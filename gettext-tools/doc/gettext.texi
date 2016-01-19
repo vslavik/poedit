@@ -469,6 +469,8 @@ Internationalizable Data
 * RST::                         Resource String Table
 * Glade::                       Glade - GNOME user interface description
 * GSettings::                   GSettings - GNOME user configuration schema
+* AppData::                     AppData - freedesktop.org application description
+* Preparing ITS Rules::         Preparing Rules for XML Internationalization
 
 Concluding Remarks
 
@@ -2607,7 +2609,7 @@ with the following one:
 
 @{
   static const char *messages[] = @{
-    gettext_noop ("some very meaningful message",
+    gettext_noop ("some very meaningful message"),
     gettext_noop ("and another one")
   @};
   const char *string;
@@ -8779,7 +8781,7 @@ adds to the @file{configure.ac} or @file{configure.in} a line of the
 form
 
 @example
-AM_GNU_GETTEXT_VERSION(@value{VERSION})
+AM_GNU_GETTEXT_VERSION(@value{ARCHIVE-VERSION})
 @end example
 
 @noindent
@@ -12153,6 +12155,8 @@ using GNU gettext.
 * RST::                         Resource String Table
 * Glade::                       Glade - GNOME user interface description
 * GSettings::                   GSettings - GNOME user configuration schema
+* AppData::                     AppData - freedesktop.org application description
+* Preparing ITS Rules::  Preparing Rules for XML Internationalization
 @end menu
 
 @node POT, RST, List of Data Formats, List of Data Formats
@@ -12198,7 +12202,7 @@ glade, libglade, glade2, libglade2, intltool
 @code{xgettext}, @code{libglade-xgettext}, @code{xml-i18n-extract}, @code{intltool-extract}
 @end table
 
-@node GSettings,  , Glade, List of Data Formats
+@node GSettings, AppData, Glade, List of Data Formats
 @subsection GSettings - GNOME user configuration schema
 
 @table @asis
@@ -12211,6 +12215,180 @@ glib2
 @item Extractor
 @code{xgettext}, @code{intltool-extract}
 @end table
+
+@node AppData, Preparing ITS Rules, GSettings, List of Data Formats
+@subsection AppData - freedesktop.org application description
+
+@table @asis
+@item RPMs
+appdata-tools, appstream, libappstream-glib, libappstream-glib-builder
+
+@item File extension
+@code{appdata.xml}
+
+@item Extractor
+@code{xgettext}, @code{intltool-extract}, @code{itstool}
+@end table
+
+@menu
+@end menu
+
+@node Preparing ITS Rules,  , AppData, List of Data Formats
+@subsection Preparing Rules for XML Internationalization
+@cindex preparing rules for XML translation
+
+Marking translatable strings in an XML file is done through a separate
+"rule" file, making use of the Internationalization Tag Set standard
+(ITS, @uref{http://www.w3.org/TR/its20/}).  The currently supported ITS
+data categories are: @samp{Translate}, @samp{Localization Note},
+@samp{Elements Within Text}, and @samp{Preserve Space}.  In addition to
+them, @code{xgettext} also recognizes the following extended data
+categories:
+
+@table @samp
+@item Context
+
+This data category associates @code{msgctxt} to the extracted text.  In
+the global rule, the @code{contextRule} element contains the following:
+
+@itemize
+@item
+A required @code{selector} attribute.  It contains an absolute selector
+that selects the nodes to which this rule applies.
+
+@item
+A required @code{contextPointer} attribute that contains a relative
+selector pointing to a node that holds the @code{msgctxt} value.
+
+@item
+An optional @code{textPointer} attribute that contains a relative
+selector pointing to a node that holds the @code{msgid} value.
+@end itemize
+
+@item Escape Special Characters
+
+This data category indicates whether the special XML characters
+(@code{<}, @code{>}, @code{&}, @code{"}) are escaped with entity
+reference.  In the global rule, the @code{escapeRule} element contains
+the following:
+
+@itemize
+@item
+A required @code{selector} attribute.  It contains an absolute selector
+that selects the nodes to which this rule applies.
+
+@item
+A required @code{escape} attribute with the value @code{yes} or @code{no}.
+@end itemize
+
+@item Extended Preserve Space
+
+This data category extends the standard @samp{Preserve Space} data
+category with the additional value @samp{trim}.  The value means to
+remove the leading and trailing whitespaces of the content, but not to
+normalize whitespaces in the middle.  In the global rule, the
+@code{preserveSpaceRule} element contains the following:
+
+@itemize
+@item
+A required @code{selector} attribute.  It contains an absolute selector
+that selects the nodes to which this rule applies.
+
+@item
+A required @code{space} attribute with the value @code{default},
+@code{preserve}, or @code{trim}.
+@end itemize
+
+@end table
+
+All those extended data categories can only be expressed with global
+rules, and the rule elements have to have the
+@code{https://www.gnu.org/s/gettext/ns/its/extensions/1.0} namespace.
+
+Given the following XML document in a file @file{messages.xml}:
+
+@example
+<?xml version="1.0"?>
+<messages>
+  <message>
+    <p>A translatable string</p>
+  </message>
+  <message>
+    <p translatable="no">A non-translatable string</p>
+  </message>
+</messages>
+@end example
+
+To extract the first text content ("A translatable string"), but not the
+second ("A non-translatable string"), the following ITS rules can be used:
+
+@example
+<?xml version="1.0"?>
+<its:rules xmlns:its="http://www.w3.org/2005/11/its" version="1.0">
+  <its:translateRule selector="/messages" translate="no"/>
+  <its:translateRule selector="//message/p" translate="yes"/>
+
+  <!-- If 'p' has an attribute 'translatable' with the value 'no', then
+       the content is not translatable.  -->
+  <its:translateRule selector="//message/p[@@translatable = 'no']"
+    translate="no"/>
+</its:rules>
+@end example
+
+@samp{xgettext} needs another file called "locating rule" to associate
+an ITS rule with an XML file.  If the above ITS file is saved as
+@file{messages.its}, the locating rule would look like:
+
+@example
+<?xml version="1.0"?>
+<locatingRules>
+  <locatingRule name="Messages" pattern="*.xml">
+    <documentRule localName="messages" target="messages.its"/>
+  </locatingRule>
+  <locatingRule name="Messages" pattern="*.msg" target="messages.its"/>
+</locatingRules>
+@end example
+
+The @code{locatingRule} element must have a @code{pattern} attribute,
+which denotes either a literal file name or a wildcard pattern of the
+XML file.  The @code{locatingRule} element can have child
+@code{documentRule} element, which adds checks on the content of the XML
+file.
+
+The first rule matches any file with the @file{.xml} file extension, but
+it only applies to XML files whose root element is @samp{<messages>}.
+
+The second rule indicates that the same ITS rule file are also
+applicable to any file with the @file{.msg} file extension.  The
+optional @code{name} attribute of @code{locatingRule} allows to choose
+rules by name, typically with @code{xgettext}'s @code{-L} option.
+
+The associated ITS rule file is indicated by the @code{target} attribute
+of @code{locatingRule} or @code{documentRule}.  If it is specified in a
+@code{documentRule} element, the parent @code{locatingRule} shouldn't
+have the @code{target} attribute.
+
+Locating rule files must have the @file{.loc} file extension.  Both ITS
+rule files and locating rule files must be installed in the
+@file{$prefix/share/gettext/its} directory.  Once those files are
+properly installed, @code{xgettext} can extract translatable strings
+from the matching XML files.
+
+@subsubsection Two Use-cases of Translated Strings in XML
+
+For XML, there are two use-cases of translated strings.  One is the case
+where the translated strings are directly consumed by programs, and the
+other is the case where the translated strings are merged back to the
+original XML document.  In the former case, special characters in the
+extracted strings shouldn't be escaped, while they should in the latter
+case.  To control wheter to escape special characters, the @samp{Escape
+Special Characters} data category can be used.
+
+To merge the translations, the @samp{msgfmt} program can be used with
+the option @code{--xml}.  @xref{msgfmt Invocation}, for more details
+about how one calls the @samp{msgfmt} program.  @samp{msgfmt}'s
+@code{--xml} option doesn't perform character escaping, so translated
+strings can have arbitrary XML constructs, such as elements for markup.
 
 @c This is the template for new data formats.
 @ignore

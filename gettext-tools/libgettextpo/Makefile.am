@@ -41,6 +41,8 @@ AM_CPPFLAGS = \
   -I../src -I$(top_srcdir)/src \
   -I../intl -I$(top_srcdir)/../gettext-runtime/intl
 
+DEFS = -DIN_LIBGETTEXTPO=1 @DEFS@
+
 # libgettextpo contains the public API for PO files.
 libgettextpo_la_SOURCES = \
   gettext-po.c \
@@ -93,8 +95,7 @@ libgettextpo_la_AUXSOURCES = \
   ../src/plural-exp.c \
   ../src/plural-eval.c \
   ../src/msgl-check.c \
-  ../src/sentence.c \
-  ../src/libexpat-compat.c
+  ../src/sentence.c
 
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
@@ -109,7 +110,7 @@ libgettextpo_la_LIBADD = libgnu.la $(WOE32_LIBADD) $(LTLIBUNISTRING)
 libgettextpo_la_LDFLAGS = \
   -version-info $(LTV_CURRENT):$(LTV_REVISION):$(LTV_AGE) \
   -rpath $(libdir) \
-  @LTLIBINTL@ @LTLIBICONV@ @LTLIBEXPAT@ -lc -no-undefined
+  @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 
 # Tell the mingw or Cygwin linker which symbols to export.
 if WOE32DLL
@@ -155,7 +156,7 @@ config.h: $(BUILT_SOURCES)
 	          sf=`echo "$$f" | sed -e 's,\\.[^.]*$$,,'`.c; \
 	          test -f $$sf || sf=$(srcdir)/$$sf; \
 	          of=`echo "$$f" | sed -e 's,^.*/,,' -e 's,\\.[^.]*$$,,'`.$(OBJEXT); \
-	          $(COMPILE) -c $$sf || { rm -f config.h; exit 1; }; \
+	          $(COMPILE) $(DEFS) -c $$sf || { rm -f config.h; exit 1; }; \
 	          sh ./exported.sh $$of 1>&5; \
 	          rm -f $$of `echo "$$of" | sed -e 's,\\.$(OBJEXT)$$,.lo,'`; \
 	          ;; \

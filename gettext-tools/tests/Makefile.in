@@ -13,7 +13,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -112,15 +111,15 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 \
 	msgfmt-8 msgfmt-9 msgfmt-10 msgfmt-11 msgfmt-12 msgfmt-13 \
 	msgfmt-14 msgfmt-15 msgfmt-16 msgfmt-17 msgfmt-18 \
 	msgfmt-properties-1 msgfmt-qt-1 msgfmt-qt-2 msgfmt-desktop-1 \
-	msgfmt-desktop-2 msggrep-1 msggrep-2 msggrep-3 msggrep-4 \
-	msggrep-5 msggrep-6 msggrep-7 msggrep-8 msggrep-9 msggrep-10 \
-	msggrep-11 msginit-1 msginit-2 msginit-3 msginit-4 msgmerge-1 \
-	msgmerge-2 msgmerge-3 msgmerge-4 msgmerge-5 msgmerge-6 \
-	msgmerge-7 msgmerge-8 msgmerge-9 msgmerge-10 msgmerge-11 \
-	msgmerge-12 msgmerge-13 msgmerge-14 msgmerge-15 msgmerge-16 \
-	msgmerge-17 msgmerge-18 msgmerge-19 msgmerge-20 msgmerge-21 \
-	msgmerge-22 msgmerge-23 msgmerge-24 msgmerge-25 \
-	msgmerge-compendium-1 msgmerge-compendium-2 \
+	msgfmt-desktop-2 msgfmt-xml-1 msgfmt-xml-2 msggrep-1 msggrep-2 \
+	msggrep-3 msggrep-4 msggrep-5 msggrep-6 msggrep-7 msggrep-8 \
+	msggrep-9 msggrep-10 msggrep-11 msginit-1 msginit-2 msginit-3 \
+	msginit-4 msgmerge-1 msgmerge-2 msgmerge-3 msgmerge-4 \
+	msgmerge-5 msgmerge-6 msgmerge-7 msgmerge-8 msgmerge-9 \
+	msgmerge-10 msgmerge-11 msgmerge-12 msgmerge-13 msgmerge-14 \
+	msgmerge-15 msgmerge-16 msgmerge-17 msgmerge-18 msgmerge-19 \
+	msgmerge-20 msgmerge-21 msgmerge-22 msgmerge-23 msgmerge-24 \
+	msgmerge-25 msgmerge-compendium-1 msgmerge-compendium-2 \
 	msgmerge-compendium-3 msgmerge-compendium-4 \
 	msgmerge-compendium-5 msgmerge-compendium-6 \
 	msgmerge-properties-1 msgmerge-properties-2 msgmerge-update-1 \
@@ -131,41 +130,41 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 \
 	recode-sr-latin-1 recode-sr-latin-2 xgettext-2 xgettext-3 \
 	xgettext-4 xgettext-5 xgettext-6 xgettext-7 xgettext-8 \
 	xgettext-9 xgettext-10 xgettext-11 xgettext-12 xgettext-13 \
-	xgettext-14 xgettext-awk-1 xgettext-awk-2 xgettext-c-2 \
-	xgettext-c-3 xgettext-c-4 xgettext-c-5 xgettext-c-6 \
-	xgettext-c-7 xgettext-c-8 xgettext-c-9 xgettext-c-10 \
-	xgettext-c-11 xgettext-c-12 xgettext-c-13 xgettext-c-14 \
-	xgettext-c-15 xgettext-c-16 xgettext-c-17 xgettext-c-18 \
-	xgettext-c-19 xgettext-c-20 xgettext-c-21 xgettext-csharp-1 \
-	xgettext-csharp-2 xgettext-csharp-3 xgettext-csharp-4 \
-	xgettext-csharp-5 xgettext-csharp-6 xgettext-csharp-7 \
-	xgettext-csharp-8 xgettext-elisp-1 xgettext-elisp-2 \
-	xgettext-glade-1 xgettext-glade-2 xgettext-glade-3 \
-	xgettext-glade-4 xgettext-glade-5 xgettext-glade-6 \
-	xgettext-glade-7 xgettext-java-1 xgettext-java-2 \
-	xgettext-java-3 xgettext-java-4 xgettext-java-5 \
-	xgettext-java-6 xgettext-java-7 xgettext-librep-1 \
-	xgettext-librep-2 xgettext-lisp-1 xgettext-lisp-2 \
-	xgettext-objc-1 xgettext-objc-2 xgettext-perl-1 \
-	xgettext-perl-2 xgettext-perl-3 xgettext-perl-4 \
-	xgettext-perl-5 xgettext-perl-6 xgettext-perl-7 \
-	xgettext-perl-8 xgettext-php-1 xgettext-php-2 xgettext-php-3 \
-	xgettext-php-4 xgettext-po-1 xgettext-properties-1 \
-	xgettext-python-1 xgettext-python-2 xgettext-python-3 \
-	xgettext-python-4 xgettext-scheme-1 xgettext-scheme-2 \
-	xgettext-scheme-3 xgettext-scheme-4 xgettext-sh-1 \
-	xgettext-sh-2 xgettext-sh-3 xgettext-sh-4 xgettext-sh-5 \
-	xgettext-sh-6 xgettext-smalltalk-1 xgettext-smalltalk-2 \
-	xgettext-stringtable-1 xgettext-tcl-1 xgettext-tcl-2 \
-	xgettext-tcl-3 xgettext-tcl-4 xgettext-ycp-1 xgettext-ycp-2 \
-	xgettext-ycp-3 xgettext-ycp-4 xgettext-lua-1 xgettext-lua-2 \
-	xgettext-javascript-1 xgettext-javascript-2 \
+	xgettext-14 xgettext-appdata-1 xgettext-awk-1 xgettext-awk-2 \
+	xgettext-c-2 xgettext-c-3 xgettext-c-4 xgettext-c-5 \
+	xgettext-c-6 xgettext-c-7 xgettext-c-8 xgettext-c-9 \
+	xgettext-c-10 xgettext-c-11 xgettext-c-12 xgettext-c-13 \
+	xgettext-c-14 xgettext-c-15 xgettext-c-16 xgettext-c-17 \
+	xgettext-c-18 xgettext-c-19 xgettext-c-20 xgettext-c-21 \
+	xgettext-csharp-1 xgettext-csharp-2 xgettext-csharp-3 \
+	xgettext-csharp-4 xgettext-csharp-5 xgettext-csharp-6 \
+	xgettext-csharp-7 xgettext-csharp-8 xgettext-elisp-1 \
+	xgettext-elisp-2 xgettext-glade-1 xgettext-glade-2 \
+	xgettext-glade-3 xgettext-glade-4 xgettext-glade-5 \
+	xgettext-glade-6 xgettext-glade-7 xgettext-java-1 \
+	xgettext-java-2 xgettext-java-3 xgettext-java-4 \
+	xgettext-java-5 xgettext-java-6 xgettext-java-7 \
+	xgettext-librep-1 xgettext-librep-2 xgettext-lisp-1 \
+	xgettext-lisp-2 xgettext-objc-1 xgettext-objc-2 \
+	xgettext-perl-1 xgettext-perl-2 xgettext-perl-3 \
+	xgettext-perl-4 xgettext-perl-5 xgettext-perl-6 \
+	xgettext-perl-7 xgettext-perl-8 xgettext-php-1 xgettext-php-2 \
+	xgettext-php-3 xgettext-php-4 xgettext-po-1 \
+	xgettext-properties-1 xgettext-python-1 xgettext-python-2 \
+	xgettext-python-3 xgettext-python-4 xgettext-scheme-1 \
+	xgettext-scheme-2 xgettext-scheme-3 xgettext-scheme-4 \
+	xgettext-sh-1 xgettext-sh-2 xgettext-sh-3 xgettext-sh-4 \
+	xgettext-sh-5 xgettext-sh-6 xgettext-smalltalk-1 \
+	xgettext-smalltalk-2 xgettext-stringtable-1 xgettext-tcl-1 \
+	xgettext-tcl-2 xgettext-tcl-3 xgettext-tcl-4 xgettext-ycp-1 \
+	xgettext-ycp-2 xgettext-ycp-3 xgettext-ycp-4 xgettext-lua-1 \
+	xgettext-lua-2 xgettext-javascript-1 xgettext-javascript-2 \
 	xgettext-javascript-3 xgettext-javascript-4 \
 	xgettext-javascript-5 xgettext-javascript-6 xgettext-vala-1 \
-	xgettext-gsettings-1 xgettext-desktop-1 format-awk-1 \
-	format-awk-2 format-boost-1 format-boost-2 format-c-1 \
-	format-c-2 format-c-3 format-c-4 format-c-5 format-csharp-1 \
-	format-csharp-2 format-elisp-1 format-elisp-2 \
+	xgettext-gsettings-1 xgettext-desktop-1 xgettext-its-1 \
+	format-awk-1 format-awk-2 format-boost-1 format-boost-2 \
+	format-c-1 format-c-2 format-c-3 format-c-4 format-c-5 \
+	format-csharp-1 format-csharp-2 format-elisp-1 format-elisp-2 \
 	format-gcc-internal-1 format-gcc-internal-2 \
 	format-gfc-internal-1 format-gfc-internal-2 format-java-1 \
 	format-java-2 format-kde-1 format-kde-2 format-kde-kuit-1 \
@@ -186,7 +185,7 @@ TESTS = gettext-1 gettext-2 gettext-3 gettext-4 gettext-5 gettext-6 \
 	lang-pascal lang-ycp lang-tcl lang-perl-1 lang-perl-2 lang-php \
 	lang-po lang-rst lang-lua lang-javascript lang-vala \
 	autopoint-1 autopoint-2 autopoint-3 cldr-plurals-1
-noinst_PROGRAMS = tstgettext$(EXEEXT) tstngettext$(EXEEXT) \
+check_PROGRAMS = tstgettext$(EXEEXT) tstngettext$(EXEEXT) \
 	testlocale$(EXEEXT) gettext-3-prg$(EXEEXT) \
 	gettext-4-prg$(EXEEXT) gettext-5-prg$(EXEEXT) \
 	gettext-6-prg$(EXEEXT) gettext-7-prg$(EXEEXT) \
@@ -213,6 +212,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/btowc.m4 \
 	$(top_srcdir)/gnulib-m4/byteswap.m4 \
 	$(top_srcdir)/gnulib-m4/canonicalize.m4 \
+	$(top_srcdir)/gnulib-m4/check-math-lib.m4 \
 	$(top_srcdir)/gnulib-m4/close.m4 \
 	$(top_srcdir)/gnulib-m4/closedir.m4 \
 	$(top_srcdir)/gnulib-m4/configmake.m4 \
@@ -220,6 +220,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/csharp.m4 \
 	$(top_srcdir)/gnulib-m4/csharpcomp.m4 \
 	$(top_srcdir)/gnulib-m4/csharpexec.m4 \
+	$(top_srcdir)/gnulib-m4/ctype.m4 \
 	$(top_srcdir)/gnulib-m4/curses.m4 \
 	$(top_srcdir)/gnulib-m4/dirent_h.m4 \
 	$(top_srcdir)/gnulib-m4/double-slash-root.m4 \
@@ -231,7 +232,10 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/error.m4 \
 	$(top_srcdir)/gnulib-m4/execute.m4 \
 	$(top_srcdir)/gnulib-m4/exponentd.m4 \
+	$(top_srcdir)/gnulib-m4/exponentf.m4 \
+	$(top_srcdir)/gnulib-m4/exponentl.m4 \
 	$(top_srcdir)/gnulib-m4/extensions.m4 \
+	$(top_srcdir)/gnulib-m4/fabs.m4 \
 	$(top_srcdir)/gnulib-m4/fatal-signal.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl.m4 \
 	$(top_srcdir)/gnulib-m4/fcntl_h.m4 \
@@ -261,6 +265,11 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/inline.m4 \
 	$(top_srcdir)/gnulib-m4/intmax_t.m4 \
 	$(top_srcdir)/gnulib-m4/inttypes.m4 \
+	$(top_srcdir)/gnulib-m4/isinf.m4 \
+	$(top_srcdir)/gnulib-m4/isnan.m4 \
+	$(top_srcdir)/gnulib-m4/isnand.m4 \
+	$(top_srcdir)/gnulib-m4/isnanf.m4 \
+	$(top_srcdir)/gnulib-m4/isnanl.m4 \
 	$(top_srcdir)/gnulib-m4/iswblank.m4 \
 	$(top_srcdir)/gnulib-m4/java.m4 \
 	$(top_srcdir)/gnulib-m4/javacomp.m4 \
@@ -283,10 +292,13 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/locale-zh.m4 \
 	$(top_srcdir)/gnulib-m4/locale_h.m4 \
 	$(top_srcdir)/gnulib-m4/localename.m4 \
+	$(top_srcdir)/gnulib-m4/log10.m4 \
 	$(top_srcdir)/gnulib-m4/lseek.m4 \
 	$(top_srcdir)/gnulib-m4/lstat.m4 \
 	$(top_srcdir)/gnulib-m4/malloc.m4 \
 	$(top_srcdir)/gnulib-m4/malloca.m4 \
+	$(top_srcdir)/gnulib-m4/math_h.m4 \
+	$(top_srcdir)/gnulib-m4/mathfunc.m4 \
 	$(top_srcdir)/gnulib-m4/mbchar.m4 \
 	$(top_srcdir)/gnulib-m4/mbiter.m4 \
 	$(top_srcdir)/gnulib-m4/mbrtowc.m4 \
@@ -316,6 +328,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/pathmax.m4 \
 	$(top_srcdir)/gnulib-m4/pipe2.m4 \
 	$(top_srcdir)/gnulib-m4/posix_spawn.m4 \
+	$(top_srcdir)/gnulib-m4/pow.m4 \
 	$(top_srcdir)/gnulib-m4/printf.m4 \
 	$(top_srcdir)/gnulib-m4/putenv.m4 \
 	$(top_srcdir)/gnulib-m4/quote.m4 \
@@ -340,6 +353,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/sigaction.m4 \
 	$(top_srcdir)/gnulib-m4/signal_h.m4 \
 	$(top_srcdir)/gnulib-m4/signalblocking.m4 \
+	$(top_srcdir)/gnulib-m4/signbit.m4 \
 	$(top_srcdir)/gnulib-m4/sigpipe.m4 \
 	$(top_srcdir)/gnulib-m4/sleep.m4 \
 	$(top_srcdir)/gnulib-m4/snprintf.m4 \
@@ -444,7 +458,6 @@ mkinstalldirs = $(SHELL) $(top_srcdir)/../build-aux/mkinstalldirs
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES = init-env
 CONFIG_CLEAN_VPATH_FILES =
-PROGRAMS = $(noinst_PROGRAMS)
 am_cake_OBJECTS = plural-1-prg.$(OBJEXT) setlocale.$(OBJEXT)
 cake_OBJECTS = $(am_cake_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -801,7 +814,7 @@ TEST_LOG_COMPILE = $(TEST_LOG_COMPILER) $(AM_TEST_LOG_FLAGS) \
 	$(TEST_LOG_FLAGS)
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/init-env.in \
 	$(top_srcdir)/../build-aux/mkinstalldirs \
-	$(top_srcdir)/../build-aux/test-driver ChangeLog
+	$(top_srcdir)/../build-aux/test-driver
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 pkglibexecdir = @pkglibexecdir@
 ACLOCAL = @ACLOCAL@
@@ -812,6 +825,7 @@ AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 APPLE_UNIVERSAL_BUILD = @APPLE_UNIVERSAL_BUILD@
 AR = @AR@
 ARCHIVE_FORMAT = @ARCHIVE_FORMAT@
+ARCHIVE_VERSION = @ARCHIVE_VERSION@
 ARFLAGS = @ARFLAGS@
 AS = @AS@
 ASM_SYMBOL_PREFIX = @ASM_SYMBOL_PREFIX@
@@ -873,6 +887,7 @@ EOVERFLOW_HIDDEN = @EOVERFLOW_HIDDEN@
 EOVERFLOW_VALUE = @EOVERFLOW_VALUE@
 ERRNO_H = @ERRNO_H@
 EXEEXT = @EXEEXT@
+FABS_LIBM = @FABS_LIBM@
 FGREP = @FGREP@
 FLOAT_H = @FLOAT_H@
 FNMATCH_H = @FNMATCH_H@
@@ -887,15 +902,34 @@ GLIBC21 = @GLIBC21@
 GLOBAL_SYMBOL_PIPE = @GLOBAL_SYMBOL_PIPE@
 GMSGFMT = @GMSGFMT@
 GMSGFMT_015 = @GMSGFMT_015@
+GNULIB_ACOSF = @GNULIB_ACOSF@
+GNULIB_ACOSL = @GNULIB_ACOSL@
 GNULIB_ALPHASORT = @GNULIB_ALPHASORT@
+GNULIB_ASINF = @GNULIB_ASINF@
+GNULIB_ASINL = @GNULIB_ASINL@
+GNULIB_ATAN2F = @GNULIB_ATAN2F@
+GNULIB_ATANF = @GNULIB_ATANF@
+GNULIB_ATANL = @GNULIB_ATANL@
 GNULIB_ATOLL = @GNULIB_ATOLL@
 GNULIB_BTOWC = @GNULIB_BTOWC@
 GNULIB_CALLOC_POSIX = @GNULIB_CALLOC_POSIX@
 GNULIB_CANONICALIZE_FILE_NAME = @GNULIB_CANONICALIZE_FILE_NAME@
+GNULIB_CBRT = @GNULIB_CBRT@
+GNULIB_CBRTF = @GNULIB_CBRTF@
+GNULIB_CBRTL = @GNULIB_CBRTL@
+GNULIB_CEIL = @GNULIB_CEIL@
+GNULIB_CEILF = @GNULIB_CEILF@
+GNULIB_CEILL = @GNULIB_CEILL@
 GNULIB_CHDIR = @GNULIB_CHDIR@
 GNULIB_CHOWN = @GNULIB_CHOWN@
 GNULIB_CLOSE = @GNULIB_CLOSE@
 GNULIB_CLOSEDIR = @GNULIB_CLOSEDIR@
+GNULIB_COPYSIGN = @GNULIB_COPYSIGN@
+GNULIB_COPYSIGNF = @GNULIB_COPYSIGNF@
+GNULIB_COPYSIGNL = @GNULIB_COPYSIGNL@
+GNULIB_COSF = @GNULIB_COSF@
+GNULIB_COSHF = @GNULIB_COSHF@
+GNULIB_COSL = @GNULIB_COSL@
 GNULIB_DIRFD = @GNULIB_DIRFD@
 GNULIB_DPRINTF = @GNULIB_DPRINTF@
 GNULIB_DUP = @GNULIB_DUP@
@@ -904,6 +938,16 @@ GNULIB_DUP3 = @GNULIB_DUP3@
 GNULIB_DUPLOCALE = @GNULIB_DUPLOCALE@
 GNULIB_ENVIRON = @GNULIB_ENVIRON@
 GNULIB_EUIDACCESS = @GNULIB_EUIDACCESS@
+GNULIB_EXP2 = @GNULIB_EXP2@
+GNULIB_EXP2F = @GNULIB_EXP2F@
+GNULIB_EXP2L = @GNULIB_EXP2L@
+GNULIB_EXPF = @GNULIB_EXPF@
+GNULIB_EXPL = @GNULIB_EXPL@
+GNULIB_EXPM1 = @GNULIB_EXPM1@
+GNULIB_EXPM1F = @GNULIB_EXPM1F@
+GNULIB_EXPM1L = @GNULIB_EXPM1L@
+GNULIB_FABSF = @GNULIB_FABSF@
+GNULIB_FABSL = @GNULIB_FABSL@
 GNULIB_FACCESSAT = @GNULIB_FACCESSAT@
 GNULIB_FCHDIR = @GNULIB_FCHDIR@
 GNULIB_FCHMODAT = @GNULIB_FCHMODAT@
@@ -918,6 +962,15 @@ GNULIB_FFSL = @GNULIB_FFSL@
 GNULIB_FFSLL = @GNULIB_FFSLL@
 GNULIB_FGETC = @GNULIB_FGETC@
 GNULIB_FGETS = @GNULIB_FGETS@
+GNULIB_FLOOR = @GNULIB_FLOOR@
+GNULIB_FLOORF = @GNULIB_FLOORF@
+GNULIB_FLOORL = @GNULIB_FLOORL@
+GNULIB_FMA = @GNULIB_FMA@
+GNULIB_FMAF = @GNULIB_FMAF@
+GNULIB_FMAL = @GNULIB_FMAL@
+GNULIB_FMOD = @GNULIB_FMOD@
+GNULIB_FMODF = @GNULIB_FMODF@
+GNULIB_FMODL = @GNULIB_FMODL@
 GNULIB_FOPEN = @GNULIB_FOPEN@
 GNULIB_FPRINTF = @GNULIB_FPRINTF@
 GNULIB_FPRINTF_POSIX = @GNULIB_FPRINTF_POSIX@
@@ -926,6 +979,9 @@ GNULIB_FPUTC = @GNULIB_FPUTC@
 GNULIB_FPUTS = @GNULIB_FPUTS@
 GNULIB_FREAD = @GNULIB_FREAD@
 GNULIB_FREOPEN = @GNULIB_FREOPEN@
+GNULIB_FREXP = @GNULIB_FREXP@
+GNULIB_FREXPF = @GNULIB_FREXPF@
+GNULIB_FREXPL = @GNULIB_FREXPL@
 GNULIB_FSCANF = @GNULIB_FSCANF@
 GNULIB_FSEEK = @GNULIB_FSEEK@
 GNULIB_FSEEKO = @GNULIB_FSEEKO@
@@ -956,17 +1012,47 @@ GNULIB_GETUSERSHELL = @GNULIB_GETUSERSHELL@
 GNULIB_GL_UNISTD_H_GETOPT = @GNULIB_GL_UNISTD_H_GETOPT@
 GNULIB_GRANTPT = @GNULIB_GRANTPT@
 GNULIB_GROUP_MEMBER = @GNULIB_GROUP_MEMBER@
+GNULIB_HYPOT = @GNULIB_HYPOT@
+GNULIB_HYPOTF = @GNULIB_HYPOTF@
+GNULIB_HYPOTL = @GNULIB_HYPOTL@
 GNULIB_ICONV = @GNULIB_ICONV@
+GNULIB_ILOGB = @GNULIB_ILOGB@
+GNULIB_ILOGBF = @GNULIB_ILOGBF@
+GNULIB_ILOGBL = @GNULIB_ILOGBL@
 GNULIB_IMAXABS = @GNULIB_IMAXABS@
 GNULIB_IMAXDIV = @GNULIB_IMAXDIV@
 GNULIB_ISATTY = @GNULIB_ISATTY@
+GNULIB_ISBLANK = @GNULIB_ISBLANK@
+GNULIB_ISFINITE = @GNULIB_ISFINITE@
+GNULIB_ISINF = @GNULIB_ISINF@
+GNULIB_ISNAN = @GNULIB_ISNAN@
+GNULIB_ISNAND = @GNULIB_ISNAND@
+GNULIB_ISNANF = @GNULIB_ISNANF@
+GNULIB_ISNANL = @GNULIB_ISNANL@
 GNULIB_ISWBLANK = @GNULIB_ISWBLANK@
 GNULIB_ISWCTYPE = @GNULIB_ISWCTYPE@
 GNULIB_LCHMOD = @GNULIB_LCHMOD@
 GNULIB_LCHOWN = @GNULIB_LCHOWN@
+GNULIB_LDEXPF = @GNULIB_LDEXPF@
+GNULIB_LDEXPL = @GNULIB_LDEXPL@
 GNULIB_LINK = @GNULIB_LINK@
 GNULIB_LINKAT = @GNULIB_LINKAT@
 GNULIB_LOCALECONV = @GNULIB_LOCALECONV@
+GNULIB_LOG = @GNULIB_LOG@
+GNULIB_LOG10 = @GNULIB_LOG10@
+GNULIB_LOG10F = @GNULIB_LOG10F@
+GNULIB_LOG10L = @GNULIB_LOG10L@
+GNULIB_LOG1P = @GNULIB_LOG1P@
+GNULIB_LOG1PF = @GNULIB_LOG1PF@
+GNULIB_LOG1PL = @GNULIB_LOG1PL@
+GNULIB_LOG2 = @GNULIB_LOG2@
+GNULIB_LOG2F = @GNULIB_LOG2F@
+GNULIB_LOG2L = @GNULIB_LOG2L@
+GNULIB_LOGB = @GNULIB_LOGB@
+GNULIB_LOGBF = @GNULIB_LOGBF@
+GNULIB_LOGBL = @GNULIB_LOGBL@
+GNULIB_LOGF = @GNULIB_LOGF@
+GNULIB_LOGL = @GNULIB_LOGL@
 GNULIB_LSEEK = @GNULIB_LSEEK@
 GNULIB_LSTAT = @GNULIB_LSTAT@
 GNULIB_MALLOC_POSIX = @GNULIB_MALLOC_POSIX@
@@ -1005,6 +1091,9 @@ GNULIB_MKOSTEMPS = @GNULIB_MKOSTEMPS@
 GNULIB_MKSTEMP = @GNULIB_MKSTEMP@
 GNULIB_MKSTEMPS = @GNULIB_MKSTEMPS@
 GNULIB_MKTIME = @GNULIB_MKTIME@
+GNULIB_MODF = @GNULIB_MODF@
+GNULIB_MODFF = @GNULIB_MODFF@
+GNULIB_MODFL = @GNULIB_MODFL@
 GNULIB_NANOSLEEP = @GNULIB_NANOSLEEP@
 GNULIB_NL_LANGINFO = @GNULIB_NL_LANGINFO@
 GNULIB_NONBLOCKING = @GNULIB_NONBLOCKING@
@@ -1040,6 +1129,7 @@ GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2 = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDU
 GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
 GNULIB_POSIX_SPAWN_FILE_ACTIONS_DESTROY = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_DESTROY@
 GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT = @GNULIB_POSIX_SPAWN_FILE_ACTIONS_INIT@
+GNULIB_POWF = @GNULIB_POWF@
 GNULIB_PREAD = @GNULIB_PREAD@
 GNULIB_PRINTF = @GNULIB_PRINTF@
 GNULIB_PRINTF_POSIX = @GNULIB_PRINTF_POSIX@
@@ -1063,11 +1153,20 @@ GNULIB_READLINK = @GNULIB_READLINK@
 GNULIB_READLINKAT = @GNULIB_READLINKAT@
 GNULIB_REALLOC_POSIX = @GNULIB_REALLOC_POSIX@
 GNULIB_REALPATH = @GNULIB_REALPATH@
+GNULIB_REMAINDER = @GNULIB_REMAINDER@
+GNULIB_REMAINDERF = @GNULIB_REMAINDERF@
+GNULIB_REMAINDERL = @GNULIB_REMAINDERL@
 GNULIB_REMOVE = @GNULIB_REMOVE@
 GNULIB_RENAME = @GNULIB_RENAME@
 GNULIB_RENAMEAT = @GNULIB_RENAMEAT@
 GNULIB_REWINDDIR = @GNULIB_REWINDDIR@
+GNULIB_RINT = @GNULIB_RINT@
+GNULIB_RINTF = @GNULIB_RINTF@
+GNULIB_RINTL = @GNULIB_RINTL@
 GNULIB_RMDIR = @GNULIB_RMDIR@
+GNULIB_ROUND = @GNULIB_ROUND@
+GNULIB_ROUNDF = @GNULIB_ROUNDF@
+GNULIB_ROUNDL = @GNULIB_ROUNDL@
 GNULIB_RPMATCH = @GNULIB_RPMATCH@
 GNULIB_SCANDIR = @GNULIB_SCANDIR@
 GNULIB_SCANF = @GNULIB_SCANF@
@@ -1078,10 +1177,16 @@ GNULIB_SETHOSTNAME = @GNULIB_SETHOSTNAME@
 GNULIB_SETLOCALE = @GNULIB_SETLOCALE@
 GNULIB_SIGACTION = @GNULIB_SIGACTION@
 GNULIB_SIGNAL_H_SIGPIPE = @GNULIB_SIGNAL_H_SIGPIPE@
+GNULIB_SIGNBIT = @GNULIB_SIGNBIT@
 GNULIB_SIGPROCMASK = @GNULIB_SIGPROCMASK@
+GNULIB_SINF = @GNULIB_SINF@
+GNULIB_SINHF = @GNULIB_SINHF@
+GNULIB_SINL = @GNULIB_SINL@
 GNULIB_SLEEP = @GNULIB_SLEEP@
 GNULIB_SNPRINTF = @GNULIB_SNPRINTF@
 GNULIB_SPRINTF_POSIX = @GNULIB_SPRINTF_POSIX@
+GNULIB_SQRTF = @GNULIB_SQRTF@
+GNULIB_SQRTL = @GNULIB_SQRTL@
 GNULIB_STAT = @GNULIB_STAT@
 GNULIB_STDIO_H_NONBLOCKING = @GNULIB_STDIO_H_NONBLOCKING@
 GNULIB_STDIO_H_SIGPIPE = @GNULIB_STDIO_H_SIGPIPE@
@@ -1110,10 +1215,17 @@ GNULIB_STRVERSCMP = @GNULIB_STRVERSCMP@
 GNULIB_SYMLINK = @GNULIB_SYMLINK@
 GNULIB_SYMLINKAT = @GNULIB_SYMLINKAT@
 GNULIB_SYSTEM_POSIX = @GNULIB_SYSTEM_POSIX@
+GNULIB_TANF = @GNULIB_TANF@
+GNULIB_TANHF = @GNULIB_TANHF@
+GNULIB_TANL = @GNULIB_TANL@
 GNULIB_TIMEGM = @GNULIB_TIMEGM@
 GNULIB_TIME_R = @GNULIB_TIME_R@
+GNULIB_TIME_RZ = @GNULIB_TIME_RZ@
 GNULIB_TMPFILE = @GNULIB_TMPFILE@
 GNULIB_TOWCTRANS = @GNULIB_TOWCTRANS@
+GNULIB_TRUNC = @GNULIB_TRUNC@
+GNULIB_TRUNCF = @GNULIB_TRUNCF@
+GNULIB_TRUNCL = @GNULIB_TRUNCL@
 GNULIB_TTYNAME_R = @GNULIB_TTYNAME_R@
 GNULIB_UNISTD_H_NONBLOCKING = @GNULIB_UNISTD_H_NONBLOCKING@
 GNULIB_UNISTD_H_SIGPIPE = @GNULIB_UNISTD_H_SIGPIPE@
@@ -1173,25 +1285,57 @@ GNULIB_WMEMSET = @GNULIB_WMEMSET@
 GNULIB_WRITE = @GNULIB_WRITE@
 GNULIB__EXIT = @GNULIB__EXIT@
 GREP = @GREP@
+HAVE_ACOSF = @HAVE_ACOSF@
+HAVE_ACOSL = @HAVE_ACOSL@
 HAVE_ALPHASORT = @HAVE_ALPHASORT@
+HAVE_ASINF = @HAVE_ASINF@
+HAVE_ASINL = @HAVE_ASINL@
 HAVE_ASPRINTF = @HAVE_ASPRINTF@
+HAVE_ATAN2F = @HAVE_ATAN2F@
+HAVE_ATANF = @HAVE_ATANF@
+HAVE_ATANL = @HAVE_ATANL@
 HAVE_ATOLL = @HAVE_ATOLL@
 HAVE_BTOWC = @HAVE_BTOWC@
 HAVE_CANONICALIZE_FILE_NAME = @HAVE_CANONICALIZE_FILE_NAME@
+HAVE_CBRT = @HAVE_CBRT@
+HAVE_CBRTF = @HAVE_CBRTF@
+HAVE_CBRTL = @HAVE_CBRTL@
 HAVE_CHOWN = @HAVE_CHOWN@
 HAVE_CLIX = @HAVE_CLIX@
 HAVE_CLIX_IN_PATH = @HAVE_CLIX_IN_PATH@
 HAVE_CLOSEDIR = @HAVE_CLOSEDIR@
+HAVE_COPYSIGN = @HAVE_COPYSIGN@
+HAVE_COPYSIGNL = @HAVE_COPYSIGNL@
+HAVE_COSF = @HAVE_COSF@
+HAVE_COSHF = @HAVE_COSHF@
+HAVE_COSL = @HAVE_COSL@
 HAVE_CSC = @HAVE_CSC@
 HAVE_CSCC = @HAVE_CSCC@
 HAVE_CSCC_IN_PATH = @HAVE_CSCC_IN_PATH@
 HAVE_CSC_IN_PATH = @HAVE_CSC_IN_PATH@
+HAVE_DECL_ACOSL = @HAVE_DECL_ACOSL@
+HAVE_DECL_ASINL = @HAVE_DECL_ASINL@
+HAVE_DECL_ATANL = @HAVE_DECL_ATANL@
+HAVE_DECL_CBRTF = @HAVE_DECL_CBRTF@
+HAVE_DECL_CBRTL = @HAVE_DECL_CBRTL@
+HAVE_DECL_CEILF = @HAVE_DECL_CEILF@
+HAVE_DECL_CEILL = @HAVE_DECL_CEILL@
+HAVE_DECL_COPYSIGNF = @HAVE_DECL_COPYSIGNF@
+HAVE_DECL_COSL = @HAVE_DECL_COSL@
 HAVE_DECL_DIRFD = @HAVE_DECL_DIRFD@
 HAVE_DECL_ENVIRON = @HAVE_DECL_ENVIRON@
+HAVE_DECL_EXP2 = @HAVE_DECL_EXP2@
+HAVE_DECL_EXP2F = @HAVE_DECL_EXP2F@
+HAVE_DECL_EXP2L = @HAVE_DECL_EXP2L@
+HAVE_DECL_EXPL = @HAVE_DECL_EXPL@
+HAVE_DECL_EXPM1L = @HAVE_DECL_EXPM1L@
 HAVE_DECL_FCHDIR = @HAVE_DECL_FCHDIR@
 HAVE_DECL_FDATASYNC = @HAVE_DECL_FDATASYNC@
 HAVE_DECL_FDOPENDIR = @HAVE_DECL_FDOPENDIR@
+HAVE_DECL_FLOORF = @HAVE_DECL_FLOORF@
+HAVE_DECL_FLOORL = @HAVE_DECL_FLOORL@
 HAVE_DECL_FPURGE = @HAVE_DECL_FPURGE@
+HAVE_DECL_FREXPL = @HAVE_DECL_FREXPL@
 HAVE_DECL_FSEEKO = @HAVE_DECL_FSEEKO@
 HAVE_DECL_FTELLO = @HAVE_DECL_FTELLO@
 HAVE_DECL_GETDELIM = @HAVE_DECL_GETDELIM@
@@ -1203,13 +1347,28 @@ HAVE_DECL_GETPAGESIZE = @HAVE_DECL_GETPAGESIZE@
 HAVE_DECL_GETUSERSHELL = @HAVE_DECL_GETUSERSHELL@
 HAVE_DECL_IMAXABS = @HAVE_DECL_IMAXABS@
 HAVE_DECL_IMAXDIV = @HAVE_DECL_IMAXDIV@
+HAVE_DECL_LDEXPL = @HAVE_DECL_LDEXPL@
 HAVE_DECL_LOCALTIME_R = @HAVE_DECL_LOCALTIME_R@
+HAVE_DECL_LOG10L = @HAVE_DECL_LOG10L@
+HAVE_DECL_LOG2 = @HAVE_DECL_LOG2@
+HAVE_DECL_LOG2F = @HAVE_DECL_LOG2F@
+HAVE_DECL_LOG2L = @HAVE_DECL_LOG2L@
+HAVE_DECL_LOGB = @HAVE_DECL_LOGB@
+HAVE_DECL_LOGL = @HAVE_DECL_LOGL@
 HAVE_DECL_MEMMEM = @HAVE_DECL_MEMMEM@
 HAVE_DECL_MEMRCHR = @HAVE_DECL_MEMRCHR@
 HAVE_DECL_OBSTACK_PRINTF = @HAVE_DECL_OBSTACK_PRINTF@
+HAVE_DECL_REMAINDER = @HAVE_DECL_REMAINDER@
+HAVE_DECL_REMAINDERL = @HAVE_DECL_REMAINDERL@
+HAVE_DECL_RINTF = @HAVE_DECL_RINTF@
+HAVE_DECL_ROUND = @HAVE_DECL_ROUND@
+HAVE_DECL_ROUNDF = @HAVE_DECL_ROUNDF@
+HAVE_DECL_ROUNDL = @HAVE_DECL_ROUNDL@
 HAVE_DECL_SETENV = @HAVE_DECL_SETENV@
 HAVE_DECL_SETHOSTNAME = @HAVE_DECL_SETHOSTNAME@
+HAVE_DECL_SINL = @HAVE_DECL_SINL@
 HAVE_DECL_SNPRINTF = @HAVE_DECL_SNPRINTF@
+HAVE_DECL_SQRTL = @HAVE_DECL_SQRTL@
 HAVE_DECL_STRDUP = @HAVE_DECL_STRDUP@
 HAVE_DECL_STRERROR_R = @HAVE_DECL_STRERROR_R@
 HAVE_DECL_STRNDUP = @HAVE_DECL_STRNDUP@
@@ -1218,6 +1377,10 @@ HAVE_DECL_STRSIGNAL = @HAVE_DECL_STRSIGNAL@
 HAVE_DECL_STRTOIMAX = @HAVE_DECL_STRTOIMAX@
 HAVE_DECL_STRTOK_R = @HAVE_DECL_STRTOK_R@
 HAVE_DECL_STRTOUMAX = @HAVE_DECL_STRTOUMAX@
+HAVE_DECL_TANL = @HAVE_DECL_TANL@
+HAVE_DECL_TRUNC = @HAVE_DECL_TRUNC@
+HAVE_DECL_TRUNCF = @HAVE_DECL_TRUNCF@
+HAVE_DECL_TRUNCL = @HAVE_DECL_TRUNCL@
 HAVE_DECL_TTYNAME_R = @HAVE_DECL_TTYNAME_R@
 HAVE_DECL_UNSETENV = @HAVE_DECL_UNSETENV@
 HAVE_DECL_VSNPRINTF = @HAVE_DECL_VSNPRINTF@
@@ -1229,6 +1392,12 @@ HAVE_DUP2 = @HAVE_DUP2@
 HAVE_DUP3 = @HAVE_DUP3@
 HAVE_DUPLOCALE = @HAVE_DUPLOCALE@
 HAVE_EUIDACCESS = @HAVE_EUIDACCESS@
+HAVE_EXPF = @HAVE_EXPF@
+HAVE_EXPL = @HAVE_EXPL@
+HAVE_EXPM1 = @HAVE_EXPM1@
+HAVE_EXPM1F = @HAVE_EXPM1F@
+HAVE_FABSF = @HAVE_FABSF@
+HAVE_FABSL = @HAVE_FABSL@
 HAVE_FACCESSAT = @HAVE_FACCESSAT@
 HAVE_FCHDIR = @HAVE_FCHDIR@
 HAVE_FCHMODAT = @HAVE_FCHMODAT@
@@ -1239,6 +1408,12 @@ HAVE_FDOPENDIR = @HAVE_FDOPENDIR@
 HAVE_FEATURES_H = @HAVE_FEATURES_H@
 HAVE_FFSL = @HAVE_FFSL@
 HAVE_FFSLL = @HAVE_FFSLL@
+HAVE_FMA = @HAVE_FMA@
+HAVE_FMAF = @HAVE_FMAF@
+HAVE_FMAL = @HAVE_FMAL@
+HAVE_FMODF = @HAVE_FMODF@
+HAVE_FMODL = @HAVE_FMODL@
+HAVE_FREXPF = @HAVE_FREXPF@
 HAVE_FSEEKO = @HAVE_FSEEKO@
 HAVE_FSTATAT = @HAVE_FSTATAT@
 HAVE_FSYNC = @HAVE_FSYNC@
@@ -1261,9 +1436,18 @@ HAVE_GIJ_IN_PATH = @HAVE_GIJ_IN_PATH@
 HAVE_GLOBAL_SYMBOL_PIPE = @HAVE_GLOBAL_SYMBOL_PIPE@
 HAVE_GRANTPT = @HAVE_GRANTPT@
 HAVE_GROUP_MEMBER = @HAVE_GROUP_MEMBER@
+HAVE_HYPOTF = @HAVE_HYPOTF@
+HAVE_HYPOTL = @HAVE_HYPOTL@
+HAVE_ILOGB = @HAVE_ILOGB@
+HAVE_ILOGBF = @HAVE_ILOGBF@
+HAVE_ILOGBL = @HAVE_ILOGBL@
 HAVE_ILRUN = @HAVE_ILRUN@
 HAVE_ILRUN_IN_PATH = @HAVE_ILRUN_IN_PATH@
 HAVE_INTTYPES_H = @HAVE_INTTYPES_H@
+HAVE_ISBLANK = @HAVE_ISBLANK@
+HAVE_ISNAND = @HAVE_ISNAND@
+HAVE_ISNANF = @HAVE_ISNANF@
+HAVE_ISNANL = @HAVE_ISNANL@
 HAVE_ISWBLANK = @HAVE_ISWBLANK@
 HAVE_ISWCNTRL = @HAVE_ISWCNTRL@
 HAVE_JAVA = @HAVE_JAVA@
@@ -1285,10 +1469,19 @@ HAVE_LANGINFO_T_FMT_AMPM = @HAVE_LANGINFO_T_FMT_AMPM@
 HAVE_LANGINFO_YESEXPR = @HAVE_LANGINFO_YESEXPR@
 HAVE_LCHMOD = @HAVE_LCHMOD@
 HAVE_LCHOWN = @HAVE_LCHOWN@
-HAVE_LIBEXPAT = @HAVE_LIBEXPAT@
+HAVE_LDEXPF = @HAVE_LDEXPF@
 HAVE_LIBUNISTRING = @HAVE_LIBUNISTRING@
 HAVE_LINK = @HAVE_LINK@
 HAVE_LINKAT = @HAVE_LINKAT@
+HAVE_LOG10F = @HAVE_LOG10F@
+HAVE_LOG10L = @HAVE_LOG10L@
+HAVE_LOG1P = @HAVE_LOG1P@
+HAVE_LOG1PF = @HAVE_LOG1PF@
+HAVE_LOG1PL = @HAVE_LOG1PL@
+HAVE_LOGBF = @HAVE_LOGBF@
+HAVE_LOGBL = @HAVE_LOGBL@
+HAVE_LOGF = @HAVE_LOGF@
+HAVE_LOGL = @HAVE_LOGL@
 HAVE_LONG_LONG_INT = @HAVE_LONG_LONG_INT@
 HAVE_LSTAT = @HAVE_LSTAT@
 HAVE_MAX_ALIGN_T = @HAVE_MAX_ALIGN_T@
@@ -1312,6 +1505,8 @@ HAVE_MKOSTEMP = @HAVE_MKOSTEMP@
 HAVE_MKOSTEMPS = @HAVE_MKOSTEMPS@
 HAVE_MKSTEMP = @HAVE_MKSTEMP@
 HAVE_MKSTEMPS = @HAVE_MKSTEMPS@
+HAVE_MODFF = @HAVE_MODFF@
+HAVE_MODFL = @HAVE_MODFL@
 HAVE_MONO = @HAVE_MONO@
 HAVE_MONO_IN_PATH = @HAVE_MONO_IN_PATH@
 HAVE_MSVC_INVALID_PARAMETER_HANDLER = @HAVE_MSVC_INVALID_PARAMETER_HANDLER@
@@ -1331,6 +1526,7 @@ HAVE_POSIX_SIGNALBLOCKING = @HAVE_POSIX_SIGNALBLOCKING@
 HAVE_POSIX_SPAWN = @HAVE_POSIX_SPAWN@
 HAVE_POSIX_SPAWNATTR_T = @HAVE_POSIX_SPAWNATTR_T@
 HAVE_POSIX_SPAWN_FILE_ACTIONS_T = @HAVE_POSIX_SPAWN_FILE_ACTIONS_T@
+HAVE_POWF = @HAVE_POWF@
 HAVE_PREAD = @HAVE_PREAD@
 HAVE_PSELECT = @HAVE_PSELECT@
 HAVE_PTHREAD_SIGMASK = @HAVE_PTHREAD_SIGMASK@
@@ -1346,9 +1542,14 @@ HAVE_READDIR = @HAVE_READDIR@
 HAVE_READLINK = @HAVE_READLINK@
 HAVE_READLINKAT = @HAVE_READLINKAT@
 HAVE_REALPATH = @HAVE_REALPATH@
+HAVE_REMAINDER = @HAVE_REMAINDER@
+HAVE_REMAINDERF = @HAVE_REMAINDERF@
 HAVE_RENAMEAT = @HAVE_RENAMEAT@
 HAVE_REWINDDIR = @HAVE_REWINDDIR@
+HAVE_RINT = @HAVE_RINT@
+HAVE_RINTL = @HAVE_RINTL@
 HAVE_RPMATCH = @HAVE_RPMATCH@
+HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = @HAVE_SAME_LONG_DOUBLE_AS_DOUBLE@
 HAVE_SCANDIR = @HAVE_SCANDIR@
 HAVE_SCHED_H = @HAVE_SCHED_H@
 HAVE_SECURE_GETENV = @HAVE_SECURE_GETENV@
@@ -1361,9 +1562,14 @@ HAVE_SIGNED_SIG_ATOMIC_T = @HAVE_SIGNED_SIG_ATOMIC_T@
 HAVE_SIGNED_WCHAR_T = @HAVE_SIGNED_WCHAR_T@
 HAVE_SIGNED_WINT_T = @HAVE_SIGNED_WINT_T@
 HAVE_SIGSET_T = @HAVE_SIGSET_T@
+HAVE_SINF = @HAVE_SINF@
+HAVE_SINHF = @HAVE_SINHF@
+HAVE_SINL = @HAVE_SINL@
 HAVE_SLEEP = @HAVE_SLEEP@
 HAVE_SNPRINTF = @HAVE_SNPRINTF@
 HAVE_SPAWN_H = @HAVE_SPAWN_H@
+HAVE_SQRTF = @HAVE_SQRTF@
+HAVE_SQRTL = @HAVE_SQRTL@
 HAVE_STDINT_H = @HAVE_STDINT_H@
 HAVE_STPCPY = @HAVE_STPCPY@
 HAVE_STPNCPY = @HAVE_STPNCPY@
@@ -1389,7 +1595,11 @@ HAVE_SYS_PARAM_H = @HAVE_SYS_PARAM_H@
 HAVE_SYS_SELECT_H = @HAVE_SYS_SELECT_H@
 HAVE_SYS_TIME_H = @HAVE_SYS_TIME_H@
 HAVE_SYS_TYPES_H = @HAVE_SYS_TYPES_H@
+HAVE_TANF = @HAVE_TANF@
+HAVE_TANHF = @HAVE_TANHF@
+HAVE_TANL = @HAVE_TANL@
 HAVE_TIMEGM = @HAVE_TIMEGM@
+HAVE_TIMEZONE_T = @HAVE_TIMEZONE_T@
 HAVE_TYPE_VOLATILE_SIG_ATOMIC_T = @HAVE_TYPE_VOLATILE_SIG_ATOMIC_T@
 HAVE_UNISTD_H = @HAVE_UNISTD_H@
 HAVE_UNLINKAT = @HAVE_UNLINKAT@
@@ -1465,13 +1675,16 @@ INTLOBJS = @INTLOBJS@
 INTL_DEFAULT_VERBOSITY = @INTL_DEFAULT_VERBOSITY@
 INTL_LIBTOOL_SUFFIX_PREFIX = @INTL_LIBTOOL_SUFFIX_PREFIX@
 INTL_MACOSX_LIBS = @INTL_MACOSX_LIBS@
+ISINF_LIBM = @ISINF_LIBM@
+ISNAND_LIBM = @ISNAND_LIBM@
+ISNANF_LIBM = @ISNANF_LIBM@
+ISNANL_LIBM = @ISNANL_LIBM@
+ISNAN_LIBM = @ISNAN_LIBM@
 JAR = @JAR@
 JAVA_CHOICE = @JAVA_CHOICE@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBCROCO = @LIBCROCO@
-LIBEXPAT = @LIBEXPAT@
-LIBEXPAT_PREFIX = @LIBEXPAT_PREFIX@
 LIBGLIB = @LIBGLIB@
 LIBGLIB_H = @LIBGLIB_H@
 LIBGREP_LIBDEPS = @LIBGREP_LIBDEPS@
@@ -1509,9 +1722,9 @@ LOCALE_FR_UTF8 = @LOCALE_FR_UTF8@
 LOCALE_JA = @LOCALE_JA@
 LOCALE_TR_UTF8 = @LOCALE_TR_UTF8@
 LOCALE_ZH_CN = @LOCALE_ZH_CN@
+LOG10_LIBM = @LOG10_LIBM@
 LTLIBC = @LTLIBC@
 LTLIBCROCO = @LTLIBCROCO@
-LTLIBEXPAT = @LTLIBEXPAT@
 LTLIBGLIB = @LTLIBGLIB@
 LTLIBICONV = @LTLIBICONV@
 LTLIBINTL = @LTLIBINTL@
@@ -1532,6 +1745,7 @@ MSGFMT = @MSGFMT@
 MSGFMT_015 = @MSGFMT_015@
 MSGMERGE = @MSGMERGE@
 MSGMERGE_LIBM = @MSGMERGE_LIBM@
+NEXT_AS_FIRST_DIRECTIVE_CTYPE_H = @NEXT_AS_FIRST_DIRECTIVE_CTYPE_H@
 NEXT_AS_FIRST_DIRECTIVE_DIRENT_H = @NEXT_AS_FIRST_DIRECTIVE_DIRENT_H@
 NEXT_AS_FIRST_DIRECTIVE_ERRNO_H = @NEXT_AS_FIRST_DIRECTIVE_ERRNO_H@
 NEXT_AS_FIRST_DIRECTIVE_FCNTL_H = @NEXT_AS_FIRST_DIRECTIVE_FCNTL_H@
@@ -1541,6 +1755,7 @@ NEXT_AS_FIRST_DIRECTIVE_ICONV_H = @NEXT_AS_FIRST_DIRECTIVE_ICONV_H@
 NEXT_AS_FIRST_DIRECTIVE_INTTYPES_H = @NEXT_AS_FIRST_DIRECTIVE_INTTYPES_H@
 NEXT_AS_FIRST_DIRECTIVE_LANGINFO_H = @NEXT_AS_FIRST_DIRECTIVE_LANGINFO_H@
 NEXT_AS_FIRST_DIRECTIVE_LOCALE_H = @NEXT_AS_FIRST_DIRECTIVE_LOCALE_H@
+NEXT_AS_FIRST_DIRECTIVE_MATH_H = @NEXT_AS_FIRST_DIRECTIVE_MATH_H@
 NEXT_AS_FIRST_DIRECTIVE_SCHED_H = @NEXT_AS_FIRST_DIRECTIVE_SCHED_H@
 NEXT_AS_FIRST_DIRECTIVE_SIGNAL_H = @NEXT_AS_FIRST_DIRECTIVE_SIGNAL_H@
 NEXT_AS_FIRST_DIRECTIVE_SPAWN_H = @NEXT_AS_FIRST_DIRECTIVE_SPAWN_H@
@@ -1559,6 +1774,7 @@ NEXT_AS_FIRST_DIRECTIVE_TIME_H = @NEXT_AS_FIRST_DIRECTIVE_TIME_H@
 NEXT_AS_FIRST_DIRECTIVE_UNISTD_H = @NEXT_AS_FIRST_DIRECTIVE_UNISTD_H@
 NEXT_AS_FIRST_DIRECTIVE_WCHAR_H = @NEXT_AS_FIRST_DIRECTIVE_WCHAR_H@
 NEXT_AS_FIRST_DIRECTIVE_WCTYPE_H = @NEXT_AS_FIRST_DIRECTIVE_WCTYPE_H@
+NEXT_CTYPE_H = @NEXT_CTYPE_H@
 NEXT_DIRENT_H = @NEXT_DIRENT_H@
 NEXT_ERRNO_H = @NEXT_ERRNO_H@
 NEXT_FCNTL_H = @NEXT_FCNTL_H@
@@ -1568,6 +1784,7 @@ NEXT_ICONV_H = @NEXT_ICONV_H@
 NEXT_INTTYPES_H = @NEXT_INTTYPES_H@
 NEXT_LANGINFO_H = @NEXT_LANGINFO_H@
 NEXT_LOCALE_H = @NEXT_LOCALE_H@
+NEXT_MATH_H = @NEXT_MATH_H@
 NEXT_SCHED_H = @NEXT_SCHED_H@
 NEXT_SIGNAL_H = @NEXT_SIGNAL_H@
 NEXT_SPAWN_H = @NEXT_SPAWN_H@
@@ -1598,12 +1815,14 @@ PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
 PACKAGE_STRING = @PACKAGE_STRING@
+PACKAGE_SUFFIX = @PACKAGE_SUFFIX@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PERL = @PERL@
 POSUB = @POSUB@
+POW_LIBM = @POW_LIBM@
 PRAGMA_COLUMNS = @PRAGMA_COLUMNS@
 PRAGMA_SYSTEM_HEADER = @PRAGMA_SYSTEM_HEADER@
 PRIPTR_PREFIX = @PRIPTR_PREFIX@
@@ -1622,6 +1841,11 @@ RELOCATABLE_STRIP = @RELOCATABLE_STRIP@
 REPLACE_BTOWC = @REPLACE_BTOWC@
 REPLACE_CALLOC = @REPLACE_CALLOC@
 REPLACE_CANONICALIZE_FILE_NAME = @REPLACE_CANONICALIZE_FILE_NAME@
+REPLACE_CBRTF = @REPLACE_CBRTF@
+REPLACE_CBRTL = @REPLACE_CBRTL@
+REPLACE_CEIL = @REPLACE_CEIL@
+REPLACE_CEILF = @REPLACE_CEILF@
+REPLACE_CEILL = @REPLACE_CEILL@
 REPLACE_CHOWN = @REPLACE_CHOWN@
 REPLACE_CLOSE = @REPLACE_CLOSE@
 REPLACE_CLOSEDIR = @REPLACE_CLOSEDIR@
@@ -1630,16 +1854,33 @@ REPLACE_DPRINTF = @REPLACE_DPRINTF@
 REPLACE_DUP = @REPLACE_DUP@
 REPLACE_DUP2 = @REPLACE_DUP2@
 REPLACE_DUPLOCALE = @REPLACE_DUPLOCALE@
+REPLACE_EXP2 = @REPLACE_EXP2@
+REPLACE_EXP2L = @REPLACE_EXP2L@
+REPLACE_EXPM1 = @REPLACE_EXPM1@
+REPLACE_EXPM1F = @REPLACE_EXPM1F@
+REPLACE_FABSL = @REPLACE_FABSL@
 REPLACE_FCHOWNAT = @REPLACE_FCHOWNAT@
 REPLACE_FCLOSE = @REPLACE_FCLOSE@
 REPLACE_FCNTL = @REPLACE_FCNTL@
 REPLACE_FDOPEN = @REPLACE_FDOPEN@
 REPLACE_FDOPENDIR = @REPLACE_FDOPENDIR@
 REPLACE_FFLUSH = @REPLACE_FFLUSH@
+REPLACE_FLOOR = @REPLACE_FLOOR@
+REPLACE_FLOORF = @REPLACE_FLOORF@
+REPLACE_FLOORL = @REPLACE_FLOORL@
+REPLACE_FMA = @REPLACE_FMA@
+REPLACE_FMAF = @REPLACE_FMAF@
+REPLACE_FMAL = @REPLACE_FMAL@
+REPLACE_FMOD = @REPLACE_FMOD@
+REPLACE_FMODF = @REPLACE_FMODF@
+REPLACE_FMODL = @REPLACE_FMODL@
 REPLACE_FOPEN = @REPLACE_FOPEN@
 REPLACE_FPRINTF = @REPLACE_FPRINTF@
 REPLACE_FPURGE = @REPLACE_FPURGE@
 REPLACE_FREOPEN = @REPLACE_FREOPEN@
+REPLACE_FREXP = @REPLACE_FREXP@
+REPLACE_FREXPF = @REPLACE_FREXPF@
+REPLACE_FREXPL = @REPLACE_FREXPL@
 REPLACE_FSEEK = @REPLACE_FSEEK@
 REPLACE_FSEEKO = @REPLACE_FSEEKO@
 REPLACE_FSTAT = @REPLACE_FSTAT@
@@ -1658,19 +1899,44 @@ REPLACE_GETLOGIN_R = @REPLACE_GETLOGIN_R@
 REPLACE_GETPAGESIZE = @REPLACE_GETPAGESIZE@
 REPLACE_GETTIMEOFDAY = @REPLACE_GETTIMEOFDAY@
 REPLACE_GMTIME = @REPLACE_GMTIME@
+REPLACE_HUGE_VAL = @REPLACE_HUGE_VAL@
+REPLACE_HYPOT = @REPLACE_HYPOT@
+REPLACE_HYPOTF = @REPLACE_HYPOTF@
+REPLACE_HYPOTL = @REPLACE_HYPOTL@
 REPLACE_ICONV = @REPLACE_ICONV@
 REPLACE_ICONV_OPEN = @REPLACE_ICONV_OPEN@
 REPLACE_ICONV_UTF = @REPLACE_ICONV_UTF@
+REPLACE_ILOGB = @REPLACE_ILOGB@
+REPLACE_ILOGBF = @REPLACE_ILOGBF@
 REPLACE_ISATTY = @REPLACE_ISATTY@
+REPLACE_ISFINITE = @REPLACE_ISFINITE@
+REPLACE_ISINF = @REPLACE_ISINF@
+REPLACE_ISNAN = @REPLACE_ISNAN@
 REPLACE_ISWBLANK = @REPLACE_ISWBLANK@
 REPLACE_ISWCNTRL = @REPLACE_ISWCNTRL@
 REPLACE_ITOLD = @REPLACE_ITOLD@
 REPLACE_LCHOWN = @REPLACE_LCHOWN@
+REPLACE_LDEXPL = @REPLACE_LDEXPL@
 REPLACE_LINK = @REPLACE_LINK@
 REPLACE_LINKAT = @REPLACE_LINKAT@
 REPLACE_LOCALECONV = @REPLACE_LOCALECONV@
 REPLACE_LOCALTIME = @REPLACE_LOCALTIME@
 REPLACE_LOCALTIME_R = @REPLACE_LOCALTIME_R@
+REPLACE_LOG = @REPLACE_LOG@
+REPLACE_LOG10 = @REPLACE_LOG10@
+REPLACE_LOG10F = @REPLACE_LOG10F@
+REPLACE_LOG10L = @REPLACE_LOG10L@
+REPLACE_LOG1P = @REPLACE_LOG1P@
+REPLACE_LOG1PF = @REPLACE_LOG1PF@
+REPLACE_LOG1PL = @REPLACE_LOG1PL@
+REPLACE_LOG2 = @REPLACE_LOG2@
+REPLACE_LOG2F = @REPLACE_LOG2F@
+REPLACE_LOG2L = @REPLACE_LOG2L@
+REPLACE_LOGB = @REPLACE_LOGB@
+REPLACE_LOGBF = @REPLACE_LOGBF@
+REPLACE_LOGBL = @REPLACE_LOGBL@
+REPLACE_LOGF = @REPLACE_LOGF@
+REPLACE_LOGL = @REPLACE_LOGL@
 REPLACE_LSEEK = @REPLACE_LSEEK@
 REPLACE_LSTAT = @REPLACE_LSTAT@
 REPLACE_MALLOC = @REPLACE_MALLOC@
@@ -1688,6 +1954,10 @@ REPLACE_MKFIFO = @REPLACE_MKFIFO@
 REPLACE_MKNOD = @REPLACE_MKNOD@
 REPLACE_MKSTEMP = @REPLACE_MKSTEMP@
 REPLACE_MKTIME = @REPLACE_MKTIME@
+REPLACE_MODF = @REPLACE_MODF@
+REPLACE_MODFF = @REPLACE_MODFF@
+REPLACE_MODFL = @REPLACE_MODFL@
+REPLACE_NAN = @REPLACE_NAN@
 REPLACE_NANOSLEEP = @REPLACE_NANOSLEEP@
 REPLACE_NL_LANGINFO = @REPLACE_NL_LANGINFO@
 REPLACE_NULL = @REPLACE_NULL@
@@ -1717,16 +1987,25 @@ REPLACE_READLINK = @REPLACE_READLINK@
 REPLACE_READLINKAT = @REPLACE_READLINKAT@
 REPLACE_REALLOC = @REPLACE_REALLOC@
 REPLACE_REALPATH = @REPLACE_REALPATH@
+REPLACE_REMAINDER = @REPLACE_REMAINDER@
+REPLACE_REMAINDERF = @REPLACE_REMAINDERF@
+REPLACE_REMAINDERL = @REPLACE_REMAINDERL@
 REPLACE_REMOVE = @REPLACE_REMOVE@
 REPLACE_RENAME = @REPLACE_RENAME@
 REPLACE_RENAMEAT = @REPLACE_RENAMEAT@
 REPLACE_RMDIR = @REPLACE_RMDIR@
+REPLACE_ROUND = @REPLACE_ROUND@
+REPLACE_ROUNDF = @REPLACE_ROUNDF@
+REPLACE_ROUNDL = @REPLACE_ROUNDL@
 REPLACE_SELECT = @REPLACE_SELECT@
 REPLACE_SETENV = @REPLACE_SETENV@
 REPLACE_SETLOCALE = @REPLACE_SETLOCALE@
+REPLACE_SIGNBIT = @REPLACE_SIGNBIT@
+REPLACE_SIGNBIT_USING_GCC = @REPLACE_SIGNBIT_USING_GCC@
 REPLACE_SLEEP = @REPLACE_SLEEP@
 REPLACE_SNPRINTF = @REPLACE_SNPRINTF@
 REPLACE_SPRINTF = @REPLACE_SPRINTF@
+REPLACE_SQRTL = @REPLACE_SQRTL@
 REPLACE_STAT = @REPLACE_STAT@
 REPLACE_STDIO_READ_FUNCS = @REPLACE_STDIO_READ_FUNCS@
 REPLACE_STDIO_WRITE_FUNCS = @REPLACE_STDIO_WRITE_FUNCS@
@@ -1752,6 +2031,9 @@ REPLACE_SYMLINKAT = @REPLACE_SYMLINKAT@
 REPLACE_TIMEGM = @REPLACE_TIMEGM@
 REPLACE_TMPFILE = @REPLACE_TMPFILE@
 REPLACE_TOWLOWER = @REPLACE_TOWLOWER@
+REPLACE_TRUNC = @REPLACE_TRUNC@
+REPLACE_TRUNCF = @REPLACE_TRUNCF@
+REPLACE_TRUNCL = @REPLACE_TRUNCL@
 REPLACE_TTYNAME_R = @REPLACE_TTYNAME_R@
 REPLACE_UNLINK = @REPLACE_UNLINK@
 REPLACE_UNLINKAT = @REPLACE_UNLINKAT@
@@ -1892,10 +2174,10 @@ EXTRA_DIST = init.sh init.cfg $(TESTS) test.mo overflow-1.mo \
 	mm-ko.euc-kr.po mm-ko-comp.euc-kr.po mm-viet.comp.po \
 	mm-viet.pot mm-viet.out msguniq-a.in msguniq-a.inp \
 	msguniq-a.out qttest_pl.po qttest_pl.qm qttest2_de.po \
-	qttest2_de.qm qttest2_de.ts ChangeLog.0 gettext-3-1.po \
-	gettext-3-2.po gettext-4.po gettext-5.po gettext-6-1.po \
-	gettext-6-2.po gettext-7.po gettextpo-1.de.po xgettext-1 \
-	xgettext-c-1 xg-c-21.c common/supplemental/plurals.xml
+	qttest2_de.qm qttest2_de.ts gettext-3-1.po gettext-3-2.po \
+	gettext-4.po gettext-5.po gettext-6-1.po gettext-6-2.po \
+	gettext-7.po gettextpo-1.de.po xgettext-1 xgettext-c-1 \
+	xg-c-21.c common/supplemental/plurals.xml
 MOSTLYCLEANFILES = core *.stackdump
 
 # For debugging memory leaks and memory allocation bugs.
@@ -2022,8 +2304,8 @@ $(am__aclocal_m4_deps):
 init-env: $(top_builddir)/config.status $(srcdir)/init-env.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-clean-noinstPROGRAMS:
-	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
+clean-checkPROGRAMS:
+	@list='$(check_PROGRAMS)'; test -n "$$list" || exit 0; \
 	echo " rm -f" $$list; \
 	rm -f $$list || exit $$?; \
 	test -n "$(EXEEXT)" || exit 0; \
@@ -2342,7 +2624,7 @@ check-TESTS:
 	log_list=`echo $$log_list`; trs_list=`echo $$trs_list`; \
 	$(MAKE) $(AM_MAKEFLAGS) $(TEST_SUITE_LOG) TEST_LOGS="$$log_list"; \
 	exit $$?;
-recheck: all 
+recheck: all $(check_PROGRAMS)
 	@test -z "$(TEST_SUITE_LOG)" || rm -f $(TEST_SUITE_LOG)
 	@set +e; $(am__set_TESTS_bases); \
 	bases=`for i in $$bases; do echo $$i; done \
@@ -3284,6 +3566,20 @@ msgfmt-desktop-2.log: msgfmt-desktop-2
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfmt-xml-1.log: msgfmt-xml-1
+	@p='msgfmt-xml-1'; \
+	b='msgfmt-xml-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+msgfmt-xml-2.log: msgfmt-xml-2
+	@p='msgfmt-xml-2'; \
+	b='msgfmt-xml-2'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 msggrep-1.log: msggrep-1
 	@p='msggrep-1'; \
 	b='msggrep-1'; \
@@ -3847,6 +4143,13 @@ xgettext-13.log: xgettext-13
 xgettext-14.log: xgettext-14
 	@p='xgettext-14'; \
 	b='xgettext-14'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-appdata-1.log: xgettext-appdata-1
+	@p='xgettext-appdata-1'; \
+	b='xgettext-appdata-1'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -4565,6 +4868,13 @@ xgettext-desktop-1.log: xgettext-desktop-1
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+xgettext-its-1.log: xgettext-its-1
+	@p='xgettext-its-1'; \
+	b='xgettext-its-1'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 format-awk-1.log: format-awk-1
 	@p='format-awk-1'; \
 	b='format-awk-1'; \
@@ -5248,9 +5558,10 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
+	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -5288,7 +5599,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-local clean-noinstPROGRAMS \
+clean-am: clean-checkPROGRAMS clean-generic clean-libtool clean-local \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -5358,7 +5669,7 @@ uninstall-am:
 .MAKE: check-am install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-TESTS check-am clean \
-	clean-generic clean-libtool clean-local clean-noinstPROGRAMS \
+	clean-checkPROGRAMS clean-generic clean-libtool clean-local \
 	cscopelist-am ctags ctags-am distclean distclean-compile \
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \

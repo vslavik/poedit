@@ -19,10 +19,36 @@
 #ifndef _MSGFMT_H
 #define _MSGFMT_H
 
+#include "message.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Be more verbose.  Use only 'fprintf' and 'multiline_warning' but not
    'error' or 'multiline_error' to emit verbosity messages, because 'error'
    and 'multiline_error' during PO file parsing cause the program to exit
    with EXIT_FAILURE.  See function lex_end().  */
 extern int verbose;
+
+/* Data types for bulk operation mode.  */
+typedef struct msgfmt_operand_ty msgfmt_operand_ty;
+struct msgfmt_operand_ty
+{
+  char *language;
+  message_list_ty *mlp;
+};
+
+typedef struct msgfmt_operand_list_ty msgfmt_operand_list_ty;
+struct msgfmt_operand_list_ty
+{
+  msgfmt_operand_ty *items;
+  size_t nitems;
+  size_t nitems_max;
+};
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _MSGFMT_H */

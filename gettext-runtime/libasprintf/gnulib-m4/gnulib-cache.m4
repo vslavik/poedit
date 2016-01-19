@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=gettext-runtime/libasprintf --local-dir=gnulib-local --lib=libgnu --source-base=. --m4-base=gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../../build-aux --lgpl=2 --makefile-name=Makefile.gnulib --no-conditional-dependencies --libtool --macro-prefix=gl alloca errno verify xsize
+#   gnulib-tool --import --local-dir=gnulib-local --lib=libgnu --source-base=. --m4-base=gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../../build-aux --lgpl=2 --makefile-name=Makefile.gnulib --no-conditional-dependencies --libtool --macro-prefix=gl alloca errno verify xsize
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([../../gnulib-local])

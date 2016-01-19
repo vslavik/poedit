@@ -38,7 +38,9 @@
 # if defined __APPLE__ && defined __MACH__
 #  include <xlocale.h>
 # endif
-# include <langinfo.h>
+# if __GLIBC__ >= 2 && !defined __UCLIBC__
+#  include <langinfo.h>
+# endif
 # if !defined IN_LIBINTL
 #  include "glthread/lock.h"
 # endif

@@ -191,11 +191,12 @@ am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/installpaths.in \
 	$(top_srcdir)/../../build-aux/install-sh \
 	$(top_srcdir)/../../build-aux/missing \
 	$(top_srcdir)/../../build-aux/mkinstalldirs \
-	../../build-aux/compile ../../build-aux/config.guess \
-	../../build-aux/config.rpath ../../build-aux/config.sub \
-	../../build-aux/install-sh ../../build-aux/ltmain.sh \
-	../../build-aux/missing ../../build-aux/mkinstalldirs \
-	../../build-aux/texinfo.tex ChangeLog README
+	../../build-aux/ar-lib ../../build-aux/compile \
+	../../build-aux/config.guess ../../build-aux/config.rpath \
+	../../build-aux/config.sub ../../build-aux/install-sh \
+	../../build-aux/ltmain.sh ../../build-aux/missing \
+	../../build-aux/mkinstalldirs ../../build-aux/texinfo.tex \
+	ChangeLog README
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -315,6 +316,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@

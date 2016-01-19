@@ -1,6 +1,10 @@
 # Variable needed by LTLIBINTL.
 top_builddir=../..
 
+# Variable needed by xgettext.
+GETTEXTDATADIR="$abs_top_srcdir"
+export GETTEXTDATADIR
+
 OBJEXT="@OBJEXT@"
 EXEEXT="@EXEEXT@"
 CC="@CC@"
@@ -22,6 +26,7 @@ LOCALE_FR="@LOCALE_FR@"
 LOCALE_FR_UTF8="@LOCALE_FR_UTF8@"
 LOCALE_JA="@LOCALE_JA@"
 host_os="@host_os@"
+ARCHIVE_VERSION="@ARCHIVE_VERSION@"
 
 : ${GETTEXT=tstgettext}
 : ${NGETTEXT=tstngettext}

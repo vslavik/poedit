@@ -13,6 +13,8 @@ lib/libxml/SAX.c
 lib/libxml/SAX2.c
 lib/libxml/SAX2.in.h
 lib/libxml/SAX.in.h
+lib/libxml/buf.c
+lib/libxml/buf.h
 lib/libxml/c14n.c
 lib/libxml/c14n.in.h
 lib/libxml/catalog.c
@@ -24,6 +26,7 @@ lib/libxml/debugXML.in.h
 lib/libxml/dict.c
 lib/libxml/dict.in.h
 lib/libxml/elfgcchack.h
+lib/libxml/enc.h
 lib/libxml/encoding.c
 lib/libxml/encoding.in.h
 lib/libxml/entities.c
@@ -49,13 +52,16 @@ lib/libxml/pattern.c
 lib/libxml/pattern.in.h
 lib/libxml/relaxng.c
 lib/libxml/relaxng.in.h
+lib/libxml/save.h
 lib/libxml/schemasInternals.in.h
 lib/libxml/schematron.c
 lib/libxml/schematron.in.h
 lib/libxml/threads.c
 lib/libxml/threads.in.h
+lib/libxml/timsort.h
 lib/libxml/tree.c
 lib/libxml/tree.in.h
+lib/libxml/trionan.c
 lib/libxml/uri.c
 lib/libxml/uri.in.h
 lib/libxml/valid.c
@@ -104,6 +110,12 @@ stdarg
 snprintf
 vsnprintf
 no-c++
+isinf
+isnan
+signbit
+pow
+log10
+fabs
 
 configure.ac:
 gl_LIBXML
@@ -121,11 +133,14 @@ libxml_rpl_la_SOURCES = \
   libxml/HTMLtree.c \
   libxml/SAX.c \
   libxml/SAX2.c \
+  libxml/buf.h \
+  libxml/buf.c \
   libxml/c14n.c \
   libxml/catalog.c \
   libxml/chvalid.c \
   libxml/debugXML.c \
   libxml/dict.c \
+  libxml/enc.h \
   libxml/encoding.c \
   libxml/entities.c \
   libxml/error.c \
@@ -139,9 +154,12 @@ libxml_rpl_la_SOURCES = \
   libxml/parserInternals.c \
   libxml/pattern.c \
   libxml/relaxng.c \
+  libxml/save.h \
   libxml/schematron.c \
   libxml/threads.c \
+  libxml/timsort.h \
   libxml/tree.c \
+  libxml/trionan.c \
   libxml/uri.c \
   libxml/valid.c \
   libxml/xinclude.c \

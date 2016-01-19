@@ -44,7 +44,8 @@ all-local: ABOUT-NLS
 
 ABOUT-NLS: $(srcdir)/doc/nls.texi $(srcdir)/doc/matrix.texi
 	rm -f $(srcdir)/ABOUT-NLS \
-	  && $(MAKEINFO) --plaintext --no-validate -I $(srcdir)/doc nls.texi \
+	  && $(MAKEINFO) --plaintext --no-validate -I $(srcdir)/doc \
+	     $(srcdir)/doc/nls.texi \
 	     | sed -e "s/\`\([^']*\)'/‘\1’/g" > $(srcdir)/ABOUT-NLS
 
 

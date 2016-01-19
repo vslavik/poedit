@@ -45,12 +45,11 @@ desktop_DATA = hello.desktop
 # processed earlier than the variable substitution below.  Otherwise,
 # the 'msgfmt' command will be required at compile-time.
 hello.desktop.in: hello.desktop.in.in
-	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@-t \
-	  -d $(top_srcdir)/po && mv $@-t $@
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
+# Substitute variables in a Desktop Entry file.
 hello.desktop: hello.desktop.in
-	@rm -f $@ $@-t
-	$(AM_V_GEN) sed -e 's|@bindir[@]|$(bindir)|g' $< > $@-t && mv $@-t $@
+	$(AM_V_GEN) sed -e 's|@bindir[@]|$(bindir)|g' $< > $@
 
 CLEANFILES = $(BUILT_SOURCES) hello.desktop $(desktop_DATA)
 

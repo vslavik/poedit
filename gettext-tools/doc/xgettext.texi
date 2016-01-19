@@ -500,6 +500,16 @@ obsolete messages.
 Write out a NeXTstep/GNUstep localized resource file in @code{.strings} syntax.
 Note that this file format doesn't support plural forms.
 
+@item --its=@var{file}
+@opindex --its@r{, @code{xgettext} option}
+Use ITS rules defined in @var{file}.
+Note that this is only effective with XML files.
+
+@item --itstool
+@opindex --itstool@r{, @code{xgettext} option}
+Write out comments recognized by itstool (@uref{http://itstool.org}).
+Note that this is only effective with XML files.
+
 @item -w @var{number}
 @itemx --width=@var{number}
 @opindex -w@r{, @code{xgettext} option}

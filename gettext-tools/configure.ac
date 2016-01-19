@@ -286,29 +286,10 @@ AH_BOTTOM([
 #endif
 
 /* Extra OS/2 (emx+gcc) defines.  */
-#ifdef __EMX__
+#if defined __EMX__ && !defined __KLIBC__
 # include "intl/os2compat.h"
 #endif
 ])
-
-dnl Check for the expat XML parser.
-dnl On operating systems where binary distribution vendors are likely to
-dnl ship both gettext and expat, we use dynamic loading to avoid a hard
-dnl dependency from gettext to expat.
-case "$host_os" in
-  linux*)
-    AC_DEFINE([DYNLOAD_LIBEXPAT], [1],
-      [Define to 1 if libexpat shall be dynamically loaded via dlopen().])
-    LIBEXPAT="-ldl"
-    LTLIBEXPAT="-ldl"
-    AC_SUBST([LIBEXPAT])
-    AC_SUBST([LTLIBEXPAT])
-    ;;
-  *)
-    AC_LIB_HAVE_LINKFLAGS([expat], [],
-      [#include <expat.h>], [XML_ExpatVersion();])
-    ;;
-esac
 
 dnl Check for nm output filter that yields the exported symbols.
 gt_GLOBAL_SYMBOL_PIPE
@@ -458,6 +439,14 @@ changequote([,])dnl
 fi
 AC_SUBST([ARCHIVE_FORMAT])
 
+ARCHIVE_VERSION=0.19.7
+AC_SUBST([ARCHIVE_VERSION])
+
+PACKAGE_SUFFIX="-$ARCHIVE_VERSION"
+AC_SUBST([PACKAGE_SUFFIX])
+AC_DEFINE_UNQUOTED(PACKAGE_SUFFIX, "$PACKAGE_SUFFIX",
+  [Define to the suffix of this package])
+
 dnl Check for tools needed for formatting the documentation.
 ac_aux_dir_abs=`cd $ac_aux_dir && pwd`
 AC_PATH_PROG([DVIPS], [dvips], [$ac_aux_dir_abs/missing dvips])
@@ -515,6 +504,8 @@ AC_CONFIG_FILES([intl/Makefile:../gettext-runtime/intl/Makefile.in], [
     < intl/Makefile > intl/Makefile.tmp
   mv intl/Makefile.tmp intl/Makefile
   ])
+
+AC_CONFIG_FILES([its/Makefile])
 
 AC_CONFIG_FILES([gnulib-lib/Makefile])
 

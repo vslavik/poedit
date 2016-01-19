@@ -785,7 +785,6 @@ internal_function
 _nl_load_domain (struct loaded_l10nfile *domain_file,
 		 struct binding *domainbinding)
 {
-  __libc_lock_define_initialized_recursive (static, lock);
   int fd = -1;
   size_t size;
 #ifdef _LIBC
@@ -799,6 +798,7 @@ _nl_load_domain (struct loaded_l10nfile *domain_file,
   int revision;
   const char *nullentry;
   size_t nullentrylen;
+  __libc_lock_define_initialized_recursive (static, lock);
 
   __libc_lock_lock_recursive (lock);
   if (domain_file->decided != 0)
@@ -885,6 +885,7 @@ _nl_load_domain (struct loaded_l10nfile *domain_file,
 	      if (nb == -1 && errno == EINTR)
 		continue;
 #endif
+              free (data);
 	      goto out;
 	    }
 	  read_ptr += nb;

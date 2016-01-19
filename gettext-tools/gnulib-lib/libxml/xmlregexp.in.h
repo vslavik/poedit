@@ -38,7 +38,7 @@ typedef xmlRegExecCtxt *xmlRegExecCtxtPtr;
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 #include <libxml/tree.h>
 #include <libxml/dict.h>
 #ifdef __cplusplus
@@ -51,16 +51,22 @@ extern "C" {
 XMLPUBFUN xmlRegexpPtr XMLCALL
 		    xmlRegexpCompile	(const xmlChar *regexp);
 XMLPUBFUN void XMLCALL			 xmlRegFreeRegexp(xmlRegexpPtr regexp);
-XMLPUBFUN int XMLCALL			
+XMLPUBFUN int XMLCALL
 		    xmlRegexpExec	(xmlRegexpPtr comp,
 					 const xmlChar *value);
-XMLPUBFUN void XMLCALL			
-    		    xmlRegexpPrint	(FILE *output,
+XMLPUBFUN void XMLCALL
+		    xmlRegexpPrint	(FILE *output,
 					 xmlRegexpPtr regexp);
-XMLPUBFUN int XMLCALL			
+XMLPUBFUN int XMLCALL
 		    xmlRegexpIsDeterminist(xmlRegexpPtr comp);
 
-/*
+/**
+ * xmlRegExecCallbacks:
+ * @exec: the regular expression context
+ * @token: the current token string
+ * @transdata: transition data
+ * @inputdata: input data
+ *
  * Callback function when doing a transition in the automata
  */
 typedef void (*xmlRegExecCallbacks) (xmlRegExecCtxtPtr exec,
@@ -71,17 +77,17 @@ typedef void (*xmlRegExecCallbacks) (xmlRegExecCtxtPtr exec,
 /*
  * The progressive API
  */
-XMLPUBFUN xmlRegExecCtxtPtr XMLCALL	
-    		    xmlRegNewExecCtxt	(xmlRegexpPtr comp,
+XMLPUBFUN xmlRegExecCtxtPtr XMLCALL
+		    xmlRegNewExecCtxt	(xmlRegexpPtr comp,
 					 xmlRegExecCallbacks callback,
 					 void *data);
-XMLPUBFUN void XMLCALL			
+XMLPUBFUN void XMLCALL
 		    xmlRegFreeExecCtxt	(xmlRegExecCtxtPtr exec);
-XMLPUBFUN int XMLCALL			
-    		    xmlRegExecPushString(xmlRegExecCtxtPtr exec,
+XMLPUBFUN int XMLCALL
+		    xmlRegExecPushString(xmlRegExecCtxtPtr exec,
 					 const xmlChar *value,
 					 void *data);
-XMLPUBFUN int XMLCALL			
+XMLPUBFUN int XMLCALL
 		    xmlRegExecPushString2(xmlRegExecCtxtPtr exec,
 					 const xmlChar *value,
 					 const xmlChar *value2,
@@ -89,15 +95,15 @@ XMLPUBFUN int XMLCALL
 
 XMLPUBFUN int XMLCALL
 		    xmlRegExecNextValues(xmlRegExecCtxtPtr exec,
-		    			 int *nbval,
-		    			 int *nbneg,
+					 int *nbval,
+					 int *nbneg,
 					 xmlChar **values,
 					 int *terminal);
 XMLPUBFUN int XMLCALL
 		    xmlRegExecErrInfo	(xmlRegExecCtxtPtr exec,
-		    			 const xmlChar **string,
+					 const xmlChar **string,
 					 int *nbval,
-		    			 int *nbneg,
+					 int *nbneg,
 					 xmlChar **values,
 					 int *terminal);
 #ifdef LIBXML_EXPR_ENABLED
@@ -135,7 +141,7 @@ typedef enum {
 } xmlExpNodeType;
 
 /*
- * 2 core expressions shared by all for the empty language set 
+ * 2 core expressions shared by all for the empty language set
  * and for the set with just the empty token
  */
 XMLPUBVAR xmlExpNodePtr forbiddenExp;
@@ -209,7 +215,7 @@ XMLPUBFUN void XMLCALL
 #endif /* LIBXML_EXPR_ENABLED */
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 #endif /* LIBXML_REGEXP_ENABLED */
 

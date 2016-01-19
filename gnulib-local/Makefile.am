@@ -18,9 +18,8 @@
 ## Process this file with automake to produce Makefile.in.
 
 # Generate this list with
-# find . '(' -name CVS -o -name Makefile.am ')' -prune -o -type f '!' '(' -name '*.orig' -or -name '*~' ')' -printf '%P\n' | sort | tr '\012' @ | sed 's/@$/%/;s/@/ \\@/g' | tr @% '\012\012'
+# find . '(' -name CVS -o -name Makefile.am ')' -prune -o -type f '!' '(' -name '*.orig' -or -name '*~' -or -name 'ChangeLog.*' ')' -printf '%P\n' | sort | tr '\012' @ | sed 's/@$/%/;s/@/ \\@/g' | tr @% '\012\012'
 EXTRA_DIST = \
-ChangeLog \
 build-aux/moopp \
 lib/addext.c \
 lib/alloca.in.h \
@@ -29,8 +28,6 @@ lib/backupfile.c \
 lib/backupfile.h \
 lib/basename.c \
 lib/basename.h \
-lib/ChangeLog.0 \
-lib/ChangeLog.1 \
 lib/closeout.c \
 lib/closeout.h \
 lib/error.h.diff \
@@ -250,8 +247,6 @@ lib/xmalloc.c \
 lib/xstrdup.c \
 m4/alloca.m4 \
 m4/backupfile.m4 \
-m4/ChangeLog.0 \
-m4/ChangeLog.1 \
 m4/curses.m4 \
 m4/gcj.m4 \
 m4/hard-locale.m4.diff \

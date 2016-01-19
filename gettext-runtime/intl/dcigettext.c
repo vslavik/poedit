@@ -323,7 +323,7 @@ const char *_nl_current_default_domain attribute_hidden
 #endif
 
 /* Contains the default location of the message catalogs.  */
-#if defined __EMX__
+#if defined __EMX__ && !defined __KLIBC__
 extern const char _nl_default_dirname[];
 #else
 # ifdef _LIBC

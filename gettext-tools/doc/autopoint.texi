@@ -11,6 +11,13 @@ into a source package.  It extracts from a macro call of the form
 used by the package, and copies the infrastructure files belonging to
 this version into the package.
 
+To extract the latest available infrastructure which satisfies a version
+requirement, then you can use the form
+@code{AM_GNU_GETTEXT_REQUIRE_VERSION(@var{version})} instead.  For
+example, if gettext @value{ARCHIVE-VERSION} is installed on your system
+and @code{0.19.1} is requested, then the infrastructure files of version
+@value{ARCHIVE-VERSION} will be copied into a source package.
+
 @subsubsection Options
 
 @table @samp
@@ -43,10 +50,11 @@ Output version information and exit.
 
 @end table
 
-@code{autopoint} supports the GNU @code{gettext} versions from 0.10.35 to
-the current one, @value{VERSION}.  In order to apply @code{autopoint} to
-a package using a @code{gettext} version newer than @value{VERSION}, you
-need to install this same version of GNU @code{gettext} at least.
+@code{autopoint} supports the GNU @code{gettext} versions from 0.10.35
+to the current one, @value{ARCHIVE-VERSION}.  In order to apply
+@code{autopoint} to a package using a @code{gettext} version newer than
+@value{ARCHIVE-VERSION}, you need to install this same version of GNU
+@code{gettext} at least.
 
 In packages using GNU @code{automake}, an invocation of @code{autopoint}
 should be followed by invocations of @code{aclocal} and then @code{autoconf}

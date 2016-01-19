@@ -54,9 +54,9 @@ sentence_end (const char *string, ucs4_t *ending_charp)
   ucs4_t ending_char = 0xfffd;
   /* Possible starting position of the match, and the next starting
      position if the current match fails.  */
-  const char *match_start, *match_next;
+  const char *match_start = NULL, *match_next = NULL;
   /* Number of spaces.  */
-  int spaces;
+  int spaces = 0;
 
   while (str <= str_limit)
     {

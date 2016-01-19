@@ -165,7 +165,6 @@ EXTRA_DIST += test-byteswap.c macros.h
 
 TESTS += test-c-ctype
 check_PROGRAMS += test-c-ctype
-
 EXTRA_DIST += test-c-ctype.c macros.h
 
 ## end   gnulib module c-ctype-tests
@@ -231,6 +230,41 @@ EXTRA_DIST += test-copy-file.sh test-copy-file-1.sh test-copy-file-2.sh test-cop
 
 ## end   gnulib module copy-file-tests
 
+## begin gnulib module ctype
+
+BUILT_SOURCES += ctype.h
+
+# We need the following in order to create <ctype.h> when the system
+# doesn't have one that works with the given compiler.
+ctype.h: ctype.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  sed -e 's|@''GUARD_PREFIX''@|GL|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_CTYPE_H''@|$(NEXT_CTYPE_H)|g' \
+	      -e 's/@''GNULIB_ISBLANK''@/$(GNULIB_ISBLANK)/g' \
+	      -e 's/@''HAVE_ISBLANK''@/$(HAVE_ISBLANK)/g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
+	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	      < $(srcdir)/ctype.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+MOSTLYCLEANFILES += ctype.h ctype.h-t
+
+EXTRA_DIST += ctype.in.h
+
+## end   gnulib module ctype
+
+## begin gnulib module ctype-tests
+
+TESTS += test-ctype
+check_PROGRAMS += test-ctype
+EXTRA_DIST += test-ctype.c
+
+## end   gnulib module ctype-tests
+
 ## begin gnulib module dirent-tests
 
 TESTS += test-dirent
@@ -281,6 +315,16 @@ check_PROGRAMS += test-errno
 EXTRA_DIST += test-errno.c
 
 ## end   gnulib module errno-tests
+
+## begin gnulib module fabs-tests
+
+TESTS += test-fabs
+check_PROGRAMS += test-fabs
+test_fabs_SOURCES = test-fabs.c randomd.c
+test_fabs_LDADD = $(LDADD) @FABS_LIBM@
+EXTRA_DIST += test-fabs.c test-fabs.h signature.h minus-zero.h macros.h randomd.c
+
+## end   gnulib module fabs-tests
 
 ## begin gnulib module fcntl-h-tests
 
@@ -607,6 +651,82 @@ EXTRA_DIST += test-inttypes.c
 
 ## end   gnulib module inttypes-tests
 
+## begin gnulib module isinf-tests
+
+TESTS += test-isinf
+check_PROGRAMS += test-isinf
+test_isinf_LDADD = $(LDADD) @ISINF_LIBM@
+EXTRA_DIST += test-isinf.c infinity.h macros.h
+
+## end   gnulib module isinf-tests
+
+## begin gnulib module isnan-tests
+
+TESTS += test-isnan
+check_PROGRAMS += test-isnan
+test_isnan_LDADD = $(LDADD) @ISNAN_LIBM@
+
+EXTRA_DIST += test-isnan.c minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnan-tests
+
+## begin gnulib module isnand-nolibm-tests
+
+TESTS += test-isnand-nolibm
+check_PROGRAMS += test-isnand-nolibm
+
+EXTRA_DIST += test-isnand-nolibm.c test-isnand.h minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnand-nolibm-tests
+
+## begin gnulib module isnand-tests
+
+TESTS += test-isnand
+check_PROGRAMS += test-isnand
+test_isnand_LDADD = $(LDADD) @ISNAND_LIBM@
+
+EXTRA_DIST += test-isnand.c test-isnand.h minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnand-tests
+
+## begin gnulib module isnanf-nolibm-tests
+
+TESTS += test-isnanf-nolibm
+check_PROGRAMS += test-isnanf-nolibm
+
+EXTRA_DIST += test-isnanf-nolibm.c test-isnanf.h minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnanf-nolibm-tests
+
+## begin gnulib module isnanf-tests
+
+TESTS += test-isnanf
+check_PROGRAMS += test-isnanf
+test_isnanf_LDADD = $(LDADD) @ISNANF_LIBM@
+
+EXTRA_DIST += test-isnanf.c test-isnanf.h minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnanf-tests
+
+## begin gnulib module isnanl-nolibm-tests
+
+TESTS += test-isnanl-nolibm
+check_PROGRAMS += test-isnanl-nolibm
+
+EXTRA_DIST += test-isnanl-nolibm.c test-isnanl.h minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnanl-nolibm-tests
+
+## begin gnulib module isnanl-tests
+
+TESTS += test-isnanl
+check_PROGRAMS += test-isnanl
+test_isnanl_LDADD = $(LDADD) @ISNANL_LIBM@
+
+EXTRA_DIST += test-isnanl.c test-isnanl.h minus-zero.h infinity.h nan.h macros.h
+
+## end   gnulib module isnanl-tests
+
 ## begin gnulib module iswblank-tests
 
 TESTS += test-iswblank
@@ -658,6 +778,16 @@ EXTRA_DIST += test-lock.c
 
 ## end   gnulib module lock-tests
 
+## begin gnulib module log10-tests
+
+TESTS += test-log10
+check_PROGRAMS += test-log10
+test_log10_SOURCES = test-log10.c randomd.c
+test_log10_LDADD = $(LDADD) @LOG10_LIBM@
+EXTRA_DIST += test-log10.c test-log10.h minus-zero.h signature.h macros.h randomd.c
+
+## end   gnulib module log10-tests
+
 ## begin gnulib module lseek
 
 
@@ -691,6 +821,14 @@ check_PROGRAMS += test-malloca
 EXTRA_DIST += test-malloca.c
 
 ## end   gnulib module malloca-tests
+
+## begin gnulib module math-tests
+
+TESTS += test-math
+check_PROGRAMS += test-math
+EXTRA_DIST += test-math.c macros.h
+
+## end   gnulib module math-tests
 
 ## begin gnulib module mbrtowc-tests
 
@@ -864,6 +1002,15 @@ EXTRA_DIST += test-posix_spawn1.c test-posix_spawn1.in.sh test-posix_spawn2.c te
 
 ## end   gnulib module posix_spawnp-tests
 
+## begin gnulib module pow-tests
+
+TESTS += test-pow
+check_PROGRAMS += test-pow
+test_pow_LDADD = $(LDADD) @POW_LIBM@
+EXTRA_DIST += test-pow.c signature.h macros.h
+
+## end   gnulib module pow-tests
+
 ## begin gnulib module putenv
 
 
@@ -998,6 +1145,15 @@ check_PROGRAMS += test-signal-h
 EXTRA_DIST += test-signal-h.c
 
 ## end   gnulib module signal-h-tests
+
+## begin gnulib module signbit-tests
+
+TESTS += test-signbit
+check_PROGRAMS += test-signbit
+
+EXTRA_DIST += test-signbit.c minus-zero.h infinity.h macros.h
+
+## end   gnulib module signbit-tests
 
 ## begin gnulib module sigpipe-tests
 
@@ -1398,7 +1554,7 @@ TESTS += test-term-ostream-xterm
 TESTS_ENVIRONMENT += srcdir='$(srcdir)'
 check_PROGRAMS += test-term-ostream
 test_term_ostream_LDADD = $(LIBTERMCAP) $(LDADD)
-EXTRA_DIST += test-term-ostream.c test-term-ostream-xterm test-term-ostream-xterm-r6.out test-term-ostream-xterm-xf86-v32.out test-term-ostream-xterm-basic.out test-term-ostream-xterm-basic-italic.out test-term-ostream-xterm-8bit.out test-term-ostream-xterm-linux-debian.out test-term-ostream-xterm-linux-mandriva.out test-term-ostream-xterm-netbsd3.out test-term-ostream-xterm-solaris10.out test-term-ostream-xterm-aix51.out test-term-ostream-xterm-osf51.out test-term-ostream-xterm-irix65.out test-term-ostream-xterm-mingw.out test-term-ostream-xterm-16color.out test-term-ostream-xterm-88color.out test-term-ostream-xterm-256color.out
+EXTRA_DIST += test-term-ostream.c test-term-ostream-xterm test-term-ostream-xterm-r6.out test-term-ostream-xterm-xf86-v32.out test-term-ostream-xterm-basic.out test-term-ostream-xterm-basic-italic.out test-term-ostream-xterm-freebsd101.out test-term-ostream-xterm-8bit.out test-term-ostream-xterm-linux-debian.out test-term-ostream-xterm-linux-mandriva.out test-term-ostream-xterm-netbsd3.out test-term-ostream-xterm-solaris10.out test-term-ostream-xterm-aix51.out test-term-ostream-xterm-osf51.out test-term-ostream-xterm-irix65.out test-term-ostream-xterm-mingw.out test-term-ostream-xterm-16color.out test-term-ostream-xterm-88color.out test-term-ostream-xterm-256color.out
 
 ## end   gnulib module term-ostream-tests
 

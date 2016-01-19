@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=gettext-tools --local-dir=gnulib-local --lib=libgrep --source-base=libgrep --m4-base=libgrep/gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../build-aux --avoid=alloca-opt --avoid=extensions --avoid=gettext-h --avoid=include_next --avoid=locale --avoid=localcharset --avoid=malloc-posix --avoid=mbrtowc --avoid=mbsinit --avoid=multiarch --avoid=ssize_t --avoid=stdbool --avoid=stddef --avoid=stdint --avoid=stdlib --avoid=streq --avoid=unistd --avoid=verify --avoid=wchar --avoid=wctype-h --makefile-name=Makefile.gnulib --no-conditional-dependencies --no-libtool --macro-prefix=grgl --witness-c-macro=IN_GETTEXT_TOOLS_LIBGREP mbrlen regex
+#   gnulib-tool --import --local-dir=gnulib-local --lib=libgrep --source-base=libgrep --m4-base=libgrep/gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../build-aux --avoid=alloca-opt --avoid=extensions --avoid=gettext-h --avoid=include_next --avoid=locale --avoid=localcharset --avoid=malloc-posix --avoid=mbrtowc --avoid=mbsinit --avoid=multiarch --avoid=ssize_t --avoid=stdbool --avoid=stddef --avoid=stdint --avoid=stdlib --avoid=streq --avoid=unistd --avoid=verify --avoid=wchar --avoid=wctype-h --makefile-name=Makefile.gnulib --no-conditional-dependencies --no-libtool --macro-prefix=grgl --witness-c-macro=IN_GETTEXT_TOOLS_LIBGREP mbrlen regex
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([../gnulib-local])

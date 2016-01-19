@@ -34,7 +34,7 @@
 #include <stdint.h>
 
 #ifdef _LIBC
-# include <bits/libc-lock.h>
+# include <libc-lock.h>
 # define lock_define(name) __libc_lock_define (, name)
 # define lock_init(lock) (__libc_lock_init (lock), 0)
 # define lock_fini(lock) 0
@@ -87,7 +87,6 @@
 # ifndef _RE_DEFINE_LOCALE_FUNCTIONS
 #  define _RE_DEFINE_LOCALE_FUNCTIONS 1
 #   include <locale/localeinfo.h>
-#   include <locale/elem-hash.h>
 #   include <locale/coll-lookup.h>
 # endif
 #endif
@@ -137,7 +136,10 @@
 # undef __wctype
 # undef __iswctype
 # define __wctype wctype
+# define __iswalnum iswalnum
 # define __iswctype iswctype
+# define __towlower towlower
+# define __towupper towupper
 # define __btowc btowc
 # define __mbrtowc mbrtowc
 # define __wcrtomb wcrtomb
@@ -447,23 +449,23 @@ typedef struct re_dfa_t re_dfa_t;
 
 #ifndef _LIBC
 # define internal_function
+# define IS_IN(libc) false
 #endif
 
-#ifndef NOT_IN_libc
 static reg_errcode_t re_string_realloc_buffers (re_string_t *pstr,
 						Idx new_buf_len)
      internal_function;
-# ifdef RE_ENABLE_I18N
+#ifdef RE_ENABLE_I18N
 static void build_wcs_buffer (re_string_t *pstr) internal_function;
 static reg_errcode_t build_wcs_upper_buffer (re_string_t *pstr)
   internal_function;
-# endif /* RE_ENABLE_I18N */
+#endif /* RE_ENABLE_I18N */
 static void build_upper_buffer (re_string_t *pstr) internal_function;
 static void re_string_translate_buffer (re_string_t *pstr) internal_function;
 static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
 					  int eflags)
      internal_function __attribute__ ((pure));
-#endif
+
 #define re_string_peek_byte(pstr, offset) \
   ((pstr)->mbs[(pstr)->cur_idx + offset])
 #define re_string_fetch_byte(pstr) \
@@ -556,7 +558,7 @@ typedef struct bin_tree_storage_t bin_tree_storage_t;
 
 #define IS_WORD_CHAR(ch) (isalnum (ch) || (ch) == '_')
 #define IS_NEWLINE(ch) ((ch) == NEWLINE_CHAR)
-#define IS_WIDE_WORD_CHAR(ch) (iswalnum (ch) || (ch) == L'_')
+#define IS_WIDE_WORD_CHAR(ch) (__iswalnum (ch) || (ch) == L'_')
 #define IS_WIDE_NEWLINE(ch) ((ch) == WIDE_NEWLINE_CHAR)
 
 #define NOT_SATISFY_PREV_CONSTRAINT(constraint,context) \
@@ -860,15 +862,17 @@ re_string_wchar_at (const re_string_t *pstr, Idx idx)
   return (wint_t) pstr->wcs[idx];
 }
 
-# ifndef NOT_IN_libc
+# ifdef _LIBC
+#  include <locale/weight.h>
+# endif
+
 static int
 internal_function __attribute__ ((pure, unused))
 re_string_elem_size_at (const re_string_t *pstr, Idx idx)
 {
-#  ifdef _LIBC
+# ifdef _LIBC
   const unsigned char *p, *extra;
   const int32_t *table, *indirect;
-#   include <locale/weight.h>
   uint_fast32_t nrules = _NL_CURRENT_WORD (LC_COLLATE, _NL_COLLATE_NRULES);
 
   if (nrules != 0)
@@ -879,14 +883,13 @@ re_string_elem_size_at (const re_string_t *pstr, Idx idx)
       indirect = (const int32_t *) _NL_CURRENT (LC_COLLATE,
 						_NL_COLLATE_INDIRECTMB);
       p = pstr->mbs + idx;
-      findidx (&p, pstr->len - idx);
+      findidx (table, indirect, extra, &p, pstr->len - idx);
       return p - pstr->mbs - idx;
     }
   else
-#  endif /* _LIBC */
+# endif /* _LIBC */
     return 1;
 }
-# endif
 #endif /* RE_ENABLE_I18N */
 
 #ifndef __GNUC_PREREQ
