@@ -1,4 +1,4 @@
-/* ignore a function return without a compiler warning
+/* ignore a function return without a compiler warning.  -*- coding: utf-8 -*-
 
    Copyright (C) 2008-2015 Free Software Foundation, Inc.
 

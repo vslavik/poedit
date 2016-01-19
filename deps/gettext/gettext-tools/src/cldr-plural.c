@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -229,7 +229,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 127 "cldr-plural.y" /* yacc.c:355  */
@@ -245,6 +245,8 @@ union YYSTYPE
 
 #line 247 "cldr-plural.c" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -257,7 +259,7 @@ int yyparse (struct cldr_plural_parse_args *arg);
 
 /* Copy the second part of user declarations.  */
 
-#line 261 "cldr-plural.c" /* yacc.c:358  */
+#line 263 "cldr-plural.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -558,7 +560,7 @@ static const yytype_uint16 yyrline[] =
        0,   159,   159,   160,   163,   176,   179,   183,   189,   193,
      201,   205,   211,   215,   221,   228,   234,   238,   244,   251,
      254,   255,   258,   259,   262,   264,   265,   267,   268,   271,
-     272,   273,   274
+     273,   275,   277
 };
 #endif
 
@@ -1115,67 +1117,67 @@ yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, struct cldr_plural
           case 10: /* KEYWORD  */
 #line 138 "cldr-plural.y" /* yacc.c:1257  */
       { free (((*yyvaluep).sval)); }
-#line 1119 "cldr-plural.c" /* yacc.c:1257  */
+#line 1121 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 11: /* INTEGER  */
 #line 143 "cldr-plural.y" /* yacc.c:1257  */
       { free (((*yyvaluep).oval)); }
-#line 1125 "cldr-plural.c" /* yacc.c:1257  */
+#line 1127 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 12: /* DECIMAL  */
 #line 143 "cldr-plural.y" /* yacc.c:1257  */
       { free (((*yyvaluep).oval)); }
-#line 1131 "cldr-plural.c" /* yacc.c:1257  */
+#line 1133 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 13: /* OPERAND  */
 #line 145 "cldr-plural.y" /* yacc.c:1257  */
       { }
-#line 1137 "cldr-plural.c" /* yacc.c:1257  */
+#line 1139 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 24: /* condition  */
 #line 139 "cldr-plural.y" /* yacc.c:1257  */
       { cldr_plural_condition_free (((*yyvaluep).cval)); }
-#line 1143 "cldr-plural.c" /* yacc.c:1257  */
+#line 1145 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 25: /* and_condition  */
 #line 139 "cldr-plural.y" /* yacc.c:1257  */
       { cldr_plural_condition_free (((*yyvaluep).cval)); }
-#line 1149 "cldr-plural.c" /* yacc.c:1257  */
+#line 1151 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 26: /* relation  */
 #line 140 "cldr-plural.y" /* yacc.c:1257  */
       { cldr_plural_relation_free (((*yyvaluep).lval)); }
-#line 1155 "cldr-plural.c" /* yacc.c:1257  */
+#line 1157 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 27: /* expression  */
 #line 141 "cldr-plural.y" /* yacc.c:1257  */
       { free (((*yyvaluep).eval)); }
-#line 1161 "cldr-plural.c" /* yacc.c:1257  */
+#line 1163 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 28: /* range_list  */
 #line 144 "cldr-plural.y" /* yacc.c:1257  */
       { cldr_plural_range_list_free (((*yyvaluep).rval)); }
-#line 1167 "cldr-plural.c" /* yacc.c:1257  */
+#line 1169 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 29: /* range_or_integer  */
 #line 142 "cldr-plural.y" /* yacc.c:1257  */
       { cldr_plural_range_free (((*yyvaluep).gval)); }
-#line 1173 "cldr-plural.c" /* yacc.c:1257  */
+#line 1175 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
     case 30: /* range  */
 #line 142 "cldr-plural.y" /* yacc.c:1257  */
       { cldr_plural_range_free (((*yyvaluep).gval)); }
-#line 1179 "cldr-plural.c" /* yacc.c:1257  */
+#line 1181 "cldr-plural.c" /* yacc.c:1257  */
         break;
 
 
@@ -1454,7 +1456,7 @@ yyreduce:
             }
           result->items[result->nitems++] = rule;
         }
-#line 1458 "cldr-plural.c" /* yacc.c:1646  */
+#line 1460 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 6:
@@ -1462,7 +1464,7 @@ yyreduce:
     {
           (yyval.cval) = (yyvsp[0].cval);
         }
-#line 1466 "cldr-plural.c" /* yacc.c:1646  */
+#line 1468 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 7:
@@ -1470,7 +1472,7 @@ yyreduce:
     {
           (yyval.cval) = new_branch_condition (CLDR_PLURAL_CONDITION_OR, (yyvsp[-2].cval), (yyvsp[0].cval));
         }
-#line 1474 "cldr-plural.c" /* yacc.c:1646  */
+#line 1476 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 8:
@@ -1478,7 +1480,7 @@ yyreduce:
     {
           (yyval.cval) = new_leaf_condition ((yyvsp[0].lval));
         }
-#line 1482 "cldr-plural.c" /* yacc.c:1646  */
+#line 1484 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 9:
@@ -1488,7 +1490,7 @@ yyreduce:
                                      (yyvsp[-2].cval),
                                      new_leaf_condition ((yyvsp[0].lval)));
         }
-#line 1492 "cldr-plural.c" /* yacc.c:1646  */
+#line 1494 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 10:
@@ -1496,7 +1498,7 @@ yyreduce:
     {
           (yyval.lval) = new_relation ((yyvsp[-2].eval), CLDR_PLURAL_RELATION_EQUAL, (yyvsp[0].rval));
         }
-#line 1500 "cldr-plural.c" /* yacc.c:1646  */
+#line 1502 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 11:
@@ -1504,7 +1506,7 @@ yyreduce:
     {
           (yyval.lval) = new_relation ((yyvsp[-2].eval), CLDR_PLURAL_RELATION_NOT_EQUAL, (yyvsp[0].rval));
         }
-#line 1508 "cldr-plural.c" /* yacc.c:1646  */
+#line 1510 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 12:
@@ -1512,7 +1514,7 @@ yyreduce:
     {
           (yyval.eval) = new_expression ((yyvsp[0].ival), 0);
         }
-#line 1516 "cldr-plural.c" /* yacc.c:1646  */
+#line 1518 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 13:
@@ -1520,7 +1522,7 @@ yyreduce:
     {
           (yyval.eval) = new_expression ((yyvsp[-2].ival), (yyvsp[0].oval)->value.ival);
         }
-#line 1524 "cldr-plural.c" /* yacc.c:1646  */
+#line 1526 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 14:
@@ -1531,7 +1533,7 @@ yyreduce:
           memset (ranges, 0, sizeof (struct cldr_plural_range_list_ty));
           (yyval.rval) = add_range (ranges, (yyvsp[0].gval));
         }
-#line 1535 "cldr-plural.c" /* yacc.c:1646  */
+#line 1537 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 15:
@@ -1539,7 +1541,7 @@ yyreduce:
     {
           (yyval.rval) = add_range ((yyvsp[-2].rval), (yyvsp[0].gval));
         }
-#line 1543 "cldr-plural.c" /* yacc.c:1646  */
+#line 1545 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 16:
@@ -1547,7 +1549,7 @@ yyreduce:
     {
           (yyval.gval) = (yyvsp[0].gval);
         }
-#line 1551 "cldr-plural.c" /* yacc.c:1646  */
+#line 1553 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 17:
@@ -1555,7 +1557,7 @@ yyreduce:
     {
           (yyval.gval) = new_range ((yyvsp[0].oval), (yyvsp[0].oval));
         }
-#line 1559 "cldr-plural.c" /* yacc.c:1646  */
+#line 1561 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
   case 18:
@@ -1563,11 +1565,35 @@ yyreduce:
     {
           (yyval.gval) = new_range ((yyvsp[-2].oval), (yyvsp[0].oval));
         }
-#line 1567 "cldr-plural.c" /* yacc.c:1646  */
+#line 1569 "cldr-plural.c" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 272 "cldr-plural.y" /* yacc.c:1646  */
+    { free ((yyvsp[0].oval)); }
+#line 1575 "cldr-plural.c" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 274 "cldr-plural.y" /* yacc.c:1646  */
+    { free ((yyvsp[-2].oval)); free ((yyvsp[0].oval)); }
+#line 1581 "cldr-plural.c" /* yacc.c:1646  */
+    break;
+
+  case 31:
+#line 276 "cldr-plural.y" /* yacc.c:1646  */
+    { free ((yyvsp[0].oval)); }
+#line 1587 "cldr-plural.c" /* yacc.c:1646  */
+    break;
+
+  case 32:
+#line 278 "cldr-plural.y" /* yacc.c:1646  */
+    { free ((yyvsp[-2].oval)); free ((yyvsp[0].oval)); }
+#line 1593 "cldr-plural.c" /* yacc.c:1646  */
     break;
 
 
-#line 1571 "cldr-plural.c" /* yacc.c:1646  */
+#line 1597 "cldr-plural.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1795,7 +1821,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 277 "cldr-plural.y" /* yacc.c:1906  */
+#line 281 "cldr-plural.y" /* yacc.c:1906  */
 
 
 static int

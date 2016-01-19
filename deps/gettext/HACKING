@@ -73,3 +73,24 @@ After fetching the sources from the repository, peek at the comments in
 autogen.sh, then run "./autogen.sh"; then you can proceed with "./configure"
 as usual.
 
+Submitting patches
+==================
+
+Patches should be sent to bug-gettext@gnu.org, the bug/feature mailing
+list.  You can subscribe to the mailing list, or see the list
+archives, by following links from
+http://savannah.gnu.org/mail/?group=gettext .
+
+To email a patch you can use a shell command like 'git format-patch
+-1' to create a file, and then attach the file to your email.  
+
+GNU gettext development no longer stores descriptions of new changes
+in ChangeLog files.  Instead, a single ChangeLog file is generated
+from the commit messages when a release is prepared.  So changes you
+commit should not touch any of the ChangeLog files in the repository,
+but instead should contain the log entries in the commit message.
+
+For the style of a ChangeLog entry, see the "Change Logs" section of
+the GNU coding standards:
+
+  http://www.gnu.org/prep/standards/html_node/Change-Logs.html

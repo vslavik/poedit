@@ -51,8 +51,7 @@ EXTRA_DIST += $(doc_DATA)
 EXTRA_DIST += \
   iso-639.sed iso-639-2.sed iso-3166.sed \
   ISO_639 ISO_639-2 ISO_3166 ISO_3166_de \
-  texi2html \
-  ChangeLog.0
+  texi2html
 
 iso-639.texi: ISO_639 iso-639.sed
 	$(SED) -f $(srcdir)/iso-639.sed $(srcdir)/ISO_639 > iso-639.tmp
@@ -78,7 +77,8 @@ $(srcdir)/stamp-vti: $(info_TEXINFOS) $(gettext_TEXINFOS) $(top_srcdir)/../.vers
 	echo "@set UPDATED $$1 $$2 $$3"; \
 	echo "@set UPDATED-MONTH $$2 $$3"; \
 	echo "@set EDITION $(VERSION)"; \
-	echo "@set VERSION $(VERSION)") > vti.tmp
+	echo "@set VERSION $(VERSION)"; \
+	echo "@set ARCHIVE-VERSION $(ARCHIVE_VERSION)") > vti.tmp
 	cmp -s vti.tmp version.texi \
 	  || (echo "Updating version.texi"; \
 	      cp vti.tmp version.texi)

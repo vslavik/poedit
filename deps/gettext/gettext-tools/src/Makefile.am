@@ -40,7 +40,7 @@ read-po.h read-properties.h read-stringtable.h \
 str-list.h \
 color.h write-catalog.h write-po.h write-properties.h write-stringtable.h \
 dir-list.h file-list.h po-gram-gen.h po-gram-gen2.h cldr-plural.h \
-cldr-plural-exp.h \
+cldr-plural-exp.h locating-rule.h its.h \
 msgl-charset.h msgl-equal.h msgl-iconv.h msgl-ascii.h msgl-cat.h msgl-header.h \
 msgl-english.h msgl-check.h msgl-fsearch.h msgfmt.h msgunfmt.h \
 plural-count.h plural-eval.h plural-distrib.h \
@@ -51,13 +51,14 @@ read-resources.h write-resources.h \
 read-tcl.h write-tcl.h \
 write-qt.h \
 read-desktop.h write-desktop.h \
+write-xml.h \
 po-time.h plural-table.h lang-table.h format.h filters.h \
 xgettext.h x-c.h x-po.h x-sh.h x-python.h x-lisp.h x-elisp.h x-librep.h \
 x-scheme.h x-smalltalk.h x-java.h x-properties.h x-csharp.h x-awk.h x-ycp.h \
 x-tcl.h x-perl.h x-php.h x-stringtable.h x-rst.h x-glade.h x-lua.h \
-x-javascript.h x-vala.h x-gsettings.h x-desktop.h libexpat-compat.h
+x-javascript.h x-vala.h x-gsettings.h x-desktop.h x-appdata.h
 
-EXTRA_DIST += FILES project-id ChangeLog.0
+EXTRA_DIST += FILES project-id
 
 aliaspath = $(localedir)
 jardir = $(datadir)/gettext
@@ -151,9 +152,9 @@ $(COMMON_SOURCE) read-catalog.c \
 color.c write-catalog.c write-properties.c write-stringtable.c write-po.c \
 msgl-ascii.c msgl-iconv.c msgl-equal.c msgl-cat.c msgl-header.c msgl-english.c \
 msgl-check.c file-list.c msgl-charset.c po-time.c plural-exp.c plural-eval.c \
-plural-table.c quote.h sentence.h sentence.c libexpat-compat.c \
+plural-table.c quote.h sentence.h sentence.c \
 $(FORMAT_SOURCE) \
-read-desktop.c
+read-desktop.c locating-rule.c its.c
 
 # msggrep needs pattern matching.
 LIBGREP = ../libgrep/libgrep.a
@@ -164,7 +165,8 @@ msgcmp_SOURCES += msgl-fsearch.c
 msgfmt_SOURCES = msgfmt.c
 msgfmt_SOURCES += \
   write-mo.c write-java.c write-csharp.c write-resources.c write-tcl.c \
-  write-qt.c write-desktop.c ../../gettext-runtime/intl/hash-string.c
+  write-qt.c write-desktop.c write-xml.c \
+  ../../gettext-runtime/intl/hash-string.c
 if !WOE32DLL
 msgmerge_SOURCES = msgmerge.c
 else
@@ -182,7 +184,7 @@ endif
 xgettext_SOURCES += \
   x-c.c x-po.c x-sh.c x-python.c x-lisp.c x-elisp.c x-librep.c x-scheme.c \
   x-smalltalk.c x-java.c x-csharp.c x-awk.c x-ycp.c x-tcl.c x-perl.c x-php.c \
-  x-rst.c x-glade.c x-lua.c x-javascript.c x-vala.c x-gsettings.c \
+  x-rst.c x-lua.c x-javascript.c x-vala.c \
   x-desktop.c
 if !WOE32DLL
 msgattrib_SOURCES = msgattrib.c
@@ -239,6 +241,7 @@ recode_sr_latin_SOURCES = recode-sr-latin.c filter-sr-latin.c
 hostname_SOURCES = hostname.c
 urlget_SOURCES = urlget.c
 cldr_plurals_SOURCES = cldr-plural.y cldr-plural-exp.c cldr-plurals.c
+cldr_plurals_CFLAGS = $(AM_CFLAGS) $(INCXML)
 cldr_plurals_LDADD = libgettextsrc.la $(LDADD)
 
 # How to build libgettextsrc.la.
@@ -251,9 +254,9 @@ cldr_plurals_LDADD = libgettextsrc.la $(LDADD)
 # use iconv().
 libgettextsrc_la_LDFLAGS = \
   -release @VERSION@ \
-  ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ @LTLIBEXPAT@ -lc -no-undefined
+  ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
 
-libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS)
+libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS) $(INCXML)
 
 # Tell the mingw or Cygwin linker which symbols to export.
 if WOE32DLL
@@ -333,6 +336,7 @@ msguniq_CPPFLAGS = $(AM_CPPFLAGS) -DINSTALLDIR=\"$(bindir)\"
 recode_sr_latin_CPPFLAGS = $(AM_CPPFLAGS) -DINSTALLDIR=\"$(bindir)\"
 hostname_CPPFLAGS = $(AM_CPPFLAGS) -DINSTALLDIR=\"$(pkglibdir)\"
 urlget_CPPFLAGS = $(AM_CPPFLAGS) -DINSTALLDIR=\"$(pkglibdir)\"
+cldr_plurals_CPPFLAGS = $(AM_CPPFLAGS) -DINSTALLDIR=\"$(pkglibdir)\"
 if RELOCATABLE_VIA_LD
 msgcmp_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 msgfmt_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
@@ -352,6 +356,7 @@ msguniq_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 recode_sr_latin_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 hostname_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(pkglibdir)`
 urlget_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(pkglibdir)`
+cldr_plurals_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(pkglibdir)`
 endif
 
 # Linking with C++ libraries is needed _only_ on mingw and Cygwin.

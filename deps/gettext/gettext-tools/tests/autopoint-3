@@ -3,8 +3,6 @@
 
 # Test the autopoint program, with Automake.
 
-required_gettext_version=0.19.5
-
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
   || { echo "Skipping test: autoconf not found"; exit 77; }
@@ -61,7 +59,7 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CC
 AM_GNU_GETTEXT([use-libtool])
-AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+AM_GNU_GETTEXT_VERSION([$ARCHIVE_VERSION])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile])
@@ -131,18 +129,6 @@ test $? = 0 || { cat autopoint.err; exit 1; }
 : ${CONFIG_SHELL=${SHELL-/bin/sh}}
 ${CONFIG_SHELL} ./configure --with-included-gettext >/dev/null 2>autpoint.err
 test $? = 0 || { cat autopoint.err; exit 1; }
-
-# Workaround for 0.18.3 or earlier: Processing intl/plural.y with
-# Bison 3.0.1 or later generates a wrong code.  Use pre-generated
-# intl/plural.c in that case.
-test -f intl/plural.c && touch intl/plural.c
-
-# Workaround for a bug in 0.19 and 0.19.1: ChangeLog is missing in the archive.
-case "$required_gettext_version" in
-  0.19 | 0.19.1)
-    test -f intl/ChangeLog || : > intl/ChangeLog
-    ;;
-esac
 
 ${MAKE} >/dev/null 2>autopoint.err
 test $? = 0 || { cat autopoint.err; exit 1; }

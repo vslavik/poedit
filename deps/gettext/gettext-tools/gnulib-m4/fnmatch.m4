@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 9.
+# Check for fnmatch - serial 9.  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2015 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation

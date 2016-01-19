@@ -27,25 +27,16 @@ extern "C" {
 #endif
 
 
-#define EXTENSIONS_GLADE \
-  { "glade",     "glade"    },                                          \
-  { "glade2",    "glade"    },                                          \
-  { "ui",        "glade"    },                                          \
+/* The scanner is implemented as ITS rules, in its/glade[12].its and
+   its/gtkbuilder.its.  */
+
+#define EXTENSIONS_GLADE                                             \
+  { "glade",     NULL    },                                          \
+  { "glade2",    NULL    },                                          \
+  { "ui",        NULL    },                                          \
 
 #define SCANNERS_GLADE \
-  { "glade",            extract_glade, NULL, NULL, NULL, NULL },              \
-
-/* Scan a glade XML file and add its translatable strings to mdlp.  */
-extern void extract_glade (FILE *fp, const char *real_filename,
-                           const char *logical_filename,
-                           flag_context_list_table_ty *flag_table,
-                           msgdomain_list_ty *mdlp);
-
-
-/* Handling of options specific to this language.  */
-
-extern void x_glade_extract_all (void);
-extern void x_glade_keyword (const char *name);
+  { "glade",            NULL, NULL, NULL, NULL, NULL },              \
 
 
 #ifdef __cplusplus

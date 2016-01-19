@@ -19,7 +19,7 @@
 #ifndef _WRITE_DESKTOP_H
 #define _WRITE_DESKTOP_H
 
-#include "message.h"
+#include "msgfmt.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,8 +38,7 @@ extern int
                                 const char *file_name);
 
 extern int
-       msgdomain_write_desktop_bulk (string_list_ty *languages,
-                                     message_list_ty **messages,
+       msgdomain_write_desktop_bulk (msgfmt_operand_list_ty *operands,
                                      const char *template_file_name,
                                      hash_table *keywords,
                                      const char *file_name);

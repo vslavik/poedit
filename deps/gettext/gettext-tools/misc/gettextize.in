@@ -23,6 +23,7 @@
 progname=$0
 package=@PACKAGE@
 version=@VERSION@
+archive_version=@ARCHIVE_VERSION@
 
 # Set variables
 # - gettext_datadir     directory where the data files are stored.
@@ -1235,8 +1236,11 @@ sed -e 's%sed -e "/POTFILES =/r po/POTFILES" po/Makefile\.in > po/Makefile *;* *
 func_modify_configure_in "(AC_OUTPUT): Remove command that created po/Makefile."
 sed -e '/^\(dnl \|\)AC_LINK_FILES(\$nls_cv_header_libgt, \$nls_cv_header_intl)$/d' < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
 func_modify_configure_in "(AC_LINK_FILES): Remove invocation."
-sed -e 's/^AM_GNU_GETTEXT_VERSION([^()]*)/AM_GNU_GETTEXT_VERSION(['"$version"'])/' < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
-func_modify_configure_in "(AM_GNU_GETTEXT_VERSION): Bump to $version."
+# AM_GNU_GETTEXT_VERSION may not be present, when AM_GNU_GETTEXT_REQUIRE_VERSION is used.
+if grep '^AM_GNU_GETTEXT_VERSION(' "$srcdir/$configure_in" 2>&1 >/dev/null; then
+  sed -e 's/^AM_GNU_GETTEXT_VERSION([^()]*)/AM_GNU_GETTEXT_VERSION(['"$archive_version"'])/' < "$srcdir/$configure_in" > "$srcdir/$configure_in.tmp"
+  func_modify_configure_in "(AM_GNU_GETTEXT_VERSION): Bump to $archive_version."
+fi
 $do_changelog && func_ChangeLog_finish
 
 # Recommend replacement for deprecated Makefile variables.

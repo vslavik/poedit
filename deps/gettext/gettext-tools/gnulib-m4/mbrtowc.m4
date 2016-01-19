@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 26
+# mbrtowc.m4 serial 26  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2015 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -569,10 +569,10 @@ changequote([,])dnl
            int
            main (void)
            {
-             return mbrtowc (&wc, "", 0, &mbs) == (size_t) -2;
+             return mbrtowc (&wc, "", 0, &mbs) != (size_t) -2;
            }]])],
-        [gl_cv_func_mbrtowc_empty_input=no],
         [gl_cv_func_mbrtowc_empty_input=yes],
+        [gl_cv_func_mbrtowc_empty_input=no],
         [:])
     ])
 ])

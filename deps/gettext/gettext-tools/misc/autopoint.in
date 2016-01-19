@@ -23,6 +23,7 @@
 progname=$0
 package=@PACKAGE@
 version=@VERSION@
+archive_version=@ARCHIVE_VERSION@
 
 # Set variables
 # - gettext_datadir     directory where the data files are stored.
@@ -313,27 +314,57 @@ else
   func_trace=func_trace_sed
 fi
 
-# Check whether the -V option and the version number in configure.in match.
-# At least one of the two must be given. If both are given, they must agree.
+# func_version_prereq required_version version
+# compares the required version and the latest archive version.
+func_version_prereq ()
+{
+  req="$1"
+  ver="$2"
+  echo "m4_if(m4_version_compare([$ver], [$req]), [-1], [m4_exit([1])])" \
+    | "$AUTOM4TE" --language=M4sugar 2>&1 >/dev/null
+}
+
+# If AM_GNU_GETTEXT_REQUIRE_VERSION is used and archive_version is newer than
+# that, use archive_version.
+xreq=`func_trace_sed AM_GNU_GETTEXT_REQUIRE_VERSION "$configure_in"`
 
 # Need to use func_trace_sed instead of $func_trace, since
 # AM_GNU_GETTEXT_VERSION is not a standard Autoconf trace.
 xver=`func_trace_sed AM_GNU_GETTEXT_VERSION "$configure_in"`
-if test -z "$xver" && test -f intl/VERSION; then
-  xver=`cat intl/VERSION | LC_ALL=C sed -n -e 's/^.*gettext-\([-+_.0-9A-Za-z]*\).*$/\1/p'`
+
+# Prefer AM_GNU_GETTEXT_REQUIRE_VERSION over AM_GNU_GETTEXT_VERSION if both are
+# specified.
+if test -n "$xreq" && test -n "$xver"; then
+  echo "autopoint: using AM_GNU_GETTEXT_REQUIRE_VERSION instead of AM_GNU_GETTEXT_VERSION"
 fi
-if test -n "$xver"; then
-  if test -n "$ver"; then
-    if test "X$ver" != "X$xver"; then
-      func_fatal_error "Version mismatch: specified -V $ver but the package uses gettext version $xver"
-    fi
+
+if test -n "$xreq"; then
+  if func_version_prereq "$xreq" "$archive_version"; then
+    ver="$archive_version"
   else
-    ver="$xver"
+    func_fatal_error "gettext version $xreq or newer is required"
   fi
 else
-  if test -z "$ver"; then
-    func_fatal_error "Missing version: please specify in $configure_in through a line 'AM_GNU_GETTEXT_VERSION(x.yy.zz)' the gettext version the package is using"
+  if test -z "$xver" && test -f intl/VERSION; then
+    xver=`cat intl/VERSION | LC_ALL=C sed -n -e 's/^.*gettext-\([-+_.0-9A-Za-z]*\).*$/\1/p'`
   fi
+
+  # Check whether the -V option and the version number in configure.in match.
+  # At least one of the two must be given. If both are given, they must agree.
+
+  if test -n "$xver"; then
+    if test -n "$ver"; then
+      if test "X$ver" != "X$xver"; then
+        func_fatal_error "Version mismatch: specified -V $ver but the package uses gettext version $xver"
+      fi
+    else
+      ver="$xver"
+    fi
+  fi
+fi
+
+if test -z "$ver"; then
+  func_fatal_error "Missing version: please specify in $configure_in through a line 'AM_GNU_GETTEXT_VERSION(x.yy.zz)' the gettext version the package is using"
 fi
 
 # Check whether the version number is supported.
@@ -347,7 +378,7 @@ case "$ver" in
   0.16 | 0.16.1 | \
   0.17 | \
   0.18 | 0.18.1 | 0.18.2 | 0.18.3 | \
-  0.19 | 0.19.1 | 0.19.2 | 0.19.3 | 0.19.4 | 0.19.5 )
+  0.19 | 0.19.1 | 0.19.2 | 0.19.3 | 0.19.4 | 0.19.5 | 0.19.6 | 0.19.7 )
     ;;
   *)
     func_fatal_error "The AM_GNU_GETTEXT_VERSION declaration in your $configure_in

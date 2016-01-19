@@ -1561,7 +1561,7 @@ sub update_sec_num {
     $level--; # here we start at 0
     if ($name =~ /^appendix/) {
 	# appendix style
-	if (defined(@appendix_sec_num)) {
+	if (@appendix_sec_num) {
 	    &incr_sec_num($level, @appendix_sec_num);
 	} else {
 	    @appendix_sec_num = ('A', 0, 0, 0);
@@ -1569,7 +1569,7 @@ sub update_sec_num {
 	return(join('.', @appendix_sec_num[0..$level]));
     } else {
 	# normal style
-	if (defined(@normal_sec_num)) {
+	if (@normal_sec_num) {
 	    &incr_sec_num($level, @normal_sec_num);
 	} else {
 	    @normal_sec_num = (1, 0, 0, 0);

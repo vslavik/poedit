@@ -81,7 +81,11 @@
 
 #if TEST_POSIX_THREADS
 # include <pthread.h>
-# include <sched.h>
+# ifndef __KLIBC__
+#  include <sched.h>
+# else
+#  define sched_yield() pthread_yield()
+# endif
 typedef pthread_t gl_thread_t;
 static inline gl_thread_t gl_thread_create (void * (*func) (void *), void *arg)
 {

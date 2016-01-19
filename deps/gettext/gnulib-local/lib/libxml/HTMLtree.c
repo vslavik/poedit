@@ -30,16 +30,18 @@
 #include <libxml/globals.h>
 #include <libxml/uri.h>
 
+#include "buf.h"
+
 /************************************************************************
  *									*
- *   		Getting/Setting encoding meta tags			*
+ *		Getting/Setting encoding meta tags			*
  *									*
  ************************************************************************/
 
 /**
  * htmlGetMetaEncoding:
  * @doc:  the document
- * 
+ *
  * Encoding definition lookup in the Meta tags
  *
  * Returns the current encoding as flagged in the HTML source
@@ -126,17 +128,17 @@ found_meta:
 
 found_content:
     encoding = xmlStrstr(content, BAD_CAST"charset=");
-    if (encoding == NULL) 
+    if (encoding == NULL)
 	encoding = xmlStrstr(content, BAD_CAST"Charset=");
-    if (encoding == NULL) 
+    if (encoding == NULL)
 	encoding = xmlStrstr(content, BAD_CAST"CHARSET=");
     if (encoding != NULL) {
 	encoding += 8;
     } else {
 	encoding = xmlStrstr(content, BAD_CAST"charset =");
-	if (encoding == NULL) 
+	if (encoding == NULL)
 	    encoding = xmlStrstr(content, BAD_CAST"Charset =");
-	if (encoding == NULL) 
+	if (encoding == NULL)
 	    encoding = xmlStrstr(content, BAD_CAST"CHARSET =");
 	if (encoding != NULL)
 	    encoding += 9;
@@ -151,7 +153,7 @@ found_content:
  * htmlSetMetaEncoding:
  * @doc:  the document
  * @encoding:  the encoding string
- * 
+ *
  * Sets the current encoding in the Meta tags
  * NOTE: this will not change the document content encoding, just
  * the META flag associated.
@@ -160,13 +162,18 @@ found_content:
  */
 int
 htmlSetMetaEncoding(htmlDocPtr doc, const xmlChar *encoding) {
-    htmlNodePtr cur, meta;
-    const xmlChar *content;
+    htmlNodePtr cur, meta = NULL, head = NULL;
+    const xmlChar *content = NULL;
     char newcontent[100];
 
+    newcontent[0] = 0;
 
     if (doc == NULL)
 	return(-1);
+
+    /* html isn't a real encoding it's just libxml2 way to get entities */
+    if (!xmlStrcasecmp(encoding, BAD_CAST "html"))
+        return(-1);
 
     if (encoding != NULL) {
 	snprintf(newcontent, sizeof(newcontent), "text/html; charset=%s",
@@ -201,39 +208,24 @@ htmlSetMetaEncoding(htmlDocPtr doc, const xmlChar *encoding) {
 	if ((cur->type == XML_ELEMENT_NODE) && (cur->name != NULL)) {
 	    if (xmlStrcasecmp(cur->name, BAD_CAST"head") == 0)
 		break;
-	    if (xmlStrcasecmp(cur->name, BAD_CAST"meta") == 0)
+	    if (xmlStrcasecmp(cur->name, BAD_CAST"meta") == 0) {
+                head = cur->parent;
 		goto found_meta;
+            }
 	}
 	cur = cur->next;
     }
     if (cur == NULL)
 	return(-1);
 found_head:
-    if (cur->children == NULL) {
-	if (encoding == NULL)
-	    return(0);
-	meta = xmlNewDocNode(doc, NULL, BAD_CAST"meta", NULL);
-	xmlAddChild(cur, meta);
-	xmlNewProp(meta, BAD_CAST"http-equiv", BAD_CAST"Content-Type");
-	xmlNewProp(meta, BAD_CAST"content", BAD_CAST newcontent);
-	return(0);
-    }
+    head = cur;
+    if (cur->children == NULL)
+        goto create;
     cur = cur->children;
 
 found_meta:
-    if (encoding != NULL) {
-	/*
-	 * Create a new Meta element with the right attributes
-	 */
-
-	meta = xmlNewDocNode(doc, NULL, BAD_CAST"meta", NULL);
-	xmlAddPrevSibling(cur, meta);
-	xmlNewProp(meta, BAD_CAST"http-equiv", BAD_CAST"Content-Type");
-	xmlNewProp(meta, BAD_CAST"content", BAD_CAST newcontent);
-    }
-
     /*
-     * Search and destroy all the remaining the meta elements carrying
+     * Search and update all the remaining the meta elements carrying
      * encoding informations
      */
     while (cur != NULL) {
@@ -253,11 +245,11 @@ found_meta:
 			if ((!xmlStrcasecmp(attr->name, BAD_CAST"http-equiv"))
 			 && (!xmlStrcasecmp(value, BAD_CAST"Content-Type")))
 			    http = 1;
-			else 
+			else
                         {
-                           if ((value != NULL) && 
-				(!xmlStrcasecmp(attr->name, BAD_CAST"content")))
-			      content = value;
+                           if ((value != NULL) &&
+                               (!xmlStrcasecmp(attr->name, BAD_CAST"content")))
+			       content = value;
                         }
 		        if ((http != 0) && (content != NULL))
 			    break;
@@ -266,16 +258,41 @@ found_meta:
 		}
 		if ((http != 0) && (content != NULL)) {
 		    meta = cur;
-		    cur = cur->next;
-		    xmlUnlinkNode(meta);
-                    xmlFreeNode(meta);
-		    continue;
+		    break;
 		}
 
 	    }
 	}
 	cur = cur->next;
     }
+create:
+    if (meta == NULL) {
+        if ((encoding != NULL) && (head != NULL)) {
+            /*
+             * Create a new Meta element with the right attributes
+             */
+
+            meta = xmlNewDocNode(doc, NULL, BAD_CAST"meta", NULL);
+            if (head->children == NULL)
+                xmlAddChild(head, meta);
+            else
+                xmlAddPrevSibling(head->children, meta);
+            xmlNewProp(meta, BAD_CAST"http-equiv", BAD_CAST"Content-Type");
+            xmlNewProp(meta, BAD_CAST"content", BAD_CAST newcontent);
+        }
+    } else {
+        /* remove the meta tag if NULL is passed */
+        if (encoding == NULL) {
+            xmlUnlinkNode(meta);
+            xmlFreeNode(meta);
+        }
+        /* change the document only if there is a real encoding change */
+        else if (xmlStrcasestr(content, encoding) == NULL) {
+            xmlSetProp(meta, BAD_CAST"content", BAD_CAST newcontent);
+        }
+    }
+
+
     return(0);
 }
 
@@ -299,7 +316,7 @@ static const char* htmlBooleanAttrs[] = {
  * @name:  the name of the attribute to check
  *
  * Determine if a given attribute is a boolean attribute.
- * 
+ *
  * returns: false if the attribute is not boolean, true otherwise.
  */
 int
@@ -316,9 +333,14 @@ htmlIsBooleanAttr(const xmlChar *name)
 }
 
 #ifdef LIBXML_OUTPUT_ENABLED
+/*
+ * private routine exported from xmlIO.c
+ */
+xmlOutputBufferPtr
+xmlAllocOutputBufferInternal(xmlCharEncodingHandlerPtr encoder);
 /************************************************************************
  *									*
- * 			Output error handlers				*
+ *			Output error handlers				*
  *									*
  ************************************************************************/
 /**
@@ -367,17 +389,13 @@ htmlSaveErr(int code, xmlNodePtr node, const char *extra)
 
 /************************************************************************
  *									*
- *   		Dumping HTML tree content to a simple buffer		*
+ *		Dumping HTML tree content to a simple buffer		*
  *									*
  ************************************************************************/
 
-static int
-htmlNodeDumpFormat(xmlBufferPtr buf, xmlDocPtr doc, xmlNodePtr cur,
-	           int format);
-
 /**
- * htmlNodeDumpFormat:
- * @buf:  the HTML buffer output
+ * htmlBufNodeDumpFormat:
+ * @buf:  the xmlBufPtr output
  * @doc:  the document
  * @cur:  the current node
  * @format:  should formatting spaces been added
@@ -386,10 +404,10 @@ htmlNodeDumpFormat(xmlBufferPtr buf, xmlDocPtr doc, xmlNodePtr cur,
  *
  * Returns the number of byte written or -1 in case of error
  */
-static int
-htmlNodeDumpFormat(xmlBufferPtr buf, xmlDocPtr doc, xmlNodePtr cur,
+static size_t
+htmlBufNodeDumpFormat(xmlBufPtr buf, xmlDocPtr doc, xmlNodePtr cur,
 	           int format) {
-    unsigned int use;
+    size_t use;
     int ret;
     xmlOutputBufferPtr outbuf;
 
@@ -412,10 +430,10 @@ htmlNodeDumpFormat(xmlBufferPtr buf, xmlDocPtr doc, xmlNodePtr cur,
     outbuf->context = NULL;
     outbuf->written = 0;
 
-    use = buf->use;
+    use = xmlBufUse(buf);
     htmlNodeDumpFormatOutput(outbuf, doc, cur, NULL, format);
     xmlFree(outbuf);
-    ret = buf->use - use;
+    ret = xmlBufUse(buf) - use;
     return (ret);
 }
 
@@ -432,9 +450,24 @@ htmlNodeDumpFormat(xmlBufferPtr buf, xmlDocPtr doc, xmlNodePtr cur,
  */
 int
 htmlNodeDump(xmlBufferPtr buf, xmlDocPtr doc, xmlNodePtr cur) {
-    xmlInitParser();
+    xmlBufPtr buffer;
+    size_t ret;
 
-    return(htmlNodeDumpFormat(buf, doc, cur, 1));
+    if ((buf == NULL) || (cur == NULL))
+        return(-1);
+
+    xmlInitParser();
+    buffer = xmlBufFromBuffer(buf);
+    if (buffer == NULL)
+        return(-1);
+
+    ret = htmlBufNodeDumpFormat(buffer, doc, cur, 1);
+
+    xmlBufBackToBuffer(buffer);
+
+    if (ret > INT_MAX)
+        return(-1);
+    return((int) ret);
 }
 
 /**
@@ -467,7 +500,7 @@ htmlNodeDumpFileFormat(FILE *out, xmlDocPtr doc,
 	if (enc != XML_CHAR_ENCODING_UTF8) {
 	    handler = xmlFindCharEncodingHandler(encoding);
 	    if (handler == NULL)
-		return(-1);
+		htmlSaveErr(XML_SAVE_UNKNOWN_ENCODING, NULL, encoding);
 	}
     }
 
@@ -479,7 +512,7 @@ htmlNodeDumpFileFormat(FILE *out, xmlDocPtr doc,
     if (handler == NULL)
 	handler = xmlFindCharEncodingHandler("ascii");
 
-    /* 
+    /*
      * save the content to a temp buffer.
      */
     buf = xmlOutputBufferCreateFile(out, handler);
@@ -548,11 +581,9 @@ htmlDocDumpMemoryFormat(xmlDocPtr cur, xmlChar**mem, int *size, int format) {
 	    }
 
 	    handler = xmlFindCharEncodingHandler(encoding);
-	    if (handler == NULL) {
-		*mem = NULL;
-		*size = 0;
-		return;
-	    }
+	    if (handler == NULL)
+                htmlSaveErr(XML_SAVE_UNKNOWN_ENCODING, NULL, encoding);
+
 	} else {
 	    handler = xmlFindCharEncodingHandler(encoding);
 	}
@@ -566,22 +597,22 @@ htmlDocDumpMemoryFormat(xmlDocPtr cur, xmlChar**mem, int *size, int format) {
     if (handler == NULL)
 	handler = xmlFindCharEncodingHandler("ascii");
 
-    buf = xmlAllocOutputBuffer(handler);
+    buf = xmlAllocOutputBufferInternal(handler);
     if (buf == NULL) {
 	*mem = NULL;
 	*size = 0;
 	return;
     }
 
-	htmlDocContentDumpFormatOutput(buf, cur, NULL, format);
+    htmlDocContentDumpFormatOutput(buf, cur, NULL, format);
 
     xmlOutputBufferFlush(buf);
     if (buf->conv != NULL) {
-	*size = buf->conv->use;
-	*mem = xmlStrndup(buf->conv->content, *size);
+	*size = xmlBufUse(buf->conv);
+	*mem = xmlStrndup(xmlBufContent(buf->conv), *size);
     } else {
-	*size = buf->buffer->use;
-	*mem = xmlStrndup(buf->buffer->content, *size);
+	*size = xmlBufUse(buf->buffer);
+	*mem = xmlStrndup(xmlBufContent(buf->buffer), *size);
     }
     (void)xmlOutputBufferClose(buf);
 }
@@ -603,7 +634,7 @@ htmlDocDumpMemory(xmlDocPtr cur, xmlChar**mem, int *size) {
 
 /************************************************************************
  *									*
- *   		Dumping HTML tree content to an I/O output buffer	*
+ *		Dumping HTML tree content to an I/O output buffer	*
  *									*
  ************************************************************************/
 
@@ -614,7 +645,7 @@ void xmlNsListDumpOutput(xmlOutputBufferPtr buf, xmlNsPtr cur);
  * @buf:  the HTML buffer output
  * @doc:  the document
  * @encoding:  the encoding string
- * 
+ *
  * TODO: check whether encoding is needed
  *
  * Dump the HTML document DTD, if any.
@@ -632,14 +663,15 @@ htmlDtdDumpOutput(xmlOutputBufferPtr buf, xmlDocPtr doc,
     xmlOutputBufferWriteString(buf, (const char *)cur->name);
     if (cur->ExternalID != NULL) {
 	xmlOutputBufferWriteString(buf, " PUBLIC ");
-	xmlBufferWriteQuotedString(buf->buffer, cur->ExternalID);
+	xmlBufWriteQuotedString(buf->buffer, cur->ExternalID);
 	if (cur->SystemID != NULL) {
 	    xmlOutputBufferWriteString(buf, " ");
-	    xmlBufferWriteQuotedString(buf->buffer, cur->SystemID);
-	} 
-    }  else if (cur->SystemID != NULL) {
+	    xmlBufWriteQuotedString(buf->buffer, cur->SystemID);
+	}
+    } else if (cur->SystemID != NULL &&
+	       xmlStrcmp(cur->SystemID, BAD_CAST "about:legacy-compat")) {
 	xmlOutputBufferWriteString(buf, " SYSTEM ");
-	xmlBufferWriteQuotedString(buf->buffer, cur->SystemID);
+	xmlBufWriteQuotedString(buf->buffer, cur->SystemID);
     }
     xmlOutputBufferWriteString(buf, ">\n");
 }
@@ -659,9 +691,10 @@ htmlAttrDumpOutput(xmlOutputBufferPtr buf, xmlDocPtr doc, xmlAttrPtr cur,
     xmlChar *value;
 
     /*
-     * TODO: The html output method should not escape a & character
-     *       occurring in an attribute value immediately followed by
-     *       a { character (see Section B.7.1 of the HTML 4.0 Recommendation).
+     * The html output method should not escape a & character
+     * occurring in an attribute value immediately followed by
+     * a { character (see Section B.7.1 of the HTML 4.0 Recommendation).
+     * This is implemented in xmlEncodeEntitiesReentrant
      */
 
     if (cur == NULL) {
@@ -684,20 +717,51 @@ htmlAttrDumpOutput(xmlOutputBufferPtr buf, xmlDocPtr doc, xmlAttrPtr cur,
 		 (!xmlStrcasecmp(cur->name, BAD_CAST "src")) ||
 		 ((!xmlStrcasecmp(cur->name, BAD_CAST "name")) &&
 		  (!xmlStrcasecmp(cur->parent->name, BAD_CAST "a"))))) {
-		xmlChar *escaped;
 		xmlChar *tmp = value;
+		/* xmlURIEscapeStr() escapes '"' so it can be safely used. */
+		xmlBufCCat(buf->buffer, "\"");
 
 		while (IS_BLANK_CH(*tmp)) tmp++;
 
-		escaped = xmlURIEscapeStr(tmp, BAD_CAST"@/:=?;#%&,+");
-		if (escaped != NULL) {
-		    xmlBufferWriteQuotedString(buf->buffer, escaped);
-		    xmlFree(escaped);
-		} else {
-		    xmlBufferWriteQuotedString(buf->buffer, value);
+		/* URI Escape everything, except server side includes. */
+		for ( ; ; ) {
+		    xmlChar *escaped;
+		    xmlChar endChar;
+		    xmlChar *end = NULL;
+		    xmlChar *start = (xmlChar *)xmlStrstr(tmp, BAD_CAST "<!--");
+		    if (start != NULL) {
+			end = (xmlChar *)xmlStrstr(tmp, BAD_CAST "-->");
+			if (end != NULL) {
+			    *start = '\0';
+			}
+		    }
+
+		    /* Escape the whole string, or until start (set to '\0'). */
+		    escaped = xmlURIEscapeStr(tmp, BAD_CAST"@/:=?;#%&,+");
+		    if (escaped != NULL) {
+		        xmlBufCat(buf->buffer, escaped);
+		        xmlFree(escaped);
+		    } else {
+		        xmlBufCat(buf->buffer, tmp);
+		    }
+
+		    if (end == NULL) { /* Everything has been written. */
+			break;
+		    }
+
+		    /* Do not escape anything within server side includes. */
+		    *start = '<'; /* Restore the first character of "<!--". */
+		    end += 3; /* strlen("-->") */
+		    endChar = *end;
+		    *end = '\0';
+		    xmlBufCat(buf->buffer, start);
+		    *end = endChar;
+		    tmp = end;
 		}
+
+		xmlBufCCat(buf->buffer, "\"");
 	    } else {
-		xmlBufferWriteQuotedString(buf->buffer, value);
+		xmlBufWriteQuotedString(buf->buffer, value);
 	    }
 	    xmlFree(value);
 	} else  {
@@ -778,6 +842,10 @@ htmlNodeDumpFormatOutput(xmlOutputBufferPtr buf, xmlDocPtr doc,
     if ((cur->type == XML_HTML_DOCUMENT_NODE) ||
         (cur->type == XML_DOCUMENT_NODE)){
 	htmlDocContentDumpOutput(buf, (xmlDocPtr) cur, encoding);
+	return;
+    }
+    if (cur->type == XML_ATTRIBUTE_NODE) {
+        htmlAttrDumpOutput(buf, doc, (xmlAttrPtr) cur, encoding);
 	return;
     }
     if (cur->type == HTML_TEXT_NODE) {
@@ -1043,7 +1111,7 @@ htmlDocDump(FILE *f, xmlDocPtr cur) {
 
 	    handler = xmlFindCharEncodingHandler(encoding);
 	    if (handler == NULL)
-		return(-1);
+		htmlSaveErr(XML_SAVE_UNKNOWN_ENCODING, NULL, encoding);
 	} else {
 	    handler = xmlFindCharEncodingHandler(encoding);
 	}
@@ -1083,7 +1151,7 @@ htmlSaveFile(const char *filename, xmlDocPtr cur) {
 
     if ((cur == NULL) || (filename == NULL))
         return(-1);
-       
+
     xmlInitParser();
 
     encoding = (const char *) htmlGetMetaEncoding(cur);
@@ -1102,7 +1170,7 @@ htmlSaveFile(const char *filename, xmlDocPtr cur) {
 
 	    handler = xmlFindCharEncodingHandler(encoding);
 	    if (handler == NULL)
-		return(-1);
+		htmlSaveErr(XML_SAVE_UNKNOWN_ENCODING, NULL, encoding);
 	}
     }
 
@@ -1114,7 +1182,7 @@ htmlSaveFile(const char *filename, xmlDocPtr cur) {
     if (handler == NULL)
 	handler = xmlFindCharEncodingHandler("ascii");
 
-    /* 
+    /*
      * save the content to a temp buffer.
      */
     buf = xmlOutputBufferCreateFilename(filename, handler, cur->compression);
@@ -1134,7 +1202,7 @@ htmlSaveFile(const char *filename, xmlDocPtr cur) {
  * @encoding: the document encoding
  *
  * Dump an HTML document to a file using a given encoding.
- * 
+ *
  * returns: the number of byte written or -1 in case of failure.
  */
 int
@@ -1146,7 +1214,7 @@ htmlSaveFileFormat(const char *filename, xmlDocPtr cur,
 
     if ((cur == NULL) || (filename == NULL))
         return(-1);
-       
+
     xmlInitParser();
 
     if (encoding != NULL) {
@@ -1163,9 +1231,9 @@ htmlSaveFileFormat(const char *filename, xmlDocPtr cur,
 
 	    handler = xmlFindCharEncodingHandler(encoding);
 	    if (handler == NULL)
-		return(-1);
-            htmlSetMetaEncoding(cur, (const xmlChar *) encoding);
+		htmlSaveErr(XML_SAVE_UNKNOWN_ENCODING, NULL, encoding);
 	}
+        htmlSetMetaEncoding(cur, (const xmlChar *) encoding);
     } else {
 	htmlSetMetaEncoding(cur, (const xmlChar *) "UTF-8");
     }
@@ -1178,7 +1246,7 @@ htmlSaveFileFormat(const char *filename, xmlDocPtr cur,
     if (handler == NULL)
 	handler = xmlFindCharEncodingHandler("ascii");
 
-    /* 
+    /*
      * save the content to a temp buffer.
      */
     buf = xmlOutputBufferCreateFilename(filename, handler, 0);
@@ -1198,7 +1266,7 @@ htmlSaveFileFormat(const char *filename, xmlDocPtr cur,
  *
  * Dump an HTML document to a file using a given encoding
  * and formatting returns/spaces are added.
- * 
+ *
  * returns: the number of byte written or -1 in case of failure.
  */
 int

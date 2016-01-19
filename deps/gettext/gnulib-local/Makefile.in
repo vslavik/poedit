@@ -118,7 +118,7 @@ am__can_run_installinfo = \
 am__extra_recursive_targets = maintainer-update-po-recursive
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in \
-	$(top_srcdir)/build-aux/mkinstalldirs ChangeLog
+	$(top_srcdir)/build-aux/mkinstalldirs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -208,6 +208,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -219,9 +220,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
 # Generate this list with
-# find . '(' -name CVS -o -name Makefile.am ')' -prune -o -type f '!' '(' -name '*.orig' -or -name '*~' ')' -printf '%P\n' | sort | tr '\012' @ | sed 's/@$/%/;s/@/ \\@/g' | tr @% '\012\012'
+# find . '(' -name CVS -o -name Makefile.am ')' -prune -o -type f '!' '(' -name '*.orig' -or -name '*~' -or -name 'ChangeLog.*' ')' -printf '%P\n' | sort | tr '\012' @ | sed 's/@$/%/;s/@/ \\@/g' | tr @% '\012\012'
 EXTRA_DIST = \
-ChangeLog \
 build-aux/moopp \
 lib/addext.c \
 lib/alloca.in.h \
@@ -230,8 +230,6 @@ lib/backupfile.c \
 lib/backupfile.h \
 lib/basename.c \
 lib/basename.h \
-lib/ChangeLog.0 \
-lib/ChangeLog.1 \
 lib/closeout.c \
 lib/closeout.h \
 lib/error.h.diff \
@@ -451,8 +449,6 @@ lib/xmalloc.c \
 lib/xstrdup.c \
 m4/alloca.m4 \
 m4/backupfile.m4 \
-m4/ChangeLog.0 \
-m4/ChangeLog.1 \
 m4/curses.m4 \
 m4/gcj.m4 \
 m4/hard-locale.m4.diff \

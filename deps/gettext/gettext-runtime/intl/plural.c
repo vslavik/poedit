@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -163,7 +163,7 @@ extern int __gettextdebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 49 "plural.y" /* yacc.c:355  */
@@ -174,6 +174,8 @@ union YYSTYPE
 
 #line 176 "plural.c" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -262,7 +264,7 @@ new_exp_3 (enum expression_operator op, struct expression *bexp,
 }
 
 
-#line 266 "plural.c" /* yacc.c:358  */
+#line 268 "plural.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1359,7 +1361,7 @@ yyreduce:
 	      YYABORT;
 	    arg->res = (yyvsp[0].exp);
 	  }
-#line 1363 "plural.c" /* yacc.c:1646  */
+#line 1365 "plural.c" /* yacc.c:1646  */
     break;
 
   case 3:
@@ -1367,7 +1369,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_3 (qmop, (yyvsp[-4].exp), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1371 "plural.c" /* yacc.c:1646  */
+#line 1373 "plural.c" /* yacc.c:1646  */
     break;
 
   case 4:
@@ -1375,7 +1377,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 (lor, (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1379 "plural.c" /* yacc.c:1646  */
+#line 1381 "plural.c" /* yacc.c:1646  */
     break;
 
   case 5:
@@ -1383,7 +1385,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 (land, (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1387 "plural.c" /* yacc.c:1646  */
+#line 1389 "plural.c" /* yacc.c:1646  */
     break;
 
   case 6:
@@ -1391,7 +1393,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1395 "plural.c" /* yacc.c:1646  */
+#line 1397 "plural.c" /* yacc.c:1646  */
     break;
 
   case 7:
@@ -1399,7 +1401,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1403 "plural.c" /* yacc.c:1646  */
+#line 1405 "plural.c" /* yacc.c:1646  */
     break;
 
   case 8:
@@ -1407,7 +1409,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1411 "plural.c" /* yacc.c:1646  */
+#line 1413 "plural.c" /* yacc.c:1646  */
     break;
 
   case 9:
@@ -1415,7 +1417,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_2 ((yyvsp[-1].op), (yyvsp[-2].exp), (yyvsp[0].exp));
 	  }
-#line 1419 "plural.c" /* yacc.c:1646  */
+#line 1421 "plural.c" /* yacc.c:1646  */
     break;
 
   case 10:
@@ -1423,7 +1425,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_1 (lnot, (yyvsp[0].exp));
 	  }
-#line 1427 "plural.c" /* yacc.c:1646  */
+#line 1429 "plural.c" /* yacc.c:1646  */
     break;
 
   case 11:
@@ -1431,7 +1433,7 @@ yyreduce:
     {
 	    (yyval.exp) = new_exp_0 (var);
 	  }
-#line 1435 "plural.c" /* yacc.c:1646  */
+#line 1437 "plural.c" /* yacc.c:1646  */
     break;
 
   case 12:
@@ -1440,7 +1442,7 @@ yyreduce:
 	    if (((yyval.exp) = new_exp_0 (num)) != NULL)
 	      (yyval.exp)->val.num = (yyvsp[0].num);
 	  }
-#line 1444 "plural.c" /* yacc.c:1646  */
+#line 1446 "plural.c" /* yacc.c:1646  */
     break;
 
   case 13:
@@ -1448,11 +1450,11 @@ yyreduce:
     {
 	    (yyval.exp) = (yyvsp[-1].exp);
 	  }
-#line 1452 "plural.c" /* yacc.c:1646  */
+#line 1454 "plural.c" /* yacc.c:1646  */
     break;
 
 
-#line 1456 "plural.c" /* yacc.c:1646  */
+#line 1458 "plural.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

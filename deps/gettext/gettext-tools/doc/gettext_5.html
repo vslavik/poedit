@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 15 July 2015 -->
+     from gettext.texi on 28 December 2015 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 5  Making the PO Template File</TITLE>
@@ -646,19 +646,31 @@ obsolete messages.
 Write out a NeXTstep/GNUstep localized resource file in <CODE>.strings</CODE> syntax.
 Note that this file format doesn't support plural forms.
 
+<DT><SAMP>&lsquo;--its=<VAR>file</VAR>&rsquo;</SAMP>
+<DD>
+<A NAME="IDX225"></A>
+Use ITS rules defined in <VAR>file</VAR>.
+Note that this is only effective with XML files.
+
+<DT><SAMP>&lsquo;--itstool&rsquo;</SAMP>
+<DD>
+<A NAME="IDX226"></A>
+Write out comments recognized by itstool (<A HREF="http://itstool.org">http://itstool.org</A>).
+Note that this is only effective with XML files.
+
 <DT><SAMP>&lsquo;-w <VAR>number</VAR>&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--width=<VAR>number</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX225"></A>
-<A NAME="IDX226"></A>
+<A NAME="IDX227"></A>
+<A NAME="IDX228"></A>
 Set the output page width.  Long strings in the output files will be
 split across multiple lines in order to ensure that each line's width
 (= number of screen columns) is less or equal to the given <VAR>number</VAR>.
 
 <DT><SAMP>&lsquo;--no-wrap&rsquo;</SAMP>
 <DD>
-<A NAME="IDX227"></A>
+<A NAME="IDX229"></A>
 Do not break long message lines.  Message lines whose width exceeds the
 output page width will not be split into several lines.  Only file reference
 lines which are wider than the output page width will be split.
@@ -667,9 +679,9 @@ lines which are wider than the output page width will be split.
 <DD>
 <DT><SAMP>&lsquo;--sort-output&rsquo;</SAMP>
 <DD>
-<A NAME="IDX228"></A>
-<A NAME="IDX229"></A>
 <A NAME="IDX230"></A>
+<A NAME="IDX231"></A>
+<A NAME="IDX232"></A>
 Generate sorted output.  Note that using this option makes it much harder
 for the translator to understand each message's context.
 
@@ -677,16 +689,16 @@ for the translator to understand each message's context.
 <DD>
 <DT><SAMP>&lsquo;--sort-by-file&rsquo;</SAMP>
 <DD>
-<A NAME="IDX231"></A>
-<A NAME="IDX232"></A>
+<A NAME="IDX233"></A>
+<A NAME="IDX234"></A>
 Sort output by file location.
 
 <DT><SAMP>&lsquo;--omit-header&rsquo;</SAMP>
 <DD>
-<A NAME="IDX233"></A>
+<A NAME="IDX235"></A>
 Don't write header with <SAMP>&lsquo;msgid ""&rsquo;</SAMP> entry.
 
-<A NAME="IDX234"></A>
+<A NAME="IDX236"></A>
 This is useful for testing purposes because it eliminates a source
 of variance for generated <CODE>.gmo</CODE> files.  With <CODE>--omit-header</CODE>,
 two invocations of <CODE>xgettext</CODE> on the same files with the same
@@ -697,7 +709,7 @@ would not entirely be in ASCII.
 
 <DT><SAMP>&lsquo;--copyright-holder=<VAR>string</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX235"></A>
+<A NAME="IDX237"></A>
 Set the copyright holder in the output.  <VAR>string</VAR> should be the
 copyright holder of the surrounding package.  (Note that the msgstr
 strings, extracted from the package's sources, belong to the copyright
@@ -713,25 +725,25 @@ simply because <CODE>xgettext</CODE> was first used in the GNU project.
 
 <DT><SAMP>&lsquo;--foreign-user&rsquo;</SAMP>
 <DD>
-<A NAME="IDX236"></A>
+<A NAME="IDX238"></A>
 Omit FSF copyright in output.  This option is equivalent to
 <SAMP>&lsquo;--copyright-holder=”&rsquo;</SAMP>.  It can be useful for packages outside the GNU
 project that want their translations to be in the public domain.
 
 <DT><SAMP>&lsquo;--package-name=<VAR>package</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX237"></A>
+<A NAME="IDX239"></A>
 Set the package name in the header of the output.
 
 <DT><SAMP>&lsquo;--package-version=<VAR>version</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX238"></A>
+<A NAME="IDX240"></A>
 Set the package version in the header of the output.  This option has an
 effect only if the <SAMP>&lsquo;--package-name&rsquo;</SAMP> option is also used.
 
 <DT><SAMP>&lsquo;--msgid-bugs-address=<VAR>email@address</VAR>&rsquo;</SAMP>
 <DD>
-<A NAME="IDX239"></A>
+<A NAME="IDX241"></A>
 Set the reporting address for msgid bugs.  This is the email address or URL
 to which the translators shall report bugs in the untranslated strings:
 
@@ -765,16 +777,16 @@ Don't forget to specify this option.
 <DD>
 <DT><SAMP>&lsquo;--msgstr-prefix[=<VAR>string</VAR>]&rsquo;</SAMP>
 <DD>
-<A NAME="IDX240"></A>
-<A NAME="IDX241"></A>
+<A NAME="IDX242"></A>
+<A NAME="IDX243"></A>
 Use <VAR>string</VAR> (or "" if not specified) as prefix for msgstr values.
 
 <DT><SAMP>&lsquo;-M[<VAR>string</VAR>]&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--msgstr-suffix[=<VAR>string</VAR>]&rsquo;</SAMP>
 <DD>
-<A NAME="IDX242"></A>
-<A NAME="IDX243"></A>
+<A NAME="IDX244"></A>
+<A NAME="IDX245"></A>
 Use <VAR>string</VAR> (or "" if not specified) as suffix for msgstr values.
 
 </DL>
@@ -789,16 +801,16 @@ Use <VAR>string</VAR> (or "" if not specified) as suffix for msgstr values.
 <DD>
 <DT><SAMP>&lsquo;--help&rsquo;</SAMP>
 <DD>
-<A NAME="IDX244"></A>
-<A NAME="IDX245"></A>
+<A NAME="IDX246"></A>
+<A NAME="IDX247"></A>
 Display this help and exit.
 
 <DT><SAMP>&lsquo;-V&rsquo;</SAMP>
 <DD>
 <DT><SAMP>&lsquo;--version&rsquo;</SAMP>
 <DD>
-<A NAME="IDX246"></A>
-<A NAME="IDX247"></A>
+<A NAME="IDX248"></A>
+<A NAME="IDX249"></A>
 Output version information and exit.
 
 </DL>
