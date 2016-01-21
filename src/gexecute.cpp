@@ -30,11 +30,11 @@
 #include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/stdpaths.h>
+#include <wx/translation.h>
 #include <wx/filename.h>
 
 #include "gexecute.h"
 #include "errors.h"
-#include "chooselang.h"
 
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
@@ -52,17 +52,14 @@
 namespace
 {
 
-#if defined(__WXOSX__) || defined(__WXMSW__)
-
-wxString GetGettextPackagePath()
-{
 #ifdef __WXOSX__
-    wxString dir = wxStandardPaths::Get().GetPluginsDir();
-    return dir + "/GettextTools.bundle/Contents/MacOS";
-#else
-    return wxStandardPaths::Get().GetDataDir() + wxFILE_SEP_PATH + "GettextTools";
-#endif
+wxString GetGettextPluginPath()
+{
+    return wxStandardPaths::Get().GetPluginsDir() + "/GettextTools.bundle";
 }
+#endif // __WXOSX__
+
+#if defined(__WXOSX__) || defined(__WXMSW__)
 
 inline wxString GetAuxBinariesDir()
 {
@@ -122,14 +119,20 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     wxString binary = cmdline.BeforeFirst(_T(' '));
     cmdline = GetPathToAuxBinary(binary) + cmdline.Mid(binary.length());
     wxGetEnvMap(&env.env);
-    env.env["POEDIT_LOCALEDIR"] = GetGettextPackagePath() + "/share/locale";
-    #if NEED_CHOOSELANG_UI
-	wxString lang = GetUILanguage();
     env.env["GETTEXTIOENCODING"] = "UTF-8";
+
+    wxString lang = wxTranslations::Get()->GetBestTranslation("gettext-tools");
 	if ( !lang.empty() )
-		env.env["LANG"] = lang;
-    #endif
+        env.env["LANG"] = lang;
 #endif // __WXOSX__ || __WXMSW__
+
+#ifdef __WXOSX__
+    // Hack alert! On Windows, relocation works, but building with it is too
+    // messy/broken on OS X, so just use some custom hacks instead:
+    auto sharedir = GetGettextPackagePath() + "/share";
+    env.env["POEDIT_LOCALEDIR"] = sharedir + "/locale";
+    env.env["GETTEXTDATADIR"] = sharedir + "/gettext";
+#endif
 
     wxLogTrace("poedit.execute", "executing: %s", cmdline.c_str());
 
@@ -212,3 +215,16 @@ wxString QuoteCmdlineArg(const wxString& s)
 #endif
     return "\"" + s2 + "\"";
 }
+
+
+#if defined(__WXOSX__) || defined(__WXMSW__)
+wxString GetGettextPackagePath()
+{
+#if defined(__WXOSX__)
+    return GetGettextPluginPath() + "/Contents/MacOS";
+#elif defined(__WXMSW__)
+    return wxStandardPaths::Get().GetDataDir() + wxFILE_SEP_PATH + "GettextTools";
+#endif
+}
+#endif // __WXOSX__ || __WXMSW__
+

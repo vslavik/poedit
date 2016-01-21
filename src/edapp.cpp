@@ -71,6 +71,7 @@
 #include "extractor.h"
 #include "chooselang.h"
 #include "customcontrols.h"
+#include "gexecute.h"
 #include "hidpi.h"
 #include "icons.h"
 #include "version.h"
@@ -555,7 +556,10 @@ void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
-#elif !defined(__WXOSX__)
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
+#elif defined(__WXOSX__)
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
+#else // UNIX
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + "/share/locale");
 #endif
 
