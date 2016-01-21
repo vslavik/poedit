@@ -37,7 +37,11 @@ AC_DEFUN([gl_EARLY],
   m4_pattern_allow([^gl_ES$])dnl a valid locale name
   m4_pattern_allow([^gl_LIBOBJS$])dnl a variable
   m4_pattern_allow([^gl_LTLIBOBJS$])dnl a variable
+
+  # Pre-early section.
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_PROG_AR_RANLIB])
+
   AC_REQUIRE([AM_PROG_CC_C_O])
   # Code from module absolute-header:
   # Code from module acl:
@@ -94,6 +98,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module csharpcomp-script:
   # Code from module csharpexec:
   # Code from module csharpexec-script:
+  # Code from module ctype:
+  # Code from module ctype-tests:
   # Code from module diffseq:
   # Code from module dirent:
   # Code from module dirent-tests:
@@ -112,8 +118,9 @@ AC_DEFUN([gl_EARLY],
   # Code from module execute:
   # Code from module exitfail:
   # Code from module extensions:
-  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   # Code from module extern-inline:
+  # Code from module fabs:
+  # Code from module fabs-tests:
   # Code from module fatal-signal:
   # Code from module fcntl:
   # Code from module fcntl-h:
@@ -191,6 +198,22 @@ AC_DEFUN([gl_EARLY],
   # Code from module inttypes:
   # Code from module inttypes-incomplete:
   # Code from module inttypes-tests:
+  # Code from module isinf:
+  # Code from module isinf-tests:
+  # Code from module isnan:
+  # Code from module isnan-tests:
+  # Code from module isnand:
+  # Code from module isnand-nolibm:
+  # Code from module isnand-nolibm-tests:
+  # Code from module isnand-tests:
+  # Code from module isnanf:
+  # Code from module isnanf-nolibm:
+  # Code from module isnanf-nolibm-tests:
+  # Code from module isnanf-tests:
+  # Code from module isnanl:
+  # Code from module isnanl-nolibm:
+  # Code from module isnanl-nolibm-tests:
+  # Code from module isnanl-tests:
   # Code from module iswblank:
   # Code from module iswblank-tests:
   # Code from module java:
@@ -217,6 +240,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module localename-tests:
   # Code from module lock:
   # Code from module lock-tests:
+  # Code from module log10:
+  # Code from module log10-tests:
   # Code from module lseek:
   # Code from module lseek-tests:
   # Code from module lstat:
@@ -224,6 +249,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module malloc-posix:
   # Code from module malloca:
   # Code from module malloca-tests:
+  # Code from module math:
+  # Code from module math-tests:
   # Code from module mbchar:
   # Code from module mbiter:
   # Code from module mbrtowc:
@@ -279,6 +306,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module posix_spawnattr_setsigmask:
   # Code from module posix_spawnp:
   # Code from module posix_spawnp-tests:
+  # Code from module pow:
+  # Code from module pow-tests:
   # Code from module progname:
   # Code from module propername:
   # Code from module putenv:
@@ -321,6 +350,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module sigaction-tests:
   # Code from module signal-h:
   # Code from module signal-h-tests:
+  # Code from module signbit:
+  # Code from module signbit-tests:
   # Code from module sigpipe:
   # Code from module sigpipe-tests:
   # Code from module sigprocmask:
@@ -575,6 +606,7 @@ AC_DEFUN([gl_INIT],
      AM_][XGETTEXT_OPTION([--flag=error_at_line:5:c-format])])
   gl_EXECUTE
   AC_REQUIRE([gl_EXTERN_INLINE])
+  gl_FUNC_FABS
   gl_FATAL_SIGNAL
   gl_FUNC_FCNTL
   if test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1; then
@@ -670,6 +702,55 @@ AC_DEFUN([gl_INIT],
     AC_LIBOBJ([iconv_close])
   fi
   gl_INLINE
+  gl_ISINF
+  if test $REPLACE_ISINF = 1; then
+    AC_LIBOBJ([isinf])
+  fi
+  gl_MATH_MODULE_INDICATOR([isinf])
+  gl_ISNAN
+  gl_MATH_MODULE_INDICATOR([isnan])
+  gl_FUNC_ISNAND
+  m4_ifdef([gl_ISNAN], [
+    AC_REQUIRE([gl_ISNAN])
+  ])
+  if test $HAVE_ISNAND = 0 || test $REPLACE_ISNAN = 1; then
+    AC_LIBOBJ([isnand])
+    gl_PREREQ_ISNAND
+  fi
+  gl_MATH_MODULE_INDICATOR([isnand])
+  gl_FUNC_ISNAND_NO_LIBM
+  if test $gl_func_isnand_no_libm != yes; then
+    AC_LIBOBJ([isnand])
+    gl_PREREQ_ISNAND
+  fi
+  gl_FUNC_ISNANF
+  m4_ifdef([gl_ISNAN], [
+    AC_REQUIRE([gl_ISNAN])
+  ])
+  if test $HAVE_ISNANF = 0 || test $REPLACE_ISNAN = 1; then
+    AC_LIBOBJ([isnanf])
+    gl_PREREQ_ISNANF
+  fi
+  gl_MATH_MODULE_INDICATOR([isnanf])
+  gl_FUNC_ISNANF_NO_LIBM
+  if test $gl_func_isnanf_no_libm != yes; then
+    AC_LIBOBJ([isnanf])
+    gl_PREREQ_ISNANF
+  fi
+  gl_FUNC_ISNANL
+  m4_ifdef([gl_ISNAN], [
+    AC_REQUIRE([gl_ISNAN])
+  ])
+  if test $HAVE_ISNANL = 0 || test $REPLACE_ISNAN = 1; then
+    AC_LIBOBJ([isnanl])
+    gl_PREREQ_ISNANL
+  fi
+  gl_MATH_MODULE_INDICATOR([isnanl])
+  gl_FUNC_ISNANL_NO_LIBM
+  if test $gl_func_isnanl_no_libm != yes; then
+    AC_LIBOBJ([isnanl])
+    gl_PREREQ_ISNANL
+  fi
   gl_FUNC_ISWBLANK
   if test $HAVE_ISWCNTRL = 0 || test $REPLACE_ISWCNTRL = 1; then
     :
@@ -697,6 +778,11 @@ AC_DEFUN([gl_INIT],
   gl_LOCALENAME
   gl_LOCK
   gl_MODULE_INDICATOR([lock])
+  gl_FUNC_LOG10
+  if test $REPLACE_LOG10 = 1; then
+    AC_LIBOBJ([log10])
+  fi
+  gl_MATH_MODULE_INDICATOR([log10])
   gl_FUNC_LSTAT
   if test $REPLACE_LSTAT = 1; then
     AC_LIBOBJ([lstat])
@@ -709,6 +795,7 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDLIB_MODULE_INDICATOR([malloc-posix])
   gl_MALLOCA
+  gl_MATH_H
   gl_MBCHAR
   gl_MBITER
   gl_FUNC_MBRTOWC
@@ -840,6 +927,7 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_POSIX_SPAWN_INTERNAL
   fi
   gl_SPAWN_MODULE_INDICATOR([posix_spawnp])
+  gl_FUNC_POW
   AC_CHECK_DECLS([program_invocation_name], [], [], [#include <errno.h>])
   AC_CHECK_DECLS([program_invocation_short_name], [], [], [#include <errno.h>])
   m4_ifdef([AM_XGETTEXT_OPTION],
@@ -926,6 +1014,13 @@ AC_DEFUN([gl_INIT],
   fi
   gl_SIGNAL_MODULE_INDICATOR([sigaction])
   gl_SIGNAL_H
+  gl_SIGNBIT
+  if test $REPLACE_SIGNBIT = 1; then
+    AC_LIBOBJ([signbitf])
+    AC_LIBOBJ([signbitd])
+    AC_LIBOBJ([signbitl])
+  fi
+  gl_MATH_MODULE_INDICATOR([signbit])
   gl_SIGNAL_SIGPIPE
   dnl Define the C macro GNULIB_SIGPIPE to 1.
   gl_MODULE_INDICATOR([sigpipe])
@@ -1180,6 +1275,7 @@ changequote([, ])dnl
   gt_LOCALE_FR_UTF8
   gt_LOCALE_FR
   gt_LOCALE_TR_UTF8
+  gl_CTYPE_H
   gl_FUNC_DUP
   if test $REPLACE_DUP = 1; then
     AC_LIBOBJ([dup])
@@ -1219,6 +1315,22 @@ changequote([, ])dnl
   gl_UNISTD_MODULE_INDICATOR([getpagesize])
   gl_INTTYPES_H
   gl_INTTYPES_INCOMPLETE
+  gl_FLOAT_EXPONENT_LOCATION
+  gl_DOUBLE_EXPONENT_LOCATION
+  gl_LONG_DOUBLE_EXPONENT_LOCATION
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  gl_FLOAT_EXPONENT_LOCATION
+  gl_DOUBLE_EXPONENT_LOCATION
+  gl_LONG_DOUBLE_EXPONENT_LOCATION
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  gl_DOUBLE_EXPONENT_LOCATION
+  gl_DOUBLE_EXPONENT_LOCATION
+  gl_FLOAT_EXPONENT_LOCATION
+  gl_FLOAT_EXPONENT_LOCATION
+  gl_LONG_DOUBLE_EXPONENT_LOCATION
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  gl_LONG_DOUBLE_EXPONENT_LOCATION
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_CHECK_FUNCS_ONCE([newlocale])
   AC_CHECK_FUNCS_ONCE([newlocale])
   gl_FUNC_LSEEK
@@ -1275,6 +1387,9 @@ changequote([, ])dnl
   gt_LOCALE_FR_UTF8
   gt_LOCALE_JA
   gt_LOCALE_ZH_CN
+  AC_REQUIRE([gl_FLOAT_EXPONENT_LOCATION])
+  AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
+  AC_REQUIRE([gl_LONG_DOUBLE_EXPONENT_LOCATION])
   gl_FUNC_SLEEP
   if test $HAVE_SLEEP = 0 || test $REPLACE_SLEEP = 1; then
     AC_LIBOBJ([sleep])
@@ -1597,6 +1712,14 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/iconveh.h
   lib/ignore-value.h
   lib/intprops.h
+  lib/isinf.c
+  lib/isnan.c
+  lib/isnand-nolibm.h
+  lib/isnand.c
+  lib/isnanf-nolibm.h
+  lib/isnanf.c
+  lib/isnanl-nolibm.h
+  lib/isnanl.c
   lib/iswblank.c
   lib/itold.c
   lib/javacomp.c
@@ -1674,6 +1797,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/libxml/SAX.in.h
   lib/libxml/SAX2.c
   lib/libxml/SAX2.in.h
+  lib/libxml/buf.c
+  lib/libxml/buf.h
   lib/libxml/c14n.c
   lib/libxml/c14n.in.h
   lib/libxml/catalog.c
@@ -1685,6 +1810,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/libxml/dict.c
   lib/libxml/dict.in.h
   lib/libxml/elfgcchack.h
+  lib/libxml/enc.h
   lib/libxml/encoding.c
   lib/libxml/encoding.in.h
   lib/libxml/entities.c
@@ -1710,13 +1836,16 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/libxml/pattern.in.h
   lib/libxml/relaxng.c
   lib/libxml/relaxng.in.h
+  lib/libxml/save.h
   lib/libxml/schemasInternals.in.h
   lib/libxml/schematron.c
   lib/libxml/schematron.in.h
   lib/libxml/threads.c
   lib/libxml/threads.in.h
+  lib/libxml/timsort.h
   lib/libxml/tree.c
   lib/libxml/tree.in.h
+  lib/libxml/trionan.c
   lib/libxml/uri.c
   lib/libxml/uri.in.h
   lib/libxml/valid.c
@@ -1761,11 +1890,14 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/locale.in.h
   lib/localename.c
   lib/localename.h
+  lib/log10.c
   lib/lstat.c
   lib/malloc.c
   lib/malloca.c
   lib/malloca.h
   lib/malloca.valgrind
+  lib/math.c
+  lib/math.in.h
   lib/mbchar.c
   lib/mbchar.h
   lib/mbiter.c
@@ -1849,6 +1981,9 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/sig-handler.h
   lib/sigaction.c
   lib/signal.in.h
+  lib/signbitd.c
+  lib/signbitf.c
+  lib/signbitl.c
   lib/sigprocmask.c
   lib/size_max.h
   lib/snprintf.c
@@ -2011,6 +2146,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/btowc.m4
   m4/byteswap.m4
   m4/canonicalize.m4
+  m4/check-math-lib.m4
   m4/close.m4
   m4/closedir.m4
   m4/codeset.m4
@@ -2019,6 +2155,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/csharp.m4
   m4/csharpcomp.m4
   m4/csharpexec.m4
+  m4/ctype.m4
   m4/curses.m4
   m4/dirent_h.m4
   m4/double-slash-root.m4
@@ -2031,8 +2168,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/error.m4
   m4/execute.m4
   m4/exponentd.m4
+  m4/exponentf.m4
+  m4/exponentl.m4
   m4/extensions.m4
   m4/extern-inline.m4
+  m4/fabs.m4
   m4/fatal-signal.m4
   m4/fcntl-o.m4
   m4/fcntl.m4
@@ -2073,6 +2213,11 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/inttypes-pri.m4
   m4/inttypes.m4
   m4/inttypes_h.m4
+  m4/isinf.m4
+  m4/isnan.m4
+  m4/isnand.m4
+  m4/isnanf.m4
+  m4/isnanl.m4
   m4/iswblank.m4
   m4/java.m4
   m4/javacomp.m4
@@ -2097,12 +2242,14 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/locale_h.m4
   m4/localename.m4
   m4/lock.m4
+  m4/log10.m4
   m4/longlong.m4
   m4/lseek.m4
   m4/lstat.m4
   m4/malloc.m4
   m4/malloca.m4
   m4/math_h.m4
+  m4/mathfunc.m4
   m4/mbchar.m4
   m4/mbiter.m4
   m4/mbrtowc.m4
@@ -2135,6 +2282,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/pipe2.m4
   m4/po.m4
   m4/posix_spawn.m4
+  m4/pow.m4
   m4/printf-posix.m4
   m4/printf.m4
   m4/progtest.m4
@@ -2161,6 +2309,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/sigaction.m4
   m4/signal_h.m4
   m4/signalblocking.m4
+  m4/signbit.m4
   m4/sigpipe.m4
   m4/size_max.m4
   m4/sleep.m4
@@ -2228,8 +2377,12 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/xsize.m4
   m4/xvasprintf.m4
   m4/yield.m4
+  tests/infinity.h
   tests/init.sh
   tests/macros.h
+  tests/minus-zero.h
+  tests/nan.h
+  tests/randomd.c
   tests/signature.h
   tests/test-alignof.c
   tests/test-alloca-opt.c
@@ -2262,12 +2415,15 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-copy-file-2.sh
   tests/test-copy-file.c
   tests/test-copy-file.sh
+  tests/test-ctype.c
   tests/test-dirent.c
   tests/test-dup-safer.c
   tests/test-dup.c
   tests/test-dup2.c
   tests/test-environ.c
   tests/test-errno.c
+  tests/test-fabs.c
+  tests/test-fabs.h
   tests/test-fcntl-h.c
   tests/test-fcntl.c
   tests/test-fdopen.c
@@ -2309,17 +2465,31 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-init.sh
   tests/test-intprops.c
   tests/test-inttypes.c
+  tests/test-isinf.c
+  tests/test-isnan.c
+  tests/test-isnand-nolibm.c
+  tests/test-isnand.c
+  tests/test-isnand.h
+  tests/test-isnanf-nolibm.c
+  tests/test-isnanf.c
+  tests/test-isnanf.h
+  tests/test-isnanl-nolibm.c
+  tests/test-isnanl.c
+  tests/test-isnanl.h
   tests/test-iswblank.c
   tests/test-langinfo.c
   tests/test-linkedhash_list.c
   tests/test-locale.c
   tests/test-localename.c
   tests/test-lock.c
+  tests/test-log10.c
+  tests/test-log10.h
   tests/test-lseek.c
   tests/test-lseek.sh
   tests/test-lstat.c
   tests/test-lstat.h
   tests/test-malloca.c
+  tests/test-math.c
   tests/test-mbrtowc-w32-1.sh
   tests/test-mbrtowc-w32-2.sh
   tests/test-mbrtowc-w32-3.sh
@@ -2371,6 +2541,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-posix_spawn_file_actions_addclose.c
   tests/test-posix_spawn_file_actions_adddup2.c
   tests/test-posix_spawn_file_actions_addopen.c
+  tests/test-pow.c
   tests/test-quotearg-simple.c
   tests/test-quotearg.h
   tests/test-raise.c
@@ -2395,6 +2566,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-sh-quote.c
   tests/test-sigaction.c
   tests/test-signal-h.c
+  tests/test-signbit.c
   tests/test-sigpipe.c
   tests/test-sigpipe.sh
   tests/test-sigprocmask.c
@@ -2438,6 +2610,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-term-ostream-xterm-aix51.out
   tests/test-term-ostream-xterm-basic-italic.out
   tests/test-term-ostream-xterm-basic.out
+  tests/test-term-ostream-xterm-freebsd101.out
   tests/test-term-ostream-xterm-irix65.out
   tests/test-term-ostream-xterm-linux-debian.out
   tests/test-term-ostream-xterm-linux-mandriva.out
@@ -2497,6 +2670,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/unistr/test-u8-uctomb.c
   tests/zerosize-ptr.h
   tests=lib/btowc.c
+  tests=lib/ctype.in.h
   tests=lib/dup.c
   tests=lib/fdopen.c
   tests=lib/file-has-acl.c

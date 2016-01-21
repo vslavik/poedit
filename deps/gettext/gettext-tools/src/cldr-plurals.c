@@ -27,7 +27,8 @@
 #include <error.h>
 #include <getopt.h>
 #include "gettext.h"
-#include "libexpat-compat.h"
+#include <libxml/tree.h>
+#include <libxml/parser.h>
 #include <locale.h>
 #include "progname.h"
 #include "propername.h"
@@ -38,269 +39,149 @@
 
 #define _(s) gettext(s)
 
-#if DYNLOAD_LIBEXPAT || HAVE_LIBEXPAT
-/* Locale name to extract.  */
-static char *extract_locale;
 
-/* CLDR plural rules extracted from XML.  */
-static char *extracted_rules;
-
-/* XML parser.  */
-static XML_Parser parser;
-
-/* Logical filename, used to label the extracted messages.  */
-static char *logical_file_name;
-
-struct element_state
+static char *
+extract_rules (FILE *fp,
+               const char *real_filename, const char *logical_filename,
+               const char *locale)
 {
-  bool extract_rules;
-  bool extract_string;
-  char *count;
-  int lineno;
-  char *buffer;
-  size_t bufmax;
-  size_t buflen;
-};
-static struct element_state *stack;
-static size_t stack_size;
-static size_t stack_depth;
+  xmlDocPtr doc;
+  xmlNodePtr node, n;
+  size_t locale_length;
+  char *buffer = NULL, *p;
+  size_t bufmax = 0;
+  size_t buflen = 0;
 
-/* Ensures stack_size >= size.  */
-static void
-ensure_stack_size (size_t size)
-{
-  if (size > stack_size)
-    {
-      stack_size = 2 * stack_size;
-      if (stack_size < size)
-        stack_size = size;
-      stack =
-        (struct element_state *)
-        xrealloc (stack, stack_size * sizeof (struct element_state));
-    }
-}
-
-/* Callback called when <element> is seen.  */
-static void
-start_element_handler (void *userData, const char *name,
-                       const char **attributes)
-{
-  struct element_state *p;
-
-  if (!stack_depth && strcmp (name, "supplementalData") != 0)
-    {
-      error_at_line (0, 0,
-                     logical_file_name,
-                     XML_GetCurrentLineNumber (parser),
-                     _("\
-The root element <%s> is not allowed in a valid CLDR file"),
-                     name);
-    }
-
-  /* Increase stack depth.  */
-  stack_depth++;
-  ensure_stack_size (stack_depth + 1);
-
-  p = &stack[stack_depth];
-  p->count = NULL;
-  p->extract_rules = false;
-  p->extract_string = false;
-  p->lineno = XML_GetCurrentLineNumber (parser);
-  p->buffer = NULL;
-  p->bufmax = 0;
-  p->buflen = 0;
-
-  if (strcmp (name, "pluralRules") == 0)
-    {
-      const char *locales = NULL;
-      const char **attp = attributes;
-      while (*attp != NULL)
-        {
-          if (strcmp (attp[0], "locales") == 0)
-            locales = attp[1];
-          attp += 2;
-        }
-      if (locales)
-        {
-          const char *cp = locales;
-          size_t length = strlen (extract_locale);
-          while (*cp)
-            {
-              while (c_isspace (*cp))
-                cp++;
-              if (strncmp (cp, extract_locale, length) == 0
-                  && (*(cp + length) == ' '
-                      || *(cp + length) == '\n'
-                      || *(cp + length) == '\0'))
-                {
-                  p->extract_rules = true;
-                  break;
-                }
-              while (*cp && !c_isspace (*cp))
-                cp++;
-            }
-        }
-    }
-  else if (stack_depth > 1 && strcmp (name, "pluralRule") == 0)
-    {
-      struct element_state *parent = &stack[stack_depth - 1];
-
-      p->extract_string = parent->extract_rules;
-      if (p->extract_string)
-        {
-          const char *count = NULL;
-          const char **attp = attributes;
-          while (*attp != NULL)
-            {
-              if (strcmp (attp[0], "count") == 0)
-                count = attp[1];
-              attp += 2;
-            }
-          p->count = xstrdup (count);
-        }
-    }
-}
-
-/* Callback called when </element> is seen.  */
-static void
-end_element_handler (void *userData, const char *name)
-{
-  struct element_state *p = &stack[stack_depth];
-
-  if (p->extract_string && strcmp (name, "pluralRule") == 0)
-    {
-      struct element_state *parent = &stack[stack_depth - 1];
-      size_t length;
-
-      /* NUL terminate the buffer.  */
-      if (p->buflen > 0)
-        {
-          if (p->buflen == p->bufmax)
-            p->buffer = (char *) xrealloc (p->buffer, p->buflen + 1);
-          p->buffer[p->buflen] = '\0';
-        }
-
-      length = strlen (p->count) + strlen (": ")
-        + p->buflen + strlen ("; ");
-      if (parent->buflen + length + 1 > parent->bufmax)
-        {
-          parent->bufmax = 2 * parent->bufmax;
-          if (parent->bufmax < parent->buflen + length + 1)
-            parent->bufmax = parent->buflen + length + 1;
-          parent->buffer = (char *) xrealloc (parent->buffer, parent->bufmax);
-        }
-      sprintf (parent->buffer + parent->buflen,
-               "%s: %s; ",
-               p->count, p->buffer == NULL ? "" : p->buffer);
-      parent->buflen += length;
-      parent->buffer[parent->buflen] = '\0';
-    }
-  else if (p->extract_rules && strcmp (name, "pluralRules") == 0)
-    {
-      char *cp;
-
-      /* NUL terminate the buffer.  */
-      if (p->buflen > 0)
-        {
-          if (p->buflen == p->bufmax)
-            p->buffer = (char *) xrealloc (p->buffer, p->buflen + 1);
-          p->buffer[p->buflen] = '\0';
-        }
-
-      /* Scrub the last semicolon, if any.  */
-      cp = strrchr (p->buffer, ';');
-      if (cp)
-        *cp = '\0';
-      extracted_rules = xstrdup (p->buffer);
-    }
-
-  /* Free memory for this stack level.  */
-  if (p->count != NULL)
-    free (p->count);
-  if (p->buffer != NULL)
-    free (p->buffer);
-
-  /* Decrease stack depth.  */
-  stack_depth--;
-}
-
-/* Callback called when some text is seen.  */
-static void
-character_data_handler (void *userData, const char *s, int len)
-{
-  struct element_state *p = &stack[stack_depth];
-
-  /* Accumulate character data.  */
-  if (p->extract_string && len > 0)
-    {
-      if (p->buflen + len > p->bufmax)
-        {
-          p->bufmax = 2 * p->bufmax;
-          if (p->bufmax < p->buflen + len)
-            p->bufmax = p->buflen + len;
-          p->buffer = (char *) xrealloc (p->buffer, p->bufmax);
-        }
-      memcpy (p->buffer + p->buflen, s, len);
-      p->buflen += len;
-    }
-}
-
-static void
-extract_rule (FILE *fp,
-              const char *real_filename, const char *logical_filename,
-              const char *locale)
-{
-  logical_file_name = xstrdup (logical_filename);
-  extract_locale = xstrdup (locale);
-
-  parser = XML_ParserCreate (NULL);
-  if (parser == NULL)
+  doc = xmlReadFd (fileno (fp), logical_filename, NULL,
+                   XML_PARSE_NONET
+                   | XML_PARSE_NOWARNING
+                   | XML_PARSE_NOERROR
+                   | XML_PARSE_NOBLANKS);
+  if (doc == NULL)
     error (EXIT_FAILURE, 0, _("memory exhausted"));
 
-  XML_SetElementHandler (parser, start_element_handler, end_element_handler);
-  XML_SetCharacterDataHandler (parser, character_data_handler);
-
-  stack_depth = 0;
-
-  while (!feof (fp))
+  node = xmlDocGetRootElement (doc);
+  if (!node || !xmlStrEqual (node->name, BAD_CAST "supplementalData"))
     {
-      char buf[4096];
-      int count = fread (buf, 1, sizeof buf, fp);
-
-      if (count == 0)
-        {
-          if (ferror (fp))
-            error (EXIT_FAILURE, errno, _("\
-error while reading \"%s\""), real_filename);
-          /* EOF reached.  */
-          break;
-        }
-
-      if (XML_Parse (parser, buf, count, 0) == 0)
-        error (EXIT_FAILURE, 0, _("%s:%lu:%lu: %s"), logical_filename,
-               (unsigned long) XML_GetCurrentLineNumber (parser),
-               (unsigned long) XML_GetCurrentColumnNumber (parser) + 1,
-               XML_ErrorString (XML_GetErrorCode (parser)));
+      error_at_line (0, 0,
+                     logical_filename,
+                     xmlGetLineNo (node),
+                     _("\
+The root element must be <%s>"),
+                     "supplementalData");
+      goto out;
     }
 
-  if (XML_Parse (parser, NULL, 0, 1) == 0)
-    error (EXIT_FAILURE, 0, _("%s:%lu:%lu: %s"), logical_filename,
-           (unsigned long) XML_GetCurrentLineNumber (parser),
-           (unsigned long) XML_GetCurrentColumnNumber (parser) + 1,
-           XML_ErrorString (XML_GetErrorCode (parser)));
+  for (n = node->children; n; n = n->next)
+    {
+      if (n->type == XML_ELEMENT_NODE
+          && xmlStrEqual (n->name, BAD_CAST "plurals"))
+        break;
+    }
+  if (!n)
+    {
+      error (0, 0, _("The element <%s> does not contain a <%s> element"),
+             "supplementalData", "plurals");
+      goto out;
+    }
 
-  /* Close scanner.  */
-  free (logical_file_name);
-  logical_file_name = NULL;
+  locale_length = strlen (locale);
+  for (n = n->children; n; n = n->next)
+    {
+      xmlChar *locales;
+      xmlChar *cp;
+      xmlNodePtr n2;
+      bool found = false;
 
-  free (extract_locale);
-  extract_locale = NULL;
+      if (n->type != XML_ELEMENT_NODE
+          || !xmlStrEqual (n->name, BAD_CAST "pluralRules"))
+        continue;
 
-  XML_ParserFree (parser);
-  parser = NULL;
+      if (!xmlHasProp (n, BAD_CAST "locales"))
+        {
+          error_at_line (0, 0,
+                         logical_filename,
+                         xmlGetLineNo (n),
+                         _("\
+The element <%s> does not have attribute <%s>"),
+                         "pluralRules", "locales");
+          continue;
+        }
+
+      cp = locales = xmlGetProp (n, BAD_CAST "locales");
+      while (*cp != '\0')
+        {
+          while (c_isspace (*cp))
+            cp++;
+          if (xmlStrncmp (cp, BAD_CAST locale, locale_length) == 0
+              && (*(cp + locale_length) == '\0'
+                  || c_isspace (*(cp + locale_length))))
+            {
+              found = true;
+              break;
+            }
+          while (*cp && !c_isspace (*cp))
+            cp++;
+        }
+      xmlFree (locales);
+
+      if (!found)
+        continue;
+
+      for (n2 = n->children; n2; n2 = n2->next)
+        {
+          xmlChar *count;
+          xmlChar *content;
+          size_t length;
+
+          if (n2->type != XML_ELEMENT_NODE
+              || !xmlStrEqual (n2->name, BAD_CAST "pluralRule"))
+            continue;
+
+          if (!xmlHasProp (n2, BAD_CAST "count"))
+            {
+              error_at_line (0, 0,
+                             logical_filename,
+                             xmlGetLineNo (n2),
+                             _("\
+The element <%s> does not have attribute <%s>"),
+                             "pluralRule", "count");
+              break;
+            }
+
+          count = xmlGetProp (n2, BAD_CAST "count");
+          content = xmlNodeGetContent (n2);
+          length = xmlStrlen (count) + strlen (": ")
+            + xmlStrlen (content) + strlen ("; ");
+
+          if (buflen + length + 1 > bufmax)
+            {
+              bufmax *= 2;
+              if (bufmax < buflen + length + 1)
+                bufmax = buflen + length + 1;
+              buffer = (char *) xrealloc (buffer, bufmax);
+            }
+
+          sprintf (buffer + buflen, "%s: %s; ", count, content);
+          xmlFree (count);
+          xmlFree (content);
+
+          buflen += length;
+        }
+    }
+
+  if (buffer)
+    {
+      /* Scrub the last semicolon, if any.  */
+      p = strrchr (buffer, ';');
+      if (p)
+        *p = '\0';
+    }
+
+ out:
+  xmlFreeDoc (doc);
+  return buffer;
 }
-
-#endif
 
 /* Display usage information and exit.  */
 static void
@@ -422,41 +303,37 @@ There is NO WARRANTY, to the extent permitted by law.\n\
   if (argc == optind + 2)
     {
       /* Two arguments: Read CLDR rules from a file.  */
-#if DYNLOAD_LIBEXPAT || HAVE_LIBEXPAT
-      if (LIBEXPAT_AVAILABLE ())
-        {
-          const char *locale = argv[optind];
-          const char *logical_filename = argv[optind + 1];
-          FILE *fp;
+      const char *locale = argv[optind];
+      const char *logical_filename = argv[optind + 1];
+      char *extracted_rules;
+      FILE *fp;
 
-          fp = fopen (logical_filename, "r");
-          if (fp == NULL)
-            error (1, 0, _("%s cannot be read"), logical_filename);
+      LIBXML_TEST_VERSION
 
-          extract_rule (fp, logical_filename, logical_filename, locale);
-          if (extracted_rules == NULL)
-            error (1, 0, _("cannot extract rules for %s"), locale);
+      fp = fopen (logical_filename, "r");
+      if (fp == NULL)
+        error (1, 0, _("%s cannot be read"), logical_filename);
 
-          if (opt_cldr_format)
-            printf ("%s\n", extracted_rules);
-          else
-            {
-              struct cldr_plural_rule_list_ty *result;
+      extracted_rules = extract_rules (fp, logical_filename, logical_filename,
+                                       locale);
+      fclose (fp);
+      if (extracted_rules == NULL)
+        error (1, 0, _("cannot extract rules for %s"), locale);
 
-              result = cldr_plural_parse (extracted_rules);
-              if (result == NULL)
-                error (1, 0, _("cannot parse CLDR rule"));
-
-              cldr_plural_rule_list_print (result, stdout);
-              cldr_plural_rule_list_free (result);
-            }
-          free (extracted_rules);
-        }
+      if (opt_cldr_format)
+        printf ("%s\n", extracted_rules);
       else
-#endif
         {
-          error (1, 0, _("extraction is not supported"));
+          struct cldr_plural_rule_list_ty *result;
+
+          result = cldr_plural_parse (extracted_rules);
+          if (result == NULL)
+            error (1, 0, _("cannot parse CLDR rule"));
+
+          cldr_plural_rule_list_print (result, stdout);
+          cldr_plural_rule_list_free (result);
         }
+      free (extracted_rules);
     }
   else if (argc == optind)
     {

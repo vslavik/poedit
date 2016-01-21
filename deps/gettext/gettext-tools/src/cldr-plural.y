@@ -269,9 +269,13 @@ sample_ellipsis: %empty
         ;
 
 sample_range: DECIMAL
+	{ free ($1); }
         | DECIMAL '~' DECIMAL
+        { free ($1); free ($3); }
         | INTEGER
+        { free ($1); }
         | INTEGER '~' INTEGER
+	{ free ($1); free ($3); }
         ;
 
 %%

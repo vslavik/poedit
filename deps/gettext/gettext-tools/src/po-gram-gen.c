@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@
 #define YYBISON 1
 
 /* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+#define YYBISON_VERSION "3.0.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -238,7 +238,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
 #line 144 "po-gram-gen.y" /* yacc.c:355  */
@@ -253,6 +253,8 @@ union YYSTYPE
 
 #line 255 "po-gram-gen.c" /* yacc.c:355  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -266,7 +268,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 270 "po-gram-gen.c" /* yacc.c:358  */
+#line 272 "po-gram-gen.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -1372,7 +1374,7 @@ yyreduce:
     {
                   po_callback_comment_dispatcher ((yyvsp[0].string).string);
                 }
-#line 1376 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1378 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 8:
@@ -1380,7 +1382,7 @@ yyreduce:
     {
                    po_callback_domain ((yyvsp[0].string).string);
                 }
-#line 1384 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1386 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 9:
@@ -1405,7 +1407,7 @@ yyreduce:
                       free (string4);
                     }
                 }
-#line 1409 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1411 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 10:
@@ -1433,7 +1435,7 @@ yyreduce:
                       free ((yyvsp[0].rhs).rhs.msgstr);
                     }
                 }
-#line 1437 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1439 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 11:
@@ -1446,7 +1448,7 @@ yyreduce:
                   string_list_destroy (&(yyvsp[-1].stringlist).stringlist);
                   free ((yyvsp[0].string).string);
                 }
-#line 1450 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1452 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 12:
@@ -1459,7 +1461,7 @@ yyreduce:
                   string_list_destroy (&(yyvsp[-1].stringlist).stringlist);
                   free ((yyvsp[0].rhs).rhs.msgstr);
                 }
-#line 1463 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1465 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 13:
@@ -1470,7 +1472,7 @@ yyreduce:
                   free_message_intro ((yyvsp[-1].message_intro));
                   string_list_destroy (&(yyvsp[0].stringlist).stringlist);
                 }
-#line 1474 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1476 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 14:
@@ -1483,7 +1485,7 @@ yyreduce:
                   (yyval.message_intro).pos = (yyvsp[0].string).pos;
                   (yyval.message_intro).obsolete = (yyvsp[0].string).obsolete;
                 }
-#line 1487 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1489 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 15:
@@ -1497,7 +1499,7 @@ yyreduce:
                   (yyval.message_intro).pos = (yyvsp[0].string).pos;
                   (yyval.message_intro).obsolete = (yyvsp[0].string).obsolete;
                 }
-#line 1501 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1503 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 16:
@@ -1510,7 +1512,7 @@ yyreduce:
                   (yyval.prev).pos = (yyvsp[-1].string).pos;
                   (yyval.prev).obsolete = (yyvsp[-1].string).obsolete;
                 }
-#line 1514 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1516 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 17:
@@ -1524,7 +1526,7 @@ yyreduce:
                   (yyval.prev).pos = (yyvsp[-2].string).pos;
                   (yyval.prev).obsolete = (yyvsp[-2].string).obsolete;
                 }
-#line 1528 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1530 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 18:
@@ -1534,7 +1536,7 @@ yyreduce:
                   (yyval.string).pos = (yyvsp[0].pos).pos;
                   (yyval.string).obsolete = (yyvsp[0].pos).obsolete;
                 }
-#line 1538 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1540 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 19:
@@ -1546,7 +1548,7 @@ yyreduce:
                   (yyval.string).pos = (yyvsp[0].pos).pos;
                   (yyval.string).obsolete = (yyvsp[0].pos).obsolete;
                 }
-#line 1550 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1552 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 20:
@@ -1556,7 +1558,7 @@ yyreduce:
                   (yyval.string).pos = (yyvsp[0].pos).pos;
                   (yyval.string).obsolete = (yyvsp[0].pos).obsolete;
                 }
-#line 1560 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1562 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 21:
@@ -1568,7 +1570,7 @@ yyreduce:
                   (yyval.string).pos = (yyvsp[0].pos).pos;
                   (yyval.string).obsolete = (yyvsp[0].pos).obsolete;
                 }
-#line 1572 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1574 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 22:
@@ -1580,7 +1582,7 @@ yyreduce:
                   (yyval.string).pos = (yyvsp[-1].pos).pos;
                   (yyval.string).obsolete = (yyvsp[-1].pos).obsolete;
                 }
-#line 1584 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1586 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 23:
@@ -1591,7 +1593,7 @@ yyreduce:
                   (yyval.string).pos = (yyvsp[-1].pos).pos;
                   (yyval.string).obsolete = (yyvsp[-1].pos).obsolete;
                 }
-#line 1595 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1597 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 24:
@@ -1599,7 +1601,7 @@ yyreduce:
     {
                   (yyval.rhs) = (yyvsp[0].rhs);
                 }
-#line 1603 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1605 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 25:
@@ -1615,7 +1617,7 @@ yyreduce:
                   (yyval.rhs).pos = (yyvsp[-1].rhs).pos;
                   (yyval.rhs).obsolete = (yyvsp[-1].rhs).obsolete;
                 }
-#line 1619 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1621 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 26:
@@ -1638,7 +1640,7 @@ yyreduce:
                   (yyval.rhs).pos = (yyvsp[-4].pos).pos;
                   (yyval.rhs).obsolete = (yyvsp[-4].pos).obsolete;
                 }
-#line 1642 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1644 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 27:
@@ -1650,7 +1652,7 @@ yyreduce:
                   (yyval.stringlist).pos = (yyvsp[0].string).pos;
                   (yyval.stringlist).obsolete = (yyvsp[0].string).obsolete;
                 }
-#line 1654 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1656 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 28:
@@ -1663,7 +1665,7 @@ yyreduce:
                   (yyval.stringlist).pos = (yyvsp[-1].stringlist).pos;
                   (yyval.stringlist).obsolete = (yyvsp[-1].stringlist).obsolete;
                 }
-#line 1667 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1669 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -1675,7 +1677,7 @@ yyreduce:
                   (yyval.stringlist).pos = (yyvsp[0].string).pos;
                   (yyval.stringlist).obsolete = (yyvsp[0].string).obsolete;
                 }
-#line 1679 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1681 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
   case 30:
@@ -1688,11 +1690,11 @@ yyreduce:
                   (yyval.stringlist).pos = (yyvsp[-1].stringlist).pos;
                   (yyval.stringlist).obsolete = (yyvsp[-1].stringlist).obsolete;
                 }
-#line 1692 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1694 "po-gram-gen.c" /* yacc.c:1646  */
     break;
 
 
-#line 1696 "po-gram-gen.c" /* yacc.c:1646  */
+#line 1698 "po-gram-gen.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

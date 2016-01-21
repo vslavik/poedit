@@ -101,6 +101,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
     }
 
   free (buf);
+  buf = NULL; /* To avoid double free in error case.  */
 
 #if !USE_ACL
   if (close (dest_fd) < 0)
@@ -174,6 +175,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
  error_src:
   close (src_fd);
  error:
+  free (buf);
   return err;
 }
 

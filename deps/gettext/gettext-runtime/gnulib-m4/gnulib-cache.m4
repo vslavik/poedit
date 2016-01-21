@@ -27,7 +27,7 @@
 
 
 # Specification in the form of a command-line invocation:
-#   gnulib-tool --import --dir=gettext-runtime --local-dir=gnulib-local --lib=libgrt --source-base=gnulib-lib --m4-base=gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../build-aux --no-conditional-dependencies --no-libtool --macro-prefix=gl ansi-c++-opt atexit basename closeout csharpcomp-script error getopt-gnu gettext-h gettext-runtime-misc havelib java javacomp-script memmove progname propername relocatable-prog setlocale sigpipe stdbool stdio stdlib strtoul unlocked-io xalloc
+#   gnulib-tool --import --local-dir=gnulib-local --lib=libgrt --source-base=gnulib-lib --m4-base=gnulib-m4 --doc-base=doc --tests-base=tests --aux-dir=../build-aux --no-conditional-dependencies --no-libtool --macro-prefix=gl ansi-c++-opt atexit basename closeout csharpcomp-script error getopt-gnu gettext-h gettext-runtime-misc havelib java javacomp-script memmove progname propername relocatable-prog setlocale sigpipe stdbool stdio stdlib strtoul unlocked-io xalloc
 
 # Specification in the form of a few gnulib-tool.m4 macro invocations:
 gl_LOCAL_DIR([../gnulib-local])

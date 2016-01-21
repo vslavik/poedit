@@ -63,7 +63,7 @@
 
 ;;; Code:
 
-(defconst po-mode-version-string "2.23" "\
+(defconst po-mode-version-string "2.24" "\
 Version number of this version of po-mode.el.")
 
 ;;; Emacs portability matters - part I.
@@ -3390,10 +3390,11 @@ Leave point after marked string."
         (file-error nil))
 
       ;; Make sure there's a version number in the output:
-      ;; 0.11 or 0.10.36 or 0.11-pre1 or 0.16.2-pre1
+      ;; 0.11 or 0.10.36 or 0.19.5.1 or 0.11-pre1 or 0.16.2-pre1
       (progn (goto-char (point-min))
              (or (looking-at ".* \\([0-9]+\\)\\.\\([0-9]+\\)$")
                  (looking-at ".* \\([0-9]+\\)\\.\\([0-9]+\\)\\.\\([0-9]+\\)$")
+                 (looking-at ".* \\([0-9]+\\)\\.\\([0-9]+\\)\\.\\([0-9]+\\)\\.\\([0-9]+\\)$")
                  (looking-at ".* \\([0-9]+\\)\\.\\([0-9]+\\)[-_A-Za-z0-9]+$")
                  (looking-at ".* \\([0-9]+\\)\\.\\([0-9]+\\)\\.\\([0-9]+\\)[-_A-Za-z0-9]+$")))
 

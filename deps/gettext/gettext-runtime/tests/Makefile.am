@@ -26,7 +26,7 @@ AM_CPPFLAGS = \
   -I.. \
   -I$(srcdir)/../intl
 
-noinst_PROGRAMS = test-lock
+check_PROGRAMS = test-lock
 test_lock_SOURCES = test-lock.c ../intl/lock.c ../intl/threadlib.c
 test_lock_LDADD = @LIBMULTITHREAD@ @LIBSCHED@
 

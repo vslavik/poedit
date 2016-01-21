@@ -16,7 +16,7 @@
 
 #if defined __CYGWIN__ || defined __MINGW32__
 # include "intl-exports.c"
-#elif defined __EMX__
+#elif defined __EMX__ && !defined __KLIBC__
 # include "os2compat.c"
 #else
 /* Avoid AIX compiler warning.  */

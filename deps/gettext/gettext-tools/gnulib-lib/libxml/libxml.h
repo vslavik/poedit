@@ -20,7 +20,20 @@
 
 #if defined(macintosh)
 #include "config-mac.h"
+#elif defined(_WIN32_WCE)
+/*
+ * Windows CE compatibility definitions and functions
+ * This is needed to compile libxml2 for Windows CE.
+ * At least I tested it with WinCE 5.0 for Emulator and WinCE 4.2/SH4 target
+ */
+#include <win32config.h>
+#include <libxml/xmlversion.h>
 #else
+/*
+ * Currently supported platforms use either autoconf or
+ * copy to config.h own "preset" configuration file.
+ * As result ifdef HAVE_CONFIG_H is omited here.
+ */
 #include "config.h"
 #include <libxml/xmlversion.h>
 #endif
@@ -64,6 +77,23 @@ void __xmlLoaderErr(void *ctx, const char *msg, const char *filename);
 void __htmlParseContent(void *ctx);
 #endif
 
+/*
+ * internal global initialization critical section routines.
+ */
+void __xmlGlobalInitMutexLock(void);
+void __xmlGlobalInitMutexUnlock(void);
+void __xmlGlobalInitMutexDestroy(void);
+
+int __xmlInitializeDict(void);
+
+#if defined(HAVE_RAND) && defined(HAVE_SRAND) && defined(HAVE_TIME)
+/*
+ * internal thread safe random function
+ */
+int __xmlRandom(void);
+#endif
+
+int xmlNop(void);
 
 #ifdef IN_LIBXML
 #ifdef __GNUC__
@@ -75,5 +105,8 @@ void __htmlParseContent(void *ctx);
 #endif
 #endif
 #endif
+#endif
+#if !defined(PIC) && !defined(NOLIBTOOL)
+#  define LIBXML_STATIC
 #endif
 #endif /* ! __XML_LIBXML_H__ */

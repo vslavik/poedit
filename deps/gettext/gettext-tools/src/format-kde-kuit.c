@@ -24,11 +24,27 @@
 #include <stdlib.h>
 
 #include "format.h"
-#include "libexpat-compat.h"
 #include "unistr.h"
 #include "xalloc.h"
 #include "xvasprintf.h"
 #include "gettext.h"
+
+#if IN_LIBGETTEXTPO
+/* Use included markup parser to avoid extra dependency from
+   libgettextpo to libxml2.  */
+# ifndef FORMAT_KDE_KUIT_FALLBACK_MARKUP
+#  define FORMAT_KDE_KUIT_USE_FALLBACK_MARKUP 1
+# endif
+#else
+#  define FORMAT_KDE_KUIT_USE_LIBXML2 1
+#endif
+
+#if FORMAT_KDE_KUIT_USE_LIBXML2
+# include <libxml/parser.h>
+#elif FORMAT_KDE_KUIT_USE_FALLBACK_MARKUP
+# include "markup.h"
+#endif
+
 
 #define _(str) gettext (str)
 
@@ -48,25 +64,7 @@ struct spec
   void *base;
 };
 
-#if DYNLOAD_LIBEXPAT || HAVE_LIBEXPAT
-
 #define XML_NS "https://www.gnu.org/s/gettext/kde"
-
-/* Callback called when <element> is seen.  */
-static void
-start_element_handler (void *data, const char *name,
-                       const char **attributes)
-{
-  /* Nothing to do for now.  We could check text outside of a
-     structuring tag, etc.  */
-}
-
-/* Callback called when </element> is seen.  */
-static void
-end_element_handler (void *data, const char *name)
-{
-  /* Nothing to do.  */
-}
 
 struct char_range
 {
@@ -182,8 +180,6 @@ is_reference (const char *input)
   return false;
 }
 
-#endif
-
 
 static void *
 format_parse (const char *format, bool translated, char *fdi,
@@ -191,83 +187,102 @@ format_parse (const char *format, bool translated, char *fdi,
 {
   struct spec spec;
   struct spec *result;
+  const char *str;
+  const char *str_limit;
+  size_t amp_count;
+  char *buffer, *bp;
 
   spec.base = NULL;
 
-#if DYNLOAD_LIBEXPAT || HAVE_LIBEXPAT
-  if (LIBEXPAT_AVAILABLE ())
+  /* Preprocess the input, putting the content in a <gt:kuit> element.  */
+  str = format;
+  str_limit = str + strlen (format);
+
+  for (amp_count = 0; str < str_limit; amp_count++)
     {
-      XML_Parser parser;
-      const char *str = format;
-      const char *str_limit = str + strlen (format);
-      size_t amp_count;
-      char *buffer, *bp;
+      const char *amp = strchrnul (str, '&');
+      if (*amp != '&')
+        break;
+      str = amp + 1;
+    }
 
-      for (amp_count = 0; str < str_limit; amp_count++)
+  buffer = xmalloc (amp_count * 4
+                    + strlen (format)
+                    + strlen ("<gt:kuit xmlns:gt=\"" XML_NS "\"></gt:kuit>")
+                    + 1);
+  *buffer = '\0';
+
+  bp = buffer;
+  bp = stpcpy (bp, "<gt:kuit xmlns:gt=\"" XML_NS "\">");
+  str = format;
+  while (str < str_limit)
+    {
+      const char *amp = strchrnul (str, '&');
+
+      bp = stpncpy (bp, str, amp - str);
+      if (*amp != '&')
+        break;
+
+      bp = stpcpy (bp, is_reference (amp) ? "&" : "&amp;");
+      str = amp + 1;
+    }
+  stpcpy (bp, "</gt:kuit>");
+
+#if FORMAT_KDE_KUIT_USE_LIBXML2
+    {
+      xmlDocPtr doc;
+
+      doc = xmlReadMemory (buffer, strlen (buffer), "", NULL,
+                           XML_PARSE_NONET
+                           | XML_PARSE_NOWARNING
+                           | XML_PARSE_NOERROR
+                           | XML_PARSE_NOBLANKS);
+      if (doc == NULL)
         {
-          const char *amp = strchrnul (str, '&');
-          if (*amp != '&')
-            break;
-          str = amp + 1;
-        }
-
-      buffer = xmalloc (amp_count * 4
-                        + strlen (format)
-                        + strlen ("<gt:kuit xmlns:gt=\"" XML_NS "\"></gt:kuit>")
-                        + 1);
-      *buffer = '\0';
-
-      bp = buffer;
-      bp = stpcpy (bp, "<gt:kuit xmlns:gt=\"" XML_NS "\">");
-      str = format;
-      while (str < str_limit)
-        {
-          const char *amp = strchrnul (str, '&');
-
-          bp = stpncpy (bp, str, amp - str);
-          if (*amp != '&')
-            break;
-
-          bp = stpcpy (bp, is_reference (amp) ? "&" : "&amp;");
-          str = amp + 1;
-        }
-      stpcpy (bp, "</gt:kuit>");
-
-      parser = XML_ParserCreate (NULL);
-      if (parser == NULL)
-        {
-          *invalid_reason = xasprintf (_("memory exhausted"));
-          free (buffer);
-          return NULL;
-        }
-
-      XML_SetElementHandler (parser,
-                             start_element_handler,
-                             end_element_handler);
-
-      if (XML_Parse (parser, buffer, strlen (buffer), 0) == 0)
-        {
+          xmlError *err = xmlGetLastError ();
           *invalid_reason =
             xasprintf (_("error while parsing: %s"),
-                       XML_ErrorString (XML_GetErrorCode (parser)));
+                       err->message);
           free (buffer);
-          XML_ParserFree (parser);
-          return NULL;
-        }
-
-      if (XML_Parse (parser, NULL, 0, 1) == 0)
-        {
-          *invalid_reason =
-            xasprintf (_("error while parsing: %s"),
-                       XML_ErrorString (XML_GetErrorCode (parser)));
-          free (buffer);
-          XML_ParserFree (parser);
+          xmlFreeDoc (doc);
           return NULL;
         }
 
       free (buffer);
-      XML_ParserFree (parser);
+      xmlFreeDoc (doc);
     }
+#elif FORMAT_KDE_KUIT_FALLBACK_MARKUP
+    {
+      markup_parser_ty parser;
+      markup_parse_context_ty *context;
+
+      memset (&parser, 0, sizeof (markup_parser_ty));
+      context = markup_parse_context_new (&parser, 0, NULL);
+      if (!markup_parse_context_parse (context, buffer, strlen (buffer)))
+        {
+          *invalid_reason =
+            xasprintf (_("error while parsing: %s"),
+                       markup_parse_context_get_error (context));
+          free (buffer);
+          markup_parse_context_free (context);
+          return NULL;
+        }
+
+      if (!markup_parse_context_end_parse (context))
+        {
+          *invalid_reason =
+            xasprintf (_("error while parsing: %s"),
+                       markup_parse_context_get_error (context));
+          free (buffer);
+          markup_parse_context_free (context);
+          return NULL;
+        }
+
+      free (buffer);
+      markup_parse_context_free (context);
+    }
+#else
+    /* No support for XML.  */
 #endif
 
   spec.base = formatstring_kde.parse (format, translated, fdi, invalid_reason);

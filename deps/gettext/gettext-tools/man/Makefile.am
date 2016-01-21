@@ -51,7 +51,7 @@ msgexec.1.html msgfilter.1.html msggrep.1.html msginit.1.html msguniq.1.html \
 recode-sr-latin.1.html \
 gettextize.1.html autopoint.1.html
 
-EXTRA_DIST += help2man $(man_aux) $(man_MANS) $(man_HTML) ChangeLog.0
+EXTRA_DIST += help2man $(man_aux) $(man_MANS) $(man_HTML)
 MAINTAINERCLEANFILES = $(man_MANS) $(man_HTML)
 
 PERL = @PERL@

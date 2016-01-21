@@ -3,8 +3,6 @@
 
 # Test the autopoint program, without Automake.
 
-required_gettext_version=0.19.5
-
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
   || { echo "Skipping test: autoconf not found"; exit 77; }
@@ -29,7 +27,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 
 AC_PROG_CC
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+AM_GNU_GETTEXT_VERSION([$ARCHIVE_VERSION])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
@@ -57,7 +55,7 @@ AC_CONFIG_SRCDIR(hello.c)
 
 AC_PROG_CC
 AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+AM_GNU_GETTEXT_VERSION([$ARCHIVE_VERSION])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
@@ -84,7 +82,7 @@ AC_CONFIG_SRCDIR(hello.c)
 
 AC_PROG_CC
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+AM_GNU_GETTEXT_VERSION([$ARCHIVE_VERSION])
 
 # first macro directory, in which po.m4, etc. belong
 AC_CONFIG_MACRO_DIR([gettext-m4])
@@ -118,7 +116,7 @@ AC_CONFIG_SRCDIR(hello.c)
 
 AC_PROG_CC
 AM_GNU_GETTEXT([external], [need-formatstring-macros])
-AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+AM_GNU_GETTEXT_VERSION([$ARCHIVE_VERSION])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
@@ -150,7 +148,7 @@ _gt_recurse([a], [b], , [c])
 
 AC_PROG_CC
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([$required_gettext_version])
+AM_GNU_GETTEXT_VERSION([$ARCHIVE_VERSION])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([po/Makefile.in])
@@ -168,3 +166,63 @@ test -f m4/po.m4 || exit 1
 test -f po/Makefile.in.in || exit 1
 
 rm -fr m4 po
+
+# Check for AM_GNU_GETTEXT_REQUIRE_VERSION.
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+
+AC_PROG_CC
+AM_GNU_GETTEXT_REQUIRE_VERSION([0.19])
+AM_GNU_GETTEXT([external])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >/dev/null 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+test ! -d intl || exit 1
+test -d m4 || exit 1
+test -d po || exit 1
+
+test -f m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1
+
+# Check for the case where both AM_GNU_GETTEXT_REQUIRE_VERSION and
+# AM_GNU_GETTEXT_VERSION are used.
+cat <<EOF >configure.ac
+AC_INIT
+AC_CONFIG_SRCDIR(hello.c)
+
+AC_PROG_CC
+AM_GNU_GETTEXT
+AM_GNU_GETTEXT_REQUIRE_VERSION([0.19])
+# This shall be ignored when AM_GNU_GETTEXT_REQUIRE_VERSION is defined
+AM_GNU_GETTEXT_VERSION([0.19])
+
+AC_CONFIG_MACRO_DIR([m4])
+
+AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([po/Makefile.in])
+AC_OUTPUT
+EOF
+
+$gettext_datadir/autopoint >autopoint.out 2>autopoint.err
+test $? = 0 || { cat autopoint.err; exit 1; }
+
+grep 'using AM_GNU_GETTEXT_REQUIRE_VERSION' autopoint.out 2>&1 >/dev/null || exit 1
+
+test -d intl || exit 1
+test -d m4 || exit 1
+test -d po || exit 1
+
+cat >autopoint.ver <<EOF
+GNU gettext library from gettext-$ARCHIVE_VERSION
+EOF
+: ${DIFF=diff}
+${DIFF} autopoint.ver intl/VERSION || exit 1
+test -f m4/po.m4 || exit 1
+test -f po/Makefile.in.in || exit 1

@@ -71,6 +71,7 @@
 #include "extractor.h"
 #include "chooselang.h"
 #include "customcontrols.h"
+#include "gexecute.h"
 #include "hidpi.h"
 #include "icons.h"
 #include "version.h"
@@ -555,7 +556,10 @@ void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
 	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
-#elif !defined(__WXOSX__)
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
+#elif defined(__WXOSX__)
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
+#else // UNIX
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetInstallPrefix() + "/share/locale");
 #endif
 
@@ -676,8 +680,9 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         { "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
         { "C#",         "*.cs" },
         { "EmacsLisp",  "*.el" },
-        { "GSettings",  "gschema.xml" },
+        { "GSettings",  "*.gschema.xml" },
         { "Glade",      "*.glade;*.glade2;*.ui" },
+        { "AppData",    "*.appdata.xml" },
         { "Java",       "*.java" },
         { "JavaScript", "*.js" },
         { "Lisp",       "*.lisp" },

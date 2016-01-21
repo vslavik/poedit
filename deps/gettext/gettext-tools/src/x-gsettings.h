@@ -28,17 +28,13 @@ extern "C" {
 #endif
 
 
-#define EXTENSIONS_GSETTINGS \
-  { "gschema.xml", "gsettings" }, \
+/* The scanner is implemented as ITS rules, in its/gsettings.its.  */
+
+#define EXTENSIONS_GSETTINGS                    \
+  { "gschema.xml", NULL }, \
 
 #define SCANNERS_GSETTINGS \
-  { "gsettings", extract_gsettings, NULL, NULL, NULL, NULL }, \
-
-/* Scan a gsettings XML file and add its translatable strings to mdlp.  */
-extern void extract_gsettings (FILE *fp, const char *real_filename,
-                               const char *logical_filename,
-                               flag_context_list_table_ty *flag_table,
-                               msgdomain_list_ty *mdlp);
+  { "gsettings", NULL, NULL, NULL, NULL, NULL }, \
 
 
 #ifdef __cplusplus

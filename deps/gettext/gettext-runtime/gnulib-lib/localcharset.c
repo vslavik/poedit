@@ -395,9 +395,11 @@ locale_charset (void)
   const char *codeset;
   const char *aliases;
 
-  /* HACK: force UTF-8 output when used from within Poedit */
-  if ( getenv("POEDIT_USE_UTF8") )
-      return "UTF-8";
+  /* Force output encoding, particularly useful for redirected output on win32
+     where charset detection fails when no actual console is attached. */
+  const char *forced_encoding = getenv("GETTEXTIOENCODING");
+  if (forced_encoding)
+      return forced_encoding;
 
 #if !(defined WINDOWS_NATIVE || defined OS2)
 

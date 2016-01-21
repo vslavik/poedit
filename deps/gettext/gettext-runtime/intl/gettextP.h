@@ -219,6 +219,9 @@ struct binding
 /* A counter which is incremented each time some previous translations
    become invalid.
    This variable is part of the external ABI of the GNU libintl.  */
+#if defined __KLIBC__ && !defined _LIBC
+# define _nl_msg_cat_cntr libintl_nl_msg_cat_cntr
+#endif
 #ifdef IN_LIBGLOCALE
 # include <glocale/config.h>
 extern LIBGLOCALE_DLL_EXPORTED int _nl_msg_cat_cntr;

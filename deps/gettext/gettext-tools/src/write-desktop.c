@@ -43,8 +43,7 @@ typedef struct msgfmt_desktop_reader_ty msgfmt_desktop_reader_ty;
 struct msgfmt_desktop_reader_ty
 {
   DESKTOP_READER_TY
-  string_list_ty *languages;
-  message_list_ty **messages;
+  msgfmt_operand_list_ty *operands;
   hash_table *keywords;
   FILE *output_file;
 };
@@ -78,13 +77,12 @@ msgfmt_desktop_handle_pair (desktop_reader_ty *reader,
           char *unescaped = desktop_unescape_string (value, is_list);
           size_t i;
 
-          for (i = 0; i < msgfmt_reader->languages->nitems; i++)
+          for (i = 0; i < msgfmt_reader->operands->nitems; i++)
             {
-              const char *language = msgfmt_reader->languages->item[i];
-              message_list_ty *mlp = msgfmt_reader->messages[i];
+              msgfmt_operand_ty *operand = &msgfmt_reader->operands->items[i];
               message_ty *mp;
 
-              mp = message_list_search (mlp, NULL, unescaped);
+              mp = message_list_search (operand->mlp, NULL, unescaped);
               if (mp && *mp->msgstr != '\0')
                 {
                   char *escaped;
@@ -92,7 +90,7 @@ msgfmt_desktop_handle_pair (desktop_reader_ty *reader,
                   escaped = desktop_escape_string (mp->msgstr, is_list);
                   fprintf (msgfmt_reader->output_file,
                            "%s[%s]=%s\n",
-                           key, language, escaped);
+                           key, operand->language, escaped);
                   free (escaped);
                 }
             }
@@ -138,8 +136,7 @@ desktop_reader_class_ty msgfmt_methods =
   };
 
 int
-msgdomain_write_desktop_bulk (string_list_ty *languages,
-                              message_list_ty **messages,
+msgdomain_write_desktop_bulk (msgfmt_operand_list_ty *operands,
                               const char *template_file_name,
                               hash_table *keywords,
                               const char *file_name)
@@ -151,8 +148,7 @@ msgdomain_write_desktop_bulk (string_list_ty *languages,
   reader = desktop_reader_alloc (&msgfmt_methods);
   msgfmt_reader = (msgfmt_desktop_reader_ty *) reader;
 
-  msgfmt_reader->languages = languages;
-  msgfmt_reader->messages = messages;
+  msgfmt_reader->operands = operands;
   msgfmt_reader->keywords = keywords;
 
   if (strcmp (file_name, "-") == 0)
@@ -163,8 +159,7 @@ msgdomain_write_desktop_bulk (string_list_ty *languages,
       if (msgfmt_reader->output_file == NULL)
         {
           desktop_reader_free (reader);
-          error (EXIT_SUCCESS,
-                 errno, _("error while opening \"%s\" for writing"),
+          error (0, errno, _("error while opening \"%s\" for writing"),
                  file_name);
           return 1;
         }
@@ -174,8 +169,7 @@ msgdomain_write_desktop_bulk (string_list_ty *languages,
   if (template_file == NULL)
     {
       desktop_reader_free (reader);
-      error (EXIT_SUCCESS,
-             errno, _("error while opening \"%s\" for reading"),
+      error (0, errno, _("error while opening \"%s\" for reading"),
              template_file_name);
       return 1;
     }
@@ -184,8 +178,11 @@ msgdomain_write_desktop_bulk (string_list_ty *languages,
 
   /* Make sure nothing went wrong.  */
   if (fwriteerror (msgfmt_reader->output_file))
-    error (EXIT_FAILURE, errno, _("error while writing \"%s\" file"),
-           file_name);
+    {
+      error (0, errno, _("error while writing \"%s\" file"),
+             file_name);
+      return 1;
+    }
 
   desktop_reader_free (reader);
 
@@ -200,27 +197,20 @@ msgdomain_write_desktop (message_list_ty *mlp,
                          hash_table *keywords,
                          const char *file_name)
 {
-  string_list_ty *languages;
-  message_list_ty **messages;
-  int retval;
+  msgfmt_operand_ty operand;
+  msgfmt_operand_list_ty operands;
 
   /* Convert the messages to Unicode.  */
   iconv_message_list (mlp, canon_encoding, po_charset_utf8, NULL);
 
-  languages = string_list_alloc ();
-  string_list_append (languages, locale_name);
+  /* Create a single-element operands and run the bulk operation on it.  */
+  operand.language = (char *) locale_name;
+  operand.mlp = mlp;
+  operands.nitems = 1;
+  operands.items = &operand;
 
-  messages = XNMALLOC (1, message_list_ty *);
-  messages[0] = mlp;
-
-  retval = msgdomain_write_desktop_bulk (languages,
-                                         messages,
-                                         template_file_name,
-                                         keywords,
-                                         file_name);
-
-  string_list_free (languages);
-  free (messages);
-
-  return retval;
+  return msgdomain_write_desktop_bulk (&operands,
+                                       template_file_name,
+                                       keywords,
+                                       file_name);
 }

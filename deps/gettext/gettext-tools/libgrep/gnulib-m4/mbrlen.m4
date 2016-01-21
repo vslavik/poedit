@@ -1,4 +1,4 @@
-# mbrlen.m4 serial 9
+# mbrlen.m4 serial 9  -*- coding: utf-8 -*-
 dnl Copyright (C) 2008, 2010-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -253,10 +253,10 @@ changequote([,])dnl
            int
            main (void)
            {
-             return mbrlen ("", 0, &mbs) == (size_t) -2;
+             return mbrlen ("", 0, &mbs) != (size_t) -2;
            }]])],
-        [gl_cv_func_mbrlen_empty_input=no],
         [gl_cv_func_mbrlen_empty_input=yes],
+        [gl_cv_func_mbrlen_empty_input=no],
         [:])
     ])
 ])

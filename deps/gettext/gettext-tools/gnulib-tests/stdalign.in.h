@@ -52,7 +52,10 @@
 #undef _Alignas
 #undef _Alignof
 
-#if !defined __STDC_VERSION__ || __STDC_VERSION__ < 201112
+/* GCC releases before GCC 4.9 had a bug in _Alignof.  See GCC bug 52023
+   <http://gcc.gnu.org/bugzilla/show_bug.cgi?id=52023>.  */
+#if (!defined __STDC_VERSION__ || __STDC_VERSION__ < 201112 \
+     || (defined __GNUC__ && __GNUC__ < 4 + (__GNUC_MINOR__ < 9)))
 # ifdef __cplusplus
 #  if 201103 <= __cplusplus
 #   define _Alignof(type) alignof (type)
@@ -64,7 +67,9 @@
 #  define _Alignof(type) offsetof (struct { char __a; type __b; }, __b)
 # endif
 #endif
-#define alignof _Alignof
+#if ! (defined __cplusplus && 201103 <= __cplusplus)
+# define alignof _Alignof
+#endif
 #define __alignof_is_defined 1
 
 /* alignas (A), also known as _Alignas (A), aligns a variable or type
@@ -99,14 +104,17 @@
          ? 4 < __GNUC__ + (1 <= __GNUC_MINOR__)                 \
          : __GNUC__)                                            \
         || __HP_cc || __HP_aCC || __IBMC__ || __IBMCPP__        \
-        || __ICC || 0x5110 <= __SUNPRO_C)
+        || __ICC || 0x590 <= __SUNPRO_C)
 #  define _Alignas(a) __attribute__ ((__aligned__ (a)))
 # elif 1300 <= _MSC_VER
 #  define _Alignas(a) __declspec (align (a))
 # endif
 #endif
-#if defined _Alignas || (defined __STDC_VERSION && 201112 <= __STDC_VERSION__)
+#if ((defined _Alignas && ! (defined __cplusplus && 201103 <= __cplusplus)) \
+     || (defined __STDC_VERSION && 201112 <= __STDC_VERSION__))
 # define alignas _Alignas
+#endif
+#if defined alignas || (defined __cplusplus && 201103 <= __cplusplus)
 # define __alignas_is_defined 1
 #endif
 
