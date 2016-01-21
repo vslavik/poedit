@@ -2058,7 +2058,7 @@ int Catalog::DoValidate(const wxString& po_file)
 void Catalog::SetFileName(const wxString& fn)
 {
     wxFileName f(fn);
-    f.Normalize();
+    f.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
     m_fileName = f.GetFullPath();
 }
 
@@ -2094,7 +2094,7 @@ wxString GetSourcesPath(const wxString& fileName, const Catalog::HeaderData& hea
     }
 
     wxFileName root = wxFileName::DirName(basepath);
-    root.Normalize();
+    root.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 
     if (kind == SourcesPath::Root)
     {
