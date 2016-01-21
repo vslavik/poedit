@@ -680,7 +680,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         { "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
         { "C#",         "*.cs" },
         { "EmacsLisp",  "*.el" },
-        { "GSettings",  "gschema.xml" },
+        { "GSettings",  "*.gschema.xml" },
         { "Glade",      "*.glade;*.glade2;*.ui" },
         { "Java",       "*.java" },
         { "JavaScript", "*.js" },
