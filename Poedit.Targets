@@ -21,7 +21,8 @@
     <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
     <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
     <GettextOutDir>$(OutDir)GettextTools\</GettextOutDir>
-    <GettextBinDir>packages\Gettext.Tools.0.19.5.1\tools\</GettextBinDir>
+    <GettextNugetDir>packages\Gettext.Tools.0.19.7.001\tools\</GettextNugetDir>
+    <GettextBinDir>$(GettextNugetDir)bin\</GettextBinDir>
     <Msgfmt>$(GettextBinDir)msgfmt.exe -c</Msgfmt>
 
     <PoDirPoedit>locales</PoDirPoedit>
@@ -48,17 +49,17 @@
     <TranslationFiles Include="$(PoDirPoedit)\*.po" />
     <TranslationFilesWX Include="$(PoDirWX)\*.po" />
     <TranslationFilesWXMSW Include="$(PoDirWXMSW)\*.po" />
-    <!--<TranslationFilesGettext Include="$(GettextDir)share\**\*.mo" />-->
   </ItemGroup>
 
   <ItemGroup>
-    <GettextFiles Include="$(GettextBinDir)\msgcat.exe" />
-    <GettextFiles Include="$(GettextBinDir)\msgfmt.exe" />
-    <GettextFiles Include="$(GettextBinDir)\msgunfmt.exe" />
-    <GettextFiles Include="$(GettextBinDir)\msguniq.exe" />
-    <GettextFiles Include="$(GettextBinDir)\msgmerge.exe" />
-    <GettextFiles Include="$(GettextBinDir)\xgettext.exe" />
-    <GettextFiles Include="$(GettextBinDir)\*.dll" />
+    <GettextBinFiles Include="$(GettextBinDir)\msgcat.exe" />
+    <GettextBinFiles Include="$(GettextBinDir)\msgfmt.exe" />
+    <GettextBinFiles Include="$(GettextBinDir)\msgunfmt.exe" />
+    <GettextBinFiles Include="$(GettextBinDir)\msguniq.exe" />
+    <GettextBinFiles Include="$(GettextBinDir)\msgmerge.exe" />
+    <GettextBinFiles Include="$(GettextBinDir)\xgettext.exe" />
+    <GettextBinFiles Include="$(GettextBinDir)\*.dll" />
+    <GettextDataFiles Include="$(GettextNugetDir)\share\**\*.*" />
   </ItemGroup>
 
 
@@ -132,21 +133,19 @@
 
 
   <Target Name="CopyGettextTools" AfterTargets="Link">
-    <Message Importance="High" Text="Copying gettext tools binaries to $(GettextOutDir) [@(TranslationFilesGettext)]" />
+    <Message Importance="High" Text="Copying gettext tools binaries to $(GettextOutDir)" />
     <MakeDir Directories="$(GettextOutDir)\bin" />
-    <!--<MakeDir Directories="$(GettextOutDir)\share" />-->
+    <MakeDir Directories="$(GettextOutDir)\share" />
     <Copy
-      SourceFiles="@(GettextFiles)"
+      SourceFiles="@(GettextBinFiles)"
       DestinationFolder="$(GettextOutDir)\bin"
       SkipUnchangedFiles="true"
     />
-    <!--
     <Copy
-      SourceFiles="@(TranslationFilesGettext)"
+      SourceFiles="@(GettextDataFiles)"
       DestinationFolder="$(GettextOutDir)\share\%(RecursiveDir)"
       SkipUnchangedFiles="true"
     />
-    -->
   </Target>
 
 </Project>
