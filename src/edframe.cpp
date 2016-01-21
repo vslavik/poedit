@@ -1000,22 +1000,27 @@ void PoeditFrame::InitSpellchecker()
 #ifndef __WXMSW__ // language choice is automatic, per-keyboard on Windows, can't fail
     if ( enabledInitially && report_problem )
     {
-        AttentionMessage msg
-        (
-            "missing-spell-dict",
-            AttentionMessage::Warning,
-            wxString::Format
+        // Some languages don't have a reasonable spellchecking method or hunspell support:
+        const bool notCapable = lang.Lang() == "zh" || lang.Lang() == "ja";
+        if (!notCapable)
+        {
+            AttentionMessage msg
             (
-                // TRANSLATORS: %s is language name in its basic form (as you
-                // would see e.g. in a list of supported languages). You may need
-                // to rephrase it, e.g. to an equivalent of "for language %s".
-                _(L"Spellchecking is disabled, because the dictionary for %s isn’t installed."),
-                lang.LanguageDisplayName()
-            )
-        );
-        msg.AddAction(_("Install"), []{ ShowSpellcheckerHelp(); });
-        msg.AddDontShowAgain();
-        m_attentionBar->ShowMessage(msg);
+                "missing-spell-dict",
+                AttentionMessage::Warning,
+                wxString::Format
+                (
+                    // TRANSLATORS: %s is language name in its basic form (as you
+                    // would see e.g. in a list of supported languages). You may need
+                    // to rephrase it, e.g. to an equivalent of "for language %s".
+                    _(L"Spellchecking is disabled, because the dictionary for %s isn’t installed."),
+                    lang.LanguageDisplayName()
+                )
+            );
+            msg.AddAction(_("Install"), []{ ShowSpellcheckerHelp(); });
+            msg.AddDontShowAgain();
+            m_attentionBar->ShowMessage(msg);
+        }
     }
 #endif // !__WXMSW__
 }
