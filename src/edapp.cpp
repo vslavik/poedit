@@ -605,7 +605,7 @@ void PoeditApp::SetupLanguage()
     const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
     g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
 
-#ifdef _WXMSW__
+#ifdef __WXMSW__
     win_sparkle_set_lang(bestTrans.utf8_str());
 #endif
 }
