@@ -66,6 +66,8 @@ wxString WrapTextAtWidth(const wxString& text_, int width, wxWindow *wnd)
     {
         UErrorCode err = U_ZERO_ERROR;
         iter.reset(icu::BreakIterator::createLineInstance(icu::Locale(), err));
+        if (!iter)
+            iter.reset(icu::BreakIterator::createLineInstance(icu::Locale::getEnglish(), err));
     }
 
     iter->setText(text);
