@@ -26,6 +26,8 @@
 #ifndef Poedit_customcontrols_h
 #define Poedit_customcontrols_h
 
+#include "language.h"
+
 #include <wx/stattext.h>
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
@@ -54,6 +56,8 @@ class AutoWrappingText : public wxStaticText
 public:
     AutoWrappingText(wxWindow *parent, const wxString& label);
 
+    void SetLanguage(Language lang) { m_language = lang; }
+
     void SetAlignment(int align);
     void SetAndWrapLabel(const wxString& label);
 
@@ -62,6 +66,7 @@ protected:
 
     wxString m_text;
     int m_wrapWidth;
+    Language m_language;
 };
 
 /// Like AutoWrappingText, but allows selecting (OS X) or at least copying (Windows)
