@@ -48,6 +48,10 @@ void Sparkle_Initialize(bool checkForBeta)
     UserDefaults_RemoveValue("SUCheckAtStartup");
 
     @autoreleasepool {
+        // For Preferences window, have default in sync with Info.plist:
+        NSDictionary *sparkleDefaults = @{ @"SUEnableAutomaticChecks": @YES };
+        [[NSUserDefaults standardUserDefaults] registerDefaults:sparkleDefaults];
+
         SUUpdater *updater = [SUUpdater sharedUpdater];
 
         /* TODO: Use feedParametersForUpdater delegate method and append ?beta=1 instead.
