@@ -1846,8 +1846,8 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         wxString dummy = data->GetFlags();
         if (!dummy.empty())
             f.AddLine(dummy);
-        for (unsigned i = 0; i < data->GetOldMsgid().GetCount(); i++)
-            f.AddLine("#| " + data->GetOldMsgid()[i]);
+        for (unsigned i = 0; i < data->GetOldMsgidRaw().GetCount(); i++)
+            f.AddLine("#| " + data->GetOldMsgidRaw()[i]);
         if ( data->HasContext() )
         {
             SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data->GetContext()) + _T("\""));
@@ -2664,4 +2664,22 @@ wxArrayString CatalogItem::GetReferences() const
     }
 
     return refs;
+}
+
+wxString CatalogItem::GetOldMsgid() const
+{
+    wxString s;
+    for (auto line: m_oldMsgid)
+    {
+        if (line.length() < 2)
+            continue;
+        if (line.Last() == '"')
+            line.RemoveLast();
+        if (line[0] == '"')
+            line.Remove(0, 1);
+        if (line.StartsWith("msgid \""))
+            line.Remove(0, 7);
+        s += UnescapeCString(line);
+    }
+    return s;
 }

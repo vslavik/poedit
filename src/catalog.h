@@ -269,7 +269,8 @@ class CatalogItem
         }
 
         void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
-        const wxArrayString& GetOldMsgid() const { return m_oldMsgid; }
+        const wxArrayString& GetOldMsgidRaw() const { return m_oldMsgid; }
+        wxString GetOldMsgid() const;
         bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
 
         // Validity (syntax-checking) status of the entry:

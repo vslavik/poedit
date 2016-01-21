@@ -145,8 +145,7 @@ public:
 
     void Update(const CatalogItemPtr& item) override
     {
-        auto txt = wxJoin(item->GetOldMsgid(), ' ', '\0');
-        m_text->SetAndWrapLabel(txt);
+        m_text->SetAndWrapLabel(item->GetOldMsgid());
     }
 
 private:
