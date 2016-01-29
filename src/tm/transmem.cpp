@@ -65,6 +65,7 @@
 #include <StringReader.h>
 #include <TokenStream.h>
 #include <TermAttribute.h>
+#include <PositionIncrementAttribute.h>
 
 using namespace Lucene;
 
@@ -399,13 +400,15 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
 
         auto stream = m_analyzer->tokenStream(sourceField, newLucene<StringReader>(source));
         int sourceTokensCount = 0;
+        int sourceTokenPosition = -1;
         while (stream->incrementToken())
         {
             sourceTokensCount++;
             auto word = stream->getAttribute<TermAttribute>()->term();
+            sourceTokenPosition += stream->getAttribute<PositionIncrementAttribute>()->getPositionIncrement();
             auto term = newLucene<Term>(sourceField, word);
             boolQ->add(newLucene<TermQuery>(term), BooleanClause::SHOULD);
-            phraseQ->add(term);
+            phraseQ->add(term, sourceTokenPosition);
         }
 
         auto searcher = m_mng->Searcher();
