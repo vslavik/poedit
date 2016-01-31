@@ -1328,8 +1328,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
         wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
         int validation_errors = 0;
         Catalog::CompilationStatus compilation_status = Catalog::CompilationStatus::NotDone;
-        if (!m_catalog->CompileToMO(fn, validation_errors, compilation_status))
-            return;
+        m_catalog->CompileToMO(fn, validation_errors, compilation_status);
 
         if (validation_errors)
         {
