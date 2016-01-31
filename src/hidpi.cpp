@@ -84,8 +84,14 @@ wxBitmap LoadScaledBitmap(const wxString& name)
             LoadPNGImage(img, filename);
         }
 
-        img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale,
-                    imgScale == 2.0 ? wxIMAGE_QUALITY_NEAREST : wxIMAGE_QUALITY_BICUBIC);
+        wxImageResizeQuality quality;
+        if (imgScale == 2.0)
+            quality = wxIMAGE_QUALITY_NEAREST;
+        else if (imgScale == 1.5)
+            quality = wxIMAGE_QUALITY_BILINEAR;
+        else
+            quality = wxIMAGE_QUALITY_BICUBIC;
+        img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale, quality);
         return wxBitmap(img);
     }
     // else: load normally
