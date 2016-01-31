@@ -1079,7 +1079,7 @@ void PoeditApp::OnQuit(wxCommandEvent&)
     // only refuses to quit if a app-modal window is open:
     for (NSWindow *w in [NSApp windows])
     {
-        if (w.sheet && w.preventsApplicationTerminationWhenModal)
+        if (w.sheet && w.visible && w.preventsApplicationTerminationWhenModal)
             return;
     }
 #endif
