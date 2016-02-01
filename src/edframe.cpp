@@ -300,6 +300,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("show_statusbar"),    PoeditFrame::OnShowHideStatusbar)
    EVT_UPDATE_UI      (XRCID("show_statusbar"),    PoeditFrame::OnUpdateShowHideStatusbar)
    EVT_MENU           (XRCID("menu_copy_from_src"), PoeditFrame::OnCopyFromSource)
+   EVT_MENU           (XRCID("menu_copy_from_singular"), PoeditFrame::OnCopyFromSingular)
    EVT_MENU           (XRCID("menu_clear"),       PoeditFrame::OnClearTranslation)
    EVT_MENU           (XRCID("menu_references"),  PoeditFrame::OnReferencesMenu)
    EVT_MENU           (wxID_FIND,                 PoeditFrame::OnFind)
@@ -338,8 +339,9 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(XRCID("go_next_unfinished"), PoeditFrame::OnSingleSelectionUpdate)
 
    EVT_UPDATE_UI(XRCID("menu_fuzzy"),         PoeditFrame::OnSelectionUpdateEditable)
-   EVT_UPDATE_UI(XRCID("menu_copy_from_src"), PoeditFrame::OnSelectionUpdateEditable)
    EVT_UPDATE_UI(XRCID("menu_clear"),         PoeditFrame::OnSelectionUpdateEditable)
+   EVT_UPDATE_UI(XRCID("menu_copy_from_src"), PoeditFrame::OnSelectionUpdateEditable)
+   EVT_UPDATE_UI(XRCID("menu_copy_from_singular"), PoeditFrame::OnSingleSelectionWithPluralsUpdate)
    EVT_UPDATE_UI(XRCID("menu_comment"),       PoeditFrame::OnEditCommentUpdate)
 
    // handling of open files:
@@ -2047,6 +2049,14 @@ void PoeditFrame::OnIDsFlag(wxCommandEvent&)
     m_list->SetDisplayLines(m_displayIDs);
 }
 
+void PoeditFrame::OnCopyFromSingular(wxCommandEvent&)
+{
+    auto current = dynamic_cast<TranslationTextCtrl*>(wxWindow::FindFocus());
+    if (!current || !m_textTransSingularForm)
+        return;
+
+    current->SetPlainTextUserWritten(m_textTransSingularForm->GetPlainText());
+}
 
 void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
 {
@@ -3711,6 +3721,14 @@ void PoeditFrame::OnSelectionUpdateEditable(wxUpdateUIEvent& event)
 void PoeditFrame::OnSingleSelectionUpdate(wxUpdateUIEvent& event)
 {
     event.Enable(m_catalog && m_list && m_list->HasSingleSelection());
+}
+
+void PoeditFrame::OnSingleSelectionWithPluralsUpdate(wxUpdateUIEvent& event)
+{
+    // Enable only if a single item with plural forms is selected
+    event.Enable(m_catalog && m_list && m_list->HasSingleSelection() &&
+                 m_pluralNotebook && m_pluralNotebook->IsShown() &&
+                 std::find(m_textTransPlural.begin(), m_textTransPlural.end(), FindFocus()) != m_textTransPlural.end());
 }
 
 void PoeditFrame::OnHasCatalogUpdate(wxUpdateUIEvent& event)

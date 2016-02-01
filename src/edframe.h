@@ -282,6 +282,7 @@ private:
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
+        void OnCopyFromSingular(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);
         void OnFind(wxCommandEvent& event);
         void OnFindAndReplace(wxCommandEvent& event);
@@ -304,6 +305,7 @@ private:
         void OnSelectionUpdate(wxUpdateUIEvent& event);
         void OnSelectionUpdateEditable(wxUpdateUIEvent& event);
         void OnSingleSelectionUpdate(wxUpdateUIEvent& event);
+        void OnSingleSelectionWithPluralsUpdate(wxUpdateUIEvent& event);
         void OnHasCatalogUpdate(wxUpdateUIEvent& event);
         void OnIsEditableUpdate(wxUpdateUIEvent& event);
         void OnEditCommentUpdate(wxUpdateUIEvent& event);
