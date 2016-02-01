@@ -236,6 +236,8 @@ class PoeditFrame : public wxFrame
         void OnNextPage(wxCommandEvent&);
         void OnPrevUnfinished(wxCommandEvent&);
         void OnNextUnfinished(wxCommandEvent&);
+        void OnPrevPluralForm(wxCommandEvent&);
+        void OnNextPluralForm(wxCommandEvent&);
 
         // Message handlers:
 public: // for PoeditApp

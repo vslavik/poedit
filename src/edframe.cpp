@@ -316,6 +316,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_next_page"),       PoeditFrame::OnNextPage)
    EVT_MENU           (XRCID("go_prev_unfinished"), PoeditFrame::OnPrevUnfinished)
    EVT_MENU           (XRCID("go_next_unfinished"), PoeditFrame::OnNextUnfinished)
+   EVT_MENU           (XRCID("go_prev_pluralform"), PoeditFrame::OnPrevPluralForm)
+   EVT_MENU           (XRCID("go_next_pluralform"), PoeditFrame::OnNextPluralForm)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
    EVT_COMMAND        (wxID_ANY, EVT_SUGGESTION_SELECTED, PoeditFrame::OnSuggestion)
    EVT_MENU           (XRCID("menu_auto_translate"), PoeditFrame::OnAutoTranslateAll)
@@ -337,6 +339,8 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(XRCID("go_next_page"),       PoeditFrame::OnSingleSelectionUpdate)
    EVT_UPDATE_UI(XRCID("go_prev_unfinished"), PoeditFrame::OnSingleSelectionUpdate)
    EVT_UPDATE_UI(XRCID("go_next_unfinished"), PoeditFrame::OnSingleSelectionUpdate)
+   EVT_UPDATE_UI(XRCID("go_prev_pluralform"), PoeditFrame::OnSingleSelectionWithPluralsUpdate)
+   EVT_UPDATE_UI(XRCID("go_next_pluralform"), PoeditFrame::OnSingleSelectionWithPluralsUpdate)
 
    EVT_UPDATE_UI(XRCID("menu_fuzzy"),         PoeditFrame::OnSelectionUpdateEditable)
    EVT_UPDATE_UI(XRCID("menu_clear"),         PoeditFrame::OnSelectionUpdateEditable)
@@ -926,6 +930,11 @@ void PoeditFrame::SetAccelerators()
         { wxACCEL_CTRL | wxACCEL_SHIFT, WXK_NUMPAD_UP,      XRCID("go_prev_unfinished") },
         { wxACCEL_CTRL | wxACCEL_SHIFT, WXK_DOWN,           XRCID("go_next_unfinished") },
         { wxACCEL_CTRL | wxACCEL_SHIFT, WXK_NUMPAD_DOWN,    XRCID("go_next_unfinished") },
+
+        { wxACCEL_CTRL | wxACCEL_ALT, WXK_LEFT,             XRCID("go_prev_pluralform") },
+        { wxACCEL_CTRL | wxACCEL_ALT, WXK_NUMPAD_LEFT,      XRCID("go_prev_pluralform") },
+        { wxACCEL_CTRL | wxACCEL_ALT, WXK_RIGHT,            XRCID("go_next_pluralform") },
+        { wxACCEL_CTRL | wxACCEL_ALT, WXK_NUMPAD_RIGHT,     XRCID("go_next_pluralform") },
 
         { wxACCEL_CTRL, WXK_UP,                 XRCID("go_prev") },
         { wxACCEL_CTRL, WXK_NUMPAD_UP,          XRCID("go_prev") },
@@ -3907,4 +3916,16 @@ void PoeditFrame::OnNextPage(wxCommandEvent&)
         return;
     auto pos = std::min(m_list->GetFirstSelected()+10, long(m_list->GetItemCount())-1);
     m_list->SelectOnly(pos);
+}
+
+void PoeditFrame::OnPrevPluralForm(wxCommandEvent&)
+{
+    m_pluralNotebook->AdvanceSelection(/*forward=*/false);
+    m_textTransPlural[m_pluralNotebook->GetSelection()]->SetFocus();
+}
+
+void PoeditFrame::OnNextPluralForm(wxCommandEvent&)
+{
+    m_pluralNotebook->AdvanceSelection(/*forward=*/true);
+    m_textTransPlural[m_pluralNotebook->GetSelection()]->SetFocus();
 }
