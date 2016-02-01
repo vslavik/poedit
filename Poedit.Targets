@@ -3,7 +3,7 @@
          ToolsVersion="4.0">
 
   <PropertyGroup>
-    <MSBuildCommunityTasksPath>$(MSBuildProjectDirectory)\packages\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
+    <MSBuildCommunityTasksPath>$(SolutionDir)\packages\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"
           Condition="Exists('$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets')" />
@@ -21,7 +21,7 @@
     <ResourcesOutDir>$(OutDir)Resources\</ResourcesOutDir>
     <TranslationsOutDir>$(OutDir)Translations\</TranslationsOutDir>
     <GettextOutDir>$(OutDir)GettextTools\</GettextOutDir>
-    <GettextNugetDir>packages\Gettext.Tools.0.19.7.001\tools\</GettextNugetDir>
+    <GettextNugetDir>$(SolutionDir)\packages\Gettext.Tools.0.19.7.001\tools\</GettextNugetDir>
     <GettextBinDir>$(GettextNugetDir)bin\</GettextBinDir>
     <Msgfmt>$(GettextBinDir)msgfmt.exe -c</Msgfmt>
 
