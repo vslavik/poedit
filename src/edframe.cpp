@@ -931,11 +931,6 @@ void PoeditFrame::SetAccelerators()
         { wxACCEL_CTRL | wxACCEL_SHIFT, WXK_DOWN,           XRCID("go_next_unfinished") },
         { wxACCEL_CTRL | wxACCEL_SHIFT, WXK_NUMPAD_DOWN,    XRCID("go_next_unfinished") },
 
-        { wxACCEL_CTRL | wxACCEL_ALT, WXK_LEFT,             XRCID("go_prev_pluralform") },
-        { wxACCEL_CTRL | wxACCEL_ALT, WXK_NUMPAD_LEFT,      XRCID("go_prev_pluralform") },
-        { wxACCEL_CTRL | wxACCEL_ALT, WXK_RIGHT,            XRCID("go_next_pluralform") },
-        { wxACCEL_CTRL | wxACCEL_ALT, WXK_NUMPAD_RIGHT,     XRCID("go_next_pluralform") },
-
         { wxACCEL_CTRL, WXK_UP,                 XRCID("go_prev") },
         { wxACCEL_CTRL, WXK_NUMPAD_UP,          XRCID("go_prev") },
         { wxACCEL_CTRL, WXK_DOWN,               XRCID("go_next") },
