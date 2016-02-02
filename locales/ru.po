@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2015-10-20 13:51+0200\n"
-"PO-Revision-Date: 2015-10-20 07:51-0400\n"
+"POT-Creation-Date: 2016-02-02 18:06+0100\n"
+"PO-Revision-Date: 2016-02-02 04:18-0500\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -31,11 +31,12 @@ msgid "%i line of file '%s' was not loaded correctly."
 msgid_plural "%i lines of file '%s' were not loaded correctly."
 msgstr[0] "%i строка файла '%s' не была загружена корректно."
 msgstr[1] "%i строк файла '%s' не была загружена корректно."
-msgstr[2] "%i строк файла '%s' не была загружена корректно."
+msgstr[2] "%i строк файла «%s» были загружены некорректно."
 
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
-msgstr "Строка %d файла '%s' повреждена (некорректные данные %s)."
+msgstr ""
+"Строка %d файла «%s» повреждена (недопустимая последовательность в %s)."
 
 #, c-format
 msgid "Malformed header: '%s'"
@@ -87,14 +88,14 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Каталог не удалось сохранить в кодировке «%s», как указано в настройках "
-"каталога.\n"
+"Каталог не удалось сохранить в кодировке «%s», как указано в его "
+"настройках.\n"
 "\n"
-"Он был сохранён в кодировке UTF-8, и настройки были изменены соответствующим "
-"образом."
+"Вместо этого он был сохранён в кодировке UTF-8 и настройки были "
+"соответственно изменены."
 
 msgid "Error saving catalog"
-msgstr "Не удалось открыть каталог"
+msgstr "Не удалось сохранить каталог"
 
 msgid "PO Translation Files"
 msgstr "Файлы перевода PO"
@@ -134,8 +135,8 @@ msgid ""
 "Crowdin is an online localization management platform and collaborative "
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
-"Crowdin - это онлайн инструмент для совместной локализации и перевода. "
-"Poedit может автоматически синхронизировать PO файлы с Crowdin."
+"Crowdin — это онлайн-платформа локализации и совместного перевода. Poedit "
+"может синхронизировать PO-файлы с Crowdin."
 
 msgid "Sign In"
 msgstr "Войти в систему"
@@ -150,7 +151,7 @@ msgid "Sign out"
 msgstr "Выйти"
 
 msgid "Waiting for authentication…"
-msgstr "Ожидание авторизации…"
+msgstr "Ожидание аутентификации…"
 
 msgid "Updating user information…"
 msgstr "Обновление информации о пользователе…"
@@ -159,10 +160,10 @@ msgid "Signed in as:"
 msgstr "Вы вошли как:"
 
 msgid "Learn More About Crowdin"
-msgstr "Узнать больше о Crowdin"
+msgstr "Подробнее о Crowdin"
 
 msgid "Learn more about Crowdin"
-msgstr "Узнать больше о Crowdin"
+msgstr "Подробнее о Crowdin"
 
 msgid "Sign in to Crowdin"
 msgstr "Войти в Crowdin"
@@ -180,18 +181,16 @@ msgid "File:"
 msgstr "Файл:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "В вашем аккаунте Crowdin нет проектов для перевода."
+msgstr "В вашей учетной записи Crowdin нет проектов перевода."
 
 msgid "This project has no files that can be translated in Poedit."
-msgstr ""
-"Этот проект не содержит файлов, которые могут быть переведены с помощью "
-"Poedit."
+msgstr "В этом проекте нет файлов, которые можно перевести в Poedit."
 
 msgid "This file can only be edited in Crowdin’s web interface."
-msgstr "Этот файл можно редактировать только в веб-интерфейсе Crowdin."
+msgstr "Этот файл можно править только в веб-интерфейсе Crowdin."
 
 msgid "Downloading latest translations…"
-msgstr "Загрузка новейших переводов…"
+msgstr "Загружаются последние переводы…"
 
 msgid "Syncing with Crowdin"
 msgstr "Синхронизация с Crowdin"
@@ -209,7 +208,7 @@ msgid "&Copy"
 msgstr "&Копировать"
 
 msgid "Learn more"
-msgstr "Узнать больше"
+msgstr "Подробнее"
 
 msgid "Learn More"
 msgstr "Узнать больше"
@@ -227,7 +226,7 @@ msgstr "Анализ файлов..."
 #. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
 #, c-format
 msgid "Parsing %s files..."
-msgstr "Анализ %s файлов..."
+msgstr "Анализ файлов %s..."
 
 msgid "Failed to load extracted catalog."
 msgstr "Не удалось загрузить извлечённый каталог."
@@ -245,14 +244,14 @@ msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"Пожалуйста, откройте и измените соответствующий PO файл. Когда вы сохраняете "
-"его, MO файл тоже обновится."
+"Вместо этого откройте и измените соответствующий файл PO. Когда вы сохраните "
+"его, файл MO тоже обновится."
 
 msgid "don't delete temporary files (for debugging)"
 msgstr "не удалять временные файлы (для отладки)"
 
 msgid "handle a poedit:// URI"
-msgstr "обработать poedit:// адрес"
+msgstr "открывать адреса poedit://"
 
 msgid "Failed to communicate with Poedit process."
 msgstr "Не удалось подключиться к процессу Poedit."
@@ -299,7 +298,7 @@ msgid "Undo"
 msgstr "Отменить"
 
 msgid "Redo"
-msgstr "Повторить"
+msgstr "Вернуть"
 
 msgid "Paste and Match Style"
 msgstr "Стиль копирования и вставки"
@@ -320,7 +319,7 @@ msgid "Check Spelling While Typing"
 msgstr "Проверять правописание во время ввода"
 
 msgid "Check Grammar With Spelling"
-msgstr "Проверять также грамматику"
+msgstr "Проверять также и грамматику"
 
 msgid "Correct Spelling Automatically"
 msgstr "Автоматически исправлять ошибки правописания"
@@ -350,13 +349,13 @@ msgid "Transformations"
 msgstr "Преобразования"
 
 msgid "Make Upper Case"
-msgstr "В верхний регистр"
+msgstr "ПРОПИСНЫМИ"
 
 msgid "Make Lower Case"
-msgstr "В нижний регистр"
+msgstr "строчными"
 
 msgid "Capitalize"
-msgstr "Перевести в верхний регистр"
+msgstr "С Заглавной Буквы"
 
 msgid "Speech"
 msgstr "Речь"
@@ -389,15 +388,14 @@ msgid "PO Translation"
 msgstr "Файл перевода PO"
 
 msgid "The file cannot be opened."
-msgstr "Файл не удаётся открыть."
+msgstr "Не удается открыть файл."
 
 msgid "Invalid file"
 msgstr "Недопустимый файл"
 
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
-msgstr ""
-"Файл, возможно, повреждён или имеет формат, не поддерживаемый в Poedit."
+msgstr "Файл, возможно, повреждён или имеет формат, не поддерживаемый Poedit."
 
 msgid "&Undo"
 msgstr "&Отменить"
@@ -424,10 +422,10 @@ msgid "&Delete"
 msgstr "&Удалить"
 
 msgid "Select &All"
-msgstr "Выбрать &Все"
+msgstr "Выбрать &все"
 
 msgid "Select All"
-msgstr "Выбрать Все"
+msgstr "Выбрать все"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
@@ -499,7 +497,7 @@ msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
 "To make a translation, create a new PO file based on the template."
 msgstr ""
-"Файлы POT являются шаблонами и не содержат в себе никаких переводов.\n"
+"Файлы POT являются шаблонами и не содержат переводов.\n"
 "Чтобы сделать перевод создайте файл PO из шаблона."
 
 msgid "Create New Translation"
@@ -517,9 +515,9 @@ msgid ""
 "Poedit needs Windows 8 or newer for spellchecking, but you only have Windows "
 "7. Microsoft is offering free upgrades to Windows 10 until July 29, 2016."
 msgstr ""
-"Для проверки орфографии PoEdit необходима Windows 8 или более поздней "
-"версии, но у вас есть только Windows 7. Microsoft предлагает бесплатное "
-"обновления Windows 10 до 29 июля 2016 года."
+"Для проверки орфографии Poedit необходима Windows 8 или более поздней "
+"версии, но у вас только Windows 7. Microsoft предлагает бесплатное "
+"обновление до Windows 10 до 29 июля 2016 года."
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -564,7 +562,7 @@ msgid "Export as..."
 msgstr "Экспортировать как..."
 
 msgid "HTML Files"
-msgstr "HTML-файлы"
+msgstr "Файлы HTML"
 
 msgid "Open catalog template"
 msgstr "Открыть шаблон каталога"
@@ -573,7 +571,7 @@ msgid "Updating catalog"
 msgstr "Обновление каталога"
 
 msgid "Source code not available."
-msgstr "Исходный код не доступен."
+msgstr "Исходный код недоступен."
 
 msgid "Updating failed"
 msgstr "Не удалось обновить"
@@ -624,7 +622,7 @@ msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
-"Файл был сохранён, но его не удаётся скомпилировать в формат MO и "
+"Файл был сохранён, но его не удалось скомпилировать в формат MO и "
 "использовать."
 
 msgid ""
@@ -647,7 +645,7 @@ msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "Перевод готов к использованию, но %d запись ещё не переведена."
-msgstr[1] "Перевод готов к использованию, но %d записей ещё не переведено."
+msgstr[1] "Перевод готов к использованию, но %d записи ещё не переведено."
 msgstr[2] "Перевод готов к использованию, но %d записей ещё не переведено."
 
 msgid "The translation is ready for use."
@@ -666,16 +664,16 @@ msgid ""
 "should review translations of any items marked as fuzzy and correct them if "
 "necessary."
 msgstr ""
-"Этот файл содержал в себе повторяющиеся элементы, которые не разрешаются в "
-"PO-файлах и предотвращают файл от использования. Poedit исправил их, но "
-"следует просмотреть переводы всех элементов, помеченные как неточные и "
-"исправить их при необходимости."
+"Этот файл содержал в себе повторяющиеся элементы, которые недопустимы в "
+"файлах PO и могли бы помешать его использованию. Poedit исправил проблему, "
+"но следует просмотреть все переводы, помеченные как неточные, и исправить их "
+"при необходимости."
 
 msgid "Language of the translation isn't set."
 msgstr "Язык перевода ещё не указан."
 
 msgid "Set Language"
-msgstr "Выбрать язык"
+msgstr "Выбор языка"
 
 msgid "Set language"
 msgstr "Задать язык"
@@ -685,8 +683,8 @@ msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
-"Предложения не доступны, если язык перевода не установлен. Другие функции, "
-"такие как формы множественного числа, также могут быть затронуты."
+"Предложения недоступны, пока не выбран язык перевода. Также не будут "
+"поддерживаться формы множественного числа и другие функции."
 
 msgid "Language of the translation is the same as source language."
 msgstr "Язык перевода совпадает с исходным языком."
@@ -731,7 +729,7 @@ msgstr "Исправить заголовок"
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr ""
 "Выражение формы множественного числа, используемое в каталоге, является "
-"необычным для %s."
+"необычным для языка %s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
 msgid "Review"
@@ -753,7 +751,7 @@ msgstr "Осталось: %d"
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] "%d ошибка"
-msgstr[1] "%d ошибок"
+msgstr[1] "%d ошибки"
 msgstr[2] "%d ошибок"
 
 #, c-format
@@ -777,19 +775,19 @@ msgid "Failed to update translation memory: %s"
 msgstr "Не удалось обновить память переводов: %s"
 
 msgid "Purge deleted translations"
-msgstr "Уничтожить удалённые переводы"
+msgstr "Убрать удалённые переводы"
 
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Действительно удалить все больше неиспользуемые переводы?"
+msgstr "Действительно удалить все неиспользуемые переводы?"
 
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
 "permanently removed. You will have to translate them again if they are added "
 "back in the future."
 msgstr ""
-"Если продолжить этот процесс, все переводы, помеченные как удалённые, будут "
-"безвозвратно удалены. Если они будут добавлены обратно в будущем, их "
-"придётся повторно переводить."
+"Если продолжить, то все переводы, помеченные как удалённые, будут "
+"безвозвратно удалены. Если они будут повторно добавлены в будущем, их "
+"придётся заново переводить."
 
 msgid "Keep"
 msgstr "Оставить"
@@ -807,17 +805,18 @@ msgid ""
 "By default, inaccurate results are filled in as well and marked as fuzzy. "
 "Check this option to only include accurate matches."
 msgstr ""
-"По-умолчанию не полностью совпадающие результаты также будут заполнены и "
-"помечены неточными."
+"По умолчанию не полностью совпадающие результаты также будут заполнены и "
+"помечены как неточные. Отметьте этот вариант, чтобы заполнять только полные "
+"совпадения."
 
 msgid "Don’t mark exact matches as fuzzy"
-msgstr "Не помечать точные совпадения неточными"
+msgstr "Не помечать полные совпадения как неточные"
 
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as fuzzy and should be reviewed."
 msgstr ""
-"Включите это только если вы уверены в качестве вашей памяти переводов. По-"
+"Включите это только если вы уверены в качестве вашей памяти переводов. По "
 "умолчанию все совпадения из памяти переводов отмечаются как неточные и "
 "подлежат проверке."
 
@@ -829,7 +828,7 @@ msgid "%d entry was filled from the translation memory."
 msgid_plural "%d entries were filled from the translation memory."
 msgstr[0] "Из памяти переводов была взята %d запись."
 msgstr[1] "Из памяти переводов были взяты %d записи."
-msgstr[2] "Из памяти переводов были взяты %d записи."
+msgstr[2] "Из памяти переводов были взяты %d записей."
 
 msgid ""
 "The translations were marked as fuzzy, because they may be inaccurate. You "
@@ -844,15 +843,15 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
-"Память переводов не содержит никаких строк, похожих на содержимое этого "
-"файла. Она подходит только для полуавтоматического перевода после того, как "
-"Poedit соберёт достаточно данных из файлов, которые вы перевели вручную."
+"Память переводов не содержит строк, похожих на содержимое этого файла. Она "
+"подходит только для полуавтоматического перевода после того, как Poedit "
+"соберёт достаточно данных из файлов, которые вы перевели вручную."
 
 msgid "Translating"
 msgstr "Выполняется перевод"
 
 msgid "Filling missing translations from TM..."
-msgstr "Автоматический перевод на основе &памяти переводов"
+msgstr "Автоматический перевод на основе памяти переводов..."
 
 #, c-format
 msgid "Translated %u string"
@@ -874,13 +873,13 @@ msgid "Clear Translation"
 msgstr "Удалить перевод"
 
 msgid "Edit comment"
-msgstr "Редактирование комментария"
+msgstr "Править комментарий"
 
 msgid "Edit Comment"
-msgstr "Редактирование комментария"
+msgstr "Править комментарий"
 
 msgid "References:"
-msgstr "Связи:"
+msgstr "Ссылки:"
 
 msgid "Everything"
 msgstr "Всё"
@@ -978,7 +977,7 @@ msgstr "Нет упоминаний для выбранного элемента
 
 #, c-format
 msgid "Error opening file %s!"
-msgstr "Не удалось открыть файл %s"
+msgstr "Не удалось открыть файл «%s»!"
 
 msgid "Find"
 msgstr "Искать"
@@ -991,7 +990,7 @@ msgid "Options"
 msgstr "Параметры"
 
 msgid "Ignore case"
-msgstr "Игнорировать регистр"
+msgstr "Не учитывать регистр"
 
 msgid "Wrap around"
 msgstr "Искать по кругу"
@@ -1000,7 +999,7 @@ msgid "Whole words only"
 msgstr "Только полные слова"
 
 msgid "Find in source texts"
-msgstr "Найти в исходных текстах"
+msgstr "Искать в исходных текстах"
 
 msgid "Find in translations"
 msgstr "Искать в переводах"
@@ -1021,13 +1020,13 @@ msgid "< &Previous"
 msgstr "< &Предыдущий"
 
 msgid "&Next >"
-msgstr "&Далее >"
+msgstr "&Следующий >"
 
 msgid "String to find"
 msgstr "Искомая строка"
 
 msgid "Replacement string"
-msgstr "Замена"
+msgstr "Строка замены"
 
 #, c-format
 msgid "Cannot execute program: %s"
@@ -1043,7 +1042,7 @@ msgid "Language of the translation:"
 msgstr "Язык перевода:"
 
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - диспетчер каталогов"
+msgstr "Poedit — диспетчер каталогов"
 
 msgid "Catalog"
 msgstr "Каталог"
@@ -1103,7 +1102,7 @@ msgid ""
 "of GNU gettext files."
 msgstr ""
 "Ваше имя и почта будут использоваться только при указании последнего "
-"переводчика в заголовках GNU gettext файлов."
+"переводчика в заголовках файлов GNU gettext."
 
 msgid "Editing"
 msgstr "Редактирование"
@@ -1115,20 +1114,19 @@ msgid "Show summary after catalog update"
 msgstr "Показывать сводку после обновления каталога"
 
 msgid "Check spelling"
-msgstr "Проверить правописание"
+msgstr "Проверять правописание"
 
 msgid "Always change focus to text input field"
-msgstr "Всегда делать активным поле для ввода текста"
+msgstr "Всегда переключаться на поле ввода текста"
 
 msgid ""
 "Never let the list of strings take focus. If enabled, you must use Ctrl-"
 "arrows for keyboard navigation but you can also type text immediately, "
 "without having to press Tab to change focus."
 msgstr ""
-"Никогда не делать активным список со строками Если включено, для перемещения "
-"с помощью клавиатуры необходимо использовать CTRL+стрелки. Этот параметр "
-"также позволяет вводить текст немедленно, без предварительного нажатия "
-"клавиши TAB для переключения фокуса."
+"Не фокусироваться на списке строк. Если включено, для перемещения с помощью "
+"клавиатуры необходимо нажимать Ctrl+стрелки, но при этом можно вводить текст "
+"немедленно, без переключения фокуса клавишей Tab."
 
 msgid "Appearance"
 msgstr "Внешний вид"
@@ -1137,7 +1135,7 @@ msgid "Use custom list font:"
 msgstr "Использовать настраиваемый шрифт для списка:"
 
 msgid "Use custom text fields font:"
-msgstr "Использовать настраиваемый шрифт для полей ввода:"
+msgstr "Шрифт полей ввода:"
 
 msgid "Change UI language"
 msgstr "Изменить язык интерфейса"
@@ -1156,7 +1154,7 @@ msgid "Learn From Files..."
 msgstr "Собрать из файлов..."
 
 msgid "Learn from files..."
-msgstr "Изучить файлы..."
+msgstr "Собрать из файлов..."
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
@@ -1173,11 +1171,11 @@ msgid ""
 msgstr ""
 "Если включено, Poedit попытается автоматически перевести новые строки, "
 "используя накопленную память переводов. Если память переводов содержит мало "
-"данных, толку от этого будет мало. Чем больше переводов вы редактируете, тем "
-"больше становится память переводов и тем больше она помогает."
+"данных, толку от этого будет мало. Чем больше вы переводите, тем больше "
+"становится память переводов и тем больше она помогает."
 
 msgid "Stored translations:"
-msgstr "Сохранённые переводы:"
+msgstr "Сохраненных переводов:"
 
 msgid "Database size on disk:"
 msgstr "Размер базы данных на диске:"
@@ -1224,7 +1222,7 @@ msgstr ""
 "кода и извлекают их так, чтобы их можно было перевести."
 
 msgid "New"
-msgstr "Новый"
+msgstr "Создать"
 
 msgid "Edit"
 msgstr "Править"
@@ -1234,7 +1232,7 @@ msgstr "Удалить экстрактор"
 
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
-msgstr "Вы уверены, что хотите удалить экстрактор \"%s\"?"
+msgstr "Вы уверены, что хотите удалить экстрактор «%s»?"
 
 msgid "Extractors"
 msgstr "Экстракторы"
@@ -1280,10 +1278,10 @@ msgid "Wrap at:"
 msgstr "Перенос:"
 
 msgid "Preserve formatting of existing files"
-msgstr "Использовать форматирование существующего файла"
+msgstr "Сохранять форматирование существующих файлов"
 
 msgid "Advanced"
-msgstr "Расширенные параметры"
+msgstr "Дополнительно"
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1292,7 +1290,7 @@ msgid ""
 msgstr ""
 "<big>Перетащите папки сюда</big>\n"
 "\n"
-"или используйте кнопку +"
+"или нажмите кнопку +"
 
 msgid ""
 "<big>Drag and drop folders here</big>\n"
@@ -1301,7 +1299,7 @@ msgid ""
 msgstr ""
 "<big>Перетащите папки сюда</big>\n"
 "\n"
-"или используйте кнопку +"
+"или нажмите кнопку +"
 
 msgid "Add Folders..."
 msgstr "Добавить папки..."
@@ -1358,7 +1356,7 @@ msgid "Create new translations project"
 msgstr "Создать новый проект переводов"
 
 msgid "Edit the project"
-msgstr "Редактировать проект"
+msgstr "Править проект"
 
 msgid "Delete the project"
 msgstr "Удалить проект"
@@ -1370,7 +1368,7 @@ msgid "Update all catalogs in the project"
 msgstr "Обновить все каталоги в этом проекте"
 
 msgid "Edit project"
-msgstr "Редактирование проекта"
+msgstr "Правка проекта"
 
 msgid "Project name:"
 msgstr "Название проекта:"
@@ -1438,6 +1436,12 @@ msgstr "&Диспетчер каталогов"
 msgid "Catalogs &Manager"
 msgstr "&Диспетчер каталогов"
 
+msgid "Copy from singular"
+msgstr "Копировать форму единственного числа"
+
+msgid "Copy From Singular"
+msgstr "Копировать форму единственного числа"
+
 msgid "Translation is &fuzzy"
 msgstr "Неточный п&еревод"
 
@@ -1445,19 +1449,19 @@ msgid "Translation Is &Fuzzy"
 msgstr "Неточный п&еревод"
 
 msgid "Edit &comment"
-msgstr "Редактировать &комментарий"
+msgstr "Править &комментарий"
 
 msgid "Edit &Comment"
-msgstr "Редактировать &комментарий"
+msgstr "Править &комментарий"
 
 msgid "Suggestions"
 msgstr "Предложения"
 
 msgid "&Show references"
-msgstr "&Показать связи"
+msgstr "&Показать ссылки"
 
 msgid "&Show References"
-msgstr "&Показать связи"
+msgstr "&Показать ссылки"
 
 msgid "&Find..."
 msgstr "&Найти..."
@@ -1517,13 +1521,13 @@ msgid "Entries with errors first"
 msgstr "Сперва отображать записи с ошибками"
 
 msgid "Entries with Errors First"
-msgstr "Сперва отображать записи с Ошибками"
+msgstr "Показывать записи с ошибками в начале"
 
 msgid "&Untranslated entries first"
-msgstr "Сначала &непереведённые записи"
+msgstr "Показывать &непереведённые записи в начале"
 
 msgid "&Untranslated Entries First"
-msgstr "Сначала &непереведённые записи"
+msgstr "Показывать &непереведённые записи в начале"
 
 msgid "Show sidebar"
 msgstr "Показать боковую панель"
@@ -1541,19 +1545,19 @@ msgid "&Update from Sources"
 msgstr "&Обновить из исходного кода"
 
 msgid "Update from &POT file..."
-msgstr "Обновить из &POT-файла..."
+msgstr "Обновить из файла &POT..."
 
 msgid "Update from &POT File..."
-msgstr "Обновить из &POT-файла..."
+msgstr "Обновить из файла &POT..."
 
 msgid "Sync with Crowdin"
 msgstr "Синхронизировать с Crowdin"
 
 msgid "Fill missing translations from &TM..."
-msgstr "Заполнить перевод из памяти переводов..."
+msgstr "Заполнить непереведенное из памяти переводов..."
 
 msgid "Fill Missing Translations from &TM..."
-msgstr "Заполнить перевод из памяти переводов..."
+msgstr "Заполнить непереведенное из памяти переводов..."
 
 msgid "&Purge deleted translations"
 msgstr "&Уничтожить удалённые переводы"
@@ -1600,11 +1604,23 @@ msgstr "С&ледующий незаконченный"
 msgid "Ne&xt Unfinished"
 msgstr "С&ледующий незаконченный"
 
+msgid "Previous plural form"
+msgstr "Предыдущая форма множественного числа"
+
+msgid "Previous Plural Form"
+msgstr "Предыдущая форма множественного числа"
+
+msgid "Next plural form"
+msgstr "Следующая форма множественного числа"
+
+msgid "Next Plural Form"
+msgstr "Следующая форма множественного числа"
+
 msgid "&Online help"
-msgstr "&Справка в Интернете"
+msgstr "&Справка в интернете"
 
 msgid "&Online Help"
-msgstr "&Справка в Интернете"
+msgstr "&Справка в интернете"
 
 msgid "&GNU gettext manual"
 msgstr "&Руководство по GNU gettext"
@@ -1720,11 +1736,11 @@ msgid ""
 "Use these keywords (function names) to recognize translatable strings\n"
 "in source files:"
 msgstr ""
-"Используйте эти ключевые слова (имена функций) для поиска переводимых строк "
-"в исходных файлах:"
+"Искать переводимые строки в исходных файлах по этим ключевым словам (именам "
+"функций):"
 
 msgid "Learn about gettext keywords"
-msgstr "Узнать больше о ключевых словах gettext"
+msgstr "Подробнее о ключевых словах gettext"
 
 msgid "Update summary"
 msgstr "Сводка об обновлении"
@@ -1733,7 +1749,7 @@ msgid ""
 "These strings were found in the sources but were not in the catalog.\n"
 "Poedit will add them to the catalog now."
 msgstr ""
-"Эти строки были найдены в оригинале, но они отсутствуют в каталоге.\n"
+"Эти строки были найдены в исходных файлах, но они отсутствуют в каталоге.\n"
 "Poedit сейчас добавит их в каталог."
 
 msgid "New strings"
@@ -1743,7 +1759,7 @@ msgid ""
 "These strings are no longer in the sources.\n"
 "Poedit will remove them from the catalog now."
 msgstr ""
-"Этих строк больше нет в оригинале.\n"
+"Этих строк больше нет в исходных файлах.\n"
 "Poedit сейчас удалит их из каталога."
 
 msgid "Obsolete strings"
@@ -1784,7 +1800,7 @@ msgid ""
 "The old source text (before it changed during an update) that the fuzzy "
 "translation corresponds to."
 msgstr ""
-"Старый исходный текст (до обновления), которому соответствует нечеткий "
+"Старый исходный текст (до обновления), которому соответствует неточный "
 "перевод."
 
 msgid "Notes for translators:"
@@ -1837,7 +1853,7 @@ msgid ""
 "have lots of translations stored, but should normally be much faster."
 msgstr ""
 "Это необходимо сделать перед запуском Poedit. Если у вас сохранено много "
-"переводов, на это может потребоваться несколько минут. Но обычно это "
+"переводов, на это может потребоваться несколько минут, но обычно это "
 "выполняется намного быстрее."
 
 msgid "Proceed"
@@ -1865,15 +1881,15 @@ msgid "Welcome to Poedit"
 msgstr "Добро пожаловать в Poedit"
 
 msgid "Edit a translation"
-msgstr "Редактирование перевода"
+msgstr "Правка перевода"
 
 msgid "Open an existing PO file and edit the translation."
-msgstr "Открыть существующий PO-файл и редактировать перевод."
+msgstr "Открыть имеющийся файл PO и править перевод."
 
 msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
-msgstr "Создание перевода на основе существующего PO-файла или POT-шаблона."
+msgstr "Создать перевод на основе имеющегося файла PO или шаблона POT."
 
 msgid "Collaborate on a translation with Crowdin"
 msgstr "Помочь переводу на Crowdin"
@@ -1881,7 +1897,7 @@ msgstr "Помочь переводу на Crowdin"
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
 msgstr ""
-"Скачать файл из Crowdin проекта, перевести его и выгрузить изменения обратно."
+"Скачать файл из проекта Crowdin, перевести его и выгрузить изменения обратно."
 
 msgid "What is Crowdin?"
 msgstr "Что такое Crowdin?"
@@ -1903,16 +1919,16 @@ msgstr ""
 "для них разработчик."
 
 msgid "(Learn more about GNU gettext)"
-msgstr "(Узнать больше о GNU gettext)"
+msgstr "(Подробнее о GNU gettext)"
 
 msgid "The simplest way to fill this catalog is to update it from a POT:"
-msgstr "Самый простой способ перевести этот каталог — обновить его из POT:"
+msgstr "Самый простой способ заполнить этот каталог — обновить его из POT:"
 
 msgid "Update from POT"
 msgstr "Обновить из POT-файла"
 
 msgid "Take translatable strings from an existing POT template."
-msgstr "Извлечение переводимых строк из существующего POT-шаблона."
+msgstr "Извлечь переводимые строки из имеющегося шаблона POT."
 
 msgid ""
 "You can also extract translatable strings directly from the source code:"
