@@ -44,7 +44,9 @@
 // in the version after it completely.
 //
 // Recommended setting: 0 (please update your code)
-#define WXWIN_COMPATIBILITY_2_8 1
+#define WXWIN_COMPATIBILITY_2_8 0
+
+#define WXWIN_COMPATIBILITY_3_0 0
 
 // MSW-only: Set to 0 for accurate dialog units, else 1 for old behaviour when
 // default system font is used for wxWindow::GetCharWidth/Height() instead of
@@ -308,6 +310,19 @@
     #define wxUSE_STD_DEFAULT  1
 #endif
 
+// Use standard C++ containers where it can be done without breaking backwards
+// compatibility.
+//
+// This provides better interoperability with the standard library, e.g. with
+// this option on it's possible to insert std::vector<> into many wxWidgets
+// containers directly.
+//
+// Default is 1.
+//
+// Recommended setting is 1 unless you want to avoid all dependencies on the
+// standard library.
+#define wxUSE_STD_CONTAINERS_COMPATIBLY 1
+
 // Use standard C++ containers to implement wxVector<>, wxStack<>, wxDList<>
 // and wxHashXXX<> classes. If disabled, wxWidgets own (mostly compatible but
 // usually more limited) implementations are used which allows to avoid the
@@ -429,6 +444,9 @@
 //
 // Recommended setting: 1 (but may be safely disabled if you don't use it)
 #define wxUSE_FSVOLUME      1
+
+// Recommended setting: 1 (but may be safely disabled if you don't use it)
+#define wxUSE_SECRETSTORE   0
 
 // Use wxStandardPaths class which allows to retrieve some standard locations
 // in the file system
@@ -762,6 +780,24 @@
 
 #define wxUSE_GRAPHICS_CONTEXT 1
 
+// FIXME: Disable once Windows XP / Vista is not supported
+#define wxUSE_GRAPHICS_GDIPLUS 1
+
+// Enable support for Direct2D-based implementation of wxGraphicsContext.
+//
+// Default is 1 for compilers which support it, i.e. VC10+ currently. If you
+// use an earlier MSVC version or another compiler and installed the necessary
+// SDK components manually, you need to change this setting.
+//
+// Recommended setting: 1 for faster and better quality graphics under Windows
+// 7 and later systems (if wxUSE_GRAPHICS_GDIPLUS is also enabled, earlier
+// systems will fall back on using GDI+).
+#if defined(_MSC_VER) && _MSC_VER >= 1600
+    #define wxUSE_GRAPHICS_DIRECT2D wxUSE_GRAPHICS_CONTEXT
+#else
+    #define wxUSE_GRAPHICS_DIRECT2D 0
+#endif
+
 // Enable wxGraphicsContext implementation using Cairo library.
 //
 // This is not needed under Windows and detected automatically by configure
@@ -821,6 +857,7 @@
 // Default is 1
 //
 // Recommended setting: 1
+#define wxUSE_ACTIVITYINDICATOR 1
 #define wxUSE_ANIMATIONCTRL 1   // wxAnimationCtrl
 #define wxUSE_BANNERWINDOW  1   // wxBannerWindow
 #define wxUSE_BUTTON        1   // wxButton
@@ -990,6 +1027,8 @@
 // wxHeaderCtrl)
 #define wxUSE_REARRANGECTRL 1
 
+#define wxUSE_ADDREMOVECTRL 0
+
 // ----------------------------------------------------------------------------
 // Miscellaneous GUI stuff
 // ----------------------------------------------------------------------------
@@ -1076,7 +1115,7 @@
 // Default is 1.
 //
 // Recommended setting: 1
-#define wxUSE_NOTIFICATION_MESSAGE 1
+#define wxUSE_NOTIFICATION_MESSAGE 0
 
 // wxPreferencesEditor provides a common API for different ways of presenting
 // the standard "Preferences" or "Properties" dialog under different platforms
@@ -1200,6 +1239,10 @@
 
 // progress dialog class for lengthy operations
 #define wxUSE_PROGRESSDLG 1
+
+// Set to 0 to disable the use of the native progress dialog (currently only
+// available under MSW and suffering from some bugs there, hence this option).
+#define wxUSE_NATIVE_PROGRESSDLG 1
 
 // support for startup tips (wxShowTip &c)
 #define wxUSE_STARTUP_TIPS 1
@@ -1533,6 +1576,19 @@
 // Recommended setting: 1, required by wxMediaCtrl
 #define wxUSE_ACTIVEX 1
 
+// Enable WinRT support
+//
+// Default is 1 for compilers which support it, i.e. VS2012+ currently. If you
+// use an earlier MSVC version or another compiler and installed the necessary
+// SDK components manually, you need to change this setting.
+//
+// Recommended setting: 1
+#if defined(_MSC_VER) && _MSC_VER >= 1700 && !defined(_USING_V110_SDK71_)
+    #define wxUSE_WINRT 1
+#else
+    #define wxUSE_WINRT 0
+#endif
+
 // wxDC caching implementation
 #define wxUSE_DC_CACHEING 1
 
@@ -1588,6 +1644,7 @@
 //
 // Recommended setting: 1, set to 0 for a tiny library size reduction
 #define wxUSE_TASKBARICON_BALLOONS 1
+#define wxUSE_TASKBARBUTTON 0
 
 // Set to 1 to compile MS Windows XP theme engine support
 #define wxUSE_UXTHEME           1
@@ -1625,6 +1682,18 @@
 // ----------------------------------------------------------------------------
 // Crash debugging helpers
 // ----------------------------------------------------------------------------
+
+// Set this to 1 to use dbghelp.dll for providing stack traces in crash
+// reports.
+//
+// Default is 1 if the compiler supports it, 0 for old MinGW.
+//
+// Recommended setting: 1, there is not much gain in disabling this
+#if defined(__VISUALC__) || defined(__MINGW64_TOOLCHAIN__)
+    #define wxUSE_DBGHELP 1
+#else
+    #define wxUSE_DBGHELP 0
+#endif
 
 // Set this to 1 to be able to use wxCrashReport::Generate() to create mini
 // dumps of your program when it crashes (or at any other moment)
@@ -1681,6 +1750,8 @@
 // make sure we have the proper dispatcher for the console event loop
 #define wxUSE_SELECT_DISPATCHER 1
 #define wxUSE_EPOLL_DISPATCHER 0
+
+#define wxUSE_XTEST 0
 
 #endif
 
