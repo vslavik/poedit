@@ -73,7 +73,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
               [
                   AC_MSG_CHECKING([for libcpprest >= 2.5])
                   old_LIBS="$LIBS"
-                  LIBS="-lcpprest $LIBS"
+                  LIBS="-lcpprest -lboost_system -lssl -lcrypto $LIBS"
                   AC_LINK_IFELSE([AC_LANG_PROGRAM(
                       [
                           #include <cpprest/version.h>
@@ -96,7 +96,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
 AS_IF([test "x$have_cpprest" = "xyes"],
       [
           AC_DEFINE([HAVE_HTTP_CLIENT])
-          CPPREST_LIBS="-lcpprest"
+          CPPREST_LIBS="-lcpprest -lboost_system -lssl -lcrypto"
           AC_SUBST(CPPREST_LIBS)
           PKG_CHECK_MODULES([LIBSECRET], [libsecret-1], [
               CXXFLAGS="$CXXFLAGS $LIBSECRET_CFLAGS"
