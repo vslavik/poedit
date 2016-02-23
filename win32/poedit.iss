@@ -30,8 +30,8 @@
 
 #include "../" + CONFIG + "/git_build_number.h"
 
-#define VERSION          "1.8.7"
-#define VERSION_FULL     "1.8.7"
+#define VERSION          "1.8.7.1"
+#define VERSION_FULL     "1.8.7.1"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
