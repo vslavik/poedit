@@ -176,6 +176,8 @@ const DisplayNamesData& GetDisplayNamesData()
             {
                 if (strcmp(script, "Latn") == 0)
                     code += "@latin";
+                else if (strcmp(script, "Cyrl") == 0)
+                    code += "@cyrillic";
             }
             
             s.foldCase();
@@ -422,8 +424,9 @@ wxString Language::DisplayNameInItself() const
 
 wxString Language::FormatForRoundtrip() const
 {
-    // TODO: Can't show variants nicely yet, not standardized
-    if (!Variant().empty())
+    // Can't show all variants nicely, but some common one can be
+    auto v = Variant();
+    if (!v.empty() && v != "latin" && v != "cyrillic")
         return m_code;
 
     wxString disp = DisplayName();

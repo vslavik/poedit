@@ -54,7 +54,7 @@ public:
     std::string RFC3066() const;
 
     /// Returns name of the locale suitable for ICU
-    std::string IcuLocaleName() const { return LangAndCountry(); }
+    std::string IcuLocaleName() const { return RFC3066(); }
     /// Returns ICU equivalent of the language info
     icu::Locale ToIcu() const;
 
