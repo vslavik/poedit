@@ -255,12 +255,19 @@ std::string Language::Variant() const
 
 std::string Language::RFC3066() const
 {
-    auto c = Country();
     auto l = Lang();
-    if (c.empty())
-        return l;
-    else
-        return l + "-" + c;
+    auto c = Country();
+    auto v = Variant();
+
+    auto code = l;
+    if (v == "latin")
+        code += "-Latn";
+    else if (v == "cyrillic")
+        code += "-Cyrl";
+    if (!c.empty())
+        code += "-" + c;
+
+    return code;
 }
 
 
