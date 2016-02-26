@@ -231,8 +231,12 @@ std::string Language::Country() const
     const size_t pos = m_code.find('_');
     if (pos == std::string::npos)
         return std::string();
+
+    const size_t endpos = m_code.rfind('@');
+    if (endpos == std::string::npos)
+        return m_code.substr(pos+1);
     else
-        return m_code.substr(pos+1, m_code.rfind('@'));
+        return m_code.substr(pos+1, endpos - (pos+1));
 }
 
 std::string Language::LangAndCountry() const
@@ -246,7 +250,7 @@ std::string Language::Variant() const
     if (pos == std::string::npos)
         return std::string();
     else
-        return m_code.substr(0, pos);
+        return m_code.substr(pos + 1);
 }
 
 std::string Language::RFC3066() const
