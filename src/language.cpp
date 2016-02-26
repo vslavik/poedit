@@ -255,7 +255,7 @@ std::string Language::Variant() const
         return m_code.substr(pos + 1);
 }
 
-std::string Language::RFC3066() const
+std::string Language::LanguageTag() const
 {
     auto l = Lang();
     auto c = Country();
@@ -502,7 +502,7 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
         if (probableLanguage.Lang() == "en")
             hints.language_hint = ENGLISH;
         else
-            hints.language_hint = GetLanguageFromName(probableLanguage.RFC3066().c_str());
+            hints.language_hint = GetLanguageFromName(probableLanguage.LanguageTag().c_str());
     }
 
     // three best guesses; we don't care, but they must be passed in

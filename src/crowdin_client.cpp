@@ -232,7 +232,7 @@ void CrowdinClient::DownloadFile(const std::string& project_id, const std::wstri
     auto url = "/api/project/" + project_id + "/export-file"
                    "?json="
                    "&export_translated_only=1"
-                   "&language=" + lang.RFC3066() +
+                   "&language=" + lang.LanguageTag() +
                    "&file=" + http_client::url_encode(file);
     m_api->download(url, output_file, onSuccess, onError);
 }
@@ -247,7 +247,7 @@ void CrowdinClient::UploadFile(const std::string& project_id, const std::wstring
 
     multipart_form_data data;
     data.add_value("json", "");
-    data.add_value("language", lang.RFC3066());
+    data.add_value("language", lang.LanguageTag());
     data.add_value("import_duplicates", "0");
     data.add_value("import_eq_suggestions", "0");
     data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
