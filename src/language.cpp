@@ -215,8 +215,54 @@ const DisplayNamesData& GetDisplayNamesData()
     return data;
 }
 
+std::string DoGetLanguageTag(const Language& lang)
+{
+    auto l = lang.Lang();
+    auto c = lang.Country();
+    auto v = lang.Variant();
+
+    auto tag = l;
+    if (v == "latin")
+        tag += "-Latn";
+    else if (v == "cyrillic")
+        tag += "-Cyrl";
+    if (!c.empty())
+        tag += "-" + c;
+    return tag;
+}
+
+bool DoIsRTL(const Language& lang)
+{
+#if U_ICU_VERSION_MAJOR_NUM >= 51
+    auto locale = lang.IcuLocaleName();
+    UErrorCode err = U_ZERO_ERROR;
+    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
+    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
+        return false; // fallback
+    return uscript_isRightToLeft(codes[0]);
+#else
+    return false; // fallback
+#endif
+}
+
 } // anonymous namespace
 
+
+void Language::Init(const std::string& code)
+{
+    m_code = code;
+
+    if (IsValid())
+    {
+        m_tag = DoGetLanguageTag(*this);
+        m_isRTL = DoIsRTL(*this);
+    }
+    else
+    {
+        m_tag.clear();
+        m_isRTL = false;
+    }
+}
 
 bool Language::IsValidCode(const std::wstring& s)
 {
@@ -254,24 +300,6 @@ std::string Language::Variant() const
     else
         return m_code.substr(pos + 1);
 }
-
-std::string Language::LanguageTag() const
-{
-    auto l = Lang();
-    auto c = Country();
-    auto v = Variant();
-
-    auto code = l;
-    if (v == "latin")
-        code += "-Latn";
-    else if (v == "cyrillic")
-        code += "-Cyrl";
-    if (!c.empty())
-        code += "-" + c;
-
-    return code;
-}
-
 
 Language Language::TryParse(const std::wstring& s)
 {
@@ -369,25 +397,6 @@ std::string Language::DefaultPluralFormsExpr() const
         return i->second;
 
     return std::string();
-}
-
-
-bool Language::IsRTL() const
-{
-    if (!IsValid())
-        return false; // fallback
-
-#if U_ICU_VERSION_MAJOR_NUM >= 51
-    auto locale = IcuLocaleName();
-
-    UErrorCode err = U_ZERO_ERROR;
-    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
-    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
-        return false; // fallback
-    return uscript_isRightToLeft(codes[0]);
-#else
-    return false;
-#endif
 }
 
 
