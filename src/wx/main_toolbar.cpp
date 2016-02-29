@@ -26,6 +26,7 @@
 #include "main_toolbar.h"
 
 #include <wx/intl.h>
+#include <wx/settings.h>
 #include <wx/toolbar.h>
 #include <wx/xrc/xmlres.h>
 
@@ -44,7 +45,13 @@ public:
         int osmajor = 0;
         if (wxGetOsVersion(&osmajor, nullptr) == wxOS_WINDOWS_NT && osmajor == 10)
         {
-            m_tb->SetBackgroundColour(*wxWHITE);
+            auto menuClr = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR);
+            // Windows 10 lies about this color. Check it for the default value, which is
+            // a shade of gray even though the menubar is actually white, and change it to
+            // white. This way other colors, e.g. from hi-contrast themes, will be preserved.
+            if (menuClr.GetRGB() == 0xF0F0F0)
+                menuClr.SetRGB(0xFFFFFF);
+            m_tb->SetBackgroundColour(menuClr);
         }
 #endif
     }
