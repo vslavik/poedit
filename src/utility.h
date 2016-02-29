@@ -65,6 +65,35 @@
     #define BORDER_OSX(dir, n) Border(dir, 0)
 #endif
 
+
+// ----------------------------------------------------------------------
+// Platform version checks
+// ----------------------------------------------------------------------
+
+#ifdef __WXMSW__
+
+inline bool IsWindows10OrGreater()
+{
+    int osmajor = 0;
+    return wxGetOsVersion(&osmajor, nullptr) == wxOS_WINDOWS_NT && osmajor >= 10;
+}
+
+inline bool IsWindowsXP()
+{
+    int osmajor = 0;
+    wxGetOsVersion(&osmajor, nullptr);
+    return osmajor < 6;
+}
+
+inline bool IsWindows7OrGreater()
+{
+    int verMaj, verMin;
+    wxGetOsVersion(&verMaj, &verMin);
+    return verMaj > 6 || (verMaj == 6 && verMin >= 1);
+}
+
+#endif // __WXMSW__
+
 // ----------------------------------------------------------------------
 // Misc helpers
 // ----------------------------------------------------------------------

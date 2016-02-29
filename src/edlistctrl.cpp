@@ -29,6 +29,7 @@
 #include "hidpi.h"
 #include "language.h"
 #include "cat_sorting.h"
+#include "utility.h"
 
 #include <wx/wx.h>
 #include <wx/imaglist.h>
@@ -175,9 +176,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 #ifdef __WXMSW__
     // On Windows 7, shaded list items make it impossible to see the selection,
     // so use different color for it (see bug #336).
-    int verMaj, verMin;
-    wxGetOsVersion(&verMaj, &verMin);
-    if ( verMaj > 6 || (verMaj == 6 && verMin >= 1) )
+    if (IsWindows7OrGreater())
     {
         shaded.Set(int(0.99 * shaded.Red()),
                    int(0.99 * shaded.Green()),

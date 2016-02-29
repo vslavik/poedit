@@ -25,6 +25,8 @@
 
 #include "main_toolbar.h"
 
+#include "utility.h"
+
 #include <wx/intl.h>
 #include <wx/settings.h>
 #include <wx/toolbar.h>
@@ -42,8 +44,7 @@ public:
 
 #ifdef __WXMSW__
         // De-uglify the toolbar a bit on Windows 10:
-        int osmajor = 0;
-        if (wxGetOsVersion(&osmajor, nullptr) == wxOS_WINDOWS_NT && osmajor == 10)
+        if (IsWindows10OrGreater())
         {
             auto menuClr = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR);
             // Windows 10 lies about this color. Check it for the default value, which is
