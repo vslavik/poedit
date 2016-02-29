@@ -468,19 +468,23 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
         else
             orig = d->GetString();
 
+        orig = orig.substr(0, GetMaxColChars());
+
         // Add RTL Unicode mark to render bidi texts correctly
         if (m_appIsRTL)
-            return L"\u202a" + orig.substr(0,GetMaxColChars());
+            return L"\u202a" + orig;
         else
-            return orig.substr(0,GetMaxColChars());
+            return orig;
     }
     else if (column == m_colTrans)
     {
+        auto trans = d->GetTranslation().substr(0, GetMaxColChars());
+
         // Add RTL Unicode mark to render bidi texts correctly
         if (m_isRTL && !m_appIsRTL)
-            return L"\u202b" + d->GetTranslation();
+            return L"\u202b" + trans;
         else
-            return d->GetTranslation();
+            return trans;
     }
     else if (column == m_colId)
     {
