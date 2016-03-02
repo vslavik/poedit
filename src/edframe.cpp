@@ -47,6 +47,10 @@
 #include <wx/dnd.h>
 #include <wx/windowptr.h>
 
+#ifdef __WXMSW__
+#include <Dwmapi.h> 
+#endif
+
 #ifdef __WXOSX__
 #import <AppKit/NSDocumentController.h>
 #include "osx_helpers.h"
@@ -570,6 +574,20 @@ PoeditFrame::PoeditFrame() :
 #ifdef __WXOSX__
     NSWindow *wnd = (NSWindow*)GetWXWindow();
     [wnd setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+#endif
+
+#ifdef __WXMSW__
+    if (IsWindows10OrGreater())
+    {
+        // This is a terrible, terrible hack to reduce a 2px line between menu
+        // and toolbar to 1px only.
+        MARGINS margins;
+        margins.cxLeftWidth = 0;
+        margins.cxRightWidth = 0;
+        margins.cyBottomHeight = 0;
+        margins.cyTopHeight = PX(20);
+        DwmExtendFrameIntoClientArea(GetHWND(), &margins);
+    }
 #endif
 }
 
