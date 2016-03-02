@@ -54,6 +54,8 @@ public:
                 menuClr.SetRGB(0xFFFFFF);
             m_tb->SetBackgroundColour(menuClr);
         }
+        if (!IsWindowsXP())
+            m_tb->SetDoubleBuffered(true);
 #endif
     }
 

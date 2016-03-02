@@ -688,7 +688,11 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
                                 wxLC_REPORT,
                                 m_displayIDs);
 
-    m_bottomPanel = new wxPanel(m_splitter);
+    m_bottomPanel = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER | DoubleBufferingWindowStyle());
+#ifdef __WXMSW__
+    if (!IsWindowsXP())
+	    m_bottomPanel->SetDoubleBuffered(true);
+#endif
 
     wxStaticText *labelSource =
         new wxStaticText(m_bottomPanel, -1, _("Source text:"));

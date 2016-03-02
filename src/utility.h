@@ -94,6 +94,15 @@ inline bool IsWindows7OrGreater()
 
 #endif // __WXMSW__
 
+inline int DoubleBufferingWindowStyle()
+{
+#ifdef __WXMSW__
+    return IsWindowsXP() ? 0 : wxFULL_REPAINT_ON_RESIZE;
+#else
+    return 0;
+#endif
+}
+
 // ----------------------------------------------------------------------
 // Misc helpers
 // ----------------------------------------------------------------------

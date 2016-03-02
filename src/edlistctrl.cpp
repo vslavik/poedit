@@ -147,6 +147,13 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
                const wxString &name)
      : wxListView(parent, id, pos, size, style | wxLC_VIRTUAL, validator, name)
 {
+#ifdef __WXMSW__
+    if (wxApp::GetComCtl32Version() >= 600)
+    {
+        ::SendMessage(GetHwnd(), LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
+    }
+#endif
+
     m_displayIDs = dispIDs;
 
     m_isRTL = false;

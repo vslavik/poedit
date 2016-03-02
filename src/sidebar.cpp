@@ -31,6 +31,7 @@
 #include "concurrency.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "utility.h"
 
 #include "tm/suggestions.h"
 #include "tm/transmem.h"
@@ -733,11 +734,16 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
 
 Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
-    : wxPanel(parent, wxID_ANY),
+    : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER | DoubleBufferingWindowStyle()),
       m_catalog(nullptr),
       m_selectedItem(nullptr)
 {
     SetBackgroundColour(SIDEBAR_BACKGROUND);
+#ifdef __WXMSW__
+    if (!IsWindowsXP())
+        SetDoubleBuffered(true);
+#endif
+
     Bind(wxEVT_PAINT, &Sidebar::OnPaint, this);
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
