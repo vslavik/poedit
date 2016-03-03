@@ -121,10 +121,10 @@ void Catalog::ExportToHTML(std::ostream& f)
 
     std::string lang_src, lang_tra;
     if (m_sourceLanguage.IsValid())
-        lang_src = " lang='" + m_sourceLanguage.RFC3066() + "'";
+        lang_src = " lang='" + m_sourceLanguage.LanguageTag() + "'";
     if (m_header.Lang.IsValid())
     {
-        lang_tra = " lang='" + m_header.Lang.RFC3066() + "'";
+        lang_tra = " lang='" + m_header.Lang.LanguageTag() + "'";
         if (m_header.Lang.IsRTL())
             lang_tra += " dir='rtl'";
     }

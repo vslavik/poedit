@@ -50,11 +50,11 @@ public:
     /// Returns optional variant (after @, e.g. 'latin', typically empty)
     std::string Variant() const;
 
-    /// Return code formatted as in RFC 3066, e.g. en-US
-    std::string RFC3066() const;
+    /// Return language tag for the language, per BCP 47, e.g. en-US or sr-Latn
+    std::string LanguageTag() const { return m_tag; }
 
     /// Returns name of the locale suitable for ICU
-    std::string IcuLocaleName() const { return LangAndCountry(); }
+    std::string IcuLocaleName() const { return LanguageTag(); }
     /// Returns ICU equivalent of the language info
     icu::Locale ToIcu() const;
 
@@ -91,7 +91,7 @@ public:
     std::string DefaultPluralFormsExpr() const;
 
     /// Returns true if the language is written right-to-left.
-    bool IsRTL() const;
+    bool IsRTL() const { return m_isRTL; }
 
     /**
         Tries to parse the string as language identification.
@@ -153,12 +153,15 @@ public:
     bool operator!=(const Language& other) const { return m_code != other.m_code; }
     bool operator<(const Language& other) const { return m_code < other.m_code; }
 
-protected:
-    Language(const std::string& code) : m_code(code) {}
-    Language(const std::wstring& code) : m_code(code.begin(), code.end()) {}
+private:
+    Language(const std::string& code) { Init(code); }
+    Language(const std::wstring& code) { Init(std::string(code.begin(), code.end())); }
+    void Init(const std::string& code);
 
 private:
     std::string m_code;
+    std::string m_tag;
+    bool m_isRTL;
 };
 
 #endif // Poedit_language_h

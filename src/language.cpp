@@ -176,6 +176,8 @@ const DisplayNamesData& GetDisplayNamesData()
             {
                 if (strcmp(script, "Latn") == 0)
                     code += "@latin";
+                else if (strcmp(script, "Cyrl") == 0)
+                    code += "@cyrillic";
             }
             
             s.foldCase();
@@ -213,8 +215,54 @@ const DisplayNamesData& GetDisplayNamesData()
     return data;
 }
 
+std::string DoGetLanguageTag(const Language& lang)
+{
+    auto l = lang.Lang();
+    auto c = lang.Country();
+    auto v = lang.Variant();
+
+    auto tag = l;
+    if (v == "latin")
+        tag += "-Latn";
+    else if (v == "cyrillic")
+        tag += "-Cyrl";
+    if (!c.empty())
+        tag += "-" + c;
+    return tag;
+}
+
+bool DoIsRTL(const Language& lang)
+{
+#if U_ICU_VERSION_MAJOR_NUM >= 51
+    auto locale = lang.IcuLocaleName();
+    UErrorCode err = U_ZERO_ERROR;
+    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
+    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
+        return false; // fallback
+    return uscript_isRightToLeft(codes[0]);
+#else
+    return false; // fallback
+#endif
+}
+
 } // anonymous namespace
 
+
+void Language::Init(const std::string& code)
+{
+    m_code = code;
+
+    if (IsValid())
+    {
+        m_tag = DoGetLanguageTag(*this);
+        m_isRTL = DoIsRTL(*this);
+    }
+    else
+    {
+        m_tag.clear();
+        m_isRTL = false;
+    }
+}
 
 bool Language::IsValidCode(const std::wstring& s)
 {
@@ -231,8 +279,12 @@ std::string Language::Country() const
     const size_t pos = m_code.find('_');
     if (pos == std::string::npos)
         return std::string();
+
+    const size_t endpos = m_code.rfind('@');
+    if (endpos == std::string::npos)
+        return m_code.substr(pos+1);
     else
-        return m_code.substr(pos+1, m_code.rfind('@'));
+        return m_code.substr(pos+1, endpos - (pos+1));
 }
 
 std::string Language::LangAndCountry() const
@@ -246,19 +298,8 @@ std::string Language::Variant() const
     if (pos == std::string::npos)
         return std::string();
     else
-        return m_code.substr(0, pos);
+        return m_code.substr(pos + 1);
 }
-
-std::string Language::RFC3066() const
-{
-    auto c = Country();
-    auto l = Lang();
-    if (c.empty())
-        return l;
-    else
-        return l + "-" + c;
-}
-
 
 Language Language::TryParse(const std::wstring& s)
 {
@@ -359,25 +400,6 @@ std::string Language::DefaultPluralFormsExpr() const
 }
 
 
-bool Language::IsRTL() const
-{
-    if (!IsValid())
-        return false; // fallback
-
-#if U_ICU_VERSION_MAJOR_NUM >= 51
-    auto locale = IcuLocaleName();
-
-    UErrorCode err = U_ZERO_ERROR;
-    UScriptCode codes[10]= {USCRIPT_INVALID_CODE};
-    if (uscript_getCode(locale.c_str(), codes, 10, &err) == 0 || err != U_ZERO_ERROR)
-        return false; // fallback
-    return uscript_isRightToLeft(codes[0]);
-#else
-    return false;
-#endif
-}
-
-
 icu::Locale Language::ToIcu() const
 {
     if (!IsValid())
@@ -411,8 +433,9 @@ wxString Language::DisplayNameInItself() const
 
 wxString Language::FormatForRoundtrip() const
 {
-    // TODO: Can't show variants nicely yet, not standardized
-    if (!Variant().empty())
+    // Can't show all variants nicely, but some common one can be
+    auto v = Variant();
+    if (!v.empty() && v != "latin" && v != "cyrillic")
         return m_code;
 
     wxString disp = DisplayName();
@@ -488,7 +511,7 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
         if (probableLanguage.Lang() == "en")
             hints.language_hint = ENGLISH;
         else
-            hints.language_hint = GetLanguageFromName(probableLanguage.RFC3066().c_str());
+            hints.language_hint = GetLanguageFromName(probableLanguage.LanguageTag().c_str());
     }
 
     // three best guesses; we don't care, but they must be passed in
