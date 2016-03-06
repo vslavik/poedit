@@ -521,6 +521,9 @@ wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
             case '\t':
                 s2 += "\\t";
                 break;
+            case '\a':
+                s2 += "\\a";
+                break;
             case '\0':
                 s2 += "\\0";
                 break;
@@ -573,6 +576,9 @@ wxString AnyTranslatableTextCtrl::UnescapePlainText(const wxString& s)
                     break;
                 case 't':
                     s2 += '\t';
+                    break;
+                case 'a':
+                    s2 += '\a';
                     break;
                 case '0':
                     s2 += '\0';
