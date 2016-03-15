@@ -1187,14 +1187,24 @@ void PoeditFrame::OnCloseWindow(wxCloseEvent& event)
     if (event.CanVeto() && NeedsToAskIfCanDiscardCurrentDoc())
     {
 #ifdef __WXOSX__
-        // Veto the event by default, the window-modally ask for permission.
+        // Veto the event by default, then window-modally ask for permission.
         // If it turns out that the window can be closed, the completion handler
         // will do it:
         event.Veto();
-#endif
         DoIfCanDiscardCurrentDoc([=]{
             Destroy();
         });
+#else // !__WXOSX__
+        // DoIfCanDiscardCurentDoc() doesn't have on-failure callback and
+        // so we instead veto preemtively and then un-veto it. Note that this
+        // only works because on non-OSX platforms the question dialog is
+        // modal and the code below called immediately.
+        event.Veto();
+        DoIfCanDiscardCurrentDoc([=, &event]{
+            event.Veto(false);
+            Destroy();
+        });
+#endif
     }
     else // can't veto
     {
