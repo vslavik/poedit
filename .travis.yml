@@ -21,6 +21,9 @@ script:
     # don't build directly, create a tarball first and try building from that
     - ./bootstrap && ./configure && make dist && make distcheck
 
+after_failure:
+    - test -f Makefile || cat config.log
+
 git:
     submodules: false
 
