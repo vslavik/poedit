@@ -1,3 +1,6 @@
+sudo: required
+dist: trusty
+
 language: cpp
 
 compiler: gcc
@@ -5,19 +8,15 @@ compiler: gcc
 before_install:
     # dependencies for building Poedit on old Ubuntu:
     - sudo add-apt-repository -y ppa:vslavik/poedit
-    # get a decent C++11 compiler too:
-    - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
+    - sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
+    - sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.2/ubuntu/ trusty universe'
     - sudo apt-get update -qq
 
 install:
     - sudo apt-get install -qq --no-install-recommends asciidoc xsltproc xmlto
-    - sudo apt-get install -qq libexpat1-dev libdb++-dev libboost-dev libboost-regex-dev libboost-system-dev liblucene++-dev libicu-dev libwxgtk3.0-dev libgtk2.0-dev libgtkspell-dev
-    # install g++ 4.8, if tests are run with g++
-    - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-4.8; fi
-    - if [ "$CXX" == "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50; fi
+    - sudo apt-get install -qq libexpat1-dev libdb++-dev libboost-dev libboost-{system,regex,thread,iostreams}-dev liblucene++-dev libicu-dev libwxgtk3.0-dev libgtk2.0-dev libgtkspell-dev
 
 script:
-    - $CXX --version
     - scripts/travis-check-translations.sh
     # don't build directly, create a tarball first and try building from that
     - ./bootstrap && ./configure && make dist && make distcheck
