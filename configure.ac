@@ -57,23 +57,32 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
 esac
 
 
+AX_BOOST_BASE([1.54], [], [AC_MSG_ERROR([Boost libraries are required])])
+AX_BOOST_SYSTEM
+AX_BOOST_REGEX
+CXXFLAGS="$CXXFLAGS $BOOST_CPPFLAGS"
+
+
 dnl Check for C++REST SDK used for online features
 AC_ARG_WITH([cpprest],
     AS_HELP_STRING([--without-cpprest], [Ignore presence of C++ REST SDK and disable it]))
 
 AS_IF([test "x$with_cpprest" != "xno"],
       [
+      AX_BOOST_IOSTREAMS
+      AX_BOOST_THREAD
+
       have_cpprest=no
       dnl C++11 check above modified CXXFLAGS, but AC_CHECK_HEADERS needs
       dnl it for this header too and it uses only the preprocessor in one
       dnl of its two phases:
       old_CPPFLAGS="$CPPFLAGS"
-      CPPFLAGS="$CPPFLAGS $CXXFLAGS"
+      CPPFLAGS="$CPPFLAGS $CXXFLAGS $BOOST_CPPFLAGS"
           AC_CHECK_HEADERS([cpprest/http_client.h],
               [
                   AC_MSG_CHECKING([for libcpprest >= 2.5])
                   old_LIBS="$LIBS"
-                  LIBS="-lcpprest -lboost_system -lssl -lcrypto $LIBS"
+                  LIBS="-lcpprest $BOOST_SYSTEM_LIB $BOOST_THREAD_LIB -lssl -lcrypto $LIBS"
                   AC_LINK_IFELSE([AC_LANG_PROGRAM(
                       [
                           #include <cpprest/version.h>
@@ -96,7 +105,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
 AS_IF([test "x$have_cpprest" = "xyes"],
       [
           AC_DEFINE([HAVE_HTTP_CLIENT])
-          CPPREST_LIBS="-lcpprest -lboost_system -lssl -lcrypto"
+          CPPREST_LIBS="-lcpprest $BOOST_IOSTREAMS_LIB $BOOST_THREAD_LIB $BOOST_SYSTEM_LIB -lssl -lcrypto"
           AC_SUBST(CPPREST_LIBS)
           PKG_CHECK_MODULES([LIBSECRET], [libsecret-1], [
               CXXFLAGS="$CXXFLAGS $LIBSECRET_CFLAGS"

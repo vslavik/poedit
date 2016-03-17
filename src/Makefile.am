@@ -23,7 +23,7 @@ CROWDIN_SUPPORT_SRC = \
                  crowdin_client.h crowdin_client.cpp \
                  crowdin_gui.h crowdin_gui.cpp \
                  keychain/keytar_posix.cc keychain/keytar.h
-CROWDIN_SUPPORT_LIBS = -lboost_iostreams $(CPPREST_LIBS) $(LIBSECRET_LIBS)
+CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS) $(LIBSECRET_LIBS)
 endif
 
 poedit_SOURCES = attentionbar.cpp attentionbar.h \
@@ -59,7 +59,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
 poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) $(CLD2_LIBS) $(CROWDIN_SUPPORT_LIBS) \
-               -lboost_regex -lboost_system
+               $(BOOST_LDFLAGS) $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \
 		$(srcdir)/resources/menus.xrc \
