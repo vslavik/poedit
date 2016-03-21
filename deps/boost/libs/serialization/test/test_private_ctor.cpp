@@ -16,6 +16,7 @@
 #include <boost/archive/text_oarchive.hpp>
 
 class V {
+private:
     friend int test_main(int /* argc */, char * /* argv */[]);
     friend class boost::serialization::access;
     int m_i;    
@@ -28,6 +29,7 @@ class V {
     {
         ar & m_i;
     }
+public:
     bool operator==(const V & v) const {
         return m_i == v.m_i;
     }
@@ -47,5 +49,18 @@ int test_main(int /* argc */, char * /* argv */[])
         ia >> v1;
     }
     BOOST_CHECK(v == v1);
+
+    const V *vptr = & v;
+    {
+        boost::archive::text_oarchive oa(ss);
+        oa << vptr;
+    }
+    V *vptr1;
+    {
+        boost::archive::text_iarchive ia(ss);
+        ia >> vptr1;
+    }
+    BOOST_CHECK(*vptr == *vptr1);
+
     return EXIT_SUCCESS;
 }

@@ -4,7 +4,7 @@
 <title>Some Miscellaneous Examples of the Normal (Gaussian) Distribution</title>
 <link rel="stylesheet" href="../../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../normal_example.html" title="Normal Distribution Examples">
 <link rel="prev" href="../normal_example.html" title="Normal Distribution Examples">
 <link rel="next" href="../inverse_chi_squared_eg.html" title="Inverse Chi-Squared Distribution Bayes Example">
@@ -433,7 +433,7 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
 <p>
             Now we are getting really close, but to do the job properly, we could
             use root finding method, for example the tools provided, and used elsewhere,
-            in the Math Toolkit, see <a class="link" href="../../../internals1/roots2.html" title="Root Finding Without Derivatives: Bisection, Bracket and TOMS748">root-finding
+            in the Math Toolkit, see <a class="link" href="../../../roots/roots_noderiv.html" title="Root Finding Without Derivatives">root-finding
             without derivatives</a>.
           </p>
 <p>
@@ -452,7 +452,7 @@ Fraction 3 standard deviations within either side of mean is 0.997300203936740
 <span class="keyword">double</span> <span class="identifier">qp</span> <span class="special">=</span> <span class="identifier">quantile</span><span class="special">(</span><span class="identifier">s</span><span class="special">,</span> <span class="number">0.95</span><span class="special">);</span>
 <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"prob = "</span> <span class="special">&lt;&lt;</span> <span class="identifier">prob</span> <span class="special">&lt;&lt;</span> <span class="string">", quantile(p) "</span> <span class="special">&lt;&lt;</span> <span class="identifier">qp</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span> <span class="comment">// p = 0.241971, quantile(p) 1.64485</span>
 <span class="comment">// Rearranging, we can directly calculate the required standard deviation:</span>
-<span class="keyword">double</span> <span class="identifier">sd95</span> <span class="special">=</span> <span class="identifier">abs</span><span class="special">((</span><span class="identifier">x</span> <span class="special">-</span> <span class="identifier">mean</span><span class="special">))</span> <span class="special">/</span> <span class="identifier">qp</span><span class="special">;</span>
+<span class="keyword">double</span> <span class="identifier">sd95</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">abs</span><span class="special">((</span><span class="identifier">x</span> <span class="special">-</span> <span class="identifier">mean</span><span class="special">))</span> <span class="special">/</span> <span class="identifier">qp</span><span class="special">;</span>
 
 <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"If we want the "</span><span class="special">&lt;&lt;</span> <span class="identifier">p</span> <span class="special">&lt;&lt;</span> <span class="string">" th quantile to be located at "</span>
   <span class="special">&lt;&lt;</span> <span class="identifier">x</span> <span class="special">&lt;&lt;</span> <span class="string">", would need a standard deviation of "</span> <span class="special">&lt;&lt;</span> <span class="identifier">sd95</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>

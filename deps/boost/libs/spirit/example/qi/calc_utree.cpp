@@ -31,7 +31,7 @@
 namespace boost { namespace phoenix 
 {
     // There's a bug in the Phoenix V2 type deduction mechanism that prevents 
-    // correct return type deduction for for the math operations below. Newer
+    // correct return type deduction for the math operations below. Newer
     // versions of Phoenix will be switching to BOOST_TYPEOF. In the meantime, 
     // we will use the specializations helping with return type deduction 
     // below:

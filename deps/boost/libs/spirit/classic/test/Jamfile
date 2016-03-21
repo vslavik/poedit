@@ -175,7 +175,7 @@ local multi-threading = <library>/boost/thread//boost_thread
         ;
 
     test-suite "spirit.classic.utility.actors"
-        : [ spirit-run actor/$(actor_test_sources).cpp ]
+        : [ spirit-run actor/$(actor_test_sources).cpp : : : <library>/boost/system//boost_system ]
         ;
 
     test-suite "spirit.classic.typeof-support"

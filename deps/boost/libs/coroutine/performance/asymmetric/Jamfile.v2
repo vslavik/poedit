@@ -16,14 +16,18 @@ import toolset ;
 project boost/coroutine/performance/asymmetric
     : requirements
       <library>/boost/chrono//boost_chrono
+      <library>/boost/context//boost_context
       <library>/boost/coroutine//boost_coroutine
       <library>/boost/program_options//boost_program_options
-      <cxxflags>-DBOOST_DISABLE_ASSERTS
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>gcc,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-fsplit-stack
+      <toolset>clang,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
       <link>static
-      <optimization>speed
       <threading>multi
-      <variant>release
       <cxxflags>-DBOOST_DISABLE_ASSERTS
+      <optimization>speed
+      <variant>release
     ;
 
 alias sources

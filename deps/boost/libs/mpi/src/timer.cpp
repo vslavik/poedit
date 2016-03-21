@@ -13,7 +13,7 @@ bool timer::time_is_global()
   int* is_global;
   int found = 0;
 
-  BOOST_MPI_CHECK_RESULT(MPI_Attr_get,
+  BOOST_MPI_CHECK_RESULT(MPI_Comm_get_attr,
                          (MPI_COMM_WORLD, MPI_WTIME_IS_GLOBAL, &is_global,
                           &found));
   if (!found)

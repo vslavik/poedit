@@ -150,9 +150,9 @@ namespace
     }
   }
 
-  //  Compile-only tests not intended to be executed -----------------------------------//
+  //  misc_test ------------------------------------------------------------------------//
 
-  void compile_only()
+  void misc_test()
   {
     fs::path p;
 
@@ -214,6 +214,7 @@ int cpp_main(int /*argc*/, char* /*argv*/[])
   BOOST_TEST(!fs::is_regular(ng));  // verify deprecated name still works
   BOOST_TEST(!fs::symbolic_link_exists("nosuchfileordirectory"));
 
+  misc_test();
   path_rename_test();
   normalize_test();
  

@@ -27,7 +27,7 @@
 #include <boost/container/detail/mpl.hpp>
 #include <boost/container/detail/type_traits.hpp>
 #include <boost/container/detail/mpl.hpp>
-#include <boost/container/detail/type_traits.hpp>
+#include <boost/container/detail/std_fwd.hpp>
 #include <boost/move/adl_move_swap.hpp> //swap
 
 #include <boost/intrusive/detail/minimal_pair_header.hpp>      //pair
@@ -58,37 +58,25 @@ struct is_pair< std::pair<T1, T2> >
    static const bool value = true;
 };
 
-struct pair_nat;
-
-struct piecewise_construct_t { };
-static const piecewise_construct_t piecewise_construct = piecewise_construct_t();
-
-/*
-template <class T1, class T2>
-struct pair
+template <class T>
+struct is_not_pair
 {
-    template <class U, class V> pair(pair<U, V>&& p);
-    template <class... Args1, class... Args2>
-        pair(piecewise_construct_t, tuple<Args1...> first_args,
-             tuple<Args2...> second_args);
-
-    template <class U, class V> pair& operator=(const pair<U, V>& p);
-    pair& operator=(pair&& p) noexcept(is_nothrow_move_assignable<T1>::value &&
-                                       is_nothrow_move_assignable<T2>::value);
-    template <class U, class V> pair& operator=(pair<U, V>&& p);
-
-    void swap(pair& p) noexcept(noexcept(swap(first, p.first)) &&
-                                noexcept(swap(second, p.second)));
+   static const bool value = !is_pair<T>::value;
 };
 
-template <class T1, class T2> bool operator==(const pair<T1,T2>&, const pair<T1,T2>&);
-template <class T1, class T2> bool operator!=(const pair<T1,T2>&, const pair<T1,T2>&);
-template <class T1, class T2> bool operator< (const pair<T1,T2>&, const pair<T1,T2>&);
-template <class T1, class T2> bool operator> (const pair<T1,T2>&, const pair<T1,T2>&);
-template <class T1, class T2> bool operator>=(const pair<T1,T2>&, const pair<T1,T2>&);
-template <class T1, class T2> bool operator<=(const pair<T1,T2>&, const pair<T1,T2>&);
-*/
+template <class T>
+struct is_std_pair
+{
+   static const bool value = false;
+};
 
+template <class T1, class T2>
+struct is_std_pair< std::pair<T1, T2> >
+{
+   static const bool value = true;
+};
+
+struct pair_nat;
 
 template <class T1, class T2>
 struct pair
@@ -182,10 +170,11 @@ struct pair
    }
 
    template <class D, class S>
-   typename ::boost::container::container_detail::enable_if_c
-      < !(::boost::container::container_detail::is_same<T1, D>::value &&
-          ::boost::container::container_detail::is_same<T2, S>::value)
-      , pair &>::type
+   typename ::boost::container::container_detail::disable_if_or
+      < pair &
+      , ::boost::container::container_detail::is_same<T1, D>
+      , ::boost::container::container_detail::is_same<T2, S>
+      >::type
       operator=(const pair<D, S>&p)
    {
       first  = p.first;
@@ -194,18 +183,18 @@ struct pair
    }
 
    template <class D, class S>
-   typename ::boost::container::container_detail::enable_if_c
-      < !(::boost::container::container_detail::is_same<T1, D>::value &&
-          ::boost::container::container_detail::is_same<T2, S>::value)
-      , pair &>::type
+   typename ::boost::container::container_detail::disable_if_or
+      < pair &
+      , ::boost::container::container_detail::is_same<T1, D>
+      , ::boost::container::container_detail::is_same<T2, S>
+      >::type
       operator=(BOOST_RV_REF_BEG pair<D, S> BOOST_RV_REF_END p)
    {
       first  = ::boost::move(p.first);
       second = ::boost::move(p.second);
       return *this;
    }
-
-   //std::pair copy assignment
+//std::pair copy assignment
    pair& operator=(const std::pair<T1, T2> &p)
    {
       first  = p.first;

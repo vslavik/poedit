@@ -1,5 +1,5 @@
 [/
- / Copyright (c) 2014 Vicente J. Botet Escriba
+ / Copyright (c) 2014-2015 Vicente J. Botet Escriba
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -411,7 +411,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [variablelist
 
-[[Effects:] [close the scheduler/executor `e` for submissions.]]
+[[Effects:] [close the executor `e` for submissions.]]
 
 [[Remark:] [The worker threads will work until there is no more closures to run.]]
 
@@ -431,7 +431,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [[Return type:] [`bool`.]]
 
-[[Return:] [whether the scheduler/executor is closed for submissions.]]
+[[Return:] [whether the executor is closed for submissions.]]
 
 [[Throws:] [Whatever exception that can be throw while ensuring the thread safety.]]
 
@@ -814,7 +814,7 @@ Scheduler providing time related functions. Note that `scheduler` is not an Exec
   }
 
 [/////////////////////////////////////]
-[section:constructor Constructor `at_executor(Scheduler&)`]
+[section:constructor Constructor `at_executor(Scheduler&, clock::time_point const&)`]
 
       at_executor(Scheduler& sch, clock::time_point const& tp);
 

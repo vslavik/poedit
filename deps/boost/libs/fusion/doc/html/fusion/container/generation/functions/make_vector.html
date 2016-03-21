@@ -43,7 +43,10 @@
 <span class="identifier">make_vector</span><span class="special">(</span><span class="identifier">T0</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x0</span><span class="special">,</span> <span class="identifier">T1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">x1</span><span class="special">...</span> <span class="identifier">TN</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">xN</span><span class="special">);</span>
 </pre>
 <p>
-            The variadic function accepts <code class="computeroutput"><span class="number">0</span></code>
+            For C++11 compilers, the variadic function interface has no upper bound.
+          </p>
+<p>
+            For C++03 compilers, the variadic function accepts <code class="computeroutput"><span class="number">0</span></code>
             to <code class="computeroutput"><span class="identifier">FUSION_MAX_VECTOR_SIZE</span></code>
             elements, where <code class="computeroutput"><span class="identifier">FUSION_MAX_VECTOR_SIZE</span></code>
             is a user definable predefined maximum that defaults to <code class="computeroutput"><span class="number">10</span></code>. You may define the preprocessor constant

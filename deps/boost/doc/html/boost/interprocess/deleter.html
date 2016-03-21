@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -38,32 +39,32 @@
   <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">::</span><span class="identifier">pointer_traits</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">SegmentManager</span><span class="special">::</span><span class="identifier">void_pointer</span> <span class="special">&gt;</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind_pointer</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <a name="boost.interprocess.deleter.pointer"></a><span class="identifier">pointer</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="deleter.html#boost.interprocess.deleterconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="deleter.html#idp55972976-bb"><span class="identifier">deleter</span></a><span class="special">(</span><span class="identifier">segment_manager_pointer</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="deleter.html#idm45879390757008-bb"><span class="identifier">deleter</span></a><span class="special">(</span><span class="identifier">segment_manager_pointer</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="deleter.html#idp55970720-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="deleter.html#idp55971280-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="deleter.html#idm45879390759264-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="deleter.html#idm45879390758704-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp237756720"></a><h2>Description</h2>
+<a name="idm45555316000624"></a><h2>Description</h2>
 <p>A deleter that uses the segment manager's destroy_ptr function to destroy the passed pointer resource.</p>
 <p>This deleter is used </p>
 <div class="refsect2">
-<a name="idp237757792"></a><h3>
+<a name="idm45555315999552"></a><h3>
 <a name="boost.interprocess.deleterconstruct-copy-destruct"></a><code class="computeroutput">deleter</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp55972976-bb"></a><span class="identifier">deleter</span><span class="special">(</span><span class="identifier">segment_manager_pointer</span> pmngr<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm45879390757008-bb"></a><span class="identifier">deleter</span><span class="special">(</span><span class="identifier">segment_manager_pointer</span> pmngr<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp237764384"></a><h3>
-<a name="idp55970720-bb"></a><code class="computeroutput">deleter</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp55971280-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span> p<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idm45555315993024"></a><h3>
+<a name="idm45879390759264-bb"></a><code class="computeroutput">deleter</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390758704-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">pointer</span> <span class="special">&amp;</span> p<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

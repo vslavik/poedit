@@ -89,7 +89,7 @@ void test_distance_point_point(Strategy const& strategy,
                   "POINT(180 -10)",
                   (is_comparable_strategy
                    ? 1.0
-                   : (180.0 * bg::math::d2r * strategy.radius())),
+                   : (bg::math::pi<double>() * strategy.radius())),
                   1.0,
                   strategy);
     tester::apply("p-p-04",
@@ -97,7 +97,7 @@ void test_distance_point_point(Strategy const& strategy,
                   "POINT(180 0)",
                   (is_comparable_strategy
                    ? 1.0
-                   : (180.0 * bg::math::d2r * strategy.radius())),
+                   : (bg::math::pi<double>() * strategy.radius())),
                   1.0,
                   strategy);
 }

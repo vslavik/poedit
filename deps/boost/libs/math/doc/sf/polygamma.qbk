@@ -30,7 +30,7 @@ The following graphs illustrate the behaviour of the function for odd and even o
 
 [optional_policy]
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the result is of type `double` when T is an integer type, and type T otherwise.
 
 [h4 Accuracy]
@@ -40,12 +40,7 @@ found on various platforms with various floating point types.
 Unless otherwise specified any floating point type that is narrower
 than the one shown will have __zero_error.
 
-[table
-[[Significand Size] [Platform and Compiler] [Small-medium positive arguments] [Small-medium negative x] ]
-[[53]            [Win32 Visual C++ 12]  [Peak=5.0 Mean=1] [Peak=1200 Mean=65]]
-[[64]            [Win64 Mingw GCC]  [Peak=16 Mean=3] [Peak=33 Mean=3] ]
-[[113]           [Win64 Mingw GCC __float128]    [Peak=6.5 Mean=1][Peak=30 Mean=4] ]
-]
+[table_polygamma]
 
 As shown above, error rates are generally very acceptable for moderately sized
 arguments.  Error rates should stay low for exact inputs, however, please note that the

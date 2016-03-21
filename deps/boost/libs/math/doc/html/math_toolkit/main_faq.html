@@ -4,7 +4,7 @@
 <title>Frequently Asked Questions FAQ</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../overview.html" title="Chapter&#160;1.&#160;Overview">
 <link rel="prev" href="overview_tr1.html" title="C99 and C++ TR1 C-style Functions">
 <link rel="next" href="contact.html" title="Contact Info and Support">
@@ -102,7 +102,7 @@
           <span class="emphasis"><em>What these "policies" things for?</em></span> <br>
           Policies are a powerful (if necessarily complex) fine-grain mechanism that
           allow you to customise the behaviour of the Boost.Math library according
-          to your precise needs. See <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>. But
+          to your precise needs. See <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>. But
           if, very probably, the default behaviour suits you, you don't need to know
           more.
         </li>
@@ -159,7 +159,7 @@
           Why?</em></span> We hope Boost.Math to be more accurate: our priority is
           accuracy (over speed). See the section on accuracy. But for evaluations
           that require iterations there are parameters which can change the required
-          accuracy (see <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>). You might be able
+          accuracy (see <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>). You might be able
           to squeeze a little more (or less) accuracy at the cost of runtime.
         </li>
 <li class="listitem">
@@ -169,7 +169,7 @@
           you have the latest compiler version with all optimisations switched on
           is the key to speed. For evaluations that require iteration, you may be
           able to gain a little more speed at the expense of accuracy. See detailed
-          suggestions and results on <a class="link" href="../perf.html" title="Chapter&#160;15.&#160;Performance">performance</a>.
+          suggestions and results on <a class="link" href="../perf.html" title="Chapter&#160;16.&#160;Performance">performance</a>.
         </li>
 <li class="listitem">
           <span class="emphasis"><em>How do I handle infinity and NaNs portably?</em></span> <br>
@@ -189,8 +189,8 @@
         </li>
 <li class="listitem">
           <span class="emphasis"><em>I need more decimal digits for values/computations.</em></span>
-          <br> You can use Boost.Math with <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>:
-          typically <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>
+          <br> You can use Boost.Math with <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>:
+          typically <a href="../../../../../libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>
           is a useful user-defined type to provide a fixed number of decimal digits,
           usually 50 or 100.
         </li>

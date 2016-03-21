@@ -26,14 +26,21 @@
 template <class T>
 T binomial_wrapper(T n, T k)
 {
+#ifdef BINOMIAL_FUNCTION_TO_TEST
+   return BINOMIAL_FUNCTION_TO_TEST(
+      boost::math::itrunc(n),
+      boost::math::itrunc(k));
+#else
    return boost::math::binomial_coefficient<T>(
       boost::math::itrunc(n),
       boost::math::itrunc(k));
+#endif
 }
 
 template <class T>
 void test_binomial(T, const char* type_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BINOMIAL_FUNCTION_TO_TEST))
    using namespace std;
 
    typedef T (*func_t)(T, T);
@@ -68,5 +75,6 @@ void test_binomial(T, const char* type_name)
    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
    handle_test_result(result, binomial_large_data[result.worst()], result.worst(), type_name, "binomial_coefficient", "Binomials: large arguments");
    std::cout << std::endl;
+#endif
 }
 

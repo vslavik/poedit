@@ -18,12 +18,13 @@ __std_ref 10.
 
 __header ` #include <boost/type_traits/is_virtual_base_of.hpp>` or ` #include <boost/type_traits.hpp>`
 
-__compat this trait also requires a working __is_base_of trait.
+[all_compilers]
 
 [note 
 There are a small number of cases where it's simply not possible for this trait to work, and
-where attempting to instantiate the trait will cause compiler errors (see bug report
-[@https://svn.boost.org/trac/boost/ticket/3730 #3730]).  Further more the issues may well
+where attempting to instantiate the trait will cause compiler errors (see bug reports
+[@https://svn.boost.org/trac/boost/ticket/3730 #3730] and [@https://svn.boost.org/trac/boost/ticket/11323 11323]).  
+Further more the issues may well
 be compiler specific.  In this situation the user should supply a full specialization of
 the trait to work around the problem.]
 

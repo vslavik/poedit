@@ -4,7 +4,7 @@
 <title>Riemann Zeta Function</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../zetas.html" title="Zeta Functions">
 <link rel="prev" href="../zetas.html" title="Zeta Functions">
 <link rel="next" href="../expint.html" title="Exponential Integrals">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">zeta</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">zeta</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">zeta</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -47,9 +47,9 @@
         type calculation rules</em></span></a>: the return type is <code class="computeroutput"><span class="keyword">double</span></code> if T is an integer type, and T otherwise.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
@@ -59,8 +59,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">zeta</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">zeta</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">zeta</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the <a href="http://mathworld.wolfram.com/RiemannZetaFunction.html" target="_top">zeta
@@ -89,9 +89,10 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.zetas.zeta.errors_in_the_function_zeta_z"></a><p class="title"><b>Table&#160;6.30.&#160;Errors In the Function zeta(z)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function zeta(z)">
+<a name="math_toolkit.zetas.zeta.table_zeta"></a><p class="title"><b>Table&#160;6.73.&#160;Error rates for zeta</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for zeta">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -99,23 +100,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  z &gt; 0
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  z &lt; 0
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -123,102 +126,157 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Zeta: Random values greater than 1
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 0.836&#949; (Mean = 0.093&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.99 Mean=0.1
-                </p>
-                <p>
-                  GSL Peak=8.7 Mean=1.0
-                </p>
-                <p>
-                  <a href="http://www.netlib.org/cephes/" target="_top">Cephes</a> Peak=2.1
-                  Mean=1.1
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 8.69&#949; (Mean = 1.03&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  <span class="red">Max = 4.49e+33&#949; (Mean = 6.85e+32&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_zeta_Cephes_Zeta_Random_values_greater_than_1">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=7.1 Mean=3.0
+                  <span class="blue">Max = 0.846&#949; (Mean = 0.0833&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 5.45&#949; (Mean
+                  = 1&#949;))
                 </p>
+              </td>
+<td>
                 <p>
-                  GSL Peak=137 Mean=14
-                </p>
-                <p>
-                  <a href="http://www.netlib.org/cephes/" target="_top">Cephes</a> Peak=5084
-                  Mean=470
+                  <span class="blue">Max = 0.846&#949; (Mean = 0.0743&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Zeta: Random values less than 1
                 </p>
               </td>
 <td>
                 <p>
-                  RedHat Linux IA_EM64, gcc-4.1
+                  <span class="blue">Max = 7.03&#949; (Mean = 2.98&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.99 Mean=0.5
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 137&#949; (Mean = 13.8&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_zeta_Cephes_Zeta_Random_values_less_than_1">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=570 Mean=60
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 7.03&#949; (Mean = 2.71&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 538&#949; (Mean = 59.3&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA64, gcc-4.1
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=0.99 Mean=0.5
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=559 Mean=56
+                  <span class="blue">Max = 70.1&#949; (Mean = 17.1&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Zeta: Values close to and greater than 1
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 0.994&#949; (Mean = 0.421&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1.0 Mean=0.4
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 7.73&#949; (Mean = 4.07&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  <span class="red">Max = 6.77e+15&#949; (Mean = 1.52e+15&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_zeta_Cephes_Zeta_Values_close_to_and_greater_than_1">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1018 Mean=79
+                  <span class="blue">Max = 0.995&#949; (Mean = 0.5&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.9e+06&#949; (Mean = 5.11e+05&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.995&#949; (Mean = 0.5&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Zeta: Values close to and less than 1
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.991&#949; (Mean = 0.375&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 0.991&#949; (Mean = 0.28&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  <span class="red">Max = 8.66e+15&#949; (Mean = 1.9e+15&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_zeta_Cephes_Zeta_Values_close_to_and_less_than_1">And
+                  other failures.</a>)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.998&#949; (Mean = 0.508&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 8.53e+06&#949; (Mean =
+                  1.87e+06&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.998&#949; (Mean = 0.568&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Zeta: Integer arguments
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 6.5&#949; (Mean = 2.17&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 3.75&#949; (Mean = 1.1&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_zeta_Cephes_Zeta_Integer_arguments">And
+                  other failures.</a>)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 9&#949; (Mean = 3.06&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 70.3&#949; (Mean = 17.4&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 21&#949; (Mean = 7.13&#949;)</span>
                 </p>
               </td>
 </tr>

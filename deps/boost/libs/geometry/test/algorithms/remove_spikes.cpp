@@ -1,10 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2013 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2013 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2013 Mateusz Loskot, London, UK.
-// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+// Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -36,14 +36,7 @@
 #include <boost/geometry/strategies/strategies.hpp>
 
 #if defined(BOOST_GEOMETRY_UNIT_TEST_MULTI)
-
-#  include <boost/geometry/multi/algorithms/remove_spikes.hpp>
-
-#  include <boost/geometry/multi/algorithms/area.hpp>
-#  include <boost/geometry/multi/algorithms/correct.hpp>
-#  include <boost/geometry/multi/algorithms/perimeter.hpp>
-#  include <boost/geometry/multi/geometries/multi_polygon.hpp>
-#  include <boost/geometry/multi/io/wkt/wkt.hpp>
+#  include <boost/geometry/geometries/multi_polygon.hpp>
 #endif
 
 

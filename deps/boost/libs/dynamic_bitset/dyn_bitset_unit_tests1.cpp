@@ -28,6 +28,11 @@ class minimal_allocator {
 public:
     typedef T value_type;
 
+    minimal_allocator() {}
+
+    template <typename U>
+    minimal_allocator(const minimal_allocator<U>&) {}
+
     T* allocate(std::size_t n) {
         void* p = std::malloc(sizeof(T) * n);
         if (!p) {

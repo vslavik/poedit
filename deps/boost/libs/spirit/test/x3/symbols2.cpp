@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -36,12 +36,10 @@ main()
     using spirit_test::test_attr;
     using boost::spirit::x3::symbols;
     using boost::spirit::x3::rule;
-    //~ using boost::spirit::x3::lazy;
-    //~ using boost::spirit::x3::_r1;
 
     { // construction from symbol array
         char const* syms[] = {"Joel","Ruby","Tenji","Tutit","Kim","Joey"};
-        symbols<char, int> sym(syms);
+        symbols<int> sym(syms);
 
         BOOST_TEST((test("Joel", sym)));
         BOOST_TEST((test("Ruby", sym)));
@@ -56,7 +54,7 @@ main()
 
         char const* syms[] = {"Joel","Ruby","Tenji","Tutit","Kim","Joey"};
         int data[] = {1,2,3,4,5,6};
-        symbols<char, int> sym(syms, data);
+        symbols<int> sym(syms, data);
 
         int i;
         BOOST_TEST((test_attr("Joel", sym, i)));
@@ -103,30 +101,9 @@ main()
         BOOST_TEST((!test("z", sym)));
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ namespace phx = boost::phoenix;
-
-        //~ symbols<char, int> sym;
-        //~ sym.add
-            //~ ("a", 1)
-            //~ ("b", 2)
-        //~ ;
-
-        //~ rule<char const*, int(symbols<char, int>&)> r;
-        //~ r %= lazy(_r1);
-
-        //~ int i = 0;
-        //~ BOOST_TEST(test_attr("a", r(phx::ref(sym)), i));
-        //~ BOOST_TEST(i == 1);
-        //~ BOOST_TEST(test_attr("b", r(phx::ref(sym)), i));
-        //~ BOOST_TEST(i == 2);
-        //~ BOOST_TEST(!test("c", r(phx::ref(sym))));
-    //~ }
-
     { // find
 
-        symbols<char, int> sym;
+        symbols<int> sym;
         sym.add("a", 1)("b", 2);
 
         BOOST_TEST(!sym.find("c"));
@@ -142,7 +119,7 @@ main()
         BOOST_TEST(sym.find("b") && *sym.find("b") == 2);
         BOOST_TEST(sym.find("c") && *sym.find("c") == 0);
 
-        symbols<char, int> const_sym(sym);
+        symbols<int> const_sym(sym);
 
         BOOST_TEST(const_sym.find("a") && *const_sym.find("a") == 1);
         BOOST_TEST(const_sym.find("b") && *const_sym.find("b") == 2);
@@ -159,19 +136,19 @@ main()
     }
 
     { // name
-        symbols <char, int> sym,sym2;
+        symbols <int> sym,sym2;
         sym.name("test");
         BOOST_TEST(sym.name()=="test");
         sym2 = sym;
         BOOST_TEST(sym2.name()=="test");
 
-        symbols <char,int> sym3(sym);
+        symbols <int> sym3(sym);
         BOOST_TEST(sym3.name()=="test");
     }
 
     { // Substrings
 
-        symbols<char, int> sym;
+        symbols<int> sym;
         BOOST_TEST(sym.at("foo") == 0);
         sym.at("foo") = 1;
         BOOST_TEST(sym.at("foo") == 1);
@@ -204,7 +181,7 @@ main()
         // remove bug
 
         std::string s;
-        symbols<char, double> vars;
+        symbols<double> vars;
 
         vars.add("l1", 12.0);
         vars.add("l2", 0.0);
@@ -215,7 +192,7 @@ main()
     }
 
     { // test for proto problem with rvalue references (10-11-2011)
-        symbols<char, int> sym;
+        symbols<int> sym;
         sym += get_str("Joel");
         sym += get_str("Ruby");
 

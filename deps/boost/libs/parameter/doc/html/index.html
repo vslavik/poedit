@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
 <title>The Boost Parameter Library</title>
 <link rel="stylesheet" href="rst.css" type="text/css" />
 </head>
@@ -122,7 +122,7 @@ or copy at <a class="reference external" href="http://www.boost.org/LICENSE_1_0.
 </li>
 <li><a class="reference internal" href="#portability-considerations" id="id38">5&nbsp;&nbsp;&nbsp;Portability Considerations</a><ul class="auto-toc">
 <li><a class="reference internal" href="#no-sfinae-support" id="id39">5.1&nbsp;&nbsp;&nbsp;No SFINAE Support</a></li>
-<li><a class="reference internal" href="#no-support-for-result-of" id="id40">5.2&nbsp;&nbsp;&nbsp;No Support for <tt class="docutils literal"><span class="pre">result_of</span></tt></a></li>
+<li><a class="reference internal" href="#no-support-for-result-of" id="id40">5.2&nbsp;&nbsp;&nbsp;No Support for <tt class="docutils literal">result_of</tt></a></li>
 <li><a class="reference internal" href="#compiler-can-t-see-references-in-unnamed-namespace" id="id41">5.3&nbsp;&nbsp;&nbsp;Compiler Can't See References In Unnamed Namespace</a></li>
 </ul>
 </li>
@@ -158,8 +158,8 @@ const bool movability = false;
 window* w = new_window(&quot;alert box&quot;, movability);
 </pre>
 <p class="compound-middle">In the example above we wanted to make an unmoveable window
-with a default <tt class="docutils literal"><span class="pre">border_width</span></tt>, but instead we got a moveable
-window with a <tt class="docutils literal"><span class="pre">border_width</span></tt> of zero.  To get the desired
+with a default <tt class="docutils literal">border_width</tt>, but instead we got a moveable
+window with a <tt class="docutils literal">border_width</tt> of zero.  To get the desired
 effect, we'd need to write:</p>
 <pre class="compound-last literal-block">
 window* w = new_window(
@@ -201,9 +201,9 @@ window* w = new_window(&quot;alert box&quot;, <strong>movable_=</strong>false); 
 <p class="compound-first">A <strong>deduced parameter</strong> can be passed in any position <em>without</em>
 supplying an explicit parameter name.  It's not uncommon for a
 function to have parameters that can be uniquely identified based
-on the types of arguments passed.  The <tt class="docutils literal"><span class="pre">name</span></tt> parameter to
-<tt class="docutils literal"><span class="pre">new_window</span></tt> is one such example.  None of the other arguments,
-if valid, can reasonably be converted to a <tt class="docutils literal"><span class="pre">char</span> <span class="pre">const*</span></tt>.  With
+on the types of arguments passed.  The <tt class="docutils literal">name</tt> parameter to
+<tt class="docutils literal">new_window</tt> is one such example.  None of the other arguments,
+if valid, can reasonably be converted to a <tt class="docutils literal">char const*</tt>.  With
 a deduced parameter interface, we could pass the window name in
 <em>any</em> argument position without causing ambiguity:</p>
 <pre class="compound-middle literal-block">
@@ -222,8 +222,8 @@ names.</p>
 <p class="compound-first">The reasoning we've given for named and deduced parameter
 interfaces applies equally well to class templates as it does to
 functions.  Using the Parameter library, we can create interfaces
-that allow template arguments (in this case <tt class="docutils literal"><span class="pre">shared</span></tt> and
-<tt class="docutils literal"><span class="pre">Client</span></tt>) to be explicitly named, like this:</p>
+that allow template arguments (in this case <tt class="docutils literal">shared</tt> and
+<tt class="docutils literal">Client</tt>) to be explicitly named, like this:</p>
 <pre class="compound-middle literal-block">
 smart_ptr&lt;<strong>ownership&lt;shared&gt;</strong>, <strong>value_type&lt;Client&gt;</strong> &gt; p;
 </pre>
@@ -251,7 +251,7 @@ more advanced idioms as well.</p>
 <h2><a class="toc-backref" href="#id27">2.1&nbsp;&nbsp;&nbsp;Parameter-Enabled Functions</a></h2>
 <p>In this section we'll show how the Parameter library can be used to
 build an expressive interface to the <a class="reference external" href="../../../graph/index.html">Boost Graph library</a>'s
-<a class="reference external" href="../../../graph/doc/depth_first_search.html"><tt class="docutils literal"><span class="pre">depth_first_search</span></tt></a> algorithm.<a class="footnote-reference" href="#old-interface" id="id3"><sup>1</sup></a></p>
+<a class="reference external" href="../../../graph/doc/depth_first_search.html"><tt class="docutils literal">depth_first_search</tt></a> algorithm.<a class="footnote-reference" href="#old-interface" id="id3"><sup>1</sup></a></p>
 <!-- Revisit this
 
 After laying some groundwork
@@ -271,10 +271,10 @@ header named for the component.  For example,</p>
 </pre>
 <p>will ensure <tt class="docutils literal"><span class="pre">boost::parameter::keyword</span></tt> is known to the
 compiler.  There is also a combined header,
-<tt class="docutils literal"><span class="pre">boost/parameter.hpp</span></tt>, that includes most of the library's
+<tt class="docutils literal">boost/parameter.hpp</tt>, that includes most of the library's
 components.  For the the rest of this tutorial, unless we say
 otherwise, you can use the rule above to figure out which header
-to <tt class="docutils literal"><span class="pre">#include</span></tt> to access any given component of the library.</p>
+to <tt class="docutils literal">#include</tt> to access any given component of the library.</p>
 <!-- @example.append('''
 using boost::parameter::keyword;
 ''') -->
@@ -289,8 +289,8 @@ namespace parameter = boost::parameter;
 <tt class="docutils literal"><span class="pre">boost::parameter::xxx</span></tt>.</p>
 </div>
 <div class="section" id="the-abstract-interface-to-dfs">
-<h3>2.1.2&nbsp;&nbsp;&nbsp;The Abstract Interface to <tt class="docutils literal"><span class="pre">depth_first_search</span></tt></h3>
-<p>The Graph library's <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> algorithm is a generic function accepting
+<h3>2.1.2&nbsp;&nbsp;&nbsp;The Abstract Interface to <tt class="docutils literal">depth_first_search</tt></h3>
+<p>The Graph library's <tt class="docutils literal">depth_first_search</tt> algorithm is a generic function accepting
 from one to four arguments by reference.  If all arguments were
 required, its signature might be as follows:</p>
 <pre class="literal-block">
@@ -308,7 +308,7 @@ void depth_first_search(
 <p>However, most of the parameters have a useful default value, as
 shown in the table below.</p>
 <table border="1" class="docutils" id="default-expressions">
-<span id="parameter-table"></span><caption><tt class="docutils literal"><span class="pre">depth_first_search</span></tt> Parameters</caption>
+<span id="parameter-table"></span><caption><tt class="docutils literal">depth_first_search</tt> Parameters</caption>
 <colgroup>
 <col width="17%" />
 <col width="11%" />
@@ -323,41 +323,41 @@ shown in the table below.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><tt class="docutils literal"><span class="pre">graph</span></tt></td>
+<tr><td><tt class="docutils literal">graph</tt></td>
 <td>in</td>
 <td>Model of <a class="reference external" href="../../../graph/doc/IncidenceGraph.html"><span class="concept">Incidence Graph</span></a> and
 <a class="reference external" href="../../../graph/doc/VertexListGraph.html"><span class="concept">Vertex List Graph</span></a></td>
 <td>none - this argument is required.</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">visitor</span></tt></td>
+<tr><td><tt class="docutils literal">visitor</tt></td>
 <td>in</td>
 <td>Model of <a class="reference external" href="../../../graph/doc/DFSVisitor.html"><span class="concept">DFS Visitor</span></a></td>
 <td><tt class="docutils literal"><span class="pre">boost::dfs_visitor&lt;&gt;()</span></tt></td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">root_vertex</span></tt></td>
+<tr><td><tt class="docutils literal">root_vertex</tt></td>
 <td>in</td>
-<td><tt class="docutils literal"><span class="pre">graph</span></tt>'s vertex descriptor
+<td><tt class="docutils literal">graph</tt>'s vertex descriptor
 type.</td>
 <td><tt class="docutils literal"><span class="pre">*vertices(graph).first</span></tt></td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">index_map</span></tt></td>
+<tr><td><tt class="docutils literal">index_map</tt></td>
 <td>in</td>
 <td>Model of <a class="reference external" href="../../../property_map/doc/ReadablePropertyMap.html"><span class="concept">Readable Property Map</span></a>
-with key type := <tt class="docutils literal"><span class="pre">graph</span></tt>'s
+with key type := <tt class="docutils literal">graph</tt>'s
 vertex descriptor and value type
 an integer type.</td>
 <td><tt class="docutils literal"><span class="pre">get(boost::vertex_index,graph)</span></tt></td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">color_map</span></tt></td>
+<tr><td><tt class="docutils literal">color_map</tt></td>
 <td>in/out</td>
 <td>Model of <a class="reference external" href="../../../property_map/doc/ReadWritePropertyMap.html"><span class="concept">Read/Write Property Map</span></a>
-with key type := <tt class="docutils literal"><span class="pre">graph</span></tt>'s
+with key type := <tt class="docutils literal">graph</tt>'s
 vertex descriptor type.</td>
-<td>an <tt class="docutils literal"><span class="pre">iterator_property_map</span></tt>
+<td>an <tt class="docutils literal">iterator_property_map</tt>
 created from a <tt class="docutils literal"><span class="pre">std::vector</span></tt> of
-<tt class="docutils literal"><span class="pre">default_color_type</span></tt> of size
-<tt class="docutils literal"><span class="pre">num_vertices(graph)</span></tt> and using
-<tt class="docutils literal"><span class="pre">index_map</span></tt> for the index map.</td>
+<tt class="docutils literal">default_color_type</tt> of size
+<tt class="docutils literal">num_vertices(graph)</tt> and using
+<tt class="docutils literal">index_map</tt> for the index map.</td>
 </tr>
 </tbody>
 </table>
@@ -368,15 +368,15 @@ to understand them in detail.</p>
 <div class="section" id="defining-the-keywords">
 <h3>2.1.3&nbsp;&nbsp;&nbsp;Defining the Keywords</h3>
 <p>The point of this exercise is to make it possible to call
-<tt class="docutils literal"><span class="pre">depth_first_search</span></tt> with named arguments, leaving out any
+<tt class="docutils literal">depth_first_search</tt> with named arguments, leaving out any
 arguments for which the default is appropriate:</p>
 <pre class="literal-block">
 graphs::depth_first_search(g, <strong>color_map_=my_color_map</strong>);
 </pre>
 <!-- @ignore() -->
 <p>To make that syntax legal, there needs to be an object called
-“<tt class="docutils literal"><span class="pre">color_map_</span></tt>” whose assignment operator can accept a
-<tt class="docutils literal"><span class="pre">my_color_map</span></tt> argument.  In this step we'll create one such
+“<tt class="docutils literal">color_map_</tt>” whose assignment operator can accept a
+<tt class="docutils literal">my_color_map</tt> argument.  In this step we'll create one such
 <strong>keyword object</strong> for each parameter.  Each keyword object will be
 identified by a unique <strong>keyword tag type</strong>.</p>
 <!-- Revisit this
@@ -387,7 +387,7 @@ we'll define the keyword objects so they're accessible through
 ``graphs``, and we'll hide the tag types away in a nested
 namespace, ``graphs::tag``.  The library provides a convenient
 macro for that purpose. -->
-<p>We're going to define our interface in namespace <tt class="docutils literal"><span class="pre">graphs</span></tt>.  The
+<p>We're going to define our interface in namespace <tt class="docutils literal">graphs</tt>.  The
 library provides a convenient macro for defining keyword objects:</p>
 <pre class="literal-block">
 #include &lt;boost/parameter/name.hpp&gt;
@@ -402,7 +402,7 @@ namespace graphs
 }
 </pre>
 <!-- @test('compile') -->
-<p>The declaration of the <tt class="docutils literal"><span class="pre">graph</span></tt> keyword you see here is
+<p>The declaration of the <tt class="docutils literal">graph</tt> keyword you see here is
 equivalent to:</p>
 <pre class="literal-block">
 namespace graphs
@@ -420,7 +420,7 @@ namespace graphs
 <!-- @example.prepend('#include <boost/parameter/keyword.hpp>') -->
 <!-- @test('compile') -->
 <p>It defines a <em>keyword tag type</em> named <tt class="docutils literal"><span class="pre">tag::graph</span></tt> and a <em>keyword
-object</em> reference named <tt class="docutils literal"><span class="pre">_graph</span></tt>.</p>
+object</em> reference named <tt class="docutils literal">_graph</tt>.</p>
 <p>This “fancy dance” involving an unnamed namespace and references
 is all done to avoid violating the One Definition Rule (ODR)<a class="footnote-reference" href="#odr" id="id5"><sup>2</sup></a> when the named parameter interface is used by function
 templates that are instantiated in multiple translation
@@ -430,7 +430,7 @@ units (MSVC6.x users see <a class="reference internal" href="#compiler-can-t-see
 <h3>2.1.4&nbsp;&nbsp;&nbsp;Writing the Function</h3>
 <p>Now that we have our keywords defined, the function template
 definition follows a simple pattern using the
-<tt class="docutils literal"><span class="pre">BOOST_PARAMETER_FUNCTION</span></tt> macro:</p>
+<tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt> macro:</p>
 <pre class="literal-block">
 #include &lt;boost/parameter/preprocessor.hpp&gt;
 
@@ -477,7 +477,7 @@ int vertex_index = 0;
 
 }''') -->
 <!-- @test('compile') -->
-<p>The arguments to <tt class="docutils literal"><span class="pre">BOOST_PARAMETER_FUNCTION</span></tt> are:</p>
+<p>The arguments to <tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt> are:</p>
 <ol class="arabic simple">
 <li>The return type of the resulting function template.  Parentheses
 around the return type prevent any commas it might contain from
@@ -494,12 +494,12 @@ match the function's parameter names.</li>
 parenthesized terms (a <a class="reference external" href="../../../preprocessor/index.html">Boost.Preprocessor</a> <a class="reference external" href="http://boost-consulting.com/mplbook/preprocessor.html#sequences">sequence</a>) describing
 the function's parameters in the order in which they'd be expected
 if passed positionally.  Any required parameters must come first,
-but the <tt class="docutils literal"><span class="pre">(required</span> <span class="pre">…</span> <span class="pre">)</span></tt> clause can be omitted when all the
+but the <tt class="docutils literal">(required … )</tt> clause can be omitted when all the
 parameters are optional.</p>
 <div class="section" id="required-parameters">
 <h4>2.1.5.1&nbsp;&nbsp;&nbsp;Required Parameters</h4>
 <div class="compound">
-<p class="compound-first">Required parameters are given first—nested in a <tt class="docutils literal"><span class="pre">(required</span> <span class="pre">…</span> <span class="pre">)</span></tt>
+<p class="compound-first">Required parameters are given first—nested in a <tt class="docutils literal">(required … )</tt>
 clause—as a series of two-element tuples describing each parameter
 name and any requirements on the argument type.  In this case there
 is only a single required parameter, so there's just a single
@@ -507,11 +507,11 @@ tuple:</p>
 <pre class="compound-middle literal-block">
 (required <strong>(graph, *)</strong> )
 </pre>
-<p class="compound-last">Since <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> doesn't require any particular type
-for its <tt class="docutils literal"><span class="pre">graph</span></tt> parameter, we use an asterisk to indicate that
+<p class="compound-last">Since <tt class="docutils literal">depth_first_search</tt> doesn't require any particular type
+for its <tt class="docutils literal">graph</tt> parameter, we use an asterix to indicate that
 any type is allowed.  Required parameters must always precede any
 optional parameters in a signature, but if there are <em>no</em>
-required parameters, the <tt class="docutils literal"><span class="pre">(required</span> <span class="pre">…</span> <span class="pre">)</span></tt> clause can be omitted
+required parameters, the <tt class="docutils literal">(required … )</tt> clause can be omitted
 entirely.</p>
 </div>
 <!-- @example.prepend('''
@@ -527,7 +527,7 @@ BOOST_PARAMETER_FUNCTION((void), f, tag,
 <div class="section" id="optional-parameters">
 <h4>2.1.5.2&nbsp;&nbsp;&nbsp;Optional Parameters</h4>
 <div class="compound">
-<p class="compound-first">Optional parameters—nested in an <tt class="docutils literal"><span class="pre">(optional</span> <span class="pre">…</span> <span class="pre">)</span></tt> clause—are given
+<p class="compound-first">Optional parameters—nested in an <tt class="docutils literal">(optional … )</tt> clause—are given
 as a series of adjacent <em>three</em>-element tuples describing the
 parameter name, any requirements on the argument type, <em>and</em> and an
 expression representing the parameter's default value:</p>
@@ -567,13 +567,13 @@ BOOST_PARAMETER_FUNCTION((void), f, tag,
 <div class="section" id="handling-out-parameters">
 <h4>2.1.5.3&nbsp;&nbsp;&nbsp;Handling “Out” Parameters</h4>
 <div class="compound">
-<p class="compound-first">Within the function body, a parameter name such as <tt class="docutils literal"><span class="pre">visitor</span></tt> is
+<p class="compound-first">Within the function body, a parameter name such as <tt class="docutils literal">visitor</tt> is
 a <em>C++ reference</em>, bound either to an actual argument passed by
 the caller or to the result of evaluating a default expression.
-In most cases, parameter types are of the form <tt class="docutils literal"><span class="pre">T</span> <span class="pre">const&amp;</span></tt> for
-some <tt class="docutils literal"><span class="pre">T</span></tt>.  Parameters whose values are expected to be modified,
-however, must be passed by reference to <em>non</em>-<tt class="docutils literal"><span class="pre">const</span></tt>.  To
-indicate that <tt class="docutils literal"><span class="pre">color_map</span></tt> is both read and written, we wrap
+In most cases, parameter types are of the form <tt class="docutils literal">T const&amp;</tt> for
+some <tt class="docutils literal">T</tt>.  Parameters whose values are expected to be modified,
+however, must be passed by reference to <em>non</em>-<tt class="docutils literal">const</tt>.  To
+indicate that <tt class="docutils literal">color_map</tt> is both read and written, we wrap
 its name in <tt class="docutils literal"><span class="pre">in_out(…)</span></tt>:</p>
 <pre class="compound-last literal-block">
 (optional
@@ -609,9 +609,9 @@ BOOST_PARAMETER_FUNCTION((void), f, tag,
 ''') -->
 <!-- @example.append(') {}') -->
 <!-- @test('compile') -->
-<p>If <tt class="docutils literal"><span class="pre">color_map</span></tt> were strictly going to be modified but not examined,
-we could have written <tt class="docutils literal"><span class="pre">out(color_map)</span></tt>.  There is no functional
-difference between <tt class="docutils literal"><span class="pre">out</span></tt> and <tt class="docutils literal"><span class="pre">in_out</span></tt>; the library provides
+<p>If <tt class="docutils literal">color_map</tt> were strictly going to be modified but not examined,
+we could have written <tt class="docutils literal">out(color_map)</tt>.  There is no functional
+difference between <tt class="docutils literal">out</tt> and <tt class="docutils literal">in_out</tt>; the library provides
 both so you can make your interfaces more self-documenting.</p>
 </div>
 <div class="section" id="positional-arguments">
@@ -624,15 +624,15 @@ call</p>
 graphs::depth_first_search(x, y);
 </pre>
 <!-- @ignore() -->
-<p><tt class="docutils literal"><span class="pre">x</span></tt> will always be interpreted as a graph and <tt class="docutils literal"><span class="pre">y</span></tt> will always
+<p><tt class="docutils literal">x</tt> will always be interpreted as a graph and <tt class="docutils literal">y</tt> will always
 be interpreted as a visitor.</p>
 </div>
 <div class="section" id="default-expression-evaluation">
 <h4>2.1.5.5&nbsp;&nbsp;&nbsp;Default Expression Evaluation</h4>
 <div class="compound">
 <p class="compound-first">Note that in our example, the value of the graph parameter is
-used in the default expressions for <tt class="docutils literal"><span class="pre">root_vertex</span></tt>,
-<tt class="docutils literal"><span class="pre">index_map</span></tt> and <tt class="docutils literal"><span class="pre">color_map</span></tt>.</p>
+used in the default expressions for <tt class="docutils literal">root_vertex</tt>,
+<tt class="docutils literal">index_map</tt> and <tt class="docutils literal">color_map</tt>.</p>
 <pre class="compound-middle literal-block">
 (required (<strong>graph</strong>, *) )
 (optional
@@ -651,7 +651,7 @@ parameters, so you can use any of their values by name.</p>
 <p class="compound-first">A default expression is never evaluated—or even instantiated—if
 an actual argument is passed for that parameter.  We can actually
 demonstrate that with our code so far by replacing the body of
-<tt class="docutils literal"><span class="pre">depth_first_search</span></tt> with something that prints the arguments:</p>
+<tt class="docutils literal">depth_first_search</tt> with something that prints the arguments:</p>
 <pre class="compound-middle literal-block">
 #include &lt;boost/graph/depth_first_search.hpp&gt; // for dfs_visitor
 
@@ -677,7 +677,7 @@ int main()
 }
 </pre>
 <p class="compound-last">Despite the fact that default expressions such as
-<tt class="docutils literal"><span class="pre">vertices(graph).first</span></tt> are ill-formed for the given <tt class="docutils literal"><span class="pre">graph</span></tt>
+<tt class="docutils literal"><span class="pre">vertices(graph).first</span></tt> are ill-formed for the given <tt class="docutils literal">graph</tt>
 arguments, both calls will compile, and each one will print
 exactly the same thing.</p>
 </div>
@@ -704,24 +704,24 @@ BOOST_PARAMETER_NAME(color_map)''') -->
 <div class="section" id="signature-matching-and-overloading">
 <h4>2.1.5.6&nbsp;&nbsp;&nbsp;Signature Matching and Overloading</h4>
 <p>In fact, the function signature is so general that any call to
-<tt class="docutils literal"><span class="pre">depth_first_search</span></tt> with fewer than five arguments will match
+<tt class="docutils literal">depth_first_search</tt> with fewer than five arguments will match
 our function, provided we pass <em>something</em> for the required
-<tt class="docutils literal"><span class="pre">graph</span></tt> parameter.  That might not seem to be a problem at first;
+<tt class="docutils literal">graph</tt> parameter.  That might not seem to be a problem at first;
 after all, if the arguments don't match the requirements imposed by
-the implementation of <tt class="docutils literal"><span class="pre">depth_first_search</span></tt>, a compilation error
+the implementation of <tt class="docutils literal">depth_first_search</tt>, a compilation error
 will occur later, when its body is instantiated.</p>
 <p>There are at least three problems with very general function
 signatures.</p>
 <ol class="arabic simple">
-<li>By the time our <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> is instantiated, it has
+<li>By the time our <tt class="docutils literal">depth_first_search</tt> is instantiated, it has
 been selected as the best matching overload.  Some other
-<tt class="docutils literal"><span class="pre">depth_first_search</span></tt> overload might've worked had it been
+<tt class="docutils literal">depth_first_search</tt> overload might've worked had it been
 chosen instead.  By the time we see a compilation error, there's
 no chance to change that decision.</li>
 <li>Even if there are no overloads, error messages generated at
 instantiation time usually expose users to confusing
 implementation details.  For example, users might see references
-to names generated by <tt class="docutils literal"><span class="pre">BOOST_PARAMETER_FUNCTION</span></tt> such as
+to names generated by <tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt> such as
 <tt class="docutils literal"><span class="pre">graphs::detail::depth_first_search_with_named_params</span></tt> (or
 worse—think of the kinds of errors you get from your STL
 implementation when you make a mistake).<a class="footnote-reference" href="#conceptcpp" id="id7"><sup>4</sup></a></li>
@@ -729,13 +729,13 @@ implementation when you make a mistake).<a class="footnote-reference" href="#con
 signatures have been the subject of much discussion, especially
 in the presence of <a class="reference external" href="http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#225">unqualified calls</a>.  If all we want is to
 avoid unintentional argument-dependent lookup (ADL), we can
-isolate <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> in a namespace containing no
+isolate <tt class="docutils literal">depth_first_search</tt> in a namespace containing no
 types<a class="footnote-reference" href="#using" id="id8"><sup>6</sup></a>, but suppose we <em>want</em> it to found via ADL?</li>
 </ol>
 <p>It's usually a good idea to prevent functions from being considered
 for overload resolution when the passed argument types aren't
 appropriate.  The library already does this when the required
-<tt class="docutils literal"><span class="pre">graph</span></tt> parameter is not supplied, but we're not likely to see a
+<tt class="docutils literal">graph</tt> parameter is not supplied, but we're not likely to see a
 depth first search that doesn't take a graph to operate on.
 Suppose, instead, that we found a different depth first search
 algorithm that could work on graphs that don't model
@@ -758,12 +758,12 @@ depth_first_search(boost::adjacency_list&lt;&gt;(), 2, &quot;hello&quot;);
 <div class="section" id="adding-type-requirements">
 <h5>2.1.5.6.1&nbsp;&nbsp;&nbsp;Adding Type Requirements</h5>
 <p>We really don't want the compiler to consider the original version
-of <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> because the <tt class="docutils literal"><span class="pre">root_vertex</span></tt> argument,
-<tt class="docutils literal"><span class="pre">&quot;hello&quot;</span></tt>, doesn't meet the <a class="reference internal" href="#parameter-table">requirement</a> that it match the
-<tt class="docutils literal"><span class="pre">graph</span></tt> parameter's vertex descriptor type.  Instead, this call
+of <tt class="docutils literal">depth_first_search</tt> because the <tt class="docutils literal">root_vertex</tt> argument,
+<tt class="docutils literal">&quot;hello&quot;</tt>, doesn't meet the <a class="reference internal" href="#parameter-table">requirement</a> that it match the
+<tt class="docutils literal">graph</tt> parameter's vertex descriptor type.  Instead, this call
 should just invoke our new overload.  To take the original
-<tt class="docutils literal"><span class="pre">depth_first_search</span></tt> overload out of contention, we need to tell
-the library about this requirement by replacing the <tt class="docutils literal"><span class="pre">*</span></tt> element
+<tt class="docutils literal">depth_first_search</tt> overload out of contention, we need to tell
+the library about this requirement by replacing the <tt class="docutils literal">*</tt> element
 of the signature with the required type, in parentheses:</p>
 <pre class="literal-block">
 (root_vertex,
@@ -771,28 +771,66 @@ of the signature with the required type, in parentheses:</p>
      *vertices(graph).first)
 </pre>
 <!-- @ignore() -->
-<p>Now the original <tt class="docutils literal"><span class="pre">depth_first_search</span></tt> will only be called when
-the <tt class="docutils literal"><span class="pre">root_vertex</span></tt> argument can be converted to the graph's vertex
+<p>Now the original <tt class="docutils literal">depth_first_search</tt> will only be called when
+the <tt class="docutils literal">root_vertex</tt> argument can be converted to the graph's vertex
 descriptor type, and our example that <em>was</em> ambiguous will smoothly
 call the new overload.</p>
 <div class="note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <em>type</em> of the <tt class="docutils literal"><span class="pre">graph</span></tt> argument is available in the
-signature—and in the function body—as <tt class="docutils literal"><span class="pre">graph_type</span></tt>.  In
-general, to access the type of any parameter <em>foo</em>, write <em>foo</em><tt class="docutils literal"><span class="pre">_type</span></tt>.</p>
+<p class="last">The <em>type</em> of the <tt class="docutils literal">graph</tt> argument is available in the
+signature—and in the function body—as <tt class="docutils literal">graph_type</tt>.  In
+general, to access the type of any parameter <em>foo</em>, write <em>foo</em><tt class="docutils literal">_type</tt>.</p>
 </div>
 </div>
 <div class="section" id="predicate-requirements">
 <h5>2.1.5.6.2&nbsp;&nbsp;&nbsp;Predicate Requirements</h5>
 <p>The requirements on other arguments are a bit more interesting than
-those on <tt class="docutils literal"><span class="pre">root_vertex</span></tt>; they can't be described in terms of simple
+those on <tt class="docutils literal">root_vertex</tt>; they can't be described in terms of simple
 type matching.  Instead, they must be described in terms of <a class="reference external" href="../../../mpl/doc/refmanual/metafunction.html">MPL
 Metafunctions</a>.  There's no space to give a complete description
 of metafunctions or of graph library details here, but we'll show
 you the complete signature with maximal checking, just to give you
 a feel for how it's done.  Each predicate metafunction is enclosed
-in parentheses <em>and preceded by an asterisk</em>, as follows:</p>
+in parentheses <em>and preceded by an asterix</em>, as follows:</p>
 <pre class="literal-block">
+// We first need to define a few metafunction that we use in the
+// predicates below.
+
+template &lt;class G&gt;
+struct traversal_category
+{
+    typedef typename boost::graph_traits&lt;G&gt;::traversal_category type;
+};
+
+template &lt;class G&gt;
+struct vertex_descriptor
+{
+    typedef typename boost::graph_traits&lt;G&gt;::vertex_descriptor type;
+};
+
+template &lt;class G&gt;
+struct value_type
+{
+    typedef typename boost::property_traits&lt;G&gt;::value_type type;
+};
+
+template &lt;class G&gt;
+struct key_type
+{
+    typedef typename boost::property_traits&lt;G&gt;::key_type type;
+};
+
+template&lt;class Size, class IndexMap&gt;
+boost::iterator_property_map&lt;
+    boost::default_color_type*, IndexMap
+  , boost::default_color_type, boost::default_color_type&amp;
+&gt;
+default_color_map(Size num_vertices, IndexMap const&amp; index_map)
+{
+   std::vector&lt;boost::default_color_type&gt; colors(num_vertices);
+   return &amp;colors[0];
+}
+
 BOOST_PARAMETER_FUNCTION(
     (void), depth_first_search, graphs
 
@@ -800,12 +838,10 @@ BOOST_PARAMETER_FUNCTION(
       (graph
        , <strong>*(boost::mpl::and_&lt;
                boost::is_convertible&lt;
-                   boost::graph_traits&lt;_&gt;::traversal_category
-                 , boost::incidence_graph_tag
+                   traversal_category&lt;_&gt;, boost::incidence_graph_tag
                &gt;
              , boost::is_convertible&lt;
-                   boost::graph_traits&lt;_&gt;::traversal_category
-                 , boost::vertex_list_graph_tag
+                   traversal_category&lt;_&gt;, boost::vertex_list_graph_tag
                &gt;
            &gt;)</strong> ))
 
@@ -813,25 +849,21 @@ BOOST_PARAMETER_FUNCTION(
       (visitor, *, boost::dfs_visitor&lt;&gt;()) // not checkable
 
       (root_vertex
-        , (typename boost::graph_traits&lt;graphs::graph::_&gt;::vertex_descriptor)
+        , (vertex_descriptor&lt;graphs::graph::_&gt;)
         , *vertices(graph).first)
 
       (index_map
         , <strong>*(boost::mpl::and_&lt;
-              boost::is_integral&lt;
-                  boost::property_traits&lt;_&gt;::value_type
-              &gt;
+              boost::is_integral&lt;value_type&lt;_&gt; &gt;
             , boost::is_same&lt;
-                  typename boost::graph_traits&lt;graphs::graph::_&gt;::vertex_descriptor
-                , boost::property_traits&lt;_&gt;::key_type
+                  vertex_descriptor&lt;graphs::graph::_&gt;, key_type&lt;_&gt;
               &gt;
           &gt;)</strong>
         , get(boost::vertex_index,graph))
 
       (in_out(color_map)
         , <strong>*(boost::is_same&lt;
-              typename boost::graph_traits&lt;graphs::graph::_&gt;::vertex_descriptor
-            , boost::property_traits&lt;_&gt;::key_type
+              vertex_descriptor&lt;graphs::graph::_&gt;, key_type&lt;_&gt;
           &gt;)</strong>
        , default_color_map(num_vertices(graph), index_map) )
     )
@@ -839,6 +871,8 @@ BOOST_PARAMETER_FUNCTION(
 </pre>
 <!-- @example.prepend('''
 #include <boost/parameter.hpp>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/depth_first_search.hpp>
 
 BOOST_PARAMETER_NAME((_graph, graphs) graph)
 BOOST_PARAMETER_NAME((_visitor, graphs) visitor)
@@ -847,35 +881,32 @@ BOOST_PARAMETER_NAME((_index_map, graphs) index_map)
 BOOST_PARAMETER_NAME((_color_map, graphs) color_map)
 
 using boost::mpl::_;
-
-namespace boost
-{
-  struct incidence_graph_tag {};
-  struct vertex_list_graph_tag {};
-
-  int vertex_index = 0;
-
-  template <class T>
-  struct graph_traits
-  {
-      typedef int traversal_category;
-      typedef int vertex_descriptor;
-  };
-
-  template <class T>
-  struct property_traits
-  {
-      typedef int value_type;
-      typedef int key_type;
-  };
-
-  template <class T = int>
-  struct dfs_visitor
-  {};
-}''') -->
+''') -->
 <!-- @example.append('''
-{}''') -->
+{}
+
+int main()
+{
+    typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS> G;
+
+    enum {u, v, w, x, y, z, N};
+    typedef std::pair<int, int> E;
+    E edges[] = {E(u, v), E(u, x), E(x, v), E(y, x), E(v, y), E(w, y),
+                 E(w,z), E(z, z)};
+    G g(edges, edges + sizeof(edges) / sizeof(E), N);
+
+    depth_first_search(g);
+    depth_first_search(g, _root_vertex = (int)x);
+}
+''') -->
 <!-- @test('compile') -->
+<p>Note the use of the nested <cite>tag::_</cite>. This is a shortcut for:</p>
+<pre class="literal-block">
+value_type&lt;boost::mpl::_2, tag&gt;
+</pre>
+<!-- @ignore() -->
+<p>Intended to be used to access preceding arguments types in the
+predicates.</p>
 <p>We acknowledge that this signature is pretty hairy looking.
 Fortunately, it usually isn't necessary to so completely encode the
 type requirements on arguments to generic functions.  However, it
@@ -889,7 +920,7 @@ with <a class="reference external" href="http://www.generic-programming.org/soft
 <h4>2.1.5.7&nbsp;&nbsp;&nbsp;Deduced Parameters</h4>
 <p>To illustrate deduced parameter support we'll have to leave behind
 our example from the Graph library.  Instead, consider the example
-of the <a class="reference external" href="../../../python/doc/v2/def.html"><tt class="docutils literal"><span class="pre">def</span></tt></a> function from <a class="reference external" href="../../../python/doc/index.html">Boost.Python</a>.  Its signature is
+of the <a class="reference external" href="../../../python/doc/v2/def.html"><tt class="docutils literal">def</tt></a> function from <a class="reference external" href="../../../python/doc/index.html">Boost.Python</a>.  Its signature is
 roughly as follows:</p>
 <pre class="literal-block">
 template &lt;
@@ -910,13 +941,13 @@ void def(
 this example: although it means something analogous in Boost.Python
 to what it means in the Parameter library, for the purposes of this
 exercise you can think of it as being completely different.</p>
-<p>When calling <tt class="docutils literal"><span class="pre">def</span></tt>, only two arguments are required.  The
+<p>When calling <tt class="docutils literal">def</tt>, only two arguments are required.  The
 association between any additional arguments and their parameters
 can be determined by the types of the arguments actually passed, so
 the caller is neither required to remember argument positions or
 explicitly specify parameter names for those arguments.  To
-generate this interface using <tt class="docutils literal"><span class="pre">BOOST_PARAMETER_FUNCTION</span></tt>, we need
-only enclose the deduced parameters in a <tt class="docutils literal"><span class="pre">(deduced</span> <span class="pre">…)</span></tt> clause, as
+generate this interface using <tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt>, we need
+only enclose the deduced parameters in a <tt class="docutils literal">(deduced …)</tt> clause, as
 follows:</p>
 <pre class="literal-block">
 namespace mpl = boost::mpl;
@@ -987,9 +1018,9 @@ void f()
 ''') -->
 <div class="admonition-syntax-note admonition">
 <p class="first admonition-title">Syntax Note</p>
-<p class="last">A <tt class="docutils literal"><span class="pre">(deduced</span> <span class="pre">…)</span></tt> clause always contains a <tt class="docutils literal"><span class="pre">(required</span> <span class="pre">…)</span></tt>
-and/or an <tt class="docutils literal"><span class="pre">(optional</span> <span class="pre">…)</span></tt> subclause, and must follow any
-<tt class="docutils literal"><span class="pre">(required</span> <span class="pre">…)</span></tt> or <tt class="docutils literal"><span class="pre">(optional</span> <span class="pre">…)</span></tt> clauses indicating
+<p class="last">A <tt class="docutils literal">(deduced …)</tt> clause always contains a <tt class="docutils literal">(required …)</tt>
+and/or an <tt class="docutils literal">(optional …)</tt> subclause, and must follow any
+<tt class="docutils literal">(required …)</tt> or <tt class="docutils literal">(optional …)</tt> clauses indicating
 nondeduced parameters at the outer level.</p>
 </div>
 <p>With the declaration above, the following two calls are equivalent:</p>
@@ -1000,8 +1031,8 @@ def(&quot;f&quot;, &amp;f, <strong>&quot;Documentation for f&quot;</strong>, <st
 <!-- @example.prepend('''
 int main()
 {''') -->
-<p>If the user wants to pass a <tt class="docutils literal"><span class="pre">policies</span></tt> argument that was also,
-for some reason, convertible to <tt class="docutils literal"><span class="pre">char</span> <span class="pre">const*</span></tt>, she can always
+<p>If the user wants to pass a <tt class="docutils literal">policies</tt> argument that was also,
+for some reason, convertible to <tt class="docutils literal">char const*</tt>, she can always
 specify the parameter name explicitly, as follows:</p>
 <pre class="literal-block">
 def(
@@ -1015,9 +1046,9 @@ def(
 </div>
 <div class="section" id="parameter-enabled-member-functions">
 <h2><a class="toc-backref" href="#id28">2.2&nbsp;&nbsp;&nbsp;Parameter-Enabled Member Functions</a></h2>
-<p>The <tt class="docutils literal"><span class="pre">BOOST_PARAMETER_MEMBER_FUNCTION</span></tt> and
-<tt class="docutils literal"><span class="pre">BOOST_PARAMETER_CONST_MEMBER_FUNCTION</span></tt> macros accept exactly the
-same arguments as <tt class="docutils literal"><span class="pre">BOOST_PARAMETER_FUNCTION</span></tt>, but are designed to
+<p>The <tt class="docutils literal">BOOST_PARAMETER_MEMBER_FUNCTION</tt> and
+<tt class="docutils literal">BOOST_PARAMETER_CONST_MEMBER_FUNCTION</tt> macros accept exactly the
+same arguments as <tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt>, but are designed to
 be used within the body of a class:</p>
 <pre class="literal-block">
 BOOST_PARAMETER_NAME(arg1)
@@ -1064,7 +1095,7 @@ using namespace boost::parameter;
 <div class="section" id="static-member-functions">
 <h3>2.2.1&nbsp;&nbsp;&nbsp;Static Member Functions</h3>
 <p>To expose a static member function, simply insert the keyword
-“<tt class="docutils literal"><span class="pre">static</span></tt>” before the function name:</p>
+“<tt class="docutils literal">static</tt>” before the function name:</p>
 <pre class="literal-block">
 BOOST_PARAMETER_NAME(arg1)
 
@@ -1118,11 +1149,11 @@ struct myclass_impl
 <!-- @example.prepend('''
 #include <boost/parameter.hpp>
 #include <iostream>''') -->
-<p>Note that the bitwise or (“<tt class="docutils literal"><span class="pre">|</span></tt>”) operator has a special
+<p>Note that the bitwise or (“<tt class="docutils literal">|</tt>”) operator has a special
 meaning when applied to keyword objects that are passed to an
 <span class="concept">ArgumentPack</span>'s indexing operator: it is used to indicate a
-default value.  In this case if there is no <tt class="docutils literal"><span class="pre">index</span></tt> parameter in
-the <span class="concept">ArgumentPack</span>, <tt class="docutils literal"><span class="pre">42</span></tt> will be used instead.</p>
+default value.  In this case if there is no <tt class="docutils literal">index</tt> parameter in
+the <span class="concept">ArgumentPack</span>, <tt class="docutils literal">42</tt> will be used instead.</p>
 <p>Now we are ready to write the parameter-enabled constructor
 interface:</p>
 <pre class="literal-block">
@@ -1133,8 +1164,8 @@ struct myclass : myclass_impl
       , (required (name,*)) (optional (index,*))) // no semicolon
 };
 </pre>
-<p>Since we have supplied a default value for <tt class="docutils literal"><span class="pre">index</span></tt> but not for
-<tt class="docutils literal"><span class="pre">name</span></tt>, only <tt class="docutils literal"><span class="pre">name</span></tt> is required.  We can exercise our new
+<p>Since we have supplied a default value for <tt class="docutils literal">index</tt> but not for
+<tt class="docutils literal">name</tt>, only <tt class="docutils literal">name</tt> is required.  We can exercise our new
 interface as follows:</p>
 <pre class="literal-block">
 myclass x(&quot;bob&quot;, 3);                     // positional
@@ -1157,7 +1188,7 @@ template class&lt;
 class class_;
 </pre>
 <!-- @ignore() -->
-<p>Only the first argument, <tt class="docutils literal"><span class="pre">ValueType</span></tt>, is required.</p>
+<p>Only the first argument, <tt class="docutils literal">ValueType</tt>, is required.</p>
 <div class="section" id="named-template-parameters">
 <h3>2.4.1&nbsp;&nbsp;&nbsp;Named Template Parameters</h3>
 <p>First, we'll build an interface that allows users to pass arguments
@@ -1190,7 +1221,7 @@ BOOST_PARAMETER_TEMPLATE_KEYWORD(copyable)
 </pre>
 <!-- @example.prepend('#include <boost/parameter.hpp>') -->
 <!-- @test('compile') -->
-<p>The declaration of the <tt class="docutils literal"><span class="pre">class_type</span></tt> keyword you see here is
+<p>The declaration of the <tt class="docutils literal">class_type</tt> keyword you see here is
 equivalent to:</p>
 <pre class="literal-block">
 namespace boost { namespace python {
@@ -1206,7 +1237,7 @@ struct class_type
 <!-- @example.prepend('#include <boost/parameter.hpp>') -->
 <!-- @test('compile') -->
 <p>It defines a keyword tag type named <tt class="docutils literal"><span class="pre">tag::class_type</span></tt> and a
-<em>parameter passing template</em> named <tt class="docutils literal"><span class="pre">class_type</span></tt>.</p>
+<em>parameter passing template</em> named <tt class="docutils literal">class_type</tt>.</p>
 </div>
 <div class="section" id="class-template-skeleton">
 <h4>2.4.1.2&nbsp;&nbsp;&nbsp;Class Template Skeleton</h4>
@@ -1283,11 +1314,11 @@ struct bases
 </div>
 <div class="section" id="argument-packs-and-parameter-extraction">
 <span id="binding-intro"></span><h4>2.4.1.4&nbsp;&nbsp;&nbsp;Argument Packs and Parameter Extraction</h4>
-<p>Next, within the body of <tt class="docutils literal"><span class="pre">class_</span></tt> , we use the <span class="concept">ParameterSpec</span>'s
-nested <tt class="docutils literal"><span class="pre">::bind&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt> template to bundle the actual arguments into an
-<a class="reference external" href="reference.html#argumentpack"><span class="concept">ArgumentPack</span></a> type, and then use the library's <tt class="docutils literal"><span class="pre">value_type&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt>
-metafunction to extract “logical parameters”.  <tt class="docutils literal"><span class="pre">value_type&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt> is
-a lot like <tt class="docutils literal"><span class="pre">binding&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt>, but no reference is added to the actual
+<p>Next, within the body of <tt class="docutils literal">class_</tt> , we use the <span class="concept">ParameterSpec</span>'s
+nested <tt class="docutils literal">::bind&lt; … &gt;</tt> template to bundle the actual arguments into an
+<a class="reference external" href="reference.html#argumentpack"><span class="concept">ArgumentPack</span></a> type, and then use the library's <tt class="docutils literal">value_type&lt; … &gt;</tt>
+metafunction to extract “logical parameters”.  <tt class="docutils literal">value_type&lt; … &gt;</tt> is
+a lot like <tt class="docutils literal">binding&lt; … &gt;</tt>, but no reference is added to the actual
 argument type.  Note that defaults are specified by passing it an
 optional third argument:</p>
 <pre class="literal-block">
@@ -1368,13 +1399,13 @@ BOOST_MPL_ASSERT((boost::is_same&lt;c2::copyable, void&gt;));
 <div class="section" id="deduced-template-parameters">
 <h3>2.4.3&nbsp;&nbsp;&nbsp;Deduced Template Parameters</h3>
 <p>To apply a deduced parameter interface here, we need only make the
-type requirements a bit tighter so the <tt class="docutils literal"><span class="pre">held_type</span></tt> and
-<tt class="docutils literal"><span class="pre">copyable</span></tt> parameters can be crisply distinguished from the
-others.  <a class="reference external" href="../../../python/doc/index.html">Boost.Python</a> does this by requiring that <tt class="docutils literal"><span class="pre">base_list</span></tt> be
-a specialization of its <tt class="docutils literal"><span class="pre">bases&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt> template (as opposed to
-being any old MPL sequence) and by requiring that <tt class="docutils literal"><span class="pre">copyable</span></tt>, if
+type requirements a bit tighter so the <tt class="docutils literal">held_type</tt> and
+<tt class="docutils literal">copyable</tt> parameters can be crisply distinguished from the
+others.  <a class="reference external" href="../../../python/doc/index.html">Boost.Python</a> does this by requiring that <tt class="docutils literal">base_list</tt> be
+a specialization of its <tt class="docutils literal">bases&lt; … &gt;</tt> template (as opposed to
+being any old MPL sequence) and by requiring that <tt class="docutils literal">copyable</tt>, if
 explicitly supplied, be <tt class="docutils literal"><span class="pre">boost::noncopyable</span></tt>.  One easy way of
-identifying specializations of <tt class="docutils literal"><span class="pre">bases&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt> is to derive them all
+identifying specializations of <tt class="docutils literal">bases&lt; … &gt;</tt> is to derive them all
 from the same class, as an implementation detail:</p>
 <pre class="literal-block">
 namespace boost { namespace python {
@@ -1500,9 +1531,9 @@ section we'll cover some more esoteric uses of the library.</p>
 <div class="section" id="fine-grained-name-control">
 <h2><a class="toc-backref" href="#id32">3.1&nbsp;&nbsp;&nbsp;Fine-Grained Name Control</a></h2>
 <p>If you don't like the leading-underscore naming convention used
-to refer to keyword objects, or you need the name <tt class="docutils literal"><span class="pre">tag</span></tt> for
+to refer to keyword objects, or you need the name <tt class="docutils literal">tag</tt> for
 something other than the keyword type namespace, there's another
-way to use <tt class="docutils literal"><span class="pre">BOOST_PARAMETER_NAME</span></tt>:</p>
+way to use <tt class="docutils literal">BOOST_PARAMETER_NAME</tt>:</p>
 <pre class="literal-block">
 BOOST_PARAMETER_NAME(<strong>(</strong><em>object-name</em><strong>,</strong> <em>tag-namespace</em><strong>)</strong> <em>parameter-name</em>)
 </pre>
@@ -1556,7 +1587,7 @@ int x = print_index(_index = 3);  // prints &quot;index = 3&quot;
 #include <iostream>''') -->
 <p>Also, <span class="concept">ArgumentPack</span>s can be composed using the comma operator.
 The extra parentheses below are used to prevent the compiler from
-seeing two separate arguments to <tt class="docutils literal"><span class="pre">print_name_and_index</span></tt>:</p>
+seeing two separate arguments to <tt class="docutils literal">print_name_and_index</tt>:</p>
 <pre class="literal-block">
 BOOST_PARAMETER_NAME(name)
 
@@ -1573,8 +1604,8 @@ int y = print_name_and_index((_index = 3, _name = &quot;jones&quot;));
 <a class="reference external" href="reference.html#parameterspec"><span class="concept">ParameterSpec</span></a>.  As introduced described in the section on <a class="reference internal" href="#class-template-signatures">Class
 Template Signatures</a>, a <span class="concept">ParameterSpec</span> describes the positional
 order of parameters and any associated type requirements.  Just as
-we can build an <span class="concept">ArgumentPack</span> <em>type</em> with its nested <tt class="docutils literal"><span class="pre">::bind&lt;</span> <span class="pre">…</span>
-<span class="pre">&gt;</span></tt> template, we can build an <span class="concept">ArgumentPack</span> <em>object</em> by invoking
+we can build an <span class="concept">ArgumentPack</span> <em>type</em> with its nested <tt class="docutils literal">::bind&lt; …
+&gt;</tt> template, we can build an <span class="concept">ArgumentPack</span> <em>object</em> by invoking
 its function call operator:</p>
 <pre class="literal-block">
 parameter::parameters&lt;
@@ -1607,7 +1638,7 @@ can't accept non-const rvalues.</p>
 <div class="section" id="extracting-parameter-types">
 <h3>3.2.2&nbsp;&nbsp;&nbsp;Extracting Parameter Types</h3>
 <p>If we want to know the types of the arguments passed to
-<tt class="docutils literal"><span class="pre">print_name_and_index</span></tt>, we have a couple of options.  The
+<tt class="docutils literal">print_name_and_index</tt>, we have a couple of options.  The
 simplest and least error-prone approach is to forward them to a
 function template and allow <em>it</em> to do type deduction:</p>
 <pre class="literal-block">
@@ -1643,8 +1674,8 @@ int main()
 <!-- @test('run') -->
 <p>Occasionally one needs to deduce argument types without an extra
 layer of function call.  For example, suppose we wanted to return
-twice the value of the <tt class="docutils literal"><span class="pre">index</span></tt> parameter?  In that
-case we can use the <tt class="docutils literal"><span class="pre">value_type&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt> metafunction introduced
+twice the value of the <tt class="docutils literal">index</tt> parameter?  In that
+case we can use the <tt class="docutils literal">value_type&lt; … &gt;</tt> metafunction introduced
 <a class="reference internal" href="#binding-intro">earlier</a>:</p>
 <pre class="literal-block">
 BOOST_PARAMETER_NAME(index)
@@ -1671,17 +1702,17 @@ int main()
     assert(six == 6);
 }''') -->
 <!-- @test('run', howmany='all') -->
-<p>Note that if we had used <tt class="docutils literal"><span class="pre">binding&lt;</span> <span class="pre">…</span> <span class="pre">&gt;</span></tt> rather than <tt class="docutils literal"><span class="pre">value_type&lt;</span> <span class="pre">…</span>
-<span class="pre">&gt;</span></tt>, we would end up returning a reference to the temporary created in
-the <tt class="docutils literal"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">…</span></tt> expression.</p>
+<p>Note that if we had used <tt class="docutils literal">binding&lt; … &gt;</tt> rather than <tt class="docutils literal">value_type&lt; …
+&gt;</tt>, we would end up returning a reference to the temporary created in
+the <tt class="docutils literal">2 * …</tt> expression.</p>
 </div>
 <div class="section" id="lazy-default-computation">
 <h3>3.2.3&nbsp;&nbsp;&nbsp;Lazy Default Computation</h3>
 <p>When a default value is expensive to compute, it would be
 preferable to avoid it until we're sure it's absolutely necessary.
-<tt class="docutils literal"><span class="pre">BOOST_PARAMETER_FUNCTION</span></tt> takes care of that problem for us, but
+<tt class="docutils literal">BOOST_PARAMETER_FUNCTION</tt> takes care of that problem for us, but
 when using <span class="concept">ArgumentPack</span>s explicitly, we need a tool other than
-<tt class="docutils literal"><span class="pre">operator|</span></tt>:</p>
+<tt class="docutils literal">operator|</tt>:</p>
 <pre class="literal-block">
 BOOST_PARAMETER_NAME(s1)
 BOOST_PARAMETER_NAME(s2)
@@ -1709,8 +1740,8 @@ namespace parameter = boost::parameter;''') -->
 int main()
 {}''') -->
 <!-- @test('run') -->
-<p>In the example above, the string <tt class="docutils literal"><span class="pre">&quot;hello,</span> <span class="pre">world&quot;</span></tt> is constructed
-despite the fact that the user passed us a value for <tt class="docutils literal"><span class="pre">s3</span></tt>.  To
+<p>In the example above, the string <tt class="docutils literal">&quot;hello, world&quot;</tt> is constructed
+despite the fact that the user passed us a value for <tt class="docutils literal">s3</tt>.  To
 remedy that, we can compute the default value <em>lazily</em> (that is,
 only on demand), by using <tt class="docutils literal"><span class="pre">boost::bind()</span></tt> to create a function
 object.</p>
@@ -1720,12 +1751,10 @@ object.</p>
 <!-- by combining the logical-or (“``||``”) operator -->
 <!-- with a function object built by the Boost Lambda_ library: [#bind]_ -->
 <pre class="literal-block">
-using boost::bind;
-using boost::ref;
-
 typename parameter::binding&lt;
-    ArgumentPack, tag::s3, std::string
-&gt;::type s3 = args[_s3 <strong>|| bind(std::plus&lt;std::string&gt;(), ref(s1), ref(s2))</strong> ];
+    ArgumentPack, <a class="reference external" href="tag::s3">tag::s3</a>, std::string
+&gt;::type s3 = args[_s3
+    <strong>|| boost::bind(std::plus&lt;std::string&gt;(), boost::ref(s1), boost::ref(s2))</strong> ];
 </pre>
 <!-- @example.prepend('''
 #include <boost/bind.hpp>
@@ -1757,15 +1786,15 @@ int main()
 <!-- .. _Lambda: ../../../lambda/index.html -->
 <div class="sidebar">
 <p class="first sidebar-title">Mnemonics</p>
-<p class="last">To remember the difference between <tt class="docutils literal"><span class="pre">|</span></tt> and <tt class="docutils literal"><span class="pre">||</span></tt>, recall that
-<tt class="docutils literal"><span class="pre">||</span></tt> normally uses short-circuit evaluation: its second
-argument is only evaluated if its first argument is <tt class="docutils literal"><span class="pre">false</span></tt>.
-Similarly, in <tt class="docutils literal"><span class="pre">color_map[param||f]</span></tt>, <tt class="docutils literal"><span class="pre">f</span></tt> is only invoked if
-no <tt class="docutils literal"><span class="pre">color_map</span></tt> argument was supplied.</p>
+<p class="last">To remember the difference between <tt class="docutils literal">|</tt> and <tt class="docutils literal">||</tt>, recall that
+<tt class="docutils literal">||</tt> normally uses short-circuit evaluation: its second
+argument is only evaluated if its first argument is <tt class="docutils literal">false</tt>.
+Similarly, in <tt class="docutils literal"><span class="pre">color_map[param||f]</span></tt>, <tt class="docutils literal">f</tt> is only invoked if
+no <tt class="docutils literal">color_map</tt> argument was supplied.</p>
 </div>
-<p>The expression <tt class="docutils literal"><span class="pre">bind(std::plus&lt;std::string&gt;(),</span> <span class="pre">ref(s1),</span> <span class="pre">ref(s2))</span></tt> yields
+<p>The expression <tt class="docutils literal"><span class="pre">bind(std::plus&lt;std::string&gt;(),</span> ref(s1), ref(s2))</tt> yields
 a <em>function object</em> that, when invoked, adds the two strings together.
-That function will only be invoked if no <tt class="docutils literal"><span class="pre">s3</span></tt> argument is supplied by
+That function will only be invoked if no <tt class="docutils literal">s3</tt> argument is supplied by
 the caller.</p>
 <!-- The expression ``lambda::var(s1)+lambda::var(s2)`` yields a -->
 <!-- *function object* that, when invoked, adds the two strings -->
@@ -1781,7 +1810,7 @@ Parameter library.  This section points out a few more-marginal
 issues that will help you use the library more effectively.</p>
 <div class="section" id="keyword-naming">
 <h2><a class="toc-backref" href="#id35">4.1&nbsp;&nbsp;&nbsp;Keyword Naming</a></h2>
-<p><tt class="docutils literal"><span class="pre">BOOST_PARAMETER_NAME</span></tt> prepends a leading underscore to the names
+<p><tt class="docutils literal">BOOST_PARAMETER_NAME</tt> prepends a leading underscore to the names
 of all our keyword objects in order to avoid the following
 usually-silent bug:</p>
 <pre class="literal-block">
@@ -1815,19 +1844,19 @@ namespace people
 </pre>
 <!-- @ignore() -->
 <p>Although in the case above, the user was trying to pass the value
-<tt class="docutils literal"><span class="pre">3</span></tt> as the <tt class="docutils literal"><span class="pre">age</span></tt> parameter to <tt class="docutils literal"><span class="pre">g</span></tt>, what happened instead
-was that <tt class="docutils literal"><span class="pre">f</span></tt>'s <tt class="docutils literal"><span class="pre">age</span></tt> argument got reassigned the value 3,
-and was then passed as a positional argument to <tt class="docutils literal"><span class="pre">g</span></tt>.  Since
-<tt class="docutils literal"><span class="pre">g</span></tt>'s first positional parameter is <tt class="docutils literal"><span class="pre">name</span></tt>, the default value
-for <tt class="docutils literal"><span class="pre">age</span></tt> is used, and g prints <tt class="docutils literal"><span class="pre">3:42</span></tt>.  Our leading
+<tt class="docutils literal">3</tt> as the <tt class="docutils literal">age</tt> parameter to <tt class="docutils literal">g</tt>, what happened instead
+was that <tt class="docutils literal">f</tt>'s <tt class="docutils literal">age</tt> argument got reassigned the value 3,
+and was then passed as a positional argument to <tt class="docutils literal">g</tt>.  Since
+<tt class="docutils literal">g</tt>'s first positional parameter is <tt class="docutils literal">name</tt>, the default value
+for <tt class="docutils literal">age</tt> is used, and g prints <tt class="docutils literal">3:42</tt>.  Our leading
 underscore naming convention that makes this problem less likely
 to occur.</p>
 <p>In this particular case, the problem could have been detected if
-f's <tt class="docutils literal"><span class="pre">age</span></tt> parameter had been made <tt class="docutils literal"><span class="pre">const</span></tt>, which is always a
+f's <tt class="docutils literal">age</tt> parameter had been made <tt class="docutils literal">const</tt>, which is always a
 good idea whenever possible.  Finally, we recommend that you use
 an enclosing namespace for all your code, but particularly for
 names with leading underscores.  If we were to leave out the
-<tt class="docutils literal"><span class="pre">people</span></tt> namespace above, names in the global namespace
+<tt class="docutils literal">people</tt> namespace above, names in the global namespace
 beginning with leading underscores—which are reserved to your C++
 compiler—might become irretrievably ambiguous with those in our
 unnamed namespace.</p>
@@ -1898,7 +1927,7 @@ manage.</p>
 int x = <strong>f</strong>(_name = &quot;jill&quot;, _index = 3);
 </pre>
 <p>This option is convenient, but it indiscriminately makes the
-<em>entire</em> contents of <tt class="docutils literal"><span class="pre">lib</span></tt> available without qualification.</p>
+<em>entire</em> contents of <tt class="docutils literal">lib</tt> available without qualification.</p>
 </blockquote>
 <!-- @example.prepend(namespace_setup) -->
 <!-- @example.append('int main() {}') -->
@@ -1928,7 +1957,7 @@ namespace lib
 #include <boost/parameter.hpp>
 #include <iostream>''') -->
 <p>Now users need only a single <em>using-directive</em> to bring in just the
-names of all keywords associated with <tt class="docutils literal"><span class="pre">lib</span></tt>:</p>
+names of all keywords associated with <tt class="docutils literal">lib</tt>:</p>
 <pre class="literal-block">
 <strong>using namespace lib::keywords;</strong>
 int y = lib::f(_name = &quot;bob&quot;, _index = 2);
@@ -1959,22 +1988,22 @@ issues and workarounds for particular compilers.</p>
 <div class="section" id="no-sfinae-support">
 <h2><a class="toc-backref" href="#id39">5.1&nbsp;&nbsp;&nbsp;No SFINAE Support</a></h2>
 <p>Some older compilers don't support SFINAE.  If your compiler meets
-that criterion, then Boost headers will <tt class="docutils literal"><span class="pre">#define</span></tt> the preprocessor
-symbol <tt class="docutils literal"><span class="pre">BOOST_NO_SFINAE</span></tt>, and parameter-enabled functions won't be
+that criterion, then Boost headers will <tt class="docutils literal">#define</tt> the preprocessor
+symbol <tt class="docutils literal">BOOST_NO_SFINAE</tt>, and parameter-enabled functions won't be
 removed from the overload set based on their signatures.</p>
 </div>
 <div class="section" id="no-support-for-result-of">
-<h2>5.2&nbsp;&nbsp;&nbsp;No Support for <a class="reference external" href="../../../utility/utility.htm#result_of"><tt class="docutils literal"><span class="pre">result_of</span></tt></a></h2>
-<p><a class="reference internal" href="#lazy-default-computation">Lazy default computation</a> relies on the <tt class="docutils literal"><span class="pre">result_of</span></tt> class
+<h2>5.2&nbsp;&nbsp;&nbsp;No Support for <a class="reference external" href="../../../utility/utility.htm#result_of"><tt class="docutils literal">result_of</tt></a></h2>
+<p><a class="reference internal" href="#lazy-default-computation">Lazy default computation</a> relies on the <tt class="docutils literal">result_of</tt> class
 template to compute the types of default arguments given the type
 of the function object that constructs them.  On compilers that
-don't support <tt class="docutils literal"><span class="pre">result_of</span></tt>, <tt class="docutils literal"><span class="pre">BOOST_NO_RESULT_OF</span></tt> will be
-<tt class="docutils literal"><span class="pre">#define</span></tt>d, and the compiler will expect the function object to
-contain a nested type name, <tt class="docutils literal"><span class="pre">result_type</span></tt>, that indicates its
+don't support <tt class="docutils literal">result_of</tt>, <tt class="docutils literal">BOOST_NO_RESULT_OF</tt> will be
+<tt class="docutils literal">#define</tt>d, and the compiler will expect the function object to
+contain a nested type name, <tt class="docutils literal">result_type</tt>, that indicates its
 return type when invoked without arguments.  To use an ordinary
 function as a default generator on those compilers, you'll need to
-wrap it in a class that provides <tt class="docutils literal"><span class="pre">result_type</span></tt> as a <tt class="docutils literal"><span class="pre">typedef</span></tt>
-and invokes the function via its <tt class="docutils literal"><span class="pre">operator()</span></tt>.</p>
+wrap it in a class that provides <tt class="docutils literal">result_type</tt> as a <tt class="docutils literal">typedef</tt>
+and invokes the function via its <tt class="docutils literal">operator()</tt>.</p>
 <!-- Can't Declare |ParameterSpec| via ``typedef``
 =============================================
 
@@ -2054,8 +2083,8 @@ function or class template</td>
 <tr class="field"><th class="field-name" colspan="2">Parameter (or “formal parameter”):</th></tr>
 <tr><td>&nbsp;</td><td class="field-body"><p class="first">the name used to refer to an
 argument within a function or class template.  For example, the
-value of <tt class="docutils literal"><span class="pre">f</span></tt>'s <em>parameter</em> <tt class="docutils literal"><span class="pre">x</span></tt> is given by the <em>argument</em>
-<tt class="docutils literal"><span class="pre">3</span></tt>:</p>
+value of <tt class="docutils literal">f</tt>'s <em>parameter</em> <tt class="docutils literal">x</tt> is given by the <em>argument</em>
+<tt class="docutils literal">3</tt>:</p>
 <pre class="last literal-block">
 int f(int x) { return x + 1 }
 int y = f(3);
@@ -2096,7 +2125,7 @@ units (object files) that make up a program.</td></tr>
 Library, don't worry about the meaning of any
 Graph-library-specific details you encounter.  In this case you
 could replace all mentions of vertex descriptor types with
-<tt class="docutils literal"><span class="pre">int</span></tt> in the text, and your understanding of the Parameter
+<tt class="docutils literal">int</tt> in the text, and your understanding of the Parameter
 library wouldn't suffer.</td></tr>
 </tbody>
 </table>
@@ -2114,7 +2143,7 @@ library wouldn't suffer.</td></tr>
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label">[5]</td><td><em>(<a class="fn-backref" href="#id13">1</a>, <a class="fn-backref" href="#id14">2</a>)</em> Here we're assuming there's a predicate
-metafunction <tt class="docutils literal"><span class="pre">is_keyword_expression</span></tt> that can be used to
+metafunction <tt class="docutils literal">is_keyword_expression</tt> that can be used to
 identify models of Boost.Python's KeywordExpression concept.</td></tr>
 </tbody>
 </table>
@@ -2151,9 +2180,9 @@ from the overload set. By producing an invalid type in the
 function signature depending on the result of some condition,
 we can decide whether or not an overload is considered during overload
 resolution.  The technique is formalized in
-the <a class="reference external" href="../../../utility/enable_if.html"><tt class="docutils literal"><span class="pre">enable_if</span></tt></a> utility.  Most recent compilers support SFINAE;
+the <a class="reference external" href="../../../utility/enable_if.html"><tt class="docutils literal">enable_if</tt></a> utility.  Most recent compilers support SFINAE;
 on compilers that don't support it, the Boost config library
-will <tt class="docutils literal"><span class="pre">#define</span></tt> the symbol <tt class="docutils literal"><span class="pre">BOOST_NO_SFINAE</span></tt>.
+will <tt class="docutils literal">#define</tt> the symbol <tt class="docutils literal">BOOST_NO_SFINAE</tt>.
 See
 <a class="reference external" href="http://www.semantics.org/once_weakly/w02_SFINAE.pdf">http://www.semantics.org/once_weakly/w02_SFINAE.pdf</a> for more
 information on SFINAE.</td></tr>
@@ -2163,7 +2192,7 @@ information on SFINAE.</td></tr>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: 2009-05-31 01:40 UTC.
+Generated on: 2011-11-08 21:40 UTC.
 Generated by <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
 
 </div>

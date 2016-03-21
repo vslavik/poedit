@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -41,33 +42,33 @@
                 at_least_one_value_required, invalid_bool_value, 
                 invalid_option_value, invalid_option <span class="special">}</span><span class="special">;</span>
   <span class="comment">// <a class="link" href="validation_error.html#boost.program_options.validation_errorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="validation_error.html#idp156632224-bb"><span class="identifier">validation_error</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
+  <a class="link" href="validation_error.html#idm45507096038224-bb"><span class="identifier">validation_error</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
                    <span class="keyword">int</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="validation_error.html#idp145360624-bb"><span class="special">~</span><span class="identifier">validation_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="validation_error.html#idm45507107383120-bb"><span class="special">~</span><span class="identifier">validation_error</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="validation_error.html#idp145360912-bb">protected member functions</a></span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="validation_error.html#idp198416224-bb"><span class="identifier">get_template</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="validation_error.html#idm45507107382832-bb">protected member functions</a></span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a class="link" href="validation_error.html#idm45507107382368-bb"><span class="identifier">get_template</span></a><span class="special">(</span><span class="identifier">kind_t</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp338481856"></a><h2>Description</h2>
+<a name="idm45555216793216"></a><h2>Description</h2>
 <p>Class thrown when value of option is incorrect. </p>
 <div class="refsect2">
-<a name="idp338482592"></a><h3>
+<a name="idm45555216792480"></a><h3>
 <a name="boost.program_options.validation_errorconstruct-copy-destruct"></a><code class="computeroutput">validation_error</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp156632224-bb"></a><span class="identifier">validation_error</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> option_name <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idm45507096038224-bb"></a><span class="identifier">validation_error</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> option_name <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
                  <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <span class="special">&amp;</span> original_token <span class="special">=</span> <span class="string">""</span><span class="special">,</span> 
                  <span class="keyword">int</span> option_style <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp145360624-bb"></a><span class="special">~</span><span class="identifier">validation_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idm45507107383120-bb"></a><span class="special">~</span><span class="identifier">validation_error</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp338505952"></a><h3>
-<a name="idp145360912-bb"></a><code class="computeroutput">validation_error</code> protected member functions</h3>
+<a name="idm45555216769312"></a><h3>
+<a name="idm45507107382832-bb"></a><code class="computeroutput">validation_error</code> protected member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idp198416224-bb"></a><span class="identifier">get_template</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span> <a name="idm45507107382368-bb"></a><span class="identifier">get_template</span><span class="special">(</span><span class="identifier">kind_t</span> kind<span class="special">)</span><span class="special">;</span></pre>
 <p>Used to convert kind_t to a related error text </p>
 </li></ol></div>
 </div>

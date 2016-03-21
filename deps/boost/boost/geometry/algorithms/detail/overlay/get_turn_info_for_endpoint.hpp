@@ -14,6 +14,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_GET_TURN_INFO_FOR_ENDPOINT_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_GET_TURN_INFO_FOR_ENDPOINT_HPP
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
 #include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
 
@@ -153,7 +154,7 @@ public:
             }
             else
             {
-                BOOST_ASSERT(result.template get<0>().count == 1);
+                BOOST_GEOMETRY_ASSERT(result.template get<0>().count == 1);
                 ips[0].p_operation = union_or_blocked_same_dirs(arrival_a, is_p_last);
                 ips[0].q_operation = union_or_blocked_same_dirs(arrival_b, is_q_last);
 
@@ -297,10 +298,10 @@ struct get_turn_info_for_endpoint
         // may this give false positives for INTs?
         typename IntersectionResult::point_type const&
             inters_pt = result.template get<0>().intersections[ip_index];
-        BOOST_ASSERT(ip_info.is_pi == equals::equals_point_point(pi, inters_pt));
-        BOOST_ASSERT(ip_info.is_qi == equals::equals_point_point(qi, inters_pt));
-        BOOST_ASSERT(ip_info.is_pj == equals::equals_point_point(pj, inters_pt));
-        BOOST_ASSERT(ip_info.is_qj == equals::equals_point_point(qj, inters_pt));
+        BOOST_GEOMETRY_ASSERT(ip_info.is_pi == equals::equals_point_point(pi, inters_pt));
+        BOOST_GEOMETRY_ASSERT(ip_info.is_qi == equals::equals_point_point(qi, inters_pt));
+        BOOST_GEOMETRY_ASSERT(ip_info.is_pj == equals::equals_point_point(pj, inters_pt));
+        BOOST_GEOMETRY_ASSERT(ip_info.is_qj == equals::equals_point_point(qj, inters_pt));
 #endif
 
         // TODO - calculate first/last only if needed
@@ -412,8 +413,8 @@ struct get_turn_info_for_endpoint
                 // may this give false positives for INTs?
                 typename IntersectionResult::point_type const&
                     inters_pt = inters.i_info().intersections[ip_index];
-                BOOST_ASSERT(ip_i2 == equals::equals_point_point(i2, inters_pt));
-                BOOST_ASSERT(ip_j2 == equals::equals_point_point(j2, inters_pt));
+                BOOST_GEOMETRY_ASSERT(ip_i2 == equals::equals_point_point(i2, inters_pt));
+                BOOST_GEOMETRY_ASSERT(ip_j2 == equals::equals_point_point(j2, inters_pt));
 #endif
                 if ( ip_i2 )
                 {
@@ -448,7 +449,7 @@ struct get_turn_info_for_endpoint
                     }
                     else
                     {
-                        BOOST_ASSERT(operations_combination(operations, operation_intersection, operation_union));
+                        BOOST_GEOMETRY_ASSERT(operations_combination(operations, operation_intersection, operation_union));
                         //op1 = operation_union;
                         //op2 = operation_union;
                     }
@@ -463,8 +464,8 @@ struct get_turn_info_for_endpoint
                 // may this give false positives for INTs?
                 typename IntersectionResult::point_type const&
                     inters_pt = inters.i_info().intersections[ip_index];
-                BOOST_ASSERT(ip_i2 == equals::equals_point_point(i2, inters_pt));
-                BOOST_ASSERT(ip_j2 == equals::equals_point_point(j2, inters_pt));
+                BOOST_GEOMETRY_ASSERT(ip_i2 == equals::equals_point_point(i2, inters_pt));
+                BOOST_GEOMETRY_ASSERT(ip_j2 == equals::equals_point_point(j2, inters_pt));
 #endif
                 if ( ip_i2 )
                 {
@@ -499,7 +500,7 @@ struct get_turn_info_for_endpoint
                     }
                     else
                     {
-                        BOOST_ASSERT(operations_combination(operations, operation_intersection, operation_union));
+                        BOOST_GEOMETRY_ASSERT(operations_combination(operations, operation_intersection, operation_union));
                         //op1 = operation_blocked;
                         //op2 = operation_union;
                     }
@@ -560,7 +561,7 @@ struct get_turn_info_for_endpoint
             // NOTE: is_collinear is NOT set for the first endpoint
             // for which there is no preceding segment
 
-            //BOOST_ASSERT( result.template get<1>().dir_a == 0 && result.template get<1>().dir_b == 0 );
+            //BOOST_GEOMETRY_ASSERT( result.template get<1>().dir_a == 0 && result.template get<1>().dir_b == 0 );
             if ( ! is_p_first_ip )
             {
                 tp.operations[0].is_collinear = op0 != operation_intersection

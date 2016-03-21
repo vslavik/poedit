@@ -1,0 +1,2568 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Trading Accuracy for Performance</title>
+<link rel="stylesheet" href="../math.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../perf.html" title="Chapter&#160;16.&#160;Performance">
+<link rel="prev" href="getting_best.html" title="Getting the Best Performance from this Library: Compiler and Compiler Options">
+<link rel="next" href="tuning.html" title="Performance Tuning Macros">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="getting_best.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../perf.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tuning.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="math_toolkit.tradoffs"></a><a class="link" href="tradoffs.html" title="Trading Accuracy for Performance">Trading Accuracy for Performance</a>
+</h2></div></div></div>
+<p>
+      There are a number of <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a> that can be used
+      to trade accuracy for performance:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Internal promotion: by default functions with <code class="computeroutput"><span class="keyword">float</span></code>
+          arguments are evaluated at <code class="computeroutput"><span class="keyword">double</span></code>
+          precision internally to ensure full precision in the result. Similarly
+          <code class="computeroutput"><span class="keyword">double</span></code> precision functions
+          are evaluated at <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></code>
+          precision internally by default. Changing these defaults can have a significant
+          speed advantage at the expense of accuracy, note also that evaluating using
+          <code class="computeroutput"><span class="keyword">float</span></code> internally may result
+          in numerical instability for some of the more complex algorithms, we suggest
+          you use this option with care.
+        </li>
+<li class="listitem">
+          Target accuracy: just because you choose to evaluate at <code class="computeroutput"><span class="keyword">double</span></code>
+          precision doesn't mean you necessarily want to target full 16-digit accuracy,
+          if you wish you can change the default (full machine precision) to whatever
+          is "good enough" for your particular use case.
+        </li>
+</ul></div>
+<p>
+      For example, suppose you want to evaluate <code class="computeroutput"><span class="keyword">double</span></code>
+      precision functions at <code class="computeroutput"><span class="keyword">double</span></code>
+      precision internally, you can change the global default by passing <code class="computeroutput"><span class="special">-</span><span class="identifier">DBOOST_MATH_PROMOTE_DOUBLE_POLICY</span><span class="special">=</span><span class="keyword">false</span></code> on the
+      command line, or at the point of call via something like this:
+    </p>
+<pre class="programlisting"><span class="keyword">double</span> <span class="identifier">val</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">erf</span><span class="special">(</span><span class="identifier">my_argument</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">make_policy</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">promote_double</span><span class="special">&lt;</span><span class="keyword">false</span><span class="special">&gt;()));</span>
+</pre>
+<p>
+      However, an easier option might be:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// Or any individual special function header</span>
+
+<span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
+
+<span class="keyword">namespace</span> <span class="identifier">precise</span><span class="special">{</span>
+<span class="comment">//</span>
+<span class="comment">// Define a Policy for accurate evaluation - this is the same as the default, unless</span>
+<span class="comment">// someone has changed the global defaults.</span>
+<span class="comment">//</span>
+<span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">policies</span><span class="special">::</span><span class="identifier">policy</span><span class="special">&lt;&gt;</span> <span class="identifier">accurate_policy</span><span class="special">;</span>
+<span class="comment">//</span>
+<span class="comment">// Invoke BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS to declare</span>
+<span class="comment">// functions that use the above policy.  Note no trailing</span>
+<span class="comment">// ";" required on the macro call:</span>
+<span class="comment">//</span>
+<span class="identifier">BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS</span><span class="special">(</span><span class="identifier">accurate_policy</span><span class="special">)</span>
+
+
+<span class="special">}</span>
+
+<span class="keyword">namespace</span> <span class="identifier">fast</span><span class="special">{</span>
+<span class="comment">//</span>
+<span class="comment">// Define a Policy for fast evaluation:</span>
+<span class="comment">//</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">polcies</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">policy</span><span class="special">&lt;</span><span class="identifier">promote_double</span><span class="special">&lt;</span><span class="keyword">false</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">fast_policy</span><span class="special">;</span>
+<span class="comment">//</span>
+<span class="comment">// Invoke BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS:</span>
+<span class="comment">//</span>
+<span class="identifier">BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS</span><span class="special">(</span><span class="identifier">fast_policy</span><span class="special">)</span>
+
+<span class="special">}</span>
+
+<span class="special">}</span>
+</pre>
+<p>
+      And now one can call:
+    </p>
+<pre class="programlisting"><span class="identifier">math</span><span class="special">::</span><span class="identifier">accurate</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">x</span><span class="special">);</span>
+</pre>
+<p>
+      For the "accurate" version of tgamma, and:
+    </p>
+<pre class="programlisting"><span class="identifier">math</span><span class="special">::</span><span class="identifier">fast</span><span class="special">::</span><span class="identifier">tgamma</span><span class="special">(</span><span class="identifier">x</span><span class="special">);</span>
+</pre>
+<p>
+      For the faster version.
+    </p>
+<p>
+      Had we wished to change the target precision (to 9 decimal places) as well
+      as the evaluation type used, we might have done:
+    </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
+<span class="keyword">namespace</span> <span class="identifier">fast</span><span class="special">{</span>
+<span class="comment">//</span>
+<span class="comment">// Define a Policy for fast evaluation:</span>
+<span class="comment">//</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">polcies</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">policy</span><span class="special">&lt;</span><span class="identifier">promote_double</span><span class="special">&lt;</span><span class="keyword">false</span><span class="special">&gt;,</span> <span class="identifier">digits10</span><span class="special">&lt;</span><span class="number">9</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">fast_policy</span><span class="special">;</span>
+<span class="comment">//</span>
+<span class="comment">// Invoke BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS:</span>
+<span class="comment">//</span>
+<span class="identifier">BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS</span><span class="special">(</span><span class="identifier">fast_policy</span><span class="special">)</span>
+
+<span class="special">}</span>
+<span class="special">}</span>
+</pre>
+<p>
+      One can do a similar thing with the distribution classes:
+    </p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">distributions</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> <span class="comment">// or any individual distribution header</span>
+
+<span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">fast</span><span class="special">{</span>
+<span class="comment">//</span>
+<span class="comment">// Define a policy for fastest possible evaluation:</span>
+<span class="comment">//</span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">polcies</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">policy</span><span class="special">&lt;</span><span class="identifier">promote_float</span><span class="special">&lt;</span><span class="keyword">false</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">fast_float_policy</span><span class="special">;</span>
+<span class="comment">//</span>
+<span class="comment">// Invoke BOOST_MATH_DECLARE_DISTRIBUTIONS</span>
+<span class="comment">//</span>
+<span class="identifier">BOOST_MATH_DECLARE_DISTRIBUTIONS</span><span class="special">(</span><span class="keyword">float</span><span class="special">,</span> <span class="identifier">fast_float_policy</span><span class="special">)</span>
+
+<span class="special">}}</span> <span class="comment">// namespaces</span>
+
+<span class="comment">//</span>
+<span class="comment">// And use:</span>
+<span class="comment">//</span>
+<span class="keyword">float</span> <span class="identifier">p_val</span> <span class="special">=</span> <span class="identifier">cdf</span><span class="special">(</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">fast</span><span class="special">::</span><span class="identifier">normal</span><span class="special">(</span><span class="number">1.0f</span><span class="special">,</span> <span class="number">3.0f</span><span class="special">),</span> <span class="number">0.25f</span><span class="special">);</span>
+</pre>
+<p>
+      Here's how these options change the relative performance of the distributions
+      on Linux:
+    </p>
+<div class="table">
+<a name="math_toolkit.tradoffs.table_Distribution_performance_comparison_for_different_performance_options_with_GNU_C_version_5_1_0_on_linux"></a><p class="title"><b>Table&#160;16.2.&#160;Distribution performance comparison for different performance options
+      with GNU C++ version 5.1.0 on linux</b></p>
+<div class="table-contents"><table class="table" summary="Distribution performance comparison for different performance options
+      with GNU C++ version 5.1.0 on linux">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              <p>
+                Function
+              </p>
+            </th>
+<th>
+              <p>
+                boost 1.59
+              </p>
+            </th>
+<th>
+              <p>
+                Boost<br> promote_double&lt;false&gt;
+              </p>
+            </th>
+<th>
+              <p>
+                Boost<br> promote_double&lt;false&gt;<br> digits10&lt;10&gt;
+              </p>
+            </th>
+<th>
+              <p>
+                Boost<br> float<br> promote_float&lt;false&gt;
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                ArcSine (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.11<br> (38ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.11<br> (38ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.11<br> (38ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (18ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ArcSine (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.12<br> (9ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.12<br> (9ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.12<br> (9ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (8ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ArcSine (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (20ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (20ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (20ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (16ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Beta (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.23<br> (413ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.34<br> (171ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.24<br> (159ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (128ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Beta (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.77<br> (327ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.03<br> (122ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.03<br> (122ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (118ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Beta (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.75<br> (2643ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.56<br> (1101ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (882ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (704ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Binomial (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.15<br> (1042ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.38<br> (597ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.88<br> (471ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (251ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Binomial (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.52<br> (345ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.11<br> (152ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.09<br> (150ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (137ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Binomial (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.55<br> (4706ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.13<br> (2818ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.71<br> (2261ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (1326ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Cauchy (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.19<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (24ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (24ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (21ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Cauchy (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.33<br> (8ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.33<br> (8ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.33<br> (8ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (6ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Cauchy (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (43ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (43ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.40<br> (42ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (30ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ChiSquared (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.87<br> (495ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.86<br> (238ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.54<br> (197ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (128ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ChiSquared (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.59<br> (337ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.31<br> (123ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.26<br> (118ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (94ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ChiSquared (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.73<br> (1299ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.99<br> (692ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (521ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (348ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Exponential (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.29<br> (18ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.29<br> (18ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.29<br> (18ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (14ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Exponential (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.56<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.56<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.56<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (16ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Exponential (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.05<br> (23ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.05<br> (23ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.05<br> (23ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ExtremeValue (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.27<br> (47ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (48ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (48ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (37ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ExtremeValue (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.41<br> (65ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (66ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (66ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (46ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                ExtremeValue (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.55<br> (62ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.57<br> (63ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.57<br> (63ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (40ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                F (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.18<br> (961ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.37<br> (545ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.86<br> (427ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (230ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                F (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.84<br> (378ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (152ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (152ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (133ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                F (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.77<br> (2753ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.48<br> (1471ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (1295ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (993ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Gamma (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.61<br> (570ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.51<br> (239ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.32<br> (208ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (158ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Gamma (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.96<br> (452ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.37<br> (156ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.27<br> (145ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (114ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Gamma (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.89<br> (1787ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.78<br> (817ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.20<br> (551ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (459ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Geometric (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.09<br> (24ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Geometric (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.06<br> (33ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.03<br> (32ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (31ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.19<br> (37ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Geometric (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.05<br> (21ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.05<br> (21ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (20ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.10<br> (22ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Hypergeometric (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.80<br> (10644ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.01<br> (5961ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (5922ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.02<br> (6013ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Hypergeometric (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.82<br> (10316ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.02<br> (5756ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (5658ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.07<br> (6027ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Hypergeometric (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (50508ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.69<br> (85415ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.69<br> (85277ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.08<br> (105261ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseChiSquared (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.36<br> (497ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">2.00<br> (228ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.54<br> (175ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (114ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseChiSquared (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.52<br> (327ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.45<br> (135ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.35<br> (126ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (93ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseChiSquared (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.61<br> (1281ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.95<br> (693ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (531ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (355ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseGamma (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.39<br> (566ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.40<br> (234ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.21<br> (202ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (167ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseGamma (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.00<br> (452ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.41<br> (159ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.33<br> (150ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (113ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseGamma (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.59<br> (1750ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.67<br> (814ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.15<br> (559ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (488ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseGaussian (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.22<br> (102ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.20<br> (101ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.20<br> (101ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (46ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseGaussian (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (18ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (18ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (18ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (12ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                InverseGaussian (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.47<br> (1969ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.49<br> (1981ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.28<br> (1814ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (796ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Laplace (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (26ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (20ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Laplace (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.42<br> (27ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.37<br> (26ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.37<br> (26ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (19ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Laplace (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (30ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (30ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.43<br> (30ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (21ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                LogNormal (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.06<br> (107ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.23<br> (64ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.23<br> (64ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (52ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                LogNormal (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.44<br> (62ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.42<br> (61ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.44<br> (62ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (43ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                LogNormal (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.40<br> (95ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.26<br> (86ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.26<br> (86ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (68ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Logistic (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (26ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.35<br> (27ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.35<br> (27ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (20ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Logistic (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.32<br> (29ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.32<br> (29ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.32<br> (29ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Logistic (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (33ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.55<br> (34ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (33ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NegativeBinomial (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.82<br> (1640ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.81<br> (955ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.11<br> (719ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (340ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NegativeBinomial (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.58<br> (358ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (158ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.12<br> (155ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (139ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NegativeBinomial (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.74<br> (8427ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.57<br> (4814ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.22<br> (3748ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (3073ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralBeta (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.97<br> (2451ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.16<br> (1333ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.79<br> (1105ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (617ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralBeta (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.93<br> (1875ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.28<br> (1087ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.94<br> (925ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (477ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralBeta (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">5.54<br> (58621ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.63<br> (27810ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.11<br> (22395ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (10589ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralChiSquared (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.21<br> (6804ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.62<br> (4244ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.07<br> (3353ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (1617ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralChiSquared (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.98<br> (1114ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.74<br> (651ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.63<br> (608ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (374ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralChiSquared (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">6.96<br> (48267ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.58<br> (24784ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.41<br> (16702ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (6931ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralF (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.83<br> (2371ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.03<br> (1257ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.74<br> (1078ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (619ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralF (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.69<br> (1949ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.93<br> (1018ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.68<br> (886ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (528ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralF (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.34<br> (35608ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.26<br> (18535ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.96<br> (16111ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (8210ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralT (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.52<br> (9265ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.79<br> (5710ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.24<br> (4597ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (2050ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralT (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.20<br> (6920ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.80<br> (4612ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.32<br> (3818ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (1649ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                NonCentralT (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">5.64<br> (95714ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.16<br> (53580ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.24<br> (38040ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (16967ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Normal (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.55<br> (74ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (33ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.14<br> (33ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (29ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Normal (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.36<br> (30ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.41<br> (31ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.41<br> (31ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (22ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Normal (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.50<br> (60ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.18<br> (47ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.18<br> (47ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (40ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Pareto (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.22<br> (56ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.24<br> (57ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.24<br> (57ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (46ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Pareto (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.02<br> (87ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.02<br> (87ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (85ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.21<br> (103ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Pareto (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.04<br> (54ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.02<br> (53ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (52ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.23<br> (64ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Poisson (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.21<br> (234ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.58<br> (115ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.42<br> (104ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (73ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Poisson (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">3.03<br> (188ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.32<br> (82ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.31<br> (81ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (62ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Poisson (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.88<br> (1053ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.46<br> (536ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.34<br> (490ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (366ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Rayleigh (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.22<br> (22ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.17<br> (21ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.17<br> (21ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (18ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Rayleigh (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (25ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (26ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.30<br> (26ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (20ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Rayleigh (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.04<br> (24ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (23ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (23ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (23ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                SkewNormal (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.70<br> (438ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.57<br> (404ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.57<br> (404ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (257ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                SkewNormal (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.95<br> (86ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.25<br> (55ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.27<br> (56ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (44ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                SkewNormal (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.19<br> (3470ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.96<br> (3108ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.38<br> (2192ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (1588ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                StudentsT (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">6.77<br> (1415ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.13<br> (445ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">2.01<br> (421ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (209ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                StudentsT (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">5.46<br> (655ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.54<br> (185ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.56<br> (187ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (120ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                StudentsT (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="red">4.99<br> (2409ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.60<br> (773ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.57<br> (757ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (483ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Weibull (CDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.07<br> (88ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.01<br> (83ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (82ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.27<br> (104ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Weibull (PDF)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (147ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.01<br> (149ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.01<br> (149ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.24<br> (182ns)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Weibull (quantile)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.01<br> (87ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.00<br> (86ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="green">1.01<br> (87ns)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">1.22<br> (105ns)</span>
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break">
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
+      Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
+      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
+      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="getting_best.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../perf.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tuning.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

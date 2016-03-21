@@ -50,6 +50,7 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pointer<foo1_t>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pointer<foo2_t>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pointer<foo3_t>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pointer<foo4_t>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pointer<int(*const)()>::value, true);
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_pointer<test_abc1>::value, false);
 

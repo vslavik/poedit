@@ -17,6 +17,7 @@ if [ mpi.configured ]
 {
 test-suite mpi
   :
+  [ mpi-test broadcast_stl_test  : : : 2 ]
   [ mpi-test all_gather_test  ]
   [ mpi-test all_reduce_test  ]
   [ mpi-test all_to_all_test  ]
@@ -32,6 +33,7 @@ test-suite mpi
   [ mpi-test nonblocking_test ]
   [ mpi-test reduce_test  ]
   [ mpi-test ring_test : : : 2 3 4 7 8 13 17 ]
+  [ mpi-test sendrecv_test : : : 1 4 7 48 ]
   [ mpi-test scan_test  ]
   [ mpi-test scatter_test  ]
   # Note: Microsoft MPI fails all skeleton-content tests

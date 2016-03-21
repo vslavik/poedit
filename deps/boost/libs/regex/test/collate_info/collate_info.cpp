@@ -13,6 +13,9 @@
 #include <boost/regex.hpp> 
 #include <boost/regex/v4/primary_transform.hpp>
 #include <assert.h>
+#include <boost/detail/lightweight_main.hpp>
+#include <iostream>
+#include <iomanip>
 
 #ifdef BOOST_INTEL
 #pragma warning(disable:1418 981 983 2259)
@@ -150,24 +153,24 @@ void print_sort_syntax(const traits& pt, const char* name)
    std::cout << "Sort Key Syntax for type " << name << ":\n";
    typedef typename traits::char_type char_type;
    char_type delim;
-   unsigned result = ::boost::re_detail::find_sort_syntax(&pt, &delim);
+   unsigned result = ::boost::BOOST_REGEX_DETAIL_NS::find_sort_syntax(&pt, &delim);
    std::cout << "   ";
    switch(result)
    {
-   case boost::re_detail::sort_C:
+   case boost::BOOST_REGEX_DETAIL_NS::sort_C:
       std::cout << "sort_C";
       break;
-   case boost::re_detail::sort_fixed:
+   case boost::BOOST_REGEX_DETAIL_NS::sort_fixed:
       std::cout << "sort_fixed" << "    " << static_cast<int>(delim);
       break;
-   case boost::re_detail::sort_delim:
+   case boost::BOOST_REGEX_DETAIL_NS::sort_delim:
       {
          std::cout << "sort_delim" << "    ";
          std::basic_string<char_type> s(1, delim);
          print_string(s);
       }
       break;
-   case boost::re_detail::sort_unknown:
+   case boost::BOOST_REGEX_DETAIL_NS::sort_unknown:
       std::cout << "sort_unknown";
       break;
    default:
@@ -250,4 +253,3 @@ int cpp_main(int /*argc*/, char * /*argv*/[])
    return 0;
 }
 
-#include <boost/test/included/prg_exec_monitor.hpp>

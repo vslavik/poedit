@@ -1001,6 +1001,32 @@ rule glob-internal ( project : wildcards + : excludes * : rule-name )
 }
 
 
+rule glob-path-root ( root path )
+{
+    return [ path.root $(path) $(root) ] ;
+}
+
+rule glob-internal-ex ( project : paths + : wildcards + : excludes * : rule-name )
+{
+    # Make the paths we search in absolute, if they aren't already absolute.
+    # If the given paths are relative, they will be relative to the source
+    # directory. So that's what we root against.
+    local source-location
+        = [ path.root [ $(project).get source-location ] [ path.pwd ] ] ;
+    local search-paths
+        = [ sequence.transform project.glob-path-root $(source-location) : $(paths) ] ;
+    paths
+        = [ path.$(rule-name) $(search-paths) : $(wildcards) : $(excludes) ] ;
+    # The paths we have found are absolute, but the names specified in the
+    # sources list are assumed to be relative to the source directory of the
+    # corresponding project. Make the results relative to the source again.
+    local result
+        = [ sequence.transform path.relative-to $(source-location) : $(paths) ] ;
+
+    return $(result) ;
+}
+
+
 # This module defines rules common to all projects.
 #
 module project-rules
@@ -1209,6 +1235,20 @@ module project-rules
         }
         return [ project.glob-internal [ project.current ] : $(wildcards) :
             $(excludes) : glob-tree ] ;
+    }
+
+    rule glob-ex ( paths + : wildcards + : excludes * )
+    {
+        import project ;
+        return [ project.glob-internal-ex [ project.current ]
+            : $(paths) : $(wildcards) : $(excludes) : glob ] ;
+    }
+
+    rule glob-tree-ex ( paths + : wildcards + : excludes * )
+    {
+        import project ;
+        return [ project.glob-internal-ex [ project.current ]
+            : $(paths) : $(wildcards) : $(excludes) : glob-tree ] ;
     }
 
     # Calculates conditional requirements for multiple requirements at once.

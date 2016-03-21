@@ -77,7 +77,7 @@ techniques and are consequently several times slower.
 These are implemented here as ibeta_inva and ibeta_invb,
 and complement versions ibetac_inva and ibetac_invb.]
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when called with arguments T1...TN of different types.
 
    template <class T1, class T2, class T3>
@@ -181,6 +181,22 @@ of the regular forward incomplete beta functions.  However,
 note that in some parts of their domain, these functions can
 be extremely sensitive to changes in input, particularly when
 the argument /p/ (or it's complement /q/) is very close to `0` or `1`.
+
+Comparisons to other libraries are shown below, note that our test data
+exercises some rather extreme cases in the incomplete beta function
+which many other libraries fail to handle:
+
+[table_ibeta_inv]
+
+[table_ibetac_inv]
+
+[table_ibeta_inva]
+
+[table_ibetac_inva]
+
+[table_ibeta_invb]
+
+[table_ibetac_invb]
 
 [h4 Testing]
 

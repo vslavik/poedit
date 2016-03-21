@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,7 +36,7 @@
 
 <span class="keyword">enum</span> <span class="identifier">comm_create_kind</span> <span class="special">{</span> comm_duplicate, comm_take_ownership, comm_attach <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp332700928"></a><h2>Description</h2>
+<a name="idm45555222553232"></a><h2>Description</h2>
 <p>The values for this enumeration determine how a Boost.MPI communicator will behave when constructed with an MPI communicator. The options are:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem"><p><code class="computeroutput">comm_duplicate:</code> Duplicate the MPI_Comm communicator to create a new communicator (e.g., with MPI_Comm_dup). This new MPI_Comm communicator will be automatically freed when the Boost.MPI communicator (and all copies of it) is destroyed.</p></li>

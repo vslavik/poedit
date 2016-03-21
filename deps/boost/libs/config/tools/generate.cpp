@@ -13,7 +13,7 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include <boost/test/included/prg_exec_monitor.hpp>
+#include <boost/detail/lightweight_main.hpp>
 #include <iostream>
 #include <sstream>
 #include <string>

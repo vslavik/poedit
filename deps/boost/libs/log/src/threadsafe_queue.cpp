@@ -30,7 +30,7 @@
 #include <boost/throw_exception.hpp>
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/type_traits/alignment_of.hpp>
-#include <boost/log/detail/spin_mutex.hpp>
+#include <boost/log/detail/adaptive_mutex.hpp>
 #include <boost/log/detail/locks.hpp>
 #include <boost/log/detail/header.hpp>
 
@@ -46,7 +46,7 @@ class threadsafe_queue_impl_generic :
 {
 private:
     //! Mutex type to be used
-    typedef spin_mutex mutex_type;
+    typedef adaptive_mutex mutex_type;
 
     /*!
      * A structure that contains a pointer to the node and the associated mutex.
@@ -116,10 +116,6 @@ public:
     }
 
 private:
-    // Copying and assignment are closed
-    threadsafe_queue_impl_generic(threadsafe_queue_impl_generic const&);
-    threadsafe_queue_impl_generic& operator= (threadsafe_queue_impl_generic const&);
-
     BOOST_FORCEINLINE static void set_next(node_base* p, node_base* next)
     {
         p->next.data[0] = next;
@@ -128,6 +124,10 @@ private:
     {
         return static_cast< node_base* >(p->next.data[0]);
     }
+
+    // Copying and assignment are closed
+    BOOST_DELETED_FUNCTION(threadsafe_queue_impl_generic(threadsafe_queue_impl_generic const&))
+    BOOST_DELETED_FUNCTION(threadsafe_queue_impl_generic& operator= (threadsafe_queue_impl_generic const&))
 };
 
 BOOST_LOG_API threadsafe_queue_impl* threadsafe_queue_impl::create(node_base* first_node)
@@ -138,7 +138,7 @@ BOOST_LOG_API threadsafe_queue_impl* threadsafe_queue_impl::create(node_base* fi
 BOOST_LOG_API void* threadsafe_queue_impl::operator new (std::size_t size)
 {
     void* p = alignment::aligned_alloc(BOOST_LOG_CPU_CACHE_LINE_SIZE, size);
-    if (!p)
+    if (BOOST_UNLIKELY(!p))
         BOOST_THROW_EXCEPTION(std::bad_alloc());
     return p;
 }

@@ -26,7 +26,7 @@ struct BPtr_Value
 {
    static const bool constant_time_size = true;
 
-   BPtr_Value(int value = 42)
+   explicit BPtr_Value(int value = 42)
       : value_(value)
    {}
 
@@ -55,7 +55,7 @@ struct BPtr_Value
    }
 
    // value
-   int value_;
+   int_holder value_;
 
    // list node hooks
    bounded_pointer< BPtr_Value > m_previous;
@@ -65,6 +65,12 @@ struct BPtr_Value
    bounded_pointer< BPtr_Value > m_l_child;
    bounded_pointer< BPtr_Value > m_r_child;
    signed char m_extra;
+
+   const int_holder &get_int_holder() const
+   {  return value_; }
+
+   int int_value() const
+   {  return value_.int_value(); }
 
    bool is_linked() const
    { return m_previous || m_next || m_parent || m_l_child || m_r_child; }
@@ -119,47 +125,6 @@ struct List_BPtr_Node_Traits
    static void set_next(node_ptr p, node_ptr next)     { p->m_next = next; }
 };
 
-struct RBTree_BPtr_Node_Traits
-{
-   typedef BPtr_Value                     val_t;
-   typedef val_t                          node;
-   typedef bounded_pointer< val_t >       node_ptr;
-   typedef bounded_pointer< const val_t > const_node_ptr;
-   typedef signed char                    color;
-
-   static node_ptr get_parent(const_node_ptr p)        { return p->m_parent; }
-   static void set_parent(node_ptr p, node_ptr parent) { p->m_parent = parent; }
-   static node_ptr get_left(const_node_ptr p)          { return p->m_l_child; }
-   static void set_left(node_ptr p, node_ptr l_child)  { p->m_l_child = l_child; }
-   static node_ptr get_right(const_node_ptr p)         { return p->m_r_child; }
-   static void set_right(node_ptr p, node_ptr r_child) { p->m_r_child = r_child; }
-   static color get_color(const_node_ptr p)            { return p->m_extra; }
-   static void set_color(node_ptr p, color c)          { p->m_extra = c; }
-   static color black()                                { return 0; }
-   static color red()                                  { return 1; }
-};
-
-struct AVLTree_BPtr_Node_Traits
-{
-   typedef BPtr_Value                     val_t;
-   typedef val_t                          node;
-   typedef bounded_pointer< val_t >       node_ptr;
-   typedef bounded_pointer< const val_t > const_node_ptr;
-   typedef signed char                    balance;
-
-   static node_ptr get_parent(const_node_ptr p)        { return p->m_parent; }
-   static void set_parent(node_ptr p, node_ptr parent) { p->m_parent = parent; }
-   static node_ptr get_left(const_node_ptr p)          { return p->m_l_child; }
-   static void set_left(node_ptr p, node_ptr l_child)  { p->m_l_child = l_child; }
-   static node_ptr get_right(const_node_ptr p)         { return p->m_r_child; }
-   static void set_right(node_ptr p, node_ptr r_child) { p->m_r_child = r_child; }
-   static balance get_balance(const_node_ptr p)        { return p->m_extra; }
-   static void set_balance(node_ptr p, balance b)      { p->m_extra = b; }
-   static balance negative()                           { return -1; }
-   static balance zero()                               { return 0; }
-   static balance positive()                           { return 1; }
-};
-
 struct Tree_BPtr_Node_Traits
 {
    typedef BPtr_Value                     val_t;
@@ -173,6 +138,31 @@ struct Tree_BPtr_Node_Traits
    static void set_left(node_ptr p, node_ptr l_child)  { p->m_l_child = l_child; }
    static node_ptr get_right(const_node_ptr p)         { return p->m_r_child; }
    static void set_right(node_ptr p, node_ptr r_child) { p->m_r_child = r_child; }
+};
+
+struct RBTree_BPtr_Node_Traits
+   : public Tree_BPtr_Node_Traits
+{
+   typedef signed char                             color;
+   typedef Tree_BPtr_Node_Traits::node_ptr         node_ptr;
+   typedef Tree_BPtr_Node_Traits::const_node_ptr   const_node_ptr;
+   static color get_color(const_node_ptr p)            { return p->m_extra; }
+   static void set_color(node_ptr p, color c)          { p->m_extra = c; }
+   static color black()                                { return 0; }
+   static color red()                                  { return 1; }
+};
+
+struct AVLTree_BPtr_Node_Traits
+   : public Tree_BPtr_Node_Traits
+{
+   typedef signed char                             balance;
+   typedef Tree_BPtr_Node_Traits::node_ptr         node_ptr;
+   typedef Tree_BPtr_Node_Traits::const_node_ptr   const_node_ptr;
+   static balance get_balance(const_node_ptr p)       { return p->m_extra; }
+   static void set_balance(node_ptr p, balance b)     { p->m_extra = b; }
+   static balance negative()                          { return -1; }
+   static balance zero()                              { return 0; }
+   static balance positive()                          { return 1; }
 };
 
 template < typename NodeTraits >
@@ -197,10 +187,10 @@ struct BPtr_Value_Traits
 };
 
 template < typename >
-struct Value_Container;
+struct ValueContainer;
 
 template <>
-struct Value_Container< BPtr_Value >
+struct ValueContainer< BPtr_Value >
 {
    typedef bounded_reference_cont< BPtr_Value > type;
 };
@@ -217,6 +207,23 @@ class new_cloner< BPtr_Value >
    typedef bounded_allocator< value_type > allocator_type;
 
    pointer operator () (const_reference r)
+   {
+      pointer p = allocator_type().allocate(1);
+      new (p.raw()) value_type(r);
+      return p;
+   }
+};
+
+template <>
+class new_nonconst_cloner< BPtr_Value >
+{
+   public:
+   typedef BPtr_Value value_type;
+   typedef bounded_pointer< value_type > pointer;
+   typedef bounded_reference< value_type > reference;
+   typedef bounded_allocator< value_type > allocator_type;
+
+   pointer operator () (reference r)
    {
       pointer p = allocator_type().allocate(1);
       new (p.raw()) value_type(r);

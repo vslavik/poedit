@@ -41,6 +41,13 @@ namespace ns
     BOOST_FUSION_DEFINE_STRUCT_INLINE(s, (int, m))
             
     BOOST_FUSION_DEFINE_STRUCT_INLINE(empty_struct, )
+
+    // Testing non-constexpr compatible types
+    BOOST_FUSION_DEFINE_STRUCT_INLINE(
+        employee, 
+        (std::string, name)
+        (std::string, nickname)
+    )
 }
 
 template <typename Point>
@@ -128,6 +135,17 @@ main()
 {
     run_test<cls::point>();        // test with non-template enclosing class
     run_test<tpl_cls<>::point>();  // test with template enclosing class
+
+    {
+        using namespace boost::fusion;
+
+        ns::employee emp = make_list("John Doe", "jdoe"); 
+        std::cout << at_c<0>(emp) << std::endl;
+        std::cout << at_c<1>(emp) << std::endl;
+
+        BOOST_TEST(emp == make_vector("John Doe", "jdoe"));
+    }
+
     return boost::report_errors();
 
 }

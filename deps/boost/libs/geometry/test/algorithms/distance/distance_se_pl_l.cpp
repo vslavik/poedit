@@ -122,19 +122,19 @@ void test_distance_point_segment(Strategy const& strategy)
 #endif
     typedef test_distance_of_geometries<point_type, segment_type> tester;
 
+    double const d2r = bg::math::d2r<double>();
+
     tester::apply("p-s-01",
                   "POINT(0 0)",
                   "SEGMENT(2 0,3 0)",
-                  2.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                2.0 * bg::math::d2r * strategy.radius()),
+                  2.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 2.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-02",
                   "POINT(2.5 3)",
                   "SEGMENT(2 0,3 0)",
-                  3.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                3.0 * bg::math::d2r * strategy.radius()),
+                  3.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 3.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-03",
                   "POINT(2 0)",
@@ -163,44 +163,38 @@ void test_distance_point_segment(Strategy const& strategy)
     tester::apply("p-s-07",
                   "POINT(90 1e-3)",
                   "SEGMENT(0.5 0,175.5 0)",
-                  1e-3 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                1e-3 * bg::math::d2r * strategy.radius()),
+                  1e-3 * d2r * strategy.radius(),
+                  to_comparable(strategy, 1e-3 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-08",
                   "POINT(90 1e-4)",
                   "SEGMENT(0.5 0,175.5 0)",
-                  1e-4 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                1e-4 * bg::math::d2r * strategy.radius()),
+                  1e-4 * d2r * strategy.radius(),
+                  to_comparable(strategy, 1e-4 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-09",
                   "POINT(90 1e-5)",
                   "SEGMENT(0.5 0,175.5 0)",
-                  1e-5 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                1e-5 * bg::math::d2r * strategy.radius()),
+                  1e-5 * d2r * strategy.radius(),
+                  to_comparable(strategy, 1e-5 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-10",
                   "POINT(90 1e-6)",
                   "SEGMENT(0.5 0,175.5 0)",
-                  1e-6 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                1e-6 * bg::math::d2r * strategy.radius()),
+                  1e-6 * d2r * strategy.radius(),
+                  to_comparable(strategy, 1e-6 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-11",
                   "POINT(90 1e-7)",
                   "SEGMENT(0.5 0,175.5 0)",
-                  1e-7 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                1e-7 * bg::math::d2r * strategy.radius()),
+                  1e-7 * d2r * strategy.radius(),
+                  to_comparable(strategy, 1e-7 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-s-12",
                   "POINT(90 1e-8)",
                   "SEGMENT(0.5 0,175.5 0)",
-                  1e-8 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                1e-8 * bg::math::d2r * strategy.radius()),
+                  1e-8 * d2r * strategy.radius(),
+                  to_comparable(strategy, 1e-8 * d2r * strategy.radius()),
                   strategy);
 }
 
@@ -215,26 +209,25 @@ void test_distance_point_linestring(Strategy const& strategy)
 #endif
     typedef test_distance_of_geometries<point_type, linestring_type> tester;
 
+    double const d2r = bg::math::d2r<double>();
+
     tester::apply("p-l-01",
                   "POINT(0 0)",
                   "LINESTRING(2 0,2 0)",
-                  2.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                2.0 * bg::math::d2r * strategy.radius()),
+                  2.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 2.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-l-02",
                   "POINT(0 0)",
                   "LINESTRING(2 0,3 0)",
-                  2.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                2.0 * bg::math::d2r * strategy.radius()),
+                  2.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 2.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-l-03",
                   "POINT(2.5 3)",
                   "LINESTRING(2 0,3 0)",
-                  3.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                3.0 * bg::math::d2r * strategy.radius()),
+                  3.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 3.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-l-04",
                   "POINT(2 0)",
@@ -254,9 +247,8 @@ void test_distance_point_linestring(Strategy const& strategy)
     tester::apply("p-l-07",
                   "POINT(7.5 10)",
                   "LINESTRING(1 0,2 0,3 0,4 0,5 0,6 0,7 0,8 0,9 0)",
-                  10.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                10.0 * bg::math::d2r * strategy.radius()),
+                  10.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 10.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-l-08",
                   "POINT(7.5 10)",
@@ -282,19 +274,19 @@ void test_distance_point_multilinestring(Strategy const& strategy)
             point_type, multi_linestring_type
         > tester;
 
+    double const d2r = bg::math::d2r<double>();
+
     tester::apply("p-ml-01",
                   "POINT(0 0)",
                   "MULTILINESTRING((-5 0,-3 0),(2 0,3 0))",
-                  2.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                2.0 * bg::math::d2r * strategy.radius()),
+                  2.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 2.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-ml-02",
                   "POINT(2.5 3)",
                   "MULTILINESTRING((-5 0,-3 0),(2 0,3 0))",
-                  3.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                3.0 * bg::math::d2r * strategy.radius()),
+                  3.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 3.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("p-ml-03",
                   "POINT(2 0)",
@@ -431,6 +423,8 @@ void test_distance_multipoint_segment(Strategy const& strategy)
 #endif
     typedef test_distance_of_geometries<multi_point_type, segment_type> tester;
 
+    double d2r = bg::math::d2r<double>();
+
     tester::apply("mp-s-01",
                   "MULTIPOINT(0 0,1 0,0 1,1 1)",
                   "SEGMENT(2 0,0 2)",
@@ -442,9 +436,8 @@ void test_distance_multipoint_segment(Strategy const& strategy)
     tester::apply("mp-s-02",
                   "MULTIPOINT(0 0,1 0,0 1,1 1)",
                   "SEGMENT(0 -3,1 -10)",
-                  3.0 * bg::math::d2r * strategy.radius(),
-                  to_comparable(strategy,
-                                3.0 * bg::math::d2r * strategy.radius()),
+                  3.0 * d2r * strategy.radius(),
+                  to_comparable(strategy, 3.0 * d2r * strategy.radius()),
                   strategy);
     tester::apply("mp-s-03",
                   "MULTIPOINT(0 0,1 0,0 1,1 1)",

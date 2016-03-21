@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2014 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
     Copyright (c) 2013-2014 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -161,4 +161,3 @@ main()
 
     return boost::report_errors();
 }
-

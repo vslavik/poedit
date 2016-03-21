@@ -14,14 +14,14 @@ int main()
 }
 #else
 
-//#define BOOST_LOCALE_ERROR_LIMIT 1000000
-//#define BOOST_LOCALE_ERROR_LIMIT 0
+#define BOOST_LOCALE_ERROR_LIMIT 100000
 
 #include <boost/locale/boundary.hpp>
 #include <boost/locale/generator.hpp>
 #include "test_locale.hpp"
 #include "test_locale_tools.hpp"
 #include <list>
+#include <unicode/uversion.h>
 
 // Debugging code
 
@@ -380,11 +380,11 @@ void test_boundaries(std::string *all,int *first,int *second,lb::boundary_type t
     run_word<char>(all,first,second,0,0,0,g("he_IL.cp1255"),t);
     std::cout << " wchar_t"<<std::endl;
     run_word<wchar_t>(all,first,second,0,0,0,g("he_IL.UTF-8"),t);
-    #ifdef BOOST_HAS_CHAR16_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
     std::cout << " char16_t"<<std::endl;
     run_word<char16_t>(all,first,second,0,0,0,g("he_IL.UTF-8"),t);
     #endif
-    #ifdef BOOST_HAS_CHAR32_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
     std::cout << " char32_t"<<std::endl;
     run_word<char32_t>(all,first,second,0,0,0,g("he_IL.UTF-8"),t);
     #endif
@@ -394,13 +394,19 @@ void test_boundaries(std::string *all,int *first,int *second,lb::boundary_type t
 void word_boundary()
 {
     boost::locale::generator g;
-    
-    std::string all1[]={"10"," ","Hello"," ","Windows7"," ","平仮名","ひらがな","ヒラガナ",""};
+    //std::string all1[]={"10"," ","Hello"," ","Windows7"," ","平仮名","ひらがな","ヒラガナ",""};
+    //std::string all1[]={"10"," ","Hello"," ","Windows7"," ","平仮名","ひん","アヒル",""};
+    std::string all1[]={"10"," ","Hello"," ","Windows7"," ","平仮名","アヒル",""};
     int        none1[]={ 0,   1,      0,  1,         0,   1,      0,         0,          0};
     int         num1[]={ 1,   0,      0,  0,         1,   0,      0 ,        0 ,         0};
     int        word1[]={ 0,   0,      1,  0,         1,   0,      0 ,        0 ,         0};
+#if U_ICU_VERSION_MAJOR_NUM >= 50
+    int        kana1[]={ 0,   0,      0,  0,         0,   0,      0,         0 ,         0}; 
+    int        ideo1[]={ 0,   0,      0,  0,         0,   0,      1,         1 ,         1}; 
+#else
     int        kana1[]={ 0,   0,      0,  0,         0,   0,      0,         1 ,         1}; 
     int        ideo1[]={ 0,   0,      0,  0,         0,   0,      1,         0 ,         0}; 
+#endif
 
 
     int zero[25]={0};
@@ -425,14 +431,14 @@ void word_boundary()
     run_word<wchar_t>(all2,zero,zero,zero,zero,zero,g("en_US.UTF-8"));
     run_word<wchar_t>(all3,none3,zero,word3,zero,zero,g("en_US.UTF-8"));
 
-    #ifdef BOOST_HAS_CHAR16_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
     std::cout << " char16_t"<<std::endl;
     run_word<char16_t>(all1,none1,num1,word1,kana1,ideo1,g("ja_JP.UTF-8"));
     run_word<char16_t>(all2,zero,zero,zero,zero,zero,g("en_US.UTF-8"));
     run_word<char16_t>(all3,none3,zero,word3,zero,zero,g("en_US.UTF-8"));
     #endif 
 
-    #ifdef BOOST_HAS_CHAR32_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
     std::cout << " char32_t"<<std::endl;
     run_word<char32_t>(all1,none1,num1,word1,kana1,ideo1,g("ja_JP.UTF-8"));
     run_word<char32_t>(all2,zero,zero,zero,zero,zero,g("en_US.UTF-8"));

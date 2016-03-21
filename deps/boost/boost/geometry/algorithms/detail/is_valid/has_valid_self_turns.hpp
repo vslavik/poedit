@@ -12,9 +12,10 @@
 
 #include <vector>
 
-#include <boost/assert.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/range.hpp>
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/point_type.hpp>
 
 #include <boost/geometry/policies/predicate_based_interrupt_policy.hpp>
@@ -73,6 +74,8 @@ public:
                              Turns& turns,
                              VisitPolicy& visitor)
     {
+        boost::ignore_unused(visitor);
+
         rescale_policy_type robust_policy
             = geometry::get_rescale_policy<rescale_policy_type>(geometry);
 
@@ -88,7 +91,7 @@ public:
 
         if (interrupt_policy.has_intersections)
         {
-            BOOST_ASSERT(! boost::empty(turns));
+            BOOST_GEOMETRY_ASSERT(! boost::empty(turns));
             return visitor.template apply<failure_self_intersections>(turns);
         }
         else

@@ -37,7 +37,7 @@ the algorithms to find location and scale
 #include <limits>
   using std::numeric_limits;
 #include <stdexcept>
-  using std::exception;
+  
 //] [/normal_std Quickbook]
 
 int main()
@@ -365,7 +365,7 @@ The scale can be variation in dispensing or uncertainty in measurement.
 //] [/normal_find_location_and_scale_eg Quickbook end]
 
   }
-  catch(const exception& e)
+  catch(const std::exception& e)
   { // Always useful to include try & catch blocks because default policies
     // are to throw exceptions on arguments that cause errors like underflow, overflow.
     // Lacking try & catch blocks, the program will abort without a message below,

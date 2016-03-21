@@ -68,14 +68,14 @@ def install(name, package_name=None, requirements=[], binaries=[], libraries=[],
         option.set("bindir", None)
         option.set("libdir", None)
         option.set("includedir", None)
-            
+
     # If <install-source-root> is not specified, all headers are installed to
     # prefix/include, no matter what their relative path is. Sometimes that is
     # what is needed.
     install_source_root = property.select('install-source-root', requirements)
     if install_source_root:
         requirements = property.change(requirements, 'install-source-root', None)
-            
+
     install_header_subdir = property.select('install-header-subdir', requirements)
     if install_header_subdir:
         install_header_subdir = ungrist(install_header_subdir[0])
@@ -98,16 +98,16 @@ def install(name, package_name=None, requirements=[], binaries=[], libraries=[],
     include_locate = option.get("includedir", os.path.join(prefix, "include"))
 
     stage.install(name + "-bin", binaries, requirements + ["<location>" + bin_locate])
-    
+
     alias(name + "-lib", [name + "-lib-shared", name + "-lib-static"])
-    
+
     # Since the install location of shared libraries differs on universe
     # and cygwin, use target alternatives to make different targets.
     # We should have used indirection conditioanl requirements, but it's
     # awkward to pass bin-locate and lib-locate from there to another rule.
     alias(name + "-lib-shared", [name + "-lib-shared-universe"])
     alias(name + "-lib-shared", [name + "-lib-shared-cygwin"], ["<target-os>cygwin"])
-    
+
     # For shared libraries, we install both explicitly specified one and the
     # shared libraries that the installed executables depend on.
     stage.install(name + "-lib-shared-universe", binaries + libraries,
@@ -141,7 +141,7 @@ def install_data(target_name, package_name, data, requirements):
         # If --prefix is explicitly specified on the command line,
         # then we need wipe away any settings of datarootdir
         option.set("datarootdir", None)
-    
+
     prefix = get_prefix(package_name, requirements)
     datadir = option.get("datarootdir", os.path.join(prefix, "share"))
 
@@ -156,7 +156,7 @@ def get_prefix(package_name, requirements):
     if specified:
         specified = ungrist(specified[0])
     prefix = option.get("prefix", specified)
-    requirements = property.change(requirements, "install-default-prefix", None)    
+    requirements = property.change(requirements, "install-default-prefix", None)
     # Or some likely defaults if neither is given.
     if not prefix:
         if os.name == "nt":

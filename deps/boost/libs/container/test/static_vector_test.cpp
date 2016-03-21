@@ -13,6 +13,7 @@
 #include <boost/container/vector.hpp>
 #include <boost/container/stable_vector.hpp>
 #include <boost/container/detail/iterator.hpp>
+#include "../../intrusive/test/iterator_test.hpp"
 
 #include <vector>
 #include <list>
@@ -810,6 +811,15 @@ int main(int, char* [])
    BOOST_TEST(default_init_test() == true);
 
    test_support_for_initializer_list();
+
+   ////////////////////////////////////
+   //    Iterator testing
+   ////////////////////////////////////
+   {
+      typedef boost::container::static_vector<int, 3> cont_int;
+      cont_int a; a.push_back(0); a.push_back(1); a.push_back(2);
+      boost::intrusive::test::test_iterator_random< cont_int >(a);
+   }
 
    return boost::report_errors();
 }

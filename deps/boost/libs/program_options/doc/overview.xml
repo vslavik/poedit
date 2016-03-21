@@ -22,7 +22,7 @@
       </listitem>
       <listitem>
         <para>The parsers component, which uses this information to find option names
-          and values in the input sources and return them. 
+          and values in the input sources and return them.
         </para>
       </listitem>
       <listitem>
@@ -72,10 +72,10 @@
         </para>
       </listitem>
       <listitem>
-        <para>The storage component is focused on storing options values. It 
+        <para>The storage component is focused on storing options values. It
         </para>
       </listitem>
-  
+
 
     </itemizedlist>
 
@@ -105,7 +105,7 @@ desc.add_options()
     ("help", "produce help")
     ("optimization", value&lt;int&gt;()->default_value(10), "optimization level")
     ;
-</programlisting>      
+</programlisting>
     </para>
 
     <para>The call to the <code>value</code> function creates an instance of
@@ -116,14 +116,14 @@ desc.add_options()
       essentially emulates named parameters of the constructor.) Calls to
       <code>operator()</code> on the object returned by <code>add_options</code>
       forward arguments to the constructor of the <code>option_description</code>
-      class and add the new instance. 
+      class and add the new instance.
     </para>
 
     <para>
       Note that in addition to the
       <code>value</code>, library provides the <code>bool_switch</code>
       function, and user can write his own function which will return
-      other subclasses of <code>value_semantic</code> with 
+      other subclasses of <code>value_semantic</code> with
       different behaviour. For the remainder of this section, we'll talk only
       about the <code>value</code> function.
     </para>
@@ -135,7 +135,7 @@ desc.add_options()
       where value is just a vector of strings
       (<code>std::vector&lt;std::string&gt;</code>). The semantic layer
       is responsible for converting the value of the option into more usable C++
-      types. 
+      types.
     </para>
 
     <para>This separation is an important part of library design. The parsers
@@ -153,7 +153,7 @@ desc.add_options()
         <classname>boost::program_options::options_description</classname> class
         and some methods of the
         <classname>boost::program_options::value_semantic</classname> class
-        and includes:        
+        and includes:
         <itemizedlist>
           <listitem>
             <para>
@@ -193,7 +193,7 @@ desc.add_options()
       span several tokens. For example, the following command line is OK:
       <screen>
           test --help --compression 10 --verbose --email beadle@mars beadle2@mars
-      </screen>      
+      </screen>
       </para>
 
       <section>
@@ -208,18 +208,18 @@ desc.add_options()
         <para>The description string has one or more paragraphs, separated by
         the newline character ('\n'). When an option is output, the library
         will compute the indentation for options's description. Each of the
-        paragraph is output as a separate line with that intentation. If 
+        paragraph is output as a separate line with that intentation. If
         a paragraph does not fit on one line it is spanned over multiple
         lines (which will have the same indentation).
         </para>
 
         <para>You may specify additional indent for the first specified by
-        inserting spaces at the beginning of a paragraph. For example: 
+        inserting spaces at the beginning of a paragraph. For example:
         <programlisting>
 options.add_options()
     ("help", "   A long help msg a long help msg a long help msg a long help
 msg a long help msg a long help msg a long help msg a long help msg ")
-    ;  
+    ;
         </programlisting>
         will specify a four-space indent for the first line. The output will
         look like:
@@ -230,14 +230,14 @@ msg a long help msg a long help msg a long help msg a long help msg ")
                         help msg a long help msg
                         a long help msg a long
                         help msg
-          
+
         </screen>
         </para>
 
         <para>For the case where line is wrapped, you can want an additional
         indent for wrapped text. This can be done by
         inserting a tabulator character ('\t') at the desired position. For
-        example: 
+        example:
         <programlisting>
 options.add_options()
       ("well_formated", "As you can see this is a very well formatted
@@ -249,7 +249,7 @@ bla bla bla bla bla bla bla bla bla bla bla\n"
                         "  Value2: \tdoes something else, bla bla bla bla
 bla bla bla bla bla bla bla bla bla bla bla\n\n"
                         "    This paragraph has a first line indent only,
-bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla");          
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla");
         </programlisting>
         will produce:
         <screen>
@@ -280,20 +280,20 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla");
                         bla bla bla
         </screen>
         The tab character is removed before output. Only one tabulator per
-        paragraph is allowed, otherwisee an exception of type
+        paragraph is allowed, otherwise an exception of type
         program_options::error is thrown. Finally, the tabulator is ignored if
-        it's is not on the first line of the paragraph or is on the last
+        it is not on the first line of the paragraph or is on the last
         possible position of the first line.
         </para>
 
       </section>
 
     </section>
-      
+
     <section>
       <title>Semantic Information</title>
-      
-      <para>The semantic information is completely provided by the 
+
+      <para>The semantic information is completely provided by the
         <classname>boost::program_options::value_semantic</classname> class. For
         example:
 <programlisting>
@@ -303,18 +303,18 @@ desc.add_options()
     ("email", value&lt; vector&lt;string&gt; &gt;()
         ->composing()->notifier(&amp;your_function), "email")
     ;
-</programlisting>      
+</programlisting>
         These declarations specify that default value of the first option is 10,
         that the second option can appear several times and all instances should
         be merged, and that after parsing is done, the library will  call
         function <code>&amp;your_function</code>, passing the value of the
-        "email" option as argument.      
+        "email" option as argument.
       </para>
     </section>
-    
+
     <section>
       <title>Positional Options</title>
-      
+
       <para>Our definition of option as (name, value) pairs is simple and
         useful, but in one special case of the command line, there's a
         problem. A command line can include a <firstterm>positional option</firstterm>,
@@ -324,7 +324,7 @@ desc.add_options()
         </screen>
         Here, the "/etc/passwd" element does not have any option name.
       </para>
-      
+
       <para>One solution is to ask the user to extract positional options
         himself and process them as he likes. However, there's a nicer approach
         -- provide a method to automatically assign the names for positional
@@ -334,7 +334,7 @@ desc.add_options()
           archiver --compression=9 --input-file=/etc/passwd
         </screen>
       </para>
-      
+
       <para>The &positional_options_desc; class allows the command line
         parser to assign the names. The class specifies how many positional options
         are allowed, and for each allowed option, specifies the name. For example:
@@ -343,7 +343,7 @@ positional_options_description pd; pd.add("input-file", 1);
 </programlisting> specifies that for exactly one, first, positional
         option the name will be "input-file".
       </para>
-      
+
       <para>It's possible to specify that a number, or even all positional options, be
         given the same name.
 <programlisting>
@@ -360,11 +360,11 @@ pd.add("output-file", 2).add("input-file", -1);
       an instance of the &options_description; class.</para>
     </warning>
 
-      
+
     </section>
-              
+
     <!-- Note that the classes are not modified during parsing -->
-          
+
   </section>
 
   <section>
@@ -390,7 +390,7 @@ pd.add("output-file", 2).add("input-file", -1);
       The results of parsing are returned as an instance of the &parsed_options;
       class. Typically, that object is passed directly to the storage
       component. However, it also can be used directly, or undergo some additional
-      processing. 
+      processing.
     </para>
 
     <para>
@@ -422,8 +422,8 @@ pd.add("output-file", 2).add("input-file", -1);
           </para>
         </listitem>
       </itemizedlist>
-    </para>      
-    
+    </para>
+
   </section>
 
 
@@ -512,7 +512,7 @@ visual_bell=yes
       <screen>
 gui.accessibility.visual_bell=yes
       </screen>
-                  
+
     </section>
 
     <section>
@@ -538,7 +538,7 @@ gui.accessibility.visual_bell=yes
       what option names must correspond to it. To describe the second
       parameter we need to consider naming conventions for environment
       variables.</para>
-      
+
       <para>If you have an option that should be specified via environment
       variable, you need make up the variable's name. To avoid name clashes,
       we suggest that you use a sufficiently unique prefix for environment
@@ -551,9 +551,9 @@ gui.accessibility.visual_bell=yes
       Say, if you pass <literal>BOOST_</literal> as the prefix, and there are
       two variables, <envar>CVSROOT</envar> and <envar>BOOST_PROXY</envar>, the
       first variable will be ignored, and the second one will be converted to
-      option <literal>proxy</literal>. 
+      option <literal>proxy</literal>.
       </para>
-      
+
       <para>The above logic is sufficient in many cases, but it is also
       possible to pass, as the second parameter of the &parse_environment;
       function, any function taking a <code>std::string</code> and returning
@@ -561,35 +561,35 @@ gui.accessibility.visual_bell=yes
       environment variable and should return either the name of the option, or
       empty string if the variable should be ignored.
       </para>
-            
+
     </section>
   </section>
 
   <section>
     <title>Annotated List of Symbols</title>
-    
+
     <para>The following table describes all the important symbols in the
       library, for quick access.</para>
-    
+
     <informaltable pgwide="1">
-        
+
       <tgroup cols="2">
         <colspec colname='c1'/>
         <colspec colname='c2'/>
         <thead>
-          
-          <row>            
+
+          <row>
             <entry>Symbol</entry>
             <entry>Description</entry>
           </row>
         </thead>
-        
+
         <tbody>
-          
-          <row>            
+
+          <row>
             <entry namest='c1' nameend='c2'>Options description component</entry>
           </row>
-          
+
           <row>
             <entry>&options_description;</entry>
             <entry>describes a number of options</entry>
@@ -599,10 +599,10 @@ gui.accessibility.visual_bell=yes
             <entry>defines the option's value</entry>
           </row>
 
-          <row>            
+          <row>
             <entry namest='c1' nameend='c2'>Parsers component</entry>
           </row>
-          
+
           <row>
             <entry>&parse_command_line;</entry>
             <entry>parses command line (simpified interface)</entry>
@@ -624,7 +624,7 @@ gui.accessibility.visual_bell=yes
             <entry>parses environment</entry>
           </row>
 
-          <row>            
+          <row>
             <entry namest='c1' nameend='c2'>Storage component</entry>
           </row>
 
@@ -632,20 +632,20 @@ gui.accessibility.visual_bell=yes
             <entry>&variables_map;</entry>
             <entry>storage for option values</entry>
           </row>
-   
+
         </tbody>
       </tgroup>
-      
+
     </informaltable>
-    
+
   </section>
-  
+
 </section>
 
 <!--
      Local Variables:
      mode: nxml
-     sgml-indent-data: t     
+     sgml-indent-data: t
      sgml-parent-document: ("program_options.xml" "section")
      sgml-set-face: t
      End:

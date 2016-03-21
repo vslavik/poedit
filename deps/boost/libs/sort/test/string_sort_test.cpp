@@ -29,8 +29,18 @@ struct bracket {
   }
 };
 
+struct wbracket {
+  wchar_t operator()(const wstring &x, size_t offset) const {
+    return x[offset];
+  }
+};
+
 struct get_size {
   size_t operator()(const string &x) const{ return x.size(); }
+};
+
+struct wget_size {
+  size_t operator()(const wstring &x) const{ return x.size(); }
 };
 
 static const unsigned input_count = 100000;

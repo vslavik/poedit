@@ -120,7 +120,7 @@ inline T epsilon_of(const T&)
 template <class T>
 inline int digits_of(const T&)
 {
-   return std::numeric_limits<T>::is_specialized ? std::numeric_limits<T>::digits10 + 2 : std::numeric_limits<long double>::digits10 + 2;
+   return std::numeric_limits<T>::is_specialized ? std::numeric_limits<T>::digits10 + 3 : std::numeric_limits<long double>::digits10 + 3;
 }
 
 inline std::ostream& report_where(const char* file, int line, const char* function)

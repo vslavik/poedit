@@ -1,4 +1,4 @@
-//  This file was automatically generated on Mon Oct 13 13:09:13 2014
+//  This file was automatically generated on Thu Aug 13 16:32:12 2015
 //  by libs/config/tools/generate.cpp
 //  Copyright John Maddock 2002-4.
 //  Use, modification and distribution are subject to the 
@@ -28,6 +28,10 @@ namespace test = boost_has_dirent_h;
 #ifdef TEST_BOOST_HAS_EXPM1
 #  include "../test/boost_has_expm1.ipp"
 namespace test = boost_has_expm1;
+#endif
+#ifdef TEST_BOOST_HAS_FLOAT128
+#  include "../test/boost_has_float128.ipp"
+namespace test = boost_has_float128;
 #endif
 #ifdef TEST_BOOST_HAS_FTIME
 #  include "../test/boost_has_ftime.ipp"
@@ -423,11 +427,15 @@ namespace test = boost_no_cxx14_decltype_auto;
 #endif
 #ifdef TEST_BOOST_NO_CXX14_DIGIT_SEPARATORS
 #  include "../test/boost_no_cxx14_digit_separator.ipp"
-namespace test = boost_no_cxx14_digit_separator;
+namespace test = boost_no_cxx14_digit_separators;
 #endif
 #ifdef TEST_BOOST_NO_CXX14_GENERIC_LAMBDAS
 #  include "../test/boost_no_cxx14_generic_lambda.ipp"
 namespace test = boost_no_cxx14_generic_lambdas;
+#endif
+#ifdef TEST_BOOST_NO_CXX14_HDR_SHARED_MUTEX
+#  include "../test/boost_no_cxx14_hdr_shared_mutex.ipp"
+namespace test = boost_no_cxx14_hdr_shared_mutex;
 #endif
 #ifdef TEST_BOOST_NO_CXX14_INITIALIZED_LAMBDA_CAPTURES
 #  include "../test/boost_no_cxx14_lambda_capture.ipp"

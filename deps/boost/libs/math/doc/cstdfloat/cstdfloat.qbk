@@ -103,7 +103,7 @@ Use `std::numeric_limits<>` for floating-point ranges, etc. instead.]
 other headers that define generic code making use of standard library functions
 defined in <cmath>.
 
-This is because `<boost/cstdfloat.hpp>` may define overloads of 
+This is because `<boost/cstdfloat.hpp>` may define overloads of
 standard library functions where a non-standard type (i.e. other than
 `float`, `double`, or `long double`) is used for one of the specified
 width types.  If generic code (for example in another Boost.Math header)
@@ -183,7 +183,9 @@ and the maximum number of  possibly significant decimal digits using
 
     std::numeric_limits<boost::floatmax_t>::max_digits10
 
-[tip  `max_digits10` is not always supported, but can be calculated at compile-time using the Kahan formula.]
+[tip  `max_digits10` is not always supported,
+but can be calculated at compile-time using the Kahan formula.
+]
 
 [note One could test
 
@@ -266,7 +268,7 @@ are always defined after inclusion of `<boost/cstdfloat.hpp>`.
 
 [cstdfloat_constant_1]
 
-from [@../../../example/cstdfloat_example.cpp  cstdfloat_example.cpp].
+from [@../../example/cstdfloat_example.cpp  cstdfloat_example.cpp].
 
 [endsect] [/section:macros Floating-Point Constant Macros]
 
@@ -293,7 +295,7 @@ regardless of the compiler or version or operating system.
 [cstdfloat_example_2]
 [cstdfloat_example_3]
 
-For details, see [@../../../example/cstdfloat_example.cpp  cstdfloat_example.cpp]
+For details, see [@../../example/cstdfloat_example.cpp  cstdfloat_example.cpp]
 - a extensive example program.
 
 [h3:normal_table Normal distribution table]
@@ -313,7 +315,7 @@ so there are no spurious insignificant decimal digits:
    float_128_t  0    0.398942280401432702863218082711682655
 
 Some sample output for two different platforms is appended to the code at
-[@../../../example/normal_tables.cpp  normal_tables.cpp].
+[@../../example/normal_tables.cpp  normal_tables.cpp].
 
 [normal_table_1]
 
@@ -377,7 +379,7 @@ In this function, the correct overload of `fabs` may be found via
 [@http://en.wikipedia.org/wiki/Argument-dependent_name_lookup argument-dependent-lookup (ADL)]
 or by calling one of the `std::fabs` overloads.  There is a key difference between them
 however: an overload in the same namespace as T and found via ADL need ['[*not be defined at the
-time the function is declared]].  However, all the types declared in `<boost/cstdfloat.hpp>` are 
+time the function is declared]].  However, all the types declared in `<boost/cstdfloat.hpp>` are
 fundamental types, so for these types we are relying on finding an overload declared in namespace `std`.
 In that case however, ['[*all such overloads must be declared prior to the definition of function
 `unsigned_compare` otherwise they are not considered]].

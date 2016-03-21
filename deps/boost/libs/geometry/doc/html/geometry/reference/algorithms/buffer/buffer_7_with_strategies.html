@@ -28,7 +28,7 @@
           (with strategies)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp107658784"></a>
+            <a class="indexterm" name="idm44837191778896"></a>
 Calculates the buffer of a geometry.
           </p>
 <h6>
@@ -275,8 +275,7 @@ Calculates the buffer of a geometry.
                 line-ends can be rounded or flat
               </li>
 <li class="listitem">
-                distance can be symmetric or assymetric, and can be specified as
-                negative (deflate)
+                distance can be symmetric or assymetric, and positive or negative
               </li>
 <li class="listitem">
                 around points the shape can be circular or square
@@ -285,6 +284,11 @@ Calculates the buffer of a geometry.
                 the sides can be controlled (currently there is only one option provided)
               </li>
 </ul></div>
+<p>
+            By specifying a negative distance for the distance_strategy, for the
+            (multi) polygon case, the polygon will be smaller (also known as deflate).
+            The distance cannot be 0.
+          </p>
 <p>
             The next figure shows where in the generated buffer the strategies have
             effect
@@ -443,7 +447,8 @@ Calculates the buffer of a geometry.
             <span class="phrase"><a name="geometry.reference.algorithms.buffer.buffer_7_with_strategies.examples"></a></span><a class="link" href="buffer_7_with_strategies.html#geometry.reference.algorithms.buffer.buffer_7_with_strategies.examples">Examples</a>
           </h6>
 <p>
-            Shows how the buffer algorithm can be used to create a buffer of a linestring
+            Shows how the buffer algorithm can be used to create a buffer of a linestring,
+            a multi point, a multi polygon
           </p>
 <p>
 </p>

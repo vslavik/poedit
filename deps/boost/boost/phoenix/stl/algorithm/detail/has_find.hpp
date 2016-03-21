@@ -1,5 +1,7 @@
+///////////////////////////////////////////////////////////////////////////////
 // Copyright 2005 Daniel Wallin.
 // Copyright 2005 Joel de Guzman.
+// Copyright 2015 John Fletcher
 //
 // Use, modification and distribution is subject to the Boost Software
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -43,5 +45,8 @@ namespace boost
     {
     };
 }
+
+// Bring in unordered_set and unordered_map stuff.
+#include "./is_unordered_set_or_map.hpp"
 
 #endif

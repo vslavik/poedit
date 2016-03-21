@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <memory>
 #include <string>
 
 #include <boost/context/all.hpp>
@@ -14,24 +15,20 @@
 
 class X{
 private:
-    int * inp_;
-    std::string outp_;
     std::exception_ptr excptr_;
     boost::context::execution_context caller_;
     boost::context::execution_context callee_;
 
 public:
     X():
-        inp_( nullptr),
-        outp_(),
         excptr_(),
         caller_(boost::context::execution_context::current()),
-        callee_(boost::context::fixedsize_stack(),
-             [=](){
+        callee_(
+             [=]( void * vp){
                 try {
-                    int i = * inp_;
-                    outp_ = boost::lexical_cast<std::string>(i);
-                    caller_.resume();
+                    int i = * static_cast< int * >( vp);
+                    std::string str = boost::lexical_cast<std::string>(i);
+                    caller_( & str);
                 } catch (...) {
                     excptr_=std::current_exception();
                 }
@@ -39,12 +36,11 @@ public:
     {}
 
     std::string operator()(int i){
-        inp_ = & i;
-        callee_.resume();
+        void * ret = callee_( & i);
         if(excptr_){
             std::rethrow_exception(excptr_);
         }
-        return outp_;
+        return * static_cast< std::string * >( ret);
     }
 };
 

@@ -4,7 +4,7 @@
 <title>Legendre (and Associated) Polynomials</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_poly.html" title="Polynomials">
 <link rel="prev" href="../sf_poly.html" title="Polynomials">
 <link rel="next" href="laguerre.html" title="Laguerre (and Associated) Polynomials">
@@ -38,20 +38,20 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_q</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_q</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_q</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_next</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">l</span><span class="special">,</span> <span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">Pl</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">Plm1</span><span class="special">);</span>
@@ -69,9 +69,9 @@
         type.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
@@ -81,8 +81,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">l</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">l</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">l</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the Legendre Polynomial of the first kind:
@@ -108,8 +108,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">l</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">l</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_p</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">l</span><span class="special">,</span> <span class="keyword">int</span> <span class="identifier">m</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the associated Legendre polynomial of the first kind:
@@ -163,8 +163,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_q</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_q</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">legendre_q</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the value of the Legendre polynomial that is the second solution
@@ -299,9 +299,10 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.sf_poly.legendre.peak_errors_in_the_legendre_p_fu"></a><p class="title"><b>Table&#160;6.14.&#160;Peak Errors In the Legendre P Function</b></p>
-<div class="table-contents"><table class="table" summary="Peak Errors In the Legendre P Function">
+<a name="math_toolkit.sf_poly.legendre.table_legendre_p"></a><p class="title"><b>Table&#160;6.32.&#160;Error rates for legendre_p</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for legendre_p">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -309,29 +310,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
-                </p>
-                <p>
-                  0 &lt; l &lt; 20
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
-                </p>
-                <p>
-                  20 &lt; l &lt; 120
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -339,88 +336,58 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Legendre Polynomials: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 211&#949; (Mean = 20.4&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=211 Mean=20
+                  <span class="blue">Max = 0.732&#949; (Mean = 0.0619&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 211&#949; (Mean = 20.4&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=300 Mean=33
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 69.2&#949; (Mean = 9.58&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 124&#949; (Mean = 13.2&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  SUSE Linux IA32, g++ 4.1
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=70 Mean=10
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=700 Mean=60
+                  <span class="blue">Max = 69.2&#949; (Mean = 9.58&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Legendre Polynomials: Large Values
                 </p>
               </td>
 <td>
                 <p>
-                  Red Hat Linux IA64, g++ 3.4.4
+                  <span class="blue">Max = 300&#949; (Mean = 33.2&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=70 Mean=10
+                  <span class="blue">Max = 0.632&#949; (Mean = 0.0693&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 300&#949; (Mean = 33.2&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=700 Mean=60
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  113
+                  <span class="blue">Max = 699&#949; (Mean = 59.6&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 343&#949; (Mean = 32.1&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=35 Mean=6
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=292 Mean=41
+                  <span class="blue">Max = 699&#949; (Mean = 59.6&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -428,30 +395,36 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="math_toolkit.sf_poly.legendre.peak_errors_in_the_associated_le"></a><p class="title"><b>Table&#160;6.15.&#160;Peak Errors In the Associated Legendre P Function</b></p>
-<div class="table-contents"><table class="table" summary="Peak Errors In the Associated Legendre P Function">
+<a name="math_toolkit.sf_poly.legendre.table_legendre_q"></a><p class="title"><b>Table&#160;6.33.&#160;Error rates for legendre_q</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for legendre_q">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
+              </th>
+<th>
                 <p>
-                  0 &lt; l &lt; 20
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -459,68 +432,56 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Legendre Polynomials: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 46.4&#949; (Mean = 7.32&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1200 Mean=7
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0.612&#949; (Mean = 0.0517&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 46.4&#949; (Mean = 7.46&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  SUSE Linux IA32, g++ 4.1
+                  <span class="blue">Max = 50.9&#949; (Mean = 9&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=80 Mean=5
+                  <span class="blue">Max = 50.9&#949; (Mean = 8.98&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Legendre Polynomials: Large Values
                 </p>
               </td>
 <td>
                 <p>
-                  Red Hat Linux IA64, g++ 3.4.4
+                  <span class="blue">Max = 4.6e+003&#949; (Mean = 366&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=80 Mean=5
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  113
+                  <span class="blue">Max = 2.49&#949; (Mean = 0.202&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 4.6e+03&#949; (Mean = 366&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 5.98e+03&#949; (Mean = 478&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=42 Mean=4
+                  <span class="blue">Max = 5.98e+03&#949; (Mean = 478&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -528,9 +489,10 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="math_toolkit.sf_poly.legendre.peak_errors_in_the_legendre_q_fu"></a><p class="title"><b>Table&#160;6.16.&#160;Peak Errors In the Legendre Q Function</b></p>
-<div class="table-contents"><table class="table" summary="Peak Errors In the Legendre Q Function">
+<a name="math_toolkit.sf_poly.legendre.table_legendre_p_associated_"></a><p class="title"><b>Table&#160;6.34.&#160;Error rates for legendre_p (associated)</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for legendre_p (associated)">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -538,122 +500,60 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
-                </p>
-                <p>
-                  0 &lt; l &lt; 20
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
-                </p>
-                <p>
-                  20 &lt; l &lt; 120
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>
                 <p>
-                  53
+                  Associated Legendre Polynomials: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 121&#949; (Mean = 7.14&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=50 Mean=7
+                  <span class="blue">Max = 0.999&#949; (Mean = 0.05&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 121&#949; (Mean = 6.75&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_legendre_p_associated__GSL_1_16_Associated_Legendre_Polynomials_Small_Values">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=4600 Mean=370
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 175&#949; (Mean = 9.88&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 175&#949; (Mean = 9.36&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_legendre_p_associated___tr1_cmath__Associated_Legendre_Polynomials_Small_Values">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
-                  SUSE Linux IA32, g++ 4.1
+                  <span class="blue">Max = 77.7&#949; (Mean = 5.59&#949;)</span>
                 </p>
               </td>
-<td>
-                <p>
-                  Peak=51 Mean=8
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=6000 Mean=480
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Red Hat Linux IA64, g++ 3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=51 Mean=8
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=6000 Mean=480
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  113
-                </p>
-              </td>
-<td>
-                <p>
-                  HPUX IA64, aCC A.06.06
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=90 Mean=10
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=1700 Mean=140
-                </p>
-              </td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
 </div>
 <br class="table-break"><p>
@@ -662,12 +562,6 @@
         associated polynomial case when the degree is also large. Further the relative
         errors are likely to grow arbitrarily large when the function is very close
         to a root.
-      </p>
-<p>
-        No comparisons to other libraries are shown here: there appears to be only
-        one viable implementation method for these functions, the comparisons to
-        other libraries that have been run show identical error rates to those given
-        here.
       </p>
 <h5>
 <a name="math_toolkit.sf_poly.legendre.h3"></a>

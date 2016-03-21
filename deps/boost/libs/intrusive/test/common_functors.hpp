@@ -43,6 +43,14 @@ class new_cloner
 };
 
 template<class T>
+class new_nonconst_cloner
+{
+   public:
+      T *operator()(T &t)
+   {  return new T(t);  }
+};
+
+template<class T>
 class new_default_factory
 {
    public:

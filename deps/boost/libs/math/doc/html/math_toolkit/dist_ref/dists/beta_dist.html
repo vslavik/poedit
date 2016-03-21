@@ -4,7 +4,7 @@
 <title>Beta Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="bernoulli_dist.html" title="Bernoulli Distribution">
 <link rel="next" href="binomial_dist.html" title="Binomial Distribution">
@@ -30,14 +30,14 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-           <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+           <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">beta_distribution</span><span class="special">;</span>
 
 <span class="comment">// typedef beta_distribution&lt;double&gt; beta;</span>
 <span class="comment">// Note that this is deliberately NOT provided,</span>
 <span class="comment">// to avoid a clash with the function name beta.</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">beta_distribution</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -59,7 +59,7 @@
      <span class="identifier">RealType</span> <span class="identifier">mean</span><span class="special">,</span> <span class="comment">// Expected value of mean.</span>
      <span class="identifier">RealType</span> <span class="identifier">variance</span><span class="special">);</span> <span class="comment">// Expected value of variance.</span>
 
-   <span class="comment">// Parameter estimators from from</span>
+   <span class="comment">// Parameter estimators from</span>
    <span class="comment">// either alpha or beta, and x and probability.</span>
 
    <span class="keyword">static</span> <span class="identifier">RealType</span> <span class="identifier">find_alpha</span><span class="special">(</span>
@@ -290,8 +290,8 @@
           that of the j-th highest of a sample of i + j + 1 independent random variables
           uniformly distributed between 0 and 1. The cumulative probability from
           0 to x is thus the probability that the j-th highest value is less than
-          x. Or it is the probability that that at least i of the random variables
-          are less than x, a probability given by summing over the <a class="link" href="binomial_dist.html" title="Binomial Distribution">Binomial
+          x. Or it is the probability that at least i of the random variables are
+          less than x, a probability given by summing over the <a class="link" href="binomial_dist.html" title="Binomial Distribution">Binomial
           Distribution</a> with its p parameter set to x.
         </p>
 <h5>

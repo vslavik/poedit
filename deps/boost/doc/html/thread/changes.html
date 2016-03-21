@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.5.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;31.&#160;Thread 4.6.0">
 <link rel="prev" href="build.html" title="Using and building the library">
 <link rel="next" href="future.html" title="Future">
 </head>
@@ -28,6 +29,211 @@
 </h2></div></div></div>
 <h4>
 <a name="thread.changes.h0"></a>
+      <span class="phrase"><a name="thread.changes.version_4_6_0___boost_1_60"></a></span><a class="link" href="changes.html#thread.changes.version_4_6_0___boost_1_60">Version
+      4.6.0 - boost 1.60</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Know Bugs:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/4833" target="_top">#4833</a>
+          MinGW/test_tss_lib: Support of automatic tss cleanup for native threading
+          API not available
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/8600" target="_top">#8600</a>
+          wait_for_any hangs, if called with multiple copies of shared_future referencing
+          same task
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/9118" target="_top">#9118</a>
+          Seg fault on thread join when llvm and libc++ are used
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/10942" target="_top">#10942</a>
+          Boost.Thread fails to build on Cygwin.
+        </li>
+</ul></div>
+<p>
+      Please take a look at <a href="https://svn.boost.org/trac/boost/query?status=assigned&amp;status=new&amp;status=reopened&amp;component=thread&amp;type=!Feature+Requests&amp;col=id&amp;col=summary&amp;order=id" target="_top">thread
+      Know Bugs</a> to see the current state.
+    </p>
+<p>
+      Please take a look at <a href="http://www.boost.org/development/tests/master/developer/thread.html" target="_top">thread
+      trunk regression test</a> to see the last regression test snapshot.
+    </p>
+<p>
+      <span class="bold"><strong>New Experimental Features:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11231" target="_top">#11231</a>
+          Allow to set continuation future's destructor behavior to non-blocking
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11424" target="_top">#11424</a>
+          Provide shared_timed_mutex as an alternative name for shared_mutex and
+          deprecate the use of shared_mutex as a timed mutex
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11734" target="_top">#11734</a>
+          future::then(Cont) should be able to execute the contination on undetermined
+          thread
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11736" target="_top">#11736</a>
+          Allow to use launch::executor on future::then(launch::executor, cont)
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11737" target="_top">#11737</a>
+          Add a launch::inherit policy that can be used on ::then() to use the policy
+          of the parent future
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Fixed Bugs:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/3926" target="_top">#3926</a>
+          thread_specific_ptr + dlopen library causes a SIGSEGV.
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/6377" target="_top">#6377</a>
+          Condition variable blocks when changing time
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/6787" target="_top">#6787</a>
+          boost::thread::sleep() hangs if system time is rolled back
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/7665" target="_top">#7665</a>
+          this_thread::sleep_for no longer uses steady_clock in thread
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/7720" target="_top">#7720</a>
+          exception lock_error while intensive locking/unlocking of mutex
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/9309" target="_top">#9309</a>
+          test_latch fails often on clang-darwin-tot11
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/10788" target="_top">#10788</a>
+          GetLogicalProcessor isn't available for Windows platform less or equals
+          to 0x0502
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11090" target="_top">#11090</a>
+          ex_future_unwrap- ThreadSanitizer: lock-order-inversion (potential deadlock)
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11158" target="_top">#11158</a>
+          Pthread thread deadlock when faketime used
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11174" target="_top">#11174</a>
+          boost::condition_variable::timed_wait with predicate unexpectedly wakes
+          up while should wait infinite
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11185" target="_top">#11185</a>
+          Incorrect URL redirection
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11192" target="_top">#11192</a>
+          boost::future&lt;&gt;::then() with an executor doesn't compile when the
+          callback returns a future
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11250" target="_top">#11250</a>
+          future made from make_exceptional fails on assertion in destructor
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11256" target="_top">#11256</a>
+          future&lt;&gt;::is_ready() == false in continuation function
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11261" target="_top">#11261</a>
+          bad use of scoped threads in basic_thread_pool
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11262" target="_top">#11262</a>
+          bad use of direct pointer in shared_state_nullary_task
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11263" target="_top">#11263</a>
+          lock already locked lock
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11266" target="_top">#11266</a>
+          boost::packaged_task has invalid variadic signature
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11302" target="_top">#11302</a>
+          boost thread doesn't build with BOOST_THREAD_PATCH.
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11322" target="_top">#11322</a>
+          sleep_for() nanoseconds overload will always return too early on windows
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11329" target="_top">#11329</a>
+          using declarative for GetProcessHeap, .... fails
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11368" target="_top">#11368</a>
+          boost thread's usage of CreateWaitableTimer wakes PC from sleep (doh)
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11377" target="_top">#11377</a>
+          Boost condition variable always waits for system clock deadline
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11435" target="_top">#11435</a>
+          gcc compiler warning in future.hpp
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11555" target="_top">#11555</a>
+          devector.hpp assumes allocator_traits_type is always present
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11562" target="_top">#11562</a>
+          (condition_variable_any::wait_until + recursive_mutex + steady_clock) timer
+          expires after computer time is set forward on Ubuntu 64-bit
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11672" target="_top">#11672</a>
+          Thread: Should use unique_ptr, not auto_ptr
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11688" target="_top">#11688</a>
+          thread::try_join_until: Avoid busy wait if system clock changes
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11672" target="_top">#11716</a>
+          ::then(f) should inherit the parent Executor
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11795" target="_top">#11795</a>
+          Incorrect version specification for documentation of thread destructor
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11796" target="_top">#11796</a>
+          Thread move assignment operator, does not detach previous thread data
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11817" target="_top">#11817</a>
+          'sync_queue_is_closed' was not declared in boost/thread/executors/thread_executor.hpp
+        </li>
+<li class="listitem">
+          <a href="http://svn.boost.org/trac/boost/ticket/11818" target="_top">#11818</a>
+          future.then will be blocked if promise is set after the invocation of then
+        </li>
+</ul></div>
+<h4>
+<a name="thread.changes.h1"></a>
       <span class="phrase"><a name="thread.changes.version_4_5_0___boost_1_58"></a></span><a class="link" href="changes.html#thread.changes.version_4_5_0___boost_1_58">Version
       4.5.0 - boost 1.58</a>
     </h4>
@@ -175,7 +381,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h1"></a>
+<a name="thread.changes.h2"></a>
       <span class="phrase"><a name="thread.changes.version_4_4_0___boost_1_57"></a></span><a class="link" href="changes.html#thread.changes.version_4_4_0___boost_1_57">Version
       4.4.0 - boost 1.57</a>
     </h4>
@@ -383,7 +589,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h2"></a>
+<a name="thread.changes.h3"></a>
       <span class="phrase"><a name="thread.changes.version_4_3_0___boost_1_56"></a></span><a class="link" href="changes.html#thread.changes.version_4_3_0___boost_1_56">Version
       4.3.0 - boost 1.56</a>
     </h4>
@@ -555,7 +761,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h3"></a>
+<a name="thread.changes.h4"></a>
       <span class="phrase"><a name="thread.changes.version_4_2_0___boost_1_55"></a></span><a class="link" href="changes.html#thread.changes.version_4_2_0___boost_1_55">Version
       4.2.0 - boost 1.55</a>
     </h4>
@@ -723,7 +929,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h4"></a>
+<a name="thread.changes.h5"></a>
       <span class="phrase"><a name="thread.changes.version_4_1_0___boost_1_54"></a></span><a class="link" href="changes.html#thread.changes.version_4_1_0___boost_1_54">Version
       4.1.0 - boost 1.54</a>
     </h4>
@@ -884,7 +1090,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h5"></a>
+<a name="thread.changes.h6"></a>
       <span class="phrase"><a name="thread.changes.version_4_0_0___boost_1_53"></a></span><a class="link" href="changes.html#thread.changes.version_4_0_0___boost_1_53">Version
       4.0.0 - boost 1.53</a>
     </h4>
@@ -1081,7 +1287,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h6"></a>
+<a name="thread.changes.h7"></a>
       <span class="phrase"><a name="thread.changes.version_3_1_0___boost_1_52"></a></span><a class="link" href="changes.html#thread.changes.version_3_1_0___boost_1_52">Version
       3.1.0 - boost 1.52</a>
     </h4>
@@ -1246,7 +1452,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h7"></a>
+<a name="thread.changes.h8"></a>
       <span class="phrase"><a name="thread.changes.version_3_0_1___boost_1_51"></a></span><a class="link" href="changes.html#thread.changes.version_3_0_1___boost_1_51">Version
       3.0.1 - boost 1.51</a>
     </h4>
@@ -1337,7 +1543,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h8"></a>
+<a name="thread.changes.h9"></a>
       <span class="phrase"><a name="thread.changes.version_3_0_0___boost_1_50"></a></span><a class="link" href="changes.html#thread.changes.version_3_0_0___boost_1_50">Version
       3.0.0 - boost 1.50</a>
     </h4>
@@ -1550,7 +1756,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h9"></a>
+<a name="thread.changes.h10"></a>
       <span class="phrase"><a name="thread.changes.version_2_1_1___boost_1_49"></a></span><a class="link" href="changes.html#thread.changes.version_2_1_1___boost_1_49">Version
       2.1.1 - boost 1.49</a>
     </h4>
@@ -1648,7 +1854,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h10"></a>
+<a name="thread.changes.h11"></a>
       <span class="phrase"><a name="thread.changes.version_2_1_0___changes_since_boost_1_40"></a></span><a class="link" href="changes.html#thread.changes.version_2_1_0___changes_since_boost_1_40">Version 2.1.0
       - Changes since boost 1.40</a>
     </h4>
@@ -1657,7 +1863,7 @@
       a few minor changes.
     </p>
 <h4>
-<a name="thread.changes.h11"></a>
+<a name="thread.changes.h12"></a>
       <span class="phrase"><a name="thread.changes.changes_since_boost_1_35"></a></span><a class="link" href="changes.html#thread.changes.changes_since_boost_1_35">Changes
       since boost 1.35</a>
     </h4>
@@ -1694,7 +1900,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h12"></a>
+<a name="thread.changes.h13"></a>
       <span class="phrase"><a name="thread.changes.version_2_0_0___changes_since_boost_1_34"></a></span><a class="link" href="changes.html#thread.changes.version_2_0_0___changes_since_boost_1_34">Version 2.0.0
       - Changes since boost 1.34</a>
     </h4>
@@ -1705,7 +1911,7 @@
       with the old code. The new features and breaking changes are described below.
     </p>
 <h4>
-<a name="thread.changes.h13"></a>
+<a name="thread.changes.h14"></a>
       <span class="phrase"><a name="thread.changes.new_features"></a></span><a class="link" href="changes.html#thread.changes.new_features">New
       Features</a>
     </h4>
@@ -1748,7 +1954,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="thread.changes.h14"></a>
+<a name="thread.changes.h15"></a>
       <span class="phrase"><a name="thread.changes.breaking_changes"></a></span><a class="link" href="changes.html#thread.changes.breaking_changes">Breaking
       Changes</a>
     </h4>

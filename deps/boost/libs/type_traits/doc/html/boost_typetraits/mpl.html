@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>MPL Interoperability</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="prev" href="intrinsics.html" title="Support for Compiler Intrinsics">
@@ -29,18 +29,15 @@
 <p>
       All the value based traits in this library conform to MPL's requirements for
       an <a href="../../../../../libs/mpl/doc/refmanual/integral-constant.html" target="_top">Integral
-      Constant type</a>: that includes a number of rather intrusive workarounds
-      for broken compilers.
+      Constant type</a>.
     </p>
 <p>
-      Purely as an implementation detail, this means that <code class="computeroutput"><a class="link" href="reference/integral_constant.html" title="integral_constant">true_type</a></code>
-      inherits from <a href="../../../../../libs/mpl/doc/refmanual/bool.html" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code></a>,
-      <code class="computeroutput"><a class="link" href="reference/integral_constant.html" title="integral_constant">false_type</a></code>
-      inherits from <a href="../../../../../libs/mpl/doc/refmanual/bool.html" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code></a>,
-      and <code class="computeroutput"><a class="link" href="reference/integral_constant.html" title="integral_constant">integral_constant</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span>
-      <span class="identifier">v</span><span class="special">&gt;</span></code>
-      inherits from <a href="../../../../../libs/mpl/doc/refmanual/integral-c.html" target="_top"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">integral_c</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span><span class="identifier">v</span><span class="special">&gt;</span></code></a>
-      (provided <code class="computeroutput"><span class="identifier">T</span></code> is not <code class="computeroutput"><span class="keyword">bool</span></code>)
+      Please note that these types no longer inherit from <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code> or
+      <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">false_</span></code> etc, and the library will no longer
+      implicitly include any MPL header. However there is an implicit conversion
+      from <code class="computeroutput"><span class="identifier">integral_constant</span></code> to the
+      corresponding MPL types, therefore tag-dispatching that uses MPL types in function
+      overloads will still work as before.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

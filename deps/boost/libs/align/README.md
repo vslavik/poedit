@@ -1,14 +1,13 @@
-#![Boost.Align](logo/align.png)
+<!--
+(c) 2015 Glen Joseph Fernandes
+<glenjofe -at- gmail.com>
 
-Boost.Align provides memory alignment functions, allocators, and adaptors.
+Distributed under the Boost Software
+License, Version 1.0.
+http://boost.org/LICENSE_1_0.txt
+-->
 
-### Contents
+# Boost.Align
 
-* **doc** - Boost.Align documentation
-* **example** - Boost.Align examples
-* **include** - Source code of Boost.Align
-* **test** - Boost.Align unit tests
-
-### Details
-
-* [Documentation](http://boost.org/libs/align)
+Boost.Align provides memory alignment functions, allocation functions,
+allocators, allocator adaptors, deleters, type traits, and intrinsics.

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
     Copyright (c) 2013 Agustin Berge
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -43,12 +43,6 @@ main()
         BOOST_TEST((test("abcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
         BOOST_TEST(!(test("a bcd", lexeme[lexeme[lit('a') >> 'b' >> skip[lit('c') >> 'd']]], space)));
     }
-
-    //~ { // lazy skip
-        //~ using boost::phoenix::val;
-
-        //~ BOOST_TEST((test("a b c d", skip(val(space))[*char_])));
-    //~ }
 
     return boost::report_errors();
 }

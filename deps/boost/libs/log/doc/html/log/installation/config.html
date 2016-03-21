@@ -85,6 +85,23 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_USE_WINAPI_VERSION</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Affects compilation of both the library and user's code. This macro
+                  is Windows-specific. Selects the target Windows version for various
+                  Boost libraries, including Boost.Log. Code compiled for a particular
+                  Windows version will likely fail to run on the older Windows versions,
+                  but may improve performance because of using newer OS features.
+                  The macro is expected to have an integer value equivalent to <a href="https://msdn.microsoft.com/en-us/library/6sehtctf.aspx" target="_top"><code class="computeroutput"><span class="identifier">_WIN32_WINNT</span></code></a>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_LOG_NO_THREADS</span></code>
                 </p>
               </td>
@@ -243,24 +260,6 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_WINNT6_API</span></code>
-                </p>
-              </td>
-<td>
-                <p>
-                  Affects compilation of both the library and users' code. This macro
-                  is Windows-specific. If defined, the library makes use of the Windows
-                  NT 6 (Vista, Server 2008) and later APIs to generate more efficient
-                  code. This macro will also enable some experimental features of
-                  the library. Note, however, that the resulting binary will not
-                  run on Windows prior to NT 6. In order to use this feature Platform
-                  SDK 6.0 or later is required.
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_COMPILER_TLS</span></code>
                 </p>
               </td>
@@ -307,7 +306,7 @@
         You can define configuration macros in the <code class="computeroutput"><span class="identifier">bjam</span></code>
         command line, like this:
       </p>
-<pre class="programlisting">bjam --with-log variant=release define=BOOST_LOG_WITHOUT_EVENT_LOG define=BOOST_LOG_USE_WINNT6_API stage
+<pre class="programlisting">bjam --with-log variant=release define=BOOST_LOG_WITHOUT_EVENT_LOG define=BOOST_USE_WINAPI_VERSION=0x0600 stage
 </pre>
 <p>
         However, it may be more convenient to define configuration macros in the
@@ -370,6 +369,57 @@
             The application must not use logging in global constructors or destructors.
           </li>
 </ul></div>
+<p>
+        Note that the <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_COMPILER_TLS</span></code>
+        macro only controls use of TLS in Boost.Log but not in other libraries used
+        by Boost.Log. For example, <a href="http://www.boost.org/doc/libs/release/doc/html/boost_asio.html" target="_top">Boost.ASIO</a>
+        uses compiler-supplied TLS by default. In order to build Boost.Log binaries
+        completely free from use of compiler-supplied TLS, this feature has to be
+        disabled in those other libraries as well (in case of <a href="http://www.boost.org/doc/libs/release/doc/html/boost_asio.html" target="_top">Boost.ASIO</a>
+        this can be achieved by defining <code class="computeroutput"><span class="identifier">BOOST_ASIO_DISABLE_THREAD_KEYWORD_EXTENSION</span></code>
+        when building and using Boost).
+      </p>
+<h5>
+<a name="log.installation.config.h1"></a>
+        <span class="phrase"><a name="log.installation.config.notes_about_native__code__phrase_role__keyword__wchar_t__phrase___code__support"></a></span><a class="link" href="config.html#log.installation.config.notes_about_native__code__phrase_role__keyword__wchar_t__phrase___code__support">Notes
+        about native <code class="computeroutput"><span class="keyword">wchar_t</span></code> support</a>
+      </h5>
+<p>
+        Some compilers, most notably MSVC, have an option to disable the native
+        <code class="computeroutput"><span class="keyword">wchar_t</span></code> type, emulating it with
+        a typedef for one of the standard integral types. From the C++ language perspective
+        this behavior is not conforming but it may be useful for compatibility with
+        some legacy code which is difficult to update.
+      </p>
+<p>
+        By default, Boost (and Boost.Log being part of it) is built with native
+        <code class="computeroutput"><span class="keyword">wchar_t</span></code> enabled. At the time
+        of this writing, user will have to modify Boost.Build to enable the emulation
+        mode. It is possible to build Boost.Log in this mode, but there are several
+        caveats that have to be kept in mind:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            The compiled Boost.Log binaries will be exporting symbols corresponding
+            to the configuration chosen at build time. The user's code will have
+            to use the same setting as was used when building Boost.Log, otherwise
+            linking errors will appear.
+          </li>
+<li class="listitem">
+            Since in emulation mode <code class="computeroutput"><span class="keyword">wchar_t</span></code>
+            is undistinguishable from one of the integer types, certain parts of
+            the library may behave differently from the normal mode with native
+            <code class="computeroutput"><span class="keyword">wchar_t</span></code>. In particular,
+            wide-character literals may be rejected or formatted differently.
+          </li>
+<li class="listitem">
+            The emulation mode is not tested, so unexpected breakages are possible.
+          </li>
+</ul></div>
+<p>
+        Because of that using the emulation mode is discouraged and should be avoided.
+        In future releases of the library its support may be removed completely.
+      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -21,14 +21,14 @@
 [def _MPI_implementations_ 
    [@http://www-unix.mcs.anl.gov/mpi/implementations.html
     MPI implementations]]
-[def _Serialization_ [@http://www.boost.org/libs/serialization/doc
+[def _Serialization_ [@boost:/libs/serialization/doc
                       Boost.Serialization]]
 [def _BoostPython_ [@http://www.boost.org/libs/python/doc
                       Boost.Python]]
 [def _Python_      [@http://www.python.org Python]]
-[def _LAM_          [@http://www.lam-mpi.org/ LAM/MPI]]
 [def _MPICH_        [@http://www-unix.mcs.anl.gov/mpi/mpich/ MPICH2]]
 [def _OpenMPI_      [@http://www.open-mpi.org OpenMPI]]
+[def _IntelMPI_     [@https://software.intel.com/en-us/intel-mpi-library Intel MPI]]
 [def _accumulate_   [@http://www.sgi.com/tech/stl/accumulate.html
                      `accumulate`]]
 
@@ -100,8 +100,8 @@ available. Boost.MPI should work with any of the
 implementations, although it has only been tested extensively with:
 
 * [@http://www.open-mpi.org Open MPI]
-* [@http://www.lam-mpi.org LAM/MPI ]
 * [@http://www-unix.mcs.anl.gov/mpi/mpich/ MPICH2]
+* [@https://software.intel.com/en-us/intel-mpi-library Intel MPI]
 
 You can test your implementation using the following simple program,
 which passes a message from one processor to another. Each processor
@@ -110,7 +110,7 @@ prints a message to standard output.
   #include <mpi.h>
   #include <iostream>
 
-  int main()
+  int main(int argc, char* argv[])
   {
     MPI_Init(&argc, &argv);
 
@@ -133,7 +133,7 @@ prints a message to standard output.
   } 
 
 You should compile and run this program on two processors. To do this,
-consult the documentation for your MPI implementation. With _LAM_, for
+consult the documentation for your MPI implementation. With _OpenMPI_, for
 instance, you compile with the `mpiCC` or `mpic++` compiler, boot the
 LAM/MPI daemon, and run your program via `mpirun`. For instance, if
 your program is called `mpi-test.cpp`, use the following commands:
@@ -161,60 +161,121 @@ appears to be working with a C++ compiler and we're ready to move on.
 
 [section:config Configure and Build]
 
-Boost.MPI uses version 2 of the
+[section:bjam Build Environement]
+
+As the rest of Boost, Boost.MPI uses version 2 of the
 [@http://www.boost.org/doc/html/bbv2.html Boost.Build] system for
-configuring and building the library binary. You will need a very new
-version of [@http://www.boost.org/tools/build/jam_src/index.html
-Boost.Jam] (3.1.12 or later). If you already have Boost.Jam, run `bjam
--v` to determine what version you are using.
+configuring and building the library binary.
 
-Information about building Boost.Jam is
-[@http://www.boost.org/tools/build/jam_src/index.html#building_bjam
-available here]. However, most users need only run `build.sh` in the
-`tools/build/jam_src` subdirectory of Boost. Then,
-copy the resulting `bjam` executable some place convenient.
+Please refer to the general Boost installation instructions for
+[@http://www.boost.org/doc/libs/release/more/getting_started/unix-variants.html#prepare-to-use-a-boost-library-binary Unix Variant]
+(including Unix, Linux and MacOS) or
+[@http://www.boost.org/doc/libs/1_58_0/more/getting_started/windows.html#prepare-to-use-a-boost-library-binary Windows]. 
+The simplified build instructions should apply on most platforms with a few specific modifications described below.
+[endsect]
 
-For many users using _LAM_, _MPICH_, or _OpenMPI_, configuration is
-almost automatic. If you don't already have a file `user-config.jam`
-in your home directory, copy `tools/build/user-config.jam`
-there. For many users, MPI support can be enabled simply by adding the
-following line to your user-config.jam file, which is used to configure
-Boost.Build version 2. 
+[section:bootstraping Bootstrap]
+
+As described in the boost installation instructions, go to to root of your Boost source distribution 
+and run the `bootstrap` script (`./bootstrap.sh` for unix variants or `bootstrap.bat` for Windows).
+That will generate a 'project-config.jam` file in the root directory.
+Use your favourite text editor and add the following line:
 
   using mpi ;
 
-This should auto-detect MPI settings based on the MPI wrapper compiler in 
-your path, e.g., `mpic++`. If the wrapper compiler is not in your
-path, see below.
+Alternatively, you can provided explicitly the list of Boost libraries you want to build.
+Please refer to the `--help` option` of the `bootstrap` script.
+[endsect]
 
-To actually build the MPI library, go into the top-level Boost
-directory and execute the command:
+[section:mpi_setup Setting up your MPI Implementation]
+
+First, you need to scan the =include/boost/mpi/config.hpp= file and check if some 
+settings needs to be modified for your MPI implementation or preferences. 
+
+In particular, the [macroref BOOST_MPI_HOMOGENEOUS] macro, that you will need to comment out 
+if you plan tu run on an heterogeneous set of macines. See the [link mpi.homogeneous_machines optimization] notes below.
+
+Most MPI implementations requires specific compilation and link options. 
+In order to mask theses options to the user, most MPI implementations provides 
+wrappers which silently pass those options to the compiler.
+
+Depending on your MPI implementation, some work might be needed to tell Boost which 
+specific MPI option to use. This is done through the `using mpi ;` directive of the `project-config.jam` file.
+
+The general form is the following (do not forget to leave spaces around *:* and before *;*):
 
 [pre
-bjam --with-mpi
+using mpi 
+   : \[<MPI compiler wrapper>\] 
+   : \[<compilation and link options>\] 
+   : \[<mpi runner>\] ;
 ]
 
-If your MPI wrapper compiler has a different name from the default,
-you can pass the name of the wrapper compiler as the first argument to
-the mpi module:
+* [* If you're lucky]
 
-  using mpi : /opt/mpich2-1.0.4/bin/mpiCC ;
+For those who uses _MPICH_, _OpenMPI_ or some of their derivatives,  configuration can be
+almost automatic. In fact, if your `mpicxx` command is in your path, you just need to use:
 
-If your MPI implementation does not have a wrapper compiler, or the MPI 
-auto-detection code does not work with your MPI's wrapper compiler,
-you can pass MPI-related options explicitly via the second parameter to the 
-`mpi` module:
+[pre
+using mpi ;
+]
+ 
+The directive will find the wrapper and deduce the options to use.
 
-   using mpi : : <find-shared-library>lammpio <find-shared-library>lammpi++
-                 <find-shared-library>mpi <find-shared-library>lam 
-                 <find-shared-library>dl ;
+* [*If your wrapper is not in your path]
+
+...or if it does not have a usual wrapper name, you will need to tell the build system where to find it:
+
+[pre
+using mpi : /opt/mpi/bullxmpi/1.2.8.3/bin/mpicc ;
+]
+
+* [*If your wrapper is really excentric]
+
+or does not exist at all (it happens), you need to 
+provide the compilation and build options to the build environement using `jam` directives.
+For example, the following could be used for a specific Intel MPI implementation:
+
+[pre
+using mpi : mpiicc : 
+      <library-path>/softs/intel/impi/5.0.1.035/intel64/lib
+      <library-path>/softs/intel/impi/5.0.1.035/intel64/lib/release_mt
+      <include>/softs/intel/impi/5.0.1.035/intel64/include
+      <find-shared-library>mpifort
+      <find-shared-library>mpi_mt
+      <find-shared-library>mpigi
+      <find-shared-library>dl
+      <find-shared-library>rt ;
+]
+
+To do that, you need to guess the libraries and include directories associated with your environement.
+You can refer to the your specific MPI environement documentation. 
+Most of the time thoug, your wrapper have an option that provide that information, it usually starts with `--show`:
+[pre
+$ mpiicc -show
+icc -I/softs/intel//impi/5.0.3.048/intel64/include -L/softs/intel//impi/5.0.3.048/intel64/lib/release_mt -L/softs/intel//impi/5.0.3.048/intel64/lib -Xlinker --enable-new-dtags -Xlinker -rpath -Xlinker /softs/intel//impi/5.0.3.048/intel64/lib/release_mt -Xlinker -rpath -Xlinker /softs/intel//impi/5.0.3.048/intel64/lib -Xlinker -rpath -Xlinker /opt/intel/mpi-rt/5.0/intel64/lib/release_mt -Xlinker -rpath -Xlinker /opt/intel/mpi-rt/5.0/intel64/lib -lmpifort -lmpi -lmpigi -ldl -lrt -lpthread
+$ 
+]
+[
+$ mpicc --showme
+icc -I/opt/mpi/bullxmpi/1.2.8.3/include -pthread -L/opt/mpi/bullxmpi/1.2.8.3/lib -lmpi -ldl -lm -lnuma -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl
+$ mpicc --showme:compile
+-I/opt/mpi/bullxmpi/1.2.8.3/include -pthread
+$ mpicc --showme:link
+-pthread -L/opt/mpi/bullxmpi/1.2.8.3/lib -lmpi -ldl -lm -lnuma -Wl,--export-dynamic -lrt -lnsl -lutil -lm -ldl
+$ 
+]
 
 To see the results of MPI auto-detection, pass `--debug-configuration` on
 the bjam command line.
 
+* [*If you want to run the regression tests]
+
+...Which is a good thing.
+
 The (optional) third argument configures Boost.MPI for running
 regression tests. These parameters specify the executable used to
-launch jobs (default: "mpirun") followed by any necessary arguments
+launch jobs (the default is "mpirun") followed by any necessary arguments
 to this to run tests and tell the program to expect the number of
 processors to follow (default: "-np").  With the default parameters,
 for instance, the test harness will execute, e.g.,
@@ -223,21 +284,59 @@ for instance, the test harness will execute, e.g.,
 mpirun -np 4 all_gather_test
 ]
 
-[endsect]
+Some implementations provides alternative launcher that can be more convenient. For exemple, Intel's MPI provides the `mpiexec.hydra`:
 
-[section:installation Installing and Using Boost.MPI]
+[pre
+$mpiexec.hydra -np 4 all_gather_test
+]
+
+which does not requires any daemon to be running (as opposed to their `mpirun` command). Such a launcher need to be specified though:
+
+[pre
+using mpi : mpiicc : 
+      .....
+ : mpiexec.hydra -n  ;
+]
+
+[endsect]
+[section:installation Build and Install]
+
+To build the whole Boost ditribution:
+[pre
+$cd <boost distribution>
+$./b2 install
+]
+
+[tip
+Or, if you have a multi-cpu machine (say 24):
+
+[pre
+$cd <boost distribution>
+$./b2 -j24 install
+]
+]
 
 Installation of Boost.MPI can be performed in the build step by
 specifying `install` on the command line and (optionally) providing an
 installation location, e.g.,
 
 [pre
-bjam --with-mpi install
+$./b2 install
 ]
 
 This command will install libraries into a default system location. To
 change the path where libraries will be installed, add the option
 `--prefix=PATH`.
+
+Then, you can run the regression tests with:
+[pre
+$cd <boost distribution/lib/mpi/test
+$../../../b2
+]
+
+[endsect]
+[endsect]
+[section:using Using Boost.MPI]
 
 To build applications based on Boost.MPI, compile and link them as you
 normally would for MPI programs, but remember to link against the
@@ -247,7 +346,6 @@ normally would for MPI programs, but remember to link against the
 mpic++ -I/path/to/boost/mpi my_application.cpp -Llibdir \
   -lboost_mpi-gcc-mt-1_35 -lboost_serialization-gcc-d-1_35.a
 ]
-[endsect]
 
 If you plan to use the [link mpi.python Python bindings] for
 Boost.MPI in conjunction with the C++ Boost.MPI, you will also need to
@@ -257,19 +355,6 @@ only be necessary if you intend to [link mpi.python_user_data
 register C++ types] or use the [link
 mpi.python_skeleton_content skeleton/content mechanism] from
 within Python.
-
-[section:testing Testing Boost.MPI] 
-
-If you would like to verify that Boost.MPI is working properly with
-your compiler, platform, and MPI implementation, a self-contained test
-suite is available. To use this test suite, you will need to first
-configure Boost.Build for your MPI environment and then run `bjam` in
-`libs/mpi/test` (possibly with some extra options). For 
-_LAM_, you will need to run `lamboot` before running `bjam`. For
-_MPICH_, you may need to create a machine file and pass
-`-sMPIRUN_FLAGS="-machinefile <filename>"` to Boost.Jam; see the
-section on [link mpi.config configuration] for more
-information. If testing succeeds, `bjam` will exit without errors.
 
 [endsect]
 
@@ -532,13 +617,14 @@ _Serialization_ library already contains all of the required
 serialization code. In these cases, you need only include the
 appropriate header from the `boost/serialization` directory. 
 
+[def _gps_position_ [link gps_position `gps_position`]]
 For types that do not already have a serialization header, you will
 first need to implement serialization code before the types can be
-transmitted using Boost.MPI. Consider a simple class `gps_position`
+transmitted using Boost.MPI. Consider a simple class _gps_position_
 that contains members `degrees`, `minutes`, and `seconds`. This class
 is made serializable by making it a friend of
 `boost::serialization::access` and introducing the templated
-`serialize()` function, as follows:
+`serialize()` function, as follows:[#gps_position]
 
   class gps_position
   {
@@ -568,13 +654,15 @@ scope of this tutorial. For more information, please see the
 _Serialization_ library tutorial from which the above example was
 extracted. One important side benefit of making types serializable for
 Boost.MPI is that they become serializable for any other usage, such
-as storing the objects to disk to manipulated them in XML.
+as storing the objects to disk and manipulated them in XML.
 
-Some serializable types, like `gps_position` above, have a fixed
-amount of data stored at fixed field positions. When this is the case,
-Boost.MPI can optimize their serialization and transmission to avoid
-extraneous copy operations. To enable this optimization, users should
-specialize the type trait [classref
+
+Some serializable types, like _gps_position_ above, have a fixed
+amount of data stored at fixed offsets and are fully defined by
+the values of their data member (most POD with no pointers are a good example).
+When this is the case, Boost.MPI can optimize their serialization and 
+transmission by avoiding extraneous copy operations. 
+To enable this optimization, users must specialize the type trait [classref
 boost::mpi::is_mpi_datatype `is_mpi_datatype`], e.g.:
 
   namespace boost { namespace mpi {
@@ -1111,9 +1199,6 @@ programs.
 
 [endsect]
 
-
-
-
 [section:performance_optimizations Performance optimizations]
 [section:serialization_optimizations Serialization optimizations]
 
@@ -1143,11 +1228,13 @@ using the traits classes or helper macros of Boost.Serialization:
 
 [endsect]
   
-[section:homogeneous_machines Homogeneous machines]
+[section:homogeneous_machines Homogeneous Machines]
 
 More optimizations are possible on homogeneous machines, by avoiding
-MPI_Pack/MPI_Unpack calls but using direct bitwise copy. This feature can be
-enabled by defining the macro BOOST_MPI_HOMOGENEOUS when building Boost.MPI and
+MPI_Pack/MPI_Unpack calls but using direct bitwise copy. This feature is 
+enabled by default by defining the macro [macroref BOOST_MPI_HOMOGENEOUS] in the include 
+file  `boost/mpi/config.hpp`.
+That definition must be consistent when building Boost.MPI and
 when building the application.
 
 In addition all classes need to be marked both as is_mpi_datatype and
@@ -1177,127 +1264,127 @@ interfaces to MPI, or for porting existing parallel programs to Boost.MPI.
 
   [[`MPI_ANY_TAG`] [`any_tag`]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node40.html#Node40
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node40.html#Node40
 `MPI_Bsend`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Bsend_init`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node42.html#Node42
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node42.html#Node42
 `MPI_Buffer_attach`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node42.html#Node42
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node42.html#Node42
 `MPI_Buffer_detach`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node50.html#Node50
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node50.html#Node50
 `MPI_Cancel`]] 
    [[memberref boost::mpi::request::cancel
 `request::cancel`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node35.html#Node35
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node35.html#Node35
 `MPI_Get_count`]] 
    [[memberref boost::mpi::status::count `status::count`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node46.html#Node46
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node46.html#Node46
 `MPI_Ibsend`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node50.html#Node50
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node50.html#Node50
 `MPI_Iprobe`]]
    [[memberref boost::mpi::communicator::iprobe `communicator::iprobe`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node46.html#Node46
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node46.html#Node46
 `MPI_Irsend`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node46.html#Node46
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node46.html#Node46
 `MPI_Isend`]] 
    [[memberref boost::mpi::communicator::isend
 `communicator::isend`]]] 
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node46.html#Node46
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node46.html#Node46
 `MPI_Issend`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node46.html#Node46
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node46.html#Node46
 `MPI_Irecv`]] 
    [[memberref boost::mpi::communicator::isend
 `communicator::irecv`]]] 
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node50.html#Node50
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node50.html#Node50
 `MPI_Probe`]]
    [[memberref boost::mpi::communicator::probe `communicator::probe`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node53.html#Node53
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node53.html#Node53
 `MPI_PROC_NULL`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node34.html#Node34 `MPI_Recv`]]
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node34.html#Node34 `MPI_Recv`]]
    [[memberref boost::mpi::communicator::recv
 `communicator::recv`]]] 
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Recv_init`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Request_free`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node40.html#Node40
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node40.html#Node40
 `MPI_Rsend`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Rsend_init`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node31.html#Node31
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node31.html#Node31
 `MPI_Send`]]
    [[memberref boost::mpi::communicator::send
 `communicator::send`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node52.html#Node52
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node52.html#Node52
 `MPI_Sendrecv`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node52.html#Node52
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node52.html#Node52
 `MPI_Sendrecv_replace`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Send_init`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node40.html#Node40
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node40.html#Node40
 `MPI_Ssend`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Ssend_init`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Start`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node51.html#Node51
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node51.html#Node51
 `MPI_Startall`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Test`]] [[memberref boost::mpi::request::wait `request::test`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Testall`]] [[funcref boost::mpi::test_all `test_all`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Testany`]] [[funcref boost::mpi::test_any `test_any`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Testsome`]] [[funcref boost::mpi::test_some `test_some`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node50.html#Node50
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node50.html#Node50
 `MPI_Test_cancelled`]] 
    [[memberref boost::mpi::status::cancelled
 `status::cancelled`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Wait`]] [[memberref boost::mpi::request::wait
 `request::wait`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Waitall`]] [[funcref boost::mpi::wait_all `wait_all`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Waitany`]] [[funcref boost::mpi::wait_any `wait_any`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node47.html#Node47
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node47.html#Node47
 `MPI_Waitsome`]] [[funcref boost::mpi::wait_some `wait_some`]]]
 ]
 
@@ -1351,49 +1438,49 @@ operations are called internally by Boost.MPI.
 [table Derived datatypes
   [[C Function/Constant] [Boost.MPI Equivalent]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node56.html#Node56
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node56.html#Node56
 `MPI_Address`]] [used automatically in Boost.MPI for MPI version 1.x]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-20-html/node76.htm#Node76
 `MPI_Get_address`]] [used automatically in Boost.MPI for MPI version 2.0 and higher]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node58.html#Node58
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node58.html#Node58
 `MPI_Type_commit`]] [used automatically in Boost.MPI]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node55.html#Node55
 `MPI_Type_contiguous`]] [arrays]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node56.html#Node56
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node56.html#Node56
 `MPI_Type_extent`]] [used automatically in Boost.MPI]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node58.html#Node58
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node58.html#Node58
 `MPI_Type_free`]] [used automatically in Boost.MPI]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node55.html#Node55
 `MPI_Type_hindexed`]] [any type used as a subobject]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node55.html#Node55
 `MPI_Type_hvector`]] [unused]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node55.html#Node55
 `MPI_Type_indexed`]] [any type used as a subobject]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node57.html#Node57
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node57.html#Node57
 `MPI_Type_lb`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node56.html#Node56
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node56.html#Node56
 `MPI_Type_size`]] [used automatically in Boost.MPI]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node55.html#Node55
 `MPI_Type_struct`]] [user-defined classes and structs with MPI 1.x]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-20-html/node76.htm#Node76
 `MPI_Type_create_struct`]] [user-defined classes and structs with MPI 2.0 and higher]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node57.html#Node57
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node57.html#Node57
 `MPI_Type_ub`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node55.html#Node55
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node55.html#Node55
 `MPI_Type_vector`]] [used automatically in Boost.MPI]]
 ]
 
@@ -1409,14 +1496,14 @@ to pack or unpack a contiguous buffer using MPI's facilities.
 [table Packing and unpacking
   [[C Function] [Boost.MPI Equivalent]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node62.html#Node62
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node62.html#Node62
 `MPI_Pack`]] [[classref
 boost::mpi::packed_oarchive `packed_oarchive`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node62.html#Node62
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node62.html#Node62
 `MPI_Pack_size`]] [used internally by Boost.MPI]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node62.html#Node62
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node62.html#Node62
 `MPI_Unpack`]] [[classref
 boost::mpi::packed_iarchive `packed_iarchive`]]]
 ]
@@ -1429,48 +1516,50 @@ to do so.
 [table Collectives
   [[C Function] [Boost.MPI Equivalent]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node73.html#Node73
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node73.html#Node73
 `MPI_Allgather`]] [[funcref boost::mpi::all_gather `all_gather`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node73.html#Node73
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node73.html#Node73
 `MPI_Allgatherv`]] [most uses supported by [funcref boost::mpi::all_gather `all_gather`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node82.html#Node82
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node82.html#Node82
 `MPI_Allreduce`]] [[funcref boost::mpi::all_reduce `all_reduce`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node75.html#Node75
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node75.html#Node75
 `MPI_Alltoall`]] [[funcref boost::mpi::all_to_all `all_to_all`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node75.html#Node75
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node75.html#Node75
 `MPI_Alltoallv`]] [most uses supported by [funcref boost::mpi::all_to_all `all_to_all`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node66.html#Node66
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node66.html#Node66
 `MPI_Barrier`]] [[memberref
 boost::mpi::communicator::barrier `communicator::barrier`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node67.html#Node67
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node67.html#Node67
 `MPI_Bcast`]] [[funcref boost::mpi::broadcast `broadcast`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node69.html#Node69
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node69.html#Node69
 `MPI_Gather`]] [[funcref boost::mpi::gather `gather`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node69.html#Node69
-`MPI_Gatherv`]] [most uses supported by [funcref boost::mpi::gather `gather`]]]
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node69.html#Node69
+`MPI_Gatherv`]] [most uses supported by [funcref boost::mpi::gather `gather`],
+other usages supported by [funcref boost::mpi::gatherv `gatherv`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node77.html#Node77
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node77.html#Node77
 `MPI_Reduce`]] [[funcref boost::mpi::reduce `reduce`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node83.html#Node83
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node83.html#Node83
 `MPI_Reduce_scatter`]] [unsupported]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node84.html#Node84
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node84.html#Node84
 `MPI_Scan`]] [[funcref boost::mpi::scan `scan`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node71.html#Node71
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node71.html#Node71
 `MPI_Scatter`]] [[funcref boost::mpi::scatter `scatter`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node71.html#Node71
-`MPI_Scatterv`]] [most uses supported by [funcref boost::mpi::scatter `scatter`]]]
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node71.html#Node71
+`MPI_Scatterv`]] [most uses supported by [funcref boost::mpi::scatter `scatter`], 
+other uses supported by [funcref boost::mpi::scatterv `scatterv`]]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-20-html/node145.htm#Node145
 `MPI_IN_PLACE`]] [supported implicitly by [funcref boost::mpi::all_reduce 
@@ -1480,9 +1569,9 @@ boost::mpi::communicator::barrier `communicator::barrier`]]]
 Boost.MPI uses function objects to specify how reductions should occur
 in its equivalents to `MPI_Allreduce`, `MPI_Reduce`, and
 `MPI_Scan`. The following table illustrates how
-[@http://www.mpi-forum.org/docs/mpi-11-html/node78.html#Node78
+[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node78.html#Node78
 predefined] and
-[@http://www.mpi-forum.org/docs/mpi-11-html/node80.html#Node80
+[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node80.html#Node80
 user-defined] reduction operations can be mapped between the C MPI and
 Boost.MPI.
 
@@ -1528,35 +1617,35 @@ boost::mpi::group `group`] class.
 
   [[`MPI_GROUP_EMPTY`] [a default-constructed [classref
   boost::mpi::group `group`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node97.html#Node97
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node97.html#Node97
   `MPI_Group_size`]] [[memberref boost::mpi::group::size `group::size`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node97.html#Node97
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node97.html#Node97
   `MPI_Group_rank`]] [memberref boost::mpi::group::rank `group::rank`]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node97.html#Node97
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node97.html#Node97
   `MPI_Group_translate_ranks`]] [memberref boost::mpi::group::translate_ranks `group::translate_ranks`]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node97.html#Node97
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node97.html#Node97
   `MPI_Group_compare`]] [operators `==` and `!=`]]
   [[`MPI_IDENT`] [operators `==` and `!=`]]
   [[`MPI_SIMILAR`] [operators `==` and `!=`]]
   [[`MPI_UNEQUAL`] [operators `==` and `!=`]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Comm_group`]] [[memberref
   boost::mpi::communicator::group `communicator::group`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_union`]] [operator `|` for groups]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_intersection`]] [operator `&` for groups]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_difference`]] [operator `-` for groups]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_incl`]] [[memberref boost::mpi::group::include `group::include`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_excl`]] [[memberref boost::mpi::group::include `group::exclude`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_range_incl`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node98.html#Node98
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node98.html#Node98
   `MPI_Group_range_excl`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node99.html#Node99
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node99.html#Node99
   `MPI_Group_free`]] [used automatically in Boost.MPI]]
 ]
 
@@ -1566,23 +1655,23 @@ boost::mpi::communicator `communicator`] class.
 [table Communicator operations
   [[C Function] [Boost.MPI Equivalent]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node101.html#Node101
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node101.html#Node101
   `MPI_Comm_size`]] [[memberref boost::mpi::communicator::size `communicator::size`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node101.html#Node101
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node101.html#Node101
   `MPI_Comm_rank`]] [[memberref boost::mpi::communicator::rank
   `communicator::rank`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node101.html#Node101
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node101.html#Node101
   `MPI_Comm_compare`]] [operators `==` and `!=`]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node102.html#Node102
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node102.html#Node102
   `MPI_Comm_dup`]] [[classref boost::mpi::communicator `communicator`]
   class constructor using `comm_duplicate`]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node102.html#Node102
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node102.html#Node102
   `MPI_Comm_create`]] [[classref boost::mpi::communicator
   `communicator`] constructor]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node102.html#Node102
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node102.html#Node102
   `MPI_Comm_split`]] [[memberref boost::mpi::communicator::split
   `communicator::split`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node103.html#Node103
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node103.html#Node103
   `MPI_Comm_free`]] [used automatically in Boost.MPI]]
 ]
 
@@ -1592,15 +1681,15 @@ Boost.MPI currently provides support for inter-communicators via the
 [table Inter-communicator operations
   [[C Function] [Boost.MPI Equivalent]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node112.html#Node112
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node112.html#Node112
   `MPI_Comm_test_inter`]] [use [memberref boost::mpi::communicator::as_intercommunicator `communicator::as_intercommunicator`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node112.html#Node112
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node112.html#Node112
   `MPI_Comm_remote_size`]] [[memberref boost::mpi::intercommunicator::remote_size] `intercommunicator::remote_size`]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node112.html#Node112
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node112.html#Node112
   `MPI_Comm_remote_group`]] [[memberref boost::mpi::intercommunicator::remote_group `intercommunicator::remote_group`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node113.html#Node113
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node113.html#Node113
   `MPI_Intercomm_create`]] [[classref boost::mpi::intercommunicator `intercommunicator`] constructor]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node113.html#Node113
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node113.html#Node113
   `MPI_Intercomm_merge`]] [[memberref boost::mpi::intercommunicator::merge `intercommunicator::merge`]]]
 ]
 
@@ -1612,19 +1701,19 @@ Boost.MPI currently provides no support for attribute caching.
  [[`MPI_NULL_COPY_FN`] [unsupported]]
  [[`MPI_NULL_DELETE_FN`] [unsupported]]
  [[`MPI_KEYVAL_INVALID`] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Keyval_create`]] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Copy_function`]] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Delete_function`]] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Keyval_free`]] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Attr_put`]] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Attr_get`]] [unsupported]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node119.html#Node119
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node119.html#Node119
  `MPI_Attr_delete`]] [unsupported]]
 ]
 
@@ -1640,50 +1729,50 @@ algorithms.
 [table Process topologies
   [[C Function/Constant] [Boost.MPI Equivalent]]
   
-  [[`MPI_GRAPH`] [unnecessary; use [memberref boost::mpi::communicator::has_graph_topology `communicator::has_graph_topology`]]]
+  [[`MPI_GRAPH`] [unnecessary; use [memberref boost::mpi::communicator::as_graph_communicator `communicator::as_graph_communicator`]]]
   [[`MPI_CART`] [unnecessary; use [memberref boost::mpi::communicator::has_cartesian_topology `communicator::has_cartesian_topology`]]]
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node133.html#Node133
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node133.html#Node133
   `MPI_Cart_create`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node134.html#Node134
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node134.html#Node134
   `MPI_Dims_create`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node135.html#Node135
-  `MPI_Graph_create`]] [[memberref
-  boost::mpi::communicator::with_graph_topology
-  `communicator::with_graph_topology`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node135.html#Node135
+  `MPI_Graph_create`]] [[classref
+  boost::mpi::graph_communicator
+  `graph_communicator ctors`]]]
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Topo_test`]] [[memberref
-  boost::mpi::communicator::has_graph_topology
-  `communicator::has_graph_topology`], [memberref
+  boost::mpi::communicator::as_graph_communicator
+  `communicator::as_graph_communicator`], [memberref
   boost::mpi::communicator::has_cartesian_topology
   `communicator::has_cartesian_topology`]]] 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Graphdims_get`]] [[funcref boost::mpi::num_vertices
   `num_vertices`], [funcref boost::mpi::num_edges `num_edges`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Graph_get`]] [[funcref boost::mpi::vertices
   `vertices`], [funcref boost::mpi::edges `edges`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Cartdim_get`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Cart_get`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Cart_rank`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Cart_coords`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Graph_neighbors_count`]] [[funcref boost::mpi::out_degree
   `out_degree`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node136.html#Node136
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node136.html#Node136
   `MPI_Graph_neighbors`]] [[funcref boost::mpi::out_edges
   `out_edges`], [funcref boost::mpi::adjacent_vertices `adjacent_vertices`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node137.html#Node137
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node137.html#Node137
   `MPI_Cart_shift`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node138.html#Node138
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node138.html#Node138
   `MPI_Cart_sub`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node139.html#Node139
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node139.html#Node139
   `MPI_Cart_map`]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node139.html#Node139
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node139.html#Node139
   `MPI_Graph_map`]] [unsupported]]
 ]
 
@@ -1699,7 +1788,7 @@ boost::mpi::environment `environment`] class.
   boost::mpi::environment::host_rank `environment::host_rank`]]]
   [[`MPI_IO`] [unnecessary; use [memberref
   boost::mpi::environment::io_rank `environment::io_rank`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node143.html#Node147
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node143.html#Node147
   `MPI_Get_processor_name`]] 
   [[memberref boost::mpi::environment::processor_name
   `environment::processor_name`]]]
@@ -1715,21 +1804,21 @@ Boost.MPI translates MPI errors into exceptions, reported via the
   Boost.MPI exceptions]]
   [[`MPI_ERRORS_RETURN`] [unused; errors are translated into
   Boost.MPI exceptions]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node148.html#Node148
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node148.html#Node148
   `MPI_errhandler_create`]] [unused; errors are translated into
   Boost.MPI exceptions]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node148.html#Node148
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node148.html#Node148
   `MPI_errhandler_set`]] [unused; errors are translated into
   Boost.MPI exceptions]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node148.html#Node148
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node148.html#Node148
   `MPI_errhandler_get`]] [unused; errors are translated into
   Boost.MPI exceptions]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node148.html#Node148
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node148.html#Node148
   `MPI_errhandler_free`]] [unused; errors are translated into
   Boost.MPI exceptions]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node148.html#Node148
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node148.html#Node148
   `MPI_Error_string`]] [used internally by Boost.MPI]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node149.html#Node149
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node149.html#Node149
   `MPI_Error_class`]] [[memberref boost::mpi::exception::error_class `exception::error_class`]]]
 ]
 
@@ -1743,11 +1832,11 @@ Timer library].
 
   [[`MPI_WTIME_IS_GLOBAL`] [unnecessary; use [memberref
   boost::mpi::timer::time_is_global `timer::time_is_global`]]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node150.html#Node150
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node150.html#Node150
   `MPI_Wtime`]] [use [memberref boost::mpi::timer::elapsed
   `timer::elapsed`] to determine the time elapsed from some specific
   starting point]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node150.html#Node150
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node150.html#Node150
   `MPI_Wtick`]] [[memberref boost::mpi::timer::elapsed_min `timer::elapsed_min`]]]
 ]
 
@@ -1758,16 +1847,16 @@ descruction of the Boost.MPI [classref boost::mpi::environment
 [table Startup/shutdown facilities
   [[C Function] [Boost.MPI Equivalent]]       
 
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node151.html#Node151
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node151.html#Node151
   `MPI_Init`]] [[classref boost::mpi::environment `environment`]
   constructor]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node151.html#Node151
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node151.html#Node151
   `MPI_Finalize`]] [[classref boost::mpi::environment `environment`]
   destructor]]
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node151.html#Node151
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node151.html#Node151
   `MPI_Initialized`]] [[memberref boost::mpi::environment::initialized
   `environment::initialized`]]] 
- [[[@http://www.mpi-forum.org/docs/mpi-11-html/node151.html#Node151
+ [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node151.html#Node151
   `MPI_Abort`]] [[memberref boost::mpi::environment::abort
   `environment::abort`]]] 
 ]
@@ -1778,9 +1867,9 @@ MPI 1.1.
 [table Profiling interface
   [[C Function] [Boost.MPI Equivalent]]
   
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node153.html#Node153
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node153.html#Node153
   `PMPI_*` routines]] [unsupported]]
-  [[[@http://www.mpi-forum.org/docs/mpi-11-html/node156.html#Node156
+  [[[@http://www.mpi-forum.org/docs/mpi-1.1/mpi-11-html/node156.html#Node156
   `MPI_Pcontrol`]] [unsupported]]
 ]
 
@@ -2054,7 +2143,7 @@ There are an increasing number of hybrid parrallel applications that mix
 distributed and shared memory parallelism. To know how to support that model,
 one need to know what level of threading support is guaranteed by the MPI 
 implementation. There are 4 ordered level of possible threading support described
-by [classref boost::mpi::threading::level mpi::threading::level].
+by [enumref boost::mpi::threading::level mpi::threading::level].
 At the lowest level, you should not use threads at all, at the highest level, any 
 thread can perform MPI call.
 
@@ -2166,4 +2255,5 @@ Boost.MPI that proved the usefulness of the Serialization library in
 an MPI setting and the performance benefits of specialization in a C++
 abstraction layer for MPI. Jeremy Siek managed the formal review of Boost.MPI.
 
+[endsect]
 [endsect]

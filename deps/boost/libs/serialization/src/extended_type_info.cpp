@@ -110,14 +110,14 @@ public:
 
 } // namespace detail
 
-BOOST_SERIALIZATION_DECL(void)  
+BOOST_SERIALIZATION_DECL void  
 extended_type_info::key_register() const{
     if(NULL == get_key())
         return;
     singleton<detail::ktmap>::get_mutable_instance().insert(this);
 }
 
-BOOST_SERIALIZATION_DECL(void)  
+BOOST_SERIALIZATION_DECL void  
 extended_type_info::key_unregister() const{
     if(NULL == get_key())
         return;
@@ -135,7 +135,7 @@ extended_type_info::key_unregister() const{
     }
 }
 
-BOOST_SERIALIZATION_DECL(const extended_type_info *) 
+BOOST_SERIALIZATION_DECL const extended_type_info *
 extended_type_info::find(const char *key) {
     BOOST_ASSERT(NULL != key);
     const detail::ktmap & k = singleton<detail::ktmap>::get_const_instance();
@@ -146,7 +146,7 @@ extended_type_info::find(const char *key) {
     return *(it);
 }
 
-BOOST_SERIALIZATION_DECL(BOOST_PP_EMPTY())
+BOOST_SERIALIZATION_DECL
 extended_type_info::extended_type_info(
     const unsigned int type_info_key,
     const char * key
@@ -156,11 +156,11 @@ extended_type_info::extended_type_info(
 {
 }
 
-BOOST_SERIALIZATION_DECL(BOOST_PP_EMPTY()) 
+BOOST_SERIALIZATION_DECL 
 extended_type_info::~extended_type_info(){
 }
 
-BOOST_SERIALIZATION_DECL(bool)  
+BOOST_SERIALIZATION_DECL bool
 extended_type_info::operator<(const extended_type_info &rhs) const {
     // short cut for a common cases
     if(this == & rhs)
@@ -173,7 +173,7 @@ extended_type_info::operator<(const extended_type_info &rhs) const {
     return false;
 }
 
-BOOST_SERIALIZATION_DECL(bool)
+BOOST_SERIALIZATION_DECL bool
 extended_type_info::operator==(const extended_type_info &rhs) const {
     // short cut for a common cases
     if(this == & rhs)

@@ -12,6 +12,7 @@ import testing ;
 import modules ;
 import path ;
 import pch ;
+import ../../config/checks/config : requires ;
 
 local ntl-path = [ modules.peek : NTL_PATH ] ;
 local gmp_path = [ modules.peek : GMP_PATH ] ;
@@ -27,6 +28,8 @@ if $(remove-test-targets)
 {
    OBJ_REMOVAL_OPTIONS = <pch>off ;
 }
+
+obj no_eh : noeh_support.cpp ;
 
 
 project
@@ -45,9 +48,10 @@ project
       <toolset>msvc:<cxxflags>/wd4610
       <toolset>msvc:<cxxflags>/wd4510
       <toolset>msvc:<cxxflags>/wd4127
+      <toolset>msvc:<cxxflags>/wd4459
       <toolset>msvc:<cxxflags>/wd4701 # needed for lexical cast - temporary.
-       <toolset>msvc:<cxxflags>/wd4189 # local variable is initialized but not referenced
-     <toolset>msvc-7.1:<source>../vc71_fix//vc_fix
+      <toolset>msvc:<cxxflags>/wd4189 # local variable is initialized but not referenced
+      <toolset>msvc-7.1:<source>../vc71_fix//vc_fix
       <toolset>msvc-7.1:<pch>off
       <toolset>gcc,<target-os>windows:<pch>off
       <toolset>borland:<runtime-link>static
@@ -55,6 +59,7 @@ project
       # suppress xstring(237) : warning C4506: no definition for inline function
       <include>../../..
       <source>../../regex/build//boost_regex
+      <exception-handling>off:<source>no_eh
       <link>shared:<define>BOOST_REGEX_DYN_LINK=1
       # For simplicities sake, make everything a static lib:
       <link>static
@@ -97,7 +102,7 @@ run test_arcsine.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_bernoulli.cpp ../../test/build//boost_unit_test_framework ;
 run test_constants.cpp ../../test/build//boost_unit_test_framework ;
 run test_print_info_on_type.cpp ;
-run test_constant_generate.cpp : : : release <define>USE_CPP_FLOAT=1 ;
+run test_constant_generate.cpp : : : release <define>USE_CPP_FLOAT=1 <exception-handling>off:<build>no ;
 run test_bessel_j.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_bessel_y.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_bessel_i.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
@@ -188,11 +193,35 @@ run test_binomial.cpp  ../../test/build//boost_unit_test_framework
           <toolset>intel:<pch>off
         : test_binomial_real_concept6 ;
 run test_binomial_coeff.cpp pch ../../test/build//boost_unit_test_framework ;
-run test_carlson.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
+run test_carlson.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+        <define>TEST1
+        : test_carlson_1 ;
+run test_carlson.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+        <define>TEST2
+        : test_carlson_2 ;
+run test_carlson.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+        <define>TEST3
+        : test_carlson_3 ;
+run test_carlson.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+        <define>TEST4
+        : test_carlson_4 ;
 run test_cauchy.cpp ../../test/build//boost_unit_test_framework ;
 run test_cbrt.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_chi_squared.cpp ../../test/build//boost_unit_test_framework ;
 run test_classify.cpp pch ../../test/build//boost_unit_test_framework ;
+run test_difference.cpp ../../test/build//boost_unit_test_framework ;
 run test_digamma.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_dist_overloads.cpp ../../test/build//boost_unit_test_framework ;
 run test_ellint_1.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
@@ -311,6 +340,61 @@ run test_ibeta.cpp  test_instances//test_instances pch_light ../../test/build//b
           <define>TEST_DATA=4
           <toolset>intel:<pch>off
         : test_ibeta_real_concept4 ;
+
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_FLOAT
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_float ;
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_DOUBLE
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_double ;
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_LDOUBLE
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_long_double ;
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_REAL_CONCEPT
+          <define>TEST_DATA=1
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_real_concept1 ;
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_REAL_CONCEPT
+          <define>TEST_DATA=2
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_real_concept2 ;
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_REAL_CONCEPT
+          <define>TEST_DATA=3
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_real_concept3 ;
+run test_ibeta_derivative.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
+        : # command line
+        : # input files
+        : # requirements
+          <define>TEST_REAL_CONCEPT
+          <define>TEST_DATA=4
+          <toolset>intel:<pch>off
+        : test_ibeta_derivative_real_concept4 ;
+
 run test_ibeta_inv.cpp  test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework
         : # command line
         : # input files
@@ -664,6 +748,8 @@ test_rational_instances/test_rational_real_concept5.cpp
 run test_real_concept.cpp ../../test/build//boost_unit_test_framework ;
 run test_remez.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_roots.cpp pch ../../test/build//boost_unit_test_framework ;
+run test_root_iterations.cpp pch ../../test/build//boost_unit_test_framework : : : [ requires cxx11_hdr_tuple ] ;
+run test_root_finding_concepts.cpp ../../test/build//boost_unit_test_framework ;
 run test_round.cpp pch ../../test/build//boost_unit_test_framework ;
 run test_spherical_harmonic.cpp test_instances//test_instances pch_light ../../test/build//boost_unit_test_framework ;
 run test_students_t.cpp ../../test/build//boost_unit_test_framework ;
@@ -685,6 +771,7 @@ run test_policy_5.cpp ../../test/build//boost_unit_test_framework ;
 run test_policy_6.cpp ../../test/build//boost_unit_test_framework ;
 run test_policy_7.cpp ../../test/build//boost_unit_test_framework ;
 run test_policy_8.cpp ../../test/build//boost_unit_test_framework ;
+compile test_policy_9.cpp ;
 run test_policy_sf.cpp ../../test/build//boost_unit_test_framework ;
 
 run test_tr1.cpp
@@ -807,6 +894,7 @@ compile  compile_test/sf_math_fwd_incl_test.cpp ;
 run  compile_test/sf_modf_incl_test.cpp compile_test_main ;
 run  compile_test/sf_next_incl_test.cpp compile_test_main ;
 run  compile_test/sf_powm1_incl_test.cpp compile_test_main ;
+run  compile_test/sf_relative_distance_incl_test.cpp compile_test_main ;
 run  compile_test/sf_round_incl_test.cpp compile_test_main ;
 run  compile_test/sf_sign_incl_test.cpp compile_test_main ;
 run  compile_test/sf_sin_pi_incl_test.cpp compile_test_main ;
@@ -815,6 +903,7 @@ run  compile_test/sf_sinhc_incl_test.cpp compile_test_main ;
 run  compile_test/sf_sph_harm_incl_test.cpp compile_test_main ;
 run  compile_test/sf_sqrt1pm1_incl_test.cpp compile_test_main ;
 run  compile_test/sf_trunc_incl_test.cpp compile_test_main ;
+run  compile_test/sf_ulp_incl_test.cpp compile_test_main ;
 run  compile_test/sf_zeta_incl_test.cpp compile_test_main ;
 run  compile_test/std_real_concept_check.cpp ;
 run  compile_test/cstdfloat_concept_check_1.cpp
@@ -849,35 +938,35 @@ compile  compile_test/tools_toms748_inc_test.cpp ;
 run ../test/common_factor_test.cpp
     ../../test/build//boost_unit_test_framework ;
 
-run ../octonion/octonion_test.cpp
+run octonion_test.cpp
     ../../test/build//boost_unit_test_framework ;
 
-run ../quaternion/quaternion_test.cpp
+run quaternion_test.cpp
     ../../test/build//boost_unit_test_framework ;
 
-run ../quaternion/quaternion_mult_incl_test.cpp
-    ../quaternion/quaternion_mi1.cpp
-    ../quaternion/quaternion_mi2.cpp
+run quaternion_mult_incl_test.cpp
+    quaternion_mi1.cpp
+    quaternion_mi2.cpp
     ../../test/build//boost_unit_test_framework ;
 
 
 run test_legacy_nonfinite.cpp ../../test/build//boost_unit_test_framework ;
 run test_basic_nonfinite.cpp ../../test/build//boost_unit_test_framework ;
 run test_lexical_cast.cpp ../../test/build//boost_unit_test_framework ;
-run test_nonfinite_trap.cpp ../../test/build//boost_unit_test_framework ;
+run test_nonfinite_trap.cpp ../../test/build//boost_unit_test_framework : : : <exception-handling>off:<build>no ;
 run test_signed_zero.cpp ../../test/build//boost_unit_test_framework ;
 
 run complex_test.cpp ../../test/build//boost_unit_test_framework ;
 
-compile multiprc_concept_check_1.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release ;
-compile multiprc_concept_check_2.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release ;
-compile multiprc_concept_check_3.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release ;
-compile multiprc_concept_check_4.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release ;
+compile multiprc_concept_check_1.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release <exception-handling>off:<build>no ;
+compile multiprc_concept_check_2.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release <exception-handling>off:<build>no ;
+compile multiprc_concept_check_3.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release <exception-handling>off:<build>no ;
+compile multiprc_concept_check_4.cpp : <debug-symbols>off <toolset>msvc:<cxxflags>/bigobj release <exception-handling>off:<build>no ;
 compile ntl_concept_check.cpp : [ check-target-builds ../config//has_ntl_rr : : <build>no ] <debug-symbols>off ;
 compile mpfr_concept_check.cpp : [ check-target-builds ../config//has_mpfr_class : : <build>no ] <debug-symbols>off ;
 compile mpreal_concept_check.cpp : [ check-target-builds ../config//has_mpreal : : <build>no ] <debug-symbols>off ;
 compile e_float_concept_check.cpp : [ check-target-builds ../config//has_e_float : : <build>no ] <debug-symbols>off ;
-compile test_common_factor_gmpxx.cpp : [ check-target-builds ../config//has_gmpxx : : <build>no ] <debug-symbols>off ;
+compile test_common_factor_gmpxx.cpp : [ check-target-builds ../config//has_gmpxx : : <build>no ] <debug-symbols>off <exception-handling>off:<build>no ;
 
 # Temporary tests for support of max_digits10
 # run ztest_max_digits10.cpp ;

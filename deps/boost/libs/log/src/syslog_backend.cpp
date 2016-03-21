@@ -17,7 +17,7 @@
 
 #include "windows_version.hpp"
 #include <boost/log/detail/config.hpp>
-#include <memory>
+#include <ctime>
 #include <algorithm>
 #include <stdexcept>
 #include <boost/limits.hpp>
@@ -36,7 +36,6 @@
 #endif
 #include <boost/system/error_code.hpp>
 #include <boost/date_time/c_time.hpp>
-#include <ctime>
 #include <boost/log/sinks/syslog_backend.hpp>
 #include <boost/log/detail/singleton.hpp>
 #include <boost/log/detail/snprintf.hpp>
@@ -45,6 +44,7 @@
 #include <boost/thread/locks.hpp>
 #include <boost/thread/mutex.hpp>
 #endif
+#include "unique_ptr.hpp"
 
 #ifdef BOOST_LOG_USE_NATIVE_SYSLOG
 #include <syslog.h>
@@ -404,7 +404,7 @@ struct syslog_backend::implementation::udp_socket_based :
     //! Pointer to the list of sockets
     shared_ptr< syslog_udp_service > m_pService;
     //! Pointer to the socket being used
-    std::auto_ptr< syslog_udp_socket > m_pSocket;
+    log::aux::unique_ptr< syslog_udp_socket > m_pSocket;
     //! The target host to send packets to
     asio::ip::udp::endpoint m_TargetHost;
 

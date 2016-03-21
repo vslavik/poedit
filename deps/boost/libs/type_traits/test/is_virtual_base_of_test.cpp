@@ -38,6 +38,13 @@ public:
    virtual int X();
 };
 
+//
+// These are from https://svn.boost.org/trac/boost/ticket/11309
+//
+struct bug11309_A { int a; };
+struct bug11309_B : public virtual bug11309_A {};
+struct bug11309_C : public bug11309_A { virtual ~bug11309_C() {} };
+
 TT_TEST_BEGIN(is_virtual_base_of)
 
 BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<Derived,Base>::value), false);
@@ -75,6 +82,12 @@ BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<Base,virtual_inherit6>::
 BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<virtual_inherit6,Base>::value), false);
 BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<B,D>::value), false);
 BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<non_virtual_base,non_virtual_derived>::value), false);
+//
+// Bug cases:
+//
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<bug11309_A, bug11309_C>::value), false);
+BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_virtual_base_of<bug11309_A, bug11309_B>::value), true);
+
 
 TT_TEST_END
 

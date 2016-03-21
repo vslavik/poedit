@@ -22,12 +22,13 @@
 #  define BOOST_GEOMETRY_DEBUG_IDENTIFIER
 #endif
 
-#include <boost/assert.hpp>
 #include <boost/range.hpp>
 
 #include <boost/geometry/algorithms/detail/ring_identifier.hpp>
 #include <boost/geometry/algorithms/detail/overlay/copy_segment_point.hpp>
+#include <boost/geometry/algorithms/detail/overlay/handle_colocations.hpp>
 #include <boost/geometry/algorithms/detail/overlay/handle_tangencies.hpp>
+#include <boost/geometry/algorithms/detail/overlay/overlay_type.hpp>
 #include <boost/geometry/policies/robustness/robust_type.hpp>
 #include <boost/geometry/strategies/side.hpp>
 #ifdef BOOST_GEOMETRY_DEBUG_ENRICH
@@ -358,14 +359,14 @@ inline void enrich_assign(Container& operations,
                     = turn_points[it->turn_index].operations[it->operation_index];
 
             prev_op.enriched.travels_to_ip_index
-                    = static_cast<int>(it->turn_index);
+                    = static_cast<signed_size_type>(it->turn_index);
             prev_op.enriched.travels_to_vertex_index
                     = it->subject->seg_id.segment_index;
 
             if (! first
                 && prev_op.seg_id.segment_index == op.seg_id.segment_index)
             {
-                prev_op.enriched.next_ip_index = static_cast<int>(it->turn_index);
+                prev_op.enriched.next_ip_index = static_cast<signed_size_type>(it->turn_index);
             }
             first = false;
         }
@@ -467,6 +468,7 @@ inline void create_map(TurnPoints const& turn_points, MappedVector& mapped_vecto
 template
 <
     bool Reverse1, bool Reverse2,
+    overlay_type OverlayType,
     typename TurnPoints,
     typename Geometry1, typename Geometry2,
     typename RobustPolicy,
@@ -491,10 +493,9 @@ inline void enrich_intersection_points(TurnPoints& turn_points,
             std::vector<indexed_turn_operation>
         > mapped_vector_type;
 
-    // DISCARD ALL UU
-    // #76 is the reason that this is necessary...
-    // With uu, at all points there is the risk that rings are being traversed twice or more.
-    // Without uu, all rings having only uu will be untouched and gathered by assemble
+    // Iterate through turns and discard uu
+    // and check if there are possible colocations
+    bool check_colocations = false;
     for (typename boost::range_iterator<TurnPoints>::type
             it = boost::begin(turn_points);
          it != boost::end(turn_points);
@@ -502,14 +503,34 @@ inline void enrich_intersection_points(TurnPoints& turn_points,
     {
         if (it->both(detail::overlay::operation_union))
         {
+            // Discard  (necessary for a.o. #76). With uu, at all points there
+            // is the risk that rings are being traversed twice or more.
+            // Without uu, all rings having only uu will be untouched
+            // and gathered by assemble
             it->discarded = true;
+            check_colocations = true;
         }
-        if (it->both(detail::overlay::operation_none))
+        else if (it->combination(detail::overlay::operation_union,
+                                 detail::overlay::operation_blocked))
+        {
+            check_colocations = true;
+        }
+        else if (OverlayType == overlay_difference
+                 && it->both(detail::overlay::operation_intersection))
+        {
+            // For difference operation (u/u -> i/i)
+            check_colocations = true;
+        }
+        else if (it->both(detail::overlay::operation_none))
         {
             it->discarded = true;
         }
     }
 
+    if (check_colocations)
+    {
+        detail::overlay::handle_colocations<OverlayType>(turn_points);
+    }
 
     // Create a map of vectors of indexed operation-types to be able
     // to sort intersection points PER RING

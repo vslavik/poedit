@@ -95,22 +95,22 @@ def test_basic():
     #include <test2.hpp>
     int main() {}
     """)
-    
+
     tester.write("a/test1.hpp", """
     """)
-    
+
     tester.write("b/test2.hpp", """
     """)
-    
+
     tester.run_build_system()
-    
+
     tester.expect_addition("bin/$toolset/debug/test.obj")
-    
+
     # Check that the dependencies are correct
     tester.touch("a/test1.hpp")
     tester.run_build_system()
     tester.expect_touch("bin/$toolset/debug/test.obj")
-    
+
     tester.touch("b/test2.hpp")
     tester.run_build_system()
     tester.expect_touch("bin/$toolset/debug/test.obj")

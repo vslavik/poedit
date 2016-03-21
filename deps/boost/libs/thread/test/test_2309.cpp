@@ -5,12 +5,13 @@
 
 #define BOOST_THREAD_VERSION 2
 #define BOOST_THREAD_PROVIDES_INTERRUPTIONS
-#define BOOST_TEST_MODULE Boost.Threads: 2309
-#include <boost/test/unit_test.hpp>
+//#define BOOST_TEST_MODULE Boost.Threads: 2309
+//#include <boost/test/unit_test.hpp>
 
 #include <iostream>
 
 #include <boost/thread.hpp>
+#include <boost/detail/lightweight_test.hpp>
 
   using namespace std;
 
@@ -40,7 +41,7 @@
      }
   }
 
-  BOOST_AUTO_TEST_CASE(test)
+  void ticket_2309_test()
   {
     try
     {
@@ -57,9 +58,13 @@
     }
     catch (...)
     {
-      BOOST_CHECK(false && "exception raised");
+      BOOST_TEST(false && "exception raised");
     }
   }
 
+  int main()
+  {
 
+    ticket_2309_test();
+  }
 

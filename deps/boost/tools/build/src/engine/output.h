@@ -23,6 +23,17 @@ void out_action(
     int const exit_reason
 );
 
+void out_flush();
+void err_flush();
+void out_puts(char const * const s);
+void err_puts(char const * const s);
+void out_putc(const char c);
+void err_putc(const char c);
+void out_data(char const * const s);
+void err_data(char const * const s);
+void out_printf(char const * const f, ...);
+void err_printf(char const * const f, ...);
+
 OBJECT * outf_int( int const value );
 OBJECT * outf_double( double const value );
 OBJECT * outf_time( timestamp const * const value );

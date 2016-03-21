@@ -10,7 +10,8 @@
  */
 
 #include <boost/regex.hpp>
-#include <boost/test/test_tools.hpp>
+#include <boost/detail/lightweight_main.hpp>
+#include "../test_macros.hpp"
 
 #ifdef BOOST_INTEL
 #pragma warning(disable:1418 981 983 383)
@@ -102,11 +103,10 @@ void test_named_subexpressions(charT)
    }
 }
 
-int test_main( int , char* [] )
+int cpp_main( int , char* [] )
 {
    test_named_subexpressions(char(0));
    test_named_subexpressions(wchar_t(0));
    return 0;
 }
 
-#include <boost/test/included/test_exec_monitor.hpp>

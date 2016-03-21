@@ -1,13 +1,15 @@
 [/
-  (C) Copyright 2011-2013 Vicente J. Botet Escriba.
+  (C) Copyright 2011-2015 Vicente J. Botet Escriba.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
 [section:compliance Conformance and Extension]
+[////////////////////////////////////////////]
 
 [section:cpp11 C++11 standard Thread library]
+[///////////////////////////////////////////]
 
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3376.html C++11 - Standard for Programming Language C++]]]
 
@@ -88,6 +90,7 @@
 ]
 [endsect]
 [section:cxx14 C++14 standard Thread library - accepted changes]
+[//////////////////////////////////////////////////////////////]
 
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3797.html Working Draft, Standard for Programming Language C++]]
 
@@ -103,6 +106,7 @@
 
 
 [section:cxx1y C++14 TS Extensions for Concurrency V1 ]
+[/////////////////////////////////////////////////////]
 
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4107.html N4107-Extensions for Concurrency]]
 
@@ -126,8 +130,10 @@
 [endsect]
 
 [section:cxx1y C++1z TS Concurrency - On going proposals]
+[///////////////////////////////////////////////////////]
 
 [section:latch C++ Latches and Barriers]
+[//////////////////////////////////////]
 
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3600.html N3600 C++ Latches and Barriers]]
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3817.html N3817 C++ Latches and Barriers]]
@@ -140,6 +146,7 @@
 
 [endsect]
 [section:queue C++ Concurrent Queues]
+[///////////////////////////////////]
 
 [note [@ http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3533.html N3533 C++ Concurrent Queues]]
 
@@ -183,24 +190,25 @@
     [[X.3.4]      [Managed Indirection]  [No] [ - ]]
 ]
 [endsect]
-[section:executors Asynchronous Executors]
+[section:executors Executors and Schedulers]
+[//////////////////////////////////////////]
 
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3785.pdf N3785 Executors and Schedulers]]
 
-[table Asynchronous Executors
+[table Executors and Schedulers 
     [[Section]  [Description]  [Status] [Comments]]
-    [[V.1.1]      [Class executor]  [Yes] [ - ]]
-    [[V.1.1]      [add]  [Yes] [ renamed with a function template submit   ]]
-    [[V.1.1]      [num_of_pendin_closures]  [No] [    ]]
+    [[V.1.1]      [Class `executor`]  [Yes] [ - ]]
+    [[V.1.1]      [`add`]  [Yes] [ renamed with a function template `submit` ]]
+    [[V.1.1]      [`num_of_pendin_closures`]  [No] [    ]]
     [[V.1.2]      [Class sceduled_executor]  [No] [ - ]]
-    [[V.1.2]      [add_at]  [No] [ renamed with a function template submit_at   ]]
-    [[V.1.2]      [add_after]  [No] [ renamed with a function template submit_after   ]]
+    [[V.1.2]      [`add_at`]  [No] [ renamed with a function template `scheduler::submit_at`   ]]
+    [[V.1.2]      [`add_after`]  [No] [ renamed with a function template `scheduler::submit_after`   ]]
     [[V.2]      [Concrete executor classes]  [No] [ - ]]
-    [[V.2.1]      [thread_pool]  [Yes] [ static version Basic_thread_pool, dynamic one execduler_adaptor<basic_thread_pool> ]]
-    [[V.2.2]      [serial_executor]  [yes] [ - ]]
-    [[V.2.3]      [loop_executor]  [Yes] [ static version loop_scheduler, dynamic one execduler_adaptor<loop_scheduler> ]]
-    [[V.2.4]      [inline_executor]  [Yes] [ static version inline_executor, dynamic one execduler_adaptor<inline_executor> ]]
-    [[V.2.5]      [thread_executor]  [Yes] [ static version thread_executor, dynamic one execduler_adaptor<thread_executor> ]]
+    [[V.2.1]      [`thread_pool`]  [Yes] [ static version `basic_thread_pool`, dynamic one `execduler_adaptor<basic_thread_pool>` ]]
+    [[V.2.2]      [`serial_executor`]  [yes] [ - ]]
+    [[V.2.3]      [`loop_executor`]  [Yes] [ static version loop_scheduler, dynamic one `execduler_adaptor<loop_scheduler>` ]]
+    [[V.2.4]      [`inline_executor`]  [Yes] [ static version `inline_executor`, dynamic one `execduler_adaptor<inline_executor>` ]]
+    [[V.2.5]      [`thread_executor`]  [Yes] [ static version `thread_executor`, dynamic one `execduler_adaptor<thread_executor>` ]]
 ]
 
 [note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3784.pdf N3784-Improvements to `std::future<T> and Related APIs]]
@@ -212,8 +220,31 @@
     [[30.6.8]      [`async`]  [Yes] [ - ]]
 ]
 
+[note [@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4143.pdf N4143-Executors and schedulers, revision 4]]
+
+[table Executors and Schedulers - revision 4
+    [[Section]  [Description]  [Status] [Comments]]
+    [[VI.A]      [Executor Concept]  [Yes] [ `wrapper_type` renamed by `work` and `spawn by `submit` ]]
+    [[VI.A.1]      [`thread_per_task_executor]  [Yes] [ renamed `thread_executor`]]
+    [[VI.A.2]      [`thread_pool_executor`]  [Yes] [ renamed `basic_thread_pool`]]
+    [[VI.A.3]      [`system_executor`]  [No] [ - ]]
+    [[VI.A.4]      [`loop_executor`]  [Yes] [ - ]]
+    [[VI.A.5]      [`serial_executor`]  [yes] [ - ]]
+    [[VI.B]      [`executor_ref`]  [yes] [ - ]]
+    [[VI.C]      [`executor`]  [yes] [ renamed `gen_executor_ref` ]]
+    [[VI.D]      [Free Functions and Helper Objects]  [partial] [ - ]]
+    [[VI.D]      [`make_package`]  [No] [ - ]]
+    [[VI.D]      [`spawn_future`]  [No] [ `async(Ex&, ...)` is similar but returns a blocking future. ]]
+    [[VI.D]      [`spawn`]  [No] [ - ]]
+    [[VI.D]      [`task_wrapper`]  [No] [ renamed `resubmitter` ]]
+    [[VI.D]      [`set_executor`]  [No] [ renamed `resubmit` ]]
+    [[VI.D]      [`function_wrapper`]  [Partial] [ renamed `work` ]]
+]
+
 [endsect]
+[//////////////////////////////////////////////////////////////
 [section:stream_mutex	C++ Stream Mutexes - C++ Stream Guards]
+[/////////////////////////////////////////////////////////////]
 
 While Boost.Thread implementation of stream mutexes differ in the approach, it is worth comparing with the current trend on the standard.
 
@@ -241,7 +272,7 @@ While Boost.Thread implementation of stream mutexes differ in the approach, it i
 
 [endsect]
 
-
+///////////////////////////////]
 [endsect]
 
 [endsect]

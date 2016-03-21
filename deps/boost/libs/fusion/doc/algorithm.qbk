@@ -258,6 +258,22 @@ the first call) and [arg_desc] of `seq`.
     typename result_of_name_macro<Sequence const, State const, F>::type name_macro(
         Sequence const& seq, State const& initial_state, F f);
 
+    template<
+        typename Sequence,
+        typename State,
+        typename F
+        >
+    typename result_of_name_macro<Sequence, State, F>::type name_macro(
+        Sequence& seq, State& initial_state, F f);
+
+    template<
+        typename Sequence,
+        typename State,
+        typename F
+        >
+    typename result_of_name_macro<Sequence const, State, F>::type name_macro(
+        Sequence const& seq, State& initial_state, F f);
+
 [def seq_concept_macro [seq_concept]]
 [def arg_type_id_macro [arg_type_id]]
 [def arg_id_macro [arg_id]]
@@ -1722,7 +1738,7 @@ Takes 2 sequences and returns a sequence containing the elements of the first fo
     template<
         typename LhSequence,
         typename RhSequence>
-    typename __result_of_join__<LhSequence, RhSequence>::type join(LhSequence const& lhs, RhSequence const& rhs);
+    typename __result_of_join__<LhSequence const, RhSequence const>::type join(LhSequence const& lhs, RhSequence const& rhs);
 
 [table Parameters
     [[Parameter][Requirement][Description]]
@@ -1767,7 +1783,7 @@ Zips sequences together to form a single sequence, whose members are tuples of t
         ...
         typename SequenceN
         >
-    typename __result_of_zip__<Sequence1, Sequence2, ... SequenceN>::type
+    typename __result_of_zip__<Sequence1 const, Sequence2 const, ... SequenceN const>::type
     zip(Sequence1 const& seq1, Sequence2 const& seq2, ... SequenceN const& seqN);
 
 [table Parameters
@@ -1886,7 +1902,7 @@ Returns a new sequence with an element added at the end.
         typename Sequence,
         typename T
         >
-    typename __result_of_push_back__<Sequence, T>::type push_back(
+    typename __result_of_push_back__<Sequence const, T>::type push_back(
         Sequence const& seq, T const& t);
 
 [table Parameters
@@ -1927,7 +1943,7 @@ Returns a new sequence with an element added at the beginning.
         typename Sequence,
         typename T
         >
-    typename __result_of_push_front__<Sequence, T>::type push_front(
+    typename __result_of_push_front__<Sequence const, T>::type push_front(
         Sequence const& seq, T const& t);
 
 [table Parameters

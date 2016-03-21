@@ -593,9 +593,12 @@ class flat_map
    //!
    //! Complexity: Logarithmic.
    mapped_type &operator[](key_type &&k) ;
-
+   #elif defined(BOOST_MOVE_HELPERS_RETURN_SFINAE_BROKEN)
+      //in compilers like GCC 3.4, we can't catch temporaries
+      mapped_type& operator[](const key_type &k)         {  return this->priv_subscript(k);  }
+      mapped_type& operator[](BOOST_RV_REF(key_type) k)  {  return this->priv_subscript(::boost::move(k));  }
    #else
-   BOOST_MOVE_CONVERSION_AWARE_CATCH( operator[] , key_type, mapped_type&, this->priv_subscript)
+      BOOST_MOVE_CONVERSION_AWARE_CATCH( operator[] , key_type, mapped_type&, this->priv_subscript)
    #endif
 
    //! @copydoc ::boost::container::flat_set::nth(size_type)
@@ -958,7 +961,7 @@ class flat_map
    //! <b>Returns</b>: A const_iterator pointing to an element with the key
    //!   equivalent to x, or end() if such an element is not found.
    //!
-   //! <b>Complexity</b>: Logarithmic.s
+   //! <b>Complexity</b>: Logarithmic.
    const_iterator find(const key_type& x) const
       { return container_detail::force_copy<const_iterator>(m_flat_tree.find(x)); }
 
@@ -971,40 +974,40 @@ class flat_map
    //! <b>Returns</b>: An iterator pointing to the first element with key not less
    //!   than k, or a.end() if such an element is not found.
    //!
-   //! <b>Complexity</b>: Logarithmic
+   //! <b>Complexity</b>: Logarithmic.
    iterator lower_bound(const key_type& x)
       {  return container_detail::force_copy<iterator>(m_flat_tree.lower_bound(x)); }
 
    //! <b>Returns</b>: A const iterator pointing to the first element with key not
    //!   less than k, or a.end() if such an element is not found.
    //!
-   //! <b>Complexity</b>: Logarithmic
+   //! <b>Complexity</b>: Logarithmic.
    const_iterator lower_bound(const key_type& x) const
       {  return container_detail::force_copy<const_iterator>(m_flat_tree.lower_bound(x)); }
 
    //! <b>Returns</b>: An iterator pointing to the first element with key not less
    //!   than x, or end() if such an element is not found.
    //!
-   //! <b>Complexity</b>: Logarithmic
+   //! <b>Complexity</b>: Logarithmic.
    iterator upper_bound(const key_type& x)
       {  return container_detail::force_copy<iterator>(m_flat_tree.upper_bound(x)); }
 
    //! <b>Returns</b>: A const iterator pointing to the first element with key not
    //!   less than x, or end() if such an element is not found.
    //!
-   //! <b>Complexity</b>: Logarithmic
+   //! <b>Complexity</b>: Logarithmic.
    const_iterator upper_bound(const key_type& x) const
       {  return container_detail::force_copy<const_iterator>(m_flat_tree.upper_bound(x)); }
 
    //! <b>Effects</b>: Equivalent to std::make_pair(this->lower_bound(k), this->upper_bound(k)).
    //!
-   //! <b>Complexity</b>: Logarithmic
+   //! <b>Complexity</b>: Logarithmic.
    std::pair<iterator,iterator> equal_range(const key_type& x)
       {  return container_detail::force_copy<std::pair<iterator,iterator> >(m_flat_tree.lower_bound_range(x)); }
 
    //! <b>Effects</b>: Equivalent to std::make_pair(this->lower_bound(k), this->upper_bound(k)).
    //!
-   //! <b>Complexity</b>: Logarithmic
+   //! <b>Complexity</b>: Logarithmic.
    std::pair<const_iterator,const_iterator> equal_range(const key_type& x) const
       {  return container_detail::force_copy<std::pair<const_iterator,const_iterator> >(m_flat_tree.lower_bound_range(x)); }
 

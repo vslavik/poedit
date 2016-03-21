@@ -108,5 +108,46 @@ int main(int, char*[])
         BOOST_TEST(u3 >= u1);
     }
 
+    { // ticket 10510
+        // the uuids in the report
+        uuid u6 = {{0x14,0x5c,0xfc,0x95,0x80,0x50,0x45,0x5a,0x83,0x82,0x44,0xca,0x57,0xc1,0x48,0x3b}};
+        uuid u7 = {{0x14,0x5c,0xfc,0x95,0x80,0x50,0x45,0x5a,0x83,0x82,0x44,0xca,0x57,0xc1,0x48,0x3c}};
+
+        // simple uuids to reproduce problem
+        uuid u8 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}};
+        uuid u9 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2}};
+        uuid u10 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,254}};
+        uuid u11 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255}};
+
+        // some additional uuids for testing boundary cases
+        uuid u12 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1}};
+        uuid u13 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,2}};
+        uuid u14 = {{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}};
+        uuid u15 = {{255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255}};
+
+        BOOST_TEST(u6 < u7);
+        BOOST_TEST(!(u7 < u6));
+
+        BOOST_TEST(u8 < u9);
+        BOOST_TEST(!(u9 < u8));
+        BOOST_TEST(u8 < u10);
+        BOOST_TEST(!(u10 < u8));
+        BOOST_TEST(u8 < u11);
+        BOOST_TEST(!(u11 < u8));
+
+        BOOST_TEST(u9 < u10);
+        BOOST_TEST(!(u10 < u9));
+        BOOST_TEST(u9 < u11);
+        BOOST_TEST(!(u11 < u9));
+
+        BOOST_TEST(u10 < u11);
+        BOOST_TEST(!(u11 < u10));
+
+        BOOST_TEST(u12 < u13);
+        BOOST_TEST(!(u13 < u12));
+        BOOST_TEST(u14 < u15);
+        BOOST_TEST(!(u15 < u14));
+    }
+
     return boost::report_errors();
 }

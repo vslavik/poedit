@@ -16,14 +16,10 @@
 __type The same type as `remove_reference<T>::type*`.  
 
 The rationale for this template
-is that it produces the same type as `TYPEOF(&t)`, 
+is that it produces the same type as `decltype(&t)`, 
 where `t` is an object of type `T`.
 
 __std_ref 8.3.1.
-
-__compat If the compiler does not support partial specialization of class-templates
-then this template will compile, but the member `type` will always be the same as 
-type `T` except where __transform_workaround have been applied.
 
 __header ` #include <boost/type_traits/add_pointer.hpp>` or ` #include <boost/type_traits.hpp>`
 
@@ -40,6 +36,8 @@ __header ` #include <boost/type_traits/add_pointer.hpp>` or ` #include <boost/ty
 [[`add_pointer<int*&>::type`] [`int**`]]
 
 ]
+
+[all_compilers]
 
 [endsect]
 

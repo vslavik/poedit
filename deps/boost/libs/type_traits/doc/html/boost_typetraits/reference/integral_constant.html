@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>integral_constant</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_virtual_destructor.html" title="has_virtual_destructor">
@@ -32,6 +32,7 @@
    <span class="keyword">typedef</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">val</span><span class="special">&gt;</span>  <span class="identifier">type</span><span class="special">;</span>
    <span class="keyword">typedef</span> <span class="identifier">T</span>                          <span class="identifier">value_type</span><span class="special">;</span>
    <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="identifier">value</span> <span class="special">=</span> <span class="identifier">val</span><span class="special">;</span>
+   <span class="keyword">constexpr</span> <span class="keyword">operator</span> <span class="identifier">T</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
 <span class="special">};</span>
 
 <span class="keyword">typedef</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">,</span> <span class="keyword">true</span><span class="special">&gt;</span>  <span class="identifier">true_type</span><span class="special">;</span>

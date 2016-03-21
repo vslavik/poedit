@@ -20,9 +20,11 @@
 
 #include <boost/config.hpp>
 
+#include <boost/archive/basic_archive.hpp>
+
 #include <boost/serialization/collections_save_imp.hpp>
+#include <boost/serialization/collections_load_imp.hpp>
 #include <boost/serialization/detail/stack_constructor.hpp>
-#include <boost/serialization/detail/is_default_constructible.hpp>
 #include <boost/serialization/split_free.hpp>
 
 namespace boost { 
@@ -43,7 +45,7 @@ template<class Archive, class U, class Allocator>
 inline void load(
     Archive & ar,
     std::deque<U, Allocator> &t,
-    const unsigned int /*file_version*/
+    const unsigned int /* file_version */
 ){
     const boost::archive::library_version_type library_version(
         ar.get_library_version()
@@ -55,23 +57,7 @@ inline void load(
     if(boost::archive::library_version_type(3) < library_version){
         ar >> BOOST_SERIALIZATION_NVP(item_version);
     }
-    if(detail::is_default_constructible<U>()){
-        t.resize(count);
-        typename std::deque<U, Allocator>::iterator hint;
-        hint = t.begin();
-        while(count-- > 0){
-            ar >> boost::serialization::make_nvp("item", *hint++);
-        }
-    }
-    else{
-        t.clear();
-        while(count-- > 0){
-            detail::stack_construct<Archive, U> u(ar, item_version);
-            ar >> boost::serialization::make_nvp("item", u.reference());
-            t.push_back(u.reference());
-            ar.reset_object_address(& t.back() , & u.reference());
-         }
-    }
+    stl::collection_load_impl(ar, t, count, item_version);
 }
 
 // split non-intrusive serialization function member into separate

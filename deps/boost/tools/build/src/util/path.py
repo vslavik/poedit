@@ -7,13 +7,13 @@
 #  all copies. This software is provided "as is" without express or implied
 #  warranty, and with no claim as to its suitability for any purpose.
 
-#  Performs various path manipulations. Path are always in a 'normilized' 
+#  Performs various path manipulations. Path are always in a 'normilized'
 #  representation. In it, a path may be either:
 #
 #     - '.', or
 #
 #     - ['/'] [ ( '..' '/' )*  (token '/')* token ]
-# 
+#
 #   In plain english, path can be rooted, '..' elements are allowed only
 #   at the beginning, and it never ends in slash, except for path consisting
 #   of slash only.
@@ -40,6 +40,7 @@ def make (native):
     # TODO: make os selection here.
     return make_UNIX (native)
 
+@bjam_signature([['native']])
 def make_UNIX (native):
 
     # VP: I have no idea now 'native' can be empty here! But it can!
@@ -60,7 +61,7 @@ def native_UNIX (path):
 
 def pwd ():
     """ Returns the current working directory.
-        # TODO: is it a good idea to use the current dir? Some use-cases 
+        # TODO: is it a good idea to use the current dir? Some use-cases
                 may not allow us to depend on the current dir.
     """
     return make (os.getcwd ())
@@ -79,38 +80,38 @@ def is_rooted (path):
 #   #  distribute this software is granted provided this copyright notice appears in
 #   #  all copies. This software is provided "as is" without express or implied
 #   #  warranty, and with no claim as to its suitability for any purpose.
-#   
-#   #  Performs various path manipulations. Path are always in a 'normilized' 
+#
+#   #  Performs various path manipulations. Path are always in a 'normilized'
 #   #  representation. In it, a path may be either:
 #   #
 #   #     - '.', or
 #   #
 #   #     - ['/'] [ ( '..' '/' )*  (token '/')* token ]
-#   # 
+#   #
 #   #   In plain english, path can be rooted, '..' elements are allowed only
 #   #   at the beginning, and it never ends in slash, except for path consisting
 #   #   of slash only.
-#   
+#
 #   import modules ;
 #   import sequence ;
 #   import regex ;
 #   import errors : error ;
-#   
-#   
+#
+#
 #   os = [ modules.peek : OS ] ;
-#   if [ modules.peek : UNIX ] 
-#   {    
+#   if [ modules.peek : UNIX ]
+#   {
 #       local uname = [ modules.peek : JAMUNAME ] ;
 #       switch $(uname)
 #       {
 #           case CYGWIN* :
 #             os = CYGWIN ;
-#           
+#
 #           case * :
 #             os = UNIX ;
-#       }        
+#       }
 #   }
-#   
+#
 #   #
 #   #    Tests if a path is rooted.
 #   #
@@ -118,7 +119,7 @@ def is_rooted (path):
 #   {
 #       return [ MATCH "^(/)" : $(path) ] ;
 #   }
-#   
+#
 #   #
 #   #    Tests if a path has a parent.
 #   #
@@ -130,7 +131,7 @@ def is_rooted (path):
 #           return ;
 #       }
 #   }
-#   
+#
 #   #
 #   #    Returns the path without any directory components.
 #   #
@@ -138,22 +139,22 @@ def is_rooted (path):
 #   {
 #       return [ MATCH "([^/]+)$" : $(path) ] ;
 #   }
-#   
+#
 #   #
 #   #    Returns parent directory of the path. If no parent exists, error is issued.
 #   #
 #   rule parent ( path )
 #   {
 #       if [ has-parent $(path) ] {
-#   
+#
 #           if $(path) = . {
 #               return .. ;
 #           } else {
-#   
+#
 #               # Strip everything at the end of path up to and including
 #               # the last slash
 #               local result = [ regex.match "((.*)/)?([^/]+)" : $(path) : 2 3 ] ;
-#   
+#
 #               # Did we strip what we shouldn't?
 #               if $(result[2]) = ".." {
 #                   return $(path)/.. ;
@@ -172,7 +173,7 @@ def is_rooted (path):
 #           error "Path '$(path)' has no parent" ;
 #       }
 #   }
-#   
+#
 #   #
 #   #    Returns path2 such that "[ join path path2 ] = .".
 #   #    The path may not contain ".." element or be rooted.
@@ -231,19 +232,19 @@ def reverse(path):
 #   {
 #       return [ NORMALIZE_PATH $(elements:J="/") ] ;
 #   }
-#   
+#
 #   #
 #   #    Contanenates the passed path elements. Generates an error if
 #   #    any element other than the first one is rooted.
 #   #
 #   rule join ( elements + )
 #   {
-#       if ! $(elements[2]) 
+#       if ! $(elements[2])
 #       {
 #           return $(elements[1]) ;
 #       }
 #       else
-#       {        
+#       {
 #           for local e in $(elements[2-])
 #           {
 #               if [ is-rooted $(e) ]
@@ -252,13 +253,13 @@ def reverse(path):
 #               }
 #           }
 #           return [ join-imp $(elements) ] ;
-#       }    
+#       }
 #   }
 
 
 def glob (dirs, patterns):
     """ Returns the list of files matching the given pattern in the
-    specified directory.  Both directories and patterns are 
+    specified directory.  Both directories and patterns are
     supplied as portable paths. Each pattern should be non-absolute
     path, and can't contain "." or ".." elements. Each slash separated
     element of pattern can contain the following special characters:
@@ -266,10 +267,10 @@ def glob (dirs, patterns):
     -  '*', which matches arbitrary number of characters.
     A file $(d)/e1/e2/e3 (where 'd' is in $(dirs)) matches pattern p1/p2/p3
     if and only if e1 matches p1, e2 matches p2 and so on.
-    
-    For example: 
-        [ glob . : *.cpp ] 
-        [ glob . : */build/Jamfile ] 
+
+    For example:
+        [ glob . : *.cpp ]
+        [ glob . : */build/Jamfile ]
     """
 #   {
 #       local result ;
@@ -282,43 +283,43 @@ def glob (dirs, patterns):
 #               # First glob for directory part.
 #               local globbed-dirs = [ glob $(dirs) : $(p:D) ] ;
 #               result += [ glob $(globbed-dirs) : $(p:D="") ] ;
-#           }        
+#           }
 #       }
 #       else
-#       {        
+#       {
 #           # When a pattern has not directory, we glob directly.
 #           # Take care of special ".." value. The "GLOB" rule simply ignores
 #           # the ".." element (and ".") element in directory listings. This is
-#           # needed so that 
+#           # needed so that
 #           #
 #           #    [ glob libs/*/Jamfile ]
 #           #
-#           # don't return 
+#           # don't return
 #           #
 #           #    libs/../Jamfile (which is the same as ./Jamfile)
 #           #
 #           # On the other hand, when ".." is explicitly present in the pattern
 #           # we need to return it.
-#           # 
+#           #
 #           for local dir in $(dirs)
 #           {
 #               for local p in $(patterns)
-#               {                
+#               {
 #                   if $(p) != ".."
-#                   {                
-#                       result += [ sequence.transform make 
+#                   {
+#                       result += [ sequence.transform make
 #                           : [ GLOB [ native $(dir) ] : $(p) ] ] ;
-#                   }            
+#                   }
 #                   else
 #                   {
 #                       result += [ path.join $(dir) .. ] ;
-#                   }            
-#               }            
+#                   }
+#               }
 #           }
-#       }    
+#       }
 #       return $(result) ;
 #   }
-#   
+#
 
 # TODO: (PF) I replaced the code above by this. I think it should work but needs to be tested.
     result = []
@@ -335,7 +336,7 @@ def glob (dirs, patterns):
             import glob
             result.extend (glob.glob (p))
     return result
-    
+
 #
 #   Find out the absolute name of path and returns the list of all the parents,
 #   starting with the immediate one. Parents are returned as relative names.
@@ -354,7 +355,7 @@ def all_parents(path, upper_limit=None, cwd=None):
     result = []
     while path_abs and path_abs != upper_limit:
         (head, tail) = os.path.split(path)
-        path = os.path.join(path, "..")        
+        path = os.path.join(path, "..")
         result.append(path)
         path_abs = head
 
@@ -362,7 +363,7 @@ def all_parents(path, upper_limit=None, cwd=None):
         raise BaseException("'%s' is not a prefix of '%s'" % (upper_limit, path))
 
     return result
-    
+
 #  Search for 'pattern' in parent directories of 'dir', up till and including
 #  'upper_limit', if it is specified, or till the filesystem root otherwise.
 #
@@ -377,22 +378,22 @@ def glob_in_parents(dir, patterns, upper_limit=None):
 
     return result
 
-#   
+#
 #   #
 #   # Assuming 'child' is a subdirectory of 'parent', return the relative
 #   # path from 'parent' to 'child'
 #   #
 #   rule relative ( child parent )
 #   {
-#       if $(parent) = "." 
+#       if $(parent) = "."
 #       {
 #           return $(child) ;
 #       }
-#       else 
-#       {       
+#       else
+#       {
 #           local split1 = [ regex.split $(parent) / ] ;
 #           local split2 = [ regex.split $(child) / ] ;
-#       
+#
 #           while $(split1)
 #           {
 #               if $(split1[1]) = $(split2[1])
@@ -403,12 +404,12 @@ def glob_in_parents(dir, patterns, upper_limit=None):
 #               else
 #               {
 #                   errors.error $(child) is not a subdir of $(parent) ;
-#               }                
-#           }    
-#           return [ join $(split2) ] ;    
-#       }    
+#               }
+#           }
+#           return [ join $(split2) ] ;
+#       }
 #   }
-#   
+#
 #   # Returns the minimal path to path2 that is relative path1.
 #   #
 #   rule relative-to ( path1 path2 )
@@ -416,7 +417,7 @@ def glob_in_parents(dir, patterns, upper_limit=None):
 #       local root_1 = [ regex.split [ reverse $(path1) ] / ] ;
 #       local split1 = [ regex.split $(path1) / ] ;
 #       local split2 = [ regex.split $(path2) / ] ;
-#   
+#
 #       while $(split1) && $(root_1)
 #       {
 #           if $(split1[1]) = $(split2[1])
@@ -438,10 +439,10 @@ def glob_in_parents(dir, patterns, upper_limit=None):
 def programs_path ():
     raw = []
     names = ['PATH', 'Path', 'path']
-    
+
     for name in names:
         raw.append(os.environ.get (name, ''))
-    
+
     result = []
     for elem in raw:
         if elem:
@@ -458,40 +459,40 @@ def programs_path ():
 #   {
 #       local tokens = [ regex.split $(native) "[/\\]" ] ;
 #       local result ;
-#   
+#
 #       # Handle paths ending with slashes
 #       if $(tokens[-1]) = ""
 #       {
 #           tokens = $(tokens[1--2]) ; # discard the empty element
 #       }
-#   
+#
 #       result = [ path.join $(tokens) ] ;
-#   
+#
 #       if [ regex.match "(^.:)" : $(native)  ]
 #       {
 #           result = /$(result) ;
 #       }
-#       
+#
 #       if $(native) = ""
 #       {
 #           result = "." ;
 #       }
-#           
+#
 #       return $(result) ;
 #   }
-#   
+#
 #   rule native-NT ( path )
 #   {
 #       local result = [ MATCH "^/?(.*)" : $(path) ] ;
 #       result = [ sequence.join [ regex.split $(result) "/" ] : "\\" ] ;
 #       return $(result) ;
 #   }
-#   
+#
 #   rule make-CYGWIN ( path )
 #   {
 #       return [ make-NT $(path) ] ;
 #   }
-#   
+#
 #   rule native-CYGWIN ( path )
 #   {
 #       local result = $(path) ;
@@ -501,7 +502,7 @@ def programs_path ():
 #       }
 #       return [ native-UNIX $(result) ] ;
 #   }
-#   
+#
 #   #
 #   # split-VMS: splits input native path into
 #   # device dir file (each part is optional),
@@ -515,10 +516,10 @@ def programs_path ():
 #       local device = $(matches[1]) ;
 #       local dir = $(matches[2]) ;
 #       local file = $(matches[3]) ;
-#   
+#
 #       return $(device) $(dir) $(file) ;
 #   }
-#   
+#
 #   #
 #   # Converts a native VMS path into a portable path spec.
 #   #
@@ -535,13 +536,13 @@ def programs_path ():
 #       {
 #           errors.error "Can't handle default-device absolute paths: " $(native) ;
 #       }
-#           
+#
 #       local parts = [ split-path-VMS $(native) ] ;
 #       local device = $(parts[1]) ;
 #       local dir = $(parts[2]) ;
 #       local file = $(parts[3]) ;
 #       local elems ;
-#       
+#
 #       if $(device)
 #       {
 #           #
@@ -549,7 +550,7 @@ def programs_path ():
 #           #
 #           elems = /$(device) ;
 #       }
-#       
+#
 #       if $(dir) = "[]"
 #       {
 #           #
@@ -561,7 +562,7 @@ def programs_path ():
 #       {
 #           dir = [ regex.replace $(dir) "\\[|\\]" "" ] ;
 #           local dir_parts = [ regex.split $(dir) \\. ]  ;
-#       
+#
 #           if $(dir_parts[1]) = ""
 #           {
 #               #
@@ -569,15 +570,15 @@ def programs_path ():
 #               #
 #               dir_parts = $(dir_parts[2--1]) ;
 #           }
-#           
+#
 #           #
 #           # replace "parent-directory" parts (- => ..)
 #           #
 #           dir_parts = [ regex.replace-list $(dir_parts) : - : .. ] ;
-#           
+#
 #           elems = $(elems) $(dir_parts) ;
 #       }
-#       
+#
 #       if $(file)
 #       {
 #           if ! [ MATCH (\\.) : $(file) ]
@@ -589,12 +590,12 @@ def programs_path ():
 #           }
 #           elems = $(elems) $(file) ;
 #       }
-#   
+#
 #       local portable = [ path.join $(elems) ] ;
-#   
+#
 #       return $(portable) ;
 #   }
-#   
+#
 #   #
 #   # Converts a portable path spec into a native VMS path.
 #   #
@@ -608,7 +609,7 @@ def programs_path ():
 #       local file = "" ;
 #       local native ;
 #       local split ;
-#   
+#
 #       #
 #       # Has device ?
 #       #
@@ -618,7 +619,7 @@ def programs_path ():
 #           device = $(split[1]) ;
 #           dir = $(split[2]) ;
 #       }
-#   
+#
 #       #
 #       # Has file ?
 #       #
@@ -631,13 +632,13 @@ def programs_path ():
 #       #
 #       split = [ regex.split $(dir) / ] ;
 #       local maybe_file = $(split[-1]) ;
-#   
+#
 #       if [ MATCH ^([^.]+\\..*) : $(maybe_file) ]
 #       {
 #           file = $(maybe_file) ;
 #           dir = [ sequence.join $(split[1--2]) : / ] ;
 #       }
-#       
+#
 #       #
 #       # Has dir spec ?
 #       #
@@ -649,59 +650,59 @@ def programs_path ():
 #       {
 #           dir = [ regex.replace $(dir) \\.\\. - ] ;
 #           dir = [ regex.replace $(dir) / . ] ;
-#   
+#
 #           if $(device) = ""
 #           {
 #               #
 #               # Relative directory
-#               # 
+#               #
 #               dir = "."$(dir) ;
 #           }
 #           dir = "["$(dir)"]" ;
 #       }
-#       
+#
 #       native = [ sequence.join $(device) $(dir) $(file) ] ;
-#   
+#
 #       return $(native) ;
 #   }
-#   
-#   
+#
+#
 #   rule __test__ ( ) {
-#   
+#
 #       import assert ;
 #       import errors : try catch ;
-#   
+#
 #       assert.true is-rooted "/" ;
 #       assert.true is-rooted "/foo" ;
 #       assert.true is-rooted "/foo/bar" ;
 #       assert.result : is-rooted "." ;
 #       assert.result : is-rooted "foo" ;
 #       assert.result : is-rooted "foo/bar" ;
-#   
+#
 #       assert.true has-parent "foo" ;
 #       assert.true has-parent "foo/bar" ;
 #       assert.true has-parent "." ;
 #       assert.result : has-parent "/" ;
-#   
+#
 #       assert.result "." : basename "." ;
 #       assert.result ".." : basename ".." ;
 #       assert.result "foo" : basename "foo" ;
 #       assert.result "foo" : basename "bar/foo" ;
 #       assert.result "foo" : basename "gaz/bar/foo" ;
 #       assert.result "foo" : basename "/gaz/bar/foo" ;
-#   
+#
 #       assert.result "." : parent "foo" ;
 #       assert.result "/" : parent "/foo" ;
 #       assert.result "foo/bar" : parent "foo/bar/giz" ;
 #       assert.result ".." : parent "." ;
 #       assert.result ".." : parent "../foo" ;
 #       assert.result "../../foo" : parent "../../foo/bar" ;
-#   
-#   
+#
+#
 #       assert.result "." : reverse "." ;
 #       assert.result ".." : reverse "foo" ;
 #       assert.result "../../.." : reverse "foo/bar/giz" ;
-#   
+#
 #       assert.result "foo" : join "foo" ;
 #       assert.result "/foo" : join "/" "foo" ;
 #       assert.result "foo/bar" : join "foo" "bar" ;
@@ -714,57 +715,57 @@ def programs_path ():
 #       assert.result "foo/giz" : join "foo/giz" "." ;
 #       assert.result "." : join lib2 ".." ;
 #       assert.result "/" : join "/a" ".." ;
-#   
+#
 #       assert.result /a/b : join /a/b/c .. ;
-#   
+#
 #       assert.result "foo/bar/giz" : join "foo" "bar" "giz" ;
 #       assert.result "giz" : join "foo" ".." "giz" ;
 #       assert.result "foo/giz" : join "foo" "." "giz" ;
-#   
+#
 #       try ;
 #       {
 #           join "a" "/b" ;
 #       }
 #       catch only first element may be rooted ;
-#   
+#
 #       local CWD = "/home/ghost/build" ;
 #       assert.result : all-parents . : . : $(CWD) ;
 #       assert.result . .. ../.. ../../..  : all-parents "Jamfile" : "" : $(CWD) ;
 #       assert.result foo . .. ../.. ../../.. : all-parents "foo/Jamfile" : "" : $(CWD) ;
 #       assert.result ../Work .. ../.. ../../.. : all-parents "../Work/Jamfile" : "" : $(CWD) ;
-#   
+#
 #       local CWD = "/home/ghost" ;
 #       assert.result . .. : all-parents "Jamfile" : "/home" : $(CWD) ;
 #       assert.result . : all-parents "Jamfile" : "/home/ghost" : $(CWD) ;
-#       
+#
 #       assert.result "c/d" : relative "a/b/c/d" "a/b" ;
 #       assert.result "foo" : relative "foo" "." ;
-#   
+#
 #       local save-os = [ modules.peek path : os ] ;
 #       modules.poke path : os : NT ;
-#   
+#
 #       assert.result "foo/bar/giz" : make "foo/bar/giz" ;
 #       assert.result "foo/bar/giz" : make "foo\\bar\\giz" ;
 #       assert.result "foo" : make "foo/." ;
 #       assert.result "foo" : make "foo/bar/.." ;
 #       assert.result "/D:/My Documents" : make "D:\\My Documents" ;
 #       assert.result "/c:/boost/tools/build/new/project.jam" : make "c:\\boost\\tools\\build\\test\\..\\new\\project.jam" ;
-#   
+#
 #       assert.result "foo\\bar\\giz" : native "foo/bar/giz" ;
 #       assert.result "foo" : native "foo" ;
 #       assert.result "D:\\My Documents\\Work" : native "/D:/My Documents/Work" ;
-#   
+#
 #       modules.poke path : os : UNIX ;
-#   
+#
 #       assert.result "foo/bar/giz" : make "foo/bar/giz" ;
 #       assert.result "/sub1" : make "/sub1/." ;
-#       assert.result "/sub1" : make "/sub1/sub2/.." ;    
+#       assert.result "/sub1" : make "/sub1/sub2/.." ;
 #       assert.result "sub1" : make "sub1/." ;
 #       assert.result "sub1" : make "sub1/sub2/.." ;
 #       assert.result "/foo/bar" : native "/foo/bar" ;
-#   
+#
 #       modules.poke path : os : VMS ;
-#   
+#
 #       #
 #       # Don't really need to poke os before these
 #       #
@@ -776,7 +777,7 @@ def programs_path ():
 #       assert.result ""      "[dir]"  ""     : split-path-VMS "[dir]" ;
 #       assert.result ""      ""     "file"   : split-path-VMS "file" ;
 #       assert.result ""      ""     ""       : split-path-VMS "" ;
-#   
+#
 #       #
 #       # Special case: current directory
 #       #
@@ -784,7 +785,7 @@ def programs_path ():
 #       assert.result "disk:" "[]"     ""     : split-path-VMS "disk:[]" ;
 #       assert.result ""      "[]"     "file" : split-path-VMS "[]file" ;
 #       assert.result "disk:" "[]"     "file" : split-path-VMS "disk:[]file" ;
-#   
+#
 #       #
 #       # Make portable paths
 #       #
@@ -799,7 +800,7 @@ def programs_path ():
 #       assert.result "foo/bar/giz.h" : make "[.foo.bar]giz.h" ;
 #       assert.result "/disk:/my_docs" : make "disk:[my_docs]" ;
 #       assert.result "/disk:/boost/tools/build/new/project.jam" : make "disk:[boost.tools.build.test.-.new]project.jam" ;
-#   
+#
 #       #
 #       # Special case (adds '.' to end of file w/o extension to
 #       # disambiguate from directory in portable path spec).
@@ -807,7 +808,7 @@ def programs_path ():
 #       assert.result "Jamfile." : make "Jamfile" ;
 #       assert.result "dir/Jamfile." : make "[.dir]Jamfile" ;
 #       assert.result "/disk:/dir/Jamfile." : make "disk:[dir]Jamfile" ;
-#   
+#
 #       #
 #       # Make native paths
 #       #
@@ -821,9 +822,9 @@ def programs_path ():
 #       assert.result "giz.h" : native "giz.h" ;
 #       assert.result "disk:Jamfile." : native "/disk:Jamfile." ;
 #       assert.result "disk:[my_docs.work]Jamfile." : native "/disk:/my_docs/work/Jamfile." ;
-#   
+#
 #       modules.poke path : os : $(save-os) ;
-#   
+#
 #   }
 
 #
@@ -837,7 +838,7 @@ def programs_path ():
 
 def glob(dirs, patterns, exclude_patterns=None):
     """Returns the list of files matching the given pattern in the
-    specified directory.  Both directories and patterns are 
+    specified directory.  Both directories and patterns are
     supplied as portable paths. Each pattern should be non-absolute
     path, and can't contain '.' or '..' elements. Each slash separated
     element of pattern can contain the following special characters:
@@ -845,8 +846,8 @@ def glob(dirs, patterns, exclude_patterns=None):
     -  '*', which matches arbitrary number of characters.
     A file $(d)/e1/e2/e3 (where 'd' is in $(dirs)) matches pattern p1/p2/p3
     if and only if e1 matches p1, e2 matches p2 and so on.
-    For example: 
-        [ glob . : *.cpp ] 
+    For example:
+        [ glob . : *.cpp ]
         [ glob . : */build/Jamfile ]
     """
 
@@ -858,7 +859,7 @@ def glob(dirs, patterns, exclude_patterns=None):
     else:
        assert(isinstance(exclude_patterns, list))
 
-    real_patterns = [os.path.join(d, p) for p in patterns for d in dirs]    
+    real_patterns = [os.path.join(d, p) for p in patterns for d in dirs]
     real_exclude_patterns = [os.path.join(d, p) for p in exclude_patterns
                              for d in dirs]
 
@@ -883,14 +884,14 @@ def glob_tree(roots, patterns, exclude_patterns=None):
     subdirs = [s for s in glob(roots, ["*"]) if s != "." and s != ".." and os.path.isdir(s)]
     if subdirs:
         result.extend(glob_tree(subdirs, patterns, exclude_patterns))
-        
+
     return result
 
 def glob_in_parents(dir, patterns, upper_limit=None):
     """Recursive version of GLOB which glob sall parent directories
     of dir until the first match is found. Returns an empty result if no match
-    is found"""    
-    
+    is found"""
+
     assert(isinstance(dir, str))
     assert(isinstance(patterns, list))
 

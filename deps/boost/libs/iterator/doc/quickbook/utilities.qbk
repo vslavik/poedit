@@ -49,7 +49,7 @@ proxy references or return the pointee by value.  When that
 information is needed, call on `indirect_reference`.
 
 Both of these templates are essential to the correct functioning of
-[link boost_iterator.indirect `indirect_iterator`].
+[link iterator.specialized.indirect `indirect_iterator`].
 
 [h2 `minimum_category`]
 
@@ -103,9 +103,9 @@ or not), these additional tags are not considered.
 
   if ( ++x is ill-formed )
   {
-      return `Dereferenceable::element_type`
+      return Dereferenceable::element_type
   }
-  else if (`*x` is a mutable reference to
+  else if (*x is a mutable reference to
            std::iterator_traits<Dereferenceable>::value_type)
   {
       return iterator_traits<Dereferenceable>::value_type
@@ -135,7 +135,7 @@ or not), these additional tags are not considered.
 `x` is an object of type `Dereferenceable`:
 
   if ( ++x is ill-formed )
-      return `pointee<Dereferenceable>::type&`
+      return pointee<Dereferenceable>::type&
   else
       std::iterator_traits<Dereferenceable>::reference
 

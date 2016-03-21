@@ -17,7 +17,8 @@
   */
 
 #include <boost/regex.hpp>
-#include <boost/test/test_tools.hpp>
+#include <boost/detail/lightweight_main.hpp>
+#include "../test_macros.hpp"
 #include <boost/array.hpp>
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
@@ -50,7 +51,7 @@ void test_captures(const std::string& regx, const std::string& text, T& expected
    }
 }
 
-int test_main(int , char* [])
+int cpp_main(int , char* [])
 {
    typedef const char* pchar;
    pchar e1[4][5] = 
@@ -113,4 +114,3 @@ int test_main(int , char* [])
    return 0;
 }
 
-#include <boost/test/included/test_exec_monitor.hpp>

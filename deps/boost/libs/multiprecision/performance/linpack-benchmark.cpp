@@ -58,6 +58,9 @@ double lexical_cast<double, __float128>(const __float128& f)
 #elif defined(TEST_FLOAT128)
 #include <boost/multiprecision/float128.hpp>
 typedef boost::multiprecision::float128 real_type;
+#elif defined(TEST_CPP_BIN_FLOAT_QUAD)
+#include <boost/multiprecision/cpp_bin_float.hpp>
+typedef boost::multiprecision::cpp_bin_float_quad real_type;
 #else
 typedef double real_type;
 #endif

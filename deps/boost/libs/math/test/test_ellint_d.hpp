@@ -26,11 +26,14 @@
 template <class Real, typename T>
 void do_test_ellint_d2(const T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_D2_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_D2_FUNCTION_TO_TEST
+   value_type(*fp2)(value_type, value_type) = ELLINT_D2_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp2)(value_type, value_type) = boost::math::ellint_d<value_type, value_type>;
 #else
     value_type (*fp2)(value_type, value_type) = boost::math::ellint_d;
@@ -42,20 +45,24 @@ void do_test_ellint_d2(const T& data, const char* type_name, const char* test)
       bind_func<Real>(fp2, 1, 0),
       extract_result<Real>(2));
    handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::ellint_d", test);
+      type_name, "ellint_d", test);
 
    std::cout << std::endl;
+#endif
 }
 
 template <class Real, typename T>
 void do_test_ellint_d1(T& data, const char* type_name, const char* test)
 {
-    typedef Real                   value_type;
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_D1_FUNCTION_TO_TEST))
+   typedef Real                   value_type;
     boost::math::tools::test_result<value_type> result;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_D1_FUNCTION_TO_TEST
+   value_type(*fp1)(value_type) = ELLINT_D1_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    value_type (*fp1)(value_type) = boost::math::ellint_d<value_type>;
 #else
    value_type (*fp1)(value_type) = boost::math::ellint_d;
@@ -65,9 +72,10 @@ void do_test_ellint_d1(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp1, 0),
       extract_result<Real>(1));
    handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::ellint_d", test);
+      type_name, "ellint_d (complete)", test);
 
    std::cout << std::endl;
+#endif
 }
 
 template <typename T>
@@ -106,5 +114,10 @@ void test_spots(T, const char* type_name)
 #include "ellint_d_data.ipp"
 
     do_test_ellint_d1<T>(ellint_d_data, type_name, "Elliptic Integral D: Random Data");
+
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_d(T(1)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_d(T(-1)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_d(T(1.5)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_d(T(-1.5)), std::domain_error);
 }
 

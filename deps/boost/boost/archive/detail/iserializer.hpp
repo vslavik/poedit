@@ -57,11 +57,16 @@ namespace std{
 #include <boost/type_traits/is_polymorphic.hpp>
 
 #include <boost/serialization/assume_abstract.hpp>
-#define DONT_USE_HAS_NEW_OPERATOR (                    \
-    defined(__BORLANDC__)                              \
-    || BOOST_WORKAROUND(__IBMCPP__, < 1210)            \
-    || defined(__SUNPRO_CC) && (__SUNPRO_CC < 0x590)   \
-)
+
+#ifndef BOOST_MSVC
+    #define DONT_USE_HAS_NEW_OPERATOR (                    \
+           BOOST_WORKAROUND(__IBMCPP__, < 1210)            \
+        || defined(__SUNPRO_CC) && (__SUNPRO_CC < 0x590)   \
+    )
+#else
+    #define DONT_USE_HAS_NEW_OPERATOR 0
+#endif
+
 #if ! DONT_USE_HAS_NEW_OPERATOR
 #include <boost/type_traits/has_new_operator.hpp>
 #endif
@@ -221,20 +226,25 @@ struct heap_allocation {
             static T * invoke_new() {
                 return static_cast<T *>((T::operator new)(sizeof(T)));
             }
+            template<void D(void *, std::size_t)>
+            static void deleter(void * t, std::size_t s){
+                D(t, s);
+            }
+
+            template<void D(void *)>
+            static void deleter(void * t, std::size_t s){
+                D(t);
+            }
             static void invoke_delete(T * t) {
                 // if compilation fails here, the likely cause that the class
                 // T has a class specific new operator but no class specific
-                // delete operator which matches the following signature.  Fix
-                // your program to have this.  Note that adding operator delete
-                // with only one parameter doesn't seem correct to me since 
-                // the standard(3.7.4.2) says "
-                // "If a class T has a member deallocation function named
-                // 'operator delete' with exactly one parameter, then that function 
-                // is a usual (non-placement) deallocation function" which I take
-                // to mean that it will call the destructor of type T which we don't
-                // want to do here.
-                // Note: reliance upon automatic conversion from T * to void * here
-                (T::operator delete)(t, sizeof(T));
+                // delete operator which matches the following signature.
+                // note that this solution addresses the issue that two
+                // possible signatures.  But it doesn't address the possibility
+                // that the class might have class specific new with NO
+                // class specific delete at all.  Patches (compatible with
+                // C++03) welcome!
+                deleter<T::operator delete>(t, sizeof(T));
             }
         };
         struct doesnt_have_new_operator {
@@ -617,40 +627,6 @@ inline void load(Archive & ar, T &t){
         >::type typex;
     typex::invoke(ar, t);
 }
-
-#if 0
-
-// BORLAND
-#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x560))
-// borland has a couple of problems
-// a) if function is partially specialized - see below
-// const paramters are transformed to non-const ones
-// b) implementation of base_object can't be made to work
-// correctly which results in all base_object s being const.
-// So, strip off the const for borland.  This breaks the trap
-// for loading const objects - but I see no alternative
-template<class Archive, class T>
-inline void load(Archive &ar, const T & t){
-    load(ar, const_cast<T &>(t));
-}
-#endif
-
-// let wrappers through.
-#ifndef BOOST_NO_FUNCTION_TEMPLATE_ORDERING
-template<class Archive, class T>
-inline void load_wrapper(Archive &ar, const T&t, mpl::true_){
-    boost::archive::load(ar, const_cast<T&>(t));
-}
-
-#if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x560))
-template<class Archive, class T>
-inline void load(Archive &ar, const T&t){
-  load_wrapper(ar,t,serialization::is_wrapper< T >());
-}
-#endif 
-#endif
-
-#endif
 
 } // namespace archive
 } // namespace boost

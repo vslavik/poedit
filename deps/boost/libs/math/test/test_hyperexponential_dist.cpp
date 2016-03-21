@@ -7,6 +7,7 @@
 //
 
 #include <algorithm>
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp>
 #include <boost/math/distributions/complement.hpp>
 #include <boost/math/distributions/hyperexponential.hpp>
@@ -342,7 +343,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(special_cases, RealT, test_types)
 {
     const RealT tol = make_tolerance<RealT>();
 
-	// When the number of phases is 1, the hyperexponential distribution is an exponential distribution
+    // When the number of phases is 1, the hyperexponential distribution is an exponential distribution
     const RealT rates1[] = { static_cast<RealT>(0.5L) };
     boost::math::hyperexponential_distribution<RealT> hexp1(rates1);
     boost::math::exponential_distribution<RealT> exp1(rates1[0]);
@@ -355,7 +356,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(special_cases, RealT, test_types)
     BOOST_CHECK_CLOSE(boost::math::quantile(hexp1, static_cast<RealT>(0.75L)), boost::math::quantile(exp1, static_cast<RealT>(0.75L)), tol);
     BOOST_CHECK_CLOSE(boost::math::mode(hexp1), boost::math::mode(exp1), tol);
 
-	// When a k-phase hyperexponential distribution has all rates equal to r, the distribution is an exponential distribution with rate r
+    // When a k-phase hyperexponential distribution has all rates equal to r, the distribution is an exponential distribution with rate r
     const RealT rate2 = static_cast<RealT>(0.5L);
     const RealT rates2[] = { rate2, rate2, rate2 };
     boost::math::hyperexponential_distribution<RealT> hexp2(rates2);
@@ -376,12 +377,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(error_cases, RealT, test_types)
    boost::array<RealT, 2> probs = { { 1, 2 } };
    boost::array<RealT, 3> probs2 = { { 1, 2, 3 } };
    boost::array<RealT, 3> rates = { { 1, 2, 3 } };
-   BOOST_CHECK_THROW(dist_t(probs.begin(), probs.end(), rates.begin(), rates.end()), std::domain_error);
-   BOOST_CHECK_THROW(dist_t(probs, rates), std::domain_error);
+   BOOST_MATH_CHECK_THROW(dist_t(probs.begin(), probs.end(), rates.begin(), rates.end()), std::domain_error);
+   BOOST_MATH_CHECK_THROW(dist_t(probs, rates), std::domain_error);
    rates[1] = 0;
-   BOOST_CHECK_THROW(dist_t(probs2, rates), std::domain_error);
+   BOOST_MATH_CHECK_THROW(dist_t(probs2, rates), std::domain_error);
    rates[1] = -1;
-   BOOST_CHECK_THROW(dist_t(probs2, rates), std::domain_error);
-   BOOST_CHECK_THROW(dist_t(probs.begin(), probs.begin(), rates.begin(), rates.begin()), std::domain_error);
-   BOOST_CHECK_THROW(dist_t(rates.begin(), rates.begin()), std::domain_error);
+   BOOST_MATH_CHECK_THROW(dist_t(probs2, rates), std::domain_error);
+   BOOST_MATH_CHECK_THROW(dist_t(probs.begin(), probs.begin(), rates.begin(), rates.begin()), std::domain_error);
+   BOOST_MATH_CHECK_THROW(dist_t(rates.begin(), rates.begin()), std::domain_error);
 }

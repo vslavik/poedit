@@ -27,14 +27,14 @@ namespace boost {
 namespace serialization { 
 namespace no_rtti_system { 
 
-BOOST_SERIALIZATION_DECL(BOOST_PP_EMPTY())  
+BOOST_SERIALIZATION_DECL  
 extended_type_info_no_rtti_0::extended_type_info_no_rtti_0(
     const char * key
 ) :
     extended_type_info(EXTENDED_TYPE_INFO_NO_RTTI_KEY, key)
 {}
 
-BOOST_SERIALIZATION_DECL(bool)
+BOOST_SERIALIZATION_DECL bool
 extended_type_info_no_rtti_0::is_less_than(
     const boost::serialization::extended_type_info &rhs) const 
 {
@@ -57,7 +57,7 @@ extended_type_info_no_rtti_0::is_less_than(
     return std::strcmp(l, r) < 0;
 }
 
-BOOST_SERIALIZATION_DECL(bool)
+BOOST_SERIALIZATION_DECL bool
 extended_type_info_no_rtti_0::is_equal(
     const boost::serialization::extended_type_info &rhs) const 
 {
@@ -76,7 +76,7 @@ extended_type_info_no_rtti_0::is_equal(
     return 0 == std::strcmp(l, r);
 }
 
-BOOST_SERIALIZATION_DECL(BOOST_PP_EMPTY())  
+BOOST_SERIALIZATION_DECL  
 extended_type_info_no_rtti_0::~extended_type_info_no_rtti_0()
 {}
 

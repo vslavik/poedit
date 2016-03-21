@@ -32,6 +32,7 @@
 #include "object.h"
 #include "pathsys.h"
 #include "strings.h"
+#include "output.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -248,7 +249,7 @@ void file_archscan( char const * archive, scanback func, void * closure )
     offset = SARMAG;
 
     if ( DEBUG_BINDSCAN )
-        printf( "scan archive %s\n", archive );
+        out_printf( "scan archive %s\n", archive );
 
     while ( ( read( fd, &ar_hdr, SARHDR ) == SARHDR ) &&
         !( memcmp( ar_hdr.ar_fmag, ARFMAG, SARFMAG )
@@ -283,7 +284,7 @@ void file_archscan( char const * archive, scanback func, void * closure )
                 string_table = (char *)BJAM_MALLOC_ATOMIC( lar_size );
                 lseek( fd, offset + SARHDR, 0 );
                 if ( read( fd, string_table, lar_size ) != lar_size )
-                    printf("error reading string table\n");
+                    out_printf("error reading string table\n");
             }
             else if ( string_table && ar_hdr.ar_name[ 1 ] != ' ' )
             {
@@ -305,7 +306,7 @@ void file_archscan( char const * archive, scanback func, void * closure )
         *c = '\0';
 
         if ( DEBUG_BINDSCAN )
-            printf( "archive name %s found\n", lar_name );
+            out_printf( "archive name %s found\n", lar_name );
 
         sprintf( buf, "%s(%s)", archive, lar_name );
 
@@ -349,7 +350,7 @@ static void file_archscan_small( int fd, char const * archive, scanback func,
     sscanf( fl_hdr.fl_fstmoff, "%ld", &offset );
 
     if ( DEBUG_BINDSCAN )
-        printf( "scan archive %s\n", archive );
+        out_printf( "scan archive %s\n", archive );
 
     while ( offset > 0 && lseek( fd, offset, 0 ) >= 0 &&
         read( fd, &ar_hdr, sizeof( ar_hdr ) ) >= (int)sizeof( ar_hdr.hdr ) )
@@ -400,7 +401,7 @@ static void file_archscan_big( int fd, char const * archive, scanback func,
     sscanf( fl_hdr.fl_fstmoff, "%lld", &offset );
 
     if ( DEBUG_BINDSCAN )
-        printf( "scan archive %s\n", archive );
+        out_printf( "scan archive %s\n", archive );
 
     while ( offset > 0 && lseek( fd, offset, 0 ) >= 0 &&
         read( fd, &ar_hdr, sizeof( ar_hdr ) ) >= sizeof( ar_hdr.hdr ) )

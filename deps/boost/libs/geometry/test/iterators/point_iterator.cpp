@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014, Oracle and/or its affiliates.
+// Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -27,26 +27,31 @@
 #include <boost/iterator/iterator_concepts.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/is_reference.hpp>
 
 #include <boost/geometry/core/point_type.hpp>
-#include <boost/geometry/multi/core/point_type.hpp>
 
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/adapted/boost_tuple.hpp>
-#include <boost/geometry/multi/geometries/multi_geometries.hpp>
-#include <boost/geometry/multi/geometries/register/multi_point.hpp>
+#include <boost/geometry/geometries/register/linestring.hpp>
+#include <boost/geometry/geometries/register/multi_point.hpp>
 
 #include <boost/geometry/algorithms/equals.hpp>
+#include <boost/geometry/algorithms/make.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
-#include <boost/geometry/multi/algorithms/num_points.hpp>
 
 #include <boost/geometry/policies/compare.hpp>
+
+#include <boost/geometry/util/condition.hpp>
 
 #include <boost/geometry/io/wkt/wkt.hpp>
 #include <boost/geometry/io/dsv/write.hpp>
 
 #include <boost/geometry/iterators/point_iterator.hpp>
 #include <boost/geometry/iterators/point_reverse_iterator.hpp>
+
+#include <test_common/with_pointer.hpp>
+#include <test_geometries/copy_on_dereference_geometries.hpp>
 
 namespace bg = ::boost::geometry;
 namespace ba = ::boost::assign;
@@ -67,9 +72,19 @@ typedef boost::tuple<double, double, double> tuple_point_type_3d;
 typedef std::vector<tuple_point_type> tuple_multi_point_type;
 typedef std::vector<tuple_point_type_3d> tuple_multi_point_type_3d;
 
+template <typename T>
+struct vector_as_multipoint : std::vector<T> {};
+
+template <typename T>
+struct vector_as_linestring : std::vector<T> {};
+
 BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 BOOST_GEOMETRY_REGISTER_MULTI_POINT(tuple_multi_point_type)
 BOOST_GEOMETRY_REGISTER_MULTI_POINT(tuple_multi_point_type_3d)
+
+BOOST_GEOMETRY_REGISTER_MULTI_POINT_TEMPLATED(vector_as_multipoint)
+BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(vector_as_linestring)
+
 
 
 template <typename Geometry>
@@ -100,30 +115,36 @@ inline std::ostream& print_point_range(std::ostream& os,
 template
 <
     typename Geometry,
+    bool Enable = true,
     bool IsConst = boost::is_const<Geometry>::value
 >
 struct test_iterator_concepts
 {
     typedef bg::point_iterator<Geometry> iterator;
-    BOOST_CONCEPT_ASSERT(( boost::BidirectionalIteratorConcept<iterator> ));
-    BOOST_CONCEPT_ASSERT(( boost_concepts::ReadableIteratorConcept<iterator> ));
-    BOOST_CONCEPT_ASSERT(( boost_concepts::LvalueIteratorConcept<iterator> ));
+    BOOST_CONCEPT_ASSERT((boost::BidirectionalIteratorConcept<iterator>));
+    BOOST_CONCEPT_ASSERT((boost_concepts::ReadableIteratorConcept<iterator>));
+    BOOST_CONCEPT_ASSERT((boost_concepts::LvalueIteratorConcept<iterator>));
     BOOST_CONCEPT_ASSERT
-        (( boost_concepts::BidirectionalTraversalConcept<iterator> ));
+        ((boost_concepts::BidirectionalTraversalConcept<iterator>));
 };
 
 template <typename Geometry>
-struct test_iterator_concepts<Geometry, false>
-    : test_iterator_concepts<Geometry, true>
+struct test_iterator_concepts<Geometry, true, false>
+    : test_iterator_concepts<Geometry, true, true>
 {
     typedef bg::point_iterator<Geometry> iterator;
     BOOST_CONCEPT_ASSERT
-        (( boost::Mutable_BidirectionalIteratorConcept<iterator> ));
+        ((boost::Mutable_BidirectionalIteratorConcept<iterator>));
     BOOST_CONCEPT_ASSERT
-        (( boost_concepts::WritableIteratorConcept<iterator> ));
+        ((boost_concepts::WritableIteratorConcept<iterator>));
     BOOST_CONCEPT_ASSERT
-        (( boost_concepts::SwappableIteratorConcept<iterator> ));
+        ((boost_concepts::SwappableIteratorConcept<iterator>));
 };
+
+template <typename Geometry, bool IsConst>
+struct test_iterator_concepts<Geometry, false, IsConst>
+{};
+
 
 
 struct equals
@@ -139,14 +160,14 @@ struct equals
         {
             ++num_elems;
         }
-        BOOST_CHECK( size == num_elems );
+        BOOST_CHECK(size == num_elems);
 
         num_elems = 0;
         for (Iterator it = end; it != begin; --it)
         {
             ++num_elems;
         }
-        BOOST_CHECK( size == num_elems );
+        BOOST_CHECK(size == num_elems);
 
         return num_elems;
     }
@@ -158,7 +179,7 @@ struct equals
         std::size_t num_points1 = number_of_elements(begin1, end1);
         std::size_t num_points2 = number_of_elements(begin2, end2);
 
-        if ( num_points1 != num_points2 )
+        if (num_points1 != num_points2)
         {
             return false;
         }
@@ -167,7 +188,7 @@ struct equals
         Iterator2 it2 = begin2;
         for (; it1 != end1; ++it1, ++it2)
         {
-            if ( !bg::equals(*it1, *it2) )
+            if (! bg::equals(*it1, *it2))
             {
                 return false;
             }
@@ -177,6 +198,7 @@ struct equals
 };
 
 
+template <bool Enable = true>
 struct test_assignment
 {
     template <typename Iterator, typename ConstIterator, typename Value>
@@ -191,16 +213,16 @@ struct test_assignment
         std::cout << "*cit  : " << bg::wkt(*cit) << std::endl;
 #endif
 
-        BOOST_CHECK( bg::equals(*it, value1) );
-        BOOST_CHECK( !bg::equals(*it, value2) );
-        BOOST_CHECK( bg::equals(*cit, value1) );
-        BOOST_CHECK( !bg::equals(*cit, value2) );
+        BOOST_CHECK(bg::equals(*it, value1));
+        BOOST_CHECK(! bg::equals(*it, value2));
+        BOOST_CHECK(bg::equals(*cit, value1));
+        BOOST_CHECK(! bg::equals(*cit, value2));
 
         *it = value2;
-        BOOST_CHECK( bg::equals(*it, value2) );
-        BOOST_CHECK( !bg::equals(*it, value1) );
-        BOOST_CHECK( bg::equals(*cit, value2) );
-        BOOST_CHECK( !bg::equals(*cit, value1) );
+        BOOST_CHECK(bg::equals(*it, value2));
+        BOOST_CHECK(! bg::equals(*it, value1));
+        BOOST_CHECK(bg::equals(*cit, value2));
+        BOOST_CHECK(! bg::equals(*cit, value1));
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::cout << "== after 1st assignment ==" << std::endl;
@@ -211,10 +233,10 @@ struct test_assignment
 #endif
 
         *it = value1;
-        BOOST_CHECK( bg::equals(*it, value1) );
-        BOOST_CHECK( !bg::equals(*it, value2) );
-        BOOST_CHECK( bg::equals(*cit, value1) );
-        BOOST_CHECK( !bg::equals(*cit, value2) );
+        BOOST_CHECK(bg::equals(*it, value1));
+        BOOST_CHECK(! bg::equals(*it, value2));
+        BOOST_CHECK(bg::equals(*cit, value1));
+        BOOST_CHECK(! bg::equals(*cit, value2));
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::cout << "== after 2nd assignment ==" << std::endl;
@@ -227,10 +249,27 @@ struct test_assignment
     }
 };
 
+template <>
+struct test_assignment<false>
+{
+    template <typename Iterator, typename ConstIterator, typename Value>
+    static inline void apply(Iterator, ConstIterator,
+                             Value const&, Value const&)
+    {
+    }
+};
 
-template <typename Geometry, typename PointRange>
+
+template
+<
+    typename Geometry,
+    typename PointRange,
+    bool EnableConceptChecks = true
+>
 struct test_point_iterator_of_geometry
 {
+    typedef typename bg::point_type<Geometry>::type point_type;
+
     template <typename G>
     static inline void base_test(G& geometry,
                                  PointRange const& point_range,
@@ -238,19 +277,19 @@ struct test_point_iterator_of_geometry
     {
         typedef bg::point_iterator<G> point_iterator;
 
-        test_iterator_concepts<G>();
+        test_iterator_concepts<G, EnableConceptChecks>();
 
         point_iterator begin = bg::points_begin(geometry);
         point_iterator end = bg::points_end(geometry);
 
-        BOOST_CHECK( std::size_t(std::distance(begin, end))
-                     ==
-                     bg::num_points(geometry) );
+        BOOST_CHECK(std::size_t(std::distance(begin, end))
+                    ==
+                    bg::num_points(geometry));
 
-        BOOST_CHECK( equals::apply(begin, end,
-                                   bg::points_begin(point_range),
-                                   bg::points_end(point_range))
-                     );
+        BOOST_CHECK(equals::apply(begin, end,
+                                  bg::points_begin(point_range),
+                                  bg::points_end(point_range))
+                    );
 
         boost::ignore_unused(header);
 
@@ -269,7 +308,44 @@ struct test_point_iterator_of_geometry
 #endif
     }
 
-    static inline void apply(Geometry geometry, PointRange const& point_range)
+    template <typename G, bool Enable>
+    struct test_reverse
+    {
+        template <typename Iterator>
+        static inline void apply(Iterator first, Iterator last,
+                                 G const& geometry)
+        {
+            std::reverse(first, last);
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+            print_point_range(std::cout, first, last, "reversed:\n")
+                << std::endl;
+            std::cout << bg::wkt(geometry) << std::endl;
+            std::cout << std::endl;
+#endif
+
+            std::reverse(first, last);
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+            print_point_range(std::cout, first, last, "re-reversed:\n")
+                << std::endl;
+            std::cout << bg::wkt(geometry) << std::endl;
+            std::cout << std::endl;
+            std::cout << std::endl;
+#endif
+        }
+    };
+
+    template <typename G>
+    struct test_reverse<G, false>
+    {
+        template <typename Iterator>
+        static inline void apply(Iterator, Iterator, G const&)
+        {
+        }
+    };
+
+    static inline void apply(Geometry geometry,
+                             PointRange const& point_range,
+                             point_type const& zero_point)
     {
         base_test<Geometry>(geometry, point_range, "non-const");
 
@@ -315,50 +391,57 @@ struct test_point_iterator_of_geometry
         const_rend = rend;
 
         // testing equality/inequality comparison
-        BOOST_CHECK ( begin == const_begin );
-        BOOST_CHECK ( end == const_end );
-        if ( begin != end )
+        BOOST_CHECK(begin == const_begin);
+        BOOST_CHECK(end == const_end);
+        if (begin != end)
         {
-            BOOST_CHECK ( begin != const_end );
-            BOOST_CHECK ( const_begin != end );
+            BOOST_CHECK(begin != const_end);
+            BOOST_CHECK(const_begin != end);
         }
 
         // testing equality/inequality comparison for reverse_iterator
-        BOOST_CHECK ( rbegin == const_rbegin );
-        BOOST_CHECK ( rend == const_rend );
-        if ( rbegin != rend )
+        BOOST_CHECK(rbegin == const_rbegin);
+        BOOST_CHECK(rend == const_rend);
+        if (rbegin != rend)
         {
-            BOOST_CHECK ( rbegin != const_rend );
-            BOOST_CHECK ( const_rbegin != rend );
+            BOOST_CHECK(rbegin != const_rend);
+            BOOST_CHECK(const_rbegin != rend);
         }
 
-        if ( begin != end )
+        if (begin != end)
         {
-            BOOST_CHECK( rbegin != rend );
+            BOOST_CHECK(rbegin != rend);
 
             point_reverse_iterator rlast(rend);
             --rlast;
-            BOOST_CHECK( bg::equals(*begin, *rlast) );
+            BOOST_CHECK(bg::equals(*begin, *rlast));
 
             point_iterator last(end);
             --last;
-            BOOST_CHECK( bg::equals(*rbegin, *last) );
+            BOOST_CHECK(bg::equals(*rbegin, *last));
         }
         
         // testing dereferencing/assignment
-        if ( begin != end )
+
+        bool const is_reference = boost::is_reference
+            <
+                typename std::iterator_traits<point_iterator>::reference
+            >::value;
+
+        if (begin != end)
         {
-            typedef typename bg::point_type<Geometry>::type point;
+            if (BOOST_GEOMETRY_CONDITION(is_reference))
+            {
+                point_type p = *begin;
+                point_type q = zero_point;
 
-            point p = *begin;
-            point q = bg::make_zero<point>();
+                test_assignment<is_reference>::apply(begin, const_begin, p, q);
 
-            test_assignment::apply(begin, const_begin, p, q);
+                *begin = q;
+                test_assignment<is_reference>::apply(begin, const_begin, q, p);
 
-            *begin = q;
-            test_assignment::apply(begin, const_begin, q, p);
-
-            *begin = p;
+                *begin = p;
+            }
         }
 
         // test with algorithms
@@ -369,33 +452,19 @@ struct test_point_iterator_of_geometry
         std::cout << bg::wkt(geometry) << std::endl;
         std::cout << std::endl;
 #endif
-
-        std::reverse(begin, end);
-#ifdef BOOST_GEOMETRY_TEST_DEBUG
-        print_point_range(std::cout, begin, end, "reversed:\n") << std::endl;
-        std::cout << bg::wkt(geometry) << std::endl;
-        std::cout << std::endl;
-#endif
-
-        std::reverse(begin, end);
-#ifdef BOOST_GEOMETRY_TEST_DEBUG
-        print_point_range(std::cout, begin, end, "re-reversed:\n") << std::endl;
-        std::cout << bg::wkt(geometry) << std::endl;
-        std::cout << std::endl;
-        std::cout << std::endl;
-#endif
+        test_reverse<Geometry, is_reference>::apply(begin, end, geometry);
 
         typedef typename std::iterator_traits
             <
                 point_iterator
             >::value_type point;
-        if ( const_begin != const_end )
+        if (const_begin != const_end)
         {
             const_point_iterator pit_max = std::max_element(const_begin,
                                                             const_end,
                                                             bg::less<point>());
 
-            BOOST_CHECK( pit_max != const_end ); // to avoid warnings
+            BOOST_CHECK(pit_max != const_end); // to avoid warnings
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
             std::cout << "max point: " << bg::dsv(*pit_max) << std::endl;
 #endif
@@ -405,6 +474,11 @@ struct test_point_iterator_of_geometry
         std::cout << std::endl;
         std::cout << std::endl;
 #endif
+    }
+
+    static inline void apply(Geometry geometry, PointRange const& point_range)
+    {
+        apply(geometry, point_range, bg::make_zero<point_type>());
     }
 };
 
@@ -627,4 +701,149 @@ BOOST_AUTO_TEST_CASE( test_multipolygon_point_iterator )
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::cout << std::endl << std::endl;
 #endif
+}
+
+
+//======================================================================
+//======================================================================
+
+
+BOOST_AUTO_TEST_CASE( test_multipoint_of_point_pointers )
+{
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << "*** MULTIPOINT OF POINT POINTERS ***" << std::endl;
+#endif
+
+    typedef tuple_multi_point_type TMP;
+    typedef vector_as_multipoint<test::test_point_xy*> MP;
+
+    MP multipoint;
+    for (int i = 1; i < 10; i++)
+    {
+        test::test_point_xy* p = new test::test_point_xy;
+        p->x = i;
+        p->y = -i;
+        multipoint.push_back(p);
+    }
+
+    test::test_point_xy* zero = new test::test_point_xy;
+    zero->x = 0;
+    zero->y = 0;
+
+    typedef test_point_iterator_of_geometry<MP, TMP> tester;
+
+    tester::apply(multipoint,
+                  ba::tuple_list_of(1,-1)(2,-2)(3,-3)(4,-4)(5,-5)(6,-6)\
+                  (7,-7)(8,-8)(9,-9),
+                  zero
+                  );
+
+    for (unsigned int i = 0; i < multipoint.size(); i++)
+    {
+        delete multipoint[i];
+    }
+    delete zero;
+}
+
+
+//======================================================================
+//======================================================================
+
+
+BOOST_AUTO_TEST_CASE( test_linestring_of_point_pointers )
+{
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << "*** LINESTRING OF POINT POINTERS ***" << std::endl;
+#endif
+
+    typedef tuple_multi_point_type TMP;
+    typedef vector_as_linestring<test::test_point_xy*> L;
+
+    L linestring;
+    for (int i = 1; i < 10; i++)
+    {
+        test::test_point_xy* p = new test::test_point_xy;
+        p->x = i;
+        p->y = -i;
+        linestring.push_back(p);
+    }
+
+    test::test_point_xy* zero = new test::test_point_xy;
+    zero->x = 0;
+    zero->y = 0;
+
+    typedef test_point_iterator_of_geometry<L, TMP> tester;
+
+    tester::apply(linestring,
+                  ba::tuple_list_of(1,-1)(2,-2)(3,-3)(4,-4)(5,-5)(6,-6)\
+                  (7,-7)(8,-8)(9,-9),
+                  zero
+                  );
+
+    for (unsigned int i = 0; i < linestring.size(); i++)
+    {
+        delete linestring[i];
+    }
+    delete zero;
+}
+
+
+//======================================================================
+//======================================================================
+
+
+BOOST_AUTO_TEST_CASE( test_multipoint_copy_on_dereference )
+{
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << "*** MULTIPOINT WITH COPY-ON-DEREFERENCE ITERATOR ***"
+              << std::endl;
+#endif
+
+    typedef tuple_multi_point_type TMP;
+    typedef multipoint_copy_on_dereference<point_type> MP;
+
+    typedef test_point_iterator_of_geometry
+        <
+            MP, TMP, false // no concept checks
+        > tester;
+
+    // bg::read_wkt does not work for this multipoint type so we have
+    // to initialize the multipoint manually
+    MP multipoint;
+    for (int i = 1; i < 10; ++i)
+    {
+        multipoint.push_back(point_type(i, -i));
+    }
+
+    tester::apply(multipoint,
+                  // from_wkt<MP>("MULTIPOINT(1 -1,2 -2,3 -3,4 -4,5 -5,6 -6, 7 -7,8 -8,9 -9)"),
+                  ba::tuple_list_of(1,-1)(2,-2)(3,-3)(4,-4)(5,-5)(6,-6)\
+                  (7,-7)(8,-8)(9,-9)
+                  );
+}
+
+
+//======================================================================
+//======================================================================
+
+
+BOOST_AUTO_TEST_CASE( test_linestring_copy_on_dereference )
+{
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << "*** LINESTRING WITH COPY-ON-DEREFERENCE ITERATOR ***"
+              << std::endl;
+#endif
+
+    typedef tuple_multi_point_type TMP;
+    typedef linestring_copy_on_dereference<point_type> L;
+
+    typedef test_point_iterator_of_geometry
+        <
+            L, TMP, false // no concept checks
+        > tester;
+
+    tester::apply(from_wkt<L>("LINESTRING(1 -1,2 -2,3 -3,4 -4,5 -5,6 -6, 7 -7,8 -8,9 -9)"),
+                  ba::tuple_list_of(1,-1)(2,-2)(3,-3)(4,-4)(5,-5)(6,-6)\
+                  (7,-7)(8,-8)(9,-9)
+                  );
 }

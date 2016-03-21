@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_LOCAL_FUNCTION_TPL</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="up" href="reference.html#header.boost.local_function_hpp" title="Header &lt;boost/local_function.hpp&gt;">
 <link rel="prev" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">
@@ -33,8 +33,8 @@
 
 </span>BOOST_LOCAL_FUNCTION_TPL(declarations)</pre></div>
 <div class="refsect1">
-<a name="id881461"></a><h2>Description</h2>
-<p>This macro must be used instead of  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> when declaring a local function within a template. A part from that, this macro has the exact same syntax a  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> (see  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> for more information): </p>
+<a name="id904606"></a><h2>Description</h2>
+<p>This macro must be used instead of <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> when declaring a local function within a template. A part from that, this macro has the exact same syntax a  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> (see <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> for more information): </p>
 <pre class="programlisting"><span class="special">{</span> <span class="comment">// Some declarative context within a template.</span>
     <span class="special">...</span>
     <span class="identifier">result_type</span> <span class="identifier">BOOST_LOCAL_FUNCTION_TPL</span><span class="special">(</span><span class="identifier">declarations</span><span class="special">)</span> <span class="special">{</span>
@@ -43,10 +43,10 @@
     <span class="special">...</span>
 <span class="special">}</span>
 </pre>
-<p>Note that  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_NAME_TPL">BOOST_LOCAL_FUNCTION_NAME_TPL</a></code> must be used with this macro instead of  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME.html" title="Macro BOOST_LOCAL_FUNCTION_NAME">BOOST_LOCAL_FUNCTION_NAME</a></code>.</p>
-<p>This macro cannot be portably expanded multiple times on the same line. In these cases, use the  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code> macro instead.</p>
+<p>Note that <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_NAME_TPL">BOOST_LOCAL_FUNCTION_NAME_TPL</a></code> must be used with this macro instead of <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME.html" title="Macro BOOST_LOCAL_FUNCTION_NAME">BOOST_LOCAL_FUNCTION_NAME</a></code>.</p>
+<p>This macro cannot be portably expanded multiple times on the same line. In these cases, use the <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code> macro instead.</p>
 <p><span class="bold"><strong>Note:</strong></span> C++03 does not allow to use <code class="computeroutput">typename</code> outside templates. This library internally manipulates types, these operations require <code class="computeroutput">typename</code> but only within templates. This macro is used to indicate to the library when the enclosing scope is a template so the library can correctly use <code class="computeroutput">typename</code>.</p>
-<p><span class="bold"><strong>See:</strong></span>  <a class="link" href="boost_localfunction/tutorial.html" title="Tutorial"> Tutorial</a> section,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_NAME_TPL">BOOST_LOCAL_FUNCTION_NAME_TPL</a></code>. </p>
+<p><span class="bold"><strong>See:</strong></span> <a class="link" href="boost_localfunction/tutorial.html" title="Tutorial"> Tutorial</a> section, <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_NAME_TPL">BOOST_LOCAL_FUNCTION_NAME_TPL</a></code>. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

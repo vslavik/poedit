@@ -226,6 +226,19 @@ void test_distance_multipoint_multilinestring(Strategy const& strategy)
     tester::apply("multipoint(0 0,1 0,0 1,1 1)",
                   "multilinestring((4 4,5 5),(),(3 3))",
                   sqrt(8.0), 8, strategy);
+
+	// 21890717 - assertion failure in distance(Pt, Box)
+	{
+		multi_point_type mpt;
+		bg::read_wkt("multipoint(1 1,1 1,1 1,1 1,1 1,1 1,1 1,1 1,1 1)", mpt);
+		multi_linestring_type mls;
+		linestring_type ls;
+		point_type pt(std::numeric_limits<double>::quiet_NaN(), 1.0);
+		ls.push_back(pt);
+		ls.push_back(pt);
+		mls.push_back(ls);
+		bg::distance(mpt, mls);
+	}
 }
 
 //===========================================================================

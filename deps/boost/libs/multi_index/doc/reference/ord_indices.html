@@ -21,8 +21,8 @@ Index reference
 <div class="up_link"><a href="index.html"><img src="../up.gif" alt="Boost.MultiIndex reference" border="0"><br>
 Boost.MultiIndex reference
 </a></div>
-<div class="next_link"><a href="hash_indices.html"><img src="../next.gif" alt="hashed indices" border="0"><br>
-Hashed indices
+<div class="next_link"><a href="rnk_indices.html"><img src="../next.gif" alt="ranked indices" border="0"><br>
+Ranked indices
 </a></div><br clear="all" style="clear: all;">
 
 <hr>
@@ -536,7 +536,7 @@ the index belongs if
     <code>multi_index_container</code>.</li>
 </ul>
 <code>position</code> is used as a hint to improve the efficiency of the
-operation. If succesful, insertion happens as close as possible to the
+operation. If successful, insertion happens as close as possible to the
 location just prior to <code>position</code>.<br>
 <b>Returns:</b> On successful insertion, an iterator to the newly inserted
 element. Otherwise, an iterator to an element that caused the insertion to be
@@ -590,7 +590,7 @@ the index belongs if
     <code>multi_index_container</code>.</li>
 </ul>
 <code>position</code> is used as a hint to improve the efficiency of the
-operation. If succesful, insertion happens as close as possible to the
+operation. If successful, insertion happens as close as possible to the
 location just prior to <code>position</code>.<br>
 <b>Returns:</b> On successful insertion, an iterator to the newly inserted
 element. Otherwise, an iterator to an element that caused the insertion to be
@@ -705,7 +705,11 @@ belongs remains in its original state.
 <b>Requires:</b> <code>mod</code> is a unary function object
 accepting arguments of type
 <code>value_type&amp;</code>. <code>position</code> is a valid dereferenceable
-iterator of the index.<br>
+iterator of the index.
+The execution of <code>mod(e)</code>, where <code>e</code> is the element
+pointed to by <code>position</code>, does not invoke any operation of the
+<code>multi_index_container</code> after <code>e</code> is directly modified
+or, before modification, if the operation would invalidate <code>position</code>.<br>
 <b>Effects:</b> Calls <code>mod(e)</code> where <code>e</code> is the element
 pointed to by <code>position</code> and rearranges <code>*position</code> into
 all the indices of the <code>multi_index_container</code>. Rearrangement is successful if
@@ -734,9 +738,15 @@ bool modify(iterator position,Modifier mod,Rollback back);</code>
 <b>Requires:</b> <code>mod</code> and <code>back</code> are unary function
 objects accepting arguments of type
 <code>value_type&amp;</code>. <code>position</code> is a valid dereferenceable
-iterator of the index. The sequence of operations <code>mod(e)</code>,
-<code>back(e)</code>, where <code>e</code> is the element
-pointed to by <code>position</code>, restores all keys of the element
+iterator of the index.
+The execution of <code>mod(e)</code>, where <code>e</code> is the element
+pointed to by <code>position</code>, does not invoke any operation of the
+<code>multi_index_container</code> after <code>e</code> is directly modified
+or, before modification, if the operation would invalidate <code>position</code>.
+<code>back(e)</code> does not invoke any operation of the
+<code>multi_index_container</code>.
+The sequence of operations <code>mod(e)</code>,
+<code>back(e)</code> restores all keys of the element
 to their original state.<br>
 <b>Effects:</b> Calls <code>mod(e)</code> where <code>e</code> is the element
 pointed to by <code>position</code> and tries to rearrange <code>*position</code> into
@@ -772,7 +782,11 @@ is rethrown.
 from <code>value_type</code>. <code>mod</code> is a
 unary function object accepting arguments of type
 <code>key_type&amp;</code>. <code>position</code> is a valid dereferenceable
-iterator of the index.<br>
+iterator of the index.
+The execution of <code>mod(k)</code>, where <code>k</code> is the key of the element
+pointed to by <code>position</code>, does not invoke any operation of the
+<code>multi_index_container</code> after <code>k</code> is directly modified
+or, before modification, if the operation would invalidate <code>position</code>.<br>
 <b>Effects:</b> Equivalent to <code>modify(position,mod')</code>,
 with <code>mod'</code> defined in such a way that
 <code>mod'(x)</code> is the same as <code>mod(key(x))</code>, where
@@ -789,9 +803,14 @@ from <code>value_type</code>. <code>mod</code> and <code>back</code>
 are unary function objects accepting arguments of type
 <code>key_type&amp;</code>. <code>position</code> is a valid dereferenceable
 iterator of the index.
+The execution of <code>mod(k)</code>, where <code>k</code> is the key of the element
+pointed to by <code>position</code>, does not invoke any operation of the
+<code>multi_index_container</code> after <code>k</code> is directly modified
+or, before modification, if the operation would invalidate <code>position</code>.
+<code>back(k)</code> does not invoke any operation of the
+<code>multi_index_container</code>.
 The sequence of operations <code>mod(k)</code>,
-<code>back(k)</code>, where <code>k</code> is the key of the element
-pointed to by <code>position</code>, restores <code>k</code> to its original state.<br>
+<code>back(k)</code> restores <code>k</code> to its original state.<br>
 <b>Effects:</b> Equivalent to <code>modify(position,mod',back')</code>,
 with <code>mod'</code> and <code>back</code> defined in such a way that
 <code>mod'(x)</code> is the same as <code>mod(key(x))</code> and
@@ -1065,7 +1084,7 @@ input archive (XML archive) <code>ar</code>.
 <b>Requires:</b> Additionally to the general requirements, <code>value_comp()</code>
 must be serialization-compatible with <code>m.get&lt;i&gt;().value_comp()</code>,
 where <code>i</code> is the position of the ordered index in the container.<br>
-<b>Postconditions:</b> On succesful loading, each of the elements of
+<b>Postconditions:</b> On successful loading, each of the elements of
 [<code>begin()</code>, <code>end()</code>) is a restored copy of the corresponding
 element in [<code>m.get&lt;i&gt;().begin()</code>, <code>m.get&lt;i&gt;().end()</code>).
 </blockquote>
@@ -1082,7 +1101,7 @@ Operation: loading of an <code>iterator</code> or <code>const_iterator</code>
 <code>it'</code> from an input archive (XML archive) <code>ar</code>.
 
 <blockquote>
-<b>Postconditions:</b> On succesful loading, if <code>it</code> was dereferenceable
+<b>Postconditions:</b> On successful loading, if <code>it</code> was dereferenceable
 then <code>*it'</code> is the restored copy of <code>*it</code>, otherwise
 <code>it'==end()</code>.<br>
 <b>Note:</b> It is allowed that <code>it</code> be a <code>const_iterator</code>
@@ -1097,15 +1116,15 @@ Index reference
 <div class="up_link"><a href="index.html"><img src="../up.gif" alt="Boost.MultiIndex reference" border="0"><br>
 Boost.MultiIndex reference
 </a></div>
-<div class="next_link"><a href="hash_indices.html"><img src="../next.gif" alt="hashed indices" border="0"><br>
-Hashed indices
+<div class="next_link"><a href="rnk_indices.html"><img src="../next.gif" alt="ranked indices" border="0"><br>
+Ranked indices
 </a></div><br clear="all" style="clear: all;">
 
 <br>
 
-<p>Revised August 20th 2014</p>
+<p>Revised November 26th 2015</p>
 
-<p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

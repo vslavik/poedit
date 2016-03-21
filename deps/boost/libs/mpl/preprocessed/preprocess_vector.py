@@ -15,7 +15,7 @@ import preprocess
 import os.path
 
 preprocess.main(
-      [ "no_ctps", "plain", "typeof_based" ]
+      [ "plain", "typeof_based" ]
     , "vector"
     , os.path.join( "boost", "mpl", "vector", "aux_", "preprocessed" )
     )

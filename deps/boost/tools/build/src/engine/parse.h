@@ -41,6 +41,9 @@
 #define PARSE_SETTINGS  16
 #define PARSE_SWITCH    17
 #define PARSE_WHILE     18
+#define PARSE_RETURN    19
+#define PARSE_BREAK     20
+#define PARSE_CONTINUE  21
 
 
 /*

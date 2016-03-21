@@ -1,9 +1,8 @@
-/* A Bison parser, made by GNU Bison 2.4.3.  */
+/* A Bison parser, made by GNU Bison 2.6.4.  */
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
+/* Bison interface for Yacc-like parsers in C
    
-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
-   2009, 2010 Free Software Foundation, Inc.
+      Copyright (C) 1984, 1989-1990, 2000-2012 Free Software Foundation, Inc.
    
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -31,6 +30,15 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+#ifndef YY_YY_Y_TAB_H_INCLUDED
+# define YY_YY_Y_TAB_H_INCLUDED
+/* Enabling traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 1
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
 
 /* Tokens.  */
 #ifndef YYTOKENTYPE
@@ -57,33 +65,35 @@
      _RBRACKET_t = 274,
      ACTIONS_t = 275,
      BIND_t = 276,
-     CASE_t = 277,
-     CLASS_t = 278,
-     DEFAULT_t = 279,
-     ELSE_t = 280,
-     EXISTING_t = 281,
-     FOR_t = 282,
-     IF_t = 283,
-     IGNORE_t = 284,
-     IN_t = 285,
-     INCLUDE_t = 286,
-     LOCAL_t = 287,
-     MODULE_t = 288,
-     ON_t = 289,
-     PIECEMEAL_t = 290,
-     QUIETLY_t = 291,
-     RETURN_t = 292,
-     RULE_t = 293,
-     SWITCH_t = 294,
-     TOGETHER_t = 295,
-     UPDATED_t = 296,
-     WHILE_t = 297,
-     _LBRACE_t = 298,
-     _BAR_t = 299,
-     _BARBAR_t = 300,
-     _RBRACE_t = 301,
-     ARG = 302,
-     STRING = 303
+     BREAK_t = 277,
+     CASE_t = 278,
+     CLASS_t = 279,
+     CONTINUE_t = 280,
+     DEFAULT_t = 281,
+     ELSE_t = 282,
+     EXISTING_t = 283,
+     FOR_t = 284,
+     IF_t = 285,
+     IGNORE_t = 286,
+     IN_t = 287,
+     INCLUDE_t = 288,
+     LOCAL_t = 289,
+     MODULE_t = 290,
+     ON_t = 291,
+     PIECEMEAL_t = 292,
+     QUIETLY_t = 293,
+     RETURN_t = 294,
+     RULE_t = 295,
+     SWITCH_t = 296,
+     TOGETHER_t = 297,
+     UPDATED_t = 298,
+     WHILE_t = 299,
+     _LBRACE_t = 300,
+     _BAR_t = 301,
+     _BARBAR_t = 302,
+     _RBRACE_t = 303,
+     ARG = 304,
+     STRING = 305
    };
 #endif
 /* Tokens.  */
@@ -106,34 +116,35 @@
 #define _RBRACKET_t 274
 #define ACTIONS_t 275
 #define BIND_t 276
-#define CASE_t 277
-#define CLASS_t 278
-#define DEFAULT_t 279
-#define ELSE_t 280
-#define EXISTING_t 281
-#define FOR_t 282
-#define IF_t 283
-#define IGNORE_t 284
-#define IN_t 285
-#define INCLUDE_t 286
-#define LOCAL_t 287
-#define MODULE_t 288
-#define ON_t 289
-#define PIECEMEAL_t 290
-#define QUIETLY_t 291
-#define RETURN_t 292
-#define RULE_t 293
-#define SWITCH_t 294
-#define TOGETHER_t 295
-#define UPDATED_t 296
-#define WHILE_t 297
-#define _LBRACE_t 298
-#define _BAR_t 299
-#define _BARBAR_t 300
-#define _RBRACE_t 301
-#define ARG 302
-#define STRING 303
-
+#define BREAK_t 277
+#define CASE_t 278
+#define CLASS_t 279
+#define CONTINUE_t 280
+#define DEFAULT_t 281
+#define ELSE_t 282
+#define EXISTING_t 283
+#define FOR_t 284
+#define IF_t 285
+#define IGNORE_t 286
+#define IN_t 287
+#define INCLUDE_t 288
+#define LOCAL_t 289
+#define MODULE_t 290
+#define ON_t 291
+#define PIECEMEAL_t 292
+#define QUIETLY_t 293
+#define RETURN_t 294
+#define RULE_t 295
+#define SWITCH_t 296
+#define TOGETHER_t 297
+#define UPDATED_t 298
+#define WHILE_t 299
+#define _LBRACE_t 300
+#define _BAR_t 301
+#define _BARBAR_t 302
+#define _RBRACE_t 303
+#define ARG 304
+#define STRING 305
 
 
 
@@ -146,4 +157,18 @@ typedef int YYSTYPE;
 
 extern YYSTYPE yylval;
 
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void *YYPARSE_PARAM);
+#else
+int yyparse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void);
+#else
+int yyparse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
 
+#endif /* !YY_YY_Y_TAB_H_INCLUDED  */

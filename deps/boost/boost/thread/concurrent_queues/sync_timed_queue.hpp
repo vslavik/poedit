@@ -235,7 +235,7 @@ namespace detail
       if (super::closed(lk)) return true;
       super::not_empty_.wait(lk);
     }
-    return false;
+    //return false;
   }
 
   ///////////////////////////

@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-# Copyright 2003, 2004, 2005 Vladimir Prus 
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Copyright 2003, 2004, 2005 Vladimir Prus
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 # Attempt to declare a generator for creating OBJ from RC files. That generator
 # should be considered together with standard CPP->OBJ generators and
@@ -14,11 +14,11 @@ import BoostBuild
 
 t = BoostBuild.Tester()
 
-t.write("jamroot.jam", """ 
-import rcc ; 
+t.write("jamroot.jam", """
+import rcc ;
 """)
 
-t.write("rcc.jam", """ 
+t.write("rcc.jam", """
 import type ;
 import generators ;
 import print ;
@@ -53,11 +53,11 @@ get_manager().engine().register_action(
     '@($(STDOUT):E=rc-object) > "$(<)"')
 """)
 
-t.write("jamfile.jam", """ 
-obj r : r.rcc ; 
+t.write("jamfile.jam", """
+obj r : r.rcc ;
 """)
 
-t.write("r.rcc", """ 
+t.write("r.rcc", """
 """)
 
 t.run_build_system()

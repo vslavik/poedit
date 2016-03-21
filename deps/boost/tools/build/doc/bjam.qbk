@@ -71,7 +71,7 @@ cd /jam source location/
 sh ./build.sh
 ]
 
-For the Boost.Jam source included with the Boost distribution the /jam source location/ is =BOOST_ROOT/tools/build/v2/engine=.
+For the Boost.Jam source included with the Boost distribution the /jam source location/ is =BOOST_ROOT/tools/build/src/engine=.
 
 If the scripts fail to detect an appropriate toolset to build with your particular toolset may not be auto-detectable. In that case, you can specify the toolset as the first argument, this assumes that the toolset is readily available in the =PATH=.
 
@@ -421,7 +421,7 @@ This facility is useful for correct header file scanning, since many compilers w
 
 The basic =b2= language entity is called a rule. A rule is defined in two parts: the procedure and the actions. The procedure is a body of jam statements to be run when the rule is invoked; the actions are the OS shell commands to execute when updating the built targets of the rule.
 
-Rules can return values, which can be expanded into a list with "[ /rule/ /args/ ... ]". A rule's value is the value of its last statement, though only the following statements have values: 'if' (value of the leg chosen), 'switch' (value of the case chosen), set (value of the resulting variable), and 'return' (value of its arguments). Note that 'return' doesn't actually cause a return, i.e., is a no-op unless it is the last statement of the last block executed within rule body.
+Rules can return values, which can be expanded into a list with "[ /rule/ /args/ ... ]". A rule's value is the value of its last statement, though only the following statements have values: 'if' (value of the leg chosen), 'switch' (value of the case chosen), set (value of the resulting variable), and 'return' (value of its arguments).
 
 The =b2= statements for defining and invoking rules are as follows:
 
@@ -841,6 +841,7 @@ rule SHELL ( /command/ : * )
 [variablelist
     [[=exit-status=] [In addition to the output the result status of the executed command is returned as a second element of the result.]]
     [[=no-output=] [Don't capture the output of the command. Instead an empty ("") string value is returned in place of the output.]]
+    [[=strip-eol=] [Remove trailing end-of-line character from output, if any.]]
 ]
 
 Because the Perforce/Jambase defines a =SHELL= rule which hides the
@@ -1000,7 +1001,7 @@ Creates new /vars/ inside to the enclosing ={}= block, obscuring any previous va
 return /values/ ;
 ]
 
-Within a rule body, the return statement sets the return value for an invocation of the rule. It does *not* cause the rule to return; a rule's value is actually the value of the last statement executed, so a return should be the last statement executed before the rule "naturally" returns.
+Within a rule body, the return statement sets the return value for an invocation of the rule and returns to the caller.
 
 [pre
 switch /value/
@@ -1037,6 +1038,18 @@ while /cond/ { /statements/ }
 ]
 
 Repeatedly execute /statements/ while /cond/ remains true upon entry. (See the description of /cond/ expression syntax under if, above).
+
+[pre
+break ;
+]
+
+Immediately exits the nearest enclosing while or for loop.
+
+[pre
+continue ;
+]
+
+Jumps to the top of the nearest enclosing while or for loop.
 
 [endsect]
 

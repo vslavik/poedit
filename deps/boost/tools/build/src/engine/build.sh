@@ -70,6 +70,15 @@ Guess_Toolset ()
     elif test_uname IRIX64 ; then BOOST_JAM_TOOLSET=mipspro
     elif test_uname OSF1 ; then BOOST_JAM_TOOLSET=tru64cxx
     elif test_uname QNX && test_path qcc ; then BOOST_JAM_TOOLSET=qcc
+    elif test_uname Linux && test_path xlc; then 
+       if /usr/bin/lscpu | grep Byte | grep Little > /dev/null 2>&1 ; then
+          # Little endian linux          
+          BOOST_JAM_TOOLSET=xlcpp
+       else
+          #Big endian linux
+          BOOST_JAM_TOOLSET=vacpp
+       fi
+    elif test_uname AIX && test_path xlc; then BOOST_JAM_TOOLSET=vacpp    
     elif test_path gcc ; then BOOST_JAM_TOOLSET=gcc
     elif test_path icc ; then BOOST_JAM_TOOLSET=intel-linux
     elif test -r /opt/intel/cc/9.0/bin/iccvars.sh ; then
@@ -89,7 +98,6 @@ Guess_Toolset ()
         BOOST_JAM_TOOLSET_ROOT=/opt/intel/compiler50/ia32/
     elif test_path pgcc ; then BOOST_JAM_TOOLSET=pgi
     elif test_path pathcc ; then BOOST_JAM_TOOLSET=pathscale
-    elif test_path xlc ; then BOOST_JAM_TOOLSET=vacpp
     elif test_path como ; then BOOST_JAM_TOOLSET=como
     elif test_path KCC ; then BOOST_JAM_TOOLSET=kcc
     elif test_path bc++ ; then BOOST_JAM_TOOLSET=kylix
@@ -142,11 +150,11 @@ case $BOOST_JAM_TOOLSET in
     ;;
 
     intel-linux)
-    which icc >/dev/null 2>&1
+    test_path icc >/dev/null 2>&1
     if test $? ; then
-	BOOST_JAM_CC=$(which icc)
+	BOOST_JAM_CC=`test_path icc`
 	echo "Found $BOOST_JAM_CC in environment"
-	BOOST_JAM_TOOLSET_ROOT=$(echo $BOOST_JAM_CC | sed -e 's/bin.*\/icc//')
+	BOOST_JAM_TOOLSET_ROOT=`echo $BOOST_JAM_CC | sed -e 's/bin.*\/icc//'`
 	# probably the most widespread
 	ARCH=intel64
     else
@@ -183,6 +191,10 @@ case $BOOST_JAM_TOOLSET in
     ;;
 
     vacpp)
+    BOOST_JAM_CC=xlc
+    ;;
+    
+    xlcpp)
     BOOST_JAM_CC=xlc
     ;;
 

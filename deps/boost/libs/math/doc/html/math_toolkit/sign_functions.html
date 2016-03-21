@@ -4,7 +4,7 @@
 <title>Sign Manipulation Functions</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../utils.html" title="Chapter&#160;2.&#160;Floating Point Utilities">
 <link rel="prev" href="fpclass.html" title="Floating-Point Classification: Infinities and NaNs">
 <link rel="next" href="fp_facets.html" title="Facets for Floating-Point Infinities and NaNs">
@@ -93,7 +93,7 @@
 <span class="identifier">T</span> <span class="identifier">changesign</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">z</span><span class="special">);</span>
 </pre>
 <p>
-      Returns a floating point number with a binary representation where the signbit
+      Returns a floating-point number with a binary representation where the signbit
       is the opposite of the sign bit in <span class="emphasis"><em>x</em></span>, and where the other
       bits are the same as in <span class="emphasis"><em>x</em></span>.
     </p>
@@ -121,8 +121,8 @@
       One of the bits in the binary representation of a floating-point number gives
       the sign, and the remaining bits give the absolute value. That bit is known
       as the sign bit. The sign bit is set = 1 for negative numbers, and is not set
-      = 0 for positive numbers. (This is true for all binary representations of floating
-      point numbers that are used by modern microprocessors.)
+      = 0 for positive numbers. (This is true for all binary representations of floating-point
+      numbers that are used by modern microprocessors.)
     </p>
 <p>
       <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1836.pdf" target="_top">C++
@@ -132,7 +132,7 @@
 <p>
       For user-defined types (UDT), the sign may be stored in some other way. They
       may also not provide infinity or NaNs. To use these functions with a UDT, it
-      may be necessary to explicitly specialize then for UDT type T.
+      may be necessary to explicitly specialize them for UDT type T.
     </p>
 <h6>
 <a name="math_toolkit.sign_functions.h3"></a>
@@ -183,10 +183,11 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          Unsupported floating point formats
+          Unsupported floating-point formats.
         </li>
 <li class="listitem">
-          The library depends on the header boost/detail/endian.hpp
+          The library depends on the header <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">detail</span><span class="special">/</span><span class="identifier">endian</span><span class="special">.</span><span class="identifier">hpp</span></code>
+          to detemine endianness.
         </li>
 <li class="listitem">
           Code such as <code class="computeroutput"><span class="preprocessor">#if</span> <span class="identifier">defined</span><span class="special">(</span><span class="identifier">__ia64</span><span class="special">)</span> <span class="special">||</span> <span class="identifier">defined</span><span class="special">(</span><span class="identifier">__ia64__</span><span class="special">)</span> <span class="special">||</span> <span class="identifier">defined</span><span class="special">(</span><span class="identifier">_M_IA64</span><span class="special">)</span></code> is used to determine the processor type.
@@ -197,7 +198,7 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          Win32 / MSVC 7.1 / 10.0 / x86
+          Win32 / MSVC 7.1 / 10.0 / x86 32 and 64-bit, and later Win32
         </li>
 <li class="listitem">
           Win32 / Intel C++ 7.1, 8.1, 9.1 / x86
@@ -224,10 +225,10 @@
           Tru64 / Compaq C++ 7.1 / alpha
         </li>
 <li class="listitem">
-          VMS / HP C++ 7.1 / alpha (in IEEE floating point mode)
+          VMS / HP C++ 7.1 / alpha (in IEEE floating-point mode)
         </li>
 <li class="listitem">
-          VMS / HP C++ 7.2 / ia64 (in IEEE floating point mode)
+          VMS / HP C++ 7.2 / ia64 (in IEEE floating-point mode)
         </li>
 </ul></div>
 </div>

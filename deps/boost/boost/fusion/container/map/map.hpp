@@ -66,21 +66,21 @@ namespace boost { namespace fusion
         {}
 
         template <typename Sequence>
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         map(Sequence const& seq
           , typename enable_if<traits::is_sequence<Sequence>>::type* /*dummy*/ = 0)
           : base_type(begin(seq), detail::map_impl_from_iterator())
         {}
 
         template <typename Sequence>
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         map(Sequence& seq
           , typename enable_if<traits::is_sequence<Sequence>>::type* /*dummy*/ = 0)
           : base_type(begin(seq), detail::map_impl_from_iterator())
         {}
 
         template <typename Sequence>
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         map(Sequence&& seq
           , typename enable_if<traits::is_sequence<Sequence>>::type* /*dummy*/ = 0)
           : base_type(begin(seq), detail::map_impl_from_iterator())
@@ -93,7 +93,7 @@ namespace boost { namespace fusion
         {}
 
         template <typename First, typename ...T_>
-        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         map(First&& first, T_&&... rest)
           : base_type(BOOST_FUSION_FWD_ELEM(First, first), BOOST_FUSION_FWD_ELEM(T_, rest)...)
         {}

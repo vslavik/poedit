@@ -571,6 +571,8 @@ int set_test_copyable ()
       }
       segment.destroy_ptr(shmset);
       segment.destroy_ptr(shmmultiset);
+      delete stdset;
+      delete stdmultiset;
       segment.shrink_to_fit_indexes();
       if(!segment.all_memory_deallocated())
          return 1;

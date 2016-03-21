@@ -18,12 +18,15 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <boost/range.hpp>
+
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/variant/static_visitor.hpp>
 #include <boost/variant/variant_fwd.hpp>
 
 #include <boost/geometry/algorithms/clear.hpp>
 #include <boost/geometry/algorithms/envelope.hpp>
+#include <boost/geometry/algorithms/is_empty.hpp>
 #include <boost/geometry/algorithms/not_implemented.hpp>
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
@@ -261,9 +264,15 @@ inline void buffer(GeometryIn const& geometry_in,
 
     geometry_out.clear();
 
+    if (geometry::is_empty(geometry_in))
+    {
+        // Then output geometry is kept empty as well
+        return;
+    }
+
     model::box<point_type> box;
-    envelope(geometry_in, box);
-    buffer(box, box, distance_strategy.max_distance(join_strategy, end_strategy));
+    geometry::envelope(geometry_in, box);
+    geometry::buffer(box, box, distance_strategy.max_distance(join_strategy, end_strategy));
 
     rescale_policy_type rescale_policy
             = boost::geometry::get_rescale_policy<rescale_policy_type>(box);

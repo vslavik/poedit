@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -37,39 +38,39 @@
   <span class="keyword">enum</span> <a class="link" href="mapped_region/advice_types.html" title="Type advice_types">advice_types</a><span class="special">;</span>
   <span class="comment">// <a class="link" href="mapped_region.html#boost.interprocess.mapped_regionconstruct-copy-destruct">construct/copy/destruct</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> MemoryMappable<span class="special">&gt;</span> 
-    <a class="link" href="mapped_region.html#idp55532960-bb"><span class="identifier">mapped_region</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MemoryMappable</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">mode_t</span><span class="special">,</span> <span class="identifier">offset_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
+    <a class="link" href="mapped_region.html#idm45879391217152-bb"><span class="identifier">mapped_region</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MemoryMappable</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">mode_t</span><span class="special">,</span> <span class="identifier">offset_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                   <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                   <span class="identifier">map_options_t</span> <span class="special">=</span> <span class="identifier">default_map_options</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="mapped_region.html#idp55542736-bb"><span class="identifier">mapped_region</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="mapped_region.html#idp55543504-bb"><span class="identifier">mapped_region</span></a><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span> <a class="link" href="mapped_region.html#idp55546048-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="mapped_region.html#idp55545312-bb"><span class="special">~</span><span class="identifier">mapped_region</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="mapped_region.html#idm45879391207376-bb"><span class="identifier">mapped_region</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="mapped_region.html#idm45879391206608-bb"><span class="identifier">mapped_region</span></a><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span> <a class="link" href="mapped_region.html#idm45879391204064-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="mapped_region.html#idm45879391204800-bb"><span class="special">~</span><span class="identifier">mapped_region</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="mapped_region.html#idp55514352-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="mapped_region.html#idp55514912-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="mapped_region.html#idp55517904-bb"><span class="identifier">get_size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="mapped_region.html#idp55519344-bb"><span class="identifier">get_address</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">mode_t</span> <a class="link" href="mapped_region.html#idp55520912-bb"><span class="identifier">get_mode</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="mapped_region.html#idp55522512-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="mapped_region.html#idp55527056-bb"><span class="identifier">shrink_by</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="mapped_region.html#idp55530432-bb"><span class="identifier">advise</span></a><span class="special">(</span><span class="identifier">advice_types</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="mapped_region.html#idm45879391235760-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="mapped_region.html#idm45879391235200-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="mapped_region.html#idm45879391232208-bb"><span class="identifier">get_size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <span class="special">*</span> <a class="link" href="mapped_region.html#idm45879391230768-bb"><span class="identifier">get_address</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">mode_t</span> <a class="link" href="mapped_region.html#idm45879391229200-bb"><span class="identifier">get_mode</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="mapped_region.html#idm45879391227600-bb"><span class="identifier">flush</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="mapped_region.html#idm45879391223056-bb"><span class="identifier">shrink_by</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="mapped_region.html#idm45879391219680-bb"><span class="identifier">advise</span></a><span class="special">(</span><span class="identifier">advice_types</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="mapped_region.html#idp55548432-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="mapped_region.html#idp55548992-bb"><span class="identifier">get_page_size</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="mapped_region.html#idm45879391201680-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a class="link" href="mapped_region.html#idm45879391201120-bb"><span class="identifier">get_page_size</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp235099504"></a><h2>Description</h2>
+<a name="idm45555318814000"></a><h2>Description</h2>
 <p>The <a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> class represents a portion or region created from a memory_mappable object.</p>
 <p>The OS can map a region bigger than the requested one, as region must be multiple of the page size, but <a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> will always refer to the region specified by the user. </p>
 <div class="refsect2">
-<a name="idp235102480"></a><h3>
+<a name="idm45555318811024"></a><h3>
 <a name="boost.interprocess.mapped_regionconstruct-copy-destruct"></a><code class="computeroutput">mapped_region</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> MemoryMappable<span class="special">&gt;</span> 
-  <a name="idp55532960-bb"></a><span class="identifier">mapped_region</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MemoryMappable</span> <span class="special">&amp;</span> mapping<span class="special">,</span> <span class="identifier">mode_t</span> mode<span class="special">,</span> 
+  <a name="idm45879391217152-bb"></a><span class="identifier">mapped_region</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MemoryMappable</span> <span class="special">&amp;</span> mapping<span class="special">,</span> <span class="identifier">mode_t</span> mode<span class="special">,</span> 
                 <span class="identifier">offset_t</span> offset <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> size <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                 <span class="keyword">const</span> <span class="keyword">void</span> <span class="special">*</span> address <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
                 <span class="identifier">map_options_t</span> map_options <span class="special">=</span> <span class="identifier">default_map_options</span><span class="special">)</span><span class="special">;</span></pre>
@@ -82,61 +83,61 @@
 <p>The OS could allocate more pages than size/page_size(), but get_address() will always return the address passed in this function (if not null) and get_size() will return the specified size. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp55542736-bb"></a><span class="identifier">mapped_region</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879391207376-bb"></a><span class="identifier">mapped_region</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructor. Address will be 0 (nullptr). Size will be 0. Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp55543504-bb"></a><span class="identifier">mapped_region</span><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879391206608-bb"></a><span class="identifier">mapped_region</span><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Move constructor. *this will be constructed taking ownership of "other"'s region and "other" will be left in default constructor state. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span> <a name="idp55546048-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span> <a name="idm45879391204064-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Move assignment. If *this owns a memory mapped region, it will be destroyed and it will take ownership of "other"'s memory mapped region. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp55545312-bb"></a><span class="special">~</span><span class="identifier">mapped_region</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879391204800-bb"></a><span class="special">~</span><span class="identifier">mapped_region</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destroys the mapped region. Does not throw </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp235151712"></a><h3>
-<a name="idp55514352-bb"></a><code class="computeroutput">mapped_region</code> public member functions</h3>
+<a name="idm45555318761840"></a><h3>
+<a name="idm45879391235760-bb"></a><code class="computeroutput">mapped_region</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp55514912-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879391235200-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Swaps the <code class="computeroutput"><a class="link" href="mapped_region.html" title="Class mapped_region">mapped_region</a></code> with another mapped region </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp55517904-bb"></a><span class="identifier">get_size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the size of the mapping. Never throws. </li>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idm45879391232208-bb"></a><span class="identifier">get_size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns the size of the mapping. Never throws. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <span class="special">*</span> <a name="idp55519344-bb"></a><span class="identifier">get_address</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <span class="special">*</span> <a name="idm45879391230768-bb"></a><span class="identifier">get_address</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the base address of the mapping. Never throws. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">mode_t</span> <a name="idp55520912-bb"></a><span class="identifier">get_mode</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">mode_t</span> <a name="idm45879391229200-bb"></a><span class="identifier">get_mode</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the mode of the mapping used to construct the mapped region. Never throws. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp55522512-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> mapping_offset <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> numbytes <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879391227600-bb"></a><span class="identifier">flush</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> mapping_offset <span class="special">=</span> <span class="number">0</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> numbytes <span class="special">=</span> <span class="number">0</span><span class="special">,</span> 
            <span class="keyword">bool</span> async <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Flushes to the disk a byte range within the mapped memory. If 'async' is true, the function will return before flushing operation is completed If 'async' is false, function will return once data has been written into the underlying device (i.e., in mapped files OS cached information is written to disk). Never throws. Returns false if operation could not be performed. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp55527056-bb"></a><span class="identifier">shrink_by</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> bytes<span class="special">,</span> <span class="keyword">bool</span> from_back <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879391223056-bb"></a><span class="identifier">shrink_by</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> bytes<span class="special">,</span> <span class="keyword">bool</span> from_back <span class="special">=</span> <span class="keyword">true</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Shrinks current mapped region. If after shrinking there is no longer need for a previously mapped memory page, accessing that page can trigger a segmentation fault. Depending on the OS, this operation might fail (XSI shared memory), it can decommit storage and free a portion of the virtual address space (e.g.POSIX) or this function can release some physical memory wihout freeing any virtual address space(Windows). Returns true on success. Never throws. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp55530432-bb"></a><span class="identifier">advise</span><span class="special">(</span><span class="identifier">advice_types</span> advise<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879391219680-bb"></a><span class="identifier">advise</span><span class="special">(</span><span class="identifier">advice_types</span> advise<span class="special">)</span><span class="special">;</span></pre>
 <p>Advises the implementation on the expected behavior of the application with respect to the data in the region. The implementation may use this information to optimize handling of the region data. This function has no effect on the semantics of access to memory in the region, although it may affect the performance of access. If the advise type is not known to the implementation, the function returns false. True otherwise. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp235207904"></a><h3>
-<a name="idp55548432-bb"></a><code class="computeroutput">mapped_region</code> public static functions</h3>
+<a name="idm45555318705456"></a><h3>
+<a name="idm45879391201680-bb"></a><code class="computeroutput">mapped_region</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idp55548992-bb"></a><span class="identifier">get_page_size</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <a name="idm45879391201120-bb"></a><span class="identifier">get_page_size</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Returns the size of the page. This size is the minimum memory that will be used by the system when mapping a memory mappable source and will restrict the address and the offset to map. </p>
 </li></ol></div>
 </div>
@@ -144,7 +145,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

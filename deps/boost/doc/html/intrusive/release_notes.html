@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -27,6 +28,10 @@
 <a name="intrusive.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_60_00">Boost
+      1.60 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_59_00">Boost
+      1.59 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_58_00">Boost
       1.58 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_57_00">Boost
@@ -60,6 +65,57 @@
 <dt><span class="section"><a href="release_notes.html#intrusive.release_notes.release_notes_boost_1_36_00">Boost
       1.36 Release</a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_60_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_60_00" title="Boost 1.60 Release">Boost
+      1.60 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a class="link" href="advanced_lookups_insertions.html" title="Advanced lookup and insertion functions for associative containers">Advanced lookup
+            and insertions</a> in ordered associative containers now support comparison
+            functions that are not required to offer the same strict weak ordering
+            as <code class="computeroutput"><span class="identifier">key_compare</span></code>, the container
+            must be partitioned in regards to the passed comparison object.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11701" target="_top">Boost
+                  Trac #11701: <span class="emphasis"><em>Regression in boost::intrusive::set::equal_range</em></span></a>
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11765" target="_top">Boost
+                  Trac #11765: <span class="emphasis"><em>sgtree.hpp:830: bad if test ?</em></span></a>
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="intrusive.release_notes.release_notes_boost_1_59_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_59_00" title="Boost 1.59 Release">Boost
+      1.59 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Implemented <a class="link" href="map_multimap.html" title="Map and multimap-like interface for associative containers">map and multimap-like
+            interfaces</a>.
+          </li>
+<li class="listitem">
+            Refactored hashtable containers to reduce template instantiations.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11222" target="_top">Boost
+                  Trac #11222: <span class="emphasis"><em>intrusive/pointer_traits.hpp fails to compile
+                  with C++98</em></span></a>
+                </li></ul></div>
+          </li>
+</ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="intrusive.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#intrusive.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
@@ -470,7 +526,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

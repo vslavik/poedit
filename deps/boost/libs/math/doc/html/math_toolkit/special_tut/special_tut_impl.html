@@ -4,7 +4,7 @@
 <title>Implementation</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../special_tut.html" title="Tutorial: How to Write a New Special Function">
 <link rel="prev" href="../special_tut.html" title="Tutorial: How to Write a New Special Function">
 <link rel="next" href="special_tut_test.html" title="Testing">
@@ -27,19 +27,18 @@
 <a name="math_toolkit.special_tut.special_tut_impl"></a><a class="link" href="special_tut_impl.html" title="Implementation">Implementation</a>
 </h3></div></div></div>
 <p>
-        In this section we'll provide a "recipe" for adding a new special
+        In this section, we'll provide a "recipe" for adding a new special
         function to this library to make life easier for future authors wishing to
-        contribute. We'll assume the function returns a single floating point result,
-        and takes two floating point arguments. For the sake of exposistion we'll
-        give the function the name "my_special".
+        contribute. We'll assume the function returns a single floating-point result,
+        and takes two floating-point arguments. For the sake of exposition we'll
+        give the function the name <em class="replaceable"><code>my_special</code></em>.
       </p>
 <p>
-        Normally the implementation of such a function is split into two layers -
-        a public user layer, and an internal implementation layer that does the actual
-        work. The implementation layer is declared inside a "detail" namespace
-        and has a simple signature:
+        Normally, the implementation of such a function is split into two layers
+        - a public user layer, and an internal implementation layer that does the
+        actual work. The implementation layer is declared inside a <code class="computeroutput"><span class="identifier">detail</span></code> namespace and has a simple signature:
       </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">detail</span><span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">detail</span> <span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Policy</span><span class="special">&gt;</span>
 <span class="identifier">T</span> <span class="identifier">my_special_imp</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span><span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Policy</span><span class="special">&amp;</span> <span class="identifier">pol</span><span class="special">)</span>
@@ -52,7 +51,7 @@
 <p>
         We'll come back to what can go inside the implementation later, but first
         lets look at the user layer. This consists of two overloads of the function,
-        with and without a <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument:
+        with and without a <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument:
       </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
@@ -146,7 +145,7 @@
         We're now almost there, we just need to flesh out the details of the implementation
         layer:
       </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">detail</span><span class="special">{</span>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">detail</span> <span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Policy</span><span class="special">&gt;</span>
 <span class="identifier">T</span> <span class="identifier">my_special_imp</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span><span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Policy</span><span class="special">&amp;</span> <span class="identifier">pol</span><span class="special">)</span>
@@ -169,8 +168,8 @@
 <li class="listitem">
             Calls to standard library functions should be made unqualified (this
             allows argument dependent lookup to find standard library functions for
-            user-defined floating point types such as those from Boost.Multiprecision).
-            In addition the macro <code class="computeroutput"><span class="identifier">BOOST_MATH_STD_USING</span></code>
+            user-defined floating point types such as those from <a href="../../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>).
+            In addition, the macro <code class="computeroutput"><span class="identifier">BOOST_MATH_STD_USING</span></code>
             should appear at the start of the function (note no semi-colon afterwards!)
             so that all the math functions in <code class="computeroutput"><span class="keyword">namespace</span>
             <span class="identifier">std</span></code> are visible in the current
@@ -182,12 +181,12 @@
           </li>
 <li class="listitem">
             Where possible, evaluation of series, continued fractions, polynomials,
-            or root finding should use one of the <a class="link" href="../../toolkit.html" title="Chapter&#160;12.&#160;Internals (Series, Rationals and Continued Fractions, Root Finding, Function Minimization, Testing and Development Tools)">boiler
-            plate functions</a>. In any case, after any iterative method, you
-            should verify that the number of iterations did not exceed the maximum
-            specified in the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> type, and if it
-            did terminate as a result of exceeding the maximum, then the appropriate
-            error handler should be called (see existing code for examples).
+            or root finding should use one of the <a class="link" href="../internals_overview.html" title="Overview">boiler-plate
+            functions</a>. In any case, after any iterative method, you should
+            verify that the number of iterations did not exceed the maximum specified
+            in the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> type, and if it did terminate
+            as a result of exceeding the maximum, then the appropriate error handler
+            should be called (see existing code for examples).
           </li>
 <li class="listitem">
             Numeric constants such as &#960; etc should be obtained via a call to the <a class="link" href="../constants.html" title="The Mathematical Constants">appropriate function</a>, for example:
@@ -198,7 +197,7 @@
             care should be taken to ensure these are initialized at program startup
             to ensure thread safety when using user-defined number types. See for
             example the use of <code class="computeroutput"><span class="identifier">erf_initializer</span></code>
-            in boost/math/special_functions/erf.hpp.
+            in <a href="../../../../include/boost/math/special_functions/erf.hpp" target="_top">erf.hpp</a>.
           </li>
 </ul></div>
 <p>

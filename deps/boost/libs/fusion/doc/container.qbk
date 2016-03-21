@@ -66,6 +66,11 @@ cases the most efficient.
     template <typename T0, typename T1, typename T2..., typename TN>
     struct vectorN;
 
+[important Numbered forms will be deprecated in C++11 and it will be provided
+           via aliasing templates. It means that your partial specialization
+           might be compile error. You can detect whether it is aliasing
+           templates or not, using `BOOST_FUSION_HAS_VARIADIC_VECTOR`.]
+
 [*Variadic form]
 
     template <
@@ -81,9 +86,11 @@ The numbered form accepts the exact number of elements. Example:
 
     vector3<int, char, double>
 
-The variadic form accepts `0` to `FUSION_MAX_VECTOR_SIZE` elements, where
-`FUSION_MAX_VECTOR_SIZE` is a user definable predefined maximum that
-defaults to `10`. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the The variadic form accepts `0` to
+`FUSION_MAX_VECTOR_SIZE` elements, where `FUSION_MAX_VECTOR_SIZE` is a
+user definable predefined maximum that defaults to `10`. Example:
 
     vector<int, char, double>
 
@@ -232,9 +239,11 @@ each element is peculiarly constant (see __recursive_inline__).
     >
     struct list;
 
-The variadic class interface accepts `0` to `FUSION_MAX_LIST_SIZE`
-elements, where `FUSION_MAX_LIST_SIZE` is a user definable predefined
-maximum that defaults to `10`. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic class interface accepts `0` to
+`FUSION_MAX_LIST_SIZE` elements, where `FUSION_MAX_LIST_SIZE` is a user
+definable predefined maximum that defaults to `10`. Example:
 
     list<int, char, double>
 
@@ -532,9 +541,11 @@ complexity (see __overloaded_functions__).
     >
     struct set;
 
-The variadic class interface accepts `0` to `FUSION_MAX_SET_SIZE` elements,
-where `FUSION_MAX_SET_SIZE` is a user definable predefined maximum that
-defaults to `10`. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic class interface accepts `0` to
+`FUSION_MAX_SET_SIZE` elements, where `FUSION_MAX_SET_SIZE` is a user
+definable predefined maximum that defaults to `10`. Example:
 
     set<int, char, double>
 
@@ -614,9 +625,11 @@ __overloaded_functions__).
     >
     struct map;
 
-The variadic class interface accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
-where `FUSION_MAX_MAP_SIZE` is a user definable predefined maximum that
-defaults to `10`. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic class interface accepts `0` to
+`FUSION_MAX_MAP_SIZE` elements, where `FUSION_MAX_MAP_SIZE` is a user
+definable predefined maximum that defaults to `10`. Example:
 
     map<__pair__<int, char>, __pair__<char, char>, __pair__<double, char> >
 
@@ -697,10 +710,13 @@ Create a __list__ from one or more values.
     typename __result_of_make_list__<T0, T1,... TN>::type
     make_list(T0 const& x0, T1 const& x1... TN const& xN);
 
-The variadic function accepts `0` to `FUSION_MAX_LIST_SIZE` elements, where
-`FUSION_MAX_LIST_SIZE` is a user definable predefined maximum that defaults
-to `10`. You may define the preprocessor constant `FUSION_MAX_LIST_SIZE`
-before including any Fusion header to change the default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_LIST_SIZE` elements, where `FUSION_MAX_LIST_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_LIST_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_LIST_SIZE 20
 
@@ -794,11 +810,13 @@ Create a __vector__ from one or more values.
     typename __result_of_make_vector__<T0, T1,... TN>::type
     make_vector(T0 const& x0, T1 const& x1... TN const& xN);
 
-The variadic function accepts `0` to `FUSION_MAX_VECTOR_SIZE` elements,
-where `FUSION_MAX_VECTOR_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_VECTOR_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_VECTOR_SIZE` elements, where `FUSION_MAX_VECTOR_SIZE` is a
+user definable predefined maximum that defaults to `10`. You may define
+the preprocessor constant `FUSION_MAX_VECTOR_SIZE` before including any
+Fusion header to change the default. Example:
 
     #define FUSION_MAX_VECTOR_SIZE 20
 
@@ -896,11 +914,13 @@ Create a __set__ from one or more values.
     typename __result_of_make_set__<T0, T1,... TN>::type
     make_set(T0 const& x0, T1 const& x1... TN const& xN);
 
-The variadic function accepts `0` to `FUSION_MAX_SET_SIZE` elements,
-where `FUSION_MAX_SET_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_SET_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_SET_SIZE` elements, where `FUSION_MAX_SET_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_SET_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_SET_SIZE 20
 
@@ -1049,10 +1069,13 @@ Constructs a tie using a __list__ sequence.
     __list__<T0&, T1&,... TN&>
     list_tie(T0& x0, T1& x1... TN& xN);
 
-The variadic function accepts `0` to `FUSION_MAX_LIST_SIZE` elements, where
-`FUSION_MAX_LIST_SIZE` is a user definable predefined maximum that defaults
-to `10`. You may define the preprocessor constant `FUSION_MAX_LIST_SIZE`
-before including any Fusion header to change the default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_LIST_SIZE` elements, where `FUSION_MAX_LIST_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_LIST_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_LIST_SIZE 20
 
@@ -1096,11 +1119,13 @@ Constructs a tie using a __vector__ sequence.
     __vector__<T0&, T1&,... TN&>
     vector_tie(T0& x0, T1& x1... TN& xN);
 
-The variadic function accepts `0` to `FUSION_MAX_VECTOR_SIZE` elements,
-where `FUSION_MAX_VECTOR_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_VECTOR_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_VECTOR_SIZE` elements, where `FUSION_MAX_VECTOR_SIZE` is a
+user definable predefined maximum that defaults to `10`. You may define
+the preprocessor constant `FUSION_MAX_VECTOR_SIZE` before including any
+Fusion header to change the default. Example:
 
     #define FUSION_MAX_VECTOR_SIZE 20
 
@@ -1144,11 +1169,14 @@ Constructs a tie using a __map__ sequence.
     __map__<__pair__<K0, D0&>, __pair__<K1, D1&>,... __pair__<KN, DN&> >
     map_tie(D0& d0, D1& d1... DN& dN);
 
-The variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
-where `FUSION_MAX_MAP_SIZE` is a user definable predefined maximum that
-defaults to `10`, and a corresponding number of key types.
-You may define the preprocessor constant  `FUSION_MAX_MAP_SIZE` before
-including any Fusion header to change the default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_MAP_SIZE` elements, where `FUSION_MAX_MAP_SIZE` is a user
+definable predefined maximum that defaults to `10`, and a corresponding
+number of key types.  You may define the preprocessor constant
+`FUSION_MAX_MAP_SIZE` before including any Fusion header to change the
+default. Example:
 
     #define FUSION_MAX_MAP_SIZE 20
 
@@ -1249,10 +1277,13 @@ Returns the result type of __make_list__.
     template <typename T0, typename T1,... typename TN>
     struct make_list;
 
-The variadic function accepts `0` to `FUSION_MAX_LIST_SIZE` elements, where
-`FUSION_MAX_LIST_SIZE` is a user definable predefined maximum that defaults
-to `10`. You may define the preprocessor constant `FUSION_MAX_LIST_SIZE`
-before including any Fusion header to change the default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_LIST_SIZE` elements, where `FUSION_MAX_LIST_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_LIST_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_LIST_SIZE 20
 
@@ -1333,11 +1364,13 @@ Returns the result type of __make_vector__.
     template <typename T0, typename T1,... typename TN>
     struct make_vector;
 
-The variadic function accepts `0` to `FUSION_MAX_VECTOR_SIZE` elements,
-where `FUSION_MAX_VECTOR_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_VECTOR_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_VECTOR_SIZE` elements, where `FUSION_MAX_VECTOR_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_VECTOR_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_VECTOR_SIZE 20
 
@@ -1427,11 +1460,13 @@ Returns the result type of __make_set__.
     template <typename T0, typename T1,... typename TN>
     struct make_set;
 
-The variadic function accepts `0` to `FUSION_MAX_SET_SIZE` elements,
-where `FUSION_MAX_SET_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_SET_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_SET_SIZE` elements, where `FUSION_MAX_SET_SIZE` is a user definable
+predefined maximum that defaults to `10`. You may define the preprocessor
+constant `FUSION_MAX_SET_SIZE` before including any Fusion header to change
+the default. Example:
 
     #define FUSION_MAX_SET_SIZE 20
 
@@ -1559,10 +1594,13 @@ Returns the result type of __list_tie__.
     template <typename T0, typename T1,... typename TN>
     struct list_tie;
 
-The variadic function accepts `0` to `FUSION_MAX_LIST_SIZE` elements, where
-`FUSION_MAX_LIST_SIZE` is a user definable predefined maximum that defaults
-to `10`. You may define the preprocessor constant `FUSION_MAX_LIST_SIZE`
-before including any Fusion header to change the default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_LIST_SIZE` elements, where `FUSION_MAX_LIST_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_LIST_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_LIST_SIZE 20
 
@@ -1603,11 +1641,13 @@ Returns the result type of __vector_tie__.
     template <typename T0, typename T1,... typename TN>
     struct vector_tie;
 
-The variadic function accepts `0` to `FUSION_MAX_VECTOR_SIZE` elements,
-where `FUSION_MAX_VECTOR_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_VECTOR_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_VECTOR_SIZE` elements, where `FUSION_MAX_VECTOR_SIZE` is a user
+definable predefined maximum that defaults to `10`. You may define the
+preprocessor constant `FUSION_MAX_VECTOR_SIZE` before including any Fusion
+header to change the default. Example:
 
     #define FUSION_MAX_VECTOR_SIZE 20
 
@@ -1695,11 +1735,13 @@ Returns the result type of __map_tie__.
     template <typename K0, typename K1,... typename KN, typename D0, typename D1,... typename DN>
     struct map_tie;
 
-The variadic function accepts `0` to `FUSION_MAX_MAP_SIZE` elements,
-where `FUSION_MAX_MAP_SIZE` is a user definable predefined maximum that
-defaults to `10`. You may define the preprocessor constant
-`FUSION_MAX_MAP_SIZE` before including any Fusion header to change the
-default. Example:
+For C++11 compilers, the variadic function interface has no upper bound.
+
+For C++03 compilers, the variadic function accepts `0` to
+`FUSION_MAX_MAP_SIZE` elements, where `FUSION_MAX_MAP_SIZE` is a user definable
+predefined maximum that defaults to `10`. You may define the preprocessor
+constant `FUSION_MAX_MAP_SIZE` before including any Fusion header to change
+the default. Example:
 
     #define FUSION_MAX_MAP_SIZE 20
 

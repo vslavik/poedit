@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2013. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2015. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -93,11 +93,11 @@ class basic_string_base
       : members_()
    {  init(); }
 
-   basic_string_base(const allocator_type& a)
+   explicit basic_string_base(const allocator_type& a)
       : members_(a)
    {  init(); }
 
-   basic_string_base(BOOST_RV_REF(allocator_type) a)
+   explicit basic_string_base(BOOST_RV_REF(allocator_type) a)
       :  members_(boost::move(a))
    {  this->init();  }
 
@@ -108,11 +108,17 @@ class basic_string_base
       this->allocate_initial_block(n);
    }
 
+   explicit basic_string_base(size_type n)
+      : members_()
+   {
+      this->init();
+      this->allocate_initial_block(n);
+   }
+
    ~basic_string_base()
    {
       if(!this->is_short()){
-         this->deallocate_block();
-         this->is_short(true);
+         this->deallocate(this->priv_long_addr(), this->priv_long_storage());
       }
    }
 
@@ -131,15 +137,14 @@ class basic_string_base
 
       long_t(const long_t &other)
       {
-         this->is_short = other.is_short;
+         this->is_short = false;
          length   = other.length;
          storage  = other.storage;
          start    = other.start;
       }
 
-      long_t &operator =(const long_t &other)
+      long_t &operator= (const long_t &other)
       {
-         this->is_short = other.is_short;
          length   = other.length;
          storage  = other.storage;
          start    = other.start;
@@ -165,8 +170,7 @@ class basic_string_base
    static const size_type  MinInternalBufferChars = 8;
    static const size_type  AlignmentOfValueType =
       alignment_of<value_type>::value;
-   static const size_type  ShortDataOffset =
-      container_detail::ct_rounded_size<sizeof(short_header),  AlignmentOfValueType>::value;
+   static const size_type  ShortDataOffset = ((sizeof(short_header)-1)/AlignmentOfValueType+1)*AlignmentOfValueType;
    static const size_type  ZeroCostInternalBufferChars =
       (sizeof(long_t) - ShortDataOffset)/sizeof(value_type);
    static const size_type  UnalignedFinalInternalBufferChars =
@@ -421,21 +425,19 @@ class basic_string_base
          }
          else{
             short_t short_backup(this->members_.m_repr.short_repr());
-            long_t  long_backup (other.members_.m_repr.long_repr());
+            this->members_.m_repr.short_repr().~short_t();
+            ::new(&this->members_.m_repr.long_repr()) long_t(other.members_.m_repr.long_repr());
             other.members_.m_repr.long_repr().~long_t();
-            ::new(&this->members_.m_repr.long_repr()) long_t;
-            this->members_.m_repr.long_repr()  = long_backup;
-            other.members_.m_repr.short_repr() = short_backup;
+            ::new(&other.members_.m_repr.short_repr()) short_t(short_backup);
          }
       }
       else{
          if(other.is_short()){
             short_t short_backup(other.members_.m_repr.short_repr());
-            long_t  long_backup (this->members_.m_repr.long_repr());
+            other.members_.m_repr.short_repr().~short_t();
+            ::new(&other.members_.m_repr.long_repr()) long_t(this->members_.m_repr.long_repr());
             this->members_.m_repr.long_repr().~long_t();
-            ::new(&other.members_.m_repr.long_repr()) long_t;
-            other.members_.m_repr.long_repr()  = long_backup;
-            this->members_.m_repr.short_repr() = short_backup;
+            ::new(&this->members_.m_repr.short_repr()) short_t(short_backup);
          }
          else{
             boost::adl_move_swap(this->members_.m_repr.long_repr(), other.members_.m_repr.long_repr());
@@ -652,11 +654,10 @@ class basic_string
       }
    }
 
-   //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
+   //! <b>Effects</b>: Constructs a basic_string with a default-constructed allocator,
    //!   and is initialized by a specific number of characters of the s string.
-   basic_string(const basic_string& s, size_type pos, size_type n = npos,
-                const allocator_type& a = allocator_type())
-      : base_t(a)
+   basic_string(const basic_string& s, size_type pos, size_type n = npos)
+      : base_t()
    {
       this->priv_terminate_string();
       if (pos > s.size())
@@ -667,45 +668,105 @@ class basic_string
    }
 
    //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
-   //!   and is initialized by a specific number of characters of the s c-string.
-   basic_string(const CharT* s, size_type n, const allocator_type& a = allocator_type())
+   //!   and is initialized by a specific number of characters of the s string.
+   basic_string(const basic_string& s, size_type pos, size_type n, const allocator_type& a)
       : base_t(a)
+   {
+      this->priv_terminate_string();
+      if (pos > s.size())
+         throw_out_of_range("basic_string::basic_string out of range position");
+      else
+         this->assign
+            (s.begin() + pos, s.begin() + pos + container_detail::min_value(n, s.size() - pos));
+   }
+
+   //! <b>Effects</b>: Constructs a basic_string taking a default-constructed allocator,
+   //!   and is initialized by a specific number of characters of the s c-string.
+   basic_string(const CharT* s, size_type n)
+      : base_t()
    {
       this->priv_terminate_string();
       this->assign(s, s + n);
    }
 
    //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
-   //!   and is initialized by the null-terminated s c-string.
-   basic_string(const CharT* s, const allocator_type& a = allocator_type())
+   //!   and is initialized by a specific number of characters of the s c-string.
+   basic_string(const CharT* s, size_type n, const allocator_type& a)
       : base_t(a)
+   {
+      this->priv_terminate_string();
+      this->assign(s, s + n);
+   }
+
+   //! <b>Effects</b>: Constructs a basic_string with a default-constructed allocator,
+   //!   and is initialized by the null-terminated s c-string.
+   basic_string(const CharT* s)
+      : base_t()
    {
       this->priv_terminate_string();
       this->assign(s, s + Traits::length(s));
    }
 
    //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
-   //!   and is initialized by n copies of c.
-   basic_string(size_type n, CharT c, const allocator_type& a = allocator_type())
+   //!   and is initialized by the null-terminated s c-string.
+   basic_string(const CharT* s, const allocator_type& a)
       : base_t(a)
+   {
+      this->priv_terminate_string();
+      this->assign(s, s + Traits::length(s));
+   }
+
+
+   //! <b>Effects</b>: Constructs a basic_string with a default-constructed allocator,
+   //!   and is initialized by n copies of c.
+   basic_string(size_type n, CharT c)
+      : base_t()
    {
       this->priv_terminate_string();
       this->assign(n, c);
    }
 
    //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
+   //!   and is initialized by n copies of c.
+   basic_string(size_type n, CharT c, const allocator_type& a)
+      : base_t(a)
+   {
+      this->priv_terminate_string();
+      this->assign(n, c);
+   }
+
+   //! <b>Effects</b>: Constructs a basic_string with a default-constructed allocator,
    //!   and is initialized by n default-initialized characters.
-   basic_string(size_type n, default_init_t, const allocator_type& a = allocator_type())
-      : base_t(a, n + 1)
+   basic_string(size_type n, default_init_t)
+      : base_t(n + 1)
    {
       this->priv_size(n);
       this->priv_terminate_string();
    }
 
    //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
+   //!   and is initialized by n default-initialized characters.
+   basic_string(size_type n, default_init_t, const allocator_type& a)
+      : base_t(a, n + 1)
+   {
+      this->priv_size(n);
+      this->priv_terminate_string();
+   }
+
+   //! <b>Effects</b>: Constructs a basic_string with a default-constructed allocator,
    //!   and a range of iterators.
    template <class InputIterator>
-   basic_string(InputIterator f, InputIterator l, const allocator_type& a = allocator_type())
+   basic_string(InputIterator f, InputIterator l)
+      : base_t()
+   {
+      this->priv_terminate_string();
+      this->assign(f, l);
+   }
+
+   //! <b>Effects</b>: Constructs a basic_string taking the allocator as parameter,
+   //!   and a range of iterators.
+   template <class InputIterator>
+   basic_string(InputIterator f, InputIterator l, const allocator_type& a)
       : base_t(a)
    {
       this->priv_terminate_string();
@@ -1063,6 +1124,62 @@ class basic_string
    //
    //////////////////////////////////////////////
 
+   //! <b>Requires</b>: !empty()
+   //!
+   //! <b>Effects</b>: Returns a reference to the first
+   //!   element of the container.
+   //!
+   //! <b>Throws</b>: Nothing.
+   //!
+   //! <b>Complexity</b>: Constant.
+   reference         front() BOOST_NOEXCEPT_OR_NOTHROW
+   {
+      BOOST_ASSERT(!this->empty());
+      return *this->priv_addr();
+   }
+
+   //! <b>Requires</b>: !empty()
+   //!
+   //! <b>Effects</b>: Returns a const reference to the first
+   //!   element of the container.
+   //!
+   //! <b>Throws</b>: Nothing.
+   //!
+   //! <b>Complexity</b>: Constant.
+   const_reference   front() const BOOST_NOEXCEPT_OR_NOTHROW
+   {
+      BOOST_ASSERT(!this->empty());
+      return *this->priv_addr();
+   }
+
+   //! <b>Requires</b>: !empty()
+   //!
+   //! <b>Effects</b>: Returns a reference to the last
+   //!   element of the container.
+   //!
+   //! <b>Throws</b>: Nothing.
+   //!
+   //! <b>Complexity</b>: Constant.
+   reference         back() BOOST_NOEXCEPT_OR_NOTHROW
+   {
+      BOOST_ASSERT(!this->empty());
+      return *(this->priv_addr() + (this->size() - 1u) );
+   }
+
+   //! <b>Requires</b>: !empty()
+   //!
+   //! <b>Effects</b>: Returns a const reference to the last
+   //!   element of the container.
+   //!
+   //! <b>Throws</b>: Nothing.
+   //!
+   //! <b>Complexity</b>: Constant.
+   const_reference   back()  const BOOST_NOEXCEPT_OR_NOTHROW
+   {
+      BOOST_ASSERT(!this->empty());
+      return *(this->priv_addr() + (this->size() - 1u) );
+   }
+
    //! <b>Requires</b>: size() > n.
    //!
    //! <b>Effects</b>: Returns a reference to the nth element
@@ -1072,7 +1189,10 @@ class basic_string
    //!
    //! <b>Complexity</b>: Constant.
    reference operator[](size_type n) BOOST_NOEXCEPT_OR_NOTHROW
-      { return *(this->priv_addr() + n); }
+   {
+      BOOST_ASSERT(this->size() > n);
+      return *(this->priv_addr() + n);
+   }
 
    //! <b>Requires</b>: size() > n.
    //!
@@ -1083,7 +1203,10 @@ class basic_string
    //!
    //! <b>Complexity</b>: Constant.
    const_reference operator[](size_type n) const BOOST_NOEXCEPT_OR_NOTHROW
-      { return *(this->priv_addr() + n); }
+   {
+      BOOST_ASSERT(this->size() > n);
+      return *(this->priv_addr() + n);
+   }
 
    //! <b>Requires</b>: size() > n.
    //!
@@ -1289,9 +1412,7 @@ class basic_string
    template <class InputIter>
    basic_string& assign(InputIter first, InputIter last
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<InputIter, size_type>::value
-         >::type * = 0
+      , typename container_detail::disable_if_convertible<InputIter, size_type>::type * = 0
       #endif
       )
    {
@@ -1438,9 +1559,10 @@ class basic_string
    template <class InputIter>
    iterator insert(const_iterator p, InputIter first, InputIter last
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<InputIter, size_type>::value
-            && container_detail::is_input_iterator<InputIter>::value
+      , typename container_detail::disable_if_or
+         < void
+         , container_detail::is_convertible<InputIter, size_type>
+         , container_detail::is_not_input_iterator<InputIter>
          >::type * = 0
       #endif
       )
@@ -1455,9 +1577,10 @@ class basic_string
    #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
    template <class ForwardIter>
    iterator insert(const_iterator p, ForwardIter first, ForwardIter last
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<ForwardIter, size_type>::value
-            && !container_detail::is_input_iterator<ForwardIter>::value
+      , typename container_detail::disable_if_or
+         < void
+         , container_detail::is_convertible<ForwardIter, size_type>
+         , container_detail::is_input_iterator<ForwardIter>
          >::type * = 0
       )
    {
@@ -1565,6 +1688,18 @@ class basic_string
    }
    #endif
 
+   //! <b>Effects</b>: Removes the last element from the container.
+   //!
+   //! <b>Throws</b>: Nothing.
+   //!
+   //! <b>Complexity</b>: Constant time.
+   void pop_back() BOOST_NOEXCEPT_OR_NOTHROW
+   {
+      BOOST_ASSERT(!this->empty());
+      iterator p = this->end();
+      this->erase(--p);
+   }
+
    //! <b>Requires</b>: pos <= size()
    //!
    //! <b>Effects</b>: Determines the effective length xlen of the string to be removed as the smaller of n and size() - pos.
@@ -1624,18 +1759,6 @@ class basic_string
          this->priv_size(new_length);
       }
       return iterator(f);
-   }
-
-   //! <b>Requires</b>: !empty()
-   //!
-   //! <b>Throws</b>: Nothing
-   //!
-   //! <b>Effects</b>: Equivalent to erase(size() - 1, 1).
-   void pop_back() BOOST_NOEXCEPT_OR_NOTHROW
-   {
-      const size_type old_size = this->priv_size();
-      Traits::assign(this->priv_addr()[old_size-1], CharT(0));
-      this->priv_size(old_size-1);;
    }
 
    //! <b>Effects</b>: Erases all the elements of the vector.
@@ -1829,9 +1952,10 @@ class basic_string
    template <class InputIter>
    basic_string& replace(const_iterator i1, const_iterator i2, InputIter j1, InputIter j2
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<InputIter, size_type>::value
-            && container_detail::is_input_iterator<InputIter>::value
+      , typename container_detail::disable_if_or
+         < void
+         , container_detail::is_convertible<InputIter, size_type>
+         , container_detail::is_input_iterator<InputIter>
          >::type * = 0
       #endif
       )
@@ -1850,9 +1974,10 @@ class basic_string
    #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
    template <class ForwardIter>
    basic_string& replace(const_iterator i1, const_iterator i2, ForwardIter j1, ForwardIter j2
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<ForwardIter, size_type>::value
-            && !container_detail::is_input_iterator<ForwardIter>::value
+      , typename container_detail::disable_if_or
+         < void
+         , container_detail::is_convertible<ForwardIter, size_type>
+         , container_detail::is_not_input_iterator<ForwardIter>
          >::type * = 0
       )
    {

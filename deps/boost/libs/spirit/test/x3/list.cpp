@@ -88,45 +88,15 @@ main()
         BOOST_TEST(1 == v2.size() && 'a' == v2[0]);
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ typedef std::set<std::pair<std::string, std::string> > set_type;
-        //~ set_type s;
-        //~ BOOST_TEST(test_attr("k1=v1&k2=v2",
-            //~ (*(char_ - '=') >> '=' >> *(char_ - '&')) % '&', s));
+    { // actions
+        using boost::spirit::x3::_attr;
 
-        //~ set_type::const_iterator it = s.begin();
-        //~ BOOST_TEST(s.size() == 2);
-        //~ BOOST_TEST(it != s.end() && (*it).first == "k1" && (*it).second == "v1");
-        //~ BOOST_TEST(++it != s.end() && (*it).first == "k2" && (*it).second == "v2");
-    //~ }
+        std::string s;
+        auto f = [&](auto& ctx){ s = std::string(_attr(ctx).begin(), _attr(ctx).end()); };
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ typedef std::map<std::string, std::string> map_type;
-        //~ map_type m;
-        //~ BOOST_TEST(test_attr("k1=v1&k2=v2",
-            //~ (*(char_ - '=') >> '=' >> *(char_ - '&')) % '&', m));
-
-        //~ map_type::const_iterator it = m.begin();
-        //~ BOOST_TEST(m.size() == 2);
-        //~ BOOST_TEST(it != m.end() && (*it).first == "k1" && (*it).second == "v1");
-        //~ BOOST_TEST(++it != m.end() && (*it).first == "k2" && (*it).second == "v2");
-    //~ }
-
-    // $$$ Not yet implemented $$$
-    //~ { // actions
-        //~ namespace phx = boost::phoenix;
-        //~ using boost::phoenix::begin;
-        //~ using boost::phoenix::end;
-        //~ using boost::phoenix::construct;
-        //~ using boost::spirit::x3::_1;
-
-        //~ std::string s;
-        //~ BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')
-            //~ [phx::ref(s) = construct<std::string>(begin(_1), end(_1))]));
-    //~ }
+        BOOST_TEST(test("a,b,c,d,e,f,g,h", (char_ % ',')[f]));
+        BOOST_TEST(s == "abcdefgh");
+    }
 
     return boost::report_errors();
 }
-

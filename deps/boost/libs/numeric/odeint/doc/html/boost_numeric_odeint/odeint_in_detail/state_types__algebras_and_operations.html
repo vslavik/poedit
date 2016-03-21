@@ -403,7 +403,7 @@
           </p>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="identifier">MAX_N</span> <span class="special">&gt;</span>
+<pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="identifier">size_t</span> <span class="identifier">MAX_N</span> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">my_vector</span>
 <span class="special">{</span>
     <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span> <span class="keyword">double</span> <span class="special">&gt;</span> <span class="identifier">vector</span><span class="special">;</span>
@@ -1160,7 +1160,7 @@
 <pre class="programlisting"><span class="comment">// only required for steppers with error control</span>
 <span class="identifier">point3D</span> <span class="keyword">operator</span><span class="special">/(</span> <span class="keyword">const</span> <span class="identifier">point3D</span> <span class="special">&amp;</span><span class="identifier">p1</span> <span class="special">,</span> <span class="keyword">const</span> <span class="identifier">point3D</span> <span class="special">&amp;</span><span class="identifier">p2</span> <span class="special">)</span>
 <span class="special">{</span>
-    <span class="keyword">return</span> <span class="identifier">point3D</span><span class="special">(</span> <span class="identifier">p1</span><span class="special">.</span><span class="identifier">x</span><span class="special">/</span><span class="identifier">p2</span><span class="special">.</span><span class="identifier">x</span> <span class="special">,</span> <span class="identifier">p1</span><span class="special">.</span><span class="identifier">y</span><span class="special">/</span><span class="identifier">p2</span><span class="special">.</span><span class="identifier">y</span> <span class="special">,</span> <span class="identifier">p1</span><span class="special">.</span><span class="identifier">z</span><span class="special">/</span><span class="identifier">p1</span><span class="special">.</span><span class="identifier">z</span> <span class="special">);</span>
+    <span class="keyword">return</span> <span class="identifier">point3D</span><span class="special">(</span> <span class="identifier">p1</span><span class="special">.</span><span class="identifier">x</span><span class="special">/</span><span class="identifier">p2</span><span class="special">.</span><span class="identifier">x</span> <span class="special">,</span> <span class="identifier">p1</span><span class="special">.</span><span class="identifier">y</span><span class="special">/</span><span class="identifier">p2</span><span class="special">.</span><span class="identifier">y</span> <span class="special">,</span> <span class="identifier">p1</span><span class="special">.</span><span class="identifier">z</span><span class="special">/</span><span class="identifier">p2</span><span class="special">.</span><span class="identifier">z</span> <span class="special">);</span>
 <span class="special">}</span>
 
 <span class="identifier">point3D</span> <span class="identifier">abs</span><span class="special">(</span> <span class="keyword">const</span> <span class="identifier">point3D</span> <span class="special">&amp;</span><span class="identifier">p</span> <span class="special">)</span>
@@ -1279,8 +1279,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2012 Karsten
-      Ahnert and Mario Mulansky<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Karsten Ahnert and Mario Mulansky<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

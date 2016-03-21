@@ -18,6 +18,7 @@
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
 #include <boost/geometry/core/access.hpp>
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/closure.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
 #include <boost/geometry/geometries/concepts/check.hpp>
@@ -116,8 +117,8 @@ inline bool assign_next_ip(G1 const& g1, G2 const& g2,
             return false;
         }
 
-        BOOST_ASSERT(info.enriched.travels_to_vertex_index >= 0);
-        BOOST_ASSERT(info.enriched.travels_to_ip_index >= 0);
+        BOOST_GEOMETRY_ASSERT(info.enriched.travels_to_vertex_index >= 0);
+        BOOST_GEOMETRY_ASSERT(info.enriched.travels_to_ip_index >= 0);
 
         if (info.seg_id.source_index == 0)
         {
@@ -150,8 +151,8 @@ inline bool assign_next_ip(G1 const& g1, G2 const& g2,
 
 
 inline bool select_source(operation_type operation,
-                          signed_index_type source1,
-                          signed_index_type source2)
+                          signed_size_type source1,
+                          signed_size_type source2)
 {
     return (operation == operation_intersection && source1 != source2)
         || (operation == operation_union && source1 == source2)
@@ -173,7 +174,17 @@ inline bool select_next_ip(operation_type operation,
     {
         return false;
     }
+
     bool has_tp = false;
+
+    typedef typename std::iterator_traits
+    <
+        Iterator
+    >::value_type operation_type;
+
+    typename operation_type::comparable_distance_type
+            max_remaining_distance = 0;
+
     selected = boost::end(turn.operations);
     for (Iterator it = boost::begin(turn.operations);
         it != boost::end(turn.operations);
@@ -205,9 +216,23 @@ inline bool select_next_ip(operation_type operation,
                 )
             )
         {
+            if (it->operation == operation_continue)
+            {
+                max_remaining_distance = it->remaining_distance;
+            }
             selected = it;
             debug_traverse(turn, *it, " Candidate");
             has_tp = true;
+        }
+
+        if (it->operation == operation_continue && has_tp)
+        {
+            if (it->remaining_distance > max_remaining_distance)
+            {
+                max_remaining_distance = it->remaining_distance;
+                selected = it;
+                debug_traverse(turn, *it, " Candidate override");
+            }
         }
     }
 

@@ -25,6 +25,7 @@
 #include "boost/variant/apply_visitor.hpp"
 #include "boost/variant/static_visitor.hpp"
 
+#include "boost/type_index.hpp"
 #include "boost/detail/workaround.hpp"
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x0551))
 #    pragma warn -lvc
@@ -244,9 +245,7 @@ inline void verify(VariantType& var, spec<S>, std::string str = "")
    const VariantType& cvar = var;
 
    BOOST_CHECK(boost::apply_visitor(total_sizeof(), cvar) == sizeof(S));
-#if !defined(BOOST_NO_TYPEID)
-   BOOST_CHECK(cvar.type() == typeid(S));
-#endif
+   BOOST_CHECK(cvar.type() == boost::typeindex::type_id<S>());
 
    //
    // Check get<>()
@@ -261,7 +260,7 @@ inline void verify(VariantType& var, spec<S>, std::string str = "")
       S& r = boost::get<S>(var);
       ptr1 = &r;
    }
-   catch(boost::bad_get& )
+   catch(const boost::bad_get& )
    {
       BOOST_ERROR( "get<S> failed unexpectedly" );
    }
@@ -271,7 +270,7 @@ inline void verify(VariantType& var, spec<S>, std::string str = "")
       const S& cr = boost::get<S>(cvar);
       ptr2 = &cr;
    }
-   catch(boost::bad_get& )
+   catch(const boost::bad_get& )
    {
       BOOST_ERROR( "get<S> const failed unexpectedly" );
    }
@@ -295,9 +294,7 @@ inline void verify_not(VariantType& var, spec<S>)
 {
    const VariantType& cvar = var;
 
-#if !defined(BOOST_NO_TYPEID)
-   BOOST_CHECK(cvar.type() != typeid(S));
-#endif
+   BOOST_CHECK(cvar.type() != boost::typeindex::type_id<S>());
 
    //
    // Check get<>()
@@ -314,7 +311,7 @@ inline void verify_not(VariantType& var, spec<S>)
 
       ptr1 = &r;
    }
-   catch(boost::bad_get& )
+   catch(const boost::bad_get& )
    {
       // do nothing except pass-through
    }
@@ -326,7 +323,7 @@ inline void verify_not(VariantType& var, spec<S>)
 
       ptr2 = &cr;
    }
-   catch(boost::bad_get& )
+   catch(const boost::bad_get& )
    {
       // do nothing except pass-through
    }

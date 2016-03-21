@@ -1,4 +1,4 @@
-/* Copyright 2006-2014 Joaquin M Lopez Munoz.
+/* Copyright 2006-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -46,7 +46,7 @@ template<
 >
 void save(
   Archive& ar,const ::boost::flyweights::flyweight<T,Arg1,Arg2,Arg3>& f,
-  const unsigned int version)
+  const unsigned int /*version*/)
 {
   typedef ::boost::flyweights::flyweight<T,Arg1,Arg2,Arg3>    flyweight;
   typedef ::boost::flyweights::detail::save_helper<flyweight> helper;

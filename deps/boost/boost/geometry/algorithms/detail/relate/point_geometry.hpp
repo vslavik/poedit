@@ -18,6 +18,7 @@
 //#include <boost/geometry/algorithms/within.hpp>
 //#include <boost/geometry/algorithms/covered_by.hpp>
 
+#include <boost/geometry/algorithms/detail/relate/result.hpp>
 #include <boost/geometry/algorithms/detail/relate/topology_check.hpp>
 
 #include <boost/geometry/util/condition.hpp>
@@ -43,18 +44,18 @@ struct point_geometry
 
         if ( pig > 0 ) // within
         {
-            set<interior, interior, '0', Transpose>(result);
+            relate::set<interior, interior, '0', Transpose>(result);
         }
         else if ( pig == 0 )
         {
-            set<interior, boundary, '0', Transpose>(result);
+            relate::set<interior, boundary, '0', Transpose>(result);
         }
         else // pig < 0 - not within
         {
-            set<interior, exterior, '0', Transpose>(result);
+            relate::set<interior, exterior, '0', Transpose>(result);
         }
 
-        set<exterior, exterior, result_dimension<Point>::value, Transpose>(result);
+        relate::set<exterior, exterior, result_dimension<Point>::value, Transpose>(result);
 
         if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
@@ -69,9 +70,9 @@ struct point_geometry
             typedef detail::relate::topology_check<Geometry> tc_t;
             //tc_t tc(geometry, point);
             //if ( tc.has_interior )
-                set<exterior, interior, tc_t::interior, Transpose>(result);
+                relate::set<exterior, interior, tc_t::interior, Transpose>(result);
             //if ( tc.has_boundary )
-                set<exterior, boundary, tc_t::boundary, Transpose>(result);
+                relate::set<exterior, boundary, tc_t::boundary, Transpose>(result);
         }
         else
         {
@@ -79,9 +80,9 @@ struct point_geometry
             typedef detail::relate::topology_check<Geometry> tc_t;
             tc_t tc(geometry);
             if ( tc.has_interior )
-                set<exterior, interior, tc_t::interior, Transpose>(result);
+                relate::set<exterior, interior, tc_t::interior, Transpose>(result);
             if ( tc.has_boundary )
-                set<exterior, boundary, tc_t::boundary, Transpose>(result);
+                relate::set<exterior, boundary, tc_t::boundary, Transpose>(result);
         }
     }
 };

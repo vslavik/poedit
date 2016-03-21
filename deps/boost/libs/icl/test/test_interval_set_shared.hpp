@@ -664,8 +664,6 @@ void interval_set_find_4_bicremental_types()
     typedef typename IntervalSetT::interval_type IntervalT;
     typedef typename IntervalSetT::const_iterator c_iterator;
 
-    IntervalT itv = I_D(3,5);
-
     IntervalSetT set_a;
     set_a.add(C_D(1,3)).add(I_I(6,11));
 
@@ -744,8 +742,6 @@ void interval_set_range_4_discrete_types()
     typedef IntervalSet<T> IntervalSetT;
     typedef typename IntervalSetT::interval_type IntervalT;
     typedef typename IntervalSetT::key_type      KeyT;
-
-    IntervalT between = I_D(3,5);
 
     IntervalSetT set_a;
     set_a.add(C_D(1,3)).add(I_I(6,11));

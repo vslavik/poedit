@@ -207,33 +207,37 @@ rule boost_std ( inc ? lib ? )
 
     alias headers ;
     boost_lib_std chrono              : BOOST_CHRONO_DYN_LINK ;
+    boost_lib_std container           : BOOST_CONTAINER_DYN_LINK ;
     boost_lib_std date_time           : BOOST_DATE_TIME_DYN_LINK ;
     boost_lib_std filesystem          : BOOST_FILE_SYSTEM_DYN_LINK ;
     boost_lib_std graph               : BOOST_GRAPH_DYN_LINK ;
     boost_lib_std graph_parallel      : BOOST_GRAPH_DYN_LINK ;
     boost_lib_std iostreams           : BOOST_IOSTREAMS_DYN_LINK ;
     boost_lib_std locale              : BOOST_LOCALE_DYN_LINK ;
-    boost_lib_std math_tr1            : BOOST_MATH_TR1_DYN_LINK ;
-    boost_lib_std math_tr1f           : BOOST_MATH_TR1_DYN_LINK ;
-    boost_lib_std math_tr1l           : BOOST_MATH_TR1_DYN_LINK ;
+    boost_lib_std log                 : BOOST_LOG_DYN_LINK  ;
+    boost_lib_std log_setup           : BOOST_LOG_SETUP_DYN_LINK  ;
     boost_lib_std math_c99            : BOOST_MATH_TR1_DYN_LINK ;
     boost_lib_std math_c99f           : BOOST_MATH_TR1_DYN_LINK ;
     boost_lib_std math_c99l           : BOOST_MATH_TR1_DYN_LINK ;
+    boost_lib_std math_tr1            : BOOST_MATH_TR1_DYN_LINK ;
+    boost_lib_std math_tr1f           : BOOST_MATH_TR1_DYN_LINK ;
+    boost_lib_std math_tr1l           : BOOST_MATH_TR1_DYN_LINK ;
     boost_lib_std mpi                 : BOOST_MPI_DYN_LINK  ;
+    boost_lib_std prg_exec_monitor    : BOOST_TEST_DYN_LINK ;
     boost_lib_std program_options     : BOOST_PROGRAM_OPTIONS_DYN_LINK ;
     boost_lib_std python              : BOOST_PYTHON_DYN_LINK ;
     boost_lib_std python3             : BOOST_PYTHON_DYN_LINK ;
     boost_lib_std random              : BOOST_RANDOM_DYN_LINK ;
     boost_lib_std regex               : BOOST_REGEX_DYN_LINK  ;
     boost_lib_std serialization       : BOOST_SERIALIZATION_DYN_LINK ;
-    boost_lib_std wserialization      : BOOST_SERIALIZATION_DYN_LINK ;
     boost_lib_std signals             : BOOST_SIGNALS_DYN_LINK  ;
     boost_lib_std system              : BOOST_SYSTEM_DYN_LINK  ;
-    boost_lib_std unit_test_framework : BOOST_TEST_DYN_LINK  ;
-    boost_lib_std prg_exec_monitor    : BOOST_TEST_DYN_LINK ;
     boost_lib_std test_exec_monitor   : BOOST_TEST_DYN_LINK ;
     boost_lib_std thread              : BOOST_THREAD_DYN_DLL  ;
+    boost_lib_std timer               : BOOST_TIMER_DYN_DLL  ;
+    boost_lib_std unit_test_framework : BOOST_TEST_DYN_LINK  ;
     boost_lib_std wave                : BOOST_WAVE_DYN_LINK  ;
+    boost_lib_std wserialization      : BOOST_SERIALIZATION_DYN_LINK ;
 }
 
 # Example placeholder for rules defining Boost library project & library targets

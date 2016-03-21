@@ -102,6 +102,27 @@
 			<File
 				RelativePath="..\..\src\alloc_lib.c">
 			</File>
+			<File
+				RelativePath="..\..\src\dlmalloc.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\global_resource.cpp">
+			</File>
+			<File
+				RelativePath="..\..\build\Jamfile.v2">
+			</File>
+			<File
+				RelativePath="..\..\src\monotonic_buffer_resource.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\pool_resource.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\synchronized_pool_resource.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\unsynchronized_pool_resource.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -125,21 +146,6 @@
 							Name="VCCLCompilerTool"/>
 					</FileConfiguration>
 				</File>
-				<File
-					RelativePath="..\..\src\dlmalloc_ext_2_8_6.c">
-					<FileConfiguration
-						Name="Debug|Win32"
-						ExcludedFromBuild="TRUE">
-						<Tool
-							Name="VCCLCompilerTool"/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						ExcludedFromBuild="TRUE">
-						<Tool
-							Name="VCCLCompilerTool"/>
-					</FileConfiguration>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -150,6 +156,24 @@
 			</File>
 			<File
 				RelativePath="..\..\test\default_init_test.hpp">
+			</File>
+			<File
+				RelativePath="..\..\test\derived_from_memory_resource.hpp">
+			</File>
+			<File
+				RelativePath="..\..\src\dlmalloc_ext_2_8_6.c">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\test\dummy_test_allocator.hpp">
@@ -180,6 +204,9 @@
 			</File>
 			<File
 				RelativePath="..\..\test\movable_int.hpp">
+			</File>
+			<File
+				RelativePath="..\..\test\pool_resource_test.hpp">
 			</File>
 			<File
 				RelativePath="..\..\test\print_container.hpp">

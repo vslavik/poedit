@@ -34,12 +34,12 @@ struct rational_adaptor
    typedef typename IntBackend::unsigned_types  unsigned_types;
    typedef typename IntBackend::float_types     float_types;
 
-   rational_adaptor() BOOST_NOEXCEPT_IF(noexcept(rational_type())) {}
-   rational_adaptor(const rational_adaptor& o) BOOST_NOEXCEPT_IF(noexcept(std::declval<rational_type&>() = std::declval<const rational_type&>()))
+   rational_adaptor() BOOST_MP_NOEXCEPT_IF(noexcept(rational_type())) {}
+   rational_adaptor(const rational_adaptor& o) BOOST_MP_NOEXCEPT_IF(noexcept(std::declval<rational_type&>() = std::declval<const rational_type&>()))
    {
       m_value = o.m_value;
    }
-   rational_adaptor(const IntBackend& o) BOOST_NOEXCEPT_IF(noexcept(rational_type(std::declval<const IntBackend&>()))) : m_value(o) {}
+   rational_adaptor(const IntBackend& o) BOOST_MP_NOEXCEPT_IF(noexcept(rational_type(std::declval<const IntBackend&>()))) : m_value(o) {}
 
    template <class U>
    rational_adaptor(const U& u, typename enable_if_c<is_convertible<U, IntBackend>::value>::type* = 0) 
@@ -57,9 +57,9 @@ struct rational_adaptor
    }
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-   rational_adaptor(rational_adaptor&& o) BOOST_NOEXCEPT_IF(noexcept(rational_type(std::declval<rational_type>()))) : m_value(static_cast<rational_type&&>(o.m_value)) {}
-   rational_adaptor(IntBackend&& o) BOOST_NOEXCEPT_IF(noexcept(rational_type(std::declval<IntBackend>()))) : m_value(static_cast<IntBackend&&>(o)) {}
-   rational_adaptor& operator = (rational_adaptor&& o) BOOST_NOEXCEPT_IF(noexcept(std::declval<rational_type&>() = std::declval<rational_type>()))
+   rational_adaptor(rational_adaptor&& o) BOOST_MP_NOEXCEPT_IF(noexcept(rational_type(std::declval<rational_type>()))) : m_value(static_cast<rational_type&&>(o.m_value)) {}
+   rational_adaptor(IntBackend&& o) BOOST_MP_NOEXCEPT_IF(noexcept(rational_type(std::declval<IntBackend>()))) : m_value(static_cast<IntBackend&&>(o)) {}
+   rational_adaptor& operator = (rational_adaptor&& o) BOOST_MP_NOEXCEPT_IF(noexcept(std::declval<rational_type&>() = std::declval<rational_type>()))
    {
       m_value = static_cast<rational_type&&>(o.m_value);
       return *this;
@@ -134,7 +134,7 @@ struct rational_adaptor
          v2 = 1;
       if(*s)
       {
-         BOOST_THROW_EXCEPTION(std::runtime_error(std::string("Could parse the string \"") + p + std::string("\" as a valid rational number.")));
+         BOOST_THROW_EXCEPTION(std::runtime_error(std::string("Could not parse the string \"") + p + std::string("\" as a valid rational number.")));
       }
       data().assign(v1, v2);
       return *this;

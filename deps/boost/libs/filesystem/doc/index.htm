@@ -40,7 +40,7 @@
     <a href="issue_reporting.html">Bug Reports</a>&nbsp;&nbsp;
     </td>
 </table>
-
+<p></p>
 <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse"
  bordercolor="#111111" align="right">
   <tr>
@@ -65,20 +65,6 @@
   </tr>
   </table>
 <p></p>
-<div align="center">
-  <center>
-  <table border="1" cellpadding="10" cellspacing="1" style="border-collapse: collapse" bordercolor="#111111">
-    <tr>
-      <td>
-      <p align="left">This is Version 3 of the Filesystem library. Version 2 is 
-      not longer supported. 1.49.0 was the last release of Boost to supply 
-      Version 2</p>
-      </td>
-    </tr>
-  </table>
-  </center>
-</div>
-
 <h2><a name="Introduction">Introduction</a></h2>
 <p>The Boost.Filesystem library provides facilities to manipulate files and directories, 
 and the paths that identify them.</p>
@@ -130,18 +116,19 @@ throwing exceptions.</p>
     <li>At the simple script-like end of the spectrum, the intent is not to 
     compete with Python, Perl, or shell languages, but rather to provide 
     filesystem operations when C++ is already the language of choice.</li>
-    <li>Finer grained control over operations and error handling is available to 
+    <li dir="ltr">
+    <p dir="ltr">Finer grained control over operations and error handling is available to 
     support more complex applications or other cases where throwing exceptions 
-    isn't desired.</li>
+    isn't desired.<br>
+&nbsp;</li>
   </ul>
   </li>
+  <li>
+  <p dir="ltr"><b>Forms the basis for
+  <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4100.pdf">
+  ISO/IEC TS 18822</a>, the C++ standard library Filesystem Technical 
+  Specification.</b></li>
 </ul>
-
-<p>A proposal,
-<a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1975.html">
-N1975</a>, to include Boost.Filesystem in Technical Report 2 has been accepted 
-by the C++ Standards Committee. That proposal was based on version 2 of 
-Boost.Filesystem; presumably the final TR2 form will be based on version 3.</p>
 
 <h2><a name="Documentation">Documentation</a></h2>
 
@@ -218,20 +205,21 @@ thread, process, or computer.</p>
 existing file &quot;foo&quot; and then creates a directory named &quot;foo&quot;, between the 
 example code's two calls to <i>is_directory()</i>.</p>
 </blockquote>
-<h4><b>May throw exceptions</b></h4>
+<h4>E<b>xceptions</b></h4>
 <p>Unless otherwise specified, Boost.Filesystem functions throw <i>
 <a href="reference.html#basic_filesystem_error-constructors">basic_filesystem_error</a></i> 
-exceptions if they cannot successfully complete their operational 
-specifications. Also, implementations may use C++ Standard Library functions, 
-which may throw <i>std::bad_alloc</i>. These exceptions may be thrown even 
+exceptions to report failures such as I/O errors. Implementations may also use C++ Standard Library functions 
+which can throw <i>std::bad_alloc </i>exceptions to report memory allocation 
+errors. These exceptions may be thrown even 
 though the error condition leading to the exception is not explicitly specified 
 in the function's &quot;Throws&quot; paragraph.</p>
-<p>All exceptions thrown by the Filesystem 
-Library are implemented by calling <a href="../../utility/throw_exception.html">
-boost::throw_exception()</a>. Thus exact behavior may differ depending on 
-BOOST_NO_EXCEPTIONS at the time the filesystem source files are compiled.</p>
-<p>Non-throwing versions are provided of several functions that are often used 
-in contexts where error codes may be the preferred way to report an error.</p>
+<p>Nominally non-throwing versions are provided for
+<a href="reference.html#Operational-functions">operational functions</a> that 
+access the external file system, since these are often used 
+in contexts where error codes may be the preferred way to report an error. Even 
+the nominally non-throwing versions of functions will throw <i>std::bad_alloc </i>
+exceptions to report memory allocation errors. However, functions marked <code>
+noexcept</code> never throw exceptions.</p>
 
 <h2><a name="Headers">Headers</a></h2>
 
@@ -248,19 +236,12 @@ in contexts where error codes may be the preferred way to report an error.</p>
 </ul>
 <h2><a name="Examples">Example programs</a></h2>
 <p>See the <a href="tutorial.html">tutorial</a> for example programs.</p>
-<h3>Other examples</h3>
-<p>The programs used to generate the Boost regression test status tables use the 
-Filesystem Library extensively.&nbsp; See:</p>
-<ul>
-  <li><a href="../../../tools/regression/src/process_jam_log.cpp">process_jam_log.cpp</a></li>
-  <li><a href="../../../tools/regression/src/compiler_status.cpp">compiler_status.cpp</a></li>
-</ul>
 <h2><a name="Implementation">Implementation</a></h2>
 <p>The current implementation supports operating systems which provide 
 the POSIX or Windows API's.</p>
 <p>The library is in regular use on Apple  OS X, HP-UX, IBM AIX, Linux, 
 Microsoft Windows, SGI IRIX, and Sun Solaris operating systems using a variety 
-of compilers.</p>
+of compilers. It is also used by several smart phone operating systems.</p>
 <h2><a name="Macros">Macros</a></h2>
 <p>Users may defined the following macros if desired. Sensible defaults are 
 provided, so users can ignore these macros unless they have special needs.</p>
@@ -300,7 +281,7 @@ built manually using a <a href="../build/Jamfile.v2">Jamfile</a>
 supplied in directory libs/filesystem/build, or the user can construct an IDE 
 project or make file which includes the object-library source files.</p>
 <p>The object-library source files are 
-supplied in directory <a href="src">libs/filesystem/src</a>. These source files implement the 
+supplied in the <a href="../src">src directory</a>. These source files implement the 
 library for POSIX or Windows compatible operating systems; no implementation is 
 supplied for other operating systems. Note that many operating systems not 
 normally thought of as POSIX  systems, such as mainframe legacy 
@@ -463,7 +444,7 @@ version 1.31.0.&nbsp;</p>
 
 <hr>
 <p>Revised
-<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->10 January, 2015<!--webbot bot="Timestamp" endspan i-checksum="38885" --></p>
+<!--webbot bot="Timestamp" S-Type="EDITED" S-Format="%d %B, %Y" startspan -->25 October, 2015<!--webbot bot="Timestamp" endspan i-checksum="38877" --></p>
 
 <p>&copy; Copyright Beman Dawes, 2002-2005</p>
 <p> Use, modification, and distribution are subject to the Boost Software 

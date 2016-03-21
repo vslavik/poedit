@@ -15,6 +15,7 @@
 
 #include <pch.hpp>
 
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 #include <boost/math/distributions/normal.hpp> // for normal_distribution
   using boost::math::normal; // Default type double.
@@ -59,7 +60,7 @@ void test_spots(RealType)
   cout << "Tolerance for type " << typeid(RealType).name()  << " is "
     << setprecision(3) << tolerance  << " (or " << tolerance * 100 << "%)." << endl;
 
-  BOOST_CHECK_THROW( // Probability outside 0 to 1.
+  BOOST_MATH_CHECK_THROW( // Probability outside 0 to 1.
        find_location<normal_distribution<RealType> >(
        static_cast<RealType>(0.), static_cast<RealType>(-1.), static_cast<RealType>(0.) ),
        std::domain_error);
@@ -69,26 +70,26 @@ void test_spots(RealType)
   BOOST_CHECK_EQUAL(n.scale(), 1); // aka standard_deviation.
 
    // Check for 'bad' arguments.
-  BOOST_CHECK_THROW(find_location<normal>(0., -1., 0.), std::domain_error); // p below 0 to 1.
-  BOOST_CHECK_THROW(find_location<normal>(0., 2., 0.), std::domain_error); // p above 0 to 1.
-  BOOST_CHECK_THROW(find_location<normal>(numeric_limits<double>::infinity(), 0.5, 0.),
+  BOOST_MATH_CHECK_THROW(find_location<normal>(0., -1., 0.), std::domain_error); // p below 0 to 1.
+  BOOST_MATH_CHECK_THROW(find_location<normal>(0., 2., 0.), std::domain_error); // p above 0 to 1.
+  BOOST_MATH_CHECK_THROW(find_location<normal>(numeric_limits<double>::infinity(), 0.5, 0.),
     std::domain_error); // z not finite.
-  BOOST_CHECK_THROW(find_location<normal>(numeric_limits<double>::quiet_NaN(), -1., 0.),
+  BOOST_MATH_CHECK_THROW(find_location<normal>(numeric_limits<double>::quiet_NaN(), -1., 0.),
     std::domain_error); // z not finite
-  BOOST_CHECK_THROW(find_location<normal>(0., -1., numeric_limits<double>::quiet_NaN()),
+  BOOST_MATH_CHECK_THROW(find_location<normal>(0., -1., numeric_limits<double>::quiet_NaN()),
     std::domain_error); // scale not finite
 
-  BOOST_CHECK_THROW(find_location<normal>(complement(0., -1., 0.)), std::domain_error); // p below 0 to 1.
-  BOOST_CHECK_THROW(find_location<normal>(complement(0., 2., 0.)), std::domain_error); // p above 0 to 1.
-  BOOST_CHECK_THROW(find_location<normal>(complement(numeric_limits<double>::infinity(), 0.5, 0.)),
+  BOOST_MATH_CHECK_THROW(find_location<normal>(complement(0., -1., 0.)), std::domain_error); // p below 0 to 1.
+  BOOST_MATH_CHECK_THROW(find_location<normal>(complement(0., 2., 0.)), std::domain_error); // p above 0 to 1.
+  BOOST_MATH_CHECK_THROW(find_location<normal>(complement(numeric_limits<double>::infinity(), 0.5, 0.)),
     std::domain_error); // z not finite.
-  BOOST_CHECK_THROW(find_location<normal>(complement(numeric_limits<double>::quiet_NaN(), -1., 0.)),
+  BOOST_MATH_CHECK_THROW(find_location<normal>(complement(numeric_limits<double>::quiet_NaN(), -1., 0.)),
     std::domain_error); // z not finite
-  BOOST_CHECK_THROW(find_location<normal>(complement(0., -1., numeric_limits<double>::quiet_NaN())),
+  BOOST_MATH_CHECK_THROW(find_location<normal>(complement(0., -1., numeric_limits<double>::quiet_NaN())),
     std::domain_error); // scale not finite
 
   //// Check for ab-use with unsuitable distribution(s) when concept check implemented.
-  // BOOST_CHECK_THROW(find_location<pareto>(0., 0.5, 0.), std::domain_error); // pareto can't be used with find_location.
+  // BOOST_MATH_CHECK_THROW(find_location<pareto>(0., 0.5, 0.), std::domain_error); // pareto can't be used with find_location.
 
   // Check doesn't throw when an ignore_error for domain_error policy is used.
   using boost::math::policies::policy;
@@ -98,7 +99,7 @@ void test_spots(RealType)
   // Define a (bad?) policy to ignore domain errors ('bad' arguments):
   typedef policy<domain_error<ignore_error> > ignore_domain_policy;
   // Using a typedef is convenient, especially if it is re-used.
-
+#ifndef BOOST_NO_EXCEPTIONS
   BOOST_CHECK_NO_THROW(find_location<normal>(0, -1, 1,
     ignore_domain_policy())); // probability outside [0, 1]
   BOOST_CHECK_NO_THROW(find_location<normal>(numeric_limits<double>::infinity(), -1, 1,
@@ -108,7 +109,7 @@ void test_spots(RealType)
     ignore_domain_policy()))); // probability outside [0, 1]
   BOOST_CHECK_NO_THROW(find_location<normal>(complement(numeric_limits<double>::infinity(), -1, 1,
     ignore_domain_policy()))); // z not finite.
-
+#endif
   // Find location to give a probability p (0.05) of z (-2)
   RealType sd = static_cast<RealType>(1); // normal default standard deviation = 1.
   RealType z = static_cast<RealType>(-2); // z to give prob p
@@ -154,7 +155,7 @@ BOOST_AUTO_TEST_CASE( test_main )
      std::cout << "<note>The long double tests have been disabled on this platform "
         "either because the long double overloads of the usual math functions are "
         "not available at all, or because they are too inaccurate for these tests "
-        "to pass.</note>" << std::cout;
+        "to pass.</note>" << std::endl;
   #endif
   
 } // BOOST_AUTO_TEST_CASE( test_main )

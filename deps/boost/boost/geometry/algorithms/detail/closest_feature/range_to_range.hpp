@@ -15,8 +15,7 @@
 #include <iterator>
 #include <utility>
 
-#include <boost/assert.hpp>
-
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/point_type.hpp>
 #include <boost/geometry/strategies/distance.hpp>
 #include <boost/geometry/algorithms/dispatch/distance.hpp>
@@ -56,8 +55,8 @@ private:
     {
         typedef index::rtree<RTreeValueType, index::linear<8> > rtree_type;
 
-        BOOST_ASSERT( rtree_first != rtree_last );
-        BOOST_ASSERT( queries_first != queries_last );
+        BOOST_GEOMETRY_ASSERT( rtree_first != rtree_last );
+        BOOST_GEOMETRY_ASSERT( queries_first != queries_last );
 
         Distance const zero = Distance(0);
         dist_min = zero;
@@ -73,13 +72,13 @@ private:
         {
             std::size_t n = rt.query(index::nearest(*qit, 1), &t_v);
 
-            BOOST_ASSERT( n > 0 );
-            // n above is unused outside BOOST_ASSERT, hence the call
-            // to boost::ignore_unused below
+            BOOST_GEOMETRY_ASSERT( n > 0 );
+            // n above is unused outside BOOST_GEOMETRY_ASSERT,
+            // hence the call to boost::ignore_unused below
             //
             // however, t_v (initialized by the call to rt.query(...))
             // is used below, which is why we cannot put the call to
-            // rt.query(...) inside BOOST_ASSERT
+            // rt.query(...) inside BOOST_GEOMETRY_ASSERT
             boost::ignore_unused(n);
 
             Distance dist = dispatch::distance

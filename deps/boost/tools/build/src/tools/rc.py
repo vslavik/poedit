@@ -5,7 +5,7 @@
 #  distribute this software is granted provided this copyright notice appears in
 #  all copies. This software is provided "as is" without express or implied
 #  warranty, and with no claim as to its suitability for any purpose.
-#  
+#
 #  Copyright (c) 2006 Rene Rivera.
 #
 #  Copyright (c) 2008 Steven Watanabe
@@ -39,7 +39,7 @@ __debug = None
 def debug():
     global __debug
     if __debug is None:
-        __debug = "--debug-configuration" in bjam.variable("ARGV")        
+        __debug = "--debug-configuration" in bjam.variable("ARGV")
     return __debug
 
 type.register('RC', ['rc'])
@@ -51,10 +51,10 @@ def configure (command = None, condition = None, options = None):
     """
         Configures a new resource compilation command specific to a condition,
         usually a toolset selection condition. The possible options are:
-        
+
             * <rc-type>(rc|windres) - Indicates the type of options the command
               accepts.
-        
+
         Even though the arguments are all optional, only when a command, condition,
         and at minimum the rc-type option are given will the command be configured.
         This is so that callers don't have to check auto-configuration values
@@ -79,11 +79,11 @@ engine = get_manager().engine()
 class RCAction:
     """Class representing bjam action defined from Python.
     The function must register the action to execute."""
-    
+
     def __init__(self, action_name, function):
         self.action_name = action_name
         self.function = function
-            
+
     def __call__(self, targets, sources, property_set):
         if self.function:
             self.function(targets, sources, property_set)
@@ -132,7 +132,7 @@ __angle_include_re = "#include[ ]*<([^<]+)>"
 
 # Register scanner for resources
 class ResScanner(scanner.Scanner):
-    
+
     def __init__(self, includes):
         scanner.__init__ ;
         self.includes = includes
@@ -149,7 +149,7 @@ class ResScanner(scanner.Scanner):
                               "[^ ]+[ ]+(BITMAP|CURSOR|FONT|ICON|MESSAGETABLE|RT_MANIFEST)" +\
                               "[ ]+(([^ \"]+)|\"([^\"]+)\")", [3, 4])
 
-        # Icons and other includes may referenced as 
+        # Icons and other includes may referenced as
         #
         # IDR_MAINFRAME ICON "res\\icon.ico"
         #
@@ -163,19 +163,19 @@ class ResScanner(scanner.Scanner):
         # Attach binding of including file to included targets.
         # When target is directly created from virtual target
         # this extra information is unnecessary. But in other
-        # cases, it allows to distinguish between two headers of the 
-        # same name included from different places.      
+        # cases, it allows to distinguish between two headers of the
+        # same name included from different places.
         # We don't need this extra information for angle includes,
         # since they should not depend on including file (we can't
         # get literal "." in include path).
         g2 = g + "#" + b
-       
+
         g = "<" + g + ">"
         g2 = "<" + g2 + ">"
         angle = [g + x for x in angle]
         quoted = [g2 + x for x in quoted]
         res = [g2 + x for x in res]
-        
+
         all = angle + quoted
 
         bjam.call('mark-included', target, all)
@@ -187,7 +187,7 @@ class ResScanner(scanner.Scanner):
         engine.set_target_variable(angle, 'SEARCH', [utility.get_value(inc) for inc in self.includes])
         engine.set_target_variable(quoted, 'SEARCH', [b + utility.get_value(inc) for inc in self.includes])
         engine.set_target_variable(res, 'SEARCH', [b + utility.get_value(inc) for inc in self.includes])
-        
+
         # Just propagate current scanner to includes, in a hope
         # that includes do not change scanners.
         get_manager().scanners().propagate(self, angle + quoted)

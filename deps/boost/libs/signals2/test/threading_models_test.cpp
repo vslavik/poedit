@@ -52,11 +52,37 @@ void simple_test()
   BOOST_CHECK(sig() == 0);
 }
 
+class recursion_checking_dummy_mutex
+{
+  int recursion_count;
+public:
+  recursion_checking_dummy_mutex(): recursion_count(0)
+  {}
+  void lock() 
+  { 
+    BOOST_REQUIRE(recursion_count == 0);
+    ++recursion_count;
+  }
+  bool try_lock() 
+  { 
+    lock(); 
+    return true;
+  }
+  void unlock() 
+  { 
+    --recursion_count;
+    BOOST_REQUIRE(recursion_count == 0);
+  }
+};
+
 int test_main(int, char*[])
 {
   typedef boost::signals2::signal<void (), slot_counter, int, std::less<int>, boost::function<void ()>,
-    boost::function<void (const boost::signals2::connection &)>, boost::mutex> sig0_mt_type;
-  simple_test<sig0_mt_type>();
+    boost::function<void (const boost::signals2::connection &)>, recursion_checking_dummy_mutex> sig0_rc_type;
+  simple_test<sig0_rc_type>();
+   typedef boost::signals2::signal<void (), slot_counter, int, std::less<int>, boost::function<void ()>,
+     boost::function<void (const boost::signals2::connection &)>, boost::mutex> sig0_mt_type;
+   simple_test<sig0_mt_type>();
   typedef boost::signals2::signal<void (), slot_counter, int, std::less<int>, boost::function<void ()>,
     boost::function<void (const boost::signals2::connection &)>, boost::signals2::dummy_mutex> sig0_st_type;
   simple_test<sig0_st_type>();

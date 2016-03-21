@@ -1,8 +1,10 @@
 [article Predef
     [quickbook 1.7]
-    [version 1.2]
+    [version 1.4]
     [authors [Rivera, Rene]]
-    [copyright 2005, 2008-2014 Rene Rivera]
+    [copyright 2005, 2008-2015 Rene Rivera]
+    [copyright 2015 Charly Chevalier]
+    [copyright 2015 Joel Falcou]
     [purpose Identification and specification of predefined macros.]
     [license
         Distributed under the Boost Software License, Version 1.0.
@@ -143,6 +145,8 @@ macros of a particular prefix:
 * `BOOST_OS_` for the operating system we are compiling to.
 * `BOOST_PLAT_` for platforms on top of operating system or compilers.
 * `BOOST_ENDIAN_` for endianness of the os and architecture combination.
+* `BOOST_HW_` for hardware specific features.
+* `BOOST_HW_SIMD` for SIMD (Single Instruction Multiple Data) detection.
 
 [note The detected definitions are for the configuration one is targeting
 during the compile. In particular in a cross-compile this means the target
@@ -547,6 +551,10 @@ and "Y", "M", "D" for dates.
 [include ../include/boost/predef/platform/*.h]
 [endsect]
 
+[section `BOOST_HW` hardware macros]
+[include ../include/boost/predef/hardware/*.h]
+[endsect]
+
 [section Other macros]
 [include ../include/boost/predef/other/*.h]
 [endsect]
@@ -649,6 +657,21 @@ rule require ( expressions + : language ? )
 ``
 [c++]
 
+The expression can also use explicit "and", "or" logical operators
+to for more complex checks:
+
+
+[teletype]
+``
+import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+lib my_special_lib : source.cpp
+    : [ predef-require "BOOST_OS_WINDOWS" or "BOOST_OS_VMS"] ;
+``
+[c++]
+
 You can use the [^check] rule for more control and to implement
 something other than control of what gets built. The definition
 for the [^check] rule is:
@@ -673,7 +696,7 @@ import path-to-predef-src/check/predef
 
 exe my_special_exe : source.cpp
     : [ predef-check "BOOST_OS_WINDOWS == 0"
-        : <define>ENABLE_WMF=0
+        : : <define>ENABLE_WMF=0
         : <define>ENABLE_WMF=1 ] ;
 ``
 [c++]

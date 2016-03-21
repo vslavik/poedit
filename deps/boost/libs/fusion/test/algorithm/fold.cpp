@@ -238,7 +238,7 @@ main()
     }
 
     {
-#if !defined(BOOST_FUSION_NO_DECLTYPE_BASED_RESULT_OF)
+#if defined(BOOST_RESULT_OF_USE_DECLTYPE)
         {
             boost::fusion::vector<int, double, long> container{1, 2, 3};
             functor f;

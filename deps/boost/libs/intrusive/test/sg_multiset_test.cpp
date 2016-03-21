@@ -1,7 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Olaf Krzikalla 2004-2006.
-// (C) Copyright Ion Gaztanaga  2006-2013.
+// (C) Copyright Ion Gaztanaga  2007-2013
 //
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,287 +13,108 @@
 #include "itestvalue.hpp"
 #include "bptr_value.hpp"
 #include "smart_ptr.hpp"
+#include "bs_test_common.hpp"
 #include "generic_multiset_test.hpp"
-
-namespace boost { namespace intrusive { namespace test {
-
-#if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4, class O5>
-#else
-template<class T, class ...Options>
-#endif
-struct has_rebalance<boost::intrusive::sg_multiset<T,
-   #if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-   O1, O2, O3, O4, O5
-   #else
-   Options...
-   #endif
-> >
-{
-   static const bool value = true;
-};
-
-
-#if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-template<class T, class O1, class O2, class O3, class O4, class O5>
-#else
-template<class T, class ...Options>
-#endif
-struct has_insert_before<boost::intrusive::sg_multiset<T,
-   #if !defined (BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
-   O1, O2, O3, O4, O5
-   #else
-   Options...
-   #endif
-> >
-{
-   static const bool value = true;
-};
-
-}}}
 
 using namespace boost::intrusive;
 
-struct my_tag;
-
-template<class VoidPointer>
-struct hooks
+template < class ValueTraits, bool FloatingPoint, bool DefaultHolder, bool Map >
+struct rebinder
 {
-   typedef bs_set_base_hook<void_pointer<VoidPointer> >     base_hook_type;
-   typedef bs_set_member_hook<void_pointer<VoidPointer> >   member_hook_type;
-   typedef member_hook_type   auto_member_hook_type;
-   struct auto_base_hook_type
-      :  bs_set_base_hook<void_pointer<VoidPointer>, tag<my_tag> >
-   {};
-   typedef nonhook_node_member< tree_node_traits < VoidPointer >,
-                                sgtree_algorithms
-                              > nonhook_node_member_type;
+   typedef tree_rebinder_common<ValueTraits, DefaultHolder, Map> common_t;
+
+   template < class Option1 =void
+            , class Option2 =void
+            >
+   struct container
+   {
+      typedef sg_multiset
+         < typename common_t::value_type
+         , value_traits<ValueTraits>
+         , floating_point<FloatingPoint>
+         , typename common_t::holder_opt
+         , typename common_t::key_of_value_opt
+         , Option1
+         , Option2
+         > type;
+      BOOST_STATIC_ASSERT((key_type_tester<typename common_t::key_of_value_opt, type>::value));
+   };
 };
 
-
-template< class ValueType
-        , class Option1 =void
-        , class Option2 =void
-        , class Option3 =void
-        >
-struct GetContainer
-{
-   typedef boost::intrusive::sg_set
-      < ValueType
-      , Option1
-      , Option2
-      , Option3
-      > type;
-};
-
-template< class ValueType
-        , class Option1 =void
-        , class Option2 =void
-        , class Option3 =void
-        >
-struct GetContainerFixedAlpha
-{
-   typedef boost::intrusive::sg_set
-      < ValueType
-      , Option1
-      , Option2
-      , Option3
-      , boost::intrusive::floating_point<false>
-      > type;
-};
-
-// container generator with void node allocator
-template < bool Default_Holder >
-struct GetContainer_With_Holder
-{
-template< class ValueType
-        , class Option1 =void
-        , class Option2 =void
-        , class Option3 =void
-        >
-struct GetContainer
-{
-   typedef boost::intrusive::sg_multiset
-      < ValueType
-      , Option1
-      , Option2
-      , Option3
-      > type;
-};
-};
-
-// container generator with standard (non-void) node allocator
-template <>
-struct GetContainer_With_Holder< false >
-{
-template< class ValueType
-        , class Option1 =void
-        , class Option2 =void
-        , class Option3 =void
-        >
-struct GetContainer
-{
-   // extract node type through options->value_traits->node_traits->node
-   typedef typename pack_options< sgtree_defaults, Option1, Option2, Option3 >::type packed_options;
-   typedef typename detail::get_value_traits< ValueType, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename value_traits::node_traits::node node;
-
-   typedef boost::intrusive::sg_multiset
-      < ValueType
-      , Option1
-      , Option2
-      , Option3
-      , header_holder_type< pointer_holder< node > >
-      > type;
-};
-};
-
-// container generator with void node allocator
-template < bool Default_Holder >
-struct GetContainerFixedAlpha_With_Holder
-{
-template< class ValueType
-        , class Option1 =void
-        , class Option2 =void
-        , class Option3 =void
-        >
-struct GetContainerFixedAlpha
-{
-   typedef boost::intrusive::sg_multiset
-      < ValueType
-      , Option1
-      , Option2
-      , Option3
-      > type;
-};
-};
-
-// container generator with standard (non-void) node allocator
-template <>
-struct GetContainerFixedAlpha_With_Holder< false >
-{
-template< class ValueType
-        , class Option1 =void
-        , class Option2 =void
-        , class Option3 =void
-        >
-struct GetContainerFixedAlpha
-{
-   // extract node type through options->value_traits->node_traits->node
-   typedef typename pack_options< sgtree_defaults, Option1, Option2, Option3 >::type packed_options;
-   typedef typename detail::get_value_traits< ValueType, typename packed_options::proto_value_traits>::type value_traits;
-   typedef typename value_traits::node_traits::node node;
-
-   typedef boost::intrusive::sg_multiset
-      < ValueType
-      , Option1
-      , Option2
-      , Option3
-      , boost::intrusive::floating_point<false>
-      , header_holder_type< pointer_holder< node > >
-      > type;
-};
-};
-
-
-template<class VoidPointer, bool Default_Holder>
+template<class VoidPointer, bool FloatingPoint, bool DefaultHolder, bool Map>
 class test_main_template
 {
    public:
-   int operator()()
+   static void execute()
    {
-      using namespace boost::intrusive;
-      typedef testvalue<hooks<VoidPointer> , true> value_type;
-
-      test::test_generic_multiset < typename detail::get_base_value_traits
-                  < value_type
-                  , typename hooks<VoidPointer>::base_hook_type
-                  >::type
-               , GetContainer_With_Holder< Default_Holder >::template GetContainer
-               >::test_all();
-      test::test_generic_multiset < typename detail::get_member_value_traits
-                  < member_hook< value_type
-                              , typename hooks<VoidPointer>::member_hook_type
-                              , &value_type::node_
-                              >
-                  >::type
-               , GetContainer_With_Holder< Default_Holder >::template GetContainer
-               >::test_all();
-      test::test_generic_multiset < typename detail::get_base_value_traits
-                  < value_type
-                  , typename hooks<VoidPointer>::base_hook_type
-                  >::type
-               , GetContainerFixedAlpha_With_Holder< Default_Holder >::template GetContainerFixedAlpha
-               >::test_all();
-      test::test_generic_multiset < typename detail::get_member_value_traits
-                  < member_hook< value_type
-                              , typename hooks<VoidPointer>::member_hook_type
-                              , &value_type::node_
-                              >
-                  >::type
-               , GetContainerFixedAlpha_With_Holder< Default_Holder >::template GetContainerFixedAlpha
-               >::test_all();
-      test::test_generic_multiset < nonhook_node_member_value_traits< value_type,
-                                                                      typename hooks<VoidPointer>::nonhook_node_member_type,
-                                                                      &value_type::nhn_member_,
-                                                                      safe_link
-                                                                    >,
-                                    GetContainerFixedAlpha_With_Holder< Default_Holder >::template GetContainerFixedAlpha
-                                  >::test_all();
-      return 0;
+      typedef testvalue_traits< bs_hooks<VoidPointer> > testval_traits_t;
+      //base
+      typedef typename testval_traits_t::base_value_traits  base_hook_t;
+      test::test_generic_multiset
+         < base_hook_t
+         , rebinder<base_hook_t, FloatingPoint, DefaultHolder, Map>
+         >::test_all();
+      //member
+      typedef typename testval_traits_t::member_value_traits member_hook_t;
+      test::test_generic_multiset
+         < member_hook_t
+         , rebinder<member_hook_t, FloatingPoint, DefaultHolder, Map>
+         >::test_all();
+      //nonmember
+      test::test_generic_multiset
+         < typename testval_traits_t::nonhook_value_traits
+         , rebinder<typename testval_traits_t::nonhook_value_traits, FloatingPoint, DefaultHolder, Map>
+         >::test_all();
    }
 };
 
-// container generator which ignores further parametrization, except for compare option
-template < typename Value_Traits, bool ConstantTimeSize, typename HeaderHolder >
-struct Get_Preset_Container
-{
-    template < class
-             , class Option1 = void
-             , class Option2 = void
-             , class Option3 = void
-             >
-    struct GetContainer
-    {
-        // ignore further paramatrization except for the compare option
-        // notably ignore the size option (use preset)
-        typedef typename pack_options< sgtree_defaults, Option1, Option2, Option3 >::type packed_options;
-        typedef typename packed_options::compare compare_option;
-
-        typedef boost::intrusive::sg_multiset< typename Value_Traits::value_type,
-                                          value_traits< Value_Traits >,
-                                          constant_time_size< ConstantTimeSize >,
-                                          compare< compare_option >,
-                                          header_holder_type< HeaderHolder >
-                                        > type;
-    };
-};
-
+template < bool FloatingPoint, bool Map >
 struct test_main_template_bptr
 {
-    void operator () ()
-    {
-        typedef BPtr_Value value_type;
-        typedef BPtr_Value_Traits< Tree_BPtr_Node_Traits > value_traits;
-        typedef bounded_allocator< value_type > allocator_type;
+   static void execute()
+   {
+      typedef BPtr_Value_Traits< Tree_BPtr_Node_Traits > value_traits;
+      typedef bounded_allocator< BPtr_Value >            allocator_type;
 
-        allocator_type::init();
-        test::test_generic_multiset< value_traits,
-                                Get_Preset_Container< value_traits, true,
-                                                      bounded_pointer_holder< value_type > >::GetContainer
-                              >::test_all();
-        assert(allocator_type::is_clear());
-        allocator_type::destroy();
-    }
+      bounded_allocator_scope<allocator_type> bounded_scope; (void)bounded_scope;
+      test::test_generic_multiset
+         < value_traits
+         , rebinder< value_traits, FloatingPoint, true, Map>
+         >::test_all();
+   }
 };
 
 int main()
 {
-   // test (plain/smart pointers) x (const size) x (void node allocator)
-   test_main_template<void*, true>()();
-   test_main_template<boost::intrusive::smart_ptr<void>, true >()();
-   // test (bounded pointers) x (nonconst/const size) x (special node allocator)
-   test_main_template_bptr()();
+   //Combinations: VoidPointer x FloatingPoint x DefaultHolder x Map
+   //Minimize them selecting different combinations for raw and smart pointers
+   //Start with ('false', 'false', 'false') in sets and 'false', 'false', 'true' in multisets
+
+   //void pointer
+   //test_main_template<void*, false, false, false>::execute();
+   test_main_template<void*, false, false, true>::execute();
+   //test_main_template<void*, false, true, false>::execute();
+   test_main_template<void*, false, true,  true>::execute();
+   //test_main_template<void*,  true, false, false>::execute();
+   test_main_template<void*,  true, false, true>::execute();
+   //test_main_template<void*,  true, true, false>::execute();
+   test_main_template<void*,  true, true,  true>::execute();
+
+   //smart_ptr
+   test_main_template<smart_ptr<void>, false, false, false>::execute();
+   //test_main_template<smart_ptr<void>, false, false,  true>::execute();
+   test_main_template<smart_ptr<void>, false,  true, false>::execute();
+   //test_main_template<smart_ptr<void>, false,  true,  true>::execute();
+   test_main_template<smart_ptr<void>,  true, false, false>::execute();
+   //test_main_template<smart_ptr<void>,  true, false, true>::execute();
+   test_main_template<smart_ptr<void>,  true,  true, false>::execute();
+   //test_main_template<smart_ptr<void>,  true,  true,  true>::execute();
+
+   //bounded_ptr (bool FloatingPoint, bool Map)
+   //test_main_template_bptr< false, false >::execute();
+   test_main_template_bptr< false,  true >::execute();
+   test_main_template_bptr<  true, false >::execute();
+   //test_main_template_bptr<  true,  true >::execute();
 
    return boost::report_errors();
 }

@@ -1,12 +1,14 @@
 //
-//  Copyright (c) 2009-2011 Artyom Beilis (Tonkikh)
+//  Copyright (c) 2009-2015 Artyom Beilis (Tonkikh)
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 #define BOOST_LOCALE_SOURCE
+#define BOOST_DETAIL_NO_CONTAINER_FWD
 #include <boost/config.hpp>
+#include <boost/version.hpp>
 #include <boost/locale/message.hpp>
 #include <boost/locale/gnu_gettext.hpp>
 #include <boost/shared_ptr.hpp>
@@ -436,8 +438,8 @@ namespace boost {
                         while(*e)
                             e++;
                         state = pj_winberger_hash::update_state(state,
-                                    static_cast<char const *>(p),
-                                    static_cast<char const *>(e));
+                                    reinterpret_cast<char const *>(p),
+                                    reinterpret_cast<char const *>(e));
                         state = pj_winberger_hash::update_state(state,'\4');
                     }
                     p = msg.key();
@@ -445,8 +447,8 @@ namespace boost {
                     while(*e)
                         e++;
                     state = pj_winberger_hash::update_state(state,
-                                static_cast<char const *>(p),
-                                static_cast<char const *>(e));
+                                reinterpret_cast<char const *>(p),
+                                reinterpret_cast<char const *>(e));
                     return state;
                 }
             };
@@ -755,7 +757,7 @@ namespace boost {
                 return new mo_message<wchar_t>(info);
             }
             
-            #ifdef BOOST_HAS_CHAR16_T
+            #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
 
             template<>
             message_format<char16_t> *create_messages_facet(messages_info const &info)
@@ -764,7 +766,7 @@ namespace boost {
             }
             #endif
             
-            #ifdef BOOST_HAS_CHAR32_T
+            #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
 
             template<>
             message_format<char32_t> *create_messages_facet(messages_info const &info)

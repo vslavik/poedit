@@ -38,7 +38,7 @@
 
 #if BOOST_PP_VARIADICS
 
-#if defined(BOOST_PP_VARIADICS_MSVC) /* Testing the VC++ variadic version */
+#if BOOST_PP_VARIADICS_MSVC /* Testing the VC++ variadic version */
 
 /* INCORRECT */
 

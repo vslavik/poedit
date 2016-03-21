@@ -49,8 +49,8 @@
           Typically <code class="computeroutput"><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">is_specialized</span></code>
           is <code class="computeroutput"><span class="keyword">true</span></code> for all <code class="computeroutput"><span class="identifier">T</span></code> where the compile-time constant members
           of <code class="computeroutput"><span class="identifier">numeric_limits</span></code> are indeed
-          known at compile time, and don't vary at runtime. For example floating
-          point types with runtime-variable precision such as <code class="computeroutput"><span class="identifier">mpfr_float</span></code>
+          known at compile time, and don't vary at runtime. For example floating-point
+          types with runtime-variable precision such as <code class="computeroutput"><span class="identifier">mpfr_float</span></code>
           have no <code class="computeroutput"><span class="identifier">numeric_limits</span></code>
           specialization as it would be impossible to define all the members at compile
           time. In contrast the precision of a type such as <code class="computeroutput"><span class="identifier">mpfr_float_50</span></code>
@@ -69,7 +69,7 @@
 <p>
           For floating-point types, &#8734; is defined wherever possible, but clearly infinity
           is meaningless for __arbitrary_precision arithmetic backends, and there
-          is one floating point type (GMP's <code class="computeroutput"><span class="identifier">mpf_t</span></code>,
+          is one floating-point type (GMP's <code class="computeroutput"><span class="identifier">mpf_t</span></code>,
           see <a class="link" href="../floats/gmp_float.html" title="gmp_float">gmp_float</a>)
           which has no notion of infinity or NaN at all.
         </p>
@@ -123,7 +123,7 @@
           ISO/IEC 10967-1, Language independent arithmetic, noted by the C++ Standard
           defines
         </p>
-<pre class="programlisting"><span class="identifier">A</span> <span class="identifier">floating</span> <span class="identifier">point</span> <span class="identifier">type</span> <span class="identifier">F</span> <span class="identifier">shall</span> <span class="identifier">be</span> <span class="identifier">a</span> <span class="identifier">finite</span> <span class="identifier">subset</span> <span class="identifier">of</span> <span class="special">[</span><span class="identifier">real</span><span class="special">].</span>
+<pre class="programlisting"><span class="identifier">A</span> <span class="identifier">floating</span><span class="special">-</span><span class="identifier">point</span> <span class="identifier">type</span> <span class="identifier">F</span> <span class="identifier">shall</span> <span class="identifier">be</span> <span class="identifier">a</span> <span class="identifier">finite</span> <span class="identifier">subset</span> <span class="identifier">of</span> <span class="special">[</span><span class="identifier">real</span><span class="special">].</span>
 </pre>
 <p>
           The important practical distinction is that all integers (up to <code class="computeroutput"><span class="identifier">max</span><span class="special">()</span></code>)
@@ -149,7 +149,7 @@
         </p>
 <p>
           There are number of proposals to <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3407.html" target="_top">add
-          Decimal Floating Point Support to C++</a>.
+          Decimal floating-point Support to C++</a>.
         </p>
 <p>
           <a href="http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2009/n2849.pdf" target="_top">Decimal
@@ -391,32 +391,9 @@
           bit (ULP) produces a different decimal digits string.
         </p>
 <p>
-          For nearly all floating-point types, <code class="computeroutput"><span class="identifier">max_digits10</span></code>
-          is <code class="computeroutput"><span class="identifier">digits10</span><span class="special">+</span><span class="number">2</span></code>, but you should use <code class="computeroutput"><span class="identifier">max_digits10</span></code>
-          where possible.
-        </p>
-<p>
-          If <code class="computeroutput"><span class="identifier">max_digits10</span></code> is not
-          available, you should using the <a href="http://www.cs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF" target="_top">Kahan
-          formula for floating-point type T</a>
-        </p>
-<pre class="programlisting"><span class="identifier">max_digits10</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">/</span><span class="number">10000U</span><span class="special">;</span>
-</pre>
-<p>
-          The factor is log<sub>10</sub>(2) = 0.3010 but must be evaluated at compile time using
-          only integers.
-        </p>
-<p>
-          (See also <a href="http://www.loria.fr/~zimmerma/mca/mca-cup-0.5.9.pdf" target="_top">Richard
-          P. Brent and Paul Zimmerman, Modern Computer Arithmetic</a> Equation
-          3.8 on page 116.).
-        </p>
-<p>
-          The extra two (or 3) least significant digits are 'noisy' and may be junk,
-          but if you want to 'round-trip' - printing a value out and reading it back
-          in - you must use <code class="computeroutput"><span class="identifier">os</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">)</span></code>.
-          For at least one popular compiler, you must also use <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">scientific</span></code>
-          format.
+          For the most common <code class="computeroutput"><span class="keyword">double</span></code>
+          floating-point type,<code class="computeroutput"><span class="identifier">max_digits10</span></code>
+          is <code class="computeroutput"><span class="identifier">digits10</span><span class="special">+</span><span class="number">2</span></code>, but you should use C++11 <code class="computeroutput"><span class="identifier">max_digits10</span></code> where possible (see <a class="link" href="constants.html#boost_multiprecision.tut.limits.constants.max_digits10">below</a>).
         </p>
 <h5>
 <a name="boost_multiprecision.tut.limits.constants.h9"></a>
@@ -476,17 +453,23 @@
 </pre>
 <p>
           For integer types, <code class="computeroutput"><span class="identifier">max_digits10</span></code>
-          is implementation-dependant, but is usually <code class="computeroutput"><span class="identifier">digits10</span>
+          is implementation-dependent, but is usually <code class="computeroutput"><span class="identifier">digits10</span>
           <span class="special">+</span> <span class="number">2</span></code>.
-          This is the output field width required for the maximum value of the type
+          This is the output field-width required for the maximum value of the type
           T <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">max</span><span class="special">()</span></code>
-          including a sign and a space.
+          <span class="emphasis"><em>including a sign and a space</em></span>.
         </p>
 <p>
           So this will produce neat columns.
         </p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">setw</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">)</span> <span class="special">...</span>
 </pre>
+<p>
+          The extra two or three least-significant digits are 'noisy' and may be
+          junk, but if you want to 'round-trip' - printing a value out as a decimal
+          digit string and reading it back in - (most commonly during serialization
+          and de-serialization) you must use <code class="computeroutput"><span class="identifier">os</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">)</span></code>.
+        </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
@@ -504,10 +487,10 @@
 </tr>
 <tr><td align="left" valign="top">
 <p>
-            For Microsoft Visual Studio, and default float format, a small range
-            of values approximately 0.0001 to 0.004, with exponent values of 3f2
-            to 3f6, are wrongly input by one least significant bit, probably every
-            third value of significand.
+            For Microsoft Visual Studio before 2013, and default float format, a
+            small range of values approximately 0.0001 to 0.004, with exponent values
+            of 3F2 to 3F6, are wrongly input by one least significant bit, probably
+            every third value of significand.
           </p>
 <p>
             A workaround is using scientific or exponential format <code class="computeroutput"><span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">scientific</span></code>.
@@ -522,27 +505,77 @@
 <tr><td align="left" valign="top"><p>
             BOOST_NO_CXX11_NUMERIC_LIMITS is a suitable feature-test macro to determine
             if <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="keyword">float</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span></code> is implemented on any
-            platform. If <code class="computeroutput"><span class="identifier">max_digits10</span></code>
-            is not available, you should using the <a href="http://www.cs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF" target="_top">Kahan
-            formula for floating-point type T</a>. See above.
+            platform.
           </p></td></tr>
 </table></div>
 <p>
-          For example, to be portable, including older platforms:
+          If <code class="computeroutput"><span class="identifier">max_digits10</span></code> is not
+          available, you should use the <a href="http://www.cs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF" target="_top">Kahan
+          formula for floating-point type T</a>.
         </p>
-<pre class="programlisting">  <span class="keyword">typedef</span> <span class="keyword">float</span> <span class="identifier">T</span><span class="special">;</span> <span class="comment">// Any type: `double`, cpp_dec_float_50, bin_128bit_double_type ...</span>
+<p>
+          In C++, the equations for what Kahan (on page 4) describes as 'at least'
+          and 'at most' are:
+        </p>
+<pre class="programlisting"><span class="keyword">static</span> <span class="keyword">long</span> <span class="keyword">double</span> <span class="keyword">const</span> <span class="identifier">log10Two</span> <span class="special">=</span> <span class="number">0.30102999566398119521373889472449L</span><span class="special">;</span> <span class="comment">// log10(2.)</span>
 
-<span class="preprocessor">#if</span> <span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_CXX11_NUMERIC_LIMITS</span><span class="special">)</span>
-   <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="number">2</span> <span class="special">+</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">/</span><span class="number">10000U</span><span class="special">);</span>
+<span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">floor</span><span class="special">((</span><span class="identifier">significand_digits</span> <span class="special">-</span> <span class="number">1</span><span class="special">)</span> <span class="special">*</span> <span class="identifier">log10Two</span><span class="special">));</span> <span class="comment">// == digits10  - 'at least' .</span>
+<span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">ceil</span><span class="special">(</span><span class="number">1</span> <span class="special">+</span> <span class="identifier">significand_digits</span> <span class="special">*</span> <span class="identifier">log10Two</span><span class="special">));</span> <span class="comment">// == max_digits10  - 'at most'.</span>
+</pre>
+<p>
+          Unfortunately, these cannot be evaluated (at least by C++03) at <span class="bold"><strong>compile-time</strong></span>. So the following expression is often
+          used instead.
+        </p>
+<pre class="programlisting"><span class="identifier">max_digits10</span> <span class="special">=</span> <span class="number">2</span> <span class="special">+</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">/</span><span class="number">10000U</span><span class="special">;</span>
+
+<span class="comment">// == 2 + std::numeric_limits&lt;T&gt;::digits for double and 64-bit long double.</span>
+<span class="comment">// == 3 + std::numeric_limits&lt;T&gt;::digits for float,  80-bit long-double and __float128.</span>
+</pre>
+<p>
+          often the actual values are computed for the C limits macros:
+        </p>
+<pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">FLT_MAXDIG10</span> <span class="special">(</span><span class="number">2</span><span class="special">+</span><span class="identifier">FLT_MANT_DIG</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">/</span><span class="number">10000U</span><span class="special">)</span>  <span class="comment">// 9</span>
+<span class="preprocessor">#define</span> <span class="identifier">DBL_MAXDIG10</span> <span class="special">(</span><span class="number">2</span><span class="special">+</span> <span class="special">(</span><span class="identifier">DBL_MANT_DIG</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">)/</span><span class="number">10000U</span><span class="special">)</span> <span class="comment">// 17</span>
+<span class="preprocessor">#define</span> <span class="identifier">LDBL_MAXDIG10</span> <span class="special">(</span><span class="number">2</span><span class="special">+</span> <span class="special">(</span><span class="identifier">LDBL_MANT_DIG</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">)/</span><span class="number">10000U</span><span class="special">)</span> <span class="comment">// 17 for MSVC, 18 for others.</span>
+</pre>
+<p>
+          The factor 3010U/10000U is <span class="emphasis"><em>log<sub>10</sub>(2) = 0.3010</em></span> that
+          can be evaluated at compile-time using only <code class="computeroutput"><span class="keyword">short</span>
+          <span class="keyword">unsigned</span> <span class="keyword">int</span></code>s
+          to be a desirable <code class="computeroutput"><span class="keyword">const</span></code> or
+          <code class="computeroutput"><span class="keyword">constexpr</span></code> (and usually also
+          <code class="computeroutput"><span class="keyword">static</span></code>).
+        </p>
+<p>
+          Boost macros allow this to be done portably, see <a href="http://www.boost.org/doc/libs/1_58_0/libs/config/doc/html/boost_config/boost_macro_reference.html" target="_top">BOOST_CONSTEXPR_OR_CONST
+          or BOOST_STATIC_CONSTEXPR</a>.
+        </p>
+<p>
+          (See also <a href="http://www.loria.fr/~zimmerma/mca/mca-cup-0.5.9.pdf" target="_top">Richard
+          P. Brent and Paul Zimmerman, Modern Computer Arithmetic</a> Equation
+          3.8 on page 116).
+        </p>
+<p>
+          For example, to be portable (including obselete platforms) for type <code class="computeroutput"><span class="identifier">T</span></code> where <code class="computeroutput"><span class="identifier">T</span></code>
+          may be: <code class="computeroutput"><span class="keyword">float</span></code>, <code class="computeroutput"><span class="keyword">double</span></code>, <code class="computeroutput"><span class="keyword">long</span>
+          <span class="keyword">double</span></code>, <code class="computeroutput"><span class="number">128</span><span class="special">-</span><span class="identifier">bit</span> <span class="identifier">quad</span> <span class="identifier">type</span></code>,
+          <code class="computeroutput"><span class="identifier">cpp_bin_float_50</span></code> ...
+        </p>
+<pre class="programlisting">  <span class="keyword">typedef</span> <span class="keyword">float</span> <span class="identifier">T</span><span class="special">;</span>
+
+<span class="preprocessor">#if</span> <span class="identifier">defined</span> <span class="identifier">BOOST_NO_CXX11_NUMERIC_LIMITS</span>
+   <span class="comment">// No max_digits10 implemented.</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="identifier">max_digits10</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;());</span>
 <span class="preprocessor">#else</span>
-<span class="preprocessor">#  if</span> <span class="special">(</span><span class="identifier">_MSC_VER</span> <span class="special">&lt;=</span> <span class="number">1600</span><span class="special">)</span> <span class="comment">// Correct wrong value for float.</span>
-     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="number">2</span> <span class="special">+</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">digits</span> <span class="special">*</span> <span class="number">3010U</span><span class="special">/</span><span class="number">10000U</span><span class="special">);</span>
-<span class="preprocessor">#  else</span>
+  <span class="preprocessor">#if</span><span class="special">(</span><span class="identifier">_MSC_VER</span> <span class="special">&lt;=</span> <span class="number">1600</span><span class="special">)</span>
+   <span class="comment">//  Wrong value for std::numeric_limits&lt;float&gt;::max_digits10.</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="identifier">max_digits10</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;());</span>
+  <span class="preprocessor">#else</span> <span class="comment">// Use the C++11 max_digits10.</span>
      <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">);</span>
-<span class="preprocessor">#  endif</span>
+  <span class="preprocessor">#endif</span>
 <span class="preprocessor">#endif</span>
 
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"std::cout.precision = "</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"std::cout.precision(max_digits10) = "</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">()</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span> <span class="comment">// 9</span>
 
   <span class="keyword">double</span> <span class="identifier">x</span> <span class="special">=</span> <span class="number">1.2345678901234567889</span><span class="special">;</span>
 
@@ -551,7 +584,7 @@
 <p>
           which should output:
         </p>
-<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span> <span class="special">=</span> <span class="number">9</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">.</span><span class="identifier">precision</span><span class="special">(</span><span class="identifier">max_digits10</span><span class="special">)</span> <span class="special">=</span> <span class="number">9</span>
 <span class="identifier">x</span> <span class="special">=</span> <span class="number">1.23456789</span>
 </pre>
 <h5>

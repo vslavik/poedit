@@ -70,6 +70,9 @@ BOOST_FUSION_ADAPT_ASSOC_ADT(
 
 #endif
 
+class empty_adt{};
+BOOST_FUSION_ADAPT_ASSOC_ADT(empty_adt,)
+
 int
 main()
 {

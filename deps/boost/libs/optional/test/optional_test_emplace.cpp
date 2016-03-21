@@ -145,25 +145,62 @@ void test_clear_on_throw()
 
 void test_no_assignment_on_emplacement()
 {
-    optional<const std::string> os;
+    optional<const std::string> os, ot;
     BOOST_TEST(!os);
     os.emplace("wow");
     BOOST_TEST(os);
     BOOST_TEST_EQ(*os, "wow");
+    
+    BOOST_TEST(!ot);
+    ot.emplace();
+    BOOST_TEST(ot);
+    BOOST_TEST_EQ(*ot, "");
 }
+
+namespace no_rvalue_refs {
+class Guard
+{
+public:
+    int which_ctor;
+    Guard () : which_ctor(0) { }
+    Guard (std::string const&) : which_ctor(5) { }
+    Guard (std::string &) : which_ctor(6) { }
+private:
+    Guard(Guard const&);
+    void operator=(Guard const&);
+};
+
+void test_emplace()
+{
+    const std::string cs;
+    std::string ms;
+    optional<Guard> o;
+    
+    o.emplace();
+    BOOST_TEST(o);
+    BOOST_TEST(0 == o->which_ctor);
+    
+    o.emplace(cs);
+    BOOST_TEST(o);
+    BOOST_TEST(5 == o->which_ctor);
+    
+    o.emplace(ms);
+    BOOST_TEST(o);
+    BOOST_TEST(6 == o->which_ctor);
+}
+} 
 
 int main()
 {
 #if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
-  test_emplace();
+    test_emplace();
 #endif
 #if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES)
-  test_no_moves_on_emplacement();
+    test_no_moves_on_emplacement();
 #endif
-  test_clear_on_throw();
-  test_no_assignment_on_emplacement();
-
-  return boost::report_errors();
+    test_clear_on_throw();
+    test_no_assignment_on_emplacement();
+    no_rvalue_refs::test_emplace();
+  
+    return boost::report_errors();
 }
-
-

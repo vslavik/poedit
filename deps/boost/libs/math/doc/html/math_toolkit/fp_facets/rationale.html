@@ -4,7 +4,7 @@
 <title>Design Rationale</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../fp_facets.html" title="Facets for Floating-Point Infinities and NaNs">
 <link rel="prev" href="portability.html" title="Portability">
 <link rel="next" href="../next_float.html" title="Floating-Point Representation Distance (ULP), and Finding Adjacent Floating-Point Values">
@@ -36,15 +36,15 @@
             that do so. However, for that to work with dynamically linked libraries,
             a <code class="computeroutput"><span class="special">.</span><span class="identifier">cpp</span></code>
             file would have to be added to the library. It was judged be more desirable
-            to have a headers only library, than to have mutable flags and manipulators.
+            to have a header-only library, than to have mutable flags and manipulators.
           </li>
 <li class="listitem">
             The facet <code class="computeroutput"><span class="identifier">nonfinite_num_put</span></code>
             throws an exception when the <code class="computeroutput"><span class="identifier">trap_infinity</span></code>
             or <code class="computeroutput"><span class="identifier">trap_nan</span></code> flag is set
             and an attempt is made to format infinity or NaN. It would be better
-            if the facet set the fail bit of the stream. However, facets derived
-            from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">num_put</span></code> do not have access to the stream
+            if the facet set the <code class="computeroutput"><span class="identifier">fail</span> <span class="identifier">bit</span></code> of the stream. However, facets
+            derived from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">num_put</span></code> do not have access to the stream
             state.
           </li>
 </ul></div>

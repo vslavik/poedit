@@ -40,6 +40,7 @@
 \defgroup interior_rings interior_rings: interior_rings
 \defgroup intersection intersection: calculate new geometry
 \defgroup intersects intersects: detect if a geometry self-intersects or if two geometries intersect
+\defgroup is_empty is_empty: detect if a geometry is the empty set
 \defgroup is_simple is_simple: detect if a geometry is simple
 \defgroup is_valid is_valid: detect if a geometry is valid
 \defgroup iterators iterators: iterators
@@ -55,6 +56,8 @@
 \defgroup projections projections: Projections
 \defgroup ranges ranges: ranges
 \defgroup register register: Macros for registration
+\defgroup relate relate: check spatial relation between two geometries
+\defgroup relation relation: calculate spatial relation between two geometries
 \defgroup reverse reverse: reverse a geometry
 \defgroup selected selection: check if a geometry is "selected" by a point
 \defgroup set set: set geometries

@@ -4,7 +4,7 @@
 <title>Digamma</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_gamma.html" title="Gamma Functions">
 <link rel="prev" href="lgamma.html" title="Log Gamma">
 <link rel="next" href="trigamma.html" title="Trigamma">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">digamma</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">digamma</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">digamma</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -57,9 +57,9 @@
         <span class="inlinemediaobject"><img src="../../../graphs/digamma.svg" align="middle"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -76,9 +76,10 @@
         various platforms with various floating point types. Unless otherwise specified
         any floating point type that is narrower than the one shown will have <a class="link" href="../relative_error.html#math_toolkit.relative_error.zero_error">effectively zero error</a>.
       </p>
-<div class="informaltable"><table class="table">
+<div class="table">
+<a name="math_toolkit.sf_gamma.digamma.table_digamma"></a><p class="title"><b>Table&#160;6.4.&#160;Error rates for digamma</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for digamma">
 <colgroup>
-<col>
 <col>
 <col>
 <col>
@@ -87,33 +88,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Random Positive Values
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Values Near The Positive Root
-                </p>
-              </th>
-<th>
-                <p>
-                  Values Near Zero
-                </p>
-              </th>
-<th>
-                <p>
-                  Negative Values
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -121,134 +114,217 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Digamma Function: Large Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32 Visual C++ 8
+                  <span class="blue">Max = 0.98&#949; (Mean = 0.369&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.98 Mean=0.36
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 1.84&#949; (Mean = 0.71&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 1.18&#949; (Mean = 0.331&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 0.919&#949; (Mean = 0.394&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.99 Mean=0.5
+                  <span class="blue">Max = 1.39&#949; (Mean = 0.413&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.95 Mean=0.5
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=214 Mean=16
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Linux IA32 / GCC
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=1.4 Mean=0.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=1.3 Mean=0.45
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=0.98 Mean=0.35
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=180 Mean=13
+                  <span class="blue">Max = 1.39&#949; (Mean = 0.413&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Digamma Function: Near the Positive Root
                 </p>
               </td>
 <td>
                 <p>
-                  Linux IA64 / GCC
+                  <span class="blue">Max = 0.997&#949; (Mean = 0.527&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.92 Mean=0.4
+                  <span class="blue">Max = 0.891&#949; (Mean = 0.0995&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 135&#949; (Mean = 11.9&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 2.02e+03&#949; (Mean = 256&#949;))<br>
+                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.42e+04&#949; (Mean = 1.14e+03&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1.3 Mean=0.45
+                  <span class="blue">Max = 1.37&#949; (Mean = 0.477&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.98 Mean=0.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=180 Mean=13
+                  <span class="blue">Max = 1.31&#949; (Mean = 0.451&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Digamma Function: Near Zero
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 0.953&#949; (Mean = 0.337&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.9 Mean=0.4
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 0.953&#949; (Mean = 0.348&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 1.17&#949; (Mean = 0.564&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 3.5&#949; (Mean = 1.04&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1.1 Mean=0.5
+                  <span class="blue">Max = 0.984&#949; (Mean = 0.361&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=0.99 Mean=0.4
+                  <span class="blue">Max = 0.984&#949; (Mean = 0.361&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Digamma Function: Negative Values
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=64 Mean=6
+                  <span class="blue">Max = 214&#949; (Mean = 16.1&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 4.56e+04&#949; (Mean = 3.91e+03&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 4.6e+04&#949; (Mean = 3.94e+03&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 214&#949; (Mean = 16.4&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 180&#949; (Mean = 13&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 180&#949; (Mean = 13&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Digamma Function: Values near 0
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 0.866&#949; (Mean = 0.387&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 3.58e+05&#949; (Mean = 1.6e+05&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 0.5&#949; (Mean = 0.224&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1&#949; (Mean = 0.592&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1&#949; (Mean = 0.592&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Digamma Function: Integer arguments
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.992&#949; (Mean = 0.452&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.992&#949; (Mean = 0.215&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.18&#949; (Mean = 0.607&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 4.33&#949; (Mean = 0.982&#949;))<br>
+                  (<span class="emphasis"><em>Cephes:</em></span> Max = 0.992&#949; (Mean = 0.383&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.888&#949; (Mean = 0.403&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.888&#949; (Mean = 0.403&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Digamma Function: Half integer arguments
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.78&#949; (Mean = 0.314&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 1.09&#949; (Mean = 0.531&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 46.2&#949; (Mean = 7.24&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 8.56&#949; (Mean = 1.44&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.906&#949; (Mean = 0.409&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.906&#949; (Mean = 0.409&#949;)</span>
                 </p>
               </td>
 </tr>
 </tbody>
 </table></div>
-<p>
+</div>
+<br class="table-break"><p>
         As shown above, error rates for positive arguments are generally very low.
         For negative arguments there are an infinite number of irrational roots:
         relative errors very close to these can be arbitrarily large, although absolute

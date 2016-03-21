@@ -1,5 +1,9 @@
 .globl .jump_fcontext
+.globl  jump_fcontext[DS]
 .align 2 
+.csect	jump_fcontext[DS]
+jump_fcontext:
+  .long	.jump_fcontext
 .jump_fcontext:
     # reserve space on stack
     subi 1, 1, 240

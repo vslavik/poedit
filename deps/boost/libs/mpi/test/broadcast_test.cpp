@@ -15,6 +15,7 @@
 #include <boost/serialization/list.hpp>
 #include <boost/mpi/skeleton_and_content.hpp>
 #include <boost/iterator/counting_iterator.hpp>
+//#include "debugger.hpp"
 
 using boost::mpi::communicator;
 
@@ -56,8 +57,6 @@ test_skeleton_and_content(const communicator& comm, int root = 0)
   using boost::make_counting_iterator;
   using boost::mpi::broadcast;
 
-  typedef std::list<int>::iterator iterator;
-
   int list_size = comm.size() + 7;
   if (comm.rank() == root) {
     // Fill in the seed data
@@ -71,13 +70,13 @@ test_skeleton_and_content(const communicator& comm, int root = 0)
 
     // Broadcast the skeleton
     std::cout << "Broadcasting integer list skeleton from root " << root
-              << "...";
+              << "..." << std::flush;
     broadcast(comm, oa, root);
     std::cout << "OK." << std::endl;
 
     // Broadcast the content
     std::cout << "Broadcasting integer list content from root " << root
-              << "...";
+              << "..." << std::flush;
     {
       content c = get_content(original_list);
       broadcast(comm, c, root);
@@ -87,12 +86,13 @@ test_skeleton_and_content(const communicator& comm, int root = 0)
     // Reverse the list, broadcast the content again
     std::reverse(original_list.begin(), original_list.end());
     std::cout << "Broadcasting reversed integer list content from root "
-              << root << "...";
+              << root << "..." << std::flush;
     {
       content c = get_content(original_list);
       broadcast(comm, c, root);
     }
     std::cout << "OK." << std::endl;
+
   } else {
     // Allocate some useless data, to try to get the addresses of the
     // list<int>'s used later to be different across processes.
@@ -110,15 +110,24 @@ test_skeleton_and_content(const communicator& comm, int root = 0)
 
     // Receive the content and check it
     broadcast(comm, get_content(transferred_list), root);
-    BOOST_CHECK(std::equal(make_counting_iterator(0),
-                           make_counting_iterator(list_size),
-                           transferred_list.begin()));
+    bool list_content_ok = std::equal(make_counting_iterator(0),
+				      make_counting_iterator(list_size),
+				      transferred_list.begin());
+    BOOST_CHECK(list_content_ok);
 
     // Receive the reversed content and check it
     broadcast(comm, get_content(transferred_list), root);
-    BOOST_CHECK(std::equal(make_counting_iterator(0),
-                           make_counting_iterator(list_size),
-                           transferred_list.rbegin()));
+    bool rlist_content_ok = std::equal(make_counting_iterator(0),
+				       make_counting_iterator(list_size),
+				       transferred_list.rbegin());
+    BOOST_CHECK(rlist_content_ok);
+    if (!(list_content_ok && rlist_content_ok)) {
+      if (comm.rank() == 1) {
+	std::cout
+	  << "\n##### You might want to check for BOOST_MPI_BCAST_BOTTOM_WORKS_FINE "
+	  << "in boost/mpi/config.hpp.\n\n";
+      }
+    }
   }
 
   (comm.barrier)();
@@ -134,6 +143,8 @@ int test_main(int argc, char* argv[])
               << "process." << std::endl;
     MPI_Abort(comm, -1);
   }
+
+  //wait_for_debugger(extract_paused_ranks(argc, argv), comm);
 
   // Check transfer of individual objects
   broadcast_test(comm, 17, "integers");

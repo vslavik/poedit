@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for capacity memfuns.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -69,7 +69,7 @@ void test_capacity()
   BOOST_TEST(rs.back()==666);
   BOOST_TEST(rs.size()<=rs.capacity());
 
-  unsigned int c=rs.capacity();
+  employee_set::size_type c=rs.capacity();
   rs.resize(10,20);
   BOOST_TEST(rs.size()==10);
   BOOST_TEST(rs.capacity()==c);

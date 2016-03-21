@@ -8,6 +8,7 @@
 //
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/tools/tuple.hpp>
+#include <utility> // for std::pair, our headers don't know what tuple type is to be used, we have to supply it.
 //
 // Note this header includes no other headers, this is
 // important if this test is to be meaningful:
@@ -34,6 +35,6 @@ void compile_and_link_test()
    check_result<std::pair<double, double> >(boost::math::tools::bisect<F, double, Tol>(f, d, d, tol));
    check_result<double>(boost::math::tools::newton_raphson_iterate<F2, double>(f2, d, d, d, i, max_iter));
    check_result<double>(boost::math::tools::halley_iterate<F3, double>(f3, d, d, d, i, max_iter));
-   check_result<double>(boost::math::tools::schroeder_iterate<F3, double>(f3, d, d, d, i, max_iter));
+   check_result<double>(boost::math::tools::schroder_iterate<F3, double>(f3, d, d, d, i, max_iter));
 }
 

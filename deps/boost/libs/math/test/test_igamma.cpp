@@ -271,21 +271,21 @@ void expected_results()
       "[^|]*",                          // platform
       largest_type,                     // test type(s)
       "[^|]*large[^|]*",                // test data group
-      "boost::math::gamma_q", 500, 50);  // test function
+      "gamma_q", 500, 50);  // test function
    add_expected_result(
       "[^|]*",                          // compiler
       "[^|]*",                          // stdlib
       "Cygwin",                         // platform
       largest_type,                     // test type(s)
       "[^|]*large[^|]*",                // test data group
-      "boost::math::gamma_p", 700, 50);  // test function
+      "gamma_p", 700, 50);  // test function
    add_expected_result(
       "[^|]*",                          // compiler
       "[^|]*",                          // stdlib
       "[^|]*",                          // platform
       largest_type,                     // test type(s)
       "[^|]*large[^|]*",                // test data group
-      "boost::math::gamma_p", 350, 50);  // test function
+      "gamma_p", 350, 50);  // test function
    add_expected_result(
       "[^|]*",                          // compiler
       "[^|]*",                          // stdlib
@@ -361,7 +361,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
    
 }

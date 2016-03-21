@@ -20,6 +20,7 @@
 #include <boost/thread/executors/basic_thread_pool.hpp>
 #include <boost/thread/executor.hpp>
 #include <boost/detail/lightweight_test.hpp>
+#include <cassert>
 
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
 
@@ -34,6 +35,7 @@ int p1()
 
 int p2(boost::future<int> f)
 {
+  assert(f.is_ready());
   BOOST_THREAD_LOG << "p2 <" << &f << BOOST_THREAD_END_LOG;
   BOOST_TEST(f.valid());
   int i = f.get();
@@ -44,6 +46,7 @@ int p2(boost::future<int> f)
 
 void p3(boost::future<int> f)
 {
+  assert(f.is_ready());
   BOOST_THREAD_LOG << "p3 <" << &f << BOOST_THREAD_END_LOG;
   BOOST_TEST(f.valid());
   int i = f.get();
@@ -111,6 +114,14 @@ int main()
     boost::future<int> f1 = boost::async(p1);
     boost::future<int> f21 = f1.then(ex, &p2);
     boost::future<int> f2= f21.then(ex, &p2);
+    BOOST_TEST(f2.get()==4);
+  }
+  BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
+  {
+    boost::basic_thread_pool ex(1);
+    boost::future<int> f1 = boost::async(p1);
+    boost::future<int> f21 = f1.then(ex, &p2);
+    boost::future<int> f2= f21.then(&p2);
     BOOST_TEST(f2.get()==4);
   }
   BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;

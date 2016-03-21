@@ -1,6 +1,6 @@
 /* Boost.Flyweight test of flyweight forwarding and initializer_list ctors.
  *
- * Copyright 2006-2014 Joaquin M Lopez Munoz.
+ * Copyright 2006-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -167,7 +167,7 @@ void test_multictor()
   BOOST_TEST(f4==m4);
 
 #if !defined(BOOST_NO_SFINAE)&&!defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
-  flyweight<initctor> ff INIT0();
+  flyweight<initctor> ff INIT0(~);
   BOOST_TEST(ff.get().res==-1);
 
   ff=flyweight<initctor> INIT2(initctor::arg(),1);

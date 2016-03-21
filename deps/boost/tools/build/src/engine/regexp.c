@@ -45,6 +45,7 @@
 
 #include "jam.h"
 #include "regexp.h"
+#include "output.h"
 
 #include <stdio.h>
 #include <ctype.h>
@@ -907,12 +908,12 @@ regmatch( char * prog )
     scan = prog;
 #ifdef DEBUG
     if (scan != NULL && regnarrate)
-        fprintf(stderr, "%s(\n", regprop(scan));
+        err_printf("%s(\n", regprop(scan));
 #endif
     while (scan != NULL) {
 #ifdef DEBUG
         if (regnarrate)
-            fprintf(stderr, "%s...\n", regprop(scan));
+            err_printf("%s...\n", regprop(scan));
 #endif
         next = regnext(scan);
 
@@ -1180,32 +1181,32 @@ regdump( regexp *r )
     s = r->program + 1;
     while (op != END) { /* While that wasn't END last time... */
         op = OP(s);
-        printf("%2d%s", s-r->program, regprop(s));  /* Where, what. */
+        out_printf("%2d%s", s-r->program, regprop(s));  /* Where, what. */
         next = regnext(s);
         if (next == NULL)       /* Next ptr. */
-            printf("(0)");
+            out_printf("(0)");
         else
-            printf("(%d)", (s-r->program)+(next-s));
+            out_printf("(%d)", (s-r->program)+(next-s));
         s += 3;
         if (op == ANYOF || op == ANYBUT || op == EXACTLY) {
             /* Literal string, where present. */
             while (*s != '\0') {
-                putchar(*s);
+                out_putc(*s);
                 s++;
             }
             s++;
         }
-        putchar('\n');
+        out_putc('\n');
     }
 
     /* Header fields of interest. */
     if (r->regstart != '\0')
-        printf("start `%c' ", r->regstart);
+        out_printf("start `%c' ", r->regstart);
     if (r->reganch)
-        printf("anchored ");
+        out_printf("anchored ");
     if (r->regmust != NULL)
-        printf("must have \"%s\"", r->regmust);
-    printf("\n");
+        out_printf("must have \"%s\"", r->regmust);
+    out_printf("\n");
 }
 
 /*

@@ -85,7 +85,7 @@ The source code for this example can be found
 
 
 If `Reference` is `use_default` then the `reference` member of
-`transform_iterator` is\n
+`transform_iterator` is[br]
 `result_of<UnaryFunction(iterator_traits<Iterator>::reference)>::type`.
 Otherwise, `reference` is `Reference`.
 
@@ -160,7 +160,7 @@ interoperable with `Y`.
 
 [h3 Operations]
 
-In addition to the operations required by the [link transform.concepts concepts] modeled by
+In addition to the operations required by the [link iterator.specialized.transform.concepts concepts] modeled by
 `transform_iterator`, `transform_iterator` provides the following
 operations:
 
@@ -183,7 +183,7 @@ operations:
 
 [*Returns: ] An instance of `transform_iterator` with `m_f`
   initialized to `t.functor()` and `m_iterator` initialized to
-  `t.base()`.\n
+  `t.base()`.[br]
 [*Requires: ]  `OtherIterator` is implicitly convertible to `Iterator`.
 
 
@@ -204,13 +204,13 @@ operations:
 
  transform_iterator& operator++();
 
-[*Effects: ] `++m_iterator`\n
+[*Effects: ] `++m_iterator`[br]
 [*Returns: ]  `*this`
 
 
   transform_iterator& operator--();
 
-[*Effects: ]  `--m_iterator`\n
+[*Effects: ]  `--m_iterator`[br]
 [*Returns: ] `*this`
 
 [endsect]

@@ -23,6 +23,7 @@
 #include "strings.h"
 #include "timestamp.h"
 #include "variable.h"
+#include "output.h"
 
 #include <string.h>
 
@@ -102,7 +103,7 @@ void set_explicit_binding( OBJECT * target, OBJECT * locate )
     path_build( f, buf );
     boundname = object_new( buf->value );
     if ( DEBUG_SEARCH )
-        printf( "explicit locate %s: %s\n", object_str( target ), buf->value );
+        out_printf( "explicit locate %s: %s\n", object_str( target ), buf->value );
     string_free( buf );
     key = path_as_key( boundname );
     object_free( boundname );
@@ -168,7 +169,7 @@ OBJECT * search( OBJECT * target, timestamp * const time,
         path_build( f, buf );
 
         if ( DEBUG_SEARCH )
-            printf( "locate %s: %s\n", object_str( target ), buf->value );
+            out_printf( "locate %s: %s\n", object_str( target ), buf->value );
 
         key = object_new( buf->value );
         timestamp_from_path( time, key );
@@ -194,7 +195,7 @@ OBJECT * search( OBJECT * target, timestamp * const time,
             path_build( f, buf );
 
             if ( DEBUG_SEARCH )
-                printf( "search %s: %s\n", object_str( target ), buf->value );
+                out_printf( "search %s: %s\n", object_str( target ), buf->value );
 
             test_path = object_new( buf->value );
             key = path_as_key( test_path );
@@ -205,7 +206,7 @@ OBJECT * search( OBJECT * target, timestamp * const time,
             if ( ( ba = (BINDING *)hash_find( explicit_bindings, key ) ) )
             {
                 if ( DEBUG_SEARCH )
-                    printf(" search %s: found explicitly located target %s\n",
+                    out_printf(" search %s: found explicitly located target %s\n",
                         object_str( target ), object_str( ba->target ) );
                 if ( another_target )
                     *another_target = ba->target;
@@ -241,7 +242,7 @@ OBJECT * search( OBJECT * target, timestamp * const time,
         path_build( f, buf );
 
         if ( DEBUG_SEARCH )
-            printf( "search %s: %s\n", object_str( target ), buf->value );
+            out_printf( "search %s: %s\n", object_str( target ), buf->value );
 
         key = object_new( buf->value );
         timestamp_from_path( time, key );

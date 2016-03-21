@@ -19,10 +19,6 @@ the member typedef type shall name `U&`; otherwise, type shall name `T`.
 
 __std_ref 20.7.6.2.
 
-__compat If the compiler does not support partial specialization of class-templates
-then this template will compile, but the member `type` will always be the same as 
-type `T` except where __transform_workaround have been applied.
-
 __header ` #include <boost/type_traits/add_lvalue_reference.hpp>` or ` #include <boost/type_traits.hpp>`
 
 [table Examples
@@ -42,6 +38,8 @@ __header ` #include <boost/type_traits/add_lvalue_reference.hpp>` or ` #include 
 [[`add_lvalue_reference<void>::type`][`void`]]
 
 ]
+
+[all_compilers]
 
 [endsect]
 

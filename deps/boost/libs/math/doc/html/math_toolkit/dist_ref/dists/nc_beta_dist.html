@@ -4,7 +4,7 @@
 <title>Noncentral Beta Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="negative_binomial_dist.html" title="Negative Binomial Distribution">
 <link rel="next" href="nc_chi_squared_dist.html" title="Noncentral Chi-Squared Distribution">
@@ -31,12 +31,12 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">non_central_beta_distribution</span><span class="special">;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">non_central_beta_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">non_central_beta</span><span class="special">;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">non_central_beta_distribution</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -157,20 +157,18 @@ is
         </h5>
 <p>
           The following table shows the peak errors (in units of <a href="http://en.wikipedia.org/wiki/Machine_epsilon" target="_top">epsilon</a>)
-          found on various platforms with various floating point types. No comparison
-          to the <a href="http://www.r-project.org/" target="_top">R-2.5.1 Math library</a>,
-          or to the FORTRAN implementations of AS226 or AS310 are given since these
-          appear to only guarantee absolute error: this would causes our test harness
-          to assign an <span class="emphasis"><em>"infinite"</em></span> error to these libraries
-          for some of our test values when measuring <span class="emphasis"><em>relative error</em></span>.
-          Unless otherwise specified any floating-point type that is narrower than
-          the one shown will have <a class="link" href="../../relative_error.html#math_toolkit.relative_error.zero_error">effectively
+          found on various platforms with various floating point types. The failures
+          in the comparison to the <a href="http://www.r-project.org/" target="_top">R Math
+          library</a>, seem to be mostly in the corner cases when the probablity
+          would be very small. Unless otherwise specified any floating-point type
+          that is narrower than the one shown will have <a class="link" href="../../relative_error.html#math_toolkit.relative_error.zero_error">effectively
           zero error</a>.
         </p>
 <div class="table">
-<a name="math_toolkit.dist_ref.dists.nc_beta_dist.errors_in_cdf_of_the_noncentral_"></a><p class="title"><b>Table&#160;5.4.&#160;Errors In CDF of the Noncentral Beta</b></p>
-<div class="table-contents"><table class="table" summary="Errors In CDF of the Noncentral Beta">
+<a name="math_toolkit.dist_ref.dists.nc_beta_dist.table_non_central_beta_CDF"></a><p class="title"><b>Table&#160;5.4.&#160;Error rates for non central beta CDF</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for non central beta CDF">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -178,23 +176,25 @@ is
 </colgroup>
 <thead><tr>
 <th>
+                </th>
+<th>
                   <p>
-                    Significand Size
+                    Microsoft Visual C++ version 12.0<br> Win32<br> double
                   </p>
                 </th>
 <th>
                   <p>
-                    Platform and Compiler
+                    GNU C++ version 5.1.0<br> linux<br> double
                   </p>
                 </th>
 <th>
                   <p>
-                    &#945;, &#946;,&#955; &lt; 200
+                    GNU C++ version 5.1.0<br> linux<br> long double
                   </p>
                 </th>
 <th>
                   <p>
-                    &#945;,&#946;,&#955; &gt; 200
+                    Sun compiler version 0x5130<br> Sun Solaris<br> long double
                   </p>
                 </th>
 </tr></thead>
@@ -202,88 +202,158 @@ is
 <tr>
 <td>
                   <p>
-                    53
+                    Non Central Beta, medium parameters
                   </p>
                 </td>
 <td>
                   <p>
-                    Win32, Visual C++ 8
+                    <span class="blue">Max = 240&#949; (Mean = 31&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=620 Mean=22
+                    <span class="blue">Max = 0.998&#949; (Mean = 0.0659&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                    = 1.46e+26&#949; (Mean = 3.5e+24&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_Rmath_3_0_2_Non_Central_Beta_medium_parameters">And
+                    other failures.</a>)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=8670 Mean=1040
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    64
+                    <span class="blue">Max = 825&#949; (Mean = 27.4&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    RedHat Linux IA32, gcc-4.1.1
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Peak=825 Mean=50
-                  </p>
-                </td>
-<td>
-                  <p>
-                    Peak=2.5x10<sup>4</sup> Mean=4000
+                    <span class="blue">Max = 832&#949; (Mean = 38.1&#949;)</span>
                   </p>
                 </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    64
+                    Non Central Beta, large parameters
                   </p>
                 </td>
 <td>
                   <p>
-                    Redhat Linux IA64, gcc-3.4.4
+                    <span class="blue">Max = 3.41e+003&#949; (Mean = 475&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=825 Mean=30
+                    <span class="blue">Max = 1.18&#949; (Mean = 0.175&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                    = 1.01e+36&#949; (Mean = 1.19e+35&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_Rmath_3_0_2_Non_Central_Beta_large_parameters">And
+                    other failures.</a>)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=1.7x10<sup>4</sup> Mean=2500
+                    <span class="blue">Max = 2.5e+04&#949; (Mean = 3.78e+03&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 2.57e+04&#949; (Mean = 4.43e+03&#949;)</span>
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><div class="table">
+<a name="math_toolkit.dist_ref.dists.nc_beta_dist.table_non_central_beta_CDF_complement"></a><p class="title"><b>Table&#160;5.5.&#160;Error rates for non central beta CDF complement</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for non central beta CDF complement">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                </th>
+<th>
+                  <p>
+                    Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    GNU C++ version 5.1.0<br> linux<br> double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    GNU C++ version 5.1.0<br> linux<br> long double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    Non Central Beta, medium parameters
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 619&#949; (Mean = 62.7&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 0.998&#949; (Mean = 0.0957&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                    = 7.5e+97&#949; (Mean = 1.37e+96&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_complement_Rmath_3_0_2_Non_Central_Beta_medium_parameters">And
+                    other failures.</a>)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 396&#949; (Mean = 50.7&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 554&#949; (Mean = 57.3&#949;)</span>
                   </p>
                 </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    113
+                    Non Central Beta, large parameters
                   </p>
                 </td>
 <td>
                   <p>
-                    HPUX IA64, aCC A.06.06
+                    <span class="blue">Max = 8.67e+003&#949; (Mean = 1.04e+003&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=420 Mean=50
+                    <span class="blue">Max = 0.986&#949; (Mean = 0.188&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                    = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_beta_CDF_complement_Rmath_3_0_2_Non_Central_Beta_large_parameters">And
+                    other failures.</a>)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=9200 Mean=1200
+                    <span class="blue">Max = 6.83e+03&#949; (Mean = 993&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 3.56e+03&#949; (Mean = 704&#949;)</span>
                   </p>
                 </td>
 </tr>
@@ -387,11 +457,12 @@ is
           <span class="inlinemediaobject"><img src="../../../../equations/nc_beta_ref1.svg"></span>
         </p>
 <p>
-          Quantiles are computed using a specially modified version of <a class="link" href="../../internals1/roots2.html" title="Root Finding Without Derivatives: Bisection, Bracket and TOMS748">bracket_and_solve_root</a>,
-          starting the search for the root at the mean of the distribution. (A Cornish-Fisher
-          type expansion was also tried, but while this gets quite close to the root
-          in many cases, when it is wrong it tends to introduce quite pathological
-          behaviour: more investigation in this area is probably warranted).
+          Quantiles are computed using a specially modified version of <a class="link" href="../../roots/roots_noderiv/bracket_solve.html" title="Bracket and Solve Root">bracket
+          and solve</a>, starting the search for the root at the mean of the distribution.
+          (A Cornish-Fisher type expansion was also tried, but while this gets quite
+          close to the root in many cases, when it is wrong it tends to introduce
+          quite pathological behaviour: more investigation in this area is probably
+          warranted).
         </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

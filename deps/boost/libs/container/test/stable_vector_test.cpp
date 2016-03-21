@@ -7,7 +7,7 @@
 // See http://www.boost.org/libs/container for documentation.
 //
 //////////////////////////////////////////////////////////////////////////////
-
+#define STABLE_VECTOR_ENABLE_INVARIANT_CHECKING
 #include <boost/container/detail/config_begin.hpp>
 #include <memory>
 
@@ -24,6 +24,7 @@
 #include "propagate_allocator_test.hpp"
 #include "vector_test.hpp"
 #include "default_init_test.hpp"
+#include "../../intrusive/test/iterator_test.hpp"
 
 using namespace boost::container;
 
@@ -204,6 +205,18 @@ int main()
    {
        std::cerr << "test_methods_with_initializer_list_as_argument failed" << std::endl;
        return 1;
+   }
+
+   ////////////////////////////////////
+   //    Iterator testing
+   ////////////////////////////////////
+   {
+      typedef boost::container::stable_vector<int> cont_int;
+      cont_int a; a.push_back(0); a.push_back(1); a.push_back(2);
+      boost::intrusive::test::test_iterator_random< cont_int >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
    }
 
    return 0;

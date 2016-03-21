@@ -113,6 +113,9 @@ main()
 
         BOOST_TEST(!test("-.3", udouble));
         BOOST_TEST(!test_attr("-.3", udouble, d));
+        
+        BOOST_TEST(test("4em", udouble, false));
+        BOOST_TEST(test_attr("4em", udouble, d, false) && compare(d, 4.0));
     }
 
     return boost::report_errors();

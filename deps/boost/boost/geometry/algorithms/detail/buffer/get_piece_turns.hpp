@@ -17,6 +17,7 @@
 #include <boost/geometry/algorithms/detail/overlay/segment_identifier.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
 #include <boost/geometry/algorithms/detail/sections/section_functions.hpp>
+#include <boost/geometry/algorithms/detail/buffer/buffer_policies.hpp>
 
 
 namespace boost { namespace geometry
@@ -27,6 +28,34 @@ namespace boost { namespace geometry
 namespace detail { namespace buffer
 {
 
+
+#if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
+struct buffer_assign_turn
+{
+    static bool const include_no_turn = false;
+    static bool const include_degenerate = false;
+    static bool const include_opposite = false;
+
+    template
+    <
+        typename Info,
+        typename Point1,
+        typename Point2,
+        typename IntersectionInfo
+    >
+    static inline void apply(Info& info,
+                             Point1 const& /*p1*/,
+                             Point2 const& /*p2*/,
+                             IntersectionInfo const& iinfo)
+    {
+        info.rob_pi = iinfo.rpi();
+        info.rob_pj = iinfo.rpj();
+        info.rob_qi = iinfo.rqi();
+        info.rob_qj = iinfo.rqj();
+    }
+
+};
+#endif
 
 template
 <
@@ -91,7 +120,7 @@ class piece_turn_visitor
 
     template <std::size_t Dimension, typename Iterator, typename Box>
     inline void move_begin_iterator(Iterator& it_begin, Iterator it_beyond,
-            int& index, int dir, Box const& other_bounding_box)
+            signed_size_type& index, int dir, Box const& other_bounding_box)
     {
         for(; it_begin != it_beyond
                 && it_begin + 1 != it_beyond
@@ -129,20 +158,20 @@ class piece_turn_visitor
         typedef typename boost::range_value<Turns const>::type turn_type;
         typedef typename boost::range_iterator<ring_type const>::type iterator;
 
-        int const piece1_first_index = piece1.first_seg_id.segment_index;
-        int const piece2_first_index = piece2.first_seg_id.segment_index;
+        signed_size_type const piece1_first_index = piece1.first_seg_id.segment_index;
+        signed_size_type const piece2_first_index = piece2.first_seg_id.segment_index;
         if (piece1_first_index < 0 || piece2_first_index < 0)
         {
             return;
         }
 
         // Get indices of part of offsetted_rings for this monotonic section:
-        int const sec1_first_index = piece1_first_index + section1.begin_index;
-        int const sec2_first_index = piece2_first_index + section2.begin_index;
+        signed_size_type const sec1_first_index = piece1_first_index + section1.begin_index;
+        signed_size_type const sec2_first_index = piece2_first_index + section2.begin_index;
 
         // index of last point in section, beyond-end is one further
-        int const sec1_last_index = piece1_first_index + section1.end_index;
-        int const sec2_last_index = piece2_first_index + section2.end_index;
+        signed_size_type const sec1_last_index = piece1_first_index + section1.end_index;
+        signed_size_type const sec2_last_index = piece2_first_index + section2.end_index;
 
         // get geometry and iterators over these sections
         ring_type const& ring1 = m_rings[piece1.first_seg_id.multi_index];
@@ -154,7 +183,7 @@ class piece_turn_visitor
         iterator it2_beyond = boost::begin(ring2) + sec2_last_index + 1;
 
         // Set begin/end of monotonic ranges, in both x/y directions
-        int index1 = sec1_first_index;
+        signed_size_type index1 = sec1_first_index;
         move_begin_iterator<0>(it1_first, it1_beyond, index1,
                     section1.directions[0], section2.bounding_box);
         move_end_iterator<0>(it1_first, it1_beyond,
@@ -164,7 +193,7 @@ class piece_turn_visitor
         move_end_iterator<1>(it1_first, it1_beyond,
                     section1.directions[1], section2.bounding_box);
 
-        int index2 = sec2_first_index;
+        signed_size_type index2 = sec2_first_index;
         move_begin_iterator<0>(it2_first, it2_beyond, index2,
                     section2.directions[0], section1.bounding_box);
         move_end_iterator<0>(it2_first, it2_beyond,
@@ -204,7 +233,11 @@ class piece_turn_visitor
                 // and iterating in sync with them...
                 typedef detail::overlay::get_turn_info
                     <
+#if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
+                        buffer_assign_turn
+#else
                         detail::overlay::assign_null_policy
+#endif
                     > turn_policy;
 
                 turn_policy::apply(*prev1, *it1, *next1,

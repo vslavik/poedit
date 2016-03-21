@@ -71,6 +71,10 @@ namespace ns
 
 #endif 
 
+struct empty_struct {};
+BOOST_FUSION_ADAPT_STRUCT_NAMED(empty_struct, renamed_empty_struct, )
+BOOST_FUSION_ADAPT_STRUCT_NAMED_NS(empty_struct, (ns1), renamed_empty_struct1, ) 
+
 int
 main()
 {

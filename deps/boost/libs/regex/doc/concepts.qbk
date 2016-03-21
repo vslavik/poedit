@@ -58,16 +58,40 @@ an object of type `X::locale_type`.
 [[X::size_type][][An unsigned integer type, capable of holding the length of a null-terminated string of charT's.]]
 [[X::string_type][std::basic_string<charT> or std::vector<charT>][]]
 [[X::locale_type][Implementation defined][A copy constructible type that represents the locale used by the traits class.]]
-[[X::char_class_type][Implementation defined][A bitmask type representing a particular character classification. Multiple values of this type can be bitwise-or'ed together to obtain a new valid value.]]
+[[X::char_class_type]
+   [Implementation defined]
+   [A bitmask type representing a particular character classification. Multiple values of this type can be bitwise-or'ed together to obtain a new valid value.]]
 [[X::length(p)][X::size_type][Yields the smallest i such that p\[i\] == 0. Complexity is linear in i.]]
-[[v.translate(c)][X::char_type][Returns a character such that for any character d that is to be considered equivalent to c then v.translate(c) == v.translate(d).]]
-[[v.translate_nocase(c)][X::char_type][For all characters C that are to be considered equivalent to c when comparisons are to be performed without regard to case, then v.translate_nocase(c) == v.translate_nocase(C).]]
-[[v.transform(F1, F2)][X::string_type][Returns a sort key for the character sequence designated by the iterator range \[F1, F2) such that if the character sequence \[G1, G2) sorts before the character sequence [H1, H2) then v.transform(G1, G2) < v.transform(H1, H2). ]]
-[[v.transform_primary(F1, F2)][X::string_type][Returns a sort key for the character sequence designated by the iterator range \[F1, F2) such that if the character sequence [G1, G2) sorts before the character sequence \[H1, H2) when character case is not considered then v.transform_primary(G1, G2) < v.transform_primary(H1, H2).]]
-[[v.lookup_classname(F1, F2)][X::char_class_type][Converts the character sequence designated by the iterator range \[F1,F2) into a bitmask type that can subsequently be passed to isctype. Values returned from lookup_classname can be safely bitwise or'ed together. Returns 0 if the character sequence is not the name of a character class recognized by X. The value returned shall be independent of the case of the characters in the sequence.]]
-[[v.lookup_collatename(F1, F2)][X::string_type][Returns a sequence of characters that represents the collating element consisting of the character sequence designated by the iterator range \[F1, F2). Returns an empty string if the character sequence is not a valid collating element.]]
+[[v.translate(c)]
+   [X::char_type]
+   [Returns a character such that for any character d that is to be considered equivalent to c then v.translate(c) == v.translate(d).]]
+[[v.translate_nocase(c)]
+   [X::char_type]
+   [For all characters C that are to be considered equivalent to c when comparisons are to be performed without regard to case, then v.translate_nocase(c) == v.translate_nocase(C).]]
+[[v.transform(F1, F2)]
+   [X::string_type]
+   [Returns a sort key for the character sequence designated by the iterator range \[F1, F2) such that if 
+   the character sequence \[G1, G2) sorts before the character sequence \[H1, H2) then 
+   v.transform(G1, G2) < v.transform(H1, H2). ]]
+[[v.transform_primary(F1, F2)]
+   [X::string_type]
+   [Returns a sort key for the character sequence designated by the iterator range \[F1, F2) such that if the 
+   character sequence \[G1, G2) sorts before the character sequence \[H1, H2) when character case is not considered 
+   then v.transform_primary(G1, G2) < v.transform_primary(H1, H2).]]
+[[v.lookup_classname(F1, F2)]
+   [X::char_class_type]
+   [Converts the character sequence designated by the iterator range \[F1,F2) into a bitmask type that can subsequently 
+   be passed to isctype. Values returned from lookup_classname can be safely bitwise or'ed together. Returns 0 if the 
+   character sequence is not the name of a character class recognized by X. The value returned shall be independent 
+   of the case of the characters in the sequence.]]
+[[v.lookup_collatename(F1, F2)]
+   [X::string_type]
+   [Returns a sequence of characters that represents the collating element consisting of the character sequence designated 
+   by the iterator range \[F1, F2). Returns an empty string if the character sequence is not a valid collating element.]]
 [[v.isctype(c, v.lookup_classname (F1, F2))][bool][Returns true if character c is a member of the character class designated by the iterator range \[F1, F2), false otherwise.]]
-[[v.value(c, I)][int][Returns the value represented by the digit c in base I if the character c is a valid digit in base I; otherwise returns -1. \[Note: the value of I will only be 8, 10, or 16. -end note\]]]
+[[v.value(c, I)]
+   [int]
+   [Returns the value represented by the digit c in base I if the character c is a valid digit in base I; otherwise returns -1. \[Note: the value of I will only be 8, 10, or 16. -end note\]]]
 [[u.imbue(loc)][X::locale_type][Imbues u with the locale loc, returns the previous locale used by u if any. ]]
 [[v.getloc()][X::locale_type][Returns the current locale used by v if any. ]]
 ]

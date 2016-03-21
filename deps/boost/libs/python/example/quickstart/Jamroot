@@ -31,7 +31,7 @@ import testing ;
 testing.make-test run-pyd : extending test_extending.py : : test_ext ;
 
 # Declare a test of the embedding application
-testing.run embedding 
+testing.run embedding embedding.cpp
   :              # any ordinary arguments
   : script.py    # any arguments that should be treated as relative paths
   :              # requirements

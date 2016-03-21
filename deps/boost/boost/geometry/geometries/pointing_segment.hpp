@@ -12,17 +12,16 @@
 
 #include <cstddef>
 
-#include <boost/assert.hpp>
 #include <boost/concept/assert.hpp>
 #include <boost/core/addressof.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_const.hpp>
 
-#include <boost/geometry/geometries/concepts/point_concept.hpp>
-
 #include <boost/geometry/core/access.hpp>
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 
+#include <boost/geometry/geometries/concepts/point_concept.hpp>
 
 namespace boost { namespace geometry
 {
@@ -99,13 +98,13 @@ struct indexed_access<model::pointing_segment<Point>, 0, Dimension>
 
     static inline coordinate_type get(segment_type const& s)
     {
-        BOOST_ASSERT( s.first != NULL );
+        BOOST_GEOMETRY_ASSERT( s.first != NULL );
         return geometry::get<Dimension>(*s.first);
     }
 
     static inline void set(segment_type& s, coordinate_type const& value)
     {
-        BOOST_ASSERT( s.first != NULL );
+        BOOST_GEOMETRY_ASSERT( s.first != NULL );
         geometry::set<Dimension>(*s.first, value);
     }
 };
@@ -122,13 +121,13 @@ struct indexed_access<model::pointing_segment<Point>, 1, Dimension>
 
     static inline coordinate_type get(segment_type const& s)
     {
-        BOOST_ASSERT( s.second != NULL );
+        BOOST_GEOMETRY_ASSERT( s.second != NULL );
         return geometry::get<Dimension>(*s.second);
     }
 
     static inline void set(segment_type& s, coordinate_type const& value)
     {
-        BOOST_ASSERT( s.second != NULL );
+        BOOST_GEOMETRY_ASSERT( s.second != NULL );
         geometry::set<Dimension>(*s.second, value);
     }
 };

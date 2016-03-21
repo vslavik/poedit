@@ -162,7 +162,10 @@
 				RelativePath="..\..\..\..\boost\container\throw_exception.hpp">
 			</File>
 			<File
-				RelativePath="..\to-do.txt">
+				RelativePath="..\..\..\..\boost\container\uses_allocator.hpp">
+			</File>
+			<File
+				RelativePath="..\..\..\..\boost\container\uses_allocator_fwd.hpp">
 			</File>
 			<File
 				RelativePath="..\..\..\..\boost\container\vector.hpp">
@@ -192,7 +195,7 @@
 					RelativePath="..\..\..\..\boost\container\detail\alloc_lib.h">
 				</File>
 				<File
-					RelativePath="..\..\..\..\boost\container\detail\alloc_lib_auto_link.hpp">
+					RelativePath="..\..\..\..\boost\container\detail\alloc_lib.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\allocation_type.hpp">
@@ -202,6 +205,12 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\auto_link.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\block_list.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\block_slist.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\compare_functors.hpp">
@@ -220,6 +229,12 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\destroyers.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\dispatch_uses_allocator.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\detail\dlmalloc.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\flat_tree.hpp">
@@ -282,10 +297,16 @@
 					RelativePath="..\..\..\..\boost\container\detail\pool_common_alloc.hpp">
 				</File>
 				<File
+					RelativePath="..\..\..\..\boost\container\detail\pool_resource.hpp">
+				</File>
+				<File
 					RelativePath="..\..\..\..\boost\container\detail\singleton.hpp">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\std_fwd.hpp">
+				</File>
+				<File
+					RelativePath="..\to-do.txt">
 				</File>
 				<File
 					RelativePath="..\..\..\..\boost\container\detail\to_raw_pointer.hpp">
@@ -312,6 +333,67 @@
 					RelativePath="..\..\..\..\boost\container\detail\workaround.hpp">
 				</File>
 			</Filter>
+			<Filter
+				Name="pmr"
+				Filter="">
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\deque.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\flat_map.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\flat_set.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\global_resource.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\list.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\map.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\memory_resource.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\monotonic_buffer_resource.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\polymorphic_allocator.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\pool_options.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\resource_adaptor.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\set.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\slist.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\small_vector.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\stable_vector.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\string.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\synchronized_pool_resource.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\unsynchronized_pool_resource.hpp">
+				</File>
+				<File
+					RelativePath="..\..\..\..\boost\container\pmr\vector.hpp">
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="doc"
@@ -330,10 +412,37 @@
 			Name="example"
 			Filter="">
 			<File
+				RelativePath="..\..\example\doc_custom_tree.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\example\doc_emplace.cpp">
 			</File>
 			<File
+				RelativePath="..\..\example\doc_extended_allocators.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\example\doc_move_containers.cpp">
+			</File>
+			<File
+				RelativePath="..\..\example\doc_pmr.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\example\doc_recursive_containers.cpp">
@@ -348,6 +457,9 @@
 		<Filter
 			Name="test"
 			Filter="">
+			<File
+				RelativePath="..\..\test\allocator_argument_tester.hpp">
+			</File>
 			<File
 				RelativePath="..\..\test\check_equal_containers.hpp">
 			</File>
@@ -397,6 +509,9 @@
 				RelativePath="..\..\test\propagate_allocator_test.hpp">
 			</File>
 			<File
+				RelativePath="..\..\test\propagation_test_allocator.hpp">
+			</File>
+			<File
 				RelativePath="..\..\test\set_test.hpp">
 			</File>
 			<File
@@ -412,6 +527,9 @@
 		<Filter
 			Name="bench"
 			Filter="">
+			<File
+				RelativePath="..\..\bench\bench_set.hpp">
+			</File>
 			<File
 				RelativePath="..\..\bench\Jamfile.v2">
 			</File>

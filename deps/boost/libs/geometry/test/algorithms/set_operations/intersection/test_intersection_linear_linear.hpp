@@ -12,7 +12,8 @@
 
 #include <limits>
 
-#include <boost/geometry/multi/geometries/multi_point.hpp>
+#include <boost/type_traits/is_same.hpp>
+
 #include <boost/geometry/geometry.hpp>
 #include "../test_set_ops_linear_linear.hpp"
 #include <from_wkt.hpp>
@@ -70,7 +71,7 @@ private:
         std::cout << "Geometry #2: " << bg::wkt(geometry2) << std::endl;
         std::cout << "intersection : " << bg::wkt(mls_output) << std::endl;
         std::cout << "expected intersection : " << bg::wkt(mls_int1)
-                  << std::endl;
+                  << " or: " << bg::wkt(mls_int2) << std::endl;
         std::cout << std::endl;
         std::cout << "************************************" << std::endl;
         std::cout << std::endl;
@@ -121,8 +122,8 @@ private:
         std::cout << "Geometry #1: " << bg::wkt(geometry2) << std::endl;
         std::cout << "Geometry #2: " << bg::wkt(geometry1) << std::endl;
         std::cout << "intersection : " << bg::wkt(mls_output) << std::endl;
-        std::cout << "expected intersection : " << bg::wkt(mls_int2)
-                  << std::endl;
+        std::cout << "expected intersection : " << bg::wkt(mls_int1)
+                  << " or: " << bg::wkt(mls_int2) << std::endl;
         std::cout << std::endl;
         std::cout << "************************************" << std::endl;
         std::cout << std::endl;
@@ -193,14 +194,27 @@ public:
         Geometry2 rg2(geometry2);
         bg::reverse<Geometry2>(rg2);
 
-        test_get_turns_ll_invariance<>::apply(geometry1, geometry2);
+        typedef typename bg::tag_cast
+            <
+                Geometry1, bg::linear_tag
+            >::type tag1_type;
+
+        typedef typename bg::tag_cast
+            <
+                Geometry2, bg::linear_tag
+            >::type tag2_type;
+
+        bool const are_linear
+            = boost::is_same<tag1_type, bg::linear_tag>::value
+            && boost::is_same<tag2_type, bg::linear_tag>::value;
+
+        test_get_turns_ll_invariance<are_linear>::apply(geometry1, geometry2);
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::cout << std::endl
                   << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
                   << std::endl << std::endl;
 #endif
-        test_get_turns_ll_invariance<>::apply(rg1, geometry2);
-
+        test_get_turns_ll_invariance<are_linear>::apply(rg1, geometry2);
 
         base_test(geometry1, geometry2, mls_int1, mls_int2, case_id, tolerance);
         //        base_test(rg1, rg2, mls_int1, mls_int2);

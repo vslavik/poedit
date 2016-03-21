@@ -27,11 +27,14 @@
 template <class Real, typename T>
 void do_test_heuman_lambda(const T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(HEUMAN_LAMBDA_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef HEUMAN_LAMBDA_FUNCTION_TO_TEST
+   value_type(*fp2)(value_type, value_type) = HEUMAN_LAMBDA_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp2)(value_type, value_type) = boost::math::ellint_d<value_type, value_type>;
 #else
    value_type(*fp2)(value_type, value_type) = boost::math::heuman_lambda;
@@ -43,9 +46,10 @@ void do_test_heuman_lambda(const T& data, const char* type_name, const char* tes
       bind_func<Real>(fp2, 1, 0),
       extract_result<Real>(2));
    handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::heuman_lambda", test);
+      type_name, "heuman_lambda", test);
 
    std::cout << std::endl;
+#endif
 }
 
 template <typename T>

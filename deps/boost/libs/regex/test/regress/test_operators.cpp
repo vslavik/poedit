@@ -10,6 +10,8 @@
  */
 
 #include "test.hpp"
+#include <iostream>
+#include <iomanip>
 
 #if !BOOST_WORKAROUND(BOOST_MSVC, <= 1300)\
    && !BOOST_WORKAROUND(__HP_aCC, BOOST_TESTED_AT(55500))\

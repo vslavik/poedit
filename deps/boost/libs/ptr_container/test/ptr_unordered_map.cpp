@@ -91,7 +91,7 @@ void ptr_map_test()
 {
     using namespace boost;
 
-    BOOST_MESSAGE( "starting associative container test" );
+    BOOST_TEST_MESSAGE( "starting associative container test" );
     enum { max_cnt = 10, size = 100 };
     C  c;
     BOOST_CHECK( c.size() == 0 );
@@ -101,7 +101,7 @@ void ptr_map_test()
 
     C c3;
 
-    BOOST_MESSAGE( "finished construction test" );
+    BOOST_TEST_MESSAGE( "finished construction test" );
 
     BOOST_DEDUCED_TYPENAME C::allocator_type alloc        = c.get_allocator();
     BOOST_DEDUCED_TYPENAME C::iterator i                  = c.begin();
@@ -113,7 +113,7 @@ void ptr_map_test()
 
     BOOST_DEDUCED_TYPENAME C::key_type a_key;
 
-    BOOST_MESSAGE( "finished iterator test" );
+    BOOST_TEST_MESSAGE( "finished iterator test" );
 
     BOOST_DEDUCED_TYPENAME C::size_type s                 = c.size();
     BOOST_DEDUCED_TYPENAME C::size_type s2                = c.max_size();
@@ -121,7 +121,7 @@ void ptr_map_test()
     BOOST_CHECK_EQUAL( c.size(), s );
     bool b                                                = c.empty();
     hide_warning(b);
-    BOOST_MESSAGE( "finished accessors test" );
+    BOOST_TEST_MESSAGE( "finished accessors test" );
 
     a_key = get_next_key( a_key );
     c.insert( a_key, new T );
@@ -140,7 +140,7 @@ void ptr_map_test()
     BOOST_CHECK( !c3.empty() );
     c3.clear();
     BOOST_CHECK( c3.empty() );
-    BOOST_MESSAGE( "finished modifiers test" );
+    BOOST_TEST_MESSAGE( "finished modifiers test" );
 
 
     a_key = get_next_key( a_key );
@@ -150,7 +150,7 @@ void ptr_map_test()
     typename C::auto_type ptr2  = c.release( c.begin() );
     std::auto_ptr<C> ap         = c.release();
     c                           = c2.clone();
-    BOOST_MESSAGE( "finished release/clone test" );
+    BOOST_TEST_MESSAGE( "finished release/clone test" );
 
 
     a_key = get_next_key( a_key );
@@ -172,12 +172,12 @@ void ptr_map_test()
     BOOST_CHECK( c3.empty() );
     c3. BOOST_NESTED_TEMPLATE transfer<C>(c);
 #endif
-    BOOST_MESSAGE( "finished transfer test" );
+    BOOST_TEST_MESSAGE( "finished transfer test" );
 
     BOOST_CHECK( !c3.empty() );
     c3.replace( c3.begin(), new T );
     c3.replace( c3.begin(), std::auto_ptr<T>( new T ) );
-    BOOST_MESSAGE( "finished set/map interface test" );
+    BOOST_TEST_MESSAGE( "finished set/map interface test" );
 
     // @todo: make macro with algorithms so that the right erase() is called.
     //  c.unique();
@@ -208,7 +208,7 @@ void ptr_map_test()
     catch( const bad_ptr_container_operation& )
     { }
 
-    BOOST_MESSAGE( "finished algorithms interface test" );
+    BOOST_TEST_MESSAGE( "finished algorithms interface test" );
 
     typename C::iterator it = c.begin(), e = c.end();
     for( ; it != e; ++it )
@@ -217,7 +217,7 @@ void ptr_map_test()
         //std::cout << "\n mapped value = " << it.value() << " key = " << it.key();
     }
         
-    BOOST_MESSAGE( "finished iterator test" );
+    BOOST_TEST_MESSAGE( "finished iterator test" );
 
     a_key = get_next_key( a_key );
     c.insert( a_key, new T );

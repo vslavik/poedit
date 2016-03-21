@@ -11,7 +11,7 @@
 #include <boost/type_traits/has_nothrow_copy.hpp>
 #include <boost/static_assert.hpp>
 
-#ifndef BOOST_NO_NOEXCEPT
+#ifndef BOOST_NO_CXX11_NOEXCEPT
 
 #if !defined(BOOST_NO_CXX11_NOEXCEPT) && !defined(BOOST_NO_SFINAE_EXPR) || defined(BOOST_IS_NOTHROW_MOVE_CONSTRUCT)
 //

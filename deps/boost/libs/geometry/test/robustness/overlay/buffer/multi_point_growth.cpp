@@ -8,7 +8,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/geometry.hpp>
-#include <boost/geometry/multi/geometries/multi_geometries.hpp>
+#include <boost/geometry/geometries/geometries.hpp>
 
 #include <boost/foreach.hpp>
 #include <boost/timer.hpp>

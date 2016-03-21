@@ -13,9 +13,9 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
-#include <memory>
 #include <utility>
 #include <algorithm>
+#include <boost/type_index.hpp>
 #include <boost/optional/optional.hpp>
 #include <boost/log/attributes/attribute.hpp>
 #include <boost/log/attributes/attribute_value.hpp>
@@ -25,6 +25,7 @@
 #if !defined(BOOST_LOG_NO_THREADS)
 #include <boost/thread/tss.hpp>
 #endif
+#include "unique_ptr.hpp"
 #include <boost/log/detail/header.hpp>
 
 namespace boost {
@@ -105,7 +106,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         /*!
          * \return The attribute value type
          */
-        type_info_wrapper get_type() const { return type_info_wrapper(typeid(scope_stack)); }
+        typeindex::type_index get_type() const { return typeindex::type_id< scope_stack >(); }
 
         //! The method is called when the attribute value is passed to another thread (e.g.
         //! in case of asynchronous logging). The value should ensure it properly owns all thread-specific data.
@@ -151,7 +152,7 @@ struct BOOST_SYMBOL_VISIBLE named_scope::impl :
 
 #else
     //! Pointer to the scope stack
-    std::auto_ptr< scope_list > pScopes;
+    log::aux::unique_ptr< scope_list > pScopes;
 #endif
 
     //! The method returns current thread scope stack
@@ -164,7 +165,7 @@ struct BOOST_SYMBOL_VISIBLE named_scope::impl :
 #endif
         if (!p)
         {
-            std::auto_ptr< scope_list > pNew(new scope_list());
+            log::aux::unique_ptr< scope_list > pNew(new scope_list());
             pScopes.reset(pNew.get());
 #if defined(BOOST_LOG_USE_COMPILER_TLS)
             pScopesCache = p = pNew.release();

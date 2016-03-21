@@ -23,7 +23,6 @@
 
 #include <boost/geometry/policies/relate/intersection_points.hpp>
 #include <boost/geometry/policies/relate/direction.hpp>
-#include <boost/geometry/policies/relate/de9im.hpp>
 #include <boost/geometry/policies/relate/tupled.hpp>
 
 #include <boost/geometry/algorithms/intersection.hpp>

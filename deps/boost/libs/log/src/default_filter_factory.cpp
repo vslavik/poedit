@@ -16,8 +16,8 @@
 #if !defined(BOOST_LOG_WITHOUT_SETTINGS_PARSERS) && !defined(BOOST_LOG_WITHOUT_DEFAULT_FACTORIES)
 
 #include <string>
-#include <boost/mpl/copy.hpp>
-#include <boost/mpl/back_inserter.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/preprocessor/seq/enum.hpp>
 #include <boost/spirit/include/qi_core.hpp>
 #include <boost/log/exceptions.hpp>
 #include <boost/log/expressions/predicates/has_attr.hpp>
@@ -181,10 +181,9 @@ private:
     const numeric_type m_numeric_operand;
 };
 
-typedef mpl::copy<
-    log::string_types,
-    mpl::back_inserter< log::floating_point_types >
->::type floating_point_and_string_types;
+typedef mpl::vector<
+    BOOST_PP_SEQ_ENUM(BOOST_LOG_STANDARD_FLOATING_POINT_TYPES()BOOST_LOG_STANDARD_STRING_TYPES())
+> floating_point_and_string_types;
 
 } // namespace
 

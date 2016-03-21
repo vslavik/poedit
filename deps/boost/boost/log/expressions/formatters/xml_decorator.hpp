@@ -106,7 +106,7 @@ struct xml_decorator_gen
  * <tt>operator[]</tt> that can be used to construct the actual decorator. For example:
  *
  * <code>
- * xml_decor[ attr< std::string >("MyAttr") ]
+ * xml_decor[ stream << attr< std::string >("MyAttr") ]
  * </code>
  *
  * For wide-character formatting there is the similar \c wxml_decor decorator generator object.

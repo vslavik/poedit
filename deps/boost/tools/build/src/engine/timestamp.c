@@ -32,6 +32,7 @@
 #include "object.h"
 #include "pathsys.h"
 #include "strings.h"
+#include "output.h"
 
 
 /*
@@ -231,7 +232,7 @@ static void time_enter( void * closure, OBJECT * target, int const found,
     b->progress = found ? BIND_FOUND : BIND_SPOTTED;
 
     if ( DEBUG_BINDSCAN )
-        printf( "time ( %s ) : %s\n", object_str( target ), time_progress[
+        out_printf( "time ( %s ) : %s\n", object_str( target ), time_progress[
             b->progress ] );
 
     object_free( target );

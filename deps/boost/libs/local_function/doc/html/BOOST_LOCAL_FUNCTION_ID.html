@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_LOCAL_FUNCTION_ID</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="up" href="reference.html#header.boost.local_function_hpp" title="Header &lt;boost/local_function.hpp&gt;">
 <link rel="prev" href="BOOST_LOCAL_FUNCTION_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_TPL">
@@ -33,8 +33,8 @@
 
 </span>BOOST_LOCAL_FUNCTION_ID(id, declarations)</pre></div>
 <div class="refsect1">
-<a name="id881677"></a><h2>Description</h2>
-<p>This macro is equivalent to  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> but it can be expanded multiple times on the same line if different identifiers <code class="computeroutput">id</code> are provided for each expansion (see the  <a class="link" href="boost_localfunction/advanced_topics.html" title="Advanced Topics"> Advanced Topics</a> section).</p>
+<a name="id905923"></a><h2>Description</h2>
+<p>This macro is equivalent to <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code> but it can be expanded multiple times on the same line if different identifiers <code class="computeroutput">id</code> are provided for each expansion (see the  <a class="link" href="boost_localfunction/advanced_topics.html" title="Advanced Topics"> Advanced Topics</a> section).</p>
 <p><span class="bold"><strong>Parameters:</strong></span> </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -54,10 +54,10 @@
 </table></div>
 <p>
 </p>
-<p>The  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME.html" title="Macro BOOST_LOCAL_FUNCTION_NAME">BOOST_LOCAL_FUNCTION_NAME</a></code> macro should be used to end each one of the multiple local function declarations as usual (and it will specify a unique name for each local function).</p>
-<p>Within templates, the special macros  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code> must be used.</p>
+<p>The <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME.html" title="Macro BOOST_LOCAL_FUNCTION_NAME">BOOST_LOCAL_FUNCTION_NAME</a></code> macro should be used to end each one of the multiple local function declarations as usual (and it will specify a unique name for each local function).</p>
+<p>Within templates, the special macros <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code> must be used.</p>
 <p><span class="bold"><strong>Note:</strong></span> This macro can be useful when the local function macros are expanded within user-defined macros (because macros all expand on the same line). On some compilers (e.g., MSVC which supports the non-standard <code class="computeroutput">__COUNTER__</code> macro) it might not be necessary to use this macro but the use of this macro when expanding multiple local function macros on the same line is always necessary to ensure portability (this is because this library can only portably use <code class="computeroutput">__LINE__</code> to internally generate unique identifiers).</p>
-<p><span class="bold"><strong>See:</strong></span>  <a class="link" href="boost_localfunction/advanced_topics.html" title="Advanced Topics"> Advanced Topics</a> section,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME.html" title="Macro BOOST_LOCAL_FUNCTION_NAME">BOOST_LOCAL_FUNCTION_NAME</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code>. </p>
+<p><span class="bold"><strong>See:</strong></span> <a class="link" href="boost_localfunction/advanced_topics.html" title="Advanced Topics"> Advanced Topics</a> section,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION.html" title="Macro BOOST_LOCAL_FUNCTION">BOOST_LOCAL_FUNCTION</a></code>, <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_NAME.html" title="Macro BOOST_LOCAL_FUNCTION_NAME">BOOST_LOCAL_FUNCTION_NAME</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_LOCAL_FUNCTION_ID_TPL.html" title="Macro BOOST_LOCAL_FUNCTION_ID_TPL">BOOST_LOCAL_FUNCTION_ID_TPL</a></code>. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

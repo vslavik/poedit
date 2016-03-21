@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,90 +36,90 @@
 <span class="keyword">class</span> <a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="file_lock.html#boost.interprocess.file_lockconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="file_lock.html#idp56504160-bb"><span class="identifier">file_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="file_lock.html#idp56504896-bb"><span class="identifier">file_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="file_lock.html#idp56507120-bb"><span class="identifier">file_lock</span></a><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span> <a class="link" href="file_lock.html#idp56508928-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="file_lock.html#idp56511296-bb"><span class="special">~</span><span class="identifier">file_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="file_lock.html#idm45879390180288-bb"><span class="identifier">file_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="file_lock.html#idm45879390179552-bb"><span class="identifier">file_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="file_lock.html#idm45879390177328-bb"><span class="identifier">file_lock</span></a><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span> <a class="link" href="file_lock.html#idm45879390175520-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="file_lock.html#idm45879390173152-bb"><span class="special">~</span><span class="identifier">file_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="file_lock.html#idp56481904-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="file_lock.html#idp56482464-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="file_lock.html#idp56484720-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idp56486928-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idp56489216-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="file_lock.html#idp56492208-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="file_lock.html#idp56494384-bb"><span class="identifier">lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idp56496576-bb"><span class="identifier">try_lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idp56498848-bb"><span class="identifier">timed_lock_sharable</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="file_lock.html#idp56501824-bb"><span class="identifier">unlock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="file_lock.html#idm45879390202544-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="file_lock.html#idm45879390201984-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="file_lock.html#idm45879390199728-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idm45879390197520-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idm45879390195232-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="file_lock.html#idm45879390192240-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="file_lock.html#idm45879390190064-bb"><span class="identifier">lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idm45879390187872-bb"><span class="identifier">try_lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="file_lock.html#idm45879390185600-bb"><span class="identifier">timed_lock_sharable</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="file_lock.html#idm45879390182624-bb"><span class="identifier">unlock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp241446736"></a><h2>Description</h2>
+<a name="idm45555312069296"></a><h2>Description</h2>
 <p>A file lock, is a mutual exclusion utility similar to a mutex using a file. A file lock has sharable and exclusive locking capabilities and can be used with <a class="link" href="scoped_lock.html" title="Class template scoped_lock">scoped_lock</a> and <a class="link" href="sharable_lock.html" title="Class template sharable_lock">sharable_lock</a> classes. A file lock can't guarantee synchronization between threads of the same process so just use file locks to synchronize threads from different processes. </p>
 <div class="refsect2">
-<a name="idp241449504"></a><h3>
+<a name="idm45555312066528"></a><h3>
 <a name="boost.interprocess.file_lockconstruct-copy-destruct"></a><code class="computeroutput">file_lock</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp56504160-bb"></a><span class="identifier">file_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879390180288-bb"></a><span class="identifier">file_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs an empty file mapping. Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp56504896-bb"></a><span class="identifier">file_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879390179552-bb"></a><span class="identifier">file_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Opens a file lock. Throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> if the file does not exist or there are no operating system resources. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp56507120-bb"></a><span class="identifier">file_lock</span><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879390177328-bb"></a><span class="identifier">file_lock</span><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
 <p>Moves the ownership of "moved"'s file mapping object to *this. After the call, "moved" does not represent any file mapping object. Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span> <a name="idp56508928-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span> <a name="idm45879390175520-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;&amp;</span> moved<span class="special">)</span><span class="special">;</span></pre>
 <p>Moves the ownership of "moved"'s file mapping to *this. After the call, "moved" does not represent any file mapping. Does not throw </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp56511296-bb"></a><span class="special">~</span><span class="identifier">file_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Closes a file lock. Does not throw. </li>
+<pre class="literallayout"><a name="idm45879390173152-bb"></a><span class="special">~</span><span class="identifier">file_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Closes a file lock. Does not throw. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp241480320"></a><h3>
-<a name="idp56481904-bb"></a><code class="computeroutput">file_lock</code> public member functions</h3>
+<a name="idm45555312035648"></a><h3>
+<a name="idm45879390202544-bb"></a><code class="computeroutput">file_lock</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56482464-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390201984-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="file_lock.html" title="Class file_lock">file_lock</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Swaps two file_locks. Does not throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56484720-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390199728-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to obtain exclusive ownership of the mutex, and if another thread has exclusive, or sharable ownership of the mutex, it waits until it can obtain the ownership. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56486928-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879390197520-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire exclusive ownership of the mutex without waiting. If no other thread has exclusive, or sharable ownership of the mutex this succeeds. Returns: If it can acquire exclusive ownership immediately returns true. If it has to wait, returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56489216-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879390195232-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire exclusive ownership of the mutex waiting if necessary until no other thread has exclusive, or sharable ownership of the mutex or abs_time is reached. Returns: If acquires exclusive ownership, returns true. Otherwise returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56492208-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390192240-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Precondition: The thread must have exclusive ownership of the mutex. Effects: The calling thread releases the exclusive ownership of the mutex. Throws: An exception derived from <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56494384-bb"></a><span class="identifier">lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390190064-bb"></a><span class="identifier">lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to obtain sharable ownership of the mutex, and if another thread has exclusive ownership of the mutex, waits until it can obtain the ownership. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56496576-bb"></a><span class="identifier">try_lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879390187872-bb"></a><span class="identifier">try_lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire sharable ownership of the mutex without waiting. If no other thread has exclusive ownership of the mutex this succeeds. Returns: If it can acquire sharable ownership immediately returns true. If it has to wait, returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56498848-bb"></a><span class="identifier">timed_lock_sharable</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879390185600-bb"></a><span class="identifier">timed_lock_sharable</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire sharable ownership of the mutex waiting if necessary until no other thread has exclusive ownership of the mutex or abs_time is reached. Returns: If acquires sharable ownership, returns true. Otherwise returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56501824-bb"></a><span class="identifier">unlock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390182624-bb"></a><span class="identifier">unlock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Precondition: The thread must have sharable ownership of the mutex. Effects: The calling thread releases the sharable ownership of the mutex. Throws: An exception derived from <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 </ol></div>
@@ -127,7 +128,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

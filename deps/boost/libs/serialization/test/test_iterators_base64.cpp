@@ -24,8 +24,6 @@ namespace std{
 }
 #endif
 
-#include <boost/serialization/pfto.hpp>
-
 #include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/insert_linebreaks.hpp>
@@ -61,8 +59,8 @@ void test_base64(unsigned int size){
         translate_out;
 
     std::copy(
-        translate_out(BOOST_MAKE_PFTO_WRAPPER(static_cast<CharType *>(rawdata))),
-        translate_out(BOOST_MAKE_PFTO_WRAPPER(rawdata + size)),
+        translate_out(static_cast<CharType *>(rawdata)),
+        translate_out(rawdata + size),
         std::back_inserter(text_base64)
     );
 
@@ -82,7 +80,7 @@ void test_base64(unsigned int size){
         std::equal(
             rawdata,
             rawdata + size,
-            translate_in(BOOST_MAKE_PFTO_WRAPPER(text_base64.begin()))
+            translate_in(text_base64.begin())
         )
     );
 

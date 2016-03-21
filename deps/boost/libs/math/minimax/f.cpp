@@ -6,7 +6,7 @@
 #define L22
 //#include "../tools/ntl_rr_lanczos.hpp"
 //#include "../tools/ntl_rr_digamma.hpp"
-#include <boost/math/bindings/rr.hpp>
+#include "multiprecision.hpp"
 #include <boost/math/tools/polynomial.hpp>
 #include <boost/math/special_functions.hpp>
 #include <boost/math/special_functions/zeta.hpp>
@@ -15,19 +15,19 @@
 #include <cmath>
 
 
-boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
+mp_type f(const mp_type& x, int variant)
 {
-   static const boost::math::ntl::RR tiny = boost::math::tools::min_value<boost::math::ntl::RR>() * 64;
+   static const mp_type tiny = boost::math::tools::min_value<mp_type>() * 64;
    switch(variant)
    {
    case 0:
       {
-      boost::math::ntl::RR x_ = sqrt(x == 0 ? 1e-80 : x);
+      mp_type x_ = sqrt(x == 0 ? 1e-80 : x);
       return boost::math::erf(x_) / x_;
       }
    case 1:
       {
-      boost::math::ntl::RR x_ = 1 / x;
+      mp_type x_ = 1 / x;
       return boost::math::erfc(x_) * x_ / exp(-x_ * x_);
       }
    case 2:
@@ -36,7 +36,7 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
       }
    case 3:
       {
-         boost::math::ntl::RR y(x);
+         mp_type y(x);
          if(y == 0) 
             y += tiny;
          return boost::math::lgamma(y+2) / y - 0.5;
@@ -52,7 +52,7 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
       //
       if(x == 0)
       {
-         return boost::lexical_cast<boost::math::ntl::RR>("0.42278433509846713939348790991759756895784066406008") / 3;
+         return boost::lexical_cast<mp_type>("0.42278433509846713939348790991759756895784066406008") / 3;
       }
       return boost::math::lgamma(x+2) / (x * (x+3));
    case 5:
@@ -64,8 +64,8 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          //
          // works well over [1, 1.5] but not near 2 :-(
          //
-         boost::math::ntl::RR r1 = boost::lexical_cast<boost::math::ntl::RR>("0.57721566490153286060651209008240243104215933593992");
-         boost::math::ntl::RR r2 = boost::lexical_cast<boost::math::ntl::RR>("0.42278433509846713939348790991759756895784066406008");
+         mp_type r1 = boost::lexical_cast<mp_type>("0.57721566490153286060651209008240243104215933593992");
+         mp_type r2 = boost::lexical_cast<mp_type>("0.42278433509846713939348790991759756895784066406008");
          if(x == 0)
          {
             return r1;
@@ -85,8 +85,8 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          //
          // works well over [1.5, 2] but not near 1 :-(
          //
-         boost::math::ntl::RR r1 = boost::lexical_cast<boost::math::ntl::RR>("0.57721566490153286060651209008240243104215933593992");
-         boost::math::ntl::RR r2 = boost::lexical_cast<boost::math::ntl::RR>("0.42278433509846713939348790991759756895784066406008");
+         mp_type r1 = boost::lexical_cast<mp_type>("0.57721566490153286060651209008240243104215933593992");
+         mp_type r2 = boost::lexical_cast<mp_type>("0.42278433509846713939348790991759756895784066406008");
          if(x == 0)
          {
             return r2;
@@ -102,9 +102,9 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          //
          // erf_inv in range [0, 0.5]
          //
-         boost::math::ntl::RR y = x;
+         mp_type y = x;
          if(y == 0)
-            y = boost::math::tools::epsilon<boost::math::ntl::RR>() / 64;
+            y = boost::math::tools::epsilon<mp_type>() / 64;
          return boost::math::erf_inv(y) / (y * (y+10));
       }
    case 8:
@@ -114,17 +114,17 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          // Use an y-offset of 0.25, and range [0, 0.25]
          // abs error, auto y-offset.
          //
-         boost::math::ntl::RR y = x;
+         mp_type y = x;
          if(y == 0)
-            y = boost::lexical_cast<boost::math::ntl::RR>("1e-5000");
+            y = boost::lexical_cast<mp_type>("1e-5000");
          return sqrt(-2 * log(y)) / boost::math::erfc_inv(y);
       }
    case 9:
       {
-         boost::math::ntl::RR x2 = x;
+         mp_type x2 = x;
          if(x2 == 0)
-            x2 = boost::lexical_cast<boost::math::ntl::RR>("1e-5000");
-         boost::math::ntl::RR y = exp(-x2*x2); // sqrt(-log(x2)) - 5;
+            x2 = boost::lexical_cast<mp_type>("1e-5000");
+         mp_type y = exp(-x2*x2); // sqrt(-log(x2)) - 5;
          return boost::math::erfc_inv(y) / x2;
       }
    case 10:
@@ -133,9 +133,9 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          // Digamma over the interval [1,2], set x-offset to 1
          // and optimise for absolute error over [0,1].
          //
-         int current_precision = boost::math::ntl::RR::precision();
+         int current_precision = get_working_precision();
          if(current_precision < 1000)
-            boost::math::ntl::RR::SetPrecision(1000);
+            set_working_precision(1000);
          //
          // This value for the root of digamma is calculated using our
          // differentiated lanczos approximation.  It agrees with Cody
@@ -143,19 +143,19 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          // TOMS ALGORITHM 708 (Didonato and Morris).
          // and Math. Comp. 27, 123-127 (1973) by Cody, Strecok and Thacher.
          //
-         //boost::math::ntl::RR root = boost::lexical_cast<boost::math::ntl::RR>("1.4616321449683623412626595423257213234331845807102825466429633351908372838889871");
+         //mp_type root = boost::lexical_cast<mp_type>("1.4616321449683623412626595423257213234331845807102825466429633351908372838889871");
          //
          // Actually better to calculate the root on the fly, it appears to be more
          // accurate: convergence is easier with the 1000-bit value, the approximation
          // produced agrees with functions.mathworld.com values to 35 digits even quite
          // near the root.
          //
-         static boost::math::tools::eps_tolerance<boost::math::ntl::RR> tol(1000);
+         static boost::math::tools::eps_tolerance<mp_type> tol(1000);
          static boost::uintmax_t max_iter = 1000;
-         boost::math::ntl::RR (*pdg)(boost::math::ntl::RR) = &boost::math::digamma;
-         static const boost::math::ntl::RR root = boost::math::tools::bracket_and_solve_root(pdg, boost::math::ntl::RR(1.4), boost::math::ntl::RR(1.5), true, tol, max_iter).first;
+         mp_type (*pdg)(mp_type) = &boost::math::digamma;
+         static const mp_type root = boost::math::tools::bracket_and_solve_root(pdg, mp_type(1.4), mp_type(1.5), true, tol, max_iter).first;
 
-         boost::math::ntl::RR x2 = x;
+         mp_type x2 = x;
          double lim = 1e-65;
          if(fabs(x2 - root) < lim)
          {
@@ -165,26 +165,26 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
             // That gets compounded again when Remez calculates the error
             // function.  This cludge seems to stop the worst of the problems:
             //
-            static const boost::math::ntl::RR a = boost::math::digamma(root - lim) / -lim;
-            static const boost::math::ntl::RR b = boost::math::digamma(root + lim) / lim;
-            boost::math::ntl::RR fract = (x2 - root + lim) / (2*lim);
-            boost::math::ntl::RR r = (1-fract) * a + fract * b;
+            static const mp_type a = boost::math::digamma(root - lim) / -lim;
+            static const mp_type b = boost::math::digamma(root + lim) / lim;
+            mp_type fract = (x2 - root + lim) / (2*lim);
+            mp_type r = (1-fract) * a + fract * b;
             std::cout << "In root area: " << r;
             return r;
          }
-         boost::math::ntl::RR result =  boost::math::digamma(x2) / (x2 - root);
+         mp_type result =  boost::math::digamma(x2) / (x2 - root);
          if(current_precision < 1000)
-            boost::math::ntl::RR::SetPrecision(current_precision);
+            set_working_precision(current_precision);
          return result;
       }
    case 11:
       // expm1:
       if(x == 0)
       {
-         static boost::math::ntl::RR lim = 1e-80;
-         static boost::math::ntl::RR a = boost::math::expm1(-lim);
-         static boost::math::ntl::RR b = boost::math::expm1(lim);
-         static boost::math::ntl::RR l = (b-a) / (2 * lim);
+         static mp_type lim = 1e-80;
+         static mp_type a = boost::math::expm1(-lim);
+         static mp_type b = boost::math::expm1(lim);
+         static mp_type l = (b-a) / (2 * lim);
          return l;
       }
       return boost::math::expm1(x) / x;
@@ -205,7 +205,7 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
       // E(k)
       {
          // x = 1-k^2
-         boost::math::ntl::RR z = 1 - x * log(x);
+         mp_type z = 1 - x * log(x);
          return boost::math::ellint_2(sqrt(1-x)) / z;
       }
    case 16:
@@ -216,7 +216,7 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
    case 17:
       // Bessel I0(x) over [16,INF]
       {
-         boost::math::ntl::RR z = 1 / (boost::math::ntl::RR(1)/16 - x);
+         mp_type z = 1 / (mp_type(1)/16 - x);
          return boost::math::cyl_bessel_i(0, z) * sqrt(z) / exp(z);
       }
    case 18:
@@ -237,31 +237,31 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
    case 21:
       // expint[1] over [0,1]:
       {
-         boost::math::ntl::RR tiny = boost::lexical_cast<boost::math::ntl::RR>("1e-5000");
-         boost::math::ntl::RR z = (x <= tiny) ? tiny : x;
+         mp_type tiny = boost::lexical_cast<mp_type>("1e-5000");
+         mp_type z = (x <= tiny) ? tiny : x;
          return boost::math::expint(1, z) - z + log(z);
       }
    case 22:
       // expint[1] over [1,N],
       // Note that x varies from [0,1]:
       {
-         boost::math::ntl::RR z = 1 / x;
+         mp_type z = 1 / x;
          return boost::math::expint(1, z) * exp(z) * z;
       }
    case 23:
       // expin Ei over [0,R]
       {
-         static const boost::math::ntl::RR root = 
-            boost::lexical_cast<boost::math::ntl::RR>("0.372507410781366634461991866580119133535689497771654051555657435242200120636201854384926049951548942392");
-         boost::math::ntl::RR z = x < (std::numeric_limits<long double>::min)() ? (std::numeric_limits<long double>::min)() : x;
+         static const mp_type root = 
+            boost::lexical_cast<mp_type>("0.372507410781366634461991866580119133535689497771654051555657435242200120636201854384926049951548942392");
+         mp_type z = x < (std::numeric_limits<long double>::min)() ? (std::numeric_limits<long double>::min)() : x;
          return (boost::math::expint(z) - log(z / root)) / (z - root);
       }
    case 24:
       // Expint Ei for large x:
       {
-         static const boost::math::ntl::RR root = 
-            boost::lexical_cast<boost::math::ntl::RR>("0.372507410781366634461991866580119133535689497771654051555657435242200120636201854384926049951548942392");
-         boost::math::ntl::RR z = x < (std::numeric_limits<long double>::min)() ? (std::numeric_limits<long double>::max)() : 1 / x;
+         static const mp_type root = 
+            boost::lexical_cast<mp_type>("0.372507410781366634461991866580119133535689497771654051555657435242200120636201854384926049951548942392");
+         mp_type z = x < (std::numeric_limits<long double>::min)() ? (std::numeric_limits<long double>::max)() : mp_type(1 / x);
          return (boost::math::expint(z) - z) * z * exp(-z);
          //return (boost::math::expint(z) - log(z)) * z * exp(-z);
       }
@@ -275,16 +275,16 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
          //
          // erf_inv in range [0, 0.5]
          //
-         boost::math::ntl::RR y = x;
+         mp_type y = x;
          if(y == 0)
-            y = boost::math::tools::epsilon<boost::math::ntl::RR>() / 64;
+            y = boost::math::tools::epsilon<mp_type>() / 64;
          y = sqrt(y);
          return boost::math::erf_inv(y) / (y);
       }
    case 28:
       {
          // log1p over [-0.5,0.5]
-         boost::math::ntl::RR y = x;
+         mp_type y = x;
          if(fabs(y) < 1e-100)
             y = (y == 0) ? 1e-100 : boost::math::sign(y) * 1e-100;
          return (boost::math::log1p(y) - y + y * y / 2) / (y);
@@ -297,7 +297,7 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
    case 30:
    {
       // trigamma over [x,y]
-      boost::math::ntl::RR y = x;
+      mp_type y = x;
       y = sqrt(y);
       return boost::math::trigamma(x) * (x * x);
    }
@@ -305,7 +305,7 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
    {
       // trigamma over [x, INF]
       if(x == 0) return 1;
-      boost::math::ntl::RR y = (x == 0) ? (std::numeric_limits<double>::max)() / 2 : 1/x;
+      mp_type y = (x == 0) ? (std::numeric_limits<double>::max)() / 2 : mp_type(1/x);
       return boost::math::trigamma(y) * y;
    }
    }
@@ -313,10 +313,10 @@ boost::math::ntl::RR f(const boost::math::ntl::RR& x, int variant)
 }
 
 void show_extra(
-   const boost::math::tools::polynomial<boost::math::ntl::RR>& n, 
-   const boost::math::tools::polynomial<boost::math::ntl::RR>& d, 
-   const boost::math::ntl::RR& x_offset, 
-   const boost::math::ntl::RR& y_offset, 
+   const boost::math::tools::polynomial<mp_type>& n, 
+   const boost::math::tools::polynomial<mp_type>& d, 
+   const mp_type& x_offset, 
+   const mp_type& y_offset, 
    int variant)
 {
    switch(variant)

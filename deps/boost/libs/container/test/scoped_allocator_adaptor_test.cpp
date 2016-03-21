@@ -19,81 +19,7 @@
 #include <memory>
 #include <cstddef>
 
-using namespace boost::container;
-
-template<class T, unsigned int Id, bool HasTrueTypes = false>
-class test_allocator
-{
-   BOOST_COPYABLE_AND_MOVABLE(test_allocator)
-   public:
-
-   template<class U>
-   struct rebind
-   {
-      typedef test_allocator<U, Id, HasTrueTypes> other;
-   };
-
-   typedef container_detail::bool_<HasTrueTypes>  propagate_on_container_copy_assignment;
-   typedef container_detail::bool_<HasTrueTypes>  propagate_on_container_move_assignment;
-   typedef container_detail::bool_<HasTrueTypes>  propagate_on_container_swap;
-   typedef container_detail::bool_<HasTrueTypes>  is_always_equal;
-   typedef T value_type;
-
-   test_allocator()
-      : m_move_contructed(false), m_move_assigned(false)
-   {}
-
-   test_allocator(const test_allocator&)
-      : m_move_contructed(false), m_move_assigned(false)
-   {}
-
-   test_allocator(BOOST_RV_REF(test_allocator) )
-      : m_move_contructed(true), m_move_assigned(false)
-   {}
-
-   template<class U>
-   test_allocator(BOOST_RV_REF_BEG test_allocator<U, Id, HasTrueTypes> BOOST_RV_REF_END)
-      : m_move_contructed(true), m_move_assigned(false)
-   {}
-
-   template<class U>
-   test_allocator(const test_allocator<U, Id, HasTrueTypes> &)
-   {}
-
-   test_allocator & operator=(BOOST_COPY_ASSIGN_REF(test_allocator))
-   {
-      return *this;
-   }
-
-   test_allocator & operator=(BOOST_RV_REF(test_allocator))
-   {
-      m_move_assigned = true;
-      return *this;
-   }
-
-   std::size_t max_size() const
-   {  return std::size_t(-1);  }
-
-   T* allocate(std::size_t n)
-   {  return (T*)::new char[n*sizeof(T)];  }
-
-   void deallocate(T*p, std::size_t)
-   {  delete []static_cast<char*>(static_cast<void*>(p));  }
-
-   bool m_move_contructed;
-   bool m_move_assigned;
-};
-
-template <class T1, class T2, unsigned int Id, bool HasTrueTypes>
-bool operator==( const test_allocator<T1, Id, HasTrueTypes>&
-               , const test_allocator<T2, Id, HasTrueTypes>&)
-{  return true;   }
-
-template <class T1, class T2, unsigned int Id, bool HasTrueTypes>
-bool operator!=( const test_allocator<T1, Id, HasTrueTypes>&
-               , const test_allocator<T2, Id, HasTrueTypes>&)
-{  return false;   }
-
+#include "allocator_argument_tester.hpp"
 
 template<unsigned int Type>
 struct tagged_integer
@@ -113,148 +39,6 @@ struct mark_on_destructor
    bool destroyed;
 };
 
-//This enum lists the construction options
-//for an allocator-aware type
-enum ConstructionTypeEnum
-{
-   ConstructiblePrefix,
-   ConstructibleSuffix,
-   NotUsesAllocator
-};
-
-//This base class provices types for
-//the derived class to implement each construction
-//type. If a construction type does not apply
-//the typedef is set to an internal nat
-//so that the class is not constructible from
-//the user arguments.
-template<ConstructionTypeEnum ConstructionType, unsigned int AllocatorTag>
-struct uses_allocator_base;
-
-template<unsigned int AllocatorTag>
-struct uses_allocator_base<ConstructibleSuffix, AllocatorTag>
-{
-   typedef test_allocator<int, AllocatorTag> allocator_type;
-   typedef allocator_type allocator_constructor_type;
-   struct nat{};
-   typedef nat allocator_arg_type;
-};
-
-template<unsigned int AllocatorTag>
-struct uses_allocator_base<ConstructiblePrefix, AllocatorTag>
-{
-   typedef test_allocator<int, AllocatorTag> allocator_type;
-   typedef allocator_type allocator_constructor_type;
-   typedef allocator_arg_t allocator_arg_type;
-};
-
-template<unsigned int AllocatorTag>
-struct uses_allocator_base<NotUsesAllocator, AllocatorTag>
-{
-   struct nat{};
-   typedef nat allocator_constructor_type;
-   typedef nat allocator_arg_type;
-};
-
-template<ConstructionTypeEnum ConstructionType, unsigned int AllocatorTag>
-struct mark_on_scoped_allocation
-   : uses_allocator_base<ConstructionType, AllocatorTag>
-{
-   private:
-   BOOST_COPYABLE_AND_MOVABLE(mark_on_scoped_allocation)
-
-   public:
-
-   typedef uses_allocator_base<ConstructionType, AllocatorTag> base_type;
-
-   //0 user argument constructors
-   mark_on_scoped_allocation()
-      : construction_type(NotUsesAllocator), value(0)
-   {}
-
-   explicit mark_on_scoped_allocation
-      (typename base_type::allocator_constructor_type)
-      : construction_type(ConstructibleSuffix), value(0)
-   {}
-
-   explicit mark_on_scoped_allocation
-      (typename base_type::allocator_arg_type, typename base_type::allocator_constructor_type)
-      : construction_type(ConstructiblePrefix), value(0)
-   {}
-
-   //1 user argument constructors
-   explicit mark_on_scoped_allocation(int i)
-      : construction_type(NotUsesAllocator), value(i)
-   {}
-
-   mark_on_scoped_allocation
-      (int i, typename base_type::allocator_constructor_type)
-      : construction_type(ConstructibleSuffix), value(i)
-   {}
-
-   mark_on_scoped_allocation
-      ( typename base_type::allocator_arg_type
-      , typename base_type::allocator_constructor_type
-      , int i)
-      : construction_type(ConstructiblePrefix), value(i)
-   {}
-
-   //Copy constructors
-   mark_on_scoped_allocation(const mark_on_scoped_allocation &other)
-      : construction_type(NotUsesAllocator), value(other.value)
-   {}
-
-   mark_on_scoped_allocation( const mark_on_scoped_allocation &other
-                            , typename base_type::allocator_constructor_type)
-      : construction_type(ConstructibleSuffix), value(other.value)
-   {}
-
-   mark_on_scoped_allocation( typename base_type::allocator_arg_type
-                            , typename base_type::allocator_constructor_type
-                            , const mark_on_scoped_allocation &other)
-      : construction_type(ConstructiblePrefix), value(other.value)
-   {}
-
-   //Move constructors
-   mark_on_scoped_allocation(BOOST_RV_REF(mark_on_scoped_allocation) other)
-      : construction_type(NotUsesAllocator), value(other.value)
-   {  other.value = 0;  other.construction_type = NotUsesAllocator;  }
-
-   mark_on_scoped_allocation( BOOST_RV_REF(mark_on_scoped_allocation) other
-                            , typename base_type::allocator_constructor_type)
-      : construction_type(ConstructibleSuffix), value(other.value)
-   {  other.value = 0;  other.construction_type = ConstructibleSuffix;  }
-
-   mark_on_scoped_allocation( typename base_type::allocator_arg_type
-                            , typename base_type::allocator_constructor_type
-                            , BOOST_RV_REF(mark_on_scoped_allocation) other)
-      : construction_type(ConstructiblePrefix), value(other.value)
-   {  other.value = 0;  other.construction_type = ConstructiblePrefix;  }
-
-   ConstructionTypeEnum construction_type;
-   int                  value;
-};
-
-namespace boost {
-namespace container {
-
-template<unsigned int AllocatorTag>
-struct constructible_with_allocator_prefix
-   < ::mark_on_scoped_allocation<ConstructiblePrefix, AllocatorTag> >
-{
-   static const bool value = true;
-};
-
-template<unsigned int AllocatorTag>
-struct constructible_with_allocator_suffix
-   < ::mark_on_scoped_allocation<ConstructibleSuffix, AllocatorTag> >
-{
-   static const bool value = true;
-};
-
-}  //namespace container {
-}  //namespace boost {
-
 
 #include <boost/container/scoped_allocator.hpp>
 #include <boost/static_assert.hpp>
@@ -263,19 +47,21 @@ struct constructible_with_allocator_suffix
 
 int main()
 {
-   typedef test_allocator<tagged_integer<0>, 0>   OuterAlloc;
-   typedef test_allocator<tagged_integer<0>, 10>  Outer10IdAlloc;
-   typedef test_allocator<tagged_integer<9>, 0>   Rebound9OuterAlloc;
-   typedef test_allocator<tagged_integer<1>, 1>   InnerAlloc1;
-   typedef test_allocator<tagged_integer<2>, 2>   InnerAlloc2;
-   typedef test_allocator<tagged_integer<1>, 11>  Inner11IdAlloc1;
+   using namespace boost::container;
 
-   typedef test_allocator<tagged_integer<0>, 0, false>      OuterAllocFalseHasTrueTypes;
-   typedef test_allocator<tagged_integer<0>, 0, true>       OuterAllocTrueHasTrueTypes;
-   typedef test_allocator<tagged_integer<1>, 1, false>      InnerAlloc1FalseHasTrueTypes;
-   typedef test_allocator<tagged_integer<1>, 1, true>       InnerAlloc1TrueHasTrueTypes;
-   typedef test_allocator<tagged_integer<2>, 2, false>      InnerAlloc2FalseHasTrueTypes;
-   typedef test_allocator<tagged_integer<2>, 2, true>       InnerAlloc2TrueHasTrueTypes;
+   typedef propagation_test_allocator<tagged_integer<0>, 0>   OuterAlloc;
+   typedef propagation_test_allocator<tagged_integer<0>, 10>  Outer10IdAlloc;
+   typedef propagation_test_allocator<tagged_integer<9>, 0>   Rebound9OuterAlloc;
+   typedef propagation_test_allocator<tagged_integer<1>, 1>   InnerAlloc1;
+   typedef propagation_test_allocator<tagged_integer<2>, 2>   InnerAlloc2;
+   typedef propagation_test_allocator<tagged_integer<1>, 11>  Inner11IdAlloc1;
+
+   typedef propagation_test_allocator<tagged_integer<0>, 0, false>      OuterAllocFalseHasTrueTypes;
+   typedef propagation_test_allocator<tagged_integer<0>, 0, true>       OuterAllocTrueHasTrueTypes;
+   typedef propagation_test_allocator<tagged_integer<1>, 1, false>      InnerAlloc1FalseHasTrueTypes;
+   typedef propagation_test_allocator<tagged_integer<1>, 1, true>       InnerAlloc1TrueHasTrueTypes;
+   typedef propagation_test_allocator<tagged_integer<2>, 2, false>      InnerAlloc2FalseHasTrueTypes;
+   typedef propagation_test_allocator<tagged_integer<2>, 2, true>       InnerAlloc2TrueHasTrueTypes;
 
    //
    typedef scoped_allocator_adaptor< OuterAlloc  >          Scoped0Inner;
@@ -301,81 +87,81 @@ int main()
                                    , InnerAlloc2 >          Rebound9Scoped2Inner;
 
    //outer_allocator_type
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< OuterAlloc
+   BOOST_STATIC_ASSERT(( container_detail::is_same< OuterAlloc
                        , Scoped0Inner::outer_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< OuterAlloc
+   BOOST_STATIC_ASSERT(( container_detail::is_same< OuterAlloc
                        , Scoped1Inner::outer_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< OuterAlloc
+   BOOST_STATIC_ASSERT(( container_detail::is_same< OuterAlloc
                        , Scoped2Inner::outer_allocator_type>::value ));
    //value_type
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::value_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::value_type
                        , Scoped0Inner::value_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::value_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::value_type
                        , Scoped1Inner::value_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::value_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::value_type
                        , Scoped2Inner::value_type>::value ));
    //size_type
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::size_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::size_type
                        , Scoped0Inner::size_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::size_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::size_type
                        , Scoped1Inner::size_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::size_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::size_type
                        , Scoped2Inner::size_type>::value ));
 
    //difference_type
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
                        , Scoped0Inner::difference_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
                        , Scoped1Inner::difference_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::difference_type
                        , Scoped2Inner::difference_type>::value ));
 
    //pointer
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::pointer
                        , Scoped0Inner::pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::pointer
                        , Scoped1Inner::pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::pointer
                        , Scoped2Inner::pointer>::value ));
 
    //const_pointer
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
                        , Scoped0Inner::const_pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
                        , Scoped1Inner::const_pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_pointer
                        , Scoped2Inner::const_pointer>::value ));
 
    //void_pointer
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
                        , Scoped0Inner::void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
                        , Scoped1Inner::void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::void_pointer
                        , Scoped2Inner::void_pointer>::value ));
 
    //const_void_pointer
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
                        , Scoped0Inner::const_void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
                        , Scoped1Inner::const_void_pointer>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
+   BOOST_STATIC_ASSERT(( container_detail::is_same< allocator_traits<OuterAlloc>::const_void_pointer
                        , Scoped2Inner::const_void_pointer>::value ));
 
    //rebind
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same<Scoped0Inner::rebind< tagged_integer<9> >::other
+   BOOST_STATIC_ASSERT(( container_detail::is_same<Scoped0Inner::rebind< tagged_integer<9> >::other
                        , Rebound9Scoped0Inner >::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same<Scoped1Inner::rebind< tagged_integer<9> >::other
+   BOOST_STATIC_ASSERT(( container_detail::is_same<Scoped1Inner::rebind< tagged_integer<9> >::other
                        , Rebound9Scoped1Inner >::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same<Scoped2Inner::rebind< tagged_integer<9> >::other
+   BOOST_STATIC_ASSERT(( container_detail::is_same<Scoped2Inner::rebind< tagged_integer<9> >::other
                        , Rebound9Scoped2Inner >::value ));
 
    //inner_allocator_type
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< Scoped0Inner
+   BOOST_STATIC_ASSERT(( container_detail::is_same< Scoped0Inner
                        , Scoped0Inner::inner_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< scoped_allocator_adaptor<InnerAlloc1>
+   BOOST_STATIC_ASSERT(( container_detail::is_same< scoped_allocator_adaptor<InnerAlloc1>
                        , Scoped1Inner::inner_allocator_type>::value ));
-   BOOST_STATIC_ASSERT(( boost::container::container_detail::is_same< scoped_allocator_adaptor<InnerAlloc1, InnerAlloc2>
+   BOOST_STATIC_ASSERT(( container_detail::is_same< scoped_allocator_adaptor<InnerAlloc1, InnerAlloc2>
                        , Scoped2Inner::inner_allocator_type>::value ));
 
    {
@@ -746,7 +532,7 @@ int main()
    }
 
    {
-      vector<int, scoped_allocator_adaptor< test_allocator<int, 0> > > dummy;
+      vector<int, scoped_allocator_adaptor< propagation_test_allocator<int, 0> > > dummy;
       dummy.push_back(0);
    }
 
@@ -781,34 +567,16 @@ int main()
 
    //construct
    {
-
-      BOOST_STATIC_ASSERT(( !boost::container::uses_allocator
-                              < ::mark_on_scoped_allocation<NotUsesAllocator, 0>
-                              , test_allocator<float, 0>
-                              >::value ));
-      BOOST_STATIC_ASSERT((  boost::container::uses_allocator
-                              < ::mark_on_scoped_allocation<ConstructiblePrefix, 0>
-                              , test_allocator<float, 0>
-                              >::value ));
-      BOOST_STATIC_ASSERT((  boost::container::uses_allocator
-                              < ::mark_on_scoped_allocation<ConstructibleSuffix, 0>
-                              , test_allocator<float, 0>
-                              >::value ));
-      BOOST_STATIC_ASSERT(( boost::container::constructible_with_allocator_prefix
-                          < ::mark_on_scoped_allocation<ConstructiblePrefix, 0> >::value ));
-      BOOST_STATIC_ASSERT(( boost::container::constructible_with_allocator_suffix
-                          < ::mark_on_scoped_allocation<ConstructibleSuffix, 0> >::value ));
-
       ////////////////////////////////////////////////////////////
       //First check scoped allocator with just OuterAlloc.
-      //In this case OuterAlloc (test_allocator with tag 0) should be
+      //In this case OuterAlloc (propagation_test_allocator with tag 0) should be
       //used to construct types.
       ////////////////////////////////////////////////////////////
       {
          Scoped0Inner s0i;
          //Check construction with 0 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy);
@@ -820,7 +588,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy);
@@ -832,7 +600,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy);
@@ -846,7 +614,7 @@ int main()
 
          //Check construction with 1 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy, 1);
@@ -858,7 +626,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy, 2);
@@ -870,7 +638,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy, 3);
@@ -884,14 +652,14 @@ int main()
       }
       ////////////////////////////////////////////////////////////
       //Then check scoped allocator with OuterAlloc and InnerAlloc.
-      //In this case InnerAlloc (test_allocator with tag 1) should be
+      //In this case InnerAlloc (propagation_test_allocator with tag 1) should be
       //used to construct types.
       ////////////////////////////////////////////////////////////
       {
          Scoped1Inner s1i;
          //Check construction with 0 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 1> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 1> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy);
@@ -903,7 +671,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 1> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 1> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy);
@@ -915,7 +683,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 1> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 1> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy);
@@ -929,7 +697,7 @@ int main()
 
          //Check construction with 1 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 1> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 1> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy, 1);
@@ -941,7 +709,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 1> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 1> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy, 2);
@@ -953,7 +721,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 1> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 1> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy, 3);
@@ -972,31 +740,31 @@ int main()
 
       ////////////////////////////////////////////////////////////
       //First check scoped allocator with just OuterAlloc.
-      //In this case OuterAlloc (test_allocator with tag 0) should be
+      //In this case OuterAlloc (propagation_test_allocator with tag 0) should be
       //used to construct types.
       ////////////////////////////////////////////////////////////
       {
          //Check outer_allocator_type is scoped
-         BOOST_STATIC_ASSERT(( boost::container::is_scoped_allocator
+         BOOST_STATIC_ASSERT(( is_scoped_allocator
             <ScopedScoped0Inner::outer_allocator_type>::value ));
-         BOOST_STATIC_ASSERT(( ::boost::container::container_detail::is_same
-            < boost::container::outermost_allocator<ScopedScoped0Inner>::type
+         BOOST_STATIC_ASSERT(( container_detail::is_same
+            < outermost_allocator<ScopedScoped0Inner>::type
             , Outer10IdAlloc
             >::value ));
-         BOOST_STATIC_ASSERT(( ::boost::container::container_detail::is_same
+         BOOST_STATIC_ASSERT(( container_detail::is_same
             < ScopedScoped0Inner::outer_allocator_type
             , scoped_allocator_adaptor<Outer10IdAlloc>
             >::value ));
-         BOOST_STATIC_ASSERT(( ::boost::container::container_detail::is_same
+         BOOST_STATIC_ASSERT(( container_detail::is_same
             < scoped_allocator_adaptor<Outer10IdAlloc>::outer_allocator_type
             , Outer10IdAlloc
             >::value ));
          ScopedScoped0Inner ssro0i;
-         Outer10IdAlloc & val = boost::container::outermost_allocator<ScopedScoped0Inner>::get(ssro0i);
+         Outer10IdAlloc & val = outermost_allocator<ScopedScoped0Inner>::get(ssro0i);
          (void)val;
          //Check construction with 0 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 10> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy);
@@ -1008,7 +776,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy);
@@ -1020,7 +788,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy);
@@ -1034,7 +802,7 @@ int main()
 
          //Check construction with 1 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 10> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy, 1);
@@ -1046,7 +814,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy, 2);
@@ -1058,7 +826,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy, 3);
@@ -1073,37 +841,37 @@ int main()
       ////////////////////////////////////////////////////////////
       //Then check scoped allocator with OuterAlloc and InnerAlloc.
       //In this case inner_allocator_type is not convertible to
-      //::mark_on_scoped_allocation<XXX, 10> so uses_allocator
+      //::allocator_argument_tester<XXX, 10> so uses_allocator
       //should be false on all tests.
       ////////////////////////////////////////////////////////////
       {
          //Check outer_allocator_type is scoped
-         BOOST_STATIC_ASSERT(( boost::container::is_scoped_allocator
+         BOOST_STATIC_ASSERT(( is_scoped_allocator
             <ScopedScoped1Inner::outer_allocator_type>::value ));
-         BOOST_STATIC_ASSERT(( ::boost::container::container_detail::is_same
-            < boost::container::outermost_allocator<ScopedScoped1Inner>::type
+         BOOST_STATIC_ASSERT(( container_detail::is_same
+            < outermost_allocator<ScopedScoped1Inner>::type
             , Outer10IdAlloc
             >::value ));
-         BOOST_STATIC_ASSERT(( ::boost::container::container_detail::is_same
+         BOOST_STATIC_ASSERT(( container_detail::is_same
             < ScopedScoped1Inner::outer_allocator_type
             , scoped_allocator_adaptor<Outer10IdAlloc, Inner11IdAlloc1>
             >::value ));
-         BOOST_STATIC_ASSERT(( ::boost::container::container_detail::is_same
+         BOOST_STATIC_ASSERT(( container_detail::is_same
             < scoped_allocator_adaptor<Outer10IdAlloc, Inner11IdAlloc1>::outer_allocator_type
             , Outer10IdAlloc
             >::value ));
          BOOST_STATIC_ASSERT(( !
-            ::boost::container::uses_allocator
-               < ::mark_on_scoped_allocation<ConstructibleSuffix, 10>
+            uses_allocator
+               < ::allocator_argument_tester<ConstructibleSuffix, 10>
                , ScopedScoped1Inner::inner_allocator_type::outer_allocator_type
                >::value ));
          ScopedScoped1Inner ssro1i;
-         Outer10IdAlloc & val = boost::container::outermost_allocator<ScopedScoped1Inner>::get(ssro1i);
+         Outer10IdAlloc & val = outermost_allocator<ScopedScoped1Inner>::get(ssro1i);
          (void)val;
 
          //Check construction with 0 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 10> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy);
@@ -1115,7 +883,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy);
@@ -1127,7 +895,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy);
@@ -1141,7 +909,7 @@ int main()
 
          //Check construction with 1 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 10> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy, 1);
@@ -1153,7 +921,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy, 2);
@@ -1165,7 +933,7 @@ int main()
             dummy.~MarkType();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 10> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 10> MarkType;
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy, 3);
@@ -1182,12 +950,12 @@ int main()
       //Now check propagation to pair
       ////////////////////////////////////////////////////////////
       //First check scoped allocator with just OuterAlloc.
-      //In this case OuterAlloc (test_allocator with tag 0) should be
+      //In this case OuterAlloc (propagation_test_allocator with tag 0) should be
       //used to construct types.
       ////////////////////////////////////////////////////////////
       {
-         using boost::container::container_detail::pair;
-         typedef test_allocator< pair< tagged_integer<0>
+         using container_detail::pair;
+         typedef propagation_test_allocator< pair< tagged_integer<0>
                                , tagged_integer<0> >, 0> OuterPairAlloc;
          //
          typedef scoped_allocator_adaptor < OuterPairAlloc  >  ScopedPair0Inner;
@@ -1195,7 +963,7 @@ int main()
          ScopedPair0Inner s0i;
          //Check construction with 0 user arguments
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             dummy.~MarkTypePair();
@@ -1210,7 +978,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             dummy.~MarkTypePair();
@@ -1225,7 +993,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             dummy.~MarkTypePair();
@@ -1242,7 +1010,7 @@ int main()
 
          //Check construction with 1 user arguments for each pair
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             dummy.~MarkTypePair();
@@ -1257,7 +1025,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             dummy.~MarkTypePair();
@@ -1272,7 +1040,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             dummy.~MarkTypePair();
@@ -1288,7 +1056,7 @@ int main()
          }
          //Check construction with pair copy construction
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy, dummy2;
             dummy.~MarkTypePair();
@@ -1303,7 +1071,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy, dummy2(1, 1);
             dummy.~MarkTypePair();
@@ -1318,7 +1086,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy, dummy2(2, 2);
             dummy.~MarkTypePair();
@@ -1334,7 +1102,7 @@ int main()
          }
          //Check construction with pair move construction
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy, dummy2(3, 3);
             dummy2.first.construction_type = dummy2.second.construction_type = ConstructibleSuffix;
@@ -1354,7 +1122,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy, dummy2(1, 1);
             dummy.~MarkTypePair();
@@ -1373,7 +1141,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy, dummy2(2, 2);
             dummy.~MarkTypePair();
@@ -1393,7 +1161,7 @@ int main()
          }
          //Check construction with related pair copy construction
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             pair<int, int> dummy2;
@@ -1409,7 +1177,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             pair<int, int> dummy2(1, 1);
@@ -1425,7 +1193,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             pair<int, int> dummy2(2, 2);
@@ -1442,7 +1210,7 @@ int main()
          }
          //Check construction with related pair move construction
          {
-            typedef ::mark_on_scoped_allocation<NotUsesAllocator, 0> MarkType;
+            typedef ::allocator_argument_tester<NotUsesAllocator, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             pair<int, int> dummy2(3, 3);
@@ -1458,7 +1226,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructibleSuffix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructibleSuffix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             pair<int, int> dummy2(1, 1);
@@ -1474,7 +1242,7 @@ int main()
             dummy.~MarkTypePair();
          }
          {
-            typedef ::mark_on_scoped_allocation<ConstructiblePrefix, 0> MarkType;
+            typedef ::allocator_argument_tester<ConstructiblePrefix, 0> MarkType;
             typedef pair<MarkType, MarkType> MarkTypePair;
             MarkTypePair dummy;
             pair<int, int> dummy2(2, 2);

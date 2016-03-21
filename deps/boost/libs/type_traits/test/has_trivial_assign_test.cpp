@@ -12,6 +12,23 @@
 #  include <boost/type_traits/has_trivial_assign.hpp>
 #endif
 
+struct non_assignable
+{
+   non_assignable();
+private:
+   non_assignable& operator=(const non_assignable&);
+};
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+
+struct non_assignable2
+{
+   non_assignable2();
+   non_assignable2& operator=(const non_assignable2&) = delete;
+};
+
+#endif
+
 TT_TEST_BEGIN(has_trivial_assign)
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<bool>::value, true);
@@ -180,9 +197,10 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int&>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int&&>::value, false);
 #endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<const int&>::value, false);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int[2]>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int[3][2]>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int[2][4][5][6][3]>::value, true);
+// Arrays can not be explicitly assigned:
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int[2]>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int[3][2]>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<int[2][4][5][6][3]>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<empty_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<void>::value, false);
@@ -202,6 +220,11 @@ BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_assign<wrap<trivial_except_
 BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_assign<wrap<trivial_except_copy> >::value, true, false);
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<test_abc1>::value, false);
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<non_assignable2>::value, false);
+#endif
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_assign<non_assignable>::value, false);
 
 TT_TEST_END
 

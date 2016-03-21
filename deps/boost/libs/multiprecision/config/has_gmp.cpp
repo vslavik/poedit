@@ -26,7 +26,8 @@ int main()
 
    mpz_t integ;
    mpz_init (integ);
-   mpz_clear (integ);
+   if(integ[0]._mp_d)
+      mpz_clear (integ);
 
    return 0;
 }

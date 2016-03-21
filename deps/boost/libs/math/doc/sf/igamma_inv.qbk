@@ -41,7 +41,7 @@ inverses which either compute
 /x/ given /a/ and /p/ or /q/,
 or else compute /a/ given /x/ and either /p/ or /q/.
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1 and T2 are different types, otherwise the return type is simply T1.
 
 [optional_policy]
@@ -105,7 +105,15 @@ they are deliberately "detuned" so as not to be too accurate: it is in
 any case impossible for these function to be more accurate than the
 regular forward incomplete gamma functions.  In practice, the accuracy
 of these functions is very similar to that of __gamma_p and __gamma_q
-functions.
+functions:
+
+[table_gamma_p_inv]
+
+[table_gamma_q_inv]
+
+[table_gamma_p_inva]
+
+[table_gamma_q_inva]
 
 [h4 Testing]
 

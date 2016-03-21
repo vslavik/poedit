@@ -4,7 +4,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
-import ../check/predef : require : predef-require ;
+import ../check/predef : require check : predef-require predef-check ;
 
 local predef-include-root ;
 local predef-dependency ;
@@ -57,4 +57,11 @@ test-suite predef :
     [ run make.cpp ]
     [ compile macos_endian.c : [ predef-require "BOOST_OS_MACOS" : cpp ] ]
     [ compile macos_vs_bsd.c : [ predef-require "BOOST_OS_MACOS" : cpp ] ]
+    [ run check_value.cpp : : : <test-info>always_show_run_output
+        [ predef-check "BOOST_COMP_CLANG > 0.0.0" "BOOST_OS_LINUX == 0" : : <cxxflags>-DCHECK_VALUE=true ] ]
     ;
+
+# Minimal testing done for predef for CI. Since
+# we don't have many we can just do all of them.
+alias minimal : predef ;
+explicit minimal ;

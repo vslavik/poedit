@@ -15,10 +15,12 @@
 #ifndef GEOMETRY_TEST_GEOMETRY_TEST_COMMON_HPP
 #define GEOMETRY_TEST_GEOMETRY_TEST_COMMON_HPP
 
+#include <boost/config.hpp>
+
 // Determine debug/release mode
 // (it would be convenient if Boost.Config or Boost.Test would define this)
 // Note that they might be combined (e.g. for optimize+no inline)
-#if defined (__clang__) || defined(__gcc__)
+#if defined (BOOST_CLANG) || defined(BOOST_GCC)
 #if defined(__OPTIMIZE__)
     #define BOOST_GEOMETRY_COMPILER_MODE_RELEASE
 #endif
@@ -27,7 +29,7 @@
 #endif
 #endif
 
-#if defined(_MSC_VER)
+#if defined(BOOST_MSVC)
 #if defined(_DEBUG)
 #define BOOST_GEOMETRY_COMPILER_MODE_DEBUG
 #else
@@ -36,14 +38,14 @@
 #endif
 
 
-#if defined(_MSC_VER)
+#if defined(BOOST_MSVC)
 // We deliberately mix float/double's  so turn off warnings
 #pragma warning( disable : 4244 )
 // For (new since Boost 1.40) warning in Boost.Test on putenv/posix
 #pragma warning( disable : 4996 )
 
 //#pragma warning( disable : 4305 )
-#endif // defined(_MSC_VER)
+#endif // defined(BOOST_MSVC)
 
 #include <boost/config.hpp>
 #include <boost/concept_check.hpp>

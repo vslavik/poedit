@@ -17,7 +17,7 @@ import feature ;
 project spirit_test
     : requirements
         <include>.
-        <toolset>gcc:<cxxflags>-std=c++0x
+        <toolset>gcc:<cxxflags>-std=c++1y
         <toolset>gcc:<cxxflags>-ftemplate-depth-512
         <toolset>clang:<cxxflags>-std=c++1y
         <toolset>clang:<cxxflags>-ftemplate-depth-512
@@ -63,7 +63,7 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      #~ [ run attribute1.cpp       : : : : x3_attribute1 ]
      #~ [ run attribute2.cpp       : : : : x3_attribute2 ]
      #~ [ run auto.cpp             : : : : x3_auto ]
-     #~ [ run binary.cpp           : : : : x3_binary ]
+     [ run binary.cpp           : : : : x3_binary ]
      [ run bool.cpp             : : : : x3_bool ]
      #~ [ run bool2.cpp            : : : : x3_bool2 ]
      [ run char1.cpp            : : : : x3_char1 ]
@@ -83,16 +83,16 @@ rule compile-fail ( sources + : requirements * : target-name ? )
      [ run kleene.cpp           : : : : x3_kleene ]
      #~ [ run lazy.cpp             : : : : x3_lazy ]
      [ run lexeme.cpp           : : : : x3_lexeme ]
-     #~ [ run lit1.cpp             : : : : x3_lit1 ]
-     #~ [ run lit2.cpp             : : : : x3_lit2 ]
+     [ run lit1.cpp             : : : : x3_lit1 ]
+     [ run lit2.cpp             : : : : x3_lit2 ]
      [ run list.cpp             : : : : x3_list ]
      #~ [ run hold.cpp             : : : : x3_hold ]
      #~ [ run match_manip1.cpp     : : : : x3_match_manip1 ]
      #~ [ run match_manip2.cpp     : : : : x3_match_manip2 ]
      #~ [ run match_manip3.cpp     : : : : x3_match_manip3 ]
      #~ [ run match_manip_attr.cpp : : : : x3_match_manip_attr ]
-     #~ [ run matches.cpp          : : : : x3_matches ]
-     #~ [ run no_case.cpp          : : : : x3_no_case ]
+     [ run matches.cpp          : : : : x3_matches ]
+     [ run no_case.cpp          : : : : x3_no_case ]
      [ run no_skip.cpp          : : : : x3_no_skip ]
      [ run not_predicate.cpp    : : : : x3_not_predicate ]
      [ run optional.cpp         : : : : x3_optional ]
@@ -165,10 +165,11 @@ rule compile-fail ( sources + : requirements * : target-name ? )
     ###########################################################################
     test-suite spirit_v3/qi/x3_extensions :
 
-     [ run extensions/seek.cpp       : : : : x3_seek ]
+     [ run extensions/confix.cpp       : : : : x3_confix ]
+     [ run extensions/repeat.cpp       : : : : x3_repeat ]
+     [ run extensions/seek.cpp         : : : : x3_seek ]
 
     ;
-
 
 }
 

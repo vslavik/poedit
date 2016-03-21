@@ -26,7 +26,7 @@ class MessageTargetClass(targets.BasicTarget):
         if not self.built:
             for arg in self.args:
                 if type(arg) == type([]):
-                    arg = " ".join(arg)                
+                    arg = " ".join(arg)
                 print arg
             self.built = True
 
@@ -38,9 +38,9 @@ def message(name, *args):
         name = name[0]
 
     t = get_manager().targets()
-    
+
     project = get_manager().projects().current()
-        
+
     return t.main_target_alternative(MessageTargetClass(*((name, project) + args)))
 
 get_manager().projects().add_rule("message", message)

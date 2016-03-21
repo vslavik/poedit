@@ -1,5 +1,6 @@
 /*=============================================================================
     Copyright (c) 2013 Carl Barron
+    Copyright (c) 2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -25,12 +26,9 @@ struct roman
     boost::optional<int> c;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(
-    roman,
-    (boost::optional<int>, a)
-    (boost::optional<int>, b)
-    (boost::optional<int>, c)
- );
+BOOST_FUSION_ADAPT_STRUCT(roman,
+    a, b, c
+);
 
 int eval(roman const & c)
 {
@@ -45,19 +43,19 @@ main()
     using boost::spirit::x3::symbols;
 
     { // construction from initializer-list
-        symbols<char, int> const ones =
+        symbols<int> const ones =
         {
             {"I", 1}, {"II", 2}, {"III", 3}, {"IV", 4},
             {"V", 5}, {"VI", 6}, {"VII", 7}, {"VIII", 8},
             {"IX", 9}
         };
-        symbols<char, int> const tens =
+        symbols<int> const tens =
         {
             {"X", 10}, {"XX", 20}, {"XXX", 30}, {"XL", 40},
             {"L", 50}, {"LX", 60}, {"LXX", 70}, {"LXXX", 80},
             {"XC", 90}
         };
-        symbols<char, int> const hundreds
+        symbols<int> const hundreds
         {
             {"C", 100}, {"CC", 200}, {"CCC", 300}, {"CD", 400},
             {"D", 500}, {"DC", 600}, {"DCC", 700}, {"DCCC", 800},
@@ -65,22 +63,22 @@ main()
         };
 
         auto number = -hundreds >> -tens >> -ones;
-        
+
         roman r;
         BOOST_TEST((test_attr("CDXLII", number, r)));
         BOOST_TEST(eval(r) == 442);
     }
 
     { // construction from initializer-list without attribute
-        symbols<char> foo = {"a1", "a2", "a3"};
-        
+        symbols<> foo = {"a1", "a2", "a3"};
+
         BOOST_TEST((test("a3", foo)));
     }
 
     { // assignment from initializer-list
-        symbols<char> foo;
+        symbols<> foo;
         foo = {"a1", "a2", "a3"};
-        
+
         BOOST_TEST((test("a3", foo)));
     }
 

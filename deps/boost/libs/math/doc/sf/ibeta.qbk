@@ -51,7 +51,7 @@ not both /a/ and /b/ are zero.
 
 The functions __beta and __betac require /a,b > 0/.
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1, T2 and T3 are different types.
 
 [optional_policy]
@@ -111,110 +111,13 @@ more extreme test cases to be tested.  For example expected results that
 are zero at double precision, may be finite but exceptionally small with
 the wider exponent range of the long double types.
 
-[table Errors In the Function ibeta(a,b,x)
-[[Significand Size] [Platform and Compiler] [0 < a,b < 10
+[table_ibeta]
 
-and
+[table_ibetac]
 
-0 < x < 1]  [0 < a,b < 100
+[table_beta_incomplete_]
 
-and
-
-0 < x < 1][1x10[super -5] < a,b < 1x10[super 5]
-
-and
-
-0 < x < 1]]
-[[53] [Win32, Visual C++ 8] 
-      [Peak=42.3 Mean=2.9
-
-(GSL Peak=682 Mean=32.5)
-
-(__cephes Peak=42.7 Mean=7.0)]  
-      [Peak=108 Mean=16.6
-      
-(GSL Peak=690 Mean=151)
-
-(__cephes Peak=1545 Mean=218)] 
-      [Peak=4x10[super 3][space] Mean=203
-      
-(GSL Peak~3x10[super 5][space] Mean~2x10[super 4][space])
-
-(__cephes Peak~5x10[super 5][space] Mean~2x10[super 4][space])]]
-[[64] [Redhat Linux IA32, gcc-3.4.4] [Peak=21.9 Mean=3.1] 
-      [Peak=270.7 Mean=26.8] [Peak~5x10[super 4][space] Mean=3x10[super 3][space] ]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=15.4 Mean=3.0] [Peak=112.9 Mean=14.3] 
-      [Peak~5x10[super 4][space] Mean=3x10[super 3][space]]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=20.9 Mean=2.6] [Peak=88.1 Mean=14.3] 
-      [Peak~2x10[super 4][space] Mean=1x10[super 3][space] ]]
-]
-
-[table Errors In the Function ibetac(a,b,x)
-[[Significand Size] [Platform and Compiler] [0 < a,b < 10
-
-and
-
-0 < x < 1]  [0 < a,b < 100
-
-and
-
-0 < x < 1][1x10[super -5] < a,b < 1x10[super 5]
-
-and
-
-0 < x < 1]]
-[[53] [Win32, Visual C++ 8] [Peak=13.9 Mean=2.0]  
-      [Peak=56.2 Mean=14] [Peak=3x10[super 3][space] Mean=159]]
-[[64] [Redhat Linux IA32, gcc-3.4.4] [Peak=21.1 Mean=3.6] 
-      [Peak=221.7 Mean=25.8] 
-      [Peak~9x10[super 4][space] Mean=3x10[super 3][space] ]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=10.6 Mean=2.2] 
-      [Peak=73.9 Mean=11.9] 
-      [Peak~9x10[super 4][space] Mean=3x10[super 3][space] ]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=9.9 Mean=2.6] 
-      [Peak=117.7 Mean=15.1] 
-      [Peak~3x10[super 4][space] Mean=1x10[super 3][space] ]]
-]
-
-[table Errors In the Function beta(a, b, x)
-[[Significand Size] [Platform and Compiler] [0 < a,b < 10
-
-and
-
-0 < x < 1]  [0 < a,b < 100
-
-and
-
-0 < x < 1][1x10[super -5] < a,b < 1x10[super 5]
-
-and
-
-0 < x < 1]]
-[[53] [Win32, Visual C++ 8] [Peak=39 Mean=2.9] [Peak=91 Mean=12.7] [Peak=635 Mean=25]]
-[[64] [Redhat Linux IA32, gcc-3.4.4] [Peak=26 Mean=3.6] [Peak=180.7 Mean=30.1] [Peak~7x10[super 4][space] Mean=3x10[super 3][space] ]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=13 Mean=2.4] [Peak=67.1 Mean=13.4] [Peak~7x10[super 4][space] Mean=3x10[super 3][space] ]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=27.3 Mean=3.6] [Peak=49.8 Mean=9.1] [Peak~6x10[super 4][space] Mean=3x10[super 3][space] ]]
-]
-
-[table Errors In the Function betac(a,b,x)
-[[Significand Size] [Platform and Compiler] [0 < a,b < 10
-
-and
-
-0 < x < 1]  [0 < a,b < 100
-
-and
-
-0 < x < 1][1x10[super -5] < a,b < 1x10[super 5]
-
-and
-
-0 < x < 1]]
-[[53] [Win32, Visual C++ 8] [Peak=12.0 Mean=2.4] [Peak=91 Mean=15] [Peak=4x10[super 3][space] Mean=113]]
-[[64] [Redhat Linux IA32, gcc-3.4.4] [Peak=19.8 Mean=3.8] [Peak=295.1 Mean=33.9] [Peak~1x10[super 5][space] Mean=5x10[super 3][space] ]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=11.2 Mean=2.4] [Peak=63.5 Mean=13.6] [Peak~1x10[super 5][space] Mean=5x10[super 3][space]  ]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=15.6 Mean=3.5] [Peak=39.8 Mean=8.9] [Peak~9x10[super 4][space] Mean=5x10[super 3][space]  ]]
-]
+[table_betac]
 
 [h4 Testing]
 

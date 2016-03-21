@@ -7,6 +7,9 @@
 
 using namespace boost::multiprecision;
 
-tom_int a;
+int main()
+{
+   tom_int a;
+}
 
 

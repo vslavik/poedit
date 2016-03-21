@@ -27,7 +27,7 @@
 <a name="geometry.reference.models.model_ring"></a><a class="link" href="model_ring.html" title="model::ring">model::ring</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp125458656"></a><a class="indexterm" name="idp125459344"></a>
+          <a class="indexterm" name="idm44837171904304"></a><a class="indexterm" name="idm44837171903616"></a>
 A ring (aka linear ring) is a closed line which should not be selfintersecting.
         </p>
 <h6>
@@ -235,6 +235,26 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
                   </p>
                 </td>
 </tr>
+<tr>
+<td>
+                  <p>
+</p>
+<pre xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="table-programlisting"><span class="identifier">ring</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span><span class="special">&lt;</span> <span class="identifier">Point</span> <span class="special">&gt;</span> <span class="identifier">l</span><span class="special">)</span></pre>
+<p>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Constructor taking std::initializer_list, filling the ring.
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="bold"><strong>std::initializer_list&lt; Point &gt;</strong></span>:
+                    <span class="emphasis"><em>l</em></span>:
+                  </p>
+                </td>
+</tr>
 </tbody>
 </table></div>
 <h6>
@@ -253,6 +273,83 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">ring</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
+<h6>
+<a name="geometry.reference.models.model_ring.h5"></a>
+          <span class="phrase"><a name="geometry.reference.models.model_ring.examples"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.examples">Examples</a>
+        </h6>
+<p>
+          Declaration and use of the Boost.Geometry model::ring, modelling the Ring
+          Concept
+        </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">bg</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span><span class="special">&gt;</span> <span class="identifier">point_t</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">ring</span><span class="special">&lt;</span><span class="identifier">point_t</span><span class="special">&gt;</span> <span class="identifier">ring_t</span><span class="special">;</span> <a class="co" name="geometry.reference.models.model_ring.c0" href="model_ring.html#geometry.reference.models.model_ring.c1"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
+
+    <span class="identifier">ring_t</span> <span class="identifier">ring1</span><span class="special">;</span> <a class="co" name="geometry.reference.models.model_ring.c2" href="model_ring.html#geometry.reference.models.model_ring.c3"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+
+<span class="preprocessor">#if</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX</span><span class="special">)</span> <span class="special">\</span>
+ <span class="special">&amp;&amp;</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_CXX11_HDR_INITIALIZER_LIST</span><span class="special">)</span>
+
+    <span class="identifier">ring_t</span> <span class="identifier">ring2</span><span class="special">{{</span><span class="number">0.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">},</span> <span class="special">{</span><span class="number">0.0</span><span class="special">,</span> <span class="number">5.0</span><span class="special">},</span> <span class="special">{</span><span class="number">5.0</span><span class="special">,</span> <span class="number">5.0</span><span class="special">},</span> <span class="special">{</span><span class="number">5.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">},</span> <span class="special">{</span><span class="number">0.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">}};</span> <a class="co" name="geometry.reference.models.model_ring.c4" href="model_ring.html#geometry.reference.models.model_ring.c5"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+
+<span class="preprocessor">#endif</span>
+
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">append</span><span class="special">(</span><span class="identifier">ring1</span><span class="special">,</span> <span class="identifier">point_t</span><span class="special">(</span><span class="number">0.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">));</span> <a class="co" name="geometry.reference.models.model_ring.c6" href="model_ring.html#geometry.reference.models.model_ring.c7"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">append</span><span class="special">(</span><span class="identifier">ring1</span><span class="special">,</span> <span class="identifier">point_t</span><span class="special">(</span><span class="number">0.0</span><span class="special">,</span> <span class="number">5.0</span><span class="special">));</span>
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">append</span><span class="special">(</span><span class="identifier">ring1</span><span class="special">,</span> <span class="identifier">point_t</span><span class="special">(</span><span class="number">5.0</span><span class="special">,</span> <span class="number">5.0</span><span class="special">));</span>
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">append</span><span class="special">(</span><span class="identifier">ring1</span><span class="special">,</span> <span class="identifier">point_t</span><span class="special">(</span><span class="number">5.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">));</span>
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">append</span><span class="special">(</span><span class="identifier">ring1</span><span class="special">,</span> <span class="identifier">point_t</span><span class="special">(</span><span class="number">0.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">));</span>
+
+    <span class="keyword">double</span> <span class="identifier">a</span> <span class="special">=</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">area</span><span class="special">(</span><span class="identifier">ring1</span><span class="special">);</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">a</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+        </p>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_ring.c1"></a><a href="#geometry.reference.models.model_ring.c0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Default parameters, clockwise, closed ring.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_ring.c3"></a><a href="#geometry.reference.models.model_ring.c2"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Default-construct a ring.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_ring.c5"></a><a href="#geometry.reference.models.model_ring.c4"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Construct a ring containing four points plus one closing point, using
+              C++11 unified initialization syntax.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_ring.c7"></a><a href="#geometry.reference.models.model_ring.c6"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Append point.
+            </p></td>
+</tr>
+</table></div>
+<p>
+          Output:
+        </p>
+<pre class="programlisting">25
+</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

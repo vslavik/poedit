@@ -32,7 +32,7 @@ counter c;
 
 void change_count()
 {
-    std::cout << "count == " << c.increment() << std::endl;
+    //std::cout << "count == " << c.increment() << std::endl;
 }
 
 int main(int, char*[])

@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,18 +23,14 @@ main()
     using boost::spirit::x3::char_;
     using boost::spirit::x3::space;
     using boost::spirit::x3::string;
-    //~ using boost::spirit::x3::alpha;
     using boost::spirit::x3::attr;
     using boost::spirit::x3::omit;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused;
-    //~ using boost::spirit::x3::no_case;
     using boost::spirit::x3::int_;
-    //~ using boost::spirit::x3::double_;
-    //~ using boost::spirit::x3::what;
+    using boost::spirit::x3::float_;
+    using boost::spirit::x3::no_case;
     using boost::spirit::x3::rule;
-    //~ using boost::spirit::x3::_1;
-    //~ using boost::spirit::x3::_2;
     using boost::spirit::x3::alnum;
 
     using boost::spirit::x3::traits::attribute_of;
@@ -177,12 +173,11 @@ main()
         BOOST_TEST((test_attr("abc", char_ >> 'b' >> char_, unused)));
     }
 
-    // $$$ no_case not yet implememnted $$$
-    //~ {
-        //~ BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
-        //~ BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
-        //~ BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
-    //~ }
+    {
+        BOOST_TEST((test("aA", no_case[char_('a') >> 'a'])));
+        BOOST_TEST((test("BEGIN END", no_case[lit("begin") >> "end"], space)));
+        BOOST_TEST((!test("BEGIN END", no_case[lit("begin") >> "nend"], space)));
+    }
 
     {
 #ifdef SPIRIT_NO_COMPILE_CHECK
@@ -282,6 +277,15 @@ main()
         //~ rule<char const*, std::string()> word = +char_("abc");
         //~ BOOST_TEST(test_attr("ab.bc.ca", *hold[word >> string(".")] >> word, s));
         //~ BOOST_TEST(s == "ab.bc.ca");
+    }
+
+    // Make sure get_sequence_types works for sequences of sequences.
+    {
+        std::vector<char> v;
+        BOOST_TEST(test_attr(" a b", (' ' >> char_) >> (' ' >> char_), v));
+        BOOST_TEST(v.size() == 2);
+        BOOST_TEST(v[0] == 'a');
+        BOOST_TEST(v[1] == 'b');
     }
 
     // alternative forms of attributes. Allow sequences to take in
@@ -409,6 +413,14 @@ main()
         BOOST_TEST(at_c<0>(attr)[1] == 456);
     }
 
+    {
+        using Attr = boost::variant<int, float>;
+        Attr attr;
+        auto const term = rule<class term, Attr>("term") = int_ | float_;
+        auto const expr = rule<class expr, Attr>("expr") = term | ('(' > term > ')');
+        BOOST_TEST((test_attr("(1)", expr, attr, space)));
+    }
+
     // test that failing sequence leaves attribute consistent
     {
 	std::string attr;
@@ -425,39 +437,35 @@ main()
 		    long>() ));
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {   // test action
-        //~ using boost::phoenix::ref;
-        //~ char c = 0;
-        //~ int n = 0;
+    {   // test action
+        using boost::fusion::at_c;
 
-        //~ BOOST_TEST(test("x123\"a string\"", (char_ >> int_ >> "\"a string\"")
-            //~ [ref(c) = _1, ref(n) = _2]));
-        //~ BOOST_TEST(c == 'x');
-        //~ BOOST_TEST(n == 123);
-    //~ }
+        char c = 0;
+        int n = 0;
+        auto f = [&](auto& ctx)
+            {
+                c = at_c<0>(_attr(ctx));
+                n = at_c<1>(_attr(ctx));
+            };
 
-    // $$$ Not yet implemented $$$
-    //~ {   // test action
-        //~ using boost::phoenix::ref;
-        //~ char c = 0;
-        //~ int n = 0;
+        BOOST_TEST(test("x123\"a string\"", (char_ >> int_ >> "\"a string\"")[f]));
+        BOOST_TEST(c == 'x');
+        BOOST_TEST(n == 123);
+    }
 
-        //~ BOOST_TEST(test("x 123 \"a string\"", (char_ >> int_ >> "\"a string\"")
-            //~ [ref(c) = _1, ref(n) = _2], space));
-        //~ BOOST_TEST(c == 'x');
-        //~ BOOST_TEST(n == 123);
-    //~ }
+    {   // test action
+        char c = 0;
+        int n = 0;
+        auto f = [&](auto& ctx)
+            {
+                c = at_c<0>(_attr(ctx));
+                n = at_c<1>(_attr(ctx));
+            };
 
-//     { // compile check only
-//         using boost::spirit::x3::rule;
-//         typedef boost::fusion::vector<int, double> tuple_type;
-//         typedef std::vector<boost::fusion::vector<int, double>> attr_type;
-//
-//         rule<char const*, tuple_type()> r = int_ >> ',' >> double_;
-//         rule<char const*, attr_type()> r2 = r >> *(',' >> r);
-//         //~ rule<char const*, attr_type()> r2 = r % ',';
-//     }
+        BOOST_TEST(test("x 123 \"a string\"", (char_ >> int_ >> "\"a string\"")[f], space));
+        BOOST_TEST(c == 'x');
+        BOOST_TEST(n == 123);
+    }
 
     return boost::report_errors();
 }

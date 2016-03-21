@@ -15,7 +15,6 @@
 int main()
 {
    test<boost::multiprecision::mpz_int>();
-   test<boost::multiprecision::number<boost::multiprecision::rational_adaptor<boost::multiprecision::gmp_int> > >();
    return boost::report_errors();
 }
 

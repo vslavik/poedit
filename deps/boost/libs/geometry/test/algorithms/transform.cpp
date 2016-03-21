@@ -130,24 +130,34 @@ int test_main(int, char* [])
     test_all<bg::model::d2::point_xy<int>, bg::model::d2::point_xy<float> >(1.0);
 
     test_all<bg::model::point<double, 2, bg::cs::spherical<bg::degree> >,
-        bg::model::point<double, 2, bg::cs::spherical<bg::radian> > >(bg::math::d2r);
+        bg::model::point<double, 2, bg::cs::spherical<bg::radian> > >(bg::math::d2r<double>());
     test_all<bg::model::point<double, 2, bg::cs::spherical<bg::radian> >,
-        bg::model::point<double, 2, bg::cs::spherical<bg::degree> > >(bg::math::r2d);
+        bg::model::point<double, 2, bg::cs::spherical<bg::degree> > >(bg::math::r2d<double>());
 
     test_all<bg::model::point<int, 2, bg::cs::spherical<bg::degree> >,
-        bg::model::point<float, 2, bg::cs::spherical<bg::radian> > >(bg::math::d2r);
+        bg::model::point<float, 2, bg::cs::spherical<bg::radian> > >(bg::math::d2r<float>());
 
     test_transformations<float, bg::degree>(4, 52, 1);
     test_transformations<double, bg::degree>(4, 52, 1);
 
-    test_transformations<float, bg::radian>(3 * bg::math::d2r, 51 * bg::math::d2r, 1);
-    test_transformations<double, bg::radian>(3 * bg::math::d2r, 51 * bg::math::d2r, 1);
+    test_transformations
+        <
+            float, bg::radian
+        >(3 * bg::math::d2r<float>(), 51 * bg::math::d2r<float>(), 1);
+
+    test_transformations
+        <
+            double, bg::radian
+        >(3 * bg::math::d2r<double>(), 51 * bg::math::d2r<double>(), 1);
 
 #if defined(HAVE_TTMATH)
     typedef bg::model::d2::point_xy<ttmath_big > PT;
     test_all<PT, PT>();
     test_transformations<ttmath_big, bg::degree>(4, 52, 1);
-    test_transformations<ttmath_big, bg::radian>(3 * bg::math::d2r, 51 * bg::math::d2r, 1);
+    test_transformations
+        <
+            ttmath_big, bg::radian
+        >(3 * bg::math::d2r<ttmath_big>(), 51 * bg::math::d2r<ttmath_big>(), 1);
 #endif
 
     return 0;

@@ -1,17 +1,17 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2014 Oracle and/or its affiliates.
+// Copyright (c) 2014-2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
-
 #ifndef BOOST_GEOMETRY_STRATEGY_AGNOSTIC_RELATE_HPP
 #define BOOST_GEOMETRY_STRATEGY_AGNOSTIC_RELATE_HPP
 
-#include <boost/geometry/algorithms/detail/relate/relate.hpp>
+#include <boost/geometry/algorithms/relate.hpp>
 
 
 namespace boost { namespace geometry
@@ -25,7 +25,7 @@ struct relate
 {
     static inline bool apply(Geometry1 const& geometry1, Geometry2 const& geometry2)
     {
-        return detail::relate::relate<StaticMask>(geometry1, geometry2);
+        return geometry::relate(geometry1, geometry2, StaticMask());
     }
 };
 
@@ -47,7 +47,10 @@ struct default_strategy<AnyTag1, AnyTag2, AnyTag1, AnyTag2, AnyCS, AnyCS, Geomet
         <
             Geometry1,
             Geometry2,
-            detail::relate::static_mask_within
+            typename detail::de9im::static_mask_within_type
+                <
+                    Geometry1, Geometry2
+                >::type
         > type;
 };
 
@@ -58,7 +61,10 @@ struct default_strategy<AnyTag1, AnyTag2, AnyTag1, areal_tag, AnyCS, AnyCS, Geom
         <
             Geometry1,
             Geometry2,
-            detail::relate::static_mask_within
+            typename detail::de9im::static_mask_within_type
+                <
+                    Geometry1, Geometry2
+                >::type
         > type;
 };
 
@@ -84,7 +90,10 @@ struct default_strategy<AnyTag1, AnyTag2, AnyTag1, AnyTag2, AnyCS, AnyCS, Geomet
         <
             Geometry1,
             Geometry2,
-            detail::relate::static_mask_covered_by
+            typename detail::de9im::static_mask_covered_by_type
+                <
+                    Geometry1, Geometry2
+                >::type
         > type;
 };
 
@@ -95,7 +104,10 @@ struct default_strategy<AnyTag1, AnyTag2, AnyTag1, areal_tag, AnyCS, AnyCS, Geom
         <
             Geometry1,
             Geometry2,
-            detail::relate::static_mask_covered_by
+            typename detail::de9im::static_mask_covered_by_type
+                <
+                    Geometry1, Geometry2
+                >::type
         > type;
 };
 

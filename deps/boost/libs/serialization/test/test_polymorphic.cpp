@@ -73,7 +73,7 @@ int test_main(int /* argc */, char * /* argv */ [])
     BOOST_CHECK(d == d1);
     std::remove(testfile);
 
-    // test using using polymorphic implementation.
+    // test using using polymorphic interface.
     {
         test_ostream os(testfile, TEST_STREAM_FLAGS);
         boost::archive::polymorphic_oarchive * oa_implementation 

@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2007.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( test1 )
 
 BOOST_AUTO_TEST_CASE( test2 )
 {
-    BOOST_CHECKPOINT("About to force division by zero!");
+    BOOST_TEST_CHECKPOINT("About to force division by zero!");
     int i = 1, j = 0;
 
     i = i / j;
@@ -38,7 +38,7 @@ extern "C" {
 #ifdef BOOST_WINDOWS
 __declspec(dllexport)
 #endif
- bool
+bool
 init_unit_test()
 {
     framework::master_test_suite().p_name.value = "Test runner test";

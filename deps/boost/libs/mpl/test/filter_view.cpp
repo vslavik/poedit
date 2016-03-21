@@ -18,6 +18,7 @@
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/sizeof.hpp>
 #include <boost/mpl/deref.hpp>
+#include <boost/mpl/equal.hpp>
 #include <boost/mpl/aux_/test.hpp>
 
 #include <boost/type_traits/is_float.hpp>
@@ -26,6 +27,10 @@
 MPL_TEST_CASE()
 {
     typedef mpl::list<int,float,long,float,char[50],long double,char> types;
+    typedef mpl::list<float,float,long double> floats;
+
+    MPL_ASSERT(( equal< mpl::filter_view< types,boost::is_float<_> >::type,floats > ));
+
     typedef mpl::max_element<
           mpl::transform_view<
               mpl::filter_view< types,boost::is_float<_> >

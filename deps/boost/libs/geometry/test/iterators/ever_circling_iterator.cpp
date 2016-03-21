@@ -33,12 +33,12 @@ void test_geometry(std::string const& wkt)
 
 
     // Run 3 times through the geometry
-    int n = boost::size(geo) * 3;
+    std::size_t n = boost::size(geo) * 3;
 
     {
         std::ostringstream out;
         bg::ever_circling_iterator<iterator_type> it(boost::begin(geo), boost::end(geo));
-        for (int i = 0; i < n; ++i, ++it)
+        for (std::size_t i = 0; i < n; ++i, ++it)
         {
             out << bg::get<0>(*it);
         }
@@ -50,7 +50,7 @@ void test_geometry(std::string const& wkt)
         // Start somewhere
         bg::ever_circling_iterator<iterator_type> it(
             boost::begin(geo), boost::end(geo), boost::begin(geo) + 1);
-        for (int i = 0; i < n; ++i, ++it)
+        for (std::size_t i = 0; i < n; ++i, ++it)
         {
             out << bg::get<0>(*it);
         }
@@ -62,9 +62,9 @@ void test_geometry(std::string const& wkt)
 
         // Navigate to somewhere
         bg::ever_circling_iterator<iterator_type> it(boost::begin(geo), boost::end(geo));
-        for (int i = 0; i < n; ++i, ++it)
+        for (std::size_t i = 0; i < n; ++i, ++it)
         {
-            const int m = boost::size(geo);
+            std::size_t const m = boost::size(geo);
             it.moveto(boost::begin(geo) + m - (i % m) - 1);
             out << bg::get<0>(*it);
         }
@@ -75,7 +75,7 @@ void test_geometry(std::string const& wkt)
     {
         std::ostringstream out;
         bg::ever_circling_range_iterator<G> it(geo);
-        for (int i = 0; i < n; ++i, ++it)
+        for (std::size_t i = 0; i < n; ++i, ++it)
         {
             out << bg::get<0>(*it);
         }

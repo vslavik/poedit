@@ -9,6 +9,45 @@
 
 [section:changelog Changelog]
 
+[heading 2.7, Boost 1.60]
+
+[*General changes:]
+
+* On Windows, the configuration macro `BOOST_LOG_USE_WINNT6_API` is no longer used by the library. The target Windows version should be configured by defining macro `BOOST_USE_WINAPI_VERSION` to the desired WinAPI version (e.g. 0x0501 for Windows XP). This macro is used in multiple different Boost libraries besides Boost.Log.
+* The default target Windows version is now Vista on compilers with recent enough Windows SDK and XP on others. The default is no longer chosen by Boost.Log but by the common WinAPI submodule used by different Boost libraries.
+* Changed internal mutex type in the thread-safe queue implementation that is used in asynchronous sink frontends with the `unbounded_fifo_queue` policy. The updated queue has improved performance in case of heavy thread contention (hundreds and thousands of logging threads) on POSIX-compatible systems.
+
+[*Bug fixes:]
+
+* Fixed compilation for Android using Google NDK. ([ticket 11559])
+* Fixed compilation of some logging statements, where the first object to be put into stream is not directly supported by `formatting_ostream`. ([ticket 11549])
+* Added a workaround for Solaris Studio 12.4, which should fix the compilation of `formatting_ostream`. ([ticket 11545])
+* Fixed compilation when native `wchar_t` type is disabled. Added a note of discouragement to the [link log.installation.config configuration] section. ([ticket 11541])
+* Fixed exporting symbols from the `boost_log_setup` library on POSIX-like systems.
+* Fixed build failure on Nuxi CloudABI.
+* Fixed compilation of [link log.detailed.expressions.formatters.decorators character decorators].
+* Added a workaround for incorrect file name generation in [link log.detailed.sink_backends.text_file text file sink backend], when the file name contains date/time placeholders. ([ticket 11691])
+
+[heading 2.6, Boost 1.59]
+
+[*General changes:]
+
+* On systems with [@https://gcc.gnu.org/wiki/Visibility symbol visibility] support (e.g. Linux) the library is now built with all internal symbols hidden. API symbols still have default visibility, so this shouldn't affect linking with the library.
+* *Breaking change:* The library has been ported to __boost_type_index__ for its underlying type info management tool. This improved library compatibility with hidden symbol visibility mode on some compilers. This affected the following public interfaces:
+  * `invalid_type` exceptions thrown by the library now have `typeindex::type_index` attached as the description of the offending type. The type was previously identified by `type_info_wrapper`.
+  * __boost_exception__ `type_info_info` error information now contains `typeindex::type_index` instead of `type_info_wrapper`. This is the error info that can be used to obtain the type info from `invalid_type` exceptions.
+  * `attribute_value::get_type()` now returns `typeindex::type_index` instead of `type_info_wrapper`. If the `attribute_value` object is empty, the returned `type_index` is default-constructed (i.e. refers to the `void` type). User-defined attribute value implementations should be similarly changed (the `attribute_value::impl::get_type()` virtual method now also returns `typeindex::type_index`).
+* `type_info_wrapper` component has been deprecated and will be removed in future releases. __boost_type_index__ is recommended as a replacement.
+* Removed the previously deprecated headers: `boost/log/utility/intrusive_ref_counter.hpp`, `boost/log/utility/explicit_operator_bool.hpp`, `boost/log/utility/empty_deleter.hpp`.
+* Added support for building the library for OpenBSD. ([ticket 11446])
+* Improved internal implementation of the event synchronization primitive used for asynchronous logging. The updated implementation relies on __boost_atomic__ for atomic operations which provides better portability. On Linux the implementation uses futexes directly. ([ticket 11398])
+* Changed the format of dates produced by the default formatter constructed from strings (e.g. when initializing the library from a config file). The new format displays months as numbers instead of abbreviated names. This allows for easier log record ordering when post-processing log files. ([ticket 8839])
+
+[*Bug fixes:]
+
+* Fixed incorrect behavior of `attribute_value_set::insert()` and `attribute_value_set` constructor in some cases. The inserted elements could have made some previously inserted elements not findable. The constructor from `attribute_set`s could leave some of the attribute values acquired from attributes not findable. ([ticket 11190])
+* Added missing function template exports. ([ticket 11495])
+
 [heading 2.5, Boost 1.58]
 
 [*Bug fixes:]

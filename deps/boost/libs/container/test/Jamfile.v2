@@ -11,6 +11,12 @@
 # Boost Software License, Version 1.0. (See accompanying file
 # LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+project
+    : requirements 
+      <link>shared:<define>BOOST_CONTAINER_DYN_LINK=1 
+      <toolset>gcc-cygwin:<link>static
+    ;
+
 # this rule enumerates through all the sources and invokes
 # the run rule for each source, the result is a list of all
 # the run rules, which we can pass on to the test_suite rule:

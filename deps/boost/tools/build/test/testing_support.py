@@ -26,7 +26,7 @@ def test_files_with_spaces_in_their_name():
     t.write("valid source.cpp", "int main() {}\n");
 
     t.write("invalid source.cpp", "this is not valid source code");
-    
+
     t.write("jamroot.jam", """
 import testing ;
 testing.compile "valid source.cpp" ;

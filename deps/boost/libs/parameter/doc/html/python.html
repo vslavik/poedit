@@ -3,12 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
 <title>The Boost Parameter Library Python Binding Documentation</title>
-<meta name="authors" content="Daniel Wallin" />
-<meta name="organization" content="Boost Consulting" />
-<meta name="date" content="2008-03-22" />
-<meta name="copyright" content="Copyright David Abrahams, Daniel Wallin 2005. Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)" />
+<meta name="authors" content="David Abrahams  Daniel Wallin" />
+<meta name="organization" content="BoostPro Computing" />
+<meta name="date" content="2009-01-29" />
+<meta name="copyright" content="Copyright David Abrahams, Daniel Wallin 2005-2009. Distributed under the Boost Software License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)" />
 <link rel="stylesheet" href="rst.css" type="text/css" />
 </head>
 <body>
@@ -19,16 +19,17 @@
 <col class="docinfo-content" />
 <tbody valign="top">
 <tr><th class="docinfo-name">Authors:</th>
-<td>Daniel Wallin</td></tr>
+<td>David Abrahams
+<br />Daniel Wallin</td></tr>
 <tr><th class="docinfo-name">Contact:</th>
-<td><a class="first last reference external" href="mailto:dalwan01&#64;student.umu.se">dalwan01&#64;student.umu.se</a></td></tr>
+<td><a class="first reference external" href="mailto:dave&#64;boost-consulting.com">dave&#64;boost-consulting.com</a>, <a class="last reference external" href="mailto:daniel&#64;boostpro.com">daniel&#64;boostpro.com</a></td></tr>
 <tr><th class="docinfo-name">Organization:</th>
-<td><a class="first last reference external" href="http://www.boost-consulting.com">Boost Consulting</a></td></tr>
+<td><a class="first last reference external" href="http://www.boostpro.com">BoostPro Computing</a></td></tr>
 <tr><th class="docinfo-name">Date:</th>
-<td>2008-03-22</td></tr>
+<td>2009-01-29</td></tr>
 <tr><th class="docinfo-name">Copyright:</th>
 <td>Copyright David Abrahams, Daniel Wallin
-2005. Distributed under the Boost Software License,
+2005-2009. Distributed under the Boost Software License,
 Version 1.0. (See accompanying file LICENSE_1_0.txt
 or copy at <a class="reference external" href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>)</td></tr>
 </tbody>
@@ -46,18 +47,18 @@ functions, operators and constructors to Python.</p>
 <li><a class="reference internal" href="#tutorial" id="id8">Tutorial</a></li>
 <li><a class="reference internal" href="#concept-parameterspec" id="id9">concept <span class="concept">ParameterSpec</span></a></li>
 <li><a class="reference internal" href="#special-keywords" id="id10"><em>special</em> keywords</a></li>
-<li><a class="reference internal" href="#class-template-init" id="id11">class template <tt class="docutils literal"><span class="pre">init</span></tt></a></li>
-<li><a class="reference internal" href="#class-template-call" id="id12">class template <tt class="docutils literal"><span class="pre">call</span></tt></a></li>
-<li><a class="reference internal" href="#class-template-function" id="id13">class template <tt class="docutils literal"><span class="pre">function</span></tt></a></li>
-<li><a class="reference internal" href="#function-template-def" id="id14">function template <tt class="docutils literal"><span class="pre">def</span></tt></a></li>
+<li><a class="reference internal" href="#class-template-init" id="id11">class template <tt class="docutils literal">init</tt></a></li>
+<li><a class="reference internal" href="#class-template-call" id="id12">class template <tt class="docutils literal">call</tt></a></li>
+<li><a class="reference internal" href="#class-template-function" id="id13">class template <tt class="docutils literal">function</tt></a></li>
+<li><a class="reference internal" href="#function-template-def" id="id14">function template <tt class="docutils literal">def</tt></a></li>
 <li><a class="reference internal" href="#portability" id="id15">Portability</a></li>
 </ul>
 </div>
 <div class="section" id="introduction">
 <h1><a class="toc-backref" href="#id7">Introduction</a></h1>
-<p><tt class="docutils literal"><span class="pre">boost/parameter/python.hpp</span></tt> introduces a group of <a class="reference external" href="../../../python/doc/v2/def_visitor.html"><tt class="docutils literal"><span class="pre">def_visitors</span></tt></a> that can
+<p><tt class="docutils literal">boost/parameter/python.hpp</tt> introduces a group of <a class="reference external" href="../../../python/doc/v2/def_visitor.html"><tt class="docutils literal">def_visitors</tt></a> that can
 be used to easily expose Boost.Parameter-enabled member functions to Python with
-Boost.Python. It also provides a function template <tt class="docutils literal"><span class="pre">def()</span></tt> that can be used
+Boost.Python. It also provides a function template <tt class="docutils literal">def()</tt> that can be used
 to expose Boost.Parameter-enabled free functions.</p>
 <p>When binding a Boost.Parameter enabled function, the keyword tags
 must be specified.  Additionally, because Boost.Parameter enabled
@@ -118,10 +119,10 @@ assert(title == "foo");
 assert(height == 20);
 assert(width == 400);
 ''') -->
-<p>It defines a set of overloaded member functions called <tt class="docutils literal"><span class="pre">open</span></tt> with one
+<p>It defines a set of overloaded member functions called <tt class="docutils literal">open</tt> with one
 required parameter and two optional ones. To bind this member function to
 Python we use the binding utility <tt class="docutils literal"><span class="pre">boost::parameter::python::function</span></tt>.
-<tt class="docutils literal"><span class="pre">boost::parameter::python::function</span></tt> is a <a class="reference external" href="../../../python/doc/v2/def_visitor.html"><tt class="docutils literal"><span class="pre">def_visitor</span></tt></a> that we'll instantiate
+<tt class="docutils literal"><span class="pre">boost::parameter::python::function</span></tt> is a <a class="reference external" href="../../../python/doc/v2/def_visitor.html"><tt class="docutils literal">def_visitor</tt></a> that we'll instantiate
 and pass to <tt class="docutils literal"><span class="pre">boost::python::class_::def()</span></tt>.</p>
 <p>To use <tt class="docutils literal"><span class="pre">boost::parameter::python::function</span></tt> we first need to define
 a class with forwarding overloads. This is needed because <tt class="docutils literal"><span class="pre">window::open()</span></tt>
@@ -189,8 +190,8 @@ forwarding overloads that we defined earlier. The second one is an <a class="ref
 Sequence</a> with the keyword tag types and argument types for the function
 specified as function types. The pointer syntax used in <tt class="docutils literal"><span class="pre">tag::width*</span></tt> and
 <tt class="docutils literal"><span class="pre">tag::height*</span></tt> means that the parameter is optional. The first element of
-the <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL Sequence</a> is the return type of the function, in this case <tt class="docutils literal"><span class="pre">void</span></tt>,
-which is passed as the first argument to <tt class="docutils literal"><span class="pre">operator()</span></tt> in the forwarding
+the <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL Sequence</a> is the return type of the function, in this case <tt class="docutils literal">void</tt>,
+which is passed as the first argument to <tt class="docutils literal">operator()</tt> in the forwarding
 class.</p>
 <!-- The
 pointer syntax means that the parameter is optional, so in this case
@@ -244,24 +245,24 @@ types instead). -->
 <hr class="docutils" />
 <div class="section" id="concept-parameterspec">
 <h1><a class="toc-backref" href="#id9">concept <span class="concept">ParameterSpec</span></a></h1>
-<p>A <span class="concept">ParameterSpec</span> is a function type <tt class="docutils literal"><span class="pre">K(T)</span></tt> that describes both the keyword tag,
-<tt class="docutils literal"><span class="pre">K</span></tt>, and the argument type, <tt class="docutils literal"><span class="pre">T</span></tt>, for a parameter.</p>
-<p><tt class="docutils literal"><span class="pre">K</span></tt> is either:</p>
+<p>A <span class="concept">ParameterSpec</span> is a function type <tt class="docutils literal">K(T)</tt> that describes both the keyword tag,
+<tt class="docutils literal">K</tt>, and the argument type, <tt class="docutils literal">T</tt>, for a parameter.</p>
+<p><tt class="docutils literal">K</tt> is either:</p>
 <ul class="simple">
-<li>A <em>required</em> keyword of the form <tt class="docutils literal"><span class="pre">Tag</span></tt></li>
-<li><strong>or</strong>, an <em>optional</em> keyword of the form <tt class="docutils literal"><span class="pre">Tag*</span></tt></li>
-<li><strong>or</strong>, a <em>special</em> keyword of the form <tt class="docutils literal"><span class="pre">Tag**</span></tt></li>
+<li>A <em>required</em> keyword of the form <tt class="docutils literal">Tag</tt></li>
+<li><strong>or</strong>, an <em>optional</em> keyword of the form <tt class="docutils literal">Tag*</tt></li>
+<li><strong>or</strong>, a <em>special</em> keyword of the form <tt class="docutils literal">Tag**</tt></li>
 </ul>
-<p>where <tt class="docutils literal"><span class="pre">Tag</span></tt> is a keyword tag type, as used in a specialization
+<p>where <tt class="docutils literal">Tag</tt> is a keyword tag type, as used in a specialization
 of <a class="reference external" href="../../../parameter/doc/html/reference.html#keyword"><tt class="docutils literal"><span class="pre">boost::parameter::keyword</span></tt></a>.</p>
 <p>The <strong>arity range</strong> for an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL Sequence</a> of <span class="concept">ParameterSpec</span>'s is
 defined as the closed range:</p>
 <pre class="literal-block">
-[ mpl::size&lt;S&gt; - number of <em>special</em> keyword tags in <tt class="docutils literal"><span class="pre">S</span></tt>, mpl::size&lt;S&gt; ]
+[ mpl::size&lt;S&gt; - number of <em>special</em> keyword tags in <tt class="docutils literal">S</tt>, mpl::size&lt;S&gt; ]
 </pre>
-<p>For example, the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">mpl::vector2&lt;x(int),y(int)&gt;</span></tt> is <tt class="docutils literal"><span class="pre">[2,2]</span></tt>,
-the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">mpl::vector2&lt;x(int),y*(int)&gt;</span></tt> is <tt class="docutils literal"><span class="pre">[2,2]</span></tt> and the
-<strong>arity range</strong> of <tt class="docutils literal"><span class="pre">mpl::vector2&lt;x(int),y**(int)&gt;</span></tt> is <tt class="docutils literal"><span class="pre">[1,2]</span></tt>.</p>
+<p>For example, the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">mpl::vector2&lt;x(int),y(int)&gt;</span></tt> is <tt class="docutils literal">[2,2]</tt>,
+the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">mpl::vector2&lt;x(int),y*(int)&gt;</span></tt> is <tt class="docutils literal">[2,2]</tt> and the
+<strong>arity range</strong> of <tt class="docutils literal"><span class="pre">mpl::vector2&lt;x(int),y**(int)&gt;</span></tt> is <tt class="docutils literal">[1,2]</tt>.</p>
 </div>
 <div class="section" id="special-keywords">
 <h1><a class="toc-backref" href="#id10"><em>special</em> keywords</a></h1>
@@ -318,20 +319,20 @@ int main()
 }''') -->
 <!-- @build() -->
 <!-- .. _example: index.html#dispatching-based-on-the-presence-of-a-default -->
-<p>In the above example the type of the default for <tt class="docutils literal"><span class="pre">color</span></tt> is <tt class="docutils literal"><span class="pre">mpl::false_</span></tt>, a
+<p>In the above example the type of the default for <tt class="docutils literal">color</tt> is <tt class="docutils literal"><span class="pre">mpl::false_</span></tt>, a
 type that is distinct from any color map that the user might supply.</p>
-<p>When binding the case outlined above, the default type for <tt class="docutils literal"><span class="pre">color</span></tt> will not
-be convertible to the parameter type. Therefore we need to tag the <tt class="docutils literal"><span class="pre">color</span></tt>
+<p>When binding the case outlined above, the default type for <tt class="docutils literal">color</tt> will not
+be convertible to the parameter type. Therefore we need to tag the <tt class="docutils literal">color</tt>
 keyword as a <em>special</em> keyword. This is done by specifying the tag as
 <tt class="docutils literal"><span class="pre">tag::color**</span></tt> when binding the function (see <a class="reference internal" href="#concept-parameterspec">concept ParameterSpec</a> for
 more details on the tagging). By doing this we tell the binding functions that
-it needs to generate two overloads, one with the <tt class="docutils literal"><span class="pre">color</span></tt> parameter present
+it needs to generate two overloads, one with the <tt class="docutils literal">color</tt> parameter present
 and one without. Had there been two <em>special</em> keywords, four overloads would
-need to be generated. The number of generated overloads is equal to 2<sup>N</sup>, where <tt class="docutils literal"><span class="pre">N</span></tt> is the number of <em>special</em> keywords.</p>
+need to be generated. The number of generated overloads is equal to 2<sup>N</sup>, where <tt class="docutils literal">N</tt> is the number of <em>special</em> keywords.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="class-template-init">
-<h1><a class="toc-backref" href="#id11">class template <tt class="docutils literal"><span class="pre">init</span></tt></a></h1>
+<h1><a class="toc-backref" href="#id11">class template <tt class="docutils literal">init</tt></a></h1>
 <p>Defines a named parameter enabled constructor.</p>
 <pre class="literal-block">
 template &lt;class ParameterSpecs&gt;
@@ -346,13 +347,13 @@ struct init : python::def_visitor&lt;init&lt;ParameterSpecs&gt; &gt;
 </pre>
 <!-- @ignore() -->
 <div class="section" id="init-requirements">
-<h2><tt class="docutils literal"><span class="pre">init</span></tt> requirements</h2>
+<h2><tt class="docutils literal">init</tt> requirements</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element is a
+<li><p class="first"><tt class="docutils literal">ParameterSpecs</tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element is a
 model of <span class="concept">ParameterSpec</span>.</p>
 </li>
-<li><p class="first">For every <tt class="docutils literal"><span class="pre">N</span></tt> in <tt class="docutils literal"><span class="pre">[U,V]</span></tt>, where <tt class="docutils literal"><span class="pre">[U,V]</span></tt> is the <strong>arity
-range</strong> of <tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt>, <tt class="docutils literal"><span class="pre">Class</span></tt> must support these
+<li><p class="first">For every <tt class="docutils literal">N</tt> in <tt class="docutils literal">[U,V]</tt>, where <tt class="docutils literal">[U,V]</tt> is the <strong>arity
+range</strong> of <tt class="docutils literal">ParameterSpecs</tt>, <tt class="docutils literal">Class</tt> must support these
 expressions:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -370,11 +371,11 @@ expressions:</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><p class="first last"><tt class="docutils literal"><span class="pre">Class(a0,</span> <span class="pre">…,</span> <span class="pre">aN)</span></tt></p>
+<tr><td><p class="first last"><tt class="docutils literal">Class(a0, …, aN)</tt></p>
 </td>
 <td><p class="first last">-</p>
 </td>
-<td><p class="first last"><tt class="docutils literal"><span class="pre">a0</span></tt>…<tt class="docutils literal"><span class="pre">aN</span></tt> are tagged arguments.</p>
+<td><p class="first last"><tt class="docutils literal">a0</tt>…<tt class="docutils literal">aN</tt> are tagged arguments.</p>
 </td>
 </tr>
 </tbody>
@@ -383,8 +384,8 @@ expressions:</p>
 </ul>
 </div>
 <div class="section" id="template-class-callpolicies-operator-callpolicies-const">
-<h2><tt class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;class</span> <span class="pre">CallPolicies&gt;</span> <span class="pre">operator[](CallPolicies</span> <span class="pre">const&amp;)</span></tt></h2>
-<p>Returns a <tt class="docutils literal"><span class="pre">def_visitor</span></tt> equivalent to <tt class="docutils literal"><span class="pre">*this</span></tt>, except that it
+<h2><tt class="docutils literal">template &lt;class CallPolicies&gt; <span class="pre">operator[](CallPolicies</span> const&amp;)</tt></h2>
+<p>Returns a <tt class="docutils literal">def_visitor</tt> equivalent to <tt class="docutils literal">*this</tt>, except that it
 uses CallPolicies when creating the binding.</p>
 </div>
 <div class="section" id="example">
@@ -447,8 +448,8 @@ assert(args[y | 1] == 1);
 </div>
 <hr class="docutils" />
 <div class="section" id="class-template-call">
-<h1><a class="toc-backref" href="#id12">class template <tt class="docutils literal"><span class="pre">call</span></tt></a></h1>
-<p>Defines a <tt class="docutils literal"><span class="pre">__call__</span></tt> operator, mapped to <tt class="docutils literal"><span class="pre">operator()</span></tt> in C++.</p>
+<h1><a class="toc-backref" href="#id12">class template <tt class="docutils literal">call</tt></a></h1>
+<p>Defines a <tt class="docutils literal">__call__</tt> operator, mapped to <tt class="docutils literal">operator()</tt> in C++.</p>
 <pre class="literal-block">
 template &lt;class ParameterSpecs&gt;
 struct call : python::def_visitor&lt;call&lt;ParameterSpecs&gt; &gt;
@@ -462,14 +463,14 @@ struct call : python::def_visitor&lt;call&lt;ParameterSpecs&gt; &gt;
 </pre>
 <!-- @ignore() -->
 <div class="section" id="call-requirements">
-<h2><tt class="docutils literal"><span class="pre">call</span></tt> requirements</h2>
+<h2><tt class="docutils literal">call</tt> requirements</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element
+<li><p class="first"><tt class="docutils literal">ParameterSpecs</tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element
 except the first models <span class="concept">ParameterSpec</span>. The first element
 is the result type of <tt class="docutils literal"><span class="pre">c(…)</span></tt>.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">Class</span></tt> must support these expressions, where <tt class="docutils literal"><span class="pre">c</span></tt> is an
-instance of <tt class="docutils literal"><span class="pre">Class</span></tt>:</p>
+<li><p class="first"><tt class="docutils literal">Class</tt> must support these expressions, where <tt class="docutils literal">c</tt> is an
+instance of <tt class="docutils literal">Class</tt>:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="24%" />
@@ -486,22 +487,22 @@ instance of <tt class="docutils literal"><span class="pre">Class</span></tt>:</p
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><p class="first last"><tt class="docutils literal"><span class="pre">c(a0,</span> <span class="pre">…,</span> <span class="pre">aN)</span></tt></p>
+<tr><td><p class="first last"><tt class="docutils literal">c(a0, …, aN)</tt></p>
 </td>
-<td><p class="first last">Convertible to <tt class="docutils literal"><span class="pre">R</span></tt></p>
+<td><p class="first last">Convertible to <tt class="docutils literal">R</tt></p>
 </td>
-<td><p class="first last"><tt class="docutils literal"><span class="pre">a0</span></tt>…<tt class="docutils literal"><span class="pre">aN</span></tt> are tagged arguments.</p>
+<td><p class="first last"><tt class="docutils literal">a0</tt>…<tt class="docutils literal">aN</tt> are tagged arguments.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>For every <tt class="docutils literal"><span class="pre">N</span></tt> in <tt class="docutils literal"><span class="pre">[U,V]</span></tt>, where <tt class="docutils literal"><span class="pre">[U,V]</span></tt> is the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt>.</p>
+<p>For every <tt class="docutils literal">N</tt> in <tt class="docutils literal">[U,V]</tt>, where <tt class="docutils literal">[U,V]</tt> is the <strong>arity range</strong> of <tt class="docutils literal">ParameterSpecs</tt>.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="id3">
-<h2><tt class="docutils literal"><span class="pre">template</span> <span class="pre">&lt;class</span> <span class="pre">CallPolicies&gt;</span> <span class="pre">operator[](CallPolicies</span> <span class="pre">const&amp;)</span></tt></h2>
-<p>Returns a <tt class="docutils literal"><span class="pre">def_visitor</span></tt> equivalent to <tt class="docutils literal"><span class="pre">*this</span></tt>, except that it
+<h2><tt class="docutils literal">template &lt;class CallPolicies&gt; <span class="pre">operator[](CallPolicies</span> const&amp;)</tt></h2>
+<p>Returns a <tt class="docutils literal">def_visitor</tt> equivalent to <tt class="docutils literal">*this</tt>, except that it
 uses CallPolicies when creating the binding.</p>
 </div>
 <div class="section" id="id4">
@@ -574,7 +575,7 @@ return 0;
 </div>
 <hr class="docutils" />
 <div class="section" id="class-template-function">
-<h1><a class="toc-backref" href="#id13">class template <tt class="docutils literal"><span class="pre">function</span></tt></a></h1>
+<h1><a class="toc-backref" href="#id13">class template <tt class="docutils literal">function</tt></a></h1>
 <p>Defines a named parameter enabled member function.</p>
 <pre class="literal-block">
 template &lt;class Fwd, class ParameterSpecs&gt;
@@ -586,14 +587,14 @@ struct function : python::def_visitor&lt;function&lt;Fwd, ParameterSpecs&gt; &gt
 </pre>
 <!-- @ignore() -->
 <div class="section" id="function-requirements">
-<h2><tt class="docutils literal"><span class="pre">function</span></tt> requirements</h2>
+<h2><tt class="docutils literal">function</tt> requirements</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element
+<li><p class="first"><tt class="docutils literal">ParameterSpecs</tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element
 except the first models <span class="concept">ParameterSpec</span>. The first element
-is the result type of <tt class="docutils literal"><span class="pre">c.f(…)</span></tt>, where <tt class="docutils literal"><span class="pre">f</span></tt> is the member
+is the result type of <tt class="docutils literal"><span class="pre">c.f(…)</span></tt>, where <tt class="docutils literal">f</tt> is the member
 function.</p>
 </li>
-<li><p class="first">An instance of <tt class="docutils literal"><span class="pre">Fwd</span></tt> must support this expression:</p>
+<li><p class="first">An instance of <tt class="docutils literal">Fwd</tt> must support this expression:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="39%" />
@@ -610,24 +611,24 @@ function.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><p class="first last"><tt class="docutils literal"><span class="pre">fwd(boost::type&lt;R&gt;(),</span> <span class="pre">self,</span> <span class="pre">a0,</span> <span class="pre">…,</span> <span class="pre">aN)</span></tt></p>
+<tr><td><p class="first last"><tt class="docutils literal"><span class="pre">fwd(boost::type&lt;R&gt;(),</span> self, a0, …, aN)</tt></p>
 </td>
-<td><p class="first last">Convertible to <tt class="docutils literal"><span class="pre">R</span></tt></p>
+<td><p class="first last">Convertible to <tt class="docutils literal">R</tt></p>
 </td>
-<td><p class="first last"><tt class="docutils literal"><span class="pre">self</span></tt> is a reference to the object on which
-the function should be invoked. <tt class="docutils literal"><span class="pre">a0</span></tt>…<tt class="docutils literal"><span class="pre">aN</span></tt>
+<td><p class="first last"><tt class="docutils literal">self</tt> is a reference to the object on which
+the function should be invoked. <tt class="docutils literal">a0</tt>…<tt class="docutils literal">aN</tt>
 are tagged arguments.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>For every <tt class="docutils literal"><span class="pre">N</span></tt> in <tt class="docutils literal"><span class="pre">[U,V]</span></tt>, where <tt class="docutils literal"><span class="pre">[U,V]</span></tt> is the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt>.</p>
+<p>For every <tt class="docutils literal">N</tt> in <tt class="docutils literal">[U,V]</tt>, where <tt class="docutils literal">[U,V]</tt> is the <strong>arity range</strong> of <tt class="docutils literal">ParameterSpecs</tt>.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="id5">
 <h2>Example</h2>
-<p>This example exports a member function <tt class="docutils literal"><span class="pre">f(int</span> <span class="pre">x,</span> <span class="pre">int</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">…)</span></tt> to Python. The
+<p>This example exports a member function <tt class="docutils literal">f(int x, int y = …)</tt> to Python. The
 sequence of <span class="concept">ParameterSpec</span>'s <tt class="docutils literal"><span class="pre">mpl::vector2&lt;tag::x(int),</span> <span class="pre">tag::y*(int)&gt;</span></tt> has
 an <strong>arity range</strong> of [2,2], so we only need one forwarding overload.</p>
 <pre class="literal-block">
@@ -690,7 +691,7 @@ assert(y == 1);
 </div>
 <hr class="docutils" />
 <div class="section" id="function-template-def">
-<h1><a class="toc-backref" href="#id14">function template <tt class="docutils literal"><span class="pre">def</span></tt></a></h1>
+<h1><a class="toc-backref" href="#id14">function template <tt class="docutils literal">def</tt></a></h1>
 <p>Defines a named parameter enabled free function in the current Python scope.</p>
 <pre class="literal-block">
 template &lt;class Fwd, class ParameterSpecs&gt;
@@ -698,13 +699,13 @@ void def(char const* name);
 </pre>
 <!-- @ignore() -->
 <div class="section" id="def-requirements">
-<h2><tt class="docutils literal"><span class="pre">def</span></tt> requirements</h2>
+<h2><tt class="docutils literal">def</tt> requirements</h2>
 <ul>
-<li><p class="first"><tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element
+<li><p class="first"><tt class="docutils literal">ParameterSpecs</tt> is an <a class="reference external" href="../../../mpl/doc/refmanual/sequences.html">MPL sequence</a> where each element
 except the first models <span class="concept">ParameterSpec</span>. The first element
-is the result type of <tt class="docutils literal"><span class="pre">f(…)</span></tt>, where <tt class="docutils literal"><span class="pre">f</span></tt> is the function.</p>
+is the result type of <tt class="docutils literal"><span class="pre">f(…)</span></tt>, where <tt class="docutils literal">f</tt> is the function.</p>
 </li>
-<li><p class="first">An instance of <tt class="docutils literal"><span class="pre">Fwd</span></tt> must support this expression:</p>
+<li><p class="first">An instance of <tt class="docutils literal">Fwd</tt> must support this expression:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="39%" />
@@ -721,22 +722,22 @@ is the result type of <tt class="docutils literal"><span class="pre">f(…)</spa
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><p class="first last"><tt class="docutils literal"><span class="pre">fwd(boost::type&lt;R&gt;(),</span> <span class="pre">a0,</span> <span class="pre">…,</span> <span class="pre">aN)</span></tt></p>
+<tr><td><p class="first last"><tt class="docutils literal"><span class="pre">fwd(boost::type&lt;R&gt;(),</span> a0, …, aN)</tt></p>
 </td>
-<td><p class="first last">Convertible to <tt class="docutils literal"><span class="pre">R</span></tt></p>
+<td><p class="first last">Convertible to <tt class="docutils literal">R</tt></p>
 </td>
-<td><p class="first last"><tt class="docutils literal"><span class="pre">a0</span></tt>…<tt class="docutils literal"><span class="pre">aN</span></tt> are tagged arguments.</p>
+<td><p class="first last"><tt class="docutils literal">a0</tt>…<tt class="docutils literal">aN</tt> are tagged arguments.</p>
 </td>
 </tr>
 </tbody>
 </table>
-<p>For every <tt class="docutils literal"><span class="pre">N</span></tt> in <tt class="docutils literal"><span class="pre">[U,V]</span></tt>, where <tt class="docutils literal"><span class="pre">[U,V]</span></tt> is the <strong>arity range</strong> of <tt class="docutils literal"><span class="pre">ParameterSpecs</span></tt>.</p>
+<p>For every <tt class="docutils literal">N</tt> in <tt class="docutils literal">[U,V]</tt>, where <tt class="docutils literal">[U,V]</tt> is the <strong>arity range</strong> of <tt class="docutils literal">ParameterSpecs</tt>.</p>
 </li>
 </ul>
 </div>
 <div class="section" id="id6">
 <h2>Example</h2>
-<p>This example exports a function <tt class="docutils literal"><span class="pre">f(int</span> <span class="pre">x,</span> <span class="pre">int</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">…)</span></tt> to Python. The
+<p>This example exports a function <tt class="docutils literal">f(int x, int y = …)</tt> to Python. The
 sequence of <span class="concept">ParameterSpec</span>'s <tt class="docutils literal"><span class="pre">mpl::vector2&lt;tag::x(int),</span> <span class="pre">tag::y*(int)&gt;</span></tt> has
 an <strong>arity range</strong> of [2,2], so we only need one forwarding overload.</p>
 <pre class="literal-block">
@@ -779,7 +780,7 @@ specialization</em>.</p>
 </div>
 <div class="footer">
 <hr class="footer" />
-Generated on: 2008-06-26 21:51 UTC.
+Generated on: 2011-11-08 21:40 UTC.
 Generated by <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
 
 </div>

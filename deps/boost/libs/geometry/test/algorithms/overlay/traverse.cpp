@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2010-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2010-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -46,6 +46,7 @@
 
 #include <boost/geometry/algorithms/detail/overlay/get_turns.hpp>
 #include <boost/geometry/algorithms/detail/overlay/enrich_intersection_points.hpp>
+#include <boost/geometry/algorithms/detail/overlay/overlay_type.hpp>
 #include <boost/geometry/algorithms/detail/overlay/traverse.hpp>
 
 #include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
@@ -57,8 +58,7 @@
 
 #include <boost/geometry/geometries/geometries.hpp>
 
-#include <boost/geometry/io/wkt/read.hpp>
-#include <boost/geometry/io/wkt/write.hpp>
+#include <boost/geometry/io/wkt/wkt.hpp>
 
 
 #if defined(TEST_WITH_SVG)
@@ -69,9 +69,16 @@
 
 #include <algorithms/overlay/overlay_cases.hpp>
 
-static inline std::string operation(int d)
+template <bg::overlay_type Op>
+static inline std::string operation()
 {
-    return d == 1 ? "union" : "intersection";
+    switch(Op)
+    {
+        case bg::overlay_union : return "union";
+        case bg::overlay_intersection : return "intersection";
+        case bg::overlay_difference : return "difference";
+    }
+    return "unknown";
 }
 
 
@@ -81,7 +88,7 @@ namespace detail
 template
 <
     typename G1, typename G2,
-    bg::detail::overlay::operation_type Direction,
+    bg::overlay_type OverlayType,
     bool Reverse1, bool Reverse2
 >
 struct test_traverse
@@ -160,28 +167,30 @@ struct test_traverse
         > turn_info;
         std::vector<turn_info> turns;
 
+        bg::detail::overlay::operation_type const op =
+                OverlayType == bg::overlay_union
+                ? bg::detail::overlay::operation_union
+                : bg::detail::overlay::operation_intersection;
+
         bg::detail::get_turns::no_interrupt_policy policy;
         bg::get_turns<Reverse1, Reverse2, bg::detail::overlay::assign_null_policy>(g1, g2, rescale_policy, turns, policy);
-        bg::enrich_intersection_points<Reverse1, Reverse2>(turns,
-                    Direction == 1 ? bg::detail::overlay::operation_union
-                    : bg::detail::overlay::operation_intersection,
+        bg::enrich_intersection_points<Reverse1, Reverse2, OverlayType>(turns, op,
             g1, g2, rescale_policy, side_strategy_type());
 
         typedef bg::model::ring<typename bg::point_type<G2>::type> ring_type;
         typedef std::vector<ring_type> out_vector;
         out_vector v;
 
-
         bg::detail::overlay::traverse
             <
                 Reverse1, Reverse2,
                 G1, G2
-            >::apply(g1, g2, Direction, rescale_policy, turns, v);
+            >::apply(g1, g2, op, rescale_policy, turns, v);
 
         // Check number of resulting rings
         BOOST_CHECK_MESSAGE(expected_count == boost::size(v),
                 "traverse: " << id
-                << " (" << operation(Direction) << ")"
+                << " (" << operation<OverlayType>() << ")"
                 << " #shapes expected: " << expected_count
                 << " detected: " << boost::size(v)
                 << " type: " << string_from_type
@@ -201,7 +210,7 @@ struct test_traverse
 #if defined(TEST_WITH_SVG)
         {
             std::ostringstream filename;
-            filename << "traverse_" << operation(Direction)
+            filename << "traverse_" << operation<OverlayType>()
                 << "_" << id
                 << "_" << string_from_type<typename bg::coordinate_type<G1>::type>::name()
                 << ".svg";
@@ -258,6 +267,10 @@ struct test_traverse
                     style =  "fill:rgb(92,92,92);font-family:Arial;font-size:6px";
                     lineheight = 6;
                 }
+                else if (turn.colocated)
+                {
+                    style =  "fill:rgb(255,0,0);font-family:Arial;font-size:8px";
+                }
 
                 //if (! turn.is_discarded() && ! turn.blocked() && ! turn.both(bg::detail::overlay::operation_union))
                 //if (! turn.discarded)
@@ -268,7 +281,7 @@ struct test_traverse
                         << std::endl
                         << "op: " << bg::operation_char(turn.operations[0].operation)
                         << " / " << bg::operation_char(turn.operations[1].operation)
-                        << (turn.is_discarded() ? " (discarded) " : turn.blocked() ? " (blocked)" : "")
+                        //<< (turn.is_discarded() ? " (discarded) " : turn.blocked() ? " (blocked)" : "")
                         << std::endl;
 
                     out << "r: " << turn.operations[0].fraction
@@ -358,7 +371,7 @@ struct test_traverse
 template
 <
     typename G1, typename G2,
-    bg::detail::overlay::operation_type Direction,
+    bg::overlay_type OverlayType,
     bool Reverse1 = false,
     bool Reverse2 = false
 >
@@ -366,7 +379,7 @@ struct test_traverse
 {
     typedef detail::test_traverse
         <
-            G1, G2, Direction, Reverse1, Reverse2
+            G1, G2, OverlayType, Reverse1, Reverse2
         > detail_test_traverse;
 
     inline static void apply(std::string const& id, std::size_t expected_count, double expected_area,
@@ -419,299 +432,306 @@ struct test_traverse
 template <typename T>
 void test_all(bool test_self_tangencies = true, bool test_mixed = false)
 {
-    using namespace bg::detail::overlay;
-
     typedef bg::model::point<T, 2, bg::cs::cartesian> P;
     typedef bg::model::polygon<P> polygon;
     //typedef bg::model::box<P> box;
 
+    typedef test_traverse
+        <
+            polygon, polygon, bg::overlay_intersection
+        > test_traverse_intersection;
+    typedef test_traverse
+        <
+            polygon, polygon, bg::overlay_union
+        > test_traverse_union;
+
     // 1-6
-    test_traverse<polygon, polygon, operation_intersection>::apply("1", 1, 5.4736, case_1[0], case_1[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("2", 1, 12.0545, case_2[0], case_2[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("3", 1, 5, case_3[0], case_3[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("4", 1, 10.2212, case_4[0], case_4[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("5", 2, 12.8155, case_5[0], case_5[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("6", 1, 4.5, case_6[0], case_6[1]);
+    test_traverse_intersection::apply("1", 1, 5.4736, case_1[0], case_1[1]);
+    test_traverse_intersection::apply("2", 1, 12.0545, case_2[0], case_2[1]);
+    test_traverse_intersection::apply("3", 1, 5, case_3[0], case_3[1]);
+    test_traverse_intersection::apply("4", 1, 10.2212, case_4[0], case_4[1]);
+    test_traverse_intersection::apply("5", 2, 12.8155, case_5[0], case_5[1]);
+    test_traverse_intersection::apply("6", 1, 4.5, case_6[0], case_6[1]);
 
     // 7-12
-    test_traverse<polygon, polygon, operation_intersection>::apply("7", 0, 0, case_7[0], case_7[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("8", 0, 0, case_8[0], case_8[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("9", 0, 0, case_9[0], case_9[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("10", 0, 0, case_10[0], case_10[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("11", 1, 1, case_11[0], case_11[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("12", 2, 0.63333, case_12[0], case_12[1]);
+    test_traverse_intersection::apply("7", 0, 0, case_7[0], case_7[1]);
+    test_traverse_intersection::apply("8", 0, 0, case_8[0], case_8[1]);
+    test_traverse_intersection::apply("9", 0, 0, case_9[0], case_9[1]);
+    test_traverse_intersection::apply("10", 0, 0, case_10[0], case_10[1]);
+    test_traverse_intersection::apply("11", 1, 1, case_11[0], case_11[1]);
+    test_traverse_intersection::apply("12", 2, 0.63333, case_12[0], case_12[1]);
 
     // 13-18
-    test_traverse<polygon, polygon, operation_intersection>::apply("13", 0, 0, case_13[0], case_13[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("14", 0, 0, case_14[0], case_14[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("15", 0, 0, case_15[0], case_15[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("16", 0, 0, case_16[0], case_16[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("17", 1, 2, case_17[0], case_17[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("18", 1, 2, case_18[0], case_18[1]);
+    test_traverse_intersection::apply("13", 0, 0, case_13[0], case_13[1]);
+    test_traverse_intersection::apply("14", 0, 0, case_14[0], case_14[1]);
+    test_traverse_intersection::apply("15", 0, 0, case_15[0], case_15[1]);
+    test_traverse_intersection::apply("16", 0, 0, case_16[0], case_16[1]);
+    test_traverse_intersection::apply("17", 1, 2, case_17[0], case_17[1]);
+    test_traverse_intersection::apply("18", 1, 2, case_18[0], case_18[1]);
 
     // 19-24
-    test_traverse<polygon, polygon, operation_intersection>::apply("19", 0, 0, case_19[0], case_19[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("20", 1, 5.5, case_20[0], case_20[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("21", 0, 0, case_21[0], case_21[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("22", 0, 0, case_22[0], case_22[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("23", 1, 1.4, case_23[0], case_23[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("24", 1, 1.0, case_24[0], case_24[1]);
+    test_traverse_intersection::apply("19", 0, 0, case_19[0], case_19[1]);
+    test_traverse_intersection::apply("20", 1, 5.5, case_20[0], case_20[1]);
+    test_traverse_intersection::apply("21", 0, 0, case_21[0], case_21[1]);
+    test_traverse_intersection::apply("22", 0, 0, case_22[0], case_22[1]);
+    test_traverse_intersection::apply("23", 1, 1.4, case_23[0], case_23[1]);
+    test_traverse_intersection::apply("24", 1, 1.0, case_24[0], case_24[1]);
 
     // 25-30
-    test_traverse<polygon, polygon, operation_intersection>::apply("25", 0, 0, case_25[0], case_25[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("26", 0, 0, case_26[0], case_26[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("27", 1, 0.9545454, case_27[0], case_27[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("28", 1, 0.9545454, case_28[0], case_28[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("29", 1, 1.4, case_29[0], case_29[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("30", 1, 0.5, case_30[0], case_30[1]);
+    test_traverse_intersection::apply("25", 0, 0, case_25[0], case_25[1]);
+    test_traverse_intersection::apply("26", 0, 0, case_26[0], case_26[1]);
+    test_traverse_intersection::apply("27", 1, 0.9545454, case_27[0], case_27[1]);
+    test_traverse_intersection::apply("28", 1, 0.9545454, case_28[0], case_28[1]);
+    test_traverse_intersection::apply("29", 1, 1.4, case_29[0], case_29[1]);
+    test_traverse_intersection::apply("30", 1, 0.5, case_30[0], case_30[1]);
 
     // 31-36
-    test_traverse<polygon, polygon, operation_intersection>::apply("31", 0, 0, case_31[0], case_31[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("32", 0, 0, case_32[0], case_32[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("33", 0, 0, case_33[0], case_33[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("34", 1, 0.5, case_34[0], case_34[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("35", 1, 1.0, case_35[0], case_35[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("36", 1, 1.625, case_36[0], case_36[1]);
+    test_traverse_intersection::apply("31", 0, 0, case_31[0], case_31[1]);
+    test_traverse_intersection::apply("32", 0, 0, case_32[0], case_32[1]);
+    test_traverse_intersection::apply("33", 0, 0, case_33[0], case_33[1]);
+    test_traverse_intersection::apply("34", 1, 0.5, case_34[0], case_34[1]);
+    test_traverse_intersection::apply("35", 1, 1.0, case_35[0], case_35[1]);
+    test_traverse_intersection::apply("36", 1, 1.625, case_36[0], case_36[1]);
 
     // 37-42
-    test_traverse<polygon, polygon, operation_intersection>::apply("37", 2, 0.666666, case_37[0], case_37[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("38", 2, 0.971429, case_38[0], case_38[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("39", 1, 24, case_39[0], case_39[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("40", 0, 0, case_40[0], case_40[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("41", 1, 5, case_41[0], case_41[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("42", 1, 5, case_42[0], case_42[1]);
+    test_traverse_intersection::apply("37", 2, 0.666666, case_37[0], case_37[1]);
+    test_traverse_intersection::apply("38", 2, 0.971429, case_38[0], case_38[1]);
+    test_traverse_intersection::apply("39", 1, 24, case_39[0], case_39[1]);
+    test_traverse_intersection::apply("40", 0, 0, case_40[0], case_40[1]);
+    test_traverse_intersection::apply("41", 1, 5, case_41[0], case_41[1]);
+    test_traverse_intersection::apply("42", 1, 5, case_42[0], case_42[1]);
 
     // 43-48 - invalid polygons
-    //test_traverse<polygon, polygon, operation_intersection>::apply("43", 2, 0.75, case_43[0], case_43[1]);
-    //test_traverse<polygon, polygon, operation_intersection>::apply("44", 1, 44, case_44[0], case_44[1]);
-    //test_traverse<polygon, polygon, operation_intersection>::apply("45", 1, 45, case_45[0], case_45[1]);
-    //test_traverse<polygon, polygon, operation_intersection>::apply("46", 1, 46, case_46[0], case_46[1]);
-    //test_traverse<polygon, polygon, operation_intersection>::apply("47", 1, 47, case_47[0], case_47[1]);
+    //test_traverse_intersection::apply("43", 2, 0.75, case_43[0], case_43[1]);
+    //test_traverse_intersection::apply("44", 1, 44, case_44[0], case_44[1]);
+    //test_traverse_intersection::apply("45", 1, 45, case_45[0], case_45[1]);
+    //test_traverse_intersection::apply("46", 1, 46, case_46[0], case_46[1]);
+    //test_traverse_intersection::apply("47", 1, 47, case_47[0], case_47[1]);
 
     // 49-54
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("50", 0, 0, case_50[0], case_50[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("51", 0, 0, case_51[0], case_51[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("52", 1, 10.5, case_52[0], case_52[1]);
+    test_traverse_intersection::apply("50", 0, 0, case_50[0], case_50[1]);
+    test_traverse_intersection::apply("51", 0, 0, case_51[0], case_51[1]);
+    test_traverse_intersection::apply("52", 1, 10.5, case_52[0], case_52[1]);
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_intersection>::apply("53_st", 0, 0, case_53[0], case_53[1]);
+        test_traverse_intersection::apply("53_st", 0, 0, case_53[0], case_53[1]);
     }
-    test_traverse<polygon, polygon, operation_intersection>::apply("53_iet", 0, 0, case_53[0], case_53[2]);
+    test_traverse_intersection::apply("53_iet", 0, 0, case_53[0], case_53[2]);
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("54_iet_iet", 1, 2, case_54[1], case_54[3]);
+    test_traverse_intersection::apply("54_iet_iet", 1, 2, case_54[1], case_54[3]);
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_intersection>::apply("54_st_iet", 1, 2, case_54[0], case_54[3]);
-        test_traverse<polygon, polygon, operation_intersection>::apply("54_iet_st", 1, 2, case_54[1], case_54[2]);
-        test_traverse<polygon, polygon, operation_intersection>::apply("54_st_st", 1, 2, case_54[0], case_54[2]);
+        test_traverse_intersection::apply("54_st_iet", 1, 2, case_54[0], case_54[3]);
+        test_traverse_intersection::apply("54_iet_st", 1, 2, case_54[1], case_54[2]);
+        test_traverse_intersection::apply("54_st_st", 1, 2, case_54[0], case_54[2]);
     }
 
     if (test_self_tangencies)
     {
         // 55-60
-        test_traverse<polygon, polygon, operation_intersection>::apply("55_st_st", 1, 2, case_55[0], case_55[2]);
+        test_traverse_intersection::apply("55_st_st", 1, 2, case_55[0], case_55[2]);
     }
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("55_st_iet", 1, 2, case_55[0], case_55[3]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("55_iet_st", 1, 2, case_55[1], case_55[2]);
+    test_traverse_intersection::apply("55_st_iet", 1, 2, case_55[0], case_55[3]);
+    test_traverse_intersection::apply("55_iet_st", 1, 2, case_55[1], case_55[2]);
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_intersection>::apply("56", 2, 4.5, case_56[0], case_56[1]);
+        test_traverse_intersection::apply("56", 2, 4.5, case_56[0], case_56[1]);
     }
-    test_traverse<polygon, polygon, operation_intersection>::apply("55_iet_iet", 1, 2, case_55[1], case_55[3]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("57", 2, 5.9705882, case_57[0], case_57[1]);
+    test_traverse_intersection::apply("55_iet_iet", 1, 2, case_55[1], case_55[3]);
+    test_traverse_intersection::apply("57", 2, 5.9705882, case_57[0], case_57[1]);
 
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_intersection>::apply("58_st",
+        test_traverse_intersection::apply("58_st",
             2, 0.333333, case_58[0], case_58[1]);
-        test_traverse<polygon, polygon, operation_intersection>::apply("59_st",
+        test_traverse_intersection::apply("59_st",
             2, 1.5416667, case_59[0], case_59[1]);
-        test_traverse<polygon, polygon, operation_intersection>::apply("60_st",
+        test_traverse_intersection::apply("60_st",
             3, 2, case_60[0], case_60[1]);
     }
-    test_traverse<polygon, polygon, operation_intersection>::apply("58_iet",
+    test_traverse_intersection::apply("58_iet",
         2, 0.333333, case_58[0], case_58[2]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("59_iet",
+    test_traverse_intersection::apply("59_iet",
         2, 1.5416667, case_59[0], case_59[2]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("60_iet",
+    test_traverse_intersection::apply("60_iet",
         3, 2, case_60[0], case_60[2]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("61_st",
+    test_traverse_intersection::apply("61_st",
         0, 0, case_61[0], case_61[1]);
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("70",
+    test_traverse_intersection::apply("70",
         2, 4, case_70[0], case_70[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("71",
+    test_traverse_intersection::apply("71",
         2, 2, case_71[0], case_71[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("72",
+    test_traverse_intersection::apply("72",
         3, 2.85, case_72[0], case_72[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("79",
+    test_traverse_intersection::apply("79",
         2, 20, case_79[0], case_79[1]);
 
     // other
 
 
     // pies (went wrong when not all cases where implemented, especially some collinear (opposite) cases
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_16_4_12",
+    test_traverse_intersection::apply("pie_16_4_12",
         1, 491866.5, pie_16_4_12[0], pie_16_4_12[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_23_21_12_500",
+    test_traverse_intersection::apply("pie_23_21_12_500",
         2, 2363199.3313, pie_23_21_12_500[0], pie_23_21_12_500[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_23_23_3_2000",
+    test_traverse_intersection::apply("pie_23_23_3_2000",
         2, 1867779.9349, pie_23_23_3_2000[0], pie_23_23_3_2000[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_23_16_16",
+    test_traverse_intersection::apply("pie_23_16_16",
         2, 2128893.9555, pie_23_16_16[0], pie_23_16_16[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_16_2_15_0",
+    test_traverse_intersection::apply("pie_16_2_15_0",
         0, 0, pie_16_2_15_0[0], pie_16_2_15_0[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_4_13_15",
+    test_traverse_intersection::apply("pie_4_13_15",
         1, 490887.06678, pie_4_13_15[0], pie_4_13_15[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("pie_20_20_7_100",
+    test_traverse_intersection::apply("pie_20_20_7_100",
         2, 2183372.2718, pie_20_20_7_100[0], pie_20_20_7_100[1]);
 
 
 
     // 1-6
-    test_traverse<polygon, polygon, operation_union>::apply("1", 1, 11.5264, case_1[0], case_1[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("2", 1, 17.9455, case_2[0], case_2[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("3", 1, 9, case_3[0], case_3[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("4", 3, 17.7788, case_4[0], case_4[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("5", 2, 18.4345, case_5[0], case_5[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("6", 1, 9, case_6[0], case_6[1]);
+    test_traverse_union::apply("1", 1, 11.5264, case_1[0], case_1[1]);
+    test_traverse_union::apply("2", 1, 17.9455, case_2[0], case_2[1]);
+    test_traverse_union::apply("3", 1, 9, case_3[0], case_3[1]);
+    test_traverse_union::apply("4", 3, 17.7788, case_4[0], case_4[1]);
+    test_traverse_union::apply("5", 2, 18.4345, case_5[0], case_5[1]);
+    test_traverse_union::apply("6", 1, 9, case_6[0], case_6[1]);
 
     // 7-12
-    test_traverse<polygon, polygon, operation_union>::apply("7", 1, 9, case_7[0], case_7[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("8", 1, 12, case_8[0], case_8[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("9", 0, 0 /*UU 2, 11*/, case_9[0], case_9[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("10", 1, 9, case_10[0], case_10[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("11", 1, 8, case_11[0], case_11[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("12", 2, 8.36667, case_12[0], case_12[1]);
+    test_traverse_union::apply("7", 1, 9, case_7[0], case_7[1]);
+    test_traverse_union::apply("8", 1, 12, case_8[0], case_8[1]);
+    test_traverse_union::apply("9", 0, 0 /*UU 2, 11*/, case_9[0], case_9[1]);
+    test_traverse_union::apply("10", 1, 9, case_10[0], case_10[1]);
+    test_traverse_union::apply("11", 1, 8, case_11[0], case_11[1]);
+    test_traverse_union::apply("12", 2, 8.36667, case_12[0], case_12[1]);
 
     // 13-18
-    test_traverse<polygon, polygon, operation_union>::apply("13", 1, 4, case_13[0], case_13[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("14", 1, 12, case_14[0], case_14[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("15", 1, 12, case_15[0], case_15[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("16", 1, 9, case_16[0], case_16[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("17", 1, 8, case_17[0], case_17[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("18", 1, 8, case_18[0], case_18[1]);
+    test_traverse_union::apply("13", 1, 4, case_13[0], case_13[1]);
+    test_traverse_union::apply("14", 1, 12, case_14[0], case_14[1]);
+    test_traverse_union::apply("15", 1, 12, case_15[0], case_15[1]);
+    test_traverse_union::apply("16", 1, 9, case_16[0], case_16[1]);
+    test_traverse_union::apply("17", 1, 8, case_17[0], case_17[1]);
+    test_traverse_union::apply("18", 1, 8, case_18[0], case_18[1]);
 
     // 19-24
-    test_traverse<polygon, polygon, operation_union>::apply("19", 1, 10, case_19[0], case_19[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("20", 1, 5.5, case_20[0], case_20[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("21", 0, 0, case_21[0], case_21[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("22", 0, 0 /*UU 2, 9.5*/, case_22[0], case_22[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("23", 1, 6.1, case_23[0], case_23[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("24", 1, 5.5, case_24[0], case_24[1]);
+    test_traverse_union::apply("19", 1, 10, case_19[0], case_19[1]);
+    test_traverse_union::apply("20", 1, 5.5, case_20[0], case_20[1]);
+    test_traverse_union::apply("21", 0, 0, case_21[0], case_21[1]);
+    test_traverse_union::apply("22", 0, 0 /*UU 2, 9.5*/, case_22[0], case_22[1]);
+    test_traverse_union::apply("23", 1, 6.1, case_23[0], case_23[1]);
+    test_traverse_union::apply("24", 1, 5.5, case_24[0], case_24[1]);
 
     // 25-30
-    test_traverse<polygon, polygon, operation_union>::apply("25", 0, 0 /*UU 2, 7*/, case_25[0], case_25[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("26", 0, 0 /*UU  2, 7.5 */, case_26[0], case_26[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("27", 1, 8.04545, case_27[0], case_27[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("28", 1, 10.04545, case_28[0], case_28[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("29", 1, 8.1, case_29[0], case_29[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("30", 1, 6.5, case_30[0], case_30[1]);
+    test_traverse_union::apply("25", 0, 0 /*UU 2, 7*/, case_25[0], case_25[1]);
+    test_traverse_union::apply("26", 0, 0 /*UU  2, 7.5 */, case_26[0], case_26[1]);
+    test_traverse_union::apply("27", 1, 8.04545, case_27[0], case_27[1]);
+    test_traverse_union::apply("28", 1, 10.04545, case_28[0], case_28[1]);
+    test_traverse_union::apply("29", 1, 8.1, case_29[0], case_29[1]);
+    test_traverse_union::apply("30", 1, 6.5, case_30[0], case_30[1]);
 
     // 31-36
-    test_traverse<polygon, polygon, operation_union>::apply("31", 0, 0 /*UU 2, 4.5 */, case_31[0], case_31[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("32", 0, 0 /*UU 2, 4.5 */, case_32[0], case_32[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("33", 0, 0 /*UU 2, 4.5 */, case_33[0], case_33[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("34", 1, 6.0, case_34[0], case_34[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("35", 1, 10.5, case_35[0], case_35[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("36", 1 /*UU 2*/, 14.375, case_36[0], case_36[1]);
+    test_traverse_union::apply("31", 0, 0 /*UU 2, 4.5 */, case_31[0], case_31[1]);
+    test_traverse_union::apply("32", 0, 0 /*UU 2, 4.5 */, case_32[0], case_32[1]);
+    test_traverse_union::apply("33", 0, 0 /*UU 2, 4.5 */, case_33[0], case_33[1]);
+    test_traverse_union::apply("34", 1, 6.0, case_34[0], case_34[1]);
+    test_traverse_union::apply("35", 1, 10.5, case_35[0], case_35[1]);
+    test_traverse_union::apply("36", 1 /*UU 2*/, 14.375, case_36[0], case_36[1]);
 
     // 37-42
-    test_traverse<polygon, polygon, operation_union>::apply("37", 1, 7.33333, case_37[0], case_37[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("38", 1, 9.52857, case_38[0], case_38[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("39", 1, 40.0, case_39[0], case_39[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("40", 0, 0 /*UU 2, 11 */, case_40[0], case_40[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("41", 1, 5, case_41[0], case_41[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("42", 1, 5, case_42[0], case_42[1]);
+    test_traverse_union::apply("37", 1, 7.33333, case_37[0], case_37[1]);
+    test_traverse_union::apply("38", 1, 9.52857, case_38[0], case_38[1]);
+    test_traverse_union::apply("39", 1, 40.0, case_39[0], case_39[1]);
+    test_traverse_union::apply("40", 0, 0 /*UU 2, 11 */, case_40[0], case_40[1]);
+    test_traverse_union::apply("41", 1, 5, case_41[0], case_41[1]);
+    test_traverse_union::apply("42", 1, 5, case_42[0], case_42[1]);
 
     // 43-48
-    //test_traverse<polygon, polygon, operation_union>::apply("43", 3, 8.1875, case_43[0], case_43[1]);
-    //test_traverse<polygon, polygon, operation_union>::apply("44", 1, 44, case_44[0], case_44[1]);
-    //test_traverse<polygon, polygon, operation_union>::apply("45", 1, 45, case_45[0], case_45[1]);
-    //test_traverse<polygon, polygon, operation_union>::apply("46", 1, 46, case_46[0], case_46[1]);
-    //test_traverse<polygon, polygon, operation_union>::apply("47", 1, 47, case_47[0], case_47[1]);
+    //test_traverse_union::apply("43", 3, 8.1875, case_43[0], case_43[1]);
+    //test_traverse_union::apply("44", 1, 44, case_44[0], case_44[1]);
+    //test_traverse_union::apply("45", 1, 45, case_45[0], case_45[1]);
+    //test_traverse_union::apply("46", 1, 46, case_46[0], case_46[1]);
+    //test_traverse_union::apply("47", 1, 47, case_47[0], case_47[1]);
 
     // 49-54
 
-    test_traverse<polygon, polygon, operation_union>::apply("50", 1, 25, case_50[0], case_50[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("51", 0, 0, case_51[0], case_51[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("52", 1, 15.5, case_52[0], case_52[1]);
+    test_traverse_union::apply("50", 1, 25, case_50[0], case_50[1]);
+    test_traverse_union::apply("51", 0, 0, case_51[0], case_51[1]);
+    test_traverse_union::apply("52", 1, 15.5, case_52[0], case_52[1]);
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_union>::apply("53_st", 2, 16, case_53[0], case_53[1]);
+        test_traverse_union::apply("53_st", 2, 16, case_53[0], case_53[1]);
     }
-    test_traverse<polygon, polygon, operation_union>::apply("53_iet",
+    test_traverse_union::apply("53_iet",
             2, 16, case_53[0], case_53[2]);
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_union>::apply("54_st_st", 2, 20, case_54[0], case_54[2]);
-        test_traverse<polygon, polygon, operation_union>::apply("54_st_iet", 2, 20, case_54[0], case_54[3]);
-        test_traverse<polygon, polygon, operation_union>::apply("54_iet_st", 2, 20, case_54[1], case_54[2]);
+        test_traverse_union::apply("54_st_st", 2, 20, case_54[0], case_54[2]);
+        test_traverse_union::apply("54_st_iet", 2, 20, case_54[0], case_54[3]);
+        test_traverse_union::apply("54_iet_st", 2, 20, case_54[1], case_54[2]);
     }
-    test_traverse<polygon, polygon, operation_union>::apply("54_iet_iet", 2, 20, case_54[1], case_54[3]);
+    test_traverse_union::apply("54_iet_iet", 2, 20, case_54[1], case_54[3]);
 
     if (test_mixed)
     {
-        test_traverse<polygon, polygon, operation_union>::apply("55_st_iet", 2, 18, case_55[0], case_55[3]);
-        test_traverse<polygon, polygon, operation_union>::apply("55_iet_st", 2, 18, case_55[1], case_55[2]);
+        test_traverse_union::apply("55_st_iet", 2, 18, case_55[0], case_55[3]);
+        test_traverse_union::apply("55_iet_st", 2, 18, case_55[1], case_55[2]);
         // moved to mixed
-        test_traverse<polygon, polygon, operation_union>::apply("55_iet_iet", 3, 18, case_55[1], case_55[3]);
+        test_traverse_union::apply("55_iet_iet", 3, 18, case_55[1], case_55[3]);
     }
 
     // 55-60
     if (test_self_tangencies)
     {
         // 55 with both input polygons having self tangencies (st_st) generates 1 correct shape
-        test_traverse<polygon, polygon, operation_union>::apply("55_st_st", 1, 18, case_55[0], case_55[2]);
+        test_traverse_union::apply("55_st_st", 1, 18, case_55[0], case_55[2]);
         // 55 with one of them self-tangency, other int/ext ring tangency generate 2 correct shapes
 
-        test_traverse<polygon, polygon, operation_union>::apply("56", 2, 14, case_56[0], case_56[1]);
+        test_traverse_union::apply("56", 2, 14, case_56[0], case_56[1]);
     }
-    test_traverse<polygon, polygon, operation_union>::apply("57", 1, 14.029412, case_57[0], case_57[1]);
+    test_traverse_union::apply("57", 1, 14.029412, case_57[0], case_57[1]);
 
     if (test_self_tangencies)
     {
-        test_traverse<polygon, polygon, operation_union>::apply("58_st",
+        test_traverse_union::apply("58_st",
             4, 12.16666, case_58[0], case_58[1]);
-        test_traverse<polygon, polygon, operation_union>::apply("59_st",
+        test_traverse_union::apply("59_st",
             2, 17.208333, case_59[0], case_59[1]);
-        test_traverse<polygon, polygon, operation_union>::apply("60_st",
+        test_traverse_union::apply("60_st",
             3, 19, case_60[0], case_60[1]);
     }
-    test_traverse<polygon, polygon, operation_union>::apply("58_iet",
+    test_traverse_union::apply("58_iet",
          4, 12.16666, case_58[0], case_58[2]);
-    test_traverse<polygon, polygon, operation_union>::apply("59_iet",
+    test_traverse_union::apply("59_iet",
         1, -3.791666, // 2, 17.208333), outer ring (ii/ix) is done by ASSEMBLE
         case_59[0], case_59[2]);
-    test_traverse<polygon, polygon, operation_union>::apply("60_iet",
+    test_traverse_union::apply("60_iet",
         3, 19, case_60[0], case_60[2]);
-    test_traverse<polygon, polygon, operation_union>::apply("61_st",
+    test_traverse_union::apply("61_st",
         1, 4, case_61[0], case_61[1]);
 
-    test_traverse<polygon, polygon, operation_union>::apply("70",
+    test_traverse_union::apply("70",
         1, 9, case_70[0], case_70[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("71",
+    test_traverse_union::apply("71",
         2, 9, case_71[0], case_71[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("72",
+    test_traverse_union::apply("72",
         1, 10.65, case_72[0], case_72[1]);
 
     // other
-    test_traverse<polygon, polygon, operation_union>::apply("box_poly5",
+    test_traverse_union::apply("box_poly5",
             2, 4.7191,
             "POLYGON((1.5 1.5, 1.5 2.5, 4.5 2.5, 4.5 1.5, 1.5 1.5))",
             "POLYGON((2 1.3,2.4 1.7,2.8 1.8,3.4 1.2,3.7 1.6,3.4 2,4.1 2.5,4.5 2.5,4.5 2.3,5.0 2.3,5.0 2.1,4.5 2.1,4.5 1.9,4.0 1.9,4.5 1.2,4.9 0.8,2.9 0.7,2 1.3))");
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("collinear_overlaps",
+    test_traverse_intersection::apply("collinear_overlaps",
         1, 24,
         collinear_overlaps[0], collinear_overlaps[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("collinear_overlaps",
+    test_traverse_union::apply("collinear_overlaps",
         1, 50,
         collinear_overlaps[0], collinear_overlaps[1]);
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("many_situations", 1, 184, case_many_situations[0], case_many_situations[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("many_situations",
+    test_traverse_intersection::apply("many_situations", 1, 184, case_many_situations[0], case_many_situations[1]);
+    test_traverse_union::apply("many_situations",
         1, 207, case_many_situations[0], case_many_situations[1]);
 
 
@@ -719,25 +739,25 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     // This all went wrong in the past
     // (when not all cases (get_turns) where implemented,
     //   especially important are some collinear (opposite) cases)
-    test_traverse<polygon, polygon, operation_union>::apply("pie_16_4_12",
+    test_traverse_union::apply("pie_16_4_12",
         1, 3669665.5, pie_16_4_12[0], pie_16_4_12[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("pie_23_21_12_500",
+    test_traverse_union::apply("pie_23_21_12_500",
         1, 6295516.7185, pie_23_21_12_500[0], pie_23_21_12_500[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("pie_23_23_3_2000",
+    test_traverse_union::apply("pie_23_23_3_2000",
         1, 7118735.0530, pie_23_23_3_2000[0], pie_23_23_3_2000[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("pie_23_16_16",
+    test_traverse_union::apply("pie_23_16_16",
         1, 5710474.5406, pie_23_16_16[0], pie_23_16_16[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("pie_16_2_15_0",
+    test_traverse_union::apply("pie_16_2_15_0",
         1, 3833641.5, pie_16_2_15_0[0], pie_16_2_15_0[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("pie_4_13_15",
+    test_traverse_union::apply("pie_4_13_15",
         1, 2208122.43322, pie_4_13_15[0], pie_4_13_15[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("pie_20_20_7_100",
+    test_traverse_union::apply("pie_20_20_7_100",
         1, 5577158.72823, pie_20_20_7_100[0], pie_20_20_7_100[1]);
 
     /*
     if (test_not_valid)
     {
-    test_traverse<polygon, polygon, operation_union>::apply("pie_5_12_12_0_7s",
+    test_traverse_union::apply("pie_5_12_12_0_7s",
         1, 3271710.48516, pie_5_12_12_0_7s[0], pie_5_12_12_0_7s[1]);
     }
     */
@@ -748,7 +768,7 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     static const double float_might_deviate_more = is_float ? 0.1 : 0.001; // In some cases up to 1 promille permitted
 
     // GCC: does not everywhere handle float correctly (in our algorithms)
-    bool const is_float_on_non_msvc =
+    static bool const is_float_on_non_msvc =
 #if defined(_MSC_VER)
         false;
 #else
@@ -764,30 +784,30 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     // ("hv" means "high volume")
     {
         double deviation = is_float ? 0.01 : 0.001;
-        test_traverse<polygon, polygon, operation_union>::apply("hv1", 1, 1624.508688461573, hv_1[0], hv_1[1], deviation);
-        test_traverse<polygon, polygon, operation_intersection>::apply("hv1", 1, 1622.7200125123809, hv_1[0], hv_1[1], deviation);
+        test_traverse_union::apply("hv1", 1, 1624.508688461573, hv_1[0], hv_1[1], deviation);
+        test_traverse_intersection::apply("hv1", 1, 1622.7200125123809, hv_1[0], hv_1[1], deviation);
 
-        test_traverse<polygon, polygon, operation_union>::apply("hv2", 1, 1622.9193392726836, hv_2[0], hv_2[1], deviation);
-        test_traverse<polygon, polygon, operation_intersection>::apply("hv2", 1, 1622.1733591429329, hv_2[0], hv_2[1], deviation);
+        test_traverse_union::apply("hv2", 1, 1622.9193392726836, hv_2[0], hv_2[1], deviation);
+        test_traverse_intersection::apply("hv2", 1, 1622.1733591429329, hv_2[0], hv_2[1], deviation);
 
-        test_traverse<polygon, polygon, operation_union>::apply("hv3", 1, 1624.22079205664, hv_3[0], hv_3[1], deviation);
-        test_traverse<polygon, polygon, operation_intersection>::apply("hv3", 1, 1623.8265057282042, hv_3[0], hv_3[1], deviation);
+        test_traverse_union::apply("hv3", 1, 1624.22079205664, hv_3[0], hv_3[1], deviation);
+        test_traverse_intersection::apply("hv3", 1, 1623.8265057282042, hv_3[0], hv_3[1], deviation);
 
 
         if ( BOOST_GEOMETRY_CONDITION(! is_float) )
         {
-            test_traverse<polygon, polygon, operation_union>::apply("hv4", 1, 1626.5146964146334, hv_4[0], hv_4[1], deviation);
-            test_traverse<polygon, polygon, operation_intersection>::apply("hv4", 1, 1626.2580370864305, hv_4[0], hv_4[1], deviation);
-            test_traverse<polygon, polygon, operation_union>::apply("hv5", 1, 1624.2158307261871, hv_5[0], hv_5[1], deviation);
-            test_traverse<polygon, polygon, operation_intersection>::apply("hv5", 1, 1623.4506071521519, hv_5[0], hv_5[1], deviation);
+            test_traverse_union::apply("hv4", 1, 1626.5146964146334, hv_4[0], hv_4[1], deviation);
+            test_traverse_intersection::apply("hv4", 1, 1626.2580370864305, hv_4[0], hv_4[1], deviation);
+            test_traverse_union::apply("hv5", 1, 1624.2158307261871, hv_5[0], hv_5[1], deviation);
+            test_traverse_intersection::apply("hv5", 1, 1623.4506071521519, hv_5[0], hv_5[1], deviation);
 
             // Case 2009-12-07
-            test_traverse<polygon, polygon, operation_intersection>::apply("hv6", 1, 1604.6318757402121, hv_6[0], hv_6[1], deviation);
-            test_traverse<polygon, polygon, operation_union>::apply("hv6", 1, 1790.091872401327, hv_6[0], hv_6[1], deviation);
+            test_traverse_intersection::apply("hv6", 1, 1604.6318757402121, hv_6[0], hv_6[1], deviation);
+            test_traverse_union::apply("hv6", 1, 1790.091872401327, hv_6[0], hv_6[1], deviation);
 
             // Case 2009-12-08, needing sorting on side in enrich_intersection_points
-            test_traverse<polygon, polygon, operation_union>::apply("hv7", 1, 1624.5779453641017, hv_7[0], hv_7[1], deviation);
-            test_traverse<polygon, polygon, operation_intersection>::apply("hv7", 1, 1623.6936420295772, hv_7[0], hv_7[1], deviation);
+            test_traverse_union::apply("hv7", 1, 1624.5779453641017, hv_7[0], hv_7[1], deviation);
+            test_traverse_intersection::apply("hv7", 1, 1623.6936420295772, hv_7[0], hv_7[1], deviation);
         }
     }
 
@@ -800,24 +820,24 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     // Solved now (by sorting on sides in those cases)
     if ( BOOST_GEOMETRY_CONDITION(! is_float_on_non_msvc) )
     {
-        test_traverse<polygon, polygon, operation_intersection>::apply("dz_1",
+        test_traverse_intersection::apply("dz_1",
                 2, 16.887537949472005, dz_1[0], dz_1[1]);
-        test_traverse<polygon, polygon, operation_union>::apply("dz_1",
+        test_traverse_union::apply("dz_1",
                 3, 1444.2621305732864, dz_1[0], dz_1[1]);
 
-        test_traverse<polygon, polygon, operation_intersection>::apply("dz_2",
+        test_traverse_intersection::apply("dz_2",
                 2, 68.678921274288541, dz_2[0], dz_2[1]);
-        test_traverse<polygon, polygon, operation_union>::apply("dz_2",
+        test_traverse_union::apply("dz_2",
                 1, 1505.4202304878663, dz_2[0], dz_2[1]);
 
-        test_traverse<polygon, polygon, operation_intersection>::apply("dz_3",
+        test_traverse_intersection::apply("dz_3",
                 5, 192.49316937645651, dz_3[0], dz_3[1]);
-        test_traverse<polygon, polygon, operation_union>::apply("dz_3",
-                6, 1446.496005965641, dz_3[0], dz_3[1]);
+        test_traverse_union::apply("dz_3",
+                5, 1446.496005965641, dz_3[0], dz_3[1]);
 
-        test_traverse<polygon, polygon, operation_intersection>::apply("dz_4",
+        test_traverse_intersection::apply("dz_4",
                 1, 473.59423868207693, dz_4[0], dz_4[1]);
-        test_traverse<polygon, polygon, operation_union>::apply("dz_4",
+        test_traverse_union::apply("dz_4",
                 1, 1871.6125138873476, dz_4[0], dz_4[1]);
     }
 
@@ -825,21 +845,21 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
 
     // SNL (Subsidiestelsel Natuur & Landschap - verAANnen)
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("snl-1",
+    test_traverse_intersection::apply("snl-1",
         2, 286.996062095888,
         snl_1[0], snl_1[1],
         float_might_deviate_more);
 
-    test_traverse<polygon, polygon, operation_union>::apply("snl-1",
+    test_traverse_union::apply("snl-1",
         2, 51997.5408506132,
         snl_1[0], snl_1[1],
         float_might_deviate_more);
 
     {
-        test_traverse<polygon, polygon, operation_intersection>::apply("isov",
+        test_traverse_intersection::apply("isov",
                 1, 88.1920, isovist[0], isovist[1],
                 float_might_deviate_more);
-        test_traverse<polygon, polygon, operation_union>::apply("isov",
+        test_traverse_union::apply("isov",
                 1, 313.3604, isovist[0], isovist[1],
                 float_might_deviate_more);
     }
@@ -860,59 +880,59 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
         // ttmath can form a very small intersection triangle
         // (which is even not accomplished by SQL Server/PostGIS)
         std::string const caseid = "ggl_list_20110820_christophe";
-        test_traverse<polygon, polygon, operation_intersection>::apply(caseid,
+        test_traverse_intersection::apply(caseid,
             expected_count, expected,
             ggl_list_20110820_christophe[0], ggl_list_20110820_christophe[1]);
-        test_traverse<polygon, polygon, operation_union>::apply(caseid,
+        test_traverse_union::apply(caseid,
             1, 67.3550722317627,
             ggl_list_20110820_christophe[0], ggl_list_20110820_christophe[1]);
 */
     }
 
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_f",
+    test_traverse_union::apply("buffer_rt_f",
         1, 4.60853,
         buffer_rt_f[0], buffer_rt_f[1]);
-    test_traverse<polygon, polygon, operation_intersection>::apply("buffer_rt_f",
+    test_traverse_intersection::apply("buffer_rt_f",
         1, 0.0002943725152286,
         buffer_rt_f[0], buffer_rt_f[1], 0.01);
 
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_g",
+    test_traverse_union::apply("buffer_rt_g",
         1, 16.571,
         buffer_rt_g[0], buffer_rt_g[1]);
 
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_g_boxes1",
+    test_traverse_union::apply("buffer_rt_g_boxes1",
         1, 20,
         buffer_rt_g_boxes[0], buffer_rt_g_boxes[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_g_boxes2",
+    test_traverse_union::apply("buffer_rt_g_boxes2",
         1, 24,
         buffer_rt_g_boxes[0], buffer_rt_g_boxes[2]);
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_g_boxes3",
+    test_traverse_union::apply("buffer_rt_g_boxes3",
         1, 28,
         buffer_rt_g_boxes[0], buffer_rt_g_boxes[3]);
 
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_g_boxes43",
+    test_traverse_union::apply("buffer_rt_g_boxes43",
         1, 30,
         buffer_rt_g_boxes[4], buffer_rt_g_boxes[3]);
 
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_rt_l",
+    test_traverse_union::apply("buffer_rt_l",
         1, 19.3995, buffer_rt_l[0], buffer_rt_l[1]);
 
-    test_traverse<polygon, polygon, operation_union>::apply("buffer_mp2",
+    test_traverse_union::apply("buffer_mp2",
             1, 36.7535642, buffer_mp2[0], buffer_mp2[1], 0.01);
-    test_traverse<polygon, polygon, operation_union>::apply("collinear_opposite_rr",
+    test_traverse_union::apply("collinear_opposite_rr",
             1, 6.41, collinear_opposite_right[0], collinear_opposite_right[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("collinear_opposite_ll",
+    test_traverse_union::apply("collinear_opposite_ll",
             1, 11.75, collinear_opposite_left[0], collinear_opposite_left[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("collinear_opposite_ss",
+    test_traverse_union::apply("collinear_opposite_ss",
             1, 6, collinear_opposite_straight[0], collinear_opposite_straight[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("collinear_opposite_lr",
+    test_traverse_union::apply("collinear_opposite_lr",
             1, 8.66, collinear_opposite_left[0], collinear_opposite_right[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("collinear_opposite_rl",
+    test_traverse_union::apply("collinear_opposite_rl",
             1, 9, collinear_opposite_right[0], collinear_opposite_left[1]);
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("ticket_7462", 1, 0.220582, ticket_7462[0], ticket_7462[1]);
+    test_traverse_intersection::apply("ticket_7462", 1, 0.220582, ticket_7462[0], ticket_7462[1]);
 
-    test_traverse<polygon, polygon, operation_intersection>::apply
+    test_traverse_intersection::apply
         ("ticket_9081_15", 1, 0.006889578,
             ticket_9081_15[0], ticket_9081_15[1]);
 
@@ -920,37 +940,45 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     {
         // NOTE: currently throws (normally)
         std::string caseid = "ggl_list_20120229_volker";
-        test_traverse<polygon, polygon, operation_union>::apply(caseid,
+        test_traverse_union::apply(caseid,
             1, 99,
             ggl_list_20120229_volker[0], ggl_list_20120229_volker[1]);
-        test_traverse<polygon, polygon, operation_intersection>::apply(caseid,
+        test_traverse_intersection::apply(caseid,
             1, 99,
             ggl_list_20120229_volker[0], ggl_list_20120229_volker[1]);
         caseid = "ggl_list_20120229_volker_2";
-        test_traverse<polygon, polygon, operation_union>::apply(caseid,
+        test_traverse_union::apply(caseid,
             1, 99,
             ggl_list_20120229_volker[2], ggl_list_20120229_volker[1]);
-        test_traverse<polygon, polygon, operation_intersection>::apply(caseid,
+        test_traverse_intersection::apply(caseid,
             1, 99,
             ggl_list_20120229_volker[2], ggl_list_20120229_volker[1]);
     }
 #endif
 }
 
+#if ! defined(BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE)
 template <typename T>
 void test_open()
 {
-    using namespace bg::detail::overlay;
-
     typedef bg::model::polygon
         <
             bg::model::point<T, 2, bg::cs::cartesian>,
             true, false
         > polygon;
 
-    test_traverse<polygon, polygon, operation_intersection>::apply("open_1", 1, 5.4736,
+    typedef test_traverse
+        <
+            polygon, polygon, bg::overlay_intersection
+        > test_traverse_intersection;
+    typedef test_traverse
+        <
+            polygon, polygon, bg::overlay_union
+        > test_traverse_union;
+
+    test_traverse_intersection::apply("open_1", 1, 5.4736,
         open_case_1[0], open_case_1[1]);
-    test_traverse<polygon, polygon, operation_union>::apply("open_1", 1, 11.5264,
+    test_traverse_union::apply("open_1", 1, 11.5264,
         open_case_1[0], open_case_1[1]);
 }
 
@@ -958,20 +986,18 @@ void test_open()
 template <typename T>
 void test_ccw()
 {
-    using namespace bg::detail::overlay;
-
     typedef bg::model::polygon
         <
             bg::model::point<T, 2, bg::cs::cartesian>,
             false, true
         > polygon;
 
-    test_traverse<polygon, polygon, operation_intersection, true, true>::apply("ccw_1", 1, 5.4736,
+    test_traverse<polygon, polygon, bg::overlay_intersection, true, true>::apply("ccw_1", 1, 5.4736,
         ccw_case_1[0], ccw_case_1[1]);
-    test_traverse<polygon, polygon, operation_union, true, true>::apply("ccw_1", 1, 11.5264,
+    test_traverse<polygon, polygon, bg::overlay_union, true, true>::apply("ccw_1", 1, 11.5264,
         ccw_case_1[0], ccw_case_1[1]);
 }
-
+#endif
 
 
 int test_main(int, char* [])

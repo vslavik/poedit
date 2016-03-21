@@ -77,10 +77,10 @@ void compare(std::string left,std::string right,int level,int expected)
         TEST(l(left,right) == (expected < 0));
     TEST_COMP(char,left,right);
     TEST_COMP(wchar_t,to<wchar_t>(left),to<wchar_t>(right));
-    #ifdef BOOST_HAS_CHAR16_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
     TEST_COMP(char16_t,to<char16_t>(left),to<char16_t>(right));
     #endif
-    #ifdef BOOST_HAS_CHAR32_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
     TEST_COMP(char32_t,to<char32_t>(left),to<char32_t>(right));
     #endif
     l=gen("en_US.ISO8859-1");

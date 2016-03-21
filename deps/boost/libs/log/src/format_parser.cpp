@@ -36,7 +36,7 @@ BOOST_LOG_OPEN_NAMESPACE
 namespace aux {
 
 template< typename CharT >
-format_description< CharT > parse_format(const CharT* begin, const CharT* end)
+BOOST_LOG_API format_description< CharT > parse_format(const CharT* begin, const CharT* end)
 {
     typedef CharT char_type;
     typedef format_description< char_type > description;

@@ -20,6 +20,7 @@ project
       #<toolset>gcc-mw:<link>static
       #<toolset>gcc-mingw:<link>static
       <toolset>gcc-cygwin:<link>static
+      <toolset>sun:<link>static
     ;
 
 #
@@ -149,10 +150,9 @@ test-suite regex
       : : : <test-info>always_show_run_output : test_collate_info ]
 
 
-      [ compile concepts/concept_check.cpp ../build//boost_regex
-      ]
-      [ compile concepts/icu_concept_check.cpp ../build//boost_regex
-      ]
+      [ link concepts/concept_check.cpp ../build//boost_regex ]
+      [ link concepts/icu_concept_check.cpp ../build//boost_regex ]
+      [ link concepts/range_concept_check.cpp ../build//boost_regex ]
       
      [ run
     # sources

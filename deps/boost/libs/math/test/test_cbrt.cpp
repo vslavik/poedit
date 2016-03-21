@@ -12,6 +12,9 @@
 #include <pch_light.hpp> // include /libs/math/src/
 #include "test_cbrt.hpp"
 
+#include <boost/math/special_functions/cbrt.hpp> // Added to avoid link failure missing cbrt variants.
+// Assumes special functions library built rather than included?
+
 //
 // DESCRIPTION:
 // ~~~~~~~~~~~~

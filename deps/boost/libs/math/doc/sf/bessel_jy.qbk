@@ -33,7 +33,7 @@ where:
 
 [equation bessel3]
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1 and T2 are different types.  The functions are also optimised for the
 relatively common case that T1 is an integer.
 
@@ -64,61 +64,26 @@ a simplified version of this implementation
 [h4 Accuracy]
 
 The following tables show how the accuracy of these functions
-varies on various platforms, along with comparisons to the __gsl and
-__cephes libraries.  Note that the cyclic nature of these
+varies on various platforms, along with comparisons to other 
+libraries.  Note that the cyclic nature of these
 functions means that they have an infinite number of irrational
 roots: in general these functions have arbitrarily large /relative/
 errors when the arguments are sufficiently close to a root.  Of
 course the absolute error in such cases is always small.
 Note that only results for the widest floating-point type on the
 system are given as narrower types have __zero_error.  All values
-are relative errors in units of epsilon.
+are relative errors in units of epsilon.  Most of the gross errors
+exhibited by other libraries occur for very large arguments - you will 
+need to drill down into the actual program output if you need more 
+information on this.
 
-[table Errors Rates in cyl_bessel_j
-[[Significand Size] [Platform and Compiler] [J[sub 0][space] and J[sub 1]] [J[sub v]] [J[sub v][space] (large values of x > 1000)] ]
-[[53] [Win32 / Visual C++ 8.0]
-      [Peak=2.5 Mean=1.1
+[table_cyl_bessel_j_integer_orders_]
 
-GSL Peak=6.6
+[table_cyl_bessel_j]
 
-__cephes Peak=2.5 Mean=1.1]
-      [Peak=11 Mean=2.2
+[table_cyl_neumann_integer_orders_]
 
-GSL Peak=11
-
-__cephes Peak=17 Mean=2.5]
-      [Peak=59 Mean=10
-
-GSL Peak=6x10[super 11]
-
-__cephes Peak=2x10[super 5] ] ]
-[[64] [Red Hat Linux IA64 / G++ 3.4] [Peak=7 Mean=3] [Peak=117 Mean=10] [Peak=2x10[super 4][space] Mean=6x10[super 3]] ]
-[[64] [SUSE Linux AMD64 / G++ 4.1] [Peak=7 Mean=3] [Peak=400 Mean=40] [Peak=2x10[super 4][space] Mean=1x10[super 4]] ]
-[[113] [HP-UX / HP aCC 6] [Peak=14 Mean=6] [Peak=29 Mean=3] [Peak=2700 Mean=450] ]
-]
-
-[table Errors Rates in cyl_neumann
-[[Significand Size] [Platform and Compiler] [Y[sub 0][space] and Y[sub 1]] [Y[sub n] (integer orders)] [Y[sub v] (fractional orders)] ]
-[[53] [Win32 / Visual C++ 8.0]
-      [Peak=4.7 Mean=1.7
-
-GSL Peak=34 Mean=9
-
-__cephes Peak=330 Mean=54]
-      [Peak=117 Mean=10
-
-GSL Peak=500 Mean=54
-
-__cephes Peak=923 Mean=83]
-      [Peak=800 Mean=40
-
-GSL Peak=1.4x10[super 6][space] Mean\=7x10[super 4][space]
-
-__cephes Peak=+INF]]
-[[64] [Red Hat Linux IA64 / G++ 3.4] [Peak=470 Mean=56] [Peak=843 Mean=51] [Peak=741 Mean=51] ]
-[[64] [SUSE Linux AMD64 / G++ 4.1] [Peak=1300 Mean=424] [Peak=2x10[super 4][space] Mean=8x10[super 3]] [Peak=1x10[super 5][space] Mean=6x10[super 3]] ]
-[[113] [HP-UX / HP aCC 6] [Peak=180 Mean=63] [Peak=340 Mean=150] [Peak=2x10[super 4][space] Mean=1200] ]
-]
+[table_cyl_neumann]
 
 Note that for large /x/ these functions are largely dependent on
 the accuracy of the `std::sin` and `std::cos` functions.

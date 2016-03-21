@@ -170,21 +170,21 @@ void test_mfc(const char&, const test_regex_search_tag&)
 #pragma warning(push)
 #pragma warning(disable:4244)
 #endif
-      if(boost::re_detail::distance(s.GetString(), tstart2->first) != last_end2)
+      if(boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->first) != last_end2)
       {
          BOOST_REGEX_TEST_ERROR(
             "Error in location of start of field split, found: " 
-            << boost::re_detail::distance(s.GetString(), tstart2->first)
+            << boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->first)
             << ", expected: "
             << last_end2
             << ".", char);
       }
       int expected_end = static_cast<int>(answer_table[0] < 0 ? s.GetLength() : answer_table[0]);
-      if(boost::re_detail::distance(s.GetString(), tstart2->second) != expected_end)
+      if(boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->second) != expected_end)
       {
          BOOST_REGEX_TEST_ERROR(
             "Error in location of end2 of field split, found: "
-            << boost::re_detail::distance(s.GetString(), tstart2->second)
+            << boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->second)
             << ", expected: "
             << expected_end
             << ".", char);
@@ -348,21 +348,21 @@ void test_mfc(const wchar_t&, const test_regex_search_tag&)
 #pragma warning(push)
 #pragma warning(disable:4244)
 #endif
-      if(boost::re_detail::distance(s.GetString(), tstart2->first) != last_end2)
+      if(boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->first) != last_end2)
       {
          BOOST_REGEX_TEST_ERROR(
             "Error in location of start of field split, found: " 
-            << boost::re_detail::distance(s.GetString(), tstart2->first)
+            << boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->first)
             << ", expected: "
             << last_end2
             << ".", wchar_t);
       }
       int expected_end = static_cast<int>(answer_table[0] < 0 ? s.GetLength() : answer_table[0]);
-      if(boost::re_detail::distance(s.GetString(), tstart2->second) != expected_end)
+      if(boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->second) != expected_end)
       {
          BOOST_REGEX_TEST_ERROR(
             "Error in location of end2 of field split, found: "
-            << boost::re_detail::distance(s.GetString(), tstart2->second)
+            << boost::BOOST_REGEX_DETAIL_NS::distance(s.GetString(), tstart2->second)
             << ", expected: "
             << expected_end
             << ".", wchar_t);

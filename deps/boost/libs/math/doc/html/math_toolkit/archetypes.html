@@ -4,10 +4,10 @@
 <title>Conceptual Archetypes for Reals and Distributions</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
-<link rel="up" href="../using_udt.html" title="Chapter&#160;13.&#160;Use with User-Defined Floating-Point Types - Boost.Multiprecision and others">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../using_udt.html" title="Chapter&#160;14.&#160;Use with User-Defined Floating-Point Types - Boost.Multiprecision and others">
 <link rel="prev" href="dist_concept.html" title="Conceptual Requirements for Distribution Types">
-<link rel="next" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">
+<link rel="next" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -35,7 +35,7 @@
           Real concept for floating-point types.
         </li>
 <li class="listitem">
-          distribution Concept for statistical distributions.
+          Distribution concept for statistical distributions.
         </li>
 </ul></div>
 <h6>
@@ -100,13 +100,13 @@
 </pre>
 <p>
       <code class="computeroutput"><span class="identifier">real_concept</span></code> is an archetype
-      for <a class="link" href="concepts.html" title="Conceptual Requirements for Real Number Types">user defined real types</a>, it
-      declares its standard library functions in its own namespace: these will only
-      be found if they are called unqualified allowing argument dependent lookup
+      for <a class="link" href="real_concepts.html" title="Conceptual Requirements for Real Number Types">user defined real types</a>,
+      it declares its standard library functions in its own namespace: these will
+      only be found if they are called unqualified allowing argument dependent lookup
       to locate them. In addition this type is useable at runtime: this allows code
       that would not otherwise be exercised by the built-in floating point types
       to be tested. There is no std::numeric_limits&lt;&gt; support for this type,
-      since numeric_limits is not a conceptual requirement for <a class="link" href="concepts.html" title="Conceptual Requirements for Real Number Types">RealType</a>s.
+      since numeric_limits is not a conceptual requirement for <a class="link" href="real_concepts.html" title="Conceptual Requirements for Real Number Types">RealType</a>s.
     </p>
 <p>
       NTL RR is an example of a type meeting the requirements that this type models,

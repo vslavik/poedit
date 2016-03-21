@@ -7,6 +7,9 @@
 
 using namespace boost::multiprecision;
 
-cpp_bin_float<50> a;
+int main()
+{
+   cpp_bin_float<50> a;
+}
 
 

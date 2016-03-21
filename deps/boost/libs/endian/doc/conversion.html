@@ -1,4 +1,4 @@
-﻿<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
 <meta name="GENERATOR" content="Microsoft FrontPage 5.0">
@@ -68,8 +68,26 @@ ordering. User defined types are also supported.</p>
 
 <p>Functions are implemented <code>inline</code> if appropriate.<code> </code>
 For C++03 compilers, <code> noexcept</code> is 
-elided  . 
+elided. 
 Boost scoped enum emulation is used so that the library still works for compilers that do not support scoped enums.</p>
+
+<h3><a name="Definitions">Definitions</a></h3>
+<p><b><i>Endianness</i></b> refers to the ordering of bytes within internal or 
+external integers and other arithmetic data. Most-significant byte first is 
+called <b><i>big endian</i></b> ordering. Least-significant byte first is called
+<b><i>little endian</i></b> ordering. Other orderings are possible and some CPU 
+architectures support both big and little ordering.</p>
+<blockquote>
+<p>[<i>Note:</i> The names are derived from
+<a href="http://en.wikipedia.org/wiki/Jonathan_Swift" title="Jonathan Swift">
+Jonathan Swift</a>'s satirical novel <i>
+<a href="http://en.wikipedia.org/wiki/Gulliver's_Travels" title="Gulliver's Travels">
+Gulliver’s Travels</a></i>, where rival kingdoms opened their soft-boiled eggs 
+at different ends. Wikipedia has an extensive description of
+<a href="https://en.wikipedia.org/wiki/Endianness">Endianness</a>. <i>—end note</i>]</p>
+</blockquote>
+<p>The standard integral types (C++std 3.9.1) except <code>bool</code> 
+are collectively called the <b> <i>endian types</i></b>.</p>
 
 <h3>
 Header <code>&lt;boost/endian/conversion.hpp&gt;</code>
@@ -84,10 +102,10 @@ namespace endian
 {
   enum class <a name="order">order</a>
   {
-    big,                             // big endian
-    little,                          // little endian
-    native = <b><i>implementation-defined-as-big-or-little
-  </i></b>};
+    native = <b><i>see below,
+</i></b>    big    = <b><i>see below</i></b>,
+    little = <b><i>see below</i></b>,
+ <b><i>  </i></b>};
 
   int8_t   <a href="#endian_reverse">endian_reverse</a>(int8_t x) noexcept;
   int16_t  <a href="#endian_reverse">endian_reverse</a>(int16_t x) noexcept;
@@ -131,16 +149,20 @@ namespace endian
 
 } // namespace endian
 } // namespace boost</pre>
-<p dir="ltr">The implementation is required to define the <code>enum class order</code> 
-constant <code>native</code> as
-<code>big</code> on big endian platforms and <code>little</code> on little 
-endian platforms.</p>
-<h3 dir="ltr"><a name="Definitions">Definitions</a></h3>
-<p dir="ltr">The standard integral types (C++std 3.9.1) except <code>bool</code>, 
-are collectively called the <i>endian types</i>.</p>
+<p>The values of <code>order::little</code> and <code>order::big</code> shall 
+not be equal to one another. </p>
+<p><a name="native-order-specification"></a>The value of <code>order::native</code> 
+shall be:</p>
+<ul>
+  <li>equal to <code>order::big</code> if the execution environment is big 
+  endian, otherwise</li>
+  <li>equal to <code>order::little</code> if the execution environment is little 
+  endian, otherwise</li>
+  <li>unequal to both <code>order::little</code> and <code>order::big</code>.</li>
+</ul>
 <h3><a name="Requirements">Requirements</a></h3>
 <h4><a name="Template-argument-requirements">Template argument requirements</a></h4>
-<p dir="ltr">The template definitions in the <code>boost/endian/conversion.hpp</code> 
+<p>The template definitions in the <code>boost/endian/conversion.hpp</code> 
 header refer to various named requirements whose details are set out in the 
 tables in this subsection. In these tables, <code>T</code> is an object or 
 reference type to be supplied by a C++ program instantiating a template; <code>x</code> 
@@ -232,7 +254,7 @@ uint16_t endian_reverse(uint16_t x) noexcept;
 uint32_t endian_reverse(uint32_t x) noexcept;
 uint64_t endian_reverse(uint64_t x) noexcept;</pre>
 <blockquote>
-  <p dir="ltr"><i>Returns:</i> <i><code>x</code></i>, with the order of its 
+  <p><i>Returns:</i> <i><code>x</code></i>, with the order of its 
   constituent bytes reversed.</p>
   <p><i>Remarks:</i> The type of <i><code>x</code></i> meets the <code>EndianReversible</code> requirements.</p>
   <p>[<i>Note:</i> The Boost.Endian library does not provide overloads for the C++ standard library 
@@ -348,6 +370,17 @@ portability for both programs and data.</p>
 
 </blockquote>
 
+<p><b>Why not use the Linux names (htobe16, htole16, be16toh, le16toh, etc.) ?</b></p>
+
+<blockquote>
+
+<p>Those names are non-standard and vary even between POSIX-like operating 
+systems. A C++ library TS was going to use those names, but found they were 
+sometimes implemented as macros. Since macros do not respect scoping and 
+namespace rules, to use them would be very error prone.</p>
+
+</blockquote>
+
 <h2><a name="Acknowledgements">Acknowledgements</a></h2><p>Tomas Puverle was instrumental
 in identifying and articulating the need to support endian conversion as separate from
 endian integer types. Phil Endecott suggested the form of the value returning signatures.
@@ -362,7 +395,8 @@ that became the starting point for <b><code>boost/endian/detail/intrinsic.hpp</c
 Pierre Talbot provided the <code>int8_t endian_reverse()</code> and templated
 <code>endian_reverse_inplace()</code> implementations.</p>
 <hr>
-<p>Last revised: <!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->26 March, 2015<!--webbot bot="Timestamp" endspan i-checksum="28922" --></p>
+<p>Last revised: 
+<!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->14 October, 2015<!--webbot bot="Timestamp" endspan i-checksum="38874" --></p>
 <p>© Copyright Beman Dawes, 2011, 2013</p>
 <p>Distributed under the Boost Software License, Version 1.0. See <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/ LICENSE_1_0.txt</a></p>
 

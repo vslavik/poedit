@@ -1,8 +1,8 @@
 # Status: being written afresh by Vladimir Prus
 
-# Copyright 2007 Vladimir Prus 
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Copyright 2007 Vladimir Prus
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 # This file is supposed to implement error reporting for Boost.Build.
 # Experience with jam version has shown that printing full backtrace
@@ -22,7 +22,7 @@ import sys
 def format(message, prefix=""):
     parts = str(message).split("\n")
     return "\n".join(prefix+p for p in parts)
-    
+
 
 class Context:
 
@@ -71,7 +71,7 @@ class ExceptionWithUserContext(Exception):
                 traceback.print_tb(self.original_tb_)
             elif self.stack_:
                 for l in traceback.format_list(self.stack_):
-                    print l,                
+                    print l,
         else:
             print "    use the '--stacktrace' option to get Python stacktrace"
         print
@@ -87,9 +87,9 @@ def user_error_checkpoint(callable):
             errors.handle_stray_exception(e)
         finally:
             errors.pop_user_context()
-            
+
     return wrapper
-                            
+
 class Errors:
 
     def __init__(self):
@@ -116,12 +116,12 @@ class Errors:
 
     def handle_stray_exception(self, e):
         raise ExceptionWithUserContext("unexpected exception", self.contexts_[:],
-                                       e, sys.exc_info()[2])    
+                                       e, sys.exc_info()[2])
     def __call__(self, message):
         self._count = self._count + 1
-        raise ExceptionWithUserContext(message, self.contexts_[:], 
+        raise ExceptionWithUserContext(message, self.contexts_[:],
                                        stack=traceback.extract_stack())
 
-        
 
-    
+
+

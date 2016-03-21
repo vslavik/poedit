@@ -164,6 +164,10 @@ int main()
         main_tasks.pop(task);
         task();
     }
+
+    cout << "Done" << std::endl;
+
+    return EXIT_SUCCESS;
 }
 
 // __________________________________________________________________ //

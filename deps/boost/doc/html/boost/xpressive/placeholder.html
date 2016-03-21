@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,11 +35,11 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">,</span> <span class="keyword">int</span> I <span class="special">=</span> <span class="number">0</span><span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="placeholder.html" title="Struct template placeholder">placeholder</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="placeholder.html#boost.xpressive.placeholderconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="placeholder.html#idp352646384-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="placeholder.html#idp352650272-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="placeholder.html#idm45506840458560-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="placeholder.html#idm45506840454672-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp531142112"></a><h2>Description</h2>
+<a name="idm45555020731312"></a><h2>Description</h2>
 <p>Use <code class="computeroutput">placeholder&lt;&gt;</code> to define a placeholder for use in semantic actions to stand in for real objects. The use of placeholders allows regular expressions with actions to be defined once and reused in many contexts to read and write from objects which were not available when the regex was defined.</p>
 <p>
 You can use <code class="computeroutput">placeholder&lt;&gt;</code> by creating an object of type <code class="computeroutput">placeholder&lt;T&gt;</code> and using that object in a semantic action exactly as you intend an object of type <code class="computeroutput">T</code> to be used. </p>
@@ -94,7 +95,7 @@ You can use <code class="computeroutput">placeholder&lt;&gt;</code> by creating 
 </pre>
 <p> </p>
 <div class="refsect2">
-<a name="idp531291680"></a><h3>Template Parameters</h3>
+<a name="idm45555020581760"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> T</pre>
@@ -107,13 +108,13 @@ You can use <code class="computeroutput">placeholder&lt;&gt;</code> by creating 
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp531298176"></a><h3>
+<a name="idm45555020575264"></a><h3>
 <a name="boost.xpressive.placeholderconstruct-copy-destruct"></a><code class="computeroutput">placeholder</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="idp352646384-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> t<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="idm45506840458560-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> t<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 
 </p>
@@ -144,7 +145,7 @@ You can use <code class="computeroutput">placeholder&lt;&gt;</code> by creating 
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="idp352650272-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a name="idm45506840454672-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
 </li>
 </ol></div>

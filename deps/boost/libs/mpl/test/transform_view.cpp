@@ -16,12 +16,22 @@
 #include <boost/mpl/max_element.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/sizeof.hpp>
+#include <boost/mpl/equal.hpp>
 #include <boost/mpl/aux_/test.hpp>
-
 
 MPL_TEST_CASE()
 {
     typedef list<int,long,char,char[50],double> types;
+    typedef list<
+        sizeof_<int>::type,
+        sizeof_<long>::type,
+        sizeof_<char>::type,
+        sizeof_<char[50]>::type,
+        sizeof_<double>::type
+    > sizes;
+
+    MPL_ASSERT(( equal< transform_view< types, sizeof_<_> >::type,sizes > ));
+
     typedef max_element<
           transform_view< types, sizeof_<_> >
         >::type iter;

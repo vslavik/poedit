@@ -19,14 +19,13 @@ In other words, inherits from __true_type only if copy constructor of `T` not
 marked with `= delete`, `T` does not derives from `boost::noncopyable` and 
 does not marked with `BOOST_MOVABLE_BUT_NOT_COPYABLE(T)`.
 
-__compat If the compiler does not support partial-specialization of class 
-templates, then this template can not be used.
+__compat This trait requires the C++11 features `decltype` and SFINAE-expression support for full support.
 
 If your compiler does not support C++11 deleted functions (`= delete`) or does not support  
 SFINAE for the deleted constructors, then derive your classes from `boost::noncopyable` or 
 mark them with `BOOST_MOVABLE_BUT_NOT_COPYABLE(T)` to show that class is noncopyable.
 
-Trait does not care about access modifiers, so if you see errors like this:
+The trait does not care about access modifiers, so if you see errors like this:
 
       'T::T(const T&)' is private
       boost/type_traits/is_copy_constructible.hpp:68:5: error: within this context

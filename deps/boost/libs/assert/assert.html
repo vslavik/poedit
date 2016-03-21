@@ -22,6 +22,7 @@
             <a href="#BOOST_ASSERT_MSG">BOOST_ASSERT_MSG</a><br />
             <a href="#BOOST_VERIFY">BOOST_VERIFY</a><br />
             <a href="#BOOST_VERIFY_MSG">BOOST_VERIFY_MSG</a><br />
+            <a href="#BOOST_ASSERT_IS_VOID">BOOST_ASSERT_IS_VOID</a><br />            
         </p>
             
 <h2><a name="BOOST_ASSERT">BOOST_ASSERT</a></h2>
@@ -113,8 +114,40 @@
 			defined, to <code>BOOST_ASSERT_MSG(expr,msg)</code> when it's not.</p>
 	    <hr />
 		<p>
+<h2><a name="BOOST_ASSERT_IS_VOID">BOOST_ASSERT_IS_VOID</a></h2>
+		<p>The macro <code>BOOST_ASSERT_IS_VOID</code> is defined when <code>BOOST_ASSERT</code> and <code>BOOST_ASSERT_MSG</code>, are expanded to <code>((void)0)</code>.
+      	This macro is useful to avoid compiling and potentially running code that is only intended to prepare data to be used in the assertion.</p>
+		<blockquote>
+		<pre>
+void MyContainer::erase(iterator i)
+{
+  //Some sanity checks, data must be ordered
+  #ifndef BOOST_ASSERT_IS_VOID
+     if(i != c.begin()){
+        iterator prev = i;
+        --prev;
+        BOOST_ASSERT(*prev < *i);
+     }
+     else if(i != c.end()){
+        iterator next = i;
+        ++next;
+        BOOST_ASSERT(*i < *next);
+     }
+  #endif
+  this->erase_impl(i);
+}
+</pre>
+		</blockquote>         
+      
+      
+		<p>&bull; By default, <code>BOOST_ASSERT_IS_VOID</code> is defined if <code>NDEBUG</code> is defined.</p>
+		<p>&bull; If the macro <code>BOOST_DISABLE_ASSERTS</code> is defined <code>BOOST_ASSERT_IS_VOID</code> is always defined.</p>
+		<p>&bull; If the macro <code>BOOST_ENABLE_ASSERT_HANDLER</code> is defined <code>BOOST_ASSERT_IS_VOID</code> is never defined.</p>
+		<p>&bull; If the macro <code>BOOST_ENABLE_ASSERT_DEBUG_HANDLER</code>, then <code>BOOST_ASSERT_IS_VOID</code> is defined when <code>NDEBUG</code> is defined.</p>
+	    <hr />
+		<p>
 			<small>Copyright © 2002, 2007, 2014 by Peter Dimov.&nbsp; Copyright © 2011 
-        by Beman Dawes. Distributed under the Boost Software 
+        by Beman Dawes.&nbsp; Copyright © 2015 by Ion Gaztanaga. Distributed under the Boost Software 
 				License, Version 1.0. See accompanying file <a href="../../LICENSE_1_0.txt">LICENSE_1_0.txt</a>
 				or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">http://www.boost.org/LICENSE_1_0.txt</a>.</small></p>
 	</body>

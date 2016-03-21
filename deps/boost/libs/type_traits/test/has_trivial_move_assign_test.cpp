@@ -13,6 +13,38 @@
 #  include <boost/type_traits/has_trivial_move_assign.hpp>
 #endif
 
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+
+struct non_copyable_movable
+{
+   int val;
+   non_copyable_movable(int);
+   non_copyable_movable(const non_copyable_movable&) = delete;
+   non_copyable_movable& operator=(const non_copyable_movable&) = delete;
+   //non_copyable_movable(non_copyable_movable&&) = default;
+#if BOOST_WORKAROUND(BOOST_MSVC, <= 1800) || BOOST_WORKAROUND(BOOST_GCC_VERSION, < 40500)
+   non_copyable_movable& operator=(non_copyable_movable&& o) 
+   {
+      val = std::move(o.val);
+      return *this;
+   }
+#else
+   non_copyable_movable& operator=(non_copyable_movable&&) = default;
+#endif
+};
+
+struct copyable_non_moveable
+{
+   int val;
+   copyable_non_moveable(int);
+   copyable_non_moveable(const copyable_non_moveable&) = default;
+   copyable_non_moveable& operator=(const copyable_non_moveable&) = default;
+   copyable_non_moveable(copyable_non_moveable&&) = delete;
+   copyable_non_moveable& operator=(copyable_non_moveable&&) = delete;
+};
+
+#endif
+
 TT_TEST_BEGIN(has_trivial_move_assign)
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<bool>::value, true);
@@ -181,9 +213,10 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int&>::value, false)
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int&&>::value, false);
 #endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<const int&>::value, false);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int[2]>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int[3][2]>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int[2][4][5][6][3]>::value, true);
+// array types are not assignable:
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int[2]>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int[3][2]>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<int[2][4][5][6][3]>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<empty_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<void>::value, false);
@@ -204,6 +237,11 @@ BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<wrap<trivial_ex
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<test_abc1>::value, false);
 
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<non_copyable_movable>::value, true, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_trivial_move_assign<copyable_non_moveable>::value, false);
+#endif
+   
 TT_TEST_END
 
 

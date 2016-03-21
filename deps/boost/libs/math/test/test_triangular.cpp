@@ -98,31 +98,31 @@ void test_spots(RealType)
 
   if (std::numeric_limits<RealType>::has_quiet_NaN == true)
   {
-  BOOST_CHECK_THROW( // duff parameter lower.
+  BOOST_MATH_CHECK_THROW( // duff parameter lower.
     triangular_distribution<RealType>(static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN()), 0, 0),
     std::domain_error);
 
-  BOOST_CHECK_THROW( // duff parameter mode.
+  BOOST_MATH_CHECK_THROW( // duff parameter mode.
     triangular_distribution<RealType>(0, static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN()), 0),
     std::domain_error);
 
-  BOOST_CHECK_THROW( // duff parameter upper.
+  BOOST_MATH_CHECK_THROW( // duff parameter upper.
     triangular_distribution<RealType>(0, 0, static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN())),
     std::domain_error);
   } // quiet_NaN tests.
 
-  BOOST_CHECK_THROW( // duff parameters upper < lower.
+  BOOST_MATH_CHECK_THROW( // duff parameters upper < lower.
     triangular_distribution<RealType>(1, 0, -1),
     std::domain_error);
 
-  BOOST_CHECK_THROW( // duff parameters upper == lower.
+  BOOST_MATH_CHECK_THROW( // duff parameters upper == lower.
     triangular_distribution<RealType>(0, 0, 0),
     std::domain_error);
-  BOOST_CHECK_THROW( // duff parameters mode < lower.
+  BOOST_MATH_CHECK_THROW( // duff parameters mode < lower.
     triangular_distribution<RealType>(0, -1, 1),
     std::domain_error);
 
-  BOOST_CHECK_THROW( // duff parameters mode > upper.
+  BOOST_MATH_CHECK_THROW( // duff parameters mode > upper.
     triangular_distribution<RealType>(0, 2, 1),
     std::domain_error);
 
@@ -223,22 +223,22 @@ void test_spots(RealType)
     // Note that these assume that  BOOST_MATH_OVERFLOW_ERROR_POLICY is NOT throw_on_error.
     // #define BOOST_MATH_OVERFLOW_ERROR_POLICY == throw_on_error would give a throw here.
     // #define BOOST_MATH_DOMAIN_ERROR_POLICY == throw_on_error IS defined, so the throw path
-    // of error handling is tested below with BOOST_CHECK_THROW tests.
+    // of error handling is tested below with BOOST_MATH_CHECK_THROW tests.
 
-    BOOST_CHECK_THROW( // x == infinity NOT OK.
+    BOOST_MATH_CHECK_THROW( // x == infinity NOT OK.
       pdf(triangular_distribution<RealType>(0, 0, 1), static_cast<RealType>(std::numeric_limits<RealType>::infinity())),
       std::domain_error);
 
-    BOOST_CHECK_THROW( // x == minus infinity not OK too.
+    BOOST_MATH_CHECK_THROW( // x == minus infinity not OK too.
       pdf(triangular_distribution<RealType>(0, 0, 1), static_cast<RealType>(-std::numeric_limits<RealType>::infinity())),
       std::domain_error);
   }
   if(std::numeric_limits<RealType>::has_quiet_NaN)
   { // BOOST_CHECK tests for NaN using std::numeric_limits<>::has_quiet_NaN() - should throw.
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
       pdf(triangular_distribution<RealType>(0, 0, 1), static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN())),
       std::domain_error);
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
       pdf(triangular_distribution<RealType>(0, 0, 1), static_cast<RealType>(-std::numeric_limits<RealType>::quiet_NaN())),
       std::domain_error);
   } // test for x = NaN using std::numeric_limits<>::quiet_NaN()
@@ -432,46 +432,96 @@ void test_spots(RealType)
     boost::math::tools::epsilon<RealType>(),
     static_cast<RealType>(boost::math::tools::epsilon<double>())) * 10; // 10 eps as a fraction.
   cout << "Tolerance (as fraction) for type " << typeid(RealType).name()  << " is " << tolerance << "." << endl;
-  triangular_distribution<RealType> tridef; // (-1, 0, 1) // default
-  RealType x = static_cast<RealType>(0.5);
-  using namespace std; // ADL of std names.
-  // mean:
-  BOOST_CHECK_CLOSE_FRACTION(
-    mean(tridef), static_cast<RealType>(0), tolerance);
-  // variance:
-  BOOST_CHECK_CLOSE_FRACTION(
-    variance(tridef), static_cast<RealType>(0.16666666666666666666666666666666666666666667L), tolerance);
-  // was 0.0833333333333333333333333333333333333333333L
+  
+    triangular_distribution<RealType> tridef; // (-1, 0, 1) // Default distribution.
+    RealType x = static_cast<RealType>(0.5);
+    using namespace std; // ADL of std names.
+    // mean:
+    BOOST_CHECK_CLOSE_FRACTION(
+      mean(tridef), static_cast<RealType>(0), tolerance);
+    // variance:
+    BOOST_CHECK_CLOSE_FRACTION(
+      variance(tridef), static_cast<RealType>(0.16666666666666666666666666666666666666666667L), tolerance);
+    // was 0.0833333333333333333333333333333333333333333L
 
-  // std deviation:
-  BOOST_CHECK_CLOSE_FRACTION(
-    standard_deviation(tridef), sqrt(variance(tridef)), tolerance);
-  // hazard:
-  BOOST_CHECK_CLOSE_FRACTION(
-    hazard(tridef, x), pdf(tridef, x) / cdf(complement(tridef, x)), tolerance);
-  // cumulative hazard:
-  BOOST_CHECK_CLOSE_FRACTION(
-    chf(tridef, x), -log(cdf(complement(tridef, x))), tolerance);
-  // coefficient_of_variation:
-  if (mean(tridef) != 0)
+    // std deviation:
+    BOOST_CHECK_CLOSE_FRACTION(
+      standard_deviation(tridef), sqrt(variance(tridef)), tolerance);
+    // hazard:
+    BOOST_CHECK_CLOSE_FRACTION(
+      hazard(tridef, x), pdf(tridef, x) / cdf(complement(tridef, x)), tolerance);
+    // cumulative hazard:
+    BOOST_CHECK_CLOSE_FRACTION(
+      chf(tridef, x), -log(cdf(complement(tridef, x))), tolerance);
+    // coefficient_of_variation:
+    if (mean(tridef) != 0)
+    {
+      BOOST_CHECK_CLOSE_FRACTION(
+        coefficient_of_variation(tridef), standard_deviation(tridef) / mean(tridef), tolerance);
+    }
+    // mode:
+    BOOST_CHECK_CLOSE_FRACTION(
+      mode(tridef), static_cast<RealType>(0), tolerance);
+    // skewness:
+    BOOST_CHECK_CLOSE_FRACTION(
+      median(tridef), static_cast<RealType>(0), tolerance);
+    // https://reference.wolfram.com/language/ref/Skewness.html  skewness{-1, 0, +1} = 0
+    // skewness[triangulardistribution{-1, 0, +1}] does not compute a result.
+    // skewness[triangulardistribution{0, +1}] result == 0
+    // skewness[normaldistribution{0,1}] result == 0
+
+    BOOST_CHECK_EQUAL(
+      skewness(tridef), static_cast<RealType>(0));
+    // kurtosis:
+    BOOST_CHECK_CLOSE_FRACTION(
+      kurtosis_excess(tridef), kurtosis(tridef) - static_cast<RealType>(3L), tolerance);
+    // kurtosis excess = kurtosis - 3;
+    BOOST_CHECK_CLOSE_FRACTION(
+      kurtosis_excess(tridef), static_cast<RealType>(-0.6), tolerance); // Constant value of -3/5 for all distributions.
+
   {
-  BOOST_CHECK_CLOSE_FRACTION(
-    coefficient_of_variation(tridef), standard_deviation(tridef) / mean(tridef), tolerance);
-  }
-  // mode:
-  BOOST_CHECK_CLOSE_FRACTION(
-    mode(tridef), static_cast<RealType>(0), tolerance);
-  // skewness:
-  BOOST_CHECK_CLOSE_FRACTION(
-    median(trim12), static_cast<RealType>(-0.13397459621556151), tolerance);
-  BOOST_CHECK_EQUAL(
-    skewness(tridef), static_cast<RealType>(0));
-  // kurtosis:
-  BOOST_CHECK_CLOSE_FRACTION(
-    kurtosis_excess(tridef), kurtosis(tridef) - static_cast<RealType>(3L), tolerance);
-  // kurtosis excess = kurtosis - 3;
-  BOOST_CHECK_CLOSE_FRACTION(
-    kurtosis_excess(tridef), static_cast<RealType>(-0.6), tolerance); // for all distributions.
+    triangular_distribution<RealType> tri01(0, 1, 1); //  Asymmetric 0, 1, 1 distribution.
+    RealType x = static_cast<RealType>(0.5);
+    using namespace std; // ADL of std names.
+                         // mean:
+    BOOST_CHECK_CLOSE_FRACTION(
+      mean(tri01), static_cast<RealType>(0.66666666666666666666666666666666666666666666666667L), tolerance);
+    // variance: N[variance[triangulardistribution{0, 1}, 1], 50]
+    BOOST_CHECK_CLOSE_FRACTION(
+      variance(tri01), static_cast<RealType>(0.055555555555555555555555555555555555555555555555556L), tolerance);
+    // std deviation:
+    BOOST_CHECK_CLOSE_FRACTION(
+      standard_deviation(tri01), sqrt(variance(tri01)), tolerance);
+    // hazard:
+    BOOST_CHECK_CLOSE_FRACTION(
+      hazard(tri01, x), pdf(tri01, x) / cdf(complement(tri01, x)), tolerance);
+    // cumulative hazard:
+    BOOST_CHECK_CLOSE_FRACTION(
+      chf(tri01, x), -log(cdf(complement(tri01, x))), tolerance);
+    // coefficient_of_variation:
+    if (mean(tri01) != 0)
+    {
+      BOOST_CHECK_CLOSE_FRACTION(
+        coefficient_of_variation(tri01), standard_deviation(tri01) / mean(tri01), tolerance);
+    }
+    // mode:
+    BOOST_CHECK_CLOSE_FRACTION(
+      mode(tri01), static_cast<RealType>(1), tolerance);
+    // skewness:
+    BOOST_CHECK_CLOSE_FRACTION(
+      median(tri01), static_cast<RealType>(0.70710678118654752440084436210484903928483593768847L), tolerance);
+
+    // https://reference.wolfram.com/language/ref/Skewness.html
+    // N[skewness[triangulardistribution{0, 1}, 1], 50]
+    BOOST_CHECK_CLOSE_FRACTION(
+      skewness(tri01), static_cast<RealType>(-0.56568542494923801952067548968387923142786875015078L), tolerance);
+    // kurtosis:
+    BOOST_CHECK_CLOSE_FRACTION(
+      kurtosis_excess(tri01), kurtosis(tri01) - static_cast<RealType>(3L), tolerance);
+    // kurtosis excess = kurtosis - 3;
+    BOOST_CHECK_CLOSE_FRACTION(
+      kurtosis_excess(tri01), static_cast<RealType>(-0.6), tolerance); // Constant value of -3/5 for all distributions.
+  } // tri01 tests
 
   if(std::numeric_limits<RealType>::has_infinity)
   { // BOOST_CHECK tests for infinity using std::numeric_limits<>::infinity()
@@ -480,7 +530,7 @@ void test_spots(RealType)
     // Note that these assume that BOOST_MATH_OVERFLOW_ERROR_POLICY is NOT throw_on_error.
     // #define BOOST_MATH_OVERFLOW_ERROR_POLICY == throw_on_error would give a throw here.
     // #define BOOST_MATH_DOMAIN_ERROR_POLICY == throw_on_error IS defined, so the throw path
-    // of error handling is tested below with BOOST_CHECK_THROW tests.
+    // of error handling is tested below with BOOST_MATH_CHECK_THROW tests.
 
     using boost::math::policies::policy;
     using boost::math::policies::domain_error;
@@ -500,9 +550,9 @@ void test_spots(RealType)
     // value of std::numeric_limits<RealType>::infinity() is zero, so FPclassify is zero,
     // so (boost::math::isfinite)(std::numeric_limits<RealType>::infinity()) does not detect infinity.
     // so these tests would never throw.
-    //BOOST_CHECK_THROW(pdf(tridef, std::numeric_limits<RealType>::infinity()),  std::domain_error);
-    //BOOST_CHECK_THROW(pdf(tridef, std::numeric_limits<RealType>::quiet_NaN()),  std::domain_error);
-    // BOOST_CHECK_THROW(pdf(tridef, boost::math::tools::max_value<RealType>() * 2),  std::domain_error); // Doesn't throw.
+    //BOOST_MATH_CHECK_THROW(pdf(tridef, std::numeric_limits<RealType>::infinity()),  std::domain_error);
+    //BOOST_MATH_CHECK_THROW(pdf(tridef, std::numeric_limits<RealType>::quiet_NaN()),  std::domain_error);
+    // BOOST_MATH_CHECK_THROW(pdf(tridef, boost::math::tools::max_value<RealType>() * 2),  std::domain_error); // Doesn't throw.
     BOOST_CHECK_EQUAL(pdf(tridef, boost::math::tools::max_value<RealType>()), 0);
   }
   // Special cases:
@@ -522,10 +572,10 @@ void test_spots(RealType)
   // Error checks:
   if(std::numeric_limits<RealType>::has_quiet_NaN)
   { // BOOST_CHECK tests for quiet_NaN (not for real_concept, for example - see notes above).
-    BOOST_CHECK_THROW(triangular_distribution<RealType>(0, std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
-    BOOST_CHECK_THROW(triangular_distribution<RealType>(0, -std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
+    BOOST_MATH_CHECK_THROW(triangular_distribution<RealType>(0, std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
+    BOOST_MATH_CHECK_THROW(triangular_distribution<RealType>(0, -std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
   }
-  BOOST_CHECK_THROW(triangular_distribution<RealType>(1, 0), std::domain_error); // lower > upper!
+  BOOST_MATH_CHECK_THROW(triangular_distribution<RealType>(1, 0), std::domain_error); // lower > upper!
 
   check_out_of_range<triangular_distribution<RealType> >(-1, 0, 1);
 } // template <class RealType>void test_spots(RealType)
@@ -679,7 +729,7 @@ BOOST_AUTO_TEST_CASE( test_main )
      std::cout << "<note>The long double tests have been disabled on this platform "
         "either because the long double overloads of the usual math functions are "
         "not available at all, or because they are too inaccurate for these tests "
-        "to pass.</note>" << std::cout;
+        "to pass.</note>" << std::endl;
   #endif
 
   

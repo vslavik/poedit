@@ -16,7 +16,7 @@ new max_digits10.
 This is needed to produce or select a macro to avoid compilation failure in Boost.Test
 for platforms that do not include either or both of these.
 
-BOOST_NO_NUMERIC_LIMITS_LOWEST is suitable but deprecated.
+BOOST_NO_CXX11_NUMERIC_LIMITS is suitable.
 
 
 [Boost C++ Libraries]

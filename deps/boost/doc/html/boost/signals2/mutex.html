@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,12 +35,12 @@
 </span>
 <span class="keyword">class</span> <a class="link" href="mutex.html" title="Class mutex">mutex</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
-  <span class="keyword">void</span> <a class="link" href="mutex.html#idp89425232-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="mutex.html#idp216034704-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="mutex.html#idp142727824-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="mutex.html#idm45507038541024-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="mutex.html#idm45507047265360-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="mutex.html#idm45507106472528-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp421932224"></a><h2>Description</h2>
+<a name="idm45555131428144"></a><h2>Description</h2>
 <p>
             The <code class="computeroutput">mutex</code> class implements the <code class="computeroutput">Lockable</code>
             concept of Boost.Thread, and is the default <code class="computeroutput">Mutex</code> template parameter
@@ -63,10 +64,10 @@
             use the <a class="link" href="dummy_mutex.html" title="Class dummy_mutex">signals2::dummy_mutex</a> class as the <code class="computeroutput">Mutex</code>
             template type for your signal.
           </p>
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp89425232-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507038541024-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Locks the mutex.
               </p>
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp216034704-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45507047265360-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Makes a non-blocking attempt to lock the mutex.
               </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -79,7 +80,7 @@
 <td><p><code class="computeroutput">true</code> on success.</p></td>
 </tr></tbody>
 </table></div>
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp142727824-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507106472528-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Unlocks the mutex.
               </p>
 </div>

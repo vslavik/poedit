@@ -8,6 +8,7 @@
 // (See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 using ::boost::math::concepts::real_concept;
 
@@ -405,7 +406,7 @@ void test_spots(RealType)
        kurtosis(dist2)
        , static_cast<RealType>(6272) * 12 / 3456 + 3, tol2);
     // special cases:
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           fisher_f_distribution<RealType>(static_cast<RealType>(1), static_cast<RealType>(1)),
           static_cast<RealType>(0)), std::overflow_error
@@ -435,67 +436,67 @@ void test_spots(RealType)
        cdf(complement(fisher_f_distribution<RealType>(3, 3), static_cast<RealType>(0)))
        , static_cast<RealType>(1));
 
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           fisher_f_distribution<RealType>(-1, 2),
           static_cast<RealType>(1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           fisher_f_distribution<RealType>(1, -1),
           static_cast<RealType>(1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           fisher_f_distribution<RealType>(8, 2),
           static_cast<RealType>(-1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(
           fisher_f_distribution<RealType>(-1, 1),
           static_cast<RealType>(1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(
           fisher_f_distribution<RealType>(8, 4),
           static_cast<RealType>(-1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(complement(
           fisher_f_distribution<RealType>(-1, 2),
           static_cast<RealType>(1))), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(complement(
           fisher_f_distribution<RealType>(8, 4),
           static_cast<RealType>(-1))), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(
           fisher_f_distribution<RealType>(-1, 2),
           static_cast<RealType>(0.5)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(
           fisher_f_distribution<RealType>(8, 8),
           static_cast<RealType>(-1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(
           fisher_f_distribution<RealType>(8, 8),
           static_cast<RealType>(1.1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(complement(
           fisher_f_distribution<RealType>(2, -1),
           static_cast<RealType>(0.5))), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(complement(
           fisher_f_distribution<RealType>(8, 8),
           static_cast<RealType>(-1))), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(complement(
           fisher_f_distribution<RealType>(8, 8),
           static_cast<RealType>(1.1))), std::domain_error

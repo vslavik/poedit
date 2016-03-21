@@ -15,6 +15,7 @@
 #include "rules.h"
 #include "strings.h"
 #include "variable.h"
+#include "output.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +32,7 @@ static void check_defined( LIST * class_names )
     {
         if ( !hash_find( classes, list_item( iter ) ) )
         {
-            printf( "Class %s is not defined\n", object_str( list_item( iter ) )
+            out_printf( "Class %s is not defined\n", object_str( list_item( iter ) )
                 );
             abort();
         }
@@ -141,7 +142,7 @@ OBJECT * make_class_module( LIST * xname, LIST * bases, FRAME * frame )
     }
     else
     {
-        printf( "Class %s already defined\n", object_str( list_front( xname ) )
+        out_printf( "Class %s already defined\n", object_str( list_front( xname ) )
             );
         abort();
     }

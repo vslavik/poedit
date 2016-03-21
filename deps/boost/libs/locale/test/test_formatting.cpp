@@ -39,9 +39,21 @@ using namespace boost::locale;
 #endif
 
 #ifdef TEST_DEBUG
-#undef BOOST_HAS_CHAR16_T
-#undef BOOST_HAS_CHAR32_T
-#define TESTEQ(x,y) do { std::cerr << "["<<x << "]!=\n[" << y <<"]"<< std::endl; TEST((x)==(y)); } while(0)
+#undef BOOST_LOCALE_ENABLE_CHAR16_T
+#undef BOOST_LOCALE_ENABLE_CHAR32_T
+template<typename T>
+void print_diff(T const &,T const &,int)
+{
+}
+template<>
+void print_diff(std::string const &l,std::string const &r,int line)
+{
+    if(l!=r) {
+        std::cerr << "----[" << l <<"]!=\n----["<<r<<"] in " << line << std::endl;
+    }
+}
+
+#define TESTEQ(x,y) do { print_diff((x),(y),__LINE__); TEST((x)==(y)); } while(0)
 #else
 #define TESTEQ(x,y) TEST((x)==(y))
 #endif
@@ -53,6 +65,40 @@ do{ \
     ss << manip << value; \
     TESTEQ(ss.str(),to_correct_string<CharType>(expected,loc)); \
 }while(0)
+
+#ifndef _LIBCPP_VERSION
+static bool parsing_fails()
+{
+    return true;
+}
+#else
+static bool parsing_fails()
+{
+    static bool checked=false;
+    static bool fails;
+    if(!checked) {
+        try {
+            std::istringstream ss("x");
+            ss.exceptions(std::ios_base::failbit);
+            int x;
+            ss>>x;
+            fails =false;
+        }
+        catch(std::ios_base::failure const &) {
+            fails=true;
+        }
+        catch(...) {
+            fails=false;
+        }
+        checked=true;
+        if(!fails) {
+            std::cerr << "!!! Warning: libc++ library does not throw an exception on failbit !!!" << std::endl;
+        }
+    }
+    return fails;
+}
+#endif
+
 
 #define TEST_NOPAR(manip,actual,type)                           \
 do{                                                             \
@@ -66,7 +112,7 @@ do{                                                             \
         ss >> manip >> v ;                                      \
         TEST(ss.fail());                                        \
     }                                                           \
-    {                                                           \
+    if(parsing_fails()){                                        \
         std::basic_istringstream<CharType> ss;                  \
         ss.imbue(loc);                                          \
         ss.str(act);                                            \
@@ -288,25 +334,40 @@ void test_manip(std::string e_charset="UTF-8")
     TEST_FP2(as::time,                as::time_zone("GMT+01:00"),a_datetime,"4:33:13 PM",time_t,a_time+a_timesec);
     TEST_FP3(as::time,as::time_short ,as::time_zone("GMT+01:00"),a_datetime,"4:33 PM",time_t,a_time);
     TEST_FP3(as::time,as::time_medium,as::time_zone("GMT+01:00"),a_datetime,"4:33:13 PM",time_t,a_time+a_timesec);
-    TEST_FP3(as::time,as::time_long  ,as::time_zone("GMT+01:00"),a_datetime,"4:33:13 PM GMT+01:00",time_t,a_time+a_timesec);
+
+#if U_ICU_VERSION_MAJOR_NUM >= 52
+#define GMT_P100 "GMT+1"
+#else
+#define GMT_P100 "GMT+01:00"
+#endif
+
+#if U_ICU_VERSION_MAJOR_NUM >= 50
+#define PERIOD "," 
+#define ICUAT " at"
+#else
+#define PERIOD ""
+#define ICUAT ""
+#endif
+
+    TEST_FP3(as::time,as::time_long  ,as::time_zone("GMT+01:00"),a_datetime,"4:33:13 PM "  GMT_P100,time_t,a_time+a_timesec);
     #if BOOST_ICU_VER == 308 && defined(__CYGWIN__)
     // Known faliture ICU issue
     #else
     TEST_FP3(as::time,as::time_full  ,as::time_zone("GMT+01:00"),a_datetime,"4:33:13 PM GMT+01:00",time_t,a_time+a_timesec);
     #endif
 
-    TEST_FP2(as::datetime,                                as::gmt,a_datetime,"Feb 5, 1970 3:33:13 PM",time_t,a_datetime);
-    TEST_FP4(as::datetime,as::date_short ,as::time_short ,as::gmt,a_datetime,"2/5/70 3:33 PM",time_t,a_date+a_time);
-    TEST_FP4(as::datetime,as::date_medium,as::time_medium,as::gmt,a_datetime,"Feb 5, 1970 3:33:13 PM",time_t,a_datetime);
+    TEST_FP2(as::datetime,                                as::gmt,a_datetime,"Feb 5, 1970" PERIOD  " 3:33:13 PM",time_t,a_datetime);
+    TEST_FP4(as::datetime,as::date_short ,as::time_short ,as::gmt,a_datetime,"2/5/70" PERIOD " 3:33 PM",time_t,a_date+a_time);
+    TEST_FP4(as::datetime,as::date_medium,as::time_medium,as::gmt,a_datetime,"Feb 5, 1970" PERIOD " 3:33:13 PM",time_t,a_datetime);
     #if BOOST_ICU_VER >= 408
-    TEST_FP4(as::datetime,as::date_long  ,as::time_long  ,as::gmt,a_datetime,"February 5, 1970 3:33:13 PM GMT",time_t,a_datetime);
+    TEST_FP4(as::datetime,as::date_long  ,as::time_long  ,as::gmt,a_datetime,"February 5, 1970" ICUAT " 3:33:13 PM GMT",time_t,a_datetime);
         #if BOOST_ICU_EXACT_VER != 40800
             // know bug #8675
-            TEST_FP4(as::datetime,as::date_full  ,as::time_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970 3:33:13 PM GMT",time_t,a_datetime);
+            TEST_FP4(as::datetime,as::date_full  ,as::time_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970" ICUAT " 3:33:13 PM GMT",time_t,a_datetime);
         #endif
     #else
-    TEST_FP4(as::datetime,as::date_long  ,as::time_long  ,as::gmt,a_datetime,"February 5, 1970 3:33:13 PM GMT+00:00",time_t,a_datetime);
-    TEST_FP4(as::datetime,as::date_full  ,as::time_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970 3:33:13 PM GMT+00:00",time_t,a_datetime);
+    TEST_FP4(as::datetime,as::date_long  ,as::time_long  ,as::gmt,a_datetime,"February 5, 1970" PERIOD " 3:33:13 PM GMT+00:00",time_t,a_datetime);
+    TEST_FP4(as::datetime,as::date_full  ,as::time_full  ,as::gmt,a_datetime,"Thursday, February 5, 1970" PERIOD " 3:33:13 PM GMT+00:00",time_t,a_datetime);
     #endif
 
     time_t now=time(0);
@@ -330,7 +391,7 @@ void test_manip(std::string e_charset="UTF-8")
     std::string result[]= { 
         "Thu","Thursday","Feb","February",  // aAbB
         #if BOOST_ICU_VER >= 408
-        "Thursday, February 5, 1970 3:33:13 PM GMT", // c
+        "Thursday, February 5, 1970" ICUAT  " 3:33:13 PM GMT", // c
         #else
         "Thursday, February 5, 1970 3:33:13 PM GMT+00:00", // c
         #endif
@@ -433,7 +494,7 @@ void test_format(std::string charset="UTF-8")
     time_t a_timesec = 13;
     time_t a_datetime = a_date + a_time + a_timesec;
     FORMAT("{1,date,gmt};{1,time,gmt};{1,datetime,gmt};{1,dt,gmt}",a_datetime,
-            "Feb 5, 1970;3:33:13 PM;Feb 5, 1970 3:33:13 PM;Feb 5, 1970 3:33:13 PM");
+            "Feb 5, 1970;3:33:13 PM;Feb 5, 1970" PERIOD " 3:33:13 PM;Feb 5, 1970" PERIOD " 3:33:13 PM");
     #if BOOST_ICU_VER >= 408
     FORMAT("{1,time=short,gmt};{1,time=medium,gmt};{1,time=long,gmt};{1,date=full,gmt}",a_datetime,
             "3:33 PM;3:33:13 PM;3:33:13 PM GMT;Thursday, February 5, 1970");
@@ -469,13 +530,13 @@ int main()
         test_manip<wchar_t>();
         test_format<wchar_t>();
 
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         std::cout << "Testing char16_t" << std::endl;
         test_manip<char16_t>();
         test_format<char16_t>();
         #endif
 
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         std::cout << "Testing char32_t" << std::endl;
         test_manip<char32_t>();
         test_format<char32_t>();

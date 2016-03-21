@@ -17,14 +17,14 @@ If a type has a trivial move assignment-operator then the operator has the same 
 as copying the bits of one object to the other: 
 calls to the operator can be safely replaced with a call to `memcpy`.
 
-__compat If the compiler does not support partial-specialization of class 
-templates, then this template can not be used with function types.
-
-Without some (as yet unspecified) help from the compiler, 
+__compat Without some (as yet unspecified) help from the compiler, 
 has_trivial_move_assign will never report that a user-defined class or struct has a 
-trivial constructor; this is always safe, if possibly sub-optimal.  
-Currently (February 2013) compilers have no necessary __intrinsics to ensure that this 
-trait "just works".  You may also test to see if the necessary __intrinsics are available 
+trivial move assign; this is always safe, if possibly sub-optimal. 
+In addition, in order to correctly handle private or deleted move assignment
+operators then c++11's `decltype` is required. 
+Currently (June 2015) compilers that have the necessary __intrinsics to ensure that this 
+trait "just works" include Clang, GCC-5.1 and MSVC-12.0.  
+You may also test to see if the necessary __intrinsics are available 
 by checking to see if the macro `BOOST_HAS_TRIVIAL_MOVE_ASSIGN` is defined.
 
 

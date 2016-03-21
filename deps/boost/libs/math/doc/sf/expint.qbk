@@ -18,7 +18,7 @@
    
    }} // namespaces
    
-The return type of these functions is computed using the __arg_pomotion_rules:
+The return type of these functions is computed using the __arg_promotion_rules:
 the return type is `double` if T is an integer type, and T otherwise.
 
 [optional_policy]
@@ -42,23 +42,11 @@ of z:
 
 The following table shows the peak errors (in units of epsilon) 
 found on various platforms with various floating point types, 
-along with comparisons to the __cephes library.
+along with comparisons to other libraries.
 Unless otherwise specified any floating point type that is narrower
 than the one shown will have __zero_error.
 
-[table Errors In the Function expint(n, z)
-[[Significand Size] [Platform and Compiler] [En][E1]]
-[[53] [Win32, Visual C++ 8] [Peak=7.1 Mean=1.8
-
-__cephes Peak=5.1 Mean=1.3
-]
-[Peak=0.99 Mean=0.5
-
-__cephes Peak=3.1 Mean=1.1]]
-[[64] [RedHat Linux IA_EM64, gcc-4.1] [Peak=9.9 Mean=2.1]  [Peak=0.97 Mean=0.4]]
-[[64] [Redhat Linux IA64, gcc-4.1] [Peak=9.9 Mean=2.1]  [Peak=0.97 Mean=0.4]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=23.3 Mean=3.7]  [Peak=1.6 Mean=0.5]]
-]
+[table_expint_En_]
 
 [h4 Testing]
 
@@ -119,7 +107,7 @@ is used.
    
    }} // namespaces
    
-The return type of these functions is computed using the __arg_pomotion_rules:
+The return type of these functions is computed using the __arg_promotion_rules:
 the return type is `double` if T is an integer type, and T otherwise.
 
 [optional_policy]
@@ -147,18 +135,7 @@ along with comparisons to Cody's SPECFUN implementation and the __gsl library.
 Unless otherwise specified any floating point type that is narrower
 than the one shown will have __zero_error.
 
-[table Errors In the Function expint(z)
-[[Significand Size] [Platform and Compiler] [Error]]
-[[53] [Win32, Visual C++ 8] [Peak=2.4 Mean=0.6
-
-GSL Peak=8.9 Mean=0.7 
-
-SPECFUN (Cody) Peak=2.5 Mean=0.6
-]]
-[[64] [RedHat Linux IA_EM64, gcc-4.1] [Peak=5.1 Mean=0.8]]
-[[64] [Redhat Linux IA64, gcc-4.1] [Peak=5.0 Mean=0.8]  ]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=1.9 Mean=0.63]]
-]
+[table_expint_Ei_]
 
 It should be noted that all three libraries tested above 
 offer sub-epsilon precision over most of their range.

@@ -6,9 +6,9 @@
  /]
 
 [library Boost.Interprocess
-    [quickbook 1.4]
+    [quickbook 1.5]
     [authors [Gaztanaga, Ion]]
-    [copyright 2005-2012 Ion Gaztanaga]
+    [copyright 2005-2015 Ion Gaztanaga]
     [id interprocess]
     [dirname interprocess]
     [purpose Interprocess communication utilities]
@@ -6732,10 +6732,26 @@ thank them:
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_60_00 Boost 1.60 Release]
+*  Improved [classref boost::interprocess::offset_ptr offset_ptr] performance and removed any undefined behaviour. No
+   special cases needed for different compilers.
+*  Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/11699 ( Trac #11699 ( (['"Forward declarations of std templates causes stack corruption under Visual Studio 2015"])].
+
+[endsect]
+
+[section:release_notes_boost_1_59_00 Boost 1.59 Release]
+*  Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/5139 ( Trac #5139 ( (['"Initial Stream Position in Boost.Interprocess.Vectorstream"])].
+   * [@https://github.com/boostorg/interprocess/pull/19 GitHub Pull #19 (['"Fix exception visibility"])]. Thanks to Romain-Geissler.
+
+[endsect]
+
 [section:release_notes_boost_1_58_00 Boost 1.58 Release]
 *  Reduced some compile-time dependencies. Updated to Boost.Container changes.
 *  Fixed bugs:
    * [@https://github.com/boostorg/interprocess/pull/13 GitHub Pull #13 (['"haiku: we don't have XSI shared memory, so don't try to use it"])].
+     Thanks to Jessica Hamilton.
 
 [endsect]
 

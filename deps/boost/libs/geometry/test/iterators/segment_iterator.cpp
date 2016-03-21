@@ -45,6 +45,8 @@
 
 #include <boost/geometry/iterators/segment_iterator.hpp>
 
+#include <test_common/with_pointer.hpp>
+#include <test_geometries/copy_on_dereference_geometries.hpp>
 
 namespace ba = ::boost::assign;
 namespace bg = ::boost::geometry;
@@ -70,6 +72,9 @@ typedef std::vector<tuple_linestring_type> tuple_multi_linestring_type;
 BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 BOOST_GEOMETRY_REGISTER_LINESTRING(tuple_linestring_type)
 BOOST_GEOMETRY_REGISTER_MULTI_LINESTRING(tuple_multi_linestring_type)
+
+BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::vector)
+
 
 template <typename Geometry>
 inline Geometry from_wkt(std::string const& wkt)
@@ -117,14 +122,14 @@ struct equals
         {
             ++num_elems;
         }
-        BOOST_CHECK( size == num_elems );
+        BOOST_CHECK(size == num_elems);
 
         num_elems = 0;
         for (Iterator it = end; it != begin; --it)
         {
             ++num_elems;
         }
-        BOOST_CHECK( size == num_elems );
+        BOOST_CHECK(size == num_elems);
 
         return num_elems;
     }
@@ -136,7 +141,7 @@ struct equals
         std::size_t num_points1 = number_of_elements(begin1, end1);
         std::size_t num_points2 = number_of_elements(begin2, end2);
 
-        if ( num_points1 != num_points2 )
+        if (num_points1 != num_points2)
         {
             return false;
         }
@@ -145,7 +150,7 @@ struct equals
         Iterator2 it2 = begin2;
         for (; it1 != end1; ++it1, ++it2)
         {
-            if ( !bg::equals(*it1, *it2) )
+            if (! bg::equals(*it1, *it2))
             {
                 return false;
             }
@@ -173,15 +178,15 @@ struct test_segment_iterator_of_geometry
 
         if (check_num_segments)
         {
-            BOOST_CHECK( std::size_t(std::distance(begin, end))
-                         ==
-                         bg::num_segments(geometry) );
+            BOOST_CHECK(std::size_t(std::distance(begin, end))
+                        ==
+                        bg::num_segments(geometry));
         }
 
-        BOOST_CHECK( equals::apply(begin, end,
-                                   bg::segments_begin(segment_range),
-                                   bg::segments_end(segment_range))
-                     );
+        BOOST_CHECK(equals::apply(begin, end,
+                                  bg::segments_begin(segment_range),
+                                  bg::segments_end(segment_range))
+                    );
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
         std::string closure
@@ -220,8 +225,20 @@ struct test_segment_iterator_of_geometry
             boost::ignore_unused(first_segment);
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
+            typedef bg::model::segment
+                <
+                    bg::model::point<double, 2, bg::cs::cartesian>
+                > other_segment;
+            other_segment other_seg;
+            // convert is used as a workaround for geometries whose
+            // point is a pointer. WKT does not seem to work for
+            // segment iterators created this way.
+            bg::convert(first_segment, other_seg);
             std::cout << "first segment in geometry: "
-                      << bg::wkt(first_segment)
+                      << bg::wkt(other_seg)
+                      << std::endl;
+            std::cout << "first segment in geometry (DSV): "
+                      << bg::dsv(first_segment)
                       << std::endl;
 
             std::cout << std::endl << std::endl;
@@ -234,10 +251,10 @@ struct test_segment_iterator_of_geometry
                   bg::segments_end(geometry),
                   std::back_inserter(segments));
 
-        BOOST_CHECK( std::size_t( std::distance(bg::segments_begin(geometry),
-                                                bg::segments_end(geometry)) )
-                     ==
-                     segments.size() );
+        BOOST_CHECK(std::size_t( std::distance(bg::segments_begin(geometry),
+                                               bg::segments_end(geometry)) )
+                    ==
+                    segments.size());
     }
 
     static inline void apply(Geometry geometry,
@@ -654,4 +671,77 @@ BOOST_AUTO_TEST_CASE( test_multi_polygon_segment_iterator )
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::cout << std::endl << std::endl << std::endl;
 #endif
+}
+
+//======================================================================
+//======================================================================
+
+BOOST_AUTO_TEST_CASE( test_linestring_of_point_pointers )
+{
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << "*** LINESTRING OF POINT POINTERS ***" << std::endl;
+#endif
+
+    typedef tuple_multi_linestring_type TML;
+    typedef std::vector<test::test_point_xy*> L;
+
+    std::vector<test::test_point_xy*> linestring;
+    for (int i = 1; i < 10; i++)
+    {
+        test::test_point_xy* p = new test::test_point_xy;
+        p->x = i;
+        p->y = -i;
+        linestring.push_back(p);
+    }
+
+    test::test_point_xy* zero = new test::test_point_xy;
+    zero->x = 0;
+    zero->y = 0;
+
+    typedef test_segment_iterator_of_geometry<L, TML> tester;
+
+    tester::apply(linestring,
+                  ba::list_of<tuple_linestring_type>
+                  ( ba::tuple_list_of(1,-1)(2,-2) )
+                  ( ba::tuple_list_of(2,-2)(3,-3) )
+                  ( ba::tuple_list_of(3,-3)(4,-4) )
+                  ( ba::tuple_list_of(4,-4)(5,-5) )
+                  ( ba::tuple_list_of(5,-5)(6,-6) )
+                  ( ba::tuple_list_of(6,-6)(7,-7) )
+                  ( ba::tuple_list_of(7,-7)(8,-8) )
+                  ( ba::tuple_list_of(8,-8)(9,-9) )
+                  );
+
+    for (unsigned int i = 0; i < linestring.size(); i++)
+    {
+        delete linestring[i];
+    }
+}
+
+//======================================================================
+//======================================================================
+
+BOOST_AUTO_TEST_CASE( test_linestring_copy_on_dereference )
+{
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << "*** LINESTRING WITH COPY-ON-DEREFERENCE ITERATOR ***"
+              << std::endl;
+#endif
+
+    typedef tuple_multi_linestring_type TML;
+    typedef linestring_copy_on_dereference<point_type> L;
+
+    typedef test_segment_iterator_of_geometry<L, TML> tester;
+
+    tester::apply(from_wkt<L>("LINESTRING(1 -1,2 -2,3 -3,4 -4,5 -5,6 -6, 7 -7,8 -8,9 -9)"),
+                  ba::list_of<tuple_linestring_type>
+                  ( ba::tuple_list_of(1,-1)(2,-2) )
+                  ( ba::tuple_list_of(2,-2)(3,-3) )
+                  ( ba::tuple_list_of(3,-3)(4,-4) )
+                  ( ba::tuple_list_of(4,-4)(5,-5) )
+                  ( ba::tuple_list_of(5,-5)(6,-6) )
+                  ( ba::tuple_list_of(6,-6)(7,-7) )
+                  ( ba::tuple_list_of(7,-7)(8,-8) )
+                  ( ba::tuple_list_of(8,-8)(9,-9) )
+                  );
 }

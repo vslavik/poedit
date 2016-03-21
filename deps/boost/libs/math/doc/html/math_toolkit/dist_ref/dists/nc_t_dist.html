@@ -4,7 +4,7 @@
 <title>Noncentral T Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="nc_f_dist.html" title="Noncentral F Distribution">
 <link rel="next" href="normal_dist.html" title="Normal (Gaussian) Distribution">
@@ -31,12 +31,12 @@
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+          <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">non_central_t_distribution</span><span class="special">;</span>
 
 <span class="keyword">typedef</span> <span class="identifier">non_central_t_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">non_central_t</span><span class="special">;</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">non_central_t_distribution</span>
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
@@ -139,27 +139,36 @@
           zero error</a>.
         </p>
 <div class="table">
-<a name="math_toolkit.dist_ref.dists.nc_t_dist.errors_in_cdf_of_the_noncentral_"></a><p class="title"><b>Table&#160;5.6.&#160;Errors In CDF of the Noncentral T Distribution</b></p>
-<div class="table-contents"><table class="table" summary="Errors In CDF of the Noncentral T Distribution">
+<a name="math_toolkit.dist_ref.dists.nc_t_dist.table_non_central_t_CDF"></a><p class="title"><b>Table&#160;5.8.&#160;Error rates for non central t CDF</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for non central t CDF">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+                </th>
+<th>
                   <p>
-                    Significand Size (bits)
+                    Microsoft Visual C++ version 12.0<br> Win32<br> double
                   </p>
                 </th>
 <th>
                   <p>
-                    Platform and Compiler
+                    GNU C++ version 5.1.0<br> linux<br> double
                   </p>
                 </th>
 <th>
                   <p>
-                    &#957;, &#948; &lt; 600
+                    GNU C++ version 5.1.0<br> linux<br> long double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Sun compiler version 0x5130<br> Sun Solaris<br> long double
                   </p>
                 </th>
 </tr></thead>
@@ -167,68 +176,210 @@
 <tr>
 <td>
                   <p>
-                    53
+                    Non Central T
                   </p>
                 </td>
 <td>
                   <p>
-                    Win32, Visual C++ 8
+                    <span class="blue">Max = 138&#949; (Mean = 31.5&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=120 Mean=26
-                  </p>
-                </td>
-</tr>
-<tr>
-<td>
-                  <p>
-                    64
+                    <span class="blue">Max = 0.796&#949; (Mean = 0.0691&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                    = 5.28e+15&#949; (Mean = 8.49e+14&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_t_CDF_Rmath_3_0_2_Non_Central_T">And
+                    other failures.</a>)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    RedHat Linux IA32, gcc-4.1.1
+                    <span class="blue">Max = 141&#949; (Mean = 31.1&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=121 Mean=26
+                    <span class="blue">Max = 145&#949; (Mean = 30.2&#949;)</span>
                   </p>
                 </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    64
+                    Non Central T (small non-centrality)
                   </p>
                 </td>
 <td>
                   <p>
-                    Redhat Linux IA64, gcc-3.4.4
+                    <span class="blue">Max = 3.61&#949; (Mean = 1.03&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=122 Mean=25
+                    <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                    3.0.2:</em></span> Max = 2.09e+03&#949; (Mean = 244&#949;))
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 7.86&#949; (Mean = 1.69&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 9.15&#949; (Mean = 2.25&#949;)</span>
                   </p>
                 </td>
 </tr>
 <tr>
 <td>
                   <p>
-                    113
+                    Non Central T (large parameters)
                   </p>
                 </td>
 <td>
                   <p>
-                    HPUX IA64, aCC A.06.06
+                    <span class="blue">Max = 286&#949; (Mean = 62.8&#949;)</span>
                   </p>
                 </td>
 <td>
                   <p>
-                    Peak=115 Mean=24
+                    <span class="blue">Max = 257&#949; (Mean = 72.1&#949;)</span><br> <br>
+                    (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 2.46&#949; (Mean = 0.657&#949;))
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 5.26e+05&#949; (Mean = 1.48e+05&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 5.24e+05&#949; (Mean = 1.47e+05&#949;)</span>
+                  </p>
+                </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><div class="table">
+<a name="math_toolkit.dist_ref.dists.nc_t_dist.table_non_central_t_CDF_complement"></a><p class="title"><b>Table&#160;5.9.&#160;Error rates for non central t CDF complement</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for non central t CDF complement">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                </th>
+<th>
+                  <p>
+                    Microsoft Visual C++ version 12.0<br> Win32<br> double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    GNU C++ version 5.1.0<br> linux<br> double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    GNU C++ version 5.1.0<br> linux<br> long double
+                  </p>
+                </th>
+<th>
+                  <p>
+                    Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                  </p>
+                </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  <p>
+                    Non Central T
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 150&#949; (Mean = 32.3&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 0.707&#949; (Mean = 0.0497&#949;)</span><br>
+                    <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                    = 6.19e+15&#949; (Mean = 6.72e+14&#949;) <a class="link" href="../../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_non_central_t_CDF_complement_Rmath_3_0_2_Non_Central_T">And
+                    other failures.</a>)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 203&#949; (Mean = 31.8&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 340&#949; (Mean = 43.6&#949;)</span>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Non Central T (small non-centrality)
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 5.21&#949; (Mean = 1.43&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                    3.0.2:</em></span> Max = 1.87e+03&#949; (Mean = 263&#949;))
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 7.48&#949; (Mean = 1.86&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 10.9&#949; (Mean = 2.43&#949;)</span>
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    Non Central T (large parameters)
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 227&#949; (Mean = 50.4&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 478&#949; (Mean = 96.3&#949;)</span><br> <br>
+                    (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 2.24&#949; (Mean = 0.945&#949;))
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 9.79e+05&#949; (Mean = 1.97e+05&#949;)</span>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <span class="blue">Max = 9.79e+05&#949; (Mean = 1.97e+05&#949;)</span>
                   </p>
                 </td>
 </tr>
@@ -372,8 +523,8 @@ when the normal distribution
             </li>
 </ul></div>
 <p>
-          The quantile is calculated via the usual <a class="link" href="../../internals1/roots2.html" title="Root Finding Without Derivatives: Bisection, Bracket and TOMS748">derivative-free
-          root-finding techniques</a>, with the initial guess taken as the quantile
+          The quantile is calculated via the usual <a class="link" href="../../roots/roots_noderiv.html" title="Root Finding Without Derivatives">root-finding
+          without derivatives</a> method with the initial guess taken as the quantile
           of a normal approximation to the noncentral T.
         </p>
 <p>

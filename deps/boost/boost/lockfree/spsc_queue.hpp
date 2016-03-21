@@ -18,12 +18,12 @@
 #include <boost/static_assert.hpp>
 #include <boost/utility.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/config.hpp> // for BOOST_LIKELY
 
 #include <boost/type_traits/has_trivial_destructor.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 
 #include <boost/lockfree/detail/atomic.hpp>
-#include <boost/lockfree/detail/branch_hints.hpp>
 #include <boost/lockfree/detail/copy_payload.hpp>
 #include <boost/lockfree/detail/parameter.hpp>
 #include <boost/lockfree/detail/prefix.hpp>
@@ -62,7 +62,7 @@ protected:
     static size_t next_index(size_t arg, size_t max_size)
     {
         size_t ret = arg + 1;
-        while (unlikely(ret >= max_size))
+        while (BOOST_UNLIKELY(ret >= max_size))
             ret -= max_size;
         return ret;
     }
@@ -86,7 +86,7 @@ protected:
 
     size_t read_available(size_t max_size) const
     {
-        size_t write_index = write_index_.load(memory_order_relaxed);
+        size_t write_index = write_index_.load(memory_order_acquire);
         const size_t read_index  = read_index_.load(memory_order_relaxed);
         return read_available(write_index, read_index, max_size);
     }
@@ -94,7 +94,7 @@ protected:
     size_t write_available(size_t max_size) const
     {
         size_t write_index = write_index_.load(memory_order_relaxed);
-        const size_t read_index  = read_index_.load(memory_order_relaxed);
+        const size_t read_index  = read_index_.load(memory_order_acquire);
         return write_available(write_index, read_index, max_size);
     }
 
@@ -709,13 +709,13 @@ public:
     }
 
     template <typename U>
-    explicit spsc_queue(typename allocator::template rebind<U>::other const & alloc)
+    explicit spsc_queue(typename allocator::template rebind<U>::other const &)
     {
         // just for API compatibility: we don't actually need an allocator
         BOOST_STATIC_ASSERT(!runtime_sized);
     }
 
-    explicit spsc_queue(allocator const & alloc)
+    explicit spsc_queue(allocator const &)
     {
         // just for API compatibility: we don't actually need an allocator
         BOOST_ASSERT(!runtime_sized);
@@ -914,7 +914,7 @@ public:
      *
      * \return number of available elements that can be popped from the spsc_queue
      *
-     * \note Thread-safe and wait-free, should only be called from the producer thread
+     * \note Thread-safe and wait-free, should only be called from the consumer thread
      * */
     size_type read_available() const
     {
@@ -925,7 +925,7 @@ public:
      *
      * \return number of elements that can be pushed to the spsc_queue
      *
-     * \note Thread-safe and wait-free, should only be called from the consumer thread
+     * \note Thread-safe and wait-free, should only be called from the producer thread
      * */
     size_type write_available() const
     {
@@ -936,7 +936,7 @@ public:
      *
      * Availability of front element can be checked using read_available().
      *
-     * \pre only one thread is allowed to check front element
+     * \pre only a consuming thread is allowed to check front element
      * \pre read_available() > 0. If ringbuffer is empty, it's undefined behaviour to invoke this method.
      * \return reference to the first element in the queue
      *

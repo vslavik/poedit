@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -38,6 +39,8 @@
       range splice for <code class="computeroutput"><span class="special">(</span><span class="identifier">s</span><span class="special">)</span><span class="identifier">list</span></code></a></span></dt>
 <dt><span class="section"><a href="extended_functionality.html#container.extended_functionality.extended_allocators">Extended
       allocators</a></span></dt>
+<dt><span class="section"><a href="extended_functionality.html#container.extended_functionality.polymorphic_memory_resources">Polymorphic
+      Memory Resources </a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -327,16 +330,8 @@
             built above DLmalloc (See <a href="http://www.malloc.de/en/" target="_top">ptmalloc2,
             ptmalloc3</a> or <a href="http://www.nedprod.com/programs/portable/nedmalloc/" target="_top">nedmalloc</a>).
             This low-level allocator is implemented as a separately compiled library
-            whereas <code class="computeroutput"><a class="link" href="../boost/container/allocator.html" title="Class template allocator">allocator</a></code>,
-            <code class="computeroutput"><a class="link" href="../boost/container/adaptive_pool.html" title="Class template adaptive_pool">adaptive_pool</a></code>
-            and <code class="computeroutput"><a class="link" href="../boost/container/node_allocator.html" title="Class template node_allocator">node_allocator</a></code>
-            are header-only classes.
+            and the following extended allocators depend on the library:
           </li>
-</ul></div>
-<p>
-        The following extended allocators are provided:
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             <code class="computeroutput"><a class="link" href="../boost/container/allocator.html" title="Class template allocator">allocator</a></code>: This
             extended allocator offers expansion, shrink-in place and burst allocation
@@ -415,10 +410,271 @@
 <p>
       </p>
 </div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.extended_functionality.polymorphic_memory_resources"></a><a class="link" href="extended_functionality.html#container.extended_functionality.polymorphic_memory_resources" title="Polymorphic Memory Resources">Polymorphic
+      Memory Resources </a>
+</h3></div></div></div>
+<p>
+        The document <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4480.html" target="_top">C++
+        Extensions for Library Fundamentals (Final draft: N4480)</a> includes
+        classes that provide allocator type erasure and runtime polymorphism. As
+        Pablo Halpern, the author of the proposal, explains in the paper (<a href="https://isocpp.org/files/papers/N3916.pdf" target="_top">N3916 Polymorphic Memory
+        Resources (r2)</a>):
+      </p>
+<p>
+        <span class="quote">&#8220;<span class="quote"><span class="emphasis"><em>A significant impediment to effective memory management
+        in C++ has been the inability to use allocators in non-generic contexts.
+        In large software systems, most of the application program consists of non-generic
+        procedural or object-oriented code that is compiled once and linked many
+        times.</em></span></span>&#8221;</span>
+      </p>
+<p>
+        <span class="quote">&#8220;<span class="quote"><span class="emphasis"><em>Allocators in C++, however, have historically relied solely
+        on compile-time polymorphism, and therefore have not been suitable for use
+        in vocabulary types, which are passed through interfaces between separately-compiled
+        modules, because the allocator type necessarily affects the type of the object
+        that uses it. This proposal builds upon the improvements made to allocators
+        in C++11 and describes a set of facilities for runtime polymorphic memory
+        resources that interoperate with the existing compile-time polymorphic allocators.</em></span></span>&#8221;</span>
+      </p>
+<p>
+        <span class="bold"><strong>Boost.Container</strong></span> implements nearly all classes
+        of the proposal under the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">pmr</span></code>.
+        There are two groups,
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Header only utilities (these don't require the separately compiled library):
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource</a></code>.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/resource_adaptor.html" title="Type definition resource_adaptor">resource_adaptor</a></code>.
+                </li>
+</ul></div>
+          </li>
+<li class="listitem">
+            Utilities that require the the separately compiled library:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/polymorphic_allocator.html" title="Class template polymorphic_allocator">polymorphic_allocator</a></code>.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/monotonic_buffer_resource.html" title="Class monotonic_buffer_resource">monotonic_buffer_resource</a></code>.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/unsynchr_idm46583871327984.html" title="Class unsynchronized_pool_resource">unsynchronized_pool_resource</a></code>.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/synchronized_pool_resource.html" title="Class synchronized_pool_resource">synchronized_pool_resource</a></code>.
+                </li>
+<li class="listitem">
+                  Global resource functions: <code class="computeroutput"><a class="link" href="../boost/container/pmr/get_default_resource.html" title="Function get_default_resource">get_default_resource</a></code>/
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/set_default_resource.html" title="Function set_default_resource">set_default_resource</a></code>/
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/new_delete_resource.html" title="Function new_delete_resource">new_delete_resource</a></code>/
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/null_memory_resource.html" title="Function null_memory_resource">null_memory_resource</a></code>
+                </li>
+<li class="listitem">
+                  Aliases for boost containers using the polymorphic allocator (like
+                  <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.vector">pmr::vector</a></code>,
+                  etc.)
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+<p>
+        <span class="bold"><strong>Boost.Container</strong></span>'s polymorphic resource library
+        is usable from C++03 containers, and offers some alternative utilities if
+        the required C++11 features of the <span class="emphasis"><em>Library Fundamentals</em></span>
+        specification are not available.
+      </p>
+<p>
+        Let's review the usage example given in <a href="https://isocpp.org/files/papers/N3916.pdf" target="_top">N3916</a>
+        and see how it can be implemented using <span class="bold"><strong>Boost.Container</strong></span>:
+        <span class="emphasis"><em>Suppose we are processing a series of shopping lists, where a shopping
+        list is a container of strings, and storing them in a collection (a list)
+        of shopping lists. Each shopping list being processed uses a bounded amount
+        of memory that is needed for a short period of time, while the collection
+        of shopping lists uses an unbounded amount of memory and will exist for a
+        longer period of time. For efficiency, we can use a more time-efficient memory
+        allocator based on a finite buffer for the temporary shopping lists.</em></span>
+      </p>
+<p>
+        Let's see how <code class="computeroutput"><span class="identifier">ShoppingList</span></code>
+        can be defined to support an polymorphic memory resource that can allocate
+        memory from different underlying mechanisms. The most important details are:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            It should declare that supports an allocator defining an <code class="computeroutput"><span class="identifier">allocator_type</span></code> typedef. This <code class="computeroutput"><span class="identifier">allocator_type</span></code> will be of type <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource *</a></code>,
+            which is a base class for polymorphic resources.
+          </li>
+<li class="listitem">
+            It must define constructors that take the the allocator as argument.
+            It can be implemented in two ways:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <code class="computeroutput"><span class="identifier">ShoppingList</span></code> has
+                  constructors taking <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource*</a></code>
+                  as the last argument.
+                </li>
+<li class="listitem">
+                  <code class="computeroutput"><span class="identifier">ShoppingList</span></code> has
+                  constructors taking <code class="computeroutput"><a class="link" href="../boost/container/allocator_arg_t.html" title="Type definition allocator_arg_t">allocator_arg_t</a></code>
+                  as the first argument and <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource*</a></code>
+                  as the second argument.
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+<p>
+        <span class="bold"><strong>Note:</strong></span> <span class="emphasis"><em>In C++03 compilers, it is
+        required that the programmer specializes as <code class="computeroutput"><span class="keyword">true</span></code>
+        <code class="computeroutput"><a class="link" href="../boost/container/construc_idm46583867843104.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
+        or <code class="computeroutput"><a class="link" href="../boost/container/construc_idm46583867853472.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>
+        as in C++03 there is no way to automatically detect the chosen option at
+        compile time. If no specialization is done, <span class="bold"><strong>Boost.Container</strong></span>
+        assumes the suffix option</em></span>.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="comment">//ShoppingList.hpp</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">pmr</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">pmr</span><span class="special">/</span><span class="identifier">string</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">class</span> <span class="identifier">ShoppingList</span>
+<span class="special">{</span>
+   <span class="comment">// A vector of strings using polymorphic allocators. Every element</span>
+   <span class="comment">// of the vector will use the same allocator as the vector itself.</span>
+   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">pmr</span><span class="special">::</span><span class="identifier">vector_of</span>
+      <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">pmr</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">m_strvec</span><span class="special">;</span>
+   <span class="comment">//Alternatively in compilers that support template aliases:</span>
+   <span class="comment">//    boost::container::pmr::vector&lt;boost::container::pmr::string&gt; m_strvec;</span>
+   <span class="keyword">public</span><span class="special">:</span>
+
+   <span class="comment">// This makes uses_allocator&lt;ShoppingList, memory_resource*&gt;::value true</span>
+   <span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">pmr</span><span class="special">::</span><span class="identifier">memory_resource</span><span class="special">*</span> <span class="identifier">allocator_type</span><span class="special">;</span>
+
+   <span class="comment">// If the allocator is not specified, "m_strvec" uses pmr::get_default_resource().</span>
+   <span class="keyword">explicit</span> <span class="identifier">ShoppingList</span><span class="special">(</span><span class="identifier">allocator_type</span> <span class="identifier">alloc</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span>
+      <span class="special">:</span> <span class="identifier">m_strvec</span><span class="special">(</span><span class="identifier">alloc</span><span class="special">)</span> <span class="special">{}</span>
+
+   <span class="comment">// Copy constructor. As allocator is not specified,</span>
+   <span class="comment">// "m_strvec" uses pmr::get_default_resource().</span>
+   <span class="identifier">ShoppingList</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ShoppingList</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">)</span>
+      <span class="special">:</span> <span class="identifier">m_strvec</span><span class="special">(</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">m_strvec</span><span class="special">)</span> <span class="special">{}</span>
+
+   <span class="comment">// Copy construct using the given memory_resource.</span>
+   <span class="identifier">ShoppingList</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ShoppingList</span><span class="special">&amp;</span> <span class="identifier">other</span><span class="special">,</span> <span class="identifier">allocator_type</span> <span class="identifier">a</span><span class="special">)</span>
+      <span class="special">:</span> <span class="identifier">m_strvec</span><span class="special">(</span><span class="identifier">other</span><span class="special">.</span><span class="identifier">m_strvec</span><span class="special">,</span> <span class="identifier">a</span><span class="special">)</span> <span class="special">{}</span>
+
+   <span class="identifier">allocator_type</span> <span class="identifier">get_allocator</span><span class="special">()</span> <span class="keyword">const</span>
+   <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">m_strvec</span><span class="special">.</span><span class="identifier">get_allocator</span><span class="special">().</span><span class="identifier">resource</span><span class="special">();</span> <span class="special">}</span>
+
+   <span class="keyword">void</span> <span class="identifier">add_item</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="identifier">item</span><span class="special">)</span>
+   <span class="special">{</span> <span class="identifier">m_strvec</span><span class="special">.</span><span class="identifier">emplace_back</span><span class="special">(</span><span class="identifier">item</span><span class="special">);</span> <span class="special">}</span>
+
+   <span class="comment">//...</span>
+<span class="special">};</span>
+</pre>
+<p>
+      </p>
+<p>
+        <span class="emphasis"><em>However, this time-efficient allocator is not appropriate for the
+        longer lived collection of shopping lists. This example shows how those temporary
+        shopping lists, using a time-efficient allocator, can be used to populate
+        the long lived collection of shopping lists, using a general purpose allocator,
+        something that would be annoyingly difficult without the polymorphic allocators.</em></span>
+      </p>
+<p>
+        In <span class="bold"><strong>Boost.Container</strong></span> for the time-efficient
+        allocation we can use <code class="computeroutput"><a class="link" href="../boost/container/pmr/monotonic_buffer_resource.html" title="Class monotonic_buffer_resource">monotonic_buffer_resource</a></code>,
+        providing an external buffer that will be used until it's exhausted. In the
+        default configuration, when the buffer is exhausted, the default memory resource
+        will be used instead.
+      </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="string">"ShoppingList.hpp"</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">cassert</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">pmr</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">container</span><span class="special">/</span><span class="identifier">pmr</span><span class="special">/</span><span class="identifier">monotonic_buffer_resource</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">void</span> <span class="identifier">processShoppingList</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">ShoppingList</span><span class="special">&amp;)</span>
+<span class="special">{</span>  <span class="comment">/**/</span>   <span class="special">}</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+   <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">;</span>
+   <span class="comment">//All memory needed by folder and its contained objects will</span>
+   <span class="comment">//be allocated from the default memory resource (usually new/delete) </span>
+   <span class="identifier">pmr</span><span class="special">::</span><span class="identifier">list_of</span><span class="special">&lt;</span><span class="identifier">ShoppingList</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">folder</span><span class="special">;</span> <span class="comment">// Default allocator resource</span>
+   <span class="comment">//Alternatively in compilers that support template aliases:</span>
+   <span class="comment">//    boost::container::pmr::list&lt;ShoppingList&gt; folder;</span>
+   <span class="special">{</span>
+      <span class="keyword">char</span> <span class="identifier">buffer</span><span class="special">[</span><span class="number">1024</span><span class="special">];</span>
+      <span class="identifier">pmr</span><span class="special">::</span><span class="identifier">monotonic_buffer_resource</span> <span class="identifier">buf_rsrc</span><span class="special">(&amp;</span><span class="identifier">buffer</span><span class="special">,</span> <span class="number">1024</span><span class="special">);</span>
+
+      <span class="comment">//All memory needed by temporaryShoppingList will be allocated</span>
+      <span class="comment">//from the local buffer (speeds up "processShoppingList")</span>
+      <span class="identifier">ShoppingList</span> <span class="identifier">temporaryShoppingList</span><span class="special">(&amp;</span><span class="identifier">buf_rsrc</span><span class="special">);</span>
+      <span class="identifier">assert</span><span class="special">(&amp;</span><span class="identifier">buf_rsrc</span> <span class="special">==</span> <span class="identifier">temporaryShoppingList</span><span class="special">.</span><span class="identifier">get_allocator</span><span class="special">());</span>
+
+      <span class="comment">//list nodes, and strings "salt" and "pepper" will be allocated</span>
+      <span class="comment">//in the stack thanks to "monotonic_buffer_resource".</span>
+      <span class="identifier">temporaryShoppingList</span><span class="special">.</span><span class="identifier">add_item</span><span class="special">(</span><span class="string">"salt"</span><span class="special">);</span>
+      <span class="identifier">temporaryShoppingList</span><span class="special">.</span><span class="identifier">add_item</span><span class="special">(</span><span class="string">"pepper"</span><span class="special">);</span>
+      <span class="comment">//...</span>
+
+      <span class="comment">//All modifications and additions to "temporaryShoppingList"</span>
+      <span class="comment">//will use memory from "buffer" until it's exhausted.</span>
+      <span class="identifier">processShoppingList</span><span class="special">(</span><span class="identifier">temporaryShoppingList</span><span class="special">);</span>
+
+      <span class="comment">//Processing done, now insert it in "folder",</span>
+      <span class="comment">//which uses the default memory resource</span>
+      <span class="identifier">folder</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="identifier">temporaryShoppingList</span><span class="special">);</span>
+      <span class="identifier">assert</span><span class="special">(</span><span class="identifier">pmr</span><span class="special">::</span><span class="identifier">get_default_resource</span><span class="special">()</span> <span class="special">==</span> <span class="identifier">folder</span><span class="special">.</span><span class="identifier">back</span><span class="special">().</span><span class="identifier">get_allocator</span><span class="special">());</span>
+      <span class="comment">//temporaryShoppingList, buf_rsrc, and buffer go out of scope</span>
+   <span class="special">}</span>
+   <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+      </p>
+<p>
+        <span class="emphasis"><em>Notice that the shopping lists within <code class="computeroutput"><span class="identifier">folder</span></code>
+        use the default allocator resource whereas the shopping list <code class="computeroutput"><span class="identifier">temporaryShoppingList</span></code> uses the short-lived
+        but very fast <code class="computeroutput"><span class="identifier">buf_rsrc</span></code>. Despite
+        using different allocators, you can insert <code class="computeroutput"><span class="identifier">temporaryShoppingList</span></code>
+        into folder because they have the same <code class="computeroutput"><span class="identifier">ShoppingList</span></code>
+        type. Also, while <code class="computeroutput"><span class="identifier">ShoppingList</span></code>
+        uses memory_resource directly, <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.list">pmr::list</a></code>,
+        <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.vector">pmr::vector</a></code> and
+        <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.string">pmr::string</a></code> all
+        use <code class="computeroutput"><a class="link" href="../boost/container/pmr/polymorphic_allocator.html" title="Class template polymorphic_allocator">polymorphic_allocator</a></code>.</em></span>
+      </p>
+<p>
+        <span class="emphasis"><em>The resource passed to the <code class="computeroutput"><span class="identifier">ShoppingList</span></code>
+        constructor is propagated to the vector and each string within that <code class="computeroutput"><span class="identifier">ShoppingList</span></code>. Similarly, the resource used
+        to construct <code class="computeroutput"><span class="identifier">folder</span></code> is propagated
+        to the constructors of the ShoppingLists that are inserted into the list
+        (and to the strings within those <code class="computeroutput"><span class="identifier">ShoppingLists</span></code>).
+        The <code class="computeroutput"><a class="link" href="../boost/container/pmr/polymorphic_allocator.html" title="Class template polymorphic_allocator">polymorphic_allocator</a></code>
+        template is designed to be almost interchangeable with a pointer to <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource</a></code>,
+        thus producing a <span class="emphasis"><em>bridge</em></span> between the template-policy
+        style of allocator and the polymorphic-base-class style of allocator.</em></span>
+      </p>
+<p>
+        This example actually shows how easy is to use <span class="bold"><strong>Boost.Container</strong></span>
+        to write type-erasured allocator-capable classes even in C++03 compilers.
+      </p>
+</div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

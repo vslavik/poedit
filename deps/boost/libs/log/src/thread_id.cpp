@@ -240,7 +240,7 @@ void format_thread_id(char* buf, std::size_t size, thread::id tid)
 }
 
 template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, thread::id const& tid)
+BOOST_LOG_API std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, thread::id const& tid)
 {
     if (strm.good())
     {

@@ -33,6 +33,7 @@
 #include "object.h"
 #include "pathsys.h"
 #include "strings.h"
+#include "output.h"
 
 #ifdef __BORLANDC__
 # undef FILENAME  /* cpp namespace collision */
@@ -368,7 +369,7 @@ void file_archscan( char const * archive, scanback func, void * closure )
     offset = SARMAG;
 
     if ( DEBUG_BINDSCAN )
-        printf( "scan archive %s\n", archive );
+        out_printf( "scan archive %s\n", archive );
 
     while ( ( read( fd, &ar_hdr, SARHDR ) == SARHDR ) &&
         !memcmp( ar_hdr.ar_fmag, ARFMAG, SARFMAG ) )
@@ -391,7 +392,7 @@ void file_archscan( char const * archive, scanback func, void * closure )
              */
             string_table = BJAM_MALLOC_ATOMIC( lar_size + 1 );
             if ( read( fd, string_table, lar_size ) != lar_size )
-                printf( "error reading string table\n" );
+                out_printf( "error reading string table\n" );
             string_table[ lar_size ] = '\0';
             offset += SARHDR + lar_size;
             continue;

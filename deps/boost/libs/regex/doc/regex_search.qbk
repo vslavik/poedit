@@ -27,8 +27,8 @@ algorithm is defined as follows:
             class Allocator, class charT, class traits> 
    bool regex_search(const basic_string<charT, ST, SA>& s, 
                      match_results<
-                        typename basic_string<charT, ST,SA>::const_iterator, 
-                        Allocator>& m, 
+                     typename basic_string<charT, ST,SA>::const_iterator, 
+                     Allocator>& m, 
                      const basic_regex<charT, traits>& e, 
                      match_flag_type flags = match_default); 
              

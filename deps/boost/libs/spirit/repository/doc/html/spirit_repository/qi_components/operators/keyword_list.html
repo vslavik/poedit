@@ -294,10 +294,10 @@ Person : Mary, 10, 1.69
 Person : Mike, 10, 1.69
 </pre>
 <p>
-          Now let's delcare a parser with some occurence constraints:
+          Now let's delcare a parser with some occurrence constraints:
         </p>
 <p>
-          The parser definition below uses the kwd directive occurence constraint
+          The parser definition below uses the kwd directive occurrence constraint
           variants to make sure that the name and age keyword occur only once and
           allows the favorite color entry to appear 0 or more times.
         </p>
@@ -324,7 +324,7 @@ Person : Mike, 10, 1.69
      <span class="special">,</span><span class="identifier">Hellen</span><span class="special">);</span>
  <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="identifier">Hellen</span><span class="special">;</span>
 
-<span class="comment">// Parsing this string will fail because the age and size minimum occurence requirements aren't met.</span>
+<span class="comment">// Parsing this string will fail because the age and size minimum occurrence requirements aren't met.</span>
 <span class="identifier">test_phrase_parser_attr</span><span class="special">(</span>
      <span class="string">"name = \"Johny\"  \n favorite color = \"blue\" \n favorite color = \"green\" "</span>
      <span class="special">,</span><span class="identifier">constraint_person_rule</span>
@@ -334,7 +334,7 @@ Person : Mike, 10, 1.69
         </p>
 <p>
           Parsing the first string will succeed but fail for the second string as
-          the occurence constraints aren't met. This code should print:
+          the occurrence constraints aren't met. This code should print:
         </p>
 <pre class="programlisting">Person : Hellen, 10, 1.8
 blue

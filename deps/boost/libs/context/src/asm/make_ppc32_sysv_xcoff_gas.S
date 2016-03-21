@@ -1,6 +1,9 @@
 	.globl	make_fcontext[DS]
 	.globl .make_fcontext[PR]
 	.align 2 
+	.csect  make_fcontext[DS]
+make_fcontext:
+	.long .make_fcontext[PR]
 	.csect .make_fcontext[PR], 3
 #.make_fcontext:
     # save return address into R6

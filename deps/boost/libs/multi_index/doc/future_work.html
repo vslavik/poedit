@@ -37,25 +37,11 @@ principle driving the current internal design of <code>multi_index_container</co
 <h2>Contents</h2>
 
 <ul>
-  <li><a href="#ranked_indices">Ranked indices</a></li>
   <li><a href="#notifying">Notifying indices</a></li>
   <li><a href="#constraints">Constraints</a></li>
   <li><a href="#user_defined_indices">User-defined indices</a></li>
   <li><a href="#indexed_maps">Indexed maps</a></li>
 </ul>
-
-<h2><a name="ranked_indices">Ranked indices</a></h2>
-
-<p>
-Ordered indices are implemented using red-black trees; these trees
-can be augmented with additional information to obtain a type
-of data structure called
-<a href="http://pine.cs.yale.edu/pinewiki/OrderStatisticsTree"><i>order-statistics
-trees</i></a>, allowing for logarithmic search of the <i>n</i>-th element. It
-has been proposed that order-statistics trees be used to devise a new type of
-<i>ranked indices</i> that support <code>operator[]</code> while retaining
-the functionality of ordered indices.
-</p>
 
 <h2><a name="notifying">Notifying indices</a></h2>
 
@@ -200,9 +186,9 @@ Release notes
 
 <br>
 
-<p>Revised July 6th 2013</p>
+<p>Revised April 19th 2015</p>
 
-<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

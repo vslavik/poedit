@@ -21,6 +21,10 @@ else if [ os.name ] = HPUX
 {
   lib ipv6 ;
 }
+else if [ os.name ] = HAIKU
+{
+  lib network ;
+}
 
 project
   : requirements
@@ -35,6 +39,7 @@ project
     <os>NT,<toolset>gcc-cygwin:<define>__USE_W32_SOCKETS
     <os>HPUX,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
     <os>HPUX:<library>ipv6
+    <os>HAIKU:<library>network
   ;
 
 exe async_tcp_client : async_tcp_client.cpp ;

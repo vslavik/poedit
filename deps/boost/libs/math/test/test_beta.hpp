@@ -22,7 +22,6 @@
 #include <boost/array.hpp>
 #include "functor.hpp"
 
-#include "test_beta_hooks.hpp"
 #include "handle_test_result.hpp"
 #include "table_type.hpp"
 
@@ -35,10 +34,13 @@
 template <class Real, class T>
 void do_test_beta(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BETA_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BETA_FUNCTION_TO_TEST
+   pg funcp = BETA_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::beta<value_type, value_type>;
 #else
    pg funcp = boost::math::beta;
@@ -56,18 +58,9 @@ void do_test_beta(const T& data, const char* type_name, const char* test_name)
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::beta", test_name);
-#ifdef TEST_OTHER
-   if(::boost::is_floating_point<value_type>::value){
-      funcp = other::beta;
-      result = boost::math::tools::test_hetero<Real>(
-         data, 
-         bind_func<Real>(funcp, 0, 1), 
-         extract_result<Real>(2));
-      print_test_result(result, data[result.worst()], result.worst(), type_name, "other::beta");
-   }
-#endif
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "beta", test_name);
    std::cout << std::endl;
+#endif
 }
 template <class T>
 void test_beta(T, const char* name)

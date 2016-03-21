@@ -59,7 +59,7 @@ void expected_results()
       "Mac OS",                      // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 100, 15); // test function
+      "tgamma", 100, 15); // test function
    //
    // G++ On Win32:
    //
@@ -69,21 +69,21 @@ void expected_results()
       "Win32.*",                      // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 100, 15); // test function
+      "tgamma", 100, 15); // test function
    add_expected_result(
       "GNU.*",                          // compiler
       ".*",                          // stdlib
       "Win32.*",                          // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 600, 200);  // test function
+      "tgamma", 600, 200);  // test function
    add_expected_result(
       "GNU.*",                          // compiler
       ".*",                          // stdlib
       "Win32.*",                          // platform
       "real_concept",                // test type(s)
       "near.*",                      // test data group
-      "boost::math::tgamma", 200, 100);  // test function
+      "tgamma", 200, 100);  // test function
    //
    // G++ on Linux, result vary a bit by processor type,
    // on Itanium results are *much* better than listed here,
@@ -96,56 +96,56 @@ void expected_results()
       "linux",                       // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 600, 200); // test function
+      "tgamma", 600, 200); // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                          // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::lgamma", 30, 10);  // test function
+      "lgamma", 30, 10);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                       // platform
       largest_type,                  // test type(s)
       "near (1|2|-10)",              // test data group
-      "boost::math::tgamma", 10, 5);  // test function
+      "tgamma", 10, 5);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                       // platform
       largest_type,                  // test type(s)
       "near (1|2|-10)",              // test data group
-      "boost::math::lgamma", 50, 50);  // test function
+      "lgamma", 50, 50);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                       // platform
       largest_type,                  // test type(s)
       "tgamma1pm1.*",                // test data group
-      "boost::math::tgamma1pm1", 50, 15);  // test function
+      "tgamma1pm1", 50, 15);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                       // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 600, 100);  // test function
+      "tgamma", 600, 100);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                       // platform
       "real_concept",                // test type(s)
       "near (0|-55)",                // test data group
-      "boost::math::(t|l)gamma", 300, 150);  // test function
+      "(t|l)gamma", 300, 150);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "linux",                       // platform
       "real_concept",                // test type(s)
       "tgamma1pm1.*",                // test data group
-      "boost::math::tgamma1pm1", 40, 10);  // test function
+      "tgamma1pm1", 40, 10);  // test function
    //
    // HP-UX results:
    //
@@ -155,35 +155,35 @@ void expected_results()
       "HP-UX",                          // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 5, 4);  // test function
+      "tgamma", 5, 4);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "HP-UX",                       // platform
       largest_type,                  // test type(s)
       "near (0|-55)",                // test data group
-      "boost::math::tgamma", 10, 5);  // test function
+      "tgamma", 10, 5);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "HP-UX",                       // platform
       largest_type,                  // test type(s)
       "near (1|2|-10)",              // test data group
-      "boost::math::lgamma", 250, 200);  // test function
+      "lgamma", 250, 200);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "HP-UX",                          // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::lgamma", 50, 20);  // test function
+      "lgamma", 50, 20);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "HP-UX",                          // platform
       "real_concept",                // test type(s)
       "tgamma1pm1.*",                // test data group
-      "boost::math::tgamma1pm1", 200, 80);  // test function
+      "tgamma1pm1", 200, 80);  // test function
    //
    // Tru64:
    //
@@ -193,7 +193,7 @@ void expected_results()
       ".*",                          // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::lgamma", 50, 20);  // test function
+      "lgamma", 50, 20);  // test function
    //
    // Sun OS:
    //
@@ -203,14 +203,14 @@ void expected_results()
       "Sun.*",                       // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 300, 50); // test function
+      "tgamma", 300, 50); // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       "Sun.*",                       // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 300, 50); // test function
+      "tgamma", 300, 50); // test function
 
    //
    // Catch all cases come last:
@@ -221,42 +221,42 @@ void expected_results()
       ".*",                          // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 4, 1);  // test function
+      "tgamma", 4, 1);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       "factorials",                  // test data group
-      "boost::math::lgamma", 9, 1);  // test function
+      "lgamma", 9, 1);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       "near (0|-55)",                // test data group
-      "boost::math::(t|l)gamma", 200, 100);  // test function
+      "(t|l)gamma", 200, 100);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       "near (1|2|-10)",              // test data group
-      "boost::math::tgamma", 10, 5);  // test function
+      "tgamma", 10, 5);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       "near (1|2|-10)",              // test data group
-      "boost::math::lgamma", 14, 7);  // test function
+      "lgamma", 14, 7);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       largest_type,                  // test type(s)
       "tgamma1pm1.*",                // test data group
-      "boost::math::tgamma1pm1", 30, 9);  // test function
+      "tgamma1pm1", 30, 9);  // test function
 
    add_expected_result(
       ".*",                          // compiler
@@ -264,35 +264,35 @@ void expected_results()
       ".*",                          // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::tgamma", 600, 100);  // test function
+      "tgamma", 600, 100);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       "real_concept",                // test type(s)
       "factorials",                  // test data group
-      "boost::math::lgamma", 200, 20);  // test function
+      "lgamma", 200, 20);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       "real_concept",                // test type(s)
       "near.*",                      // test data group
-      "boost::math::tgamma", 300, 100);  // test function
+      "tgamma", 300, 100);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       "real_concept",                // test type(s)
       "near.*",                      // test data group
-      "boost::math::lgamma", 40000000, 10000000);  // test function
+      "lgamma", 40000000, 10000000);  // test function
    add_expected_result(
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
       "real_concept",                // test type(s)
       "tgamma1pm1.*",                // test data group
-      "boost::math::tgamma1pm1", 20, 5);  // test function
+      "tgamma1pm1", 20, 5);  // test function
 
    //
    // Finish off by printing out the compiler/stdlib/platform names,
@@ -331,7 +331,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
    
 }

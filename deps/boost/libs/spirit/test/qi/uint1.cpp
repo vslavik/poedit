@@ -125,6 +125,13 @@ main()
         BOOST_TEST(!test("1", uint4));
         BOOST_TEST(!test_attr("1", uint4, u));
         BOOST_TEST(test_attr("014567", uint4, u, false) && u == 145);
+
+        uint_parser<uint8_t, 10, 1, 3> uchar_3;
+        unsigned char uc;
+        BOOST_TEST(test_attr("255", uchar_3, uc, true));
+        BOOST_TEST(uc == 255);
+        BOOST_TEST(!test_attr("256", uchar_3, uc, false));
+        BOOST_TEST(!test_attr("257", uchar_3, uc, false));
     }
 
     ///////////////////////////////////////////////////////////////////////////

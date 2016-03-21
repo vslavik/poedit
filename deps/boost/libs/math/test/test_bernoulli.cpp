@@ -22,6 +22,7 @@
 
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 using ::boost::math::concepts::real_concept;
+#include <boost/math/tools/test.hpp>
 
 #include <boost/math/distributions/bernoulli.hpp> // for bernoulli_distribution
 using boost::math::bernoulli_distribution;
@@ -73,16 +74,16 @@ void test_spots(RealType)
   BOOST_CHECK_EQUAL(bernoulli_distribution<RealType>(static_cast<RealType>(0.1L)).success_fraction(), static_cast<RealType>(0.1L));
   BOOST_CHECK_EQUAL(bernoulli_distribution<RealType>(static_cast<RealType>(0.9L)).success_fraction(), static_cast<RealType>(0.9L));
 
-  BOOST_CHECK_THROW( // Constructor success_fraction outside 0 to 1.
+  BOOST_MATH_CHECK_THROW( // Constructor success_fraction outside 0 to 1.
        bernoulli_distribution<RealType>(static_cast<RealType>(2)), std::domain_error);
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
        bernoulli_distribution<RealType>(static_cast<RealType>(-2)), std::domain_error);
 
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
        pdf( // pdf k neither 0 nor 1.
           bernoulli_distribution<RealType>(static_cast<RealType>(0.25L)), static_cast<RealType>(-1)), std::domain_error);
 
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
        pdf( // pdf k neither 0 nor 1.
           bernoulli_distribution<RealType>(static_cast<RealType>(0.25L)), static_cast<RealType>(2)), std::domain_error);
  
@@ -133,22 +134,22 @@ void test_spots(RealType)
        static_cast<RealType>(5.11111111111111111111111111111111111111111111L),
        tolerance);
 
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
      quantile(
         bernoulli_distribution<RealType>(static_cast<RealType>(2)), // prob >1
         static_cast<RealType>(0)), std::domain_error
      );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
      quantile(
         bernoulli_distribution<RealType>(static_cast<RealType>(-1)), // prob < 0
         static_cast<RealType>(0)), std::domain_error
      );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
      quantile(
         bernoulli_distribution<RealType>(static_cast<RealType>(0.5L)), // k >1
         static_cast<RealType>(-1)), std::domain_error
      );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
      quantile(
         bernoulli_distribution<RealType>(static_cast<RealType>(0.5L)), // k < 0
         static_cast<RealType>(2)), std::domain_error
@@ -216,47 +217,57 @@ void test_spots(RealType)
 
    // Checks for 'bad' parameters.
    // Construction.
-   BOOST_CHECK_THROW(bernoulli_distribution<RealType>(-1), std::domain_error); // p outside 0 to 1.
-   BOOST_CHECK_THROW(bernoulli_distribution<RealType>(+2), std::domain_error); // p outside 0 to 1.
+   BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType>(-1), std::domain_error); // p outside 0 to 1.
+   BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType>(+2), std::domain_error); // p outside 0 to 1.
 
    // Parameters.
    bernoulli_distribution<RealType> dist(RealType(1)); 
-   BOOST_CHECK_THROW(pdf(dist, -1), std::domain_error);
-   BOOST_CHECK_THROW(cdf(dist, -1), std::domain_error);
-   BOOST_CHECK_THROW(cdf(complement(dist, -1)), std::domain_error);
-   BOOST_CHECK_THROW(quantile(dist, 2), std::domain_error);
-   BOOST_CHECK_THROW(quantile(complement(dist, -1)), std::domain_error);
-   BOOST_CHECK_THROW(quantile(dist, -1), std::domain_error);
-   BOOST_CHECK_THROW(quantile(complement(dist, -1)), std::domain_error);
+   BOOST_MATH_CHECK_THROW(pdf(dist, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(cdf(dist, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(cdf(complement(dist, -1)), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(dist, 2), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, -1)), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(dist, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, -1)), std::domain_error);
      
    // No longer allow any parameter to be NaN or inf, so all these tests should throw.
    if (std::numeric_limits<RealType>::has_quiet_NaN)
    { 
     // Attempt to construct from non-finite should throw.
      RealType nan = std::numeric_limits<RealType>::quiet_NaN();
-     BOOST_CHECK_THROW(bernoulli_distribution<RealType> b(nan), std::domain_error);
-     
+#ifndef BOOST_NO_EXCEPTIONS
+     BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType> b(nan), std::domain_error);
+#else
+     BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType>(nan), std::domain_error);
+#endif
     // Non-finite parameters should throw.
      bernoulli_distribution<RealType> b(RealType(1)); 
-     BOOST_CHECK_THROW(pdf(b, +nan), std::domain_error); // x = NaN
-     BOOST_CHECK_THROW(cdf(b, +nan), std::domain_error); // x = NaN
-     BOOST_CHECK_THROW(cdf(complement(b, +nan)), std::domain_error); // x = + nan
-     BOOST_CHECK_THROW(quantile(b, +nan), std::domain_error); // p = + nan
-     BOOST_CHECK_THROW(quantile(complement(b, +nan)), std::domain_error); // p = + nan
+     BOOST_MATH_CHECK_THROW(pdf(b, +nan), std::domain_error); // x = NaN
+     BOOST_MATH_CHECK_THROW(cdf(b, +nan), std::domain_error); // x = NaN
+     BOOST_MATH_CHECK_THROW(cdf(complement(b, +nan)), std::domain_error); // x = + nan
+     BOOST_MATH_CHECK_THROW(quantile(b, +nan), std::domain_error); // p = + nan
+     BOOST_MATH_CHECK_THROW(quantile(complement(b, +nan)), std::domain_error); // p = + nan
   } // has_quiet_NaN
 
   if (std::numeric_limits<RealType>::has_infinity)
   {
      RealType inf = std::numeric_limits<RealType>::infinity(); 
-     BOOST_CHECK_THROW(bernoulli_distribution<RealType> w(inf), std::domain_error);
-
+#ifndef BOOST_NO_EXCEPTIONS
+     BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType> w(inf), std::domain_error);
+#else
+     BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType>(inf), std::domain_error);
+#endif
      bernoulli_distribution<RealType> w(RealType(1)); 
-     BOOST_CHECK_THROW(bernoulli_distribution<RealType> w(inf), std::domain_error);
-     BOOST_CHECK_THROW(pdf(w, +inf), std::domain_error); // x = inf
-     BOOST_CHECK_THROW(cdf(w, +inf), std::domain_error); // x = inf
-     BOOST_CHECK_THROW(cdf(complement(w, +inf)), std::domain_error); // x = + inf
-     BOOST_CHECK_THROW(quantile(w, +inf), std::domain_error); // p = + inf
-     BOOST_CHECK_THROW(quantile(complement(w, +inf)), std::domain_error); // p = + inf
+#ifndef BOOST_NO_EXCEPTIONS
+     BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType> w(inf), std::domain_error);
+#else
+     BOOST_MATH_CHECK_THROW(bernoulli_distribution<RealType>(inf), std::domain_error);
+#endif
+     BOOST_MATH_CHECK_THROW(pdf(w, +inf), std::domain_error); // x = inf
+     BOOST_MATH_CHECK_THROW(cdf(w, +inf), std::domain_error); // x = inf
+     BOOST_MATH_CHECK_THROW(cdf(complement(w, +inf)), std::domain_error); // x = + inf
+     BOOST_MATH_CHECK_THROW(quantile(w, +inf), std::domain_error); // p = + inf
+     BOOST_MATH_CHECK_THROW(quantile(complement(w, +inf)), std::domain_error); // p = + inf
    } // has_infinity
 
 } // template <class RealType>void test_spots(RealType)

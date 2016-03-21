@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.5.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;31.&#160;Thread 4.6.0">
 <link rel="prev" href="future.html" title="Future">
 <link rel="next" href="ScopedThreads.html" title="Scoped Threads">
 </head>
@@ -95,9 +96,9 @@
         thread</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.join">Joining a thread</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.destructor1">Destructor
-        V1</a></span></dt>
+        V1-2</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.destructor2">Destructor
-        V2</a></span></dt>
+        V3-X</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.interruption">Interruption</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.id">Thread IDs</a></span></dt>
 <dt><span class="section"><a href="thread_management.html#thread.thread_management.tutorial.native_in">Using
@@ -346,8 +347,8 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.tutorial.destructor1"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.destructor1" title="Destructor V1">Destructor
-        V1</a>
+<a name="thread.thread_management.tutorial.destructor1"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.destructor1" title="Destructor V1-2">Destructor
+        V1-2</a>
 </h4></div></div></div>
 <p>
           When the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object that represents
@@ -364,8 +365,8 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="thread.thread_management.tutorial.destructor2"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.destructor2" title="Destructor V2">Destructor
-        V2</a>
+<a name="thread.thread_management.tutorial.destructor2"></a><a class="link" href="thread_management.html#thread.thread_management.tutorial.destructor2" title="Destructor V3-X">Destructor
+        V3-X</a>
 </h4></div></div></div>
 <p>
           When the <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> object that represents
@@ -385,7 +386,7 @@
 <span class="special">{</span>
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span> <span class="identifier">t</span><span class="special">(</span><span class="identifier">my_func</span><span class="special">);</span>
   <span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread_joiner</span> <span class="identifier">g</span><span class="special">(</span><span class="identifier">t</span><span class="special">);</span>
-  <span class="comment">// do someting else</span>
+  <span class="comment">// do something else</span>
 <span class="special">}</span> <span class="comment">// here the thread_joiner destructor will join the thread before it is destroyed.</span>
 </pre>
 </div>
@@ -607,7 +608,7 @@
         </p>
 <p>
           As the single way to interrupt a thread is through a <a class="link" href="thread_management.html#thread.thread_management.thread" title="Class thread"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">thread</span></code></a> instance, <code class="computeroutput"><span class="identifier">interruption_request</span><span class="special">()</span></code>
-          wiil returns false for the native threads.
+          will return false for the native threads.
         </p>
 <h6>
 <a name="thread.thread_management.tutorial.native_from.h0"></a>
@@ -1542,7 +1543,7 @@
 <a name="thread.thread_management.thread.hardware_concurrency"></a><a class="link" href="thread_management.html#thread.thread_management.thread.hardware_concurrency" title="Static member function hardware_concurrency()">Static
         member function <code class="computeroutput"><span class="identifier">hardware_concurrency</span><span class="special">()</span></code></a>
 </h4></div></div></div>
-<pre class="programlisting"><span class="keyword">unsigned</span> <span class="identifier">hardware_concurrency</span><span class="special">()</span> <span class="identifier">noexecpt</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">unsigned</span> <span class="identifier">hardware_concurrency</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -1565,7 +1566,7 @@
 <a name="thread.thread_management.thread.physical_concurrency"></a><a class="link" href="thread_management.html#thread.thread_management.thread.physical_concurrency" title="Static member function physical_concurrency()">Static
         member function <code class="computeroutput"><span class="identifier">physical_concurrency</span><span class="special">()</span></code></a>
 </h4></div></div></div>
-<pre class="programlisting"><span class="keyword">unsigned</span> <span class="identifier">physical_concurrency</span><span class="special">()</span> <span class="identifier">noexecpt</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">unsigned</span> <span class="identifier">physical_concurrency</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
@@ -2058,7 +2059,7 @@
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                  Constructs a thread atrributes instance with its default values.
+                  Constructs a thread attributes instance with its default values.
                 </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -2438,7 +2439,7 @@
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                Suspends the current thread until the duration specified by by <code class="computeroutput"><span class="identifier">rel_time</span></code> has elapsed.
+                Suspends the current thread until the duration specified by <code class="computeroutput"><span class="identifier">rel_time</span></code> has elapsed.
               </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>

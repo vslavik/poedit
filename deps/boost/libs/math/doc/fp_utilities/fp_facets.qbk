@@ -6,7 +6,7 @@
 
   namespace boost{ namespace math
   {
-    // Values for flags. 
+    // Values for flags.
     const int legacy;
     const int signed_zero;
     const int trap_infinity;
@@ -14,10 +14,10 @@
 
     template<
         class CharType,
-        class OutputIterator = std::ostreambuf_iterator<CharType> 
+        class OutputIterator = std::ostreambuf_iterator<CharType>
     >
     class nonfinite_num_put : public std::num_put<CharType, OutputIterator>
-    { 
+    {
     public:
         explicit nonfinite_num_put(int flags = 0);
     };
@@ -30,7 +30,7 @@
     {
     public:
         explicit nonfinite_num_get(int flags = 0);  // legacy, sign_zero ...
-    }; 
+    };
   }} // namespace boost namespace math
 
 To use these facets
@@ -98,7 +98,7 @@ So without some specific action, input and output of nonfinite values is not por
 [h4 C99 standard for output of infinity and NaN]
 
 The [@http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1256.pdf C99 standard]
-[*does] specify how infinity and NaN 
+[*does] specify how infinity and NaN
 are formatted by printf and similar output functions,
 and parsed by scanf and similar input functions.
 
@@ -145,7 +145,7 @@ and output as `1.#QNAN` by Microsoft compilers.
 
 [note The C99 standard does not distinguish
 between the quiet NaN and signaling NaN values.
-A quiet NaN propagates through almost every arithmetic operation 
+A quiet NaN propagates through almost every arithmetic operation
 without raising a floating-point exception;
 a signaling NaN generally raises a floating-point exception
 when occurring as an arithmetic operand.
@@ -161,7 +161,7 @@ a sign or may leave them unsigned. Wherever such values are unsigned,
 any requirement in the C99 Standard to retrieve the sign shall produce an unspecified sign,
 and any requirement to set the sign shall be ignored.
 
-This might apply to user-defined types, but in practice built-in floating-point 
+This might apply to user-defined types, but in practice built-in floating-point
 types `float`, `double` and `long double` have well-behaved signs.]
 
 The numbers can be of type `float`, `double` and `long double`.
@@ -177,7 +177,7 @@ The meaning of that string is implementation dependent.
 It can be used to convey extra information about the NaN, from the 'payload'.
 A particular value of the payload might be used to indicate a ['missing value], for example.
 
-This library uses the string representations specified by the C99 standard. 
+This library uses the string representations specified by the C99 standard.
 
 An example of an implementation that optionally includes the NaN payload information is at
 [@http://publib.boulder.ibm.com/infocenter/zos/v1r10/index.jsp?topic=/com.ibm.zos.r10.bpxbd00/fprints.htm AIX NaN fprintf].
@@ -213,7 +213,7 @@ corresponding to the integer value n.
          >
  class nonfinite_num_put;
 
-The `class nonfinite_num_put<CharType, OutputIterator>` 
+The `class nonfinite_num_put<CharType, OutputIterator>`
 is derived from `std::num_put<CharType, OutputIterator>`.
 Thus it is a facet that formats numbers.
 The first template argument is the character type of the formatted strings,
@@ -227,7 +227,7 @@ The public interface of the class consists of a single constructor only:
 
 The flags argument (effectively optional because a default of ` no_flags` is provided)
 is discussed below.
-The class template `nonfinite_num_put` is defined in the 
+The class template `nonfinite_num_put` is defined in the
 header `boost/math/nonfinite_num_facets.hpp`
 and lives in the namespace `boost::math`.
 
@@ -248,7 +248,7 @@ The strings can be in all lower case or all upper case.
 An optional + sign can be used with positive numbers.
 This can be controlled with the `uppercase`, `lowercase`, `showpos` and `noshowpos` manipulators.
 Formatting of integers, boolean values and finite floating-point numbers is simply delegated to the normal `std::num_put`.
- 
+
 
 [h5 Facet `nonfinite_num_get`]
 
@@ -331,7 +331,7 @@ then the facet will recognize all the following string representations of `infin
 * `one` stands for any string that `std::num_get` parses as the number `1`,
 typically "1.#INF", "1.QNAN" but also "000001.#INF"...
 
-The list includes a number of non-standard string representations of infinity and NaN 
+The list includes a number of non-standard string representations of infinity and NaN
 that are used by various existing implementations of the C++ standard library,
 and also string representations used by other programming languages.
 
@@ -421,23 +421,24 @@ Or you need to imbue your stringstream with suitable get and put facets.]
 that input from decimal digits strings converts with rounding to the
 nearest representable floating-point binary value.
 (In contrast, decimal digits read by the compiler,
-for example by an assignment like `double d = 1.234567890123456789`, 
+for example by an assignment like `double d = 1.234567890123456789`,
 are guaranteed to assign the nearest representable value to double d).
 This implies that, no matter how many decimal digits you provide,
 there is a potential uncertainty of 1 least significant bit in the resulting binary value.]
 
-See [@http://en.wikipedia.org/wiki/Floating_point#Representable_numbers.2C_conversion_and_rounding
-for more information on ['nearest representable] and ['rounding]].
+See [@http://en.wikipedia.org/wiki/Floating_point#Representable_numbers.2C_conversion_and_rounding conversion and rounding]
+for more information on ['nearest representable] and ['rounding] and
+[@http://www.exploringbinary.com/ Exploring  Binary] for much detail on input and round-tripping difficulties.
 
 Most iostream libraries do in fact achieve the desirable
 ['nearest representable floating-point binary value] for all values of input.
-However one popular STL library does not quite achieve this for 64-bit doubles.  See 
-[@http://connect.microsoft.com/VisualStudio/feedback/details/98770/decimal-digit-string-input-to-double-may-be-1-bit-wrong  
+However one popular STL library does not quite achieve this for 64-bit doubles.  See
+[@http://connect.microsoft.com/VisualStudio/feedback/details/98770/decimal-digit-string-input-to-double-may-be-1-bit-wrong
 Decimal digit string input to double may be 1 bit wrong] for the bizarre full details.
 
 If you are expecting to 'round-trip' `lexical_cast` or `serialization`,
 for example archiving and loading,
-and want to be [*absolutely certain that you will 
+and want to be [*absolutely certain that you will
 always get an exactly identical double value binary pattern],
 you should use the suggested 'workaround' below that is believed to work on all platforms.
 
@@ -455,15 +456,15 @@ and crucially, [*require `scientific` format], not `fixed` or automatic (default
 [h4 Use with serialization archives]
 
 It is vital that the same locale is used
-when an archive is saved and when it is loaded. 
-Otherwise, loading the archive may fail. 
+when an archive is saved and when it is loaded.
+Otherwise, loading the archive may fail.
 By default, archives are saved and loaded with a classic C locale
 with a `boost::archive::codecvt_null` facet added.
 Normally you do not have to worry about that.
 
 The constructors for the archive classes, as a side-effect,
-imbue the stream with such a locale. 
-However, if you want to use the 
+imbue the stream with such a locale.
+However, if you want to use the
 facets `nonfinite_num_put` and `nonfinite_num_get` with archives,
 then you have to manage the locale manually.
 That is done by calling the archive constructor with the flag
@@ -542,20 +543,20 @@ using `std::ios_base::xalloc` and `std::ios_base::iword`.
 Then one could safely modify the flags, and one could define manipulators that do so.
 However, for that to work with dynamically linked libraries,
 a `.cpp` file would have to be added to the library.
-It was judged be more desirable to have a headers only library,
+It was judged be more desirable to have a header-only library,
 than to have mutable flags and manipulators.
 
 * The facet `nonfinite_num_put` throws an exception when
 the `trap_infinity` or `trap_nan` flag is set
 and an attempt is made to format infinity or NaN.
-It would be better if the facet set the fail bit of the stream.
+It would be better if the facet set the `fail bit` of the stream.
 However, facets derived from `std::num_put` do not have access to the stream state.
 
 [endsect] [/section:rationale Design Rationale]
 
 [endsect] [/section:fp_facets Facets for Floating-Point Infinities and NaNs]
 
-[/ 
+[/
   Copyright Johan Rade and Paul A. Bristow 2011.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at

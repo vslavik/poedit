@@ -4,7 +4,7 @@
 <title>Triangular Distribution</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../dists.html" title="Distributions">
 <link rel="prev" href="students_t_dist.html" title="Students t Distribution">
 <link rel="next" href="uniform_dist.html" title="Uniform Distribution">
@@ -30,12 +30,12 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">distributions</span><span class="special">/</span><span class="identifier">triangular</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></pre>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span> <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span>
-           <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
+           <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a>   <span class="special">=</span> <a class="link" href="../../pol_ref/pol_ref_ref.html" title="Policy Class Reference">policies::policy&lt;&gt;</a> <span class="special">&gt;</span>
  <span class="keyword">class</span> <span class="identifier">triangular_distribution</span><span class="special">;</span>
 
  <span class="keyword">typedef</span> <span class="identifier">triangular_distribution</span><span class="special">&lt;&gt;</span> <span class="identifier">triangular</span><span class="special">;</span>
 
- <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+ <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">RealType</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
  <span class="keyword">class</span> <span class="identifier">triangular_distribution</span>
  <span class="special">{</span>
  <span class="keyword">public</span><span class="special">:</span>
@@ -43,7 +43,7 @@
     <span class="keyword">typedef</span> <span class="identifier">Policy</span>   <span class="identifier">policy_type</span><span class="special">;</span>
 
     <span class="identifier">triangular_distribution</span><span class="special">(</span><span class="identifier">RealType</span> <span class="identifier">lower</span> <span class="special">=</span> <span class="special">-</span><span class="number">1</span><span class="special">,</span> <span class="identifier">RealType</span> <span class="identifier">mode</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span> <span class="identifier">RealType</span> <span class="identifier">upper</span> <span class="special">=</span> <span class="number">1</span><span class="special">);</span> <span class="comment">// Constructor.</span>
-       <span class="special">:</span> <span class="identifier">m_lower</span><span class="special">(</span><span class="identifier">lower</span><span class="special">),</span> <span class="identifier">m_mode</span><span class="special">(</span><span class="identifier">mode</span><span class="special">),</span> <span class="identifier">m_upper</span><span class="special">(</span><span class="identifier">upper</span><span class="special">)</span> <span class="comment">// Default is -1, 0, +1 triangular distribution.</span>
+       <span class="special">:</span> <span class="identifier">m_lower</span><span class="special">(</span><span class="identifier">lower</span><span class="special">),</span> <span class="identifier">m_mode</span><span class="special">(</span><span class="identifier">mode</span><span class="special">),</span> <span class="identifier">m_upper</span><span class="special">(</span><span class="identifier">upper</span><span class="special">)</span> <span class="comment">// Default is -1, 0, +1 symmetric triangular distribution.</span>
     <span class="comment">// Accessor functions.</span>
     <span class="identifier">RealType</span> <span class="identifier">lower</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
     <span class="identifier">RealType</span> <span class="identifier">mode</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
@@ -74,7 +74,7 @@
           density function</a>:
         </p>
 <p>
-          f(x) =
+          &#8192;&#8192; f(x) =
         </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
@@ -85,9 +85,10 @@
             </li>
 </ul></div>
 <p>
-          Parameter a (lower) can be any finite value. Parameter b (upper) can be
-          any finite value &gt; a (lower). Parameter c (mode) a &lt;= c &lt;= b.
-          This is the most probable value.
+          Parameter <span class="emphasis"><em>a</em></span> (lower) can be any finite value. Parameter
+          <span class="emphasis"><em>b</em></span> (upper) can be any finite value &gt; a (lower).
+          Parameter <span class="emphasis"><em>c</em></span> (mode) a &lt;= c &lt;= b. This is the
+          most probable value.
         </p>
 <p>
           The <a href="http://en.wikipedia.org/wiki/Random_variate" target="_top">random variate</a>
@@ -101,12 +102,12 @@
         </p>
 <p>
           The distribution simplifies when the 'best guess' is either the lower or
-          upper limit - a 90 degree angle triangle. The default chosen is the 001
-          triangular distribution which expresses an estimate that the lowest value
-          is the most likely; for example, you believe that the next-day quoted delivery
-          date is most likely (knowing that a quicker delivery is impossible - the
-          postman only comes once a day), and that longer delays are decreasingly
-          likely, and delivery is assumed to never take more than your upper limit.
+          upper limit - a 90 degree angle triangle. The 001 triangular distribution
+          which expresses an estimate that the lowest value is the most likely; for
+          example, you believe that the next-day quoted delivery date is most likely
+          (knowing that a quicker delivery is impossible - the postman only comes
+          once a day), and that longer delays are decreasingly likely, and delivery
+          is assumed to never take more than your upper limit.
         </p>
 <p>
           The following graph illustrates how the <a href="http://en.wikipedia.org/wiki/Probability_density_function" target="_top">probability
@@ -137,6 +138,36 @@
           Requires that the <span class="emphasis"><em>lower</em></span>, <span class="emphasis"><em>mode</em></span>
           and <span class="emphasis"><em>upper</em></span> parameters are all finite, otherwise calls
           <a class="link" href="../../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>.
+        </p>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top">
+<p>
+            These constructors are slightly different from the analogs provided by
+            <a href="http://mathworld.wolfram.com" target="_top">Wolfram MathWorld</a>
+            <a href="http://reference.wolfram.com/language/ref/TriangularDistribution.html" target="_top">Triangular
+            distribution</a>, where
+          </p>
+<p>
+            <code class="literal">TriangularDistribution[{min, max}]</code> represents a <span class="bold"><strong>symmetric</strong></span> triangular statistical distribution
+            giving values between min and max.<br> <code class="literal">TriangularDistribution[]</code>
+            represents a <span class="bold"><strong>symmetric</strong></span> triangular statistical
+            distribution giving values between 0 and 1.<br> <code class="literal">TriangularDistribution[{min,
+            max}, c]</code> represents a triangular distribution with mode at
+            c (usually <span class="bold"><strong>asymmetric</strong></span>).<br>
+          </p>
+<p>
+            So, for example, to compute a variance using <a href="http://www.wolframalpha.com/" target="_top">Wolfram
+            Alpha</a>, use <code class="literal">N[variance[TriangularDistribution{1, +2}],
+            50]</code>
+          </p>
+</td></tr>
+</table></div>
+<p>
+          The parameters of a distribution can be obtained using these member functions:
         </p>
 <pre class="programlisting"><span class="identifier">RealType</span> <span class="identifier">lower</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span>
 </pre>
@@ -366,8 +397,8 @@
 </tbody>
 </table></div>
 <p>
-          Some 'known good' test values were obtained from <a href="http://espse.ed.psu.edu/edpsych/faculty/rhale/hale/507Mat/statlets/free/pdist.htm" target="_top">Statlet:
-          Calculate and plot probability distributions</a>
+          Some 'known good' test values were obtained using <a href="http://www.wolframalpha.com/" target="_top">Wolfram
+          Alpha</a>.
         </p>
 <h5>
 <a name="math_toolkit.dist_ref.dists.triangular_dist.h4"></a>
@@ -387,14 +418,6 @@
               Evans, M.; Hastings, N.; and Peacock, B. "Triangular Distribution."
               Ch. 40 in Statistical Distributions, 3rd ed. New York: Wiley, pp. 187-188,
               2000, ISBN - 0471371246.
-            </li>
-<li class="listitem">
-              <a href="http://www.brighton-webs.co.uk/distributions/triangular.asp" target="_top">Brighton
-              Webs Ltd. BW D-Calc 1.0 Distribution Calculator</a>
-            </li>
-<li class="listitem">
-              <a href="http://www.worldscibooks.com/mathematics/etextbook/5720/5720_chap1.pdf" target="_top">The
-              Triangular Distribution including its history.</a>
             </li>
 <li class="listitem">
               <a href="http://www.measurement.sk/2002/S1/Wimmer2.pdf" target="_top">Gejza Wimmer,

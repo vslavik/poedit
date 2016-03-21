@@ -265,11 +265,6 @@ struct nothrow_construct_UDT
    { return true; }
 };
 
-#ifndef BOOST_NO_CXX11_FINAL
-struct final_UDT final
-{};
-#endif
-
 class Base { };
 
 class Derived : public Base { };
@@ -369,6 +364,14 @@ struct polymorphic_derived2 : public polymorphic_base
 {
    virtual void method();
 };
+
+#ifndef BOOST_NO_CXX11_FINAL
+struct final_UDT final
+{};
+struct polymorphic_derived_final final : public polymorphic_derived2
+{};
+#endif
+
 
 struct virtual_inherit1 : public virtual Base { };
 struct virtual_inherit2 : public virtual_inherit1 { };

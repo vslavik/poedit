@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library) // Robustness Test
 
-// Copyright (c) 2013 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2013-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -20,7 +20,7 @@
  #include <boost/geometry/geometries/register/point.hpp>
  #include <boost/geometry/geometries/register/ring.hpp>
  #include <boost/geometry/io/wkt/wkt.hpp>
- #include <boost/geometry/multi/geometries/multi_polygon.hpp>
+ #include <boost/geometry/geometries/multi_polygon.hpp>
 
 #include <boost/foreach.hpp>
 #include <boost/timer.hpp>

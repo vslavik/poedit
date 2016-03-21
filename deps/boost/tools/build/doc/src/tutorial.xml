@@ -520,8 +520,8 @@ lib utils : utils.cpp /boost/filesystem//fs ;
 lib core : core.cpp utils ;
 exe app : app.cpp core ;</programlisting>
         This works no matter what kind of linking is used. When <filename>core
-        </filename> is built as a shared library, it is linked directly into
-        <filename>utils</filename>. Static libraries can't link to other
+        </filename> is built as a shared library, links <filename>utils
+        </filename> directly into it. Static libraries can't link to other
         libraries, so when <filename>core</filename> is built as a static
         library, its dependency on <filename>utils</filename> is passed along to
         <filename>core</filename>'s dependents, causing <filename>app</filename>

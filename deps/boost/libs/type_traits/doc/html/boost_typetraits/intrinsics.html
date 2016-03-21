@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Support for Compiler Intrinsics</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="prev" href="user_defined.html" title="User Defined Specializations">
@@ -48,6 +48,12 @@
           <a class="link" href="reference/is_pod.html" title="is_pod">is_pod</a>
         </li>
 <li class="listitem">
+          <a class="link" href="reference/is_nothrow_move_assignable.html" title="is_nothrow_move_assignable">is_nothrow_move_assignable</a>
+        </li>
+<li class="listitem">
+          <a class="link" href="reference/is_nothrow_move_constructible.html" title="is_nothrow_move_constructible">is_nothrow_move_constructible</a>
+        </li>
+<li class="listitem">
           <a class="link" href="reference/has_trivial_constructor.html" title="has_trivial_constructor">has_trivial_constructor</a>
         </li>
 <li class="listitem">
@@ -90,6 +96,9 @@
 <li class="listitem">
           <a class="link" href="reference/is_polymorphic.html" title="is_polymorphic">is_polymorphic</a>
         </li>
+<li class="listitem">
+          <a class="link" href="reference/is_virtual_base_of.html" title="is_virtual_base_of">is_virtual_base_of</a>
+        </li>
 </ul></div>
 <p>
       The following traits classes are dependent on one or more of the above:
@@ -117,196 +126,16 @@
 <thead><tr>
 <th>
               <p>
-                BOOST_IS_UNION(T)
+                BOOST_ALIGNMENT_OF(T)
               </p>
             </th>
 <th>
               <p>
-                Should evaluate to true if T is a union type
+                Should evaluate to the alignment requirements of type T
               </p>
             </th>
 </tr></thead>
 <tbody>
-<tr>
-<td>
-              <p>
-                BOOST_IS_POD(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T is a POD type
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_IS_EMPTY(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T is an empty struct or union
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_TRIVIAL_CONSTRUCTOR(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if the default constructor for T is trivial
-                (i.e. has no effect)
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_TRIVIAL_COPY(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T has a trivial copy constructor (and
-                can therefore be replaced by a call to memcpy)
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_TRIVIAL_MOVE_CONSTRUCTOR(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T has a trivial move constructor (and
-                can therefore be replaced by a call to memcpy)
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_TRIVIAL_ASSIGN(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T has a trivial assignment operator (and
-                can therefore be replaced by a call to memcpy)
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_TRIVIAL_MOVE_ASSIGN(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T has a trivial move assignment operator
-                (and can therefore be replaced by a call to memcpy)
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_TRIVIAL_DESTRUCTOR(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if T has a trivial destructor (i.e. ~T()
-                has no effect)
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_NOTHROW_CONSTRUCTOR(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if <code class="computeroutput"><span class="identifier">T</span>
-                <span class="identifier">x</span><span class="special">;</span></code>
-                can not throw
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_NOTHROW_COPY(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if <code class="computeroutput"><span class="identifier">T</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> can not throw
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_NOTHROW_ASSIGN(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true if <code class="computeroutput"><span class="identifier">T</span>
-                <span class="identifier">t</span><span class="special">,</span>
-                <span class="identifier">u</span><span class="special">;</span>
-                <span class="identifier">t</span> <span class="special">=</span>
-                <span class="identifier">u</span></code> can not throw
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_HAS_VIRTUAL_DESTRUCTOR(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true T has a virtual destructor
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_IS_NOTHROW_MOVE_ASSIGN(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true T has a non-throwing move assign operator.
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                BOOST_IS_NOTHROW_MOVE_CONSTRUCT(T)
-              </p>
-            </td>
-<td>
-              <p>
-                Should evaluate to true T has a non-throwing move constructor.
-              </p>
-            </td>
-</tr>
 <tr>
 <td>
               <p>
@@ -358,12 +187,61 @@
 <tr>
 <td>
               <p>
+                BOOST_IS_EMPTY(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T is an empty struct or union
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
                 BOOST_IS_ENUM(T)
               </p>
             </td>
 <td>
               <p>
                 Should evaluate to true is T is an enum
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_FINAL(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T is a class type declared with the final
+                specifier
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_NOTHROW_MOVE_ASSIGN(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a non-throwing move assign operator.
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_IS_NOTHROW_MOVE_CONSTRUCT(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a non-throwing move constructor.
               </p>
             </td>
 </tr>
@@ -382,25 +260,156 @@
 <tr>
 <td>
               <p>
-                BOOST_ALIGNMENT_OF(T)
+                BOOST_IS_POD(T)
               </p>
             </td>
 <td>
               <p>
-                Should evaluate to the alignment requirements of type T
+                Should evaluate to true if T is a POD type
               </p>
             </td>
 </tr>
 <tr>
 <td>
               <p>
-                BOOST_IS_FINAL(T)
+                BOOST_IS_UNION(T)
               </p>
             </td>
 <td>
               <p>
-                Should evaluate to true if T is a class type declared with the final
-                specifier
+                Should evaluate to true if T is a union type
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_NOTHROW_ASSIGN(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if <code class="computeroutput"><span class="identifier">T</span>
+                <span class="identifier">t</span><span class="special">,</span>
+                <span class="identifier">u</span><span class="special">;</span>
+                <span class="identifier">t</span> <span class="special">=</span>
+                <span class="identifier">u</span></code> can not throw
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_NOTHROW_CONSTRUCTOR(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if <code class="computeroutput"><span class="identifier">T</span>
+                <span class="identifier">x</span><span class="special">;</span></code>
+                can not throw
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_NOTHROW_COPY(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if <code class="computeroutput"><span class="identifier">T</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> can not throw
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_TRIVIAL_ASSIGN(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T has a trivial assignment operator (and
+                can therefore be replaced by a call to memcpy)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_TRIVIAL_CONSTRUCTOR(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if the default constructor for T is trivial
+                (i.e. has no effect)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_TRIVIAL_COPY(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T has a trivial copy constructor (and
+                can therefore be replaced by a call to memcpy)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_TRIVIAL_DESTRUCTOR(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T has a trivial destructor (i.e. ~T()
+                has no effect)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_TRIVIAL_MOVE_CONSTRUCTOR(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T has a trivial move constructor (and
+                can therefore be replaced by a call to memcpy)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_TRIVIAL_MOVE_ASSIGN(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true if T has a trivial move assignment operator
+                (and can therefore be replaced by a call to memcpy)
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                BOOST_HAS_VIRTUAL_DESTRUCTOR(T)
+              </p>
+            </td>
+<td>
+              <p>
+                Should evaluate to true T has a virtual destructor
               </p>
             </td>
 </tr>

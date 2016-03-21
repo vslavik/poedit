@@ -11,8 +11,12 @@
 #  pragma warning (disable : 4512) // assignment operator could not be generated.
 #endif
 
+#include <boost/config.hpp>
+#ifndef BOOST_NO_EXCEPTIONS
 #define BOOST_MATH_UNDERFLOW_ERROR_POLICY throw_on_error
 #define BOOST_MATH_OVERFLOW_ERROR_POLICY throw_on_error
+#endif
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 #include <boost/math/distributions/logistic.hpp>
     using boost::math::logistic_distribution;
@@ -206,10 +210,10 @@ void test_spots(RealType T)
       BOOST_CHECK_EQUAL(cdf(complement(logistic_distribution<RealType>(), +std::numeric_limits<RealType>::infinity())), 0); // x = + infinity, c cdf = 0
       BOOST_CHECK_EQUAL(cdf(complement(logistic_distribution<RealType>(), -std::numeric_limits<RealType>::infinity())), 1); // x = - infinity, c cdf = 1
    }
-   BOOST_CHECK_THROW(quantile(logistic_distribution<RealType>(), static_cast<RealType>(1)), std::overflow_error); // x = + infinity, cdf = 1
-   BOOST_CHECK_THROW(quantile(logistic_distribution<RealType>(), static_cast<RealType>(0)), std::overflow_error); // x = - infinity, cdf = 0
-   BOOST_CHECK_THROW(quantile(complement(logistic_distribution<RealType>(), static_cast<RealType>(1))), std::overflow_error); // x = - infinity, cdf = 0
-   BOOST_CHECK_THROW(quantile(complement(logistic_distribution<RealType>(), static_cast<RealType>(0))), std::overflow_error); // x = + infinity, cdf = 1
+   BOOST_MATH_CHECK_THROW(quantile(logistic_distribution<RealType>(), static_cast<RealType>(1)), std::overflow_error); // x = + infinity, cdf = 1
+   BOOST_MATH_CHECK_THROW(quantile(logistic_distribution<RealType>(), static_cast<RealType>(0)), std::overflow_error); // x = - infinity, cdf = 0
+   BOOST_MATH_CHECK_THROW(quantile(complement(logistic_distribution<RealType>(), static_cast<RealType>(1))), std::overflow_error); // x = - infinity, cdf = 0
+   BOOST_MATH_CHECK_THROW(quantile(complement(logistic_distribution<RealType>(), static_cast<RealType>(0))), std::overflow_error); // x = + infinity, cdf = 1
    BOOST_CHECK_EQUAL(cdf(logistic_distribution<RealType>(), +boost::math::tools::max_value<RealType>()), 1); // x = + infinity, cdf = 1
    BOOST_CHECK_EQUAL(cdf(logistic_distribution<RealType>(), -boost::math::tools::max_value<RealType>()), 0); // x = - infinity, cdf = 0
    BOOST_CHECK_EQUAL(cdf(complement(logistic_distribution<RealType>(), +boost::math::tools::max_value<RealType>())), 0); // x = + infinity, c cdf = 0
@@ -237,20 +241,38 @@ void test_spots(RealType T)
    // location/scale can't be infinity.
    if(std::numeric_limits<RealType>::has_infinity)
    {
-      BOOST_CHECK_THROW(
+#ifndef BOOST_NO_EXCEPTIONS
+      BOOST_MATH_CHECK_THROW(
          logistic_distribution<RealType> dist(std::numeric_limits<RealType>::infinity(), 0.5),
          std::domain_error);
-      BOOST_CHECK_THROW(
+      BOOST_MATH_CHECK_THROW(
          logistic_distribution<RealType> dist(0.5, std::numeric_limits<RealType>::infinity()),
          std::domain_error);
+#else
+      BOOST_MATH_CHECK_THROW(
+         logistic_distribution<RealType>(std::numeric_limits<RealType>::infinity(), 0.5),
+         std::domain_error);
+      BOOST_MATH_CHECK_THROW(
+         logistic_distribution<RealType>(0.5, std::numeric_limits<RealType>::infinity()),
+         std::domain_error);
+#endif
    }
    // scale can't be negative or 0.
-   BOOST_CHECK_THROW(
+#ifndef BOOST_NO_EXCEPTIONS
+   BOOST_MATH_CHECK_THROW(
       logistic_distribution<RealType> dist(0.5, -0.5),
       std::domain_error);
-   BOOST_CHECK_THROW(
+   BOOST_MATH_CHECK_THROW(
       logistic_distribution<RealType> dist(0.5, 0),
       std::domain_error);
+#else
+   BOOST_MATH_CHECK_THROW(
+      logistic_distribution<RealType>(0.5, -0.5),
+      std::domain_error);
+   BOOST_MATH_CHECK_THROW(
+      logistic_distribution<RealType>(0.5, 0),
+      std::domain_error);
+#endif
 
    logistic_distribution<RealType> dist(0.5, 0.5);
    // x can't be NaN, p can't be NaN.
@@ -258,11 +280,11 @@ void test_spots(RealType T)
    if (std::numeric_limits<RealType>::has_quiet_NaN)
    {
       // No longer allow x to be NaN, then these tests should throw.
-      BOOST_CHECK_THROW(pdf(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
-      BOOST_CHECK_THROW(cdf(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
-      BOOST_CHECK_THROW(cdf(complement(dist, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // x = + infinity
-      BOOST_CHECK_THROW(quantile(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
-      BOOST_CHECK_THROW(quantile(complement(dist, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
+      BOOST_MATH_CHECK_THROW(pdf(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
+      BOOST_MATH_CHECK_THROW(cdf(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
+      BOOST_MATH_CHECK_THROW(cdf(complement(dist, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // x = + infinity
+      BOOST_MATH_CHECK_THROW(quantile(dist, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
+      BOOST_MATH_CHECK_THROW(quantile(complement(dist, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
    }
    if (std::numeric_limits<RealType>::has_infinity)
    {
@@ -274,15 +296,15 @@ void test_spots(RealType T)
 
 
    // p can't be outside (0,1).
-   BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(1.1)), std::domain_error); 
-   BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(-0.1)), std::domain_error);
-   BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(1)), std::overflow_error); 
-   BOOST_CHECK_THROW(quantile(dist, static_cast<RealType>(0)), std::overflow_error);
+   BOOST_MATH_CHECK_THROW(quantile(dist, static_cast<RealType>(1.1)), std::domain_error); 
+   BOOST_MATH_CHECK_THROW(quantile(dist, static_cast<RealType>(-0.1)), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(dist, static_cast<RealType>(1)), std::overflow_error); 
+   BOOST_MATH_CHECK_THROW(quantile(dist, static_cast<RealType>(0)), std::overflow_error);
 
-   BOOST_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(1.1))), std::domain_error); 
-   BOOST_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(-0.1))), std::domain_error);
-   BOOST_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(1))), std::overflow_error); 
-   BOOST_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(0))), std::overflow_error); 
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(1.1))), std::domain_error); 
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(-0.1))), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(1))), std::overflow_error); 
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, static_cast<RealType>(0))), std::overflow_error); 
 
    // Tests for mean,mode,median,variance,skewness,kurtosis.
    //mean
@@ -349,7 +371,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
    
 } // BOOST_AUTO_TEST_CASE( test_main )

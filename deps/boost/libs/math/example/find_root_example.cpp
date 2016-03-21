@@ -30,7 +30,7 @@ First we need some includes to access the normal distribution
 #include <limits>
   using std::numeric_limits;
 #include <stdexcept>
-  using std::exception;
+  
 
 //] //[/root_find1]
 

@@ -11,7 +11,7 @@
 //  TITLE:         C++14 digit separator unavailable
 //  DESCRIPTION:   The compiler does not support C++14 digit separator
 
-namespace boost_no_cxx14_digit_separator
+namespace boost_no_cxx14_digit_separators
 {
 
 int test()

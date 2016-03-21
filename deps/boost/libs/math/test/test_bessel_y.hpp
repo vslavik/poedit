@@ -15,7 +15,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_bessel_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -25,10 +24,13 @@
 template <class Real, class T>
 void do_test_cyl_neumann_y(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_Y_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BESSEL_Y_FUNCTION_TO_TEST
+   pg funcp = BESSEL_Y_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::cyl_neumann<value_type, value_type>;
 #else
    pg funcp = boost::math::cyl_neumann;
@@ -46,36 +48,26 @@ void do_test_cyl_neumann_y(const T& data, const char* type_name, const char* tes
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_neumann", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_neumann", test_name);
    std::cout << std::endl;
 
-#ifdef TEST_OTHER
-   if(boost::is_floating_point<value_type>::value)
-   {
-      funcp = other::cyl_neumann;
-
-      //
-      // test other::cyl_neumann against data:
-      //
-      result = boost::math::tools::test_hetero<Real>(
-         data, 
-         bind_func<Real>(funcp, 0, 1), 
-         extract_result<Real>(2));
-      handle_test_result(result, data[result.worst()], result.worst(), type_name, "other::cyl_neumann", test_name);
-      std::cout << std::endl;
-   }
 #endif
 }
 
 template <class T>
 T cyl_neumann_int_wrapper(T v, T x)
 {
+#ifdef BESSEL_YN_FUNCTION_TO_TEST
+   return static_cast<T>(BESSEL_YN_FUNCTION_TO_TEST(boost::math::itrunc(v), x));
+#else
    return static_cast<T>(boost::math::cyl_neumann(boost::math::itrunc(v), x));
+#endif
 }
 
 template <class Real, class T>
 void do_test_cyl_neumann_y_int(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_YN_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -97,17 +89,21 @@ void do_test_cyl_neumann_y_int(const T& data, const char* type_name, const char*
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_neumann", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_neumann (integer orders)", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class Real, class T>
 void do_test_sph_neumann_y(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_YS_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BESSEL_YS_FUNCTION_TO_TEST
+   pg funcp = BESSEL_YS_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::sph_neumann<value_type>;
 #else
    pg funcp = boost::math::sph_neumann;
@@ -125,8 +121,9 @@ void do_test_sph_neumann_y(const T& data, const char* type_name, const char* tes
       data, 
       bind_func_int1<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_neumann", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "sph_neumann", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>

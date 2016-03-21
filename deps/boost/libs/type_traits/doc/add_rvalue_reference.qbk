@@ -21,11 +21,6 @@ reference. -end note\]].
 
 __std_ref 20.7.6.2.
 
-__compat If the compiler does not support partial specialization of class-templates
-and rvalue references
-then this template will compile, but the member `type` will always be the same as 
-type `T`.
-
 __header ` #include <boost/type_traits/add_rvalue_reference.hpp>` or ` #include <boost/type_traits.hpp>`
 
 [table Examples
@@ -45,6 +40,8 @@ __header ` #include <boost/type_traits/add_rvalue_reference.hpp>` or ` #include 
 [[`add_rvalue_reference<void>::type`][`void`]]
 
 ]
+
+__compat In the absence of rvalue-reference support this trait has no effect.
 
 [endsect]
 

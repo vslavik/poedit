@@ -53,7 +53,7 @@ void test_ptr_circular_buffer()
     random_access_algorithms_test< ptr_circular_buffer<int> >();
 
 
-    BOOST_MESSAGE( "starting ptr_circular_buffer test" );
+    BOOST_TEST_MESSAGE( "starting ptr_circular_buffer test" );
     ptr_circular_buffer<int> vec( 100u );
     BOOST_CHECK( vec.capacity() >= 100u );
 
@@ -89,7 +89,7 @@ void test_ptr_circular_buffer()
     BOOST_CHECK( vec2 <= vec );
     BOOST_CHECK( vec >= vec2 );
 
-    BOOST_MESSAGE( "push_front test" );    
+    BOOST_TEST_MESSAGE( "push_front test" );    
     assign::push_front( vec2 )
                       ( new int(2) )
                       ( new int(4) )
@@ -105,7 +105,7 @@ void test_ptr_circular_buffer()
     vec2.rresize( 0 );
     //vec2.reverse();
 
-    BOOST_MESSAGE( "when full test" );    
+    BOOST_TEST_MESSAGE( "when full test" );    
 
     ptr_circular_buffer<int> vec3;
     BOOST_CHECK_EQUAL( vec3.capacity(),  0u );
@@ -134,7 +134,7 @@ void test_ptr_circular_buffer()
     BOOST_CHECK_EQUAL( vec3.front(), 6 );
     BOOST_CHECK_EQUAL( vec3.back(), 2 );
 
-    BOOST_MESSAGE( "transfer test" );    
+    BOOST_TEST_MESSAGE( "transfer test" );    
     ptr_circular_buffer<int> vec4(2u);
     vec4.transfer( vec4.end(), vec3 );
     BOOST_CHECK_EQUAL( vec4.size(), 2u );
@@ -145,11 +145,11 @@ void test_ptr_circular_buffer()
     BOOST_CHECK_EQUAL( vec3.size(), 1u );
     BOOST_CHECK_EQUAL( vec3.front(), 2 );
 
-    BOOST_MESSAGE( "rerase test" );   
+    BOOST_TEST_MESSAGE( "rerase test" );   
     vec.rerase( vec.begin() );
     vec.rerase( boost::make_iterator_range( vec ) ); 
 
-    BOOST_MESSAGE( "array test" );    
+    BOOST_TEST_MESSAGE( "array test" );    
     const int data_size = 10;
     int** array = new int*[data_size];
     for( int i = 0; i != data_size; ++i ) 
@@ -165,7 +165,7 @@ void test_ptr_circular_buffer()
     const_array_range = const_cast< const ptr_circular_buffer<int>& >(vec).array_one();
     const_array_range = const_cast< const ptr_circular_buffer<int>& >(vec).array_two();
     
-    BOOST_MESSAGE( "finishing ptr_circular_buffer test" );    
+    BOOST_TEST_MESSAGE( "finishing ptr_circular_buffer test" );    
     
 }
 

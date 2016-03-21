@@ -19,6 +19,7 @@
 #include <string>
 #include <memory>
 #include <locale>
+#include <boost/core/explicit_operator_bool.hpp>
 #include <boost/utility/string_ref_fwd.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/log/detail/config.hpp>
@@ -26,7 +27,6 @@
 #include <boost/log/detail/code_conversion.hpp>
 #include <boost/log/utility/string_literal_fwd.hpp>
 #include <boost/log/utility/formatting_ostream_fwd.hpp>
-#include <boost/utility/explicit_operator_bool.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -40,19 +40,26 @@ BOOST_LOG_OPEN_NAMESPACE
 namespace aux {
 
 template< typename T, typename R >
-struct enable_if_char_type {};
+struct enable_if_streamable_char_type {};
 template< typename R >
-struct enable_if_char_type< char, R > { typedef R type; };
+struct enable_if_streamable_char_type< char, R > { typedef R type; };
 template< typename R >
-struct enable_if_char_type< wchar_t, R > { typedef R type; };
+struct enable_if_streamable_char_type< wchar_t, R > { typedef R type; };
+#if !defined(BOOST_LOG_NO_CXX11_CODECVT_FACETS)
 #if !defined(BOOST_NO_CXX11_CHAR16_T)
 template< typename R >
-struct enable_if_char_type< char16_t, R > { typedef R type; };
+struct enable_if_streamable_char_type< char16_t, R > { typedef R type; };
 #endif
 #if !defined(BOOST_NO_CXX11_CHAR32_T)
 template< typename R >
-struct enable_if_char_type< char32_t, R > { typedef R type; };
+struct enable_if_streamable_char_type< char32_t, R > { typedef R type; };
 #endif
+#endif
+
+template< typename StreamT, typename R >
+struct enable_if_formatting_ostream {};
+template< typename CharT, typename TraitsT, typename AllocatorT, typename R >
+struct enable_if_formatting_ostream< basic_formatting_ostream< CharT, TraitsT, AllocatorT >, R > { typedef R type; };
 
 } // namespace aux
 
@@ -120,6 +127,10 @@ public:
         explicit sentry(basic_formatting_ostream& strm) : base_type(strm.stream())
         {
         }
+
+        // A workaround for Solaris Studio 12.4 compiler, see: https://svn.boost.org/trac/boost/ticket/11545
+        BOOST_EXPLICIT_OPERATOR_BOOL()
+        bool operator! () const { return !static_cast< base_type const& >(*this); }
 
         BOOST_DELETED_FUNCTION(sentry(sentry const&))
         BOOST_DELETED_FUNCTION(sentry& operator= (sentry const&))
@@ -338,7 +349,7 @@ public:
     }
 
     template< typename OtherCharT >
-    typename aux::enable_if_char_type< OtherCharT, basic_formatting_ostream& >::type
+    typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
     put(OtherCharT c)
     {
         write(&c, 1);
@@ -352,11 +363,11 @@ public:
     }
 
     template< typename OtherCharT >
-    typename aux::enable_if_char_type< OtherCharT, basic_formatting_ostream& >::type
+    typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
     write(const OtherCharT* p, std::streamsize size)
     {
         sentry guard(*this);
-        if (guard)
+        if (!!guard)
         {
             m_stream.flush();
 
@@ -392,6 +403,8 @@ public:
         return this->formatted_write(p, static_cast< std::streamsize >(std::char_traits< char >::length(p)));
     }
 
+    // When no native character type is supported, the following overloads are disabled as they have ambiguous meaning.
+    // Use basic_string_ref, basic_string_view or basic_string to explicitly indicate that the data is a string.
 #if !defined(BOOST_NO_INTRINSIC_WCHAR_T)
     basic_formatting_ostream& operator<< (wchar_t c)
     {
@@ -402,6 +415,7 @@ public:
         return this->formatted_write(p, static_cast< std::streamsize >(std::char_traits< wchar_t >::length(p)));
     }
 #endif
+#if !defined(BOOST_LOG_NO_CXX11_CODECVT_FACETS)
 #if !defined(BOOST_NO_CXX11_CHAR16_T)
     basic_formatting_ostream& operator<< (char16_t c)
     {
@@ -421,6 +435,7 @@ public:
     {
         return this->formatted_write(p, static_cast< std::streamsize >(std::char_traits< char32_t >::length(p)));
     }
+#endif
 #endif
 
     basic_formatting_ostream& operator<< (bool value)
@@ -510,25 +525,90 @@ public:
     }
 
     template< typename OtherCharT, typename OtherTraitsT, typename OtherAllocatorT >
-    friend typename aux::enable_if_char_type< OtherCharT, basic_formatting_ostream& >::type
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
     operator<< (basic_formatting_ostream& strm, std::basic_string< OtherCharT, OtherTraitsT, OtherAllocatorT > const& str)
     {
         return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
     }
 
     template< typename OtherCharT, typename OtherTraitsT >
-    friend typename aux::enable_if_char_type< OtherCharT, basic_formatting_ostream& >::type
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
     operator<< (basic_formatting_ostream& strm, basic_string_literal< OtherCharT, OtherTraitsT > const& str)
     {
         return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
     }
 
     template< typename OtherCharT, typename OtherTraitsT >
-    friend typename aux::enable_if_char_type< OtherCharT, basic_formatting_ostream& >::type
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
     operator<< (basic_formatting_ostream& strm, basic_string_ref< OtherCharT, OtherTraitsT > const& str)
     {
         return strm.formatted_write(str.data(), static_cast< std::streamsize >(str.size()));
     }
+
+    template< typename OtherCharT, typename OtherTraitsT, typename OtherAllocatorT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream& strm, std::basic_string< OtherCharT, OtherTraitsT, OtherAllocatorT >& str)
+    {
+        return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream& strm, basic_string_literal< OtherCharT, OtherTraitsT >& str)
+    {
+        return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream& strm, basic_string_ref< OtherCharT, OtherTraitsT >& str)
+    {
+        return strm.formatted_write(str.data(), static_cast< std::streamsize >(str.size()));
+    }
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    template< typename OtherCharT, typename OtherTraitsT, typename OtherAllocatorT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream&& strm, std::basic_string< OtherCharT, OtherTraitsT, OtherAllocatorT > const& str)
+    {
+        return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream&& strm, basic_string_literal< OtherCharT, OtherTraitsT > const& str)
+    {
+        return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream&& strm, basic_string_ref< OtherCharT, OtherTraitsT > const& str)
+    {
+        return strm.formatted_write(str.data(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT, typename OtherAllocatorT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream&& strm, std::basic_string< OtherCharT, OtherTraitsT, OtherAllocatorT >& str)
+    {
+        return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream&& strm, basic_string_literal< OtherCharT, OtherTraitsT >& str)
+    {
+        return strm.formatted_write(str.c_str(), static_cast< std::streamsize >(str.size()));
+    }
+
+    template< typename OtherCharT, typename OtherTraitsT >
+    friend typename aux::enable_if_streamable_char_type< OtherCharT, basic_formatting_ostream& >::type
+    operator<< (basic_formatting_ostream&& strm, basic_string_ref< OtherCharT, OtherTraitsT >& str)
+    {
+        return strm.formatted_write(str.data(), static_cast< std::streamsize >(str.size()));
+    }
+#endif
 
 private:
     void init_stream()
@@ -548,7 +628,7 @@ private:
     basic_formatting_ostream& formatted_write(const char_type* p, std::streamsize size)
     {
         sentry guard(*this);
-        if (guard)
+        if (!!guard)
         {
             m_stream.flush();
 
@@ -567,7 +647,7 @@ private:
     basic_formatting_ostream& formatted_write(const OtherCharT* p, std::streamsize size)
     {
         sentry guard(*this);
-        if (guard)
+        if (!!guard)
         {
             m_stream.flush();
 
@@ -703,17 +783,26 @@ void basic_formatting_ostream< CharT, TraitsT, AllocatorT >::aligned_write(const
     }
 }
 
-template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
-inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
-operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, T const& value)
+// Implementation note: these operators below should be the least attractive for the compiler
+// so that user's overloads are chosen, when present. We use function template partial ordering for this purpose.
+// We also don't use perfect forwarding for the right hand argument because in ths case the generic overload
+// would be more preferred than the typical one written by users:
+//
+// formatting_ostream& operator<< (formatting_ostream& strm, my_type const& arg);
+//
+// This is because my_type rvalues require adding const to the type, which counts as a conversion that is not required
+// if there is a perfect forwarding overload.
+template< typename StreamT, typename T >
+inline typename boost::log::aux::enable_if_formatting_ostream< StreamT, StreamT& >::type
+operator<< (StreamT& strm, T const& value)
 {
     strm.stream() << value;
     return strm;
 }
 
-template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
-inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
-operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, T& value)
+template< typename StreamT, typename T >
+inline typename boost::log::aux::enable_if_formatting_ostream< StreamT, StreamT& >::type
+operator<< (StreamT& strm, T& value)
 {
     strm.stream() << value;
     return strm;
@@ -721,19 +810,19 @@ operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, T& val
 
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 
-template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
-inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
-operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >&& strm, T const& value)
+template< typename StreamT, typename T >
+inline typename boost::log::aux::enable_if_formatting_ostream< StreamT, StreamT& >::type
+operator<< (StreamT&& strm, T const& value)
 {
-    static_cast< basic_formatting_ostream< CharT, TraitsT, AllocatorT >& >(strm) << value;
+    strm.stream() << value;
     return strm;
 }
 
-template< typename CharT, typename TraitsT, typename AllocatorT, typename T >
-inline basic_formatting_ostream< CharT, TraitsT, AllocatorT >&
-operator<< (basic_formatting_ostream< CharT, TraitsT, AllocatorT >&& strm, T& value)
+template< typename StreamT, typename T >
+inline typename boost::log::aux::enable_if_formatting_ostream< StreamT, StreamT& >::type
+operator<< (StreamT&& strm, T& value)
 {
-    static_cast< basic_formatting_ostream< CharT, TraitsT, AllocatorT >& >(strm) << value;
+    strm.stream() << value;
     return strm;
 }
 

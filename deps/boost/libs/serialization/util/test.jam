@@ -176,16 +176,15 @@ rule test-bsl-run_files ( test-name : sources * : libs * : requirements * ) {
     return $(tests) ;
 }
     
-rule test-bsl-run_polymorphic_archive ( test-name : sources * ) {
+rule test-bsl-run_polymorphic_archive ( test-name : sources * : requirements * ) {
     local tests ;
     for local defn in $(BOOST_ARCHIVE_LIST) {
         tests += [ 
             test-bsl-run_archive $(test-name)
             : polymorphic_$(defn:LB)  
-            : $(test-name) $(sources)
+            : $(test-name) $(sources) $(requirements)
         ] ;
     }
     return $(tests) ;
 }
-
 

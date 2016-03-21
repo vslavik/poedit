@@ -79,6 +79,20 @@ namespace ns
   )
 #endif
 
+template <typename TypeToConstruct>
+class empty_adt_templated_factory {
+
+  TypeToConstruct operator()() {
+    return TypeToConstruct();
+  }
+
+};
+
+BOOST_FUSION_ADAPT_TPL_ADT(
+    (TypeToConstruct),
+    (empty_adt_templated_factory)(TypeToConstruct),
+) 
+
 int
 main()
 {

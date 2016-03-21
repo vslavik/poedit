@@ -28,6 +28,177 @@
 </h2></div></div></div>
 <h4>
 <a name="geometry.release_notes.h0"></a>
+      <span class="phrase"><a name="geometry.release_notes.boost_1_60"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_60">Boost
+      1.60</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Solved tickets</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/10803" target="_top">10803</a>
+          Union algorithm returning invalid geometry
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11522" target="_top">11522</a>
+          Namespace clash in buffer for traits::detail
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11533" target="_top">11533</a>
+          Assert failure in rtree caused by a bug in remove() if min elements number
+          is 1
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11607" target="_top">11607</a>
+          Private geometry::exception::what()
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11709" target="_top">11709</a>
+          is_simple segfault
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11710" target="_top">11710</a>
+          is_simple - empty geometry logic
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11711" target="_top">11711</a>
+          is_simple and is_valid - Points that are NaN or Infinity
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bugfixes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fix colocations of touching interior ring / exterior ring, where it also
+          touches another polygon
+        </li>
+<li class="listitem">
+          Fix removing values from an empty rtree - no effect and 0 returned instead
+          of assertion failure.
+        </li>
+</ul></div>
+<h4>
+<a name="geometry.release_notes.h1"></a>
+      <span class="phrase"><a name="geometry.release_notes.boost_1_59"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_59">Boost
+      1.59</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Additional functionality</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Added rtree const_iterator, begin(), end() and the support for Boost.Range.
+        </li>
+<li class="listitem">
+          The support for C++11 <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">initializer_list</span></code>
+          in geometries models.
+        </li>
+<li class="listitem">
+          Disjoint and intersects support the following geometry combinations: multipoint/linestring,
+          multipoint/multilinestring.
+        </li>
+<li class="listitem">
+          Added relate() and relation() algorithms.
+        </li>
+<li class="listitem">
+          Intersection has been implemented for combinations of pointlike and linear
+          geometries
+        </li>
+<li class="listitem">
+          Added implementation for difference(pointlike, linear)
+        </li>
+<li class="listitem">
+          New algorithm is_empty, returning true if the geometry represents the empty
+          set
+        </li>
+<li class="listitem">
+          The envelope algorithm supports pointlike and linear geometries in the
+          spherical equatorial coordinate system
+        </li>
+<li class="listitem">
+          The envelope algorithm supports pointlike geometries in the geographic
+          coordinate system
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Improvements</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Upgraded rtree const_query_iterator category to ForwardIterator.
+        </li>
+<li class="listitem">
+          Buffer performance of buffers around multi-points is improved significantly
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Breaking changes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          buffer side strategy now returns error_code instead of bool. If you have
+          your own custom side strategy, it should be adapted
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>Solved tickets</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11113" target="_top">11113</a>
+          Support easy enumeration of all elements with BOOST_FOREACH
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11232" target="_top">11232</a>
+          Feature request - relate()
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11236" target="_top">11236</a>
+          Invalid result of centroid() for integer coordinate type
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11268" target="_top">11268</a>
+          Regression in boost::geometry::intersection interface with multi_linestring
+          and box -- does not compile on 1.57 VS 1.55
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11332" target="_top">11332</a>
+          Assertion failure in buffer for extreme coordinate differences
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11346" target="_top">11346</a>
+          Segment iterator does not work with ranges returning values instead of
+          references
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11436" target="_top">11436</a>
+          sym_difference(py1, py2, mpy) returns invalid multipolygon
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bugfixes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Buffer: use a more robust way to calculate the side of an intersection,
+          this fixes several errors in buffer generation
+        </li>
+<li class="listitem">
+          Fix in selection of segment to which calculate from IP from, in intersection
+          of two segments. Now is selected the one close to a segment-point point,
+          or else the one on the shortest segment. This avoids (rarely occuring)
+          generation of tiny triangles making output polygons invalid
+        </li>
+<li class="listitem">
+          In rescaling round instead of truncate to the integer grid (this fix and
+          the previous mentioned can have some impact on output geometries)
+        </li>
+<li class="listitem">
+          Fix potential infinite loop in detail::has_spikes (the loop can happen
+          if the points passed have NaN coordinates)
+        </li>
+</ul></div>
+<h4>
+<a name="geometry.release_notes.h2"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_58"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_58">Boost
       1.58</a>
     </h4>
@@ -241,13 +412,10 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h1"></a>
+<a name="geometry.release_notes.h3"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_57"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_57">Boost
       1.57</a>
     </h4>
-<p>
-      <span class="bold"><strong>Additional functionality</strong></span>
-    </p>
 <p>
       <span class="bold"><strong>Improvements</strong></span>
     </p>
@@ -351,7 +519,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h2"></a>
+<a name="geometry.release_notes.h4"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_56"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_56">Boost
       1.56</a>
     </h4>
@@ -502,7 +670,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h3"></a>
+<a name="geometry.release_notes.h5"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_55"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_55">Boost
       1.55</a>
     </h4>
@@ -603,7 +771,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h4"></a>
+<a name="geometry.release_notes.h6"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_54"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_54">Boost
       1.54</a>
     </h4>
@@ -688,7 +856,7 @@
           length, num_points)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h5"></a>
+<a name="geometry.release_notes.h7"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_53"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_53">Boost
       1.53</a>
     </h4>
@@ -743,7 +911,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h6"></a>
+<a name="geometry.release_notes.h8"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_51"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_51">Boost
       1.51</a>
     </h4>
@@ -776,7 +944,7 @@
           spherical distance, fixed (by patch of Karsten Ahnert)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h7"></a>
+<a name="geometry.release_notes.h9"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_50"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_50">Boost
       1.50</a>
     </h4>
@@ -831,7 +999,7 @@
           added algorithm "touches" (OGC SF compliant) for *polygon/*polygon
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h8"></a>
+<a name="geometry.release_notes.h10"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_49"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_49">Boost
       1.49</a>
     </h4>
@@ -951,7 +1119,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h9"></a>
+<a name="geometry.release_notes.h11"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_48"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_48">Boost
       1.48</a>
     </h4>
@@ -1043,7 +1211,7 @@
           Basic (limited) support for Boost.Rational
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h10"></a>
+<a name="geometry.release_notes.h12"></a>
       <span class="phrase"><a name="geometry.release_notes.boost_1_47"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_47">Boost
       1.47</a>
     </h4>

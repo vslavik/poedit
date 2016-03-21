@@ -40,9 +40,9 @@ struct is_simple_multipoint
 {
     static inline bool apply(MultiPoint const& multipoint)
     {
-        if ( boost::size(multipoint) == 0 )
+        if (boost::empty(multipoint))
         {
-            return false;
+            return true;
         }
 
         MultiPoint mp(multipoint);

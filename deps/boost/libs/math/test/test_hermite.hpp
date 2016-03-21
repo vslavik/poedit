@@ -21,7 +21,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_legendre_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -31,10 +30,13 @@
 template <class Real, class T>
 void do_test_hermite(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(HERMITE_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef HERMITE_FUNCTION_TO_TEST
+   pg funcp = HERMITE_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::hermite<value_type>;
 #else
    pg funcp = boost::math::hermite;
@@ -52,9 +54,10 @@ void do_test_hermite(const T& data, const char* type_name, const char* test_name
       data, 
       bind_func_int1<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::hermite", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "hermite", test_name);
 
    std::cout << std::endl;
+#endif
 }
 
 template <class T>

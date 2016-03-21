@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-# Copyright 2001 Dave Abrahams 
+# Copyright 2001 Dave Abrahams
 # Copyright 2011 Steven Watanabe
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 import BoostBuild
 import os
