@@ -1936,8 +1936,10 @@ bool Catalog::FixDuplicateItems()
     if ( !tmpdir.IsOk() )
         return false;
 
-    wxString po_file_temp = tmpdir.CreateFileName("catalog.po");
-    wxString po_file_fixed = tmpdir.CreateFileName("fixed.po");
+    wxString ext;
+    wxFileName::SplitPath(m_fileName, nullptr, nullptr, &ext);
+    wxString po_file_temp = tmpdir.CreateFileName("catalog." + ext);
+    wxString po_file_fixed = tmpdir.CreateFileName("fixed." + ext);
 
     if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
