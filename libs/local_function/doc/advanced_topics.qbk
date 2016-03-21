@@ -267,7 +267,7 @@ Furthermore, non __CXX11__ local functions can always be passes as template para
 This library uses an indirect function call via a function pointer in order to pass the local function as a template parameter (see the __Implementation__ section).
 No compiler has yet been observed to be able to inline function calls when they use such indirect function pointer calls.
 Therefore, inline local functions do not use such indirect function pointer call (so they are more likely to be optimized) but because of that they cannot be passed as template parameters.
-The indirect function pointer call is needed on __CXX03__ but it is not needed on __CXX11__ (see __N2657__ and __Boost_Config__'s `BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS`) thus this library automatically generates local function calls that can be inline on __CXX11__ compilers (even when the local function is not declared inline).
+The indirect function pointer call is needed on __CXX03__ but it is not needed on __CXX11__ (see __N2657__ and __Boost_Config__'s `BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS`) thus this library automatically generates local function calls that can be inline on __CXX11__ compilers (even when the local function is not declared inline).
 ]
 
 [important

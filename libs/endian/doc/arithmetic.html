@@ -320,23 +320,19 @@ example:</p>
 have identical layout on all platforms, so they never actually reverse endianness. They are provided to enable generic code, and 
 to improve code readability and searchability.</p>
 <h2><a name="Class_template_endian">Class template <code>endian</code></a><code>_arithmetic</code></h2>
-<p>An endian is an integer byte-holder with user-specified <a href="#endianness">
+<p>An <code>endian_integer</code> is an integer byte-holder with user-specified <a href="#endianness">
 endianness</a>, value type, size, and <a href="#alignment">alignment</a>. The 
-usual operations on integers are supplied.</p>
+usual operations on arithmetic types are supplied.</p>
 <h3><a name="Synopsis">Synopsis</a></h3>
-<pre>namespace boost
+<pre>#include &lt;boost/endian/conversion.hpp&gt;
+#include &lt;boost/endian/buffers.hpp&gt;
+
+namespace boost
 {
   namespace endian
   {
     //  C++11 features emulated if not available
    
-    enum class <a name="order">order</a>
-    {
-      big,                             // big-endian
-      little,                          // little-endian
-      native = <b><i>implementation-defined</i></b>  // same as order::big or order::little<b><i>
-    </i></b>};
-
     enum class <a name="alignment">align</a> {no, yes};            
 
     template &lt;order Order, class T, std::size_t n_bits,
@@ -633,7 +629,7 @@ sign partial specialization to correctly extend the sign when cover integer size
 differs from endian representation size.</p>
 <hr>
 <p>Last revised:
-<!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->25 March, 2015<!--webbot bot="Timestamp" endspan i-checksum="28920" --></p>
+<!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->14 October, 2015<!--webbot bot="Timestamp" endspan i-checksum="38874" --></p>
 <p>© Copyright Beman Dawes, 2006-2009, 2013</p>
 <p>Distributed under the Boost Software License, Version 1.0. See
 <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/ LICENSE_1_0.txt</a></p>

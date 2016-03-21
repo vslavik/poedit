@@ -45,7 +45,7 @@ import b2.build_system as build_system
 
 
 from b2.manager import get_manager
-from b2.util import stem, bjam_signature
+from b2.util import stem, bjam_signature, is_iterable_typed
 from b2.util.sequence import unique
 
 import bjam
@@ -88,7 +88,10 @@ __all_tests = []
 # Helper rule. Create a test target, using basename of first source if no target
 # name is explicitly passed. Remembers the created target in a global variable.
 def make_test(target_type, sources, requirements, target_name=None):
-
+    assert isinstance(target_type, basestring)
+    assert is_iterable_typed(sources, basestring)
+    assert is_iterable_typed(requirements, basestring)
+    assert isinstance(target_type, basestring) or target_type is None
     if not target_name:
         target_name = stem(os.path.basename(sources[0]))
 
@@ -151,7 +154,7 @@ def handle_input_files(input_files):
 
 @bjam_signature((["sources", "*"], ["args", "*"], ["input_files", "*"],
                  ["requirements", "*"], ["target_name", "?"],
-                 ["default_build", "*"]))                 
+                 ["default_build", "*"]))
 def run(sources, args, input_files, requirements, target_name=None, default_build=[]):
     if args:
         requirements.append("<testing.arg>" + " ".join(args))
@@ -160,7 +163,7 @@ def run(sources, args, input_files, requirements, target_name=None, default_buil
 
 @bjam_signature((["sources", "*"], ["args", "*"], ["input_files", "*"],
                  ["requirements", "*"], ["target_name", "?"],
-                 ["default_build", "*"]))                 
+                 ["default_build", "*"]))
 def run_fail(sources, args, input_files, requirements, target_name=None, default_build=[]):
     if args:
         requirements.append("<testing.arg>" + " ".join(args))
@@ -189,7 +192,8 @@ __ln1 = re.compile("/(tools|libs)/(.*)/(test|example)")
 __ln2 = re.compile("/(tools|libs)/(.*)$")
 __ln3 = re.compile("(/status$)")
 def get_library_name(path):
-    
+    assert isinstance(path, basestring)
+
     path = path.replace("\\", "/")
     match1 = __ln1.match(path)
     match2 = __ln2.match(path)
@@ -216,6 +220,7 @@ __out_xml = option.get("out-xml", False, True)
 #   - relative location of all source from the project root.
 #
 def dump_test(target):
+    assert isinstance(target, targets.AbstractTarget)
     type = target.type()
     name = target.name()
     project = target.project()
@@ -298,7 +303,11 @@ generators.register_composing("testing.time", [], ["TIME"])
 # contained in testing-aux.jam, which we load into Jam module named 'testing'
 
 def run_path_setup(target, sources, ps):
-
+    if __debug__:
+        from ..build.property_set import PropertySet
+        assert is_iterable_typed(target, basestring) or isinstance(target, basestring)
+        assert is_iterable_typed(sources, basestring)
+        assert isinstance(ps, PropertySet)
     # For testing, we need to make sure that all dynamic libraries needed by the
     # test are found. So, we collect all paths from dependency libraries (via
     # xdll-path property) and add whatever explicit dll-path user has specified.
@@ -313,7 +322,12 @@ def run_path_setup(target, sources, ps):
                      common.shared_library_path_variable(), dll_paths))
 
 def capture_output_setup(target, sources, ps):
-    run_path_setup(target, sources, ps)
+    if __debug__:
+        from ..build.property_set import PropertySet
+        assert is_iterable_typed(target, basestring)
+        assert is_iterable_typed(sources, basestring)
+        assert isinstance(ps, PropertySet)
+    run_path_setup(target[0], sources, ps)
 
     if ps.get('preserve-test-targets') == ['off']:
         bjam.call("set-target-variable", target, "REMOVE_TEST_TARGETS", "1")

@@ -164,9 +164,11 @@ void test()
 
         BOOST_STATIC_ASSERT((is_same<boost::fusion::result_of::deref<i0>::type, int&>::value));
         BOOST_STATIC_ASSERT((is_same<boost::fusion::result_of::deref<i1>::type, char&>::value));
+        BOOST_STATIC_ASSERT((is_same<boost::fusion::result_of::deref<i2>::type, char&>::value));
 
         BOOST_STATIC_ASSERT((is_same<boost::fusion::result_of::value_of<i0>::type, int>::value));
         BOOST_STATIC_ASSERT((is_same<boost::fusion::result_of::value_of<i1>::type, char&>::value));
+        BOOST_STATIC_ASSERT((is_same<boost::fusion::result_of::value_of<i2>::type, char&>::value));
     }
 
     { // Testing advance

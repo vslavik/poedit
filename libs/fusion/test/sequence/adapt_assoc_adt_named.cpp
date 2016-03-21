@@ -52,6 +52,9 @@ BOOST_FUSION_ADAPT_ASSOC_ADT_NAMED(
     (int, int, obj.get_y(), obj.set_y(val), ns::y_member)
 )
 
+class empty_adt{};
+BOOST_FUSION_ADAPT_ASSOC_ADT_NAMED(empty_adt, renamed_empty_adt,)
+
 int
 main()
 {

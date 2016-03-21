@@ -235,7 +235,7 @@ class varray
 
     BOOST_COPYABLE_AND_MOVABLE(varray)
 
-#ifdef BOOST_NO_RVALUE_REFERENCES
+#ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
 public:
     template <std::size_t C, typename S>
     varray & operator=(varray<Value, C, S> & sv)
@@ -422,7 +422,7 @@ public:
     //!   Linear O(N).
     template <std::size_t C, typename S>
 // TEMPORARY WORKAROUND
-#if defined(BOOST_NO_RVALUE_REFERENCES)
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     varray & operator=(::boost::rv< varray<value_type, C, S> > const& other)
 #else
     varray & operator=(varray<value_type, C, S> const& other)

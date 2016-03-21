@@ -45,7 +45,7 @@ void thread()
 #endif
     }
   }
-  BOOST_CATCH (boost::lock_error& le)
+  BOOST_CATCH (boost::lock_error& )
   {
     //BOOST_THREAD_LOG << "lock_error exception thrd>" << BOOST_THREAD_END_LOG;
   }

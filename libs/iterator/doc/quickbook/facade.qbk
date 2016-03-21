@@ -68,6 +68,7 @@ requirements.
   [
     [`i.dereference()`]
     [Access the value referred to]
+  ]
   [
     [`i.equal(j)`]
     [Compare for equality with `j`]
@@ -83,6 +84,7 @@ requirements.
   [
     [`i.advance(n)`]
     [Advance by `n` positions]
+  ]
   [
     [`i.distance_to(j)`]
     [Measure the distance to `j`]
@@ -487,7 +489,8 @@ w.m)` for some temporary object `w` of type `value_type`.
               iterator_facade<Dr2,V2,TC2,R2,D2> const& rhs);
 
 [*Returns:]
- 
+
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -495,6 +498,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `((Dr2 const&)rhs).equal((Dr1 const&)lhs)`.
+]
 
 
   template <class Dr1, class V1, class TC1, class R1, class D1,
@@ -505,6 +509,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
 [*Returns:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -512,6 +517,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `!((Dr2 const&)rhs).equal((Dr1 const&)lhs)`.
+]
 
 
   template <class Dr1, class V1, class TC1, class R1, class D1,
@@ -522,6 +528,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
 [*Returns:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -529,6 +536,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) > 0`.
+]
 
 
   template <class Dr1, class V1, class TC1, class R1, class D1,
@@ -539,6 +547,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
 [*Returns:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -546,6 +555,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) >= 0`.
+]
 
 
   template <class Dr1, class V1, class TC1, class R1, class D1,
@@ -556,6 +566,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
 [*Returns:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -563,6 +574,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) < 0`.
+]
 
 
   template <class Dr1, class V1, class TC1, class R1, class D1,
@@ -573,6 +585,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
 [*Returns:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -580,6 +593,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs) <= 0`.
+]
 
 .. _minus:
 
@@ -592,6 +606,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
 [*Return Type:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
    then 
@@ -600,9 +615,11 @@ w.m)` for some temporary object `w` of type `value_type`.
 
    Otherwise 
     `difference` shall be `iterator_traits<Dr2>::difference_type`
+]
 
 [*Returns:]
  
+[pre
   if `is_convertible<Dr2,Dr1>::value`
 
   then 
@@ -610,6 +627,7 @@ w.m)` for some temporary object `w` of type `value_type`.
 
   Otherwise, 
     `((Dr2 const&)rhs).distance_to((Dr1 const&)lhs)`.
+]
 
 
 [endsect]

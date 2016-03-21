@@ -63,5 +63,7 @@ int main( int argc, char * argv[])
 
     boost::thread( thread_fn).join();
 
+    std::cout << "Done" << std::endl;
+
     return 0;
 }

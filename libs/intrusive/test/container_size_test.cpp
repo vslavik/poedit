@@ -83,12 +83,12 @@ void test_sizes(boolean<true>, std::size_t wordsize)
       test_iterator_sizes<c>(wordsize);
    }
    {
-      typedef list< node< list_base_hook<> >, header_holder_type< pointer_holder< list_node<void*> > > > c;
+      typedef list< node< list_base_hook<> >, header_holder_type< heap_node_holder< list_node<void*>* > > > c;
       BOOST_TEST_EQ(sizeof(c), wordsize*2);
       test_iterator_sizes<c>(wordsize);
    }
    {
-      typedef list< node< list_base_hook<> >, constant_time_size<false>, header_holder_type< pointer_holder< list_node<void*> > > > c;
+      typedef list< node< list_base_hook<> >, constant_time_size<false>, header_holder_type< heap_node_holder< list_node<void*>* > > > c;
       BOOST_TEST_EQ(sizeof(c), wordsize*1);
       test_iterator_sizes<c>(wordsize);
    }
@@ -123,12 +123,12 @@ void test_sizes(boolean<true>, std::size_t wordsize)
       test_iterator_sizes<c>(wordsize);
    }
    {
-      typedef set< node< set_base_hook<> >, header_holder_type< pointer_holder< rbtree_node<void*> > > > c;
+      typedef set< node< set_base_hook<> >, header_holder_type< heap_node_holder< rbtree_node<void*>* > > > c;
       BOOST_TEST_EQ(sizeof(c), wordsize*2);
       test_iterator_sizes<c>(wordsize);
    }
    {
-      typedef set< node< set_base_hook<> >, constant_time_size<false>, header_holder_type< pointer_holder< rbtree_node<void*> > > > c;
+      typedef set< node< set_base_hook<> >, constant_time_size<false>, header_holder_type< heap_node_holder< rbtree_node<void*>* > > > c;
       BOOST_TEST_EQ(sizeof(c), wordsize*1);
       test_iterator_sizes<c>(wordsize);
    }
@@ -148,13 +148,23 @@ void test_sizes(boolean<true>, std::size_t wordsize)
       test_iterator_sizes<c>(wordsize);
    }
    {
-      typedef avl_set< node< avl_set_base_hook<> >, header_holder_type< pointer_holder< avltree_node<void*> > > > c;
+      typedef avl_set< node< avl_set_base_hook<> >, header_holder_type< heap_node_holder< avltree_node<void*>* > > > c;
       BOOST_TEST_EQ(sizeof(c), wordsize*2);
       test_iterator_sizes<c>(wordsize);
    }
    {
-      typedef avl_set< node< avl_set_base_hook<> >, constant_time_size<false>, header_holder_type< pointer_holder< avltree_node<void*> > > > c;
+      typedef avl_set< node< avl_set_base_hook<> >, constant_time_size<false>, header_holder_type< heap_node_holder< avltree_node<void*>* > > > c;
       BOOST_TEST_EQ(sizeof(c), wordsize*1);
+      test_iterator_sizes<c>(wordsize);
+   }
+   {  //bs
+      typedef bs_set<node< bs_set_base_hook<> > > c;
+      BOOST_TEST_EQ(sizeof(c), wordsize*4);
+      test_iterator_sizes<c>(wordsize);
+   }
+   {
+      typedef bs_set<node< bs_set_base_hook<> > , constant_time_size<false> > c;
+      BOOST_TEST_EQ(sizeof(c), wordsize*3);
       test_iterator_sizes<c>(wordsize);
    }
    {  //splay

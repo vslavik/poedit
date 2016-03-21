@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,17 +35,17 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="maximum.html" title="Struct template maximum">maximum</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">binary_function</span><span class="special">&lt;</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">{</span>
 
-  <span class="comment">// <a class="link" href="maximum.html#idp209267424-bb">public member functions</a></span>
-  <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="maximum.html#idp209267984-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="maximum.html#idm45507109479136-bb">public member functions</a></span>
+  <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="maximum.html#idm45507109478576-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp335112560"></a><h2>Description</h2>
+<a name="idm45555220128176"></a><h2>Description</h2>
 <p>This binary function object computes the maximum of the two values it is given. When used with MPI and a type <code class="computeroutput">T</code> that has an associated, built-in MPI data type, translates to <code class="computeroutput">MPI_MAX</code>. </p>
 <div class="refsect2">
-<a name="idp335114784"></a><h3>
-<a name="idp209267424-bb"></a><code class="computeroutput">maximum</code> public member functions</h3>
+<a name="idm45555220125952"></a><h3>
+<a name="idm45507109479136-bb"></a><code class="computeroutput">maximum</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp209267984-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> <a name="idm45507109478576-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> y<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">

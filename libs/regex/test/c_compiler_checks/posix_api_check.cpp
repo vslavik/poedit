@@ -21,7 +21,7 @@
 #include <string.h>
 #include <boost/assert.hpp>
 #include <boost/regex.h>
-#include <boost/detail/lightweight_test.hpp>
+#include "../test_macros.hpp"
 
 const char* expression = "^";
 const char* text = "\n      ";
@@ -43,7 +43,7 @@ int main()
       printf("%s", buf);
       return result;
    }
-   BOOST_TEST(re.re_nsub == 0);
+   BOOST_CHECK(re.re_nsub == 0);
    matches[0].rm_so = 0;
    matches[0].rm_eo = strlen(text);
    result = regexecA(&re, text, 1, matches, REG_NOTBOL | REG_NOTEOL | REG_STARTEND);
@@ -55,7 +55,7 @@ int main()
       regfreeA(&re);
       return result;
    }
-   BOOST_TEST(matches[0].rm_so == matches[0].rm_eo);
+   BOOST_CHECK(matches[0].rm_so == matches[0].rm_eo);
    regfreeA(&re);
    printf("no errors found\n");
    return boost::report_errors();

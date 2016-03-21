@@ -31,6 +31,12 @@ Key extraction
 
 <ul>
   <li><a href="#classification">Classification</a>
+  <li><a href="#rnk_indices">Ranked indices</a>
+    <ul>
+      <li><a href="#rnk_spec">Specification</a></li>
+      <li><a href="#rnk_ops">Rank operations</a></li>
+    </ul>
+  </li>
   <li><a href="#hashed_indices">Hashed indices</a>
     <ul>
       <li><a href="#hash_unique_non_unique">Unique and non-unique variants</a></li>
@@ -71,12 +77,18 @@ some added benefits, functionally or in the area of performance.
   <th align="center">specifier</th>
 </tr>
 <tr>
-  <td align="center" rowspan="4">&nbsp;&nbsp;key-based&nbsp;&nbsp;</td>
-  <td align="center" rowspan="2">&nbsp;&nbsp;ordered&nbsp;&nbsp;</td>
+  <td align="center" rowspan="6">&nbsp;&nbsp;key-based&nbsp;&nbsp;</td>
+  <td align="center" rowspan="4">&nbsp;&nbsp;ordered&nbsp;&nbsp;</td>
   <td align="center">&nbsp;&nbsp;<code>ordered_unique</code>&nbsp;&nbsp;</td>
 </tr>
 <tr class="odd_tr">
   <td align="center">&nbsp;&nbsp;<code>ordered_non_unique</code>&nbsp;&nbsp;</td>
+</tr>
+<tr>
+  <td align="center">&nbsp;&nbsp;<code>ranked_unique</code>&nbsp;&nbsp;</td>
+</tr>
+<tr class="odd_tr">
+  <td align="center">&nbsp;&nbsp;<code>ranked_non_unique</code>&nbsp;&nbsp;</td>
 </tr>
 <tr>
   <td align="center" rowspan="2">&nbsp;&nbsp;hashed&nbsp;&nbsp;</td>
@@ -106,6 +118,114 @@ allowed to modify; non key-based indices, on the other hand, can be freely
 rearranged at the expense of lacking lookup facilities. Sequenced indices,
 modeled after the interface of <code>std::list</code>, are the customary
 example of a non key-based index.
+</p>
+
+<h2><a name="rnk_indices">Ranked indices</a></h2>
+
+<p>
+Suppose we have a <code>std::multiset</code> of numbers and we want to output
+the values above the 75h <a href="http://en.wikipedia.org/wiki/Percentile">percentile</a>:
+</p>
+
+<blockquote><pre>
+<span class=keyword>typedef</span> <span class=identifier>std</span><span class=special>::</span><span class=identifier>multiset</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt;</span> <span class=identifier>int_multiset</span><span class=special>;</span>
+
+<span class=keyword>void</span> <span class=identifier>output_above_75th_percentile</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>int_multiset</span><span class=special>&amp;</span> <span class=identifier>s</span><span class=special>)</span>
+<span class=special>{</span>
+  <span class=identifier>int_multiset</span><span class=special>::</span><span class=identifier>const_iterator</span> <span class=identifier>it</span><span class=special>=</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>begin</span><span class=special>();</span>
+  <span class=identifier>std</span><span class=special>::</span><span class=identifier>advance</span><span class=special>(</span><span class=identifier>it</span><span class=special>,</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>size</span><span class=special>()*</span><span class=number>3</span><span class=special>/</span><span class=number>4</span><span class=special>);</span> <span class=comment>// linear on s.size();</span>
+
+  <span class=identifier>std</span><span class=special>::</span><span class=identifier>copy</span><span class=special>(</span><span class=identifier>it</span><span class=special>,</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>end</span><span class=special>(),</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream_iterator</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt;(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>cout</span><span class=special>,</span><span class=string>&quot;\n&quot;</span><span class=special>));</span>
+<span class=special>}</span>
+</pre></blockquote>
+
+<p>
+The problem with this code is that getting to the beginning of the desired subsequence
+involves a linear traversal of the container. Ranked indices provide the mechanisms to do this
+much faster: 
+</p>
+
+<blockquote><pre>
+<span class=keyword>typedef</span> <span class=identifier>multi_index_container</span><span class=special>&lt;</span>
+  <span class=keyword>int</span><span class=special>,</span>
+  <span class=identifier>indexed_by</span><span class=special>&lt;</span>
+    <span class=identifier>ranked_non_unique</span><span class=special>&lt;</span><span class=identifier>identity</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt;</span> <span class=special>&gt;</span>
+  <span class=special>&gt;</span>
+<span class=special>&gt;</span> <span class=identifier>int_multiset</span><span class=special>;</span>
+
+<span class=keyword>void</span> <span class=identifier>output_above_75th_percentile</span><span class=special>(</span><span class=keyword>const</span> <span class=identifier>int_multiset</span><span class=special>&amp;</span> <span class=identifier>s</span><span class=special>)</span>
+<span class=special>{</span>
+  <span class=identifier>int_multiset</span><span class=special>::</span><span class=identifier>const_iterator</span> <span class=identifier>it</span><span class=special>=</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>nth</span><span class=special>(</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>size</span><span class=special>()*</span><span class=number>3</span><span class=special>/</span><span class=number>4</span><span class=special>);</span> <span class=comment>// logarithmic</span>
+  <span class=identifier>std</span><span class=special>::</span><span class=identifier>copy</span><span class=special>(</span><span class=identifier>it</span><span class=special>,</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>end</span><span class=special>(),</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>ostream_iterator</span><span class=special>&lt;</span><span class=keyword>int</span><span class=special>&gt;(</span><span class=identifier>std</span><span class=special>::</span><span class=identifier>cout</span><span class=special>,</span><span class=string>&quot;\n&quot;</span><span class=special>));</span>
+<span class=special>}</span>
+</pre></blockquote>
+
+<p>
+<code>nth(n)</code> returns an iterator to the element whose <i>rank</i>, i.e. its distance
+from the beginning of the index, is <code>n</code>, and does so efficiently in logarithmic time.
+Conversely, <code>rank(it)</code> computes in logarithmic time the rank of the element
+pointed to by <code>it</code>, or <code>size()</code> if <code>it==end()</code>.
+</p>
+
+<blockquote><pre>
+<span class=identifier>int_multiset</span><span class=special>::</span><span class=identifier>iterator</span>  <span class=identifier>it</span><span class=special>=</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>insert</span><span class=special>(</span><span class=number>10</span><span class=special>).</span><span class=identifier>first</span><span class=special>;</span>
+<span class=identifier>int_multiset</span><span class=special>::</span><span class=identifier>size_type</span> <span class=identifier>r</span><span class=special>=</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>rank</span><span class=special>(</span><span class=identifier>it</span><span class=special>);</span> <span class=comment>// rank of 10;</span>
+</pre></blockquote>
+
+<p>
+Ranked indices provide the same interface as ordered indices plus several rank-related operations.
+The cost of this extra functionality is higher memory consumption due to some internal additional
+data (one word per element) and somewhat longer execution times in insertion and erasure
+&#8212;in particular, erasing an element takes time proportional to <code>log(n)</code>, where
+<code>n</code> is the number of elements in the index, whereas for ordered indices this time is
+constant.
+The <a href="../reference/rnk_indices.html">reference</a> describes these indices in complete detail.
+</p>
+
+<h3><a name="rnk_spec">Specification</a></h3>
+
+<p>
+The specification of ranked indices is done exactly as with <a href="basics.html#ord_spec">ordered indices</a>,
+except that <code>ranked_unique</code> and <code>ranked_non_unique</code> are used instead.
+</p>
+
+<blockquote><pre>
+<span class=special>(</span><span class=identifier>ranked_unique</span> <span class=special>|</span> <span class=identifier>ranked_non_unique</span><span class=special>)
+  </span><span class=special>&lt;[</span><i>(tag)</i><span class=special>[,</span><i>(key extractor)</i><span class=special>[,</span><i>(comparison predicate)</i><span class=special>]]]&gt;</span>
+
+<span class=special>(</span><span class=identifier>ranked_unique</span> <span class=special>|</span> <span class=identifier>ranked_non_unique</span><span class=special>)</span>
+  <span class=special>&lt;[</span><i>(key extractor)</i><span class=special>[,</span><i>(comparison predicate)</i><span class=special>]]&gt;</span>
+</pre></blockquote>
+
+<h3><a name="rnk_ops">Rank operations</a></h3>
+
+<p>
+Besides <code>nth</code> and <code>rank</code>, ranked indices provide member functions
+<ul>
+  <li><code>find_rank</code>,</li>
+  <li><code>lower_bound_rank</code>,</li>
+  <li><code>upper_bound_rank</code>,</li>
+  <li><code>equal_range_rank</code> and </li>
+  <li><code>range_rank</code></li>
+</ul>
+that behave as their normal
+<a href="basics.html#special_lookup">lookup</a> and <a href="basics.html#range">range retrieval</a>
+counterparts (<code>find</code>, <code>lower_bound</code> etc.) but return ranks rather than iterators.
+</p>
+
+<blockquote><pre>
+<span class=keyword>void</span> <span class=identifier>percentile</span><span class=special>(</span><span class=keyword>int</span> <span class=identifier>n</span><span class=special>,</span><span class=keyword>const</span> <span class=identifier>int_multiset</span><span class=special>&amp;</span> <span class=identifier>s</span><span class=special>)</span>
+<span class=special>{</span>
+  <span class=identifier>std</span><span class=special>::</span><span class=identifier>cout</span><span class=special>&lt;&lt;</span><span class=identifier>n</span><span class=special>&lt;&lt;</span><span class=string>&quot; lies in the &quot;</span><span class=special>&lt;&lt;</span>
+    <span class=identifier>s</span><span class=special>.</span><span class=identifier>upper_bound_rank</span><span class=special>(</span><span class=identifier>n</span><span class=special>)*</span><span class=number>100.0</span><span class=special>/</span><span class=identifier>s</span><span class=special>.</span><span class=identifier>size</span><span class=special>()&lt;&lt;</span><span class=string>&quot; percentile\n&quot;</span><span class=special>;</span>
+<span class=special>}</span>
+</pre></blockquote>
+
+<p>
+You might think that <code>upper_bound_rank(n)</code> is mere shorthand for
+<code>rank(upper_bound(n))</code>: in reality, though, you should prefer using
+<code>*_rank</code> operations directly as they run faster than the
+alternative formulations.
 </p>
 
 <h2><a name="hashed_indices">Hashed indices</a></h2>
@@ -162,25 +282,10 @@ determining whether a hashed index is preferred over an ordered one.
 </p>
 
 <p>
-If you are familiar with non-standard <code>hash_set</code>s provided
-by some compiler vendors, then learning to use hashed indices should be straightforward.
-However, the interface of hashed indices is modeled after the specification
-for unordered associative containers by the
-<a href="http://www.open-std.org/JTC1/SC22/WG21/docs/papers/2005/n1836.pdf">C++ Standard
-Library Technical Report</a> (TR1),
-which differs in some significant aspects from existing pre-standard
-implementations:
-<ul>
-  <li>As there is no notion of ordering between keys, the <a href="#hash_lookup">lookup
-    interface</a> does not offer <code>lower_bound</code> or <code>upper_bound</code>
-    member functions (unlike Dinkumware's solution.)</li>
-  <li>A set of member functions is provided for handling the internal
-    bucket structure on which hashed indices rely. This includes facilities
-    for <a href="../reference/hash_indices.html#hash_policy">rehashing</a>,
-    control of the load factor (number of elements divided by number of buckets),
-    and inspection of the buckets contents. Pre-standard implementations
-    do not have such an extensive functionality.</li> 
-</ul>
+Hashed indices replicate the interface as <code>std::unordered_set</code> and
+<code>std::unordered_multiset</code>, with only minor differences where required
+by the general constraints of <code>multi_index_container</code>s, and provide
+additional useful capabilities like in-place updating of elements.
 Check the <a href="../reference/hash_indices.html">reference</a> for a
 complete specification of the interface of hashed indices,
 and <a href="../examples.html#example8">example 8</a> and
@@ -352,19 +457,18 @@ member functions, with the same functionality as in ordered indices.
 Due to the internal constraints imposed by the Boost.MultiIndex framework,
 hashed indices provide guarantees on iterator validity and
 exception safety that are actually stronger than required by the
-C++ Standard Library Technical Report (TR1) with respect
-to unordered associative containers:
+C++ standard with respect to unordered associative containers:
 <ul>
   <li>Iterator validity is preserved in any case during insertion or rehashing:
-    TR1 allows for iterator invalidation when a rehash (implicit or explicit)
+    C++ unordered associative containers can invalidate iterators when a rehash (implicit or explicit)
     is performed.</li>
   <li>Erasing an element or range of elements via iterators does not throw ever,
     as the internal hash function and equality predicate objects are not actually
     invoked.</li>
   <li><code>rehash</code> provides the strong exception safety guarantee
-    unconditionally. TR1 only warrants it if the internal hash function and
+    unconditionally. The standard only warrants it for unordered associative containers if the internal hash function and
     equality predicate objects do not throw. The somewhat surprising consequence
-    is that a TR1-compliant unordered associative container might erase
+    is that a standard-compliant <code>std::unordered_set</code> might erase
     elements if an exception is thrown during rehashing!</li>
 </ul>
 In general, these stronger guarantees play in favor of the user's convenience,
@@ -527,15 +631,16 @@ indices), but induces important limitations in non key-based indices:
   <span class=special>&gt;</span>
 <span class=special>&gt;</span> <span class=identifier>container</span><span class=special>;</span>	
 
-<span class=identifier>container</span> <span class=identifier>c</span><span class=special>;</span>
+<span class=identifier>container</span>    <span class=identifier>c</span><span class=special>;</span>
+<span class=identifier>std</span><span class=special>::</span><span class=identifier>mt19937</span> <span class=identifier>rng</span><span class=special>;</span>
 <span class=special>...</span>
 <span class=comment>// compiler error: assignment to read-only objects</span>
-<span class=identifier>std</span><span class=special>::</span><span class=identifier>random_shuffle</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(),</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>end</span><span class=special>());</span>
+<span class=identifier>std</span><span class=special>::</span><span class=identifier>shuffle</span><span class=special>(</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(),</span><span class=identifier>c</span><span class=special>.</span><span class=identifier>end</span><span class=special>(),</span><span class=identifier>rng</span><span class=special>);</span>
 </pre></blockquote>
 
 <p>
 What is unfortunate about the previous example is that the operation
-performed by <code>std::random_shuffle</code> is potentially compatible
+performed by <code>std::shuffle</code> is potentially compatible
 with <code>multi_index_container</code> invariants, as its result can be
 described by a permutation of the elements in the random access index
 with no actual modifications to the elements themselves. There are many
@@ -561,7 +666,7 @@ container:
 <span class=identifier>BOOST_FOREACH</span><span class=special>(</span><span class=keyword>const</span> <span class=keyword>int</span><span class=special>&amp;</span> <span class=identifier>i</span><span class=special>,</span><span class=identifier>c</span><span class=special>)</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>push_back</span><span class=special>(</span><span class=identifier>boost</span><span class=special>::</span><span class=identifier>cref</span><span class=special>(</span><span class=identifier>i</span><span class=special>));</span>
 
 <span class=comment>// this compiles OK, as reference_wrappers are swappable</span>
-<span class=identifier>std</span><span class=special>::</span><span class=identifier>random_shuffle</span><span class=special>(</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(),</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>end</span><span class=special>());</span>
+<span class=identifier>std</span><span class=special>::</span><span class=identifier>shuffle</span><span class=special>(</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>begin</span><span class=special>(),</span><span class=identifier>v</span><span class=special>.</span><span class=identifier>end</span><span class=special>(),</span><span class=identifier>rng</span><span class=special>);</span>
 </pre></blockquote>
 
 <p>
@@ -569,7 +674,7 @@ Elements of <code>v</code> are <code>reference_wrapper</code>s (from
 <a href="../../../../doc/html/ref.html">Boost.Ref</a>) to the actual elements
 in the multi-index container. These objects still do not allow modification
 of the referenced entities, but they are swappable,
-which is the only requirement <code>std::random_shuffle</code> imposes. Once
+which is the only requirement <code>std::shuffle</code> imposes. Once
 we have our desired rearrange stored in the view, we can transfer it to
 the container with
 </p>
@@ -672,7 +777,7 @@ in scenarios where access via iterators is not suitable or desireable:
 <h2><a name="ordered_node_compression">Ordered indices node compression</a></h2>
 
 <p>
-Ordered indices are implemented by means of a data structure
+Ordered and ranked indices are implemented by means of a data structure
 known as a <i>red-black tree</i>. Nodes of a red-back tree contain pointers
 to the parent and the two children nodes, plus a 1-bit field referred to as
 the <i>node color</i> (hence the name of the structure). Due to alignment
@@ -686,7 +791,7 @@ significant bit of the address must always be zero.
 </p>
 
 <p>
-Boost.MultiIndex ordered indices implement this type of node compression
+Boost.MultiIndex ordered and ranked indices implement this type of node compression
 whenever applicable. As compared with common implementations of the STL
 container <code>std::set</code>, node compression can
 result in a reduction of header overload by 25% (from 16 to 12 bytes on
@@ -716,9 +821,9 @@ Key extraction
 
 <br>
 
-<p>Revised July 7th 2013</p>
+<p>Revised August 19th 2015</p>
 
-<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

@@ -15,14 +15,16 @@
 ```
 namespace boost {
 
-class none_t {};
+class none_t {/* see below */};
 
-extern const none_t none; // see below
+const none_t none (/* see below */); 
     
 } // namespace boost
 ```
 
-Variable `none` has external linkage, however it is not required to link with any library to obtain its definition. Only by including this header file, the definition becomes available, by means of using template instantiation.
+Class `none_t` is meant to serve as a tag for selecting appropriate overloads of from `optional`'s interface. It is an empty, trivially copyable class with disabled default constructor.
+
+Constant `none` is used to indicate an optional object that does not contain a value in initialization, assignment and relational operations of `optional`.
 
 [endsect]
 

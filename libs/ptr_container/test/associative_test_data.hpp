@@ -55,7 +55,7 @@ void ptr_set_test()
 {   
     using namespace boost;
     
-    BOOST_MESSAGE( "starting associative container test" ); 
+    BOOST_TEST_MESSAGE( "starting associative container test" ); 
     enum { max_cnt = 10, size = 100 };
     C  c;
     BOOST_CHECK( c.size() == 0 );
@@ -67,7 +67,7 @@ void ptr_set_test()
     
     C c3;
     
-    BOOST_MESSAGE( "finished construction test" ); 
+    BOOST_TEST_MESSAGE( "finished construction test" ); 
 
     C a_copy( c );
     BOOST_CHECK_EQUAL( a_copy.size(), c.size() );
@@ -78,7 +78,7 @@ void ptr_set_test()
     a_copy = a_copy;
     BOOST_CHECK( a_copy.empty() );
     
-    BOOST_MESSAGE( "finished copying test" ); 
+    BOOST_TEST_MESSAGE( "finished copying test" ); 
                  
     BOOST_DEDUCED_TYPENAME C::allocator_type alloc        = c.get_allocator();
     BOOST_DEDUCED_TYPENAME C::iterator i                  = c.begin();
@@ -88,7 +88,7 @@ void ptr_set_test()
     BOOST_DEDUCED_TYPENAME C::iterator i2                 = c.end();
     BOOST_DEDUCED_TYPENAME C::const_iterator ci2          = c2.begin();
                              
-    BOOST_MESSAGE( "finished iterator test" ); 
+    BOOST_TEST_MESSAGE( "finished iterator test" ); 
    
     BOOST_DEDUCED_TYPENAME C::size_type s                 = c.size();
     BOOST_DEDUCED_TYPENAME C::size_type s2                = c.max_size();
@@ -96,7 +96,7 @@ void ptr_set_test()
     BOOST_CHECK_EQUAL( c.size(), s );
     bool b                                                = c.empty();
     hide_warning(b);
-    BOOST_MESSAGE( "finished accessors test" ); 
+    BOOST_TEST_MESSAGE( "finished accessors test" ); 
     
     T* t = new T;
     c.insert( c.end(), t );    
@@ -126,13 +126,13 @@ void ptr_set_test()
     //
     c3.erase( boost::make_iterator_range(c3) );
     BOOST_CHECK( c3.empty() );
-    BOOST_MESSAGE( "finished modifiers test" ); 
+    BOOST_TEST_MESSAGE( "finished modifiers test" ); 
              
     c.insert( c.end(), new T );
     typename C::auto_type ptr2  = c.release( c.begin() );
     std::auto_ptr<C> ap2         = c.release();
     c                           = c2.clone();
-    BOOST_MESSAGE( "finished release/clone test" ); 
+    BOOST_TEST_MESSAGE( "finished release/clone test" ); 
 
     c3.insert( new T );
     c3.insert( new T );
@@ -165,12 +165,12 @@ void ptr_set_test()
     BOOST_CHECK( c3.empty() );
 #endif    
 
-    BOOST_MESSAGE( "finished transfer test" );         
+    BOOST_TEST_MESSAGE( "finished transfer test" );         
   
     C c4;
     c4.swap(c3);
     swap(c4,c3); 
-    BOOST_MESSAGE( "finished set/map interface test" );         
+    BOOST_TEST_MESSAGE( "finished set/map interface test" );         
     
     sub_range<C>        sub;
     sub_range<const C> csub;
@@ -185,7 +185,7 @@ void ptr_set_test()
     csub = c2.equal_range( *t );         
     delete t;
        
-    BOOST_MESSAGE( "finished algorithms interface test" );         
+    BOOST_TEST_MESSAGE( "finished algorithms interface test" );         
     
 }
 

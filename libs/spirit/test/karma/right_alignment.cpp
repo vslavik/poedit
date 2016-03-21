@@ -11,6 +11,7 @@
 #include <boost/spirit/include/karma_numeric.hpp>
 #include <boost/spirit/include/karma_generate.hpp>
 #include <boost/spirit/include/karma_directive.hpp>
+#include <boost/spirit/include/karma_upper_lower_case.hpp>
 
 #include "test.hpp"
 
@@ -34,6 +35,8 @@ main()
         BOOST_TEST(test("*********x", right_align(10, char_('*'))[char_('x')]));
         BOOST_TEST(test("*********x", right_align(10, '*')[char_], 'x'));
         BOOST_TEST(test("*********x", right_align(10, '*')['x']));
+        BOOST_TEST(test("aaaaaaaaax", lower[right_align(10, 'A')['X']]));
+        BOOST_TEST(test("AAAAAAAAAX", upper[right_align(10, 'a')['x']]));
 
         BOOST_TEST(test("*********x", right_align(char_('*'))[char_('x')]));
         BOOST_TEST(test("*********x", right_align(char_('*'))[char_], 'x'));

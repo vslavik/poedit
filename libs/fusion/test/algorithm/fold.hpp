@@ -189,7 +189,7 @@ struct fold_test_n
                     >::type
                   , typename mpl::if_c<
                         !n
-                      , mpl::vector<mpl::int_<1>, mpl::int_<0> > const&
+                      , mpl::vector<mpl::int_<1>, mpl::int_<0> >&
                       , mpl::vector<mpl::int_<n+1>, mpl::int_<squares_sum> >
                     >::type
                 >

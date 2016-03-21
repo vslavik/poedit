@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_units.html" title="Chapter&#160;36.&#160;Boost.Units 1.1.0">
+<link rel="up" href="../boost_units.html" title="Chapter&#160;37.&#160;Boost.Units 1.1.0">
 <link rel="prev" href="Units.html" title="Units">
 <link rel="next" href="Examples.html" title="Examples">
 </head>
@@ -57,8 +58,8 @@
       Operators +, -, *, and / are provided for algebraic operations between scalars
       and units, scalars and quantities, units and quantities, and between quantities.
       In addition, integral and rational powers and roots can be computed using the
-      <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/pow_idp341202912.html" title="Function template pow">pow</a></code></span>&lt;R&gt;
-      and <span class="underline"><code class="computeroutput"><a class="link" href="Reference.html#boost.units.root_idp342056176">root</a></code></span>&lt;R&gt;
+      <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/pow_idm45506852379376.html" title="Function template pow">pow</a></code></span>&lt;R&gt;
+      and <span class="underline"><code class="computeroutput"><a class="link" href="Reference.html#boost.units.root_idm45506851526112">root</a></code></span>&lt;R&gt;
       functions. Finally, the standard set of boolean comparison operators ( <code class="computeroutput"><span class="special">==,</span> <span class="special">!=,</span> <span class="special">&lt;,</span>
       <span class="special">&lt;=,</span> <span class="special">&gt;,</span>
       <span class="keyword">and</span> <span class="special">&gt;=</span></code>
@@ -171,9 +172,9 @@
         This library is designed to emphasize safety above convenience when performing
         operations with dimensioned quantities. Specifically, construction of quantities
         is required to fully specify both value and unit. Direct construction from
-        a scalar value is prohibited (though the static member function <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html#idp342136448-bb">from_value</a></code></span>
+        a scalar value is prohibited (though the static member function <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html#idm45506851445840-bb">from_value</a></code></span>
         is provided to enable this functionality where it is necessary. In addition,
-        a <span class="underline"><code class="computeroutput"><a class="link" href="Reference.html#boost.units.quantity_cast_idp342220624">quantity_cast</a></code></span>
+        a <span class="underline"><code class="computeroutput"><a class="link" href="Reference.html#boost.units.quantity_idm45506851361664">quantity_cast</a></code></span>
         to a reference allows direct access to the underlying value of a <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html" title="Class template quantity">quantity</a></code></span>
         variable. An explicit constructor is provided to enable conversion between
         dimensionally compatible quantities in different unit systems. Implicit conversions
@@ -222,7 +223,7 @@
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">quantity</span><span class="special">&lt;</span><span class="identifier">Unit</span><span class="special">,</span><span class="identifier">Y</span><span class="special">&gt;</span></code>
             can be directly constructed from a value of type <code class="computeroutput"><span class="identifier">Y</span></code>
-            using the static member function <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html#idp342136448-bb">from_value</a></code></span>.
+            using the static member function <span class="underline"><code class="computeroutput"><a class="link" href="../boost/units/quantity.html#idm45506851445840-bb">from_value</a></code></span>.
             Doing so, naturally, bypasses any type-checking of the newly assigned
             value, so this method should be used only when absolutely necessary.
           </li>

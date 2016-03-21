@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -43,46 +44,46 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_streambuf</span><span class="special">&lt;</span> <span class="identifier">char_type</span><span class="special">,</span> <span class="identifier">traits_type</span> <span class="special">&gt;</span> <a name="boost.interprocess.basic_bufferbuf.base_t"></a><span class="identifier">base_t</span><span class="special">;</span>     
 
   <span class="comment">// <a class="link" href="basic_bufferbuf.html#boost.interprocess.basic_bufferbufconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="basic_bufferbuf.html#idp56310208-bb"><span class="identifier">basic_bufferbuf</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">in</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="basic_bufferbuf.html#idp56312192-bb"><span class="identifier">basic_bufferbuf</span></a><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> 
+  <span class="keyword">explicit</span> <a class="link" href="basic_bufferbuf.html#idm45879390374240-bb"><span class="identifier">basic_bufferbuf</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">in</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="basic_bufferbuf.html#idm45879390372256-bb"><span class="identifier">basic_bufferbuf</span></a><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> 
                            <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">in</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="basic_bufferbuf.html#idp56315584-bb"><span class="special">~</span><span class="identifier">basic_bufferbuf</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_bufferbuf.html#idm45879390368864-bb"><span class="special">~</span><span class="identifier">basic_bufferbuf</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_bufferbuf.html#idp56305200-bb">public member functions</a></span>
-  <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&gt;</span> <a class="link" href="basic_bufferbuf.html#idp56305760-bb"><span class="identifier">buffer</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_bufferbuf.html#idp56307360-bb"><span class="identifier">buffer</span></a><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_bufferbuf.html#idm45879390379248-bb">public member functions</a></span>
+  <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&gt;</span> <a class="link" href="basic_bufferbuf.html#idm45879390378688-bb"><span class="identifier">buffer</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_bufferbuf.html#idm45879390377088-bb"><span class="identifier">buffer</span></a><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp239983488"></a><h2>Description</h2>
+<a name="idm45555313535360"></a><h2>Description</h2>
 <p>A streambuf class that controls the transmission of elements to and from a basic_xbufferstream. The elements are transmitted from a to a fixed size buffer </p>
 <div class="refsect2">
-<a name="idp239984336"></a><h3>
+<a name="idm45555313534512"></a><h3>
 <a name="boost.interprocess.basic_bufferbufconstruct-copy-destruct"></a><code class="computeroutput">basic_bufferbuf</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp56310208-bb"></a><span class="identifier">basic_bufferbuf</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> mode <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">in</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45879390374240-bb"></a><span class="identifier">basic_bufferbuf</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> mode <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">in</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Does not throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp56312192-bb"></a><span class="identifier">basic_bufferbuf</span><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span> buf<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> length<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45879390372256-bb"></a><span class="identifier">basic_bufferbuf</span><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span> buf<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> length<span class="special">,</span> 
                          <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> mode <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">in</span><span class="special">|</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Assigns formatting buffer. Does not throw. </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp56315584-bb"></a><span class="special">~</span><span class="identifier">basic_bufferbuf</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idm45879390368864-bb"></a><span class="special">~</span><span class="identifier">basic_bufferbuf</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp240023152"></a><h3>
-<a name="idp56305200-bb"></a><code class="computeroutput">basic_bufferbuf</code> public member functions</h3>
+<a name="idm45555313495808"></a><h3>
+<a name="idm45879390379248-bb"></a><code class="computeroutput">basic_bufferbuf</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&gt;</span> <a name="idp56305760-bb"></a><span class="identifier">buffer</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">CharT</span> <span class="special">*</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">&gt;</span> <a name="idm45879390378688-bb"></a><span class="identifier">buffer</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the pointer and size of the internal buffer. Does not throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56307360-bb"></a><span class="identifier">buffer</span><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span> buf<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> length<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390377088-bb"></a><span class="identifier">buffer</span><span class="special">(</span><span class="identifier">CharT</span> <span class="special">*</span> buf<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> length<span class="special">)</span><span class="special">;</span></pre>
 <p>Sets the underlying buffer to a new value Does not throw. </p>
 </li>
 </ol></div>
@@ -91,7 +92,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

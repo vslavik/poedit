@@ -76,7 +76,7 @@ MPL_TEST_CASE()
 
     typedef apply1< _1, std_vector<_1> >::type v_lambda;
     typedef apply1<v_lambda,int>::type v_int;
-    MPL_ASSERT(( is_same< v,std_vector<int> > ));
+    MPL_ASSERT(( is_same< v_int,std_vector<int> > ));
 }
 
 MPL_TEST_CASE()
@@ -86,7 +86,7 @@ MPL_TEST_CASE()
 
     typedef apply1< lambda<_1>, std_vector<_1> >::type make_vector;
     typedef apply_wrap1< make_vector,int >::type v_int;
-    MPL_ASSERT(( is_same< v,std_vector<int> > ));
+    MPL_ASSERT(( is_same< v_int,std_vector<int> > ));
 }
 
 MPL_TEST_CASE()

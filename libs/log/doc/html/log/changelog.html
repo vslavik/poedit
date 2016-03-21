@@ -21,6 +21,164 @@
 </h2></div></div></div>
 <h4>
 <a name="log.changelog.h0"></a>
+      <span class="phrase"><a name="log.changelog.2_7__boost_1_60"></a></span><a class="link" href="changelog.html#log.changelog.2_7__boost_1_60">2.7,
+      Boost 1.60</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          On Windows, the configuration macro <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_WINNT6_API</span></code>
+          is no longer used by the library. The target Windows version should be
+          configured by defining macro <code class="computeroutput"><span class="identifier">BOOST_USE_WINAPI_VERSION</span></code>
+          to the desired WinAPI version (e.g. 0x0501 for Windows XP). This macro
+          is used in multiple different Boost libraries besides Boost.Log.
+        </li>
+<li class="listitem">
+          The default target Windows version is now Vista on compilers with recent
+          enough Windows SDK and XP on others. The default is no longer chosen by
+          Boost.Log but by the common WinAPI submodule used by different Boost libraries.
+        </li>
+<li class="listitem">
+          Changed internal mutex type in the thread-safe queue implementation that
+          is used in asynchronous sink frontends with the <code class="computeroutput"><span class="identifier">unbounded_fifo_queue</span></code>
+          policy. The updated queue has improved performance in case of heavy thread
+          contention (hundreds and thousands of logging threads) on POSIX-compatible
+          systems.
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed compilation for Android using Google NDK. ( <a href="https://svn.boost.org/trac/boost/ticket/11559" target="_top">#11559</a>)
+        </li>
+<li class="listitem">
+          Fixed compilation of some logging statements, where the first object to
+          be put into stream is not directly supported by <code class="computeroutput"><span class="identifier">formatting_ostream</span></code>.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/11549" target="_top">#11549</a>)
+        </li>
+<li class="listitem">
+          Added a workaround for Solaris Studio 12.4, which should fix the compilation
+          of <code class="computeroutput"><span class="identifier">formatting_ostream</span></code>.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/11545" target="_top">#11545</a>)
+        </li>
+<li class="listitem">
+          Fixed compilation when native <code class="computeroutput"><span class="keyword">wchar_t</span></code>
+          type is disabled. Added a note of discouragement to the <a class="link" href="installation/config.html" title="Configuring and building the library">configuration</a>
+          section. ( <a href="https://svn.boost.org/trac/boost/ticket/11541" target="_top">#11541</a>)
+        </li>
+<li class="listitem">
+          Fixed exporting symbols from the <code class="computeroutput"><span class="identifier">boost_log_setup</span></code>
+          library on POSIX-like systems.
+        </li>
+<li class="listitem">
+          Fixed build failure on Nuxi CloudABI.
+        </li>
+<li class="listitem">
+          Fixed compilation of <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators" title="Character decorators">character
+          decorators</a>.
+        </li>
+<li class="listitem">
+          Added a workaround for incorrect file name generation in <a class="link" href="detailed/sink_backends.html#log.detailed.sink_backends.text_file" title="Text file backend">text
+          file sink backend</a>, when the file name contains date/time placeholders.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/11691" target="_top">#11691</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h1"></a>
+      <span class="phrase"><a name="log.changelog.2_6__boost_1_59"></a></span><a class="link" href="changelog.html#log.changelog.2_6__boost_1_59">2.6,
+      Boost 1.59</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          On systems with <a href="https://gcc.gnu.org/wiki/Visibility" target="_top">symbol
+          visibility</a> support (e.g. Linux) the library is now built with all
+          internal symbols hidden. API symbols still have default visibility, so
+          this shouldn't affect linking with the library.
+        </li>
+<li class="listitem">
+          <span class="bold"><strong>Breaking change:</strong></span> The library has been
+          ported to <a href="http://www.boost.org/doc/libs/release/doc/html/boost_typeindex.html" target="_top">Boost.TypeIndex</a>
+          for its underlying type info management tool. This improved library compatibility
+          with hidden symbol visibility mode on some compilers. This affected the
+          following public interfaces:
+          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">invalid_type</span></code> exceptions
+                thrown by the library now have <code class="computeroutput"><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_index</span></code>
+                attached as the description of the offending type. The type was previously
+                identified by <code class="computeroutput"><span class="identifier">type_info_wrapper</span></code>.
+              </li>
+<li class="listitem">
+                <a href="http://www.boost.org/doc/libs/release/libs/exception/doc/boost-exception.html" target="_top">Boost.Exception</a>
+                <code class="computeroutput"><span class="identifier">type_info_info</span></code> error
+                information now contains <code class="computeroutput"><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_index</span></code>
+                instead of <code class="computeroutput"><span class="identifier">type_info_wrapper</span></code>.
+                This is the error info that can be used to obtain the type info from
+                <code class="computeroutput"><span class="identifier">invalid_type</span></code> exceptions.
+              </li>
+<li class="listitem">
+                <code class="computeroutput"><span class="identifier">attribute_value</span><span class="special">::</span><span class="identifier">get_type</span><span class="special">()</span></code>
+                now returns <code class="computeroutput"><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_index</span></code>
+                instead of <code class="computeroutput"><span class="identifier">type_info_wrapper</span></code>.
+                If the <code class="computeroutput"><span class="identifier">attribute_value</span></code>
+                object is empty, the returned <code class="computeroutput"><span class="identifier">type_index</span></code>
+                is default-constructed (i.e. refers to the <code class="computeroutput"><span class="keyword">void</span></code>
+                type). User-defined attribute value implementations should be similarly
+                changed (the <code class="computeroutput"><span class="identifier">attribute_value</span><span class="special">::</span><span class="identifier">impl</span><span class="special">::</span><span class="identifier">get_type</span><span class="special">()</span></code> virtual method now also returns
+                <code class="computeroutput"><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_index</span></code>).
+              </li>
+</ul></div>
+        </li>
+<li class="listitem">
+          <code class="computeroutput"><span class="identifier">type_info_wrapper</span></code> component
+          has been deprecated and will be removed in future releases. <a href="http://www.boost.org/doc/libs/release/doc/html/boost_typeindex.html" target="_top">Boost.TypeIndex</a>
+          is recommended as a replacement.
+        </li>
+<li class="listitem">
+          Removed the previously deprecated headers: <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">intrusive_ref_counter</span><span class="special">.</span><span class="identifier">hpp</span></code>,
+          <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">explicit_operator_bool</span><span class="special">.</span><span class="identifier">hpp</span></code>, <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">log</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">empty_deleter</span><span class="special">.</span><span class="identifier">hpp</span></code>.
+        </li>
+<li class="listitem">
+          Added support for building the library for OpenBSD. ( <a href="https://svn.boost.org/trac/boost/ticket/11446" target="_top">#11446</a>)
+        </li>
+<li class="listitem">
+          Improved internal implementation of the event synchronization primitive
+          used for asynchronous logging. The updated implementation relies on <a href="http://www.boost.org/doc/libs/release/doc/html/atomic.html" target="_top">Boost.Atomic</a>
+          for atomic operations which provides better portability. On Linux the implementation
+          uses futexes directly. ( <a href="https://svn.boost.org/trac/boost/ticket/11398" target="_top">#11398</a>)
+        </li>
+<li class="listitem">
+          Changed the format of dates produced by the default formatter constructed
+          from strings (e.g. when initializing the library from a config file). The
+          new format displays months as numbers instead of abbreviated names. This
+          allows for easier log record ordering when post-processing log files. (
+          <a href="https://svn.boost.org/trac/boost/ticket/8839" target="_top">#8839</a>)
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_value_set</span><span class="special">::</span><span class="identifier">insert</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">attribute_value_set</span></code>
+          constructor in some cases. The inserted elements could have made some previously
+          inserted elements not findable. The constructor from <code class="computeroutput"><span class="identifier">attribute_set</span></code>s
+          could leave some of the attribute values acquired from attributes not findable.
+          ( <a href="https://svn.boost.org/trac/boost/ticket/11190" target="_top">#11190</a>)
+        </li>
+<li class="listitem">
+          Added missing function template exports. ( <a href="https://svn.boost.org/trac/boost/ticket/11495" target="_top">#11495</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h2"></a>
       <span class="phrase"><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
       Boost 1.58</a>
     </h4>
@@ -56,7 +214,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h1"></a>
+<a name="log.changelog.h3"></a>
       <span class="phrase"><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
       Boost 1.57</a>
     </h4>
@@ -80,7 +238,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h2"></a>
+<a name="log.changelog.h4"></a>
       <span class="phrase"><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
       Boost 1.56</a>
     </h4>
@@ -176,7 +334,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h3"></a>
+<a name="log.changelog.h5"></a>
       <span class="phrase"><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
       Boost 1.55</a>
     </h4>
@@ -239,7 +397,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h4"></a>
+<a name="log.changelog.h6"></a>
       <span class="phrase"><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
       Boost 1.54</a>
     </h4>
@@ -286,7 +444,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h5"></a>
+<a name="log.changelog.h7"></a>
       <span class="phrase"><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
       13 April 2013</a>
     </h4>
@@ -661,7 +819,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h6"></a>
+<a name="log.changelog.h8"></a>
       <span class="phrase"><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
       02 December 2011</a>
     </h4>
@@ -681,7 +839,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h7"></a>
+<a name="log.changelog.h9"></a>
       <span class="phrase"><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
       09 May 2010</a>
     </h4>
@@ -721,7 +879,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h8"></a>
+<a name="log.changelog.h10"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
       Candidate 4, 08 Jan 2010</a>
     </h4>
@@ -816,7 +974,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h9"></a>
+<a name="log.changelog.h11"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
       Candidate 3, 08 Feb 2009</a>
     </h4>
@@ -850,7 +1008,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h10"></a>
+<a name="log.changelog.h12"></a>
       <span class="phrase"><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
       Candidate 2</a>
     </h4>

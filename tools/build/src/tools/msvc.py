@@ -44,15 +44,15 @@ __debug = None
 def debug():
     global __debug
     if __debug is None:
-        __debug = "--debug-configuration" in bjam.variable("ARGV")        
+        __debug = "--debug-configuration" in bjam.variable("ARGV")
     return __debug
 
 
-# It is not yet clear what to do with Cygwin on python port.    
+# It is not yet clear what to do with Cygwin on python port.
 def on_cygwin():
     return False
 
-    
+
 type.register('MANIFEST', ['manifest'])
 feature.feature('embed-manifest',['on','off'], ['incidental', 'propagated']) ;
 
@@ -113,7 +113,7 @@ def init(version = None, command = None, options = None):
 
     options = to_seq(options)
     command = to_seq(command)
-    
+
     if command:
         options.extend("<command>"+cmd for cmd in command)
     configure(version,options)
@@ -122,7 +122,7 @@ def configure(version=None, options=None):
     if version == "all":
         if options:
             raise RuntimeError("MSVC toolset configuration: options should be empty when '{}' is specified.".format(version))
-        
+
         # Configure (i.e. mark as used) all registered versions.
         all_versions = __versions.all()
         if not all_versions:
@@ -145,7 +145,7 @@ def configure(version=None, options=None):
 
 def extend_conditions(conditions,exts):
     return [ cond + '/' + ext for cond in conditions for ext in exts ]
-        
+
 def configure_version_specific(toolset_arg, version, conditions):
     # Starting with versions 7.0, the msvc compiler have the /Zc:forScope and
     # /Zc:wchar_t options that improve C++ standard conformance, but those
@@ -204,7 +204,7 @@ def configure_version_specific(toolset_arg, version, conditions):
         toolset.flags('{}.link'.format(toolset_arg), 'LINKFLAGS', extend_conditions(conditions, __cpu_arch_amd64), ['/MACHINE:X64'])
         toolset.flags('{}.link'.format(toolset_arg), 'LINKFLAGS', extend_conditions(conditions, __cpu_arch_i386), ['/MACHINE:X86'])
         toolset.flags('{}.link'.format(toolset_arg), 'LINKFLAGS', extend_conditions(conditions, __cpu_arch_ia64), ['/MACHINE:IA64'])
-        
+
         # Make sure that manifest will be generated even if there is no
         # dependencies to put there.
         toolset.flags('{}.link'.format(toolset_arg), 'LINKFLAGS', conditions, ['/MANIFEST'])
@@ -216,12 +216,12 @@ def configure_version_specific(toolset_arg, version, conditions):
 def register_toolset():
      if not 'msvc' in feature.values('toolset'):
         register_toolset_really()
-        
-    
+
+
 engine = get_manager().engine()
 
-# this rule sets up the pdb file that will be used when generating static 
-# libraries and the debug-store option is database, so that the compiler 
+# this rule sets up the pdb file that will be used when generating static
+# libraries and the debug-store option is database, so that the compiler
 # puts all debug info into a single .pdb file named after the library
 #
 # Poking at source targets this way is probably not clean, but it's the
@@ -252,7 +252,7 @@ $(LIBRARIES_MENTIONED_BY_FILE)
 "$(LIBRARY_OPTION)$(FINDLIBS_ST).lib"
 "$(LIBRARY_OPTION)$(FINDLIBS_SA).lib")"'''.format(rm=common.rm_command()),
         function=archive)
-        
+
 # For the assembler the following options are turned on by default:
 #
 #   -Zp4   align structures to 4 bytes
@@ -319,10 +319,10 @@ def compile_cpp_pch(targets,sources=[],properties=None):
 #
 # 1. PDB_CFLAG is only set for <debug-symbols>on/<debug-store>database, ensuring that the /Fd flag is dropped if PDB_CFLAG is empty
 #
-# 2. When compiling executables's source files, PDB_NAME is set on a per-source file basis by rule compile-c-c++. 
+# 2. When compiling executables's source files, PDB_NAME is set on a per-source file basis by rule compile-c-c++.
 #    The linker will pull these into the executable's PDB
 #
-# 3. When compiling library's source files, PDB_NAME is updated to <libname>.pdb for each source file by rule archive, 
+# 3. When compiling library's source files, PDB_NAME is updated to <libname>.pdb for each source file by rule archive,
 #    as in this case the compiler must be used to create a single PDB for our library.
 #
 
@@ -330,7 +330,7 @@ class SetupAction:
     def __init__(self, setup_func, function):
         self.setup_func = setup_func
         self.function = function
-            
+
     def __call__(self, targets, sources, property_set):
         assert(callable(self.setup_func))
         # This can modify sources.
@@ -378,7 +378,7 @@ def setup_preprocess_c_cpp_action(targets, sources, properties):
     sources += bjam.call('get-target-variable',targets,'PCH_FILE')
     sources += bjam.call('get-target-variable',targets,'PCH_HEADER')
     return 'preprocess-c-c++'
-    
+
 register_setup_action(
     'msvc.preprocess.c',
     setup_preprocess_c_cpp_action,
@@ -436,7 +436,7 @@ register_setup_action(
 engine.register_action(
     'msvc.compile.idl',
     '''$(.IDL) /nologo @"@($(<[1]:W).rsp:E=
-"$(>:W)" 
+"$(>:W)"
 -D$(DEFINES)
 "-I$(INCLUDES:W)"
 -U$(UNDEFS)
@@ -506,7 +506,7 @@ $(LIBRARIES)
 if %ERRORLEVEL% NEQ 0 EXIT %ERRORLEVEL%''',
         function=link_dll,
         bound_list=['DEF_FILE','LIBRARIES_MENTIONED_BY_FILE'])
-    
+
     engine.register_action(
         'msvc.manifest.dll',
         '''if exist "$(<[1]).manifest" (
@@ -540,7 +540,7 @@ $(LIBRARIES)
 "$(LIBRARY_OPTION)$(FINDLIBS_SA).lib")"''',
         function=link_dll,
         bound_list=['DEF_FILE','LIBRARIES_MENTIONED_BY_FILE'])
-    
+
     engine.register_action(
         'msvc.manifest.dll',
         '''if test -e "$(<[1]).manifest"; then
@@ -566,7 +566,7 @@ class MsvcPchGenerator(pch.PchGenerator):
                 pch_header = s
             elif type.is_derived(s.type(), 'CPP') or type.is_derived(s.type(), 'C'):
                 pch_source = s
-            
+
         if not pch_header:
             raise RuntimeError( "can not build pch without pch-header" )
 
@@ -589,7 +589,7 @@ class MsvcPchGenerator(pch.PchGenerator):
             result_props.append(Property('pch-header', pch_header))
         if pch_file:
             result_props.append(Property('pch-file', pch_file))
-            
+
         return property_set.PropertySet(result_props), generated
 
 
@@ -635,7 +635,7 @@ def configure_really(version=None, options=[]):
         # Take the first registered (i.e. auto-detected) version.
         version = __versions.first()
         v = version
-        
+
         # Note: 'version' can still be empty at this point if no versions have
         # been auto-detected.
         if not version:
@@ -665,12 +665,12 @@ def configure_really(version=None, options=[]):
         conditions = common.check_init_parameters('msvc', None, ('version', v))
         __versions.set(version, 'conditions', conditions)
         command = feature.get_values('<command>', options)
-        
+
         # If version is specified, we try to search first in default paths, and
         # only then in PATH.
         command = common.get_invocation_command('msvc', 'cl.exe', command, default_paths(version))
         common.handle_options('msvc', conditions, command, options)
-        
+
         if not version:
             # Even if version is not explicitly specified, try to detect the
             # version from the path.
@@ -718,7 +718,7 @@ def configure_really(version=None, options=[]):
             # MSVC 7.1 compiler even though it thinks it is using the msvc-9.0
             # toolset version.
             command = common.get_absolute_tool_path(command)
-        
+
         if command:
             parent = os.path.dirname(os.path.normpath(command))
             # Setup will be used if the command name has been specified. If
@@ -834,7 +834,7 @@ def configure_really(version=None, options=[]):
         default_assembler_ia64  = 'ias'
 
         assembler = feature.get_values('<assembler>',options)
-        
+
         idl_compiler = feature.get_values('<idl-compiler>',options)
         if not idl_compiler:
             idl_compiler = 'midl'
@@ -851,7 +851,7 @@ def configure_really(version=None, options=[]):
 
         for c in cpu:
             cpu_conditions = [ condition + '/' + arch for arch in globals()['__cpu_arch_{}'.format(c)] for condition in conditions ]
-            
+
             setup_script = setup_scripts.get(c, '')
 
             if debug():
@@ -934,7 +934,7 @@ class MsvcLinkingGenerator(builtin.LinkingGenerator):
         if result:
             name_main = result[0].name()
             action = result[0].action()
-            
+
             if prop_set.get('<debug-symbols>') == 'on':
                 # We force exact name on PDB. The reason is tagging -- the tag rule may
                 # reasonably special case some target types, like SHARED_LIB. The tag rule
@@ -947,7 +947,7 @@ class MsvcLinkingGenerator(builtin.LinkingGenerator):
                     action.replace_targets(target,registered_target)
                 result.append(registered_target)
             if prop_set.get('<embed-manifest>') == 'off':
-                # Manifest is evil target. It has .manifest appened to the name of 
+                # Manifest is evil target. It has .manifest appened to the name of
                 # main target, including extension. E.g. a.exe.manifest. We use 'exact'
                 # name because to achieve this effect.
                 target = FileTarget(name_main+'.manifest', 'MANIFEST', project, action, True)
@@ -1151,14 +1151,14 @@ class MSVCConfigurations(Configurations):
 
     def first(self):
         return self.first_
-    
+
 
 # List of all registered configurations.
 __versions = MSVCConfigurations()
 
 # Supported CPU architectures.
 __cpu_arch_i386 = [
-    '<architecture>/<address-model>', 
+    '<architecture>/<address-model>',
     '<architecture>/<address-model>32',
     '<architecture>x86/<address-model>',
     '<architecture>x86/<address-model>32']

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,31 +36,31 @@
 <span class="keyword">class</span> <a class="link" href="bad_alloc.html" title="Class bad_alloc">bad_alloc</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">interprocess_exception</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="bad_alloc.html#boost.interprocess.bad_allocconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="bad_alloc.html#idp54977488-bb"><span class="identifier">bad_alloc</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="bad_alloc.html#idm45879391773040-bb"><span class="identifier">bad_alloc</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="bad_alloc.html#idp54975376-bb">public member functions</a></span>
-  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="bad_alloc.html#idp54975936-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="bad_alloc.html#idm45879391775152-bb">public member functions</a></span>
+  <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a class="link" href="bad_alloc.html#idm45879391774592-bb"><span class="identifier">what</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp232047712"></a><h2>Description</h2>
-<p>This is the exception thrown by named <a class="link" href="interprocess_semaphore.html" title="Class interprocess_semaphore">interprocess_semaphore</a> when a deadlock situation is detected or when an error is detected in the post/wait operation This is the exception thrown by synchronization objects when there is an error in a wait() function This exception is thrown when a named object is created in "open_only" mode and the resource was not already created This exception is thrown when a memory request can't be fulfilled. </p>
+<a name="idm45555321871424"></a><h2>Description</h2>
+<p>This exception is thrown when a memory request can't be fulfilled. </p>
 <div class="refsect2">
-<a name="idp232049760"></a><h3>
+<a name="idm45555321870672"></a><h3>
 <a name="boost.interprocess.bad_allocconstruct-copy-destruct"></a><code class="computeroutput">bad_alloc</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp54977488-bb"></a><span class="identifier">bad_alloc</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm45879391773040-bb"></a><span class="identifier">bad_alloc</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp232055568"></a><h3>
-<a name="idp54975376-bb"></a><code class="computeroutput">bad_alloc</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idp54975936-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
+<a name="idm45555321864736"></a><h3>
+<a name="idm45879391775152-bb"></a><code class="computeroutput">bad_alloc</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> <a name="idm45879391774592-bb"></a><span class="identifier">what</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -14,7 +14,7 @@
 
 #include <boost/geometry/algorithms/reverse.hpp>
 
-#include <boost/geometry/algorithms/detail/signed_index_type.hpp>
+#include <boost/geometry/algorithms/detail/signed_size_type.hpp>
 
 #include <boost/geometry/algorithms/detail/relate/turns.hpp>
 
@@ -32,6 +32,7 @@ namespace bg_turns = bg_detail::turns;
 
 template
 <
+    bool Enable = true,
     bool EnableRemoveDuplicateTurns = true,
     bool EnableDegenerateTurns = true
 >
@@ -132,10 +133,10 @@ public:
                   bg_turns::less_seg_fraction_other_op<>());
 
         std::sort(boost::begin(rturns_all), boost::end(rturns_all),
-                  bg_turns::less_seg_fraction_other_op<std::greater<boost::geometry::signed_index_type> >());
+                  bg_turns::less_seg_fraction_other_op<std::greater<boost::geometry::signed_size_type> >());
 
         std::sort(boost::begin(rturns_wo_cont), boost::end(rturns_wo_cont),
-                  bg_turns::less_seg_fraction_other_op<std::greater<boost::geometry::signed_index_type> >());
+                  bg_turns::less_seg_fraction_other_op<std::greater<boost::geometry::signed_size_type> >());
 
         remove_duplicate_turns::apply(turns_all);
         remove_duplicate_turns::apply(turns_wo_cont);
@@ -166,6 +167,17 @@ public:
     }
 };
 
-
+template <bool EnableRemoveDuplicateTurns, bool EnableDegenerateTurns>
+class test_get_turns_ll_invariance
+<
+    false, EnableRemoveDuplicateTurns, EnableDegenerateTurns
+>
+{
+public:
+    template <typename Linear1, typename Linear2>
+    static inline void apply(Linear1 const&, Linear2 const&)
+    {
+    }
+};
 
 #endif // BOOST_GEOMETRY_TEST_GET_TURNS_LL_INVARIANCE_HPP

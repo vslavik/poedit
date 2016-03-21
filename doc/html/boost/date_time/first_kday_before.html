@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -40,14 +41,14 @@
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">duration_type</span>        <a name="boost.date_time.first_kday_before.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>   
 
   <span class="comment">// <a class="link" href="first_kday_before.html#boost.date_time.first_kday_beforeconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="first_kday_before.html#idp37141408-bb"><span class="identifier">first_kday_before</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="first_kday_before.html#idm45507099579296-bb"><span class="identifier">first_kday_before</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="first_kday_before.html#idp100837952-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="first_kday_before.html#idp98656832-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_before.html#idp66653952-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="first_kday_before.html#idm45507093192720-bb">public member functions</a></span>
+  <span class="identifier">date_type</span> <a class="link" href="first_kday_before.html#idm45507099001808-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_before.html#idm45507099580576-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp180806896"></a><h2>Description</h2>
+<a name="idm45555373462304"></a><h2>Description</h2>
 <p>Date generator that takes a date and finds kday after </p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">first_kday_before</span><span class="special">&lt;</span><span class="identifier">date</span><span class="special">&gt;</span> <span class="identifier">firstkdaybefore</span><span class="special">;</span>
 <span class="identifier">firstkdaybefore</span> <span class="identifier">fkbf</span><span class="special">(</span><span class="identifier">Monday</span><span class="special">)</span><span class="special">;</span>
@@ -55,19 +56,19 @@
 </pre>
 <p> </p>
 <div class="refsect2">
-<a name="idp180825712"></a><h3>
+<a name="idm45555373443424"></a><h3>
 <a name="boost.date_time.first_kday_beforeconstruct-copy-destruct"></a><code class="computeroutput">first_kday_before</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp37141408-bb"></a><span class="identifier">first_kday_before</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm45507099579296-bb"></a><span class="identifier">first_kday_before</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp180832352"></a><h3>
-<a name="idp100837952-bb"></a><code class="computeroutput">first_kday_before</code> public member functions</h3>
+<a name="idm45555373436736"></a><h3>
+<a name="idm45507093192720-bb"></a><code class="computeroutput">first_kday_before</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_type</span> <a name="idp98656832-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date_type</span> start_day<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return next kday given. </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp66653952-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="identifier">date_type</span> <a name="idm45507099001808-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date_type</span> start_day<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return next kday given. </li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idm45507099580576-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

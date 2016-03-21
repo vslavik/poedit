@@ -8,7 +8,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 //[buffer_with_strategies
-//` Shows how the buffer algorithm can be used to create a buffer of a linestring
+//` Shows how the buffer algorithm can be used to create a buffer of a linestring, a multi point, a multi polygon
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>

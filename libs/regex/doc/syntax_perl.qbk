@@ -564,12 +564,29 @@ executes /no-pattern/.
 * [^(?(DEFINE)never-exectuted-pattern)]  Defines a block of code that is never executed and matches no characters:
 this is usually used to define one or more named sub-expressions which are referred to from elsewhere in the pattern.
 
+[h5 Backtracking Control Verbs]
+
+This library has partial support for Perl's backtracking control verbs, in particular (*MARK) is not supported.
+There may also be detail differences in behaviour between this library and Perl, not least because Perl's behaviour
+is rather under-documented and often somewhat random in how it behaves in practice.  The verbs supported are:
+
+* [^(*PRUNE)]  Has no effect unless backtracked onto, in which case all the backtracking information prior to this
+point is discarded.
+* [^(*SKIP)]   Behaves the same as [^(*PRUNE)] except that it is assumed that no match can possibly occur prior to 
+the current point in the string being searched.  This can be used to optimize searches by skipping over chunks of text
+that have already been determined can not form a match.
+* [^(*THEN)]  Has no effect unless backtracked onto, in which case all subsequent alternatives in a group of alternations
+are discarded.
+* [^(*COMMIT)]  Has no effect unless backtracked onto, in which case all subsequent matching/searching attempts are abandoned.
+* [^(*FAIL)]  Causes the match to fail unconditionally at this point, can be used to force the engine to backtrack.
+* [^(*ACCEPT)] Causes the pattern to be considered matched at the current point.  Any half-open sub-expressions are closed at the current point.
+
 [h4 Operator precedence]
 
 The order of precedence for of operators is as follows:
 
 # Collation-related bracket symbols 	`[==] [::] [..]`
-# Escaped characters 	[^\]
+# Escaped characters 	[^\\]
 # Character set (bracket expression) 	`[]`
 # Grouping 	[^()]
 # Single-character-ERE duplication 	[^* + ? {m,n}]

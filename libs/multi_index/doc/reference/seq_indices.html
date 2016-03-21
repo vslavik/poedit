@@ -698,7 +698,11 @@ belongs remains in its original state.
 <b>Requires:</b> <code>mod</code> is a unary function object
 accepting arguments of type
 <code>value_type&amp;</code>. <code>position</code> is a valid dereferenceable
-iterator of the index.<br>
+iterator of the index.
+The execution of <code>mod(e)</code>, where <code>e</code> is the element
+pointed to by <code>position</code>, does not invoke any operation of the
+<code>multi_index_container</code> after <code>e</code> is directly modified
+or, before modification, if the operation would invalidate <code>position</code>.<br>
 <b>Effects:</b> Calls <code>mod(e)</code> where <code>e</code> is the element
 pointed to by <code>position</code> and rearranges <code>*position</code> into
 all the indices of the <code>multi_index_container</code>. Rearrangement on sequenced
@@ -722,9 +726,15 @@ bool modify(iterator position,Modifier mod,Rollback back);</code>
 <b>Requires:</b> <code>mod</code> and <code>back</code> are unary function
 objects accepting arguments of type
 <code>value_type&amp;</code>. <code>position</code> is a valid dereferenceable
-iterator of the index. The sequence of operations <code>mod(e)</code>,
-<code>back(e)</code>, where <code>e</code> is the element
-pointed to by <code>position</code>, restores all keys of the element
+iterator of the index.
+The execution of <code>mod(e)</code>, where <code>e</code> is the element
+pointed to by <code>position</code>, does not invoke any operation of the
+<code>multi_index_container</code> after <code>e</code> is directly modified
+or, before modification, if the operation would invalidate <code>position</code>.
+<code>back(e)</code> does not invoke any operation of the
+<code>multi_index_container</code>.
+The sequence of operations <code>mod(e)</code>,
+<code>back(e)</code> restores all keys of the element
 to their original state.<br>
 <b>Effects:</b> Calls <code>mod(e)</code> where <code>e</code> is the element
 pointed to by <code>position</code> and tries to rearrange <code>*position</code> into
@@ -762,7 +772,7 @@ same <code>multi_index_container</code>.
 <b>Requires:</b> <code>position</code> is a valid iterator of the index.
 <code>&amp;x!=this</code>.<br>
 <b>Effects:</b> Inserts the contents of <code>x</code> before <code>position</code>,
-in the same order as they were in <code>x</code>. Those elements succesfully
+in the same order as they were in <code>x</code>. Those elements successfully
 inserted are erased from <code>x</code>.<br>
 <b>Complexity:</b> <code>O(x.size()*I(n+x.size()) + x.size()*D(x.size()))</code>.<br>
 <b>Exception safety:</b> Basic.<br>
@@ -774,9 +784,9 @@ inserted are erased from <code>x</code>.<br>
 <b>Requires:</b> <code>position</code> is a valid iterator of the index.
 <code>i</code> is a valid dereferenceable iterator <code>x</code>.<br>
 <b>Effects:</b> Inserts the element pointed to by <code>i</code> before
-<code>position</code>: if insertion is succesful, the element is erased from
+<code>position</code>: if insertion is successful, the element is erased from
 <code>x</code>. In the special case <code>&amp;x==this</code>, no copy or
-deletion is performed, and the operation is always succesful. If
+deletion is performed, and the operation is always successful. If
 <code>position==i</code>, no operation is performed.<br>
 <b>Postconditions:</b> If <code>&amp;x==this</code>, no iterator or reference
 is invalidated.<br>
@@ -794,10 +804,10 @@ otherwise, strong.<br>
 <code>last</code> is reachable from <code>first</code>. <code>position</code>
 is not in the range [<code>first</code>,<code>last</code>).<br>
 <b>Effects:</b> For each element in the range [<code>first</code>,<code>last</code>),
-insertion is tried before <code>position</code>; if the operation is succesful,
+insertion is tried before <code>position</code>; if the operation is successful,
 the element is erased from <code>x</code>. In the special case
 <code>&amp;x==this</code>, no copy or deletion is performed, and insertions are
-always succesful.<br>
+always successful.<br>
 <b>Postconditions:</b> If <code>&amp;x==this</code>, no iterator or reference
 is invalidated.<br>
 <b>Complexity:</b> If <code>&amp;x==this</code>, constant; otherwise
@@ -1003,7 +1013,7 @@ input archive (XML archive) <code>ar</code>.
 
 <blockquote>
 <b>Requires:</b> No additional requirements to those imposed by the container.<br>
-<b>Postconditions:</b> On succesful loading, each of the elements of
+<b>Postconditions:</b> On successful loading, each of the elements of
 [<code>begin()</code>, <code>end()</code>) is a restored copy of the corresponding
 element in [<code>m.get&lt;i&gt;().begin()</code>, <code>m.get&lt;i&gt;().end()</code>),
 where <code>i</code> is the position of the sequenced index in the container.
@@ -1021,7 +1031,7 @@ Operation: loading of an <code>iterator</code> or <code>const_iterator</code>
 <code>it'</code> from an input archive (XML archive) <code>ar</code>.
 
 <blockquote>
-<b>Postconditions:</b> On succesful loading, if <code>it</code> was dereferenceable
+<b>Postconditions:</b> On successful loading, if <code>it</code> was dereferenceable
 then <code>*it'</code> is the restored copy of <code>*it</code>, otherwise
 <code>it'==end()</code>.<br>
 <b>Note:</b> It is allowed that <code>it</code> be a <code>const_iterator</code>
@@ -1042,9 +1052,9 @@ Random access indices
 
 <br>
 
-<p>Revised August 20th 2014</p>
+<p>Revised November 26th 2015</p>
 
-<p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

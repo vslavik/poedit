@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>is_nothrow_move_constructible</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="is_nothrow_move_assignable.html" title="is_nothrow_move_assignable">
@@ -43,17 +43,12 @@
         is a variable of type <code class="computeroutput"><span class="identifier">T</span></code>).
       </p>
 <p>
-        <span class="bold"><strong>Compiler Compatibility:</strong></span> If the compiler
-        does not support partial-specialization of class templates, then this template
-        can not be used with function types.
-      </p>
-<p>
-        Without some (C++11 noexcept shall work correctly) help from the compiler,
-        <code class="computeroutput"><span class="identifier">is_nothrow_move_constructible</span></code>
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> Without some (C++11
+        noexcept shall work correctly) help from the compiler, <code class="computeroutput"><span class="identifier">is_nothrow_move_constructible</span></code>
         will never report that a class or struct has a non-throwing copy-constructor;
-        this is always safe, if possibly sub-optimal. Currently (February 2013) Clang
-        and GCC 4.7 have the necessary compiler support to ensure that this trait
-        "just works".
+        this is always safe, if possibly sub-optimal. Currently (February 2013) MSVC-12.0,
+        Clang and GCC 4.7 have the necessary compiler support to ensure that this
+        trait "just works".
       </p>
 <p>
         <span class="bold"><strong>Header:</strong></span> <code class="computeroutput"> <span class="preprocessor">#include</span>

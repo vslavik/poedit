@@ -46,6 +46,9 @@ int main(int, char *[])
     test_struct_api<test_struct<boost::uint32_t> >();
     test_struct_api<test_struct<boost::uint64_t> >();
 
+    // https://svn.boost.org/trac/boost/ticket/10994
+    test_struct_x2_api<test_struct_x2<boost::uint64_t> >();
+
     // https://svn.boost.org/trac/boost/ticket/9985
     test_struct_api<test_struct<double> >();
 

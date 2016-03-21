@@ -4,8 +4,8 @@
 <title>Check Utilities</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Predef 1.2">
-<link rel="up" href="../index.html" title="Predef 1.2">
+<link rel="home" href="../index.html" title="Predef 1.4">
+<link rel="up" href="../index.html" title="Predef 1.4">
 <link rel="prev" href="reference/version_definition_macros.html" title="Version definition macros">
 <link rel="next" href="history.html" title="History">
 </head>
@@ -103,6 +103,17 @@ lib my_special_lib : source.cpp
 }
 </pre>
 <p>
+      The expression can also use explicit "and", "or" logical
+      operators to for more complex checks:
+    </p>
+<pre class="programlisting">import path-to-predef-src/check/predef
+    : check require
+    : predef-check predef-require ;
+
+lib my_special_lib : source.cpp
+    : [ predef-require "BOOST_OS_WINDOWS" or "BOOST_OS_VMS"] ;
+</pre>
+<p>
       You can use the <code class="literal">check</code> rule for more control and to implement
       something other than control of what gets built. The definition for the <code class="literal">check</code>
       rule is:
@@ -122,7 +133,7 @@ lib my_special_lib : source.cpp
 
 exe my_special_exe : source.cpp
     : [ predef-check "BOOST_OS_WINDOWS == 0"
-        : &lt;define&gt;ENABLE_WMF=0
+        : : &lt;define&gt;ENABLE_WMF=0
         : &lt;define&gt;ENABLE_WMF=1 ] ;
 </pre>
 <p>
@@ -134,7 +145,8 @@ exe my_special_exe : source.cpp
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2014 Rene Rivera<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2015 Rene
+      Rivera<br>Copyright &#169; 2015 Charly Chevalier<br>Copyright &#169; 2015 Joel Falcou<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for key extractors.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +17,6 @@
 #include <boost/ref.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <list>
-#include <memory>
 
 using namespace boost::multi_index;
 using namespace boost::tuples;
@@ -188,8 +187,8 @@ void test_key_extractors()
   test_class**                               tpp=&tp;
   const test_class**                         ctpp=&ctp;
 
-  std::auto_ptr<test_class*>                 tap(new test_class*(tp));
-  std::auto_ptr<const test_class*>           ctap(new const test_class*(ctp));
+  boost::scoped_ptr<test_class*>             tap(new test_class*(tp));
+  boost::scoped_ptr<const test_class*>       ctap(new const test_class*(ctp));
 
   boost::reference_wrapper<test_class>       tw(tr);
   boost::reference_wrapper<const test_class> ctw(tr);

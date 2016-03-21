@@ -16,7 +16,7 @@
    
    }} // namespaces
    
-The return type of these functions is computed using the __arg_pomotion_rules:
+The return type of these functions is computed using the __arg_promotion_rules:
 the return type is `double` if T is an integer type, and T otherwise.
 
 [optional_policy]
@@ -46,23 +46,7 @@ along with comparisons to the __gsl and __cephes libraries.
 Unless otherwise specified any floating point type that is narrower
 than the one shown will have __zero_error.
 
-[table Errors In the Function zeta(z)
-[[Significand Size] [Platform and Compiler] [z > 0][z < 0]]
-[[53] [Win32, Visual C++ 8] [Peak=0.99 Mean=0.1
-
-GSL Peak=8.7 Mean=1.0 
-
-__cephes Peak=2.1 Mean=1.1
-]  [Peak=7.1 Mean=3.0 
-
-GSL Peak=137 Mean=14 
-
-__cephes Peak=5084 Mean=470
-]]
-[[64] [RedHat Linux IA_EM64, gcc-4.1] [Peak=0.99 Mean=0.5]  [Peak=570 Mean=60]]
-[[64] [Redhat Linux IA64, gcc-4.1] [Peak=0.99 Mean=0.5]  [Peak=559 Mean=56]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=1.0 Mean=0.4]  [Peak=1018 Mean=79]]
-]
+[table_zeta]
 
 [h4 Testing]
 

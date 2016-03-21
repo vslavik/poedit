@@ -134,7 +134,7 @@ Depending on the MPI implementation the code might need to be compiled with i.e.
 Instead of reading another thread's data, we asynchronously send and receive the
 relevant data from neighbouring nodes, performing some computation in the interim
 to hide the latency.
-[phase_chain_rhs]
+[phase_chain_mpi_rhs]
 
 Analogous to `openmp_state<T>` we use `mpi_state< InnerState<T> >`, which
 automatically selects `mpi_nested_algebra` and the appropriate MPI-oblivious

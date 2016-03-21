@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -47,7 +48,7 @@
   <span class="keyword">void</span> <span class="identifier">all_to_all</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> in_values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">,</span> 
                   <span class="identifier">T</span> <span class="special">*</span> out_values<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp331256256"></a><h2>Description</h2>
+<a name="idm45555224301104"></a><h2>Description</h2>
 <p><code class="computeroutput">all_to_all</code> is a collective algorithm that transmits <code class="computeroutput">p</code> values from every process to every other process. On process i, jth value of the <code class="computeroutput">in_values</code> vector is sent to process j and placed in the ith position of the <code class="computeroutput">out_values</code> vector in process <code class="computeroutput">j</code>. The type <code class="computeroutput">T</code> of the values may be any type that is serializable or has an associated MPI data type. If <code class="computeroutput">n</code> is provided, then arrays of <code class="computeroutput">n</code> values will be transferred from one process to another.</p>
 <p>When the type <code class="computeroutput">T</code> has an associated MPI data type, this routine invokes <code class="computeroutput">MPI_Alltoall</code> to scatter the values.</p>
 <p>

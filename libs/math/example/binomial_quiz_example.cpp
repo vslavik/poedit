@@ -39,7 +39,7 @@ First, we need to be able to use the binomial distribution constructor
 #include <iomanip>
   using std::setw; using std::setprecision;
 #include <exception>
-  using std::exception;
+  
 
 
 //][/binomial_quiz_example1]
@@ -407,7 +407,7 @@ If guessing then percentiles 1 to 99% will get 0 to 7.788 right.
 
 //] [/discrete_quantile_real]
   }
-  catch(const exception& e)
+  catch(const std::exception& e)
   { // Always useful to include try & catch blocks because
     // default policies are to throw exceptions on arguments that cause
     // errors like underflow, overflow.

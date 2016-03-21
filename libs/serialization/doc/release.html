@@ -29,6 +29,8 @@ http://www.boost.org/LICENSE_1_0.txt)
 </table>
 <hr>
 <dl class="index">
+    <dt><a href="#differences_1_59">Differences from version 1.58</a></dt>
+    <dt><a href="#differences_1_58">Differences from version 1.48</a></dt>
     <dt><a href="#differences_1_45">Differences from version 1.45</a></dt> 
     <dt><a href="#differences_1_43">Differences from version 1.43</a></dt> 
     <dt><a href="#differences_1_42">Differences from version 1.42</a></dt> 
@@ -39,12 +41,28 @@ http://www.boost.org/LICENSE_1_0.txt)
     <dt><a href="#differences_1_35">Differences from version 1.35</a></dt>
     <dt><a href="#differences_1_34">Differences from version 1.34</a></dt> 
     <dt><a href="#differences_1_33">Differences from version 1.33</a></dt> 
-    <dt><a href="#differences_1_32">Differences from version 1.32</a></dt> 
+    <dt><a href="#differences_1_32">Differences from version 1.32</a></dt>
     <dt><a href="#todo">Pending Issues</a></dt>
 </dl>
 As of this writing, there are no known bugs. However, due to compiler/library 
 quirks and or bugs, some tests fail with some combinations of compilers and 
 libraries.
+<h2><a name="differences_1_59"></a>Differences from Boost 1.58</h2>
+<ul>
+<li>Eliminated support for Borland compilers and Microsoft compilers prior to version
+7.1.
+<li>Eliminated support for compilers which do not support Partial Function Template
+Ordering (pfto).
+<li>Added support for "visibility hidden" for GCC compilers.  Shared libraries
+will only expose symbols actually needed rather than all sympols in the library.  This
+should result in smaller shared libraries which are faster to load.
+</ul>
+<h2><a name="differences_1_58"></a>Differences from Boost 1.48</h2>
+<ul>
+<li>Added support for C++11 types such as std::shared_ptr, std::array, and others.
+<li>Implemented the concept of a "Helper" which can be used to implement serialization of types which are otherwise not serializable."
+<li>Made library compatible with C++11,  Compatibility with C++03 has been maintained.
+</ul>
 <h2><a name="differences_1_45"></a>Differences from Boost 1.45</h2>
 Since the release of version 1.42, it has been discovered that binary
 archives created by versions 1.42-1.44 cannot always be read by the

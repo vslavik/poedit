@@ -7,8 +7,11 @@
 
 using namespace boost::multiprecision;
 
-mpf_float a;
-mpz_int b;
-mpq_rational c;
+int main()
+{
+   mpf_float a;
+   mpz_int b;
+   mpq_rational c;
+}
 
 

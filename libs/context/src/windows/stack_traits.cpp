@@ -46,8 +46,7 @@ extern "C" {
 #  include BOOST_ABI_PREFIX
 #endif
 
-namespace boost {
-namespace context {
+namespace {
 
 #if __cplusplus < 201103L
 void system_info_( SYSTEM_INFO * si)
@@ -80,16 +79,24 @@ std::size_t page_count( std::size_t stacksize)
             static_cast< float >( stacksize) / pagesize() ) );
 }
 
+}
+
+namespace boost {
+namespace context {
+
 // Windows seams not to provide a limit for the stacksize
 // libcoco uses 32k+4k bytes as minimum
+BOOST_CONTEXT_DECL
 bool
 stack_traits::is_unbounded() BOOST_NOEXCEPT
 { return true; }
 
+BOOST_CONTEXT_DECL
 std::size_t
 stack_traits::page_size() BOOST_NOEXCEPT
 { return pagesize(); }
 
+BOOST_CONTEXT_DECL
 std::size_t
 stack_traits::default_size() BOOST_NOEXCEPT
 {
@@ -104,12 +111,14 @@ stack_traits::default_size() BOOST_NOEXCEPT
 }
 
 // because Windows seams not to provide a limit for minimum stacksize
+BOOST_CONTEXT_DECL
 std::size_t
 stack_traits::minimum_size() BOOST_NOEXCEPT
 { return MIN_STACKSIZE; }
 
 // because Windows seams not to provide a limit for maximum stacksize
 // maximum_size() can never be called (pre-condition ! is_unbounded() )
+BOOST_CONTEXT_DECL
 std::size_t
 stack_traits::maximum_size() BOOST_NOEXCEPT
 {

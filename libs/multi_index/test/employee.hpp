@@ -1,6 +1,6 @@
 /* Used in Boost.MultiIndex tests.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -21,6 +21,7 @@
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/ordered_index.hpp>
 #include <boost/multi_index/random_access_index.hpp>
+#include <boost/multi_index/ranked_index.hpp>
 #include <boost/multi_index/sequenced_index.hpp>
 #include <cstddef>
 #include <ostream>
@@ -109,7 +110,7 @@ struct employee_set_indices:
     boost::multi_index::hashed_non_unique<
       boost::multi_index::tag<name,by_name>,
       BOOST_MULTI_INDEX_MEMBER(employee,std::string,name)>,
-    boost::multi_index::ordered_non_unique<
+    boost::multi_index::ranked_non_unique<
       boost::multi_index::tag<age>,
       BOOST_MULTI_INDEX_MEMBER(employee,int,age)>,
     boost::multi_index::sequenced<

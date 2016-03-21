@@ -60,7 +60,8 @@ project boost/thread
         <toolset>gcc:<cxxflags>-Wno-long-long
         #<toolset>gcc:<cxxflags>-ansi
         #<toolset>gcc:<cxxflags>-fpermissive
-        <toolset>gcc:<cxxflags>-Wno-variadic-macros
+        <toolset>gcc-4:<cxxflags>-Wno-variadic-macros
+        <toolset>gcc-5:<cxxflags>-Wno-variadic-macros
         #<toolset>gcc:<cxxflags>-Wunused-local-typedefs
         <toolset>gcc:<cxxflags>-Wunused-function
         <toolset>gcc:<cxxflags>-Wno-unused-parameter
@@ -70,7 +71,9 @@ project boost/thread
         #<toolset>darwin:<cxxflags>-ansi
         <toolset>darwin:<cxxflags>-fpermissive
         <toolset>darwin:<cxxflags>-Wno-long-long
-        <toolset>darwin:<cxxflags>-Wno-variadic-macros
+        #<toolset>darwin:<cxxflags>-Wno-variadic-macros
+        <toolset>darwin-4:<cxxflags>-Wno-variadic-macros
+        <toolset>darwin-5:<cxxflags>-Wno-variadic-macros
         #<toolset>darwin:<cxxflags>-Wunused-local-typedefs
         <toolset>darwin:<cxxflags>-Wunused-function
         <toolset>darwin:<cxxflags>-Wno-unused-parameter

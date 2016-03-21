@@ -509,15 +509,6 @@ def main_real():
     # that all project files already be loaded.
     (target_ids, properties) = build_request.from_command_line(sys.argv[1:] + extra_properties)
 
-    # Expand properties specified on the command line into multiple property
-    # sets consisting of all legal property combinations. Each expanded property
-    # set will be used for a single build run. E.g. if multiple toolsets are
-    # specified then requested targets will be built with each of them.
-    if properties:
-        expanded = build_request.expand_no_defaults(properties)
-    else:
-        expanded = [property_set.empty()]
-
     # Check that we actually found something to build.
     if not current_project and not target_ids:
         get_manager().errors()("no Jamfile in current directory found, and no target references specified.")
@@ -594,6 +585,22 @@ def main_real():
     virtual_targets = []
 
     global results_of_main_targets
+
+    # Expand properties specified on the command line into multiple property
+    # sets consisting of all legal property combinations. Each expanded property
+    # set will be used for a single build run. E.g. if multiple toolsets are
+    # specified then requested targets will be built with each of them.
+    # The expansion is being performed as late as possible so that the feature
+    # validation is performed after all necessary modules (including project targets
+    # on the command line) have been loaded.
+    if properties:
+        expanded = []
+        for p in properties:
+            expanded.extend(build_request.convert_command_line_element(p))
+
+        expanded = build_request.expand_no_defaults(expanded)
+    else:
+        expanded = [property_set.empty()]
 
     # Now that we have a set of targets to build and a set of property sets to
     # build the targets with, we can start the main build process by using each

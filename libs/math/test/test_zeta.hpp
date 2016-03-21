@@ -17,7 +17,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_zeta_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -27,6 +26,7 @@
 template <class Real, class T>
 void do_test_zeta(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ZETA_FUNCTION_TO_TEST))
    //
    // test zeta(T) against data:
    //
@@ -36,7 +36,9 @@ void do_test_zeta(const T& data, const char* type_name, const char* test_name)
    std::cout << test_name << " with type " << type_name << std::endl;
 
    typedef value_type (*pg)(value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ZETA_FUNCTION_TO_TEST
+   pg funcp = ZETA_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::zeta<value_type>;
 #else
    pg funcp = boost::math::zeta;
@@ -50,20 +52,9 @@ void do_test_zeta(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0),
       extract_result<Real>(1));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::zeta", test_name);
-#ifdef TEST_OTHER
-   if(boost::is_floating_point<value_type>::value)
-   {
-      funcp = other::zeta;
-
-      result = boost::math::tools::test_hetero<Real>(
-         data,
-         bind_func<Real>(funcp, 0),
-         extract_result<Real>(1));
-      handle_test_result(result, data[result.worst()], result.worst(), type_name, "other::zeta", test_name);
-   }
-#endif
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "zeta", test_name);
    std::cout << std::endl;
+#endif
 }
 template <class T>
 void test_zeta(T, const char* name)

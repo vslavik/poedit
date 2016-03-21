@@ -585,26 +585,6 @@ local rule should-clean-project ( project )
     local properties = [ $(build-request).get-at 2 ] ;
 
 
-    # Expand properties specified on the command line into multiple property
-    # sets consisting of all legal property combinations. Each expanded property
-    # set will be used for a single build run. E.g. if multiple toolsets are
-    # specified then requested targets will be built with each of them.
-    if $(properties)
-    {
-        expanded = [ build-request.expand-no-defaults $(properties) ] ;
-        local xexpanded ;
-        for local e in $(expanded)
-        {
-            xexpanded += [ property-set.create [ feature.split $(e) ] ] ;
-        }
-        expanded = $(xexpanded) ;
-    }
-    else
-    {
-        expanded = [ property-set.empty ] ;
-    }
-
-
     # Check that we actually found something to build.
     if ! $(current-project) && ! $(target-ids)
     {
@@ -694,6 +674,29 @@ local rule should-clean-project ( project )
     local first-build-build-dir = [ $(first-project-root).build-dir ] ;
     configure.set-log-file $(first-build-build-dir)/config.log ;
     config-cache.load $(first-build-build-dir)/project-cache.jam ;
+
+    # Expand properties specified on the command line into multiple property
+    # sets consisting of all legal property combinations. Each expanded property
+    # set will be used for a single build run. E.g. if multiple toolsets are
+    # specified then requested targets will be built with each of them.
+    # The expansion is being performed as late as possible so that the feature
+    # validation is performed after all necessary modules (including project targets
+    # on the command line) have been loaded.
+    if $(properties)
+    {
+        expanded += [ build-request.convert-command-line-elements $(properties) ] ;
+        expanded = [ build-request.expand-no-defaults $(expanded) ] ;
+        local xexpanded ;
+        for local e in $(expanded)
+        {
+            xexpanded += [ property-set.create [ feature.split $(e) ] ] ;
+        }
+        expanded = $(xexpanded) ;
+    }
+    else
+    {
+        expanded = [ property-set.empty ] ;
+    }
 
     # Now that we have a set of targets to build and a set of property sets to
     # build the targets with, we can start the main build process by using each

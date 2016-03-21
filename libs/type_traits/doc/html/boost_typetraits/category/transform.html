@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Type Traits that Transform One Type to Another</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../category.html" title="Type Traits by Category">
 <link rel="prev" href="value_traits/operators.html" title="Operator Type Traits">
@@ -63,6 +63,9 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span><span class="special">...</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <a class="link" href="../reference/common_type.html" title="common_type">common_type</a><span class="special">;</span>
 
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">U</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <a class="link" href="../reference/copy_cv.html" title="copy_cv">copy_cv</a><span class="special">;</span>
+
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <a class="link" href="../reference/decay.html" title="decay">decay</a><span class="special">;</span>
 
@@ -101,63 +104,10 @@
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <a class="link" href="../reference/remove_volatile.html" title="remove_volatile">remove_volatile</a><span class="special">;</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">struct</span> <a class="link" href="../reference/type_identity.html" title="type_identity">type_identity</a><span class="special">;</span>
 </pre>
-<h5>
-<a name="boost_typetraits.category.transform.h0"></a>
-        <span class="phrase"><a name="boost_typetraits.category.transform.broken_compiler_workarounds_"></a></span><a class="link" href="transform.html#boost_typetraits.category.transform.broken_compiler_workarounds_">Broken
-        Compiler Workarounds:</a>
-      </h5>
-<p>
-        For all of these templates support for partial specialization of class templates
-        is required to correctly implement the transformation. On the other hand,
-        practice shows that many of the templates from this category are very useful,
-        and often essential for implementing some generic libraries. Lack of these
-        templates is often one of the major limiting factors in porting those libraries
-        to compilers that do not yet support this language feature. As some of these
-        compilers are going to be around for a while, and at least one of them is
-        very wide-spread, it was decided that the library should provide workarounds
-        where possible.
-      </p>
-<p>
-        The basic idea behind the workaround is to manually define full specializations
-        of all type transformation templates for all fundamental types, and all their
-        1st and 2nd rank cv-[un]qualified derivative pointer types, and to provide
-        a user-level macro that will define all the explicit specializations needed
-        for any user-defined type T.
-      </p>
-<p>
-        The first part guarantees the successful compilation of something like this:
-      </p>
-<pre class="programlisting"><span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">volatile</span><span class="special">,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">volatile</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">*,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">*&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span><span class="special">*&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="special">...</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">*</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">*</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="keyword">char</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">*</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">*</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-</pre>
-<p>
-        and the second part provides the library's users with a mechanism to make
-        the above code work not only for <code class="computeroutput"><span class="keyword">char</span></code>,
-        <code class="computeroutput"><span class="keyword">int</span></code> or other built-in type,
-        but for their own types as well:
-      </p>
-<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">myspace</span><span class="special">{</span>
-   <span class="keyword">struct</span> <span class="identifier">MyClass</span> <span class="special">{};</span>
-<span class="special">}</span>
-<span class="comment">// declare this at global scope:</span>
-<span class="identifier">BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION</span><span class="special">(</span><span class="identifier">myspace</span><span class="special">::</span><span class="identifier">MyClass</span><span class="special">)</span>
-<span class="comment">// transformations on myspace::MyClass now work:</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">myspace</span><span class="special">::</span><span class="identifier">MyClass</span><span class="special">,</span> <span class="identifier">remove_reference</span><span class="special">&lt;</span><span class="identifier">myspace</span><span class="special">::</span><span class="identifier">MyClass</span><span class="special">&amp;&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">((</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">myspace</span><span class="special">::</span><span class="identifier">MyClass</span><span class="special">,</span> <span class="identifier">remove_const</span><span class="special">&lt;</span><span class="identifier">myspace</span><span class="special">::</span><span class="identifier">MyClass</span> <span class="keyword">const</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">));</span>
-<span class="comment">// etc.</span>
-</pre>
-<p>
-        Note that the macro BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION evaluates
-        to nothing on those compilers that <span class="bold"><strong>do</strong></span> support
-        partial specialization.
-      </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

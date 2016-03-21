@@ -71,7 +71,7 @@ rule install ( name package-name ? : requirements * : binaries * : libraries * :
 
     # First, figure out all locations. Use the default if no prefix option
     # given.
-    local prefix = [ get-prefix $(name) : $(requirements) ] ;
+    local prefix = [ get-prefix $(package-name) : $(requirements) ] ;
 
     # Architecture dependent files.
     local exec-locate = [ option.get exec-prefix : $(prefix) ] ;

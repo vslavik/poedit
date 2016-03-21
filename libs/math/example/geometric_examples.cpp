@@ -262,7 +262,7 @@ If we chose the popular 95% confidence in the limits, corresponding to an alpha 
 because we are calculating a two-sided interval, we must divide alpha by two.
 */
     double alpha = 0.05;
-    double k = 100; // So frequency of occurence is 1/100.
+    double k = 100; // So frequency of occurrence is 1/100.
     cout << "Probability is failure is " << 1/k << endl;
     double t = geometric::find_lower_bound_on_p(k, alpha/2);
     cout << "geometric::find_lower_bound_on_p(" << int(k) << ", " << alpha/2 << ") = "

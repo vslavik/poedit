@@ -5,8 +5,8 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -23,6 +23,7 @@
 #include <boost/concept_check.hpp>
 
 #include <boost/geometry/strategies/geographic/distance_andoyer.hpp>
+#include <boost/geometry/strategies/geographic/side_andoyer.hpp>
 
 #include <boost/geometry/core/srs.hpp>
 #include <boost/geometry/strategies/strategies.hpp>
@@ -37,7 +38,7 @@
 
 
 template <typename P1, typename P2>
-void test_andoyer(double lon1, double lat1, double lon2, double lat2, double expected_km)
+void test_distance(double lon1, double lat1, double lon2, double lat2, double expected_km)
 {
     // Set radius type, but for integer coordinates we want to have floating point radius type
     typedef typename bg::promote_floating_point
@@ -58,8 +59,8 @@ void test_andoyer(double lon1, double lat1, double lon2, double lat2, double exp
     typedef typename bg::strategy::distance
         ::services::return_type<andoyer_type, P1, P2>::type return_type;
 
-
-    P1 p1, p2;
+    P1 p1;
+    P2 p2;
 
     bg::assign_values(p1, lon1, lat1);
     bg::assign_values(p2, lon2, lat2);
@@ -68,12 +69,42 @@ void test_andoyer(double lon1, double lat1, double lon2, double lat2, double exp
     BOOST_CHECK_CLOSE(bg::distance(p1, p2, andoyer), return_type(1000.0 * expected_km), 0.001);
 }
 
+template <typename PS, typename P>
+void test_side(double lon1, double lat1,
+               double lon2, double lat2,
+               double lon, double lat,
+               int expected_side)
+{
+    // Set radius type, but for integer coordinates we want to have floating point radius type
+    typedef typename bg::promote_floating_point
+        <
+            typename bg::coordinate_type<PS>::type
+        >::type rtype;
+
+    typedef bg::srs::spheroid<rtype> stype;
+
+    typedef bg::strategy::side::andoyer<stype> strategy_type;
+
+    strategy_type strategy;
+
+    PS p1, p2;
+    P p;
+
+    bg::assign_values(p1, lon1, lat1);
+    bg::assign_values(p2, lon2, lat2);
+    bg::assign_values(p, lon, lat);
+
+    int side = strategy.apply(p1, p2, p);
+
+    BOOST_CHECK_EQUAL(side, expected_side);
+}
+
 template <typename P1, typename P2>
 void test_all()
 {
-    test_andoyer<P1, P2>(0, 90, 1, 80, 1116.814237); // polar
-    test_andoyer<P1, P2>(4, 52, 4, 52, 0.0); // no point difference
-    test_andoyer<P1, P2>(4, 52, 3, 40, 1336.039890); // normal case
+    test_distance<P1, P2>(0, 90, 1, 80, 1116.814237); // polar
+    test_distance<P1, P2>(4, 52, 4, 52, 0.0); // no point difference
+    test_distance<P1, P2>(4, 52, 3, 40, 1336.039890); // normal case
 
     /* SQL Server gives:
         1116.82586908528, 0, 1336.02721932545
@@ -83,6 +114,19 @@ SELECT 0.001 * geography::STGeomFromText('POINT(0 90)', 4326).STDistance(geograp
 union SELECT 0.001 * geography::STGeomFromText('POINT(4 52)', 4326).STDistance(geography::STGeomFromText('POINT(4 52)', 4326))
 union SELECT 0.001 * geography::STGeomFromText('POINT(4 52)', 4326).STDistance(geography::STGeomFromText('POINT(3 40)', 4326))
      */
+
+    test_side<P1, P2>(0, 0, 0, 1, 0, 2, 0);
+    test_side<P1, P2>(0, 0, 0, 1, 0, -2, 0);
+    test_side<P1, P2>(10, 0, 10, 1, 10, 2, 0);
+    test_side<P1, P2>(10, 0, 10, -1, 10, 2, 0);
+
+    test_side<P1, P2>(10, 0, 10, 1, 0, 2, 1); // left
+    test_side<P1, P2>(10, 0, 10, -1, 0, 2, -1); // right
+
+    test_side<P1, P2>(-10, -10, 10, 10, 10, 0, -1); // right
+    test_side<P1, P2>(-10, -10, 10, 10, -10, 0, 1); // left
+    test_side<P1, P2>(170, -10, -170, 10, -170, 0, -1); // right
+    test_side<P1, P2>(170, -10, -170, 10, 170, 0, 1); // left
 }
 
 template <typename P>

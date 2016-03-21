@@ -357,7 +357,7 @@ std::locale create_formatting(  std::locale const &in,
                 tmp = std::locale(tmp,new util::base_num_format<wchar_t>());
                 return tmp;
             }
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         case char16_t_facet:
             {
                 std::locale tmp = create_basic_formatting<char16_t>(in,locale_name);
@@ -365,7 +365,7 @@ std::locale create_formatting(  std::locale const &in,
                 return tmp;
             }
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         case char32_t_facet:
             {
                 std::locale tmp = create_basic_formatting<char32_t>(in,locale_name);
@@ -425,7 +425,7 @@ std::locale create_parsing( std::locale const &in,
                     tmp = std::locale(in,new util::base_num_parse<wchar_t>());
                     return tmp;
                 }
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         case char16_t_facet:
                 {
                     std::locale tmp = create_basic_parsing<char16_t>(in,locale_name);
@@ -433,7 +433,7 @@ std::locale create_parsing( std::locale const &in,
                     return tmp;
                 }
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         case char32_t_facet:
                 {
                     std::locale tmp = create_basic_parsing<char32_t>(in,locale_name);

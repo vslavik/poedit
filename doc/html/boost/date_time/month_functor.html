@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -41,29 +42,29 @@
   <span class="keyword">typedef</span> <span class="identifier">cal_type</span><span class="special">::</span><span class="identifier">day_type</span>       <a name="boost.date_time.month_functor.day_type"></a><span class="identifier">day_type</span><span class="special">;</span>     
 
   <span class="comment">// <a class="link" href="month_functor.html#boost.date_time.month_functorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="month_functor.html#idp44345168-bb"><span class="identifier">month_functor</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="month_functor.html#idm45507162186208-bb"><span class="identifier">month_functor</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="month_functor.html#idp62822160-bb">public member functions</a></span>
-  <span class="identifier">duration_type</span> <a class="link" href="month_functor.html#idp102637584-bb"><span class="identifier">get_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">duration_type</span> <a class="link" href="month_functor.html#idp102793328-bb"><span class="identifier">get_neg_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="month_functor.html#idm45507088888400-bb">public member functions</a></span>
+  <span class="identifier">duration_type</span> <a class="link" href="month_functor.html#idm45507088887840-bb"><span class="identifier">get_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">duration_type</span> <a class="link" href="month_functor.html#idm45507105235728-bb"><span class="identifier">get_neg_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp175414080"></a><h2>Description</h2>
+<a name="idm45555378850096"></a><h2>Description</h2>
 <p>This adjustment function provides the logic for 'month-based' advancement on a ymd based calendar. The policy it uses to handle the non existant end of month days is to back up to the last day of the month. Also, if the starting date is the last day of a month, this functor will attempt to adjust to the end of the month. </p>
 <div class="refsect2">
-<a name="idp175415088"></a><h3>
+<a name="idm45555378849088"></a><h3>
 <a name="boost.date_time.month_functorconstruct-copy-destruct"></a><code class="computeroutput">month_functor</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp44345168-bb"></a><span class="identifier">month_functor</span><span class="special">(</span><span class="keyword">int</span> f<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm45507162186208-bb"></a><span class="identifier">month_functor</span><span class="special">(</span><span class="keyword">int</span> f<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp175421616"></a><h3>
-<a name="idp62822160-bb"></a><code class="computeroutput">month_functor</code> public member functions</h3>
+<a name="idm45555378842496"></a><h3>
+<a name="idm45507088888400-bb"></a><code class="computeroutput">month_functor</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">duration_type</span> <a name="idp102637584-bb"></a><span class="identifier">get_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> d<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">duration_type</span> <a name="idm45507088887840-bb"></a><span class="identifier">get_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> d<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">duration_type</span> <a name="idp102793328-bb"></a><span class="identifier">get_neg_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> d<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns a negative duration_type. </li>
+<pre class="literallayout"><span class="identifier">duration_type</span> <a name="idm45507105235728-bb"></a><span class="identifier">get_neg_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">date_type</span> <span class="special">&amp;</span> d<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Returns a negative duration_type. </li>
 </ol></div>
 </div>
 </div>

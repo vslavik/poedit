@@ -54,7 +54,7 @@ int main()
     BOOST_TEST(i == 1);
 
   }
-  catch(std::exception& ex)
+  catch(std::exception& )
   {
     BOOST_TEST(false);
   }

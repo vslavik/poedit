@@ -261,7 +261,7 @@ void remez_minimax<T>::init_chebyshev()
    detail::remez_error_function<T> Err(func, this->numerator(), this->denominator(), rel_error);
    detail::remez_max_error_function<T> Ex(Err);
    m_max_error = 0;
-   int max_err_location = 0;
+   //int max_err_location = 0;
    for(unsigned i = 0; i < unknowns; ++i)
    {
       std::pair<T, T> r = brent_find_minima(Ex, zeros[i], zeros[i+1], m_precision);
@@ -270,7 +270,7 @@ void remez_minimax<T>::init_chebyshev()
       if(rel_err > m_max_error)
       {
          m_max_error = fabs(r.second);
-         max_err_location = i;
+         //max_err_location = i;
       }
    }
    control_points = maxima;
@@ -583,7 +583,7 @@ T remez_minimax<T>::iterate()
    //
    detail::remez_max_error_function<T> Ex(Err);
    m_max_error = 0;
-   int max_err_location = 0;
+   //int max_err_location = 0;
    for(unsigned i = 0; i < unknowns; ++i)
    {
       std::pair<T, T> r = brent_find_minima(Ex, zeros[i], zeros[i+1], m_precision);
@@ -592,7 +592,7 @@ T remez_minimax<T>::iterate()
       if(rel_err > m_max_error)
       {
          m_max_error = fabs(r.second);
-         max_err_location = i;
+         //max_err_location = i;
       }
    }
    //
@@ -602,7 +602,7 @@ T remez_minimax<T>::iterate()
    //
    swap(control_points, maxima);
    m_max_change = 0;
-   int max_change_location = 0;
+   //int max_change_location = 0;
    for(unsigned i = 0; i < unknowns; ++i)
    {
       control_points[i] = (control_points[i] * (100 - m_brake) + maxima[i] * m_brake) / 100;
@@ -622,7 +622,7 @@ T remez_minimax<T>::iterate()
       if(change > m_max_change)
       {
          m_max_change = change;
-         max_change_location = i;
+         //max_change_location = i;
       }
    }
    //

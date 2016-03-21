@@ -115,7 +115,7 @@ operations.
 
   reverse_iterator();
 
-[*Requires: ] `Iterator` must be Default Constructible.\n
+[*Requires: ] `Iterator` must be Default Constructible.[br]
 [*Effects: ] Constructs an instance of `reverse_iterator` with `m_iterator` 
   default constructed.
 
@@ -131,7 +131,7 @@ operations.
       , typename enable_if_convertible<OtherIterator, Iterator>::type* = 0 // exposition
     );
 
-[*Requires: ] `OtherIterator` is implicitly convertible to `Iterator`.\n
+[*Requires: ] `OtherIterator` is implicitly convertible to `Iterator`.[br]
 [*Effects: ] Constructs instance of `reverse_iterator` whose 
     `m_iterator` subobject is constructed from `y.base()`.
 
@@ -149,12 +149,12 @@ operations.
 
   reverse_iterator& operator++();
 
-[*Effects: ] `--m_iterator`\n
+[*Effects: ] `--m_iterator`[br]
 [*Returns: ] `*this`
 
   reverse_iterator& operator--();
 
-[*Effects: ] `++m_iterator`\n
+[*Effects: ] `++m_iterator`[br]
 [*Returns: ] `*this`
 
 [endsect]

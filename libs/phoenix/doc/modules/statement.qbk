@@ -289,6 +289,10 @@ The syntax is:
     [
         sequenced_statements
     ]
+    .catch_<another_exception_type>(local-id)
+    [
+        sequenced_statements
+    ]
     ...
     .catch_all
     [
@@ -297,6 +301,9 @@ The syntax is:
 
 Note the usual underscore after try and catch, and the extra parentheses required
 after the catch.
+
+The second form of catch statement can refer thrown exception using specified
+local-id, which is __phoenix_local_variable__, in sequenced_statements.
 
 [/note `do_` is one example of a customized actor. See [link phoenix.advanced.extending.extending_actors Extending Actors] for more details]
 
@@ -311,9 +318,9 @@ prints messages about different exception types it catches.
     [
         cout << val("caught runtime error or derived\n")
     ]
-    .catch_<exception>()
+    .catch_<exception>(e_)
     [
-        cout << val("caught exception or derived\n")
+        cout << val("caught exception or derived: ") << bind(&exception::what, e_) << val("\n")
     ]
     .catch_all
     [

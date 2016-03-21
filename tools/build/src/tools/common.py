@@ -17,31 +17,31 @@ import os.path
 import sys
 
 # for some reason this fails on Python 2.7(r27:82525)
-# from b2.build import virtual_target 
+# from b2.build import virtual_target
 import b2.build.virtual_target
 from b2.build import feature, type
 from b2.util.utility import *
-from b2.util import path
+from b2.util import path, is_iterable_typed
 
 __re__before_first_dash = re.compile ('([^-]*)-')
 
 def reset ():
     """ Clear the module state. This is mainly for testing purposes.
         Note that this must be called _after_ resetting the module 'feature'.
-    """    
+    """
     global __had_unspecified_value, __had_value, __declared_subfeature
     global __init_loc
     global __all_signatures, __debug_configuration, __show_configuration
-    
+
     # Stores toolsets without specified initialization values.
     __had_unspecified_value = {}
 
     # Stores toolsets with specified initialization values.
     __had_value = {}
-    
+
     # Stores toolsets with declared subfeatures.
     __declared_subfeature = {}
-    
+
     # Stores all signatures of the toolsets.
     __all_signatures = {}
 
@@ -70,7 +70,7 @@ def reset ():
          "HAIKU": "LIBRARY_PATH"}
     global __shared_library_path_variable
     __shared_library_path_variable = m.get(OS, "LD_LIBRARY_PATH")
-                            
+
 reset()
 
 def shared_library_path_variable():
@@ -112,6 +112,7 @@ class Configurations(object):
             Returns True if the configuration has been added and False if
             it already exists. Reports an error if the configuration is 'used'.
         """
+        assert isinstance(id, basestring)
         if id in self.used_:
             #FIXME
             errors.error("common: the configuration '$(id)' is in use")
@@ -132,6 +133,7 @@ class Configurations(object):
             'used' and False if it the state wasn't changed. Reports an error
             if the configuration isn't known.
         """
+        assert isinstance(id, basestring)
         if id not in self.all_:
             #FIXME:
             errors.error("common: the configuration '$(id)' is not known")
@@ -154,10 +156,15 @@ class Configurations(object):
 
     def get(self, id, param):
         """ Returns the value of a configuration parameter. """
+        assert isinstance(id, basestring)
+        assert isinstance(param, basestring)
         return self.params_.get(param, {}).get(id)
 
     def set (self, id, param, value):
         """ Sets the value of a configuration parameter. """
+        assert isinstance(id, basestring)
+        assert isinstance(param, basestring)
+        assert is_iterable_typed(value, basestring)
         self.params_.setdefault(param, {})[id] = value
 
 # Ported from trunk@47174
@@ -174,14 +181,11 @@ def check_init_parameters(toolset, requirement, *args):
 
         The return value from this rule is a condition to be used for flags settings.
     """
+    assert isinstance(toolset, basestring)
+    assert is_iterable_typed(requirement, basestring)
     from b2.build import toolset as b2_toolset
     if requirement is None:
         requirement = []
-    # The type checking here is my best guess about
-    # what the types should be.
-    assert(isinstance(toolset, str))
-    # iterable and not a string, allows for future support of sets
-    assert(not isinstance(requirement, basestring) and hasattr(requirement, '__contains__'))
     sig = toolset
     condition = replace_grist(toolset, '<toolset>')
     subcondition = []
@@ -193,7 +197,7 @@ def check_init_parameters(toolset, requirement, *args):
         value = arg[1]
         assert(isinstance(name, str))
         assert(isinstance(value, str) or value is None)
-        
+
         str_toolset_name = str((toolset, name))
 
         # FIXME: is this the correct translation?
@@ -235,7 +239,7 @@ def check_init_parameters(toolset, requirement, *args):
             __had_unspecified_value[str_toolset_name] = True
 
         if value == None: value = ''
-        
+
         sig = sig + value + '-'
 
     # if a requirement is specified, the signature should be unique
@@ -245,12 +249,12 @@ def check_init_parameters(toolset, requirement, *args):
 
     if __all_signatures.has_key(sig):
         message = "duplicate initialization of '%s' with the following parameters: " % toolset
-        
+
         for arg in args:
             name = arg[0]
             value = arg[1]
             if value == None: value = '<unspecified>'
-            
+
             message += "'%s' = '%s'\n" % (name, value)
 
         raise BaseException(message)
@@ -285,38 +289,35 @@ def get_invocation_command_nodefault(
         'user-provided-command' is not given, tries to find binary named 'tool' in
         PATH and in the passed 'additional-path'. Otherwise, verifies that the first
         element of 'user-provided-command' is an existing program.
-        
+
         This rule returns the command to be used when invoking the tool. If we can't
         find the tool, a warning is issued. If 'path-last' is specified, PATH is
         checked after 'additional-paths' when searching for 'tool'.
     """
-    assert(isinstance(toolset, str))
-    assert(isinstance(tool, str))
-    assert(isinstance(user_provided_command, list))
-    if additional_paths is not None:
-        assert(isinstance(additional_paths, list))
-        assert(all([isinstance(path, str) for path in additional_paths]))
-    assert(all(isinstance(path, str) for path in additional_paths))
-    assert(isinstance(path_last, bool))
-    
+    assert isinstance(toolset, basestring)
+    assert isinstance(tool, basestring)
+    assert is_iterable_typed(user_provided_command, basestring)
+    assert is_iterable_typed(additional_paths, basestring) or additional_paths is None
+    assert isinstance(path_last, (int, bool))
+
     if not user_provided_command:
-        command = find_tool(tool, additional_paths, path_last) 
+        command = find_tool(tool, additional_paths, path_last)
         if not command and __debug_configuration:
             print "warning: toolset", toolset, "initialization: can't find tool, tool"
             #FIXME
             #print "warning: initialized from" [ errors.nearest-user-location ] ;
     else:
         command = check_tool(user_provided_command)
-        assert(isinstance(command, list))
-        command=' '.join(command)
         if not command and __debug_configuration:
             print "warning: toolset", toolset, "initialization:"
             print "warning: can't find user-provided command", user_provided_command
             #FIXME
             #ECHO "warning: initialized from" [ errors.nearest-user-location ]
+            command = []
+        command = ' '.join(command)
 
     assert(isinstance(command, str))
-    
+
     return command
 
 # ported from trunk@47174
@@ -325,14 +326,11 @@ def get_invocation_command(toolset, tool, user_provided_command = [],
     """ Same as get_invocation_command_nodefault, except that if no tool is found,
         returns either the user-provided-command, if present, or the 'tool' parameter.
     """
-
-    assert(isinstance(toolset, str))
-    assert(isinstance(tool, str))
-    assert(isinstance(user_provided_command, list))
-    if additional_paths is not None:
-        assert(isinstance(additional_paths, list))
-        assert(all([isinstance(path, str) for path in additional_paths]))
-    assert(isinstance(path_last, bool))
+    assert isinstance(toolset, basestring)
+    assert isinstance(tool, basestring)
+    assert is_iterable_typed(user_provided_command, basestring)
+    assert is_iterable_typed(additional_paths, basestring) or additional_paths is None
+    assert isinstance(path_last, (int, bool))
 
     result = get_invocation_command_nodefault(toolset, tool,
                                               user_provided_command,
@@ -346,7 +344,7 @@ def get_invocation_command(toolset, tool, user_provided_command = [],
             result = tool
 
     assert(isinstance(result, str))
-    
+
     return result
 
 # ported from trunk@47281
@@ -356,6 +354,7 @@ def get_absolute_tool_path(command):
         return the absolute path to the command. This works even if commnad
         has not path element and is present in PATH.
     """
+    assert isinstance(command, basestring)
     if os.path.dirname(command):
         return os.path.dirname(command)
     else:
@@ -376,9 +375,9 @@ def find_tool(name, additional_paths = [], path_last = False):
         Otherwise, returns the empty string.  If 'path_last' is specified,
         path is checked after 'additional_paths'.
     """
-    assert(isinstance(name, str))
-    assert(isinstance(additional_paths, list))
-    assert(isinstance(path_last, bool))
+    assert isinstance(name, basestring)
+    assert is_iterable_typed(additional_paths, basestring)
+    assert isinstance(path_last, (int, bool))
 
     programs = path.programs_path()
     match = path.glob(programs, [name, name + '.exe'])
@@ -407,7 +406,7 @@ def check_tool_aux(command):
     """ Checks if 'command' can be found either in path
         or is a full name to an existing file.
     """
-    assert(isinstance(command, str))
+    assert isinstance(command, basestring)
     dirname = os.path.dirname(command)
     if dirname:
         if os.path.exists(command):
@@ -425,13 +424,12 @@ def check_tool_aux(command):
 
 # ported from trunk@47281
 def check_tool(command):
-    """ Checks that a tool can be invoked by 'command'. 
+    """ Checks that a tool can be invoked by 'command'.
         If command is not an absolute path, checks if it can be found in 'path'.
         If comand is absolute path, check that it exists. Returns 'command'
         if ok and empty string otherwise.
     """
-    assert(isinstance(command, list))
-    assert(all(isinstance(c, str) for c in command))
+    assert is_iterable_typed(command, basestring)
     #FIXME: why do we check the first and last elements????
     if check_tool_aux(command[0]) or check_tool_aux(command[-1]):
         return command
@@ -449,11 +447,10 @@ def handle_options(tool, condition, command, options):
     """
     from b2.build import toolset
 
-    assert(isinstance(tool, str))
-    assert(isinstance(condition, list))
-    assert(isinstance(command, str))
-    assert(isinstance(options, list))
-    assert(command)
+    assert isinstance(tool, basestring)
+    assert is_iterable_typed(condition, basestring)
+    assert command and isinstance(command, basestring)
+    assert is_iterable_typed(options, basestring)
     toolset.flags(tool, 'CONFIG_COMMAND', condition, [command])
     toolset.flags(tool + '.compile', 'OPTIONS', condition, feature.get_values('<compileflags>', options))
     toolset.flags(tool + '.compile.c', 'OPTIONS', condition, feature.get_values('<cflags>', options))
@@ -490,8 +487,8 @@ def variable_setting_command(variable, value):
         words, on Unix systems, the variable is exported, which is consistent with the
         only possible behavior on Windows systems.
     """
-    assert(isinstance(variable, str))
-    assert(isinstance(value, str))
+    assert isinstance(variable, basestring)
+    assert isinstance(value, basestring)
 
     if os_name() == 'NT':
         return "set " + variable + "=" + value + os.linesep
@@ -533,8 +530,8 @@ def path_variable_setting_command(variable, paths):
         Returns a command to sets a named shell path variable to the given NATIVE
         paths on the current platform.
     """
-    assert(isinstance(variable, str))
-    assert(isinstance(paths, list))
+    assert isinstance(variable, basestring)
+    assert is_iterable_typed(paths, basestring)
     sep = os.path.pathsep
     return variable_setting_command(variable, sep.join(paths))
 
@@ -542,7 +539,10 @@ def prepend_path_variable_command(variable, paths):
     """
         Returns a command that prepends the given paths to the named path variable on
         the current platform.
-    """    
+    """
+    assert isinstance(variable, basestring)
+    assert is_iterable_typed(paths, basestring)
+
     return path_variable_setting_command(variable,
         paths + os.environ.get(variable, "").split(os.pathsep))
 
@@ -562,6 +562,7 @@ __mkdir_set = set()
 __re_windows_drive = re.compile(r'^.*:\$')
 
 def mkdir(engine, target):
+    assert isinstance(target, basestring)
     # If dir exists, do not update it. Do this even for $(DOT).
     bjam.call('NOUPDATE', target)
 
@@ -590,7 +591,7 @@ def mkdir(engine, target):
         if os_name() == 'NT':
             if(__re_windows_drive.match(s)):
                 s = ''
-                
+
         if s:
             if s != target:
                 engine.add_dependency(target, s)
@@ -642,9 +643,12 @@ def format_name(format, name, target_type, prop_set):
         The returned name also has the target type specific prefix and suffix which
         puts it in a ready form to use as the value from a custom tag rule.
     """
-    assert(isinstance(format, list))
-    assert(isinstance(name, str))
-    assert(isinstance(target_type, str) or not type)
+    if __debug__:
+        from ..build.property_set import PropertySet
+        assert is_iterable_typed(format, basestring)
+        assert isinstance(name, basestring)
+        assert isinstance(target_type, basestring)
+        assert isinstance(prop_set, PropertySet)
     # assert(isinstance(prop_set, property_set.PropertySet))
     if type.is_derived(target_type, 'LIB'):
         result = "" ;
@@ -653,7 +657,7 @@ def format_name(format, name, target_type, prop_set):
             if grist == '<base>':
                 result += os.path.basename(name)
             elif grist == '<toolset>':
-                result += join_tag(get_value(f), 
+                result += join_tag(get_value(f),
                     toolset_tag(name, target_type, prop_set))
             elif grist == '<threading>':
                 result += join_tag(get_value(f),
@@ -690,6 +694,8 @@ def format_name(format, name, target_type, prop_set):
         return result
 
 def join_tag(joiner, tag):
+    assert isinstance(joiner, basestring)
+    assert isinstance(tag, basestring)
     if tag:
         if not joiner: joiner = '-'
         return joiner + tag
@@ -698,6 +704,11 @@ def join_tag(joiner, tag):
 __re_toolset_version = re.compile(r"<toolset.*version>(\d+)[.](\d*)")
 
 def toolset_tag(name, target_type, prop_set):
+    if __debug__:
+        from ..build.property_set import PropertySet
+        assert isinstance(name, basestring)
+        assert isinstance(target_type, basestring)
+        assert isinstance(prop_set, PropertySet)
     tag = ''
 
     properties = prop_set.raw()
@@ -708,7 +719,7 @@ def toolset_tag(name, target_type, prop_set):
     elif tools.startswith('como'): tag += 'como'
     elif tools.startswith('cw'): tag += 'cw'
     elif tools.startswith('darwin'): tag += 'xgcc'
-    elif tools.startswith('edg'): tag += edg
+    elif tools.startswith('edg'): tag += 'edg'
     elif tools.startswith('gcc'):
         flavor = prop_set.get('<toolset-gcc:flavor>')
         ''.find
@@ -764,6 +775,11 @@ def toolset_tag(name, target_type, prop_set):
 
 
 def threading_tag(name, target_type, prop_set):
+    if __debug__:
+        from ..build.property_set import PropertySet
+        assert isinstance(name, basestring)
+        assert isinstance(target_type, basestring)
+        assert isinstance(prop_set, PropertySet)
     tag = ''
     properties = prop_set.raw()
     if '<threading>multi' in properties: tag = 'mt'
@@ -772,6 +788,11 @@ def threading_tag(name, target_type, prop_set):
 
 
 def runtime_tag(name, target_type, prop_set ):
+    if __debug__:
+        from ..build.property_set import PropertySet
+        assert isinstance(name, basestring)
+        assert isinstance(target_type, basestring)
+        assert isinstance(prop_set, PropertySet)
     tag = ''
 
     properties = prop_set.raw()
@@ -847,13 +868,13 @@ def init(manager):
         __CP = 'cp'
         __IGNORE = ''
         __LN = 'ln'
-        
+
     engine.register_action("common.Clean", __RM + ' "$(>)"',
                            flags=['piecemeal', 'together', 'existing'])
     engine.register_action("common.copy", __CP + ' "$(>)" "$(<)"')
     engine.register_action("common.RmTemps", __RM + ' "$(>)" ' + __IGNORE,
                            flags=['quietly', 'updated', 'piecemeal', 'together'])
 
-    engine.register_action("common.hard-link", 
+    engine.register_action("common.hard-link",
         __RM + ' "$(<)" 2$(NULL_OUT) $(NULL_OUT)' + os.linesep +
         __LN + ' "$(>)" "$(<)" $(NULL_OUT)')

@@ -127,6 +127,9 @@ The following templates describe the general properties of a type.
    struct __has_nothrow_copy_constructor;
 
    template <class T>
+   struct __has_nothrow_destructor;
+
+   template <class T>
    struct __has_trivial_assign;
 
    template <class T>
@@ -150,11 +153,32 @@ The following templates describe the general properties of a type.
    template <class T>
    struct __is_abstract;
 
+   template <class T, class U>
+   struct __is_assignable;
+
+   template <class T>
+   struct __is_copy_constructible;
+
+   template <class T>
+   struct __is_copy_assignable;
+
+   template <class T, class... Args>
+   struct __is_constructible;
+
+   template <class T>
+   struct __is_default_constructible;
+
+   template <class T>
+   struct __is_destructible;
+
    template <class T>
    struct __is_const;
 
    template <class T>
    struct __is_empty;
+
+   template <class T>
+   struct __is_final;
 
    template <class T>
    struct __is_stateless;

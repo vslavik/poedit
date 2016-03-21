@@ -203,7 +203,7 @@ following operations:
 
   indirect_iterator();
 
-[*Requires: ] `Iterator` must be Default Constructible.\n
+[*Requires: ] `Iterator` must be Default Constructible.[br]
 [*Effects: ] Constructs an instance of `indirect_iterator` with 
    a default-constructed `m_iterator`.
 
@@ -225,7 +225,7 @@ following operations:
     , typename enable_if_convertible<Iterator2, Iterator>::type* = 0 // exposition
   );
 
-[*Requires: ] `Iterator2` is implicitly convertible to `Iterator`.\n
+[*Requires: ] `Iterator2` is implicitly convertible to `Iterator`.[br]
 [*Effects: ] Constructs an instance of `indirect_iterator` whose 
     `m_iterator` subobject is constructed from `y.base()`.
 
@@ -242,13 +242,13 @@ following operations:
 
   indirect_iterator& operator++();
 
-[*Effects: ] `++m_iterator`\n
+[*Effects: ] `++m_iterator`[br]
 [*Returns: ] `*this`
 
 
   indirect_iterator& operator--();
 
-[*Effects: ] `--m_iterator`\n
+[*Effects: ] `--m_iterator`[br]
 [*Returns: ] `*this`
 
 [endsect]

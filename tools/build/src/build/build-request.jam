@@ -150,8 +150,7 @@ rule from-command-line ( command-line * )
             if [ MATCH "(.*=.*)" : $(e) ]
                 || [ looks-like-implicit-value $(e:D=) : $(feature-space) ]
             {
-                properties += [ convert-command-line-element $(e) :
-                    $(feature-space) ] ;
+                properties += $(e) ;
             }
             else if $(e)
             {
@@ -169,9 +168,22 @@ rule from-command-line ( command-line * )
 }
 
 
-# Converts one element of command line build request specification into internal
+# Converts a list of elements of command line build request specification into internal
 # form. Expects all the project files to already be loaded.
 #
+rule convert-command-line-elements ( elements * )
+{
+    local result ;
+    for local e in $(elements)
+    {
+        result += [ convert-command-line-element $(e) ] ;
+    }
+    return $(result) ;
+}
+
+
+# Converts one element of command line build request specification into internal
+# form.
 local rule convert-command-line-element ( e )
 {
     local result ;
@@ -286,37 +298,60 @@ rule __test__ ( )
 
     local r ;
 
-    r = [ build-request.from-command-line bjam debug runtime-link=dynamic ] ;
-    assert.equal [ $(r).get-at 1 ] : ;
-    assert.equal [ $(r).get-at 2 ] : debug <runtime-link>dynamic ;
-
     try ;
     {
-        build-request.from-command-line bjam gcc/debug runtime-link=dynamic/static ;
+        r = [ build-request.from-command-line bjam gcc/debug runtime-link=dynamic/static ] ;
+        build-request.convert-command-line-elements [ $(r).get-at 2 ] ;
     }
     catch \"static\" is not an implicit feature value ;
 
+    r = [ build-request.from-command-line bjam debug runtime-link=dynamic ] ;
+    assert.equal [ $(r).get-at 1 ] : ;
+    assert.equal [ $(r).get-at 2 ] : debug runtime-link=dynamic ;
+
+    assert.equal
+        [ build-request.convert-command-line-elements debug runtime-link=dynamic ]
+        : debug <runtime-link>dynamic ;
+
     r = [ build-request.from-command-line bjam -d2 --debug debug target runtime-link=dynamic ] ;
     assert.equal [ $(r).get-at 1 ] : target ;
-    assert.equal [ $(r).get-at 2 ] : debug <runtime-link>dynamic ;
+    assert.equal [ $(r).get-at 2 ] : debug runtime-link=dynamic ;
+
+    assert.equal
+        [ build-request.convert-command-line-elements debug runtime-link=dynamic ]
+        : debug <runtime-link>dynamic ;
 
     r = [ build-request.from-command-line bjam debug runtime-link=dynamic,static ] ;
     assert.equal [ $(r).get-at 1 ] : ;
-    assert.equal [ $(r).get-at 2 ] : debug <runtime-link>dynamic <runtime-link>static ;
+    assert.equal [ $(r).get-at 2 ] : debug runtime-link=dynamic,static ;
+
+    assert.equal
+        [ build-request.convert-command-line-elements debug runtime-link=dynamic,static ]
+        : debug <runtime-link>dynamic <runtime-link>static ;
 
     r = [ build-request.from-command-line bjam debug gcc/runtime-link=dynamic,static ] ;
     assert.equal [ $(r).get-at 1 ] : ;
-    assert.equal [ $(r).get-at 2 ] : debug gcc/<runtime-link>dynamic
-        gcc/<runtime-link>static ;
+    assert.equal [ $(r).get-at 2 ] : debug gcc/runtime-link=dynamic,static ;
+
+    assert.equal
+        [ build-request.convert-command-line-elements debug gcc/runtime-link=dynamic,static ]
+        : debug gcc/<runtime-link>dynamic gcc/<runtime-link>static ;
 
     r = [ build-request.from-command-line bjam msvc gcc,borland/runtime-link=static ] ;
     assert.equal [ $(r).get-at 1 ] : ;
-    assert.equal [ $(r).get-at 2 ] : msvc gcc/<runtime-link>static
-        borland/<runtime-link>static ;
+    assert.equal [ $(r).get-at 2 ] : msvc gcc,borland/runtime-link=static ;
+
+    assert.equal
+        [ build-request.convert-command-line-elements msvc gcc,borland/runtime-link=static ]
+        : msvc gcc/<runtime-link>static borland/<runtime-link>static ;
 
     r = [ build-request.from-command-line bjam gcc-3.0 ] ;
     assert.equal [ $(r).get-at 1 ] : ;
     assert.equal [ $(r).get-at 2 ] : gcc-3.0 ;
+
+    assert.equal
+        [ build-request.convert-command-line-elements gcc-3.0 ]
+        : gcc-3.0 ;
 
     feature.finish-test build-request-test-temp ;
 }

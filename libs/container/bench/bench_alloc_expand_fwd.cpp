@@ -223,7 +223,7 @@ void vector_test_template(unsigned int num_iterations, unsigned int num_elements
                      << "(" << float(numalloc)/num_iterations << "/" << float(numexpand)/num_iterations << ")"
                   << std::endl << std::endl;
    }
-   boost_cont_trim(0);
+   bc::dlmalloc_trim(0);
 }
 
 void print_header()

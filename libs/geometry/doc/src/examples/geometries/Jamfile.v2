@@ -13,7 +13,16 @@ project boost-geometry-doc-src-example-geometries
     : # requirements
     ;
 
+exe box : box.cpp ;
+exe linestring : linestring.cpp ;
 exe point : point.cpp ;
+exe point_xy : point_xy.cpp ;
+exe polygon : polygon.cpp ;
+exe multi_linestring : multi_linestring.cpp ;
+exe multi_point : multi_point.cpp ;
+exe multi_polygon : multi_polygon.cpp ;
+exe ring : ring.cpp ;
+exe segment : segment.cpp ;
 
 build-project adapted ;
 build-project register ;

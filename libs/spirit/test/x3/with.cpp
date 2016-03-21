@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2014 Joel de Guzman
+    Copyright (c) 2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +21,7 @@ struct my_rule_class
         x3::get<my_tag>(context)++;
         return x3::error_handler_result::fail;
     }
-    
+
     template <typename Iterator, typename Attribute, typename Context>
     inline void
     on_success(Iterator const&, Iterator const&, Attribute&, Context const& context)
@@ -46,7 +46,7 @@ main()
         auto r = rule<my_rule_class, char const*>() =
             '(' > int_ > ',' > int_ > ')'
             ;
-        
+
         auto start =
             with<my_tag>(std::ref(val)) [ r ]
             ;

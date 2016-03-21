@@ -13,6 +13,8 @@
 #include <boost/math/tools/config.hpp>
 #include <boost/math/tools/stats.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/math/special_functions/relative_difference.hpp>
+#include <boost/math/policies/error_handling.hpp>
 #include <boost/test/test_tools.hpp>
 #include <stdexcept>
 #include <iostream>
@@ -60,98 +62,9 @@ struct calculate_result_type
 template <class T>
 T relative_error(T a, T b)
 {
-   BOOST_MATH_STD_USING
-#ifdef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
-   //
-   // If math.h has no long double support we can't rely
-   // on the math functions generating exponents outside
-   // the range of a double:
-   //
-   T min_val = (std::max)(
-      tools::min_value<T>(),
-      static_cast<T>((std::numeric_limits<double>::min)()));
-   T max_val = (std::min)(
-      tools::max_value<T>(),
-      static_cast<T>((std::numeric_limits<double>::max)()));
-#else
-   T min_val = tools::min_value<T>();
-   T max_val = tools::max_value<T>();
-#endif
-
-   if((a != 0) && (b != 0))
-   {
-      // TODO: use isfinite:
-      if(fabs(b) >= max_val)
-      {
-         if(fabs(a) >= max_val)
-            return 0;  // one infinity is as good as another!
-      }
-      // If the result is denormalised, treat all denorms as equivalent:
-      if((a < min_val) && (a > 0))
-         a = min_val;
-      else if((a > -min_val) && (a < 0))
-         a = -min_val;
-      if((b < min_val) && (b > 0))
-         b = min_val;
-      else if((b > -min_val) && (b < 0))
-         b = -min_val;
-      return (std::max)(fabs((a-b)/a), fabs((a-b)/b));
-   }
-
-   // Handle special case where one or both are zero:
-   if(min_val == 0)
-      return fabs(a-b);
-   if(fabs(a) < min_val)
-      a = min_val;
-   if(fabs(b) < min_val)
-      b = min_val;
-   return (std::max)(fabs((a-b)/a), fabs((a-b)/b));
+   return boost::math::relative_difference(a, b);
 }
 
-#if defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
-template <>
-inline double relative_error<double>(double a, double b)
-{
-   BOOST_MATH_STD_USING
-   //
-   // On Mac OS X we evaluate "double" functions at "long double" precision,
-   // but "long double" actually has a very slightly narrower range than "double"!  
-   // Therefore use the range of "long double" as our limits since results outside
-   // that range may have been truncated to 0 or INF:
-   //
-   double min_val = (std::max)((double)tools::min_value<long double>(), tools::min_value<double>());
-   double max_val = (std::min)((double)tools::max_value<long double>(), tools::max_value<double>());
-
-   if((a != 0) && (b != 0))
-   {
-      // TODO: use isfinite:
-      if(b > max_val)
-      {
-         if(a > max_val)
-            return 0;  // one infinity is as good as another!
-      }
-      // If the result is denormalised, treat all denorms as equivalent:
-      if((a < min_val) && (a > 0))
-         a = min_val;
-      else if((a > -min_val) && (a < 0))
-         a = -min_val;
-      if((b < min_val) && (b > 0))
-         b = min_val;
-      else if((b > -min_val) && (b < 0))
-         b = -min_val;
-      return (std::max)(fabs((a-b)/a), fabs((a-b)/b));
-   }
-
-   // Handle special case where one or both are zero:
-   if(min_val == 0)
-      return fabs(a-b);
-   if(fabs(a) < min_val)
-      a = min_val;
-   if(fabs(b) < min_val)
-      b = min_val;
-   return (std::max)(fabs((a-b)/a), fabs((a-b)/b));
-}
-#endif
 
 template <class T>
 void set_output_precision(T)
@@ -170,16 +83,16 @@ void set_output_precision(T)
 }
 
 template <class Seq>
-void print_row(const Seq& row)
+void print_row(const Seq& row, std::ostream& os = std::cout)
 {
    set_output_precision(row[0]);
    for(unsigned i = 0; i < row.size(); ++i)
    {
       if(i)
-         std::cout << ", ";
-      std::cout << row[i];
+         os << ", ";
+      os << row[i];
    }
-   std::cout << std::endl;
+   os << std::endl;
 }
 
 //
@@ -201,9 +114,12 @@ test_result<typename calculate_result_type<A>::value_type> test(const A& a, F1 t
    {
       const row_type& row = a[i];
       value_type point;
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          point = test_func(row);
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const std::underflow_error&)
       {
@@ -218,11 +134,12 @@ test_result<typename calculate_result_type<A>::value_type> test(const A& a, F1 t
       catch(const std::exception& e)
       {
          std::cerr << e.what() << std::endl;
-         print_row(row);
+         print_row(row, std::cerr);
          BOOST_ERROR("Unexpected exception.");
          // so we don't get further errors:
          point = expect_func(row);
       }
+#endif
       value_type expected = expect_func(row);
       value_type err = relative_error(point, expected);
 #ifdef BOOST_INSTRUMENT
@@ -238,16 +155,16 @@ test_result<typename calculate_result_type<A>::value_type> test(const A& a, F1 t
 #endif
       if(!(boost::math::isfinite)(point) && (boost::math::isfinite)(expected))
       {
-         std::cout << "CAUTION: Found non-finite result, when a finite value was expected at entry " << i << "\n";
-         std::cout << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
-         print_row(row);
+         std::cerr << "CAUTION: Found non-finite result, when a finite value was expected at entry " << i << "\n";
+         std::cerr << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
+         print_row(row, std::cerr);
          BOOST_ERROR("Unexpected non-finite result");
       }
       if(err > 0.5)
       {
-         std::cout << "CAUTION: Gross error found at entry " << i << ".\n";
-         std::cout << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
-         print_row(row);
+         std::cerr << "CAUTION: Gross error found at entry " << i << ".\n";
+         std::cerr << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
+         print_row(row, std::cerr);
          BOOST_ERROR("Gross error");
       }
       result.add(err);
@@ -269,9 +186,12 @@ test_result<Real> test_hetero(const A& a, F1 test_func, F2 expect_func)
    {
       const row_type& row = a[i];
       value_type point;
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          point = test_func(row);
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const std::underflow_error&)
       {
@@ -286,11 +206,12 @@ test_result<Real> test_hetero(const A& a, F1 test_func, F2 expect_func)
       catch(const std::exception& e)
       {
          std::cerr << e.what() << std::endl;
-         print_row(row);
+         print_row(row, std::cerr);
          BOOST_ERROR("Unexpected exception.");
          // so we don't get further errors:
          point = expect_func(row);
       }
+#endif
       value_type expected = expect_func(row);
       value_type err = relative_error(point, expected);
 #ifdef BOOST_INSTRUMENT
@@ -306,16 +227,16 @@ test_result<Real> test_hetero(const A& a, F1 test_func, F2 expect_func)
 #endif
       if(!(boost::math::isfinite)(point) && (boost::math::isfinite)(expected))
       {
-         std::cout << "CAUTION: Found non-finite result, when a finite value was expected at entry " << i << "\n";
-         std::cout << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
-         print_row(row);
+         std::cerr << "CAUTION: Found non-finite result, when a finite value was expected at entry " << i << "\n";
+         std::cerr << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
+         print_row(row, std::cerr);
          BOOST_ERROR("Unexpected non-finite result");
       }
       if(err > 0.5)
       {
-         std::cout << "CAUTION: Gross error found at entry " << i << ".\n";
-         std::cout << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
-         print_row(row);
+         std::cerr << "CAUTION: Gross error found at entry " << i << ".\n";
+         std::cerr << "Found: " << point << " Expected " << expected << " Error: " << err << std::endl;
+         print_row(row, std::cerr);
          BOOST_ERROR("Gross error");
       }
       result.add(err);
@@ -325,9 +246,61 @@ test_result<Real> test_hetero(const A& a, F1 test_func, F2 expect_func)
    return result;
 }
 
+template <class Val, class Exception>
+void test_check_throw(Val v, Exception e)
+{
+   BOOST_CHECK(errno);
+   errno = 0;
+}
+
+template <class Val>
+void test_check_throw(Val val, std::domain_error const* e)
+{
+   BOOST_CHECK(errno == EDOM);
+   errno = 0;
+   if(std::numeric_limits<Val>::has_quiet_NaN)
+   {
+      BOOST_CHECK((boost::math::isnan)(val));
+   }
+}
+
+template <class Val>
+void test_check_throw(Val v, std::overflow_error const* e)
+{
+   BOOST_CHECK(errno == ERANGE);
+   errno = 0;
+   BOOST_CHECK((v >= boost::math::tools::max_value<Val>()) || (v <= -boost::math::tools::max_value<Val>()));
+}
+
+template <class Val>
+void test_check_throw(Val v, boost::math::rounding_error const* e)
+{
+   BOOST_CHECK(errno == ERANGE);
+   errno = 0;
+   if(std::numeric_limits<Val>::is_specialized && std::numeric_limits<Val>::is_integer)
+   {
+      BOOST_CHECK((v == (std::numeric_limits<Val>::max)()) || (v == (std::numeric_limits<Val>::min)()));
+   }
+   else
+   {
+      BOOST_CHECK((v == boost::math::tools::max_value<Val>()) || (v == -boost::math::tools::max_value<Val>()));
+   }
+}
+
 } // namespace tools
 } // namespace math
 } // namespace boost
+
+
+  //
+  // exception-free testing support, ideally we'd only define this in our tests,
+  // but to keep things simple we really need it somewhere that's always included:
+  //
+#ifdef BOOST_NO_EXCEPTIONS
+#  define BOOST_MATH_CHECK_THROW(x, ExceptionType) boost::math::tools::test_check_throw(x, static_cast<ExceptionType const*>(0));
+#else
+#  define BOOST_MATH_CHECK_THROW(x, y) BOOST_CHECK_THROW(x, y)
+#endif
 
 #endif
 

@@ -15,9 +15,11 @@ The 5 strategies give the user control to the generated buffer
 
 * convex corners can be rounded or sharp
 * line-ends can be rounded or flat
-* distance can be symmetric or assymetric, and can be specified as negative (deflate)
+* distance can be symmetric or assymetric, and positive or negative
 * around points the shape can be circular or square
 * the sides can be controlled (currently there is only one option provided)
+
+By specifying a negative distance for the distance_strategy, for the (multi) polygon case, the polygon will be smaller (also known as deflate). The distance cannot be 0.
 
 The next figure shows where in the generated buffer the strategies have effect
 

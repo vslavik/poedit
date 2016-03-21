@@ -1,7 +1,12 @@
+//  Copyright John Maddock 2015.
+//  Use, modification and distribution are subject to the
+//  Boost Software License, Version 1.0. (See accompanying file
+//  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
 #ifndef SC_
 #  define SC_(x) static_cast<T>(BOOST_JOIN(x, L))
 #endif
-   static const boost::array<boost::array<T, 3>, 900> ellint_d2_data = {{
+   static const boost::array<boost::array<typename table_type<T>::type, 3>, 900> ellint_d2_data = {{
       { SC_(-1.6098388671875000000000000000000000000000e+01), SC_(1.6900929544760856515495106577873229980469e-09), SC_(-7.8732233320862771639280819567039935203140e+00) }, 
       { SC_(-1.6098388671875000000000000000000000000000e+01), SC_(2.1149908491224778117612004280090332031250e-09), SC_(-7.8732233320862771686912327739413416253147e+00) }, 
       { SC_(-1.6098388671875000000000000000000000000000e+01), SC_(7.0996275525203600409440696239471435546875e-09), SC_(-7.8732233320862773040094892394481766236413e+00) }, 

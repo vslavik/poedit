@@ -1,12 +1,72 @@
 [/
   (C) Copyright 2007-11 Anthony Williams.
-  (C) Copyright 2011-14 Vicente J. Botet Escriba.
+  (C) Copyright 2011-15 Vicente J. Botet Escriba.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
 [section:changes History]
+
+[heading Version 4.6.0 - boost 1.60]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/4833 #4833] MinGW/test_tss_lib: Support of automatic tss cleanup for native threading API not available
+* [@http://svn.boost.org/trac/boost/ticket/8600 #8600] wait_for_any hangs, if called with multiple copies of shared_future referencing same task
+* [@http://svn.boost.org/trac/boost/ticket/9118 #9118] Seg fault on thread join when llvm and libc++ are used
+* [@http://svn.boost.org/trac/boost/ticket/10942 #10942] Boost.Thread fails to build on Cygwin.
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread trunk regression test] to see the last regression test snapshot.
+
+[*New Experimental Features:]
+
+
+* [@http://svn.boost.org/trac/boost/ticket/11231 #11231] Allow to set continuation future's destructor behavior to non-blocking
+* [@http://svn.boost.org/trac/boost/ticket/11424 #11424] Provide shared_timed_mutex as an alternative name for shared_mutex and deprecate the use of shared_mutex as a timed mutex
+* [@http://svn.boost.org/trac/boost/ticket/11734 #11734] future::then(Cont) should be able to execute the contination on undetermined thread
+* [@http://svn.boost.org/trac/boost/ticket/11736 #11736] Allow to use launch::executor on future::then(launch::executor, cont)
+* [@http://svn.boost.org/trac/boost/ticket/11737 #11737] Add a launch::inherit policy that can be used on ::then() to use the policy of the parent future
+
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+* [@http://svn.boost.org/trac/boost/ticket/6377 #6377] Condition variable blocks when changing time
+* [@http://svn.boost.org/trac/boost/ticket/6787 #6787] boost::thread::sleep() hangs if system time is rolled back
+* [@http://svn.boost.org/trac/boost/ticket/7665 #7665] this_thread::sleep_for no longer uses steady_clock in thread
+* [@http://svn.boost.org/trac/boost/ticket/7720 #7720] exception lock_error while intensive locking/unlocking of mutex
+* [@http://svn.boost.org/trac/boost/ticket/9309 #9309] test_latch fails often on clang-darwin-tot11
+* [@http://svn.boost.org/trac/boost/ticket/10788 #10788] GetLogicalProcessor isn't available for Windows platform less or equals to 0x0502
+* [@http://svn.boost.org/trac/boost/ticket/11090 #11090] ex_future_unwrap- ThreadSanitizer: lock-order-inversion (potential deadlock)
+* [@http://svn.boost.org/trac/boost/ticket/11158 #11158] Pthread thread deadlock when faketime used
+* [@http://svn.boost.org/trac/boost/ticket/11174 #11174] boost::condition_variable::timed_wait with predicate unexpectedly wakes up while should wait infinite
+* [@http://svn.boost.org/trac/boost/ticket/11185 #11185] Incorrect URL redirection
+* [@http://svn.boost.org/trac/boost/ticket/11192 #11192] boost::future<>::then() with an executor doesn't compile when the callback returns a future
+* [@http://svn.boost.org/trac/boost/ticket/11250 #11250] future made from make_exceptional fails on assertion in destructor
+* [@http://svn.boost.org/trac/boost/ticket/11256 #11256] future<>::is_ready() == false in continuation function
+* [@http://svn.boost.org/trac/boost/ticket/11261 #11261] bad use of scoped threads in basic_thread_pool
+* [@http://svn.boost.org/trac/boost/ticket/11262 #11262] bad use of direct pointer in shared_state_nullary_task
+* [@http://svn.boost.org/trac/boost/ticket/11263 #11263] lock already locked lock
+* [@http://svn.boost.org/trac/boost/ticket/11266 #11266] boost::packaged_task has invalid variadic signature
+* [@http://svn.boost.org/trac/boost/ticket/11302 #11302] boost thread doesn't build with BOOST_THREAD_PATCH.
+* [@http://svn.boost.org/trac/boost/ticket/11322 #11322] sleep_for() nanoseconds overload will always return too early on windows
+* [@http://svn.boost.org/trac/boost/ticket/11329 #11329] using declarative for GetProcessHeap, .... fails
+* [@http://svn.boost.org/trac/boost/ticket/11368 #11368] boost thread's usage of CreateWaitableTimer wakes PC from sleep (doh)
+* [@http://svn.boost.org/trac/boost/ticket/11377 #11377] Boost condition variable always waits for system clock deadline
+* [@http://svn.boost.org/trac/boost/ticket/11435 #11435] gcc compiler warning in future.hpp
+* [@http://svn.boost.org/trac/boost/ticket/11555 #11555] devector.hpp assumes allocator_traits_type is always present
+* [@http://svn.boost.org/trac/boost/ticket/11562 #11562] (condition_variable_any::wait_until + recursive_mutex + steady_clock) timer expires after computer time is set forward on Ubuntu 64-bit
+* [@http://svn.boost.org/trac/boost/ticket/11672 #11672] Thread: Should use unique_ptr, not auto_ptr
+* [@http://svn.boost.org/trac/boost/ticket/11688 #11688] thread::try_join_until: Avoid busy wait if system clock changes
+* [@http://svn.boost.org/trac/boost/ticket/11672 #11716] ::then(f) should inherit the parent Executor
+* [@http://svn.boost.org/trac/boost/ticket/11795 #11795] Incorrect version specification for documentation of thread destructor
+* [@http://svn.boost.org/trac/boost/ticket/11796 #11796] Thread move assignment operator, does not detach previous thread data
+* [@http://svn.boost.org/trac/boost/ticket/11817 #11817] 'sync_queue_is_closed' was not declared in boost/thread/executors/thread_executor.hpp
+* [@http://svn.boost.org/trac/boost/ticket/11818 #11818] future.then will be blocked if promise is set after the invocation of then
+
 
 [heading Version 4.5.0 - boost 1.58]
 

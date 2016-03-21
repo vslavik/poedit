@@ -27,7 +27,15 @@ class some_entity  :  public entity
 {/**/};
 
 //Definition of the intrusive list
-typedef list<entity> entity_list;
+struct entity_list : list<entity>
+{
+   ~entity_list()
+   {
+      // entity's destructor removes itself from the global list implicitly
+      while (!this->empty())
+         delete &this->front();
+   }
+};
 
 //A global list
 entity_list global_list;
@@ -40,14 +48,6 @@ entity::~entity()
 void insert_some_entity()
 {  global_list.push_back (*new some_entity(/*...*/));  }
 
-//Function to clear an entity from the intrusive global list
-void clear_list ()
-{
-   // entity's destructor removes itself from the global list implicitly
-   while (!global_list.empty())
-      delete &global_list.front();
-}
-
 int main()
 {
    //Insert some new entities
@@ -57,4 +57,4 @@ int main()
    return 0;
 }
 
-//]
+//]   

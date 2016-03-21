@@ -18,7 +18,6 @@
 #include <boost/array.hpp>
 #include "functor.hpp"
 
-#include "test_gamma_hooks.hpp"
 #include "handle_test_result.hpp"
 #include "table_type.hpp"
 
@@ -32,13 +31,19 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
-   pg funcp = boost::math::tgamma<value_type, value_type>;
-#else
-   pg funcp = boost::math::tgamma;
-#endif
+   pg funcp;
 
    boost::math::tools::test_result<value_type> result;
+
+#if !(defined(ERROR_REPORTING_MODE) && !defined(IGAMMA_FUNCTION_TO_TEST))
+
+#ifdef IGAMMA_FUNCTION_TO_TEST
+   funcp = IGAMMA_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+   funcp = boost::math::tgamma<value_type, value_type>;
+#else
+   funcp = boost::math::tgamma;
+#endif
 
    std::cout << "Testing " << test_name << " with type " << type_name
       << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
@@ -52,11 +57,13 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
          data,
          bind_func<Real>(funcp, 0, 1),
          extract_result<Real>(2));
-      handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::tgamma", test_name);
+      handle_test_result(result, data[result.worst()], result.worst(), type_name, "tgamma (incomplete)", test_name);
       //
       // test tgamma_lower(T, T) against data:
       //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef IGAMMAL_FUNCTION_TO_TEST
+      funcp = IGAMMAL_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
       funcp = boost::math::tgamma_lower<value_type, value_type>;
 #else
       funcp = boost::math::tgamma_lower;
@@ -65,12 +72,16 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
          data,
          bind_func<Real>(funcp, 0, 1),
          extract_result<Real>(4));
-      handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::tgamma_lower", test_name);
+      handle_test_result(result, data[result.worst()], result.worst(), type_name, "tgamma_lower", test_name);
    }
+#endif
+#if !(defined(ERROR_REPORTING_MODE) && !defined(GAMMAQ_FUNCTION_TO_TEST))
    //
    // test gamma_q(T, T) against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef GAMMAQ_FUNCTION_TO_TEST
+   funcp = GAMMAQ_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::gamma_q<value_type, value_type>;
 #else
    funcp = boost::math::gamma_q;
@@ -79,25 +90,13 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
       data,
       bind_func<Real>(funcp, 0, 1),
       extract_result<Real>(3));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::gamma_q", test_name);
-#if defined(TEST_OTHER)
-   //
-   // test other gamma_q(T, T) against data:
-   //
-   if(boost::is_floating_point<value_type>::value)
-   {
-      funcp = other::gamma_q;
-      result = boost::math::tools::test_hetero<Real>(
-         data,
-         bind_func<Real>(funcp, 0, 1),
-         extract_result<Real>(3));
-      print_test_result(result, data[result.worst()], result.worst(), type_name, "other::gamma_q");
-   }
-#endif
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "gamma_q", test_name);
    //
    // test gamma_p(T, T) against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef GAMMAP_FUNCTION_TO_TEST
+   funcp = GAMMAP_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::gamma_p<value_type, value_type>;
 #else
    funcp = boost::math::gamma_p;
@@ -106,22 +105,9 @@ void do_test_gamma_2(const T& data, const char* type_name, const char* test_name
       data,
       bind_func<Real>(funcp, 0, 1),
       extract_result<Real>(5));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::gamma_p", test_name);
-#if defined(TEST_OTHER)
-   //
-   // test other gamma_p(T, T) against data:
-   //
-   if(boost::is_floating_point<value_type>::value)
-   {
-      funcp = other::gamma_p;
-      result = boost::math::tools::test_hetero<Real>(
-         data,
-         bind_func<Real>(funcp, 0, 1),
-         extract_result<Real>(5));
-      print_test_result(result, data[result.worst()], result.worst(), type_name, "other::gamma_p");
-   }
-#endif
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "gamma_p", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>
@@ -210,12 +196,12 @@ void test_spots(T)
    BOOST_CHECK_CLOSE(::boost::math::gamma_p(static_cast<T>(30), ldexp(T(1), -30)), static_cast<T>(4.460092102072560946444018923090222645613009128135650652e-304L), tolerance);
    BOOST_CHECK_CLOSE(::boost::math::gamma_p_derivative(static_cast<T>(2), ldexp(T(1), -575)), static_cast<T>(8.08634922390438981326119906687585206568664784377654648227177e-174L), tolerance);
 
-   typedef boost::math::policies::policy<boost::math::policies::overflow_error<boost::math::policies::throw_on_error> > throw_policy;
+   //typedef boost::math::policies::policy<boost::math::policies::overflow_error<boost::math::policies::throw_on_error> > throw_policy;
 
    if(std::numeric_limits<T>::max_exponent <= 1024 && std::numeric_limits<T>::has_infinity)
    {
       BOOST_CHECK_EQUAL(::boost::math::tgamma(static_cast<T>(176), static_cast<T>(100)), std::numeric_limits<T>::infinity());
-      //BOOST_CHECK_THROW(::boost::math::tgamma(static_cast<T>(176), static_cast<T>(100), throw_policy()), std::overflow_error);
+      //BOOST_MATH_CHECK_THROW(::boost::math::tgamma(static_cast<T>(176), static_cast<T>(100), throw_policy()), std::overflow_error);
       BOOST_CHECK_EQUAL(::boost::math::tgamma(static_cast<T>(530), static_cast<T>(2000)), std::numeric_limits<T>::infinity());
       BOOST_CHECK_EQUAL(::boost::math::tgamma(static_cast<T>(740), static_cast<T>(2500)), std::numeric_limits<T>::infinity());
       BOOST_CHECK_EQUAL(::boost::math::tgamma(static_cast<T>(530.5), static_cast<T>(2000)), std::numeric_limits<T>::infinity());

@@ -16,6 +16,60 @@
 #include "boost/variant/multivisitors.hpp"
 #include "boost/lexical_cast.hpp"
 
+#include <boost/noncopyable.hpp>
+#include <boost/core/ignore_unused.hpp>
+
+namespace has_result_type_tests {
+    template <class T>
+    struct wrap {
+        typedef T result_type;
+    };
+
+    struct s1 : wrap<int> {};
+    struct s2 : wrap<int&> {};
+    struct s3 : wrap<const int&> {};
+    struct s4 {};
+    struct s5 : wrap<int*> {};
+    struct s6 : wrap<int**> {};
+    struct s7 : wrap<const int*> {};
+    struct s8 : wrap<boost::noncopyable> {};
+    struct s9 : wrap<boost::noncopyable&> {};
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    struct s10 : wrap<boost::noncopyable&&> {};
+#endif
+    struct s11 : wrap<const boost::noncopyable&> {};
+    struct s12 : wrap<const boost::noncopyable*> {};
+    struct s13 : wrap<boost::noncopyable*> {};
+    struct s14 { typedef int result_type; };
+    struct s15 { typedef int& result_type; };
+    struct s16 { typedef const int& result_type; };
+}
+
+
+void test_has_result_type_triat() {
+    using namespace has_result_type_tests;
+    using boost::detail::variant::has_result_type;
+
+    BOOST_CHECK(has_result_type<s1>::value);
+    BOOST_CHECK(has_result_type<s2>::value);
+    BOOST_CHECK(has_result_type<s3>::value);
+    BOOST_CHECK(!has_result_type<s4>::value);
+    BOOST_CHECK(has_result_type<s5>::value);
+    BOOST_CHECK(has_result_type<s6>::value);
+    BOOST_CHECK(has_result_type<s7>::value);
+    BOOST_CHECK(has_result_type<s8>::value);
+    BOOST_CHECK(has_result_type<s9>::value);
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+    BOOST_CHECK(has_result_type<s10>::value);
+#endif
+    BOOST_CHECK(has_result_type<s11>::value);
+    BOOST_CHECK(has_result_type<s12>::value);
+    BOOST_CHECK(has_result_type<s13>::value);
+    BOOST_CHECK(has_result_type<s14>::value);
+    BOOST_CHECK(has_result_type<s15>::value);
+    BOOST_CHECK(has_result_type<s16>::value);
+}
+
 struct lex_streamer_explicit: boost::static_visitor<std::string> {
     template <class T>
     const char* operator()(const T& ) {
@@ -176,6 +230,8 @@ void run()
 #ifndef BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES
     boost::apply_visitor(lex_streamer_void_visitor)(v2);
 #endif
+
+    boost::ignore_unused(lex_streamer_visitor, visitor_ref, lex_streamer_void_visitor);
 }
 
 
@@ -242,6 +298,8 @@ void run2()
 
     boost::apply_visitor(lex_streamer_void(), v1, v2);
     boost::apply_visitor(lex_streamer_void(), v2, v1);
+
+    boost::ignore_unused(lex_combine_visitor, visitor_ref);
 }
 
 #undef BOOST_CHECK_IF_HAS_VARIADIC
@@ -316,6 +374,7 @@ int test_main(int , char* [])
     run();
     run2();
     run3();
+    test_has_result_type_triat();
 
     return 0;
 }

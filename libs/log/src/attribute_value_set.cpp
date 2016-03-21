@@ -94,7 +94,7 @@ private:
     };
 
     //! A list of buckets
-    typedef boost::array< bucket, 1U << BOOST_LOG_HASH_TABLE_SIZE_LOG > buckets;
+    typedef boost::array< bucket, 1u << BOOST_LOG_HASH_TABLE_SIZE_LOG > buckets;
 
     //! Element disposer
     struct disposer
@@ -119,8 +119,6 @@ private:
 
     //! The container with elements
     node_list m_Nodes;
-    //! The pointer to the beginning of the storage of the elements
-    node* m_pStorage;
     //! The pointer to the end of the allocated elements within the storage
     node* m_pEnd;
     //! The pointer to the end of storage
@@ -141,7 +139,6 @@ private:
         m_pSourceAttributes(source_attrs),
         m_pThreadAttributes(thread_attrs),
         m_pGlobalAttributes(global_attrs),
-        m_pStorage(storage),
         m_pEnd(storage),
         m_pEOS(eos)
     {
@@ -320,7 +317,7 @@ private:
     //! The function returns a bucket for the specified element
     bucket& get_bucket(id_type id)
     {
-        return m_Buckets[id & (buckets::static_size - 1)];
+        return m_Buckets[id & (buckets::static_size - 1u)];
     }
 
     //! Attempts to find an element with the specified key in the bucket
@@ -398,18 +395,18 @@ private:
             b.first = b.last = p;
             it = m_Nodes.end();
         }
-        else if (where == b.first)
-        {
-            // The new element should become the first element of the bucket
-            it = m_Nodes.iterator_to(*where);
-            b.first = p;
-        }
         else if (where == b.last && key.id() > where->m_Value.first.id())
         {
             // The new element should become the last element of the bucket
             it = m_Nodes.iterator_to(*where);
             ++it;
             b.last = p;
+        }
+        else if (where == b.first)
+        {
+            // The new element should become the first element of the bucket
+            it = m_Nodes.iterator_to(*where);
+            b.first = p;
         }
         else
         {

@@ -201,13 +201,17 @@ public:
       {
          if((arg1.type & dummy_param) == 0)
             row.push_back(*a);
+#ifndef BOOST_NO_EXCEPTIONS
          try{
+#endif
             // domain_error exceptions from func are swallowed
             // and this data point is ignored:
             boost::math::tools::detail::unpack_and_append(row, func(*a));
             m_data.insert(row);
+#ifndef BOOST_NO_EXCEPTIONS
          }
          catch(const std::domain_error&){}
+#endif
          row.clear();
          ++a;
       }
@@ -237,13 +241,17 @@ public:
                row.push_back(*a);
             if((arg2.type & dummy_param) == 0)
                row.push_back(*c);
+#ifndef BOOST_NO_EXCEPTIONS
             try{
+#endif
                // domain_error exceptions from func are swallowed
                // and this data point is ignored:
                detail::unpack_and_append(row, func(*a, *c));
                m_data.insert(row);
+#ifndef BOOST_NO_EXCEPTIONS
             }
             catch(const std::domain_error&){}
+#endif
             row.clear();
             ++c;
          }
@@ -282,13 +290,17 @@ public:
                   row.push_back(*c);
                if((arg3.type & dummy_param) == 0)
                   row.push_back(*e);
+#ifndef BOOST_NO_EXCEPTIONS
                try{
+#endif
                   // domain_error exceptions from func are swallowed
                   // and this data point is ignored:
                   detail::unpack_and_append(row, func(*a, *c, *e));
                   m_data.insert(row);
+#ifndef BOOST_NO_EXCEPTIONS
                }
                catch(const std::domain_error&){}
+#endif
                row.clear();
                ++e;
             }
@@ -487,9 +499,12 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             info.z1 = 0;
             break;
          }
+#ifndef BOOST_NO_EXCEPTIONS
          try{
+#endif
             info.z1 = boost::lexical_cast<T>(line);
             break;
+#ifndef BOOST_NO_EXCEPTIONS
          }
          catch(const boost::bad_lexical_cast&)
          {
@@ -503,6 +518,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             std::cout << "Sorry don't recognise that either, giving up...\n\n";
             return false;
          }
+#endif
       }while(true);
       do{
          std::cout << "Enter value for the end point fo the range [default=1]:";
@@ -514,9 +530,12 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
          }
          else
          {
+#ifndef BOOST_NO_EXCEPTIONS
             try
             {
+#endif
                info.z2 = boost::lexical_cast<T>(line);
+#ifndef BOOST_NO_EXCEPTIONS
             }
             catch(const boost::bad_lexical_cast&)
             {
@@ -530,6 +549,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
                std::cout << "Sorry don't recognise that either, giving up...\n\n";
                return false;
             }
+#endif
          }
          if(info.z1 >= info.z2)
          {
@@ -551,7 +571,9 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
          std::cout << "How many data points do you want?";
          std::getline(std::cin, line);
          boost::algorithm::trim(line);
+#ifndef BOOST_NO_EXCEPTIONS
          try{
+#endif
             info.n1 = boost::lexical_cast<int>(line);
             info.n2 = 0;
             if(info.n1 <= 0)
@@ -568,6 +590,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
                return false;
             }
             break;
+#ifndef BOOST_NO_EXCEPTIONS
          }
          catch(const boost::bad_lexical_cast&)
          {
@@ -581,6 +604,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             std::cout << "Sorry don't recognise that either, giving up...\n\n";
             return false;
          }
+#endif
       }while(true);
       break;
    case power_series:
@@ -597,9 +621,12 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             info.z1 = 0;
             break;
          }
+#ifndef BOOST_NO_EXCEPTIONS
          try{
+#endif
             info.z1 = boost::lexical_cast<T>(line);
             break;
+#ifndef BOOST_NO_EXCEPTIONS
          }
          catch(const boost::bad_lexical_cast&)
          {
@@ -613,6 +640,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             std::cout << "Sorry don't recognise that either, giving up...\n\n";
             return false;
          }
+#endif
       }while(true);
 
       do{
@@ -621,9 +649,12 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             "enter value for the starting exponent b:";
          std::getline(std::cin, line);
          boost::algorithm::trim(line);
+#ifndef BOOST_NO_EXCEPTIONS
          try{
+#endif
             info.n1 = boost::lexical_cast<int>(line);
             break;
+#ifndef BOOST_NO_EXCEPTIONS
          }
          catch(const boost::bad_lexical_cast&)
          {
@@ -637,6 +668,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             std::cout << "Sorry don't recognise that either, giving up...\n\n";
             return false;
          }
+#endif
       }while(true);
 
       do{
@@ -645,9 +677,12 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             "enter value for the ending exponent b:";
          std::getline(std::cin, line);
          boost::algorithm::trim(line);
+#ifndef BOOST_NO_EXCEPTIONS
          try{
+#endif
             info.n2 = boost::lexical_cast<int>(line);
             break;
+#ifndef BOOST_NO_EXCEPTIONS
          }
          catch(const boost::bad_lexical_cast&)
          {
@@ -661,6 +696,7 @@ bool get_user_parameter_info(parameter_info<T>& info, const char* param_name)
             std::cout << "Sorry don't recognise that either, giving up...\n\n";
             return false;
          }
+#endif
       }while(true);
 
       break;

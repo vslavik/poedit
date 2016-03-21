@@ -20,6 +20,7 @@
 #  define TEST_REAL_CONCEPT
 #endif
 
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 #include <boost/math/distributions/non_central_f.hpp> // for chi_squared_distribution
 #define BOOST_TEST_MAIN
@@ -304,12 +305,12 @@ void test_spots(RealType)
 
    // Error handling checks:
    check_out_of_range<boost::math::non_central_f_distribution<RealType> >(1, 1, 1);
-   BOOST_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(0, 1, 1), 0), std::domain_error);
-   BOOST_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(-1, 1, 1), 0), std::domain_error);
-   BOOST_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(1, 0, 1), 0), std::domain_error);
-   BOOST_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(1, -1, 1), 0), std::domain_error);
-   BOOST_CHECK_THROW(quantile(boost::math::non_central_f_distribution<RealType>(1, 1, 1), -1), std::domain_error);
-   BOOST_CHECK_THROW(quantile(boost::math::non_central_f_distribution<RealType>(1, 1, 1), 2), std::domain_error);
+   BOOST_MATH_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(0, 1, 1), 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(-1, 1, 1), 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(1, 0, 1), 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(pdf(boost::math::non_central_f_distribution<RealType>(1, -1, 1), 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(boost::math::non_central_f_distribution<RealType>(1, 1, 1), -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(boost::math::non_central_f_distribution<RealType>(1, 1, 1), 2), std::domain_error);
 } // template <class RealType>void test_spots(RealType)
 
 BOOST_AUTO_TEST_CASE( test_main )

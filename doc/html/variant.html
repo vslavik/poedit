@@ -1,7 +1,8 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;38.&#160;Boost.Variant</title>
+<title>Chapter&#160;39.&#160;Boost.Variant</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
@@ -25,7 +26,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="variant"></a>Chapter&#160;38.&#160;Boost.Variant</h2></div>
+<a name="variant"></a>Chapter&#160;39.&#160;Boost.Variant</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Eric</span> <span class="surname">Friedman</span>
 </h3></div></div>
@@ -34,7 +35,7 @@
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2002, 2003 Eric Friedman, Itay Maman</p></div>
 <div><div class="legalnotice">
-<a name="idp517845328"></a><p>Distributed under the Boost Software License, Version 1.0.
+<a name="idm45555034029472"></a><p>Distributed under the Boost Software License, Version 1.0.
     (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
     <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
     </p>
@@ -74,7 +75,7 @@
 <dt><span class="section"><a href="variant/misc.html">Miscellaneous Notes</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="variant/misc.html#variant.versus-any">Boost.Variant vs. Boost.Any</a></span></dt>
-<dt><span class="section"><a href="variant/misc.html#idp521687744">Portability</a></span></dt>
+<dt><span class="section"><a href="variant/misc.html#idm45555030186032">Portability</a></span></dt>
 <dt><span class="section"><a href="variant/misc.html#variant.troubleshooting">Troubleshooting</a></span></dt>
 <dt><span class="section"><a href="variant/misc.html#variant.ack">Acknowledgments</a></span></dt>
 </dl></dd>
@@ -106,7 +107,7 @@ include:</p>
 <li class="listitem">Compile-time type-safe value visitation via
     <code class="computeroutput"><a class="link" href="boost/apply_visitor.html" title="Function apply_visitor">boost::apply_visitor</a></code>.</li>
 <li class="listitem">Run-time checked explicit value retrieval via
-    <code class="computeroutput"><a class="link" href="boost/get_idp108797984.html" title="Function get">boost::get</a></code>.</li>
+    <code class="computeroutput"><a class="link" href="boost/get_idm45507165650576.html" title="Function get">boost::get</a></code>.</li>
 <li class="listitem">Support for recursive variant types via both
     <code class="computeroutput"><a class="link" href="boost/make_recursive_variant.html" title="Class template make_recursive_variant">boost::make_recursive_variant</a></code> and
     <code class="computeroutput"><a class="link" href="boost/recursive_wrapper.html" title="Class template recursive_wrapper">boost::recursive_wrapper</a></code>.</li>
@@ -149,7 +150,7 @@ manipulated through a common base type (often a virtual base class
 or, more dangerously, a <code class="computeroutput">void*</code>). Objects of
 concrete type may be then retrieved by way of a polymorphic downcast
 construct (e.g., <code class="computeroutput">dynamic_cast</code>,
-<code class="computeroutput"><a class="link" href="boost/any_cast_idp42424128.html" title="Function any_cast">boost::any_cast</a></code>, etc.).</p>
+<code class="computeroutput"><a class="link" href="boost/any_cast_idm45507162615824.html" title="Function any_cast">boost::any_cast</a></code>, etc.).</p>
 <p>However, solutions of this sort are highly error-prone, due
 to the following:</p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">

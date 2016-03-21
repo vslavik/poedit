@@ -212,6 +212,11 @@
 [def __time_point__op_gt [link chrono.reference.cpp0x.time_point_hpp.cmp.time_point__op_gt `operator>`]]
 [def __time_point__op_geq [link chrono.reference.cpp0x.time_point_hpp.cmp.time_point__op_geq `operator>=`]]
 
+[def __time_point_units [link chrono.reference.io.time_point_units_hpp.time_point_units `time_point_units`]]
+
+
+
+
 
 
 [/==================]
@@ -2539,7 +2544,7 @@ The current implementation provides in addition:
 
 [section:assert How Assert Behaves?]
 
-When `BOOST_NO_STATIC_ASSERT` is defined, the user can select the way static assertions are reported. Define
+When `BOOST_NO_CXX11_STATIC_ASSERT` is defined, the user can select the way static assertions are reported. Define
 
 * `BOOST_CHRONO_USES_STATIC_ASSERT`: define it if you want to use Boost.StaticAssert.
 * `BOOST_CHRONO_USES_MPL_ASSERT`: define it if you want to use Boost.MPL static assertions.
@@ -2588,11 +2593,15 @@ However, you will either need to define `BOOST_CHRONO_DONT_PROVIDE_HYBRID_ERROR_
 
 Version 2.0.0 deprecates the preceding IO features. 
 
+However the default version is always version 1. 
+If you don't want to include the deprecated features you could define `BOOST_CHRONO_DONT_PROVIDES_DEPRECATED_IO_SINCE_V2_0_0`.
+
+[/
 These deprecated features will be provided by default up to boost 1.55. 
-If you don't want to include the deprecated features you could define `BOOST_CHRONO_DONT_PROVIDES_DEPRECATED_IO_SINCE_V2_0_0`. 
 Since 1.55 these features will not be included any more by default. 
 Since this version, if you want to include the deprecated features yet you could define `BOOST_CHRONO_PROVIDES_DEPRECATED_IO_SINCE_V2_0_0`. 
-These deprecated features will be only available until boost 1.58, that is you have 1 year and a half to move to the new features.
+These id features will be only available until boost 1.58, that is you have 1 year and a half to move to the new features.
+]
 
 [endsect]
 
@@ -2895,7 +2904,7 @@ The following members of __duration do not throw an exception unless the indicat
 
             constexpr duration();
 
-__effects  Constructs an object of type __duration from duration_values<rep>::zero().
+__effects  Constructs an object of type __duration initialized from `duration_values<rep>::zero()` in C++98 or `BOOST_CHRONO_DURATION_DEFAULTS_TO_ZERO` is defined, otherwise the duration is uninitialized.
 
 [endsect]
 
@@ -4124,7 +4133,7 @@ This file includes the i/o of the two major components, duration and time_point.
 
         #include <boost/chrono/io/duration_style.hpp>
         #include <boost/chrono/io/timezone.hpp>
-        #include <boost/chrono/io/ios_state.hpp>
+        #include <boost/chrono/io/ios_base_state.hpp>
         #include <boost/chrono/io/duration_get.hpp>
         #include <boost/chrono/io/duration_put.hpp>
         #include <boost/chrono/io/duration_units.hpp>
@@ -4193,7 +4202,7 @@ __duration unit names come in two varieties: prefix and symbol.
 
 
 [/==================================================================]
-[section:ios_state_hpp Header `<boost/chrono/io/ios_state.hpp>`]
+[section:ios_state_hpp Header `<boost/chrono/io/ios_base_state.hpp>`]
 [/==================================================================]
 
     namespace boost {
@@ -5594,7 +5603,7 @@ The symbol or name format can be easily chosen by streaming a `symbol_format` or
 
           explicit __duration_fmt__c1(__duration_style style) noexcept;
 
-        #ifndef BOOST_NO_EXPLICIT_CONVERSION_OPERATORS
+        #ifndef BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
           explicit
           __duration_fmt__op_duration_style() const noexcept;
         #endif
@@ -6083,6 +6092,8 @@ __returns s, iterator pointing immediately after the last character produced.
 
     namespace boost {
       namespace chrono {
+        template <typename CharT, typename Clock, typename TPUFacet>
+        std::basic_string<CharT> get_epoch_custom(Clock, TPUFacet& f);
         template <typename CharT=char>
         class time_point_units;
         template <typename CharT=char>
@@ -6090,6 +6101,25 @@ __returns s, iterator pointing immediately after the last character produced.
       }
     }
 
+[section:get_epoch_custom Template Function `get_epoch_custom`]
+
+        template <typename CharT, typename Clock, typename TPUFacet>
+        std::basic_string<CharT> get_epoch_custom(Clock, TPUFacet& f);
+        
+
+Customization point to the epoch associated to the clock `Clock`
+The default calls `f.do_get_epoch(Clock())`. 
+
+The user can overload this function.
+    
+        
+__returns Forwards the call to the facet as if 
+
+      return f.do_get_epoch(Clock());
+
+
+[endsect]
+[//////////////////////////////////////////////////////////]
 [section:time_point_units Template Class `time_point_units`]
 
 
@@ -6161,7 +6191,8 @@ __returns the pattern to be used by default.
       template <typename Clock>
       string_type get_epoch() const;
 
-__returns the epoch associated to the clock `Clock` calling `__do_get_epoch(Clock())`
+__returns the epoch associated to the clock `Clock` as if `return get_epoch_custom<CharT>(Clock(), *this);
+`
 
 [endsect]
     

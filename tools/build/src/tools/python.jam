@@ -962,15 +962,17 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
     # symbols. If we linked to libpython, we would get duplicate symbols. So
     # declare two targets -- one for building extensions and another for
     # embedding.
-    #
-    # Unlike most *nix systems, Mac OS X's linker does not permit undefined
-    # symbols when linking a shared library. So, we still need to link against
-    # the Python framework, even when building extensions. Note that framework
-    # builds of Python always use shared libraries, so we do not need to worry
-    # about duplicate Python symbols.
-    if $(target-os) in windows cygwin darwin
+    if $(target-os) in windows cygwin
     {
         alias python_for_extensions : python : $(target-requirements) ;
+    }
+    else if $(target-os) = darwin {
+        alias python_for_extensions
+            :
+            : $(target-requirements)
+            :
+            : $(usage-requirements) <linkflags>"-undefined dynamic_lookup"
+            ;
     }
     # On AIX we need Python extensions and Boost.Python to import symbols from
     # the Python interpreter. Dynamic libraries opened with dlopen() do not

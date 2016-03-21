@@ -19,11 +19,12 @@ int main()
 {
     bg::model::point<double, 2, bg::cs::cartesian> point1;
     bg::model::point<double, 3, bg::cs::cartesian> point2(1.0, 2.0, 3.0); /*< Construct, assigning three coordinates >*/
-    point1.set<0>(1.0); /*< Set a coordinate. [*Note]: prefer using `bg::set<0>(point1, 1.0);` >*/
-    point1.set<1>(2.0);
 
-    double x = point1.get<0>(); /*< Get a coordinate. [*Note]: prefer using `x = bg::get<0>(point1);` >*/
-    double y = point1.get<1>();
+    bg::set<0>(point1, 1.0); /*< Set a coordinate, generic. >*/
+    point1.set<1>(2.0); /*< Set a coordinate, class-specific ([*Note]: prefer `bg::set()`). >*/
+
+    double x = bg::get<0>(point1); /*< Get a coordinate, generic. >*/
+    double y = point1.get<1>(); /*< Get a coordinate, class-specific ([*Note]: prefer `bg::get()`). >*/
 
     std::cout << x << ", " << y << std::endl;
     return 0;

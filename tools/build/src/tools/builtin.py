@@ -13,7 +13,7 @@ import b2.build.targets as targets
 import sys
 from b2.build import feature, property, virtual_target, generators, type, property_set, scanner
 from b2.util.utility import *
-from b2.util import path, regex, bjam_signature
+from b2.util import path, regex, bjam_signature, is_iterable_typed
 import b2.tools.types
 from b2.manager import get_manager
 
@@ -36,15 +36,15 @@ def variant (name, parents_or_properties, explicit_properties = []):
         refining parents' explicit properties with the passed explicit
         properties. The result is remembered and will be used if
         this variant is used as parent.
-        
+
         Second, determines the full property set for this variant by
-        adding to the explicit properties default values for all properties 
+        adding to the explicit properties default values for all properties
         which neither present nor are symmetric.
-        
+
         Lastly, makes appropriate value of 'variant' property expand
         to the full property set.
         name:                   Name of the variant
-        parents_or_properties:  Specifies parent variants, if 
+        parents_or_properties:  Specifies parent variants, if
                                 'explicit_properties' are given,
                                 and explicit_properties otherwise.
         explicit_properties:    Explicit properties.
@@ -54,7 +54,7 @@ def variant (name, parents_or_properties, explicit_properties = []):
         explicit_properties = parents_or_properties
     else:
         parents = parents_or_properties
-    
+
     inherited = property_set.empty()
     if parents:
 
@@ -62,22 +62,22 @@ def variant (name, parents_or_properties, explicit_properties = []):
         # between base variants, and there was no demand for so to bother.
         if len (parents) > 1:
             raise BaseException ("Multiple base variants are not yet supported")
-        
+
         p = parents[0]
         # TODO: the check may be stricter
         if not feature.is_implicit_value (p):
             raise BaseException ("Invalid base variant '%s'" % p)
-        
+
         inherited = __variant_explicit_properties[p]
 
     explicit_properties = property_set.create_with_validation(explicit_properties)
     explicit_properties = inherited.refine(explicit_properties)
-    
+
     # Record explicitly specified properties for this variant
     # We do this after inheriting parents' properties, so that
     # they affect other variants, derived from this one.
     __variant_explicit_properties[name] = explicit_properties
-           
+
     feature.extend('variant', [name])
     feature.compose ("<variant>" + name, explicit_properties.all())
 
@@ -128,20 +128,20 @@ def register_globals ():
 
     feature.feature('target-os', __os_names, ['propagated', 'link-incompatible'])
     feature.set_default('target-os', default_host_os())
-    
+
     feature.feature ('toolset', [], ['implicit', 'propagated' ,'symmetric'])
-    
+
     feature.feature ('stdlib', ['native'], ['propagated', 'composite'])
-    
+
     feature.feature ('link', ['shared', 'static'], ['propagated'])
     feature.feature ('runtime-link', ['shared', 'static'], ['propagated'])
     feature.feature ('runtime-debugging', ['on', 'off'], ['propagated'])
-    
-    
+
+
     feature.feature ('optimization',  ['off', 'speed', 'space'], ['propagated'])
     feature.feature ('profiling', ['off', 'on'], ['propagated'])
     feature.feature ('inlining', ['off', 'on', 'full'], ['propagated'])
-    
+
     feature.feature ('threading', ['single', 'multi'], ['propagated'])
     feature.feature ('rtti', ['on', 'off'], ['propagated'])
     feature.feature ('exception-handling', ['on', 'off'], ['propagated'])
@@ -162,21 +162,21 @@ def register_globals ():
     feature.feature ('linkflags', [], ['free'])
     feature.feature ('archiveflags', [], ['free'])
     feature.feature ('version', [], ['free'])
-    
+
     feature.feature ('location-prefix', [], ['free'])
 
     feature.feature ('action', [], ['free'])
 
-    
+
     # The following features are incidental, since
     # in themself they have no effect on build products.
     # Not making them incidental will result in problems in corner
     # cases, for example:
-    # 
+    #
     #    unit-test a : a.cpp : <use>b ;
     #    lib b : a.cpp b ;
-    # 
-    # Here, if <use> is not incidental, we'll decide we have two 
+    #
+    # Here, if <use> is not incidental, we'll decide we have two
     # targets for a.obj with different properties, and will complain.
     #
     # Note that making feature incidental does not mean it's ignored. It may
@@ -196,7 +196,7 @@ def register_globals ():
         'off',        # Do not fail the compilation if there are warnings.
         'on'],        # Fail the compilation if there are warnings.
         ['incidental', 'propagated'])
-    
+
     feature.feature('c++-template-depth',
         [str(i) for i in range(64,1024+1,64)] +
         [str(i) for i in range(20,1000+1,10)] +
@@ -213,31 +213,31 @@ def register_globals ():
     feature.feature ('library-path', [], ['free', 'path']) #order-sensitive ;
     # Internal feature.
     feature.feature ('library-file', [], ['free', 'dependency'])
-    
+
     feature.feature ('name', [], ['free'])
     feature.feature ('tag', [], ['free'])
     feature.feature ('search', [], ['free', 'path']) #order-sensitive ;
     feature.feature ('location', [], ['free', 'path'])
-    
+
     feature.feature ('dll-path', [], ['free', 'path'])
     feature.feature ('hardcode-dll-paths', ['true', 'false'], ['incidental'])
-    
-    
+
+
     # This is internal feature which holds the paths of all dependency
     # dynamic libraries. On Windows, it's needed so that we can all
     # those paths to PATH, when running applications.
     # On Linux, it's needed to add proper -rpath-link command line options.
     feature.feature ('xdll-path', [], ['free', 'path'])
-    
+
     #provides means to specify def-file for windows dlls.
     feature.feature ('def-file', [], ['free', 'dependency'])
-    
+
     # This feature is used to allow specific generators to run.
     # For example, QT tools can only be invoked when QT library
     # is used. In that case, <allow>qt will be in usage requirement
     # of the library.
     feature.feature ('allow', [], ['free'])
-    
+
     # The addressing model to generate code for. Currently a limited set only
     # specifying the bit size of pointers.
     feature.feature('address-model', ['16', '32', '64'], ['propagated', 'optional'])
@@ -261,7 +261,7 @@ def register_globals ():
 
         # HP/PA-RISC
         'parisc',
-        
+
         # Advanced RISC Machines
         'arm',
 
@@ -307,7 +307,7 @@ def register_globals ():
 
         # HP/PA-RISC
         '700', '7100', '7100lc', '7200', '7300', '8000',
-        
+
         # Advanced RISC Machines
         'armv2', 'armv2a', 'armv3', 'armv3m', 'armv4', 'armv4t', 'armv5',
         'armv5t', 'armv5te', 'armv6', 'armv6j', 'iwmmxt', 'ep9312'],
@@ -318,17 +318,17 @@ def register_globals ():
 
     # The value of 'no' prevents building of a target.
     feature.feature('build', ['yes', 'no'], ['optional'])
-    
+
     # Windows-specific features
     feature.feature ('user-interface', ['console', 'gui', 'wince', 'native', 'auto'], [])
     feature.feature ('variant', [], ['implicit', 'composite', 'propagated', 'symmetric'])
 
 
     variant ('debug', ['<optimization>off', '<debug-symbols>on', '<inlining>off', '<runtime-debugging>on'])
-    variant ('release', ['<optimization>speed', '<debug-symbols>off', '<inlining>full', 
+    variant ('release', ['<optimization>speed', '<debug-symbols>off', '<inlining>full',
                          '<runtime-debugging>off', '<define>NDEBUG'])
     variant ('profile', ['release'], ['<profiling>on', '<debug-symbols>on'])
-    
+
 
 reset ()
 register_globals ()
@@ -336,19 +336,19 @@ register_globals ()
 class SearchedLibTarget (virtual_target.AbstractFileTarget):
     def __init__ (self, name, project, shared, search, action):
         virtual_target.AbstractFileTarget.__init__ (self, name, 'SEARCHED_LIB', project, action)
-        
+
         self.shared_ = shared
         self.search_ = search
 
     def shared (self):
         return self.shared_
-    
+
     def search (self):
         return self.search_
-        
+
     def actualize_location (self, target):
         bjam.call("NOTFILE", target)
-    
+
     def path (self):
         #FIXME: several functions rely on this not being None
         return ""
@@ -361,24 +361,24 @@ class CScanner (scanner.Scanner):
         self.includes_ = []
 
         for i in includes:
-            self.includes_.extend(i.split("&&"))              
+            self.includes_.extend(i.split("&&"))
 
     def pattern (self):
         return r'#[ \t]*include[ ]*(<(.*)>|"(.*)")'
 
     def process (self, target, matches, binding):
-       
+
         angle = regex.transform (matches, "<(.*)>")
         quoted = regex.transform (matches, '"(.*)"')
 
         g = str(id(self))
         b = os.path.normpath(os.path.dirname(binding[0]))
-        
+
         # Attach binding of including file to included targets.
         # When target is directly created from virtual target
         # this extra information is unnecessary. But in other
-        # cases, it allows to distinguish between two headers of the 
-        # same name included from different places.      
+        # cases, it allows to distinguish between two headers of the
+        # same name included from different places.
         # We don't need this extra information for angle includes,
         # since they should not depend on including file (we can't
         # get literal "." in include path).
@@ -395,11 +395,11 @@ class CScanner (scanner.Scanner):
         engine = get_manager().engine()
         engine.set_target_variable(angle, "SEARCH", get_value(self.includes_))
         engine.set_target_variable(quoted, "SEARCH", [b] + get_value(self.includes_))
-        
+
         # Just propagate current scanner to includes, in a hope
-        # that includes do not change scanners. 
+        # that includes do not change scanners.
         get_manager().scanners().propagate(self, angle + quoted)
-        
+
 scanner.register (CScanner, 'include')
 type.set_scanner ('CPP', CScanner)
 type.set_scanner ('C', CScanner)
@@ -407,15 +407,18 @@ type.set_scanner ('C', CScanner)
 # Ported to trunk@47077
 class LibGenerator (generators.Generator):
     """ The generator class for libraries (target type LIB). Depending on properties it will
-        request building of the approapriate specific type -- SHARED_LIB, STATIC_LIB or 
+        request building of the approapriate specific type -- SHARED_LIB, STATIC_LIB or
         SHARED_LIB.
     """
 
     def __init__(self, id, composing = True, source_types = [], target_types_and_names = ['LIB'], requirements = []):
         generators.Generator.__init__(self, id, composing, source_types, target_types_and_names, requirements)
-    
-    def run(self, project, name, prop_set, sources):
 
+    def run(self, project, name, prop_set, sources):
+        assert isinstance(project, targets.ProjectTarget)
+        assert isinstance(name, basestring) or name is None
+        assert isinstance(prop_set, property_set.PropertySet)
+        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
         # The lib generator is composing, and can be only invoked with
         # explicit name. This check is present in generator.run (and so in
         # builtin.LinkingGenerator), but duplicate it here to avoid doing
@@ -429,7 +432,7 @@ class LibGenerator (generators.Generator):
                ('<search>' in properties_grist or '<name>' in properties_grist):
                 actual_type = 'SEARCHED_LIB'
             elif '<file>' in properties_grist:
-                # The generator for 
+                # The generator for
                 actual_type = 'LIB'
             elif '<link>shared' in properties:
                 actual_type = 'SHARED_LIB'
@@ -451,7 +454,11 @@ generators.override("builtin.prebuilt", "builtin.lib-generator")
 def lib(names, sources=[], requirements=[], default_build=[], usage_requirements=[]):
     """The implementation of the 'lib' rule. Beyond standard syntax that rule allows
     simplified: 'lib a b c ;'."""
-
+    assert is_iterable_typed(names, basestring)
+    assert is_iterable_typed(sources, basestring)
+    assert is_iterable_typed(requirements, basestring)
+    assert is_iterable_typed(default_build, basestring)
+    assert is_iterable_typed(usage_requirements, basestring)
     if len(names) > 1:
         if any(r.startswith('<name>') for r in requirements):
             get_manager().errors()("When several names are given to the 'lib' rule\n" +
@@ -490,8 +497,12 @@ class SearchedLibGenerator (generators.Generator):
         # is make sure SearchedLibGenerator is not invoked deep in transformation
         # search.
         generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)
-    
+
     def run(self, project, name, prop_set, sources):
+        assert isinstance(project, targets.ProjectTarget)
+        assert isinstance(name, basestring) or name is None
+        assert isinstance(prop_set, property_set.PropertySet)
+        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
 
         if not name:
             return None
@@ -499,12 +510,12 @@ class SearchedLibGenerator (generators.Generator):
         # If name is empty, it means we're called not from top-level.
         # In this case, we just fail immediately, because SearchedLibGenerator
         # cannot be used to produce intermediate targets.
-        
+
         properties = prop_set.raw ()
         shared = '<link>shared' in properties
 
         a = virtual_target.NullAction (project.manager(), prop_set)
-        
+
         real_name = feature.get_values ('<name>', properties)
         if real_name:
             real_name = real_name[0]
@@ -515,7 +526,7 @@ class SearchedLibGenerator (generators.Generator):
         t = SearchedLibTarget(real_name, project, shared, search, a)
 
         # We return sources for a simple reason. If there's
-        #    lib png : z : <name>png ; 
+        #    lib png : z : <name>png ;
         # the 'z' target should be returned, so that apps linking to
         # 'png' will link to 'z', too.
         return(usage_requirements, [b2.manager.get_manager().virtual_targets().register(t)] + sources)
@@ -525,9 +536,14 @@ generators.register (SearchedLibGenerator ())
 class PrebuiltLibGenerator(generators.Generator):
 
     def __init__(self, id, composing, source_types, target_types_and_names, requirements):
-        generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)        
+        generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)
 
     def run(self, project, name, properties, sources):
+        assert isinstance(project, targets.ProjectTarget)
+        assert isinstance(name, basestring)
+        assert isinstance(properties, property_set.PropertySet)
+        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
+
         f = properties.get("file")
         return f + sources
 
@@ -542,10 +558,11 @@ class CompileAction (virtual_target.Action):
         virtual_target.Action.__init__ (self, manager, sources, action_name, prop_set)
 
     def adjust_properties (self, prop_set):
-        """ For all virtual targets for the same dependency graph as self, 
+        """ For all virtual targets for the same dependency graph as self,
             i.e. which belong to the same main target, add their directories
             to include path.
         """
+        assert isinstance(prop_set, property_set.PropertySet)
         s = self.targets () [0].creating_subvariant ()
 
         return prop_set.add_raw (s.implicit_includes ('include', 'H'))
@@ -560,7 +577,7 @@ class CCompilingGenerator (generators.Generator):
     def __init__ (self, id, composing, source_types, target_types_and_names, requirements):
         # TODO: (PF) What to do with optional_properties? It seemed that, in the bjam version, the arguments are wrong.
         generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)
-            
+
     def action_class (self):
         return CompileAction
 
@@ -574,11 +591,15 @@ class LinkingGenerator (generators.Generator):
     """
     def __init__ (self, id, composing, source_types, target_types_and_names, requirements):
         generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)
-        
+
     def run (self, project, name, prop_set, sources):
+        assert isinstance(project, targets.ProjectTarget)
+        assert isinstance(name, basestring) or name is None
+        assert isinstance(prop_set, property_set.PropertySet)
+        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
 
         sources.extend(prop_set.get('<library>'))
-        
+
         # Add <library-path> properties for all searched libraries
         extra = []
         for s in sources:
@@ -589,8 +610,8 @@ class LinkingGenerator (generators.Generator):
         # It's possible that we have libraries in sources which did not came
         # from 'lib' target. For example, libraries which are specified
         # just as filenames as sources. We don't have xdll-path properties
-        # for such target, but still need to add proper dll-path properties.   
-        extra_xdll_path = []                            
+        # for such target, but still need to add proper dll-path properties.
+        extra_xdll_path = []
         for s in sources:
                 if type.is_derived (s.type (), 'SHARED_LIB') and not s.action ():
                     # Unfortunately, we don't have a good way to find the path
@@ -602,7 +623,7 @@ class LinkingGenerator (generators.Generator):
         # Hardcode DLL paths only when linking executables.
         # Pros: do not need to relink libraries when installing.
         # Cons: "standalone" libraries (plugins, python extensions) can not
-        # hardcode paths to dependent libraries.            
+        # hardcode paths to dependent libraries.
         if prop_set.get('<hardcode-dll-paths>') == ['true'] \
               and type.is_derived(self.target_types_ [0], 'EXE'):
                 xdll_path = prop_set.get('<xdll-path>')
@@ -610,64 +631,69 @@ class LinkingGenerator (generators.Generator):
                      for sp in extra_xdll_path)
                 extra.extend(property.Property('<dll-path>', sp) \
                      for sp in xdll_path)
-        
+
         if extra:
-            prop_set = prop_set.add_raw (extra)                
+            prop_set = prop_set.add_raw (extra)
         result = generators.Generator.run(self, project, name, prop_set, sources)
-        
+
         if result:
             ur = self.extra_usage_requirements(result, prop_set)
             ur = ur.add(property_set.create(['<xdll-path>' + p for p in extra_xdll_path]))
         else:
             return None
         return (ur, result)
-    
+
     def extra_usage_requirements (self, created_targets, prop_set):
-        
+        assert is_iterable_typed(created_targets, virtual_target.VirtualTarget)
+        assert isinstance(prop_set, property_set.PropertySet)
+
         result = property_set.empty ()
         extra = []
-                        
+
         # Add appropriate <xdll-path> usage requirements.
         raw = prop_set.raw ()
         if '<link>shared' in raw:
             paths = []
-            
-            # TODO: is it safe to use the current directory? I think we should use 
+
+            # TODO: is it safe to use the current directory? I think we should use
             # another mechanism to allow this to be run from anywhere.
             pwd = os.getcwd()
-            
+
             for t in created_targets:
                 if type.is_derived(t.type(), 'SHARED_LIB'):
                     paths.append(path.root(path.make(t.path()), pwd))
 
             extra += replace_grist(paths, '<xdll-path>')
-        
+
         # We need to pass <xdll-path> features that we've got from sources,
         # because if shared library is built, exe which uses it must know paths
         # to other shared libraries this one depends on, to be able to find them
         # all at runtime.
-                        
+
         # Just pass all features in property_set, it's theorically possible
         # that we'll propagate <xdll-path> features explicitly specified by
-        # the user, but then the user's to blaim for using internal feature.                
+        # the user, but then the user's to blaim for using internal feature.
         values = prop_set.get('<xdll-path>')
         extra += replace_grist(values, '<xdll-path>')
-        
+
         if extra:
             result = property_set.create(extra)
 
         return result
 
     def generated_targets (self, sources, prop_set, project, name):
-
+        assert is_iterable_typed(sources, virtual_target.VirtualTarget)
+        assert isinstance(prop_set, property_set.PropertySet)
+        assert isinstance(project, targets.ProjectTarget)
+        assert isinstance(name, basestring)
         # sources to pass to inherited rule
         sources2 = []
         # sources which are libraries
         libraries  = []
-        
+
         # Searched libraries are not passed as argument to linker
         # but via some option. So, we pass them to the action
-        # via property. 
+        # via property.
         fsa = []
         fst = []
         for s in sources:
@@ -688,7 +714,7 @@ class LinkingGenerator (generators.Generator):
         if fst:
             add.append("<find-static-library>" + '&&'.join(fst))
 
-        spawn = generators.Generator.generated_targets(self, sources2, prop_set.add_raw(add), project, name)       
+        spawn = generators.Generator.generated_targets(self, sources2, prop_set.add_raw(add), project, name)
         return spawn
 
 
@@ -701,12 +727,12 @@ class ArchiveGenerator (generators.Generator):
     """
     def __init__ (self, id, composing, source_types, target_types_and_names, requirements):
         generators.Generator.__init__ (self, id, composing, source_types, target_types_and_names, requirements)
-        
+
     def run (self, project, name, prop_set, sources):
         sources += prop_set.get ('<library>')
-        
+
         result = generators.Generator.run (self, project, name, prop_set, sources)
-             
+
         return result
 
 

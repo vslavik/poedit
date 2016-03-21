@@ -210,7 +210,7 @@ private:
 
 //! The function parses library settings from an input stream
 template< typename CharT >
-basic_settings< CharT > parse_settings(std::basic_istream< CharT >& strm)
+BOOST_LOG_SETUP_API basic_settings< CharT > parse_settings(std::basic_istream< CharT >& strm)
 {
     typedef CharT char_type;
     typedef std::basic_string< char_type > string_type;

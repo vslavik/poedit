@@ -1,4 +1,4 @@
-// Copyright 2013-2014 Antony Polukhin
+// Copyright 2013-2015 Antony Polukhin
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See the accompanying file LICENSE_1_0.txt
@@ -17,7 +17,20 @@
 #include <boost/type_index.hpp>
 #include <iostream>
 #include <stdexcept>
+//<-
+// Making `#include <cassert>` visible in docs, while actually using hand-made check
+// instead of `assert`. This is required to verify correct behavior even if NDEBUG
+// is defined and to avoid `unused local variable` warnings with defined NDEBUG.
+#ifdef assert
+#   undef assert
+#endif
+#define assert(X) if (!(X)) std::exit(__LINE__)
+    /* !Comment block is not closed intentionaly!
+//->
 #include <cassert>
+//<-
+    !Closing comment block! */
+//->
 
 class type_erased_unary_function {
     void*                           function_ptr_;

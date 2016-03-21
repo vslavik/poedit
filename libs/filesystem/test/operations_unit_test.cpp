@@ -1,6 +1,6 @@
 //  operations_unit_test.cpp  ----------------------------------------------------------//
 
-//  Copyright Beman Dawes 2008, 2009
+//  Copyright Beman Dawes 2008, 2009, 2015
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -9,7 +9,7 @@
 
 //  ------------------------------------------------------------------------------------//
 
-//  This program is misnamed - it is really a smoke test rather than a unit_test
+//  This program is misnamed - it is really a smoke test rather than a unit test
 
 //  ------------------------------------------------------------------------------------//
 
@@ -46,6 +46,9 @@ using std::string;
 
 namespace
 {
+  const path temp_dir(initial_path() / unique_path("op-unit_test-%%%%-%%%%-%%%%"));
+
+  bool cleanup = true;
 
   void check(bool ok, const char* file, int line)
   {
@@ -312,6 +315,21 @@ namespace
     CHECK(!create_directory("/", ec));
   }
 
+  //  string_file_tests  ---------------------------------------------------------------//
+
+  void string_file_tests()
+  {
+    cout << "string_file_tests..." << endl;
+    std::string contents("0123456789");
+    path p(temp_dir / "string_file");
+    save_string_file(p, contents);
+    save_string_file(p, contents);
+    BOOST_TEST_EQ(file_size(p), 10u);
+    std::string round_trip;
+    load_string_file(p, round_trip);
+    BOOST_TEST_EQ(contents, round_trip);
+  }
+
 }  // unnamed namespace
 
 //--------------------------------------------------------------------------------------//
@@ -334,6 +352,8 @@ int cpp_main(int, char*[])
   
   cout << "current_path() is " << current_path().string() << endl;
 
+  create_directory(temp_dir);
+
   file_status_test();
   query_test();
   directory_iterator_test();
@@ -342,11 +362,25 @@ int cpp_main(int, char*[])
   directory_entry_test();
   directory_entry_overload_test();
   error_handling_test();
+  string_file_tests();
 
   cout << unique_path() << endl;
   cout << unique_path("foo-%%%%%-%%%%%-bar") << endl;
   cout << unique_path("foo-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%-bar") << endl;
   cout << unique_path("foo-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-%%%%%-bar") << endl;
+  
+  cout << "testing complete" << endl;
+
+  // post-test cleanup
+  if (cleanup)
+  {
+    cout << "post-test removal of " << temp_dir << endl;
+    BOOST_TEST(remove_all(temp_dir) != 0);
+    // above was added just to simplify testing, but it ended up detecting
+    // a bug (failure to close an internal search handle). 
+    cout << "post-test removal complete" << endl;
+//    BOOST_TEST(!fs::exists(dir));  // nice test, but doesn't play well with TortoiseGit cache
+  }
 
   return ::boost::report_errors();
 }

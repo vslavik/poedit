@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2007-2013. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2007-2015. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -8,8 +8,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-
-#define BOOST_CONTAINER_SOURCE
 #include <boost/container/detail/alloc_lib.h>
 
 #include "errno.h"   //dlmalloc bug EINVAL is used in posix_memalign without checking LACKS_ERRNO_H
@@ -31,7 +29,10 @@
 #endif
 
 #define USE_DL_PREFIX
-#define FORCEINLINE
+
+#ifdef __GNUC__
+#define FORCEINLINE inline
+#endif
 #include "dlmalloc_2_8_6.c"
 
 #ifdef _MSC_VER
@@ -1071,7 +1072,7 @@ static int internal_multialloc_arrays
    return 1;
 }
 
-BOOST_CONTAINER_DECL int boost_cont_multialloc_arrays
+int boost_cont_multialloc_arrays
    (size_t n_elements, const size_t *sizes, size_t element_size, size_t contiguous_elements, boost_cont_memchain *pchain)
 {
    int ret = 0;
@@ -1124,10 +1125,10 @@ static boost_cont_malloc_stats_t get_malloc_stats(mstate m)
    return ret;
 }
 
-BOOST_CONTAINER_DECL size_t boost_cont_size(const void *p)
+size_t boost_cont_size(const void *p)
 {  return DL_SIZE_IMPL(p);  }
 
-BOOST_CONTAINER_DECL void* boost_cont_malloc(size_t bytes)
+void* boost_cont_malloc(size_t bytes)
 {
    size_t received_bytes;
    ensure_initialization();
@@ -1135,7 +1136,7 @@ BOOST_CONTAINER_DECL void* boost_cont_malloc(size_t bytes)
       (BOOST_CONTAINER_ALLOCATE_NEW, 1, bytes, bytes, &received_bytes, 0).first;
 }
 
-BOOST_CONTAINER_DECL void boost_cont_free(void* mem)
+void boost_cont_free(void* mem)
 {
    mstate ms = (mstate)gm;
    if (!ok_magic(ms)) {
@@ -1147,7 +1148,7 @@ BOOST_CONTAINER_DECL void boost_cont_free(void* mem)
    }
 }
 
-BOOST_CONTAINER_DECL void* boost_cont_memalign(size_t bytes, size_t alignment)
+void* boost_cont_memalign(size_t bytes, size_t alignment)
 {
    void *addr;
    ensure_initialization();
@@ -1158,7 +1159,7 @@ BOOST_CONTAINER_DECL void* boost_cont_memalign(size_t bytes, size_t alignment)
    return addr;
 }
 
-BOOST_CONTAINER_DECL int boost_cont_multialloc_nodes
+int boost_cont_multialloc_nodes
    (size_t n_elements, size_t elem_size, size_t contiguous_elements, boost_cont_memchain *pchain)
 {
    int ret = 0;
@@ -1174,12 +1175,12 @@ BOOST_CONTAINER_DECL int boost_cont_multialloc_nodes
    return ret;
 }
 
-BOOST_CONTAINER_DECL size_t boost_cont_footprint()
+size_t boost_cont_footprint()
 {
    return ((mstate)gm)->footprint;
 }
 
-BOOST_CONTAINER_DECL size_t boost_cont_allocated_memory()
+size_t boost_cont_allocated_memory()
 {
    size_t alloc_mem = 0;
    mstate m = (mstate)gm;
@@ -1224,13 +1225,13 @@ BOOST_CONTAINER_DECL size_t boost_cont_allocated_memory()
    return alloc_mem;
 }
 
-BOOST_CONTAINER_DECL size_t boost_cont_chunksize(const void *p)
+size_t boost_cont_chunksize(const void *p)
 {  return chunksize(mem2chunk(p));   }
 
-BOOST_CONTAINER_DECL int boost_cont_all_deallocated()
+int boost_cont_all_deallocated()
 {  return !s_allocated_memory;  }
 
-BOOST_CONTAINER_DECL boost_cont_malloc_stats_t boost_cont_malloc_stats()
+boost_cont_malloc_stats_t boost_cont_malloc_stats()
 {
   mstate ms = (mstate)gm;
   if (ok_magic(ms)) {
@@ -1243,16 +1244,16 @@ BOOST_CONTAINER_DECL boost_cont_malloc_stats_t boost_cont_malloc_stats()
   }
 }
 
-BOOST_CONTAINER_DECL size_t boost_cont_in_use_memory()
+size_t boost_cont_in_use_memory()
 {  return s_allocated_memory;   }
 
-BOOST_CONTAINER_DECL int boost_cont_trim(size_t pad)
+int boost_cont_trim(size_t pad)
 {
    ensure_initialization();
    return dlmalloc_trim(pad);
 }
 
-BOOST_CONTAINER_DECL int boost_cont_grow
+int boost_cont_grow
    (void* oldmem, size_t minbytes, size_t maxbytes, size_t *received)
 {
    mstate ms = (mstate)gm;
@@ -1276,7 +1277,7 @@ BOOST_CONTAINER_DECL int boost_cont_grow
    return 0;
 }
 
-BOOST_CONTAINER_DECL int boost_cont_shrink
+int boost_cont_shrink
    (void* oldmem, size_t minbytes, size_t maxbytes, size_t *received, int do_commit)
 {
    mstate ms = (mstate)gm;
@@ -1294,7 +1295,7 @@ BOOST_CONTAINER_DECL int boost_cont_shrink
 }
 
 
-BOOST_CONTAINER_DECL void* boost_cont_alloc
+void* boost_cont_alloc
    (size_t minbytes, size_t preferred_bytes, size_t *received_bytes)
 {
    //ensure_initialization provided by boost_cont_allocation_command
@@ -1302,7 +1303,7 @@ BOOST_CONTAINER_DECL void* boost_cont_alloc
       (BOOST_CONTAINER_ALLOCATE_NEW, 1, minbytes, preferred_bytes, received_bytes, 0).first;
 }
 
-BOOST_CONTAINER_DECL void boost_cont_multidealloc(boost_cont_memchain *pchain)
+void boost_cont_multidealloc(boost_cont_memchain *pchain)
 {
    mstate ms = (mstate)gm;
    if (!ok_magic(ms)) {
@@ -1312,7 +1313,7 @@ BOOST_CONTAINER_DECL void boost_cont_multidealloc(boost_cont_memchain *pchain)
    internal_multialloc_free(ms, pchain);
 }
 
-BOOST_CONTAINER_DECL int boost_cont_malloc_check()
+int boost_cont_malloc_check()
 {
 #ifdef DEBUG
    mstate ms = (mstate)gm;
@@ -1330,7 +1331,7 @@ BOOST_CONTAINER_DECL int boost_cont_malloc_check()
 }
 
 
-BOOST_CONTAINER_DECL boost_cont_command_ret_t boost_cont_allocation_command
+boost_cont_command_ret_t boost_cont_allocation_command
    (allocation_type command, size_t sizeof_object, size_t limit_size
    , size_t preferred_size, size_t *received_size, void *reuse_ptr)
 {
@@ -1378,8 +1379,8 @@ BOOST_CONTAINER_DECL boost_cont_command_ret_t boost_cont_allocation_command
             if(!addr)   addr = mspace_malloc_lockless(ms, limit_size);
             if(addr){
                s_allocated_memory += chunksize(mem2chunk(addr));
+               *received_size = DL_SIZE_IMPL(addr);
             }
-            *received_size = DL_SIZE_IMPL(addr);
             ret.first  = addr;
             ret.second = 0;
             if(addr){
@@ -1405,9 +1406,48 @@ BOOST_CONTAINER_DECL boost_cont_command_ret_t boost_cont_allocation_command
    return ret;
 }
 
-BOOST_CONTAINER_DECL int boost_cont_mallopt(int param_number, int value)
+int boost_cont_mallopt(int param_number, int value)
 {
   return change_mparam(param_number, value);
+}
+
+void *boost_cont_sync_create()
+{
+   void *p = boost_cont_malloc(sizeof(MLOCK_T));
+   if(p){
+      if(0 != INITIAL_LOCK((MLOCK_T*)p)){
+         boost_cont_free(p);
+         p = 0;
+      }
+   }
+   return p;
+}
+
+void boost_cont_sync_destroy(void *sync)
+{
+   if(sync){
+      (void)DESTROY_LOCK((MLOCK_T*)sync);
+      boost_cont_free(sync);
+   }
+}
+
+int boost_cont_sync_lock(void *sync)
+{  return 0 == (ACQUIRE_LOCK((MLOCK_T*)sync));  }
+
+void boost_cont_sync_unlock(void *sync)
+{  RELEASE_LOCK((MLOCK_T*)sync);  }
+
+int boost_cont_global_sync_lock()
+{
+   int ret;
+   ensure_initialization();
+   ret = ACQUIRE_MALLOC_GLOBAL_LOCK();
+   return 0 == ret;
+}
+
+void boost_cont_global_sync_unlock()
+{
+   RELEASE_MALLOC_GLOBAL_LOCK()
 }
 
 //#ifdef DL_DEBUG_DEFINED

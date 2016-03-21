@@ -16,6 +16,9 @@
 
 // Remove the ublas checking, otherwise the inverse might fail
 // (while nothing seems to be wrong)
+#ifdef BOOST_UBLAS_TYPE_CHECK
+#undef BOOST_UBLAS_TYPE_CHECK
+#endif
 #define BOOST_UBLAS_TYPE_CHECK 0
 
 #include <boost/numeric/ublas/lu.hpp>

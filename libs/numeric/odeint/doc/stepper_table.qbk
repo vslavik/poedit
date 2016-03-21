@@ -1,8 +1,8 @@
 [/============================================================================
   Boost.odeint
 
-  Copyright 2011-2012 Karsten Ahnert
-  Copyright 2011-2012 Mario Mulansky
+  Copyright 2011-2015 Karsten Ahnert
+  Copyright 2011-2015 Mario Mulansky
   Copyright 2012 Sylwester Arabas
 
   Use, modification and distribution is subject to the Boost Software License,
@@ -21,7 +21,8 @@
   [[Fehlberg 78] [`runge_kutta_fehlberg78`] [__error_stepper] [__system] [8] [Yes (7)] [No] [No] [Good high order method with error estimation, to be used in controlled_error_stepper.]]
 
   [[Adams Bashforth] [`adams_bashforth`] [__stepper] [__system] [configurable] [No] [No] [Yes] [Multistep method]]
-  [[Adams Moulton] [`adams_moulton`] [__stepper] [__system] [configurable] [No] [No] [Yes] [Multistep method]]
+[/ # removed as it is not an independent algorithm. 
+  [[Adams Moulton] [`adams_moulton`] [__stepper] [__system] [configurable] [No] [No] [Yes] [Multistep method]] \]
   [[Adams Bashforth Moulton] [`adams_bashforth_moulton`] [__stepper] [__system] [configurable] [No] [No] [Yes] [Combined multistep method]]
 
   [[Controlled Runge-Kutta] [`controlled_runge_kutta`] [__controlled_stepper] [__system] [depends] [Yes] [No] [depends] [Error control for __error_stepper. Requires an __error_stepper from above. Order depends on the given ErrorStepper]]

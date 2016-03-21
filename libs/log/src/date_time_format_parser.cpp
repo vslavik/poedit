@@ -344,7 +344,7 @@ inline void parse_format(const CharT* begin, const CharT* end, ParserT& parser, 
 
 //! Parses the date format string and invokes the callback object
 template< typename CharT >
-void parse_date_format(const CharT* begin, const CharT* end, date_format_parser_callback< CharT >& callback)
+BOOST_LOG_API void parse_date_format(const CharT* begin, const CharT* end, date_format_parser_callback< CharT >& callback)
 {
     typedef CharT char_type;
     typedef date_format_parser_callback< char_type > callback_type;
@@ -354,7 +354,7 @@ void parse_date_format(const CharT* begin, const CharT* end, date_format_parser_
 
 //! Parses the time format string and invokes the callback object
 template< typename CharT >
-void parse_time_format(const CharT* begin, const CharT* end, time_format_parser_callback< CharT >& callback)
+BOOST_LOG_API void parse_time_format(const CharT* begin, const CharT* end, time_format_parser_callback< CharT >& callback)
 {
     typedef CharT char_type;
     typedef time_format_parser_callback< char_type > callback_type;
@@ -364,7 +364,7 @@ void parse_time_format(const CharT* begin, const CharT* end, time_format_parser_
 
 //! Parses the date and time format string and invokes the callback object
 template< typename CharT >
-void parse_date_time_format(const CharT* begin, const CharT* end, date_time_format_parser_callback< CharT >& callback)
+BOOST_LOG_API void parse_date_time_format(const CharT* begin, const CharT* end, date_time_format_parser_callback< CharT >& callback)
 {
     typedef CharT char_type;
     typedef date_time_format_parser_callback< char_type > callback_type;
@@ -373,7 +373,7 @@ void parse_date_time_format(const CharT* begin, const CharT* end, date_time_form
 }
 
 template< typename CharT >
-void put_integer(std::basic_string< CharT >& str, uint32_t value, unsigned int width, CharT fill_char)
+BOOST_LOG_API void put_integer(std::basic_string< CharT >& str, uint32_t value, unsigned int width, CharT fill_char)
 {
     typedef CharT char_type;
     char_type buf[std::numeric_limits< uint32_t >::digits10 + 2];

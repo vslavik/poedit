@@ -53,11 +53,16 @@ test-suite phoenix_function :
     [ run function/adapt_function.cpp ]
     [ run function/function_tests.cpp ]
     [ run function/lazy_argument_tests.cpp ]
+#    [ run function/lazy_compose_tests.cpp ]
+#    [ run function/lazy_fold_tests.cpp ]
     [ run function/lazy_list_tests.cpp ]
     [ run function/lazy_list2_tests.cpp ]
     [ run function/lazy_list3_tests.cpp ]
     [ run function/lazy_make_pair_tests.cpp ]
+#    [ run function/lazy_ptr_tests.cpp ]
+#    [ run function/lazy_scan_tests.cpp ]
     [ run function/lazy_templated_struct_tests.cpp ]
+#    [ run function/lazy_thunk_tests.cpp ]
     [ run function/lazy_operator_tests.cpp ]
 #    [ run function/function_tests_phx2.cpp ]
     ;
@@ -134,7 +139,9 @@ test-suite phoenix_scope :
 
 test-suite phoenix_algorithm :
     [ run algorithm/for_each.cpp ]
+    [ run algorithm/for_each2.cpp ]
     [ run algorithm/for_test.cpp ]
+    [ run algorithm/for_test2.cpp ]
     [ run algorithm/iteration.cpp ]
     [ run algorithm/transformation1.cpp ]
     [ run algorithm/transformation2.cpp ]
@@ -143,6 +150,7 @@ test-suite phoenix_algorithm :
     [ run algorithm/querying.cpp ]
     [ run algorithm/querying_find.cpp ]
     [ run algorithm/querying2.cpp ]
+    [ run algorithm/querying_find2.cpp ]
     ;
 
 test-suite phoenix_boost_bind_compatibility :

@@ -186,7 +186,7 @@ int main()
       //
       // Again but with bigger base 10 numbers:
       //
-      number<cpp_dec_float<std::numeric_limits<int1024_t>::digits10 + 2> > cppdec2(cppi2);
+      number<cpp_dec_float<std::numeric_limits<int1024_t>::digits10 + 3> > cppdec2(cppi2);
       cppdec2 = scalbn(cppdec2, eval);
       cppr.assign(cppdec2);
       cppr2 = cppi2;

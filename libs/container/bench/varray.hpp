@@ -200,7 +200,7 @@ public:
     //!   Linear O(N).
     template <std::size_t C>
 // TEMPORARY WORKAROUND
-#if defined(BOOST_NO_RVALUE_REFERENCES)
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
     varray & operator=(::boost::rv< varray<value_type, C> > const& other)
 #else
     varray & operator=(varray<value_type, C> const& other)

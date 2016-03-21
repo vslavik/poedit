@@ -199,5 +199,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    return 0;
+    std::cout << "\nDone" << std::endl;
+
+    return EXIT_SUCCESS;
 }

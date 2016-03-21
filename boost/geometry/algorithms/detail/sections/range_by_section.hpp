@@ -19,11 +19,11 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_SECTIONS_RANGE_BY_SECTION_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_SECTIONS_RANGE_BY_SECTION_HPP
 
-#include <boost/assert.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/range.hpp>
 
 #include <boost/geometry/core/access.hpp>
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/closure.hpp>
 #include <boost/geometry/core/exterior_ring.hpp>
 #include <boost/geometry/core/interior_rings.hpp>
@@ -77,7 +77,7 @@ struct full_section_multi
     {
         typedef typename boost::range_size<MultiGeometry>::type size_type;
 
-        BOOST_ASSERT
+        BOOST_GEOMETRY_ASSERT
             (
                 section.ring_id.multi_index >= 0
                 && size_type(section.ring_id.multi_index) < boost::size(multi)

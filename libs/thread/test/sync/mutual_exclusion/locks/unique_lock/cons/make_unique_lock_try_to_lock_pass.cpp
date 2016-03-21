@@ -74,7 +74,7 @@ void f()
   }
   {
     time_point t0 = Clock::now();
-    while (true)
+    for (;;)
     {
 #if ! defined(BOOST_NO_CXX11_AUTO_DECLARATIONS)
       auto

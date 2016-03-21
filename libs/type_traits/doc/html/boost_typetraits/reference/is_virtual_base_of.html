@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>is_virtual_base_of</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="is_unsigned.html" title="is_unsigned">
@@ -46,9 +46,8 @@
         or <code class="computeroutput"> <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
       </p>
 <p>
-        <span class="bold"><strong>Compiler Compatibility:</strong></span> this trait also
-        requires a working <a class="link" href="is_base_of.html" title="is_base_of">is_base_of</a>
-        trait.
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> All current compilers
+        are supported by this trait.
       </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -58,7 +57,8 @@
 <tr><td align="left" valign="top"><p>
           There are a small number of cases where it's simply not possible for this
           trait to work, and where attempting to instantiate the trait will cause
-          compiler errors (see bug report <a href="https://svn.boost.org/trac/boost/ticket/3730" target="_top">#3730</a>).
+          compiler errors (see bug reports <a href="https://svn.boost.org/trac/boost/ticket/3730" target="_top">#3730</a>
+          and <a href="https://svn.boost.org/trac/boost/ticket/11323" target="_top">11323</a>).
           Further more the issues may well be compiler specific. In this situation
           the user should supply a full specialization of the trait to work around
           the problem.

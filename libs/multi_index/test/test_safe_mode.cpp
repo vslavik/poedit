@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for safe_mode.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -223,10 +223,9 @@ static void local_test_safe_mode(
 {
   ::local_test_safe_mode<Policy>(std::forward_iterator_tag());
 
-  typedef typename Policy::container      container;
-  typedef typename Policy::index_type     index_type;
-  typedef typename index_type::value_type value_type;
-  typedef typename index_type::iterator   iterator;
+  typedef typename Policy::container    container;
+  typedef typename Policy::index_type   index_type;
+  typedef typename index_type::iterator iterator;
 
   container   c;
   index_type& i=Policy::index_from_container(c);
@@ -245,10 +244,9 @@ static void local_test_safe_mode(
 {
   ::local_test_safe_mode<Policy>(std::bidirectional_iterator_tag());
 
-  typedef typename Policy::container      container;
-  typedef typename Policy::index_type     index_type;
-  typedef typename index_type::value_type value_type;
-  typedef typename index_type::iterator   iterator;
+  typedef typename Policy::container    container;
+  typedef typename Policy::index_type   index_type;
+  typedef typename index_type::iterator iterator;
 
   container   c;
   index_type& i=Policy::index_from_container(c);
@@ -277,10 +275,9 @@ static void local_test_safe_mode_with_rearrange()
 {
   ::local_test_safe_mode<Policy>();
 
-  typedef typename Policy::container      container;
-  typedef typename Policy::index_type     index_type;
-  typedef typename index_type::value_type value_type;
-  typedef typename index_type::iterator   iterator;
+  typedef typename Policy::container    container;
+  typedef typename Policy::index_type   index_type;
+  typedef typename index_type::iterator iterator;
 
   container   c;
   index_type& i=Policy::index_from_container(c);

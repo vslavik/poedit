@@ -9,7 +9,7 @@
     ]
     [authors [Agrawal, Nikhar], [Bikineev, Anton], [Bristow, Paul A.], [Holin, Hubert], [Guazzone, Marco], [Kormanyos, Christopher], [Lalande, Bruno], [Maddock, John], [Råde, Johan], [Sobotta, Benjamin], [Sewani, Gautam], [van den Berg, Thijs], [Walker, Daryle], [Zhang, Xiaogang]]
     [/last-revision $Date$]
-    [version 2.2.0]
+    [version 2.3.0]
 ]
 
 [template mathpart[id title]
@@ -40,6 +40,9 @@
 [import ../../../tools/auto_index/include/auto_index_helpers.qbk]
 [/ Must be first included file!]
 
+[import ../reporting/accuracy/doc/accuracy_tables.qbk]
+[import ../reporting/performance/doc/performance_tables.qbk]
+
 [import html4_symbols.qbk]
 
 [import overview/common_overviews.qbk] [/ overviews that appear in more than one place!]
@@ -64,6 +67,11 @@
 [def __nearequal '''&#x224A;''']
 [def __spaces '''&#x2000;&#x2000;'''] [/ two spaces - useful for an indent.]
 
+[def __tick [role aligncenter [role green \u2714]]] [/ u2714 is a HEAVY CHECK MARK tick (2713 check
+mark)]
+[def __cross [role aligncenter [role red \u2718]]] [/ u2718 is a heavy cross]
+[def __star [role aligncenter [role red \u2736]]] [/ 6-point star]
+
 [def __caution This is now an official Boost library, but remains a library under
                development, the code is fully functional and robust, but
                interfaces, library structure, and function and distribution names
@@ -82,8 +90,7 @@
 [def __rounding_error [link math_toolkit.error_handling.rounding_error rounding_error]]
 [def __indeterminate_result_error [link math_toolkit.error_handling.indeterminate_result_error indeterminate_result_error]]
 [def __checked_narrowing_cast [link math_toolkit.error_handling.checked_narrowing_cast checked_narrowing_cast]]
-
-[def __arg_pomotion_rules [link math_toolkit.result_type ['result type calculation rules]]]
+[def __arg_promotion_rules [link math_toolkit.result_type ['result type calculation rules]]]
 [def __sf_result [link math_toolkit.result_type ['calculated-result-type]]]
 
 [/ The following macros expand to links to the various special functions
@@ -93,9 +100,37 @@ and use the function's name as the link text.]
 [def __lanczos [link math_toolkit.lanczos Lanczos approximation]]
 [def __zero_error [link math_toolkit.relative_error.zero_error effectively zero error]]
 [def __relative_error [link math_toolkit.relative_error relative zero error]]
-[def __root_finding_with_derivatives [link math_toolkit.internals1.roots root-finding with derivatives]]
-[def __root_finding_without_derivatives [link math_toolkit.internals1.roots2 root-finding without derivatives]]
 
+[/ links to roots]
+
+[def __root_finding_with_derivatives [link math_toolkit.roots.roots_deriv root-finding with derivatives]] [/Newton, Halley & Schoeder]
+[def __root_finding_without_derivatives [link math_toolkit.roots.roots_noderiv root-finding without derivatives]]
+[def __root_finding_TOMS748 [link math_toolkit.roots.roots_noderiv.TOMS748 TOMS 748 algorithm]]
+[def __bracket_solve [link math_toolkit.roots.roots_noderiv.bracket_solve bracket and solve]]
+[def __root_termination [link math_toolkit.roots.roots_noderiv.root_termination predefined termination functors]]
+[def __root_finding_examples [link math_toolkit.roots.root_finding_examples root-finding examples]]
+[def __brent_minima [link math_toolkit.roots.brent_minima Brent's method]]
+[def __brent_minima_example [link math_toolkit.roots.brent_minima.example Brent's method example]]
+[def __newton[link math_toolkit.roots.roots_deriv.newton Newton-Raphson iteration]]
+[def __halley [link math_toolkit.roots.roots_deriv.halley Halley]]
+[def __schroder [link math_toolkit.roots.roots_deriv.schroder Schr'''&#xf6;'''der]]
+[def __brent_minima_example [link math_toolkit.roots.brent_minima.example Brent minima finding example]]
+[def __bisection [link math_toolkit.roots.roots_noderiv.bisect bisection]]
+[def __bisect [link math_toolkit.roots.roots_noderiv.bisect bisect]]
+[def __bisection_wikipedia [@https://en.wikipedia.org/wiki/Bisection bisection]]
+[def __root_finding_example_without_derivatives [link math_toolkit.roots.root_finding_examples.no_derivatives root-finding without derivatives]]
+[def __root_finding_example_cbrt_without_derivatives [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_no_derivatives root-finding without derivatives]]
+[def __root_finding_example_cbrt_with_1_derivative [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_1st_derivative root-finding with 1st derivatives]]
+[def __root_finding_example_cbrt_with_2_derivatives [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_2_derivatives root-finding with 1st and 2nd derivatives]]
+[def __root_finding_examples [link math_toolkit.roots.root_finding_examples root-finding examples]]
+[def __no_derivatives   [link math_toolkit.roots.root_finding_examples.no_derivatives no derivatives]]
+[def __cbrt_no_derivatives  [link math_toolkit.roots.root_finding_examples.cbrt_no_derivatives cbrt no derivatives]]
+[def __cbrt_no_derivatives [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_no_derivatives without derivatives]]
+[def __cbrt_1st_derivative [link math_toolkit.roots.root_finding_examples.cbrt_eg.cbrt_1st_derivative cube-root with 1st derivative]]
+[def __cbrt_2_derivatives [link math_toolkit..roots.root_finding_examples.cbrt_eg.cbrt_2_derivatives cube-root with 1st  & 2nd derivative]]
+[def __fifth_root [link math_toolkit.roots.root_finding_examples.5th_root_eg fifth root]]
+[def __nth_root [link math_toolkit.roots.root_finding_examples.nth_root nth root]]
+[def __multiprecision_root [link math_toolkit.roots.root_finding_examples.multiprecision_root multiprecision root]]
 [/gammas]
 [def __lgamma [link math_toolkit.sf_gamma.lgamma lgamma]]
 [def __digamma [link math_toolkit.sf_gamma.digamma digamma]]
@@ -216,6 +251,14 @@ and use the function's name as the link text.]
 [def __isnormal [link math_toolkit.fpclass isnormal]]
 [def __fp_facets [link math_toolkit.fp_facets nonfinite fp_facets]]
 
+[/utils]
+[def __float_next [link math_toolkit.next_float.float_next float_next]]
+[def __float_prior [link math_toolkit.next_float.float_prior float_prior]]
+[def __nextafter [link math_toolkit.next_float.nextafter nextafter]]
+[def __float_advance [link math_toolkit.next_float.float_advance float_advance]]
+[def __ulp [link math_toolkit.next_float.ulp ulp]]
+
+
 [/powers etc]
 [def __expm1 [link math_toolkit.powers.expm1 expm1]]
 [def __log1p [link math_toolkit.powers.log1p log1p]]
@@ -252,9 +295,9 @@ and use the function's name as the link text.]
 [def __spherical_harmonic [link math_toolkit.sf_poly.sph_harm spherical_harmonic]]
 [def __owens_t [link math_toolkit.owens_t Owens T]]
 
-
 [/tools]
-[def __tuple [link math_toolkit.internals1.tuples boost::math::tuple]]
+[def __tuple [link math_toolkit.internals.tuples boost::math::tuple]]
+[def __tuple_type [link math_toolkit.internals.tuples std::pair, std::tuple, boost::tuple or boost::fusion::tuple]]
 
 [/ distribution non-members]
 [def __cdf [link math_toolkit.dist_ref.nmp.cdf Cumulative Distribution Function]]
@@ -324,7 +367,6 @@ and use the function's name as the link text.]
 [def __promotion_policy [link math_toolkit.pol_ref.internal_promotion internal promotion policy]]
 [def __precision_policy [link math_toolkit.pol_ref.precision_pol precision policy]]
 [def __policy_macros [link math_toolkit.pol_ref.policy_defaults Using Macros to Change the Policy Defaults]]
-
 [def __random_variate [@http://en.wikipedia.org/wiki/Random_variate random variate]]
 [def __random_variable [@http://en.wikipedia.org/wiki/Random_variable random variable]]
 [def __probability_distribution [@http://en.wikipedia.org/wiki/Probability_distribution probability_distribution]]
@@ -333,6 +375,10 @@ and use the function's name as the link text.]
    __chf, __mean, __median, __mode, __variance, __sd, __skewness,
    __kurtosis, __kurtosis_excess, __range and __support]
 
+[def __real_concept [link math_toolkit.real_concepts  real concept]]
+[def __next_float [link math_toolkit.next_float Adjacent Floating-Point Values]]
+
+[/ External links]
 [def __gsl [@http://www.gnu.org/software/gsl/ GSL-1.9]]
 [def __glibc [@http://www.gnu.org/software/libc/ GNU C Lib]]
 [def __hpc [@http://docs.hp.com/en/B9106-90010/index.html HP-UX C Library]]
@@ -342,8 +388,15 @@ and use the function's name as the link text.]
 [def __NTL_quad_float [@http://shoup.net/ntl/doc/quad_float.txt NTL::quad_float]]
 [def __MPFR [@http://www.mpfr.org/ GNU MPFR library]]
 [def __GMP [@http://gmplib.org/ GNU Multiple Precision Arithmetic Library]]
-[def __multiprecision [@http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html Boost.Multiprecision]]
-[def __cpp_dec_float [@http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html cpp_dec_float]]
+[def __multiprecision [@boost:/libs/multiprecision/doc/html/index.html Boost.Multiprecision]]
+[def __cpp_dec_float [@boost:/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html cpp_dec_float]]
+[def __cpp_bin_float [@boost:/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_bin_float.html cpp_bin_float]]
+[def __boost_test [@boost:/libs/test/doc/html/index.html Boost.Test]]
+[def __boost_timer [@boost:/libs/timer/doc/index.html Boost.Timer]]
+[def __boost_test_fp [@boost:/libs/test/doc/html/boost_test/users_guide/testing_tools/testing_floating_points.html Boost.Test floating-point comparison]]
+[def __boost_math_fp [link math_toolkit.float_comparison Boost.Math floating-point utilities]]
+[def __float_distance [@boost:/libs/math/doc/html/math_toolkit/next_float/float_distance.html Boost.Math float_distance]]
+[def __ulp [@http://en.wikipedia.org/wiki/Unit_in_the_last_place  Unit in the last place (ULP)]]
 [def __R [@http://www.r-project.org/ The R Project for Statistical Computing]]
 [def __godfrey [link godfrey Godfrey]]
 [def __pugh [link pugh Pugh]]
@@ -360,8 +413,15 @@ and use the function's name as the link text.]
 [def __building [link math_toolkit.building building libraries]]
 [def __e_float [@http://calgo.acm.org/910.zip e_float (TOMS Algorithm 910)]]
 [def __Abramowitz_Stegun M. Abramowitz and I. A. Stegun, Handbook of Mathematical Functions, NBS  (1964)]
-[def _DMLF [@http://dlmf.nist.gov/ NIST Digital Library of Mathematical Functions]]
+[def __DMLF [@http://dlmf.nist.gov/ NIST Digital Library of Mathematical Functions]]
+[def __floating_point  [@http://en.wikipedia.org/wiki/Floating_point Floating point]]
 [def __epsilon [@http://en.wikipedia.org/wiki/Machine_epsilon machine epsilon]]
+[def __ADL [@http://en.cppreference.com/w/cpp/language/adl Argument Dependent Lookup (ADL)]]
+[def __function_template_instantiation [@http://en.cppreference.com/w/cpp/language/function_template Function template instantiation]]
+[def __fundamental_types [@http://en.cppreference.com/w/cpp/language/types fundamental types]]
+[def __guard_digits [@http://en.wikipedia.org/wiki/Guard_digit guard digits]]
+[def __SSE2 [@http://en.wikipedia.org/wiki/SSE2 SSE2 instructions]]
+[def __representable [@http://en.wikipedia.org/wiki/Floating_point#Representable_numbers.2C_conversion_and_rounding representable]]
 
 [/ Some composite templates]
 [template super[x]'''<superscript>'''[x]'''</superscript>''']
@@ -452,6 +512,7 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include fp_utilities/sign.qbk]
 [include fp_utilities/fp_facets.qbk]
 [include fp_utilities/float_next.qbk]
+[include fp_utilities/float_comparison.qbk]
 [endmathpart]
 
 [mathpart cstdfloat..Specified-width floating-point typedefs]
@@ -546,34 +607,33 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include tr1/tr1_ref.qbk]
 [endmathpart]
 
-
 [include complex/complex-tr1.qbk]
 [include quaternion/math-quaternion.qbk]
 [include octonion/math-octonion.qbk]
 [include gcd/math-gcd.qbk]
 
-[mathpart toolkit Internals (Series, Rationals and Continued Fractions, Root Finding, Function Minimization, Testing and Development Tools)]
+[mathpart rooting Tools: Root Finding and Minimization Algorithms]
+[section:roots Root finding]
+[include roots/roots_overview.qbk]
+[endsect] [/section:roots Root finding]
+
+[endmathpart] [/mathpart roots Root Finding Algorithms]
+
+[mathpart internals Internal Details: Series, Rationals and Continued Fractions, Testing, and Development Tools]
 
 [include internals/internals_overview.qbk]
-
-[section:internals1 Utilities & internals]
+[section:internals Internal tools]
 [include internals/series.qbk]
 [include internals/fraction.qbk]
 [include internals/rational.qbk]
-[include internals/roots.qbk]
-[include internals/roots_without_derivatives.qbk]
-[include internals/minima.qbk]
 [include internals/tuple.qbk]
-[endsect] [/section:internals1 Utilities & internals]
-
-[section:internals2 Testing and Development]
 [include internals/polynomial.qbk]
 [include internals/minimax.qbk]
 [include internals/relative_error.qbk] [/ uncertainty of floating-point calculations.]
 [include internals/test_data.qbk]
-[endsect] [/section:internals2 Testing and Development]
+[endsect] [/section:internals]
 
-[endmathpart] [/section:toolkit Toolkit]
+[endmathpart] [/mathpart internals Internal Details: Series, Rationals and Continued Fractions, Testing, and Development Tools]
 
 [mathpart using_udt Use with User-Defined Floating-Point Types - Boost.Multiprecision and others]
 [include concepts/concepts.qbk]
@@ -590,6 +650,23 @@ and as a CD ISBN 0-9504833-2-X  978-0-9504833-2-0, Classification 519.2-dc22.
 [include background/lanczos.qbk]
 [include background/remez.qbk]
 [include background/references.qbk]
+
+[section:logs_and_tables Error logs and tables]
+
+[section:all_table Tables of Error Rates for all Functions]
+
+[all_tables]
+
+[endsect]
+
+[section:logs Error Logs For Error Rate Tables]
+
+[all_errors]
+
+[endsect]
+
+[endsect]
+
 [endmathpart] [/section:backgrounders Backgrounders]
 
 [mathpart status Library Status]

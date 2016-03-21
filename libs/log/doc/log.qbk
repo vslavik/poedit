@@ -17,6 +17,7 @@
 
 [/ Links to external resources /]
 [def __boost_config__ [@http://www.boost.org/doc/libs/release/libs/config/doc/html/index.html Boost.Config]]
+[def __boost_atomic__ [@http://www.boost.org/doc/libs/release/doc/html/atomic.html Boost.Atomic]]
 [def __boost_smart_ptr__ [@http://www.boost.org/doc/libs/release/libs/smart_ptr/smart_ptr.htm Boost.SmartPtr]]
 [def __boost_function__ [@http://www.boost.org/doc/libs/release/doc/html/function.html Boost.Function]]
 [def __boost_filesystem__ [@http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm Boost.Filesystem]]
@@ -46,6 +47,7 @@
 [def __boost_asio__ [@http://www.boost.org/doc/libs/release/doc/html/boost_asio.html Boost.ASIO]]
 [def __boost_move__ [@http://www.boost.org/doc/libs/release/doc/html/move.html Boost.Move]]
 [def __boost_locale__ [@http://www.boost.org/doc/libs/release/libs/locale/doc/html/index.html Boost.Locale]]
+[def __boost_type_index__ [@http://www.boost.org/doc/libs/release/doc/html/boost_typeindex.html Boost.TypeIndex]]
 [def __boost_utility__ [@http://www.boost.org/doc/libs/release/libs/utility/utility.htm Boost.Utility]]
 [def __boost_quickbook__ [@http://www.boost.org/doc/libs/release/doc/html/quickbook.html Boost.Quickbook]]
 
@@ -158,7 +160,7 @@ The library should build and work with a reasonably compliant compiler. The libr
 * Windows XP, Windows Vista, Windows 7. MSVC 8.0 SP1, MSVC 9.0 and newer.
 * Linux. GCC 4.5 and newer. Older versions may work too, but it was not tested.
 * Linux. Intel C++ 13.1.0.146 Build 20130121.
-* Linux. Clang 3.2.
+* Linux. Clang 3.2 and newer.
 
 The following compilers/platforms are not supported and will likely fail to compile the library:
 
@@ -167,13 +169,13 @@ The following compilers/platforms are not supported and will likely fail to comp
 * GCC 4.2 and older.
 * Borland C++ 5.5.1 (free version). Newer versions might or might not work.
 * Solaris Studio 12.3 and older.
-* Windows 9x, ME, NT4 and older are not supported.
+* Windows 9x, ME, NT4, 2000 and older are not supported.
 
 Boost.Log should be compatible with all hardware architectures supported by Boost. However, in case of 32 bit x86 architecture the library requires at least i586 class CPU to run.
 
 [heading Notes for GCC users]
 
-GCC versions since 4.5 support link time optimization (LTO), when most of optimizations and binary code generation happens at linking stage. This allows to perform more advanced optimizations and produce faster code. Unfortunately, it does not play well with projects containing source files that need to be compiled with different compiler options. Boost.Log is one of such projects, some parts of its sources contain optimizations for modern CPUs and will not run on older CPUs. Enabling LTO for Boost.Log will produce binaries incompatible with older CPUs (GCC [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043 bug]), which will likely result in crashes in run time. For this reason GCC LTO is not supported in Boost.Log.
+GCC versions since 4.5 support link time optimization (LTO), when most of optimizations and binary code generation happens at linking stage. This allows to perform more advanced optimizations and produce faster code. Unfortunately, it does not play well with projects containing source files that need to be compiled with different compiler options. Boost.Log is one of such projects, some parts of its sources contain optimizations for modern CPUs and will not run on older CPUs. Enabling LTO for Boost.Log will produce binaries incompatible with older CPUs (GCC [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=61043 bug]), which will likely result in crashes in run time. This problem is fixed in GCC 5.1 and newer. For this reason LTO is not supported in Boost.Log until GCC version 5.1.
 
 There is a GCC [@http://gcc.gnu.org/bugzilla/show_bug.cgi?id=60607 bug] which may cause compilation failures when `-march=native` command line argument is used. It is recommended to avoid using `-march=native` argument (or `instruction-set=native` bjam property) and instead explicitly specify the target CPU (e.g. `instruction-set=sandy-bridge`).
 
@@ -205,6 +207,7 @@ The library supports a number of configuration macros:
     [[Macro name]                               [Effect]]
     [[`BOOST_LOG_DYN_LINK`]                     [If defined in user code, the library will assume the binary is built as a dynamically loaded library ("dll" or "so"). Otherwise it is assumed that the library is built in static mode. This macro must be either defined or not defined for all translation units of user application that uses logging. This macro can help with auto-linking on platforms that support it.]]
     [[`BOOST_ALL_DYN_LINK`]                     [Same as `BOOST_LOG_DYN_LINK` but also affects other Boost libraries the same way.]]
+    [[`BOOST_USE_WINAPI_VERSION`]               [Affects compilation of both the library and user's code. This macro is Windows-specific. Selects the target Windows version for various Boost libraries, including Boost.Log. Code compiled for a particular Windows version will likely fail to run on the older Windows versions, but may improve performance because of using newer OS features. The macro is expected to have an integer value equivalent to [@https://msdn.microsoft.com/en-us/library/6sehtctf.aspx `_WIN32_WINNT`].]]
     [[`BOOST_LOG_NO_THREADS`]                   [If defined, disables multithreading support. Affects the compilation of both the library and users' code. The macro is automatically defined if no threading support is detected.]]
     [[`BOOST_LOG_WITHOUT_CHAR`]                 [If defined, disables support for narrow character logging. Affects the compilation of both the library and users' code.]]
     [[`BOOST_LOG_WITHOUT_WCHAR_T`]              [If defined, disables support for wide character logging. Affects the compilation of both the library and users' code.]]
@@ -216,7 +219,6 @@ The library supports a number of configuration macros:
     [[`BOOST_LOG_WITHOUT_EVENT_LOG`]            [Affects only compilation of the library. If defined, the support for Windows event log will not be built. Defining the macro also makes Message Compiler toolset unnecessary.]]
     [[`BOOST_LOG_WITHOUT_SYSLOG`]               [Affects only compilation of the library. If defined, the support for syslog backend will not be built.]]
     [[`BOOST_LOG_NO_SHORTHAND_NAMES`]           [Affects only compilation of users' code. If defined, some deprecated shorthand macro names will not be available.]]
-    [[`BOOST_LOG_USE_WINNT6_API`]               [Affects compilation of both the library and users' code. This macro is Windows-specific. If defined, the library makes use of the Windows NT 6 (Vista, Server 2008) and later APIs to generate more efficient code. This macro will also enable some experimental features of the library. Note, however, that the resulting binary will not run on Windows prior to NT 6. In order to use this feature Platform SDK 6.0 or later is required.]]
     [[`BOOST_LOG_USE_COMPILER_TLS`]             [Affects only compilation of the library. This macro enables support for compiler intrinsics for thread-local storage. Defining it may improve performance of Boost.Log if certain usage limitations are acceptable. See below for more comments.]]
     [[`BOOST_LOG_USE_STD_REGEX`, `BOOST_LOG_USE_BOOST_REGEX` or `BOOST_LOG_USE_BOOST_XPRESSIVE`] [Affects only compilation of the library. By defining one of these macros the user can instruct Boost.Log to use `std::regex`, __boost_regex__ or __boost_xpressive__ internally for string matching filters parsed from strings and settings. If none of these macros is defined then Boost.Log uses __boost_regex__ by default. Using `std::regex` or __boost_regex__ typically produces smaller executables, __boost_regex__ usually also being the fastest in run time. Using __boost_xpressive__ allows to eliminate the dependency on __boost_regex__ compiled binary. Note that these macros do not affect [link log.detailed.expressions.predicates.advanced_string_matching filtering expressions] created by users.]]
 ]
@@ -224,7 +226,7 @@ The library supports a number of configuration macros:
 You can define configuration macros in the `bjam` command line, like this:
 
 [pre
-    bjam --with-log variant=release define=BOOST_LOG_WITHOUT_EVENT_LOG define=BOOST_LOG_USE_WINNT6_API stage
+    bjam --with-log variant=release define=BOOST_LOG_WITHOUT_EVENT_LOG define=BOOST_USE_WINAPI_VERSION=0x0600 stage
 ]
 
 However, it may be more convenient to define configuration macros in the "boost/config/user.hpp" file in order to automatically define them both for the library and user's projects. If none of the options are specified, the library will try to support the most comprehensive setup, including support for all character types and features available for the target platform.
@@ -244,6 +246,20 @@ The library provides the `BOOST_LOG_USE_COMPILER_TLS` configuration macro that a
 
 * The application executable must be linked with the Boost.Log library. It should not be loaded dynamically during run time.
 * The application must not use logging in global constructors or destructors.
+
+Note that the `BOOST_LOG_USE_COMPILER_TLS` macro only controls use of TLS in Boost.Log but not in other libraries used by Boost.Log. For example, __boost_asio__ uses compiler-supplied TLS by default. In order to build Boost.Log binaries completely free from use of compiler-supplied TLS, this feature has to be disabled in those other libraries as well (in case of __boost_asio__ this can be achieved by defining `BOOST_ASIO_DISABLE_THREAD_KEYWORD_EXTENSION` when building and using Boost).
+
+[heading Notes about native `wchar_t` support]
+
+Some compilers, most notably MSVC, have an option to disable the native `wchar_t` type, emulating it with a typedef for one of the standard integral types. From the C++ language perspective this behavior is not conforming but it may be useful for compatibility with some legacy code which is difficult to update.
+
+By default, Boost (and Boost.Log being part of it) is built with native `wchar_t` enabled. At the time of this writing, user will have to modify Boost.Build to enable the emulation mode. It is possible to build Boost.Log in this mode, but there are several caveats that have to be kept in mind:
+
+* The compiled Boost.Log binaries will be exporting symbols corresponding to the configuration chosen at build time. The user's code will have to use the same setting as was used when building Boost.Log, otherwise linking errors will appear.
+* Since in emulation mode `wchar_t` is undistinguishable from one of the integer types, certain parts of the library may behave differently from the normal mode with native `wchar_t`. In particular, wide-character literals may be rejected or formatted differently.
+* The emulation mode is not tested, so unexpected breakages are possible.
+
+Because of that using the emulation mode is discouraged and should be avoided. In future releases of the library its support may be removed completely.
 
 [endsect]
 

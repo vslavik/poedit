@@ -728,7 +728,7 @@ corresponds to the following grammar:
         =   -sign >>
             (       nan
                 |   inf
-                |   fractional_constant >> !exponent_part
+                |   fractional_constant >> -exponent_part
                 |  +digit >> exponent_part
             )
         ;
@@ -1026,7 +1026,7 @@ matched value (`true` or `false`).
 [heading Boolean `Policies` Specializations]
 
 The easiest way to implement a proper boolean parsing policy is to derive a
-new type from the the type `bool_policies` while overriding the aspects
+new type from the type `bool_policies` while overriding the aspects
 of the parsing which need to be changed. For example, here's the
 implementation of a boolean parsing policy interpreting the string `"eurt"`
 (i.e. "true" spelled backwards) as `false`:

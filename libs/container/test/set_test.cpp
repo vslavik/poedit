@@ -20,6 +20,7 @@
 #include "set_test.hpp"
 #include "propagate_allocator_test.hpp"
 #include "emplace_test.hpp"
+#include "../../intrusive/test/iterator_test.hpp"
 
 using namespace boost::container;
 
@@ -439,6 +440,26 @@ int main ()
    typedef multiset< int*, std::less<int*>, std::allocator<int*>
                    , tree_assoc_options< optimize_size<true>, tree_type<avl_tree>  >::type > avlmset_size_optimized_yes;
    BOOST_STATIC_ASSERT(sizeof(avlmset_size_optimized_yes) < sizeof(avlmset_size_optimized_no));
+
+   ////////////////////////////////////
+   //    Iterator testing
+   ////////////////////////////////////
+   {
+      typedef boost::container::set<int> cont_int;
+      cont_int a; a.insert(0); a.insert(1); a.insert(2);
+      boost::intrusive::test::test_iterator_bidirectional< cont_int >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
+   }
+   {
+      typedef boost::container::multiset<int> cont_int;
+      cont_int a; a.insert(0); a.insert(1); a.insert(2);
+      boost::intrusive::test::test_iterator_bidirectional< cont_int >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
+   }
    return 0;
 }
 

@@ -281,18 +281,7 @@ rule configure-version-specific ( toolset : version : conditions )
         # dependencies to put there.
         toolset.flags $(toolset).link LINKFLAGS $(conditions) : /MANIFEST ;
     }
-    
-    # Starting with Visual Studio 2013 the CRT is split into a desktop and app dll.
-    #If targeting WinRT and 12.0 set lib path to link against app CRT.
-    if [ MATCH "(12)" : $(version) ]
-    {
-        local VCPath = [ path.parent [ path.make [ default-path $(version) ] ] ] ;
-        local storeLibPath = [ path.join [ path.join $(VCPath) "lib" ] "store" ] ;
-        toolset.flags $(toolset).link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-i386) : [ path.native $(storeLibPath) ] ;
-        toolset.flags $(toolset).link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-amd64) : [ path.native [ path.join $(storeLibPath) "amd64" ] ] ;
-        toolset.flags $(toolset).link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-arm) : [ path.native [ path.join $(storeLibPath) "arm" ] ] ;
-    }
-    
+
     toolset.pop-checking-for-flags-module ;
 }
 
@@ -1061,6 +1050,14 @@ local rule configure-really ( version ? : options * )
             {
                 default-global-setup-options-amd64 = amd64 ;
             }
+            # When Boost.Build itself is running as a 32-bit process on 64-bit
+            # Windows, the above test will fail (since WOW64 simulates a 32-bit
+            # environment, including environment values).  So check the WOW64
+            # variable PROCESSOR_ARCHITEW6432 as well.
+            if [ MATCH ^(AMD64) : [ os.environ PROCESSOR_ARCHITEW6432 ] ]
+            {
+                default-global-setup-options-amd64 = amd64 ;
+            }
             # TODO: The same 'native compiler usage' should be implemented for
             # the Itanium platform by using the "ia64" parameter. For this
             # though we need someone with access to this platform who can find
@@ -1164,7 +1161,14 @@ local rule configure-really ( version ? : options * )
                 {
                     setup-script = $(setup-phone-$(c)) ;
                 }
-                toolset.flags msvc.compile .CC  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(compiler) /Zm800 -nologo ;
+                if $(api) = desktop
+                {
+                    toolset.flags msvc.compile .CC  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(compiler) /Zm800 -nologo ;
+                }
+                else
+                {
+                    toolset.flags msvc.compile .CC  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(compiler) /Zm800 /ZW /EHsc -nologo ;
+                }
                 toolset.flags msvc.compile .ASM <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(cpu-assembler) -nologo ;
                 toolset.flags msvc.link    .LD  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(linker) /NOLOGO /INCREMENTAL:NO ;
                 toolset.flags msvc.archive .LD  <windows-api>$(api)/$(cpu-conditions) : $(setup-script)$(linker) /lib /NOLOGO  ;
@@ -1174,6 +1178,16 @@ local rule configure-really ( version ? : options * )
             {
                 toolset.flags msvc .CC.FILTER $(cpu-conditions) : "|" $(cc-filter) ;
             }
+        }
+
+        # Starting with Visual Studio 2013 the CRT is split into a desktop and app dll.
+        # If targeting WinRT and 12.0 set lib path to link against app CRT.
+        if [ MATCH "(12)" : $(version) ]
+        {
+            local storeLibPath = [ path.join $(parent) "lib/store" ] ;
+            toolset.flags msvc.link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-i386) : [ path.native $(storeLibPath) ] ;
+            toolset.flags msvc.link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-amd64) : [ path.native [ path.join $(storeLibPath) "amd64" ] ] ;
+            toolset.flags msvc.link LINKPATH $(conditions)/<windows-api>store/$(.cpu-arch-arm) : [ path.native [ path.join $(storeLibPath) "arm" ] ] ;
         }
 
         # Set version-specific flags.

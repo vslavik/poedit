@@ -8,6 +8,16 @@ the zip iterator moves all the iterators in parallel.
 Dereferencing the zip iterator returns a tuple that contains
 the results of dereferencing the individual iterators. 
 
+The tuple of iterators is now implemented in terms of a Boost fusion sequence. 
+Because of this the 'tuple' may be any Boost fusion sequence and, for backwards
+compatibility through a Boost fusion sequence adapter, a Boost tuple. Because the 
+'tuple' may be any boost::fusion sequence the 'tuple' may also be any type for which a 
+Boost fusion adapter exists. This includes, among others, a std::tuple and a std::pair.
+Just remember to include the appropriate Boost fusion adapter header files for these
+other Boost fusion adapters. The zip_iterator header file already includes the
+Boost fusion adapter header file for Boost tuple, so you need not include it yourself
+to use a Boost tuple as your 'tuple'.
+
 [section:zip_example Example]
 
 There are two main types of applications of the `zip_iterator`. The first
@@ -218,7 +228,7 @@ operations.
               , IteratorTuple>::type* = 0     // exposition only
     );
 
-[*Returns:] An instance of `zip_iterator` that is a copy of `other`.\n
+[*Returns:] An instance of `zip_iterator` that is a copy of `other`.[br]
 [*Requires:] `OtherIteratorTuple` is implicitly convertible to `IteratorTuple`.
 
 
@@ -235,13 +245,13 @@ operations.
 
   zip_iterator& operator++();
 
-[*Effects:] Increments each iterator in `m_iterator_tuple`.\n
+[*Effects:] Increments each iterator in `m_iterator_tuple`.[br]
 [*Returns:] `*this`
 
 
   zip_iterator& operator--();
 
-[*Effects:] Decrements each iterator in `m_iterator_tuple`.\n
+[*Effects:] Decrements each iterator in `m_iterator_tuple`.[br]
 [*Returns:] `*this`
 
     template<typename IteratorTuple> 

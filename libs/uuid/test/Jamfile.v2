@@ -54,5 +54,8 @@ test-suite uuid :
 
     # test sha1 hash function
     [ run test_sha1.cpp ]
+    
+    # test MSVC 12 (VS2013) optimizer bug with SIMD operations. See https://svn.boost.org/trac/boost/ticket/8509#comment:3.
+    # Only happens in Release x64 builds.
+    [ run test_msvc_simd_bug981648_main.cpp test_msvc_simd_bug981648_foo.cpp : : : <variant>release <debug-symbols>on : test_msvc_simd_bug981648 ]
     ;
-

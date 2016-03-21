@@ -762,6 +762,23 @@ Many thanks to all boosters that have tested, reviewed and improved the library.
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_60 Boost 1.60 Release]
+
+*  Fixed bug:
+   * [@https://svn.boost.org/trac/boost/ticket/11615 Trac #11615: ['"Boost.Move should use the qualified name for std::size_t in type_traits.hpp"]],
+
+[endsect]
+
+[section:release_notes_boost_1_59 Boost 1.59 Release]
+
+   *  Changed `unique_ptr`'s converting constructor taking the source by value in C++03 compilers to allow simple conversions
+      from convertible types returned by value.
+   *  Fixed bug:
+      * [@https://svn.boost.org/trac/boost/ticket/11229 Trac #11229: ['"vector incorrectly copies move-only objects using memcpy"]],
+      * [@https://svn.boost.org/trac/boost/ticket/11510 Trac #11510: ['"unique_ptr: -Wshadow warning issued"]],
+
+[endsect]
+
 [section:release_notes_boost_1_58_00 Boost 1.58 Release]
 
 *  Added [macroref BOOST_MOVE_BASE BOOST_MOVE_BASE] utility.

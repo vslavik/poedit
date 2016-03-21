@@ -8,6 +8,7 @@
 #include <boost/iterator/new_iterator_tests.hpp>
 
 #include <boost/call_traits.hpp>
+#include <boost/polymorphic_cast.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/utility/enable_if.hpp>
 
@@ -49,14 +50,14 @@ class counter_iterator
 struct proxy
 {
     proxy(int& x) : state(x) {}
-        
+
     operator int const&() const
     {
         return state;
     }
 
     int& operator=(int x) { state = x; return state; }
-        
+
     int& state;
 };
 
@@ -128,6 +129,61 @@ template <class T, class U>
 void same_type(U const&)
 { BOOST_MPL_ASSERT((boost::is_same<T,U>)); }
 
+template <class I, class A>
+struct abstract_iterator
+    : boost::iterator_facade<
+          abstract_iterator<I, A>
+        , A &
+        // In order to be value type as a reference, traversal category has
+        // to satisfy least forward traversal.
+        , boost::forward_traversal_tag
+        , A &
+      >
+{
+    abstract_iterator(I iter) : iter(iter) {}
+
+    void increment()
+    { ++iter; }
+
+    A & dereference() const
+    { return *iter; }
+
+    bool equal(abstract_iterator const& y) const
+    { return iter == y.iter; }
+
+    I iter;
+};
+
+struct base
+{
+    virtual void assign(const base &) = 0;
+    virtual bool equal(const base &) const = 0;
+};
+
+struct derived : base
+{
+    derived(int state) : state(state) { }
+    derived(const derived &d) : state(d.state) { }
+    derived(const base &b) { derived::assign(b); }
+
+    virtual void assign(const base &b)
+    {
+        state = boost::polymorphic_cast<const derived *>(&b)->state;
+    }
+
+    virtual bool equal(const base &b) const
+    {
+        return state == boost::polymorphic_cast<const derived *>(&b)->state;
+    }
+
+    int state;
+};
+
+inline bool operator==(const base &lhs, const base &rhs)
+{
+    return lhs.equal(rhs);
+}
+
 int main()
 {
     {
@@ -160,6 +216,11 @@ int main()
         ++i->m_x;
         BOOST_TEST(x == 2);
         BOOST_TEST(i.m_x == 2);
+    }
+
+    {
+        derived d(1);
+        boost::readable_iterator_test(abstract_iterator<derived *, base>(&d), derived(1));
     }
 
     return boost::report_errors();

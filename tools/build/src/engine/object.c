@@ -23,6 +23,7 @@
 
 #include "jam.h"
 #include "object.h"
+#include "output.h"
 
 #include <assert.h>
 #include <stddef.h>
@@ -386,9 +387,9 @@ void object_done()
 
     if ( DEBUG_MEM )
     {
-        printf( "%dK in strings\n", strtotal / 1024 );
+        out_printf( "%dK in strings\n", strtotal / 1024 );
         if ( strcount_in != strcount_out )
-            printf( "--- %d strings of %d dangling\n", strcount_in -
+            out_printf( "--- %d strings of %d dangling\n", strcount_in -
                 strcount_out, strcount_in );
     }
 }

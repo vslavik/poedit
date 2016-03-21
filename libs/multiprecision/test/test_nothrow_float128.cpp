@@ -11,7 +11,7 @@
 #include <boost/type_traits/has_nothrow_copy.hpp>
 #include <boost/static_assert.hpp>
 
-#ifndef BOOST_NO_NOEXCEPT
+#ifndef BOOST_NO_CXX11_NOEXCEPT
 
 #if !defined(BOOST_NO_CXX11_NOEXCEPT) && !defined(BOOST_NO_SFINAE_EXPR) || defined(BOOST_IS_NOTHROW_MOVE_CONSTRUCT)
 //
@@ -47,6 +47,31 @@ BOOST_STATIC_ASSERT(boost::has_nothrow_copy<boost::multiprecision::float128>::va
 #ifdef BOOST_HAS_NOTHROW_ASSIGN
 BOOST_STATIC_ASSERT(boost::has_nothrow_assign<boost::multiprecision::float128>::value);
 #endif
+
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128()));
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128(std::declval<const boost::multiprecision::float128&>())));
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128(std::declval<boost::multiprecision::float128>())));
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128(std::declval<const float128_type&>())));
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128(std::declval<float128_type>())));
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128(std::declval<const double&>())));
+BOOST_STATIC_ASSERT(noexcept(boost::multiprecision::float128(std::declval<double>())));
+BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<const boost::multiprecision::float128&>()));
+BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<boost::multiprecision::float128>()));
+BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<const float128_type&>()));
+BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<float128_type>()));
+BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<const double&>()));
+BOOST_STATIC_ASSERT(noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<double>()));
+
+struct any_convert
+{
+   template <class T>
+   operator T ()const;   // Can throw!
+};
+
+BOOST_STATIC_ASSERT(!noexcept(boost::multiprecision::float128(std::declval<const any_convert&>())));
+BOOST_STATIC_ASSERT(!noexcept(boost::multiprecision::float128(std::declval<any_convert>())));
+BOOST_STATIC_ASSERT(!noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<const any_convert&>()));
+BOOST_STATIC_ASSERT(!noexcept(std::declval<boost::multiprecision::float128&>() = std::declval<any_convert>()));
 
 #endif // noexcept
 

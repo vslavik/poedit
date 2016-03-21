@@ -44,6 +44,7 @@ BOOST_AUTO_TEST_CASE(string_literal_ctors)
         BOOST_CHECK(std::strcmp(lit.c_str(), "abcd") == 0);
     }
 
+#ifdef BOOST_LOG_USE_WCHAR_T
     // Copying
     {
         logging::wstring_literal lit1 = L"Hello";
@@ -60,6 +61,7 @@ BOOST_AUTO_TEST_CASE(string_literal_ctors)
         logging::wstring_literal lit2 = logging::str_literal(L"Wow!");
         BOOST_CHECK(std::wcscmp(lit2.c_str(), L"Wow!") == 0);
     }
+#endif
 }
 
 // Assignment tests

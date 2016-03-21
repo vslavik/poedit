@@ -3,6 +3,7 @@
 // Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -18,11 +19,13 @@
 #include <boost/geometry/core/point_type.hpp>
 #include <boost/geometry/core/tags.hpp>
 
+#include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/range.hpp>
 
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/validity_failure_type.hpp>
 #include <boost/geometry/algorithms/detail/check_iterator_range.hpp>
+#include <boost/geometry/algorithms/detail/is_valid/has_invalid_coordinate.hpp>
 #include <boost/geometry/algorithms/detail/is_valid/has_spikes.hpp>
 #include <boost/geometry/algorithms/detail/num_distinct_consecutive_points.hpp>
 
@@ -44,6 +47,11 @@ struct is_valid_linestring
     static inline bool apply(Linestring const& linestring,
                              VisitPolicy& visitor)
     {
+        if (has_invalid_coordinate<Linestring>::apply(linestring, visitor))
+        {
+            return false;
+        }
+
         if (boost::size(linestring) < 2)
         {
             return visitor.template apply<failure_few_points>();
@@ -138,7 +146,8 @@ public:
     static inline bool apply(MultiLinestring const& multilinestring,
                              VisitPolicy& visitor)
     {
-        if (AllowEmptyMultiGeometries && boost::empty(multilinestring))
+        if (BOOST_GEOMETRY_CONDITION(
+                AllowEmptyMultiGeometries && boost::empty(multilinestring)))
         {
             return visitor.template apply<no_failure>();
         }

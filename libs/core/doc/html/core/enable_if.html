@@ -36,7 +36,7 @@
 </dl></div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp85676048"></a>Authors</h3></div></div></div>
+<a name="idm45877773668544"></a>Authors</h3></div></div></div>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           Jaakko J&#228;rvi
@@ -366,6 +366,27 @@
           the default (<code class="computeroutput"><span class="keyword">void</span></code>) is the
           correct value.
         </p>
+<p>
+          The <code class="computeroutput"><span class="identifier">enable_if_has_type</span></code>
+          template is usable this scenario but instead of using a type traits to
+          enable or disable a specialization, it use a SFINAE context to check for
+          the existence of a dependent type inside its parameter. For example, the
+          following structure extracts a dependent <code class="computeroutput"><span class="identifier">value_type</span></code>
+          from T if and only if <code class="computeroutput"><span class="identifier">T</span><span class="special">::</span><span class="identifier">value_type</span></code>
+          exists.
+        </p>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Enable</span> <span class="special">=</span> <span class="keyword">void</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">value_type_from</span>
+<span class="special">{</span>
+  <span class="keyword">typedef</span> <span class="identifier">T</span> <span class="identifier">type</span><span class="special">;</span>
+<span class="special">};</span>
+
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+<span class="keyword">class</span> <span class="identifier">value_type_from</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">enable_if_has_type</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
+<span class="special">{</span>
+  <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">::</span><span class="identifier">value_type</span> <span class="identifier">type</span><span class="special">;</span>
+<span class="special">};</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">

@@ -161,7 +161,7 @@ namespace boost {
                 return convert_from<wchar_t>(begin,end,charset.c_str(),how);
             }
 
-            #ifdef BOOST_HAS_CHAR16_T
+            #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
             template<>
             std::basic_string<char16_t> to_utf(char const *begin,char const *end,std::string const &charset,method_type how)
             {
@@ -175,7 +175,7 @@ namespace boost {
             }
             #endif
 
-            #ifdef BOOST_HAS_CHAR32_T
+            #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
             template<>
             std::basic_string<char32_t> to_utf(char const *begin,char const *end,std::string const &charset,method_type how)
             {

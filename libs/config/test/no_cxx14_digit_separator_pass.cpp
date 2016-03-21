@@ -27,11 +27,11 @@
 #ifndef BOOST_NO_CXX14_DIGIT_SEPARATORS
 #include "boost_no_cxx14_digit_separator.ipp"
 #else
-namespace boost_no_cxx14_digit_separator = empty_boost;
+namespace boost_no_cxx14_digit_separators = empty_boost;
 #endif
 
 int main( int, char *[] )
 {
-   return boost_no_cxx14_digit_separator::test();
+   return boost_no_cxx14_digit_separators::test();
 }
 

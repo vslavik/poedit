@@ -51,7 +51,7 @@ boost::numeric::ublas::vector<T> solve(
    // iterate to reduce error:
    //
    boost::numeric::ublas::vector<T> delta(b.size());
-   for(unsigned i = 0; i < 1; ++i)
+   for(unsigned k = 0; k < 1; ++k)
    {
       noalias(delta) = prod(A_, b);
       delta -= b_;

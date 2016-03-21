@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Annex: Implementation</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="prev" href="no_variadic_macros.html" title="Annex: No Variadic Macros">
@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="no_variadic_macros.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../reference.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section boost_localfunction_implementation">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_localfunction.implementation"></a><a class="link" href="implementation.html" title="Annex: Implementation">Annex: Implementation</a>
 </h2></div></div></div>
@@ -44,7 +44,7 @@
 </table></div>
 <h4>
 <a name="boost_localfunction.implementation.h0"></a>
-      <span><a name="boost_localfunction.implementation.local_classes_as_template_parameters"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.local_classes_as_template_parameters">Local
+      <span class="phrase"><a name="boost_localfunction.implementation.local_classes_as_template_parameters"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.local_classes_as_template_parameters">Local
       Classes as Template Parameters</a>
     </h4>
 <p>
@@ -54,7 +54,7 @@
       be passed as template parameters (e.g., to the <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span></code>
       algorithm), this is instead possible in <a href="http://www.open-std.org/JTC1/SC22/WG21/" target="_top">C++11</a>,
       MSVC, and some other compilers (see <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2657.htm" target="_top">[N2657]</a>
-      and <a href="http://www.boost.org/libs/chrono" target="_top">Boost.Config</a>'s <code class="computeroutput"><span class="identifier">BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS</span></code>).
+      and <a href="http://www.boost.org/libs/chrono" target="_top">Boost.Config</a>'s <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS</span></code>).
       To work around this limitation, this library investigated the following two
       "tricks" (both tricks can be extended to support function default
       parameters):
@@ -155,7 +155,7 @@
       virtual function respectively). Therefore, on compilers that accept local classes
       as template parameters (MSVC, <a href="http://www.open-std.org/JTC1/SC22/WG21/" target="_top">C++11</a>,
       etc, see <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2657.htm" target="_top">[N2657]</a>
-      and <a href="http://www.boost.org/libs/chrono" target="_top">Boost.Config</a>'s <code class="computeroutput"><span class="identifier">BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS</span></code>),
+      and <a href="http://www.boost.org/libs/chrono" target="_top">Boost.Config</a>'s <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS</span></code>),
       this library automatically generates code that passes the local class type
       directly as template parameter without using neither one of these two tricks
       in order to take full advantage of compiler optimizations that inline the local
@@ -163,7 +163,7 @@
     </p>
 <h4>
 <a name="boost_localfunction.implementation.h1"></a>
-      <span><a name="boost_localfunction.implementation.parsing_macros"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.parsing_macros">Parsing
+      <span class="phrase"><a name="boost_localfunction.implementation.parsing_macros"></a></span><a class="link" href="implementation.html#boost_localfunction.implementation.parsing_macros">Parsing
       Macros</a>
     </h4>
 <p>
@@ -174,7 +174,7 @@
       special code to bind by constant), etc. The parameter tokens are inspected
       using preprocessor meta-programming and specifically using the macros defined
       by the files in the <code class="literal">boost/local_function/detail/preprocessor/keyword/</code>
-      directory. <sup>[<a name="boost_localfunction.implementation.f0" href="#ftn.boost_localfunction.implementation.f0" class="footnote">31</a>]</sup>
+      directory. <a href="#ftn.boost_localfunction.implementation.f0" class="footnote" name="boost_localfunction.implementation.f0"><sup class="footnote">[31]</sup></a>
     </p>
 <p>
       For example, the following code defines a macro that allows the preprocessor
@@ -205,8 +205,8 @@
 <p>
     </p>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.implementation.f0" href="#boost_localfunction.implementation.f0" class="para">31</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.boost_localfunction.implementation.f0" class="footnote"><p><a href="#boost_localfunction.implementation.f0" class="para"><sup class="para">[31] </sup></a>
         This technique is at the core of even more complex preprocessor parsing macros
         like the ones that parse the <a href="http://sourceforge.net/projects/contractpp" target="_top">Contract++</a>
         syntax.

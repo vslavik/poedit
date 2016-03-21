@@ -58,7 +58,7 @@ public:
 // only required for steppers with error control
 point3D operator/( const point3D &p1 , const point3D &p2 )
 {
-    return point3D( p1.x/p2.x , p1.y/p2.y , p1.z/p1.z );
+    return point3D( p1.x/p2.x , p1.y/p2.y , p1.z/p2.z );
 }
 
 point3D abs( const point3D &p )

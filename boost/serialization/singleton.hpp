@@ -77,7 +77,7 @@ namespace serialization {
 // attempt to retieve a mutable instances while locked will
 // generate a assertion if compiled for debug.
 
-class singleton_module : 
+class BOOST_SYMBOL_VISIBLE singleton_module :
     public boost::noncopyable
 {
 private:
@@ -123,13 +123,13 @@ class singleton : public singleton_module
 private:
     BOOST_DLLEXPORT static T & instance;
     // include this to provoke instantiation at pre-execution time
-    static void use(T const &) {}
+    static void use(T const *) {}
     BOOST_DLLEXPORT static T & get_instance() {
         static detail::singleton_wrapper< T > t;
         // refer to instance, causing it to be instantiated (and
         // initialized at startup on working compilers)
         BOOST_ASSERT(! detail::singleton_wrapper< T >::m_is_destroyed);
-        use(instance);
+        use(& instance);
         return static_cast<T &>(t);
     }
 public:

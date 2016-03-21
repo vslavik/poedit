@@ -35,6 +35,8 @@ main()
 #include <boost/spirit/include/classic_rule.hpp>
 #include <boost/spirit/include/classic_epsilon.hpp>
 #include <boost/thread/xtime.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/lock_types.hpp>
 #include <boost/ref.hpp>
 
 static boost::mutex simple_mutex;
@@ -48,7 +50,7 @@ struct simple : public BOOST_SPIRIT_CLASSIC_NS::grammar<simple>
         definition(simple const& /*self*/)
         {
             top = BOOST_SPIRIT_CLASSIC_NS::epsilon_p;
-            boost::mutex::scoped_lock lock(simple_mutex);
+            boost::unique_lock<boost::mutex> lock(simple_mutex);
             simple_definition_count++;
         }
 

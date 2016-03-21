@@ -282,8 +282,6 @@ int test_main(int argc, char* argv[])
   environment env(argc, argv);
 
   communicator comm;
-  const bool in_place = true;
-  const bool out_of_place = false;
 
   // Built-in MPI datatypes with built-in MPI operations
   all_reduce_test(comm, int_generator(), "integers", std::plus<int>(), "sum",

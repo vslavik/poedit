@@ -21,7 +21,7 @@ using boost::optional;
 
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-#ifndef BOOST_NO_NOEXCEPT
+#ifndef BOOST_NO_CXX11_NOEXCEPT
 
 // these 4 classes have different noexcept signatures in move operations
 struct NothrowBoth {
@@ -105,7 +105,7 @@ void test_noexcept_optional_with_operator() // compile-time test
   BOOST_STATIC_ASSERT(!BOOST_NOEXCEPT_EXPR( onx0 = ONx0() ));
 }
 
-#endif // !defned BOOST_NO_NOEXCEPT
+#endif // !defned BOOST_NO_CXX11_NOEXCEPT
 #endif // !defined BOOST_NO_CXX11_RVALUE_REFERENCES
 
 int main()

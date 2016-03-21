@@ -82,6 +82,11 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_polymorphic<IDispatch>::value, true);
 // this test was added to check for bug reported on 21 May 2003:
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_polymorphic<poly_bug>::value, true);
 
+#ifndef BOOST_NO_CXX11_FINAL
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_polymorphic < final_UDT >::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_polymorphic<polymorphic_derived_final>::value, true);
+#endif
+
 TT_TEST_END
 
 

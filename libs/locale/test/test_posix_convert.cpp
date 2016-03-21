@@ -59,7 +59,7 @@ void test_char()
         std::cout << "Testing " << name << std::endl;
         std::locale l=gen(name);
         test_one<CharType>(l,"Hello World","hello world","HELLO WORLD");
-        #ifdef __APPLE__
+        #if defined(__APPLE__) || defined(__FreeBSD__)
         if(sizeof(CharType)!=1)
         #endif
             test_one<CharType>(l,"Façade","façade","FAÇADE");

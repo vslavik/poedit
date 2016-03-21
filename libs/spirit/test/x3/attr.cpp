@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -12,8 +12,7 @@
 
 #include "test.hpp"
 
-int
-main()
+int main()
 {
     using spirit_test::test_attr;
     using boost::spirit::x3::attr;
@@ -27,7 +26,7 @@ main()
         BOOST_TEST(test_attr("", attr(d1), d) && d == 1);
 
         std::pair<int, int> p;
-        BOOST_TEST(test_attr("1", int_ >> attr(1), p) && 
+        BOOST_TEST(test_attr("1", int_ >> attr(1), p) &&
             p.first == 1 && p.second == 1);
 
         char c = '\0';
@@ -37,27 +36,16 @@ main()
         // str ends up with an explicit null-terminator... $$$
         //~ std::string str;
         //~ BOOST_TEST(test_attr("", attr("test"), str) && str == "test");
-        
+
         int array[] = {0, 1, 2};
         std::vector<int> vec;
         BOOST_TEST(test_attr("", attr(array), vec) && vec.size() == 3 &&
             vec[0] == 0 && vec[1] == 1 && vec[2] == 2);
     }
 
-    //~ {   // testing lazy constructs
-        //~ using boost::phoenix::val;
-        //~ using boost::phoenix::ref;
-
-        //~ int d = 0;
-        //~ BOOST_TEST(test_attr("", attr(val(1)), d) && d == 1);
-
-        //~ int d1 = 2;
-        //~ BOOST_TEST(test_attr("", attr(ref(d1)), d) && d == 2);
-    //~ }
-
     {
         std::string s;
-        BOOST_TEST(test_attr("s", "s" >> attr(std::string("123")), s) && 
+        BOOST_TEST(test_attr("s", "s" >> attr(std::string("123")), s) &&
             s == "123");
     }
 

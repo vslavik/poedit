@@ -233,11 +233,15 @@ void test_polygon_polygon()
         bg::read_wkt("POLYGON((0 0,0 10,10 10,10 0,0 0))", p1);
         bg::read_wkt("POLYGON((10 0,10 10,20 10,20 0,10 0))", p2);
         bg::read_wkt("POLYGON((5 5,5 10,6 10,6 5,5 5))", p3);
-        BOOST_CHECK(bgdr::relate(p1, p2, bgdr::mask9("FT*******")
-                                      || bgdr::mask9("F**T*****")
-                                      || bgdr::mask9("F***T****"))); // touches()
-        BOOST_CHECK(bgdr::relate(p1, p3, bgdr::mask9("T*****FF*"))); // contains()
-        BOOST_CHECK(bgdr::relate(p2, p3, bgdr::mask9("FF*FF****"))); // disjoint()
+        BOOST_CHECK(bg::relate(p1, p2, bg::de9im::mask("FT*******")
+                                    || bg::de9im::mask("F**T*****")
+                                    || bg::de9im::mask("F***T****"))); // touches()
+        BOOST_CHECK(bg::relate(p1, p3, bg::de9im::mask("T*****FF*"))); // contains()
+        BOOST_CHECK(bg::relate(p2, p3, bg::de9im::mask("FF*FF****"))); // disjoint()
+
+        BOOST_CHECK(bg::relate(p1, p2, bg::de9im::static_mask<'F','T'>()
+                                    || bg::de9im::static_mask<'F','*','*','T'>()
+                                    || bg::de9im::static_mask<'F','*','*','*','T'>()));
     }
 
     // CCW
@@ -339,6 +343,25 @@ void test_polygon_polygon()
                                   "POLYGON((1 1,1 2,2 2,2 1,1 1))",
                                   "****F****");*/
     }
+
+    // mysql 21872795 (overlaps)
+    test_geometry<poly, poly>("POLYGON((2 2,2 8,8 8,8 2,2 2))",
+                              "POLYGON((0 0,0 10,10 10,10 0,0 0),(8 8,4 6,4 4,8 8))",
+                              "21210F212");
+    test_geometry<poly, poly>("POLYGON((2 2,2 8,8 8,8 2,2 2))",
+                              "POLYGON((0 0,0 10,10 10,10 0,0 0),(2 2,4 4,4 6,2 2))",
+                              "21210F212");
+    // mysql 21873343 (touches)
+    test_geometry<poly, poly>("POLYGON((0 0,0 10,10 10,10 0,0 0), (0 8, 8 5, 8 8, 0 8))",
+                              "POLYGON((0 8,-8 5,-8 8,0 8))",
+                              "FF2F01212");
+    test_geometry<poly, poly>("POLYGON((0 0,0 10,10 10,10 0,0 0), (0 6, 6 3, 6 6, 0 6))",
+                              "POLYGON((0 6,-6 3,-6 6,0 6))",
+                              "FF2F01212");
+    // similar but touching from the inside of the hole
+    test_geometry<poly, poly>("POLYGON((0 0,0 10,10 10,10 0,0 0), (0 8, 8 5, 8 8, 0 8))",
+                              "POLYGON((0 8,7 7, 7 6,0 8))",
+                              "FF2F01212");
 }
 
 template <typename P>

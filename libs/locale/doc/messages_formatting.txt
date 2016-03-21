@@ -359,8 +359,8 @@ for Windows (see \ref gettext_for_windows).
 For example, we have a source file called \c dir.cpp that prints:
 
 \code
-    cout << translate("Listing of catalog {1}:") % file_name << endl;
-    cout << translate("Catalog {1} contains 1 file","Catalog {1} contains {2,num} files",files_no) 
+    cout << format(translate("Listing of catalog {1}:")) % file_name << endl;
+    cout << format(translate("Catalog {1} contains 1 file","Catalog {1} contains {2,num} files",files_no)) 
             % file_name % files_no << endl;
 \endcode
 

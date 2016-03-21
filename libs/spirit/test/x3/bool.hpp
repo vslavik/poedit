@@ -16,13 +16,13 @@
 struct backwards_bool_policies : boost::spirit::x3::bool_policies<>
 {
     // we want to interpret a 'true' spelled backwards as 'false'
-    template <typename Iterator, typename Attribute>
+    template <typename Iterator, typename Attribute, typename CaseCompare>
     static bool
-    parse_false(Iterator& first, Iterator const& last, Attribute& attr)
+    parse_false(Iterator& first, Iterator const& last, Attribute& attr, CaseCompare const& case_compare)
     {
         namespace spirit = boost::spirit;
         namespace x3 = boost::spirit::x3;
-        if (x3::detail::string_parse("eurt", first, last, x3::unused))
+        if (x3::detail::string_parse("eurt", first, last, x3::unused, case_compare))
         {
             x3::traits::move_to(false, attr);   // result is false
             return true;

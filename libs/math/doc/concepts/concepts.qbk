@@ -20,12 +20,12 @@ Of course, the main cost of higher precision is very much decreased
 (usually at least hundred-fold) computation speed, and big increases in memory use.
 
 Some libraries offer true
-[@http://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic arbitrary precision arithmetic]
-where the precision is limited only by avilable memory and compute time, but most are used
-at some arbitrarily-fixed precision, say 100 decimal digits.
+[@http://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic arbitrary-precision arithmetic]
+where the precision is limited only by available memory and compute time, but most are used
+at some arbitrarily-fixed precision, say 100 decimal digits, like __multiprecision `cpp_dec_float_100`.
 
 __multiprecision can operate in both ways, but the most popular choice is likely to be about a hundred
-decimal digits, though examples of computing tens of thousands of digits have been demonstrated.
+decimal digits, though examples of computing about a million digits have been demonstrated.
 
 [section:why_high_precision  Why use a high-precision library rather than built-in floating-point types?]
 
@@ -37,9 +37,9 @@ Some reasons why one would want to use a higher precision:
 
 * A much more precise result (many more digits) is just a requirement.
 * The range of the computed value exceeds the range of the type: factorials are the textbook example.
-* Using double is (or may be) too inaccurate.
-* Using long double (or may be) is too inaccurate.
-* Using an extended precision type implemented in software as
+* Using `double` is (or may be) too inaccurate.
+* Using `long double` (or may be) is too inaccurate.
+* Using an extended-precision type implemented in software as
 [@http://en.wikipedia.org/wiki/Double-double_(arithmetic)#Double-double_arithmetic double-double]
 ([@http://en.wikipedia.org/wiki/Darwin_(operating_system) Darwin]) is sometimes unpredictably inaccurate.
 * Loss of precision or inaccuracy caused by extreme arguments or cancellation error.
@@ -76,7 +76,7 @@ A decimal digit string will also be 'read' precisely by the compiler
 into a built-in floating-point type to the nearest representable value.
 
 [note In contrast, reading a value from an `std::istream` into a built-in floating-point type
-is [*not guaranteed] by the C++ Standard to give the nearest representable value.]
+is [*not guaranteed by the C++ Standard] to give the nearest representable value.]
 
 William Kahan coined the term
 [@http://en.wikipedia.org/wiki/Rounding#The_table-maker.27s_dilemma Table-Maker's Dilemma]
@@ -126,7 +126,7 @@ functions then you will need to provide your own wrapper header that:
 * Provides std::numeric_limits<__float128> support.
 * Provides overloads of the standard library math function for type `__float128`and which forward to the libquadmath equivalents.
 
-Ultimately these facilities should be provided by GCC and libstdc++.
+Ultimately these facilities should be provided by GCC and `libstdc++`.
 
 [endsect]
 
@@ -237,7 +237,6 @@ to the majority of functions defined this library when used with `NTL::RR`.
 There is a concept checking test program for NTL support
 [@../../../../libs/math/test/ntl_concept_check.cpp here].
 
-
 [endsect] [/section:use_ntl Using With NTL - a High-Precision Floating-Point Library]
 
 [section:using_test Using without expression templates for Boost.Test and others]
@@ -258,25 +257,25 @@ you will need to override the default `boost::multiprecision::et_on` with
 A full example code is at [@../../example/test_cpp_float_close_fraction.cpp test_cpp_float_close_fraction.cpp]
 
 [endsect] [/section:using_test Using without expression templates for Boost.Test and others]
-
 [endsect] [/section:high_precision Using With High-Precision Floating-Point Libraries]
 
+[section:real_concepts Conceptual Requirements for Real Number Types]
 
-[section:concepts Conceptual Requirements for Real Number Types]
+The functions and statistical distributions in this library can be used with
+any type ['RealType] that meets the conceptual requirements given below.  All
+the built-in floating-point types like `double` will meet these requirements.
+(Built-in types are also called __fundamental_types).
 
-The functions, and statistical distributions in this library can be used with
-any type /RealType/ that meets the conceptual requirements given below.  All
-the built-in floating-point types will meet these requirements.
-User-defined types that meet the requirements can also be used.
-
+User-defined types that meet the conceptual requirements can also be used.
 For example, with [link math_toolkit.high_precision.use_ntl a thin wrapper class]
 one of the types provided with [@http://shoup.net/ntl/ NTL (RR)] can be used.
 But now that __multiprecision library is available,
-this has become the reference real number type.
+this has become the preferred real-number type,
+typically __cpp_dec_float or __cpp_bin_float.
 
 Submissions of binding to other extended precision types would also still be welcome.
 
-The guiding principal behind these requirements is that a /RealType/
+The guiding principal behind these requirements is that a ['RealType]
 behaves just like a built-in floating-point type.
 
 [h4 Basic Arithmetic Requirements]
@@ -381,8 +380,8 @@ to a string, causing potentially serious loss of accuracy on output.
 
 Although it might seem obvious that RealType should require `std::numeric_limits`
 to be specialized, this is not sensible for
-`NTL::RR` and similar classes where the number of digits is a runtime
-parameter (where as for `numeric_limits` it has to be fixed at compile time).
+`NTL::RR` and similar classes where the  [*number of digits is a runtime parameter]
+(whereas for `numeric_limits` everything has to be fixed at compile time).
 ]
 
 [h4 Standard Library Support Requirements]
@@ -391,7 +390,7 @@ Many (though not all) of the functions in this library make calls
 to standard library functions, the following table summarises the
 requirements.  Note that most of the functions in this library
 will only call a small subset of the functions listed here, so if in
-doubt whether a user defined type has enough standard library
+doubt whether a user-defined type has enough standard library
 support to be useable the best advise is to try it and see!
 
 In the following table /r/ is an object of type `RealType`,
@@ -441,8 +440,8 @@ boost/math/special_functions/lanczos.hpp] or
 [@../../../../boost/math/bindings/detail/big_lanczos.hpp
 boost/math/bindings/detail/big_lanczos.hpp]:
 in the former case you will need change
-static_cast's to lexical_cast's, and the constants to /strings/
-(in order to ensure the coefficients aren't truncated to long double)
+`static_cast`'s to `lexical_cast`'s, and the constants to /strings/
+(in order to ensure the coefficients aren't truncated to `long doubl`e)
 and then specialise `lanczos_traits` for type T.  Otherwise you may have to hack
 [@../../tools/lanczos_generator.cpp
 libs/math/tools/lanczos_generator.cpp] to find a suitable
@@ -450,11 +449,11 @@ approximation for your RealType.  The code will still compile if you don't do
 this, but both accuracy and efficiency will be greatly compromised in any
 function that makes use of the gamma\/beta\/erf family of functions.
 
-[endsect] [/section: ]
+[endsect] [/section:real_concepts Conceptual Requirements for Real Number Types]
 
 [section:dist_concept Conceptual Requirements for Distribution Types]
 
-A /DistributionType/ is a type that implements the following conceptual
+A ['DistributionType] is a type that implements the following conceptual
 requirements, and encapsulates a statistical distribution.
 
 Please note that this documentation should not be used as a substitute
@@ -463,8 +462,8 @@ for the
 [link math_toolkit.stat_tut tutorial] of the statistical
 distributions.
 
-In the following table, /d/ is an object of type `DistributionType`,
-/cd/ is an object of type `const DistributionType` and /cr/ is an
+In the following table, ['d] is an object of type `DistributionType`,
+['cd] is an object of type `const DistributionType` and ['cr] is an
 object of a type convertible to `RealType`.
 
 [table
@@ -495,16 +494,16 @@ object of a type convertible to `RealType`.
 [[variance(cd)][RealType][Returns the variance of the distribution.]]
 ]
 
-[endsect]
+[endsect] [/ section:dist_concept Conceptual Requirements for Distribution Types]
 
 [section:archetypes Conceptual Archetypes for Reals and Distributions]
 
 There are a few concept archetypes available:
 
 * Real concept for floating-point types.
-* distribution Concept for statistical distributions.
+* Distribution concept for statistical distributions.
 
-[h5 Real concept]
+[h5:real_concept Real concept]
 
 `std_real_concept` is an archetype for theReal types,
 including the built-in float, double, long double.
@@ -558,7 +557,7 @@ that instantiates every template in this library with type
    }}} // namespaces
 
 `real_concept` is an archetype for
-[link math_toolkit.concepts user defined real types],
+[link math_toolkit.real_concepts user defined real types],
 it declares its standard library functions in its own
 namespace: these will only be found if they are called unqualified
 allowing argument dependent lookup to locate them.  In addition
@@ -566,7 +565,7 @@ this type is useable at runtime:
 this allows code that would not otherwise be exercised by the built-in
 floating point types to be tested.  There is no std::numeric_limits<>
 support for this type, since numeric_limits is not a conceptual requirement
-for [link math_toolkit.concepts RealType]s.
+for [link math_toolkit.real_concepts RealType]s.
 
 NTL RR is an example of a type meeting the requirements that this type
 models, but note that use of a thin wrapper class is required: refer to
@@ -576,7 +575,7 @@ There is no specific test case for type `real_concept`, instead, since this
 type is usable at runtime, each individual test case as well as testing
 `float`, `double` and `long double`, also tests `real_concept`.
 
-[h6 Distribution Concept]
+[h6:distribution_concept Distribution Concept]
 
 Distribution Concept models statistical distributions.
 

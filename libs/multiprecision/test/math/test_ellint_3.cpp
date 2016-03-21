@@ -37,6 +37,13 @@ void expected_results()
       ".*",                          // test type(s)
       ".*Large.*",                   // test data group
       ".*", 75, 40);                 // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
+      ".*cpp_bin_float_quad.*",      // test type(s)
+      ".*Mathworld.*",               // test data group
+      ".*", 500, 100);               // test function
 #ifdef BOOST_INTEL
    add_expected_result(
       ".*",                          // compiler

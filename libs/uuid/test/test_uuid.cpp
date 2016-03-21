@@ -62,7 +62,7 @@ int main(int, char*[])
         unsigned char values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
         BOOST_TEST_UUID(u, values);
     }
-    
+
      { // uuid::size()
         uuid u; // uninitialized
         BOOST_TEST_EQ(u.size(), 16U);
@@ -75,7 +75,7 @@ int main(int, char*[])
         uuid u2 = {{1,0}};
         BOOST_TEST_EQ(u2.is_nil(), false);
     }
-    
+
     { // uuid::variant()
         struct Test {
             unsigned char octet7;
@@ -102,11 +102,11 @@ int main(int, char*[])
         for (size_t i=0; i<sizeof(tests)/sizeof(Test); i++) {
             uuid u = {};
             u.data[8] = tests[i].octet7; // note that octet7 is array index 8
-            
+
             BOOST_TEST_EQ(u.variant(), tests[i].variant);
         }
     }
-    
+
      { // uuid::version()
         struct Test {
             unsigned char octet9;
@@ -133,7 +133,7 @@ int main(int, char*[])
         for (size_t i=0; i<sizeof(tests)/sizeof(Test); i++) {
             uuid u = {{0}};
             u.data[6] = tests[i].octet9; // note that octet9 is array index 8
-            
+
             BOOST_TEST_EQ(u.version(), tests[i].version);
         }
     }
@@ -142,7 +142,7 @@ int main(int, char*[])
         uuid u1 = {{0}};
         uuid u2 = {{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}};
         u1.swap(u2);
-        
+
         unsigned char values1[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
         unsigned char values2[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
         BOOST_TEST_UUID(u1, values2);
@@ -163,7 +163,7 @@ int main(int, char*[])
         BOOST_TEST_EQ(u1, u1);
 
         BOOST_TEST_NE(u1, u2);
-   
+
         BOOST_TEST(u1 < u2);
         BOOST_TEST(u2 < u3);
         BOOST_TEST(u1 < u4);
@@ -184,18 +184,59 @@ int main(int, char*[])
         BOOST_TEST(u3 >= u1);
     }
 
+    { // ticket 10510
+        // the uuids in the report
+        uuid u6 = {{0x14,0x5c,0xfc,0x95,0x80,0x50,0x45,0x5a,0x83,0x82,0x44,0xca,0x57,0xc1,0x48,0x3b}};
+        uuid u7 = {{0x14,0x5c,0xfc,0x95,0x80,0x50,0x45,0x5a,0x83,0x82,0x44,0xca,0x57,0xc1,0x48,0x3c}};
+
+        // simple uuids to reproduce problem
+        uuid u8 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}};
+        uuid u9 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2}};
+        uuid u10 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,254}};
+        uuid u11 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255}};
+
+        // some additional uuids for testing boundary cases
+        uuid u12 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1}};
+        uuid u13 = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,2}};
+        uuid u14 = {{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}};
+        uuid u15 = {{255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255}};
+
+        BOOST_TEST(u6 < u7);
+        BOOST_TEST(!(u7 < u6));
+
+        BOOST_TEST(u8 < u9);
+        BOOST_TEST(!(u9 < u8));
+        BOOST_TEST(u8 < u10);
+        BOOST_TEST(!(u10 < u8));
+        BOOST_TEST(u8 < u11);
+        BOOST_TEST(!(u11 < u8));
+
+        BOOST_TEST(u9 < u10);
+        BOOST_TEST(!(u10 < u9));
+        BOOST_TEST(u9 < u11);
+        BOOST_TEST(!(u11 < u9));
+
+        BOOST_TEST(u10 < u11);
+        BOOST_TEST(!(u11 < u10));
+
+        BOOST_TEST(u12 < u13);
+        BOOST_TEST(!(u13 < u12));
+        BOOST_TEST(u14 < u15);
+        BOOST_TEST(!(u15 < u14));
+    }
+
     { // test hash
         uuid u1 = {{0}};
         uuid u2 = {{1,0}};
         uuid u3 = {{255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255}};
 
         boost::hash<uuid> uuid_hasher;
-        
+
         BOOST_TEST_EQ(uuid_hasher(u1), boost::hash_range(u1.begin(), u1.end()));
         BOOST_TEST_EQ(uuid_hasher(u2), boost::hash_range(u2.begin(), u2.end()));
         BOOST_TEST_EQ(uuid_hasher(u3), boost::hash_range(u3.begin(), u3.end()));
     }
-    
+
     { // test is_pod
         BOOST_TEST_EQ(boost::is_pod<uuid>::value, true);
     }

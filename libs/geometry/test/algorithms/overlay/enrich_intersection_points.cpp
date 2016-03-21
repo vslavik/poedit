@@ -12,6 +12,8 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#error This unit test is not updated for several years
+
 #include <iostream>
 
 #include <geometry_test_common.hpp>
@@ -26,7 +28,6 @@
 
 #define GEOMETRY_TEST_OVERLAY_NOT_REVERSED
 
-#include <overlay_common.hpp>
 
 #include <boost/algorithm/string/replace.hpp>
 

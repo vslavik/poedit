@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2011 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
     Copyright (c) 2001-2011 Hartmut Kaiser
     Copyright (c) 2011      Bryce Lelbach
 

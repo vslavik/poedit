@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -47,59 +48,59 @@
   <span class="keyword">typedef</span> <span class="identifier">index_type</span><span class="special">::</span><span class="identifier">size_type</span>          <a name="boost.interprocess.iunordered_set_index.size_type"></a><span class="identifier">size_type</span><span class="special">;</span>         
 
   <span class="comment">// <a class="link" href="iunordered_set_index.html#boost.interprocess.iunordered_set_indexconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="iunordered_set_index.html#idp55071280-bb"><span class="identifier">iunordered_set_index</span></a><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="iunordered_set_index.html#idp55073008-bb"><span class="special">~</span><span class="identifier">iunordered_set_index</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="iunordered_set_index.html#idm45879391679248-bb"><span class="identifier">iunordered_set_index</span></a><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="iunordered_set_index.html#idm45879391677520-bb"><span class="special">~</span><span class="identifier">iunordered_set_index</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="iunordered_set_index.html#idp55059392-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="iunordered_set_index.html#idp55059952-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="iunordered_set_index.html#idp55061968-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">iterator</span> <a class="link" href="iunordered_set_index.html#idp55063264-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">const_iterator</span> <a class="link" href="iunordered_set_index.html#idp55064816-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="iunordered_set_index.html#idm45879391691136-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="iunordered_set_index.html#idm45879391690576-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="iunordered_set_index.html#idm45879391688560-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">iterator</span> <a class="link" href="iunordered_set_index.html#idm45879391687264-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">const_iterator</span> <a class="link" href="iunordered_set_index.html#idm45879391685712-bb"><span class="identifier">find</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-  <a class="link" href="iunordered_set_index.html#idp55066640-bb"><span class="identifier">insert_check</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">iterator</span> <a class="link" href="iunordered_set_index.html#idp55068896-bb"><span class="identifier">insert_commit</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="iunordered_set_index.html#idm45879391683888-bb"><span class="identifier">insert_check</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">iterator</span> <a class="link" href="iunordered_set_index.html#idm45879391681632-bb"><span class="identifier">insert_commit</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp232653712"></a><h2>Description</h2>
+<a name="idm45555321264336"></a><h2>Description</h2>
 <p>Index type based in boost::intrusive::set. Just derives from boost::intrusive::set and defines the interface needed by managed memory segments </p>
 <div class="refsect2">
-<a name="idp232654544"></a><h3>
+<a name="idm45555321263504"></a><h3>
 <a name="boost.interprocess.iunordered_set_indexconstruct-copy-destruct"></a><code class="computeroutput">iunordered_set_index</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp55071280-bb"></a><span class="identifier">iunordered_set_index</span><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span> mngr<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879391679248-bb"></a><span class="identifier">iunordered_set_index</span><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span> mngr<span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Takes a pointer to the segment manager. Can throw </p>
 </li>
-<li class="listitem"><pre class="literallayout"><a name="idp55073008-bb"></a><span class="special">~</span><span class="identifier">iunordered_set_index</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idm45879391677520-bb"></a><span class="special">~</span><span class="identifier">iunordered_set_index</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp232666368"></a><h3>
-<a name="idp55059392-bb"></a><code class="computeroutput">iunordered_set_index</code> public member functions</h3>
+<a name="idm45555321251744"></a><h3>
+<a name="idm45879391691136-bb"></a><code class="computeroutput">iunordered_set_index</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp55059952-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="identifier">size_type</span> new_n<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879391690576-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="identifier">size_type</span> new_n<span class="special">)</span><span class="special">;</span></pre>
 <p>This reserves memory to optimize the insertion of n elements in the index </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp55061968-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879391688560-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>This tries to free unused memory previously allocated. </p>
 </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">iterator</span> <a name="idp55063264-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idp55064816-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">iterator</span> <a name="idm45879391687264-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">const_iterator</span> <a name="idm45879391685712-bb"></a><span class="identifier">find</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 <li class="listitem"><pre class="literallayout"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span> <span class="identifier">iterator</span><span class="special">,</span> <span class="keyword">bool</span> <span class="special">&gt;</span> 
-<a name="idp55066640-bb"></a><span class="identifier">insert_check</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">,</span> 
+<a name="idm45879391683888-bb"></a><span class="identifier">insert_check</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">intrusive_compare_key_type</span> <span class="special">&amp;</span> key<span class="special">,</span> 
              <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span> commit_data<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">iterator</span> <a name="idp55068896-bb"></a><span class="identifier">insert_commit</span><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span> val<span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span> commit_data<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">iterator</span> <a name="idm45879391681632-bb"></a><span class="identifier">insert_commit</span><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;</span> val<span class="special">,</span> <span class="identifier">insert_commit_data</span> <span class="special">&amp;</span> commit_data<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

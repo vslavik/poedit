@@ -6,18 +6,18 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 #include <boost/context/all.hpp>
 
-#define yield(x) p=x; mctx.resume();
+#define yield(x) p=x; mctx();
 
 int main() {
     int n=35;
     int p=0;
     boost::context::execution_context mctx( boost::context::execution_context::current() );
     boost::context::execution_context ctx(
-        boost::context::fixedsize_stack(),
-        [n,&p,mctx]()mutable{
+        [n,&p,&mctx](void*)mutable{
             int a=0;
             int b=1;
             while(n-->0){
@@ -28,9 +28,10 @@ int main() {
             }
         });
     for(int i=0;i<10;++i){
-        ctx.resume();
-        std::cout<<p<<std::endl;
+        ctx();
+        std::cout<<p<<" ";
     }
+    std::cout<<std::endl;
 
     std::cout << "main: done" << std::endl;
 }

@@ -11,6 +11,7 @@ import re
 import os
 import bjam
 from b2.exceptions import *
+from b2.util import is_iterable_typed
 
 __re_grist_and_value = re.compile (r'(<[^>]*>)(.*)')
 __re_grist_content = re.compile ('^<(.*)>$')
@@ -40,13 +41,13 @@ def add_grist (features):
         features: one string or a sequence of strings
         return: the gristed string, if features is a string, or a sequence of gristed strings, if features is a sequence
     """
-
+    assert is_iterable_typed(features, basestring) or isinstance(features, basestring)
     def grist_one (feature):
         if feature [0] != '<' and feature [len (feature) - 1] != '>':
             return '<' + feature + '>'
         else:
             return feature
-    
+
     if isinstance (features, str):
         return grist_one (features)
     else:
@@ -56,6 +57,8 @@ def replace_grist (features, new_grist):
     """ Replaces the grist of a string by a new one.
         Returns the string with the new grist.
     """
+    assert is_iterable_typed(features, basestring) or isinstance(features, basestring)
+    assert isinstance(new_grist, basestring)
     def replace_grist_one (name, new_grist):
         split = __re_grist_and_value.match (name)
         if not split:
@@ -71,12 +74,14 @@ def replace_grist (features, new_grist):
 def get_value (property):
     """ Gets the value of a property, that is, the part following the grist, if any.
     """
+    assert is_iterable_typed(property, basestring) or isinstance(property, basestring)
     return replace_grist (property, '')
-    
+
 def get_grist (value):
     """ Returns the grist of a string.
         If value is a sequence, does it for every value and returns the result as a sequence.
     """
+    assert is_iterable_typed(value, basestring) or isinstance(value, basestring)
     def get_grist_one (name):
         split = __re_grist_and_value.match (name)
         if not split:
@@ -90,9 +95,10 @@ def get_grist (value):
         return [ get_grist_one (v) for v in value ]
 
 def ungrist (value):
-    """ Returns the value without grist. 
+    """ Returns the value without grist.
         If value is a sequence, does it for every value and returns the result as a sequence.
     """
+    assert is_iterable_typed(value, basestring) or isinstance(value, basestring)
     def ungrist_one (value):
         stripped = __re_grist_content.match (value)
         if not stripped:
@@ -109,12 +115,15 @@ def replace_suffix (name, new_suffix):
     """ Replaces the suffix of name by new_suffix.
         If no suffix exists, the new one is added.
     """
+    assert isinstance(name, basestring)
+    assert isinstance(new_suffix, basestring)
     split = os.path.splitext (name)
     return split [0] + new_suffix
 
 def forward_slashes (s):
     """ Converts all backslashes to forward slashes.
     """
+    assert isinstance(s, basestring)
     return __re_backslash.sub ('/', s)
 
 
@@ -122,6 +131,7 @@ def split_action_id (id):
     """ Splits an id in the toolset and specific rule parts. E.g.
         'gcc.compile.c++' returns ('gcc', 'compile.c++')
     """
+    assert isinstance(id, basestring)
     split = id.split ('.', 1)
     toolset = split [0]
     name = ''
@@ -136,7 +146,7 @@ def os_name ():
 
 def platform ():
     return bjam.variable("OSPLAT")
-    
+
 def os_version ():
     return bjam.variable("OSVER")
 

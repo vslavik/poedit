@@ -6,6 +6,9 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 #define BOOST_LOCALE_SOURCE
+#if defined(__FreeBSD__)
+#include <xlocale.h>
+#endif
 #include <boost/locale/localization_backend.hpp>
 #include <boost/locale/gnu_gettext.hpp>
 #include <boost/locale/info.hpp>
@@ -140,11 +143,11 @@ namespace impl_posix {
                         return std::locale(base,gnu_gettext::create_messages_facet<char>(minf));
                     case wchar_t_facet:
                         return std::locale(base,gnu_gettext::create_messages_facet<wchar_t>(minf));
-                    #ifdef BOOST_HAS_CHAR16_T
+                    #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
                     case char16_t_facet:
                         return std::locale(base,gnu_gettext::create_messages_facet<char16_t>(minf));
                     #endif
-                    #ifdef BOOST_HAS_CHAR32_T
+                    #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
                     case char32_t_facet:
                         return std::locale(base,gnu_gettext::create_messages_facet<char32_t>(minf));
                     #endif

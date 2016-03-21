@@ -27,7 +27,7 @@ derivative of the digamma function:
 
 [optional_policy]
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the result is of type `double` when T is an integer type, and type T otherwise.
 
 [h4 Accuracy]
@@ -37,12 +37,7 @@ found on various platforms with various floating point types.
 Unless otherwise specified any floating point type that is narrower
 than the one shown will have __zero_error.
 
-[table
-[[Significand Size] [Platform and Compiler] [Random Values] ]
-[[53]            [Win32 Visual C++ 12]  [Peak=1.0 Mean=0.4] ]
-[[64]            [Win64 Mingw GCC]  [Peak=1.4 Mean=0.4]  ]
-[[113]           [Win64 Mingw GCC __float128]    [Peak=1.0 Mean=0.5] ]
-]
+[table_trigamma]
 
 As shown above, error rates are generally very low for built in types.
 For multiprecision types, error rates are typically in the order of a

@@ -4,7 +4,7 @@
 <title>Testing</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../special_tut.html" title="Tutorial: How to Write a New Special Function">
 <link rel="prev" href="special_tut_impl.html" title="Implementation">
 <link rel="next" href="../relative_error.html" title="Relative Error">
@@ -86,7 +86,7 @@
         exact binary representations: so choose values such as 1.5, 1.25, 1.125 etc.
         This ensures that if <code class="computeroutput"><span class="identifier">my_special</span></code>
         is unusually sensitive in one area, that we don't get apparently large errors
-        just because the inputs are 0.5ulp in error.
+        just because the inputs are 0.5 ulp in error.
       </p>
 <h5>
 <a name="math_toolkit.special_tut.special_tut_test.h2"></a>
@@ -100,7 +100,7 @@
         my_special may be defined in directly terms of other special functions but
         not implemented that way for performance or accuracy reasons). Alternatively
         we may use our own implementation directly, but with any special cases (asymptotic
-        expansions etc) disabled. We have a set of <a class="link" href="../internals2/test_data.html" title="Graphing, Profiling, and Generating Test Data for Special Functions">tools</a>
+        expansions etc) disabled. We have a set of <a class="link" href="../internals/test_data.html" title="Graphing, Profiling, and Generating Test Data for Special Functions">tools</a>
         to generate test data directly, here's a typical example:
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">cpp_dec_float</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -339,7 +339,7 @@
    <span class="identifier">test</span><span class="special">(</span><span class="number">0.1</span><span class="special">,</span> <span class="string">"double"</span><span class="special">);</span>
    <span class="comment">//</span>
    <span class="comment">// Testing of long double and real_concept is protected</span>
-   <span class="comment">// by some logic to disable these for unsupported </span>
+   <span class="comment">// by some logic to disable these for unsupported</span>
    <span class="comment">// or problem compilers.</span>
    <span class="comment">//</span>
 <span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS</span>
@@ -386,7 +386,7 @@
 <span class="preprocessor">#endif</span>
    <span class="comment">//</span>
    <span class="comment">// We call add_expected_result for each error rate we wish to adjust, these tell</span>
-   <span class="comment">// handle_test_result what level of error is acceptable.  We can have as many calls </span>
+   <span class="comment">// handle_test_result what level of error is acceptable.  We can have as many calls</span>
    <span class="comment">// to add_expected_result as we need, each one establishes a rule for acceptable error</span>
    <span class="comment">// with rules set first given preference.</span>
    <span class="comment">//</span>
@@ -497,12 +497,12 @@
       </h5>
 <p>
         Our concept checks verify that your function's implementation makes no assumptions
-        that aren't required by our <a class="link" href="../concepts.html" title="Conceptual Requirements for Real Number Types">Real number
-        conceptual requirements</a>. They also check for various common bugs and
-        programming traps that we've fallen into over time. To add your function
-        to these tests, edit libs/math/test/compile_test/instantiate.hpp to add calls
-        to your function: there are 7 calls to each function, each with a different
-        purpose. Search for something like "ibeta" or "gamm_p"
+        that aren't required by our <a class="link" href="../real_concepts.html" title="Conceptual Requirements for Real Number Types">Real
+        number conceptual requirements</a>. They also check for various common
+        bugs and programming traps that we've fallen into over time. To add your
+        function to these tests, edit libs/math/test/compile_test/instantiate.hpp
+        to add calls to your function: there are 7 calls to each function, each with
+        a different purpose. Search for something like "ibeta" or "gamm_p"
         and follow their examples.
       </p>
 </div>

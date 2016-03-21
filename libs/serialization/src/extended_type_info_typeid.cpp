@@ -44,7 +44,7 @@ typedef std::multiset<
     type_compare
 > tkmap;
     
-BOOST_SERIALIZATION_DECL(bool) 
+BOOST_SERIALIZATION_DECL bool
 extended_type_info_typeid_0::is_less_than(
     const boost::serialization::extended_type_info & rhs
 ) const {
@@ -56,7 +56,7 @@ extended_type_info_typeid_0::is_less_than(
     );
 }
 
-BOOST_SERIALIZATION_DECL(bool) 
+BOOST_SERIALIZATION_DECL bool
 extended_type_info_typeid_0::is_equal(
     const boost::serialization::extended_type_info & rhs
 ) const {
@@ -70,7 +70,7 @@ extended_type_info_typeid_0::is_equal(
     ;
 }
 
-BOOST_SERIALIZATION_DECL(BOOST_PP_EMPTY())
+BOOST_SERIALIZATION_DECL
 extended_type_info_typeid_0::extended_type_info_typeid_0(
     const char * key
 ) :
@@ -78,17 +78,17 @@ extended_type_info_typeid_0::extended_type_info_typeid_0(
     m_ti(NULL)
 {}
 
-BOOST_SERIALIZATION_DECL(BOOST_PP_EMPTY())
+BOOST_SERIALIZATION_DECL
 extended_type_info_typeid_0::~extended_type_info_typeid_0()
 {}
 
-BOOST_SERIALIZATION_DECL(void) 
+BOOST_SERIALIZATION_DECL void 
 extended_type_info_typeid_0::type_register(const std::type_info & ti){
     m_ti = & ti;
     singleton<tkmap>::get_mutable_instance().insert(this);
 }
 
-BOOST_SERIALIZATION_DECL(void) 
+BOOST_SERIALIZATION_DECL void 
 extended_type_info_typeid_0::type_unregister()
 {
     if(NULL != m_ti){
@@ -144,7 +144,7 @@ public:
 #  pragma warning(pop)
 #endif
 
-BOOST_SERIALIZATION_DECL(const extended_type_info *)
+BOOST_SERIALIZATION_DECL const extended_type_info *
 extended_type_info_typeid_0::get_extended_type_info(
     const std::type_info & ti
 ) const {

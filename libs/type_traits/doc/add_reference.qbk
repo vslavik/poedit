@@ -23,10 +23,6 @@ __type If `T` is not a reference type then `T&`, otherwise `T`.
 
 __std_ref 8.3.2.
 
-__compat If the compiler does not support partial specialization of class-templates
-then this template will compile, but the member `type` will always be the same as 
-type `T` except where __transform_workaround have been applied.
-
 __header ` #include <boost/type_traits/add_reference.hpp>` or ` #include <boost/type_traits.hpp>`
 
 [table Examples
@@ -42,6 +38,8 @@ __header ` #include <boost/type_traits/add_reference.hpp>` or ` #include <boost/
 [[`add_reference<int*&>::type`] [`int*&`]]
 
 ]
+
+[all_compilers]
 
 [endsect]
 

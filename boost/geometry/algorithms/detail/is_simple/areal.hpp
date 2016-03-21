@@ -40,11 +40,11 @@ struct is_simple_ring
     static inline bool apply(Ring const& ring)
     {
         simplicity_failure_policy policy;
-        return
-            !detail::is_valid::has_duplicates
-                <
-                    Ring, geometry::closure<Ring>::value
-                >::apply(ring, policy);
+        return ! boost::empty(ring)
+            && ! detail::is_valid::has_duplicates
+                    <
+                        Ring, geometry::closure<Ring>::value
+                    >::apply(ring, policy);
     }
 };
 
@@ -128,7 +128,7 @@ struct is_simple<MultiPolygon, multi_polygon_tag>
                         <
                             typename boost::range_value<MultiPolygon>::type
                         >,
-                    false // do not allow empty multi-polygon
+                    true // allow empty multi-polygon
                 >::apply(boost::begin(multipolygon), boost::end(multipolygon));
     }
 };

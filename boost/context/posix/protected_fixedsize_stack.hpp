@@ -58,7 +58,7 @@ public:
                     static_cast< float >( size_) / traits_type::page_size() ) ) );
         BOOST_ASSERT_MSG( 2 <= pages, "at least two pages must fit into stack (one page is guard-page)");
         const std::size_t size__( pages * traits_type::page_size() );
-        BOOST_ASSERT( 0 < size_ && 0 < size__);
+        BOOST_ASSERT( 0 != size_ && 0 != size__);
         BOOST_ASSERT( size__ <= size_);
 
         // conform to POSIX.4 (POSIX.1b-1993, _POSIX_C_SOURCE=199309L)

@@ -19,6 +19,67 @@
 [section:release_notes Release Notes]
 
 [/=================]
+[heading Boost 1.60]
+[/=================]
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/10803 10803] Union algorithm returning invalid geometry
+* [@https://svn.boost.org/trac/boost/ticket/11522 11522] Namespace clash in buffer for traits::detail
+* [@https://svn.boost.org/trac/boost/ticket/11533 11533] Assert failure in rtree caused by a bug in remove() if min elements number is 1
+* [@https://svn.boost.org/trac/boost/ticket/11607 11607] Private geometry::exception::what()
+* [@https://svn.boost.org/trac/boost/ticket/11709 11709] is_simple segfault
+* [@https://svn.boost.org/trac/boost/ticket/11710 11710] is_simple - empty geometry logic
+* [@https://svn.boost.org/trac/boost/ticket/11711 11711] is_simple and is_valid - Points that are NaN or Infinity
+
+[*Bugfixes]
+
+* Fix colocations of touching interior ring / exterior ring, where it also touches another polygon
+* Fix removing values from an empty rtree - no effect and 0 returned instead of assertion failure.
+
+[/=================]
+[heading Boost 1.59]
+[/=================]
+
+[*Additional functionality]
+
+* Added rtree const_iterator, begin(), end() and the support for Boost.Range.
+* The support for C++11 `std::initializer_list` in geometries models.
+* Disjoint and intersects support the following geometry combinations: multipoint/linestring, multipoint/multilinestring.
+* Added relate() and relation() algorithms.
+* Intersection has been implemented for combinations of pointlike and linear geometries
+* Added implementation for difference(pointlike, linear)
+* New algorithm is_empty, returning true if the geometry represents the empty set
+* The envelope algorithm supports pointlike and linear geometries in the spherical equatorial coordinate system
+* The envelope algorithm supports pointlike geometries in the geographic coordinate system
+
+[*Improvements]
+
+* Upgraded rtree const_query_iterator category to ForwardIterator.
+* Buffer performance of buffers around multi-points is improved significantly
+
+[*Breaking changes]
+
+* buffer side strategy now returns error_code instead of bool. If you have your own custom side strategy, it should be adapted
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/11113 11113] Support easy enumeration of all elements with BOOST_FOREACH
+* [@https://svn.boost.org/trac/boost/ticket/11232 11232] Feature request - relate()
+* [@https://svn.boost.org/trac/boost/ticket/11236 11236] Invalid result of centroid() for integer coordinate type
+* [@https://svn.boost.org/trac/boost/ticket/11268 11268] Regression in boost::geometry::intersection interface with multi_linestring and box -- does not compile on 1.57 VS 1.55
+* [@https://svn.boost.org/trac/boost/ticket/11332 11332] Assertion failure in buffer for extreme coordinate differences
+* [@https://svn.boost.org/trac/boost/ticket/11346 11346] Segment iterator does not work with ranges returning values instead of references
+* [@https://svn.boost.org/trac/boost/ticket/11436 11436] sym_difference(py1, py2, mpy) returns invalid multipolygon
+
+[*Bugfixes]
+
+* Buffer: use a more robust way to calculate the side of an intersection, this fixes several errors in buffer generation
+* Fix in selection of segment to which calculate from IP from, in intersection of two segments. Now is selected the one close to a segment-point point, or else the one on the shortest segment. This avoids (rarely occuring) generation of tiny triangles making output polygons invalid
+* In rescaling round instead of truncate to the integer grid (this fix and the previous mentioned can have some impact on output geometries)
+* Fix potential infinite loop in detail::has_spikes (the loop can happen if the points passed have NaN coordinates)
+
+[/=================]
 [heading Boost 1.58]
 [/=================]
 
@@ -83,8 +144,6 @@
 [/=================]
 [heading Boost 1.57]
 [/=================]
-
-[*Additional functionality]
 
 [*Improvements]
 

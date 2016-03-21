@@ -93,7 +93,7 @@ graph gives an idea of their behavior:
 
 [graph ellint_carlson]
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when the arguments are of different types: otherwise the return is the same type 
 as the arguments.
 
@@ -207,12 +207,16 @@ Note that only results for the widest floating-point type on the
 system are given as narrower types have __zero_error.  All values
 are relative errors in units of epsilon.
 
-[table Errors Rates in the Carlson Elliptic Integrals
-[[Significand Size] [Platform and Compiler] [R[sub F]] [R[sub D]] [R[sub J]] [R[sub C]]]
-[[53] [Win32 / Visual C++ 8.0] [Peak=2.9 Mean=0.75] [Peak=2.6 Mean=0.9] [Peak=108 Mean=6.9] [Peak=2.4 Mean=0.6] ]
-[[64] [Red Hat Linux / G++ 3.4] [Peak=2.5 Mean=0.75] [Peak=2.7 Mean=0.9] [Peak=105 Mean=8] [Peak=1.9 Mean=0.7] ]
-[[113] [HP-UX / HP aCC 6] [Peak=5.3 Mean=1.6] [Peak=2.9 Mean=0.99] [Peak=180 Mean=12] [Peak=1.8 Mean=0.7] ]
-]
+[table_ellint_rc]
+
+[table_ellint_rd]
+
+[table_ellint_rg]
+
+[table_ellint_rf]
+
+[table_ellint_rj]
+
 
 [heading Implementation]
 

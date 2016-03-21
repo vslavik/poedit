@@ -3,8 +3,8 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -18,19 +18,23 @@
 
 #include <boost/geometry/algorithms/assign.hpp>
 
+#include <boost/geometry/core/coordinate_type.hpp>
+#include <boost/geometry/core/cs.hpp>
+
+#include <boost/geometry/geometries/point.hpp>
+#include <boost/geometry/geometries/segment.hpp>
 
 #include <boost/geometry/strategies/spherical/side_by_cross_track.hpp>
 //#include <boost/geometry/strategies/spherical/side_via_plane.hpp>
 #include <boost/geometry/strategies/spherical/ssf.hpp>
 #include <boost/geometry/strategies/cartesian/side_by_triangle.hpp>
 
-#include <boost/geometry/strategies/agnostic/side_by_azimuth.hpp>
 #include <boost/geometry/strategies/geographic/mapping_ssf.hpp>
+#include <boost/geometry/strategies/geographic/side_andoyer.hpp>
+#include <boost/geometry/strategies/geographic/side_thomas.hpp>
+#include <boost/geometry/strategies/geographic/side_vincenty.hpp>
 
-#include <boost/geometry/core/cs.hpp>
-
-#include <boost/geometry/geometries/point.hpp>
-#include <boost/geometry/geometries/segment.hpp>
+#include <boost/geometry/util/math.hpp>
 
 
 namespace boost { namespace geometry {
@@ -69,10 +73,12 @@ void test_side1(std::string const& /*case_id*/, Point const& p1, Point const& p2
     // non-official
     typedef bg::srs::spheroid<double> spheroid;
     spheroid const sph(1.0, 1.0);
-    int side_azi = bgss::side_by_azimuth<spheroid>(sph).apply(p1, p2, p3);
     int side_mssf1 = bgss::mapping_spherical_side_formula<spheroid>(sph).apply(p1, p2, p3);
     int side_mssf2 = bgss::mapping_spherical_side_formula<spheroid, bgss::mapping_reduced>(sph).apply(p1, p2, p3);
     int side_mssf3 = bgss::mapping_spherical_side_formula<spheroid, bgss::mapping_geocentric>(sph).apply(p1, p2, p3);
+    int side_andoyer = bgss::andoyer<spheroid>(sph).apply(p1, p2, p3);
+    int side_thomas = bgss::thomas<spheroid>(sph).apply(p1, p2, p3);
+    int side_vincenty = bgss::vincenty<spheroid>(sph).apply(p1, p2, p3);
 
     // cartesian
     typedef bg::strategy::side::services::default_strategy<bg::cartesian_tag>::type cartesian_strategy;
@@ -80,10 +86,12 @@ void test_side1(std::string const& /*case_id*/, Point const& p1, Point const& p2
 
     BOOST_CHECK_EQUAL(side_ssf, expected);
     BOOST_CHECK_EQUAL(side_ct, expected);
-    BOOST_CHECK_EQUAL(side_azi, expected);
     BOOST_CHECK_EQUAL(side_mssf1, expected);
     BOOST_CHECK_EQUAL(side_mssf2, expected);
     BOOST_CHECK_EQUAL(side_mssf3, expected);
+    BOOST_CHECK_EQUAL(side_andoyer, expected);
+    BOOST_CHECK_EQUAL(side_thomas, expected);
+    BOOST_CHECK_EQUAL(side_vincenty, expected);
     BOOST_CHECK_EQUAL(side_cart, expected_cartesian);
 
     /*
@@ -114,7 +122,9 @@ void test_side(std::string const& case_id, Point const& p1, Point const& p2, Poi
 template <typename Point>
 void test_all()
 {
-    Point amsterdam(5.9, 52.4);
+    typedef typename bg::coordinate_type<Point>::type CT;
+
+    Point amsterdam(bg::math::rounding_cast<CT>(5.9), bg::math::rounding_cast<CT>(52.4));
     Point barcelona(2.0, 41.0);
     Point paris(2.0, 48.0);
     Point milan(7.0, 45.0);

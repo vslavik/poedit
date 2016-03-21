@@ -4,7 +4,7 @@
 <title>Exponential Integral Ei</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../expint.html" title="Exponential Integrals">
 <link rel="prev" href="expint_n.html" title="Exponential Integral En">
 <link rel="next" href="../powers.html" title="Basic Functions">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -47,9 +47,9 @@
         type calculation rules</em></span></a>: the return type is <code class="computeroutput"><span class="keyword">double</span></code> if T is an integer type, and T otherwise.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
@@ -59,8 +59,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">expint</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the <a href="http://mathworld.wolfram.com/ExponentialIntegral.html" target="_top">exponential
@@ -85,27 +85,36 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.expint.expint_i.errors_in_the_function_expint_z"></a><p class="title"><b>Table&#160;6.32.&#160;Errors In the Function expint(z)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function expint(z)">
+<a name="math_toolkit.expint.expint_i.table_expint_Ei_"></a><p class="title"><b>Table&#160;6.75.&#160;Error rates for expint (Ei)</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for expint (Ei)">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Error
+                  GNU C++ version 5.1.0<br> linux<br> double
+                </p>
+              </th>
+<th>
+                <p>
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -113,74 +122,86 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Exponential Integral Ei
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 1.43&#949; (Mean = 0.541&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=2.4 Mean=0.6
-                </p>
-                <p>
-                  GSL Peak=8.9 Mean=0.7
-                </p>
-                <p>
-                  SPECFUN (Cody) Peak=2.5 Mean=0.6
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 5.05&#949; (Mean = 0.821&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 14.1&#949; (Mean = 2.43&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_expint_Ei___tr1_cmath__Exponential_Integral_Ei">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
-                  RedHat Linux IA_EM64, gcc-4.1
+                  <span class="blue">Max = 0.994&#949; (Mean = 0.142&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 8.96&#949; (Mean = 0.703&#949;))<br>
+                  (<span class="emphasis"><em>Cephes:</em></span> <span class="red">Max = +INF&#949; (Mean
+                  = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_expint_Ei__Cephes_Exponential_Integral_Ei">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=5.1 Mean=0.8
+                  <span class="blue">Max = 3.34&#949; (Mean = 0.631&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Exponential Integral Ei: double exponent range
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA64, gcc-4.1
+                  <span class="blue">Max = 1.7&#949; (Mean = 0.66&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=5.0 Mean=0.8
+                  <span class="blue">Max = 1.72&#949; (Mean = 0.593&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 3.11&#949; (Mean = 1.13&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.998&#949; (Mean = 0.156&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.5&#949; (Mean = 0.612&#949;))<br>
+                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.77&#949; (Mean = 0.644&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.72&#949; (Mean = 0.618&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Exponential Integral Ei: long exponent range
                 </p>
               </td>
 <td>
-                <p>
-                  HPUX IA64, aCC A.06.06
-                </p>
               </td>
 <td>
                 <p>
-                  Peak=1.9 Mean=0.63
+                  <span class="blue">Max = 1.98&#949; (Mean = 0.595&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.93&#949; (Mean = 0.855&#949;))
+                </p>
+              </td>
+<td>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.98&#949; (Mean = 0.575&#949;)</span>
                 </p>
               </td>
 </tr>

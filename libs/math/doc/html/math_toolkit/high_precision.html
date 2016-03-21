@@ -4,9 +4,9 @@
 <title>Using Boost.Math with High-Precision Floating-Point Libraries</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
-<link rel="up" href="../using_udt.html" title="Chapter&#160;13.&#160;Use with User-Defined Floating-Point Types - Boost.Multiprecision and others">
-<link rel="prev" href="../using_udt.html" title="Chapter&#160;13.&#160;Use with User-Defined Floating-Point Types - Boost.Multiprecision and others">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../using_udt.html" title="Chapter&#160;14.&#160;Use with User-Defined Floating-Point Types - Boost.Multiprecision and others">
+<link rel="prev" href="../using_udt.html" title="Chapter&#160;14.&#160;Use with User-Defined Floating-Point Types - Boost.Multiprecision and others">
 <link rel="next" href="high_precision/why_high_precision.html" title="Why use a high-precision library rather than built-in floating-point types?">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -47,7 +47,7 @@
     </p>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
-          <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
+          <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
         </li>
 <li class="listitem">
           <a href="http://calgo.acm.org/910.zip" target="_top">e_float (TOMS Algorithm 910)</a>
@@ -66,7 +66,7 @@
         </li>
 </ul></div>
 <p>
-      The last four have some license restrictions; only <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
+      The last four have some license restrictions; only <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
       when using the <code class="computeroutput"><span class="identifier">cpp_float</span></code> backend
       can provide an unrestricted <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">Boost</a>
       license.
@@ -79,16 +79,17 @@
       at least hundred-fold) computation speed, and big increases in memory use.
     </p>
 <p>
-      Some libraries offer true <a href="http://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic" target="_top">arbitrary
-      precision arithmetic</a> where the precision is limited only by avilable
-      memory and compute time, but most are used at some arbitrarily-fixed precision,
-      say 100 decimal digits.
+      Some libraries offer true <a href="http://en.wikipedia.org/wiki/Arbitrary-precision_arithmetic" target="_top">arbitrary-precision
+      arithmetic</a> where the precision is limited only by available memory
+      and compute time, but most are used at some arbitrarily-fixed precision, say
+      100 decimal digits, like <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
+      <code class="computeroutput"><span class="identifier">cpp_dec_float_100</span></code>.
     </p>
 <p>
-      <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
+      <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
       can operate in both ways, but the most popular choice is likely to be about
-      a hundred decimal digits, though examples of computing tens of thousands of
-      digits have been demonstrated.
+      a hundred decimal digits, though examples of computing about a million digits
+      have been demonstrated.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

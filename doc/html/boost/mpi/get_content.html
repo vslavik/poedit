@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,7 +35,7 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">const</span> <a class="link" href="content.html" title="Class content">content</a> <span class="identifier">get_content</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp336188864"></a><h2>Description</h2>
+<a name="idm45555219086400"></a><h2>Description</h2>
 <p>The function creates an absolute MPI datatype for the object, where all offsets are counted from the address 0 (a.k.a. <code class="computeroutput">MPI_BOTTOM</code>) instead of the address <code class="computeroutput">&amp;x</code> of the object. This allows the creation of MPI data types for complex data structures containing pointers, such as linked lists or trees.</p>
 <p>The disadvantage, compared to relative MPI data types is that for each object a new MPI data type has to be created.</p>
 <p>The contents of an object can only be transmitted when the receiver already has an object with the same structure or shape as the sender. To accomplish this, first transmit the skeleton of the object using, e.g., <code class="computeroutput">skeleton()</code> or <code class="computeroutput"><code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code></code>.</p>

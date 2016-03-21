@@ -17,7 +17,7 @@ t.write("src/a.cpp", "int main() {}\n")
 
 t.run_build_system()
 t.expect_addition("bin/$toolset/debug/src/a.obj")
- 
+
 # Test that the relative path to source is preserved
 # when using 'glob'.
 t.rm("bin")

@@ -42,7 +42,7 @@ namespace spreadsort {
     {
       const int char_size = sizeof(Unsigned_char_type);
       size_t nextOffset = char_offset;
-      int step_size = max_step_size;
+      int step_size = max_step_size / char_size;
       while (true) {
         RandomAccessIter curr = first;
         do {

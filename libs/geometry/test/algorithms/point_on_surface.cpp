@@ -1,13 +1,13 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2013 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2013 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2013 Mateusz Loskot, London, UK.
-// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+// Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -43,11 +43,7 @@
 #include <algorithms/overlay/overlay_cases.hpp>
 
 #if defined(BOOST_GEOMETRY_UNIT_TEST_MULTI)
-#  include <boost/geometry/multi/algorithms/correct.hpp>
-#  include <boost/geometry/multi/algorithms/within.hpp>
-#  include <boost/geometry/multi/algorithms/detail/extreme_points.hpp>
-#  include <boost/geometry/multi/geometries/multi_polygon.hpp>
-#  include <boost/geometry/multi/io/wkt/wkt.hpp>
+#  include <boost/geometry/algorithms/detail/extreme_points.hpp>
 #endif
 
 

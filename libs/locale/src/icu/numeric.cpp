@@ -376,11 +376,11 @@ std::locale create_formatting(std::locale const &in,cdata const &cd,character_fa
             return install_formatting_facets<char>(in,cd);
         case wchar_t_facet:
             return install_formatting_facets<wchar_t>(in,cd);
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         case char16_t_facet:
             return install_formatting_facets<char16_t>(in,cd);
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         case char32_t_facet:
             return install_formatting_facets<char32_t>(in,cd);
         #endif
@@ -396,11 +396,11 @@ std::locale create_parsing(std::locale const &in,cdata const &cd,character_facet
             return install_parsing_facets<char>(in,cd);
         case wchar_t_facet:
             return install_parsing_facets<wchar_t>(in,cd);
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         case char16_t_facet:
             return install_parsing_facets<char16_t>(in,cd);
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         case char32_t_facet:
             return install_parsing_facets<char32_t>(in,cd);
         #endif

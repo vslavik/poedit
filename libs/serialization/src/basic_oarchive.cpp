@@ -410,16 +410,16 @@ namespace boost {
 namespace archive {
 namespace detail {
 
-BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
+BOOST_ARCHIVE_DECL 
 basic_oarchive::basic_oarchive(unsigned int flags)
     : pimpl(new basic_oarchive_impl(flags))
 {}
 
-BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
+BOOST_ARCHIVE_DECL 
 basic_oarchive::~basic_oarchive()
 {}
 
-BOOST_ARCHIVE_DECL(void) 
+BOOST_ARCHIVE_DECL void 
 basic_oarchive::save_object(
     const void *x, 
     const basic_oserializer & bos
@@ -427,7 +427,7 @@ basic_oarchive::save_object(
     pimpl->save_object(*this, x, bos);
 }
 
-BOOST_ARCHIVE_DECL(void) 
+BOOST_ARCHIVE_DECL void 
 basic_oarchive::save_pointer(
     const void * t, 
     const basic_pointer_oserializer * bpos_ptr
@@ -435,23 +435,28 @@ basic_oarchive::save_pointer(
     pimpl->save_pointer(*this, t, bpos_ptr);
 }
 
-BOOST_ARCHIVE_DECL(void) 
+BOOST_ARCHIVE_DECL void 
 basic_oarchive::register_basic_serializer(const basic_oserializer & bos){
     pimpl->register_type(bos);
 }
 
-BOOST_ARCHIVE_DECL(library_version_type)
+BOOST_ARCHIVE_DECL library_version_type
 basic_oarchive::get_library_version() const{
     return BOOST_ARCHIVE_VERSION();
 }
 
-BOOST_ARCHIVE_DECL(unsigned int)
+BOOST_ARCHIVE_DECL unsigned int
 basic_oarchive::get_flags() const{
     return pimpl->m_flags;
 }
 
-BOOST_ARCHIVE_DECL(void) 
+BOOST_ARCHIVE_DECL void 
 basic_oarchive::end_preamble(){
+}
+
+BOOST_ARCHIVE_DECL helper_collection &
+basic_oarchive::get_helper_collection(){
+	return *this;
 }
 
 } // namespace detail

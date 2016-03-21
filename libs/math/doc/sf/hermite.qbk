@@ -21,7 +21,7 @@
 
 [h4 Description]
 
-The return type of these functions is computed using the __arg_pomotion_rules:
+The return type of these functions is computed using the __arg_promotion_rules:
 note than when there is a single template argument the result is the same type 
 as that argument or `double` if the template argument is an integer type.
 
@@ -76,15 +76,7 @@ for various domains of input arguments.
 Note that only results for the widest floating point type on the system are 
 given as narrower types have __zero_error.
 
-[table Peak Errors In the Hermite Polynomial
-[[Significand Size] [Platform and Compiler] [Errors in range
-
-0 < l < 20] ]
-[[53] [Win32, Visual C++ 8] [Peak=4.5 Mean=1.5] ]
-[[64] [Red Hat Linux IA32, g++ 4.1] [Peak=6 Mean=2]]
-[[64] [Red Hat Linux IA64, g++ 3.4.4] [Peak=6 Mean=2] ]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=6 Mean=4]]
-]
+[table_hermite]
 
 Note that the worst errors occur when the degree increases, values greater than
 ~120 are very unlikely to produce sensible results, especially in the associated

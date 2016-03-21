@@ -4,9 +4,9 @@
 <title>Additional Implementation Notes</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
-<link rel="up" href="../backgrounders.html" title="Chapter&#160;16.&#160;Backgrounders">
-<link rel="prev" href="../backgrounders.html" title="Chapter&#160;16.&#160;Backgrounders">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../backgrounders.html" title="Chapter&#160;17.&#160;Backgrounders">
+<link rel="prev" href="../backgrounders.html" title="Chapter&#160;17.&#160;Backgrounders">
 <link rel="next" href="special_tut.html" title="Tutorial: How to Write a New Special Function">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -34,7 +34,7 @@
     </p>
 <h5>
 <a name="math_toolkit.sf_implementation.h0"></a>
-      <span class="phrase"><a name="math_toolkit.sf_implementation.implemention_philosophy"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.implemention_philosophy">Implemention
+      <span class="phrase"><a name="math_toolkit.sf_implementation.implementation_philosophy"></a></span><a class="link" href="sf_implementation.html#math_toolkit.sf_implementation.implementation_philosophy">Implementation
       philosophy</a>
     </h5>
 <p>
@@ -60,10 +60,11 @@
       tables of test values!)
     </p>
 <p>
-      For a specific RealType, say float or double, it may be possible to find approximations
-      for some functions that are simpler and thus faster, but less accurate (perhaps
-      because there are no refining iterations, for example, when calculating inverse
-      functions).
+      For a specific RealType, say <code class="computeroutput"><span class="keyword">float</span></code>
+      or <code class="computeroutput"><span class="keyword">double</span></code>, it may be possible
+      to find approximations for some functions that are simpler and thus faster,
+      but less accurate (perhaps because there are no refining iterations, for example,
+      when calculating inverse functions).
     </p>
 <p>
       If these prove accurate enough to be "fit for his purpose", then
@@ -95,8 +96,8 @@
       only accurate near to 64-bit double precision). Values are specified as long
       double types by appending L, unless they are exactly representable, for example
       integers, or binary fractions like 0.125. This avoids the risk of loss of accuracy
-      converting from double, the default type. Values are used after static_cast&lt;RealType&gt;(1.2345L)
-      to provide the appropriate RealType for spot tests.
+      converting from double, the default type. Values are used after <code class="computeroutput"><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">RealType</span><span class="special">&gt;(</span><span class="number">1.2345L</span><span class="special">)</span></code> to provide
+      the appropriate RealType for spot tests.
     </p>
 <p>
       Functions that return constants values, like kurtosis for example, are written
@@ -395,7 +396,7 @@
 <p>
       Some of the special functions in this library are implemented via rational
       approximations. These are either taken from the literature, or devised by John
-      Maddock using <a class="link" href="internals2/minimax.html" title="Minimax Approximations and the Remez Algorithm">our Remez code</a>.
+      Maddock using <a class="link" href="internals/minimax.html" title="Minimax Approximations and the Remez Algorithm">our Remez code</a>.
     </p>
 <p>
       Rational rather than Polynomial approximations are used to ensure accuracy:
@@ -418,7 +419,7 @@
       our Remez implementation often found a broad and ill-defined minima for many
       of these approximations (of course for simple "toy" examples like
       approximating <code class="computeroutput"><span class="identifier">exp</span></code> the minima
-      is well defined, and the coeffiecents should agree no matter whose Remez implementation
+      is well defined, and the coefficients should agree no matter whose Remez implementation
       is used). This should not in general effect the validity of the approximations:
       there's good literature supporting the idea that coefficients can be "in
       error" without necessarily adversely effecting the result. Note that "in
@@ -437,8 +438,8 @@
       A macro BOOST_DEFINE_MATH_CONSTANT in constants.hpp is used to provide high
       accuracy constants to mathematical functions and distributions, since it is
       important to provide values uniformly for both built-in float, double and long
-      double types, and for User Defined types in <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
-      like <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>.
+      double types, and for User Defined types in <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
+      like <a href="../../../../../libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>.
       and others like NTL::quad_float and NTL::RR.
     </p>
 <p>
@@ -509,7 +510,7 @@
       <span class="keyword">double</span></code> are all thread safe.
     </p>
 <p>
-      For User_defined types, for example, <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>,
+      For User_defined types, for example, <a href="../../../../../libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>,
       the Boost.Math should also be thread-safe, (thought we are unsure how to rigorously
       prove this).
     </p>
@@ -581,7 +582,7 @@
     </p>
 <p>
       The values of the parameters are not important, but must be <span class="bold"><strong>valid</strong></span>
-      to pass the contructor checks; the default values are suitable, but must be
+      to pass the constructor checks; the default values are suitable, but must be
       explicitly provided, for example:
     </p>
 <pre class="programlisting"><span class="identifier">check_out_of_range</span><span class="special">&lt;</span><span class="identifier">extreme_value_distribution</span><span class="special">&lt;</span><span class="identifier">RealType</span><span class="special">&gt;</span> <span class="special">&gt;(</span><span class="number">1</span><span class="special">,</span> <span class="number">2</span><span class="special">);</span>
@@ -667,7 +668,7 @@
       used by SVGMath which the author is aware of.
     </p>
 <p>
-      If neccessary the XHTML wrapper can be removed with:
+      If necessary the XHTML wrapper can be removed with:
     </p>
 <pre class="programlisting">cat filename | tr -d "\r\n" | sed -e 's/.*\(&lt;math[^&gt;]*&gt;.*&lt;/math&gt;\).*/\1/' &gt; newfile</pre>
 <p>

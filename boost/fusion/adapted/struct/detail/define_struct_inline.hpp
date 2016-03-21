@@ -66,7 +66,7 @@
 #define BOOST_FUSION_IGNORE_2(ARG1, ARG2)
 
 #define BOOST_FUSION_MAKE_COPY_CONSTRUCTOR(NAME, ATTRIBUTES_SEQ)                \
-    BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED                                    \
+    BOOST_FUSION_GPU_ENABLED                                                    \
     NAME(BOOST_PP_SEQ_FOR_EACH_I(                                               \
             BOOST_FUSION_MAKE_CONST_REF_PARAM,                                  \
             ~,                                                                  \
@@ -337,7 +337,7 @@
         typedef boost::mpl::int_<N> index;                                      \
         typedef boost_fusion_detail_Seq sequence_type;                          \
                                                                                 \
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED                                \
+        BOOST_FUSION_GPU_ENABLED                                                \
         BOOST_FUSION_ITERATOR_NAME(NAME)(boost_fusion_detail_Seq& seq)          \
             : seq_(seq)                                                         \
               BOOST_FUSION_DEFINE_ITERATOR_WKND_INIT_LIST_ENTRIES(              \

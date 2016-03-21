@@ -9,11 +9,15 @@
   http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================/]
 
+[def _max_step_checker_   [classref boost::numeric::odeint::max_step_checker `max_step_checker`]]
+
 [section Integrate functions]
 
 Integrate functions perform the time evolution of a given ODE from some
 starting time ['t[sub 0]] to a given end time ['t[sub 1]] and starting at state ['x[sub 0]] by subsequent calls of a given stepper's `do_step` function.
-Additionally, the user can provide an __observer to analyze the state during time evolution.
+Additionally, the user can provide an __observer to analyze the state during time evolution, and
+a _max_step_checker_ to throw an exception if too many steps are taken between observer calls (i.e. too
+small step size).
 There are five different integrate functions which have different strategies on when to call the observer function during integration.
 All of the integrate functions except `integrate_n_steps` can be called with any stepper following one of the stepper concepts: __stepper , __error_stepper , __controlled_stepper , __dense_output_stepper.
 Depending on the abilities of the stepper, the integrate functions make use of step-size control or dense output.
@@ -28,10 +32,14 @@ We start with explaining `integrate_const`:
 
 `integrate_const( stepper , system , x0 , t0 , t1 , dt , observer )`
 
+`integrate_const( stepper , system , x0 , t0 , t1 , dt , observer , max_step_checker )`
+
 These integrate the ODE given by `system` with subsequent steps from `stepper`.
 Integration start at `t0` and `x0` and ends at some ['t' = t[sub 0] + n dt] with /n/ such that ['t[sub 1] - dt < t' <= t[sub 1]].
 `x0` is changed to the approximative solution ['x(t')] at the end of integration.
 If provided, the `observer` is invoked at times ['t[sub 0]], ['t[sub 0] + dt], ['t[sub 0] + 2dt], ... ,['t'].
+If provided, the `max_step_checker` counts the number of steps between observer calls and throws a
+`no_progress_error` this exceeds some limit (default: 500).
 `integrate_const` returns the number of steps performed during the integration.
 Note that if you are using a simple __stepper or __error_stepper and want to make exactly `n` steps you should prefer the `integrate_n_steps` function below.
 
@@ -54,9 +62,13 @@ steps. The integration is then performed until the time `t0+n*dt`.
 
 `integrate_n_steps( stepper , system , x0 , t0 , dt , n , observer )`
 
+`integrate_n_steps( stepper , system , x0 , t0 , dt , n , observer , max_step_checker )`
+
 Integrates the ODE given by `system` with subsequent steps from `stepper` starting at ['x[sub 0]] and ['t[sub 0]].
 If provided, `observer` is called after every step and at the beginning with
 `t0`, similar as above.
+Again, providing a `max_step_checker` will throw a `no_progress_error` if too many steps are performed
+between observer calls.
 The approximate result for ['x( t[sub 0] + n dt )] is stored in `x0`.
 This function returns the end time `t0 + n*dt`.
 
@@ -75,6 +87,11 @@ Integration start at `t0` and `x0` and ends at ['t[sub 1]].
 `x0` is changed to the approximative solution ['x(t[sub 1])] at the end of integration.
 If provided, the `observer` is called after each step (and before the first step at `t0`).
 `integrate_adaptive` returns the number of steps performed during the integration.
+
+[note `integrate_adaptive` by design performs an observer call after each time step. Hence
+there is no need for a _max_step_checker_ as only exactly one step is ever performed between
+observer calls.
+]
 
 * If `stepper` is a __stepper or __error_stepper then `dt` is the step size used for integration and `integrate_adaptive` behaves like `integrate_const` except that for the last step the step size is reduced to ensure we end exactly at `t1`.
 If provided, the observer is called at each step.
@@ -99,6 +116,12 @@ Integration starts at `*times_start` and ends exactly at `*(times_end-1)`.
 `x0` contains the approximate solution at the end point of integration.
 This function requires an observer which is invoked at the subsequent times `*times_start++` until `times_start == times_end`.
 If called with a __boost_range `time_range` the function behaves the same with `times_start = boost::begin( time_range )` and `times_end = boost::end( time_range )`.
+Additionally, a _max_step_checker_ can be provided, e.g.:
+
+`integrate_times( stepper , system , x0 , times_start , times_end , dt , observer , max_step_checker)`
+
+As above, this will throw a `no_progress_error` if too many steps are performed between observer calls.
+
 `integrate_times` returns the number of steps performed during the integration.
 
 * If `stepper` is a __stepper or __error_stepper `dt` is the step size used for integration.

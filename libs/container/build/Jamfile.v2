@@ -11,11 +11,8 @@ project boost/container
       <link>static:<define>BOOST_CONTAINER_STATIC_LINK=1
     ;
 
-# Base names of the source files for libboost_container
-CPP_SOURCES = alloc_lib ;
-
 lib boost_container
-   : $(CPP_SOURCES).c
+   : alloc_lib.c [ glob *.cpp ]
    : <link>shared:<define>BOOST_CONTAINER_DYN_LINK=1
      <link>static:<define>BOOST_CONTAINER_STATIC_LINK=1
    ;

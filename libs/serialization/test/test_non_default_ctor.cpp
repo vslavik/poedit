@@ -128,7 +128,7 @@ template<class Archive>
 inline void save_construct_data(
     Archive & ar, 
     const A * a, 
-    const BOOST_PFTO unsigned int /* file_version */
+    const unsigned int /* file_version */
 ){
     // variable used for construction
     ar << boost::serialization::make_nvp("i", a->get_i());

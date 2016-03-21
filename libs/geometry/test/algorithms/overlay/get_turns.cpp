@@ -44,7 +44,7 @@
 
 // To test that "get_turns" can be called using additional information
 template <typename Point, typename SegmentRatio>
-struct my_turn_op : public bg::detail::overlay::turn_operation<SegmentRatio>
+struct my_turn_op : public bg::detail::overlay::turn_operation<Point, SegmentRatio>
 {
 };
 
@@ -121,7 +121,7 @@ struct test_get_turns
                         << ": " << bg::operation_char(turn.operations[0].operation)
                         << " " << bg::operation_char(turn.operations[1].operation)
                         << " (" << bg::method_char(turn.method) << ")"
-                        << (turn.is_discarded() ? " (discarded) " : turn.blocked() ? " (blocked)" : "")
+                        << (turn.discarded ? " (discarded) " : turn.blocked() ? " (blocked)" : "")
                         ;
 
                     offsets[p] += 10;

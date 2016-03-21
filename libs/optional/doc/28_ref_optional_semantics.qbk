@@ -463,10 +463,11 @@ __SPACE__
 
 * [*Requires:] `T` is __COPY_CONSTRUCTIBLE__ and `CopyAssignable`.
 * [*Effects:]
-[table 
-  [[][`*this` contains a value][`*this` does not contain a value]]
-  [[`rhs` contains a value][assigns `*rhs` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `*rhs`]]
-  [[`rhs` does not contain a value][destroys the contained value by calling `val->T::~T()`][no effect]]
+[table
+  [] 
+  [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
+  [[[*`rhs` contains a value]][assigns `*rhs` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `*rhs`]]
+  [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`;
 * [*Postconditions:] `bool(rhs) == bool(*this)`. 
@@ -525,9 +526,10 @@ __SPACE__
 * [*Requires:] `T` is __MOVE_CONSTRUCTIBLE__ and `MoveAssignable`.
 * [*Effects:]
 [table 
-  [[][`*this` contains a value][`*this` does not contain a value]]
-  [[`rhs` contains a value][assigns `std::move(*rhs)` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `std::move(*rhs)`]]
-  [[`rhs` does not contain a value][destroys the contained value by calling `val->T::~T()`][no effect]]
+  []
+  [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
+  [[[*`rhs` contains a value]][assigns `std::move(*rhs)` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `std::move(*rhs)`]]
+  [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`;
 * [*Postconditions:] `bool(rhs) == bool(*this)`. 
@@ -561,9 +563,10 @@ __SPACE__
 
 * [*Effect:] 
 [table 
-  [[][`*this` contains a value][`*this` does not contain a value]]
-  [[`rhs` contains a value][assigns `*rhs` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `*rhs`]]
-  [[`rhs` does not contain a value][destroys the contained value by calling `val->T::~T()`][no effect]]
+  []
+  [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
+  [[[*`rhs` contains a value]][assigns `*rhs` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `*rhs`]]
+  [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`.
 * [*Postconditions:] `bool(rhs) == bool(*this)`. 
@@ -587,10 +590,11 @@ __SPACE__
 [: `template<U> optional& optional<T` ['(not a ref)]`>::operator= ( optional<U>&& rhs ) ;`]
 
 * [*Effect:]
-[table 
-  [[][`*this` contains a value][`*this` does not contain a value]]
-  [[`rhs` contains a value][assigns `std::move(*rhs)` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `std::move(*rhs)`]]
-  [[`rhs` does not contain a value][destroys the contained value by calling `val->T::~T()`][no effect]]
+[table
+  [] 
+  [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
+  [[[*`rhs` contains a value]][assigns `std::move(*rhs)` to the contained value][initializes the contained value as if direct-initializing an object of type `T` with `std::move(*rhs)`]]
+  [[[*`rhs` does not contain a value]][destroys the contained value by calling `val->T::~T()`][no effect]]
 ]
 * [*Returns:] `*this`.
 * [*Postconditions:] `bool(rhs) == bool(*this)`. 
@@ -621,8 +625,10 @@ __SPACE__
  of type `T` with `std::forward<Args>(args)...`. 
 * [*Postconditions: ] `*this` is [_initialized].
 * [*Throws:] Whatever the selected `T`'s  constructor throws.
-* [*Notes:] `T` need not be __MOVE_CONSTRUCTIBLE__ or `MoveAssignable`. On compilers that do not support variadic templates, the signature falls back to single-argument: `template<class Arg> void emplace(Arg&& arg)`. On compilers that do not support rvalue references, the signature falls back to two overloads: taking `const` and non-`const` lvalue reference. 
 * [*Exception Safety:] If an exception is thrown during the initialization of `T`, `*this` is ['uninitialized].
+* [*Notes:] `T` need not be __MOVE_CONSTRUCTIBLE__ or `MoveAssignable`. 
+ On compilers that do not support variadic templates, the signature falls back to two overloads:`template<class Arg> void emplace(Arg&& arg)` and `void emplace()`. 
+ On compilers that do not support rvalue references, the signature falls back to three overloads: taking `const` and non-`const` lvalue reference, and third with empty function argument list. 
 * [*Example:]
 ``
 T v;
@@ -1111,9 +1117,10 @@ __SPACE__
 * [*Requires:] Lvalues of type `T` shall be swappable and `T` shall be __MOVE_CONSTRUCTIBLE__.
 * [*Effects:]
 [table 
-  [[][`*this` contains a value][`*this` does not contain a value]]
-  [[`rhs` contains a value][calls `swap(*(*this), *rhs)`][initializes the contained value of `*this` as if direct-initializing an object of type `T` with the expression `std::move(*rhs)`, followed by `rhs.val->T::~T()`, `*this` contains a value and `rhs` does not contain a value]]
-  [[`rhs` does not contain a value][initializes the contained value of `rhs` as if direct-initializing an object of type `T` with the expression `std::move(*(*this))`, followed by `val->T::~T()`, `*this` does not contain a value and `rhs` contains a value][no effect]]
+  []
+  [[][[*`*this` contains a value]][[*`*this` does not contain a value]]]
+  [[[*`rhs` contains a value]][calls `swap(*(*this), *rhs)`][initializes the contained value of `*this` as if direct-initializing an object of type `T` with the expression `std::move(*rhs)`, followed by `rhs.val->T::~T()`, `*this` contains a value and `rhs` does not contain a value]]
+  [[[*`rhs` does not contain a value]][initializes the contained value of `rhs` as if direct-initializing an object of type `T` with the expression `std::move(*(*this))`, followed by `val->T::~T()`, `*this` does not contain a value and `rhs` contains a value][no effect]]
 ]
 * [*Postconditions:] The states of `x` and `y` interchanged.
 * [*Throws:] If both are initialized, whatever `swap(T&,T&)` throws. If only

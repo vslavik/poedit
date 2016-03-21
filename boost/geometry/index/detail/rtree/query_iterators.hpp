@@ -20,7 +20,7 @@ namespace boost { namespace geometry { namespace index { namespace detail { name
 template <typename Value, typename Allocators>
 struct end_query_iterator
 {
-    typedef std::input_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
     typedef Value value_type;
     typedef typename Allocators::const_reference reference;
     typedef typename Allocators::difference_type difference_type;
@@ -65,11 +65,14 @@ class spatial_query_iterator
     typedef typename visitor_type::node_pointer node_pointer;
 
 public:
-    typedef std::input_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
     typedef Value value_type;
     typedef typename Allocators::const_reference reference;
     typedef typename Allocators::difference_type difference_type;
     typedef typename Allocators::const_pointer pointer;
+
+    inline spatial_query_iterator()
+    {}
 
     inline spatial_query_iterator(Translator const& t, Predicates const& p)
         : m_visitor(t, p)
@@ -130,11 +133,14 @@ class distance_query_iterator
     typedef typename visitor_type::node_pointer node_pointer;
 
 public:
-    typedef std::input_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
     typedef Value value_type;
     typedef typename Allocators::const_reference reference;
     typedef typename Allocators::difference_type difference_type;
     typedef typename Allocators::const_pointer pointer;
+
+    inline distance_query_iterator()
+    {}
 
     inline distance_query_iterator(Translator const& t, Predicates const& p)
         : m_visitor(t, p)
@@ -188,22 +194,19 @@ private:
     visitor_type m_visitor;
 };
 
+
 template <typename L, typename R>
 inline bool operator!=(L const& l, R const& r)
 {
     return !(l == r);
 }
 
-}}}}}} // namespace boost::geometry::index::detail::rtree::iterators
-
-
-namespace boost { namespace geometry { namespace index { namespace detail { namespace rtree { namespace iterators {
 
 template <typename Value, typename Allocators>
 class query_iterator_base
 {
 public:
-    typedef std::input_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
     typedef Value value_type;
     typedef typename Allocators::const_reference reference;
     typedef typename Allocators::difference_type difference_type;
@@ -226,12 +229,13 @@ class query_iterator_wrapper
     typedef query_iterator_base<Value, Allocators> base_t;
 
 public:
-    typedef std::input_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
     typedef Value value_type;
     typedef typename Allocators::const_reference reference;
     typedef typename Allocators::difference_type difference_type;
     typedef typename Allocators::const_pointer pointer;
 
+    query_iterator_wrapper() : m_iterator() {}
     explicit query_iterator_wrapper(Iterator const& it) : m_iterator(it) {}
 
     virtual base_t * clone() const { return new query_iterator_wrapper(m_iterator); }
@@ -258,13 +262,14 @@ class query_iterator
     typedef boost::scoped_ptr<iterator_base> iterator_ptr;
 
 public:
-    typedef std::input_iterator_tag iterator_category;
+    typedef std::forward_iterator_tag iterator_category;
     typedef Value value_type;
     typedef typename Allocators::const_reference reference;
     typedef typename Allocators::difference_type difference_type;
     typedef typename Allocators::const_pointer pointer;
 
-    query_iterator() {}
+    query_iterator()
+    {}
 
     template <typename It>
     query_iterator(It const& it)

@@ -30,21 +30,17 @@ namespace coroutines {
 namespace detail {
 
 coroutine_context::coroutine_context() :
-    stack_ctx_(),
+    palloc_(),
     ctx_( 0)
-{
-#if defined(BOOST_USE_SEGMENTED_STACKS)
-    __splitstack_getcontext( stack_ctx_.segments_ctx);
-#endif
-}
+{}
 
-coroutine_context::coroutine_context( ctx_fn fn, stack_context const& stack_ctx) :
-    stack_ctx_( stack_ctx),
-    ctx_( context::make_fcontext( stack_ctx_.sp, stack_ctx_.size, fn) )
+coroutine_context::coroutine_context( ctx_fn fn, preallocated const& palloc) :
+    palloc_( palloc),
+    ctx_( context::make_fcontext( palloc_.sp, palloc_.size, fn) )
 {}
 
 coroutine_context::coroutine_context( coroutine_context const& other) :
-    stack_ctx_( other.stack_ctx_),
+    palloc_( other.palloc_),
     ctx_( other.ctx_)
 {}
 
@@ -53,7 +49,7 @@ coroutine_context::operator=( coroutine_context const& other)
 {
     if ( this == & other) return * this;
 
-    stack_ctx_ = other.stack_ctx_;
+    palloc_ = other.palloc_;
     ctx_ = other.ctx_;
 
     return * this;
@@ -63,12 +59,12 @@ intptr_t
 coroutine_context::jump( coroutine_context & other, intptr_t param, bool preserve_fpu)
 {
 #if defined(BOOST_USE_SEGMENTED_STACKS)
-    __splitstack_getcontext( stack_ctx_.segments_ctx);
-    __splitstack_setcontext( other.stack_ctx_.segments_ctx);
+    __splitstack_getcontext( palloc_.sctx.segments_ctx);
+    __splitstack_setcontext( other.palloc_.sctx.segments_ctx);
 
     intptr_t ret = context::jump_fcontext( & ctx_, other.ctx_, param, preserve_fpu);
 
-    __splitstack_setcontext( stack_ctx_.segments_ctx);
+    __splitstack_setcontext( palloc_.sctx.segments_ctx);
 
     return ret;
 #else

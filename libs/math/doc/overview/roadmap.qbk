@@ -6,6 +6,44 @@ Currently open bug reports can be viewed
 All bug reports including closed ones can be viewed
 [@https://svn.boost.org/trac/boost/query?status=assigned&status=closed&status=new&status=reopened&component=math&col=id&col=summary&col=status&col=type&col=milestone&col=component&order=priority here].
 
+[h4 Math-2.3.0 (Boost-1.60)]
+
+New Features:
+
+* Promote the root finding and function minimization code to first class citizens - these are now officially supported as part of the library.
+* Allow the library to be used and tested with compiler exception handling support turned off.  To better facilitate this
+the default error handling policies have been changed to ['errno_on_error] but only when the compiler has no exception handling support.
+
+Patches:
+
+* Fix behaviour of the non-central chi-squared distribution when the non-centrality parameter is zero to match the chi-squared,
+see [@https://svn.boost.org/trac/boost/ticket/11557 11557].
+* Fix comments in code for the hypergeometric to match what it actually does, also fixes the parameter access functions to return
+the correct values.  See [@https://svn.boost.org/trac/boost/ticket/11556 11556].
+* Stopped using hidden visiblity library build with the Oracle compiler as it leads to unresolved externals from the C++ standard library.
+See [@https://svn.boost.org/trac/boost/ticket/11547 11547].
+* Fix unintended use of __declspec when building with Oracle C++.  See [@https://svn.boost.org/trac/boost/ticket/11546 11546].
+* Fix corner case bug in root bracketing code, see [@https://svn.boost.org/trac/boost/ticket/11532 11532].
+* Add some missing typecasts in arguments to std::max in Bernoulli code.  See [@https://svn.boost.org/trac/boost/ticket/11453 11453].
+* Fix mistaken assumptions about the possible values for FLT_EVAL_METHOD.  See [@https://svn.boost.org/trac/boost/ticket/11429 11429].
+* Completely revamped performance testing and error-rate measuring code so we can more easily document how well (or not!) we're doing.
+This information will hopefully get more frequently updated in future as it's more or less automatically generated - see the /reporting/
+sub-directory for more information.
+* Fix some corner cases in the beta, incomplete beta, and incomplete beta derivative.  With thanks to Rocco Romeo.
+* Reorganized the Bessel functions internally to improve the performance of Jn and Yn.
+* Fixed skewness formula for triangular distribution, see [@https://svn.boost.org/trac/boost/ticket/11768 #11768].
+* Fixed some examples so they compile on Unix platforms which have an ::exception struct declared, see [@https://svn.boost.org/trac/boost/ticket/11827 #11827].
+* Correct mistake in triangular distribution skewness formula [@https://svn.boost.org/trac/boost/ticket/11768 11768],
+reported by Juan Leni.
+
+[h4 Math-2.2.1]
+
+Patch release for Boost-1.58:
+
+* Minor [@https://github.com/boostorg/math/pull/13#issuecomment-98905579 patch for Haiku support.]
+* Fix the decimal digit count for 128-bit floating point types.
+* Fix a few documentation typos.
+
 [h4 Math-2.2.0 (boost-1.58.0)]
 
 * Added two new special functions - __trigamma and __polygamma.
@@ -41,10 +79,10 @@ You can continue to use these headers by adding `libs/math/include_private` to y
 rather than raising an __overflow_error, this has now been fixed, which means these functions now behave as
 documented.  However, since the default behavior on raising an __overflow_error is to throw a `std::overflow_error`
 exception, applications which have come to reply rely on these functions not throwing may experience exceptions
-where they did not before.  The special functions involved are __gamma_p_inva, __gamma_q_inva, 
+where they did not before.  The special functions involved are __gamma_p_inva, __gamma_q_inva,
 __ibeta_inva, __ibetac_inva, __ibeta_invb, __ibetac_invb, __gamma_p_inv, __gamma_q_inv.  The distributions
 involved are __pareto_distrib, __beta_distrib, __geometric_distrib, __negative_binomial_distrib,
-__binomial_distrib, __chi_squared_distrib, __gamma_distrib, __inverse_chi_squared_distrib, 
+__binomial_distrib, __chi_squared_distrib, __gamma_distrib, __inverse_chi_squared_distrib,
 __inverse_gamma_distrib.  See [@https://svn.boost.org/trac/boost/ticket/10111 #10111].
 * Fix __round and __trunc functions so they can be used with integer arguments, see [@https://svn.boost.org/trac/boost/ticket/10066 #10066].
 * Fix Halley iteration to handle zero derivative (with non-zero second derivative), see [@https://svn.boost.org/trac/boost/ticket/10046 #10046].

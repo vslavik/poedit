@@ -108,6 +108,14 @@ int main()
     boost::basic_thread_pool ex(1);
     boost::shared_future<int> f1 = boost::async(p1).share();
     boost::shared_future<int> f21 = f1.then(ex, &p2).share();
+    boost::future<int> f2= f21.then(ex, &p2);
+    BOOST_TEST(f2.get()==4);
+  }
+  BOOST_THREAD_LOG << BOOST_THREAD_END_LOG;
+  {
+    boost::basic_thread_pool ex(1);
+    boost::shared_future<int> f1 = boost::async(p1).share();
+    boost::shared_future<int> f21 = f1.then(ex, &p2).share();
     boost::future<int> f2= f21.then(&p2);
     BOOST_TEST(f2.get()==4);
   }

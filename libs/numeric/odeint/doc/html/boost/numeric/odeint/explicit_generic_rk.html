@@ -53,28 +53,28 @@
   <span class="keyword">typedef</span> <span class="identifier">rk_algorithm_type</span><span class="special">::</span><span class="identifier">coef_c_type</span>        <a name="boost.numeric.odeint.explicit_generic_rk.coef_c_type"></a><span class="identifier">coef_c_type</span><span class="special">;</span>       
 
   <span class="comment">// <a class="link" href="explicit_generic_rk.html#boost.numeric.odeint.explicit_generic_rkconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="explicit_generic_rk.html#idp40863552-bb"><span class="identifier">explicit_generic_rk</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">coef_a_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">coef_b_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <a class="link" href="explicit_generic_rk.html#idm46435652289472-bb"><span class="identifier">explicit_generic_rk</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">coef_a_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">coef_b_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                       <span class="keyword">const</span> <span class="identifier">coef_c_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                       <span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">algebra_type</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="explicit_generic_rk.html#idp40845408-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="explicit_generic_rk.html#idm46435652307616-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">,</span> 
            <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="explicit_generic_rk.html#idp40845968-bb"><span class="identifier">do_step_impl</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
+    <span class="keyword">void</span> <a class="link" href="explicit_generic_rk.html#idm46435652307056-bb"><span class="identifier">do_step_impl</span></a><span class="special">(</span><span class="identifier">System</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">,</span> 
                       <span class="identifier">StateOut</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">time_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="explicit_generic_rk.html#idp40859776-bb"><span class="identifier">adjust_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="explicit_generic_rk.html#idm46435652293248-bb"><span class="identifier">adjust_size</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="explicit_generic_rk.html#idp40870208-bb">private member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="explicit_generic_rk.html#idp40870784-bb"><span class="identifier">resize_impl</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="explicit_generic_rk.html#idm46435652282816-bb">private member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">bool</span> <a class="link" href="explicit_generic_rk.html#idm46435652282240-bb"><span class="identifier">resize_impl</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp114450768"></a><h2>Description</h2>
+<a name="idm46626317845200"></a><h2>Description</h2>
 <p>This class implements the explicit Runge-Kutta algorithms without error estimation in a generic way. The Butcher tableau is passed to the stepper which constructs the stepper scheme with the help of a template-metaprogramming algorithm. ToDo : Add example!</p>
 <p>This class derives explicit_stepper_base which provides the stepper interface.</p>
 <p>
 </p>
 <div class="refsect2">
-<a name="idp114452320"></a><h3>Template Parameters</h3>
+<a name="idm46626317843648"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="identifier">size_t</span> StageCount</pre>
@@ -112,12 +112,12 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp114471696"></a><h3>
+<a name="idm46626317824272"></a><h3>
 <a name="boost.numeric.odeint.explicit_generic_rkconstruct-copy-destruct"></a><code class="computeroutput">explicit_generic_rk</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp40863552-bb"></a><span class="identifier">explicit_generic_rk</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">coef_a_type</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">coef_b_type</span> <span class="special">&amp;</span> b<span class="special">,</span> 
+<pre class="literallayout"><a name="idm46435652289472-bb"></a><span class="identifier">explicit_generic_rk</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">coef_a_type</span> <span class="special">&amp;</span> a<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">coef_b_type</span> <span class="special">&amp;</span> b<span class="special">,</span> 
                     <span class="keyword">const</span> <span class="identifier">coef_c_type</span> <span class="special">&amp;</span> c<span class="special">,</span> 
                     <span class="keyword">const</span> <span class="identifier">algebra_type</span> <span class="special">&amp;</span> algebra <span class="special">=</span> <span class="identifier">algebra_type</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructs the <code class="computeroutput"><a class="link" href="explicit_generic_rk.html" title="Class template explicit_generic_rk">explicit_generic_rk</a></code> class. See examples section for details on the coefficients. <p>
 </p>
@@ -157,13 +157,13 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp114498656"></a><h3>
-<a name="idp40845408-bb"></a><code class="computeroutput">explicit_generic_rk</code> public member functions</h3>
+<a name="idm46626317797296"></a><h3>
+<a name="idm46435652307616-bb"></a><code class="computeroutput">explicit_generic_rk</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> System<span class="special">,</span> <span class="keyword">typename</span> StateIn<span class="special">,</span> <span class="keyword">typename</span> DerivIn<span class="special">,</span> 
          <span class="keyword">typename</span> StateOut<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idp40845968-bb"></a><span class="identifier">do_step_impl</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> in<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span> dxdt<span class="special">,</span> 
+  <span class="keyword">void</span> <a name="idm46435652307056-bb"></a><span class="identifier">do_step_impl</span><span class="special">(</span><span class="identifier">System</span> system<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> in<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">DerivIn</span> <span class="special">&amp;</span> dxdt<span class="special">,</span> 
                     <span class="identifier">time_type</span> t<span class="special">,</span> <span class="identifier">StateOut</span> <span class="special">&amp;</span> out<span class="special">,</span> <span class="identifier">time_type</span> dt<span class="special">)</span><span class="special">;</span></pre>This method performs one step. The derivative <code class="computeroutput">dxdt</code> of <code class="computeroutput">in</code> at the time <code class="computeroutput">t</code> is passed to the method. The result is updated out of place, hence the input is in <code class="computeroutput">in</code> and the output in <code class="computeroutput">out</code>. Access to this step functionality is provided by explicit_stepper_base and <code class="computeroutput">do_step_impl</code> should not be called directly. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -209,7 +209,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp40859776-bb"></a><span class="identifier">adjust_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>Adjust the size of all temporaries in the stepper manually. <p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idm46435652293248-bb"></a><span class="identifier">adjust_size</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre>Adjust the size of all temporaries in the stepper manually. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -234,16 +234,15 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp114549152"></a><h3>
-<a name="idp40870208-bb"></a><code class="computeroutput">explicit_generic_rk</code> private member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idp40870784-bb"></a><span class="identifier">resize_impl</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idm46626317746800"></a><h3>
+<a name="idm46435652282816-bb"></a><code class="computeroutput">explicit_generic_rk</code> private member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StateIn<span class="special">&gt;</span> <span class="keyword">bool</span> <a name="idm46435652282240-bb"></a><span class="identifier">resize_impl</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">StateIn</span> <span class="special">&amp;</span> x<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2012 Karsten
-      Ahnert and Mario Mulansky<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Karsten Ahnert and Mario Mulansky<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

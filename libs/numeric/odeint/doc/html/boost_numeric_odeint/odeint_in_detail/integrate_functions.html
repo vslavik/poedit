@@ -33,7 +33,9 @@
         and starting at state <span class="emphasis"><em>x<sub>0</sub></em></span> by subsequent calls of a given
         stepper's <code class="computeroutput"><span class="identifier">do_step</span></code> function.
         Additionally, the user can provide an __observer to analyze the state during
-        time evolution. There are five different integrate functions which have different
+        time evolution, and a <code class="computeroutput"><a class="link" href="../../boost/numeric/odeint/max_step_checker.html" title="Class max_step_checker">max_step_checker</a></code> to throw an
+        exception if too many steps are taken between observer calls (i.e. too small
+        step size). There are five different integrate functions which have different
         strategies on when to call the observer function during integration. All
         of the integrate functions except <code class="computeroutput"><span class="identifier">integrate_n_steps</span></code>
         can be called with any stepper following one of the stepper concepts: <a class="link" href="../concepts/stepper.html" title="Stepper">Stepper</a> , <a class="link" href="../concepts/error_stepper.html" title="Error Stepper">Error
@@ -73,6 +75,17 @@
         <span class="identifier">observer</span> <span class="special">)</span></code>
       </p>
 <p>
+        <code class="computeroutput"><span class="identifier">integrate_const</span><span class="special">(</span>
+        <span class="identifier">stepper</span> <span class="special">,</span>
+        <span class="identifier">system</span> <span class="special">,</span>
+        <span class="identifier">x0</span> <span class="special">,</span>
+        <span class="identifier">t0</span> <span class="special">,</span>
+        <span class="identifier">t1</span> <span class="special">,</span>
+        <span class="identifier">dt</span> <span class="special">,</span>
+        <span class="identifier">observer</span> <span class="special">,</span>
+        <span class="identifier">max_step_checker</span> <span class="special">)</span></code>
+      </p>
+<p>
         These integrate the ODE given by <code class="computeroutput"><span class="identifier">system</span></code>
         with subsequent steps from <code class="computeroutput"><span class="identifier">stepper</span></code>.
         Integration start at <code class="computeroutput"><span class="identifier">t0</span></code> and
@@ -82,9 +95,14 @@
         is changed to the approximative solution <span class="emphasis"><em>x(t')</em></span> at the
         end of integration. If provided, the <code class="computeroutput"><span class="identifier">observer</span></code>
         is invoked at times <span class="emphasis"><em>t<sub>0</sub></em></span>, <span class="emphasis"><em>t<sub>0</sub> + dt</em></span>,
-        <span class="emphasis"><em>t<sub>0</sub> + 2dt</em></span>, ... ,<span class="emphasis"><em>t'</em></span>. <code class="computeroutput"><span class="identifier">integrate_const</span></code> returns the number of steps
-        performed during the integration. Note that if you are using a simple <a class="link" href="../concepts/stepper.html" title="Stepper">Stepper</a> or <a class="link" href="../concepts/error_stepper.html" title="Error Stepper">Error
-        Stepper</a> and want to make exactly <code class="computeroutput"><span class="identifier">n</span></code>
+        <span class="emphasis"><em>t<sub>0</sub> + 2dt</em></span>, ... ,<span class="emphasis"><em>t'</em></span>. If provided,
+        the <code class="computeroutput"><span class="identifier">max_step_checker</span></code> counts
+        the number of steps between observer calls and throws a <code class="computeroutput"><span class="identifier">no_progress_error</span></code>
+        this exceeds some limit (default: 500). <code class="computeroutput"><span class="identifier">integrate_const</span></code>
+        returns the number of steps performed during the integration. Note that if
+        you are using a simple <a class="link" href="../concepts/stepper.html" title="Stepper">Stepper</a>
+        or <a class="link" href="../concepts/error_stepper.html" title="Error Stepper">Error Stepper</a>
+        and want to make exactly <code class="computeroutput"><span class="identifier">n</span></code>
         steps you should prefer the <code class="computeroutput"><span class="identifier">integrate_n_steps</span></code>
         function below.
       </p>
@@ -145,14 +163,26 @@
         <span class="identifier">n</span> <span class="special">,</span> <span class="identifier">observer</span> <span class="special">)</span></code>
       </p>
 <p>
+        <code class="computeroutput"><span class="identifier">integrate_n_steps</span><span class="special">(</span>
+        <span class="identifier">stepper</span> <span class="special">,</span>
+        <span class="identifier">system</span> <span class="special">,</span>
+        <span class="identifier">x0</span> <span class="special">,</span>
+        <span class="identifier">t0</span> <span class="special">,</span>
+        <span class="identifier">dt</span> <span class="special">,</span>
+        <span class="identifier">n</span> <span class="special">,</span> <span class="identifier">observer</span> <span class="special">,</span> <span class="identifier">max_step_checker</span> <span class="special">)</span></code>
+      </p>
+<p>
         Integrates the ODE given by <code class="computeroutput"><span class="identifier">system</span></code>
         with subsequent steps from <code class="computeroutput"><span class="identifier">stepper</span></code>
         starting at <span class="emphasis"><em>x<sub>0</sub></em></span> and <span class="emphasis"><em>t<sub>0</sub></em></span>. If provided,
         <code class="computeroutput"><span class="identifier">observer</span></code> is called after
         every step and at the beginning with <code class="computeroutput"><span class="identifier">t0</span></code>,
-        similar as above. The approximate result for <span class="emphasis"><em>x( t<sub>0</sub> + n dt )</em></span>
-        is stored in <code class="computeroutput"><span class="identifier">x0</span></code>. This function
-        returns the end time <code class="computeroutput"><span class="identifier">t0</span> <span class="special">+</span> <span class="identifier">n</span><span class="special">*</span><span class="identifier">dt</span></code>.
+        similar as above. Again, providing a <code class="computeroutput"><span class="identifier">max_step_checker</span></code>
+        will throw a <code class="computeroutput"><span class="identifier">no_progress_error</span></code>
+        if too many steps are performed between observer calls. The approximate result
+        for <span class="emphasis"><em>x( t<sub>0</sub> + n dt )</em></span> is stored in <code class="computeroutput"><span class="identifier">x0</span></code>.
+        This function returns the end time <code class="computeroutput"><span class="identifier">t0</span>
+        <span class="special">+</span> <span class="identifier">n</span><span class="special">*</span><span class="identifier">dt</span></code>.
       </p>
 <h5>
 <a name="boost_numeric_odeint.odeint_in_detail.integrate_functions.h2"></a>
@@ -197,6 +227,18 @@
         <code class="computeroutput"><span class="identifier">integrate_adaptive</span></code> returns
         the number of steps performed during the integration.
       </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          <code class="computeroutput"><span class="identifier">integrate_adaptive</span></code> by design
+          performs an observer call after each time step. Hence there is no need
+          for a <code class="computeroutput"><a class="link" href="../../boost/numeric/odeint/max_step_checker.html" title="Class max_step_checker">max_step_checker</a></code> as only
+          exactly one step is ever performed between observer calls.
+        </p></td></tr>
+</table></div>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             If <code class="computeroutput"><span class="identifier">stepper</span></code> is a <a class="link" href="../concepts/stepper.html" title="Stepper">Stepper</a> or <a class="link" href="../concepts/error_stepper.html" title="Error Stepper">Error Stepper</a>
@@ -270,6 +312,25 @@
         <span class="special">)</span></code> and <code class="computeroutput"><span class="identifier">times_end</span>
         <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">end</span><span class="special">(</span>
         <span class="identifier">time_range</span> <span class="special">)</span></code>.
+        Additionally, a <code class="computeroutput"><a class="link" href="../../boost/numeric/odeint/max_step_checker.html" title="Class max_step_checker">max_step_checker</a></code> can be provided,
+        e.g.:
+      </p>
+<p>
+        <code class="computeroutput"><span class="identifier">integrate_times</span><span class="special">(</span>
+        <span class="identifier">stepper</span> <span class="special">,</span>
+        <span class="identifier">system</span> <span class="special">,</span>
+        <span class="identifier">x0</span> <span class="special">,</span>
+        <span class="identifier">times_start</span> <span class="special">,</span>
+        <span class="identifier">times_end</span> <span class="special">,</span>
+        <span class="identifier">dt</span> <span class="special">,</span>
+        <span class="identifier">observer</span> <span class="special">,</span>
+        <span class="identifier">max_step_checker</span><span class="special">)</span></code>
+      </p>
+<p>
+        As above, this will throw a <code class="computeroutput"><span class="identifier">no_progress_error</span></code>
+        if too many steps are performed between observer calls.
+      </p>
+<p>
         <code class="computeroutput"><span class="identifier">integrate_times</span></code> returns the
         number of steps performed during the integration.
       </p>
@@ -334,8 +395,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2012 Karsten
-      Ahnert and Mario Mulansky<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Karsten Ahnert and Mario Mulansky<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

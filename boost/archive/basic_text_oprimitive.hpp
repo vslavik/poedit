@@ -64,7 +64,7 @@ namespace archive {
 /////////////////////////////////////////////////////////////////////////
 // class basic_text_oprimitive - output of prmitives to stream
 template<class OStream>
-class basic_text_oprimitive
+class BOOST_SYMBOL_VISIBLE basic_text_oprimitive
 {
 protected:
     OStream &os;
@@ -174,9 +174,9 @@ protected:
         save_impl(t, tf);
     }
 
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY())
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL
     basic_text_oprimitive(OStream & os, bool no_codecvt);
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL 
     ~basic_text_oprimitive();
 public:
     // unformatted append of one character
@@ -192,7 +192,7 @@ public:
         while('\0' != *s)
             os.put(*s++);
     }
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void) 
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL void 
     save_binary(const void *address, std::size_t count);
 };
 

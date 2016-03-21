@@ -38,16 +38,16 @@ void test_linestring()
     typedef typename bg::point_type<Geometry>::type P;
 
     bg::clear(geometry);
-    BOOST_CHECK_EQUAL(boost::size(geometry), 0);
+    BOOST_CHECK_EQUAL(boost::size(geometry), 0u);
 
     bg::append(geometry, bg::make<P>(1, 2));
-    BOOST_CHECK_EQUAL(boost::size(geometry), 1);
+    BOOST_CHECK_EQUAL(boost::size(geometry), 1u);
 
     bg::append(geometry, bg::make<P>(3, 4));
-    BOOST_CHECK_EQUAL(boost::size(geometry), 2);
+    BOOST_CHECK_EQUAL(boost::size(geometry), 2u);
 
     bg::traits::resize<Geometry>::apply(geometry, 1);
-    BOOST_CHECK_EQUAL(boost::size(geometry), 1);
+    BOOST_CHECK_EQUAL(boost::size(geometry), 1u);
 
     //std::cout << bg::dsv(geometry) << std::endl;
     P p = *boost::begin(geometry);
@@ -56,7 +56,7 @@ void test_linestring()
     BOOST_CHECK_EQUAL(bg::get<1>(p), 2);
 
     bg::clear(geometry);
-    BOOST_CHECK_EQUAL(boost::size(geometry), 0);
+    BOOST_CHECK_EQUAL(boost::size(geometry), 0u);
 }
 
 template <typename Point>

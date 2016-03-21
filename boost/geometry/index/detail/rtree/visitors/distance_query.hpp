@@ -337,6 +337,13 @@ public:
     };
     typedef std::vector<internal_stack_element> internal_stack_type;
 
+    inline distance_query_incremental()
+        : m_translator(NULL)
+//        , m_pred()
+        , current_neighbor((std::numeric_limits<size_type>::max)())
+//        , next_closest_node_distance((std::numeric_limits<node_distance_type>::max)())
+    {}
+
     inline distance_query_incremental(Translator const& translator, Predicates const& pred)
         : m_translator(::boost::addressof(translator))
         , m_pred(pred)
@@ -428,6 +435,7 @@ public:
     {
         BOOST_GEOMETRY_INDEX_ASSERT(l.current_neighbor != r.current_neighbor ||
                                     (std::numeric_limits<size_type>::max)() == l.current_neighbor ||
+                                    (std::numeric_limits<size_type>::max)() == r.current_neighbor ||
                                     l.neighbors[l.current_neighbor].second == r.neighbors[r.current_neighbor].second,
                                     "not corresponding iterators");
         return l.current_neighbor == r.current_neighbor;

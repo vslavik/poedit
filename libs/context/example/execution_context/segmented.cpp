@@ -6,6 +6,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <memory>
 
 #include <boost/config.hpp>
 
@@ -50,17 +51,12 @@ int main() {
         boost::context::execution_context::current() );
 
     boost::context::execution_context bar_ctx(
-#if defined(BOOST_USE_SEGMENTED_STACKS)
-        boost::context::segmented_stack(),
-#else
-        boost::context::fixedsize_stack(),
-#endif
-        [& main_ctx, count](){
+        [& main_ctx, count]( void *){
             bar( count);
-            main_ctx.resume();   
+            main_ctx();   
         });
     
-    bar_ctx.resume();
+    bar_ctx();
 
     std::cout << "main: done" << std::endl;
 

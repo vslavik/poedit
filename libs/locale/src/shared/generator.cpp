@@ -86,7 +86,7 @@ namespace boost {
         void generator::set_default_messages_domain(std::string const &domain)
         {
             std::vector<std::string>::iterator p;
-            if((p=std::find(d->domains.begin(),d->domains.end(),domain)) == d->domains.end()) {
+            if((p=std::find(d->domains.begin(),d->domains.end(),domain)) != d->domains.end()) {
                 d->domains.erase(p);
             }
             d->domains.insert(d->domains.begin(),domain);

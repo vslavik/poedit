@@ -26,6 +26,10 @@ else if [ os.name ] = QNXNTO
 {
   lib socket ;
 }
+else if [ os.name ] = HAIKU
+{
+  lib network ;
+}
 
 local USE_SELECT =
   <define>BOOST_ASIO_DISABLE_DEV_POLL
@@ -56,6 +60,7 @@ project
     <os>HPUX,<toolset>gcc:<define>_XOPEN_SOURCE_EXTENDED
     <os>HPUX:<library>ipv6
     <os>QNXNTO:<library>socket
+    <os>HAIKU:<library>network
   ;
 
 test-suite "asio" :

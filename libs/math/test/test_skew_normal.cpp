@@ -24,6 +24,7 @@
 #include <boost/math/distributions/skew_normal.hpp>
 using boost::math::skew_normal_distribution;
 using boost::math::skew_normal;
+#include <boost/math/tools/test.hpp> 
 
 #include <iostream>
 #include <iomanip>
@@ -88,10 +89,13 @@ void test_spots(RealType)
    RealType tolerance = 1e-4f; // 1e-4 (as %)
 
   // Check some bad parameters to the distribution,
-
-   BOOST_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(0, 0), std::domain_error); // zero sd
-   BOOST_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(0, -1), std::domain_error); // negative sd
-
+#ifndef BOOST_NO_EXCEPTIONS
+   BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(0, 0), std::domain_error); // zero sd
+   BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(0, -1), std::domain_error); // negative sd
+#else
+   BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType>(0, 0), std::domain_error); // zero sd
+   BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType>(0, -1), std::domain_error); // negative sd
+#endif
   // Tests on extreme values of random variate x, if has numeric_limit infinity etc.
     skew_normal_distribution<RealType> N01;
   if(std::numeric_limits<RealType>::has_infinity)
@@ -102,19 +106,25 @@ void test_spots(RealType)
     BOOST_CHECK_EQUAL(cdf(N01, -std::numeric_limits<RealType>::infinity()), 0); // x = - infinity, cdf = 0
     BOOST_CHECK_EQUAL(cdf(complement(N01, +std::numeric_limits<RealType>::infinity())), 0); // x = + infinity, c cdf = 0
     BOOST_CHECK_EQUAL(cdf(complement(N01, -std::numeric_limits<RealType>::infinity())), 1); // x = - infinity, c cdf = 1
-    BOOST_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(std::numeric_limits<RealType>::infinity(), static_cast<RealType>(1)), std::domain_error); // +infinite mean
-    BOOST_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(-std::numeric_limits<RealType>::infinity(),  static_cast<RealType>(1)), std::domain_error); // -infinite mean
-    BOOST_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(static_cast<RealType>(0), std::numeric_limits<RealType>::infinity()), std::domain_error); // infinite sd
+#ifndef BOOST_NO_EXCEPTIONS
+    BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(std::numeric_limits<RealType>::infinity(), static_cast<RealType>(1)), std::domain_error); // +infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(-std::numeric_limits<RealType>::infinity(),  static_cast<RealType>(1)), std::domain_error); // -infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType> nbad1(static_cast<RealType>(0), std::numeric_limits<RealType>::infinity()), std::domain_error); // infinite sd
+#else
+    BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType>(std::numeric_limits<RealType>::infinity(), static_cast<RealType>(1)), std::domain_error); // +infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType>(-std::numeric_limits<RealType>::infinity(),  static_cast<RealType>(1)), std::domain_error); // -infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::skew_normal_distribution<RealType>(static_cast<RealType>(0), std::numeric_limits<RealType>::infinity()), std::domain_error); // infinite sd
+#endif
   }
 
   if (std::numeric_limits<RealType>::has_quiet_NaN)
   {
     // No longer allow x to be NaN, then these tests should throw.
-    BOOST_CHECK_THROW(pdf(N01, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
-    BOOST_CHECK_THROW(cdf(N01, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
-    BOOST_CHECK_THROW(cdf(complement(N01, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // x = + infinity
-    BOOST_CHECK_THROW(quantile(N01, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
-    BOOST_CHECK_THROW(quantile(complement(N01, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
+    BOOST_MATH_CHECK_THROW(pdf(N01, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
+    BOOST_MATH_CHECK_THROW(cdf(N01, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
+    BOOST_MATH_CHECK_THROW(cdf(complement(N01, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // x = + infinity
+    BOOST_MATH_CHECK_THROW(quantile(N01, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
+    BOOST_MATH_CHECK_THROW(quantile(complement(N01, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
   }
 
    cout << "Tolerance for type " << typeid(RealType).name()  << " is " << tolerance << " %" << endl;
@@ -441,10 +451,10 @@ void test_spots(RealType)
            , static_cast<RealType>(0.8638862008406084244563L), tol100);
       }
 
-      BOOST_CHECK_THROW(cdf(skew_normal_distribution<RealType>(0, 0, 0), 0), std::domain_error);
-      BOOST_CHECK_THROW(cdf(skew_normal_distribution<RealType>(0, -1, 0), 0), std::domain_error);
-      BOOST_CHECK_THROW(quantile(skew_normal_distribution<RealType>(0, 1, 0), -1), std::domain_error);
-      BOOST_CHECK_THROW(quantile(skew_normal_distribution<RealType>(0, 1, 0), 2), std::domain_error);
+      BOOST_MATH_CHECK_THROW(cdf(skew_normal_distribution<RealType>(0, 0, 0), 0), std::domain_error);
+      BOOST_MATH_CHECK_THROW(cdf(skew_normal_distribution<RealType>(0, -1, 0), 0), std::domain_error);
+      BOOST_MATH_CHECK_THROW(quantile(skew_normal_distribution<RealType>(0, 1, 0), -1), std::domain_error);
+      BOOST_MATH_CHECK_THROW(quantile(skew_normal_distribution<RealType>(0, 1, 0), 2), std::domain_error);
       check_out_of_range<skew_normal_distribution<RealType> >(1, 1, 1);
     }
 
@@ -497,7 +507,7 @@ BOOST_AUTO_TEST_CASE( test_main )
   std::cout << "<note>The long double tests have been disabled on this platform "
     "either because the long double overloads of the usual math functions are "
     "not available at all, or because they are too inaccurate for these tests "
-    "to pass.</note>" << std::cout;
+    "to pass.</note>" << std::endl;
 #endif
   /*      */
   

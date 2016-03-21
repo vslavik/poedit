@@ -28,6 +28,9 @@ generators.override clang-darwin.prebuilt : builtin.lib-generator ;
 generators.override clang-darwin.prebuilt : builtin.prebuilt ;
 generators.override clang-darwin.searched-lib-generator : searched-lib-generator ;
 
+generators.register-c-compiler clang-darwin.compile.m : OBJECTIVE_C : OBJ : <toolset>clang <toolset-clang:platform>darwin ;
+generators.register-c-compiler clang-darwin.compile.mm : OBJECTIVE_CPP : OBJ : <toolset>clang <toolset-clang:platform>darwin ;
+
 toolset.inherit-rules clang-darwin : gcc ;
 toolset.inherit-flags clang-darwin : gcc 
         : <inlining>off <inlining>on <inlining>full <optimization>space 
@@ -72,18 +75,22 @@ rule init ( version ? :  command * : options * )
 
 SPACE = " " ;
 
-flags clang-darwin.compile OPTIONS <cflags> ;
-flags clang-darwin.compile.c++ OPTIONS <cxxflags> ;
-# flags clang-darwin.compile INCLUDES <include> ;
+toolset.flags clang-darwin.compile OPTIONS <cflags> ;
+toolset.flags clang-darwin.compile.c++ OPTIONS <cxxflags> ;
+toolset.flags clang-darwin.compile.m OPTIONS <mflags> ;
+toolset.flags clang-darwin.compile.mm OPTIONS <mflags> ;
+toolset.flags clang-darwin.compile.mm OPTIONS <mmflags> ;
+# toolset.flags clang-darwin.compile INCLUDES <include> ;
 
 # Declare flags and action for compilation.
 toolset.flags clang-darwin.compile OPTIONS <optimization>off   : -O0 ;
 toolset.flags clang-darwin.compile OPTIONS <optimization>speed : -O3 ;
 toolset.flags clang-darwin.compile OPTIONS <optimization>space : -Os ;
 
+# For clang, 'on' and 'full' are identical
 toolset.flags clang-darwin.compile OPTIONS <inlining>off  : -fno-inline ;
 toolset.flags clang-darwin.compile OPTIONS <inlining>on   : -Wno-inline ;
-toolset.flags clang-darwin.compile OPTIONS <inlining>full : -finline-functions -Wno-inline ;
+toolset.flags clang-darwin.compile OPTIONS <inlining>full : -Wno-inline ;
 
 toolset.flags clang-darwin.compile OPTIONS <warnings>off : -w ;
 toolset.flags clang-darwin.compile OPTIONS <warnings>on  : -Wall ;
@@ -94,6 +101,8 @@ toolset.flags clang-darwin.compile OPTIONS <debug-symbols>on : -g ;
 toolset.flags clang-darwin.compile OPTIONS <profiling>on : -pg ;
 toolset.flags clang-darwin.compile OPTIONS <rtti>off : -fno-rtti ;
 
+toolset.flags clang-darwin.compile OPTIONS <flags> ;
+
 actions compile.c
 {
     "$(CONFIG_COMMAND)" -x c $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"
@@ -102,6 +111,16 @@ actions compile.c
 actions compile.c++
 {
     "$(CONFIG_COMMAND)" -x c++ $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"
+}
+
+actions compile.m
+{
+    "$(CONFIG_COMMAND)" -x objective-c $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"
+}
+
+actions compile.mm
+{
+    "$(CONFIG_COMMAND)" -x objective-c++ $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"
 }
 
 flags clang-darwin ARFLAGS <archiveflags> ;
@@ -166,5 +185,5 @@ actions link bind LIBRARIES
 
 actions link.dll bind LIBRARIES
 {
-    "$(CONFIG_COMMAND)" $(USER_OPTIONS) -L"$(LINKPATH)" -o "$(<)" -single_module -dynamiclib -install_name "$(<[1]:D=)" "$(>)"  "$(LIBRARIES)" $(START-GROUP) $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS)
+    "$(CONFIG_COMMAND)" $(USER_OPTIONS) -L"$(LINKPATH)" -o "$(<)" -single_module -dynamiclib -install_name "@rpath/$(<[1]:D=)" "$(>)"  "$(LIBRARIES)" $(START-GROUP) $(FINDLIBS-ST-PFX) -l$(FINDLIBS-ST) $(FINDLIBS-SA-PFX) -l$(FINDLIBS-SA) $(END-GROUP) $(OPTIONS)
 }

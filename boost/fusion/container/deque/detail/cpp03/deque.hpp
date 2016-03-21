@@ -94,14 +94,16 @@ namespace boost { namespace fusion {
             {}
 
         template<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         deque(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)> const& seq)
             : base(seq)
             {}
 
         template<typename Sequence>
-        BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
-        deque(Sequence const& seq, typename disable_if<is_convertible<Sequence, T0> >::type* /*dummy*/ = 0)
+        BOOST_FUSION_GPU_ENABLED
+        deque(Sequence const& seq
+            , typename disable_if<is_convertible<Sequence, T0> >::type* /*dummy*/ = 0
+            , typename enable_if<traits::is_sequence<Sequence> >::type* /*dummy*/ = 0)
             : base(base::from_iterator(fusion::begin(seq)))
             {}
 
@@ -129,7 +131,7 @@ FUSION_HASH if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) || \
     (defined(__WAVE__) && defined(BOOST_FUSION_CREATE_PREPROCESSED_FILES))
         template <typename T0_>
-        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         explicit deque(T0_&& t0
           , typename enable_if<is_convertible<T0_, T0> >::type* /*dummy*/ = 0
          )
@@ -140,7 +142,7 @@ FUSION_HASH if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
             : base(std::forward<deque>(rhs))
             {}
         template<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, typename U)>
-        BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+        BOOST_FUSION_GPU_ENABLED
         deque(deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)>&& seq
             , typename disable_if<
                   is_convertible<deque<BOOST_PP_ENUM_PARAMS(FUSION_MAX_DEQUE_SIZE, U)>, T0>

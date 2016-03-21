@@ -1,4 +1,4 @@
-//  (C) Copyright Gennadiy Rozental 2005-2008.
+//  (C) Copyright Gennadiy Rozental 2005-2014.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +14,7 @@
 struct F {
     F() : i( 0 ) { BOOST_TEST_MESSAGE( "setup fixture" ); }
     ~F()         { BOOST_TEST_MESSAGE( "teardown fixture" ); }
-   
+
     int i;
 };
 

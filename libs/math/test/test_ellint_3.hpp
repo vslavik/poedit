@@ -29,11 +29,14 @@
 template <class Real, typename T>
 void do_test_ellint_pi3(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_3_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_3_FUNCTION_TO_TEST
+   value_type(*fp2)(value_type, value_type, value_type) = ELLINT_3_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp2)(value_type, value_type, value_type) = boost::math::ellint_3<value_type, value_type, value_type>;
 #else
     value_type (*fp2)(value_type, value_type, value_type) = boost::math::ellint_3;
@@ -45,20 +48,23 @@ void do_test_ellint_pi3(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp2, 2, 0, 1),
       extract_result<Real>(3));
    handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::ellint_3", test);
+      type_name, "ellint_3", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <class Real, typename T>
 void do_test_ellint_pi2(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_3C_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_3C_FUNCTION_TO_TEST
+   value_type(*fp2)(value_type, value_type) = ELLINT_3C_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp2)(value_type, value_type) = boost::math::ellint_3<value_type, value_type>;
 #else
     value_type (*fp2)(value_type, value_type) = boost::math::ellint_3;
@@ -70,10 +76,10 @@ void do_test_ellint_pi2(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp2, 1, 0),
       extract_result<Real>(2));
    handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::ellint_3", test);
+      type_name, "ellint_3 (complete)", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <typename T>
@@ -148,8 +154,8 @@ void test_spots(T, const char* type_name)
         // with high-ish error rates caused by argument reduction by Pi:
         { { SC_(20.0), ldexp(T(1647611), -19), SC_(0.5), SC_(0.000975940902692994840122139131147517258405256880370413541280) } },
         { { SC_(20.0), -ldexp(T(1647611), -19), SC_(0.5), SC_(-0.000975940902692994840122139131147517258405256880370413541280) } },
-        { { SC_(1.0) + ldexp(T(1), -6), ldexp(T(889085), -19), SC_(0.5), SC_(-27.1647225624906589308619292363045712770651414487085887109197) } },
-        { { SC_(1.0) + ldexp(T(1), -6), -ldexp(T(889085), -19), SC_(0.5), SC_(27.1647225624906589308619292363045712770651414487085887109197) } },
+        { { T(1.0) + ldexp(T(1), -6), ldexp(T(889085), -19), SC_(0.5), SC_(-27.1647225624906589308619292363045712770651414487085887109197) } },
+        { { T(1.0) + ldexp(T(1), -6), -ldexp(T(889085), -19), SC_(0.5), SC_(27.1647225624906589308619292363045712770651414487085887109197) } },
         // Phi = 0:
         { { SC_(1.0), SC_(0.0), SC_(0.5), SC_(0.0) } },
         { { SC_(-1.0), SC_(0.0), SC_(0.5), SC_(0.0) } },
@@ -186,7 +192,7 @@ void test_spots(T, const char* type_name)
         { { -1.5f * ldexp(T(1), -52), SC_(0.9375), SC_(2.48840049140103464299631535211815755485846563527849342319632) } },
         { { ldexp(T(1), -560), ldexp(T(1), -165), SC_(1.57079632679489661923132169163975144209858469968756130722545) } },
         { { ldexp(T(1), -560), -ldexp(T(1), -165), SC_(1.57079632679489661923132169163975144209858469968754451374949) } },
-        { { std::numeric_limits<T>::max_exponent > 600 ? -ldexp(T(1), 600) : 0, SC_(0.5), std::numeric_limits<T>::max_exponent > 600 ? SC_(7.71118598318249916481121898327895181916104121635240801895419e-91) : SC_(1.68575035481259604287120365779907698950080089414108904411995) } },
+        { { std::numeric_limits<T>::max_exponent > 600 ? T(-ldexp(T(1), 600)) : 0, SC_(0.5), std::numeric_limits<T>::max_exponent > 600 ? SC_(7.71118598318249916481121898327895181916104121635240801895419e-91) : SC_(1.68575035481259604287120365779907698950080089414108904411995) } },
     } };
 
     do_test_ellint_pi2<T>(data2, type_name, "Complete Elliptic Integral PI: Mathworld Data");
@@ -196,12 +202,12 @@ void test_spots(T, const char* type_name)
     do_test_ellint_pi2<T>(ellint_pi2_data, type_name, "Complete Elliptic Integral PI: Random Data");
 
     // Special cases, exceptions etc:
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(1.0001), T(-1), T(0)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(0.5), T(20), T(1.5)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(1.0001), T(-1)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(0.5), T(1)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(0.5), T(2)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(1), T(0.5), T(2)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(1), T(-0.5), T(2)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::ellint_3(T(1), T(-0.5), T(-2)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(1.0001), T(-1), T(0)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(0.5), T(20), T(1.5)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(1.0001), T(-1)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(0.5), T(1)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(0.5), T(2)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(1), T(0.5), T(2)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(1), T(-0.5), T(2)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::ellint_3(T(1), T(-0.5), T(-2)), std::domain_error);
 }

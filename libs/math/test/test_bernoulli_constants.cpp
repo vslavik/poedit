@@ -10,6 +10,7 @@
 #include <boost/math/concepts/real_concept.hpp>
 #include <boost/math/special_functions/bernoulli.hpp>
 #include <libs/math/test/table_type.hpp>
+#include <boost/math/tools/test.hpp>
 #include <iostream>
 #include <iomanip>
 
@@ -193,8 +194,10 @@ void test(const char* name)
    //
    static unsigned overflow_index = boost::is_same<T, boost::math::concepts::real_concept>::value ?
       boost::math::max_bernoulli_b2n<long double>::value + 5 : boost::math::max_bernoulli_b2n<T>::value + 5;
-   BOOST_CHECK_THROW(boost::math::bernoulli_b2n<T>(overflow_index, boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::throw_on_error>())), std::overflow_error);
-   BOOST_CHECK_THROW(boost::math::tangent_t2n<T>(overflow_index, boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::throw_on_error>())), std::overflow_error);
+#ifndef BOOST_NO_EXCEPTIONS
+   BOOST_MATH_CHECK_THROW(boost::math::bernoulli_b2n<T>(overflow_index, boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::throw_on_error>())), std::overflow_error);
+   BOOST_MATH_CHECK_THROW(boost::math::tangent_t2n<T>(overflow_index, boost::math::policies::make_policy(boost::math::policies::overflow_error<boost::math::policies::throw_on_error>())), std::overflow_error);
+#endif
 }
 
 void test_real_concept_extra()

@@ -26,7 +26,7 @@ void test_good_symbol(const char* str, D d)
   out << boost::chrono::duration_short  << d;
 #endif
   BOOST_TEST(out.good());
-  BOOST_TEST(out.str() == str);
+  BOOST_TEST_EQ(out.str(), str);
 }
 #if BOOST_CHRONO_VERSION==2
 

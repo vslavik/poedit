@@ -19,9 +19,8 @@ local here = [ modules.binding $(__name__) ] ;
 
 project.push-current [ project.current ] ;
 project.load [ path.join [ path.make $(here:D) ] ../config/message-compiler ] ;
-project.pop-current ;
-project.push-current [ project.current ] ;
 project.load [ path.join [ path.make $(here:D) ] ../config/x86-ext ] ;
+project.load [ path.join [ path.make $(here:D) ] ../config/visibility ] ;
 project.pop-current ;
 
 # Windows libs
@@ -66,7 +65,7 @@ rule select-log-api ( properties * )
         # We have to verify if message compiler is available
         if ! ( <define>BOOST_LOG_WITHOUT_EVENT_LOG in $(properties) || <define>BOOST_LOG_WITHOUT_EVENT_LOG=1 in $(properties) )
         {
-            local has_mc = [ configure.builds /boost/message-compiler//test-availability : $(properties) : message-compiler ] ;
+            local has_mc = [ configure.builds /boost/log/message-compiler//test-availability : $(properties) : message-compiler ] ;
             if $(has_mc)
             {
                 result = <log-api>winnt ;
@@ -113,12 +112,27 @@ rule select-regex-backend ( properties * )
     return $(result) ;
 }
 
+rule check-visibility ( properties * )
+{
+    local result = ;
+
+    local has_visibility = [ configure.builds /boost/log/visibility//visibility : $(properties) : compiler-supports-visibility ] ;
+    if $(has_visibility)
+    {
+        result = <cxxflags>"-fvisibility=hidden" ;
+    }
+
+    return $(result) ;
+}
+
 project boost/log
     : source-location ../src
     : requirements
         <conditional>@select-log-api
         <conditional>@check-instruction-set
         <conditional>@select-regex-backend
+        <conditional>@check-visibility
+
         <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
         <define>BOOST_THREAD_DONT_USE_CHRONO=1 # Don't introduce false dependency on Boost.Chrono
 
@@ -136,6 +150,7 @@ project boost/log
         <toolset>msvc:<cxxflags>/wd4503 # decorated name length exceeded, name was truncated
         <toolset>msvc:<cxxflags>/wd4456 # declaration of 'A' hides previous local declaration
         <toolset>msvc:<cxxflags>/wd4459 # declaration of 'A' hides global declaration
+        <toolset>msvc:<cxxflags>/wd4003 # not enough actual parameters for macro 'X' - caused by BOOST_PP_IS_EMPTY and BOOST_PP_IS_BEGIN_PARENS which are used by Fusion
 
         # Disable Intel warnings:
         # warning #177: function "X" was declared but never referenced
@@ -165,6 +180,7 @@ project boost/log
         <library>/boost/filesystem//boost_filesystem
         <library>/boost/system//boost_system
         <threading>single:<define>BOOST_LOG_NO_THREADS
+        <threading>multi:<library>/boost/atomic//boost_atomic
         <threading>multi:<library>/boost/thread//boost_thread
 
         <target-os>windows:<library>ws2_32
@@ -243,7 +259,7 @@ rule ssse3-targets-cond ( properties * )
 
     if <log-architecture>x86 in [ log-architecture.deduce-architecture $(properties) ]
     {
-        local has_ssse3 = [ configure.builds /boost/x86-extensions//ssse3 : $(properties) : compiler-supports-ssse3 ] ;
+        local has_ssse3 = [ configure.builds /boost/log/x86-extensions//ssse3 : $(properties) : compiler-supports-ssse3 ] ;
         if $(has_ssse3)
         {
             result = ;
@@ -305,7 +321,7 @@ rule avx2-targets-cond ( properties * )
 
     if <log-architecture>x86 in [ log-architecture.deduce-architecture $(properties) ]
     {
-        local has_ssse3 = [ configure.builds /boost/x86-extensions//avx2 : $(properties) : compiler-supports-avx2 ] ;
+        local has_ssse3 = [ configure.builds /boost/log/x86-extensions//avx2 : $(properties) : compiler-supports-avx2 ] ;
         if $(has_ssse3)
         {
             result = ;

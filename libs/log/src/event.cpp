@@ -24,16 +24,39 @@
 #include <boost/system/system_error.hpp>
 #include <boost/log/detail/event.hpp>
 
-#if defined(BOOST_LOG_EVENT_USE_POSIX_SEMAPHORE)
+#if defined(BOOST_LOG_EVENT_USE_FUTEX)
 
-#if defined(__GNUC__) && defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4)
-#define BOOST_LOG_EVENT_TRY_SET(ref) (__sync_lock_test_and_set(&ref, 1U) == 0U)
-#define BOOST_LOG_EVENT_RESET(ref) __sync_lock_release(&ref)
+#include <stddef.h>
+#include <errno.h>
+#include <sys/syscall.h>
+#include <linux/futex.h>
+#include <boost/memory_order.hpp>
+
+// Some Android NDKs (Google NDK and older Crystax.NET NDK versions) don't define SYS_futex
+#if defined(SYS_futex)
+#define BOOST_LOG_SYS_FUTEX SYS_futex
 #else
-#error Boost.Log internal error: BOOST_LOG_EVENT_USE_POSIX_SEMAPHORE must only be defined when atomic ops are available
+#define BOOST_LOG_SYS_FUTEX __NR_futex
 #endif
+
+#if defined(FUTEX_WAIT_PRIVATE)
+#define BOOST_LOG_FUTEX_WAIT FUTEX_WAIT_PRIVATE
+#else
+#define BOOST_LOG_FUTEX_WAIT FUTEX_WAIT
+#endif
+
+#if defined(FUTEX_WAKE_PRIVATE)
+#define BOOST_LOG_FUTEX_WAKE FUTEX_WAKE_PRIVATE
+#else
+#define BOOST_LOG_FUTEX_WAKE FUTEX_WAKE
+#endif
+
+#elif defined(BOOST_LOG_EVENT_USE_POSIX_SEMAPHORE)
+
 #include <errno.h>
 #include <semaphore.h>
+#include <boost/memory_order.hpp>
+#include <boost/atomic/fences.hpp>
 
 #elif defined(BOOST_LOG_EVENT_USE_WINAPI)
 
@@ -55,10 +78,66 @@ BOOST_LOG_OPEN_NAMESPACE
 
 namespace aux {
 
-#if defined(BOOST_LOG_EVENT_USE_POSIX_SEMAPHORE)
+#if defined(BOOST_LOG_EVENT_USE_FUTEX)
 
 //! Default constructor
-BOOST_LOG_API sem_based_event::sem_based_event() : m_state(0U)
+BOOST_LOG_API futex_based_event::futex_based_event() : m_state(0)
+{
+}
+
+//! Destructor
+BOOST_LOG_API futex_based_event::~futex_based_event()
+{
+}
+
+//! Waits for the object to become signalled
+BOOST_LOG_API void futex_based_event::wait()
+{
+    if (m_state.exchange(0, boost::memory_order_acq_rel) == 0)
+    {
+        while (true)
+        {
+            if (::syscall(BOOST_LOG_SYS_FUTEX, &m_state.storage(), BOOST_LOG_FUTEX_WAIT, 0, NULL, NULL, 0) == 0)
+            {
+                // Another thread has set the event while sleeping
+                break;
+            }
+
+            const int err = errno;
+            if (err == EWOULDBLOCK)
+            {
+                // Another thread has set the event before sleeping
+                break;
+            }
+            else if (err != EINTR)
+            {
+                BOOST_THROW_EXCEPTION(system::system_error(
+                    err, system::system_category(), "Failed to block on the futex"));
+            }
+        }
+
+        m_state.store(0, boost::memory_order_relaxed);
+    }
+}
+
+//! Sets the object to a signalled state
+BOOST_LOG_API void futex_based_event::set_signalled()
+{
+    if (m_state.exchange(1, boost::memory_order_release) == 0)
+    {
+        if (BOOST_UNLIKELY(::syscall(BOOST_LOG_SYS_FUTEX, &m_state.storage(), BOOST_LOG_FUTEX_WAKE, 1, NULL, NULL, 0) < 0))
+        {
+            const int err = errno;
+            BOOST_THROW_EXCEPTION(system::system_error(
+                err, system::system_category(), "Failed to wake threads blocked on the futex"));
+        }
+    }
+}
+
+#elif defined(BOOST_LOG_EVENT_USE_POSIX_SEMAPHORE)
+
+//! Default constructor
+BOOST_LOG_API sem_based_event::sem_based_event() : m_state()
 {
     if (sem_init(&m_semaphore, 0, 0) != 0)
     {
@@ -77,6 +156,7 @@ BOOST_LOG_API sem_based_event::~sem_based_event()
 //! Waits for the object to become signalled
 BOOST_LOG_API void sem_based_event::wait()
 {
+    boost::atomic_thread_fence(boost::memory_order_acq_rel);
     while (true)
     {
         if (sem_wait(&m_semaphore) != 0)
@@ -91,18 +171,17 @@ BOOST_LOG_API void sem_based_event::wait()
         else
             break;
     }
-    BOOST_LOG_EVENT_RESET(m_state);
+    m_state.clear(boost::memory_order_relaxed);
 }
 
 //! Sets the object to a signalled state
 BOOST_LOG_API void sem_based_event::set_signalled()
 {
-    if (BOOST_LOG_EVENT_TRY_SET(m_state))
+    if (!m_state.test_and_set(boost::memory_order_release))
     {
         if (sem_post(&m_semaphore) != 0)
         {
             const int err = errno;
-            BOOST_LOG_EVENT_RESET(m_state);
             BOOST_THROW_EXCEPTION(system::system_error(
                 err, system::system_category(), "Failed to wake the blocked thread"));
         }

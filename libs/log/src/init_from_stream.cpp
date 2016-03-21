@@ -26,7 +26,7 @@ BOOST_LOG_OPEN_NAMESPACE
 
 //! The function initializes the logging library from a stream containing logging settings
 template< typename CharT >
-void init_from_stream(std::basic_istream< CharT >& strm)
+BOOST_LOG_SETUP_API void init_from_stream(std::basic_istream< CharT >& strm)
 {
     init_from_settings(parse_settings(strm));
 }

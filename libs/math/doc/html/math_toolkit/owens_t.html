@@ -4,7 +4,7 @@
 <title>Owen's T function</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../special.html" title="Chapter&#160;6.&#160;Special Functions">
 <link rel="prev" href="inv_hyper/atanh.html" title="atanh">
 <link rel="next" href="../extern_c.html" title='Chapter&#160;7.&#160;TR1 and C99 external "C" Functions'>
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">owens_t</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">h</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">a</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">owens_t</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">h</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">owens_t</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">h</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -51,9 +51,9 @@
       function</a> of <span class="emphasis"><em>h</em></span> and <span class="emphasis"><em>a</em></span>.
     </p>
 <p>
-      The final <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+      The final <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
       be used to control the behaviour of the function: how it handles errors, what
-      level of precision to use etc. Refer to the <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy documentation
+      level of precision to use etc. Refer to the <a class="link" href="../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy documentation
       for more details</a>.
     </p>
 <p>
@@ -119,7 +119,99 @@
 <p>
       Over the built-in types and range tested, errors are less than 10 * std::numeric_limits&lt;RealType&gt;::epsilon().
     </p>
-<h5>
+<div class="table">
+<a name="math_toolkit.owens_t.table_owens_t"></a><p class="title"><b>Table&#160;6.83.&#160;Error rates for owens_t</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for owens_t">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+            </th>
+<th>
+              <p>
+                Microsoft Visual C++ version 12.0<br> Win32<br> double
+              </p>
+            </th>
+<th>
+              <p>
+                GNU C++ version 5.1.0<br> linux<br> double
+              </p>
+            </th>
+<th>
+              <p>
+                GNU C++ version 5.1.0<br> linux<br> long double
+              </p>
+            </th>
+<th>
+              <p>
+                Sun compiler version 0x5130<br> Sun Solaris<br> long double
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                Owens T (medium small values)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 4.37&#949; (Mean = 0.973&#949;)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 3.34&#949; (Mean = 0.942&#949;)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 3.34&#949; (Mean = 0.91&#949;)</span>
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                Owens T (large and diverse values)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 3.78&#949; (Mean = 0.621&#949;)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 49&#949; (Mean = 2.16&#949;)</span>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="blue">Max = 24.5&#949; (Mean = 1.38&#949;)</span>
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break"><h5>
 <a name="math_toolkit.owens_t.h3"></a>
       <span class="phrase"><a name="math_toolkit.owens_t.testing"></a></span><a class="link" href="owens_t.html#math_toolkit.owens_t.testing">Testing</a>
     </h5>

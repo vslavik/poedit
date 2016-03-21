@@ -4,7 +4,7 @@
 <title>Finding Zeros of Bessel Functions of the First and Second Kinds</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../bessel.html" title="Bessel Functions">
 <link rel="prev" href="bessel_first.html" title="Bessel Functions of the First and Second Kinds">
 <link rel="next" href="mbessel.html" title="Modified Bessel Functions of the First and Second Kinds">
@@ -70,7 +70,7 @@
                      <span class="identifier">OutputIterator</span> <span class="identifier">out_it</span><span class="special">);</span>    <span class="comment">// Destination for zeros.</span>
 </pre>
 <p>
-        There are also versions which allow control of the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>
+        There are also versions which allow control of the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>
         for error handling and precision.
       </p>
 <pre class="programlisting"> <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -549,7 +549,7 @@
 <p>
         After finding the initial estimate of a given root, its precision is subsequently
         refined to the desired level using Newton-Raphson iteration from Boost.Math's
-        <a class="link" href="../internals1/roots.html" title="Root Finding With Derivatives: Newton-Raphson, Halley &amp; Schroeder">root-finding with derivatives</a>
+        <a class="link" href="../roots/roots_deriv.html" title="Root Finding With Derivatives: Newton-Raphson, Halley &amp; Schr&#246;der">root-finding with derivatives</a>
         utilities combined with the functions <a class="link" href="bessel_first.html" title="Bessel Functions of the First and Second Kinds">cyl_bessel_j</a>
         and <a class="link" href="bessel_first.html" title="Bessel Functions of the First and Second Kinds">cyl_neumann</a>.
       </p>

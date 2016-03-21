@@ -4,7 +4,7 @@
 <title>Trigamma</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_gamma.html" title="Gamma Functions">
 <link rel="prev" href="digamma.html" title="Digamma">
 <link rel="next" href="polygamma.html" title="Polygamma">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">trigamma</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">trigamma</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">trigamma</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -57,9 +57,9 @@
         <span class="inlinemediaobject"><img src="../../../graphs/trigamma.svg" align="middle"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -76,84 +76,72 @@
         various platforms with various floating point types. Unless otherwise specified
         any floating point type that is narrower than the one shown will have <a class="link" href="../relative_error.html#math_toolkit.relative_error.zero_error">effectively zero error</a>.
       </p>
-<div class="informaltable"><table class="table">
+<div class="table">
+<a name="math_toolkit.sf_gamma.trigamma.table_trigamma"></a><p class="title"><b>Table&#160;6.5.&#160;Error rates for trigamma</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for trigamma">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Random Values
+                  GNU C++ version 5.1.0<br> linux<br> long double
+                </p>
+              </th>
+<th>
+                <p>
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>
                 <p>
-                  53
+                  Mathematica Data
                 </p>
               </td>
 <td>
                 <p>
-                  Win32 Visual C++ 12
+                  <span class="blue">Max = 1&#949; (Mean = 0.382&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1.0 Mean=0.4
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0.998&#949; (Mean = 0.105&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.34e+04&#949; (Mean = 1.51e+03&#949;))<br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.34e+04&#949; (Mean = 1.49e+03&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Win64 Mingw GCC
+                  <span class="blue">Max = 1.28&#949; (Mean = 0.449&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1.4 Mean=0.4
+                  <span class="blue">Max = 1.28&#949; (Mean = 0.447&#949;)</span>
                 </p>
               </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  113
-                </p>
-              </td>
-<td>
-                <p>
-                  Win64 Mingw GCC __float128
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=1.0 Mean=0.5
-                </p>
-              </td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
-<p>
+</div>
+<br class="table-break"><p>
         As shown above, error rates are generally very low for built in types. For
         multiprecision types, error rates are typically in the order of a few epsilon.
       </p>

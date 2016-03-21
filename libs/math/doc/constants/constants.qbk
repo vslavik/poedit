@@ -463,7 +463,7 @@ The default is to use `NTL::RR` unless you define an alternate macro, for exampl
 and probably to your chosen arbitrary precision type library.
 
 4. You need to add `libs\math\include_private` to your compiler's include path as the needed
-header is not installed in the usual places by default (this avoids a cyclic dependency between 
+header is not installed in the usual places by default (this avoids a cyclic dependency between
 the Math and Multiprecision library's headers).
 
 5. The complete program to generate the constant `half_pi` using function `calculate_half_pi` is then:
@@ -660,7 +660,7 @@ so `std::numeric_limits<quad_float>::digits10()` should be 32.
 (which seems to agree with experiments).
 We output constants (including some noisy bits,
 an approximation to `std::numeric_limits<RR>::max_digits10()`)
-by adding 2 extra decimal digits, so using `quad_float::SetOutputPrecision(32 + 2);`
+by adding 2 or 3 extra decimal digits, so using `quad_float::SetOutputPrecision(32 + 3);`
 
 Apple Mac/Darwin uses a similar ['doubledouble] 106-bit for its built-in `long double` type.
 

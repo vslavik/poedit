@@ -15,7 +15,9 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_LINEAR_AREAL_HPP
 
 #include <boost/core/ignore_unused.hpp>
+#include <boost/range/size.hpp>
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/topological_dimension.hpp>
 
 #include <boost/geometry/util/condition.hpp>
@@ -97,7 +99,7 @@ public:
         }
 
         int const pig = detail::within::point_in_geometry(range::front(linestring), m_geometry2);
-        //BOOST_ASSERT_MSG(pig != 0, "There should be no IPs");
+        //BOOST_GEOMETRY_ASSERT_MSG(pig != 0, "There should be no IPs");
 
         if ( pig > 0 )
         {
@@ -323,8 +325,8 @@ struct linear_areal
                     // if there was some previous ring
                     if ( prev_seg_id_ptr != NULL )
                     {
-                        signed_index_type const next_ring_index = prev_seg_id_ptr->ring_index + 1;
-                        BOOST_ASSERT(next_ring_index >= 0);
+                        signed_size_type const next_ring_index = prev_seg_id_ptr->ring_index + 1;
+                        BOOST_GEOMETRY_ASSERT(next_ring_index >= 0);
                         
                         // if one of the last rings of previous single geometry was ommited
                         if ( static_cast<std::size_t>(next_ring_index)
@@ -394,8 +396,8 @@ struct linear_areal
             // if there was some previous ring
             if ( prev_seg_id_ptr != NULL )
             {
-                signed_index_type const next_ring_index = prev_seg_id_ptr->ring_index + 1;
-                BOOST_ASSERT(next_ring_index >= 0);
+                signed_size_type const next_ring_index = prev_seg_id_ptr->ring_index + 1;
+                BOOST_GEOMETRY_ASSERT(next_ring_index >= 0);
 
                 // if one of the last rings of previous single geometry was ommited
                 if ( static_cast<std::size_t>(next_ring_index)
@@ -456,7 +458,7 @@ struct linear_areal
         template <typename TurnIt>
         void operator()(TurnIt first, TurnIt last) const
         {
-            BOOST_ASSERT(first != last);
+            BOOST_GEOMETRY_ASSERT(first != last);
             static OpToPriority op_to_priority;
             // find the operation with the least priority
             int least_priority = op_to_priority(first->operations[0]);
@@ -736,6 +738,8 @@ struct linear_areal
             // handle the interior overlap
             if ( m_interior_detected )
             {
+                BOOST_GEOMETRY_ASSERT_MSG(m_previous_turn_ptr, "non-NULL ptr expected");
+
                 // real interior overlap
                 if ( ! turn_on_the_same_ip<op_id>(*m_previous_turn_ptr, *it) )
                 {
@@ -745,21 +749,16 @@ struct linear_areal
                     // new range detected - reset previous state and check the boundary
                     if ( first_in_range )
                     {
-                        // actually it should be != NULL if m_interior_detected
-                        // so an assert could be checked here
-                        if ( m_previous_turn_ptr )
+                        segment_identifier const& prev_seg_id = m_previous_turn_ptr->operations[op_id].seg_id;
+
+                        bool const prev_back_b = is_endpoint_on_boundary<boundary_back>(
+                                                    range::back(sub_range(geometry, prev_seg_id)),
+                                                    boundary_checker);
+
+                        // if there is a boundary on the last point
+                        if ( prev_back_b )
                         {
-                            segment_identifier const& prev_seg_id = m_previous_turn_ptr->operations[op_id].seg_id;
-
-                            bool const prev_back_b = is_endpoint_on_boundary<boundary_back>(
-                                                        range::back(sub_range(geometry, prev_seg_id)),
-                                                        boundary_checker);
-
-                            // if there is a boundary on the last point
-                            if ( prev_back_b )
-                            {
-                                update<boundary, interior, '0', TransposeResult>(res);
-                            }
+                            update<boundary, interior, '0', TransposeResult>(res);
                         }
 
                         // The exit_watcher is reset below
@@ -1002,7 +1001,7 @@ struct linear_areal
                                       /*&& ( op == overlay::operation_blocked
                                         || op == overlay::operation_union )*/ ) // if we're here it's u or x
                                     {
-                                        BOOST_ASSERT(m_first_from_unknown);
+                                        BOOST_GEOMETRY_ASSERT(m_first_from_unknown);
                                         m_first_from_unknown_boundary_detected = true;
                                     }
                                     else
@@ -1043,7 +1042,7 @@ struct linear_areal
                    BoundaryChecker const& boundary_checker)
         {
             boost::ignore_unused(first, last);
-            //BOOST_ASSERT( first != last );
+            //BOOST_GEOMETRY_ASSERT( first != last );
 
             // For MultiPolygon many x/u operations may be generated as a first IP
             // if for all turns x/u was generated and any of the Polygons doesn't contain the LineString
@@ -1071,8 +1070,8 @@ struct linear_areal
                 // for sure
                 update<interior, exterior, '1', TransposeResult>(res);
 
-                BOOST_ASSERT(first != last);
-                BOOST_ASSERT(m_previous_turn_ptr);
+                BOOST_GEOMETRY_ASSERT(first != last);
+                BOOST_GEOMETRY_ASSERT(m_previous_turn_ptr);
 
                 segment_identifier const& prev_seg_id = m_previous_turn_ptr->operations[op_id].seg_id;
 
@@ -1094,8 +1093,8 @@ struct linear_areal
                 update<interior, interior, '1', TransposeResult>(res);
                 m_interior_detected = false;
 
-                BOOST_ASSERT(first != last);
-                BOOST_ASSERT(m_previous_turn_ptr);
+                BOOST_GEOMETRY_ASSERT(first != last);
+                BOOST_GEOMETRY_ASSERT(m_previous_turn_ptr);
 
                 segment_identifier const& prev_seg_id = m_previous_turn_ptr->operations[op_id].seg_id;
 
@@ -1112,7 +1111,7 @@ struct linear_areal
 
             // This condition may be false if the Linestring is lying on the Polygon's collinear spike
             // if Polygon's spikes are not handled in get_turns() or relate() (they currently aren't)
-            //BOOST_ASSERT_MSG(m_previous_operation != overlay::operation_continue,
+            //BOOST_GEOMETRY_ASSERT_MSG(m_previous_operation != overlay::operation_continue,
             //                    "Unexpected operation! Probably the error in get_turns(L,A) or relate(L,A)");
             // Currently one c/c turn is generated for the exit
             //   when a Linestring is going out on a collinear spike
@@ -1160,16 +1159,16 @@ struct linear_areal
             typedef typename boost::range_iterator<range2_type>::type range2_iterator;
             range2_type range2(sub_range(geometry2, turn.operations[other_op_id].seg_id));
             
-            BOOST_ASSERT(boost::size(range1));
+            BOOST_GEOMETRY_ASSERT(boost::size(range1));
             std::size_t const s2 = boost::size(range2);
-            BOOST_ASSERT(s2 > 2);
+            BOOST_GEOMETRY_ASSERT(s2 > 2);
             std::size_t const seg_count2 = s2 - 1;
 
             std::size_t const p_seg_ij = static_cast<std::size_t>(turn.operations[op_id].seg_id.segment_index);
             std::size_t const q_seg_ij = static_cast<std::size_t>(turn.operations[other_op_id].seg_id.segment_index);
 
-            BOOST_ASSERT(p_seg_ij + 1 < boost::size(range1));
-            BOOST_ASSERT(q_seg_ij + 1 < s2);
+            BOOST_GEOMETRY_ASSERT(p_seg_ij + 1 < boost::size(range1));
+            BOOST_GEOMETRY_ASSERT(q_seg_ij + 1 < s2);
 
             point1_type const& pi = range::at(range1, p_seg_ij);
             point2_type const& qi = range::at(range2, q_seg_ij);
@@ -1178,8 +1177,8 @@ struct linear_areal
             geometry::convert(qi, qi_conv);
             bool const is_ip_qj = equals::equals_point_point(turn.point, qj);
 // TODO: test this!
-//            BOOST_ASSERT(!equals::equals_point_point(turn.point, pi));
-//            BOOST_ASSERT(!equals::equals_point_point(turn.point, qi));
+//            BOOST_GEOMETRY_ASSERT(!equals::equals_point_point(turn.point, pi));
+//            BOOST_GEOMETRY_ASSERT(!equals::equals_point_point(turn.point, qi));
             point1_type new_pj;
             geometry::convert(turn.point, new_pj);
 
@@ -1211,7 +1210,7 @@ struct linear_areal
         template <typename It>
         static inline It find_next_non_duplicated(It first, It current, It last)
         {
-            BOOST_ASSERT( current != last );
+            BOOST_GEOMETRY_ASSERT( current != last );
 
             It it = current;
 
@@ -1332,8 +1331,8 @@ struct linear_areal
         if ( first == last )
             return last;
 
-        signed_index_type const multi_index = first->operations[1].seg_id.multi_index;
-        signed_index_type const ring_index = first->operations[1].seg_id.ring_index;
+        signed_size_type const multi_index = first->operations[1].seg_id.multi_index;
+        signed_size_type const ring_index = first->operations[1].seg_id.ring_index;
 
         fun(*first);
         ++first;
@@ -1379,7 +1378,7 @@ struct linear_areal
 
                 if ( is_union_detected )
                 {
-                    BOOST_ASSERT(m_previous_turn_ptr != NULL);
+                    BOOST_GEOMETRY_ASSERT(m_previous_turn_ptr != NULL);
                     if ( !detail::equals::equals_point_point(it->point, m_previous_turn_ptr->point) )
                     {
                         // break

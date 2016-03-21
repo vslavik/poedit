@@ -38,7 +38,7 @@ __debug = None
 def debug():
     global __debug
     if __debug is None:
-        __debug = "--debug-configuration" in bjam.variable("ARGV")        
+        __debug = "--debug-configuration" in bjam.variable("ARGV")
     return __debug
 
 feature.extend('toolset', ['gcc'])
@@ -333,7 +333,7 @@ flags('gcc.compile', 'INCLUDES', [], ['<include>'])
 
 engine = get_manager().engine()
 
-engine.register_action('gcc.compile.c++.pch', 
+engine.register_action('gcc.compile.c++.pch',
     '"$(CONFIG_COMMAND)" -x c++-header $(OPTIONS) -D$(DEFINES) -I"$(INCLUDES)" -c -o "$(<)" "$(>)"')
 
 engine.register_action('gcc.compile.c.pch',
@@ -360,7 +360,7 @@ def gcc_compile_c(targets, sources, properties):
     engine.set_target_variable (targets, 'LANG', '-x c')
     #}
     engine.add_dependency(targets, bjam.call('get-target-variable', targets, 'PCH_FILE'))
-    
+
 engine.register_action(
     'gcc.compile.c++',
     '"$(CONFIG_COMMAND)" $(LANG) -ftemplate-depth-128 $(OPTIONS) ' +
@@ -789,8 +789,7 @@ cpu_flags('gcc', 'OPTIONS', 'x86', 'atom', ['-march=atom'])
 # Sparc
 flags('gcc', 'OPTIONS', ['<architecture>sparc/<address-model>32'], ['-m32'])
 flags('gcc', 'OPTIONS', ['<architecture>sparc/<address-model>64'], ['-m64'])
-cpu_flags('gcc', 'OPTIONS', 'sparc', 'c3', ['-mcpu=c3'], default=True)
-cpu_flags('gcc', 'OPTIONS', 'sparc', 'v7', ['-mcpu=v7'])
+cpu_flags('gcc', 'OPTIONS', 'sparc', 'v7', ['-mcpu=v7'], default=True)
 cpu_flags('gcc', 'OPTIONS', 'sparc', 'cypress', ['-mcpu=cypress'])
 cpu_flags('gcc', 'OPTIONS', 'sparc', 'v8', ['-mcpu=v8'])
 cpu_flags('gcc', 'OPTIONS', 'sparc', 'supersparc', ['-mcpu=supersparc'])

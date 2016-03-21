@@ -8,11 +8,10 @@
 //  Library home page: http://www.boost.org/libs/filesystem
 
 #include <iostream>
-#include <iterator>
 #include <vector>
 #include <algorithm>
 #include <boost/filesystem.hpp>
-using namespace std;
+using std::cout;
 using namespace boost::filesystem;
 
 int main(int argc, char* argv[])
@@ -23,34 +22,31 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  path p (argv[1]);   // p reads clearer than argv[1] in the following code
+  path p (argv[1]);
 
   try
   {
-    if (exists(p))    // does p actually exist?
+    if (exists(p))
     {
-      if (is_regular_file(p))        // is p a regular file?
+      if (is_regular_file(p))
         cout << p << " size is " << file_size(p) << '\n';
 
-      else if (is_directory(p))      // is p a directory?
+      else if (is_directory(p))
       {
         cout << p << " is a directory containing:\n";
 
-        typedef vector<path> vec;             // store paths,
-        vec v;                                // so we can sort them later
+        std::vector<std::string> v;
 
-        copy(directory_iterator(p), directory_iterator(), back_inserter(v));
+        for (auto&& x : directory_iterator(p))
+          v.push_back(x.path().filename().string()); 
 
-        sort(v.begin(), v.end());             // sort, since directory iteration
-                                              // is not ordered on some file systems
+        std::sort(v.begin(), v.end());  
 
-        for (vec::const_iterator it(v.begin()), it_end(v.end()); it != it_end; ++it)
-        {
-          cout << "   " << *it << '\n';
-        }
+        for (auto&& x : v)
+          cout << "    " << x << '\n';
       }
       else
-        cout << p << " exists, but is neither a regular file nor a directory\n";
+        cout << p << " exists, but is not a regular file or directory\n";
     }
     else
       cout << p << " does not exist\n";

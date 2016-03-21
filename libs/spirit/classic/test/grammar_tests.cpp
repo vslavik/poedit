@@ -10,7 +10,6 @@
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace std;
 
 //#define BOOST_SPIRIT_DEBUG
 #define BOOST_SPIRIT_SINGLE_GRAMMAR_INSTANCE

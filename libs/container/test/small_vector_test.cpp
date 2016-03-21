@@ -12,6 +12,7 @@
 #include "movable_int.hpp"
 #include "propagate_allocator_test.hpp"
 #include "default_init_test.hpp"
+#include "../../intrusive/test/iterator_test.hpp"
 
 #include <boost/container/allocator.hpp>
 #include <boost/container/node_allocator.hpp>
@@ -107,39 +108,79 @@ bool test_small_vector_base_test()
    return true;
 }
 
+//small vector has internal storage so some special swap cases must be tested
+bool test_swap()
+{
+   typedef boost::container::small_vector<int, 10> vec;
+   {  //v bigger than static capacity, w empty
+      vec v;
+      for(std::size_t i = 0, max = v.capacity()+1; i != max; ++i){
+         v.push_back(int(i));
+      }
+      vec w;
+      const std::size_t v_size = v.size();
+      const std::size_t w_size = w.size();
+      v.swap(w);
+      if(v.size() != w_size || w.size() != v_size)
+         return false;
+   }
+   {  //v smaller than static capacity, w empty
+      vec v;
+      for(std::size_t i = 0, max = v.capacity()-1; i != max; ++i){
+         v.push_back(int(i));
+      }
+      vec w;
+      const std::size_t v_size = v.size();
+      const std::size_t w_size = w.size();
+      v.swap(w);
+      if(v.size() != w_size || w.size() != v_size)
+         return false;
+   }
+   {  //v & w smaller than static capacity
+      vec v;
+      for(std::size_t i = 0, max = v.capacity()-1; i != max; ++i){
+         v.push_back(int(i));
+      }
+      vec w;
+      for(std::size_t i = 0, max = v.capacity()/2; i != max; ++i){
+         w.push_back(int(i));
+      }
+      const std::size_t v_size = v.size();
+      const std::size_t w_size = w.size();
+      v.swap(w);
+      if(v.size() != w_size || w.size() != v_size)
+         return false;
+   }
+   {  //v & w bigger than static capacity
+      vec v;
+      for(std::size_t i = 0, max = v.capacity()+1; i != max; ++i){
+         v.push_back(int(i));
+      }
+      vec w;
+      for(std::size_t i = 0, max = v.capacity()*2; i != max; ++i){
+         w.push_back(int(i));
+      }
+      const std::size_t v_size = v.size();
+      const std::size_t w_size = w.size();
+      v.swap(w);
+      if(v.size() != w_size || w.size() != v_size)
+         return false;
+   }
+   return true;
+}
+
 int main()
 {
    using namespace boost::container;
-/*
-   typedef small_vector<char, 0>::storage_test storage_test;
-   std::cout << "needed_extra_storages: " << storage_test::needed_extra_storages << '\n';
-   std::cout << "needed_bytes: " << storage_test::needed_bytes << '\n';
-   std::cout << "header_bytes: " << storage_test::header_bytes << '\n';
-   std::cout << "s_start: " << storage_test::s_start << '\n';
 
-   //char
-   std::cout << "sizeof(small_vector<char,  0>): " << sizeof(small_vector<char,  0>) << " extra: " << small_vector<char,  0>::needed_extra_storages << " internal storage: " << small_vector<char,  0>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<char,  1>): " << sizeof(small_vector<char,  1>) << " extra: " << small_vector<char,  1>::needed_extra_storages << " internal storage: " << small_vector<char,  1>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<char,  2>): " << sizeof(small_vector<char,  2>) << " extra: " << small_vector<char,  2>::needed_extra_storages << " internal storage: " << small_vector<char,  2>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<char,  3>): " << sizeof(small_vector<char,  3>) << " extra: " << small_vector<char,  3>::needed_extra_storages << " internal storage: " << small_vector<char,  3>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<char,  4>): " << sizeof(small_vector<char,  4>) << " extra: " << small_vector<char,  4>::needed_extra_storages << " internal storage: " << small_vector<char,  4>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<char,  5>): " << sizeof(small_vector<char,  5>) << " extra: " << small_vector<char,  5>::needed_extra_storages << " internal storage: " << small_vector<char,  5>::internal_capacity() << '\n';
-   std::cout << "\n";
+   if(!test_swap())
+      return 1;
 
-   //short
-   std::cout << "sizeof(small_vector<short,  0>): " << sizeof(small_vector<short,  0>) << " extra: " << small_vector<short,  0>::needed_extra_storages << " internal storage: " << small_vector<short,  0>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<short,  1>): " << sizeof(small_vector<short,  1>) << " extra: " << small_vector<short,  1>::needed_extra_storages << " internal storage: " << small_vector<short,  1>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<short,  2>): " << sizeof(small_vector<short,  2>) << " extra: " << small_vector<short,  2>::needed_extra_storages << " internal storage: " << small_vector<short,  2>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<short,  3>): " << sizeof(small_vector<short,  3>) << " extra: " << small_vector<short,  3>::needed_extra_storages << " internal storage: " << small_vector<short,  3>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<short,  4>): " << sizeof(small_vector<short,  4>) << " extra: " << small_vector<short,  4>::needed_extra_storages << " internal storage: " << small_vector<short,  4>::internal_capacity() << '\n';
-   std::cout << "sizeof(small_vector<short,  5>): " << sizeof(small_vector<short,  5>) << " extra: " << small_vector<short,  5>::needed_extra_storages << " internal storage: " << small_vector<short,  5>::internal_capacity() << '\n';
-*/
    if(test::vector_test< small_vector<int, 0> >())
       return 1;
 
    if(test::vector_test< small_vector<int, 2000> >())
       return 1;
-
 
    ////////////////////////////////////
    //    Default init test
@@ -177,6 +218,18 @@ int main()
    ////////////////////////////////////
    if (!test_small_vector_base_test()){
       return 1;
+   }
+
+   ////////////////////////////////////
+   //    Iterator testing
+   ////////////////////////////////////
+   {
+      typedef boost::container::small_vector<int, 0> cont_int;
+      cont_int a; a.push_back(0); a.push_back(1); a.push_back(2);
+      boost::intrusive::test::test_iterator_random< cont_int >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
    }
 
    return 0;

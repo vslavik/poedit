@@ -5,8 +5,10 @@
 //          http://www.boost.org/LICENSE_1_0.txt)
 
 #include <cstdlib>
+#include <exception>
 #include <functional>
 #include <iostream>
+#include <memory>
 #include <sstream>
 
 #include <boost/context/all.hpp>
@@ -48,7 +50,7 @@ private:
    void E(){
       T();
       while (next=='+'||next=='-'){
-         cb(next); 
+         cb(next);
          scan();
          T();
       }
@@ -57,69 +59,84 @@ private:
    void T(){
       S();
       while (next=='*'||next=='/'){
-         cb(next); 
+         cb(next);
          scan();
          S();
       }
    }
 
    void S(){
-      if (std::isdigit(next)){
+      if (isdigit(next)){
          cb(next);
          scan();
       }
       else if(next=='('){
-         cb(next); 
+         cb(next);
          scan();
          E();
          if (next==')'){
-             cb(next); 
+             cb(next);
              scan();
          }else{
-             exit(2);
+             throw std::runtime_error("parsing failed");
          }
       }
       else{
-         exit(3);
+         throw std::runtime_error("parsing failed");
       }
    }
 };
 
 int main() {
-    std::istringstream is("1+1");
-    bool done=false;
-    char c;
+    try {
+        std::istringstream is("1+1");
+        bool done=false;
+        std::exception_ptr except;
 
-    // create handle to main execution context
-    boost::context::execution_context main_ctx(
-        boost::context::execution_context::current() );
+        // create handle to main execution context
+        auto main_ctx( boost::context::execution_context::current() );
 
-    // executes parser in new execution context
-    boost::context::execution_context parser_ctx(
-        boost::context::fixedsize_stack(),
-        [&main_ctx,&is,&c,&done](){
-            // create parser with callback function
-            Parser p( is,
-                      [&main_ctx,&c](char ch){
-                          c=ch;
-                          // resume main execution context
-                          main_ctx.resume();
-                      });
-            // start recursive parsing
-            p.run();
-            done=true;
-            main_ctx.resume();
-        });
+        // execute parser in new execution context
+        boost::context::execution_context parser_ctx(
+                [&main_ctx,&is,&done,&except](void*){
+                // create parser with callback function
+                Parser p( is,
+                          [&main_ctx](char ch){
+                                // resume main execution context
+                                main_ctx( & ch);
+                        });
+                    try {
+                        // start recursive parsing
+                        p.run();
+                    } catch ( ... ) {
+                        // store other exceptions in exception-pointer
+                        except = std::current_exception();
+                    }
+                    // set termination flag
+                    done=true;
+                    // resume main execution context
+                    main_ctx();
+                });
 
-    // user-code pulls parsed data from parser
-    // invert control flow
-    parser_ctx.resume();
-    do {
-        printf("Parsed: %c\n",c);
-        parser_ctx.resume();
-    } while( ! done);
+        // user-code pulls parsed data from parser
+        // invert control flow
+        void * vp = parser_ctx();
+        if ( except) {
+            std::rethrow_exception( except);
+        }
+        while( ! done) {
+            printf("Parsed: %c\n",* static_cast< char* >( vp) );
+            vp = parser_ctx();
+            if ( except) {
+                std::rethrow_exception( except);
+            }
+        }
 
-    std::cout << "main: done" << std::endl;
+        std::cout << "main: done" << std::endl;
 
-    return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
+    } catch ( std::exception const& e) {
+        std::cerr << "exception: " << e.what() << std::endl;
+    }
+    return EXIT_FAILURE;
 }

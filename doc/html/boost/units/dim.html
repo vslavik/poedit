@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -40,7 +41,7 @@
   <span class="keyword">typedef</span> <span class="identifier">V</span>           <a name="boost.units.dim.value_type"></a><span class="identifier">value_type</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp488025568"></a><h2>Description</h2>
+<a name="idm45555063846160"></a><h2>Description</h2>
 <p>The dim class represents a single dimension tag/dimension exponent pair. That is, <code class="computeroutput">dim&lt;tag_type,value_type&gt;</code> is a pair where <code class="computeroutput">tag_type</code> represents the fundamental dimension being represented and <code class="computeroutput">value_type</code> represents the exponent of that fundamental dimension as a <code class="computeroutput"><a class="link" href="static_rational.html" title="Class template static_rational">static_rational</a></code>. <code class="computeroutput">tag_type</code> must be a derived from a specialization of <code class="computeroutput"><a class="link" href="base_dimension.html" title="Class template base_dimension">base_dimension</a></code>. Specialization of the following Boost.MPL metafunctions are provided - @c mpl::plus for two @c dims
 - @c mpl::minus for two @c dims
 - @c mpl::negate for a @c dim

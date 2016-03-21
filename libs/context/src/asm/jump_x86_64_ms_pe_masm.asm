@@ -77,7 +77,7 @@
 
 .code
 
-jump_fcontext PROC EXPORT FRAME
+jump_fcontext PROC BOOST_CONTEXT_EXPORT FRAME
     .endprolog
 
     push  rbp  ; save RBP

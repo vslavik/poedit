@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_new_operator</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_negate.html" title="has_negate">
@@ -35,10 +35,9 @@
         otherwise inherits from <a class="link" href="integral_constant.html" title="integral_constant">false_type</a>.
       </p>
 <p>
-        <span class="bold"><strong>Compiler Compatibility:</strong></span> Not usable with
-        compilers that do not support "substitution failure is not an error"
-        (in which case BOOST_NO_SFINAE will be defined), also known to be broken
-        with the Borland/Codegear compiler.
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> Requires working
+        SFINAE (i.e. BOOST_NO_SFINAE is not set). Only a minority of rather old compilers
+        do not support this. Also known to be broken with the Borland/Codegear compilers.
       </p>
 <p>
         <span class="bold"><strong>C++ Standard Reference:</strong></span> 12.5.

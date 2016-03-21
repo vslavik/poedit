@@ -211,5 +211,11 @@ TT_TEST_BEGIN(common_type)
 #ifndef BOOST_NO_LONG_LONG
     BOOST_CHECK_TYPE4(tt::common_type<unsigned, char, boost::long_long_type>::type, boost::long_long_type);
 #endif
+
+    //changes related to defect LWG2141
+    BOOST_CHECK_TYPE(tt::common_type<int&>::type, int);
+    BOOST_CHECK_TYPE(tt::common_type<const int>::type, int);
+    BOOST_CHECK_TYPE3(tt::common_type<const int, const int>::type, int);
+    BOOST_CHECK_TYPE3(tt::common_type<const int, const long>::type, long);
 }
 TT_TEST_END

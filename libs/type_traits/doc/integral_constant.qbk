@@ -12,6 +12,7 @@
       typedef integral_constant<T, val>  type;
       typedef T                          value_type;
       static const T value = val;
+      constexpr operator T()const;
    };
    
    typedef integral_constant<bool, true>  true_type;

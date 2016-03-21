@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-# Copyright 2003 Vladimir Prus 
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Copyright 2003 Vladimir Prus
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 # This tests correct handling of dependencies, specifically, on generated
 # sources, and from generated sources.
@@ -30,7 +30,7 @@ DEPENDS a : b ;
 
 actions create-b
 {
-   echo '#include <foo.h>' > $(<) 
+   echo '#include <foo.h>' > $(<)
 }
 copy a : b ;
 create-b b ;
@@ -84,7 +84,7 @@ t.run_build_system("-d+2 -f-", stdin=" DEPENDS all : foo.h ; " + code)
 t.fail_test(not correct_order(t.stdout()))
 
 # Now foo.h exists. Test include from b -> foo.h -> bar.h -> biz.h. b and foo.h
-# already have updating actions. 
+# already have updating actions.
 t.rm(["a", "b"])
 t.write("foo.h", "#include <bar.h>")
 t.write("bar.h", "#include <biz.h>")
@@ -107,14 +107,14 @@ t.fail_test(not correct_order(t.stdout()))
 
 t.rm(["a", "biz.h"])
 t.run_build_system("-d+2 -f-", stdin=" DEPENDS all : biz.h ; " + code)
-t.fail_test(not correct_order(t.stdout()))           
+t.fail_test(not correct_order(t.stdout()))
 
 t.write("a", "")
 
 code="""
 DEPENDS all : main d ;
 
-actions copy 
+actions copy
 {
     cp $(>) $(<) ;
 }
@@ -127,9 +127,9 @@ INCLUDES a : <1>c ;
 NOCARE <1>c ;
 SEARCH on <1>c = . ;
 
-actions create-c 
+actions create-c
 {
-    echo d > $(<)    
+    echo d > $(<)
 }
 
 actions create-d
@@ -144,7 +144,7 @@ create-d d ;
 HDRSCAN on <1>c = (.*) ;
 HDRRULE on <1>c = hdrrule ;
 
-rule hdrrule 
+rule hdrrule
 {
     INCLUDES $(1) : d ;
 }

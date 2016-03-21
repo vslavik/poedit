@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2014, 2015.
 // Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
@@ -18,8 +18,7 @@
 
 #include <boost/geometry/geometries/geometries.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
-#include <boost/geometry/multi/multi.hpp>
-#include <boost/geometry/multi/geometries/multi_polygon.hpp>
+#include <boost/geometry/geometries/multi_polygon.hpp>
 
 template <typename P>
 void test_a_a()

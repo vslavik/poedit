@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -38,20 +39,20 @@
   <span class="keyword">typedef</span> <span class="identifier">time_type</span><span class="special">::</span><span class="identifier">time_duration_type</span> <a name="boost.date_time.static_local_time_adjustor.time_duration_type"></a><span class="identifier">time_duration_type</span><span class="special">;</span>
   <span class="keyword">typedef</span> <span class="identifier">time_type</span><span class="special">::</span><span class="identifier">date_type</span>          <a name="boost.date_time.static_local_time_adjustor.date_type"></a><span class="identifier">date_type</span><span class="special">;</span>         
 
-  <span class="comment">// <a class="link" href="static_local_time_adjustor.html#idp90800944-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a class="link" href="static_local_time_adjustor.html#idp90801504-bb"><span class="identifier">utc_to_local_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="static_local_time_adjustor.html#idm45507106916480-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a class="link" href="static_local_time_adjustor.html#idm45507129926528-bb"><span class="identifier">utc_to_local_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">static</span> <span class="identifier">time_duration_type</span> 
-  <a class="link" href="static_local_time_adjustor.html#idp105328320-bb"><span class="identifier">local_to_utc_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <a class="link" href="static_local_time_adjustor.html#idm45507162877696-bb"><span class="identifier">local_to_utc_offset</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                       <span class="identifier">date_time</span><span class="special">::</span><span class="identifier">dst_flags</span> <span class="special">=</span> <span class="identifier">date_time</span><span class="special">::</span><span class="identifier">calculate</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp186135808"></a><h2>Description</h2>
+<a name="idm45555368132832"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp186136224"></a><h3>
-<a name="idp90800944-bb"></a><code class="computeroutput">static_local_time_adjustor</code> public static functions</h3>
+<a name="idm45555368132416"></a><h3>
+<a name="idm45507106916480-bb"></a><code class="computeroutput">static_local_time_adjustor</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a name="idp90801504-bb"></a><span class="identifier">utc_to_local_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Calculates the offset from a utc time to local based on dst and utc offset. <p>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_duration_type</span> <a name="idm45507129926528-bb"></a><span class="identifier">utc_to_local_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Calculates the offset from a utc time to local based on dst and utc offset. <p>
 The logic is as follows. Starting with UTC time use the offset to create a label for an non-dst adjusted local time. Then call dst_rules::local_is_dst with the non adjust local time. The results of this function will either unabiguously decide that the initial local time is in dst or return an illegal or ambiguous result. An illegal result only occurs at the end of dst (where labels are skipped) and indicates that dst has ended. An ambiguous result means that we need to recheck by making a dst adjustment and then rechecking. If the dst offset is added to the utc time and the recheck proves non-ambiguous then we are past the boundary. If it is still ambiguous then we are ahead of the boundary and dst is still in effect.</p>
 <p>TODO <span style="color: red">&lt;ndash&gt;&lt;/ndash&gt;</span> check if all dst offsets are positive. If not then the algorithm needs to check for this and reverse the illegal/ambiguous logic. </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
@@ -76,7 +77,7 @@ The logic is as follows. Starting with UTC time use the offset to create a label
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">static</span> <span class="identifier">time_duration_type</span> 
-<a name="idp105328320-bb"></a><span class="identifier">local_to_utc_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span> t<span class="special">,</span> 
+<a name="idm45507162877696-bb"></a><span class="identifier">local_to_utc_offset</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">time_type</span> <span class="special">&amp;</span> t<span class="special">,</span> 
                     <span class="identifier">date_time</span><span class="special">::</span><span class="identifier">dst_flags</span> dst <span class="special">=</span> <span class="identifier">date_time</span><span class="special">::</span><span class="identifier">calculate</span><span class="special">)</span><span class="special">;</span></pre>Get the offset to UTC given a local time. </li>
 </ol></div>
 </div>

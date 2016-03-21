@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-# Copyright 2003 Vladimir Prus 
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Copyright 2003 Vladimir Prus
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 import sys
 from string import strip
@@ -38,7 +38,7 @@ else:
     file_to_include = sys.argv[2]
 
     in_file  = open(file_to_include, "r");
-    variable_name = strip(in_file.readline())    
+    variable_name = strip(in_file.readline())
     out_file.write("extern const char %s[] = {\n%s};\n\n" % (variable_name, quote_file(in_file)))
     in_file.close()
     out_file.close()

@@ -122,14 +122,14 @@ std::locale create_convert( std::locale const &in,
                 std::locale base(std::locale::classic(),new std::ctype_byname<wchar_t>(locale_name.c_str()));
                 return std::locale(in,new std_converter<wchar_t>(base));
             }
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         case char16_t_facet:
             {
                 std::locale base(std::locale::classic(),new std::ctype_byname<char16_t>(locale_name.c_str()));
                 return std::locale(in,new std_converter<char16_t>(base));
             }
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         case char32_t_facet:
             {
                 std::locale base(std::locale::classic(),new std::ctype_byname<char32_t>(locale_name.c_str()));

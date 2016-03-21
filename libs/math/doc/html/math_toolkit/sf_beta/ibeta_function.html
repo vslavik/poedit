@@ -4,7 +4,7 @@
 <title>Incomplete Beta Functions</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_beta.html" title="Beta Functions">
 <link rel="prev" href="beta_function.html" title="Beta">
 <link rel="next" href="ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">
@@ -38,26 +38,26 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibeta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibeta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibeta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -94,16 +94,16 @@
         types.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibeta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibeta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibeta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the normalised incomplete beta function of a, b and x:
@@ -117,8 +117,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ibetac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the normalised complement of the incomplete beta function of a, b
@@ -130,8 +130,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the full (non-normalised) incomplete beta function of a, b and x:
@@ -142,8 +142,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">betac</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the full (non-normalised) complement of the incomplete beta function
@@ -172,8 +172,8 @@
         with the wider exponent range of the long double types.
       </p>
 <div class="table">
-<a name="math_toolkit.sf_beta.ibeta_function.errors_in_the_function_ibeta_a_b"></a><p class="title"><b>Table&#160;6.8.&#160;Errors In the Function ibeta(a,b,x)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function ibeta(a,b,x)">
+<a name="math_toolkit.sf_beta.ibeta_function.table_ibeta"></a><p class="title"><b>Table&#160;6.18.&#160;Error rates for ibeta</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for ibeta">
 <colgroup>
 <col>
 <col>
@@ -183,46 +183,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 10
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 100
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
-                </p>
-              </th>
-<th>
-                <p>
-                  1x10<sup>-5</sup> &lt; a,b &lt; 1x10<sup>5</sup>
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -230,128 +209,122 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Incomplete Beta Function: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 9.42&#949; (Mean = 2.24&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=42.3 Mean=2.9
-                </p>
-                <p>
-                  (GSL Peak=682 Mean=32.5)
-                </p>
-                <p>
-                  (<a href="http://www.netlib.org/cephes/" target="_top">Cephes</a> Peak=42.7
-                  Mean=7.0)
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 682&#949; (Mean = 32.6&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 22.9&#949; (Mean = 3.35&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 22.7&#949; (Mean = 1.69&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=108 Mean=16.6
-                </p>
-                <p>
-                  (GSL Peak=690 Mean=151)
-                </p>
-                <p>
-                  (<a href="http://www.netlib.org/cephes/" target="_top">Cephes</a> Peak=1545
-                  Mean=218)
+                  <span class="blue">Max = 6.27&#949; (Mean = 1.7&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=4x10<sup>3</sup> &#160; Mean=203
-                </p>
-                <p>
-                  (GSL Peak~3x10<sup>5</sup> &#160; Mean~2x10<sup>4</sup> &#160;)
-                </p>
-                <p>
-                  (<a href="http://www.netlib.org/cephes/" target="_top">Cephes</a> Peak~5x10<sup>5</sup> &#160; Mean~2x10<sup>4</sup> &#160;)
+                  <span class="blue">Max = 21.3&#949; (Mean = 2.74&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Incomplete Beta Function: Medium Values
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA32, gcc-3.4.4
+                  <span class="blue">Max = 108&#949; (Mean = 16.3&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=21.9 Mean=3.1
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 690&#949; (Mean = 151&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 232&#949; (Mean = 27.9&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 1.55e+03&#949; (Mean = 121&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=270.7 Mean=26.8
+                  <span class="blue">Max = 51.4&#949; (Mean = 12&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~5x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Redhat Linux IA64, gcc-3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=15.4 Mean=3.0
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=112.9 Mean=14.3
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak~5x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 124&#949; (Mean = 18.4&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Incomplete Beta Function: Large and Diverse Values
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 1.19e+003&#949; (Mean = 59.5&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=20.9 Mean=2.6
+                  <span class="blue">Max = 1.26&#949; (Mean = 0.063&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 3.9e+05&#949; (Mean = 1.82e+04&#949;)
+                  <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_ibeta_GSL_1_16_Incomplete_Beta_Function_Large_and_Diverse_Values">And
+                  other failures.</a>)<br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span>
+                  Max = 574&#949; (Mean = 49.4&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span> Max
+                  = 5.92e+05&#949; (Mean = 2.17e+04&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=88.1 Mean=14.3
+                  <span class="blue">Max = 1.96e+04&#949; (Mean = 997&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~2x10<sup>4</sup> &#160; Mean=1x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 4.98e+04&#949; (Mean = 2.07e+03&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Incomplete Beta Function: Small Integer Values
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.69&#949; (Mean = 0.765&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 254&#949; (Mean = 50.9&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 62.2&#949; (Mean = 8.95&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 7.96&#949; (Mean = 1.3&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 4.45&#949; (Mean = 0.814&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 44.5&#949; (Mean = 10.1&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -359,8 +332,8 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="math_toolkit.sf_beta.ibeta_function.errors_in_the_function_ibetac_a_"></a><p class="title"><b>Table&#160;6.9.&#160;Errors In the Function ibetac(a,b,x)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function ibetac(a,b,x)">
+<a name="math_toolkit.sf_beta.ibeta_function.table_ibetac"></a><p class="title"><b>Table&#160;6.19.&#160;Error rates for ibetac</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for ibetac">
 <colgroup>
 <col>
 <col>
@@ -370,46 +343,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 10
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 100
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
-                </p>
-              </th>
-<th>
-                <p>
-                  1x10<sup>-5</sup> &lt; a,b &lt; 1x10<sup>5</sup>
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -417,108 +369,112 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Incomplete Beta Function: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 6.56&#949; (Mean = 1.88&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=13.9 Mean=2.0
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 22.4&#949; (Mean = 3.67&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=56.2 Mean=14
+                  <span class="blue">Max = 8.47&#949; (Mean = 1.68&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=3x10<sup>3</sup> &#160; Mean=159
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Redhat Linux IA32, gcc-3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=21.1 Mean=3.6
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=221.7 Mean=25.8
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak~9x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 13.8&#949; (Mean = 2.69&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Incomplete Beta Function: Medium Values
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA64, gcc-3.4.4
+                  <span class="blue">Max = 56.2&#949; (Mean = 14.1&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=10.6 Mean=2.2
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 204&#949; (Mean = 25.8&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=73.9 Mean=11.9
+                  <span class="blue">Max = 75.3&#949; (Mean = 11.3&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~9x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 132&#949; (Mean = 19.8&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Incomplete Beta Function: Large and Diverse Values
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 1.87e+003&#949; (Mean = 93.8&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=9.9 Mean=2.6
+                  <span class="blue">Max = 0.981&#949; (Mean = 0.0638&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 889&#949; (Mean = 68.4&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=117.7 Mean=15.1
+                  <span class="blue">Max = 3.45e+04&#949; (Mean = 1.32e+03&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~3x10<sup>4</sup> &#160; Mean=1x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 4.26e+04&#949; (Mean = 1.54e+03&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Incomplete Beta Function: Small Integer Values
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 6.37&#949; (Mean = 1.03&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 84.6&#949; (Mean = 18&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 5.34&#949; (Mean = 1.11&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 107&#949; (Mean = 17.1&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -526,8 +482,8 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="math_toolkit.sf_beta.ibeta_function.errors_in_the_function_beta_a_b_"></a><p class="title"><b>Table&#160;6.10.&#160;Errors In the Function beta(a, b, x)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function beta(a, b, x)">
+<a name="math_toolkit.sf_beta.ibeta_function.table_beta_incomplete_"></a><p class="title"><b>Table&#160;6.20.&#160;Error rates for beta (incomplete)</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for beta (incomplete)">
 <colgroup>
 <col>
 <col>
@@ -537,46 +493,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 10
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 100
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
-                </p>
-              </th>
-<th>
-                <p>
-                  1x10<sup>-5</sup> &lt; a,b &lt; 1x10<sup>5</sup>
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -584,108 +519,108 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Incomplete Beta Function: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 11.1&#949; (Mean = 2.28&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=39 Mean=2.9
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=91 Mean=12.7
+                  <span class="blue">Max = 12.5&#949; (Mean = 2.01&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=635 Mean=25
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Redhat Linux IA32, gcc-3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=26 Mean=3.6
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=180.7 Mean=30.1
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak~7x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 18.7&#949; (Mean = 3.19&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Incomplete Beta Function: Medium Values
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA64, gcc-3.4.4
+                  <span class="blue">Max = 91.1&#949; (Mean = 12.7&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=13 Mean=2.4
+                  <span class="blue">Max = 0.568&#949; (Mean = 0.0342&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=67.1 Mean=13.4
+                  <span class="blue">Max = 67.1&#949; (Mean = 13.3&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~7x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 174&#949; (Mean = 25&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Incomplete Beta Function: Large and Diverse Values
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 635&#949; (Mean = 29.5&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=27.3 Mean=3.6
+                  <span class="blue">Max = 0.999&#949; (Mean = 0.0399&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=49.8 Mean=9.1
+                  <span class="blue">Max = 6.84e+04&#949; (Mean = 2.76e+03&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~6x10<sup>4</sup> &#160; Mean=3x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 6.86e+04&#949; (Mean = 2.79e+03&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Incomplete Beta Function: Small Integer Values
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 26.8&#949; (Mean = 6.61&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.786&#949; (Mean = 0.0248&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 10.2&#949; (Mean = 3.49&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 51.8&#949; (Mean = 11&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -693,8 +628,8 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="math_toolkit.sf_beta.ibeta_function.errors_in_the_function_betac_a_b"></a><p class="title"><b>Table&#160;6.11.&#160;Errors In the Function betac(a,b,x)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function betac(a,b,x)">
+<a name="math_toolkit.sf_beta.ibeta_function.table_betac"></a><p class="title"><b>Table&#160;6.21.&#160;Error rates for betac</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for betac">
 <colgroup>
 <col>
 <col>
@@ -704,46 +639,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 10
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  0 &lt; a,b &lt; 100
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
-                </p>
-              </th>
-<th>
-                <p>
-                  1x10<sup>-5</sup> &lt; a,b &lt; 1x10<sup>5</sup>
-                </p>
-                <p>
-                  and
-                </p>
-                <p>
-                  0 &lt; x &lt; 1
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -751,108 +665,108 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Incomplete Beta Function: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 12&#949; (Mean = 2.43&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=12.0 Mean=2.4
+                  <span class="blue">Max = 0.676&#949; (Mean = 0.0302&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=91 Mean=15
+                  <span class="blue">Max = 7.75&#949; (Mean = 1.91&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=4x10<sup>3</sup> &#160; Mean=113
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Redhat Linux IA32, gcc-3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=19.8 Mean=3.8
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=295.1 Mean=33.9
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak~1x10<sup>5</sup> &#160; Mean=5x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 12.6&#949; (Mean = 3.02&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Incomplete Beta Function: Medium Values
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA64, gcc-3.4.4
+                  <span class="blue">Max = 91.3&#949; (Mean = 14.8&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=11.2 Mean=2.4
+                  <span class="blue">Max = 0.949&#949; (Mean = 0.0944&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=63.5 Mean=13.6
+                  <span class="blue">Max = 63.5&#949; (Mean = 13.4&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~1x10<sup>5</sup> &#160; Mean=5x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 97.6&#949; (Mean = 24.3&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Incomplete Beta Function: Large and Diverse Values
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 3.72e+003&#949; (Mean = 113&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=15.6 Mean=3.5
+                  <span class="blue">Max = 1.12&#949; (Mean = 0.0458&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=39.8 Mean=8.9
+                  <span class="blue">Max = 1.05e+05&#949; (Mean = 5.45e+03&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak~9x10<sup>4</sup> &#160; Mean=5x10<sup>3</sup> &#160;
+                  <span class="blue">Max = 1.04e+05&#949; (Mean = 5.46e+03&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Incomplete Beta Function: Small Integer Values
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 26.7&#949; (Mean = 6.67&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.586&#949; (Mean = 0.0314&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 10.4&#949; (Mean = 3.54&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 103&#949; (Mean = 17.4&#949;)</span>
                 </p>
               </td>
 </tr>

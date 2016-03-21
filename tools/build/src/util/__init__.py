@@ -6,14 +6,153 @@ import types
 from itertools import groupby
 
 
+def safe_isinstance(value, types=None, class_names=None):
+    """To prevent circular imports, this extends isinstance()
+    by checking also if `value` has a particular class name (or inherits from a
+    particular class name). This check is safe in that an AttributeError is not
+    raised in case `value` doesn't have a __class__ attribute.
+    """
+    # inspect is being imported here because I seriously doubt
+    # that this function will be used outside of the type
+    # checking below.
+    import inspect
+    result = False
+    if types is not None:
+        result = result or isinstance(value, types)
+    if class_names is not None and not result:
+        # this doesn't work with inheritance, but normally
+        # either the class will already be imported within the module,
+        # or the class doesn't have any subclasses. For example: PropertySet
+        if isinstance(class_names, basestring):
+            class_names = [class_names]
+        # this is the part that makes it "safe".
+        try:
+            base_names = [class_.__name__ for class_ in inspect.getmro(value.__class__)]
+            for name in class_names:
+                if name in base_names:
+                    return True
+        except AttributeError:
+            pass
+    return result
+
+
+def is_iterable_typed(values, type_):
+    return is_iterable(values) and all(isinstance(v, type_) for v in values)
+
+
+def is_iterable(value):
+    """Returns whether value is iterable and not a string."""
+    return not isinstance(value, basestring) and hasattr(value, '__iter__')
+
+
+def is_iterable_or_none(value):
+    return is_iterable(value) or value is None
+
+
+def is_single_value(value):
+    # some functions may specify a bjam signature
+    # that is a string type, but still allow a
+    # PropertySet to be passed in
+    return safe_isinstance(value, (basestring, type(None)), 'PropertySet')
+
+
+if __debug__:
+
+    from textwrap import dedent
+    message = dedent(
+        """The parameter "{}" was passed in a wrong type for the "{}()" function.
+        Actual:
+        \ttype: {}
+        \tvalue: {}
+        Expected:
+        \t{}
+        """
+    )
+
+    bjam_types = {
+        '*': is_iterable_or_none,
+        '+': is_iterable_or_none,
+        '?': is_single_value,
+        '': is_single_value,
+    }
+
+    bjam_to_python = {
+        '*': 'iterable',
+        '+': 'iterable',
+        '?': 'single value',
+        '': 'single value',
+    }
+
+
+    def get_next_var(field):
+        it = iter(field)
+        var = it.next()
+        type_ = None
+        yield_var = False
+        while type_ not in bjam_types:
+            try:
+                # the first value has already
+                # been consumed outside of the loop
+                type_ = it.next()
+            except StopIteration:
+                # if there are no more values, then
+                # var still needs to be returned
+                yield_var = True
+                break
+            if type_ not in bjam_types:
+                # type_ is not a type and is
+                # another variable in the same field.
+                yield var, ''
+                # type_ is the next var
+                var = type_
+            else:
+                # otherwise, type_ is a type for var
+                yield var, type_
+                try:
+                    # the next value should be a var
+                    var = it.next()
+                except StopIteration:
+                    # if not, then we're done with
+                    # this field
+                    break
+        if yield_var:
+            yield var, ''
+
+
 # Decorator the specifies bjam-side prototype for a Python function
 def bjam_signature(s):
+    if __debug__:
+        from inspect import getcallargs
+        def decorator(fn):
+            function_name = fn.__module__ + '.' + fn.__name__
+            def wrapper(*args, **kwargs):
+                callargs = getcallargs(fn, *args, **kwargs)
+                for field in s:
+                    for var, type_ in get_next_var(field):
+                        try:
+                            value = callargs[var]
+                        except KeyError:
+                            raise Exception(
+                                'Bjam Signature specifies a variable named "{}"\n'
+                                'but is not found within the python function signature\n'
+                                'for function {}()'.format(var, function_name)
+                            )
+                        if not bjam_types[type_](value):
+                            raise TypeError(
+                                message.format(var, function_name, type(type_), repr(value),
+                                               bjam_to_python[type_])
+                            )
+                return fn(*args, **kwargs)
+            wrapper.__name__ = fn.__name__
+            wrapper.bjam_signature = s
+            return wrapper
+        return decorator
+    else:
+        def decorator(f):
+            f.bjam_signature = s
+            return f
 
-    def wrap(f):       
-        f.bjam_signature = s
-        return f
-
-    return wrap
+    return decorator
 
 def metatarget(f):
 
@@ -58,9 +197,9 @@ def qualify_jam_action(action_name, context_module):
         ix = action_name.find('.')
         if ix != -1 and action_name[:ix] == context_module:
             return context_module + '%' + action_name[ix+1:]
-        
-        return context_module + '%' + action_name        
-    
+
+        return context_module + '%' + action_name
+
 
 def set_jam_action(name, *args):
 

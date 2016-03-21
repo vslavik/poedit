@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -41,7 +42,7 @@
   <span class="keyword">void</span> <span class="identifier">scan</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> in_values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">,</span> 
             <span class="identifier">T</span> <span class="special">*</span> out_values<span class="special">,</span> <span class="identifier">Op</span> op<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp331711888"></a><h2>Description</h2>
+<a name="idm45555223575024"></a><h2>Description</h2>
 <p><code class="computeroutput">scan</code> is a collective algorithm that combines the values stored by each process with the values of all processes with a smaller rank. The values can be arbitrarily combined, specified via a function object <code class="computeroutput">op</code>. The type <code class="computeroutput">T</code> of the values may be any type that is serializable or has an associated MPI data type. One can think of this operation as a <code class="computeroutput">gather</code> to some process, followed by an <code class="computeroutput">std::prefix_sum()</code> over the gathered values using the operation <code class="computeroutput">op</code>. The ith process returns the ith value emitted by <code class="computeroutput">std::prefix_sum()</code>.</p>
 <p>When the type <code class="computeroutput">T</code> has an associated MPI data type, this routine invokes <code class="computeroutput">MPI_Scan</code> to perform the reduction. If possible, built-in MPI operations will be used; otherwise, <code class="computeroutput">scan()</code> will create a custom <code class="computeroutput">MPI_Op</code> for the call to MPI_Scan.</p>
 <p>

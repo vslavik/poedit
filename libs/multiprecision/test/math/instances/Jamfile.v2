@@ -33,6 +33,7 @@ project : requirements
    <toolset>gcc:<cxxflags>-Wall
    <toolset>gcc:<cxxflags>-Wextra
    <toolset>intel:<define>SLOW_COMPILER
+   <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
    ;
 
 lib gmp : : <search>$(gmp_path) ;

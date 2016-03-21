@@ -244,6 +244,22 @@ inline void test_advance()
     BOOST_CHECK_EQUAL(r3.advance_end(-1).size(), 1u);
 }
 
+void ticket_10514()
+{
+    typedef std::vector<int> vec_t;
+    typedef boost::sub_range<vec_t> range_t;
+    vec_t v(10);
+    range_t r(v.begin(), v.end());
+    const range_t& cr = r;
+    range_t copy_r = cr;
+
+    BOOST_CHECK(r.begin() == copy_r.begin());
+    BOOST_CHECK(r.end() == copy_r.end());
+
+    BOOST_CHECK(cr.begin() == copy_r.begin());
+    BOOST_CHECK(cr.end() == copy_r.end());
+}
+
     } // anonymous namespace
 } // namespace boost_range_test
 
@@ -261,6 +277,8 @@ boost::unit_test::test_suite* init_unit_test_suite(int, char*[])
                   &boost_range_test::const_propagation_mutable_collection));
 
     test->add(BOOST_TEST_CASE(&boost_range_test::test_advance));
+
+    test->add(BOOST_TEST_CASE(&boost_range_test::ticket_10514));
 
     return test;
 }

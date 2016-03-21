@@ -14,13 +14,15 @@ project boost-geometry-algorithms-buffer
 
 test-suite boost-geometry-algorithms-buffer
     :
-    [ run point_buffer.cpp            : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-    [ run linestring_buffer.cpp       : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-    [ run polygon_buffer.cpp          : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-    [ run multi_point_buffer.cpp      : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-    [ run multi_linestring_buffer.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-    [ run multi_polygon_buffer.cpp    : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-    [ run aimes_linestring_buffer.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ]
-#    [ run country_buffer.cpp          : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE ] # Uncomment if you want to test this manually; requires access to data/ folder
+    [ run buffer_with_strategies.cpp  : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_with_strategies ]
+    [ run buffer_point.cpp            : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_point ]
+    [ run buffer_linestring.cpp       : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_linestring ]
+    [ run buffer_polygon.cpp          : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_polygon ]
+    [ run buffer_multi_point.cpp      : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_multi_point ]
+    [ run buffer_multi_linestring.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_multi_linestring ]
+    [ run buffer_multi_polygon.cpp    : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_multi_polygon ]
+    [ run buffer_linestring_aimes.cpp : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_linestring_aimes ]
+# Uncomment next line if you want to test this manually; requires access to data/ folder
+#    [ run buffer_countries.cpp        : : : <define>BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE : algorithms_buffer_countries ]
     ;
 

@@ -7,7 +7,7 @@
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../group__rtree__functions.html" title="R-tree free functions (boost::geometry::index::)">
 <link rel="prev" href="qbegin_rtree______const____predicates_const___.html" title="qbegin(rtree&lt;...&gt; const &amp;, Predicates const &amp;)">
-<link rel="next" href="clear_rtree________.html" title="clear(rtree&lt;...&gt; &amp;)">
+<link rel="next" href="begin_rtree______const___.html" title="begin(rtree&lt;...&gt; const &amp;)">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="qbegin_rtree______const____predicates_const___.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../group__rtree__functions.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="clear_rtree________.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="qbegin_rtree______const____predicates_const___.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../group__rtree__functions.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="begin_rtree______const___.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
@@ -28,7 +28,7 @@
           const &amp;)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp128619344"></a>
+            <a class="indexterm" name="idm44837168127024"></a>
 Returns the query iterator pointing at the end of the query range.
           </p>
 <h6>
@@ -63,23 +63,34 @@ Returns the query iterator pointing at the end of the query range.
           </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">for</span> <span class="special">(</span> <span class="identifier">Rtree</span><span class="special">::</span><span class="identifier">const_query_iterator</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">qbegin</span><span class="special">(</span><span class="identifier">tree</span><span class="special">,</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">10000</span><span class="special">))</span> <span class="special">;</span>
-      <span class="identifier">it</span> <span class="special">!=</span> <span class="identifier">qend</span><span class="special">(</span><span class="identifier">tree</span><span class="special">)</span> <span class="special">;</span> <span class="special">++</span><span class="identifier">it</span> <span class="special">)</span>
-<span class="special">{</span>
-    <span class="comment">// do something with value</span>
-    <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">has_enough_nearest_values</span><span class="special">()</span> <span class="special">)</span>
-        <span class="keyword">break</span><span class="special">;</span>
-<span class="special">}</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">qbegin</span><span class="special">(</span><span class="identifier">tree</span><span class="special">,</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">3</span><span class="special">)),</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">qend</span><span class="special">(</span><span class="identifier">tree</span><span class="special">),</span> <span class="identifier">do_something</span><span class="special">());</span>
 </pre>
 <p>
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___.h4"></a>
+            <span class="phrase"><a name="geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___.iterator_category"></a></span><a class="link" href="qend_rtree______const___.html#geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___.iterator_category">Iterator
+            category</a>
+          </h6>
+<p>
+            ForwardIterator
+          </p>
+<h6>
+<a name="geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___.h5"></a>
             <span class="phrase"><a name="geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___.throws"></a></span><a class="link" href="qend_rtree______const___.html#geometry.reference.spatial_indexes.group__rtree__functions.qend_rtree______const___.throws">Throws</a>
           </h6>
 <p>
             Nothing
           </p>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The modification of the rtree may invalidate the iterators.
+            </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
@@ -92,7 +103,7 @@ Returns the query iterator pointing at the end of the query range.
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="qbegin_rtree______const____predicates_const___.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../group__rtree__functions.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="clear_rtree________.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="qbegin_rtree______const____predicates_const___.html"><img src="../../../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../group__rtree__functions.html"><img src="../../../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../../index.html"><img src="../../../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="begin_rtree______const___.html"><img src="../../../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

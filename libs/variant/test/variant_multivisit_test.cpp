@@ -92,9 +92,9 @@ typedef boost::variant<int, double, bool> bool_like_t;
 typedef boost::variant<int, double> arithmetics_t;
 
 struct if_visitor: public boost::static_visitor<arithmetics_t> {
-    template <class T1, class T2>
-    arithmetics_t operator()(bool b, T1 v1, T2 v2) const {
-        if (b) {
+    template <class T0, class T1, class T2>
+    arithmetics_t operator()(T0 b, T1 v1, T2 v2) const {
+        if (!!b) {
             return v1;
         } else {
             return v2;

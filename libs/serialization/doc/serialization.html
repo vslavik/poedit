@@ -792,7 +792,7 @@ class derived : public base {
         ar & boost::serialization::base_object&lt;base&gt;(*this);
         // method 2 : explicitly register base/derived relationship
         boost::serialization::void_cast_register&lt;derived, base&gt;(
-            static_cast&lt;derived *&gt;=NULL),
+            static_cast&lt;derived *&gt;(NULL),
             static_cast&lt;base *&gt;(NULL)
         )
     }

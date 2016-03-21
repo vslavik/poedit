@@ -52,7 +52,7 @@ void dynamic_interval_bounds_4_bicremental_types()
 template <class T> 
 void discrete_dynamic_interval_bounds_4_bicremental_types()
 {
-    typedef typename icl::interval<T>::type IntervalT;
+    //CL typedef typename icl::interval<T>::type IntervalT;
 
     BOOST_CHECK( icl::bounds(I_I(2,4)) == interval_bounds::closed()     );
     BOOST_CHECK( icl::bounds(I_D(2,5)) == interval_bounds::right_open() );

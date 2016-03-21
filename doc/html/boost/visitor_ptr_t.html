@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,24 +36,24 @@
 <span class="keyword">class</span> <a class="link" href="visitor_ptr_t.html" title="Class template visitor_ptr_t">visitor_ptr_t</a> <span class="special">:</span> <span class="keyword">public</span> <a class="link" href="static_visitor.html" title="Class template static_visitor">static_visitor</a><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="visitor_ptr_t.html#boost.visitor_ptr_tconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="visitor_ptr_t.html#idp295557792-bb"><span class="identifier">visitor_ptr_t</span></a><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="visitor_ptr_t.html#idm45506898693568-bb"><span class="identifier">visitor_ptr_t</span></a><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="visitor_ptr_t.html#idp148683760-bb">static visitor interfaces</a></span>
-  <span class="identifier">R</span> <a class="link" href="visitor_ptr_t.html#idp148684896-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="emphasis"><em><span class="identifier">unspecified</span><span class="special">-</span><span class="identifier">forwarding</span><span class="special">-</span><span class="identifier">type</span></em></span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="visitor_ptr_t.html#idp155272288-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">U</span><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="visitor_ptr_t.html#idm45506891571536-bb">static visitor interfaces</a></span>
+  <span class="identifier">R</span> <a class="link" href="visitor_ptr_t.html#idm45506891570560-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="emphasis"><em><span class="identifier">unspecified</span><span class="special">-</span><span class="identifier">forwarding</span><span class="special">-</span><span class="identifier">type</span></em></span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="visitor_ptr_t.html#idm45506845000656-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">U</span><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp521511072"></a><h2>Description</h2>
+<a name="idm45555030362528"></a><h2>Description</h2>
 <p>Adapts the function given at construction for use as a
         <a class="link" href="../variant/reference.html#variant.concepts.static-visitor" title="StaticVisitor">static visitor</a>
         of type <code class="computeroutput">T</code> with result type <code class="computeroutput">R</code>.</p>
 <div class="refsect2">
-<a name="idp521514336"></a><h3>
+<a name="idm45555030359264"></a><h3>
 <a name="boost.visitor_ptr_tconstruct-copy-destruct"></a><code class="computeroutput">visitor_ptr_t</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp295557792-bb"></a><span class="identifier">visitor_ptr_t</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45506898693568-bb"></a><span class="identifier">visitor_ptr_t</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="special">*</span><span class="special">)</span><span class="special">(</span><span class="identifier">T</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -66,11 +67,11 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp521526224"></a><h3>
-<a name="idp148683760-bb"></a><code class="computeroutput">visitor_ptr_t</code> static visitor interfaces</h3>
+<a name="idm45555030347376"></a><h3>
+<a name="idm45506891571536-bb"></a><code class="computeroutput">visitor_ptr_t</code> static visitor interfaces</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp148684336-bb"></a><span class="identifier">R</span> <a name="idp148684896-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="emphasis"><em><span class="identifier">unspecified</span><span class="special">-</span><span class="identifier">forwarding</span><span class="special">-</span><span class="identifier">type</span></em></span> operand<span class="special">)</span><span class="special">;</span>
-<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp155272288-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">U</span><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45506891571120-bb"></a><span class="identifier">R</span> <a name="idm45506891570560-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="emphasis"><em><span class="identifier">unspecified</span><span class="special">-</span><span class="identifier">forwarding</span><span class="special">-</span><span class="identifier">type</span></em></span> operand<span class="special">)</span><span class="special">;</span>
+<span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> U<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idm45506845000656-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">U</span><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">

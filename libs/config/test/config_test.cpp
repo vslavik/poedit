@@ -1,4 +1,4 @@
-//  This file was automatically generated on Mon Oct 13 13:09:12 2014
+//  This file was automatically generated on Thu Aug 13 16:32:12 2015
 //  by libs/config/tools/generate.cpp
 //  Copyright John Maddock 2002-4.
 //  Use, modification and distribution are subject to the 
@@ -280,12 +280,17 @@ namespace boost_no_cxx14_decltype_auto = empty_boost;
 #ifndef BOOST_NO_CXX14_DIGIT_SEPARATORS
 #include "boost_no_cxx14_digit_separator.ipp"
 #else
-namespace boost_no_cxx14_digit_separator = empty_boost;
+namespace boost_no_cxx14_digit_separators = empty_boost;
 #endif
 #ifndef BOOST_NO_CXX14_GENERIC_LAMBDAS
 #include "boost_no_cxx14_generic_lambda.ipp"
 #else
 namespace boost_no_cxx14_generic_lambdas = empty_boost;
+#endif
+#ifndef BOOST_NO_CXX14_HDR_SHARED_MUTEX
+#include "boost_no_cxx14_hdr_shared_mutex.ipp"
+#else
+namespace boost_no_cxx14_hdr_shared_mutex = empty_boost;
 #endif
 #ifndef BOOST_NO_CXX14_INITIALIZED_LAMBDA_CAPTURES
 #include "boost_no_cxx14_lambda_capture.ipp"
@@ -748,6 +753,11 @@ namespace boost_has_dirent_h = empty_boost;
 #else
 namespace boost_has_expm1 = empty_boost;
 #endif
+#ifdef BOOST_HAS_FLOAT128
+#include "boost_has_float128.ipp"
+#else
+namespace boost_has_float128 = empty_boost;
+#endif
 #ifdef BOOST_HAS_FTIME
 #include "boost_has_ftime.ipp"
 #else
@@ -1009,6 +1019,11 @@ int main( int, char *[] )
    if(0 != boost_has_expm1::test())
    {
       std::cerr << "Failed test for BOOST_HAS_EXPM1 at: " << __FILE__ << ":" << __LINE__ << std::endl;
+      ++error_count;
+   }
+   if(0 != boost_has_float128::test())
+   {
+      std::cerr << "Failed test for BOOST_HAS_FLOAT128 at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
    }
    if(0 != boost_has_ftime::test())
@@ -1501,7 +1516,7 @@ int main( int, char *[] )
       std::cerr << "Failed test for BOOST_NO_CXX14_DECLTYPE_AUTO at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
    }
-   if(0 != boost_no_cxx14_digit_separator::test())
+   if(0 != boost_no_cxx14_digit_separators::test())
    {
       std::cerr << "Failed test for BOOST_NO_CXX14_DIGIT_SEPARATORS at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
@@ -1509,6 +1524,11 @@ int main( int, char *[] )
    if(0 != boost_no_cxx14_generic_lambdas::test())
    {
       std::cerr << "Failed test for BOOST_NO_CXX14_GENERIC_LAMBDAS at: " << __FILE__ << ":" << __LINE__ << std::endl;
+      ++error_count;
+   }
+   if(0 != boost_no_cxx14_hdr_shared_mutex::test())
+   {
+      std::cerr << "Failed test for BOOST_NO_CXX14_HDR_SHARED_MUTEX at: " << __FILE__ << ":" << __LINE__ << std::endl;
       ++error_count;
    }
    if(0 != boost_no_cxx14_initialized_lambda_captures::test())

@@ -399,9 +399,9 @@
         sets</a>
       </h5>
 <p>
-        A character set is a bracket-expression starting with <code class="literal">[</code>
-        and ending with <code class="literal"></code>], it defines a set of characters, and
-        matches any single character that is a member of that set.
+        A character set is a bracket-expression starting with <code class="literal">[] and ending
+        with <code class="literal"></code></code>, it defines a set of characters, and matches
+        any single character that is a member of that set.
       </p>
 <p>
         A bracket expression may contain any combination of the following:
@@ -702,7 +702,7 @@
 </table></div>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h21"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax._quot_single_character_quot__character_classes_"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax._quot_single_character_quot__character_classes_">"Single
+        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.single_character_character_class"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.single_character_character_class">"Single
         character" character classes:</a>
       </h6>
 <p>
@@ -1361,8 +1361,51 @@
             from elsewhere in the pattern.
           </li>
 </ul></div>
-<h5>
+<h6>
 <a name="boost_regex.syntax.perl_syntax.h42"></a>
+        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.backtracking_control_verbs"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.backtracking_control_verbs">Backtracking
+        Control Verbs</a>
+      </h6>
+<p>
+        This library has partial support for Perl's backtracking control verbs, in
+        particular (*MARK) is not supported. There may also be detail differences
+        in behaviour between this library and Perl, not least because Perl's behaviour
+        is rather under-documented and often somewhat random in how it behaves in
+        practice. The verbs supported are:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="literal">(*PRUNE)</code> Has no effect unless backtracked onto, in
+            which case all the backtracking information prior to this point is discarded.
+          </li>
+<li class="listitem">
+            <code class="literal">(*SKIP)</code> Behaves the same as <code class="literal">(*PRUNE)</code>
+            except that it is assumed that no match can possibly occur prior to the
+            current point in the string being searched. This can be used to optimize
+            searches by skipping over chunks of text that have already been determined
+            can not form a match.
+          </li>
+<li class="listitem">
+            <code class="literal">(*THEN)</code> Has no effect unless backtracked onto, in
+            which case all subsequent alternatives in a group of alternations are
+            discarded.
+          </li>
+<li class="listitem">
+            <code class="literal">(*COMMIT)</code> Has no effect unless backtracked onto, in
+            which case all subsequent matching/searching attempts are abandoned.
+          </li>
+<li class="listitem">
+            <code class="literal">(*FAIL)</code> Causes the match to fail unconditionally at
+            this point, can be used to force the engine to backtrack.
+          </li>
+<li class="listitem">
+            <code class="literal">(*ACCEPT)</code> Causes the pattern to be considered matched
+            at the current point. Any half-open sub-expressions are closed at the
+            current point.
+          </li>
+</ul></div>
+<h5>
+<a name="boost_regex.syntax.perl_syntax.h43"></a>
         <span class="phrase"><a name="boost_regex.syntax.perl_syntax.operator_precedence"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.operator_precedence">Operator
         precedence</a>
       </h5>
@@ -1375,7 +1418,7 @@
             <span class="special">[::]</span> <span class="special">[..]</span></code>
           </li>
 <li class="listitem">
-            Escaped characters [^]
+            Escaped characters <code class="literal">\</code>
           </li>
 <li class="listitem">
             Character set (bracket expression) <code class="computeroutput"><span class="special">[]</span></code>
@@ -1397,7 +1440,7 @@
           </li>
 </ol></div>
 <h4>
-<a name="boost_regex.syntax.perl_syntax.h43"></a>
+<a name="boost_regex.syntax.perl_syntax.h44"></a>
         <span class="phrase"><a name="boost_regex.syntax.perl_syntax.what_gets_matched"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.what_gets_matched">What
         gets matched</a>
       </h4>
@@ -1573,7 +1616,7 @@
 </tbody>
 </table></div>
 <h4>
-<a name="boost_regex.syntax.perl_syntax.h44"></a>
+<a name="boost_regex.syntax.perl_syntax.h45"></a>
         <span class="phrase"><a name="boost_regex.syntax.perl_syntax.variations"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.variations">Variations</a>
       </h4>
 <p>
@@ -1582,7 +1625,7 @@
         and <code class="literal">JScript</code></a> are all synonyms for <code class="literal">perl</code>.
       </p>
 <h4>
-<a name="boost_regex.syntax.perl_syntax.h45"></a>
+<a name="boost_regex.syntax.perl_syntax.h46"></a>
         <span class="phrase"><a name="boost_regex.syntax.perl_syntax.options"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.options">Options</a>
       </h4>
 <p>
@@ -1594,7 +1637,7 @@
         are to be applied.
       </p>
 <h4>
-<a name="boost_regex.syntax.perl_syntax.h46"></a>
+<a name="boost_regex.syntax.perl_syntax.h47"></a>
         <span class="phrase"><a name="boost_regex.syntax.perl_syntax.pattern_modifiers"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.pattern_modifiers">Pattern
         Modifiers</a>
       </h4>
@@ -1606,7 +1649,7 @@
         and <code class="literal">no_mod_s</code></a>.
       </p>
 <h4>
-<a name="boost_regex.syntax.perl_syntax.h47"></a>
+<a name="boost_regex.syntax.perl_syntax.h48"></a>
         <span class="phrase"><a name="boost_regex.syntax.perl_syntax.references"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.references">References</a>
       </h4>
 <p>

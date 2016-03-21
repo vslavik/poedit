@@ -4,10 +4,10 @@
 <title>Interpreting these Results</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
-<link rel="up" href="../perf.html" title="Chapter&#160;15.&#160;Performance">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../perf.html" title="Chapter&#160;16.&#160;Performance">
 <link rel="prev" href="perf_over2.html" title="Performance Overview">
-<link rel="next" href="getting_best.html" title="Getting the Best Performance from this Library">
+<link rel="next" href="getting_best.html" title="Getting the Best Performance from this Library: Compiler and Compiler Options">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -30,11 +30,14 @@
       In all of the following tables, the best performing result in each row, is
       assigned a relative value of "1" and shown in bold, so a score of
       "2" means <span class="emphasis"><em>"twice as slow as the best performing result".</em></span>
-      Actual timings in seconds per function call are also shown in parenthesis.
+      Actual timings in nano-seconds per function call are also shown in parenthesis.
+      To make the results easier to read, they are color-coded as follows: the best
+      result and everything within 20% of it is green, anything that's more than
+      twice as slow as the best result is red, and results in between are blue.
     </p>
 <p>
-      Result were obtained on a system with an Intel 2.8GHz Pentium 4 processor with
-      2Gb of RAM and running either Windows XP or Mandriva Linux.
+      Result were obtained on a system with an Intel core i7 4710MQ with 16Gb RAM
+      and running either Windows 8.1 or Xubuntu Linux.
     </p>
 <div class="caution"><table border="0" summary="Caution">
 <tr>
@@ -49,17 +52,6 @@
         to provide good coverage of our code and test all the appropriate corner
         cases. They do not necessarily represent "typical" usage: whatever
         that may be!
-      </p></td></tr>
-</table></div>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-        Since these tests were run, most compilers have improved their code optimisation,
-        and processor speeds have improved too, so these results are known to be
-        out of date.
       </p></td></tr>
 </table></div>
 </div>

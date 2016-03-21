@@ -67,8 +67,7 @@ class codecvt_null;
 /////////////////////////////////////////////////////////////////////////////
 // class binary_iarchive - read serialized objects from a input binary stream
 template<class Archive, class Elem, class Tr>
-class basic_binary_iprimitive
-{
+class BOOST_SYMBOL_VISIBLE basic_binary_iprimitive {
 #ifndef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
     friend class load_access;
 protected:
@@ -103,25 +102,25 @@ public:
         BOOST_ASSERT(0 == i || 1 == i);
         (void)i; // warning suppression for release builds.
     }
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
     load(std::string &s);
     #ifndef BOOST_NO_STD_WSTRING
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
     load(std::wstring &ws);
     #endif
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
     load(char * t);
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
     load(wchar_t * t);
 
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(void)
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL void
     init();
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL 
     basic_binary_iprimitive(
         std::basic_streambuf<Elem, Tr> & sb, 
         bool no_codecvt
     );
-    BOOST_ARCHIVE_OR_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
+    BOOST_ARCHIVE_OR_WARCHIVE_DECL 
     ~basic_binary_iprimitive();
 public:
     // we provide an optimized load for all fundamental types

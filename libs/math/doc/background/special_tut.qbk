@@ -2,15 +2,15 @@
 
 [section:special_tut_impl Implementation]
 
-In this section we'll provide a "recipe" for adding a new special function to this library to make life easier for
-future authors wishing to contribute.  We'll assume the function returns a single floating point result, and takes
-two floating point arguments.  For the sake of exposistion we'll give the function the name "my_special".
+In this section, we'll provide a "recipe" for adding a new special function to this library to make life easier for
+future authors wishing to contribute.  We'll assume the function returns a single floating-point result, and takes
+two floating-point arguments.  For the sake of exposition we'll give the function the name [~my_special].
 
-Normally the implementation of such a function is split into two layers - a public user layer, and an internal
-implementation layer that does the actual work.  The implementation layer is declared inside a "detail" namespace
-and has a simple signature:
+Normally, the implementation of such a function is split into two layers - a public user layer, and an internal
+implementation layer that does the actual work.
+The implementation layer is declared inside a `detail` namespace and has a simple signature:
 
-   namespace boost{ namespace math{ namespace detail{
+   namespace boost { namespace math { namespace detail {
 
    template <class T, class Policy>
    T my_special_imp(const T& a, const T&b, const Policy& pol)
@@ -86,9 +86,9 @@ what each line does:
       // to be different types.
       //
       typedef typename policies::normalise<
-         Policy, 
-         policies::promote_float<false>, 
-         policies::promote_double<false>, 
+         Policy,
+         policies::promote_float<false>,
+         policies::promote_double<false>,
          policies::discrete_quantile<>,
          policies::assert_undefined<> >::type forwarding_policy;
       //
@@ -99,9 +99,9 @@ what each line does:
       //
       return policies::checked_narrowing_cast<result_type, forwarding_policy>(
             detail::my_special_imp(
-                  static_cast<value_type>(a), 
-                  static_cast<value_type>(x), 
-                  forwarding_policy()), 
+                  static_cast<value_type>(a),
+                  static_cast<value_type>(x),
+                  forwarding_policy()),
             "boost::math::my_special<%1%>(%1%, %1%)");
    }
 
@@ -109,7 +109,7 @@ what each line does:
 
 We're now almost there, we just need to flesh out the details of the implementation layer:
 
-   namespace boost{ namespace math{ namespace detail{
+   namespace boost { namespace math { namespace detail {
 
    template <class T, class Policy>
    T my_special_imp(const T& a, const T&b, const Policy& pol)
@@ -125,13 +125,13 @@ The following guidelines indicate what (other than basic arithmetic) can go in t
 [link math_toolkit.error_handling.finding_more_information policy based error handlers].
 * Calls to standard library functions should be made unqualified (this allows argument
 dependent lookup to find standard library functions for user-defined floating point
-types such as those from Boost.Multiprecision).  In addition the macro `BOOST_MATH_STD_USING`
+types such as those from __multiprecision).  In addition, the macro `BOOST_MATH_STD_USING`
 should appear at the start of the function (note no semi-colon afterwards!) so that
 all the math functions in `namespace std` are visible in the current scope.
 * Calls to other special functions should be made as fully qualified calls, and include the
 policy parameter as the last argument, for example `boost::math::tgamma(a, pol)`.
 * Where possible, evaluation of series, continued fractions, polynomials, or root
-finding should use one of the [link toolkit boiler plate functions].  In any case, after
+finding should use one of the [link math_toolkit.internals_overview  boiler-plate functions].  In any case, after
 any iterative method, you should verify that the number of iterations did not exceed the
 maximum specified in the __Policy type, and if it did terminate as a result of exceeding the
 maximum, then the appropriate error handler should be called (see existing code for examples).
@@ -139,7 +139,7 @@ maximum, then the appropriate error handler should be called (see existing code 
 for example: `constants::pi<T>()`.
 * Where tables of coefficients are used (for example for rational approximations), care should be taken
 to ensure these are initialized at program startup to ensure thread safety when using user-defined number types.
-See for example the use of `erf_initializer` in boost/math/special_functions/erf.hpp.
+See for example the use of `erf_initializer` in [@../../include/boost/math/special_functions/erf.hpp  erf.hpp].
 
 Here are some other useful internal functions:
 
@@ -168,7 +168,7 @@ we'll divide these up in to 3 main categories:
 
 [h4 Spot Tests]
 
-Spot tests consist of checking that the expected exception is generated when the inputs are in error (or 
+Spot tests consist of checking that the expected exception is generated when the inputs are in error (or
 otherwise generate undefined values), and checking any special values.  We can check for expected exceptions
 with `BOOST_CHECK_THROW`, so for example if it's a domain error for the last parameter to be outside the range
 `[0,1]` then we might have:
@@ -205,16 +205,16 @@ tabulate these like this:
 We'll see how to use this table and the meaning of the `SC_` macro later.  One important point
 is to make sure that the input values have exact binary representations: so choose values such as
 1.5, 1.25, 1.125 etc.  This ensures that if `my_special` is unusually sensitive in one area, that
-we don't get apparently large errors just because the inputs are 0.5ulp in error.
+we don't get apparently large errors just because the inputs are 0.5 ulp in error.
 
 [h4 Random Test Values]
 
 We can generate a large number of test values to check both for future regressions, and for
 accumulated rounding or cancellation error in our implementation.  Ideally we would use an
-independent implementation for this (for example my_special may be defined in directly terms 
+independent implementation for this (for example my_special may be defined in directly terms
 of other special functions but not implemented that way for performance or accuracy reasons).
 Alternatively we may use our own implementation directly, but with any special cases (asymptotic
-expansions etc) disabled.  We have a set of [link math_toolkit.internals2.test_data tools] 
+expansions etc) disabled.  We have a set of [link math_toolkit.internals.test_data tools]
 to generate test data directly, here's a typical example:
 
 [import ../../example/special_data.cpp]
@@ -266,7 +266,7 @@ definition for the SC_ macro:
    #endif
 
 The easiest function to implement is the "test" function which is what we'll be calling
-from the test-driver program.  It simply includes the files containing the tabular 
+from the test-driver program.  It simply includes the files containing the tabular
 test data and calls `do_test` function for each table, along with a description of what's
 being tested:
 
@@ -361,7 +361,7 @@ Now we just need to write the test driver program, at it's most basic it looks s
       test(0.1, "double");
       //
       // Testing of long double and real_concept is protected
-      // by some logic to disable these for unsupported 
+      // by some logic to disable these for unsupported
       // or problem compilers.
       //
    #ifndef BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS
@@ -406,7 +406,7 @@ the particular tests plus the platform and compiler:
    #endif
       //
       // We call add_expected_result for each error rate we wish to adjust, these tell
-      // handle_test_result what level of error is acceptable.  We can have as many calls 
+      // handle_test_result what level of error is acceptable.  We can have as many calls
       // to add_expected_result as we need, each one establishes a rule for acceptable error
       // with rules set first given preference.
       //
@@ -417,14 +417,14 @@ the particular tests plus the platform and compiler:
          /* Second argument is a regular expression to match against the name of the
             C++ standard library as set in BOOST_STDLIB */
          ".*",
-         /* Third argument is a regular expression to match against the name of the 
+         /* Third argument is a regular expression to match against the name of the
             platform as set in BOOST_PLATFORM */
          ".*",
          /* Forth argument is the name of the type being tested, normally we will
             only need to up the acceptable error rate for the widest floating
             point type being tested */
          largest_real,
-         /* Fifth argument is a regular expression to match against 
+         /* Fifth argument is a regular expression to match against
             the name of the group of data being tested */
          "MySpecial Function:.*Small.*",
          /* Sixth argument is a regular expression to match against the name
@@ -432,7 +432,7 @@ the particular tests plus the platform and compiler:
          "boost::math::my_special",
          /* Seventh argument is the maximum allowable error expressed in units
             of machine epsilon passed as a long integer value */
-         50, 
+         50,
          /* Eighth argument is the maximum allowable mean error expressed in units
             of machine epsilon passed as a long integer value */
          20);
@@ -490,7 +490,7 @@ These changes should be made last, when `my_special` is stable and the code is i
 [h4 Concept Checks]
 
 Our concept checks verify that your function's implementation makes no assumptions that aren't
-required by our [link math_toolkit.concepts Real number conceptual requirements].  They also
+required by our [link math_toolkit.real_concepts Real number conceptual requirements].  They also
 check for various common bugs and programming traps that we've fallen into over time.  To
 add your function to these tests, edit libs/math/test/compile_test/instantiate.hpp to add
 calls to your function: there are 7 calls to each function, each with a different purpose.

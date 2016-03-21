@@ -20,23 +20,6 @@
 
 #if defined(BOOST_WINDOWS) || defined(__CYGWIN__)
 
-#if defined(BOOST_LOG_USE_WINNT6_API)
-
-#ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x0600 // _WIN32_WINNT_LONGHORN
-#endif
-
-#elif !defined(_WIN32_WINNT)
-
-// Use the default WinAPI version
-#include <boost/detail/winapi/config.hpp>
-
-#if !defined(_WIN32_WINNT)
-#define _WIN32_WINNT BOOST_USE_WINAPI_VERSION
-#endif
-
-#endif // BOOST_LOG_USE_WINNT6_API
-
 // This is to make Boost.ASIO happy
 #ifndef __USE_W32_SOCKETS
 #define __USE_W32_SOCKETS

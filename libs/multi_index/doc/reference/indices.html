@@ -189,11 +189,14 @@ index specifiers
   <li><a href="ord_indices.html#unique_non_unique"><code>ordered_unique</code> and
     <code>ordered_non_unique</code></a> for
     <a href="ord_indices.html">ordered indices</a>,</li>
+  <li><a href="rnk_indices.html#unique_non_unique"><code>ranked_unique</code> and
+    <code>ranked_non_unique</code></a> for
+    <a href="rnk_indices.html">ranked indices</a>,</li>
   <li><a href="hash_indices.html#unique_non_unique"><code>hashed_unique</code> and
     <code>hashed_non_unique</code></a> for
     <a href="hash_indices.html">hashed indices</a>,</li>
   <li><a href="seq_indices.html#sequenced"><code>sequenced</code></a> for
-    <a href="seq_indices.html">sequenced indices</a></li>
+    <a href="seq_indices.html">sequenced indices</a>,</li>
   <li>and <a href="rnd_indices.html#random_access"><code>random_access</code></a> for
     <a href="rnd_indices.html">random access indices</a>.</li>
 </ul>
@@ -310,6 +313,10 @@ reference</a>.
 <ul>
   <li><a href="ord_indices.html">Ordered indices</a> sort the elements
     on the key and provide fast lookup capabilites.</li>
+  <li><a href="rnk_indices.html">Ranked indices</a> are a variation of
+    ordered indices providing extra operations based on 
+    <i>rank</i>, the numerical position of an element
+    in the sequence.</li>
   <li><a href="hash_indices.html">Hashed indices</a> offer high
     efficiency access through hashing techniques.</li>
 </ul>
@@ -379,9 +386,9 @@ Ordered indices
 
 <br>
 
-<p>Revised July 7th 2013</p>
+<p>Revised April 19th 2015</p>
 
-<p>&copy; Copyright 2003-2013 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

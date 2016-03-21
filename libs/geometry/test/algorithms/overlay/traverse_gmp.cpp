@@ -12,6 +12,9 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#error This unit test is not updated for several years
+
+
 #if defined(_MSC_VER)
 #pragma warning( disable : 4244 )
 #pragma warning( disable : 4267 )

@@ -54,7 +54,7 @@ class InstallTargetClass(targets.BasicTarget):
         if a:
             ps = a.properties()
             properties = ps.all()
-            
+
             # Unless <hardcode-dll-paths>true is in properties, which can happen
             # only if the user has explicitly requested it, nuke all <dll-path>
             # properties.
@@ -80,7 +80,7 @@ class InstallTargetClass(targets.BasicTarget):
         properties.extend(build_ps.get_properties('dependency'))
 
         properties.extend(build_ps.get_properties('location'))
-        
+
 
         properties.extend(build_ps.get_properties('install-no-version-symlinks'))
 
@@ -93,7 +93,7 @@ class InstallTargetClass(targets.BasicTarget):
             properties.append(property.Property(p.feature(), os.path.abspath(p.value())))
 
         return property_set.create(properties)
-    
+
 
     def construct(self, name, source_targets, ps):
 
@@ -125,7 +125,7 @@ class InstallTargetClass(targets.BasicTarget):
                                                         new_ps, [i])
                     assert isinstance(r, property_set.PropertySet)
                     staged_targets.extend(targets)
-                    
+
             else:
                 staged_targets.append(copy_file(self.project(), ename, i, new_ps))
 
@@ -168,18 +168,18 @@ class InstallTargetClass(targets.BasicTarget):
     # CONSIDER: figure out why we can not use virtual-target.traverse here.
     #
     def collect_targets(self, targets):
-        
+
         s = [t.creating_subvariant() for t in targets]
         s = unique(filter(lambda l: l != None,s))
-        
+
         result = set(targets)
         for i in s:
             i.all_referenced_targets(result)
-           
+
         result2 = []
         for r in result:
             if isinstance(r, property.Property):
-                
+
                 if r.feature().name() != 'use':
                     result2.append(r.value())
             else:
@@ -284,7 +284,7 @@ class InstalledSharedLibGenerator(generators.Generator):
             else:
 
                 need_relink = ps.get('dll-path') != source.action().properties().get('dll-path')
-                
+
                 if need_relink:
                     # Rpath changed, need to relink.
                     copied = relink_file(project, source, ps)
@@ -308,13 +308,13 @@ class InstalledSharedLibGenerator(generators.Generator):
                 # compatibility guarantees. If not, it is possible to skip those
                 # symlinks.
                 if ps.get('install-no-version-symlinks') != ['on']:
-                
+
                     result.append(symlink(m.group(1) + '.' + m.group(2), project, copied, ps))
                     result.append(symlink(m.group(1) + '.' + m.group(2) + '.' + m.group(3),
                                           project, copied, ps))
 
             return result
-            
+
 generators.register(InstalledSharedLibGenerator())
 
 
@@ -335,9 +335,9 @@ def install(name, sources, requirements=[], default_build=[], usage_requirements
 
     from b2.manager import get_manager
     t = get_manager().targets()
-    
+
     project = get_manager().projects().current()
-        
+
     return t.main_target_alternative(
         InstallTargetClass(name, project,
                            t.main_target_sources(sources, name),

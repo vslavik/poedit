@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -29,7 +30,7 @@
 <div><div class="author"><h3 class="author">
 <span class="firstname">Ion</span> <span class="surname">Gaztanaga</span>
 </h3></div></div>
-<div><p class="copyright">Copyright &#169; 2009-2013 Ion Gaztanaga</p></div>
+<div><p class="copyright">Copyright &#169; 2009-2015 Ion Gaztanaga</p></div>
 <div><div class="legalnotice">
 <a name="container.legal"></a><p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -77,6 +78,8 @@
       range splice for <code class="computeroutput"><span class="special">(</span><span class="identifier">s</span><span class="special">)</span><span class="identifier">list</span></code></a></span></dt>
 <dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.extended_allocators">Extended
       allocators</a></span></dt>
+<dt><span class="section"><a href="container/extended_functionality.html#container.extended_functionality.polymorphic_memory_resources">Polymorphic
+      Memory Resources </a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="container/Cpp11_conformance.html">C++11/C++14 Conformance</a></span></dt>
 <dd><dl>
@@ -114,9 +117,9 @@
 </dl></dd>
 <dt><span class="section"><a href="container/index.html">Indexes</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="container/index.html#idp141095904">Class Index</a></span></dt>
-<dt><span class="section"><a href="container/index.html#idp141244048">Typedef Index</a></span></dt>
-<dt><span class="section"><a href="container/index.html#idp141817840">Function Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idm45555416051216">Class Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idm45555415898064">Typedef Index</a></span></dt>
+<dt><span class="section"><a href="container/index.html#idm45555415282304">Function Index</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="boost_container_header_reference.html">Boost.Container Header Reference</a></span></dt>
 <dd><dl>
@@ -125,28 +128,53 @@
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.allocator_traits_hpp">Header &lt;boost/container/allocator_traits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.container_fwd_hpp">Header &lt;boost/container/container_fwd.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.deque_hpp">Header &lt;boost/container/deque.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.deque_hpp">Header &lt;boost/container/pmr/deque.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.flat_map_hpp">Header &lt;boost/container/flat_map.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.flat_map_hpp">Header &lt;boost/container/pmr/flat_map.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.flat_set_hpp">Header &lt;boost/container/flat_set.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.flat_set_hpp">Header &lt;boost/container/pmr/flat_set.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.list_hpp">Header &lt;boost/container/list.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.list_hpp">Header &lt;boost/container/pmr/list.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.map_hpp">Header &lt;boost/container/map.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.map_hpp">Header &lt;boost/container/pmr/map.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.new_allocator_hpp">Header &lt;boost/container/new_allocator.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.node_allocator_hpp">Header &lt;boost/container/node_allocator.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.options_hpp">Header &lt;boost/container/options.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.global_resource_hpp">Header &lt;boost/container/pmr/global_resource.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.memory_resource_hpp">Header &lt;boost/container/pmr/memory_resource.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.monotonic_buffer_resource_hpp">Header &lt;boost/container/pmr/monotonic_buffer_resource.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.polymorphic_allocator_hpp">Header &lt;boost/container/pmr/polymorphic_allocator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.pool_options_hpp">Header &lt;boost/container/pmr/pool_options.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.resource_adaptor_hpp">Header &lt;boost/container/pmr/resource_adaptor.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.synchronized_pool_resource_hpp">Header &lt;boost/container/pmr/synchronized_pool_resource.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.unsynchronized_pool_resource_hpp">Header &lt;boost/container/pmr/unsynchronized_pool_resource.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.scoped_allocator_hpp">Header &lt;boost/container/scoped_allocator.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.scoped_allocator_fwd_hpp">Header &lt;boost/container/scoped_allocator_fwd.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.set_hpp">Header &lt;boost/container/set.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.set_hpp">Header &lt;boost/container/pmr/set.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.slist_hpp">Header &lt;boost/container/slist.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.slist_hpp">Header &lt;boost/container/pmr/slist.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.small_vector_hpp">Header &lt;boost/container/small_vector.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.small_vector_hpp">Header &lt;boost/container/pmr/small_vector.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.stable_vector_hpp">Header &lt;boost/container/stable_vector.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.stable_vector_hpp">Header &lt;boost/container/pmr/stable_vector.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.static_vector_hpp">Header &lt;boost/container/static_vector.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.string_hpp">Header &lt;boost/container/string.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.string_hpp">Header &lt;boost/container/pmr/string.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.throw_exception_hpp">Header &lt;boost/container/throw_exception.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.uses_allocator_hpp">Header &lt;boost/container/uses_allocator.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.uses_allocator_fwd_hpp">Header &lt;boost/container/uses_allocator_fwd.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.vector_hpp">Header &lt;boost/container/vector.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="boost_container_header_reference.html#header.boost.container.pmr.vector_hpp">Header &lt;boost/container/pmr/vector.hpp&gt;</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="container/acknowledgements_notes.html">Acknowledgements, notes
     and links</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_60_00">Boost
+      1.60 Release</a></span></dt>
+<dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_59_00">Boost
+      1.59 Release</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_58_00">Boost
       1.58 Release</a></span></dt>
 <dt><span class="section"><a href="container/release_notes.html#container.release_notes.release_notes_boost_1_57_00">Boost
@@ -185,7 +213,8 @@
       <span class="bold"><strong>Boost.Container</strong></span> library implements several
       well-known containers, including STL containers. The aim of the library is
       to offers advanced features not present in standard containers or to offer
-      the latest standard draft features for compilers that comply with C++03.
+      the latest standard draft features for compilers that don't comply with the
+      latest C++ standard.
     </p>
 <p>
       In short, what does <span class="bold"><strong>Boost.Container</strong></span> offer?
@@ -235,16 +264,24 @@
       Boost.Container</a>
 </h3></div></div></div>
 <p>
-        There is no need to compile <span class="bold"><strong>Boost.Container</strong></span>
-        if you don't use <a class="link" href="container/extended_functionality.html#container.extended_functionality.extended_allocators" title="Extended allocators">Extended
-        Allocators</a> since in that case it's a header-only library. Just include
-        your Boost header directory in your compiler include path.
+        There is no need to compile <span class="bold"><strong>Boost.Container</strong></span>,
+        since it's a header-only library, just include your Boost header directory
+        in your compiler include path <span class="bold"><strong>except if you use</strong></span>:
       </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a class="link" href="container/extended_functionality.html#container.extended_functionality.extended_allocators" title="Extended allocators">Extended
+            Allocators</a>
+          </li>
+<li class="listitem">
+            Some <a class="link" href="container/extended_functionality.html#container.extended_functionality.polymorphic_memory_resources" title="Polymorphic Memory Resources">Polymorphic
+            Memory Resources</a> classes.
+          </li>
+</ul></div>
 <p>
-        <a class="link" href="container/extended_functionality.html#container.extended_functionality.extended_allocators" title="Extended allocators">Extended
-        Allocators</a> are implemented as a separately compiled library, so you
-        must install binaries in a location that can be found by your linker when
-        using these classes. If you followed the <a href="http://www.boost.org/doc/libs/release/more/getting_started/index.html" target="_top">Boost
+        Those exceptions are are implemented as a separately compiled library, so
+        in those cases you must install binaries in a location that can be found
+        by your linker. If you followed the <a href="http://www.boost.org/doc/libs/release/more/getting_started/index.html" target="_top">Boost
         Getting Started</a> instructions, that's already been done for you.
       </p>
 </div>
@@ -271,7 +308,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: April 07, 2015 at 22:48:53 GMT</small></p></td>
+<td align="left"><p><small>Last revised: December 14, 2015 at 09:17:16 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

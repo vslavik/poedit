@@ -69,6 +69,19 @@ namespace ns
 
 #endif
 
+template <typename TypeToConstruct>
+struct empty_struct_templated_factory {
+
+  TypeToConstruct operator()() {
+    return TypeToConstruct();
+  }
+
+};
+
+BOOST_FUSION_ADAPT_TPL_STRUCT(
+    (TypeToConstruct),
+    (empty_struct_templated_factory)(TypeToConstruct),
+) 
 
 int
 main()

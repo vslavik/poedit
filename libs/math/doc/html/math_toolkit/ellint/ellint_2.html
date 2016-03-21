@@ -4,7 +4,7 @@
 <title>Elliptic Integrals of the Second Kind - Legendre Form</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../ellint.html" title="Elliptic Integrals">
 <link rel="prev" href="ellint_1.html" title="Elliptic Integrals of the First Kind - Legendre Form">
 <link rel="next" href="ellint_3.html" title="Elliptic Integrals of the Third Kind - Legendre Form">
@@ -38,14 +38,14 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">k</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">phi</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">k</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">phi</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">k</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">phi</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">k</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">k</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">k</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -69,8 +69,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">k</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">phi</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">k</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">phi</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">k</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">phi</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the incomplete elliptic integral of the second kind <span class="emphasis"><em>E(&#966;,
@@ -83,16 +83,16 @@
         Requires -1 &lt;= k &lt;= 1, otherwise returns the result of <a class="link" href="../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">k</span><span class="special">);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">k</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">ellint_2</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">k</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the complete elliptic integral of the second kind <span class="emphasis"><em>E(k)</em></span>:
@@ -104,9 +104,9 @@
         Requires -1 &lt;= k &lt;= 1, otherwise returns the result of <a class="link" href="../error_handling.html#math_toolkit.error_handling.domain_error">domain_error</a>.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <h5>
@@ -121,9 +121,10 @@
         zero error</a>. All values are relative errors in units of epsilon.
       </p>
 <div class="table">
-<a name="math_toolkit.ellint.ellint_2.errors_rates_in_the_elliptic_int"></a><p class="title"><b>Table&#160;6.27.&#160;Errors Rates in the Elliptic Integrals of the Second Kind</b></p>
-<div class="table-contents"><table class="table" summary="Errors Rates in the Elliptic Integrals of the Second Kind">
+<a name="math_toolkit.ellint.ellint_2.table_ellint_2"></a><p class="title"><b>Table&#160;6.64.&#160;Error rates for ellint_2</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for ellint_2">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -131,23 +132,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  F(&#966;, k)
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  K(k)
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -155,66 +158,64 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Elliptic Integral E: Mathworld Data
                 </p>
               </td>
 <td>
                 <p>
-                  Win32 / Visual C++ 8.0
+                  <span class="blue">Max = 1.31&#949; (Mean = 0.727&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=4.6 Mean=1.2
+                  <span class="blue">Max = 0.656&#949; (Mean = 0.317&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> <span class="red">Max
+                  = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_long_double_ellint_2__tr1_cmath__Elliptic_Integral_E_Mathworld_Data">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=3.5 Mean=1.0
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 0.63&#949; (Mean = 0.325&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_ellint_2_Cephes_Elliptic_Integral_E_Mathworld_Data">And
+                  other failures.</a>)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Red Hat Linux / G++ 3.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=4.3 Mean=1.1
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=4.6 Mean=1.2
+                  <span class="blue">Max = 0.656&#949; (Mean = 0.317&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Elliptic Integral E: Random Data
                 </p>
               </td>
 <td>
                 <p>
-                  HP-UX / HP aCC 6
+                  <span class="blue">Max = 2.23&#949; (Mean = 0.639&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=5.8 Mean=2.2
+                  <span class="blue">Max = 2.05&#949; (Mean = 0.632&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 3.08e+04&#949; (Mean =
+                  3.84e+03&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=10.8 Mean=2.3
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 4.4&#949; (Mean = 1.16&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 8.92&#949; (Mean = 1.48&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.05&#949; (Mean = 0.632&#949;)</span>
                 </p>
               </td>
 </tr>

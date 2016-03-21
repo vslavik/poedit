@@ -27,6 +27,8 @@ If `Ret=void`, the return type is checked to be exactly `void`.
 
 __header `#include <boost/type_traits/has_pre_increment.hpp>` or `#include <boost/type_traits/has_operator.hpp>` or `#include <boost/type_traits.hpp>`
 
+[has_binary_operator_compat]
+
 __examples
 
 [:`has_pre_increment<Rhs, Ret>::value_type` is the type `bool`.]
@@ -46,10 +48,6 @@ __examples
 
 
 [*See also:] [link boost_typetraits.category.value_traits.operators Operator Type Traits]
-
-[*Limitation:]
-
-* Requires a compiler with working SFINAE.
 
 [*Known issues:]
 

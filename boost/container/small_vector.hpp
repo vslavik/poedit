@@ -60,7 +60,7 @@ class small_vector_base;
 //! for documentation purposes.
 //! 
 //! This allocator inherits from a standard-conforming allocator
-//! and forwards member functiond to the standard allocator except
+//! and forwards member functions to the standard allocator except
 //! when internal storage is being used as memory source.
 //!
 //! This allocator is a "partially_propagable" allocator and
@@ -68,7 +68,7 @@ class small_vector_base;
 //! 
 //! A partially propagable allocator means that not all storage
 //! allocatod by an instance of `small_vector_allocator` can be
-//! deallocated by another instance of this type, even is both
+//! deallocated by another instance of this type, even if both
 //! instances compare equal or an instance is propagated to another
 //! one using the copy/move constructor or assignment. The storage that
 //! can never be propagated is identified by `storage_is_unpropagable(p)`.
@@ -117,9 +117,9 @@ class small_vector_allocator
    typedef typename allocator_traits<Allocator>::propagate_on_container_copy_assignment   propagate_on_container_copy_assignment;
    typedef typename allocator_traits<Allocator>::propagate_on_container_move_assignment   propagate_on_container_move_assignment;
    typedef typename allocator_traits<Allocator>::propagate_on_container_swap              propagate_on_container_swap;
-   //! An integral constant with member `::value == false`
+   //! An integral constant with member `value == false`
    typedef BOOST_CONTAINER_IMPDEF(container_detail::bool_<false>)                         is_always_equal;
-   //! An integral constant with member `::value == true`
+   //! An integral constant with member `value == true`
    typedef BOOST_CONTAINER_IMPDEF(container_detail::bool_<true>)                          is_partially_propagable;
 
    BOOST_CONTAINER_DOCIGN(typedef container_detail::version_type<small_vector_allocator BOOST_CONTAINER_I 1>  version;)
@@ -289,20 +289,25 @@ class small_vector_allocator
 //! This class consists of common code from all small_vector<T, N> types that don't depend on the
 //! "N" template parameter. This class is non-copyable and non-destructible, so this class tipically
 //! used as reference argument to functions that read or write small vectors. Since `small_vector<T, N>`
-//! derives from `small_vector_base<T>`, the conversion to `small_vector_base` is implicit:
-//! <code>
+//! derives from `small_vector_base<T>`, the conversion to `small_vector_base` is implicit
+//! <pre>
 //!
 //! //Clients can pass any small_vector<Foo, N>.
 //! void read_any_small_vector_of_foo(const small_vector_base<Foo> &in_parameter);
+//!
 //! void modify_any_small_vector_of_foo(small_vector_base<Foo> &out_parameter);
-//! 
+//!
 //! void some_function()
 //! {
+//! 
 //!    small_vector<Foo, 8> myvector;
+//!
 //!    read_any_small_vector_of_foo(myvector);   // Reads myvector
+//!
 //!    modify_any_small_vector_of_foo(myvector); // Modifies myvector
+//! 
 //! }
-//! </code>
+//! </pre>
 //!
 //! All `boost::container:vector` member functions are inherited. See `vector` documentation for details.
 //!
@@ -311,8 +316,12 @@ class small_vector_base
    : public vector<T, small_vector_allocator<SecondaryAllocator> >
 {
    #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
+   public:
+   //Make it public as it will be inherited by small_vector and container
+   //must have this public member
    typedef typename allocator_traits<SecondaryAllocator>::pointer pointer;
 
+   private: 
    BOOST_COPYABLE_AND_MOVABLE(small_vector_base)
 
    friend class small_vector_allocator<SecondaryAllocator>;
@@ -428,8 +437,8 @@ struct small_vector_storage_definer
 
 #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
-//! small_vector a vector-like container optimized for the case when it contains few elements.
-//! It contains some preallocated elements in-place, which allows it to avoid the use of dynamic storage allocation
+//! small_vector is a vector-like container optimized for the case when it contains few elements.
+//! It contains some preallocated elements in-place, which can avoid the use of dynamic storage allocation
 //! when the actual number of elements is below that preallocated threshold.
 //!
 //! `small_vector<T, N, Allocator>` is convertible to `small_vector_base<T, Allocator>` that is independent

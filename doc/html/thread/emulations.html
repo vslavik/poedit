@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.5.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;31.&#160;Thread 4.6.0">
 <link rel="prev" href="time.html" title="Time Requirements">
 <link rel="next" href="acknowledgements.html" title="Acknowledgments">
 </head>
@@ -465,7 +466,7 @@
         The library provides un implicit conversion to an undefined type that can
         be used as a conditional expression.
       </p>
-<pre class="programlisting"><span class="preprocessor">#if</span> <span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_EXPLICIT_CONVERSION_OPERATORS</span><span class="special">)</span>
+<pre class="programlisting"><span class="preprocessor">#if</span> <span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS</span><span class="special">)</span>
     <span class="keyword">operator</span> <span class="emphasis"><em>unspecified-bool-type</em></span><span class="special">()</span> <span class="keyword">const</span><span class="special">;</span>
     <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="preprocessor">#else</span>
@@ -580,7 +581,7 @@
 <p>
         And instead of
       </p>
-<pre class="programlisting"><span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_NO_SCOPED_ENUMS</span>
+<pre class="programlisting"><span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_NO_CXX11_SCOPED_ENUMS</span>
 <span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">BOOST_SYMBOL_VISIBLE</span> <span class="identifier">is_error_code_enum</span><span class="special">&lt;</span><span class="identifier">future_errc</span><span class="special">&gt;</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">true_type</span> <span class="special">{</span> <span class="special">};</span>
 <span class="preprocessor">#endif</span>
@@ -588,7 +589,7 @@
 <p>
         use
       </p>
-<pre class="programlisting"><span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_NO_SCOPED_ENUMS</span>
+<pre class="programlisting"><span class="preprocessor">#ifdef</span> <span class="identifier">BOOST_NO_CXX11_SCOPED_ENUMS</span>
 <span class="keyword">template</span> <span class="special">&lt;&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">BOOST_SYMBOL_VISIBLE</span> <span class="identifier">is_error_code_enum</span><span class="special">&lt;</span><span class="identifier">future_errc</span><span class="special">::</span><span class="identifier">enum_type</span><span class="special">&gt;</span> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">true_type</span> <span class="special">{</span> <span class="special">};</span>
 <span class="preprocessor">#endif</span>

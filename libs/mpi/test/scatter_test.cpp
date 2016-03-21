@@ -4,12 +4,12 @@
 // License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// A test of the scatter() collective.
+// A test of the scatter() and scatterv() collectives.
 #include <boost/mpi/collectives/scatter.hpp>
+#include <boost/mpi/collectives/scatterv.hpp>
 #include <boost/mpi/communicator.hpp>
 #include <boost/mpi/environment.hpp>
 #include <boost/test/minimal.hpp>
-#include <algorithm>
 #include "gps_position.hpp"
 #include <boost/serialization/string.hpp>
 #include <boost/serialization/list.hpp>
@@ -18,13 +18,10 @@
 
 using boost::mpi::communicator;
 
-using boost::mpi::packed_skeleton_iarchive;
-using boost::mpi::packed_skeleton_oarchive;
-
 template<typename Generator>
 void
 scatter_test(const communicator& comm, Generator generator,
-            const char* kind, int root = -1)
+             const char* kind, int root = -1)
 {
   typedef typename Generator::result_type value_type;
 
@@ -42,10 +39,8 @@ scatter_test(const communicator& comm, Generator generator,
       for (int p = 0; p < comm.size(); ++p)
         values.push_back(generator(p));
 
-      if (comm.rank() == root) {
-        std::cout << "Scattering " << kind << " from root " << root << "...";
-        std::cout.flush();
-      }
+      std::cout << "Scattering " << kind << " from root "
+                << root << "..." << std::endl;
 
       scatter(comm, values, value, root);
     } else {
@@ -58,7 +53,53 @@ scatter_test(const communicator& comm, Generator generator,
   (comm.barrier)();
 }
 
-// Generates integers to test with scatter()
+
+template<typename Generator>
+void
+scatterv_test(const communicator& comm, Generator generator,
+              const char* kind, int root = -1)
+{
+  typedef typename Generator::result_type value_type;
+
+  if (root == -1) {
+    for (root = 0; root < comm.size(); ++root)
+      scatterv_test(comm, generator, kind, root);
+  } else {
+    using boost::mpi::scatterv;
+
+    int mysize = comm.rank() + 1;
+    std::vector<value_type> myvalues(mysize);
+
+    if (comm.rank() == root) {
+      std::vector<value_type> values;
+      std::vector<int> sizes(comm.size());
+
+      // process p will receive p+1 identical generator(p) elements
+      for (int p = 0; p < comm.size(); ++p) {
+        for (int i = 0; i < p+1; ++i)
+          values.push_back(generator(p));
+        sizes[p] = p + 1;
+      }
+
+      std::cout << "Scatteringv " << kind << " from root "
+                << root << "..." << std::endl;
+
+      scatterv(comm, values, sizes, &myvalues[0], root);
+    } else {
+      scatterv(comm, &myvalues[0], mysize, root);
+    }
+
+    for (int i = 0; i < mysize; ++i)
+      BOOST_CHECK(myvalues[i] == generator(comm.rank()));
+  }
+
+  (comm.barrier)();
+}
+
+
+//
+// Generators to test with scatter/scatterv
+//
 struct int_generator
 {
   typedef int result_type;
@@ -66,7 +107,6 @@ struct int_generator
   int operator()(int p) const { return 17 + p; }
 };
 
-// Generates GPS positions to test with scatter()
 struct gps_generator
 {
   typedef gps_position result_type;
@@ -110,10 +150,16 @@ int test_main(int argc, char* argv[])
   boost::mpi::environment env(argc, argv);
 
   communicator comm;
+
   scatter_test(comm, int_generator(), "integers");
   scatter_test(comm, gps_generator(), "GPS positions");
   scatter_test(comm, string_generator(), "string");
   scatter_test(comm, string_list_generator(), "list of strings");
+
+  scatterv_test(comm, int_generator(), "integers");
+  scatterv_test(comm, gps_generator(), "GPS positions");
+  scatterv_test(comm, string_generator(), "string");
+  scatterv_test(comm, string_list_generator(), "list of strings");
 
   return 0;
 }

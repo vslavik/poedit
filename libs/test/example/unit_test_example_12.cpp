@@ -1,13 +1,13 @@
-//  (C) Copyright Gennadiy Rozental 2001-2008.
+//  (C) Copyright Gennadiy Rozental 2001-2014.
 //  Distributed under the Boost Software License, Version 1.0.
-//  (See accompanying file LICENSE_1_0.txt or copy at 
+//  (See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 //  See http://www.boost.org/libs/test for the library home page.
 
 // Boost.Test
 #include <boost/test/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/tools/floating_point_comparison.hpp>
 #include <boost/test/parameterized_test.hpp>
 using namespace boost::unit_test;
 
@@ -64,7 +64,7 @@ public:
         if( arg.length() > 8 )
             throw std::runtime_error( "Wrong argument size" );
 
-        std::string::const_iterator it = std::find_if( arg.begin(), arg.end(), 
+        std::string::const_iterator it = std::find_if( arg.begin(), arg.end(),
                                                        std::bind1st( boost::mem_fun( &hash_function::helper_ ), this ) );
 
         if( it != arg.end() )
@@ -75,9 +75,9 @@ public:
 
 private:
     bool            helper_( char c )
-    {       
+    {
         std::string::const_iterator it = std::find( m_alphabet.begin(), m_alphabet.end(), c );
-        
+
         if( it == m_alphabet.end() )
             return true;
 
@@ -125,9 +125,9 @@ public:
     void            test( hash_function_test_data const& test_data )
     {
         if( test_data.exp_value == (unsigned long)-1 )
-            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::runtime_error )
+            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::runtime_error );
         else if( test_data.exp_value == (unsigned long)-2 )
-            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range )
+            BOOST_CHECK_THROW( m_function_under_test( test_data.orig_string ), std::out_of_range );
         else {
             BOOST_TEST_MESSAGE( "Testing: " << test_data.orig_string );
             BOOST_CHECK_EQUAL( m_function_under_test( test_data.orig_string ), test_data.exp_value );
@@ -156,15 +156,17 @@ struct massive_hash_function_test : test_suite {
 
         while( !std::cin.eof() ) {
             hash_function_test_data test_data;
-            
+
             if( !(std::cin >> test_data) )
                 break;
 
             test_data_store.push_back( test_data );
         }
 
-        add( make_test_case( &hash_function_tester::test, 
+        add( make_test_case( &hash_function_tester::test,
                              "hash_function_tester",
+                             __FILE__,
+                             __LINE__,
                              instance,
                              test_data_store.begin(),
                              test_data_store.end() ) );
@@ -176,10 +178,10 @@ struct massive_hash_function_test : test_suite {
 test_suite*
 init_unit_test_suite( int, char* [] ) {
     framework::master_test_suite().p_name.value = "Unit test example 12";
-  
+
     framework::master_test_suite().add( new massive_hash_function_test );
 
-    return 0; 
+    return 0;
 }
 
 //____________________________________________________________________________//

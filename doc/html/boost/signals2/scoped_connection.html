@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,32 +35,32 @@
 </span>
 <span class="keyword">class</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a> <span class="special">:</span> <span class="keyword">public</span> <a class="link" href="connection.html" title="Class connection">connection</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
-  <span class="comment">// <a class="link" href="scoped_connection.html#idp33509680-bbconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="scoped_connection.html#idp146749936-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="scoped_connection.html#idp99862544-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="scoped_connection.html#idp219209744-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="scoped_connection.html#idp150853152-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  scoped_connection&amp; <a class="link" href="scoped_connection.html#idp219453584-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  scoped_connection&amp; <a class="link" href="scoped_connection.html#idp153987024-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  scoped_connection&amp; <a class="link" href="scoped_connection.html#idp152688864-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="scoped_connection.html#idp92660800-bb"><span class="special">~</span><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="scoped_connection.html#idm45506976104640-bbconstruct-copy-destruct">construct/copy/destruct</a></span>
+  <a class="link" href="scoped_connection.html#idm45507165429472-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="scoped_connection.html#idm45507035823456-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="scoped_connection.html#idm45507090797728-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="scoped_connection.html#idm45507037367680-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  scoped_connection&amp; <a class="link" href="scoped_connection.html#idm45506979105120-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  scoped_connection&amp; <a class="link" href="scoped_connection.html#idm45506971186864-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  scoped_connection&amp; <a class="link" href="scoped_connection.html#idm45506995142176-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="scoped_connection.html#idm45507106659824-bb"><span class="special">~</span><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="scoped_connection.html#idp215716464-bb">public methods</a></span>
-  <a class="link" href="connection.html" title="Class connection">connection</a> <a class="link" href="scoped_connection.html#idp149505056-bb"><span class="identifier">release</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="scoped_connection.html#idm45507040539392-bb">public methods</a></span>
+  <a class="link" href="connection.html" title="Class connection">connection</a> <a class="link" href="scoped_connection.html#idm45507040538832-bb"><span class="identifier">release</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="keyword">private</span><span class="special">:</span>
-  <span class="comment">// <a class="link" href="scoped_connection.html#idp200407200-bbconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="scoped_connection.html#idp200407760-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  scoped_connection&amp; <a class="link" href="scoped_connection.html#idp103972448-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="scoped_connection.html#idm45506976539840-bbconstruct-copy-destruct">construct/copy/destruct</a></span>
+  <a class="link" href="scoped_connection.html#idm45507042995120-bb"><span class="identifier">scoped_connection</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  scoped_connection&amp; <a class="link" href="scoped_connection.html#idm45507037164304-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp421278576"></a><h2>Description</h2>
+<a name="idm45555132081808"></a><h2>Description</h2>
 <p>A <a class="link" href="connection.html" title="Class connection">connection</a> which automatically disconnects on destruction.</p>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="idp421280400"></a>Thread Safety</h6></div></div></div>
+<a name="idm45555132080048"></a>Thread Safety</h6></div></div></div>
 <p>The methods of the <code class="computeroutput">scoped_connection</code> class (including those
               inherited from its base <code class="computeroutput">connection</code> class) are thread-safe with the exception
-              of <a class="link" href="connection.html#idp99868992-bb">signals2::connection::swap</a>, <a class="link" href="scoped_connection.html#idp149505056-bb">release</a>, and
+              of <a class="link" href="connection.html#idm45507038473408-bb">signals2::connection::swap</a>, <a class="link" href="scoped_connection.html#idm45507040538832-bb">release</a>, and
               the assignment operator.  A <code class="computeroutput">scoped_connection</code> object
               should not be accessed concurrently when any of these operations is in progress.
               However, it is always safe to access a different <code class="computeroutput">connection</code> object
@@ -67,11 +68,11 @@
             </p>
 </div>
 <div class="refsect2">
-<a name="idp421286480"></a><h3>
-<a name="idp33509680-bbconstruct-copy-destruct"></a><code class="computeroutput">scoped_connection</code> public construct/copy/destruct</h3>
+<a name="idm45555132073984"></a><h3>
+<a name="idm45506976104640-bbconstruct-copy-destruct"></a><code class="computeroutput">scoped_connection</code> public construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp146749936-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45507165429472-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Default constructs an empty scoped_connection.</p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -81,7 +82,7 @@
 <tbody>
 <tr>
 <td><p><span class="term">Postconditions:</span></p></td>
-<td><p><code class="computeroutput"><a class="link" href="connection.html#idp66397168-bb">connected</a>() == false </code></p></td>
+<td><p><code class="computeroutput"><a class="link" href="connection.html#idm45507106516656-bb">connected</a>() == false </code></p></td>
 </tr>
 <tr>
 <td><p><span class="term">Throws:</span></p></td>
@@ -91,7 +92,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp99862544-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45507035823456-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -106,7 +107,7 @@
 </tr>
 <tr>
 <td><p><span class="term">Postconditions:</span></p></td>
-<td><p><code class="computeroutput"><a class="link" href="connection.html#idp66397168-bb">connected</a>() == other.connected()</code></p></td>
+<td><p><code class="computeroutput"><a class="link" href="connection.html#idm45507106516656-bb">connected</a>() == other.connected()</code></p></td>
 </tr>
 <tr>
 <td><p><span class="term">Throws:</span></p></td>
@@ -116,7 +117,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp219209744-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45507090797728-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Move constructor.</p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -139,7 +140,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp150853152-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45507037367680-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>Move constructor.</p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -162,7 +163,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout">scoped_connection&amp; <a name="idp219453584-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout">scoped_connection&amp; <a name="idm45506979105120-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>Copy assignment from unscoped connection.</p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -179,7 +180,7 @@
 </tr>
 <tr>
 <td><p><span class="term">Postconditions:</span></p></td>
-<td><p><code class="computeroutput"><a class="link" href="connection.html#idp66397168-bb">connected</a>() == other.connected()</code></p></td>
+<td><p><code class="computeroutput"><a class="link" href="connection.html#idm45507106516656-bb">connected</a>() == other.connected()</code></p></td>
 </tr>
 <tr>
 <td><p><span class="term">Throws:</span></p></td>
@@ -189,7 +190,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout">scoped_connection&amp; <a name="idp153987024-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout">scoped_connection&amp; <a name="idm45506971186864-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>Move assignment.</p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -213,7 +214,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout">scoped_connection&amp; <a name="idp152688864-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout">scoped_connection&amp; <a name="idm45506995142176-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="connection.html" title="Class connection">connection</a><span class="special">&amp;&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>Move assignment.</p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -237,7 +238,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp92660800-bb"></a><span class="special">~</span><span class="identifier">scoped_connection</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45507106659824-bb"></a><span class="special">~</span><span class="identifier">scoped_connection</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -246,7 +247,7 @@
 <tbody><tr>
 <td><p><span class="term">Effects:</span></p></td>
 <td><p>If
-            <code class="computeroutput">this-&gt;<a class="link" href="connection.html#idp66397168-bb">connected</a>()</code>,
+            <code class="computeroutput">this-&gt;<a class="link" href="connection.html#idm45507106516656-bb">connected</a>()</code>,
             disconnects the signal-slot connection.</p></td>
 </tr></tbody>
 </table></div>
@@ -254,10 +255,10 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp421368768"></a><h3>
-<a name="idp215716464-bb"></a><code class="computeroutput">scoped_connection</code> public methods</h3>
+<a name="idm45555131991728"></a><h3>
+<a name="idm45507040539392-bb"></a><code class="computeroutput">scoped_connection</code> public methods</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a class="link" href="connection.html" title="Class connection">connection</a> <a name="idp149505056-bb"></a><span class="identifier">release</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="connection.html" title="Class connection">connection</a> <a name="idm45507040538832-bb"></a><span class="identifier">release</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -274,7 +275,7 @@
 </tr>
 <tr>
 <td><p><span class="term">Postconditions:</span></p></td>
-<td><p><code class="computeroutput"><a class="link" href="connection.html#idp66397168-bb">connected</a>() == false</code></p></td>
+<td><p><code class="computeroutput"><a class="link" href="connection.html#idm45507106516656-bb">connected</a>() == false</code></p></td>
 </tr>
 <tr>
 <td><p><span class="term">Returns:</span></p></td>
@@ -287,16 +288,16 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp421382880"></a><h3>
-<a name="idp200407200-bbconstruct-copy-destruct"></a><code class="computeroutput">scoped_connection</code> private construct/copy/destruct</h3>
+<a name="idm45555131977616"></a><h3>
+<a name="idm45506976539840-bbconstruct-copy-destruct"></a><code class="computeroutput">scoped_connection</code> private construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp200407760-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45507042995120-bb"></a><span class="identifier">scoped_connection</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre>
 <p>The scoped_connection class is not copyable.  It may only be copy constructed from an unscoped
                 <code class="computeroutput"><a class="link" href="connection.html" title="Class connection">connection</a></code> object.</p>
 </li>
 <li class="listitem">
-<pre class="literallayout">scoped_connection&amp; <a name="idp103972448-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout">scoped_connection&amp; <a name="idm45507037164304-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="scoped_connection.html" title="Class scoped_connection">scoped_connection</a><span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>The scoped_connection class is not copyable.  It may only be copy assigned from an unscoped 
                 <code class="computeroutput"><a class="link" href="connection.html" title="Class connection">connection</a></code> object.</p>
 </li>

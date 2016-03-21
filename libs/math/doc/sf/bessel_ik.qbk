@@ -33,7 +33,7 @@ where:
 
 [equation mbessel3]
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1 and T2 are different types.  The functions are also optimised for the
 relatively common case that T1 is an integer.
 
@@ -63,29 +63,20 @@ a simplified version of this implementation
 [h4 Accuracy]
 
 The following tables show how the accuracy of these functions
-varies on various platforms, along with a comparison to the __gsl library.  
+varies on various platforms, along with comparison to other libraries.  
 Note that only results for the widest floating-point type on the 
 system are given, as narrower types have __zero_error.  All values
-are relative errors in units of epsilon.
+are relative errors in units of epsilon.  Note that our test suite
+includes some fairly extreme inputs which results in most of the worst
+problem cases in other libraries:
 
-[table Errors Rates in cyl_bessel_i
-[[Significand Size] [Platform and Compiler] [I[sub v]] ]
-[[53] [Win32 / Visual C++ 8.0] [Peak=10 Mean=3.4
-      GSL Peak=6000]  ]
-[[64] [Red Hat Linux IA64 / G++ 3.4] [Peak=11 Mean=3] ]
-[[64] [SUSE Linux AMD64 / G++ 4.1] [Peak=11 Mean=4] ]
-[[113] [HP-UX / HP aCC 6] [Peak=15 Mean=4]  ]
-]
+[table_cyl_bessel_i_integer_orders_]
 
-[table Errors Rates in cyl_bessel_k
-[[Significand Size] [Platform and Compiler] [K[sub v]] ]
-[[53] [Win32 / Visual C++ 8.0] [Peak=9 Mean=2 
+[table_cyl_bessel_i]
 
-GSL Peak=9] ]
-[[64] [Red Hat Linux IA64 / G++ 3.4] [Peak=10 Mean=2] ]
-[[64] [SUSE Linux AMD64 / G++ 4.1] [Peak=10 Mean=2] ]
-[[113] [HP-UX / HP aCC 6] [Peak=12 Mean=5] ]
-]
+[table_cyl_bessel_k_integer_orders_]
+
+[table_cyl_bessel_k]
 
 [h4 Implementation]
 

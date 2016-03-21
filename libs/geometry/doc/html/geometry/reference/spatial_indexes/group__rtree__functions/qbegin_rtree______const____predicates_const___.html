@@ -28,7 +28,7 @@
           const &amp;, Predicates const &amp;)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp128498496"></a>
+            <a class="indexterm" name="idm44837168242496"></a>
 Returns the query iterator pointing at the begin of the query range.
           </p>
 <h6>
@@ -135,23 +135,34 @@ Returns the query iterator pointing at the begin of the query range.
           </h6>
 <p>
 </p>
-<pre class="programlisting"><span class="keyword">for</span> <span class="special">(</span> <span class="identifier">Rtree</span><span class="special">::</span><span class="identifier">const_query_iterator</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">qbegin</span><span class="special">(</span><span class="identifier">tree</span><span class="special">,</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">10000</span><span class="special">))</span> <span class="special">;</span>
-        <span class="identifier">it</span> <span class="special">!=</span> <span class="identifier">qend</span><span class="special">(</span><span class="identifier">tree</span><span class="special">)</span> <span class="special">;</span> <span class="special">++</span><span class="identifier">it</span> <span class="special">)</span>
-<span class="special">{</span>
-    <span class="comment">// do something with value</span>
-    <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">has_enough_nearest_values</span><span class="special">()</span> <span class="special">)</span>
-        <span class="keyword">break</span><span class="special">;</span>
-<span class="special">}</span>
+<pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">qbegin</span><span class="special">(</span><span class="identifier">tree</span><span class="special">,</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">3</span><span class="special">)),</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">qend</span><span class="special">(</span><span class="identifier">tree</span><span class="special">),</span> <span class="identifier">do_something</span><span class="special">());</span>
 </pre>
 <p>
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___.h5"></a>
+            <span class="phrase"><a name="geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___.iterator_category"></a></span><a class="link" href="qbegin_rtree______const____predicates_const___.html#geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___.iterator_category">Iterator
+            category</a>
+          </h6>
+<p>
+            ForwardIterator
+          </p>
+<h6>
+<a name="geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___.h6"></a>
             <span class="phrase"><a name="geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___.throws"></a></span><a class="link" href="qbegin_rtree______const____predicates_const___.html#geometry.reference.spatial_indexes.group__rtree__functions.qbegin_rtree______const____predicates_const___.throws">Throws</a>
           </h6>
 <p>
             If predicates copy throws. If allocation throws.
           </p>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The modification of the rtree may invalidate the iterators.
+            </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

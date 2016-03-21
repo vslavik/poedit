@@ -64,7 +64,7 @@ We'll begin our sample program with the needed includes:
    using std::endl;
 
 #include <stdexcept>
-   using std::exception;
+
 
 #include <cstddef>
    // using ::errno

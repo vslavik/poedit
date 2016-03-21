@@ -1,11 +1,11 @@
 # Status: ported.
 # Base revision: 64488.
 
-# Copyright 2003 Dave Abrahams 
-# Copyright 2002, 2003 Rene Rivera 
-# Copyright 2002, 2003, 2004, 2005 Vladimir Prus 
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Copyright 2003 Dave Abrahams
+# Copyright 2002, 2003 Rene Rivera
+# Copyright 2002, 2003, 2004, 2005 Vladimir Prus
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 # Defines the "symlink" special target. 'symlink' targets make symbolic links
 # to the sources.
@@ -30,18 +30,18 @@ class SymlinkTarget(targets.BasicTarget):
     _count = 0
 
     def __init__(self, project, targets, sources):
-         
+
         # Generate a fake name for now. Need unnamed targets eventually.
         fake_name = "symlink#%s" % SymlinkTarget._count
         SymlinkTarget._count = SymlinkTarget._count + 1
 
         b2.build.targets.BasicTarget.__init__(self, fake_name, project, sources)
-    
+
         # Remember the targets to map the sources onto. Pad or truncate
         # to fit the sources given.
         assert len(targets) <= len(sources)
         self.targets = targets[:] + sources[len(targets):]
-            
+
         # The virtual targets corresponding to the given targets.
         self.virtual_targets = []
 
@@ -51,7 +51,7 @@ class SymlinkTarget(targets.BasicTarget):
             s = self.targets[i]
             a = virtual_target.Action(self.manager(), [t], "symlink.ln", ps)
             vt = virtual_target.FileTarget(os.path.basename(s), t.type(), self.project(), a)
-                        
+
             # Place the symlink in the directory relative to the project
             # location, instead of placing it in the build directory.
             if not ps.get('symlink-location') == "project-relative":
@@ -80,11 +80,11 @@ class SymlinkTarget(targets.BasicTarget):
 def symlink(targets, sources):
 
     from b2.manager import get_manager
-    t = get_manager().targets()   
+    t = get_manager().targets()
     p = get_manager().projects().current()
 
     return t.main_target_alternative(
-        SymlinkTarget(p, targets, 
+        SymlinkTarget(p, targets,
                       # Note: inline targets are not supported for symlink, intentionally,
                       # since it's used to linking existing non-local targets.
                       sources))

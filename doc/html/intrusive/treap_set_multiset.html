@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -143,6 +144,15 @@
             <code class="computeroutput"><span class="identifier">priority</span><span class="special">&lt;</span>
             <span class="identifier">priority_compare</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;</span></code>
           </li>
+<li class="listitem">
+            <span class="bold"><strong><code class="computeroutput"><span class="identifier">key_of_value</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">KeyOfValueFunctionObject</span><span class="special">&gt;</span></code></strong></span>:
+            A function object that will define the <code class="computeroutput"><span class="identifier">key_type</span></code>
+            of the value type to be stored. This type will allow a map-like interface.
+            See <a class="link" href="map_multimap.html" title="Map and multimap-like interface for associative containers">Map and multimap-like interface
+            with set and multiset</a> for details. Default: <code class="computeroutput"><span class="identifier">key_type</span></code>
+            is equal to <code class="computeroutput"><span class="identifier">value_type</span></code>
+            (set-like interface).
+          </li>
 </ul></div>
 <p>
         The default <code class="computeroutput"><span class="identifier">priority_compare</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>
@@ -151,7 +161,7 @@
         as arguments and should return true if the first argument has higher priority
         (it will be searched faster), inducing strict weak ordering. The function
         will be found using ADL lookup so that the user just needs to define a <code class="computeroutput"><span class="identifier">priority_order</span></code> function in the same namespace
-        as his class:
+        as the class:
       </p>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">MyType</span>
 <span class="special">{</span>
@@ -205,8 +215,6 @@
         Now let's see a small example using binary search tree hooks and <code class="computeroutput"><a class="link" href="../boost/intrusive/treap_set.html" title="Class template treap_set">treap_set</a></code>/ <code class="computeroutput"><a class="link" href="../boost/intrusive/treap_multiset.html" title="Class template treap_multiset">treap_multiset</a></code>
         containers:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">treap_set</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">functional</span><span class="special">&gt;</span>
@@ -301,13 +309,11 @@
    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-      </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

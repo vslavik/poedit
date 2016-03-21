@@ -62,6 +62,7 @@ Test 8: test_extreme_function_arguments()
 
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+#include <boost/math/tools/test.hpp>
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/distributions/laplace.hpp>
 #include "test_out_of_range.hpp"
@@ -286,8 +287,8 @@ void test_pdf_cdf_ocatave()
    tolerance);
 
    check_out_of_range<laplace_distribution<RealType> >(0, 1);
-   BOOST_CHECK_THROW(laplace_distribution<RealType>(0, 0), std::domain_error);
-   BOOST_CHECK_THROW(laplace_distribution<RealType>(0, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(laplace_distribution<RealType>(0, 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(laplace_distribution<RealType>(0, -1), std::domain_error);
 }
 
 template <class RealType>
@@ -456,9 +457,13 @@ void test_bad_dist_parameters()
    // Check that can generate laplace distribution using both convenience methods:
    laplace_distribution<double> lp1(0.5); // Using default RealType double.
    boost::math::laplace lp2(0.5); // Using typedef. 
-
-   BOOST_CHECK_THROW(boost::math::laplace_distribution<RealType> lbad1(0, 0), std::domain_error);
-   BOOST_CHECK_THROW(boost::math::laplace_distribution<RealType> lbad2(0, -1), std::domain_error);
+#ifndef BOOST_NO_EXCEPTIONS
+   BOOST_MATH_CHECK_THROW(boost::math::laplace_distribution<RealType> lbad1(0, 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(boost::math::laplace_distribution<RealType> lbad2(0, -1), std::domain_error);
+#else
+   BOOST_MATH_CHECK_THROW(boost::math::laplace_distribution<RealType>(0, 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(boost::math::laplace_distribution<RealType>(0, -1), std::domain_error);
+#endif
 }
 
 template <class RealType>
@@ -495,16 +500,16 @@ void test_extreme_function_arguments()
    BOOST_CHECK_EQUAL(cdf(complement(L01, -std::numeric_limits<RealType>::infinity())), 1 );
 
    // Trac #9672 Feb 2014 x = infinity is now allowed.
-   //BOOST_CHECK_THROW(pdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   //BOOST_CHECK_THROW(pdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
-   //BOOST_CHECK_THROW(pdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   //BOOST_CHECK_THROW(pdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(pdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(pdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(pdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(pdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
 
    // Check cdf at x = +/- infinity.
-   //BOOST_CHECK_THROW(cdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   //BOOST_CHECK_THROW(cdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
-   //BOOST_CHECK_THROW(cdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
-   //BOOST_CHECK_THROW(cdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(cdf(L1, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(cdf(L1, -std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(cdf(L2, +std::numeric_limits<RealType>::infinity()), std::domain_error);
+   //BOOST_MATH_CHECK_THROW(cdf(L2, -std::numeric_limits<RealType>::infinity()), std::domain_error);
 
    // Check quantile at p = 0, 1 which return infinity.
    BOOST_CHECK_EQUAL(quantile(L1, 0), -std::numeric_limits<RealType>::infinity() );

@@ -435,6 +435,8 @@ rule init ( prefix : version ? : condition * : namespace ? : infix ? : full_bin 
     add-shared-library QtPrintSupport : QtGui : QT_PRINTSUPPORT_LIB : $(target-requirements) ;
     add-shared-library QtConcurrent : QtCore : QT_CONCURRENT_LIB : $(target-requirements) ;
 
+    add-shared-library QtPositioning : QtCore : QT_POSITIONING_LIB : $(target-requirements) ;
+
     add-shared-library QtOpenGL : QtGui : QT_OPENGL_LIB : $(target-requirements) ;
     add-shared-library QtSvg : QtXml QtOpenGL : QT_SVG_LIB : $(target-requirements) ;
 
@@ -472,6 +474,9 @@ rule init ( prefix : version ? : condition * : namespace ? : infix ? : full_bin 
     add-shared-library QtQuick          : QtQml : QT_QUICK_LIB : $(target-requirements) ;
     add-shared-library QtQuickParticles : QtQml : : $(target-requirements) ;
     add-shared-library QtQuickTest      : QtQml : : $(target-requirements) ;
+
+    # QtLocation (since 5.4)
+    add-shared-library QtLocation : QtQuick QtPositioning : QT_LOCATION_LIB : $(target-requirements) ;
 
     # Regular expression support
     add-shared-library QtV8 : QtCore : : $(target-requirements) ;

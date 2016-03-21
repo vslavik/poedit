@@ -61,7 +61,7 @@ public:
 template<>
 class codecvt_null<wchar_t> : public std::codecvt<wchar_t, char, std::mbstate_t>
 {
-    virtual BOOST_WARCHIVE_DECL(std::codecvt_base::result)
+    virtual BOOST_WARCHIVE_DECL std::codecvt_base::result
     do_out(
         std::mbstate_t & state,
         const wchar_t * first1,
@@ -71,7 +71,7 @@ class codecvt_null<wchar_t> : public std::codecvt<wchar_t, char, std::mbstate_t>
         char * last2,
         char * & next2
     ) const;
-    virtual BOOST_WARCHIVE_DECL(std::codecvt_base::result)
+    virtual BOOST_WARCHIVE_DECL std::codecvt_base::result
     do_in(
         std::mbstate_t & state,
         const char * first1,

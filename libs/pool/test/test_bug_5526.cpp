@@ -7,6 +7,7 @@
 
 // Test of bug #2656 (https://svn.boost.org/trac/boost/ticket/2526)
 
+#include <memory> 
 #include <boost/pool/pool.hpp>
 #include <boost/pool/singleton_pool.hpp>
 #include <boost/assert.hpp>

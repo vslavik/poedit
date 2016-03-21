@@ -267,7 +267,6 @@ void interval_map_add_sub_4_bicremental_types()
     typename IntervalMapT::domain_mapping_type v9_u1 = make_pair(v9, u1);
     typename IntervalMapT::value_type I5_6I_u1 = make_pair(I5_6I, u1);
     typename IntervalMapT::value_type I5_9I_u1 = make_pair(I5_9I, u1);
-    typename IntervalMapT::value_type I0_9I_u1 = make_pair(icl::interval<T>::closed(v0, v9), u1);
 
     BOOST_CHECK_EQUAL( IntervalMapT(I5_6I_u1).add(v0_u1).add(v9_u1), 
                        IntervalMapT().add(v9_u1).add(I5_6I_u1).add(v0_u1) );
@@ -554,7 +553,7 @@ void interval_map_operators_4_bicremental_types()
     T v7 = make<T>(7);
     T v8 = make<T>(8);
     U u1 = make<U>(1);
-    typename IntervalMapT::interval_type I3_5I(icl::interval<T>::closed(v3,v5));
+    //typename IntervalMapT::interval_type I3_5I(icl::interval<T>::closed(v3,v5));
     typename IntervalMapT::value_type I0_1I_u1(icl::interval<T>::closed(v0,v1),u1);
     typename IntervalMapT::value_type I3_5I_u1(icl::interval<T>::closed(v3,v5),u1);
     typename IntervalMapT::value_type I7_8I_u1(icl::interval<T>::closed(v7,v8),u1);
@@ -715,13 +714,13 @@ void interval_map_base_erase_4_bicremental_types()
     IntervalT I0_2D = icl::interval<T>::right_open(v0,v2);
     IntervalT I0_3D = icl::interval<T>::right_open(v0,v3);
     IntervalT I1_3D = icl::interval<T>::right_open(v1,v3);
-    IntervalT I1_4D = icl::interval<T>::right_open(v1,v4);
+    //IntervalT I1_4D = icl::interval<T>::right_open(v1,v4);
     IntervalT I1_8D = icl::interval<T>::right_open(v1,v8);
     IntervalT I2_4D = icl::interval<T>::right_open(v2,v4);
     IntervalT I2_7D = icl::interval<T>::right_open(v2,v7);
     IntervalT I2_3D = icl::interval<T>::right_open(v2,v3);
     IntervalT I5_7D = icl::interval<T>::right_open(v5,v7);
-    IntervalT I5_8D = icl::interval<T>::right_open(v5,v8);
+    //IntervalT I5_8D = icl::interval<T>::right_open(v5,v8);
     IntervalT I6_7D = icl::interval<T>::right_open(v6,v7);
     IntervalT I6_8D = icl::interval<T>::right_open(v6,v8);
     IntervalT I6_9D = icl::interval<T>::right_open(v6,v9);
@@ -1094,7 +1093,7 @@ void interval_map_infix_caret_overload_4_bicremental_types()
     std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
     mapping_pair<T,U> map_pair = K_v(4,3);
 
-    IntervalT itv = C_D(4,11);
+    //IntervalT itv = C_D(4,11);
 
     IntervalMapT map_a, map_b;
     map_a.add(CDv(1,3,1)).add(IDv(8,9,1)).add(IIv(6,11,3));
@@ -1132,8 +1131,8 @@ void interval_map_find_4_bicremental_types()
     typedef typename IntervalMapT::const_iterator c_iterator;
 
     //CL typename IntervalMapT::interval_mapping_type val_pair1 = IDv(6,9,1);
-    std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
-    mapping_pair<T,U> map_pair = K_v(4,3);
+    //std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
+    //mapping_pair<T,U> map_pair = K_v(4,3);
 
     IntervalMapT map_a;
     map_a.add(CDv(1,3,1)).add(IDv(8,9,1)).add(IIv(6,11,3));
@@ -1253,8 +1252,8 @@ void interval_map_range_4_bicremental_types()
     typedef typename IntervalMapT::const_iterator c_iterator;
 
     //CL typename IntervalMapT::interval_mapping_type val_pair1 = IDv(6,9,1);
-    std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
-    mapping_pair<T,U> map_pair = K_v(4,3);
+    //std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
+    //mapping_pair<T,U> map_pair = K_v(4,3);
 
     IntervalMapT map_a;
     map_a.add(CDv(1,3,1)).add(IDv(8,9,1)).add(IIv(6,11,3));
@@ -1294,8 +1293,8 @@ void interval_map_set_4_bicremental_types()
     typedef typename IntervalMapT::interval_type   IntervalT;
 
     //CL typename IntervalMapT::interval_mapping_type val_pair1 = IDv(6,9,1);
-    std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
-    mapping_pair<T,U> map_pair = K_v(4,3);
+    //std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
+    //mapping_pair<T,U> map_pair = K_v(4,3);
 
     IntervalMapT map_a;
     map_a.add(CDv(1,3,1)).add(IDv(8,9,1)).add(IIv(6,11,3));
@@ -1438,7 +1437,7 @@ void interval_map_element_iter_4_discrete_types()
     map_a.insert(IIv(1,3,1)).insert(IIv(6,7,2));
 
     typename IntervalMapT::atomized_type ato_map_a;
-    ReptatorT el_it = elements_begin(map_a);
+    //ReptatorT el_it = elements_begin(map_a);
 
     VectorT vec(5), cev(5);
     vec[0]=sK_v(1,1);vec[1]=sK_v(2,1);vec[2]=sK_v(3,1);vec[3]=sK_v(6,2);vec[4]=sK_v(7,2);
@@ -1479,8 +1478,8 @@ void interval_map_intersects_4_bicremental_types()
     typedef typename IntervalMapT::interval_type   IntervalT;
 
     //CL typename IntervalMapT::interval_mapping_type val_pair1 = IDv(6,9,1);
-    std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
-    mapping_pair<T,U> map_pair = K_v(4,3);
+    //std::pair<const IntervalT, U> val_pair2 = IDv(3,5,3);
+    //mapping_pair<T,U> map_pair = K_v(4,3);
 
     IntervalMapT map_a;
     map_a.add(CDv(1,3,1)).add(IDv(8,9,1)).add(IIv(6,11,3));

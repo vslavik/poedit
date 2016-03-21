@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,15 +35,15 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="local.html" title="Struct template local">local</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">terminal</span><span class="special">::</span><span class="identifier">type</span><span class="special">&lt;</span> <span class="identifier">reference_wrapper</span><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">{</span>
   <span class="comment">// <a class="link" href="local.html#boost.xpressive.localconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="local.html#idp352625904-bb"><span class="identifier">local</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="local.html#idp352626960-bb"><span class="identifier">local</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="local.html#idm45506840479040-bb"><span class="identifier">local</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="local.html#idm45506840477984-bb"><span class="identifier">local</span></a><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="local.html#idp352622368-bb">public member functions</a></span>
-  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="local.html#idp352622928-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="local.html#idp352624080-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="local.html#idm45506840482576-bb">public member functions</a></span>
+  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="local.html#idm45506840482016-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="local.html#idm45506840480864-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp531041872"></a><h2>Description</h2>
+<a name="idm45555020831488"></a><h2>Description</h2>
 <p>
 Below is an example of how to use <code class="computeroutput">local&lt;&gt;</code> in semantic actions.</p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">xpressive</span><span class="special">;</span>
@@ -65,22 +66,22 @@ Below is an example of how to use <code class="computeroutput">local&lt;&gt;</co
 <p>
 </p>
 <div class="refsect2">
-<a name="idp531080832"></a><h3>Template Parameters</h3>
+<a name="idm45555020792528"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> T</pre>
 <p>The type of the local variable.</p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp531083968"></a><h3>
+<a name="idm45555020789392"></a><h3>
 <a name="boost.xpressive.localconstruct-copy-destruct"></a><code class="computeroutput">local</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp352625904-bb"></a><span class="identifier">local</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Store a default-constructed value of type <code class="computeroutput">T</code>. </li>
+<pre class="literallayout"><a name="idm45506840479040-bb"></a><span class="identifier">local</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Store a default-constructed value of type <code class="computeroutput">T</code>. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp352626960-bb"></a><span class="identifier">local</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Store a default-constructed value of type <code class="computeroutput">T</code>. <p>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45506840477984-bb"></a><span class="identifier">local</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Store a default-constructed value of type <code class="computeroutput">T</code>. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -105,13 +106,13 @@ Below is an example of how to use <code class="computeroutput">local&lt;&gt;</co
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp531101120"></a><h3>
-<a name="idp352622368-bb"></a><code class="computeroutput">local</code> public member functions</h3>
+<a name="idm45555020772240"></a><h3>
+<a name="idm45506840482576-bb"></a><code class="computeroutput">local</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp352622928-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Fetch the wrapped value. </li>
+<pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idm45506840482016-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Fetch the wrapped value. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp352624080-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idm45506840480864-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
 </li>
 </ol></div>

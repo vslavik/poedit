@@ -84,14 +84,30 @@ struct get_turns
                              Geometry2 const& geometry2,
                              InterruptPolicy & interrupt_policy)
     {
-        static const bool reverse1 = detail::overlay::do_reverse<geometry::point_order<Geometry1>::value>::value;
-        static const bool reverse2 = detail::overlay::do_reverse<geometry::point_order<Geometry2>::value>::value;
-
         RobustPolicy robust_policy = geometry::get_rescale_policy
             <
                 RobustPolicy
             >(geometry1, geometry2);
 
+        apply(turns, geometry1, geometry2, interrupt_policy, robust_policy);
+    }
+
+    template <typename Turns, typename InterruptPolicy>
+    static inline void apply(Turns & turns,
+                             Geometry1 const& geometry1,
+                             Geometry2 const& geometry2,
+                             InterruptPolicy & interrupt_policy,
+                             RobustPolicy const& robust_policy)
+    {
+        static const bool reverse1 = detail::overlay::do_reverse
+            <
+                geometry::point_order<Geometry1>::value
+            >::value;
+
+        static const bool reverse2 = detail::overlay::do_reverse
+            <
+                geometry::point_order<Geometry2>::value
+            >::value;
 
         dispatch::get_turns
             <
@@ -112,8 +128,8 @@ struct get_turns
 template <int N = 0, int U = 1, int I = 2, int B = 3, int C = 4, int O = 0>
 struct op_to_int
 {
-    template <typename SegmentRatio>
-    inline int operator()(detail::overlay::turn_operation<SegmentRatio> const& op) const
+    template <typename Operation>
+    inline int operator()(Operation const& op) const
     {
         switch(op.operation)
         {
@@ -255,9 +271,14 @@ struct less
     {
         static LessOp less_op;
 
-        return left.operations[OpId].fraction < right.operations[OpId].fraction
-            || ( left.operations[OpId].fraction == right.operations[OpId].fraction
-              && less_op(left, right) );
+        return
+            geometry::math::equals(left.operations[OpId].fraction,
+                                   right.operations[OpId].fraction)
+            ?
+            less_op(left, right)
+            :
+            (left.operations[OpId].fraction < right.operations[OpId].fraction)
+            ;
     }
 
     template <typename Turn>

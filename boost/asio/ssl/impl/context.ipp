@@ -89,6 +89,14 @@ context::context(context::method m)
     handle_ = ::SSL_CTX_new(::SSLv2_server_method());
     break;
 #endif // defined(OPENSSL_NO_SSL2)
+#if defined(OPENSSL_NO_SSL3)
+  case context::sslv3:
+  case context::sslv3_client:
+  case context::sslv3_server:
+    boost::asio::detail::throw_error(
+        boost::asio::error::invalid_argument, "context");
+    break;
+#else // defined(OPENSSL_NO_SSL3)
   case context::sslv3:
     handle_ = ::SSL_CTX_new(::SSLv3_method());
     break;
@@ -98,6 +106,7 @@ context::context(context::method m)
   case context::sslv3_server:
     handle_ = ::SSL_CTX_new(::SSLv3_server_method());
     break;
+#endif // defined(OPENSSL_NO_SSL3)
   case context::tlsv1:
     handle_ = ::SSL_CTX_new(::TLSv1_method());
     break;
@@ -557,11 +566,15 @@ boost::system::error_code context::use_certificate_chain(
       return ec;
     }
 
+#if (OPENSSL_VERSION_NUMBER >= 0x10002000L) && !defined(LIBRESSL_VERSION_NUMBER)
+    ::SSL_CTX_clear_chain_certs(handle_);
+#else
     if (handle_->extra_certs)
     {
       ::sk_X509_pop_free(handle_->extra_certs, X509_free);
       handle_->extra_certs = 0;
     }
+#endif // (OPENSSL_VERSION_NUMBER >= 0x10002000L)
 
     while (X509* cacert = ::PEM_read_bio_X509(bio.p, 0,
           handle_->default_passwd_callback,
@@ -949,7 +962,8 @@ int context::password_callback_function(
     strcpy_s(buf, size, passwd.c_str());
 #else // defined(BOOST_ASIO_HAS_SECURE_RTL)
     *buf = '\0';
-    strncat(buf, passwd.c_str(), size);
+    if (size > 0)
+      strncat(buf, passwd.c_str(), size - 1);
 #endif // defined(BOOST_ASIO_HAS_SECURE_RTL)
 
     return static_cast<int>(strlen(buf));

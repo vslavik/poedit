@@ -30,6 +30,7 @@ MPL_TEST_CASE()
     typedef range_c<int,0,15> answer;
 
     MPL_ASSERT(( equal<numbers,answer> ));
+    MPL_ASSERT(( equal<numbers::type,answer> ));
     MPL_ASSERT_RELATION( size<numbers>::value, ==, 15 );
 }
 

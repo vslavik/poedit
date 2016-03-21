@@ -8,6 +8,7 @@
 
 import hashlib
 
+import bjam
 from b2.util.utility import *
 import property, feature
 import b2.build.feature
@@ -15,7 +16,7 @@ from b2.exceptions import *
 from b2.build.property import get_abbreviated_paths
 from b2.util.sequence import unique
 from b2.util.set import difference
-from b2.util import cached, abbreviate_dashed
+from b2.util import cached, abbreviate_dashed, is_iterable_typed
 
 from b2.manager import get_manager
 
@@ -36,6 +37,8 @@ def create (raw_properties = []):
     """ Creates a new 'PropertySet' instance for the given raw properties,
         or returns an already existing one.
     """
+    assert (is_iterable_typed(raw_properties, property.Property)
+            or is_iterable_typed(raw_properties, basestring))
     # FIXME: propagate to callers.
     if len(raw_properties) > 0 and isinstance(raw_properties[0], property.Property):
         x = raw_properties
@@ -58,6 +61,7 @@ def create_with_validation (raw_properties):
         that all properties are valid and converting implicit
         properties into gristed form.
     """
+    assert is_iterable_typed(raw_properties, basestring)
     properties = [property.create_from_string(s) for s in raw_properties]
     property.validate(properties)
 
@@ -71,7 +75,9 @@ def empty ():
 def create_from_user_input(raw_properties, jamfile_module, location):
     """Creates a property-set from the input given by the user, in the
     context of 'jamfile-module' at 'location'"""
-
+    assert is_iterable_typed(raw_properties, basestring)
+    assert isinstance(jamfile_module, basestring)
+    assert isinstance(location, basestring)
     properties = property.create_from_strings(raw_properties, True)
     properties = property.translate_paths(properties, location)
     properties = property.translate_indirect(properties, jamfile_module)
@@ -95,7 +101,10 @@ def refine_from_user_input(parent_requirements, specification, jamfile_module,
      - project-module -- the module to which context indirect features
        will be bound.
      - location -- the path to which path features are relative."""
-
+    assert isinstance(parent_requirements, PropertySet)
+    assert is_iterable_typed(specification, basestring)
+    assert isinstance(jamfile_module, basestring)
+    assert isinstance(location, basestring)
 
     if not specification:
         return parent_requirements
@@ -146,7 +155,7 @@ class PropertySet:
           caching whenever possible.
     """
     def __init__ (self, properties = []):
-
+        assert is_iterable_typed(properties, property.Property)
 
         raw_properties = []
         for p in properties:
@@ -304,6 +313,7 @@ class PropertySet:
         return self.subfeatures_
 
     def evaluate_conditionals(self, context=None):
+        assert isinstance(context, (PropertySet, type(None)))
         if not context:
             context = self
 
@@ -410,6 +420,7 @@ class PropertySet:
         """ Creates a new property set containing the properties in this one,
             plus the ones of the property set passed as argument.
         """
+        assert isinstance(ps, PropertySet)
         if not self.added_.has_key(ps):
             self.added_[ps] = create(self.all_ + ps.all())
         return self.added_[ps]
@@ -428,6 +439,7 @@ class PropertySet:
             feature = feature[0]
         if not isinstance(feature, b2.build.feature.Feature):
             feature = b2.build.feature.get(feature)
+        assert isinstance(feature, b2.build.feature.Feature)
 
         if not self.feature_map_:
             self.feature_map_ = {}
@@ -442,9 +454,9 @@ class PropertySet:
     @cached
     def get_properties(self, feature):
         """Returns all contained properties associated with 'feature'"""
-
         if not isinstance(feature, b2.build.feature.Feature):
             feature = b2.build.feature.get(feature)
+        assert isinstance(feature, b2.build.feature.Feature)
 
         result = []
         for p in self.all_:
@@ -454,7 +466,7 @@ class PropertySet:
 
     def __contains__(self, item):
         return item in self.all_set_
-    
+
 def hash(p):
     m = hashlib.md5()
     m.update(p)

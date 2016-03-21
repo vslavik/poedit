@@ -26,7 +26,7 @@
 #include "windows_version.hpp"
 #include <windows.h>
 
-#if defined(BOOST_LOG_USE_WINNT6_API)
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 #include <boost/log/detail/header.hpp>
 
@@ -103,7 +103,7 @@ BOOST_LOG_CLOSE_NAMESPACE // namespace log
 
 #include <boost/log/detail/footer.hpp>
 
-#else // defined(BOOST_LOG_USE_WINNT6_API)
+#else // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 #include <cstdlib> // atexit
 #include <boost/detail/interlocked.hpp>
@@ -381,7 +381,7 @@ BOOST_LOG_CLOSE_NAMESPACE // namespace log
 
 #include <boost/log/detail/footer.hpp>
 
-#endif // defined(BOOST_LOG_USE_WINNT6_API)
+#endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 
 #elif defined(BOOST_THREAD_PLATFORM_PTHREAD)
 

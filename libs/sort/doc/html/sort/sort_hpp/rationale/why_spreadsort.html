@@ -27,7 +27,7 @@
 <a name="sort.sort_hpp.rationale.why_spreadsort"></a><a class="link" href="why_spreadsort.html" title="Why spreadsort?">Why spreadsort?</a>
 </h4></div></div></div>
 <p>
-          The <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/spreadsort_idp47957744.html" title="Function template spreadsort">spreadsort</a></code></code>
+          The <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/spreadso_idm45762851788208.html" title="Function template spreadsort">spreadsort</a></code></code>
           algorithm used in this library is designed to provide best possible worst-case
           performance, while still being cache-friendly. It provides the better of
           <span class="emphasis"><em>&#119926;(N*log(K/S + S))</em></span> and <span class="emphasis"><em>&#119926;(N*log(N))</em></span>
@@ -48,8 +48,8 @@
           this makes it especially inefficient.
         </p>
 <p>
-          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/integer_sort_idp41299456.html" title="Function template integer_sort">integer_sort</a></code></code>
-          and <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/float_sort_idp47034528.html" title="Function template float_sort">float_sort</a></code></code>
+          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/integer__idm45762858047392.html" title="Function template integer_sort">integer_sort</a></code></code>
+          and <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/float_so_idm45762852726464.html" title="Function template float_sort">float_sort</a></code></code>
           use <a href="http://en.wikipedia.org/wiki/Introsort" target="_top">introsort</a>
           instead, which provides <span class="emphasis"><em>&#119926;(N*log(N))</em></span> performance for
           these medium-sized pieces. Also, <code class="computeroutput"><span class="identifier">flash_sort</span></code>'s
@@ -99,19 +99,19 @@
           hybrid algorithm for strings that uses substantial additional memory.
         </p>
 <p>
-          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>
+          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>
           uses minimal additional memory by comparison. Speed comparisons between
-          the two haven't been made, but the better memory efficiency makes <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>
+          the two haven't been made, but the better memory efficiency makes <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>
           more general.
         </p>
 <p>
-          <code class="computeroutput"><span class="identifier">postal_sort</span></code> and <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>
+          <code class="computeroutput"><span class="identifier">postal_sort</span></code> and <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>
           are similar. A direct performance comparison would be welcome, but an efficient
           version of <code class="computeroutput"><span class="identifier">postal_sort</span></code>
           was not found in a search for source.
         </p>
 <p>
-          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>
+          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>
           is most similar to the <a href="http://en.wikipedia.org/wiki/American_flag_sort" target="_top">American
           flag sort</a> algorithm. The main difference is that it doesn't bother
           trying to optimize how empty buckets/piles are handled, instead just checking
@@ -122,13 +122,13 @@
         </p>
 <p>
           Another difference is not applying the stack-size restriction. Because
-          of the equality check in <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>,
+          of the equality check in <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>,
           it would take <span class="emphasis"><em>m*m</em></span> memory worth of strings to force
-          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>
+          <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>
           to create a stack of depth <span class="emphasis"><em>m</em></span>. This problem isn't a
           realistic one on modern systems with multi-megabyte stacksize limits, where
           main memory would be exhausted holding the long strings necessary to exceed
-          the stacksize limit. <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_sort_idp48004640.html" title="Function template string_sort">string_sort</a></code></code>
+          the stacksize limit. <code class="literal"><code class="computeroutput"><a class="link" href="../../../boost/sort/spreadsort/string_s_idm45762851726768.html" title="Function template string_sort">string_sort</a></code></code>
           can be thought of as modernizing <a href="http://en.wikipedia.org/wiki/American_flag_sort" target="_top">American
           flag sort</a> to take advantage of <a href="http://en.wikipedia.org/wiki/Introsort" target="_top">introsort</a>
           as a fallback algorithm. In the author's testing, <a href="http://en.wikipedia.org/wiki/American_flag_sort" target="_top">American

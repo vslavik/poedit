@@ -14,7 +14,7 @@ class Manager:
     """ This class is a facade to the Boost.Build system.
         It serves as the root to access all data structures in use.
     """
-        
+
     def __init__ (self, engine, global_build_dir):
         """ Constructor.
             engine: the build engine that will actually construct the targets.
@@ -26,7 +26,7 @@ class Manager:
         from build.errors import Errors
         from b2.util.logger import NullLogger
         from build import build_request, property_set, feature
-        
+
         self.engine_ = engine
         self.virtual_targets_ = VirtualTargetRegistry (self)
         self.projects_ = ProjectRegistry (self, global_build_dir)
@@ -37,16 +37,16 @@ class Manager:
         self.boost_build_path_ = bjam.variable("BOOST_BUILD_PATH")
         self.errors_ = Errors()
         self.command_line_free_features_ = property_set.empty()
-        
+
         global the_manager
         the_manager = self
-        
+
     def scanners (self):
         return self.scanners_
 
     def engine (self):
         return self.engine_
-        
+
     def virtual_targets (self):
         return self.virtual_targets_
 
@@ -58,7 +58,7 @@ class Manager:
 
     def argv (self):
         return self.argv_
-    
+
     def logger (self):
         return self.logger_
 
@@ -88,7 +88,7 @@ class Manager:
         if not targets:
             for name, project in self.projects ().projects ():
                 targets.append (project.target ())
-            
+
         property_groups = build_request.expand_no_defaults (properties)
 
         virtual_targets = []
@@ -107,4 +107,4 @@ class Manager:
         actual_targets = []
         for virtual_target in virtual_targets:
             actual_targets.extend (virtual_target.actualize ())
-    
+

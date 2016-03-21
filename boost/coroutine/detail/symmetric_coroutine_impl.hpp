@@ -16,6 +16,7 @@
 #include <boost/coroutine/detail/coroutine_context.hpp>
 #include <boost/coroutine/detail/flags.hpp>
 #include <boost/coroutine/detail/parameters.hpp>
+#include <boost/coroutine/detail/preallocated.hpp>
 #include <boost/coroutine/detail/trampoline.hpp>
 #include <boost/coroutine/exceptions.hpp>
 #include <boost/coroutine/stack_context.hpp>
@@ -34,11 +35,11 @@ class symmetric_coroutine_impl : private noncopyable
 public:
     typedef parameters< R >                           param_type;
 
-    symmetric_coroutine_impl( stack_context const& stack_ctx,
+    symmetric_coroutine_impl( preallocated const& palloc,
                               bool unwind, bool preserve_fpu) BOOST_NOEXCEPT :
         flags_( 0),
         caller_(),
-        callee_( trampoline< symmetric_coroutine_impl< R > >, stack_ctx)
+        callee_( trampoline< symmetric_coroutine_impl< R > >, palloc)
     {
         if ( unwind) flags_ |= flag_force_unwind;
         if ( preserve_fpu) flags_ |= flag_preserve_fpu;
@@ -182,11 +183,11 @@ class symmetric_coroutine_impl< R & > : private noncopyable
 public:
     typedef parameters< R & >                         param_type;
 
-    symmetric_coroutine_impl( stack_context const& stack_ctx,
+    symmetric_coroutine_impl( preallocated const& palloc,
                               bool unwind, bool preserve_fpu) BOOST_NOEXCEPT :
         flags_( 0),
         caller_(),
-        callee_( trampoline< symmetric_coroutine_impl< R > >, stack_ctx)
+        callee_( trampoline< symmetric_coroutine_impl< R > >, palloc)
     {
         if ( unwind) flags_ |= flag_force_unwind;
         if ( preserve_fpu) flags_ |= flag_preserve_fpu;
@@ -330,11 +331,11 @@ class symmetric_coroutine_impl< void > : private noncopyable
 public:
     typedef parameters< void >                          param_type;
 
-    symmetric_coroutine_impl( stack_context const& stack_ctx,
+    symmetric_coroutine_impl( preallocated const& palloc,
                               bool unwind, bool preserve_fpu) BOOST_NOEXCEPT :
         flags_( 0),
         caller_(),
-        callee_( trampoline_void< symmetric_coroutine_impl< void > >, stack_ctx)
+        callee_( trampoline_void< symmetric_coroutine_impl< void > >, palloc)
     {
         if ( unwind) flags_ |= flag_force_unwind;
         if ( preserve_fpu) flags_ |= flag_preserve_fpu;
@@ -392,7 +393,7 @@ public:
         flags_ &= ~flag_running;
     }
 
-    inline void yield() BOOST_NOEXCEPT
+    inline void yield()
     {
         BOOST_ASSERT( is_running() );
         BOOST_ASSERT( ! is_complete() );

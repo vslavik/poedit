@@ -14,6 +14,8 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_FOLLOW_HELPERS_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_FOLLOW_HELPERS_HPP
 
+#include <boost/geometry/core/assert.hpp>
+
 #include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/range.hpp>
 //#include <boost/geometry/algorithms/detail/sub_range.hpp>
@@ -89,7 +91,7 @@ struct for_each_disjoint_geometry_if<OpId, Geometry, Tag, true>
                                  Geometry const& geometry,
                                  Pred & pred)
     {
-        BOOST_ASSERT(first != last);
+        BOOST_GEOMETRY_ASSERT(first != last);
 
         const std::size_t count = boost::size(geometry);
         boost::ignore_unused_variable_warning(count);
@@ -99,10 +101,10 @@ struct for_each_disjoint_geometry_if<OpId, Geometry, Tag, true>
         std::vector<bool> detected_intersections(count, false);
         for ( TurnIt it = first ; it != last ; ++it )
         {
-            signed_index_type multi_index = it->operations[OpId].seg_id.multi_index;
-            BOOST_ASSERT(multi_index >= 0);
+            signed_size_type multi_index = it->operations[OpId].seg_id.multi_index;
+            BOOST_GEOMETRY_ASSERT(multi_index >= 0);
             std::size_t const index = static_cast<std::size_t>(multi_index);
-            BOOST_ASSERT(index < count);
+            BOOST_GEOMETRY_ASSERT(index < count);
             detected_intersections[index] = true;
         }
 
@@ -141,12 +143,12 @@ public:
     {}
     segment_identifier const& seg_id() const
     {
-        BOOST_ASSERT(sid_ptr);
+        BOOST_GEOMETRY_ASSERT(sid_ptr);
         return *sid_ptr;
     }
     Point const& point() const
     {
-        BOOST_ASSERT(pt_ptr);
+        BOOST_GEOMETRY_ASSERT(pt_ptr);
         return *pt_ptr;
     }
 
@@ -300,15 +302,15 @@ public:
 
     point_type const& get_exit_point() const
     {
-        BOOST_ASSERT(m_exit_operation != overlay::operation_none);
-        BOOST_ASSERT(m_exit_turn_ptr);
+        BOOST_GEOMETRY_ASSERT(m_exit_operation != overlay::operation_none);
+        BOOST_GEOMETRY_ASSERT(m_exit_turn_ptr);
         return m_exit_turn_ptr->point;
     }
 
     TurnInfo const& get_exit_turn() const
     {
-        BOOST_ASSERT(m_exit_operation != overlay::operation_none);
-        BOOST_ASSERT(m_exit_turn_ptr);
+        BOOST_GEOMETRY_ASSERT(m_exit_operation != overlay::operation_none);
+        BOOST_GEOMETRY_ASSERT(m_exit_turn_ptr);
         return *m_exit_turn_ptr;
     }
 

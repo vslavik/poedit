@@ -340,6 +340,8 @@ public :
           >
     {};
 
+    typedef typename Strategy::radius_type radius_type;
+
     inline cross_track()
     {}
 
@@ -372,11 +374,16 @@ public :
         typedef typename return_type<Point, PointOfSegment>::type return_type;
 
 #ifdef BOOST_GEOMETRY_DEBUG_CROSS_TRACK
-        std::cout << "Course " << dsv(sp1) << " to " << dsv(p) << " " << crs_AD * geometry::math::r2d << std::endl;
-        std::cout << "Course " << dsv(sp1) << " to " << dsv(sp2) << " " << crs_AB * geometry::math::r2d << std::endl;
-        std::cout << "Course " << dsv(sp2) << " to " << dsv(p) << " " << crs_BD * geometry::math::r2d << std::endl;
-        std::cout << "Projection AD-AB " << projection1 << " : " << d_crs1 * geometry::math::r2d << std::endl;
-        std::cout << "Projection BD-BA " << projection2 << " : " << d_crs2 * geometry::math::r2d << std::endl;
+        std::cout << "Course " << dsv(sp1) << " to " << dsv(p) << " "
+                  << crs_AD * geometry::math::r2d<return_type>() << std::endl;
+        std::cout << "Course " << dsv(sp1) << " to " << dsv(sp2) << " "
+                  << crs_AB * geometry::math::r2d<return_type>() << std::endl;
+        std::cout << "Course " << dsv(sp2) << " to " << dsv(p) << " "
+                  << crs_BD * geometry::math::r2d << std::endl;
+        std::cout << "Projection AD-AB " << projection1 << " : "
+                  << d_crs1 * geometry::math::r2d<return_type>() << std::endl;
+        std::cout << "Projection BD-BA " << projection2 << " : "
+                  << d_crs2 * geometry::math::r2d<return_type>() << std::endl;
 #endif
 
         // http://williams.best.vwh.net/avform.htm#XTE
@@ -486,6 +493,8 @@ public :
                   >::type
           >
     {};
+
+    typedef typename Strategy::radius_type radius_type;
 
     inline cross_track()
     {}

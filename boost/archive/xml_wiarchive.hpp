@@ -58,7 +58,7 @@ class basic_xml_grammar;
 typedef basic_xml_grammar<wchar_t> xml_wgrammar;
 
 template<class Archive>
-class xml_wiarchive_impl : 
+class BOOST_SYMBOL_VISIBLE xml_wiarchive_impl : 
     public basic_text_iprimitive<std::wistream>,
     public basic_xml_iarchive<Archive>
 {
@@ -99,29 +99,29 @@ protected:
         load(v);
         t = boost::serialization::item_version_type(v);
     }
-    BOOST_WARCHIVE_DECL(void)
+    BOOST_WARCHIVE_DECL void
     load(char * t);
     #ifndef BOOST_NO_INTRINSIC_WCHAR_T
-    BOOST_WARCHIVE_DECL(void)
+    BOOST_WARCHIVE_DECL void
     load(wchar_t * t);
     #endif
-    BOOST_WARCHIVE_DECL(void)
+    BOOST_WARCHIVE_DECL void
     load(std::string &s);
     #ifndef BOOST_NO_STD_WSTRING
-    BOOST_WARCHIVE_DECL(void)
+    BOOST_WARCHIVE_DECL void
     load(std::wstring &ws);
     #endif
     template<class T>
-    void load_override(T & t, BOOST_PFTO int){
-        basic_xml_iarchive<Archive>::load_override(t, 0);
+    void load_override(T & t){
+        basic_xml_iarchive<Archive>::load_override(t);
     }
-    BOOST_WARCHIVE_DECL(void)
-    load_override(class_name_type & t, int);
-    BOOST_WARCHIVE_DECL(void) 
+    BOOST_WARCHIVE_DECL void
+    load_override(class_name_type & t);
+    BOOST_WARCHIVE_DECL void 
     init();
-    BOOST_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
+    BOOST_WARCHIVE_DECL 
     xml_wiarchive_impl(std::wistream & is, unsigned int flags) ;
-    BOOST_WARCHIVE_DECL(BOOST_PP_EMPTY()) 
+    BOOST_WARCHIVE_DECL 
     ~xml_wiarchive_impl();
 };
 
@@ -142,7 +142,7 @@ protected:
 namespace boost { 
 namespace archive {
 
-class xml_wiarchive : 
+class BOOST_SYMBOL_VISIBLE xml_wiarchive :
     public xml_wiarchive_impl<xml_wiarchive>{
 public:
     xml_wiarchive(std::wistream & is, unsigned int flags = 0) :

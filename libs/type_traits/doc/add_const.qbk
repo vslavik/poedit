@@ -17,10 +17,6 @@ __type The same type as `T const` for all `T`.
 
 __std_ref 3.9.3.
 
-__compat If the compiler does not support partial specialization of class-templates
-then this template will compile, but the member `type` will always be the same as 
-type `T` except where __transform_workaround have been applied.
-
 __header ` #include <boost/type_traits/add_const.hpp>` or ` #include <boost/type_traits.hpp>`
 
 [table Examples
@@ -36,6 +32,8 @@ __header ` #include <boost/type_traits/add_const.hpp>` or ` #include <boost/type
 [[`add_const<int const>::type`] [`int const`]]
 
 ]
+
+[all_compilers]
 
 [endsect]
 

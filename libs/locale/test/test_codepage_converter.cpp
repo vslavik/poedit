@@ -288,8 +288,12 @@ int main()
         std::cout << "Testing Shift-JIS using POSIX/iconv" << std::endl;
 
         cvt = boost::locale::impl_posix::create_iconv_converter("Shift-JIS");
-        TEST(cvt.get());
-        test_shiftjis(cvt);
+        if(cvt.get()) {
+            test_shiftjis(cvt);
+        }
+        else {
+            std::cout<< "- Shift-JIS is not supported!" << std::endl;
+        }
         #endif
 
     }

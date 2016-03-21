@@ -4,10 +4,10 @@
 <title>Run-time GCD &amp; LCM Determination</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../gcd_lcm.html" title="Chapter&#160;11.&#160;Integer Utilities (Greatest Common Divisor and Least Common Multiple)">
 <link rel="prev" href="lcm_function_object.html" title="LCM Function Object">
-<link rel="next" href="compile_time.html" title="Compile time GCD and LCM determination">
+<link rel="next" href="compile_time.html" title="Compile-time GCD and LCM determination">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -36,13 +36,15 @@
 <span class="identifier">IntegerType</span>  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">lcm</span><span class="special">(</span> <span class="identifier">IntegerType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">a</span><span class="special">,</span> <span class="identifier">IntegerType</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">b</span> <span class="special">);</span>
 </pre>
 <p>
-      The boost::math::gcd function template returns the greatest common (nonnegative)
-      divisor of the two integers passed to it. The boost::math::lcm function template
-      returns the least common (nonnegative) multiple of the two integers passed
-      to it. The function templates are parameterized on the function arguments'
-      IntegerType, which is also the return type. Internally, these function templates
-      use an object of the corresponding version of the gcd_evaluator and lcm_evaluator
-      class templates, respectively.
+      The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">gcd</span></code>
+      function template returns the greatest common (nonnegative) divisor of the
+      two integers passed to it. The boost::math::lcm function template returns the
+      least common (nonnegative) multiple of the two integers passed to it. The function
+      templates are parameterized on the function arguments' IntegerType, which is
+      also the return type. Internally, these function templates use an object of
+      the corresponding version of the <code class="computeroutput"><span class="identifier">gcd_evaluator</span></code>
+      and <code class="computeroutput"><span class="identifier">lcm_evaluator</span></code> class templates,
+      respectively.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

@@ -17,7 +17,7 @@ import glob
 import re
 import xml.dom.minidom
 
-    
+
 def usage():
     print '''
 Usage:
@@ -49,11 +49,11 @@ def get_args( argv = sys.argv[1:] ):
         }
     ( option_pairs, other ) = getopt.getopt( argv, '', spec )
     map( lambda x: options.__setitem__( x[0], x[1] ), option_pairs )
-    
+
     if options.has_key( '--help' ):
         usage()
         sys.exit(1)
-    
+
     return {
         'xmldir' : options['--xmldir'],
         'output' : options['--output'],
@@ -69,7 +69,7 @@ def if_attribute(node, attribute, true_value, false_value=None):
         return false_value
 
 class Doxygen2BoostBook:
-    
+
     def __init__( self, **kwargs ):
         ##
         self.args = kwargs
@@ -113,17 +113,17 @@ class Doxygen2BoostBook:
         self.idmap = {}
         #~ Marks generation, to prevent redoing it.
         self.generated = False
-    
+
     #~ Add an Doxygen generated XML document to the content we are translating.
     def addDox( self, document ):
         self._translateNode(document.documentElement)
-    
+
     #~ Turns the internal XML tree into an output UTF-8 string.
     def tostring( self ):
         self._generate()
         #~ return self.boostbook.toprettyxml('  ')
         return self.boostbook.toxml('utf-8')
-    
+
     #~ Does post-processing on the partial generated content to generate additional info
     #~ now that we have the complete source documents.
     def _generate( self ):
@@ -146,7 +146,7 @@ class Doxygen2BoostBook:
                         del self.idmap[self.symbols[symbol]['id']]
                     container.appendChild(self.symbols[symbol]['dom'])
             self._rewriteIDs(self.boostbook.documentElement)
-    
+
     #~ Rewrite the various IDs from Doxygen references to the newly created
     #~ BoostBook references.
     def _rewriteIDs( self, node ):
@@ -166,7 +166,7 @@ class Doxygen2BoostBook:
             self._rewriteIDs(node.firstChild)
         if node.nextSibling:
             self._rewriteIDs(node.nextSibling)
-    
+
     def _resolveContainer( self, cpp, root ):
         container = root
         for ns in cpp['namespace']:
@@ -181,11 +181,11 @@ class Doxygen2BoostBook:
                 break
             container = node
         return container
-    
+
     def _setID( self, id, name ):
         self.idmap[id] = name.replace('::','.').replace('/','.')
         #~ print '--| setID:',id,'::',self.idmap[id]
-    
+
     #~ Translate a given node within a given context.
     #~ The translation dispatches to a local method of the form
     #~ "_translate[_context0,...,_contextN]", and the keyword args are
@@ -208,7 +208,7 @@ class Doxygen2BoostBook:
                 if hasattr(self,name):
                     return getattr(self,name)(node,**kwargs)
         return None
-    
+
     #~ Translates the children of the given parent node, appending the results
     #~ to the indicated target. For nodes not translated by the translation method
     #~ it copies the child over and recurses on that child to translate any
@@ -225,7 +225,7 @@ class Doxygen2BoostBook:
                     child.data = re.sub(r'\s+',' ',child.data)
                 target.appendChild(child)
                 self._translateChildren(n,target=child)
-    
+
     #~ Translate the given node as a description, into the description subnode
     #~ of the target. If no description subnode is present in the target it
     #~ is created.
@@ -235,7 +235,7 @@ class Doxygen2BoostBook:
             description = target.appendChild(self._createNode(tag))
         self._translateChildren(node,target=description)
         return description
-    
+
     #~ Top level translation of: <doxygen ...>...</doxygen>,
     #~ translates the children.
     def _translate_doxygen( self, node ):
@@ -246,7 +246,7 @@ class Doxygen2BoostBook:
             if newNode:
                 result.append(newNode)
         return result
-    
+
     #~ Top level translation of:
     #~ <doxygenindex ...>
     #~   <compound ...>
@@ -294,7 +294,7 @@ class Doxygen2BoostBook:
             self._translate_index_(entries,target=self.section['index'])
             self._translate_index_(classes,target=self.section['classes'])
         return None
-    
+
     #~ Translate a set of index entries in the BoostBook output. The output
     #~ is grouped into groups of the first letter of the entry names.
     def _translate_index_(self, entries, target=None, **kwargs ):
@@ -314,12 +314,12 @@ class Doxygen2BoostBook:
                         'link',entries[i]['compoundname'],linkend=entries[i]['id']))
                     ie.appendChild(self.boostbook.createTextNode(')'))
                     i += 1
-    
+
     #~ Translate a <compounddef ...>...</compounddef>,
     #~ by retranslating with the "kind" of compounddef.
     def _translate_compounddef( self, node, target=None, **kwargs ):
         return self._translateNode(node,node.getAttribute('kind'))
-    
+
     #~ Translate a <compounddef kind="namespace"...>...</compounddef>. For
     #~ namespaces we just collect the information for later use as there is no
     #~ currently namespaces are not included in the BoostBook format. In the future
@@ -343,12 +343,12 @@ class Doxygen2BoostBook:
             self.symbols[namespace['name']] = namespace
             #~ self._setID(namespace['id'],namespace['name'])
         return None
-    
+
     #~ Translate a <compounddef kind="class"...>...</compounddef>, which
     #~ forwards to the kind=struct as they are the same.
     def _translate_compounddef_class( self, node, target=None, **kwargs ):
         return self._translate_compounddef_struct(node,tag='class',target=target,**kwargs)
-    
+
     #~ Translate a <compounddef kind="struct"...>...</compounddef> into:
     #~ <header id="?" name="?">
     #~   <struct name="?">
@@ -381,7 +381,7 @@ class Doxygen2BoostBook:
                 self._translateNode(n,target=struct,scope=compoundname['compoundname'])
             result = struct
         return result
-    
+
     #~ Translate a <compounddef ...><includes ...>...</includes></compounddef>,
     def _translate_compounddef_includes_( self, node, target=None, **kwargs ):
         name = node.firstChild.data
@@ -395,7 +395,7 @@ class Doxygen2BoostBook:
                     name=name)
                 }
         return None
-    
+
     #~ Translate a <basecompoundref...>...</basecompoundref> into:
     #~ <inherit access="?">
     #~   ...
@@ -405,7 +405,7 @@ class Doxygen2BoostBook:
             access=ref.getAttribute('prot')))
         self._translateChildren(ref,target=inherit)
         return
-    
+
     #~ Translate:
     #~   <templateparamlist>
     #~     <param>
@@ -448,7 +448,7 @@ class Doxygen2BoostBook:
                         value = self._getData(defval)
                     templateParam.appendChild(self._createText('default',value))
         return template
-    
+
     #~ Translate:
     #~   <briefdescription>...</briefdescription>
     #~ Into:
@@ -456,37 +456,37 @@ class Doxygen2BoostBook:
     def _translate_briefdescription( self, brief, target=None, **kwargs ):
         self._translateDescription(brief,target=target,**kwargs)
         return self._translateDescription(brief,target=target,tag='purpose',**kwargs)
-    
+
     #~ Translate:
     #~   <detaileddescription>...</detaileddescription>
     #~ Into:
     #~   <description>...</description>
     def _translate_detaileddescription( self, detailed, target=None, **kwargs ):
         return self._translateDescription(detailed,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="?">...</sectiondef>
     #~ With kind specific translation.
     def _translate_sectiondef( self, sectiondef, target=None, **kwargs ):
         self._translateNode(sectiondef,sectiondef.getAttribute('kind'),target=target,**kwargs)
-    
+
     #~ Translate non-function sections.
     def _translate_sectiondef_x_( self, sectiondef, target=None, **kwargs ):
         for n in sectiondef.childNodes:
             if hasattr(n,'getAttribute'):
                 self._translateNode(n,n.getAttribute('kind'),target=target,**kwargs)
         return None
-    
+
     #~ Translate:
     #~   <sectiondef kind="public-type">...</sectiondef>
     def _translate_sectiondef_public_type( self, sectiondef, target=None, **kwargs ):
         return self._translate_sectiondef_x_(sectiondef,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="public-sttrib">...</sectiondef>
     def _translate_sectiondef_public_attrib( self, sectiondef, target=None, **kwargs):
         return self._translate_sectiondef_x_(sectiondef,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="?-func">...</sectiondef>
     #~ All the various function group translations end up here for which
@@ -500,31 +500,31 @@ class Doxygen2BoostBook:
             if hasattr(n,'getAttribute'):
                 self._translateNode(n,n.getAttribute('kind'),target=members,**kwargs)
         return members
-    
+
     #~ Translate:
     #~   <sectiondef kind="public-func">...</sectiondef>
     def _translate_sectiondef_public_func( self, sectiondef, target=None, **kwargs ):
         return self._translate_sectiondef_func_(sectiondef,
             name='public member functions',target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="public-static-func">...</sectiondef>
     def _translate_sectiondef_public_static_func( self, sectiondef, target=None, **kwargs):
         return self._translate_sectiondef_func_(sectiondef,
             name='public static functions',target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="protected-func">...</sectiondef>
     def _translate_sectiondef_protected_func( self, sectiondef, target=None, **kwargs ):
         return self._translate_sectiondef_func_(sectiondef,
             name='protected member functions',target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="private-static-func">...</sectiondef>
     def _translate_sectiondef_private_static_func( self, sectiondef, target=None, **kwargs):
         return self._translate_sectiondef_func_(sectiondef,
             name='private static functions',target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <sectiondef kind="public-func">...</sectiondef>
     def _translate_sectiondef_private_func( self, sectiondef, target=None, **kwargs ):
@@ -536,7 +536,7 @@ class Doxygen2BoostBook:
     def _translate_sectiondef_user_defined( self, sectiondef, target=None, **kwargs ):
         return self._translate_sectiondef_func_(sectiondef,
             name=self._getChildData('header', root=sectiondef),target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <memberdef kind="typedef" id="?">
     #~     <name>...</name>
@@ -554,7 +554,7 @@ class Doxygen2BoostBook:
         typedef_type = typedef.appendChild(self._createNode('type'))
         self._translate_type(self._getChild('type',root=memberdef),target=typedef_type)
         return typedef
-    
+
     #~ Translate:
     #~   <memberdef kind="function" id="?" const="?" static="?" explicit="?" inline="?">
     #~     <name>...</name>
@@ -594,13 +594,13 @@ class Doxygen2BoostBook:
         for n in memberdef.childNodes:
             self._translateNode(memberdef,'function',n,target=method)
         return method
-    
+
     #~ Translate:
     #~   <memberdef kind="function"...><templateparamlist>...</templateparamlist></memberdef>
     def _translate_memberdef_function_templateparamlist(
         self, templateparamlist, target=None, **kwargs ):
         return self._translate_templateparamlist(templateparamlist,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <memberdef kind="function"...><type>...</type></memberdef>
     #~ To:
@@ -611,7 +611,7 @@ class Doxygen2BoostBook:
         if methodType.hasChildNodes():
             target.appendChild(methodType)
         return methodType
-    
+
     #~ Translate:
     #~   <memberdef kind="function"...><briefdescription>...</briefdescription></memberdef>
     def _translate_memberdef_function_briefdescription( self, description, target=None, **kwargs ):
@@ -621,22 +621,22 @@ class Doxygen2BoostBook:
         ## on the previous line, don't bother with the repetition.
         # result = self._translateDescription(description,target=target,tag='purpose',**kwargs)
         return result
-    
+
     #~ Translate:
     #~   <memberdef kind="function"...><detaileddescription>...</detaileddescription></memberdef>
     def _translate_memberdef_function_detaileddescription( self, description, target=None, **kwargs ):
         return self._translateDescription(description,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <memberdef kind="function"...><inbodydescription>...</inbodydescription></memberdef>
     def _translate_memberdef_function_inbodydescription( self, description, target=None, **kwargs ):
         return self._translateDescription(description,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <memberdef kind="function"...><param>...</param></memberdef>
     def _translate_memberdef_function_param( self, param, target=None, **kwargs ):
         return self._translate_param(param,target=target,**kwargs)
-    
+
     #~ Translate:
     #~   <memberdef kind="variable" id="?">
     #~     <name>...</name>
@@ -654,7 +654,7 @@ class Doxygen2BoostBook:
             name=self._getChildData('name',root=memberdef)))
         data_member_type = data_member.appendChild(self._createNode('type'))
         self._translate_type(self._getChild('type',root=memberdef),target=data_member_type)
-    
+
     #~ Translate:
     #~   <memberdef kind="enum" id="?">
     #~     <name>...</name>
@@ -673,7 +673,7 @@ class Doxygen2BoostBook:
         for n in memberdef.childNodes:
             self._translateNode(memberdef,'enum',n,target=enum,scope=scope,**kwargs)
         return enum
-    
+
     #~ Translate:
     #~   <memberdef kind="enum"...>
     #~     <enumvalue id="?">
@@ -696,7 +696,7 @@ class Doxygen2BoostBook:
             self._translateChildren(initializer,
                 target=target.appendChild(self._createNode('default')))
         return value
-    
+
     #~ Translate:
     #~   <param>
     #~     <type>...</type>
@@ -717,12 +717,12 @@ class Doxygen2BoostBook:
         if defval:
             self._translateChildren(self._getChild('defval',root=param),target=parameter)
         return parameter
-    
+
     #~ Translate:
     #~   <ref kindref="?" ...>...</ref>
     def _translate_ref( self, ref, **kwargs ):
         return self._translateNode(ref,ref.getAttribute('kindref'))
-    
+
     #~ Translate:
     #~   <ref refid="?" kindref="compound">...</ref>
     #~ To:
@@ -732,7 +732,7 @@ class Doxygen2BoostBook:
         classname = result.appendChild(self._createNode('classname'))
         self._translateChildren(ref,target=classname)
         return result
-    
+
     #~ Translate:
     #~   <ref refid="?" kindref="member">...</ref>
     #~ To:
@@ -741,7 +741,7 @@ class Doxygen2BoostBook:
         result = self._createNode('link',linkend=ref.getAttribute('refid'))
         self._translateChildren(ref,target=result)
         return result
-    
+
     #~ Translate:
     #~   <type>...</type>
     def _translate_type( self, type, target=None, **kwargs ):
@@ -758,7 +758,7 @@ class Doxygen2BoostBook:
                 target.removeChild(target.firstChild)
             target.appendChild(self._createText('emphasis','unspecified'))
         return result
-    
+
     def _getChild( self, tag = None, id = None, name = None, root = None ):
         if not root:
             root = self.boostbook.documentElement
@@ -777,17 +777,17 @@ class Doxygen2BoostBook:
                 #~ print '--|', n
                 return n
         return None
-    
+
     def _getChildData( self, tag, **kwargs ):
         return self._getData(self._getChild(tag,**kwargs),**kwargs)
-    
+
     def _getData( self, node, **kwargs ):
         if node:
             text = self._getChild('#text',root=node)
             if text:
                 return text.data.strip()
         return ''
-    
+
     def _cppName( self, type ):
         parts = re.search('^([^<]+)[<]?(.*)[>]?$',type.strip().strip(':'))
         result = {
@@ -806,7 +806,7 @@ class Doxygen2BoostBook:
                 result['name'] = result['namespace'].pop()+'::'+result['name']
                 namespace = '::'.join(result['namespace'])
         return result
-    
+
     def _createNode( self, tag, **kwargs ):
         result = self.boostbook.createElement(tag)
         for k in kwargs.keys():
@@ -816,7 +816,7 @@ class Doxygen2BoostBook:
                 else:
                     result.setAttribute(k,kwargs[k])
         return result
-    
+
     def _createText( self, tag, data, **kwargs ):
         result = self._createNode(tag,**kwargs)
         data = data.strip()
@@ -827,7 +827,7 @@ class Doxygen2BoostBook:
 
 def main( xmldir=None, output=None, id=None, title=None, index=False ):
     #~ print '--- main: xmldir = %s, output = %s' % (xmldir,output)
-    
+
     input = glob.glob( os.path.abspath( os.path.join( xmldir, "*.xml" ) ) )
     input.sort
     translator = Doxygen2BoostBook(id=id, title=title, index=index)
@@ -847,7 +847,7 @@ def main( xmldir=None, output=None, id=None, title=None, index=False ):
     for dox in decl_files:
         #~ print '--|',os.path.basename(dox)
         translator.addDox(xml.dom.minidom.parse(dox))
-    
+
     if output:
         output = open(output,'w')
     else:

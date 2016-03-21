@@ -23,11 +23,9 @@
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/geometries/concepts/linestring_concept.hpp>
 
-#ifdef BOOST_GEOMETRY_EXPERIMENTAL_ENABLE_INITIALIZER_LIST
 #include <boost/config.hpp>
 #ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
 #include <initializer_list>
-#endif
 #endif
 
 namespace boost { namespace geometry
@@ -43,6 +41,7 @@ namespace model
         e.g. a highway (with interruptions)
 \ingroup geometries
 
+\qbk{[include reference/geometries/multi_linestring.qbk]}
 \qbk{before.synopsis,
 [heading Model of]
 [link geometry.reference.concepts.concept_multi_linestring MultiLineString Concept]
@@ -58,7 +57,10 @@ class multi_linestring : public Container<LineString, Allocator<LineString> >
 {
     BOOST_CONCEPT_ASSERT( (concept::Linestring<LineString>) );
 
-#ifdef BOOST_GEOMETRY_EXPERIMENTAL_ENABLE_INITIALIZER_LIST
+#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
+
+    // default constructor and base_type definitions are required only
+    // if the constructor taking std::initializer_list is defined
 
     typedef Container<LineString, Allocator<LineString> > base_type;
 
@@ -67,8 +69,6 @@ public:
     multi_linestring()
         : base_type()
     {}
-
-#ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
 
     /// \constructor_initializer_list{multi_linestring}
     inline multi_linestring(std::initializer_list<LineString> l)
@@ -88,7 +88,6 @@ public:
 //    }
 //#endif
 
-#endif
 #endif
 };
 

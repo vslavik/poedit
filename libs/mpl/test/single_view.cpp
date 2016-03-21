@@ -15,6 +15,7 @@
 #include <boost/mpl/advance.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/begin_end.hpp>
+#include <boost/mpl/equal.hpp>
 #include <boost/mpl/aux_/test.hpp>
 
 MPL_TEST_CASE()
@@ -37,4 +38,6 @@ MPL_TEST_CASE()
     MPL_ASSERT_RELATION( (mpl::distance<last,last>::value), ==, 0 );
 
     MPL_ASSERT_RELATION( size<view>::value, ==, 1 );
+
+    MPL_ASSERT(( equal< view, view::type > ));
 }

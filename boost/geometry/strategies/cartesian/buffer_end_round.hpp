@@ -1,6 +1,11 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2012-2015 Barend Gehrels, Amsterdam, the Netherlands.
+
+// This file was modified by Oracle on 2015.
+// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -62,8 +67,7 @@ private :
                 DistanceType const& buffer_distance,
                 RangeOut& range_out) const
     {
-        PromotedType const two = 2.0;
-        PromotedType const two_pi = two * geometry::math::pi<PromotedType>();
+        PromotedType const two_pi = geometry::math::two_pi<PromotedType>();
 
         std::size_t point_buffer_count = m_points_per_circle;
 

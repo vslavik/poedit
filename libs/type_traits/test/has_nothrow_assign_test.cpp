@@ -12,6 +12,26 @@
 #  include <boost/type_traits/has_nothrow_assign.hpp>
 #endif
 
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+
+struct non_assignable
+{
+   non_assignable();
+   non_assignable& operator=(const non_assignable&) = delete;
+};
+
+#endif
+
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+
+struct noexcept_assignable
+{
+   noexcept_assignable();
+   noexcept_assignable& operator=(const noexcept_assignable&)noexcept;
+};
+
+#endif
+
 TT_TEST_BEGIN(has_nothrow_assign)
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_assign<bool>::value, true);
@@ -204,6 +224,13 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_assign<nothrow_copy_UDT>::value,
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_assign<nothrow_construct_UDT>::value, false);
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_assign<test_abc1>::value, false);
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_assign<non_assignable>::value, false);
+#endif
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_assign<noexcept_assignable>::value, true);
+#endif
 
 TT_TEST_END
 

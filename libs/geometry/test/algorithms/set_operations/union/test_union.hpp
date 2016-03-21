@@ -1,7 +1,14 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+
+// This file was modified by Oracle on 2015.
+// Modifications copyright (c) 2015 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -20,8 +27,10 @@
 
 #include <boost/geometry/algorithms/area.hpp>
 #include <boost/geometry/algorithms/correct.hpp>
+#include <boost/geometry/algorithms/is_empty.hpp>
 #include <boost/geometry/algorithms/length.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
+#include <boost/geometry/algorithms/is_valid.hpp>
 
 #include <boost/geometry/geometries/geometries.hpp>
 
@@ -34,17 +43,30 @@
 #  include <boost/geometry/io/svg/svg_mapper.hpp>
 #endif
 
+struct ut_settings
+{
+    double percentage;
+    bool test_validity;
+
+    ut_settings()
+        : percentage(0.001)
+        , test_validity(false)
+    {}
+
+};
 
 
 template <typename OutputType, typename G1, typename G2>
 void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
         int expected_count, int expected_hole_count,
         int expected_point_count, double expected_area,
-        double percentage)
+        ut_settings const& settings)
 {
     typedef typename bg::coordinate_type<G1>::type coordinate_type;
     boost::ignore_unused<coordinate_type>();
+    boost::ignore_unused(expected_point_count);
 
+    // Declare output (vector of rings, or vector of polygons)
     std::vector<OutputType> clip;
 
 #if defined(BOOST_GEOMETRY_DEBUG_ROBUSTNESS)
@@ -62,7 +84,18 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
         area += bg::area(*it);
         holes += bg::num_interior_rings(*it);
         n += bg::num_points(*it, true);
+
+        if (settings.test_validity)
+        {
+            // Check validity (currently on separate clips only)
+            // std::cout << bg::dsv(*it) << std::endl;
+            std::string message;
+            bool const valid = bg::is_valid(*it, message);
+            BOOST_CHECK_MESSAGE(valid,
+                "union: " << caseid << " not valid " << message);
+        }
     }
+
 
 #if ! defined(BOOST_GEOMETRY_TEST_ONLY_ONE_TYPE)
     {
@@ -79,13 +112,13 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
                 ++it, ++index)
         {
             // Skip the empty polygon created above to avoid the empty_input_exception
-            if (bg::num_points(*it) > 0)
+            if (! bg::is_empty(*it))
             {
                 area_inserted += bg::area(*it);
             }
         }
         BOOST_CHECK_EQUAL(boost::size(clip), boost::size(inserted) - 1);
-        BOOST_CHECK_CLOSE(area_inserted, expected_area, percentage);
+        BOOST_CHECK_CLOSE(area_inserted, expected_area, settings.percentage);
     }
 #endif
 
@@ -123,7 +156,7 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
             << " type: " << (type_for_assert_message<G1, G2>())
             );
 
-    BOOST_CHECK_CLOSE(area, expected_area, percentage);
+    BOOST_CHECK_CLOSE(area, expected_area, settings.percentage);
 
 #if defined(TEST_WITH_SVG)
     {
@@ -173,10 +206,11 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
 }
 
 template <typename OutputType, typename G1, typename G2>
-void test_one(std::string const& caseid, std::string const& wkt1, std::string const& wkt2,
+void test_one(std::string const& caseid,
+        std::string const& wkt1, std::string const& wkt2,
         int expected_count, int expected_hole_count,
         int expected_point_count, double expected_area,
-        double percentage = 0.001)
+        ut_settings const& settings = ut_settings())
 {
     G1 g1;
     bg::read_wkt(wkt1, g1);
@@ -184,15 +218,13 @@ void test_one(std::string const& caseid, std::string const& wkt1, std::string co
     G2 g2;
     bg::read_wkt(wkt2, g2);
 
-    // Reverse if necessary
+    // Reverse/close if necessary (e.g. G1/G2 are ccw and/or open)
     bg::correct(g1);
     bg::correct(g2);
 
     test_union<OutputType>(caseid, g1, g2,
         expected_count, expected_hole_count, expected_point_count,
-        expected_area, percentage);
+        expected_area, settings);
 }
-
-
 
 #endif

@@ -16,7 +16,7 @@ project
       <toolset>gcc,<target-os>windows:<pch>off
       #<toolset>gcc:<cxxflags>-fvisibility=hidden
       <toolset>intel-linux:<cxxflags>-fvisibility=hidden
-      <toolset>sun:<cxxflags>-xldscope=hidden
+      #<toolset>sun:<cxxflags>-xldscope=hidden
       [ check-target-builds ../config//has_gcc_visibility "gcc visibility" : <toolset>gcc:<cxxflags>-fvisibility=hidden : ]
     ;
 

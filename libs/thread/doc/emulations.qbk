@@ -260,7 +260,7 @@ Locks provide an explicit bool conversion operator when the compiler provides th
 
 The library provides un implicit conversion to an undefined type that can be used as a conditional expression. 
 
-    #if defined(BOOST_NO_EXPLICIT_CONVERSION_OPERATORS)
+    #if defined(BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS)
         operator ``['unspecified-bool-type]``() const;
         bool operator!() const;
     #else
@@ -346,14 +346,14 @@ use
 
 And instead of
 
-    #ifdef BOOST_NO_SCOPED_ENUMS
+    #ifdef BOOST_NO_CXX11_SCOPED_ENUMS
     template <>
     struct BOOST_SYMBOL_VISIBLE is_error_code_enum<future_errc> : public true_type { };
     #endif
 
 use
 
-    #ifdef BOOST_NO_SCOPED_ENUMS
+    #ifdef BOOST_NO_CXX11_SCOPED_ENUMS
     template <>
     struct BOOST_SYMBOL_VISIBLE is_error_code_enum<future_errc::enum_type> : public true_type { };
     #endif

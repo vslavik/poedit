@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -27,6 +28,10 @@
 <a name="container.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_60_00">Boost
+      1.60 Release</a></span></dt>
+<dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_59_00">Boost
+      1.59 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_58_00">Boost
       1.58 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_57_00">Boost
@@ -50,6 +55,89 @@
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_48_00">Boost
       1.48 Release</a></span></dt>
 </dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.release_notes.release_notes_boost_1_60_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_60_00" title="Boost 1.60 Release">Boost
+      1.60 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            Implemented <a class="link" href="extended_functionality.html#container.extended_functionality.polymorphic_memory_resources" title="Polymorphic Memory Resources">Polymorphic
+            Memory Resources</a>.
+          </li>
+<li class="listitem">
+            Add more BOOST_ASSERT checks to test preconditions in some operations
+            (like <code class="computeroutput"><span class="identifier">pop_back</span></code>, <code class="computeroutput"><span class="identifier">pop_front</span></code>, <code class="computeroutput"><span class="identifier">back</span></code>,
+            <code class="computeroutput"><span class="identifier">front</span></code>, etc.)
+          </li>
+<li class="listitem">
+            Added C++11 <code class="computeroutput"><span class="identifier">back</span></code>/<code class="computeroutput"><span class="identifier">front</span></code> operations to <code class="computeroutput"><a class="link" href="../boost/container/basic_string.html" title="Class template basic_string">basic_string</a></code>.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11627" target="_top">Trac
+                  #11627: <span class="emphasis"><em>"small_vector&lt;T,n&gt;::swap() appears
+                  to be broken"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11628" target="_top">Trac
+                  #11628: <span class="emphasis"><em>"small_vector&lt;int,n&gt; iterates over
+                  elements in destructor"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11697" target="_top">Trac
+                  #11697: <span class="emphasis"><em>"Wrong initialization order in tuple copy-constructor"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11698" target="_top">Trac
+                  #11698: <span class="emphasis"><em>"Missing return statement in static_storage_allocator"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/container/pull/29" target="_top">GitHub
+                  #29: <span class="emphasis"><em>Doc fixes for flap_map complexity requirements</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/container/pull/31" target="_top">GitHub
+                  #31: <span class="emphasis"><em>DL_SIZE_IMPL also dereference addr</em></span></a>.
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="container.release_notes.release_notes_boost_1_59_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_59_00" title="Boost 1.59 Release">Boost
+      1.59 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <a href="https://github.com/boostorg/container/pull/26" target="_top">GitHub #26:
+            <span class="emphasis"><em>Fix bug in stable_vector::capacity()</em></span></a>. Thanks
+            to timsong-cpp/Arindam Mukerjee.
+          </li>
+<li class="listitem">
+            <a href="https://github.com/boostorg/container/pull/27" target="_top">GitHub #27:
+            <span class="emphasis"><em>fix stable_vector's index_of's doxygen comment</em></span></a>.
+            Thanks to kariya-mitsuru.
+          </li>
+<li class="listitem">
+            <a href="https://svn.boost.org/trac/boost/ticket/11380" target="_top">Trac #11380:
+            <span class="emphasis"><em>"Container library std forward declarations incorrect
+            in std_fwd.hpp on libc++ with gcc"</em></span></a>.
+          </li>
+<li class="listitem">
+            <a href="https://svn.boost.org/trac/boost/ticket/11388" target="_top">Trac #11388:
+            <span class="emphasis"><em>"boost::container::list::emplace_back broken on Visual
+            Studio 2010"</em></span></a>.
+          </li>
+<li class="listitem">
+            <a href="https://svn.boost.org/trac/boost/ticket/11339" target="_top">Trac #11339:
+            <span class="emphasis"><em>"VC12 LNK2005 error with boost::container::adaptive_pool"</em></span></a>.
+          </li>
+</ul></div>
+</div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="container.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
@@ -81,21 +169,32 @@
             Fixed bugs:
             <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
 <li class="listitem">
-                  <a href="https://svn.boost.org/trac/boost/ticket/9931" target="_top">#9931:
-                  <span class="emphasis"><em>"flat_map::insert(ordered_unique_range_t...) fails
-                  with move_iterators"</em></span></a> (reopened).
+                  <a href="https://svn.boost.org/trac/boost/ticket/9931" target="_top">Trac
+                  #9931: <span class="emphasis"><em>"flat_map::insert(ordered_unique_range_t...)
+                  fails with move_iterators"</em></span></a> (reopened).
                 </li>
 <li class="listitem">
-                  <a href="https://svn.boost.org/trac/boost/ticket/11076" target="_top">#11076:
-                  <span class="emphasis"><em>"Unqualified calls to memmove/memcpy in container/detail/copy_move_algo.hpp"</em></span></a>.
+                  <a href="https://svn.boost.org/trac/boost/ticket/11076" target="_top">Trac
+                  #11076: <span class="emphasis"><em>"Unqualified calls to memmove/memcpy in
+                  container/detail/copy_move_algo.hpp"</em></span></a>.
                 </li>
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/10790" target="_top">Trac
-                  #10790 (<span class="emphasis"><em>long long errors from container"</em></span>)</a>.
+                  #10790 (<span class="emphasis"><em>"long long errors from container"</em></span>)</a>.
                 </li>
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/10808" target="_top">Trac
-                  #10808 (<span class="emphasis"><em>compare equal operator of vector is broken"</em></span>)</a>.
+                  #10808 (<span class="emphasis"><em>"compare equal operator of vector is broken"</em></span>)</a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/10930" target="_top">Trac
+                  #10930 (<span class="emphasis"><em>"container std_fwd.hpp neglects custom std
+                  namespaces"</em></span>)</a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11139" target="_top">Trac
+                  #11139 (<span class="emphasis"><em>"boost::container::vector&lt;std::shared_ptr&lt;const
+                  T&gt;...&gt;::const_iterator allows changing dereferenced elements"</em></span>)</a>.
                 </li>
 </ul></div>
           </li>
@@ -389,7 +488,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

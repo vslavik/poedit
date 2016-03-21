@@ -18,18 +18,18 @@ using boost::unit_test::test_suite;
 
 BOOST_TEST_CASE_TEMPLATE_FUNCTION( free_test_function, Number )
 {
-    BOOST_CHECK_EQUAL( 2, (int const)Number::value );
+  BOOST_CHECK_EQUAL( 2, static_cast<int>(Number::value) );
 }
 
-test_suite*
-init_unit_test_suite( int, char* [] ) {
-    test_suite* test= BOOST_TEST_SUITE( "Test case template example" );
+test_suite* init_unit_test_suite( int, char* [] ) 
+{
+  test_suite* test= BOOST_TEST_SUITE( "Test case template example" );
 
-    typedef boost::mpl::range_c<int,0,10> numbers;
+  typedef boost::mpl::range_c<int,0,10> numbers;
 
-    test->add( BOOST_TEST_CASE_TEMPLATE( free_test_function, numbers ) );
+  test->add( BOOST_TEST_CASE_TEMPLATE( free_test_function, numbers ) );
 
-    return test;
+  return test;
 }
 
 // EOF

@@ -14,11 +14,11 @@
 
 #define BOOST_TEST_MODULE util_exception_handler
 
-#include <memory>
 #include <string>
 #include <typeinfo>
 #include <stdexcept>
 #include <boost/mpl/vector.hpp>
+#include <boost/smart_ptr/scoped_ptr.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/log/utility/exception_handler.hpp>
 
@@ -128,7 +128,7 @@ namespace {
         };
 
     private:
-        std::auto_ptr< impl_base > m_pImpl;
+        boost::scoped_ptr< impl_base > m_pImpl;
 
     public:
         template< typename T >

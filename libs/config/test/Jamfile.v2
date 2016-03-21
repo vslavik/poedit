@@ -19,16 +19,16 @@ import ../checks/config : requires ;
 
 local is_unix = [ modules.peek : UNIX ] ;
 
-if $(is_unix)
-{
-	local osname = [ SHELL uname ] ;
+lib atomic ;
+lib pthread ;
+lib rt ;
 
-	switch $(osname)
-	{
-		case "Sun*" : OTHERFLAGS = "-lpthread -lrt" ;
-		case "*BSD*" : OTHERFLAGS = "-lpthread" ;
-	}
-}
+exe has_atomic_lib : config_info.cpp atomic ;
+explicit has_atomic_lib ;
+exe has_pthread_lib : config_info.cpp pthread ;
+explicit has_pthread_lib ;
+exe has_rt_lib : config_info.cpp rt ;
+explicit has_rt_lib ;
 
 test-suite config
   :
@@ -38,6 +38,9 @@ test-suite config
           : #input-files
           : #requirements
           <threading>multi
+          [ check-target-builds has_atomic_lib : <source>atomic ]
+          [ check-target-builds has_pthread_lib : <source>pthread ]
+          [ check-target-builds has_rt_lib : <source>rt ]
           : config_test_threaded
     ]
     [ run config_test.cpp
@@ -45,18 +48,18 @@ test-suite config
           : #input-files
           : #requirements
           <threading>single <toolset>msvc:<runtime-link>static <toolset>msvc:<link>static
-          <target-os>linux:<linkflags>-lpthread
-          <target-os>linux:<linkflags>-lrt
-          <toolset>gcc:<linkflags>$(OTHERFLAGS)
+          [ check-target-builds has_atomic_lib : <source>atomic ]
+          [ check-target-builds has_pthread_lib : <source>pthread ]
+          [ check-target-builds has_rt_lib : <source>rt ]
     ]
     [ run config_test.cpp
           : #args
           : #input-files
           : #requirements
           <rtti>off
-          <target-os>linux:<linkflags>-lpthread
-          <target-os>linux:<linkflags>-lrt
-          <toolset>gcc:<linkflags>$(OTHERFLAGS)
+          [ check-target-builds has_atomic_lib : <source>atomic ]
+          [ check-target-builds has_pthread_lib : <source>pthread ]
+          [ check-target-builds has_rt_lib : <source>rt ]
           : config_test_no_rtti
     ]
     [ run config_test.cpp
@@ -64,9 +67,9 @@ test-suite config
           : #input-files
           : #requirements
           <exception-handling>off
-          <target-os>linux:<linkflags>-lpthread
-          <target-os>linux:<linkflags>-lrt
-          <toolset>gcc:<linkflags>$(OTHERFLAGS)
+          [ check-target-builds has_atomic_lib : <source>atomic ]
+          [ check-target-builds has_pthread_lib : <source>pthread ]
+          [ check-target-builds has_rt_lib : <source>rt ]
           : config_test_no_except
     ]
      [ run config_info.cpp : : : <test-info>always_show_run_output <threading>single <toolset>msvc:<runtime-link>static <toolset>msvc:<link>static ]
@@ -75,7 +78,7 @@ test-suite config
      [ run config_info.cpp : : : <test-info>always_show_run_output <exception-handling>off : config_info_no_except ]
      [ run math_info.cpp : : : <test-info>always_show_run_output <toolset>borland:<runtime-link>static <toolset>borland:<link>static ]
      [ run abi/abi_test.cpp abi/main.cpp ]
-     [ run limits_test.cpp ../../test/build//boost_test_exec_monitor ]
+     [ run limits_test.cpp ]
      [ run link/main.cpp link//link_test
           : #args
           : #input-files

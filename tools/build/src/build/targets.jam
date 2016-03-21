@@ -336,6 +336,23 @@ class project-target : abstract-target
                 created. : in project [ full-name ] ;
         }
         self.alternatives += $(target-instance) ;
+        if ! ( [ $(target-instance).name ] in $(self.alternative-names) )
+        {
+            self.alternative-names += [ $(target-instance).name ] ;
+        }
+    }
+    
+    # Checks if an alternative was declared for the target.
+    # Unlike checking for a main target this does not require
+    # building the main targets. And hence can be used in/directly
+    # while loading a project.
+    #
+    rule has-alternative-for-target ( target-name )
+    {
+        if $(target-name) in $(self.alternative-names)
+        {
+            return 1 ;
+        }
     }
 
     # Returns a 'main-target' class instance corresponding to 'name'.

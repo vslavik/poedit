@@ -73,7 +73,7 @@ void at_th_entry(boost::basic_thread_pool& )
 
 int test_generic_executor_ref()
 {
-  // std::cout << BOOST_CONTEXTOF << std::endl;
+  std::cout << BOOST_CONTEXTOF << std::endl;
   {
     try
     {
@@ -83,8 +83,8 @@ int test_generic_executor_ref()
         {
           boost::future<int> t1 = boost::async(ea, &f1);
           boost::future<int> t2 = boost::async(ea, &f1);
-          // std::cout << BOOST_CONTEXTOF << " t1= " << t1.get() << std::endl;
-          // std::cout << BOOST_CONTEXTOF << " t2= " << t2.get() << std::endl;
+          std::cout << BOOST_CONTEXTOF << " t1= " << t1.get() << std::endl;
+          std::cout << BOOST_CONTEXTOF << " t2= " << t2.get() << std::endl;
         }
         submit_some(ea);
         {
@@ -93,41 +93,51 @@ int test_generic_executor_ref()
           boost::future<int> t2 = boost::async(ea3, &f1);
           //boost::future<int> t2 = boost::async(ea3, f2, 1); // todo this doesn't compiles yet on C++11
           //boost::future<int> t2 = boost::async(ea3, boost::bind(f2, 1)); // todo this doesn't compiles yet on C++98
-          // std::cout << BOOST_CONTEXTOF << " t1= " << t1.get() << std::endl;
-          // std::cout << BOOST_CONTEXTOF << " t2= " << t2.get() << std::endl;
+          std::cout << BOOST_CONTEXTOF << " t1= " << t1.get() << std::endl;
+          std::cout << BOOST_CONTEXTOF << " t2= " << t2.get() << std::endl;
         }
         submit_some(ea);
       }
-      // std::cout << BOOST_CONTEXTOF << std::endl;
+      std::cout << BOOST_CONTEXTOF << std::endl;
       {
         boost::loop_executor ea2;
         submit_some( ea2);
         ea2.run_queued_closures();
       }
 #if ! defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
-      // std::cout << BOOST_CONTEXTOF << std::endl;
+      std::cout << BOOST_CONTEXTOF << std::endl;
       {
         boost::basic_thread_pool ea1(4);
         boost::serial_executor ea2(ea1);
         submit_some(ea2);
       }
 #endif
-      // std::cout << BOOST_CONTEXTOF << std::endl;
+      std::cout << BOOST_CONTEXTOF << std::endl;
       {
         boost::inline_executor ea1;
         submit_some(ea1);
       }
-      // std::cout << BOOST_CONTEXTOF << std::endl;
+      std::cout << BOOST_CONTEXTOF << std::endl;
       {
         //boost::thread_executor ea1;
         //submit_some(ea1);
       }
-      // std::cout << BOOST_CONTEXTOF << std::endl;
+      std::cout << BOOST_CONTEXTOF << std::endl;
       {
         boost::basic_thread_pool  ea(4, at_th_entry);
         boost::future<int> t1 = boost::async(ea, &f1);
-        // std::cout << BOOST_CONTEXTOF << " t1= " << t1.get() << std::endl;
+        std::cout << BOOST_CONTEXTOF << " t1= " << t1.get() << std::endl;
       }
+      std::cout << BOOST_CONTEXTOF << std::endl;
+      {
+        boost::basic_thread_pool  ea(4, at_th_entry);
+        boost::async(ea, &f1);
+        std::cout << BOOST_CONTEXTOF << std::endl;
+      }
+      std::cout << BOOST_CONTEXTOF << std::endl;
+      boost::this_thread::sleep_for(boost::chrono::milliseconds(200));
+      std::cout << BOOST_CONTEXTOF << std::endl;
+
     }
     catch (std::exception& ex)
     {

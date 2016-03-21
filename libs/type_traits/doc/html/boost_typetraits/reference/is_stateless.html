@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>is_stateless</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="is_signed.html" title="is_signed">
@@ -58,17 +58,12 @@
         or <code class="computeroutput"> <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
       </p>
 <p>
-        <span class="bold"><strong>Compiler Compatibility:</strong></span> If the compiler
-        does not support partial-specialization of class templates, then this template
-        can not be used with function types.
-      </p>
-<p>
-        Without some (as yet unspecified) help from the compiler, is_stateless will
-        never report that a class or struct is stateless; this is always safe, if
-        possibly sub-optimal. Currently (May 2011) compilers more recent than Visual
-        C++ 8, GCC-4.3, Greenhills 6.0, Intel-11.0, and Codegear have the necessary
-        compiler <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a> to
-        ensure that this trait "just works".
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> Without some (as
+        yet unspecified) help from the compiler, is_stateless will never report that
+        a class or struct is stateless; this is always safe, if possibly sub-optimal.
+        Currently (June 2015) compilers more recent than Visual C++ 8, Clang, GCC-4.3,
+        Greenhills 6.0, Intel-11.0, and Codegear have the necessary compiler <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a> to ensure that this
+        trait "just works".
       </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

@@ -4,7 +4,7 @@
 <title>Hermite Polynomials</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_poly.html" title="Polynomials">
 <link rel="prev" href="laguerre.html" title="Laguerre (and Associated) Polynomials">
 <link rel="next" href="sph_harm.html" title="Spherical Harmonics">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T3</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite_next</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T1</span> <span class="identifier">x</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">Hn</span><span class="special">,</span> <span class="identifier">T3</span> <span class="identifier">Hnm1</span><span class="special">);</span>
@@ -58,8 +58,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">hermite</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the value of the Hermite Polynomial of order <span class="emphasis"><em>n</em></span>
@@ -69,9 +69,9 @@
         <span class="inlinemediaobject"><img src="../../../equations/hermite_0.svg"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -135,103 +135,66 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.sf_poly.hermite.peak_errors_in_the_hermite_polyn"></a><p class="title"><b>Table&#160;6.19.&#160;Peak Errors In the Hermite Polynomial</b></p>
-<div class="table-contents"><table class="table" summary="Peak Errors In the Hermite Polynomial">
+<a name="math_toolkit.sf_poly.hermite.table_hermite"></a><p class="title"><b>Table&#160;6.37.&#160;Error rates for hermite</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for hermite">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
+              </th>
+<th>
                 <p>
-                  0 &lt; l &lt; 20
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>
                 <p>
-                  53
+                  Hermite Polynomials
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 4.46&#949; (Mean = 1.41&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=4.5 Mean=1.5
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Red Hat Linux IA32, g++ 4.1
+                  <span class="blue">Max = 6.24&#949; (Mean = 2.07&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=6 Mean=2
+                  <span class="blue">Max = 6.24&#949; (Mean = 2.07&#949;)</span>
                 </p>
               </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Red Hat Linux IA64, g++ 3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=6 Mean=2
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  113
-                </p>
-              </td>
-<td>
-                <p>
-                  HPUX IA64, aCC A.06.06
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=6 Mean=4
-                </p>
-              </td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
 </div>
 <br class="table-break"><p>

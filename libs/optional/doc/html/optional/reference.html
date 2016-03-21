@@ -52,19 +52,23 @@
 </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
 
-<span class="keyword">class</span> <span class="identifier">none_t</span> <span class="special">{};</span>
+<span class="keyword">class</span> <span class="identifier">none_t</span> <span class="special">{/*</span> <span class="identifier">see</span> <span class="identifier">below</span> <span class="special">*/};</span>
 
-<span class="keyword">extern</span> <span class="keyword">const</span> <span class="identifier">none_t</span> <span class="identifier">none</span><span class="special">;</span> <span class="comment">// see below</span>
+<span class="keyword">const</span> <span class="identifier">none_t</span> <span class="identifier">none</span> <span class="special">(/*</span> <span class="identifier">see</span> <span class="identifier">below</span> <span class="special">*/);</span>
 
 <span class="special">}</span> <span class="comment">// namespace boost</span>
 </pre>
 <p>
         </p>
 <p>
-          Variable <code class="computeroutput"><span class="identifier">none</span></code> has external
-          linkage, however it is not required to link with any library to obtain
-          its definition. Only by including this header file, the definition becomes
-          available, by means of using template instantiation.
+          Class <code class="computeroutput"><span class="identifier">none_t</span></code> is meant to
+          serve as a tag for selecting appropriate overloads of from <code class="computeroutput"><span class="identifier">optional</span></code>'s interface. It is an empty,
+          trivially copyable class with disabled default constructor.
+        </p>
+<p>
+          Constant <code class="computeroutput"><span class="identifier">none</span></code> is used to
+          indicate an optional object that does not contain a value in initialization,
+          assignment and relational operations of <code class="computeroutput"><span class="identifier">optional</span></code>.
         </p>
 </div>
 </div>

@@ -1,4 +1,4 @@
-// Copyright 2013-2014 Antony Polukhin
+// Copyright 2013-2015 Antony Polukhin
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See the accompanying file LICENSE_1_0.txt
@@ -13,7 +13,21 @@
 #include <boost/type_index.hpp>
 #include <boost/unordered_set.hpp>
 #include <boost/functional/hash.hpp>
+//<-
+// Making `#include <cassert>` visible in docs, while actually using `BOOST_TEST`
+// instead of `assert`. This is required to verify correct behavior even if NDEBUG
+// is defined and to avoid `unused local variable` warnings with defined NDEBUG.
+#include <boost/core/lightweight_test.hpp>
+#ifdef assert
+#   undef assert
+#endif
+#define assert(X) BOOST_TEST(X)
+    /* !Comment block is not closed intentionaly!
+//->
 #include <cassert>
+//<-
+    !Closing comment block! */
+//->
 
 int main() {
     boost::unordered_set<boost::typeindex::type_index> types;

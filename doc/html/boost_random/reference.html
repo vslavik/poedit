@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_random.html" title="Chapter&#160;24.&#160;Boost.Random">
+<link rel="up" href="../boost_random.html" title="Chapter&#160;25.&#160;Boost.Random">
 <link rel="prev" href="tutorial.html" title="Tutorial">
 <link rel="next" href="../boost/random/additive_combine_engine.html" title="Class template additive_combine_engine">
 </head>
@@ -30,6 +31,7 @@
 <dt><span class="section"><a href="reference.html#boost_random.reference.concepts">Concepts</a></span></dt>
 <dt><span class="section"><a href="reference.html#boost_random.reference.generators">Generators</a></span></dt>
 <dt><span class="section"><a href="reference.html#boost_random.reference.distributions">Distributions</a></span></dt>
+<dt><span class="section"><a href="reference.html#boost_random.reference.utilities">Utilities</a></span></dt>
 <dt><span class="section"><a href="reference.html#headers">Headers</a></span></dt>
 </dl></div>
 <div class="section">
@@ -138,7 +140,7 @@
           of type T, and v is a const value of X.
         </p>
 <div class="table">
-<a name="boost_random.reference.concepts.uniform_random_number_generator.uniformrandomnumbergenerator_requirements"></a><p class="title"><b>Table&#160;24.1.&#160;UniformRandomNumberGenerator requirements</b></p>
+<a name="boost_random.reference.concepts.uniform_random_number_generator.uniformrandomnumbergenerator_requirements"></a><p class="title"><b>Table&#160;25.1.&#160;UniformRandomNumberGenerator requirements</b></p>
 <div class="table-contents"><table class="table" summary="UniformRandomNumberGenerator requirements">
 <colgroup>
 <col>
@@ -339,7 +341,7 @@
           A pseudo-random number generator is a <a class="link" href="reference.html#boost_random.reference.concepts.uniform_random_number_generator" title="Uniform Random Number Generator">UniformRandomNumberGenerator</a>
           which provides a deterministic sequence of pseudo-random numbers, based
           on some algorithm and internal state. <code class="computeroutput"><a class="link" href="../boost/random/linear_congruential_engine.html" title="Class template linear_congruential_engine">Linear
-          congruential</a></code> and <code class="computeroutput"><a class="link" href="../boost/random/inversive_con_idp144054144.html" title="Class template inversive_congruential_engine">inversive
+          congruential</a></code> and <code class="computeroutput"><a class="link" href="../boost/random/inversiv_idm45507090852608.html" title="Class template inversive_congruential_engine">inversive
           congruential</a></code> generators are examples of such <a class="link" href="reference.html#boost_random.reference.concepts.pseudo_random_number_generator" title="Pseudo-Random Number Generator">pseudo-random
           number generators</a>. Often, these generators are very sensitive to
           their parameters. In order to prevent wrong implementations from being
@@ -374,7 +376,7 @@
           <span class="keyword">long</span></code>.
         </p>
 <div class="table">
-<a name="boost_random.reference.concepts.pseudo_random_number_generator.pseudorandomnumbergenerator_requirements"></a><p class="title"><b>Table&#160;24.2.&#160;PseudoRandomNumberGenerator requirements</b></p>
+<a name="boost_random.reference.concepts.pseudo_random_number_generator.pseudorandomnumbergenerator_requirements"></a><p class="title"><b>Table&#160;25.2.&#160;PseudoRandomNumberGenerator requirements</b></p>
 <div class="table-contents"><table class="table" summary="PseudoRandomNumberGenerator requirements">
 <colgroup>
 <col>
@@ -554,7 +556,7 @@
           is an unsigned integer type with at least 32 bits.
         </p>
 <div class="table">
-<a name="boost_random.reference.concepts.seed_sequence.seedseq_requirements"></a><p class="title"><b>Table&#160;24.3.&#160;SeedSeq requirements</b></p>
+<a name="boost_random.reference.concepts.seed_sequence.seedseq_requirements"></a><p class="title"><b>Table&#160;25.3.&#160;SeedSeq requirements</b></p>
 <div class="table-contents"><table class="table" summary="SeedSeq requirements">
 <colgroup>
 <col>
@@ -635,7 +637,7 @@
           returning values of type <code class="computeroutput"><span class="identifier">U</span></code>.
         </p>
 <div class="table">
-<a name="boost_random.reference.concepts.random_distribution.random_distribution_requirements__in_addition_to_copyconstructible__and_assignable_"></a><p class="title"><b>Table&#160;24.4.&#160;Random distribution requirements (in addition to CopyConstructible,
+<a name="boost_random.reference.concepts.random_distribution.random_distribution_requirements__in_addition_to_copyconstructible__and_assignable_"></a><p class="title"><b>Table&#160;25.4.&#160;Random distribution requirements (in addition to CopyConstructible,
           and Assignable)</b></p>
 <div class="table-contents"><table class="table" summary="Random distribution requirements (in addition to CopyConstructible,
           and Assignable)">
@@ -1066,7 +1068,7 @@
         faster random number generation.
       </p>
 <div class="table">
-<a name="boost_random.reference.generators.generators"></a><p class="title"><b>Table&#160;24.5.&#160;generators</b></p>
+<a name="boost_random.reference.generators.generators"></a><p class="title"><b>Table&#160;25.5.&#160;generators</b></p>
 <div class="table-contents"><table class="table" summary="generators">
 <colgroup>
 <col>
@@ -1962,7 +1964,7 @@
         to it are not acceptable.
       </p>
 <div class="table">
-<a name="boost_random.reference.distributions.uniform_distributions"></a><p class="title"><b>Table&#160;24.6.&#160;Uniform Distributions</b></p>
+<a name="boost_random.reference.distributions.uniform_distributions"></a><p class="title"><b>Table&#160;25.6.&#160;Uniform Distributions</b></p>
 <div class="table-contents"><table class="table" summary="Uniform Distributions">
 <colgroup>
 <col>
@@ -2065,7 +2067,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_random.reference.distributions.bernoulli_distributions"></a><p class="title"><b>Table&#160;24.7.&#160;Bernoulli Distributions</b></p>
+<a name="boost_random.reference.distributions.bernoulli_distributions"></a><p class="title"><b>Table&#160;25.7.&#160;Bernoulli Distributions</b></p>
 <div class="table-contents"><table class="table" summary="Bernoulli Distributions">
 <colgroup>
 <col>
@@ -2146,7 +2148,7 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/random/negative_bino_idp151942992.html" title="Class template negative_binomial_distribution">negative_binomial_distribution</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/random/negative_idm45506979396656.html" title="Class template negative_binomial_distribution">negative_binomial_distribution</a></code>
                 </p>
               </td>
 <td>
@@ -2166,7 +2168,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_random.reference.distributions.poisson_distributions"></a><p class="title"><b>Table&#160;24.8.&#160;Poisson Distributions</b></p>
+<a name="boost_random.reference.distributions.poisson_distributions"></a><p class="title"><b>Table&#160;25.8.&#160;Poisson Distributions</b></p>
 <div class="table-contents"><table class="table" summary="Poisson Distributions">
 <colgroup>
 <col>
@@ -2247,6 +2249,24 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><a class="link" href="../boost/random/hyperexp_idm45507086672304.html" title="Class template hyperexponential_distribution">hyperexponential_distribution</a></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  hyperexponential distribution
+                </p>
+              </td>
+<td>
+                <p>
+                  service time of k-parallel servers each with a given service rate
+                  and probability to be chosen
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><a class="link" href="../boost/random/weibull_distribution.html" title="Class template weibull_distribution">weibull_distribution</a></code>
                 </p>
               </td>
@@ -2316,7 +2336,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_random.reference.distributions.normal_distributions"></a><p class="title"><b>Table&#160;24.9.&#160;Normal Distributions</b></p>
+<a name="boost_random.reference.distributions.normal_distributions"></a><p class="title"><b>Table&#160;25.9.&#160;Normal Distributions</b></p>
 <div class="table-contents"><table class="table" summary="Normal Distributions">
 <colgroup>
 <col>
@@ -2396,7 +2416,7 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/random/non_central_c_idp224130432.html" title="Class template non_central_chi_squared_distribution">non_central_chi_squared_distribution</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/random/non_cent_idm45506980906800.html" title="Class template non_central_chi_squared_distribution">non_central_chi_squared_distribution</a></code>
                 </p>
               </td>
 <td>
@@ -2465,7 +2485,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_random.reference.distributions.sampling_distributions"></a><p class="title"><b>Table&#160;24.10.&#160;Sampling Distributions</b></p>
+<a name="boost_random.reference.distributions.sampling_distributions"></a><p class="title"><b>Table&#160;25.10.&#160;Sampling Distributions</b></p>
 <div class="table-contents"><table class="table" summary="Sampling Distributions">
 <colgroup>
 <col>
@@ -2510,7 +2530,7 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/random/piecewise_cons_idp85519040.html" title="Class template piecewise_constant_distribution">piecewise_constant_distribution</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/random/piecewis_idm45507043304112.html" title="Class template piecewise_constant_distribution">piecewise_constant_distribution</a></code>
                 </p>
               </td>
 <td>
@@ -2527,7 +2547,7 @@
 <tr>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/random/piecewise_lin_idp196578768.html" title="Class template piecewise_linear_distribution">piecewise_linear_distribution</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/random/piecewis_idm45506986764736.html" title="Class template piecewise_linear_distribution">piecewise_linear_distribution</a></code>
                 </p>
               </td>
 <td>
@@ -2545,7 +2565,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="boost_random.reference.distributions.miscellaneous_distributions"></a><p class="title"><b>Table&#160;24.11.&#160;Miscellaneous Distributions</b></p>
+<a name="boost_random.reference.distributions.miscellaneous_distributions"></a><p class="title"><b>Table&#160;25.11.&#160;Miscellaneous Distributions</b></p>
 <div class="table-contents"><table class="table" summary="Miscellaneous Distributions">
 <colgroup>
 <col>
@@ -2612,6 +2632,73 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="boost_random.reference.utilities"></a><a class="link" href="reference.html#boost_random.reference.utilities" title="Utilities">Utilities</a>
+</h3></div></div></div>
+<div class="table">
+<a name="boost_random.reference.utilities.utilities"></a><p class="title"><b>Table&#160;25.12.&#160;Utilities</b></p>
+<div class="table-contents"><table class="table" summary="Utilities">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Name
+                </p>
+              </th>
+<th>
+                <p>
+                  Description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><a class="link" href="../boost/random/seed_seq.html" title="Class seed_seq">seed_seq</a></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Used to seed <a class="link" href="reference.html#boost_random.reference.concepts.pseudo_random_number_generator" title="Pseudo-Random Number Generator">Random
+                  Engines</a>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><a class="link" href="../boost/random/random_number_generator.html" title="Class template random_number_generator">random_number_generator</a></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Adapts a <a class="link" href="reference.html#boost_random.reference.concepts.pseudo_random_number_generator" title="Pseudo-Random Number Generator">PseudoRandomNumberGenerator</a>
+                  to work with std::random_shuffle
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><a class="link" href="../boost/random/generate_canonical.html" title="Function template generate_canonical">generate_canonical</a></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Produces random floating point values with specific precision.
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<br class="table-break">
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="headers"></a>Headers</h3></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="reference.html#header.boost.random.additive_combine_hpp">Header &lt;boost/random/additive_combine.hpp&gt;</a></span></dt>
@@ -2626,7 +2713,9 @@
 <dt><span class="section"><a href="reference.html#header.boost.random.extreme_value_distribution_hpp">Header &lt;boost/random/extreme_value_distribution.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.fisher_f_distribution_hpp">Header &lt;boost/random/fisher_f_distribution.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.gamma_distribution_hpp">Header &lt;boost/random/gamma_distribution.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="reference.html#header.boost.random.generate_canonical_hpp">Header &lt;boost/random/generate_canonical.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.geometric_distribution_hpp">Header &lt;boost/random/geometric_distribution.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="reference.html#header.boost.random.hyperexponential_distribution_hpp">Header &lt;boost/random/hyperexponential_distribution.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.independent_bits_hpp">Header &lt;boost/random/independent_bits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.inversive_congruential_hpp">Header &lt;boost/random/inversive_congruential.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.lagged_fibonacci_hpp">Header &lt;boost/random/lagged_fibonacci.hpp&gt;</a></span></dt>
@@ -2649,6 +2738,7 @@
 <dt><span class="section"><a href="reference.html#header.boost.random.student_t_distribution_hpp">Header &lt;boost/random/student_t_distribution.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.subtract_with_carry_hpp">Header &lt;boost/random/subtract_with_carry.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.taus88_hpp">Header &lt;boost/random/taus88.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="reference.html#header.boost.random.traits_hpp">Header &lt;boost/random/traits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.triangle_distribution_hpp">Header &lt;boost/random/triangle_distribution.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.uniform_01_hpp">Header &lt;boost/random/uniform_01.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.random.uniform_int_distribution_hpp">Header &lt;boost/random/uniform_int_distribution.hpp&gt;</a></span></dt>
@@ -2774,11 +2864,30 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.random.generate_canonical_hpp"></a>Header &lt;<a href="../../../boost/random/generate_canonical.hpp" target="_top">boost/random/generate_canonical.hpp</a>&gt;</h4></div></div></div>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealType<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> bits<span class="special">,</span> <span class="keyword">typename</span> URNG<span class="special">&gt;</span> 
+      <span class="identifier">RealType</span> <a class="link" href="../boost/random/generate_canonical.html" title="Function template generate_canonical"><span class="identifier">generate_canonical</span></a><span class="special">(</span><span class="identifier">URNG</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
 <a name="header.boost.random.geometric_distribution_hpp"></a>Header &lt;<a href="../../../boost/random/geometric_distribution.hpp" target="_top">boost/random/geometric_distribution.hpp</a>&gt;</h4></div></div></div>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntType <span class="special">=</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> RealType <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> 
       <span class="keyword">class</span> <a class="link" href="../boost/random/geometric_distribution.html" title="Class template geometric_distribution">geometric_distribution</a><span class="special">;</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.random.hyperexponential_distribution_hpp"></a>Header &lt;<a href="../../../boost/random/hyperexponential_distribution.hpp" target="_top">boost/random/hyperexponential_distribution.hpp</a>&gt;</h4></div></div></div>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealT <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="../boost/random/hyperexp_idm45507086672304.html" title="Class template hyperexponential_distribution">hyperexponential_distribution</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2798,8 +2907,8 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntType<span class="special">,</span> <span class="identifier">IntType</span> a<span class="special">,</span> <span class="identifier">IntType</span> b<span class="special">,</span> <span class="identifier">IntType</span> p<span class="special">&gt;</span> 
-      <span class="keyword">class</span> <a class="link" href="../boost/random/inversive_con_idp144054144.html" title="Class template inversive_congruential_engine">inversive_congruential_engine</a><span class="special">;</span>
-    <span class="keyword">typedef</span> <a class="link" href="../boost/random/inversive_con_idp144054144.html" title="Class template inversive_congruential_engine">inversive_congruential_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">9102</span><span class="special">,</span> <span class="number">2147483647</span><span class="special">-</span><span class="number">36884165</span><span class="special">,</span> <span class="number">2147483647</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/hellekalek1995.html" title="Type definition hellekalek1995"><span class="identifier">hellekalek1995</span></a><span class="special">;</span>
+      <span class="keyword">class</span> <a class="link" href="../boost/random/inversiv_idm45507090852608.html" title="Class template inversive_congruential_engine">inversive_congruential_engine</a><span class="special">;</span>
+    <span class="keyword">typedef</span> <a class="link" href="../boost/random/inversiv_idm45507090852608.html" title="Class template inversive_congruential_engine">inversive_congruential_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">9102</span><span class="special">,</span> <span class="number">2147483647</span><span class="special">-</span><span class="number">36884165</span><span class="special">,</span> <span class="number">2147483647</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/hellekalek1995.html" title="Type definition hellekalek1995"><span class="identifier">hellekalek1995</span></a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2852,7 +2961,7 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> UIntType<span class="special">,</span> <span class="keyword">int</span> w<span class="special">,</span> <span class="keyword">int</span> k<span class="special">,</span> <span class="keyword">int</span> q<span class="special">,</span> <span class="keyword">int</span> s<span class="special">&gt;</span> 
-      <span class="keyword">class</span> <a class="link" href="../boost/random/linear_feedbac_idp99770000.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">;</span>
+      <span class="keyword">class</span> <a class="link" href="../boost/random/linear_f_idm45507041557328.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2890,7 +2999,7 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntType <span class="special">=</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> RealType <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> 
-      <span class="keyword">class</span> <a class="link" href="../boost/random/negative_bino_idp151942992.html" title="Class template negative_binomial_distribution">negative_binomial_distribution</a><span class="special">;</span>
+      <span class="keyword">class</span> <a class="link" href="../boost/random/negative_idm45506979396656.html" title="Class template negative_binomial_distribution">negative_binomial_distribution</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2900,7 +3009,7 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealType <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> 
-      <span class="keyword">class</span> <a class="link" href="../boost/random/non_central_c_idp224130432.html" title="Class template non_central_chi_squared_distribution">non_central_chi_squared_distribution</a><span class="special">;</span>
+      <span class="keyword">class</span> <a class="link" href="../boost/random/non_cent_idm45506980906800.html" title="Class template non_central_chi_squared_distribution">non_central_chi_squared_distribution</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2919,7 +3028,7 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealType <span class="special">=</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">typename</span> WeightType <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> 
-      <span class="keyword">class</span> <a class="link" href="../boost/random/piecewise_cons_idp85519040.html" title="Class template piecewise_constant_distribution">piecewise_constant_distribution</a><span class="special">;</span>
+      <span class="keyword">class</span> <a class="link" href="../boost/random/piecewis_idm45507043304112.html" title="Class template piecewise_constant_distribution">piecewise_constant_distribution</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2928,7 +3037,7 @@
 <a name="header.boost.random.piecewise_linear_distribution_hpp"></a>Header &lt;<a href="../../../boost/random/piecewise_linear_distribution.hpp" target="_top">boost/random/piecewise_linear_distribution.hpp</a>&gt;</h4></div></div></div>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
-    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealType <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="../boost/random/piecewise_lin_idp196578768.html" title="Class template piecewise_linear_distribution">piecewise_linear_distribution</a><span class="special">;</span>
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealType <span class="special">=</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="../boost/random/piecewis_idm45506986764736.html" title="Class template piecewise_linear_distribution">piecewise_linear_distribution</a><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -2967,8 +3076,8 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">typedef</span> <a class="link" href="../boost/random/subtract_with_carry_engine.html" title="Class template subtract_with_carry_engine">subtract_with_carry_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">24</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a name="boost.random.ranlux_base"></a><span class="identifier">ranlux_base</span><span class="special">;</span>
-    <span class="keyword">typedef</span> <a class="link" href="../boost/random/subtract_with_idp151547040.html" title="Class template subtract_with_carry_01_engine">subtract_with_carry_01_engine</a><span class="special">&lt;</span> <span class="keyword">float</span><span class="special">,</span> <span class="number">24</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a name="boost.random.ranlux_base_01"></a><span class="identifier">ranlux_base_01</span><span class="special">;</span>
-    <span class="keyword">typedef</span> <a class="link" href="../boost/random/subtract_with_idp151547040.html" title="Class template subtract_with_carry_01_engine">subtract_with_carry_01_engine</a><span class="special">&lt;</span> <span class="keyword">double</span><span class="special">,</span> <span class="number">48</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a name="boost.random.ranlux64_base_01"></a><span class="identifier">ranlux64_base_01</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <a class="link" href="../boost/random/subtract_idm45507048596384.html" title="Class template subtract_with_carry_01_engine">subtract_with_carry_01_engine</a><span class="special">&lt;</span> <span class="keyword">float</span><span class="special">,</span> <span class="number">24</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a name="boost.random.ranlux_base_01"></a><span class="identifier">ranlux_base_01</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <a class="link" href="../boost/random/subtract_idm45507048596384.html" title="Class template subtract_with_carry_01_engine">subtract_with_carry_01_engine</a><span class="special">&lt;</span> <span class="keyword">double</span><span class="special">,</span> <span class="number">48</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a name="boost.random.ranlux64_base_01"></a><span class="identifier">ranlux64_base_01</span><span class="special">;</span>
     <span class="keyword">typedef</span> <a class="link" href="../boost/random/discard_block_engine.html" title="Class template discard_block_engine">discard_block_engine</a><span class="special">&lt;</span> <a class="link" href="reference.html#boost.random.ranlux_base">ranlux_base</a><span class="special">,</span> <span class="number">223</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/ranlux3.html" title="Type definition ranlux3"><span class="identifier">ranlux3</span></a><span class="special">;</span>
     <span class="keyword">typedef</span> <a class="link" href="../boost/random/discard_block_engine.html" title="Class template discard_block_engine">discard_block_engine</a><span class="special">&lt;</span> <a class="link" href="reference.html#boost.random.ranlux_base">ranlux_base</a><span class="special">,</span> <span class="number">389</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/ranlux4.html" title="Type definition ranlux4"><span class="identifier">ranlux4</span></a><span class="special">;</span>
     <span class="keyword">typedef</span> <a class="link" href="../boost/random/discard_block_engine.html" title="Class template discard_block_engine">discard_block_engine</a><span class="special">&lt;</span> <a class="link" href="reference.html#boost.random.ranlux_base_01">ranlux_base_01</a><span class="special">,</span> <span class="number">223</span><span class="special">,</span> <span class="number">24</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/ranlux3_01.html" title="Type definition ranlux3_01"><span class="identifier">ranlux3_01</span></a><span class="special">;</span>
@@ -3021,7 +3130,7 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> RealType<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> w<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> s<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> r<span class="special">&gt;</span> 
-      <span class="keyword">class</span> <a class="link" href="../boost/random/subtract_with_idp151547040.html" title="Class template subtract_with_carry_01_engine">subtract_with_carry_01_engine</a><span class="special">;</span>
+      <span class="keyword">class</span> <a class="link" href="../boost/random/subtract_idm45507048596384.html" title="Class template subtract_with_carry_01_engine">subtract_with_carry_01_engine</a><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> IntType<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> w<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> s<span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> r<span class="special">&gt;</span> 
       <span class="keyword">class</span> <a class="link" href="../boost/random/subtract_with_carry_engine.html" title="Class template subtract_with_carry_engine">subtract_with_carry_engine</a><span class="special">;</span>
   <span class="special">}</span>
@@ -3032,7 +3141,21 @@
 <a name="header.boost.random.taus88_hpp"></a>Header &lt;<a href="../../../boost/random/taus88.hpp" target="_top">boost/random/taus88.hpp</a>&gt;</h4></div></div></div>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
-    <span class="keyword">typedef</span> <a class="link" href="../boost/random/xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a><span class="special">&lt;</span> <a class="link" href="../boost/random/xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a><span class="special">&lt;</span> <a class="link" href="../boost/random/linear_feedbac_idp99770000.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">32</span><span class="special">,</span> <span class="number">31</span><span class="special">,</span> <span class="number">13</span><span class="special">,</span> <span class="number">12</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <a class="link" href="../boost/random/linear_feedbac_idp99770000.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">32</span><span class="special">,</span> <span class="number">29</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">4</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <a class="link" href="../boost/random/linear_feedbac_idp99770000.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">32</span><span class="special">,</span> <span class="number">28</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">17</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/taus88.html" title="Type definition taus88"><span class="identifier">taus88</span></a><span class="special">;</span>
+    <span class="keyword">typedef</span> <a class="link" href="../boost/random/xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a><span class="special">&lt;</span> <a class="link" href="../boost/random/xor_combine_engine.html" title="Class template xor_combine_engine">xor_combine_engine</a><span class="special">&lt;</span> <a class="link" href="../boost/random/linear_f_idm45507041557328.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">32</span><span class="special">,</span> <span class="number">31</span><span class="special">,</span> <span class="number">13</span><span class="special">,</span> <span class="number">12</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <a class="link" href="../boost/random/linear_f_idm45507041557328.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">32</span><span class="special">,</span> <span class="number">29</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="number">4</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span><span class="special">,</span> <a class="link" href="../boost/random/linear_f_idm45507041557328.html" title="Class template linear_feedback_shift_engine">linear_feedback_shift_engine</a><span class="special">&lt;</span> <span class="identifier">uint32_t</span><span class="special">,</span> <span class="number">32</span><span class="special">,</span> <span class="number">28</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="number">17</span> <span class="special">&gt;</span><span class="special">,</span> <span class="number">0</span> <span class="special">&gt;</span> <a class="link" href="../boost/random/taus88.html" title="Type definition taus88"><span class="identifier">taus88</span></a><span class="special">;</span>
+  <span class="special">}</span>
+<span class="special">}</span></pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="header.boost.random.traits_hpp"></a>Header &lt;<a href="../../../boost/random/traits.hpp" target="_top">boost/random/traits.hpp</a>&gt;</h4></div></div></div>
+<pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">random</span> <span class="special">{</span>
+    <span class="keyword">namespace</span> <span class="identifier">traits</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/random/traits/is_integral.html" title="Struct template is_integral">is_integral</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/random/traits/is_signed.html" title="Struct template is_signed">is_signed</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/random/traits/make_unsigned.html" title="Struct template make_unsigned">make_unsigned</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="../boost/random/traits/make_unsigned_or_unbounded.html" title="Struct template make_unsigned_or_unbounded">make_unsigned_or_unbounded</a><span class="special">;</span>
+    <span class="special">}</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>

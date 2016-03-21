@@ -29,11 +29,14 @@
 template <class Real, typename T>
 void do_test_sn(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(SN_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef SN_FUNCTION_TO_TEST
+   value_type(*fp2)(value_type, value_type) = SN_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp2)(value_type, value_type) = boost::math::jacobi_sn<value_type, value_type>;
 #else
     value_type (*fp2)(value_type, value_type) = boost::math::jacobi_sn;
@@ -45,9 +48,11 @@ void do_test_sn(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp2, 1, 0),
       extract_result<Real>(2));
     handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::jacobi_sn", test);
+      type_name, "jacobi_sn", test);
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef CN_FUNCTION_TO_TEST
+    fp2 = CN_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     fp2 = boost::math::jacobi_cn<value_type, value_type>;
 #else
     fp2 = boost::math::jacobi_cn;
@@ -57,9 +62,11 @@ void do_test_sn(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp2, 1, 0),
       extract_result<Real>(3));
     handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::jacobi_cn", test);
+      type_name, "jacobi_cn", test);
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef SN_FUNCTION_TO_TEST
+    fp2 = DN_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     fp2 = boost::math::jacobi_dn<value_type, value_type>;
 #else
     fp2 = boost::math::jacobi_dn;
@@ -69,10 +76,10 @@ void do_test_sn(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp2, 1, 0),
       extract_result<Real>(4));
     handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::jacobi_dn", test);
+      type_name, "jacobi_dn", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <typename T>

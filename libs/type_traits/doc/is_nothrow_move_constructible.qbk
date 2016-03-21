@@ -19,13 +19,10 @@ must be a complete type.
 In other words, inherits from __true_type only if expression `T(std::move(variable1))`
 won't throw (`variable1` is a variable of type `T`).
 
-__compat If the compiler does not support partial-specialization of class 
-templates, then this template can not be used with function types.
-
-Without some (C++11 noexcept shall work correctly) help from the compiler, 
+__compat Without some (C++11 noexcept shall work correctly) help from the compiler, 
 `is_nothrow_move_constructible` will never report that a class or struct has a 
 non-throwing copy-constructor; this is always safe, if possibly sub-optimal.
-Currently (February 2013) Clang and GCC 4.7 have the necessary compiler support to ensure that this
+Currently (February 2013) MSVC-12.0, Clang and GCC 4.7 have the necessary compiler support to ensure that this
 trait "just works".
 
 __header ` #include <boost/type_traits/is_nothrow_move_constructible.hpp>` or ` #include <boost/type_traits.hpp>`

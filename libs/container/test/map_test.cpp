@@ -21,6 +21,7 @@
 #include "map_test.hpp"
 #include "propagate_allocator_test.hpp"
 #include "emplace_test.hpp"
+#include "../../intrusive/test/iterator_test.hpp"
 
 using namespace boost::container;
 
@@ -433,6 +434,26 @@ int main ()
 
    if (!boost::container::test::test_map_support_for_initialization_list_for<multimap<int, int> >())
       return 1;
+
+   ////////////////////////////////////
+   //    Iterator testing
+   ////////////////////////////////////
+   {
+      typedef boost::container::map<int, int> cont_int;
+      cont_int a; a.insert(cont_int::value_type(0, 9)); a.insert(cont_int::value_type(1, 9)); a.insert(cont_int::value_type(2, 9));
+      boost::intrusive::test::test_iterator_bidirectional< cont_int >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
+   }
+   {
+      typedef boost::container::multimap<int, int> cont_int;
+      cont_int a; a.insert(cont_int::value_type(0, 9)); a.insert(cont_int::value_type(1, 9)); a.insert(cont_int::value_type(2, 9));
+      boost::intrusive::test::test_iterator_bidirectional< cont_int >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
+   }
 
    ////////////////////////////////////
    //    Test optimize_size option

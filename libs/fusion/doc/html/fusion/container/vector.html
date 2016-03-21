@@ -82,6 +82,18 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T0</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">T2</span><span class="special">...,</span> <span class="keyword">typename</span> <span class="identifier">TN</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">vectorN</span><span class="special">;</span>
 </pre>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          Numbered forms will be deprecated in C++11 and it will be provided via
+          aliasing templates. It means that your partial specialization might be
+          compile error. You can detect whether it is aliasing templates or not,
+          using <code class="computeroutput"><span class="identifier">BOOST_FUSION_HAS_VARIADIC_VECTOR</span></code>.
+        </p></td></tr>
+</table></div>
 <p>
         <span class="bold"><strong>Variadic form</strong></span>
       </p>
@@ -100,9 +112,12 @@
 <pre class="programlisting"><span class="identifier">vector3</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">char</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span>
 </pre>
 <p>
-        The variadic form accepts <code class="computeroutput"><span class="number">0</span></code> to
-        <code class="computeroutput"><span class="identifier">FUSION_MAX_VECTOR_SIZE</span></code> elements,
-        where <code class="computeroutput"><span class="identifier">FUSION_MAX_VECTOR_SIZE</span></code>
+        For C++11 compilers, the variadic function interface has no upper bound.
+      </p>
+<p>
+        For C++03 compilers, the The variadic form accepts <code class="computeroutput"><span class="number">0</span></code>
+        to <code class="computeroutput"><span class="identifier">FUSION_MAX_VECTOR_SIZE</span></code>
+        elements, where <code class="computeroutput"><span class="identifier">FUSION_MAX_VECTOR_SIZE</span></code>
         is a user definable predefined maximum that defaults to <code class="computeroutput"><span class="number">10</span></code>.
         Example:
       </p>

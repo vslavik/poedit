@@ -5,6 +5,7 @@
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include "test.hpp"
+#include "check_type.hpp"
 #include "check_integral_constant.hpp"
 #ifdef TEST_STD
 #  include <type_traits>
@@ -61,7 +62,38 @@ namespace boost
     */
 }
 
-TT_TEST_BEGIN(is_class)
+BOOST_DECL_TRANSFORM_TEST3(decay_test_1, ::tt::decay, const)
+BOOST_DECL_TRANSFORM_TEST3(decay_test_2, ::tt::decay, volatile)
+BOOST_DECL_TRANSFORM_TEST3(decay_test_3, ::tt::decay, const volatile)
+BOOST_DECL_TRANSFORM_TEST3(decay_test_4, ::tt::decay, const&)
+BOOST_DECL_TRANSFORM_TEST3(decay_test_5, ::tt::decay, volatile&)
+BOOST_DECL_TRANSFORM_TEST3(decay_test_6, ::tt::decay, const volatile&)
+BOOST_DECL_TRANSFORM_TEST(decay_test_7, ::tt::decay, const*, const*)
+BOOST_DECL_TRANSFORM_TEST(decay_test_8, ::tt::decay, [], *)
+BOOST_DECL_TRANSFORM_TEST(decay_test_9, ::tt::decay, [2], *)
+BOOST_DECL_TRANSFORM_TEST(decay_test_10, ::tt::decay, [2][3], (*)[3])
+BOOST_DECL_TRANSFORM_TEST(decay_test_11, ::tt::decay, const[], const*)
+BOOST_DECL_TRANSFORM_TEST(decay_test_12, ::tt::decay, const[2], const*)
+BOOST_DECL_TRANSFORM_TEST(decay_test_13, ::tt::decay, const[2][3], const(*)[3])
+BOOST_DECL_TRANSFORM_TEST(decay_test_14, ::tt::decay, (int), (*)(int))
+
+
+TT_TEST_BEGIN(decay)
+
+   decay_test_1();
+   decay_test_2();
+   decay_test_3();
+   decay_test_4();
+   decay_test_5();
+   decay_test_6();
+   decay_test_7();
+   decay_test_8();
+   decay_test_9();
+   decay_test_10();
+   decay_test_11();
+   decay_test_12();
+   decay_test_13();
+   decay_test_14();
 
    BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_same< 
           ::tt::decay<int>::type,int>::value),
@@ -88,20 +120,24 @@ TT_TEST_BEGIN(is_class)
    typedef int f1_type(void);
    typedef int f2_type(int);
 
-   BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_same< 
+   BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_same<
           ::tt::decay<f1_type>::type,int (*)(void)>::value),
                                   true );
    BOOST_CHECK_INTEGRAL_CONSTANT((::tt::is_same< 
           ::tt::decay<f2_type>::type,int (*)(int)>::value),
                                   true );
 
+#ifndef BOOST_NO_TEMPLATED_ITERATOR_CONSTRUCTORS
+   //
+   // Don't test this if the std lib has no templated constructors (Oracle+STLPort):
+   //
    std::pair<std::string,std::string> p  = boost::make_pair( "foo", "bar" );
    std::pair<std::string, int>        p2 = boost::make_pair( "foo", 1 );
 #ifndef BOOST_NO_STD_WSTRING
    std::pair<std::wstring,std::string> p3  = boost::make_pair( L"foo", "bar" );
    std::pair<std::wstring, int>        p4  = boost::make_pair( L"foo", 1 );
 #endif
-
+#endif
    //
    // Todo: make these work sometime. The test id not directly
    //       related to decay<T>::type and can be avoided for now.

@@ -19,8 +19,7 @@ In other words, inherits from __true_type only if copy assignment of `T` from `c
 marked with `= delete`, `T` does not derives from `boost::noncopyable` and 
 is not marked with `BOOST_MOVABLE_BUT_NOT_COPYABLE(T)`.
 
-__compat If the compiler does not support partial-specialization of class 
-templates, then this template can not be used.
+__compat Requires the C++11 features `decltype` and SFINAE-expressions for full support.
 
 If your compiler does not support C++11 deleted functions (`= delete`) or does not support  
 SFINAE for the deleted assignments, then derive your classes from `boost::noncopyable` or 

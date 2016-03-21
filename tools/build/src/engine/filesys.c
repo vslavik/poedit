@@ -34,6 +34,7 @@
 #include "object.h"
 #include "pathsys.h"
 #include "strings.h"
+#include "output.h"
 
 #include <assert.h>
 #include <sys/stat.h>
@@ -63,14 +64,14 @@ void file_build1( PATHNAME * const f, string * file )
 {
     if ( DEBUG_SEARCH )
     {
-        printf( "build file: " );
+        out_printf( "build file: " );
         if ( f->f_root.len )
-            printf( "root = '%.*s' ", f->f_root.len, f->f_root.ptr );
+            out_printf( "root = '%.*s' ", f->f_root.len, f->f_root.ptr );
         if ( f->f_dir.len )
-            printf( "dir = '%.*s' ", f->f_dir.len, f->f_dir.ptr );
+            out_printf( "dir = '%.*s' ", f->f_dir.len, f->f_dir.ptr );
         if ( f->f_base.len )
-            printf( "base = '%.*s' ", f->f_base.len, f->f_base.ptr );
-        printf( "\n" );
+            out_printf( "base = '%.*s' ", f->f_base.len, f->f_base.ptr );
+        out_printf( "\n" );
     }
 
     /* Start with the grist. If the current grist is not surrounded by <>'s, add
@@ -273,7 +274,7 @@ static void file_dirscan_impl( OBJECT * dir, scanback func, void * closure )
     if ( list_empty( d->files ) )
     {
         if ( DEBUG_BINDSCAN )
-            printf( "scan directory %s\n", object_str( d->name ) );
+            out_printf( "scan directory %s\n", object_str( d->name ) );
         if ( file_collect_dir_content_( d ) < 0 )
             return;
     }

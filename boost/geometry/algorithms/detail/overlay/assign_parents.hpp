@@ -9,6 +9,8 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_ASSIGN_PARENTS_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_ASSIGN_PARENTS_HPP
 
+#include <boost/range.hpp>
+
 #include <boost/geometry/algorithms/area.hpp>
 #include <boost/geometry/algorithms/envelope.hpp>
 #include <boost/geometry/algorithms/expand.hpp>

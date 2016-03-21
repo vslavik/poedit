@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,20 +18,18 @@ struct adata
     boost::optional<int> b;
 };
 
-BOOST_FUSION_ADAPT_STRUCT(
-    adata,
-    (int, a)
-    (boost::optional<int>, b)
+BOOST_FUSION_ADAPT_STRUCT(adata,
+    a, b
 )
 
-//~ struct test_attribute_type
-//~ {
-    //~ template <typename Attribute, typename Context>
-    //~ void operator()(Attribute&, Context&, bool&) const
-    //~ {
-        //~ BOOST_TEST(typeid(Attribute).name() == typeid(boost::optional<int>).name());
-    //~ }
-//~ };
+struct test_attribute_type
+{
+    template <typename Context>
+    void operator()(Context& ctx) const
+    {
+        BOOST_TEST(typeid(decltype(_attr(ctx))).name() == typeid(boost::optional<int>).name());
+    }
+};
 
 int
 main()
@@ -39,9 +37,8 @@ main()
     using spirit_test::test;
     using spirit_test::test_attr;
 
-    //~ using boost::spirit::x3::_1;
     using boost::spirit::x3::int_;
-    //~ using boost::spirit::x3::omit;
+    using boost::spirit::x3::omit;
     using boost::spirit::x3::ascii::char_;
 
     {
@@ -54,26 +51,25 @@ main()
         using boost::fusion::vector;
 
         vector<char, char> v;
-        //~ BOOST_TEST((test_attr("a1234c", char_ >> -omit[int_] >> char_, v)));
-        //~ BOOST_TEST((at_c<0>(v) == 'a'));
-        //~ BOOST_TEST((at_c<1>(v) == 'c'));
+        BOOST_TEST((test_attr("a1234c", char_ >> -omit[int_] >> char_, v)));
+        BOOST_TEST((at_c<0>(v) == 'a'));
+        BOOST_TEST((at_c<1>(v) == 'c'));
 
         v = boost::fusion::vector<char, char>();
-        //~ BOOST_TEST((test_attr("a1234c", char_ >> omit[-int_] >> char_, v)));
-        //~ BOOST_TEST((at_c<0>(v) == 'a'));
-        //~ BOOST_TEST((at_c<1>(v) == 'c'));
+        BOOST_TEST((test_attr("a1234c", char_ >> omit[-int_] >> char_, v)));
+        BOOST_TEST((at_c<0>(v) == 'a'));
+        BOOST_TEST((at_c<1>(v) == 'c'));
 
         char ch;
         BOOST_TEST((test_attr(",c", -(',' >> char_), ch)));
         BOOST_TEST((ch == 'c'));
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {   // test action
-        //~ boost::optional<int> n = 0;
-        //~ BOOST_TEST((test_attr("1234", (-int_)[test_attribute_type()], n)));
-        //~ BOOST_TEST((n.get() == 1234));
-    //~ }
+    {   // test action
+        boost::optional<int> n = 0;
+        BOOST_TEST((test_attr("1234", (-int_)[test_attribute_type()], n)));
+        BOOST_TEST((n.get() == 1234));
+    }
 
     {
         std::string s;
@@ -81,18 +77,17 @@ main()
         BOOST_TEST(s == "abc");
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {
-        //~ namespace phx = boost::phoenix;
+    {
+        boost::optional<int> n = 0;
+        auto f = [&](auto& ctx){ n = _attr(ctx); };
 
-        //~ boost::optional<int> n = 0;
-        //~ BOOST_TEST((test("1234", (-int_)[phx::ref(n) = _1])));
-        //~ BOOST_TEST(n.get() == 1234);
+        BOOST_TEST((test("1234", (-int_)[f])));
+        BOOST_TEST(n.get() == 1234);
 
-        //~ n = boost::optional<int>();
-        //~ BOOST_TEST((test("abcd", (-int_)[phx::ref(n) = _1], false)));
-        //~ BOOST_TEST(!n);
-    //~ }
+        n = boost::optional<int>();
+        BOOST_TEST((test("abcd", (-int_)[f], false)));
+        BOOST_TEST(!n);
+    }
 
     {
         std::vector<adata> v;

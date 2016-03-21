@@ -29,16 +29,16 @@ int main()
         BOOST_TEST(!test("false", true_));
     }
     
-    //~{
-    //~    using boost::spirit::qi::true_;
-    //~    using boost::spirit::qi::false_;
-    //~    using boost::spirit::qi::no_case;
-    //~
-    //~    BOOST_TEST(test("True", no_case[bool_]));
-    //~    BOOST_TEST(test("False", no_case[bool_]));
-    //~    BOOST_TEST(test("True", no_case[true_]));
-    //~    BOOST_TEST(test("False", no_case[false_]));
-    //~}
+    {
+        using boost::spirit::x3::true_;
+        using boost::spirit::x3::false_;
+        using boost::spirit::x3::no_case;
+    
+        BOOST_TEST(test("True", no_case[bool_]));
+        BOOST_TEST(test("False", no_case[bool_]));
+        BOOST_TEST(test("True", no_case[true_]));
+        BOOST_TEST(test("False", no_case[false_]));
+    }
     
     {
         bool b = false;
@@ -48,7 +48,7 @@ int main()
     }
     
     {
-        typedef boost::spirit::x3::bool_parser<bool, backwards_bool_policies>
+        typedef boost::spirit::x3::bool_parser<bool, boost::spirit::char_encoding::standard, backwards_bool_policies>
             backwards_bool_type;
         backwards_bool_type const backwards_bool = backwards_bool_type();
     
@@ -65,7 +65,7 @@ int main()
     }
     
     {
-        typedef boost::spirit::x3::bool_parser<test_bool_type>
+        typedef boost::spirit::x3::bool_parser<test_bool_type, boost::spirit::char_encoding::standard>
             bool_test_type;
         bool_test_type const test_bool = bool_test_type();
     

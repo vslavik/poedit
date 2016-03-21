@@ -34,6 +34,26 @@ namespace boost { namespace spirit { namespace traits
             return true;
         }
     };
+    
+    // Test if a QString is empty (required for debug)
+    template <>
+    struct is_empty_container<QString>
+    {
+        static bool call(QString const& c)
+        {
+            return c.isEmpty();
+        }
+    };
+
+    // Define how to stream a QString (required for debug)
+    template <typename Out, typename Enable>
+    struct print_attribute_debug<Out, QString, Enable>
+    {
+        static void call(Out& out, QString const& val)
+        {
+            out << val.toStdString();
+        }
+    };
 }}}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -51,7 +51,8 @@ int main( int argc, char * argv[] )
 //  test polymorphic_cast  ---------------------------------------------------//
 
     //  tests which should succeed
-    Base *    base = new Derived;
+    Derived derived_instance;
+    Base * base = &derived_instance;
     Base2 *   base2 = 0;
     Derived * derived = 0;
     derived = polymorphic_downcast<Derived*>( base );  // downcast
@@ -66,7 +67,8 @@ int main( int argc, char * argv[] )
 
      //  tests which should result in errors being detected
     int err_count = 0;
-    base = new Base;
+    Base base_instance;
+    base = &base_instance;
 
     if ( argc > 1 && *argv[1] == '1' )
         { derived = polymorphic_downcast<Derived*>( base ); } // #1 assert failure

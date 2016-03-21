@@ -1,12 +1,13 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // This file was modified by Oracle on 2014, 2015.
 // Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -21,13 +22,13 @@
 
 #include <boost/geometry/algorithms/convex_hull.hpp>
 #include <boost/geometry/algorithms/area.hpp>
+#include <boost/geometry/algorithms/is_empty.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
 #include <boost/geometry/algorithms/perimeter.hpp>
 
 #include <boost/geometry/strategies/strategies.hpp>
 
-#include <boost/geometry/io/wkt/read.hpp>
-#include <boost/geometry/io/wkt/write.hpp>
+#include <boost/geometry/io/wkt/wkt.hpp>
 
 #include <boost/geometry/geometries/polygon.hpp>
 
@@ -182,7 +183,7 @@ void test_empty_input()
         > hull;
 
     bg::convex_hull(geometry, hull);
-    BOOST_CHECK_MESSAGE(bg::num_points(hull) == 0, "Output convex hull should be empty" );
+    BOOST_CHECK_MESSAGE(bg::is_empty(hull), "Output convex hull should be empty" );
 }
 
 

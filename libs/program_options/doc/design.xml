@@ -22,7 +22,7 @@
       not mean strict 7-bit ASCII encoding, but rather "char" strings in local
       8-bit encoding.
     </para>
-          
+
     <para>
       Generally, &quot;Unicode support&quot; can mean
       many things, but for the program_options library it means that:
@@ -54,7 +54,7 @@
                   passed to an ascii value will be converted using a codecvt
                   facet (which may be specified by the user).
                 </para>
-              </listitem>                 
+              </listitem>
             </itemizedlist>
           </para>
         </listitem>
@@ -68,8 +68,8 @@
       Second, imagine a reusable library which has some options and exposes
       options description in its interface. If <emphasis>all</emphasis>
       options are either ascii or Unicode, and the library does not use any
-      Unicode strings, then the author will likely to use ascii options, which
-      would make the library unusable inside Unicode
+      Unicode strings, then the author is likely to use ascii options, making
+      the library unusable inside Unicode
       applications. Essentially, it would be necessary to provide two versions
       of the library -- ascii and Unicode.
     </para>
@@ -94,7 +94,7 @@
     <para>The primary question in implementing the Unicode support is whether
       to use templates and <code>std::basic_string</code> or to use some
       internal encoding and convert between internal and external encodings on
-      the interface boundaries.            
+      the interface boundaries.
     </para>
 
     <para>The choice, mostly, is between code size and execution
@@ -171,14 +171,14 @@
             number of new instantiations.
           </para>
         </listitem>
-          
+
       </itemizedlist>
       There's no clear leader, but the last point seems important, so UTF-8
-      will be used.      
+      will be used.
     </para>
 
-    <para>Choosing the UTF-8 encoding allows the use of existing parsers, 
-      because 7-bit ascii characters retain their values in UTF-8, 
+    <para>Choosing the UTF-8 encoding allows the use of existing parsers,
+      because 7-bit ascii characters retain their values in UTF-8,
       so searching for 7-bit strings is simple. However, there are
       two subtle issues:
       <itemizedlist>
@@ -197,16 +197,16 @@
       almost universal encoding and since composing characters following '=' (and
       other characters with special meaning to the library) are not likely to appear.
     </para>
-                   
+
   </section>
 
-  
+
 </section>
 
 <!--
      Local Variables:
      mode: xml
-     sgml-indent-data: t     
+     sgml-indent-data: t
      sgml-parent-document: ("program_options.xml" "section")
      sgml-set-face: t
      End:

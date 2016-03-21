@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../program_options.html" title="Chapter&#160;21.&#160;Boost.Program_options">
+<link rel="up" href="../program_options.html" title="Chapter&#160;22.&#160;Boost.Program_options">
 <link rel="prev" href="howto.html" title="How To">
 <link rel="next" href="s06.html" title="Acknowledgements">
 </head>
@@ -76,8 +77,8 @@
       Second, imagine a reusable library which has some options and exposes
       options description in its interface. If <span class="emphasis"><em>all</em></span>
       options are either ascii or Unicode, and the library does not use any
-      Unicode strings, then the author will likely to use ascii options, which
-      would make the library unusable inside Unicode
+      Unicode strings, then the author is likely to use ascii options, making
+      the library unusable inside Unicode
       applications. Essentially, it would be necessary to provide two versions
       of the library -- ascii and Unicode.
     </p>
@@ -99,7 +100,7 @@
 <p>The primary question in implementing the Unicode support is whether
       to use templates and <code class="computeroutput">std::basic_string</code> or to use some
       internal encoding and convert between internal and external encodings on
-      the interface boundaries.            
+      the interface boundaries.
     </p>
 <p>The choice, mostly, is between code size and execution
       speed. A templated solution would either link library code into every
@@ -142,8 +143,8 @@
       The instance of <code class="computeroutput"><a class="link" href="../boost/program_options/value_semantic.html" title="Class value_semantic">value_semantic</a></code> can then convert into some
       other encoding if needed.
     </p>
-<p>For the storage component, the only affected function is <code class="computeroutput"><a class="link" href="../boost/program_options/store_idp156630368.html" title="Function store">store</a></code>.
-      For Unicode input, the <code class="computeroutput"><a class="link" href="../boost/program_options/store_idp156630368.html" title="Function store">store</a></code> function should convert the value to the
+<p>For the storage component, the only affected function is <code class="computeroutput"><a class="link" href="../boost/program_options/store_idm45507045051456.html" title="Function store">store</a></code>.
+      For Unicode input, the <code class="computeroutput"><a class="link" href="../boost/program_options/store_idm45507045051456.html" title="Function store">store</a></code> function should convert the value to the
       internal encoding.  It should also inform the <code class="computeroutput"><a class="link" href="../boost/program_options/value_semantic.html" title="Class value_semantic">value_semantic</a></code> class
       about the used encoding.
     </p>
@@ -164,10 +165,10 @@
 </ul></div>
 <p>
       There's no clear leader, but the last point seems important, so UTF-8
-      will be used.      
+      will be used.
     </p>
-<p>Choosing the UTF-8 encoding allows the use of existing parsers, 
-      because 7-bit ascii characters retain their values in UTF-8, 
+<p>Choosing the UTF-8 encoding allows the use of existing parsers,
+      because 7-bit ascii characters retain their values in UTF-8,
       so searching for 7-bit strings is simple. However, there are
       two subtle issues:
       </p>

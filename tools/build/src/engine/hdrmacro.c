@@ -39,6 +39,7 @@
 #include "strings.h"
 #include "subst.h"
 #include "variable.h"
+#include "output.h"
 
 
 /* this type is used to store a dictionary of file header macros */
@@ -64,7 +65,7 @@ void macro_headers( TARGET * t )
     char buf[ 1024 ];
 
     if ( DEBUG_HEADER )
-        printf( "macro header scan for %s\n", object_str( t->name ) );
+        out_printf( "macro header scan for %s\n", object_str( t->name ) );
 
     /* This regexp is used to detect lines of the form
      * "#define  MACRO  <....>" or "#define  MACRO  "....."
@@ -96,7 +97,7 @@ void macro_headers( TARGET * t )
             ( (char *)re->endp[ 2 ] )[ 0 ] = '\0';
 
             if ( DEBUG_HEADER )
-                printf( "macro '%s' used to define filename '%s' in '%s'\n",
+                out_printf( "macro '%s' used to define filename '%s' in '%s'\n",
                     re->startp[ 1 ], re->startp[ 2 ], object_str( t->boundname )
                     );
 
@@ -131,7 +132,7 @@ OBJECT * macro_header_get( OBJECT * macro_name )
         header_macros_hash, macro_name ) ) )
     {
         if ( DEBUG_HEADER )
-            printf( "### macro '%s' evaluated to '%s'\n", object_str( macro_name
+            out_printf( "### macro '%s' evaluated to '%s'\n", object_str( macro_name
                 ), object_str( v->filename ) );
         return v->filename;
     }

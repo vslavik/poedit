@@ -12,6 +12,33 @@
 #  include <boost/type_traits/has_nothrow_copy.hpp>
 #endif
 
+struct non_copy
+{
+   non_copy();
+private:
+   non_copy(const non_copy&);
+};
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+
+struct delete_copy
+{
+   delete_copy();
+   delete_copy(const delete_copy&) = delete;
+};
+
+#endif
+
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+
+struct noexcept_copy
+{
+   noexcept_copy();
+   noexcept_copy& operator=(const noexcept_copy&)noexcept;
+};
+
+#endif
+
 TT_TEST_BEGIN(has_nothrow_copy)
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<bool>::value, true);
@@ -185,9 +212,10 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int&>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int&&>::value, false);
 #endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<const int&>::value, false);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int[2]>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int[3][2]>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int[2][4][5][6][3]>::value, true);
+// These used to be true, but are now false to match std conforming behavior:
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int[2]>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int[3][2]>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<int[2][4][5][6][3]>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<void>::value, false);
 // cases we would like to succeed but can't implement in the language:
@@ -200,6 +228,18 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<nothrow_assign_UDT>::value,
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<nothrow_construct_UDT>::value, false);
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<test_abc1>::value, false);
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<delete_copy>::value, false);
+#endif
+
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<noexcept_copy>::value, true);
+#endif
+
+#if !defined(BOOST_NO_CXX11_DECLTYPE) && !BOOST_WORKAROUND(BOOST_MSVC, < 1800)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_copy<non_copy>::value, false);
+#endif
 
 TT_TEST_END
 

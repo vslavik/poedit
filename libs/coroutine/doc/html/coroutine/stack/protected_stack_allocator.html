@@ -79,15 +79,15 @@
 <dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-              <code class="computeroutput"><span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">minimum</span><span class="special">:</span><span class="identifier">size</span><span class="special">()</span>
+              <code class="computeroutput"><span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">minimum_size</span><span class="special">()</span>
               <span class="special">&lt;=</span> <span class="identifier">size</span></code>
               and <code class="computeroutput"><span class="special">!</span> <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">is_unbounded</span><span class="special">()</span> <span class="special">&amp;&amp;</span>
-              <span class="special">(</span> <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">maximum</span><span class="special">:</span><span class="identifier">size</span><span class="special">()</span> <span class="special">&gt;=</span> <span class="identifier">size</span><span class="special">)</span></code>.
+              <span class="special">(</span> <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">maximum_size</span><span class="special">()</span> <span class="special">&gt;=</span> <span class="identifier">size</span><span class="special">)</span></code>.
             </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
               Allocates memory of at least <code class="computeroutput"><span class="identifier">size</span></code>
-              Bytes and stores a pointer to the stack and its actual size in <code class="computeroutput"><span class="identifier">sctx</span></code>. Depending on the architecture
+              bytes and stores a pointer to the stack and its actual size in <code class="computeroutput"><span class="identifier">sctx</span></code>. Depending on the architecture
               (the stack grows downwards/upwards) the stored address is the highest/lowest
               address of the stack.
             </p></dd>
@@ -103,10 +103,10 @@
 <dl class="variablelist">
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
-              <code class="computeroutput"><span class="identifier">sctx</span><span class="special">.</span><span class="identifier">sp</span></code> is valid, <code class="computeroutput"><span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">minimum</span><span class="special">:</span><span class="identifier">size</span><span class="special">()</span> <span class="special">&lt;=</span> <span class="identifier">sctx</span><span class="special">.</span><span class="identifier">size</span></code> and <code class="computeroutput"><span class="special">!</span>
+              <code class="computeroutput"><span class="identifier">sctx</span><span class="special">.</span><span class="identifier">sp</span></code> is valid, <code class="computeroutput"><span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">minimum_size</span><span class="special">()</span> <span class="special">&lt;=</span> <span class="identifier">sctx</span><span class="special">.</span><span class="identifier">size</span></code> and <code class="computeroutput"><span class="special">!</span>
               <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">is_unbounded</span><span class="special">()</span>
               <span class="special">&amp;&amp;</span> <span class="special">(</span>
-              <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">maximum</span><span class="special">:</span><span class="identifier">size</span><span class="special">()</span>
+              <span class="identifier">traits_type</span><span class="special">::</span><span class="identifier">maximum_size</span><span class="special">()</span>
               <span class="special">&gt;=</span> <span class="identifier">sctx</span><span class="special">.</span><span class="identifier">size</span><span class="special">)</span></code>.
             </p></dd>
 <dt><span class="term">Effects:</span></dt>

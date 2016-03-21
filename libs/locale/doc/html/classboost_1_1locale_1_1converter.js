@@ -1,6 +1,6 @@
 var classboost_1_1locale_1_1converter =
 [
-    [ "converter", "classboost_1_1locale_1_1converter.html#aba25fd4a18937543823cd61bef72c628", null ],
-    [ "convert", "classboost_1_1locale_1_1converter.html#a38dcc87504308ad5a51f3190e3c0da4b", null ],
-    [ "id", "classboost_1_1locale_1_1converter.html#a0ab17b265161bb2c5d7a233710d2740b", null ]
+    [ "converter", "classboost_1_1locale_1_1converter.html#aa9bd91f48f4ce7b6c270c5281c8b0313", null ],
+    [ "convert", "classboost_1_1locale_1_1converter.html#a85ce9bf935c59b2fdd196ed40a6a5f85", null ],
+    [ "id", "classboost_1_1locale_1_1converter.html#ae18f930e621fbe9848d08a91138f37e1", null ]
 ];

@@ -4,7 +4,7 @@
 <title>Floating-Point Representation Distance (ULP), and Finding Adjacent Floating-Point Values</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../utils.html" title="Chapter&#160;2.&#160;Floating Point Utilities">
 <link rel="prev" href="fp_facets/rationale.html" title="Design Rationale">
 <link rel="next" href="next_float/nextafter.html" title="Finding the Next Representable Value in a Specific Direction (nextafter)">
@@ -35,9 +35,11 @@
 <dt><span class="section"><a href="next_float/float_prior.html">Finding the Next
       Smaller Representable Value (float_prior)</a></span></dt>
 <dt><span class="section"><a href="next_float/float_distance.html">Calculating the
-      Representation Distance Between Two Floating Point Values (ULP) float_distance</a></span></dt>
-<dt><span class="section"><a href="next_float/float_advance.html">Advancing a Floating
-      Point Value by a Specific Representation Distance (ULP) float_advance</a></span></dt>
+      Representation Distance Between Two floating-point Values (ULP) float_distance</a></span></dt>
+<dt><span class="section"><a href="next_float/float_advance.html">Advancing a floating-point
+      Value by a Specific Representation Distance (ULP) float_advance</a></span></dt>
+<dt><span class="section"><a href="next_float/ulp.html">Obtaining the Size of a
+      Unit In the Last Place - ULP</a></span></dt>
 </dl></div>
 <p>
       <a href="http://en.wikipedia.org/wiki/Unit_in_the_last_place" target="_top">Unit of Least
@@ -54,14 +56,17 @@
       values, and estimating the number of gaps between any two floating-point values.
     </p>
 <p>
-      The floating-point type FPT must have has a fixed number of bits in the representation.
+      The floating-point type (FPT) must have has a fixed number of bits in the representation.
       The number of bits may set at runtime, but must be the same for all numbers.
       For example, <a href="http://shoup.net/ntl/doc/quad_float.txt" target="_top">NTL::quad_float</a>
-      type (fixed 128-bit representation) or <a href="http://shoup.net/ntl/doc/RR.txt" target="_top">NTL::RR</a>
-      type (arbitrary but fixed decimal digits, default 150) but <span class="bold"><strong>not</strong></span>
-      a type that extends the representation to provide an exact representation for
-      any number, for example <a href="http://keithbriggs.info/xrc.html" target="_top">XRC eXact
-      Real in C</a>.
+      type (fixed 128-bit representation), <a href="http://shoup.net/ntl/doc/RR.txt" target="_top">NTL::RR</a>
+      type (arbitrary but fixed decimal digits, default 150) or <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>
+      <a href="../../../../../libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_dec_float.html" target="_top">cpp_dec_float</a>
+      and<a href="../../../../../libs/multiprecision/doc/html/boost_multiprecision/tut/floats/cpp_bin_float.html" target="_top">cpp_bin_float</a>
+      are fixed at runtime, but <span class="bold"><strong>not</strong></span> a type that
+      extends the representation to provide an exact representation for any number,
+      for example <a href="http://keithbriggs.info/xrc.html" target="_top">XRC eXact Real in
+      C</a>.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
