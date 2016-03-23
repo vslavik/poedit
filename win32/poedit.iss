@@ -35,7 +35,10 @@
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
-#define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 12.0\VC\redist\x86\Microsoft.VC120.CRT"
+#define CRT_REDIST       GetEnv("PROGRAMFILES") + "\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT"
+#endif
+#ifndef UCRT_REDIST
+#define UCRT_REDIST       GetEnv("PROGRAMFILES") + "\Windows Kits\10\Redist\ucrt\DLLs\x86"
 #endif
 
 [Setup]
@@ -102,6 +105,7 @@ Source: NEWS; DestDir: {app}\Docs; DestName: News.txt
 Source: artwork\windows\xp\*.ico; DestDir: {app}\Resources; OnlyBelowVersion: 0,6.0.6000
 Source: artwork\windows\vista\*.ico; DestDir: {app}\Resources; MinVersion: 0,6.0.6000
 Source: {#CRT_REDIST}\*.dll; DestDir: {app}
+Source: {#UCRT_REDIST}\*.dll; DestDir: {app}; OnlyBelowVersion: 0,10.0
 Source: "{#CONFIG}\Resources\*"; DestDir: "{app}\Resources"; Flags: recursesubdirs
 Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recursesubdirs
 Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
