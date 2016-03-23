@@ -63,6 +63,12 @@
     <Link>
       <AdditionalDependencies>Winhttp.lib;httpapi.lib;crypt32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <Lib>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/IGNORE:4221 %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="..\casablanca\Release\src\build\common.vcxitems" Label="Shared" />
   <Import Project="..\casablanca\Release\src\build\win32.vcxitems" Label="Shared" />

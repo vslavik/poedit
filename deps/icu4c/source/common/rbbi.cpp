@@ -1092,7 +1092,7 @@ int32_t RuleBasedBreakIterator::handleNext(const RBBIStateTable *statetable) {
 
        #ifdef RBBI_DEBUG
             if (fTrace) {
-                RBBIDebugPrintf("             %4ld   ", utext_getNativeIndex(fText));
+                RBBIDebugPrintf("             %4ld   ", (long)utext_getNativeIndex(fText));
                 if (0x20<=c && c<0x7f) {
                     RBBIDebugPrintf("\"%c\"  ", c);
                 } else {
