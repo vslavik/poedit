@@ -2,14 +2,14 @@
 
 ``#include <boost/math/distributions/skew_normal.hpp>``
 
-   namespace boost{ namespace math{ 
-      
-   template <class RealType = double, 
+   namespace boost{ namespace math{
+
+   template <class RealType = double,
              class ``__Policy``   = ``__policy_class`` >
    class skew_normal_distribution;
-   
+
    typedef skew_normal_distribution<> normal;
-   
+
    template <class RealType, class ``__Policy``>
    class skew_normal_distribution
    {
@@ -24,17 +24,17 @@
       RealType shape()const; // The distribution is right skewed if shape > 0 and is left skewed if shape < 0.
                              // The distribution is normal if shape is zero.
    };
-   
+
    }} // namespaces
-   
+
 The skew normal distribution is a variant of the most well known
-Gaussian statistical distribution.  
+Gaussian statistical distribution.
 
 The skew normal distribution with shape zero resembles the
 [@http://en.wikipedia.org/wiki/Normal_distribution Normal Distribution],
 hence the latter can be regarded as a special case of the more generic skew normal distribution.
 
-If the standard (mean = 0, scale = 1) normal distribution probability density function is 
+If the standard (mean = 0, scale = 1) normal distribution probability density function is
 
 [space][space][equation normal01_pdf]
 
@@ -51,7 +51,7 @@ with shape parameter [alpha], defined by O'Hagan and Leonhard (1976) is
 Given [@http://en.wikipedia.org/wiki/Location_parameter location] [xi],
 [@http://en.wikipedia.org/wiki/Scale_parameter scale] [omega],
 and [@http://en.wikipedia.org/wiki/Shape_parameter shape] [alpha],
-it can be 
+it can be
 [@http://en.wikipedia.org/wiki/Skew_normal_distribution transformed],
 to the form:
 
@@ -72,24 +72,24 @@ in the following graphs:
 [h4 Member Functions]
 
    skew_normal_distribution(RealType location = 0, RealType scale = 1, RealType shape = 0);
-   
+
 Constructs a skew_normal distribution with location [xi],
 scale [omega] and shape [alpha].
 
 Requires scale > 0, otherwise __domain_error is called.
 
-   RealType location()const;   
-   
+   RealType location()const;
+
 returns the location [xi] of this distribution,
-   
+
    RealType scale()const;
 
 returns the scale [omega] of this distribution,
-   
+
    RealType shape()const;
 
 returns the shape [alpha] of this distribution.
-     
+
 (Location and scale function match other similar distributions,
 allowing the functions `find_location` and `find_scale` to be used generically).
 
@@ -137,7 +137,7 @@ and at [@http://cran.r-project.org/web/packages/sn/sn.pd R skew-normal(sn) packa
 Package sn provides functions related to the skew-normal (SN)
 and the skew-t (ST) probability distributions,
 both for the univariate and for the the multivariate case,
-including regression models. 
+including regression models.
 
 __Mathematica was also used to generate some more accurate spot test data.
 
@@ -145,7 +145,7 @@ __Mathematica was also used to generate some more accurate spot test data.
 
 The skew_normal distribution with shape = zero is implemented as a special case,
 equivalent to the normal distribution in terms of the
-[link math_toolkit.sf_erf.error_function error function], 
+[link math_toolkit.sf_erf.error_function error function],
 and therefore should have excellent accuracy.
 
 The PDF and mean, variance, skewness and kurtosis are also accurately evaluated using
@@ -165,7 +165,7 @@ and [omega] is its scale, and [alpha] is its shape.
 [table
 [[Function][Implementation Notes]]
 [[pdf][Using:[equation skew_normal_pdf] ]]
-[[cdf][Using: [equation skew_normal_cdf]\n
+[[cdf][Using: [equation skew_normal_cdf][br]
 where ['T(h,a)] is Owen's T function, and ['[Phi](x)] is the normal distribution. ]]
 [[cdf complement][Using: complement of normal distribution + 2 * Owens_t]]
 [[quantile][Maximum of the pdf is sought through searching the root of f'(x)=0]]

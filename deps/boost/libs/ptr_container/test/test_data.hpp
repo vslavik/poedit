@@ -12,7 +12,7 @@
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/config.hpp>
-#include <boost/test/test_tools.hpp>
+#include <boost/test/unit_test.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/functional/hash.hpp>
 #include <algorithm>
@@ -287,11 +287,11 @@ struct set_capacity
 template< class Cont1, class Cont2 >
 void transfer_test( Cont1& from, Cont2& to )
 {
-    BOOST_MESSAGE( "starting container transfer test" );
+    BOOST_TEST_MESSAGE( "starting container transfer test" );
     BOOST_CHECK( !from.empty() );
     to. BOOST_NESTED_TEMPLATE transfer<Cont1>( from );
     BOOST_CHECK( !to.empty() );
-    BOOST_MESSAGE( "finishing container transfer test" );
+    BOOST_TEST_MESSAGE( "finishing container transfer test" );
 }
 
 
@@ -302,7 +302,7 @@ void transfer_test( Cont1& from, Cont2& to )
 template< class BaseContainer, class DerivedContainer, class Derived >
 void container_assignment_test()
 {
-    BOOST_MESSAGE( "starting container assignment test" );
+    BOOST_TEST_MESSAGE( "starting container assignment test" );
 
     DerivedContainer derived;
     set_capacity<DerivedContainer>()( derived );
@@ -320,7 +320,7 @@ void container_assignment_test()
     BOOST_CHECK_EQUAL( base2.size(), base.size() );
     base = base;
 
-    BOOST_MESSAGE( "finished container assignment test" );
+    BOOST_TEST_MESSAGE( "finished container assignment test" );
 }
 
 

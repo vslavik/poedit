@@ -13,8 +13,7 @@
 #include <iterator>
 #include <utility>
 
-#include <boost/assert.hpp>
-
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/point_type.hpp>
 
 #include <boost/geometry/iterators/has_one_element.hpp>
@@ -70,7 +69,7 @@ public:
     {
         namespace sds = strategy::distance::services;
 
-        BOOST_ASSERT( first != last );
+        BOOST_GEOMETRY_ASSERT( first != last );
 
         if ( geometry::has_one_element(first, last) )
         {

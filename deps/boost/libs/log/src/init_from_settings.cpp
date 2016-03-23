@@ -777,7 +777,7 @@ void apply_core_settings(basic_settings_section< CharT > const& params)
 
 //! The function initializes the logging library from a settings container
 template< typename CharT >
-void init_from_settings(basic_settings_section< CharT > const& setts)
+BOOST_LOG_SETUP_API void init_from_settings(basic_settings_section< CharT > const& setts)
 {
     typedef basic_settings_section< CharT > section;
     typedef typename section::char_type char_type;
@@ -812,7 +812,7 @@ void init_from_settings(basic_settings_section< CharT > const& setts)
 
 //! The function registers a factory for a sink
 template< typename CharT >
-void register_sink_factory(const char* sink_name, shared_ptr< sink_factory< CharT > > const& factory)
+BOOST_LOG_SETUP_API void register_sink_factory(const char* sink_name, shared_ptr< sink_factory< CharT > > const& factory)
 {
     sinks_repository< CharT >& repo = sinks_repository< CharT >::get();
     BOOST_LOG_EXPR_IF_MT(lock_guard< log::aux::light_rw_mutex > lock(repo.m_Mutex);)

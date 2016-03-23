@@ -1,12 +1,12 @@
 # Status: ported.
 # Base revision: 64068
 
-# Copyright 2003 Dave Abrahams 
-# Copyright 2003 Douglas Gregor 
-# Copyright 2006 Rene Rivera 
-# Copyright 2002, 2003, 2004, 2005, 2006 Vladimir Prus 
-# Distributed under the Boost Software License, Version 1.0. 
-# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt) 
+# Copyright 2003 Dave Abrahams
+# Copyright 2003 Douglas Gregor
+# Copyright 2006 Rene Rivera
+# Copyright 2002, 2003, 2004, 2005, 2006 Vladimir Prus
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 #  This module defines the 'make' main target rule.
 
@@ -18,13 +18,13 @@ import b2.build.property_set
 
 
 class MakeTarget(BasicTarget):
-  
+
     def construct(self, name, source_targets, property_set):
 
-        action_name = property_set.get("<action>")[0]            
+        action_name = property_set.get("<action>")[0]
         action = Action(get_manager(), source_targets, action_name[1:], property_set)
         target = FileTarget(self.name(), type.type(self.name()),
-                            self.project(), action, exact=True)    
+                            self.project(), action, exact=True)
         return [ b2.build.property_set.empty(),
                  [self.project().manager().virtual_targets().register(target)]]
 
@@ -39,9 +39,9 @@ def make (target_name, sources, generating_rule,
     if not requirements:
         requirements = []
 
-        
+
     requirements.append("<action>%s" % generating_rule)
-    
+
     m = get_manager()
     targets = m.targets()
     project = m.projects().current()

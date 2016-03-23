@@ -537,8 +537,8 @@ void construct(DisableTrivialInit const&,
 
 #else // !BOOST_NO_CXX11_VARIADIC_TEMPLATES
 
-// BOOST_NO_RVALUE_REFERENCES -> P0 const& p0
-// !BOOST_NO_RVALUE_REFERENCES -> P0 && p0
+// BOOST_NO_CXX11_RVALUE_REFERENCES -> P0 const& p0
+// !BOOST_NO_CXX11_RVALUE_REFERENCES -> P0 && p0
 // which means that version with one parameter may take V const& v
 
 #define BOOST_CONTAINER_VARRAY_UTIL_CONSTRUCT_CODE(N) \

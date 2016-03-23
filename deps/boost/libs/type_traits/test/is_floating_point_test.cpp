@@ -29,6 +29,13 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<long double const>::value,
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<long double volatile>::value, true);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<long double const volatile>::value, true);
 
+#ifdef BOOST_HAS_FLOAT128
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<__float128>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<const __float128>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<volatile __float128>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_floating_point<const volatile __float128>::value, true);
+#endif
+
 //
 // cases that should not be true:
 //

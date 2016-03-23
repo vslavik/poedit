@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">
 <link rel="prev" href="getting_started.html" title="Getting Started">
@@ -22,11 +22,11 @@
 <div class="spirit-nav">
 <a accesskey="p" href="getting_started.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="alternatives.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section scope_exit_tutorial">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="scope_exit.tutorial"></a><a class="link" href="tutorial.html" title="Tutorial">Tutorial</a>
 </h2></div></div></div>
-<div class="toc"><dl>
+<div class="toc"><dl class="toc">
 <dt><span class="section"><a href="tutorial.html#scope_exit.tutorial.capturing_variables">Capturing Variables</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#scope_exit.tutorial.capturing_the_object__this_">Capturing
       The Object <code class="computeroutput"><span class="keyword">this</span></code></a></span></dt>
@@ -41,7 +41,7 @@
 <p>
       This section illustrates how to use this library.
     </p>
-<div class="section scope_exit_tutorial_capturing_variables">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="scope_exit.tutorial.capturing_variables"></a><a class="link" href="tutorial.html#scope_exit.tutorial.capturing_variables" title="Capturing Variables">Capturing Variables</a>
 </h3></div></div></div>
@@ -192,7 +192,7 @@
         bodies are executed in the reversed order of their declarations.
       </p>
 </div>
-<div class="section scope_exit_tutorial_capturing_the_object__this_">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="scope_exit.tutorial.capturing_the_object__this_"></a><a class="link" href="tutorial.html#scope_exit.tutorial.capturing_the_object__this_" title="Capturing The Object this">Capturing
       The Object <code class="computeroutput"><span class="keyword">this</span></code></a>
@@ -217,7 +217,7 @@
         object will be mutable.
       </p>
 </div>
-<div class="section scope_exit_tutorial_capturing_no_variable">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="scope_exit.tutorial.capturing_no_variable"></a><a class="link" href="tutorial.html#scope_exit.tutorial.capturing_no_variable" title="Capturing No Variable">Capturing
       No Variable</a>
@@ -228,7 +228,7 @@
         by the <code class="computeroutput"><span class="keyword">void</span></code> keyword (similarly
         to the C++ syntax that allows to declare a function with no parameter using
         <code class="literal"><span class="emphasis"><em>result-type function-name</em></span></code><code class="computeroutput"><span class="special">(</span><span class="keyword">void</span><span class="special">)</span></code>).
-        <sup>[<a name="scope_exit.tutorial.capturing_no_variable.f0" href="#ftn.scope_exit.tutorial.capturing_no_variable.f0" class="footnote">3</a>]</sup> For example, this can be useful when the <a class="link" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">Boost.ScopeExit</a>
+        <a href="#ftn.scope_exit.tutorial.capturing_no_variable.f0" class="footnote" name="scope_exit.tutorial.capturing_no_variable.f0"><sup class="footnote">[3]</sup></a> For example, this can be useful when the <a class="link" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">Boost.ScopeExit</a>
         body only needs to access global variables (see also <a href="../../../test/world_void.cpp" target="_top"><code class="literal">world_void.cpp</code></a>):
       </p>
 <p>
@@ -259,7 +259,7 @@
         Variadic Macros</a> section for more information.)
       </p>
 </div>
-<div class="section scope_exit_tutorial_capturing_all_variables__c__11_only_">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="scope_exit.tutorial.capturing_all_variables__c__11_only_"></a><a class="link" href="tutorial.html#scope_exit.tutorial.capturing_all_variables__c__11_only_" title="Capturing All Variables (C++11 Only)">Capturing
       All Variables (C++11 Only)</a>
@@ -268,7 +268,7 @@
         On C++11 compliers, it is also possible to capture all the variables in scope
         without naming them one-by-one using the special macro <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
         instead of <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>.
-        <sup>[<a name="scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" href="#ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" class="footnote">4</a>]</sup>
+        <a href="#ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" class="footnote" name="scope_exit.tutorial.capturing_all_variables__c__11_only_.f0"><sup class="footnote">[4]</sup></a>
       </p>
 <p>
         Following the same syntax adopted by C++11 lambda functions, the <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code> macro accepts
@@ -334,12 +334,12 @@
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
             The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
-            macro cannot capture data members without capturing the object <code class="computeroutput"><span class="keyword">this</span></code> while that is not the case for <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>. <sup>[<a name="scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" href="#ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" class="footnote">5</a>]</sup>
+            macro cannot capture data members without capturing the object <code class="computeroutput"><span class="keyword">this</span></code> while that is not the case for <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>. <a href="#ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" class="footnote" name="scope_exit.tutorial.capturing_all_variables__c__11_only_.f1"><sup class="footnote">[5]</sup></a>
           </li>
 <li class="listitem">
             The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
             macro captures the object in scope using <code class="computeroutput"><span class="keyword">this</span></code>
-            instead of <code class="computeroutput"><span class="identifier">this_</span></code>. <sup>[<a name="scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" href="#ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" class="footnote">6</a>]</sup>
+            instead of <code class="computeroutput"><span class="identifier">this_</span></code>. <a href="#ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" class="footnote" name="scope_exit.tutorial.capturing_all_variables__c__11_only_.f2"><sup class="footnote">[6]</sup></a>
           </li>
 <li class="listitem">
             The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
@@ -358,7 +358,7 @@
         might no longer compile (if data members were explicitly captured).
       </p>
 </div>
-<div class="section scope_exit_tutorial_template_workaround__gcc_">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="scope_exit.tutorial.template_workaround__gcc_"></a><a class="link" href="tutorial.html#scope_exit.tutorial.template_workaround__gcc_" title="Template Workaround (GCC)">Template
       Workaround (GCC)</a>
@@ -368,7 +368,7 @@
         inside templates (see the <a href="../reference.html" target="_top">Reference</a> section
         for more information). As a workaround, <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_TPL.html" title="Macro BOOST_SCOPE_EXIT_TPL">BOOST_SCOPE_EXIT_TPL</a></code>
         should be used instead of <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>
-        in these cases. <sup>[<a name="scope_exit.tutorial.template_workaround__gcc_.f0" href="#ftn.scope_exit.tutorial.template_workaround__gcc_.f0" class="footnote">7</a>]</sup> The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_TPL.html" title="Macro BOOST_SCOPE_EXIT_TPL">BOOST_SCOPE_EXIT_TPL</a></code>
+        in these cases. <a href="#ftn.scope_exit.tutorial.template_workaround__gcc_.f0" class="footnote" name="scope_exit.tutorial.template_workaround__gcc_.f0"><sup class="footnote">[7]</sup></a> The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_TPL.html" title="Macro BOOST_SCOPE_EXIT_TPL">BOOST_SCOPE_EXIT_TPL</a></code>
         macro has the exact same syntax of <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>.
         For example (see also <a href="../../../test/world_tpl.cpp" target="_top"><code class="literal">world_tpl.cpp</code></a>):
       </p>
@@ -395,7 +395,7 @@
         within templates so to maximize portability among different compilers.
       </p>
 </div>
-<div class="section scope_exit_tutorial_same_line_expansions">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="scope_exit.tutorial.same_line_expansions"></a><a class="link" href="tutorial.html#scope_exit.tutorial.same_line_expansions" title="Same Line Expansions">Same Line Expansions</a>
 </h3></div></div></div>
@@ -404,7 +404,7 @@
         <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_TPL.html" title="Macro BOOST_SCOPE_EXIT_TPL">BOOST_SCOPE_EXIT_TPL</a></code>,
         <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code>, and
         <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code> macros
-        multiple times on the same line. <sup>[<a name="scope_exit.tutorial.same_line_expansions.f0" href="#ftn.scope_exit.tutorial.same_line_expansions.f0" class="footnote">8</a>]</sup>
+        multiple times on the same line. <a href="#ftn.scope_exit.tutorial.same_line_expansions.f0" class="footnote" name="scope_exit.tutorial.same_line_expansions.f0"><sup class="footnote">[8]</sup></a>
       </p>
 <p>
         Therefore, this library provides additional macros <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ID.html" title="Macro BOOST_SCOPE_EXIT_ID">BOOST_SCOPE_EXIT_ID</a></code>,
@@ -415,7 +415,7 @@
         specify a unique identifiers as the macros' first parameters. The unique
         identifier can be any token (not just numeric) that can be concatenated by
         the C++ preprocessor (e.g., <code class="computeroutput"><span class="identifier">scope_exit_number_1_at_line_123</span></code>).
-        <sup>[<a name="scope_exit.tutorial.same_line_expansions.f1" href="#ftn.scope_exit.tutorial.same_line_expansions.f1" class="footnote">9</a>]</sup>
+        <a href="#ftn.scope_exit.tutorial.same_line_expansions.f1" class="footnote" name="scope_exit.tutorial.same_line_expansions.f1"><sup class="footnote">[9]</sup></a>
       </p>
 <p>
         The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ID.html" title="Macro BOOST_SCOPE_EXIT_ID">BOOST_SCOPE_EXIT_ID</a></code>,
@@ -439,12 +439,12 @@
     <span class="special">}</span> <span class="identifier">BOOST_SCOPE_EXIT_END_ID</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">dec</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">))</span>
 
 <span class="preprocessor">#define</span> <span class="identifier">SCOPE_EXIT_INC_DEC_TPL</span><span class="special">(</span><span class="identifier">variable</span><span class="special">,</span> <span class="identifier">offset</span><span class="special">)</span> <span class="special">\</span>
-    <span class="identifier">BOOST_SCOPE_EXIT_TPL_ID</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">inc</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">),</span> <span class="special">\</span>
+    <span class="identifier">BOOST_SCOPE_EXIT_ID_TPL</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">inc</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">),</span> <span class="special">\</span>
             <span class="special">&amp;</span><span class="identifier">variable</span><span class="special">,</span> <span class="identifier">offset</span><span class="special">)</span> <span class="special">{</span> <span class="special">\</span>
         <span class="identifier">variable</span> <span class="special">+=</span> <span class="identifier">offset</span><span class="special">;</span> <span class="special">\</span>
     <span class="special">}</span> <span class="identifier">BOOST_SCOPE_EXIT_END_ID</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">inc</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">))</span> <span class="special">\</span>
     <span class="special">\</span>
-    <span class="identifier">BOOST_SCOPE_EXIT_TPL_ID</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">dec</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">),</span> <span class="special">\</span>
+    <span class="identifier">BOOST_SCOPE_EXIT_ID_TPL</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">dec</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">),</span> <span class="special">\</span>
             <span class="special">&amp;</span><span class="identifier">variable</span><span class="special">,</span> <span class="identifier">offset</span><span class="special">)</span> <span class="special">{</span> <span class="special">\</span>
         <span class="identifier">variable</span> <span class="special">-=</span> <span class="identifier">offset</span><span class="special">;</span> <span class="special">\</span>
     <span class="special">}</span> <span class="identifier">BOOST_SCOPE_EXIT_END_ID</span><span class="special">(</span><span class="identifier">BOOST_PP_CAT</span><span class="special">(</span><span class="identifier">dec</span><span class="special">,</span> <span class="identifier">__LINE__</span><span class="special">))</span>
@@ -475,7 +475,7 @@
 
     <span class="identifier">f</span><span class="special">(</span><span class="identifier">x</span><span class="special">,</span> <span class="identifier">delta</span><span class="special">);</span>
 
-<span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_NO_LAMBDAS</span>
+<span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_NO_CXX11_LAMBDAS</span>
     <span class="special">{</span>
         <span class="identifier">SCOPE_EXIT_ALL_INC_DEC</span><span class="special">(</span><span class="identifier">x</span><span class="special">,</span> <span class="identifier">delta</span><span class="special">)</span> <span class="comment">// Multiple scope exits on same line.</span>
     <span class="special">}</span>
@@ -498,20 +498,20 @@
       </p>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.capturing_no_variable.f0" href="#scope_exit.tutorial.capturing_no_variable.f0" class="para">3</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.scope_exit.tutorial.capturing_no_variable.f0" class="footnote"><p><a href="#scope_exit.tutorial.capturing_no_variable.f0" class="para"><sup class="para">[3] </sup></a>
           <span class="bold"><strong>Rationale.</strong></span> Unfortunately, it is not possible
           to simply invoke the <a class="link" href="../index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">Boost.ScopeExit</a>
           macro with no parameters as in <code class="computeroutput"><span class="identifier">BOOST_SCOPE_EXIT</span><span class="special">()</span></code> because the C++ preprocessor cannot detect
           emptiness of a macro parameter when the parameter can start with a non-alphanumeric
           symbol (which is the case when capturing a variable by reference <code class="computeroutput"><span class="special">&amp;</span><span class="identifier">variable</span></code>).
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" href="#scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" class="para">4</a>] </sup>
+<div id="ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" class="footnote"><p><a href="#scope_exit.tutorial.capturing_all_variables__c__11_only_.f0" class="para"><sup class="para">[4] </sup></a>
           <span class="bold"><strong>Rationale.</strong></span> The <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
           macro is only defined on C++11 compilers for which the <a href="http://www.boost.org/libs/config" target="_top">Boost.Config</a>
-          macro <code class="computeroutput"><span class="identifier">BOOST_NO_LAMBDAS</span></code>
+          macro <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_LAMBDAS</span></code>
           is not defined. Using <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
-          on C++03 compilers for which <code class="computeroutput"><span class="identifier">BOOST_NO_LAMBDAS</span></code>
+          on C++03 compilers for which <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_LAMBDAS</span></code>
           is defined will generate (possibly cryptic) compiler errors. Note that
           a new macro <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
           needed to be introduced instead of reusing <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>
@@ -525,26 +525,26 @@
           so the first capture tokens are simply never compared with neither <code class="computeroutput"><span class="keyword">void</span></code> nor <code class="computeroutput"><span class="identifier">this_</span></code>
           for this macro).
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" href="#scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" class="para">5</a>] </sup>
+<div id="ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" class="footnote"><p><a href="#scope_exit.tutorial.capturing_all_variables__c__11_only_.f1" class="para"><sup class="para">[5] </sup></a>
               At present, there seems to be some discussion to allow C++11 lambda
               functions to capture data members without capturing the object <code class="computeroutput"><span class="keyword">this</span></code>. If the C++11 standard were changed
               to allow this, the <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
               macro syntax could be extended to be a superset of the <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT.html" title="Macro BOOST_SCOPE_EXIT">BOOST_SCOPE_EXIT</a></code>
               macro while keeping full backward compatibility.
             </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" href="#scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" class="para">6</a>] </sup>
+<div id="ftn.scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" class="footnote"><p><a href="#scope_exit.tutorial.capturing_all_variables__c__11_only_.f2" class="para"><sup class="para">[6] </sup></a>
               On compilers that support the use of the <code class="computeroutput"><span class="keyword">typename</span></code>
               outside templates as allowed by the C++11 standard, <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
               can use both <code class="computeroutput"><span class="keyword">this</span></code> and
               <code class="computeroutput"><span class="identifier">this_</span></code> to capture the
               object in scope (notably, this is not the case for the MSVC 10.0 compiler).
             </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.template_workaround__gcc_.f0" href="#scope_exit.tutorial.template_workaround__gcc_.f0" class="para">7</a>] </sup>
+<div id="ftn.scope_exit.tutorial.template_workaround__gcc_.f0" class="footnote"><p><a href="#scope_exit.tutorial.template_workaround__gcc_.f0" class="para"><sup class="para">[7] </sup></a>
           <span class="bold"><strong>Rationale.</strong></span> GCC versions compliant with
           C++11 do not present this issue and given that <code class="computeroutput"><a class="link" href="../BOOST_SCOPE_EXIT_ALL.html" title="Macro BOOST_SCOPE_EXIT_ALL">BOOST_SCOPE_EXIT_ALL</a></code>
           is only available on C++11 compilers, there is no need for a <code class="computeroutput"><span class="identifier">BOOST_SCOPE_EXIT_ALL_TPL</span></code> macro.
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.same_line_expansions.f0" href="#scope_exit.tutorial.same_line_expansions.f0" class="para">8</a>] </sup>
+<div id="ftn.scope_exit.tutorial.same_line_expansions.f0" class="footnote"><p><a href="#scope_exit.tutorial.same_line_expansions.f0" class="para"><sup class="para">[8] </sup></a>
           <span class="bold"><strong>Rationale.</strong></span> The library macros internally
           use <code class="computeroutput"><span class="identifier">__LINE__</span></code> to generate
           unique identifiers. Therefore, if the same macro is expanded more than
@@ -553,7 +553,7 @@
           and other compilers that provide the non-standard <code class="computeroutput"><span class="identifier">__COUNTER__</span></code>
           macro.)
         </p></div>
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.tutorial.same_line_expansions.f1" href="#scope_exit.tutorial.same_line_expansions.f1" class="para">9</a>] </sup>
+<div id="ftn.scope_exit.tutorial.same_line_expansions.f1" class="footnote"><p><a href="#scope_exit.tutorial.same_line_expansions.f1" class="para"><sup class="para">[9] </sup></a>
           Because there are restrictions on the set of tokens that the C++ preprocessor
           can concatenate and because not all compilers correctly implement these
           restrictions, it is in general recommended to specify unique identifiers

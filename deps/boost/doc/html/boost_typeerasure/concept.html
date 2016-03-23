@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;33.&#160;Boost.TypeErasure">
+<link rel="up" href="../boost_typeerasure.html" title="Chapter&#160;34.&#160;Boost.TypeErasure">
 <link rel="prev" href="multi.html" title="Functions with Multiple Arguments">
 <link rel="next" href="any.html" title="Using Any">
 </head>
@@ -61,8 +62,8 @@
 <p>
       </p>
 <p>
-        Now, we can use this in an <code class="computeroutput">any</code>
-        using <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idp304107712.html" title="Function call">call</a></code> to
+        Now, we can use this in an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
+        using <code class="computeroutput"><a class="link" href="../boost/type_erasure/call_idm45506884907840.html" title="Function call">call</a></code> to
         dispatch the operation.
       </p>
 <p>
@@ -76,16 +77,16 @@
 <p>
       </p>
 <p>
-        Our second task is to customize <code class="computeroutput">any</code>
+        Our second task is to customize <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
         so that we can call <code class="computeroutput"><span class="identifier">c</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="number">10</span><span class="special">)</span></code>. We do
         this by specializing <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>.
         The first argument is <code class="computeroutput"><span class="identifier">has_push_back</span></code>,
-        since we want to inject a member into every <code class="computeroutput">any</code>
+        since we want to inject a member into every <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
         that uses the <code class="computeroutput"><span class="identifier">has_push_back</span></code>
         concept. The second argument, <code class="computeroutput"><span class="identifier">Base</span></code>,
         is used by the library to chain multiple uses of <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>
         together. We have to inherit from it publicly. <code class="computeroutput"><span class="identifier">Base</span></code>
-        is also used to get access to the full <code class="computeroutput">any</code>
+        is also used to get access to the full <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>
         type. The third argument is the placeholder that represents this any. If
         someone used <code class="computeroutput"><span class="identifier">push_back</span><span class="special">&lt;</span><span class="identifier">_c</span><span class="special">,</span> <span class="identifier">_b</span><span class="special">&gt;</span></code>, we only want to insert a <code class="computeroutput"><span class="identifier">push_back</span></code> member in the container, not
         the value type. Thus, the third argument is the container placeholder.
@@ -136,7 +137,7 @@
       </p>
 <p>
         <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>
-        allows us to inject arbitrary declarations into an <code class="computeroutput">any</code>.
+        allows us to inject arbitrary declarations into an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code>.
         This is very flexible, but there are some pitfalls to watch out for. Sometimes
         we want to use the same concept several times with different parameters.
         Specializing <code class="computeroutput"><a class="link" href="../boost/type_erasure/concept_interface.html" title="Struct template concept_interface">concept_interface</a></code>
@@ -381,7 +382,7 @@
         <code class="computeroutput"><span class="identifier">pointer</span><span class="special">&lt;&gt;::</span><span class="identifier">element_type</span></code>. When we construct <code class="computeroutput"><span class="identifier">x</span></code>, with an <code class="computeroutput"><span class="keyword">int</span><span class="special">*</span></code>, <code class="computeroutput"><span class="identifier">pointer</span><span class="special">&lt;&gt;::</span><span class="identifier">element_type</span></code>
         is deduced as <code class="computeroutput"><span class="identifier">pointee</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">*&gt;::</span><span class="identifier">type</span></code> which is <code class="computeroutput"><span class="keyword">int</span></code>.
         Thus, dereferencing <code class="computeroutput"><span class="identifier">x</span></code> returns
-        an <code class="computeroutput">any</code> that contains
+        an <code class="computeroutput"><a class="link" href="../boost/type_erasure/any.html" title="Class template any">any</a></code> that contains
         an <code class="computeroutput"><span class="keyword">int</span></code>.
       </p>
 <p>

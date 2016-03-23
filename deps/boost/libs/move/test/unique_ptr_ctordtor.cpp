@@ -682,6 +682,107 @@ void test()
 }  //namespace unique_ptr_ctor_pointer_deleter_void{
 
 ////////////////////////////////
+//   return_unique_single_conversion
+////////////////////////////////
+
+namespace return_unique_single_conversion{
+
+template<class T>
+bml::unique_ptr<T> make_unique_ptr_of_t()
+{
+   return bml::unique_ptr<T>(new T);
+}
+
+template<class T>
+bml::unique_ptr<T const> return_const_unique_of_t()
+{
+   return bml::unique_ptr<T const> (make_unique_ptr_of_t<T>());
+} 
+
+void test()
+{
+   reset_counters();
+   BOOST_TEST(A::count == 0);
+   {
+   bml::unique_ptr<const A> p(return_const_unique_of_t<A>());
+   BOOST_TEST(A::count == 1);
+   BOOST_TEST(B::count == 0);
+   }
+   BOOST_TEST(A::count == 0);
+   {
+   bml::unique_ptr<const A> p(return_const_unique_of_t<B>());
+   BOOST_TEST(A::count == 1);
+   BOOST_TEST(B::count == 1);
+   }
+   BOOST_TEST(A::count == 0);
+}
+
+}  //namespace return_unique_single_conversion{
+
+
+////////////////////////////////
+//   return_unique_array_conversion
+////////////////////////////////
+
+namespace return_unique_array_conversion{
+
+template<class T>
+bml::unique_ptr<T[]> return_unique_array_of_t(std::size_t n)
+{
+   return bml::unique_ptr<T[]>(new T[n]);
+}
+
+template<class T>
+bml::unique_ptr<const T[]> return_const_array_of_t(std::size_t n)
+{
+   return bml::unique_ptr<const T[]>(return_unique_array_of_t<T>(n));
+} 
+
+template<class T>
+bml::unique_ptr<T[2]> return_unique_array_of_t_2()
+{
+   return bml::unique_ptr<T[2]>(new T[2]);
+}
+
+template<class T>
+bml::unique_ptr<const T[2]> return_const_array_of_t_2()
+{
+   return bml::unique_ptr<const T[2]>(return_unique_array_of_t_2<T>());
+} 
+
+void test()
+{
+   reset_counters();
+   BOOST_TEST(A::count == 0);
+   {
+   bml::unique_ptr<const A[]> p(return_unique_array_of_t<A>(2));
+   BOOST_TEST(A::count == 2);
+   BOOST_TEST(B::count == 0);
+   }
+   BOOST_TEST(A::count == 0);
+   {
+   bml::unique_ptr<const volatile A[]> p(return_unique_array_of_t<volatile A>(2));
+   BOOST_TEST(A::count == 2);
+   BOOST_TEST(B::count == 0);
+   }
+   BOOST_TEST(A::count == 0);
+   {
+   bml::unique_ptr<const volatile A[2]> p(return_const_array_of_t_2<A>());
+   BOOST_TEST(A::count == 2);
+   BOOST_TEST(B::count == 0);
+   }
+   BOOST_TEST(A::count == 0);
+   {
+   bml::unique_ptr<const volatile A[]> p(return_const_array_of_t_2<A>());
+   BOOST_TEST(A::count == 2);
+   BOOST_TEST(B::count == 0);
+   }
+   BOOST_TEST(A::count == 0);
+}
+
+}  //namespace return_unique_array_conversion{
+
+////////////////////////////////
 //             main
 ////////////////////////////////
 int main()
@@ -699,6 +800,8 @@ int main()
    unique_ptr_ctor_pointer_deleter_dfctrdelconstref::test();
    unique_ptr_ctor_pointer_deleter_convert::test();
    unique_ptr_ctor_pointer_deleter_void::test();
+   return_unique_single_conversion::test();
+   return_unique_array_conversion::test();
 
    //Test results
    return boost::report_errors();

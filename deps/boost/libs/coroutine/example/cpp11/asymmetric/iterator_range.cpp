@@ -23,6 +23,10 @@ int main()
         });
     auto crange = boost::make_iterator_range(boost::begin(c), boost::end(c));
     for (auto n : crange) {
-        std::cout << n << std::endl;
+        std::cout << n << " ";
     }
+
+    std::cout << "\nDone" << std::endl;
+
+    return EXIT_SUCCESS;
 }

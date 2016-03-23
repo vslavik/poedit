@@ -222,53 +222,6 @@ void test_stacked()
     BOOST_CHECK_EQUAL( 3, value1);
 }
 
-#if ! defined(BOOST_CONTEXT_NO_EXECUTION_CONTEXT)
-ctx::execution_context * mctx = nullptr;
-
-void f11() {
-    value1 = 3;
-    mctx->resume();
-}
-
-void f12( int i) {
-    value1 = i;
-    mctx->resume();
-}
-
-void test_ectx() {
-    boost::context::execution_context ctx( boost::context::execution_context::current() );
-    mctx = & ctx;
-    value1 = 0;
-    ctx::fixedsize_stack alloc;
-    ctx::execution_context ectx( alloc, f11);
-    ectx.resume();
-    BOOST_CHECK_EQUAL( 3, value1);
-}
-
-void test_variadric() {
-    boost::context::execution_context ctx( boost::context::execution_context::current() );
-    mctx = & ctx;
-    value1 = 0;
-    ctx::fixedsize_stack alloc;
-    ctx::execution_context ectx( alloc, f12, 5);
-    ectx.resume();
-    BOOST_CHECK_EQUAL( 5, value1);
-}
-
-void test_prealloc() {
-    boost::context::execution_context ctx( boost::context::execution_context::current() );
-    mctx = & ctx;
-    value1 = 0;
-    ctx::fixedsize_stack alloc;
-    ctx::stack_context sctx( alloc.allocate() );
-    void * sp = static_cast< char * >( sctx.sp) - 10;
-    std::size_t size = sctx.size - 10;
-    ctx::execution_context ectx( ctx::preallocated( sp, size, sctx), alloc, f12, 7);
-    ectx.resume();
-    BOOST_CHECK_EQUAL( 7, value1);
-}
-#endif
-
 boost::unit_test::test_suite * init_unit_test_suite( int, char* [])
 {
     boost::unit_test::test_suite * test =
@@ -283,12 +236,6 @@ boost::unit_test::test_suite * init_unit_test_suite( int, char* [])
     test->add( BOOST_TEST_CASE( & test_exception) );
     test->add( BOOST_TEST_CASE( & test_fp) );
     test->add( BOOST_TEST_CASE( & test_stacked) );
-
-#if ! defined(BOOST_CONTEXT_NO_EXECUTION_CONTEXT)
-    test->add( BOOST_TEST_CASE( & test_ectx) );
-    test->add( BOOST_TEST_CASE( & test_variadric) );
-    test->add( BOOST_TEST_CASE( & test_prealloc) );
-#endif
 
     return test;
 }

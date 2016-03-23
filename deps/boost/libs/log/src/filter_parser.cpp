@@ -475,7 +475,7 @@ private:
 
 //! The function registers a filter factory object for the specified attribute name
 template< typename CharT >
-void register_filter_factory(attribute_name const& name, shared_ptr< filter_factory< CharT > > const& factory)
+BOOST_LOG_SETUP_API void register_filter_factory(attribute_name const& name, shared_ptr< filter_factory< CharT > > const& factory)
 {
     BOOST_ASSERT(!!name);
     BOOST_ASSERT(!!factory);
@@ -488,7 +488,7 @@ void register_filter_factory(attribute_name const& name, shared_ptr< filter_fact
 
 //! The function parses a filter from the string
 template< typename CharT >
-filter parse_filter(const CharT* begin, const CharT* end)
+BOOST_LOG_SETUP_API filter parse_filter(const CharT* begin, const CharT* end)
 {
     typedef CharT char_type;
     typedef log::aux::encoding_specific< typename log::aux::encoding< char_type >::type > encoding_specific;

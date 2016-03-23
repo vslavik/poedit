@@ -96,11 +96,11 @@ int main()
         test_char<char>();
         std::cout << "Testing wchar_t" << std::endl;
         test_char<wchar_t>();
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         std::cout << "Testing char16_t" << std::endl;
         test_char<char16_t>();
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         std::cout << "Testing char32_t" << std::endl;
         test_char<char32_t>();
         #endif

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_modulus_assign</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_modulus.html" title="has_modulus">
@@ -63,6 +63,11 @@
         or <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">type_traits</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
       </p>
 <p>
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> Requires working
+        SFINAE (i.e. BOOST_NO_SFINAE is not set). Only a minority of rather old compilers
+        do not support this.
+      </p>
+<p>
         <span class="bold"><strong>Examples:</strong></span>
       </p>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -98,12 +103,6 @@
         <span class="bold"><strong>See also:</strong></span> <a class="link" href="../category/value_traits/operators.html" title="Operator Type Traits">Operator
         Type Traits</a>
       </p>
-<p>
-        <span class="bold"><strong>Limitation:</strong></span>
-      </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
-            Requires a compiler with working SFINAE.
-          </li></ul></div>
 <p>
         <span class="bold"><strong>Known issues:</strong></span>
       </p>

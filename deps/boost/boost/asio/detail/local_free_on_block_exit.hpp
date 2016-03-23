@@ -18,6 +18,7 @@
 #include <boost/asio/detail/config.hpp>
 
 #if defined(BOOST_ASIO_WINDOWS) || defined(__CYGWIN__)
+#if !defined(BOOST_ASIO_WINDOWS_APP)
 
 #include <boost/asio/detail/noncopyable.hpp>
 #include <boost/asio/detail/socket_types.hpp>
@@ -54,6 +55,7 @@ private:
 
 #include <boost/asio/detail/pop_options.hpp>
 
+#endif // !defined(BOOST_ASIO_WINDOWS_APP)
 #endif // defined(BOOST_ASIO_WINDOWS) || defined(__CYGWIN__)
 
 #endif // BOOST_ASIO_DETAIL_LOCAL_FREE_ON_BLOCK_EXIT_HPP

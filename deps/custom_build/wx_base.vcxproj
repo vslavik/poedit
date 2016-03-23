@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -17,13 +17,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v120_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -181,7 +181,6 @@
     <ClCompile Include="..\wx\src\common\list.cpp" />
     <ClCompile Include="..\wx\src\common\log.cpp" />
     <ClCompile Include="..\wx\src\common\longlong.cpp" />
-    <ClCompile Include="..\wx\src\common\memory.cpp" />
     <ClCompile Include="..\wx\src\common\mimecmn.cpp" />
     <ClCompile Include="..\wx\src\common\module.cpp" />
     <ClCompile Include="..\wx\src\common\msgout.cpp" />
@@ -200,10 +199,8 @@
     <ClCompile Include="..\wx\src\common\stream.cpp" />
     <ClCompile Include="..\wx\src\common\string.cpp" />
     <ClCompile Include="..\wx\src\common\stringimpl.cpp" />
-    <ClCompile Include="..\wx\src\common\stringops.cpp" />
     <ClCompile Include="..\wx\src\common\strvararg.cpp" />
     <ClCompile Include="..\wx\src\common\sysopt.cpp" />
-    <ClCompile Include="..\wx\src\common\tarstrm.cpp" />
     <ClCompile Include="..\wx\src\common\textbuf.cpp" />
     <ClCompile Include="..\wx\src\common\textfile.cpp" />
     <ClCompile Include="..\wx\src\common\threadinfo.cpp" />
@@ -220,11 +217,7 @@
     <ClCompile Include="..\wx\src\common\variant.cpp" />
     <ClCompile Include="..\wx\src\common\wfstream.cpp" />
     <ClCompile Include="..\wx\src\common\wxcrt.cpp" />
-    <ClCompile Include="..\wx\src\common\wxprintf.cpp" />
     <ClCompile Include="..\wx\src\common\xlocale.cpp" />
-    <ClCompile Include="..\wx\src\common\xti.cpp" />
-    <ClCompile Include="..\wx\src\common\xtistrm.cpp" />
-    <ClCompile Include="..\wx\src\common\zipstrm.cpp" />
     <ClCompile Include="..\wx\src\common\zstream.cpp" />
     <ClCompile Include="..\wx\src\msw\basemsw.cpp" />
     <ClCompile Include="..\wx\src\msw\crashrpt.cpp" />
@@ -234,7 +227,12 @@
     <ClCompile Include="..\wx\src\msw\dlmsw.cpp" />
     <ClCompile Include="..\wx\src\msw\evtloopconsole.cpp" />
     <ClCompile Include="..\wx\src\msw\fswatcher.cpp" />
-    <ClCompile Include="..\wx\src\msw\main.cpp" />
+    <ClCompile Include="..\wx\src\msw\main.cpp">
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Async</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\wx\src\msw\mimetype.cpp" />
     <ClCompile Include="..\wx\src\msw\mslu.cpp" />
     <ClCompile Include="..\wx\src\msw\power.cpp" />
@@ -243,7 +241,12 @@
     <ClCompile Include="..\wx\src\msw\snglinst.cpp" />
     <ClCompile Include="..\wx\src\msw\stackwalk.cpp" />
     <ClCompile Include="..\wx\src\msw\stdpaths.cpp" />
-    <ClCompile Include="..\wx\src\msw\thread.cpp" />
+    <ClCompile Include="..\wx\src\msw\thread.cpp">
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Async</ExceptionHandling>
+      <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Async</ExceptionHandling>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\wx\src\msw\timer.cpp" />
     <ClCompile Include="..\wx\src\msw\utils.cpp" />
     <ClCompile Include="..\wx\src\msw\utilsexc.cpp" />

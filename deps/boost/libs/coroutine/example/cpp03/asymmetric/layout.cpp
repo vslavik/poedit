@@ -67,5 +67,7 @@ int main(int argc, char *argv[])
 
     std::copy(boost::begin(words), boost::end(words), boost::begin(writer));
 
-    return 0;
+    std::cout << "\nDone" << std::endl;
+
+    return EXIT_SUCCESS;
 }

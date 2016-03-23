@@ -10,7 +10,7 @@
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
-#pragma warning(disable:4127)
+#pragma warning(disable:4127 6326)
 #endif
 
 namespace boost{ namespace multiprecision{ namespace detail{
@@ -314,7 +314,7 @@ typename enable_if_c<is_number<To>::value || is_floating_point<To>::value>::type
    if(shift > 0)
       num <<= shift;
    else if(shift < 0)
-      denom <<= std::abs(shift);
+      denom <<= boost::multiprecision::detail::unsigned_abs(shift);
    Integer q, r;
    divide_qr(num, denom, q, r);
    int q_bits = msb(q);
@@ -392,7 +392,7 @@ template <class To, class From>
 void generic_interconvert_float2rational(To& to, const From& from, const mpl::int_<2>& /*radix*/)
 {
    typedef typename mpl::front<typename To::unsigned_types>::type ui_type;
-   static const int shift = std::numeric_limits<long long>::digits;
+   static const int shift = std::numeric_limits<boost::long_long_type>::digits;
    typename From::exponent_type e;
    typename component_type<number<To> >::type num, denom;
    number<From> val(from);
@@ -401,7 +401,7 @@ void generic_interconvert_float2rational(To& to, const From& from, const mpl::in
    {
       val = ldexp(val, shift);
       e -= shift;
-      long long ll = boost::math::lltrunc(val);
+      boost::long_long_type ll = boost::math::lltrunc(val);
       val -= ll;
       num <<= shift;
       num += ll;
@@ -430,7 +430,7 @@ void generic_interconvert_float2rational(To& to, const From& from, const mpl::in
    val = scalbn(val, -e);
    while(val)
    {
-      long long ll = boost::math::lltrunc(val);
+      boost::long_long_type ll = boost::math::lltrunc(val);
       val -= ll;
       val = scalbn(val, 1);
       num *= Radix;

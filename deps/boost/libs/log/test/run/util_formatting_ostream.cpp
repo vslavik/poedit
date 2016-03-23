@@ -18,7 +18,9 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 #include <algorithm>
+#include <boost/config.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/utility/string_ref.hpp>
 #include <boost/log/utility/formatting_ostream.hpp>
@@ -121,6 +123,20 @@ struct test_impl
             BOOST_CHECK(equal_strings(strm_fmt.str(), strm_correct.str()));
         }
     }
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    template< typename StringT >
+    static void rvalue_stream()
+    {
+        string_type str_fmt;
+        formatting_ostream_type(str_fmt) << strings::abc() << std::setw(8) << (StringT)strings::abcd() << strings::ABC() << std::flush;
+
+        ostream_type strm_correct;
+        strm_correct << strings::abc() << std::setw(8) << (StringT)strings::abcd() << strings::ABC();
+
+        BOOST_CHECK(equal_strings(str_fmt, strm_correct.str()));
+    }
+#endif
 };
 
 } // namespace
@@ -152,6 +168,131 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(alignment, CharT, char_types)
     test::BOOST_NESTED_TEMPLATE alignment< boost::basic_string_ref< CharT > >();
 }
 
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+// Test support for rvalue stream objects
+BOOST_AUTO_TEST_CASE_TEMPLATE(rvalue_stream, CharT, char_types)
+{
+    typedef test_impl< CharT > test;
+    test::BOOST_NESTED_TEMPLATE rvalue_stream< const CharT* >();
+    test::BOOST_NESTED_TEMPLATE rvalue_stream< typename test::string_type >();
+    test::BOOST_NESTED_TEMPLATE rvalue_stream< boost::basic_string_ref< CharT > >();
+}
+#endif
+
+namespace my_namespace {
+
+class A {};
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, A const&)
+{
+    strm << "A";
+    return strm;
+}
+
+class B {};
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, B&)
+{
+    strm << "B";
+    return strm;
+}
+
+class C {};
+template< typename CharT, typename TraitsT >
+inline std::basic_ostream< CharT, TraitsT >& operator<< (std::basic_ostream< CharT, TraitsT >& strm, C const&)
+{
+    strm << "C";
+    return strm;
+}
+
+} // namespace my_namespace
+
+// Test operator forwarding
+BOOST_AUTO_TEST_CASE_TEMPLATE(operator_forwarding, CharT, char_types)
+{
+    typedef CharT char_type;
+    typedef std::basic_string< char_type > string_type;
+    typedef std::basic_ostringstream< char_type > ostream_type;
+    typedef logging::basic_formatting_ostream< char_type > formatting_ostream_type;
+
+    string_type str_fmt;
+    formatting_ostream_type strm_fmt(str_fmt);
+
+    const my_namespace::A a = my_namespace::A(); // const lvalue
+    my_namespace::B b; // lvalue
+    strm_fmt << a << b << my_namespace::C(); // rvalue
+    strm_fmt.flush();
+
+    ostream_type strm_correct;
+    strm_correct << a << b << my_namespace::C();
+
+    BOOST_CHECK(equal_strings(strm_fmt.str(), strm_correct.str()));
+}
+
+namespace my_namespace2 {
+
+class A {};
+template< typename CharT, typename TraitsT, typename AllocatorT >
+inline logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& operator<< (logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, A const&)
+{
+    strm << "A";
+    return strm;
+}
+
+class B {};
+template< typename CharT, typename TraitsT, typename AllocatorT >
+inline logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& operator<< (logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, B&)
+{
+    strm << "B";
+    return strm;
+}
+
+class C {};
+template< typename CharT, typename TraitsT, typename AllocatorT >
+inline logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& operator<< (logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm, C const&)
+{
+    strm << "C";
+    return strm;
+}
+
+class D {};
+template< typename CharT, typename TraitsT, typename AllocatorT >
+inline logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& operator<< (logging::basic_formatting_ostream< CharT, TraitsT, AllocatorT >& strm,
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+    D&&
+#else
+    D const&
+#endif
+    )
+{
+    strm << "D";
+    return strm;
+}
+
+} // namespace my_namespace2
+
+// Test operator overriding
+BOOST_AUTO_TEST_CASE_TEMPLATE(operator_overriding, CharT, char_types)
+{
+    typedef CharT char_type;
+    typedef std::basic_string< char_type > string_type;
+    typedef std::basic_ostringstream< char_type > ostream_type;
+    typedef logging::basic_formatting_ostream< char_type > formatting_ostream_type;
+
+    string_type str_fmt;
+    formatting_ostream_type strm_fmt(str_fmt);
+
+    const my_namespace2::A a = my_namespace2::A(); // const lvalue
+    my_namespace2::B b; // lvalue
+    strm_fmt << a << b << my_namespace2::C() << my_namespace2::D(); // rvalue
+    strm_fmt.flush();
+
+    ostream_type strm_correct;
+    strm_correct << "ABCD";
+
+    BOOST_CHECK(equal_strings(strm_fmt.str(), strm_correct.str()));
+}
+
 #if defined(BOOST_LOG_USE_CHAR) && defined(BOOST_LOG_USE_WCHAR_T)
 
 namespace {
@@ -172,13 +313,38 @@ void test_narrowing_code_conversion()
 {
     std::locale loc(std::locale::classic(), new utf8_codecvt_facet());
 
-    std::string str_fmt;
-    logging::formatting_ostream strm_fmt(str_fmt);
-    strm_fmt.imbue(loc);
-    strm_fmt << (StringT)wide_chars;
-    strm_fmt.flush();
+    // Test rvalues
+    {
+        std::string str_fmt;
+        logging::formatting_ostream strm_fmt(str_fmt);
+        strm_fmt.imbue(loc);
+        strm_fmt << (StringT)wide_chars;
+        strm_fmt.flush();
 
-    BOOST_CHECK(equal_strings(str_fmt, std::string(narrow_chars)));
+        BOOST_CHECK(equal_strings(str_fmt, std::string(narrow_chars)));
+    }
+    // Test lvalues
+    {
+        std::string str_fmt;
+        logging::formatting_ostream strm_fmt(str_fmt);
+        strm_fmt.imbue(loc);
+        StringT wstr = StringT(wide_chars);
+        strm_fmt << wstr;
+        strm_fmt.flush();
+
+        BOOST_CHECK(equal_strings(str_fmt, std::string(narrow_chars)));
+    }
+    // Test const lvalues
+    {
+        std::string str_fmt;
+        logging::formatting_ostream strm_fmt(str_fmt);
+        strm_fmt.imbue(loc);
+        const StringT wstr = StringT(wide_chars);
+        strm_fmt << wstr;
+        strm_fmt.flush();
+
+        BOOST_CHECK(equal_strings(str_fmt, std::string(narrow_chars)));
+    }
 }
 
 template< typename StringT >
@@ -186,13 +352,38 @@ void test_widening_code_conversion()
 {
     std::locale loc(std::locale::classic(), new utf8_codecvt_facet());
 
-    std::wstring str_fmt;
-    logging::wformatting_ostream strm_fmt(str_fmt);
-    strm_fmt.imbue(loc);
-    strm_fmt << (StringT)narrow_chars;
-    strm_fmt.flush();
+    // Test rvalues
+    {
+        std::wstring str_fmt;
+        logging::wformatting_ostream strm_fmt(str_fmt);
+        strm_fmt.imbue(loc);
+        strm_fmt << (StringT)narrow_chars;
+        strm_fmt.flush();
 
-    BOOST_CHECK(equal_strings(str_fmt, std::wstring(wide_chars)));
+        BOOST_CHECK(equal_strings(str_fmt, std::wstring(wide_chars)));
+    }
+    // Test lvalues
+    {
+        std::wstring str_fmt;
+        logging::wformatting_ostream strm_fmt(str_fmt);
+        strm_fmt.imbue(loc);
+        StringT str = StringT(narrow_chars);
+        strm_fmt << str;
+        strm_fmt.flush();
+
+        BOOST_CHECK(equal_strings(str_fmt, std::wstring(wide_chars)));
+    }
+    // Test const lvalues
+    {
+        std::wstring str_fmt;
+        logging::wformatting_ostream strm_fmt(str_fmt);
+        strm_fmt.imbue(loc);
+        const StringT str = StringT(narrow_chars);
+        strm_fmt << str;
+        strm_fmt.flush();
+
+        BOOST_CHECK(equal_strings(str_fmt, std::wstring(wide_chars)));
+    }
 }
 
 } // namespace

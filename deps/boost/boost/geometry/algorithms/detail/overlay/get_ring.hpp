@@ -10,9 +10,9 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_GET_RING_HPP
 
 
-#include <boost/assert.hpp>
 #include <boost/range.hpp>
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/exterior_ring.hpp>
 #include <boost/geometry/core/interior_rings.hpp>
 #include <boost/geometry/core/ring_type.hpp>
@@ -82,7 +82,7 @@ struct get_ring<polygon_tag>
                 ring_identifier const& id,
                 Polygon const& polygon)
     {
-        BOOST_ASSERT
+        BOOST_GEOMETRY_ASSERT
             (
                 id.ring_index >= -1
                 && id.ring_index < int(boost::size(interior_rings(polygon)))
@@ -102,7 +102,7 @@ struct get_ring<multi_polygon_tag>
                 ring_identifier const& id,
                 MultiPolygon const& multi_polygon)
     {
-        BOOST_ASSERT
+        BOOST_GEOMETRY_ASSERT
             (
                 id.multi_index >= 0
                 && id.multi_index < int(boost::size(multi_polygon))

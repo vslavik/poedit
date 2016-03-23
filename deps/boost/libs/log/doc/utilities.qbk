@@ -23,6 +23,8 @@ String literals support interface similar to STL strings, except for string modi
 
 [section:type_info_wrapper Type information wrapper]
 
+[note This component is deprecated and will be removed in future releases. __boost_type_index__ is recommended as a replacement.]
+
     #include <``[boost_log_utility_type_info_wrapper_hpp]``>
 
 The language support for run time type information is essential for the library. But partially because of limitations that the C++ Standard imposes on this feature, partially because of differences of implementation of different compilers, there was a need for a lightweight wrapper around the `std::type_info` class to fill the gaps. The table below briefly shows the differences between the `std::type_info` and [class_log_type_info_wrapper] classes.

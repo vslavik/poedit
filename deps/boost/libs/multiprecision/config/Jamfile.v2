@@ -40,16 +40,31 @@ lib gmp ;
 lib mpfr ;
 lib mpfi ;
 lib quadmath ;
+lib tommath ;
 
-exe has_gmp : has_gmp.cpp gmp :
-      <include>$(gmp_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx ;
-exe has_mpfr : has_mpfr.cpp mpfr gmp :
-      <include>$(mpfr_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx <include>$(gmp_path) ;
-exe has_mpfi : has_mpfi.cpp mpfi mpfr gmp :
-      <include>$(mpfr_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx <include>$(gmp_path) ;
-obj has_tommath : has_tommath.cpp :
-      <include>$(tommath_path) ;
-run has_float128.cpp quadmath : : : : has_float128 ;
+actions mp_simple_run_action
+{
+      $(>) > $(<)
+}
+
+rule mp-run-simple ( sources + : args * : input-files * : requirements * : target-name )
+{
+   exe $(target-name)_exe : $(sources) : $(requirements) ;
+   explicit $(target-name)_exe ;
+   make $(target-name).output : $(target-name)_exe : @mp_simple_run_action ;
+   explicit $(target-name).output ;
+   alias $(target-name) : $(target-name).output ;
+}
+
+mp-run-simple has_gmp.cpp gmp : : :
+      <include>$(gmp_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx : has_gmp ;
+mp-run-simple has_mpfr.cpp mpfr gmp : : :
+      <include>$(mpfr_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx <include>$(gmp_path) : has_mpfr ;
+mp-run-simple has_mpfi.cpp mpfi mpfr gmp : : :
+      <include>$(mpfr_path) <include>$(gmp_path)/mpfr <include>$(gmp_path)/gmpfrxx <include>$(gmp_path) : has_mpfi ;
+mp-run-simple has_tommath.cpp tommath : : :
+      <include>$(tommath_path) : has_tommath ;
+mp-run-simple has_float128.cpp quadmath : : : : has_float128 ;
 exe has_intel_quad : has_intel_quad.cpp : <cxxflags>-Qoption,cpp,--extended_float_type ;
 
 explicit has_gmp ;
@@ -58,7 +73,6 @@ explicit has_mpfi ;
 explicit has_tommath ;
 explicit has_float128 ;
 explicit has_intel_quad ;
-
 
 
 

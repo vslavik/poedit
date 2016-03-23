@@ -159,13 +159,13 @@ inline void set_throw_on_copy          ( X const* x ) { X::throw_on_copy = true 
 inline void set_throw_on_assign        ( X const* x ) { X::throw_on_assign = true  ; }
 inline void reset_throw_on_copy        ( X const* x ) { X::throw_on_copy = false ; }
 inline void reset_throw_on_assign      ( X const* x ) { X::throw_on_assign = false ; }
-inline void check_is_pending_copy      ( X const* x ) { BOOST_CHECK( X::pending_copy ) ; }
-inline void check_is_pending_dtor      ( X const* x ) { BOOST_CHECK( X::pending_dtor ) ; }
-inline void check_is_pending_assign    ( X const* x ) { BOOST_CHECK( X::pending_assign ) ; }
-inline void check_is_not_pending_copy  ( X const* x ) { BOOST_CHECK( !X::pending_copy ) ; }
-inline void check_is_not_pending_dtor  ( X const* x ) { BOOST_CHECK( !X::pending_dtor ) ; }
-inline void check_is_not_pending_assign( X const* x ) { BOOST_CHECK( !X::pending_assign ) ; }
-inline void check_instance_count       ( int c, X const* x ) { BOOST_CHECK( X::count == c ) ; }
+inline void check_is_pending_copy      ( X const* x ) { BOOST_TEST( X::pending_copy ) ; }
+inline void check_is_pending_dtor      ( X const* x ) { BOOST_TEST( X::pending_dtor ) ; }
+inline void check_is_pending_assign    ( X const* x ) { BOOST_TEST( X::pending_assign ) ; }
+inline void check_is_not_pending_copy  ( X const* x ) { BOOST_TEST( !X::pending_copy ) ; }
+inline void check_is_not_pending_dtor  ( X const* x ) { BOOST_TEST( !X::pending_dtor ) ; }
+inline void check_is_not_pending_assign( X const* x ) { BOOST_TEST( !X::pending_assign ) ; }
+inline void check_instance_count       ( int c, X const* x ) { BOOST_TEST( X::count == c ) ; }
 inline int  get_instance_count         ( X const* x ) { return X::count ; }
 
 inline void set_pending_copy           (...) {}
@@ -189,21 +189,21 @@ template<class T>
 inline void check_uninitialized_const ( optional<T> const& opt )
 {
 #ifndef BOOST_OPTIONAL_NO_NULL_COMPARE
-  BOOST_CHECK( opt == 0 ) ;
+  BOOST_TEST( opt == 0 ) ;
 #endif
-  BOOST_CHECK( !opt ) ;
-  BOOST_CHECK( !get_pointer(opt) ) ;
-  BOOST_CHECK( !opt.get_ptr() ) ;
+  BOOST_TEST( !opt ) ;
+  BOOST_TEST( !get_pointer(opt) ) ;
+  BOOST_TEST( !opt.get_ptr() ) ;
 }
 template<class T>
 inline void check_uninitialized ( optional<T>& opt )
 {
 #ifndef BOOST_OPTIONAL_NO_NULL_COMPARE
-  BOOST_CHECK( opt == 0 ) ;
+  BOOST_TEST( opt == 0 ) ;
 #endif
-  BOOST_CHECK( !opt ) ;
-  BOOST_CHECK( !get_pointer(opt) ) ;
-  BOOST_CHECK( !opt.get_ptr() ) ;
+  BOOST_TEST( !opt ) ;
+  BOOST_TEST( !get_pointer(opt) ) ;
+  BOOST_TEST( !opt.get_ptr() ) ;
 
   check_uninitialized_const(opt);
 }
@@ -211,29 +211,29 @@ inline void check_uninitialized ( optional<T>& opt )
 template<class T>
 inline void check_initialized_const ( optional<T> const& opt )
 {
-  BOOST_CHECK( opt ) ;
+  BOOST_TEST( opt ) ;
 
 #ifndef BOOST_OPTIONAL_NO_NULL_COMPARE
-  BOOST_CHECK( opt != 0 ) ;
+  BOOST_TEST( opt != 0 ) ;
 #endif
 
-  BOOST_CHECK ( !!opt ) ;
-  BOOST_CHECK ( get_pointer(opt) ) ;
-  BOOST_CHECK ( opt.get_ptr() ) ;
+  BOOST_TEST ( !!opt ) ;
+  BOOST_TEST ( get_pointer(opt) ) ;
+  BOOST_TEST ( opt.get_ptr() ) ;
 }
 
 template<class T>
 inline void check_initialized ( optional<T>& opt )
 {
-  BOOST_CHECK( opt ) ;
+  BOOST_TEST( opt ) ;
 
 #ifndef BOOST_OPTIONAL_NO_NULL_COMPARE
-  BOOST_CHECK( opt != 0 ) ;
+  BOOST_TEST( opt != 0 ) ;
 #endif
 
-  BOOST_CHECK ( !!opt ) ;
-  BOOST_CHECK ( get_pointer(opt) ) ;
-  BOOST_CHECK ( opt.get_ptr() ) ;
+  BOOST_TEST ( !!opt ) ;
+  BOOST_TEST ( get_pointer(opt) ) ;
+  BOOST_TEST ( opt.get_ptr() ) ;
 
   check_initialized_const(opt);
 }
@@ -241,12 +241,12 @@ inline void check_initialized ( optional<T>& opt )
 template<class T>
 inline void check_value_const ( optional<T> const& opt, T const& v, T const& z )
 {
-  BOOST_CHECK( *opt == v ) ;
-  BOOST_CHECK( *opt != z ) ;
-  BOOST_CHECK( opt.get() == v ) ;
-  BOOST_CHECK( opt.get() != z ) ;
-  BOOST_CHECK( (*(opt.operator->()) == v) ) ;
-  BOOST_CHECK( *get_pointer(opt) == v ) ;
+  BOOST_TEST( *opt == v ) ;
+  BOOST_TEST( *opt != z ) ;
+  BOOST_TEST( opt.get() == v ) ;
+  BOOST_TEST( opt.get() != z ) ;
+  BOOST_TEST( (*(opt.operator->()) == v) ) ;
+  BOOST_TEST( *get_pointer(opt) == v ) ;
 }
 
 template<class T>
@@ -258,12 +258,12 @@ inline void check_value ( optional<T>& opt, T const& v, T const& z )
   reset_throw_on_copy( ARG(T) ) ;
 #endif
 
-  BOOST_CHECK( *opt == v ) ;
-  BOOST_CHECK( *opt != z ) ;
-  BOOST_CHECK( opt.get() == v ) ;
-  BOOST_CHECK( opt.get() != z ) ;
-  BOOST_CHECK( (*(opt.operator->()) == v) ) ;
-  BOOST_CHECK( *get_pointer(opt) == v ) ;
+  BOOST_TEST( *opt == v ) ;
+  BOOST_TEST( *opt != z ) ;
+  BOOST_TEST( opt.get() == v ) ;
+  BOOST_TEST( opt.get() != z ) ;
+  BOOST_TEST( (*(opt.operator->()) == v) ) ;
+  BOOST_TEST( *get_pointer(opt) == v ) ;
 
   check_value_const(opt,v,z);
 }

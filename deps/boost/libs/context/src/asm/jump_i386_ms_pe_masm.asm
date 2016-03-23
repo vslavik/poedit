@@ -24,7 +24,7 @@
 .model flat, c
 .code
 
-jump_fcontext PROC EXPORT
+jump_fcontext PROC BOOST_CONTEXT_EXPORT
     ; fourth arg of jump_fcontext() == flag indicating preserving FPU
     mov  ecx, [esp+010h]
 

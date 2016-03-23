@@ -156,7 +156,7 @@ semantics.
   [
     [`++r`]
     [`X&`]
-    [pre:\n`r` is dereferenceable;\npost:\n`r` is dereferenceable or\n`r` is past-the-end]
+    [pre:[br]`r` is dereferenceable;[br]post:[br]`r` is dereferenceable or[br]`r` is past-the-end]
   ]
   [
     [`a == b`]
@@ -227,7 +227,7 @@ the stated semantics.
   [
     [`--r`]
     [`X&`]
-    [pre: there exists `s` such that `r == ++s`.\n post: `s` is dereferenceable. `--(++r) == r`. `--r == --s` implies `r == s`. `&r == &--r`.]
+    [pre: there exists `s` such that `r == ++s`.[br] post: `s` is dereferenceable. `--(++r) == r`. `--r == --s` implies `r == s`. `&r == &--r`.]
   ]
   [
     [`r--`]

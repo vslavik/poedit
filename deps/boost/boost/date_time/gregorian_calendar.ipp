@@ -79,7 +79,7 @@ namespace date_time {
     unsigned short y = static_cast<unsigned short>(ymd.year + 4800 - a);
     unsigned short m = static_cast<unsigned short>(ymd.month + 12*a - 3);
     unsigned long  d = ymd.day + ((153*m + 2)/5) + 365*y + (y/4) - (y/100) + (y/400) - 32045;
-    return static_cast<date_int_type_>(d);
+    return static_cast<date_int_type>(d);
   }
 
   //! Convert a year-month-day into the julian day number

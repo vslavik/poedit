@@ -21,7 +21,6 @@
 #include <boost/geometry/policies/compare.hpp>
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/reverse.hpp>
-#include <boost/geometry/multi/algorithms/reverse.hpp>
 
 #include "test_get_turns_ll_invariance.hpp"
 
@@ -40,18 +39,24 @@ struct ls_less
     bool operator()(Linestring1 const& linestring1,
                     Linestring2 const& linestring2) const
     {
-        if ( boost::size(linestring1) != boost::size(linestring2) )
+        if (boost::size(linestring1) != boost::size(linestring2))
+        {
             return boost::size(linestring1) < boost::size(linestring2);
+        }
 
         Iterator1 it1 = boost::begin(linestring1);
         Iterator2 it2 = boost::begin(linestring2);
         point_less less;
         for (; it1 != boost::end(linestring1); ++it1, ++it2)
         {
-            if ( less(*it1, *it2) )
+            if (less(*it1, *it2))
+            {
                 return true;
-            if ( less(*it2, *it1) )
+            }
+            if (less(*it2, *it1))
+            {
                 return false;
+            }
         }
         return false;
     }
@@ -66,8 +71,8 @@ struct ls_equal
     {
         ls_less<Linestring1, Linestring2> less;
 
-        return !less(linestring1, linestring2)
-            && !less(linestring2, linestring1);
+        return ! less(linestring1, linestring2)
+            && ! less(linestring2, linestring1);
     }    
 };
 
@@ -195,7 +200,7 @@ struct multilinestring_equals
         unique<MultiLinestring1, EnableUnique>()(mls1, tolerance);
         unique<MultiLinestring2, EnableUnique>()(mls2, tolerance);
 
-        if ( boost::size(mls1) != boost::size(mls2) )
+        if (boost::size(mls1) != boost::size(mls2))
         {
             return false;
         }
@@ -204,7 +209,7 @@ struct multilinestring_equals
         ls2_iterator it2 = boost::begin(mls2);
         for (; it1 != boost::end(mls1); ++it1, ++it2)
         {
-            if ( boost::size(*it1) != boost::size(*it2) )
+            if (boost::size(*it1) != boost::size(*it2))
             {
                 return false;
             }
@@ -249,7 +254,7 @@ private:
 
         for (; it != boost::end(multilinestring); ++it)
         {
-            if ( boost::size(*it) == 1 )
+            if (boost::size(*it) == 1)
             {
                 typename boost::range_value<MultiLinestring>::type linestring;
                 isolated_point_to_segment(*it, std::back_inserter(linestring));
@@ -271,25 +276,25 @@ private:
     {
         typedef multilinestring_equals<true> mls_equals;
 
-        if ( mls_equals::apply(multilinestring1, multilinestring2, tolerance) )
+        if (mls_equals::apply(multilinestring1, multilinestring2, tolerance))
         {
             return true;
         }
 
         MultiLinestring1 reverse_multilinestring1 = multilinestring1;
         bg::reverse(reverse_multilinestring1);
-        if ( mls_equals::apply(reverse_multilinestring1,
-                               multilinestring2,
-                               tolerance) )
+        if (mls_equals::apply(reverse_multilinestring1,
+                              multilinestring2,
+                              tolerance))
         {
             return true;
         }
 
         MultiLinestring2 reverse_multilinestring2 = multilinestring2;
         bg::reverse(reverse_multilinestring2);
-        if ( mls_equals::apply(multilinestring1,
-                               reverse_multilinestring2,
-                               tolerance) )
+        if (mls_equals::apply(multilinestring1,
+                              reverse_multilinestring2,
+                              tolerance))
         {
             return true;
         }

@@ -28,7 +28,7 @@
           const &amp;, OutIter)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp127103824"></a>
+            <a class="indexterm" name="idm44837169941600"></a>
 Finds values meeting passed predicates e.g. nearest to some Point and/or
             intersecting some Box.
           </p>
@@ -226,6 +226,27 @@ Finds values meeting passed predicates e.g. nearest to some Point and/or
 <span class="identifier">tree</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">overlaps</span><span class="special">(</span><span class="identifier">box</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">satisfies</span><span class="special">(</span><span class="identifier">my_fun</span><span class="special">),</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_inserter</span><span class="special">(</span><span class="identifier">result</span><span class="special">));</span>
 <span class="comment">// return 5 elements nearest to pt and elements are intersecting box</span>
 <span class="identifier">tree</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">5</span><span class="special">)</span> <span class="special">&amp;&amp;</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">intersects</span><span class="special">(</span><span class="identifier">box</span><span class="special">),</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">back_inserter</span><span class="special">(</span><span class="identifier">result</span><span class="special">));</span>
+
+<span class="comment">// For each found value do_something (it is a type of function object)</span>
+<span class="identifier">tree</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">intersects</span><span class="special">(</span><span class="identifier">box</span><span class="special">),</span>
+           <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_function_output_iterator</span><span class="special">(</span><span class="identifier">do_something</span><span class="special">()));</span>
+
+<span class="comment">// For each value stored in the rtree do_something</span>
+<span class="comment">// always_true is a type of function object always returning true</span>
+<span class="identifier">tree</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">satisfies</span><span class="special">(</span><span class="identifier">always_true</span><span class="special">()),</span>
+           <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_function_output_iterator</span><span class="special">(</span><span class="identifier">do_something</span><span class="special">()));</span>
+
+<span class="comment">// C++11 (lambda expression)</span>
+<span class="identifier">tree</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">intersects</span><span class="special">(</span><span class="identifier">box</span><span class="special">),</span>
+           <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_function_output_iterator</span><span class="special">([](</span><span class="identifier">value_type</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">){</span>
+               <span class="comment">// do something</span>
+           <span class="special">}));</span>
+
+<span class="comment">// C++14 (generic lambda expression)</span>
+<span class="identifier">tree</span><span class="special">.</span><span class="identifier">query</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">intersects</span><span class="special">(</span><span class="identifier">box</span><span class="special">),</span>
+           <span class="identifier">boost</span><span class="special">::</span><span class="identifier">make_function_output_iterator</span><span class="special">([](</span><span class="keyword">auto</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">){</span>
+               <span class="comment">// do something</span>
+           <span class="special">}));</span>
 </pre>
 <p>
           </p>

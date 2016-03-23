@@ -17,8 +17,10 @@
 %token _RBRACKET_t
 %token ACTIONS_t
 %token BIND_t
+%token BREAK_t
 %token CASE_t
 %token CLASS_t
+%token CONTINUE_t
 %token DEFAULT_t
 %token ELSE_t
 %token EXISTING_t
@@ -128,6 +130,9 @@
 # define psete( s,l,s1,f ) 	parse_make( PARSE_SETEXEC,l,P0,P0,s,s1,f )
 # define pswitch( l,r )   	parse_make( PARSE_SWITCH,l,r,P0,S0,S0,0 )
 # define pwhile( l,r )   	parse_make( PARSE_WHILE,l,r,P0,S0,S0,0 )
+# define preturn( l )       parse_make( PARSE_RETURN,l,P0,P0,S0,S0,0 )
+# define pbreak()           parse_make( PARSE_BREAK,P0,P0,P0,S0,S0,0 )
+# define pcontinue()        parse_make( PARSE_CONTINUE,P0,P0,P0,S0,S0,0 )
 
 # define pnode( l,r )    	parse_make( F0,l,r,P0,S0,S0,0 )
 # define psnode( s,l )     	parse_make( F0,l,P0,P0,s,S0,0 )
@@ -196,7 +201,11 @@ rule	: _LBRACE_t block _RBRACE_t
 	| arg ON_t list assign list _SEMIC_t
 		{ $$.parse = pset1( $1.parse, $3.parse, $5.parse, $4.number ); }
 	| RETURN_t list _SEMIC_t
-		{ $$.parse = $2.parse; }
+		{ $$.parse = preturn( $2.parse ); }
+    | BREAK_t _SEMIC_t
+        { $$.parse = pbreak(); }
+    | CONTINUE_t _SEMIC_t
+        { $$.parse = pcontinue(); }
 	| FOR_t local_opt ARG IN_t list _LBRACE_t block _RBRACE_t
 		{ $$.parse = pfor( $3.string, $5.parse, $7.parse, $2.number ); }
 	| SWITCH_t list _LBRACE_t cases _RBRACE_t

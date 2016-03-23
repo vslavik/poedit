@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -146,13 +147,13 @@
 </ul></div>
 <p>
       It is considered to be a bug to read or remove an element (e.g. by calling
-      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp36940624-bb">front()</a></code> or
-      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp37415056-bb">pop_back()</a></code>)
+      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713143282528-bb">front()</a></code> or
+      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713142808096-bb">pop_back()</a></code>)
       from an empty std container and from an empty <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       as well. The data consumer has to test if the container is not empty before
-      reading/removing from it by testing <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp37112832-bb">empty()</a></code>.
+      reading/removing from it by testing <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713143110320-bb">empty()</a></code>.
       However, when reading from the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>,
-      there is an option to rely on the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp36919312-bb">at()</a></code>
+      there is an option to rely on the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713143303840-bb">at()</a></code>
       method which throws an exception when the index is out of range.
     </p>
 <h4>

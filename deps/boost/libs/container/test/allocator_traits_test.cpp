@@ -105,10 +105,10 @@ class ComplexAllocator
    typedef T value_type;
    typedef SimpleSmartPtr<T>                    pointer;
    typedef SimpleSmartPtr<const T>              const_pointer;
-   typedef typename boost::container::
-      container_detail::unvoid<T>::type &       reference;
-   typedef const typename boost::container::
-      container_detail::unvoid<T>::type &       const_reference;
+   typedef typename ::boost::container::
+      container_detail::unvoid_ref<T>::type     reference;
+   typedef typename ::boost::container::
+      container_detail::unvoid_ref<const T>::type     const_reference;
    typedef SimpleSmartPtr<void>                 void_pointer;
    typedef SimpleSmartPtr<const void>           const_void_pointer;
    typedef signed short                         difference_type;

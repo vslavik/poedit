@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -33,11 +34,11 @@
 
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Concept<span class="special">,</span> <span class="keyword">typename</span> Op<span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> U<span class="special">&gt;</span> 
-  <span class="keyword">bool</span> <span class="identifier">check_match</span><span class="special">(</span><span class="keyword">const</span> binding<span class="special">&lt;</span> <span class="identifier">Concept</span> <span class="special">&gt;</span> <span class="special">&amp;</span> binding<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Op</span> <span class="special">&amp;</span> f<span class="special">,</span> 
+  <span class="keyword">bool</span> <span class="identifier">check_match</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="binding.html" title="Class template binding">binding</a><span class="special">&lt;</span> <span class="identifier">Concept</span> <span class="special">&gt;</span> <span class="special">&amp;</span> binding<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Op</span> <span class="special">&amp;</span> f<span class="special">,</span> 
                    <span class="identifier">U</span> <span class="special">&amp;&amp;</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Op<span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> U<span class="special">&gt;</span> <span class="keyword">bool</span> <span class="identifier">check_match</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Op</span> <span class="special">&amp;</span> f<span class="special">,</span> <span class="identifier">U</span> <span class="special">&amp;&amp;</span><span class="special">...</span> args<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp473712256"></a><h2>Description</h2>
+<a name="idm45555079199344"></a><h2>Description</h2>
 <p>If <code class="computeroutput"><a class="link" href="relaxed.html" title="Struct relaxed">relaxed</a></code> is in <code class="computeroutput">Concept</code>, checks whether the arguments to <code class="computeroutput">f</code> match the types specified by <code class="computeroutput">binding</code>. If <code class="computeroutput"><a class="link" href="relaxed.html" title="Struct relaxed">relaxed</a></code> is not in <code class="computeroutput">Concept</code>, returns true. If <code class="computeroutput">binding</code> is not specified, it will be deduced from the arguments. </p>
 </div>
 </div>

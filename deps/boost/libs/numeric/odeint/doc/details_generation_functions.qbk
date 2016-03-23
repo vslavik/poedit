@@ -18,7 +18,8 @@ In the __tutorial we have learned how we can use the generation functions `make_
 
 [generation_functions_syntax_auto]
 
-The first two parameters are the absolute and the relative error tolerances and the third parameter is the stepper. In C++03 you can infer the type from the `result_of` mechanism:
+The first two parameters are the absolute and the relative error tolerances and the third parameter is the stepper. Additionally, a second version exists where additionally a maximal step size is supplied which ensures the the step size is not increased above this value.
+ In C++03 you can infer the type from the `result_of` mechanism:
 
 [generation_functions_syntax_result_of]
 

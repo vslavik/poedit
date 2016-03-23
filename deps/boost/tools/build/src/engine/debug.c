@@ -7,7 +7,7 @@
 
 #include "jam.h"
 #include "debug.h"
-
+#include "output.h"
 #include "hash.h"
 
 
@@ -125,7 +125,7 @@ static void dump_profile_entry( void * p_, void * ignored )
         profile_total.cumulative += p->net;
         profile_total.memory += p->memory;
     }
-    printf( "%10ld %12.6f %12.6f %12.8f %10ld %10ld %s\n", p->num_entries,
+    out_printf( "%10ld %12.6f %12.6f %12.8f %10ld %10ld %s\n", p->num_entries,
         cumulative, net, q, p->memory, mem_each, object_str( p->name ) );
 }
 
@@ -134,7 +134,7 @@ void profile_dump()
 {
     if ( profile_hash )
     {
-        printf( "%10s %12s %12s %12s %10s %10s %s\n", "--count--", "--gross--",
+        out_printf( "%10s %12s %12s %12s %10s %10s %s\n", "--count--", "--gross--",
             "--net--", "--each--", "--mem--", "--each--", "--name--" );
         hashenumerate( profile_hash, dump_profile_entry, 0 );
         profile_other.name = constant_other;

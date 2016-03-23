@@ -14,6 +14,7 @@
 #  pragma warning (disable : 4310) // cast truncates constant value
 #endif
 
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 using ::boost::math::concepts::real_concept;
 
@@ -139,33 +140,45 @@ void test_spots(RealType)
   );
 
   // Check some bad parameters to the distribution,
-  BOOST_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> igbad1(-1, 0), std::domain_error); // negative shape.
-  BOOST_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> igbad2(0, -1), std::domain_error); // negative scale.
-  BOOST_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> igbad2(-1, -1), std::domain_error); // negative scale and shape.
+#ifndef BOOST_NO_EXCEPTIONS
+  BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> igbad1(-1, 0), std::domain_error); // negative shape.
+  BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> igbad2(0, -1), std::domain_error); // negative scale.
+  BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> igbad2(-1, -1), std::domain_error); // negative scale and shape.
+#else
+  BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType>(-1, 0), std::domain_error); // negative shape.
+  BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType>(0, -1), std::domain_error); // negative scale.
+  BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType>(-1, -1), std::domain_error); // negative scale and shape.
+#endif
 
   inverse_gamma_distribution<RealType> ig21(2, 1);
 
   if(std::numeric_limits<RealType>::has_infinity)
   {
-    BOOST_CHECK_THROW(pdf(ig21, +std::numeric_limits<RealType>::infinity()), std::domain_error); // x = + infinity, pdf = 0
-    BOOST_CHECK_THROW(pdf(ig21, -std::numeric_limits<RealType>::infinity()),  std::domain_error); // x = - infinity, pdf = 0
-    BOOST_CHECK_THROW(cdf(ig21, +std::numeric_limits<RealType>::infinity()),std::domain_error ); // x = + infinity, cdf = 1
-    BOOST_CHECK_THROW(cdf(ig21, -std::numeric_limits<RealType>::infinity()), std::domain_error); // x = - infinity, cdf = 0
-    BOOST_CHECK_THROW(cdf(complement(ig21, +std::numeric_limits<RealType>::infinity())), std::domain_error); // x = + infinity, c cdf = 0
-    BOOST_CHECK_THROW(cdf(complement(ig21, -std::numeric_limits<RealType>::infinity())), std::domain_error); // x = - infinity, c cdf = 1
-    BOOST_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> nbad1(std::numeric_limits<RealType>::infinity(), static_cast<RealType>(1)), std::domain_error); // +infinite mean
-    BOOST_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> nbad1(-std::numeric_limits<RealType>::infinity(),  static_cast<RealType>(1)), std::domain_error); // -infinite mean
-    BOOST_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> nbad1(static_cast<RealType>(0), std::numeric_limits<RealType>::infinity()), std::domain_error); // infinite sd
+    BOOST_MATH_CHECK_THROW(pdf(ig21, +std::numeric_limits<RealType>::infinity()), std::domain_error); // x = + infinity, pdf = 0
+    BOOST_MATH_CHECK_THROW(pdf(ig21, -std::numeric_limits<RealType>::infinity()),  std::domain_error); // x = - infinity, pdf = 0
+    BOOST_MATH_CHECK_THROW(cdf(ig21, +std::numeric_limits<RealType>::infinity()),std::domain_error ); // x = + infinity, cdf = 1
+    BOOST_MATH_CHECK_THROW(cdf(ig21, -std::numeric_limits<RealType>::infinity()), std::domain_error); // x = - infinity, cdf = 0
+    BOOST_MATH_CHECK_THROW(cdf(complement(ig21, +std::numeric_limits<RealType>::infinity())), std::domain_error); // x = + infinity, c cdf = 0
+    BOOST_MATH_CHECK_THROW(cdf(complement(ig21, -std::numeric_limits<RealType>::infinity())), std::domain_error); // x = - infinity, c cdf = 1
+#ifndef BOOST_NO_EXCEPTIONS
+    BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> nbad1(std::numeric_limits<RealType>::infinity(), static_cast<RealType>(1)), std::domain_error); // +infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> nbad1(-std::numeric_limits<RealType>::infinity(),  static_cast<RealType>(1)), std::domain_error); // -infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType> nbad1(static_cast<RealType>(0), std::numeric_limits<RealType>::infinity()), std::domain_error); // infinite sd
+#else
+    BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType>(std::numeric_limits<RealType>::infinity(), static_cast<RealType>(1)), std::domain_error); // +infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType>(-std::numeric_limits<RealType>::infinity(),  static_cast<RealType>(1)), std::domain_error); // -infinite mean
+    BOOST_MATH_CHECK_THROW(boost::math::inverse_gamma_distribution<RealType>(static_cast<RealType>(0), std::numeric_limits<RealType>::infinity()), std::domain_error); // infinite sd
+#endif
   }
 
   if (std::numeric_limits<RealType>::has_quiet_NaN)
   {
     // No longer allow x to be NaN, then these tests should throw.
-    BOOST_CHECK_THROW(pdf(ig21, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
-    BOOST_CHECK_THROW(cdf(ig21, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
-    BOOST_CHECK_THROW(cdf(complement(ig21, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // x = + infinity
-    BOOST_CHECK_THROW(quantile(ig21, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
-    BOOST_CHECK_THROW(quantile(complement(ig21, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
+    BOOST_MATH_CHECK_THROW(pdf(ig21, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
+    BOOST_MATH_CHECK_THROW(cdf(ig21, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // x = NaN
+    BOOST_MATH_CHECK_THROW(cdf(complement(ig21, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // x = + infinity
+    BOOST_MATH_CHECK_THROW(quantile(ig21, +std::numeric_limits<RealType>::quiet_NaN()), std::domain_error); // p = + infinity
+    BOOST_MATH_CHECK_THROW(quantile(complement(ig21, +std::numeric_limits<RealType>::quiet_NaN())), std::domain_error); // p = + infinity
   }
     // Spot check for pdf using 'naive pdf' function
   for(RealType x = 0.5; x < 5; x += 0.5)
@@ -265,62 +278,62 @@ void test_spots(RealType)
     cdf(complement(inverse_gamma_distribution<RealType>(3), static_cast<RealType>(0)))
     , static_cast<RealType>(1));
 
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     pdf(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(-1)), // shape negative.
     static_cast<RealType>(1)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     pdf(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(-1)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     cdf(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(-1)),
     static_cast<RealType>(1)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     cdf(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(-1)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     cdf(complement(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(-1)),
     static_cast<RealType>(1))), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     cdf(complement(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(-1))), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     quantile(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(-1)),
     static_cast<RealType>(0.5)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     quantile(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(-1)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     quantile(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(1.1)), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     quantile(complement(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(-1)),
     static_cast<RealType>(0.5))), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     quantile(complement(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(-1))), std::domain_error
     );
-  BOOST_CHECK_THROW(
+  BOOST_MATH_CHECK_THROW(
     quantile(complement(
     inverse_gamma_distribution<RealType>(static_cast<RealType>(8)),
     static_cast<RealType>(1.1))), std::domain_error
@@ -389,14 +402,14 @@ BOOST_AUTO_TEST_CASE( test_main )
 
     // Check throws from bad parameters.
   inverse_gamma ig051(0.5, 1.); // shape < 1, so wrong for mean.
-  BOOST_CHECK_THROW(mean(ig051), std::domain_error);
+  BOOST_MATH_CHECK_THROW(mean(ig051), std::domain_error);
   inverse_gamma ig191(1.9999, 1.); // shape < 2, so wrong for variance.
-  BOOST_CHECK_THROW(variance(ig191), std::domain_error);
+  BOOST_MATH_CHECK_THROW(variance(ig191), std::domain_error);
   inverse_gamma ig291(2.9999, 1.); // shape < 3, so wrong for skewness.
-  BOOST_CHECK_THROW(skewness(ig291), std::domain_error);
+  BOOST_MATH_CHECK_THROW(skewness(ig291), std::domain_error);
   inverse_gamma ig391(3.9999, 1.); // shape < 1, so wrong for kurtosis and kurtosis_excess.
-  BOOST_CHECK_THROW(kurtosis(ig391), std::domain_error);
-  BOOST_CHECK_THROW(kurtosis_excess(ig391), std::domain_error);
+  BOOST_MATH_CHECK_THROW(kurtosis(ig391), std::domain_error);
+  BOOST_MATH_CHECK_THROW(kurtosis_excess(ig391), std::domain_error);
 
   // Basic sanity-check spot values.
   // (Parameter value, arbitrarily zero, only communicates the floating point type).
@@ -411,7 +424,7 @@ BOOST_AUTO_TEST_CASE( test_main )
   std::cout << "<note>The long double tests have been disabled on this platform "
     "either because the long double overloads of the usual math functions are "
     "not available at all, or because they are too inaccurate for these tests "
-    "to pass.</note>" << std::cout;
+    "to pass.</note>" << std::endl;
 #endif
   
 } // BOOST_AUTO_TEST_CASE( test_main )

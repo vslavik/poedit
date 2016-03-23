@@ -3,6 +3,7 @@
 // Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -11,6 +12,8 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_IS_VALID_RING_HPP
 
 #include <deque>
+
+#include <boost/core/ignore_unused.hpp>
 
 #include <boost/geometry/core/closure.hpp>
 #include <boost/geometry/core/cs.hpp>
@@ -27,8 +30,9 @@
 #include <boost/geometry/algorithms/intersects.hpp>
 #include <boost/geometry/algorithms/validity_failure_type.hpp>
 #include <boost/geometry/algorithms/detail/num_distinct_consecutive_points.hpp>
-#include <boost/geometry/algorithms/detail/is_valid/has_spikes.hpp>
 #include <boost/geometry/algorithms/detail/is_valid/has_duplicates.hpp>
+#include <boost/geometry/algorithms/detail/is_valid/has_invalid_coordinate.hpp>
+#include <boost/geometry/algorithms/detail/is_valid/has_spikes.hpp>
 #include <boost/geometry/algorithms/detail/is_valid/has_valid_self_turns.hpp>
 
 #include <boost/geometry/strategies/area.hpp>
@@ -53,6 +57,8 @@ struct is_topologically_closed
     template <typename VisitPolicy>
     static inline bool apply(Ring const&, VisitPolicy& visitor)
     {
+        boost::ignore_unused(visitor);
+
         return visitor.template apply<no_failure>();
     }
 };
@@ -63,6 +69,8 @@ struct is_topologically_closed<Ring, closed>
     template <typename VisitPolicy>
     static inline bool apply(Ring const& ring, VisitPolicy& visitor)
     {
+        boost::ignore_unused(visitor);
+
         if (geometry::equals(range::front(ring), range::back(ring)))
         {
             return visitor.template apply<no_failure>();
@@ -112,6 +120,8 @@ struct is_properly_oriented
     template <typename VisitPolicy>
     static inline bool apply(Ring const& ring, VisitPolicy& visitor)
     {
+        boost::ignore_unused(visitor);
+
         typename ring_area_predicate
             <
                 area_result_type, IsInteriorRing
@@ -144,17 +154,23 @@ struct is_valid_ring
     static inline bool apply(Ring const& ring, VisitPolicy& visitor)
     {
         // return invalid if any of the following condition holds:
-        // (a) the ring's size is below the minimal one
-        // (b) the ring consists of at most two distinct points
-        // (c) the ring is not topologically closed
-        // (d) the ring has spikes
-        // (e) the ring has duplicate points (if AllowDuplicates is false)
-        // (f) the boundary of the ring has self-intersections
-        // (g) the order of the points is inconsistent with the defined order
+        // (a) the ring's point coordinates are not invalid (e.g., NaN)
+        // (b) the ring's size is below the minimal one
+        // (c) the ring consists of at most two distinct points
+        // (d) the ring is not topologically closed
+        // (e) the ring has spikes
+        // (f) the ring has duplicate points (if AllowDuplicates is false)
+        // (g) the boundary of the ring has self-intersections
+        // (h) the order of the points is inconsistent with the defined order
         //
         // Note: no need to check if the area is zero. If this is the
         // case, then the ring must have at least two spikes, which is
-        // checked by condition (c).
+        // checked by condition (d).
+
+        if (has_invalid_coordinate<Ring>::apply(ring, visitor))
+        {
+            return false;
+        }
 
         closure_selector const closure = geometry::closure<Ring>::value;
         typedef typename closeable_view<Ring const, closure>::type view_type;

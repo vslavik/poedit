@@ -35,6 +35,7 @@
 #include "search.h"
 #include "strings.h"
 #include "variable.h"
+#include "output.h"
 
 #include <assert.h>
 #include <stdarg.h>
@@ -78,7 +79,7 @@ LIST * evaluate_rule( RULE * rule, OBJECT * rulename, FRAME * frame )
         debug_compile( 1, buf, frame );
 
         lol_print( frame->args );
-        printf( "\n" );
+        out_printf( "\n" );
     }
 
     if ( rule->procedure && rule->module != prev_module )
@@ -218,15 +219,15 @@ static void debug_compile( int which, char const * s, FRAME * frame )
         i = ( level + 1 ) * 2;
         while ( i > 35 )
         {
-            fputs( indent, stdout );
+            out_puts( indent );
             i -= 35;
         }
 
-        printf( "%*.*s ", i, i, indent );
+        out_printf( "%*.*s ", i, i, indent );
     }
 
     if ( s )
-        printf( "%s ", s );
+        out_printf( "%s ", s );
 
     level += which;
 }

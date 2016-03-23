@@ -125,7 +125,7 @@ namespace impl_win {
             case information_facet:
                 return util::create_info(base,real_id_);
             case codepage_facet:
-                return util::create_codecvt(base,util::create_utf8_converter(),type);
+                return util::create_utf8_codecvt(base,type);
             default:
                 return base;
             }

@@ -118,9 +118,6 @@ For users using only Cartesian points, with floating point coordinates (double),
   etc. Using this headerfile the library seems to be a non-template library, so it is convenient for users that
   are not so into the template world.
 
-For users using multi-geometries:
-- \#include <boost/geometry/multi/multi.hpp>
-
 \section advanced_includes Advanced includes
 
 This section is for users who have their own geometries and want to use algorithms from the Boost.Geometry.

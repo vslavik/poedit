@@ -250,13 +250,13 @@ void test_spots(RealType)
    //
    // Error checks:
    //
-   BOOST_CHECK_THROW(lognormal_distribution<RealType>(0, 0), std::domain_error);
-   BOOST_CHECK_THROW(lognormal_distribution<RealType>(2, -1), std::domain_error);
-   BOOST_CHECK_THROW(pdf(dist, -1), std::domain_error);
-   BOOST_CHECK_THROW(cdf(dist, -1), std::domain_error);
-   BOOST_CHECK_THROW(cdf(complement(dist, -1)), std::domain_error);
-   BOOST_CHECK_THROW(quantile(dist, 1), std::overflow_error);
-   BOOST_CHECK_THROW(quantile(complement(dist, 0)), std::overflow_error);
+   BOOST_MATH_CHECK_THROW(lognormal_distribution<RealType>(0, 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(lognormal_distribution<RealType>(2, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(pdf(dist, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(cdf(dist, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(cdf(complement(dist, -1)), std::domain_error);
+   BOOST_MATH_CHECK_THROW(quantile(dist, 1), std::overflow_error);
+   BOOST_MATH_CHECK_THROW(quantile(complement(dist, 0)), std::overflow_error);
    check_out_of_range<lognormal_distribution<RealType> >(1, 2);
 
 } // template <class RealType>void test_spots(RealType)
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
 
    

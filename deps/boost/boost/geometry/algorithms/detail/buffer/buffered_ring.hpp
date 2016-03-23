@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2012-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,10 +14,13 @@
 
 #include <boost/range.hpp>
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/core/point_type.hpp>
 
 #include <boost/geometry/strategies/buffer.hpp>
+
+#include <boost/geometry/algorithms/within.hpp>
 
 #include <boost/geometry/algorithms/detail/overlay/copy_segments.hpp>
 #include <boost/geometry/algorithms/detail/overlay/copy_segment_point.hpp>
@@ -25,8 +28,6 @@
 #include <boost/geometry/algorithms/detail/overlay/get_ring.hpp>
 #include <boost/geometry/algorithms/detail/overlay/traversal_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
-
-#include <boost/geometry/multi/algorithms/within.hpp>
 
 
 namespace boost { namespace geometry
@@ -95,36 +96,36 @@ namespace traits
 
 
 template <typename Ring>
-struct tag<detail::buffer::buffered_ring<Ring> >
+struct tag<geometry::detail::buffer::buffered_ring<Ring> >
 {
     typedef ring_tag type;
 };
 
 
 template <typename Ring>
-struct point_order<detail::buffer::buffered_ring<Ring> >
+struct point_order<geometry::detail::buffer::buffered_ring<Ring> >
 {
     static const order_selector value = geometry::point_order<Ring>::value;
 };
 
 
 template <typename Ring>
-struct closure<detail::buffer::buffered_ring<Ring> >
+struct closure<geometry::detail::buffer::buffered_ring<Ring> >
 {
     static const closure_selector value = geometry::closure<Ring>::value;
 };
 
 
 template <typename Ring>
-struct point_type<detail::buffer::buffered_ring_collection<Ring> >
+struct point_type<geometry::detail::buffer::buffered_ring_collection<Ring> >
 {
     typedef typename geometry::point_type<Ring>::type type;
 };
 
 template <typename Ring>
-struct tag<detail::buffer::buffered_ring_collection<Ring> >
+struct tag<geometry::detail::buffer::buffered_ring_collection<Ring> >
 {
-    typedef detail::buffer::buffered_ring_collection_tag type;
+    typedef geometry::detail::buffer::buffered_ring_collection_tag type;
 };
 
 
@@ -225,7 +226,7 @@ struct get_ring<detail::buffer::buffered_ring_collection_tag>
                 ring_identifier const& id,
                 MultiGeometry const& multi_ring)
     {
-        BOOST_ASSERT
+        BOOST_GEOMETRY_ASSERT
             (
                 id.multi_index >= 0
                 && id.multi_index < int(boost::size(multi_ring))

@@ -41,8 +41,8 @@ quaternions ['[^x]] and ['[^y]] such that __not_equal). A good mnemotechnical wa
 things is by using the formula ['[^i*i = j*j = k*k = -1]].
 
 Quaternions (and their kin) are described in far more details in this
-other [@../../quaternion/TQE.pdf document]
-(with [@../../quaternion/TQE_EA.pdf errata and addenda]).
+other [@../quaternion/TQE.pdf document]
+(with [@../quaternion/TQE_EA.pdf errata and addenda]).
 
 Some traditional constructs, such as the exponential, carry over without
 too much change into the realms of quaternions, but other, such as taking
@@ -753,9 +753,9 @@ but there is currently a lack of standard (de facto or de jure) matrix
 library with which the conversions could work. This should be remedied in
 a further revision. In the mean time, an example of how this could be
 done is presented here for
-[@../../quaternion/HSO3.hpp __R3], and here for
-[@../../quaternion/HSO4.hpp __R4]
-([@../../quaternion/HSO3SO4.cpp example test file]).
+[@../../example/HSO3.hpp __R3], and here for
+[@../../example/HSO4.hpp __R4]
+([@../../example/HSO3SO4.cpp example test file]).
 
 [endsect]
 
@@ -838,13 +838,13 @@ Computes the n-th power of the quaternion q.
 
 [section:quat_tests Test Program]
 
-The [@../../quaternion/quaternion_test.cpp quaternion_test.cpp]
+The [@../../test/quaternion_test.cpp quaternion_test.cpp]
 test program tests quaternions specializations for float, double and long double
-([@../../quaternion/output.txt sample output], with message output
+([@../quaternion/output.txt sample output], with message output
 enabled).
 
 If you define the symbol TEST_VERBOSE, you will get
-additional output ([@../../quaternion/output_more.txt verbose output]);
+additional output ([@../quaternion/output_more.txt verbose output]);
 this will only be helpfull if you enable message output at the same time,
 of course (by uncommenting the relevant line in the test or by adding
 [^--log_level=messages] to your command line,...). In that case, and if you
@@ -859,8 +859,8 @@ operator with input of your choice from the standard input
 
 Please refer to the following PDF's:
 
-*[@../../quaternion/TQE.pdf The Quaternionic Exponential (and beyond)]
-*[@../../quaternion/TQE_EA.pdf The Quaternionic Exponential (and beyond) ERRATA & ADDENDA]
+*[@../quaternion/TQE.pdf The Quaternionic Exponential (and beyond)]
+*[@../quaternion/TQE_EA.pdf The Quaternionic Exponential (and beyond) ERRATA & ADDENDA]
 
 [endsect]
 
@@ -900,7 +900,7 @@ Thank you to all who contributed to the discution about this library.
 * Rewrite input operatore using Spirit (creates a dependency).
 * Put in place an Expression Template mechanism (perhaps borrowing from uBlas).
 * Use uBlas for the link with rotations (and move from the
-[@../../quaternion/HSO3SO4.cpp example]
+[@../../example/HSO3SO4.cpp example]
 implementation to an efficient one).
 
 [endsect]

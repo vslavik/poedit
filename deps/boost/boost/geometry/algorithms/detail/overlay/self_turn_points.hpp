@@ -12,6 +12,7 @@
 
 #include <cstddef>
 
+#include <boost/mpl/vector_c.hpp>
 #include <boost/range.hpp>
 
 #include <boost/geometry/core/access.hpp>

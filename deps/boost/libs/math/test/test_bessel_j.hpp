@@ -15,7 +15,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_bessel_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -25,10 +24,13 @@
 template <class Real, class T>
 void do_test_cyl_bessel_j(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_J_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BESSEL_J_FUNCTION_TO_TEST
+   pg funcp = BESSEL_J_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::cyl_bessel_j<value_type, value_type>;
 #else
    pg funcp = boost::math::cyl_bessel_j;
@@ -46,37 +48,27 @@ void do_test_cyl_bessel_j(const T& data, const char* type_name, const char* test
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_bessel_j", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_bessel_j", test_name);
    std::cout << std::endl;
 
-#ifdef TEST_OTHER
-   if(boost::is_floating_point<value_type>::value)
-   {
-      funcp = other::cyl_bessel_j;
-
-      //
-      // test other::cyl_bessel_j against data:
-      //
-      result = boost::math::tools::test_hetero(
-         data, 
-         bind_func<Real>(funcp, 0, 1), 
-         extract_result<Real>(2));
-      handle_test_result(result, data[result.worst()], result.worst(), type_name, "other::cyl_bessel_j", test_name);
-      std::cout << std::endl;
-   }
 #endif
 }
 
 template <class T>
 T cyl_bessel_j_int_wrapper(T v, T x)
 {
+#ifdef BESSEL_JN_FUNCTION_TO_TEST
+   return static_cast<T>(BESSEL_JN_FUNCTION_TO_TEST(boost::math::itrunc(v), x));
+#else
    return static_cast<T>(boost::math::cyl_bessel_j(boost::math::itrunc(v), x));
+#endif
 }
 
 
 template <class Real, class T>
 void do_test_cyl_bessel_j_int(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_JN_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -98,17 +90,21 @@ void do_test_cyl_bessel_j_int(const T& data, const char* type_name, const char* 
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_bessel_j", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_bessel_j (integer orders)", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class Real, class T>
 void do_test_sph_bessel_j(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_JS_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BESSEL_JS_FUNCTION_TO_TEST
+   pg funcp = BESSEL_JS_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::sph_bessel<value_type>;
 #else
    pg funcp = boost::math::sph_bessel;
@@ -126,8 +122,9 @@ void do_test_sph_bessel_j(const T& data, const char* type_name, const char* test
       data, 
       bind_func_int1<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::sph_bessel", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "sph_bessel", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>
@@ -271,8 +268,8 @@ void test_bessel(T, const char* name)
     //
     // Special cases that are errors:
     //
-    BOOST_CHECK_THROW(boost::math::cyl_bessel_j(T(-2.5), T(0)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::cyl_bessel_j(T(-2.5), T(-2)), std::domain_error);
-    BOOST_CHECK_THROW(boost::math::cyl_bessel_j(T(2.5), T(-2)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::cyl_bessel_j(T(-2.5), T(0)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::cyl_bessel_j(T(-2.5), T(-2)), std::domain_error);
+    BOOST_MATH_CHECK_THROW(boost::math::cyl_bessel_j(T(2.5), T(-2)), std::domain_error);
 }
 

@@ -85,8 +85,7 @@ public :
         promoted_type const buffer_distance = distance_strategy.apply(point, point,
                         strategy::buffer::buffer_side_left);
 
-        promoted_type const two = 2.0;
-        promoted_type const two_pi = two * geometry::math::pi<promoted_type>();
+        promoted_type const two_pi = geometry::math::two_pi<promoted_type>();
 
         promoted_type const diff = two_pi / promoted_type(m_count);
         promoted_type a = 0;

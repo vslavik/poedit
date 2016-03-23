@@ -10,17 +10,17 @@
 # This module defines function to help with two main tasks:
 #
 # - Discovering build-time configuration for the purposes of adjusting
-#   build process.  
+#   build process.
 # - Reporting what is built, and how it is configured.
 
 import b2.build.property as property
 import b2.build.property_set as property_set
 
-import b2.build.targets
+from b2.build import targets as targets_
 
 from b2.manager import get_manager
 from b2.util.sequence import unique
-from b2.util import bjam_signature, value_to_jam
+from b2.util import bjam_signature, value_to_jam, is_iterable
 
 import bjam
 import os
@@ -41,17 +41,22 @@ __log_fd = -1
 
 def register_components(components):
     """Declare that the components specified by the parameter exist."""
+    assert is_iterable(components)
     __components.extend(components)
-    
+
 def components_building(components):
     """Declare that the components specified by the parameters will be build."""
+    assert is_iterable(components)
     __built_components.extend(components)
 
 def log_component_configuration(component, message):
     """Report something about component configuration that the user should better know."""
+    assert isinstance(component, basestring)
+    assert isinstance(message, basestring)
     __component_logs.setdefault(component, []).append(message)
 
 def log_check_result(result):
+    assert isinstance(result, basestring)
     global __announced_checks
     if not __announced_checks:
         print "Performing configuration checks"
@@ -60,7 +65,9 @@ def log_check_result(result):
     print result
 
 def log_library_search_result(library, result):
-    log_check_result(("    - %(library)s : %(result)s" % locals()).rjust(width))
+    assert isinstance(library, basestring)
+    assert isinstance(result, basestring)
+    log_check_result(("    - %(library)s : %(result)s" % locals()).rjust(__width))
 
 
 def print_component_configuration():
@@ -84,6 +91,10 @@ def builds(metatarget_reference, project, ps, what):
     # Attempt to build a metatarget named by 'metatarget-reference'
     # in context of 'project' with properties 'ps'.
     # Returns non-empty value if build is OK.
+    assert isinstance(metatarget_reference, basestring)
+    assert isinstance(project, targets_.ProjectTarget)
+    assert isinstance(ps, property_set.PropertySet)
+    assert isinstance(what, basestring)
 
     result = []
 
@@ -93,12 +104,12 @@ def builds(metatarget_reference, project, ps, what):
         result = False
         __builds_cache[(what, ps)] = False
 
-        targets = b2.build.targets.generate_from_reference(
+        targets = targets_.generate_from_reference(
             metatarget_reference, project, ps).targets()
         jam_targets = []
         for t in targets:
             jam_targets.append(t.actualize())
-        
+
         x = ("    - %s" % what).rjust(__width)
         if bjam.call("UPDATE_NOW", jam_targets, str(__log_fd), "ignore-minus-n"):
             __builds_cache[(what, ps)] = True
@@ -112,6 +123,7 @@ def builds(metatarget_reference, project, ps, what):
         return existing
 
 def set_log_file(log_file_name):
+    assert isinstance(log_file_name, basestring)
     # Called by Boost.Build startup code to specify name of a file
     # that will receive results of configure checks.  This
     # should never be called by users.
@@ -134,7 +146,7 @@ class CheckTargetBuildsWorker:
         self.false_properties = property.create_from_strings(false_properties, True)
 
     def check(self, ps):
-        
+        assert isinstance(ps, property_set.PropertySet)
         # FIXME: this should not be hardcoded. Other checks might
         # want to consider different set of features as relevant.
         toolset = ps.get('toolset')[0]
@@ -146,7 +158,7 @@ class CheckTargetBuildsWorker:
                    ps.get_properties("architecture")
         rps = property_set.create(relevant)
         t = get_manager().targets().current()
-        p = t.project()        
+        p = t.project()
         if builds(self.target, p, rps, "%s builds" % self.target):
             choosen = self.true_properties
         else:

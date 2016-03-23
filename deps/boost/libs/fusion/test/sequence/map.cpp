@@ -111,6 +111,7 @@ main()
         pair<int, char> a = at_c<0>(m); (void) a;
         pair<double, std::string> b = at_c<1>(m);
         pair<abstract, int> c = at_c<2>(m);
+        (void)c;
     }
 
     // iterators & random access interface.
@@ -154,6 +155,7 @@ main()
         // make sure that the correct constructor is called
         pair<int, copy_all> p1;
         pair<int, copy_all> p2 = p1;
+        (void)p2;
     }
     
     {

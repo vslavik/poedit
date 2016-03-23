@@ -39,6 +39,14 @@ static int vectorstream_test()
 {
    {  //Test high watermarking initialization
       my_stringstream_t my_stringstream;
+
+      if(my_stringstream.tellg() != std::streampos(0)){
+         return 1;
+      }
+      if(my_stringstream.tellp() != std::streampos(0)){
+         return 1;
+      }
+
       int a (0);
       my_stringstream << 11;
       my_stringstream >> a;

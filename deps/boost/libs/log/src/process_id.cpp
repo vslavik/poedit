@@ -89,7 +89,7 @@ BOOST_LOG_OPEN_NAMESPACE
 namespace aux {
 
 template< typename CharT, typename TraitsT >
-std::basic_ostream< CharT, TraitsT >&
+BOOST_LOG_API std::basic_ostream< CharT, TraitsT >&
 operator<< (std::basic_ostream< CharT, TraitsT >& strm, process::id const& pid)
 {
     if (strm.good())

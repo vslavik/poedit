@@ -19,6 +19,7 @@
 #include "list_test.hpp"
 #include "propagate_allocator_test.hpp"
 #include "emplace_test.hpp"
+#include "../../intrusive/test/iterator_test.hpp"
 
 using namespace boost::container;
 
@@ -228,8 +229,23 @@ int main ()
    if(!boost::container::test::test_propagate_allocator<boost_container_slist>())
       return 1;
 
+   ////////////////////////////////////
+   //    Initializer lists
+   ////////////////////////////////////
    if(!test_support_for_initializer_list())
       return 1;
+
+   ////////////////////////////////////
+   //    Iterator testing
+   ////////////////////////////////////
+   {
+      typedef boost::container::slist<int> vector_int;
+      vector_int a; a.push_front(2); a.push_front(1); a.push_front(0);
+      boost::intrusive::test::test_iterator_forward< boost::container::slist<int> >(a);
+      if(boost::report_errors() != 0) {
+         return 1;
+      }
+   }
 }
 
 #include <boost/container/detail/config_end.hpp>

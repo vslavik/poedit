@@ -12,7 +12,7 @@
 # include <boost/preprocessor/facilities/is_empty.hpp>
 # include <libs/preprocessor/test/test.h>
 
-#if BOOST_PP_VARIADICS && (BOOST_PP_CONFIG_FLAGS() & BOOST_PP_CONFIG_STRICT()) && !defined(BOOST_PP_VARIADICS_MSVC)
+#if BOOST_PP_VARIADICS && (BOOST_PP_CONFIG_FLAGS() & BOOST_PP_CONFIG_STRICT()) && !BOOST_PP_VARIADICS_MSVC
 
 #define FUNC_GEN9(x,y,z) anything
   

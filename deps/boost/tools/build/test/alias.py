@@ -67,7 +67,7 @@ def test_alias_source_usage_requirements(t):
       Check whether usage requirements are propagated via "alias". In case they
     are not, linking will fail as there will be no main() function defined
     anywhere in the source.
-    
+
     """
     t.write("jamroot.jam", """\
 lib l : l.cpp : : : <define>WANT_MAIN ;

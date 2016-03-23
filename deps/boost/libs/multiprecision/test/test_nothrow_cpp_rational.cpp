@@ -21,7 +21,7 @@ typedef boost::multiprecision::number<boost::multiprecision::rational_adaptor<bo
 typedef boost::multiprecision::number<boost::multiprecision::rational_adaptor<boost::multiprecision::checked_int512_t::backend_type> > checked_rat512_t;
 typedef boost::multiprecision::number<boost::multiprecision::rational_adaptor<boost::multiprecision::checked_uint512_t::backend_type> > checked_urat512_t;
 
-#ifndef BOOST_NO_NOEXCEPT
+#ifndef BOOST_NO_CXX11_NOEXCEPT
 
 #if !defined(BOOST_NO_CXX11_NOEXCEPT) && !defined(BOOST_NO_SFINAE_EXPR) || defined(BOOST_IS_NOTHROW_MOVE_CONSTRUCT)
 //

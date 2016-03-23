@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -6,7 +7,7 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../proto/reference.html#header.boost.proto.expr_hpp" title="Header &lt;boost/proto/expr.hpp&gt;">
-<link rel="prev" href="eval_idp201270464.html" title="Function eval">
+<link rel="prev" href="eval_idm45506996501744.html" title="Function eval">
 <link rel="next" href="expr.html" title="Struct template expr">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -20,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="eval_idp201270464.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.expr_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="expr.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="eval_idm45506996501744.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.expr_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="expr.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.proto.basic_expr"></a><div class="titlepage"></div>
@@ -43,15 +44,15 @@
   <span class="keyword">typedef</span> <span class="identifier">basic_expr</span>                  <a name="boost.proto.basic_expr.proto_derived_expr"></a><span class="identifier">proto_derived_expr</span><span class="special">;</span>
   <span class="keyword">typedef</span> <span class="keyword">typename</span> <span class="identifier">Args</span><span class="special">::</span><span class="identifier">child</span><em class="replaceable"><code><span class="identifier">N</span></code></em>       <a name="boost.proto.basic_expr.proto_childN"></a><span class="identifier">proto_childN</span><span class="special">;</span>        <span class="comment">// For each <em class="replaceable"><code>N</code></em> in <em class="replaceable"><code>[0,max(Arity,1))</code></em>.</span>
 
-  <span class="comment">// <a class="link" href="basic_expr.html#idp201315680-bb">public static functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> A<span class="special">&gt;</span> <span class="keyword">static</span> <span class="identifier">basic_expr</span> <span class="keyword">const</span> <a class="link" href="basic_expr.html#idp201316560-bb"><span class="identifier">make</span></a><span class="special">(</span><span class="identifier">A</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_expr.html#idm45506996456336-bb">public static functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> A<span class="special">&gt;</span> <span class="keyword">static</span> <span class="identifier">basic_expr</span> <span class="keyword">const</span> <a class="link" href="basic_expr.html#idm45506996455456-bb"><span class="identifier">make</span></a><span class="special">(</span><span class="identifier">A</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_expr.html#idp201323664-bb">public member functions</a></span>
-  <span class="identifier">basic_expr</span> <span class="special">&amp;</span> <a class="link" href="basic_expr.html#idp201324224-bb"><span class="identifier">proto_base</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">basic_expr</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_expr.html#idp201326736-bb"><span class="identifier">proto_base</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_expr.html#idm45506996448352-bb">public member functions</a></span>
+  <span class="identifier">basic_expr</span> <span class="special">&amp;</span> <a class="link" href="basic_expr.html#idm45506996447792-bb"><span class="identifier">proto_base</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">basic_expr</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="basic_expr.html#idm45506996445280-bb"><span class="identifier">proto_base</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp363193792"></a><h2>Description</h2>
+<a name="idm45555191697424"></a><h2>Description</h2>
 <p>
             <code class="computeroutput">proto::basic_expr&lt;&gt;</code> is a node in an expression
             template tree. It is a container for its child sub-trees. It also serves as the
@@ -86,10 +87,10 @@
             expressions.
           </p>
 <div class="refsect2">
-<a name="idp363211088"></a><h3>
-<a name="idp201315680-bb"></a><code class="computeroutput">basic_expr</code> public static functions</h3>
+<a name="idm45555191680128"></a><h3>
+<a name="idm45506996456336-bb"></a><code class="computeroutput">basic_expr</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> A<span class="special">&gt;</span> <span class="keyword">static</span> <span class="identifier">basic_expr</span> <span class="keyword">const</span> <a name="idp201316560-bb"></a><span class="identifier">make</span><span class="special">(</span><span class="identifier">A</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">...</span> a<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span><span class="special">...</span> A<span class="special">&gt;</span> <span class="keyword">static</span> <span class="identifier">basic_expr</span> <span class="keyword">const</span> <a name="idm45506996455456-bb"></a><span class="identifier">make</span><span class="special">(</span><span class="identifier">A</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">...</span> a<span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -113,11 +114,11 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp363228304"></a><h3>
-<a name="idp201323664-bb"></a><code class="computeroutput">basic_expr</code> public member functions</h3>
+<a name="idm45555191662848"></a><h3>
+<a name="idm45506996448352-bb"></a><code class="computeroutput">basic_expr</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">basic_expr</span> <span class="special">&amp;</span> <a name="idp201324224-bb"></a><span class="identifier">proto_base</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">basic_expr</span> <span class="special">&amp;</span> <a name="idm45506996447792-bb"></a><span class="identifier">proto_base</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
 <col align="left" valign="top">
@@ -132,7 +133,7 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">basic_expr</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp201326736-bb"></a><span class="identifier">proto_base</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">basic_expr</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idm45506996445280-bb"></a><span class="identifier">proto_base</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>
                 This is an overloaded member function, provided for convenience. It differs from
                 the above function only in what argument(s) it accepts.
@@ -152,7 +153,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="eval_idp201270464.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.expr_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="expr.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="eval_idm45506996501744.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.expr_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="expr.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

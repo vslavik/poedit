@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -45,56 +46,56 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ios</span><span class="special">&lt;</span> <span class="identifier">char_type</span><span class="special">,</span> <span class="identifier">CharTraits</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">traits_type</span>                     <a name="boost.interprocess.basic_ovectorstream.traits_type"></a><span class="identifier">traits_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="basic_ovectorstream.html#boost.interprocess.basic_ovectorstreamconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="basic_ovectorstream.html#idp56425216-bb"><span class="identifier">basic_ovectorstream</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="basic_ovectorstream.html#idm45879390259232-bb"><span class="identifier">basic_ovectorstream</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> VectorParameter<span class="special">&gt;</span> 
-    <a class="link" href="basic_ovectorstream.html#idp56426944-bb"><span class="identifier">basic_ovectorstream</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">VectorParameter</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="basic_ovectorstream.html#idm45879390257504-bb"><span class="identifier">basic_ovectorstream</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">VectorParameter</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="basic_ovectorstream.html#idp56416880-bb">public member functions</a></span>
-  <a class="link" href="basic_vectorbuf.html" title="Class template basic_vectorbuf">basic_vectorbuf</a><span class="special">&lt;</span> <span class="identifier">CharVector</span><span class="special">,</span> <span class="identifier">CharTraits</span> <span class="special">&gt;</span> <span class="special">*</span> <a class="link" href="basic_ovectorstream.html#idp56417440-bb"><span class="identifier">rdbuf</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_ovectorstream.html#idp56419312-bb"><span class="identifier">swap_vector</span></a><span class="special">(</span><span class="identifier">vector_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">const</span> <span class="identifier">vector_type</span> <span class="special">&amp;</span> <a class="link" href="basic_ovectorstream.html#idp56421376-bb"><span class="identifier">vector</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="basic_ovectorstream.html#idp56422960-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">vector_type</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="basic_ovectorstream.html#idm45879390267568-bb">public member functions</a></span>
+  <a class="link" href="basic_vectorbuf.html" title="Class template basic_vectorbuf">basic_vectorbuf</a><span class="special">&lt;</span> <span class="identifier">CharVector</span><span class="special">,</span> <span class="identifier">CharTraits</span> <span class="special">&gt;</span> <span class="special">*</span> <a class="link" href="basic_ovectorstream.html#idm45879390267008-bb"><span class="identifier">rdbuf</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_ovectorstream.html#idm45879390265136-bb"><span class="identifier">swap_vector</span></a><span class="special">(</span><span class="identifier">vector_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">const</span> <span class="identifier">vector_type</span> <span class="special">&amp;</span> <a class="link" href="basic_ovectorstream.html#idm45879390263072-bb"><span class="identifier">vector</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="basic_ovectorstream.html#idm45879390261488-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">vector_type</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp240937728"></a><h2>Description</h2>
+<a name="idm45555312580000"></a><h2>Description</h2>
 <p>A basic_ostream class that holds a character vector specified by CharVector template parameter as its formatting buffer. The vector must have contiguous storage, like std::vector, boost::interprocess::vector or boost::interprocess::basic_string </p>
 <div class="refsect2">
-<a name="idp240938656"></a><h3>
+<a name="idm45555312579072"></a><h3>
 <a name="boost.interprocess.basic_ovectorstreamconstruct-copy-destruct"></a><code class="computeroutput">basic_ovectorstream</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp56425216-bb"></a><span class="identifier">basic_ovectorstream</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> mode <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879390259232-bb"></a><span class="identifier">basic_ovectorstream</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> mode <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Throws if vector_type default constructor throws. </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> VectorParameter<span class="special">&gt;</span> 
-  <a name="idp56426944-bb"></a><span class="identifier">basic_ovectorstream</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">VectorParameter</span> <span class="special">&amp;</span> param<span class="special">,</span> 
+  <a name="idm45879390257504-bb"></a><span class="identifier">basic_ovectorstream</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">VectorParameter</span> <span class="special">&amp;</span> param<span class="special">,</span> 
                       <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">openmode</span> mode <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span><span class="special">::</span><span class="identifier">out</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructor. Throws if vector_type(const VectorParameter &amp;param) throws. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp240966368"></a><h3>
-<a name="idp56416880-bb"></a><code class="computeroutput">basic_ovectorstream</code> public member functions</h3>
+<a name="idm45555312551216"></a><h3>
+<a name="idm45879390267568-bb"></a><code class="computeroutput">basic_ovectorstream</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="basic_vectorbuf.html" title="Class template basic_vectorbuf">basic_vectorbuf</a><span class="special">&lt;</span> <span class="identifier">CharVector</span><span class="special">,</span> <span class="identifier">CharTraits</span> <span class="special">&gt;</span> <span class="special">*</span> <a name="idp56417440-bb"></a><span class="identifier">rdbuf</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="basic_vectorbuf.html" title="Class template basic_vectorbuf">basic_vectorbuf</a><span class="special">&lt;</span> <span class="identifier">CharVector</span><span class="special">,</span> <span class="identifier">CharTraits</span> <span class="special">&gt;</span> <span class="special">*</span> <a name="idm45879390267008-bb"></a><span class="identifier">rdbuf</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the address of the stored stream buffer. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56419312-bb"></a><span class="identifier">swap_vector</span><span class="special">(</span><span class="identifier">vector_type</span> <span class="special">&amp;</span> vect<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390265136-bb"></a><span class="identifier">swap_vector</span><span class="special">(</span><span class="identifier">vector_type</span> <span class="special">&amp;</span> vect<span class="special">)</span><span class="special">;</span></pre>
 <p>Swaps the underlying vector with the passed vector. This function resets the write position in the stream. Does not throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">vector_type</span> <span class="special">&amp;</span> <a name="idp56421376-bb"></a><span class="identifier">vector</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <span class="identifier">vector_type</span> <span class="special">&amp;</span> <a name="idm45879390263072-bb"></a><span class="identifier">vector</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns a const reference to the internal vector. Does not throw. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56422960-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">vector_type</span><span class="special">::</span><span class="identifier">size_type</span> size<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879390261488-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">vector_type</span><span class="special">::</span><span class="identifier">size_type</span> size<span class="special">)</span><span class="special">;</span></pre>
 <p>Calls reserve() method of the internal vector. Resets the stream to the first position. Throws if the internals vector's reserve throws. </p>
 </li>
 </ol></div>
@@ -103,7 +104,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

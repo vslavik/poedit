@@ -39,7 +39,7 @@ const char* player_name(int state)
     if (state == PLAYER_B)
         return "PLAYER-B";
     throw "bad player";
-    return 0;
+    //return 0;
 }
 
 void player(int active)
@@ -50,7 +50,7 @@ void player(int active)
 
     while (state < GAME_OVER)
     {
-        std::cout << player_name(active) << ": Play." << std::endl;
+        //std::cout << player_name(active) << ": Play." << std::endl;
         state = other;
         cond.notify_all();
         do

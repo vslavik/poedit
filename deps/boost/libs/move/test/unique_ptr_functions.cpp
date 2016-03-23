@@ -134,7 +134,7 @@ void test()
 
 
 ////////////////////////////////
-//   make_unique_single
+//    make_unique_array
 ////////////////////////////////
 
 namespace make_unique_array{

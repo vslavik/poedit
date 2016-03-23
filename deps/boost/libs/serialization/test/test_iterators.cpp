@@ -42,8 +42,8 @@ void test_wchar_from_mb(const wchar_t *la, const char * a, const unsigned int si
     typedef boost::archive::iterators::wchar_from_mb<const char *> translator;
     BOOST_CHECK((
         std::equal(
-            translator(BOOST_MAKE_PFTO_WRAPPER(a)),
-            translator(BOOST_MAKE_PFTO_WRAPPER(a + size)),
+            translator(a),
+            translator(a + size),
             la
         )
     ));
@@ -53,8 +53,8 @@ void test_mb_from_wchar(const char * a, const wchar_t *la, const unsigned int si
     typedef boost::archive::iterators::mb_from_wchar<const wchar_t *> translator;
     BOOST_CHECK(
         std::equal(
-            translator(BOOST_MAKE_PFTO_WRAPPER(la)), 
-            translator(BOOST_MAKE_PFTO_WRAPPER(la + size)), 
+            translator(la),
+            translator(la + size),
             a
         )
     );
@@ -72,8 +72,8 @@ void test_xml_escape(
 
     BOOST_CHECK(
         std::equal(
-            translator(BOOST_MAKE_PFTO_WRAPPER(xml)),
-            translator(BOOST_MAKE_PFTO_WRAPPER(xml + size)),
+            translator(xml),
+            translator(xml + size),
             xml_escaped
         )
     );
@@ -91,8 +91,8 @@ void test_xml_unescape(
 
     BOOST_CHECK(
         std::equal(
-            translator(BOOST_MAKE_PFTO_WRAPPER(xml_escaped)),
-            translator(BOOST_MAKE_PFTO_WRAPPER(xml_escaped + size)),
+            translator(xml_escaped),
+            translator(xml_escaped + size),
             xml
         )
     );
@@ -115,8 +115,8 @@ void test_transform_width(unsigned int size){
     std::vector<char> vout;
 
     std::copy(
-        translator1(BOOST_MAKE_PFTO_WRAPPER(static_cast<char *>(rawdata))),
-        translator1(BOOST_MAKE_PFTO_WRAPPER(rawdata + size)),
+        translator1(static_cast<char *>(rawdata)),
+        translator1(rawdata + size),
         std::back_inserter(vout)
     );
 
@@ -132,8 +132,8 @@ void test_transform_width(unsigned int size){
 
     std::vector<char> vin;
     std::copy(
-        translator2(BOOST_MAKE_PFTO_WRAPPER(vout.begin())),
-        translator2(BOOST_MAKE_PFTO_WRAPPER(vout.end())),
+        translator2(vout.begin()),
+        translator2(vout.end()),
         std::back_inserter(vin)
     );
 

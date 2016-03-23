@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -139,7 +140,7 @@
             Assert Behaves?</a>
 </h6></div></div></div>
 <p>
-              When <code class="computeroutput"><span class="identifier">BOOST_NO_STATIC_ASSERT</span></code>
+              When <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_STATIC_ASSERT</span></code>
               is defined, the user can select the way static assertions are reported.
               Define
             </p>
@@ -228,14 +229,8 @@
               Version 2.0.0 deprecates the preceding IO features.
             </p>
 <p>
-              These deprecated features will be provided by default up to boost 1.55.
-              If you don't want to include the deprecated features you could define
-              <code class="computeroutput"><span class="identifier">BOOST_CHRONO_DONT_PROVIDES_DEPRECATED_IO_SINCE_V2_0_0</span></code>.
-              Since 1.55 these features will not be included any more by default.
-              Since this version, if you want to include the deprecated features
-              yet you could define <code class="computeroutput"><span class="identifier">BOOST_CHRONO_PROVIDES_DEPRECATED_IO_SINCE_V2_0_0</span></code>.
-              These deprecated features will be only available until boost 1.58,
-              that is you have 1 year and a half to move to the new features.
+              However the default version is always version 1. If you don't want
+              to include the deprecated features you could define <code class="computeroutput"><span class="identifier">BOOST_CHRONO_DONT_PROVIDES_DEPRECATED_IO_SINCE_V2_0_0</span></code>.
             </p>
 </div>
 <div class="section"><div class="titlepage"><div><div><h6 class="title">
@@ -641,7 +636,10 @@
 </pre>
 <p>
               <span class="bold"><strong>Effects:</strong></span> Constructs an object of type
-              <a class="link" href="reference.html#chrono.reference.cpp0x.duration_hpp.duration" title="Class Template duration&lt;&gt;"><code class="computeroutput"><span class="identifier">duration</span></code></a> from duration_values&lt;rep&gt;::zero().
+              <a class="link" href="reference.html#chrono.reference.cpp0x.duration_hpp.duration" title="Class Template duration&lt;&gt;"><code class="computeroutput"><span class="identifier">duration</span></code></a> initialized from
+              <code class="computeroutput"><span class="identifier">duration_values</span><span class="special">&lt;</span><span class="identifier">rep</span><span class="special">&gt;::</span><span class="identifier">zero</span><span class="special">()</span></code>
+              in C++98 or <code class="computeroutput"><span class="identifier">BOOST_CHRONO_DURATION_DEFAULTS_TO_ZERO</span></code>
+              is defined, otherwise the duration is uninitialized.
             </p>
 </div>
 <div class="section">
@@ -2733,7 +2731,7 @@
 <dt><span class="section"><a href="reference.html#chrono.reference.io.chrono_io_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">chrono_io</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.duration_style_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_style</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.timezone_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">timezone</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
-<dt><span class="section"><a href="reference.html#chrono.reference.io.ios_state_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">ios_state</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
+<dt><span class="section"><a href="reference.html#chrono.reference.io.ios_state_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">ios_base_state</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.duration_get_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_get</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.duration_put_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_put</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.duration_units_hpp">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_units</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a></span></dt>
@@ -2752,7 +2750,7 @@
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_style</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">timezone</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
-<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">ios_state</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">ios_base_state</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_get</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_put</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">duration_units</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -2825,7 +2823,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="chrono.reference.io.ios_state_hpp"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp" title="Header &lt;boost/chrono/io/ios_state.hpp&gt;">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">ios_state</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a>
+<a name="chrono.reference.io.ios_state_hpp"></a><a class="link" href="reference.html#chrono.reference.io.ios_state_hpp" title="Header &lt;boost/chrono/io/ios_base_state.hpp&gt;">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">ios_base_state</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a>
 </h4></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="reference.html#chrono.reference.io.ios_state_hpp.sag">Setter and
@@ -5415,7 +5413,7 @@
 
   <span class="keyword">explicit</span> <a class="link" href="reference.html#chrono.reference.io.duration_io_hpp.manipulators.duration_fmt.c1" title="Constructor duration_fmt(duration_style)"><code class="computeroutput"><span class="identifier">duration_fmt</span></code></a><span class="special">(</span><a class="link" href="reference.html#chrono.reference.io.duration_style_hpp.duration_style" title="Scoped enum duration_style"><code class="computeroutput"><span class="identifier">duration_style</span></code></a> <span class="identifier">style</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 
-<span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_NO_EXPLICIT_CONVERSION_OPERATORS</span>
+<span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS</span>
   <span class="keyword">explicit</span>
   <a class="link" href="reference.html#chrono.reference.io.duration_io_hpp.manipulators.duration_fmt.op_duration_style" title="Member Function operator duration_style()"><code class="computeroutput"><span class="keyword">operator</span> <span class="identifier">duration_style</span></code></a><span class="special">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">;</span>
 <span class="preprocessor">#endif</span>
@@ -5888,11 +5886,11 @@
 </pre>
 <p>
               <span class="bold"><strong>Effects:</strong></span> Let <code class="computeroutput"><span class="identifier">facet</span></code>
-              be the __time_point_units facet associated to <code class="computeroutput"><span class="identifier">ios</span></code>
-              or a new instance of the default __time_point_units_default facet.
-              Let <code class="computeroutput"><span class="identifier">epoch</span></code> be the epoch
-              string associated to the <code class="computeroutput"><span class="identifier">Clock</span></code>
-              using this facet. Scans <code class="computeroutput"><span class="identifier">s</span></code>
+              be the <a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units" title="Template Class time_point_units"><code class="computeroutput"><span class="identifier">time_point_units</span></code></a> facet associated
+              to <code class="computeroutput"><span class="identifier">ios</span></code> or a new instance
+              of the default __time_point_units_default facet. Let <code class="computeroutput"><span class="identifier">epoch</span></code> be the epoch string associated
+              to the <code class="computeroutput"><span class="identifier">Clock</span></code> using
+              this facet. Scans <code class="computeroutput"><span class="identifier">s</span></code>
               to match <code class="computeroutput"><span class="identifier">epoch</span></code> or
               <code class="computeroutput"><span class="identifier">end</span></code> is reached.
             </p>
@@ -6153,7 +6151,9 @@
 <span class="identifier">s</span><span class="special">=</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">copy</span><span class="special">(</span><span class="identifier">str</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">str</span><span class="special">.</span><span class="identifier">end</span><span class="special">(),</span> <span class="identifier">s</span><span class="special">);</span>
 </pre>
 <p>
-              where facet is the <code class="computeroutput"><span class="identifier">__time_point_units</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span></code> facet associated to the <code class="computeroutput"><span class="identifier">ios</span></code> or a new instance of <code class="computeroutput"><span class="identifier">__time_point_units_default</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span></code>.
+              where facet is the <code class="computeroutput"><a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units" title="Template Class time_point_units"><code class="computeroutput"><span class="identifier">time_point_units</span></code></a><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span></code>
+              facet associated to the <code class="computeroutput"><span class="identifier">ios</span></code>
+              or a new instance of <code class="computeroutput"><span class="identifier">__time_point_units_default</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span></code>.
             </p>
 <p>
               <span class="bold"><strong>Returns:</strong></span> s, iterator pointing immediately
@@ -6167,6 +6167,8 @@
 <a name="chrono.reference.io.time_point_units_hpp"></a><a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp" title="Header &lt;boost/chrono/io/time_point_units.hpp&gt;">Header <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">chrono</span><span class="special">/</span><span class="identifier">io</span><span class="special">/</span><span class="identifier">time_point_units</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code></a>
 </h4></div></div></div>
 <div class="toc"><dl class="toc">
+<dt><span class="section"><a href="reference.html#chrono.reference.io.time_point_units_hpp.get_epoch_custom">Template
+          Function <code class="computeroutput"><span class="identifier">get_epoch_custom</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units">Template
           Class <code class="computeroutput"><span class="identifier">time_point_units</span></code></a></span></dt>
 <dt><span class="section"><a href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units_default">Template
@@ -6174,6 +6176,8 @@
 </dl></div>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">chrono</span> <span class="special">{</span>
+    <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Clock</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">TPUFacet</span><span class="special">&gt;</span>
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="identifier">get_epoch_custom</span><span class="special">(</span><span class="identifier">Clock</span><span class="special">,</span> <span class="identifier">TPUFacet</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">);</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">=</span><span class="keyword">char</span><span class="special">&gt;</span>
     <span class="keyword">class</span> <span class="identifier">time_point_units</span><span class="special">;</span>
     <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">=</span><span class="keyword">char</span><span class="special">&gt;</span>
@@ -6183,12 +6187,34 @@
 </pre>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
+<a name="chrono.reference.io.time_point_units_hpp.get_epoch_custom"></a><a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.get_epoch_custom" title="Template Function get_epoch_custom">Template
+          Function <code class="computeroutput"><span class="identifier">get_epoch_custom</span></code></a>
+</h5></div></div></div>
+<pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Clock</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">TPUFacet</span><span class="special">&gt;</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;</span> <span class="identifier">get_epoch_custom</span><span class="special">(</span><span class="identifier">Clock</span><span class="special">,</span> <span class="identifier">TPUFacet</span><span class="special">&amp;</span> <span class="identifier">f</span><span class="special">);</span>
+</pre>
+<p>
+            Customization point to the epoch associated to the clock <code class="computeroutput"><span class="identifier">Clock</span></code> The default calls <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">do_get_epoch</span><span class="special">(</span><span class="identifier">Clock</span><span class="special">())</span></code>.
+          </p>
+<p>
+            The user can overload this function.
+          </p>
+<p>
+            <span class="bold"><strong>Returns:</strong></span> Forwards the call to the facet
+            as if
+          </p>
+<pre class="programlisting"><span class="keyword">return</span> <span class="identifier">f</span><span class="special">.</span><span class="identifier">do_get_epoch</span><span class="special">(</span><span class="identifier">Clock</span><span class="special">());</span>
+</pre>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h5 class="title">
 <a name="chrono.reference.io.time_point_units_hpp.time_point_units"></a><a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units" title="Template Class time_point_units">Template
           Class <code class="computeroutput"><span class="identifier">time_point_units</span></code></a>
 </h5></div></div></div>
 <p>
-            __time_point_units facet gives useful information about the time_point
-            pattern, the text associated to a time_point's epoch,
+            <a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units" title="Template Class time_point_units"><code class="computeroutput"><span class="identifier">time_point_units</span></code></a> facet gives
+            useful information about the time_point pattern, the text associated
+            to a time_point's epoch,
           </p>
 <pre class="programlisting">  <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">CharT</span><span class="special">=</span><span class="keyword">char</span><span class="special">&gt;</span>
   <span class="keyword">class</span> <span class="identifier">time_point_units</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">::</span><span class="identifier">facet</span>
@@ -6229,7 +6255,7 @@
 <pre class="programlisting"><span class="keyword">explicit</span> <span class="identifier">time_point_units</span><span class="special">(</span><span class="identifier">size_t</span> <span class="identifier">refs</span> <span class="special">=</span> <span class="number">0</span><span class="special">);</span>
 </pre>
 <p>
-              Construct a __time_point_units facet.
+              Construct a <a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units" title="Template Class time_point_units"><code class="computeroutput"><span class="identifier">time_point_units</span></code></a> facet.
             </p>
 <p>
               <span class="bold"><strong>Parameters:</strong></span>
@@ -6238,11 +6264,11 @@
                   <span class="bold"><strong>refs:</strong></span> references
                 </li></ul></div>
 <p>
-              <span class="bold"><strong>Effects:</strong></span> Construct a __time_point_units
-              facet. If the <code class="computeroutput"><span class="identifier">refs</span></code>
-              argument is <code class="computeroutput"><span class="number">0</span></code> then destruction
-              of the object is delegated to the locale, or locales, containing it.
-              This allows the user to ignore lifetime management issues. On the other
+              <span class="bold"><strong>Effects:</strong></span> Construct a <a class="link" href="reference.html#chrono.reference.io.time_point_units_hpp.time_point_units" title="Template Class time_point_units"><code class="computeroutput"><span class="identifier">time_point_units</span></code></a> facet. If
+              the <code class="computeroutput"><span class="identifier">refs</span></code> argument is
+              <code class="computeroutput"><span class="number">0</span></code> then destruction of the
+              object is delegated to the locale, or locales, containing it. This
+              allows the user to ignore lifetime management issues. On the other
               had, if <code class="computeroutput"><span class="identifier">refsv</span> <span class="identifier">is</span>
               </code>1` then the object must be explicitly deleted; the locale will
               not do so. In this case, the object can be maintained across the lifetime
@@ -6271,8 +6297,8 @@
 </pre>
 <p>
               <span class="bold"><strong>Returns:</strong></span> the epoch associated to the
-              clock <code class="computeroutput"><span class="identifier">Clock</span></code> calling
-              <code class="computeroutput"><span class="identifier">__do_get_epoch</span><span class="special">(</span><span class="identifier">Clock</span><span class="special">())</span></code>
+              clock <code class="computeroutput"><span class="identifier">Clock</span></code> as if
+              <code class="computeroutput"><span class="keyword">return</span> <span class="identifier">get_epoch_custom</span><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">&gt;(</span><span class="identifier">Clock</span><span class="special">(),</span> <span class="special">*</span><span class="keyword">this</span><span class="special">);</span> </code>
             </p>
 </div>
 <div class="section">

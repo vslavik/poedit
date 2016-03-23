@@ -7,10 +7,10 @@
 
    template <class T>
    T round(const T& v);
-   
+
    template <class T, class Policy>
    T round(const T& v, const Policy&);
-   
+
    template <class T>
    int iround(const T& v);
 
@@ -36,7 +36,7 @@ direction.
 
 If the argument /v/ is either non-finite or else outside the range
 of the result type, then returns the result of __rounding_error: by
-default this throws an instance of boost::math::rounding_error.
+default this throws an instance of `boost::math::rounding_error`.
 
 [endsect]
 
@@ -71,12 +71,12 @@ default this throws an instance of boost::math::rounding_error.
 The trunc functions round their argument to the integer value,
 nearest to but no larger in magnitude than the argument.
 
-For example `itrunc(3.7)` would return `3` and `ltrunc(-4.6)` 
+For example `itrunc(3.7)` would return `3` and `ltrunc(-4.6)`
 would return `-4`.
 
 If the argument /v/ is either non-finite or else outside the range
 of the result type, then returns the result of __rounding_error: by
-default this throws an instance of boost::math::rounding_error.
+default this throws an instance of `boost::math::rounding_error`.
 
 [endsect]
 
@@ -108,20 +108,20 @@ default this throws an instance of boost::math::rounding_error.
    template <class T, class Policy>
    T modf(const T& v, long long* ipart, const Policy&);
 
-The `modf` functions store the integer part of /v/ in `*ipart` 
+The `modf` functions store the integer part of /v/ in `*ipart`
 and return the fractional part of /v/.  The sign of the integer
 and fractional parts are the same as the sign of /v/.
 
 If the argument /v/ is either non-finite or else outside the range
 of the result type, then returns the result of __rounding_error: by
-default this throws an instance of boost::math::rounding_error.
+default this throws an instance of `boost::math::rounding_error`.
 
 [endsect]
 
 
 [endsect] [/section:rounding Rounding Truncation and Integer Conversion]
 
-[/ 
+[/
   Copyright 2006 John Maddock and Paul A. Bristow.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at

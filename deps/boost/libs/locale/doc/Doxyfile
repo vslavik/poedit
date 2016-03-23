@@ -128,7 +128,7 @@ FULL_PATH_NAMES        = YES
 # If left blank the directory from which doxygen is run is used as the
 # path to strip.
 
-STRIP_FROM_PATH        = ../../..
+STRIP_FROM_PATH        = ../../.. ../include 
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of
 # the path mentioned in the documentation of a class, which tells
@@ -137,7 +137,7 @@ STRIP_FROM_PATH        = ../../..
 # definition is used. Otherwise one should specify the include paths that
 # are normally passed to the compiler using the -I flag.
 
-STRIP_FROM_INC_PATH    = ../../..
+STRIP_FROM_INC_PATH    = ../../.. ../include 
 
 # If the SHORT_NAMES tag is set to YES, doxygen will generate much shorter
 # (but less readable) file names. This can be useful if your file system
@@ -648,8 +648,8 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = ../../../boost/locale/ \
-                         ../../../boost/locale/boundary \
+INPUT                  = ../include/boost/locale/ \
+                         ../include/boost/locale/boundary \
                          .
 
 # This tag can be used to specify the character encoding of the source files
@@ -1506,8 +1506,8 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator
 # instead of the = operator.
 
-PREDEFINED             = BOOST_HAS_CHAR32_T \
-                         BOOST_HAS_CHAR16_T \
+PREDEFINED             = BOOST_LOCALE_ENABLE_CHAR32_T \
+                         BOOST_LOCALE_ENABLE_CHAR16_T \
                          BOOST_LOCALE_DECL= \
                          BOOST_LOCALE_DOXYGEN
 

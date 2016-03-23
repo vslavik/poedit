@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Getting the Best Performance from this Library</title>
+<title>Getting the Best Performance from this Library: Compiler and Compiler Options</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
-<link rel="up" href="../perf.html" title="Chapter&#160;15.&#160;Performance">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../perf.html" title="Chapter&#160;16.&#160;Performance">
 <link rel="prev" href="interp.html" title="Interpreting these Results">
-<link rel="next" href="comp_compilers.html" title="Comparing Compilers">
+<link rel="next" href="tradoffs.html" title="Trading Accuracy for Performance">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,22 +20,26 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="interp.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../perf.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="comp_compilers.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="interp.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../perf.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tradoffs.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="math_toolkit.getting_best"></a><a class="link" href="getting_best.html" title="Getting the Best Performance from this Library">Getting the Best Performance
-    from this Library</a>
+<a name="math_toolkit.getting_best"></a><a class="link" href="getting_best.html" title="Getting the Best Performance from this Library: Compiler and Compiler Options">Getting the Best Performance
+    from this Library: Compiler and Compiler Options</a>
 </h2></div></div></div>
 <p>
       By far the most important thing you can do when using this library is turn
       on your compiler's optimisation options. As the following table shows the penalty
-      for using the library in debug mode can be quite large.
+      for using the library in debug mode can be quite large. In addition switching
+      to 64-bit code has a small but noticeable improvement in performance, as does
+      switching to a different compiler (Intel C++ 15 in this example).
     </p>
 <div class="table">
-<a name="math_toolkit.getting_best.performance_comparison_of_releas"></a><p class="title"><b>Table&#160;15.1.&#160;Performance Comparison of Release and Debug Settings</b></p>
-<div class="table-contents"><table class="table" summary="Performance Comparison of Release and Debug Settings">
+<a name="math_toolkit.getting_best.table_Compiler_Option_Comparison_on_Windows_x64"></a><p class="title"><b>Table&#160;16.1.&#160;Compiler Option Comparison on Windows x64</b></p>
+<div class="table-contents"><table class="table" summary="Compiler Option Comparison on Windows x64">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
@@ -48,18 +52,22 @@
             </th>
 <th>
               <p>
-                Microsoft Visual C++ 8.0
-              </p>
-              <p>
-                Debug Settings: /Od /ZI
+                cl /Od (x86 build)
               </p>
             </th>
 <th>
               <p>
-                Microsoft Visual C++ 8.0
+                cl /Ox (x64 build)
               </p>
+            </th>
+<th>
               <p>
-                Release settings: /Ox /arch:SSE2
+                cl /arch:sse2 /Ox (x86 build)
+              </p>
+            </th>
+<th>
+              <p>
+                icl /Ox (x64 build)
               </p>
             </th>
 </tr></thead>
@@ -67,208 +75,81 @@
 <tr>
 <td>
               <p>
-                <a class="link" href="sf_erf/error_function.html" title="Error Functions">erf</a>
+                boost::math::cbrt
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p>16.65</p>
-<p> </p>
-<p>(1.028e-006s)</p>
-<p>
+                <span class="red">21.80<br> (327ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(1.483e-007s)</p>
-<p>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <a class="link" href="sf_erf/error_inv.html" title="Error Function Inverses">erf_inv</a>
+                <span class="red">3.33<br> (50ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p>19.28</p>
-<p> </p>
-<p>(1.215e-006s)</p>
-<p>
+                <span class="red">4.13<br> (62ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(4.888e-007s)</p>
-<p>
+                <span class="green">1.00<br> (15ns)</span>
               </p>
             </td>
 </tr>
 <tr>
 <td>
               <p>
-                <a class="link" href="sf_beta/ibeta_function.html" title="Incomplete Beta Functions">ibeta</a>
-                and <a class="link" href="sf_beta/ibeta_function.html" title="Incomplete Beta Functions">ibetac</a>
+                boost::math::cyl_bessel_j (integer orders)
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p>8.32</p>
-<p> </p>
-<p>(1.540e-005s)</p>
-<p>
+                <span class="red">13.87<br> (1040ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(1.852e-006s)</p>
-<p>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <a class="link" href="sf_beta/ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">ibeta_inv</a>
-                and <a class="link" href="sf_beta/ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">ibetac_inv</a>
+                <span class="blue">1.63<br> (122ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p>10.25</p>
-<p> </p>
-<p>(7.492e-005s)</p>
-<p>
+                <span class="blue">1.59<br> (119ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(7.311e-006s)</p>
-<p>
+                <span class="green">1.00<br> (75ns)</span>
               </p>
             </td>
 </tr>
 <tr>
 <td>
               <p>
-                <a class="link" href="sf_beta/ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">ibeta_inva</a>,
-                <a class="link" href="sf_beta/ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">ibetac_inva</a>,
-                <a class="link" href="sf_beta/ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">ibeta_invb</a>
-                and <a class="link" href="sf_beta/ibeta_inv_function.html" title="The Incomplete Beta Function Inverses">ibetac_invb</a>
+                boost::math::ibeta_inv
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p>8.57</p>
-<p> </p>
-<p>(2.441e-004s)</p>
-<p>
+                <span class="red">4.76<br> (7597ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(2.847e-005s)</p>
-<p>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <a class="link" href="sf_gamma/igamma.html" title="Incomplete Gamma Functions">gamma_p</a> and
-                <a class="link" href="sf_gamma/igamma.html" title="Incomplete Gamma Functions">gamma_q</a>
+                <span class="blue">1.23<br> (1963ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p>10.98</p>
-<p> </p>
-<p>(1.044e-005s)</p>
-<p>
+                <span class="blue">1.48<br> (2364ns)</span>
               </p>
             </td>
 <td>
               <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(9.504e-007s)</p>
-<p>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <a class="link" href="sf_gamma/igamma_inv.html" title="Incomplete Gamma Function Inverses">gamma_p_inv</a>
-                and <a class="link" href="sf_gamma/igamma_inv.html" title="Incomplete Gamma Function Inverses">gamma_q_inv</a>
-              </p>
-            </td>
-<td>
-              <p>
-                </p>
-<p>10.25</p>
-<p> </p>
-<p>(3.721e-005s)</p>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(3.631e-006s)</p>
-<p>
-              </p>
-            </td>
-</tr>
-<tr>
-<td>
-              <p>
-                <a class="link" href="sf_gamma/igamma_inv.html" title="Incomplete Gamma Function Inverses">gamma_p_inva</a>
-                and <a class="link" href="sf_gamma/igamma_inv.html" title="Incomplete Gamma Function Inverses">gamma_q_inva</a>
-              </p>
-            </td>
-<td>
-              <p>
-                </p>
-<p>11.26</p>
-<p> </p>
-<p>(1.124e-004s)</p>
-<p>
-              </p>
-            </td>
-<td>
-              <p>
-                </p>
-<p><span class="bold"><strong>1.00</strong></span></p>
-<p> </p>
-<p>(9.982e-006s)</p>
-<p>
+                <span class="green">1.00<br> (1596ns)</span>
               </p>
             </td>
 </tr>
@@ -290,7 +171,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="interp.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../perf.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="comp_compilers.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="interp.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../perf.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="tradoffs.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

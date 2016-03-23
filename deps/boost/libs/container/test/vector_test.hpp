@@ -42,6 +42,52 @@ namespace boost{
 namespace container {
 namespace test{
 
+template<class Vector>
+struct vector_hash_function_capacity
+{
+   typedef typename Vector::size_type size_type;
+   template <typename U, size_type (U::*)() const> struct Check;
+   template <typename U> static char func(Check<U, &U::capacity> *);
+   template <typename U> static int func(...);
+
+   public:
+   static const bool value = sizeof(func<Vector>(0)) == sizeof(char);
+};
+
+template<class V1, class V2>
+bool vector_vector_hash_function_capacity_only(V1&, V2&, boost::container::container_detail::false_type)
+{
+   return true;
+}
+
+template<class MyBoostVector, class MyStdVector>
+bool vector_vector_hash_function_capacity_only(MyBoostVector&boostvector, MyStdVector&stdvector, boost::container::container_detail::true_type)
+{
+   //deque has no reserve
+   boostvector.reserve(boostvector.size()*2);
+   stdvector.reserve(stdvector.size()*2);
+   if(!test::CheckEqualContainers(boostvector, stdvector)) return false;
+
+   std::size_t cap = boostvector.capacity();
+   boostvector.reserve(cap*2);
+   stdvector.reserve(cap*2);
+   if(!test::CheckEqualContainers(boostvector, stdvector)) return false;
+   boostvector.resize(0);
+   stdvector.resize(0);
+   if(!test::CheckEqualContainers(boostvector, stdvector)) return false;
+
+   boostvector.resize(cap*2);
+   stdvector.resize(cap*2);
+   if(!test::CheckEqualContainers(boostvector, stdvector)) return false;
+
+   boostvector.resize(cap*2);
+   stdvector.resize(cap*2);
+   if(!test::CheckEqualContainers(boostvector, stdvector)) return false;
+
+   return true;
+}
+
+
 template<class V1, class V2>
 bool vector_copyable_only(V1&, V2&, boost::container::container_detail::false_type)
 {
@@ -263,11 +309,7 @@ int vector_test()
          stdvector.insert(stdvector.begin() + old_size/2, aux_vect2, aux_vect2 + 50);
          if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
       }
-/*       //deque has no reserve
-      boostvector.reserve(boostvector.size()*2);
-      stdvector.reserve(stdvector.size()*2);
-      if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
-*/
+
       boostvector.shrink_to_fit();
       MyStdVector(stdvector).swap(stdvector);
       if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
@@ -353,33 +395,20 @@ int vector_test()
          stdvector.assign(l.begin(), l.end());
          if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
       }
-
-      boostvector.resize(100);
-      if(!test_nth_index_of(boostvector))
+   
+      if(!vector_vector_hash_function_capacity_only(boostvector, stdvector, container_detail::bool_<vector_hash_function_capacity<MyBoostVector>::value>()))
          return 1;
-/*       deque has no reserve or capacity
-      std::size_t cap = boostvector.capacity();
-      boostvector.reserve(cap*2);
-      stdvector.reserve(cap*2);
-      if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
-      boostvector.resize(0);
-      stdvector.resize(0);
-      if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
-
-      boostvector.resize(cap*2);
-      stdvector.resize(cap*2);
-      if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
 
       boostvector.clear();
       stdvector.clear();
       boostvector.shrink_to_fit();
       MyStdVector(stdvector).swap(stdvector);
-      if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
+      if(!test::CheckEqualContainers(boostvector, stdvector)) return false;
 
-      boostvector.resize(cap*2);
-      stdvector.resize(cap*2);
-      if(!test::CheckEqualContainers(boostvector, stdvector)) return 1;
-*/
+      boostvector.resize(100);
+      if(!test_nth_index_of(boostvector))
+         return 1;
+
    }
    std::cout << std::endl << "Test OK!" << std::endl;
    return 0;

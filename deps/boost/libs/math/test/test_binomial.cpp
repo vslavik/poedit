@@ -27,6 +27,7 @@
 // Enable C++ Exceptions Yes With SEH Exceptions (/EHa) prevents warning 4535.
 #endif
 
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp> // for real_concept
 using ::boost::math::concepts::real_concept;
 
@@ -521,57 +522,57 @@ void test_spots(RealType T)
           binomial_distribution<RealType>(static_cast<RealType>(0), static_cast<RealType>(0.25)),
           static_cast<RealType>(0)), static_cast<RealType>(1)
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           binomial_distribution<RealType>(static_cast<RealType>(-1), static_cast<RealType>(0.25)),
           static_cast<RealType>(0)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(-0.25)),
           static_cast<RealType>(0)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(1.25)),
           static_cast<RealType>(0)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(0.25)),
           static_cast<RealType>(-1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        pdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(0.25)),
           static_cast<RealType>(9)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(0.25)),
           static_cast<RealType>(-1)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(0.25)),
           static_cast<RealType>(9)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(-0.25)),
           static_cast<RealType>(0)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        cdf(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(1.25)),
           static_cast<RealType>(0)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(-0.25)),
           static_cast<RealType>(0)), std::domain_error
        );
-    BOOST_CHECK_THROW(
+    BOOST_MATH_CHECK_THROW(
        quantile(
           binomial_distribution<RealType>(static_cast<RealType>(8), static_cast<RealType>(1.25)),
           static_cast<RealType>(0)), std::domain_error
@@ -749,7 +750,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
 
 } // BOOST_AUTO_TEST_CASE( test_main )

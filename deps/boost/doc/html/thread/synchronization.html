@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,7 +6,7 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;30.&#160;Thread 4.5.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;31.&#160;Thread 4.6.0">
 <link rel="prev" href="ScopedThreads.html" title="Scoped Threads">
 <link rel="next" href="thread_local_storage.html" title="Thread Local Storage">
 </head>
@@ -62,7 +63,7 @@
         a Function</a></span></dt>
 </dl></div>
 <p>
-        <a href="http://home.roadrunner.com/~hinnant/mutexes/locking.html" target="_top">Handling
+        <a href="http://web.archive.org/web/20140531071228/http://home.roadrunner.com/~hinnant/mutexes/locking.html" target="_top">Handling
         mutexes in C++</a> is an excellent tutorial. You need just replace std
         and ting by boost.
       </p>
@@ -9762,7 +9763,7 @@
 <dl class="variablelist">
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                    close the scheduler/executor <code class="computeroutput"><span class="identifier">e</span></code>
+                    close the executor <code class="computeroutput"><span class="identifier">e</span></code>
                     for submissions.
                   </p></dd>
 <dt><span class="term">Remark:</span></dt>
@@ -9799,7 +9800,7 @@
                   </p></dd>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
-                    whether the scheduler/executor is closed for submissions.
+                    whether the executor is closed for submissions.
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -10280,8 +10281,9 @@
 </pre>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.synchronization.executors.ref.at_executor.constructor"></a><a class="link" href="synchronization.html#thread.synchronization.executors.ref.at_executor.constructor" title="Constructor at_executor(Scheduler&amp;)">Constructor
-            <code class="computeroutput"><span class="identifier">at_executor</span><span class="special">(</span><span class="identifier">Scheduler</span><span class="special">&amp;)</span></code></a>
+<a name="thread.synchronization.executors.ref.at_executor.constructor"></a><a class="link" href="synchronization.html#thread.synchronization.executors.ref.at_executor.constructor" title="Constructor at_executor(Scheduler&amp;, clock::time_point const&amp;)">Constructor
+            <code class="computeroutput"><span class="identifier">at_executor</span><span class="special">(</span><span class="identifier">Scheduler</span><span class="special">&amp;,</span>
+            <span class="identifier">clock</span><span class="special">::</span><span class="identifier">time_point</span> <span class="keyword">const</span><span class="special">&amp;)</span></code></a>
 </h6></div></div></div>
 <pre class="programlisting"><span class="identifier">at_executor</span><span class="special">(</span><span class="identifier">Scheduler</span><span class="special">&amp;</span> <span class="identifier">sch</span><span class="special">,</span> <span class="identifier">clock</span><span class="special">::</span><span class="identifier">time_point</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">tp</span><span class="special">);</span>
 </pre>
@@ -11685,7 +11687,7 @@
           <span class="phrase"><a name="thread.synchronization.futures.shared.share__"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.share__">share()</a>
         </h6>
 <p>
-          Namming the return type when declaring the <code class="computeroutput"><span class="identifier">shared_future</span></code>
+          Naming the return type when declaring the <code class="computeroutput"><span class="identifier">shared_future</span></code>
           is needed; auto is not available within template argument lists. Here
           <code class="computeroutput"><span class="identifier">share</span><span class="special">()</span></code>
           could be used to simplify the code
@@ -11709,7 +11711,7 @@
           on get()</a>
         </h6>
 <p>
-          The user can either read or write the future avariable.
+          The user can either read or write the future variable.
         </p>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">write_to_get</span><span class="special">(</span> <span class="identifier">type</span> <span class="identifier">arg</span> <span class="special">)</span> <span class="special">{</span>
 
@@ -11734,7 +11736,7 @@
           storage is thread safe.
         </p>
 <p>
-          There has been some work by the C++ standard committe on an <code class="computeroutput"><span class="identifier">atomic_future</span></code> that behaves as an <code class="computeroutput"><span class="identifier">atomic</span></code> variable, that is is thread_safe,
+          There has been some work by the C++ standard committee on an <code class="computeroutput"><span class="identifier">atomic_future</span></code> that behaves as an <code class="computeroutput"><span class="identifier">atomic</span></code> variable, that is thread_safe,
           and a <code class="computeroutput"><span class="identifier">shared_future</span></code> that
           can be shared between several threads, but there were not enough consensus
           and time to get it ready for C++11.
@@ -11859,14 +11861,14 @@
               the chaining of continuations.
             </li>
 <li class="listitem">
-              Scheduler: Providing an overload to <code class="computeroutput"><span class="special">.</span><span class="identifier">then</span></code>, to take a scheduler reference
+              Executor: Providing an overload to <code class="computeroutput"><span class="special">.</span><span class="identifier">then</span></code>, to take an executor reference
               places great flexibility over the execution of the future in the programmer's
               hand. As described above, often taking a launch policy is not sufficient
-              for powerful asynchronous operations. The lifetime of the scheduler
+              for powerful asynchronous operations. The lifetime of the executor
               must outlive the continuation.
             </li>
 <li class="listitem">
-              Launch policy: if the additional flexibility that the scheduler provides
+              Launch policy: if the additional flexibility that the executor provides
               is not required.
             </li>
 </ul></div>
@@ -11955,9 +11957,11 @@
 
   <span class="keyword">enum</span> <span class="keyword">class</span> <span class="identifier">launch</span>
   <span class="special">{</span>
+    <span class="identifier">none</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
     <span class="identifier">async</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
     <span class="identifier">deferred</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
     <span class="identifier">executor</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
+    <span class="identifier">inherit</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
     <span class="identifier">any</span> <span class="special">=</span> <span class="identifier">async</span> <span class="special">|</span> <span class="identifier">deferred</span>
   <span class="special">};</span>
 
@@ -12096,15 +12100,44 @@
 </h5></div></div></div>
 <pre class="programlisting"><span class="keyword">enum</span> <span class="keyword">class</span> <span class="identifier">launch</span>
 <span class="special">{</span>
+  <span class="identifier">none</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
   <span class="identifier">async</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
   <span class="identifier">deferred</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
   <span class="identifier">executor</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
+  <span class="identifier">inherit</span> <span class="special">=</span> <span class="identifier">unspecified</span><span class="special">,</span>
   <span class="identifier">any</span> <span class="special">=</span> <span class="identifier">async</span> <span class="special">|</span> <span class="identifier">deferred</span>
 <span class="special">};</span>
 </pre>
 <p>
             The enum type launch is a bitmask type with launch::async and launch::deferred
             denoting individual bits.
+          </p>
+<p>
+            A future created with <code class="computeroutput"><span class="identifier">promise</span><span class="special">&lt;&gt;</span></code> or with a <code class="computeroutput"><span class="identifier">packaged_task</span><span class="special">&lt;&gt;</span></code> or with <code class="computeroutput"><span class="identifier">make_ready_future</span></code>/<code class="computeroutput"><span class="identifier">make_exceptional_future</span></code> (has no associated
+            launch policy), has an implicit a launch policy of <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">none</span></code>.
+          </p>
+<p>
+            A future created by <code class="computeroutput"><span class="identifier">async</span><span class="special">(</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span><span class="special">,</span> <span class="special">...)</span></code>
+            or <code class="computeroutput"><span class="special">::</span><span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span><span class="special">,</span> <span class="special">...)</span></code>
+            has associated a launch policy <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span></code>.
+            A future created by <code class="computeroutput"><span class="identifier">async</span><span class="special">(</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span><span class="special">,</span> <span class="special">...)</span></code>
+            or <code class="computeroutput"><span class="special">::</span><span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span><span class="special">,</span> <span class="special">...)</span></code>
+            has associated a launch policy <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>.
+            A future created by <code class="computeroutput"><span class="identifier">async</span><span class="special">(</span><span class="identifier">Executor</span><span class="special">,</span> <span class="special">...)</span></code>
+            or <code class="computeroutput"><span class="special">::</span><span class="identifier">then</span><span class="special">(</span><span class="identifier">Executor</span><span class="special">,</span> <span class="special">...)</span></code>
+            or <code class="computeroutput"><span class="special">::</span><span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">executor</span><span class="special">,</span> <span class="special">...)</span></code>
+            has associated a launch policy <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">executor</span></code>.
+            A future created by <code class="computeroutput"><span class="identifier">async</span><span class="special">(...)</span></code> or <code class="computeroutput"><span class="special">::</span><span class="identifier">then</span><span class="special">(...)</span></code>
+            has associated a launch policy <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">none</span></code>.
+          </p>
+<p>
+            A future created by <code class="computeroutput"><span class="special">::</span><span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span><span class="special">::</span><span class="identifier">inherit</span><span class="special">,</span> <span class="special">...)</span></code>
+            has associated a launch policy parent future.
+          </p>
+<p>
+            The <code class="computeroutput"><span class="identifier">executor</span></code> and the
+            <code class="computeroutput"><span class="identifier">inherit</span></code> launch policies
+            have a sense only can be user only on <code class="computeroutput"><span class="identifier">then</span><span class="special">()</span></code>.
           </p>
 </div>
 <div class="section">
@@ -12332,7 +12365,7 @@
   <span class="identifier">then</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">S</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
    <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">(</span> <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">)&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
-  <span class="identifier">then</span><span class="special">(</span><span class="identifier">S</span><span class="special">&amp;</span> <span class="identifier">scheduler</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
+  <span class="identifier">then</span><span class="special">(</span><span class="identifier">Ex</span><span class="special">&amp;</span> <span class="identifier">executor</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
    <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">(</span> <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">)&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
   <span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span> <span class="identifier">policy</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
@@ -13270,7 +13303,7 @@
 <span class="identifier">then</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">S</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
  <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">(</span> <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">)&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
-<span class="identifier">then</span><span class="special">(</span><span class="identifier">S</span><span class="special">&amp;</span> <span class="identifier">scheduler</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
+<span class="identifier">then</span><span class="special">(</span><span class="identifier">Ex</span><span class="special">&amp;</span> <span class="identifier">executor</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
  <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">(</span> <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">)&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span> <span class="identifier">policy</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">);</span> <span class="comment">// EXTENSION</span>
@@ -13304,29 +13337,29 @@
 <dd><p>
                     The three functions differ only by input parameters. The first
                     only takes a callable object which accepts a future object as
-                    a parameter. The second function takes a scheduler as the first
+                    a parameter. The second function takes a executor as the first
                     parameter and a callable object as the second parameter. The
                     third function takes a launch policy as the first parameter and
                     a callable object as the second parameter.
+                  </p></dd>
+<dt><span class="term">Requires:</span></dt>
+<dd><p>
+                    <code class="computeroutput"><span class="identifier">INVOKE</span><span class="special">(</span><span class="identifier">DECAY_COPY</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;(</span><span class="identifier">func</span><span class="special">)),</span>
+                    <span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="keyword">this</span><span class="special">))</span></code>
+                    shall be a valid expression.
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
                     All the functions create a shared state that is associated with
-                    the returned future object. The further behavior of the functions
-                    is as follows.
+                    the returned future object. Additionally,
                   </p>
 <p>
-                    - The continuation is called when the object's shared state is
-                    ready (has a value or exception stored).
-                  </p>
-<p>
-                    - The continuation launches according to the specified policy
-                    or scheduler.
-                  </p>
-<p>
-                    - When the scheduler or launch policy is not provided the continuation
-                    inherits the parent's launch policy or scheduler.
+                    - When the object's shared state is ready, the continuation
+                    <code class="computeroutput"><span class="identifier">INVOKE</span><span class="special">(</span><span class="identifier">DECAY_COPY</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;(</span><span class="identifier">func</span><span class="special">)),</span>
+                    <span class="identifier">std</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="keyword">this</span><span class="special">))</span></code>
+                    is called depending on the overload (see below) with the call
+                    to DECAY_COPY() being evaluated in the thread that called then.
                   </p>
 <p>
                     - Any value returned from the continuation is stored as the result
@@ -13336,17 +13369,42 @@
                     resulting <code class="computeroutput"><span class="identifier">future</span></code>.
                   </p>
 <p>
-                    - If the parent was created with <code class="computeroutput"><span class="identifier">promise</span><span class="special">&lt;&gt;</span></code> or with a <code class="computeroutput"><span class="identifier">packaged_task</span><span class="special">&lt;&gt;</span></code>
-                    (has no associated launch policy), the continuation behaves the
-                    same as the third overload with a policy argument of <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span> <span class="special">|</span>
-                    <span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code> and the same argument
-                    for <code class="computeroutput"><span class="identifier">func</span></code>.
+                    The continuation launches according to the specified policy or
+                    executor or noting.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">none</span></code>
+                    the continuation is called on an unspecified thread of execution.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span></code>
+                    the continuation is called on a new thread of execution.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>
+                    the continuation is called on demand.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">executor</span></code>
+                    the continuation is called on one of the thread of execution
+                    of the executor.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">inherit</span></code>
+                    the continuation inherits the parent's launch policy or executor.
+                  </p>
+<p>
+                    - When the executor or launch policy is not provided (first overload)
+                    is if as if launch::none was specified.
+                  </p>
+<p>
+                    - When the executor is provided (second overload) the continuation
+                    is called on one of the thread of execution of the executor.
                   </p>
 <p>
                     - If the parent has a policy of <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>
                     and the continuation does not have a specified launch policy
-                    or scheduler, then the parent is filled by immediately calling
-                    <code class="computeroutput"><span class="special">.</span><span class="identifier">wait</span><span class="special">()</span></code>, and the policy of the antecedent
+                    executor, then the parent is filled by immediately calling <code class="computeroutput"><span class="special">.</span><span class="identifier">wait</span><span class="special">()</span></code>, and the policy of the antecedent
                     is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>.
                   </p>
 </dd>
@@ -14066,7 +14124,7 @@
 <span class="identifier">then</span><span class="special">(</span><span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">S</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
  <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">(</span><span class="identifier">shared_future</span><span class="special">)&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
-<span class="identifier">then</span><span class="special">(</span><span class="identifier">S</span><span class="special">&amp;</span> <span class="identifier">scheduler</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
+<span class="identifier">then</span><span class="special">(</span><span class="identifier">Ex</span><span class="special">&amp;</span> <span class="identifier">executor</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
  <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">(</span><span class="identifier">shared_future</span><span class="special">)&gt;::</span><span class="identifier">type</span><span class="special">&gt;</span>
 <span class="identifier">then</span><span class="special">(</span><span class="identifier">launch</span> <span class="identifier">policy</span><span class="special">,</span> <span class="identifier">F</span><span class="special">&amp;&amp;</span> <span class="identifier">func</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span> <span class="comment">// EXTENSION</span>
@@ -14100,39 +14158,74 @@
 <dd><p>
                     The three functions differ only by input parameters. The first
                     only takes a callable object which accepts a shared_future object
-                    as a parameter. The second function takes a scheduler as the
+                    as a parameter. The second function takes an executor as the
                     first parameter and a callable object as the second parameter.
                     The third function takes a launch policy as the first parameter
                     and a callable object as the second parameter.
                   </p></dd>
+<dt><span class="term">Requires:</span></dt>
+<dd><p>
+                    <code class="computeroutput"><span class="identifier">INVOKE</span><span class="special">(</span><span class="identifier">DECAY_COPY</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;(</span><span class="identifier">func</span><span class="special">)),</span>
+                    <span class="special">*</span><span class="keyword">this</span><span class="special">)</span></code> shall be a valid expression.
+                  </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
-                    - The continuation is called when the object's shared state is
-                    ready (has a value or exception stored).
+                    All the functions create a shared state that is associated with
+                    the returned future object. Additionally,
                   </p>
 <p>
-                    - The continuation launches according to the specified policy
-                    or scheduler.
+                    - When the object's shared state is ready, the continuation
+                    <code class="computeroutput"><span class="identifier">INVOKE</span><span class="special">(</span><span class="identifier">DECAY_COPY</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;(</span><span class="identifier">func</span><span class="special">)),</span>
+                    <span class="special">*</span><span class="keyword">this</span><span class="special">)</span></code> is called depending on the overload
+                    (see below) with the call to DECAY_COPY() being evaluated in
+                    the thread that called then.
                   </p>
 <p>
-                    - When the scheduler or launch policy is not provided the continuation
-                    inherits the parent's launch policy or scheduler.
+                    - Any value returned from the continuation is stored as the result
+                    in the shared state of the resulting <code class="computeroutput"><span class="identifier">future</span></code>.
+                    Any exception propagated from the execution of the continuation
+                    is stored as the exceptional result in the shared state of the
+                    resulting <code class="computeroutput"><span class="identifier">future</span></code>.
                   </p>
 <p>
-                    - If the parent was created with <code class="computeroutput"><span class="identifier">promise</span></code>
-                    or with a <code class="computeroutput"><span class="identifier">packaged_task</span></code>
-                    (has no associated launch policy), the continuation behaves the
-                    same as the third overload with a policy argument of <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span> <span class="special">|</span>
-                    <span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code> and the same argument
-                    for func.
+                    The continuation launches according to the specified policy or
+                    executor or noting.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">none</span></code>
+                    the continuation is called on an unspecified thread of execution.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">async</span></code>
+                    the continuation is called on a new thread of execution.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>
+                    the continuation is called on demand.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">executor</span></code>
+                    the continuation is called on one of the thread of execution
+                    of the executor.
+                  </p>
+<p>
+                    - When the launch policy is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">inherit</span></code>
+                    the continuation inherits the parent's launch policy or executor.
+                  </p>
+<p>
+                    - When the executor or launch policy is not provided (first overload)
+                    is if as if launch::none was specified.
+                  </p>
+<p>
+                    - When the executor is provided (second overload) the continuation
+                    is called on one of the thread of execution of the executor.
                   </p>
 <p>
                     - If the parent has a policy of <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>
                     and the continuation does not have a specified launch policy
-                    or scheduler, then the parent is filled by immediately calling
-                    <code class="computeroutput"><span class="special">.</span><span class="identifier">wait</span><span class="special">()</span></code>, and the policy of the antecedent
-                    is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>
+                    executor, then the parent is filled by immediately calling <code class="computeroutput"><span class="special">.</span><span class="identifier">wait</span><span class="special">()</span></code>, and the policy of the antecedent
+                    is <code class="computeroutput"><span class="identifier">launch</span><span class="special">::</span><span class="identifier">deferred</span></code>.
                   </p>
 </dd>
 <dt><span class="term">Returns:</span></dt>

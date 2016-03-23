@@ -566,6 +566,8 @@ int map_test_copyable ()
             return 1;
          if(!CheckEqualContainers(&shmmmapcopy, &stdmmapcopy))
             return 1;
+         delete stdmap;
+         delete stdmultimap;
          segment.destroy_ptr(shmmap);
          segment.destroy_ptr(shmmultimap);
       }

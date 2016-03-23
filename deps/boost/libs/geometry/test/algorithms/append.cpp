@@ -1,12 +1,12 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -24,25 +24,20 @@
 #include <geometry_test_common.hpp>
 
 #include <boost/geometry/core/access.hpp>
+#include <boost/geometry/core/point_type.hpp>
+#include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/algorithms/make.hpp>
 #include <boost/geometry/algorithms/clear.hpp>
 #include <boost/geometry/algorithms/append.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
 #include <boost/geometry/geometries/geometries.hpp>
+#include <boost/geometry/geometries/concepts/check.hpp>
 #include <boost/geometry/geometries/register/linestring.hpp>
 #include <boost/variant/variant.hpp>
 
 #include <test_common/test_point.hpp>
 #include <test_geometries/wrapped_boost_array.hpp>
 
-// includes for multi-geometries
-#include <boost/geometry/multi/core/point_type.hpp>
-#include <boost/geometry/multi/core/tags.hpp>
-#include <boost/geometry/multi/geometries/concepts/check.hpp>
-#include <boost/geometry/multi/geometries/multi_geometries.hpp>
-#include <boost/geometry/multi/algorithms/append.hpp>
-#include <boost/geometry/multi/algorithms/clear.hpp>
-#include <boost/geometry/multi/algorithms/num_points.hpp>
 
 BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::vector)
 BOOST_GEOMETRY_REGISTER_LINESTRING_TEMPLATED(std::deque)

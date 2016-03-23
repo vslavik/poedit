@@ -4,7 +4,7 @@
 <title>Ratios of Gamma Functions</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_gamma.html" title="Gamma Functions">
 <link rel="prev" href="polygamma.html" title="Polygamma">
 <link rel="next" href="igamma.html" title="Incomplete Gamma Functions">
@@ -33,14 +33,14 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_delta_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">delta</span><span class="special">);</span>
 
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Policy</span><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_delta_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">delta</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_delta_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">delta</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -51,8 +51,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the ratio of gamma functions:
@@ -61,9 +61,9 @@
         <span class="inlinemediaobject"><img src="../../../equations/gamma_ratio0.svg"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -73,8 +73,8 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_delta_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">delta</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_delta_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">delta</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">tgamma_delta_ratio</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">delta</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 </pre>
 <p>
         Returns the ratio of gamma functions:
@@ -83,9 +83,9 @@
         <span class="inlinemediaobject"><img src="../../../equations/gamma_ratio1.svg"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -112,33 +112,36 @@
         any floating point type that is narrower than the one shown will have <a class="link" href="../relative_error.html#math_toolkit.relative_error.zero_error">effectively zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.sf_gamma.gamma_ratios.errors_in_the_function_tgamma_de"></a><p class="title"><b>Table&#160;6.1.&#160;Errors In the Function tgamma_delta_ratio(a, delta)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function tgamma_delta_ratio(a, delta)">
+<a name="math_toolkit.sf_gamma.gamma_ratios.table_tgamma_delta_ratio"></a><p class="title"><b>Table&#160;6.7.&#160;Error rates for tgamma_delta_ratio</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for tgamma_delta_ratio">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  20 &lt; a &lt; 80
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
+              </th>
+<th>
                 <p>
-                  and
-                </p>
-                <p>
-                  delta &lt; 1
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -146,68 +149,162 @@
 <tr>
 <td>
                 <p>
-                  53
+                  tgamma + small delta ratios
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 10.1&#949; (Mean = 1.25&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=16.9 Mean=1.7
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA32, gcc-3.4.4
+                  <span class="blue">Max = 5.56&#949; (Mean = 0.969&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=24 Mean=2.7
+                  <span class="blue">Max = 15.4&#949; (Mean = 2.09&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  tgamma + small delta ratios (negative delta)
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA64, gcc-3.4.4
+                  <span class="blue">Max = 8.04&#949; (Mean = 1.31&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=12.8 Mean=1.8
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 8.67&#949; (Mean = 1.29&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 18.3&#949; (Mean = 2.03&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  tgamma + small integer ratios
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 2.74&#949; (Mean = 0.736&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=21.4 Mean=2.3
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.96&#949; (Mean = 0.677&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.96&#949; (Mean = 0.677&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  tgamma + small integer ratios (negative delta)
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.15&#949; (Mean = 0.685&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.62&#949; (Mean = 0.451&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.62&#949; (Mean = 0.451&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  integer tgamma ratios
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.968&#949; (Mean = 0.386&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.997&#949; (Mean = 0.4&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.997&#949; (Mean = 0.4&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  integer tgamma ratios (negative delta)
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.974&#949; (Mean = 0.184&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.853&#949; (Mean = 0.176&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.853&#949; (Mean = 0.176&#949;)</span>
                 </p>
               </td>
 </tr>
@@ -215,100 +312,66 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="math_toolkit.sf_gamma.gamma_ratios.errors_in_the_function_tgamma_ra"></a><p class="title"><b>Table&#160;6.2.&#160;Errors In the Function tgamma_ratio(a, b)</b></p>
-<div class="table-contents"><table class="table" summary="Errors In the Function tgamma_ratio(a, b)">
+<a name="math_toolkit.sf_gamma.gamma_ratios.table_tgamma_ratio"></a><p class="title"><b>Table&#160;6.8.&#160;Error rates for tgamma_ratio</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for tgamma_ratio">
 <colgroup>
+<col>
+<col>
 <col>
 <col>
 <col>
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  6 &lt; a,b &lt; 50
+                  GNU C++ version 5.1.0<br> linux<br> long double
+                </p>
+              </th>
+<th>
+                <p>
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>
                 <p>
-                  53
+                  tgamma ratios
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 3.66&#949; (Mean = 1.27&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=34 Mean=9
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Redhat Linux IA32, gcc-3.4.4
+                  <span class="blue">Max = 3.09&#949; (Mean = 1.15&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=91 Mean=23
+                  <span class="blue">Max = 174&#949; (Mean = 61.2&#949;)</span>
                 </p>
               </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
-                </p>
-              </td>
-<td>
-                <p>
-                  Redhat Linux IA64, gcc-3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=35.6 Mean=9.3
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  113
-                </p>
-              </td>
-<td>
-                <p>
-                  HPUX IA64, aCC A.06.06
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=43.9 Mean=13.2
-                </p>
-              </td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
 </div>
 <br class="table-break"><h5>

@@ -14,7 +14,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_bessel_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -24,18 +23,27 @@
 template <class T>
 T cyl_bessel_k_int_wrapper(T v, T x)
 {
+#ifdef BESSEL_KN_FUNCTION_TO_TEST
+   return static_cast<T>(
+      BESSEL_KN_FUNCTION_TO_TEST(
+      boost::math::itrunc(v), x));
+#else
    return static_cast<T>(
       boost::math::cyl_bessel_k(
       boost::math::itrunc(v), x));
+#endif
 }
 
 template <class Real, class T>
 void do_test_cyl_bessel_k(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_K_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BESSEL_K_FUNCTION_TO_TEST
+   pg funcp = BESSEL_K_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::cyl_bessel_k<value_type, value_type>;
 #else
    pg funcp = boost::math::cyl_bessel_k;
@@ -53,30 +61,16 @@ void do_test_cyl_bessel_k(const T& data, const char* type_name, const char* test
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_bessel_k", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_bessel_k", test_name);
    std::cout << std::endl;
 
-#ifdef TEST_OTHER
-   if(boost::is_floating_point<value_type>::value)
-   {
-      funcp = other::cyl_bessel_k;
-
-      //
-      // test other::cyl_bessel_k against data:
-      //
-      result = boost::math::tools::test_hetero(
-         data, 
-         bind_func<Real>(funcp, 0, 1), 
-         extract_result<Real>(2));
-      print_test_result(result, data[result.worst()], result.worst(), type_name, "other::cyl_bessel_k");
-      std::cout << std::endl;
-   }
 #endif
 }
 
 template <class Real, class T>
 void do_test_cyl_bessel_k_int(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_KN_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -98,8 +92,9 @@ void do_test_cyl_bessel_k_int(const T& data, const char* type_name, const char* 
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_bessel_k", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_bessel_k (integer orders)", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>

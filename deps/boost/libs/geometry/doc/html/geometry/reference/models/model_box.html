@@ -27,7 +27,7 @@
 <a name="geometry.reference.models.model_box"></a><a class="link" href="model_box.html" title="model::box">model::box</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp125355392"></a><a class="indexterm" name="idp125356080"></a>
+          <a class="indexterm" name="idm44837172171488"></a><a class="indexterm" name="idm44837172170800"></a>
 Class box: defines a box made of two describing points.
         </p>
 <h6>
@@ -40,6 +40,14 @@ Class box: defines a box made of two describing points.
         </p>
 <h6>
 <a name="geometry.reference.models.model_box.h1"></a>
+          <span class="phrase"><a name="geometry.reference.models.model_box.model_of"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.model_of">Model
+          of</a>
+        </h6>
+<p>
+          <a class="link" href="../concepts/concept_box.html" title="Box Concept">Box Concept</a>
+        </p>
+<h6>
+<a name="geometry.reference.models.model_box.h2"></a>
           <span class="phrase"><a name="geometry.reference.models.model_box.synopsis"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.synopsis">Synopsis</a>
         </h6>
 <p>
@@ -53,7 +61,7 @@ Class box: defines a box made of two describing points.
 <p>
         </p>
 <h6>
-<a name="geometry.reference.models.model_box.h2"></a>
+<a name="geometry.reference.models.model_box.h3"></a>
           <span class="phrase"><a name="geometry.reference.models.model_box.template_parameter_s_"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
@@ -91,7 +99,7 @@ Class box: defines a box made of two describing points.
 </tr></tbody>
 </table></div>
 <h6>
-<a name="geometry.reference.models.model_box.h3"></a>
+<a name="geometry.reference.models.model_box.h4"></a>
           <span class="phrase"><a name="geometry.reference.models.model_box.constructor_s_"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -127,6 +135,9 @@ Class box: defines a box made of two describing points.
                   </p>
                 </td>
 <td>
+                  <p>
+                    Default constructor, no initialization.
+                  </p>
                 </td>
 <td>
                 </td>
@@ -157,7 +168,7 @@ Class box: defines a box made of two describing points.
 </tbody>
 </table></div>
 <h6>
-<a name="geometry.reference.models.model_box.h4"></a>
+<a name="geometry.reference.models.model_box.h5"></a>
           <span class="phrase"><a name="geometry.reference.models.model_box.member_function_s_"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.member_function_s_">Member
           Function(s)</a>
         </h6>
@@ -254,7 +265,7 @@ Class box: defines a box made of two describing points.
 </tbody>
 </table></div>
 <h6>
-<a name="geometry.reference.models.model_box.h5"></a>
+<a name="geometry.reference.models.model_box.h6"></a>
           <span class="phrase"><a name="geometry.reference.models.model_box.header"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.header">Header</a>
         </h6>
 <p>
@@ -269,6 +280,103 @@ Class box: defines a box made of two describing points.
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">geometries</span><span class="special">/</span><span class="identifier">box</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
+<h6>
+<a name="geometry.reference.models.model_box.h7"></a>
+          <span class="phrase"><a name="geometry.reference.models.model_box.examples"></a></span><a class="link" href="model_box.html#geometry.reference.models.model_box.examples">Examples</a>
+        </h6>
+<p>
+          Declaration and use of the Boost.Geometry model::box, modelling the Box
+          Concept
+        </p>
+<p>
+</p>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+
+<span class="keyword">namespace</span> <span class="identifier">bg</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">;</span>
+
+<span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
+<span class="special">{</span>
+    <span class="keyword">typedef</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span><span class="special">&gt;</span> <span class="identifier">point_t</span><span class="special">;</span>
+    <span class="keyword">typedef</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">box</span><span class="special">&lt;</span><span class="identifier">point_t</span><span class="special">&gt;</span> <span class="identifier">box_t</span><span class="special">;</span>
+
+    <span class="identifier">box_t</span> <span class="identifier">box1</span><span class="special">;</span> <a class="co" name="geometry.reference.models.model_box.c0" href="model_box.html#geometry.reference.models.model_box.c1"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
+    <span class="identifier">box_t</span> <span class="identifier">box2</span><span class="special">(</span><span class="identifier">point_t</span><span class="special">(</span><span class="number">0.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">),</span> <span class="identifier">point_t</span><span class="special">(</span><span class="number">5.0</span><span class="special">,</span> <span class="number">5.0</span><span class="special">));</span> <a class="co" name="geometry.reference.models.model_box.c2" href="model_box.html#geometry.reference.models.model_box.c3"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+
+<span class="preprocessor">#ifndef</span> <span class="identifier">BOOST_NO_CXX11_UNIFIED_INITIALIZATION_SYNTAX</span>
+
+    <span class="identifier">box_t</span> <span class="identifier">box3</span><span class="special">{{</span><span class="number">0.0</span><span class="special">,</span> <span class="number">0.0</span><span class="special">},</span> <span class="special">{</span><span class="number">5.0</span><span class="special">,</span> <span class="number">5.0</span><span class="special">}};</span> <a class="co" name="geometry.reference.models.model_box.c4" href="model_box.html#geometry.reference.models.model_box.c5"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+
+<span class="preprocessor">#endif</span>
+
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;</span><span class="identifier">bg</span><span class="special">::</span><span class="identifier">min_corner</span><span class="special">,</span> <span class="number">0</span><span class="special">&gt;(</span><span class="identifier">box1</span><span class="special">,</span> <span class="number">1.0</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_box.c6" href="model_box.html#geometry.reference.models.model_box.c7"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;</span><span class="identifier">bg</span><span class="special">::</span><span class="identifier">min_corner</span><span class="special">,</span> <span class="number">1</span><span class="special">&gt;(</span><span class="identifier">box1</span><span class="special">,</span> <span class="number">2.0</span><span class="special">);</span>
+    <span class="identifier">box1</span><span class="special">.</span><span class="identifier">max_corner</span><span class="special">().</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="number">3.0</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_box.c8" href="model_box.html#geometry.reference.models.model_box.c9"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a>
+    <span class="identifier">box1</span><span class="special">.</span><span class="identifier">max_corner</span><span class="special">().</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="number">4.0</span><span class="special">);</span>
+
+    <span class="keyword">double</span> <span class="identifier">min_x</span> <span class="special">=</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="identifier">bg</span><span class="special">::</span><span class="identifier">min_corner</span><span class="special">,</span> <span class="number">0</span><span class="special">&gt;(</span><span class="identifier">box1</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_box.c10" href="model_box.html#geometry.reference.models.model_box.c11"><img src="../../../../../../../doc/src/images/callouts/6.png" alt="6" border="0"></a>
+    <span class="keyword">double</span> <span class="identifier">min_y</span> <span class="special">=</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="identifier">bg</span><span class="special">::</span><span class="identifier">min_corner</span><span class="special">,</span> <span class="number">1</span><span class="special">&gt;(</span><span class="identifier">box1</span><span class="special">);</span>
+    <span class="keyword">double</span> <span class="identifier">max_x</span> <span class="special">=</span> <span class="identifier">box1</span><span class="special">.</span><span class="identifier">max_corner</span><span class="special">().</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;();</span> <a class="co" name="geometry.reference.models.model_box.c12" href="model_box.html#geometry.reference.models.model_box.c13"><img src="../../../../../../../doc/src/images/callouts/7.png" alt="7" border="0"></a>
+    <span class="keyword">double</span> <span class="identifier">max_y</span> <span class="special">=</span> <span class="identifier">box1</span><span class="special">.</span><span class="identifier">max_corner</span><span class="special">().</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;();</span>
+
+    <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">min_x</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">min_y</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">max_x</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">max_y</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
+
+    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
+<span class="special">}</span>
+</pre>
+<p>
+        </p>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c1"></a><a href="#geometry.reference.models.model_box.c0"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Default-construct a box.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c3"></a><a href="#geometry.reference.models.model_box.c2"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Construct, assigning min and max corner point.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c5"></a><a href="#geometry.reference.models.model_box.c4"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Construct, using C++11 unified initialization syntax.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c7"></a><a href="#geometry.reference.models.model_box.c6"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Set a coordinate, generic.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c9"></a><a href="#geometry.reference.models.model_box.c8"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Set a coordinate, class-specific (<span class="bold"><strong>Note</strong></span>:
+              prefer <code class="computeroutput"><span class="identifier">bg</span><span class="special">::</span><span class="identifier">set</span><span class="special">()</span></code>).
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c11"></a><a href="#geometry.reference.models.model_box.c10"><img src="../../../../../../../doc/src/images/callouts/6.png" alt="6" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Get a coordinate, generic.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_box.c13"></a><a href="#geometry.reference.models.model_box.c12"><img src="../../../../../../../doc/src/images/callouts/7.png" alt="7" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Get a coordinate, class-specific (<span class="bold"><strong>Note</strong></span>:
+              prefer <code class="computeroutput"><span class="identifier">bg</span><span class="special">::</span><span class="identifier">get</span><span class="special">()</span></code>).
+            </p></td>
+</tr>
+</table></div>
+<p>
+          Output:
+        </p>
+<pre class="programlisting">1, 2, 3, 4
+</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

@@ -17,6 +17,8 @@
 #include <boost/intrusive/pointer_traits.hpp>
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/intrusive/detail/to_raw_pointer.hpp>
+#include <boost/intrusive/detail/parent_from_member.hpp>
 
 
 namespace boost{

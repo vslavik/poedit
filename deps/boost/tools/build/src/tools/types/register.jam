@@ -21,7 +21,7 @@ local rule type ( type : suffixes * : base-type ? : os * )
 }
 
 .this-module's-file = [ modules.binding $(__name__) ] ;
-.this-module's-dir = [ path.parent $(.this-module's-file) ] ;
+.this-module's-dir = [ path.parent [ path.make $(.this-module's-file) ] ] ;
 .sibling-jamfiles =  [ path.glob $(.this-module's-dir) : *.jam ] ;
 .sibling-modules = [ MATCH ^(.*)\.jam$ : $(.sibling-jamfiles) ] ;
 
@@ -32,7 +32,7 @@ for m in $(.sibling-modules)
     m = types/$(m) ;
     
     # Inject the type rule into the new module
-    IMPORT $(__name__) : type : $(m) : type ;
+    IMPORT $(__name__) : type : $(m:B) : type ;
     import $(m) ;
 }
 

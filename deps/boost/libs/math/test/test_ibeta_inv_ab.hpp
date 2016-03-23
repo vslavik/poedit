@@ -34,7 +34,7 @@ template <class Real, class T>
 void test_inverses(const T& data)
 {
    using namespace std;
-   typedef typename T::value_type row_type;
+   //typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    value_type precision = static_cast<value_type>(ldexp(1.0, 1-boost::math::policies::digits<value_type, boost::math::policies::policy<> >()/2)) * 100;
@@ -94,11 +94,14 @@ void test_inverses(const T& data)
 template <class Real, class T>
 void test_inverses2(const T& data, const char* type_name, const char* test_name)
 {
-   typedef typename T::value_type row_type;
+#if !(defined(ERROR_REPORTING_MODE) && !defined(IBETA_INVA_FUNCTION_TO_TEST))
+   //typedef typename T::value_type row_type;
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef IBETA_INVA_FUNCTION_TO_TEST
+   pg funcp = IBETA_INVA_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::ibeta_inva<value_type, value_type, value_type>;
 #else
    pg funcp = boost::math::ibeta_inva;
@@ -116,11 +119,13 @@ void test_inverses2(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0, 1, 2),
       extract_result<Real>(3));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::ibeta_inva", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "ibeta_inva", test_name);
    //
    // test ibetac_inva(T, T, T) against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef IBETAC_INVA_FUNCTION_TO_TEST
+   funcp = IBETAC_INVA_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::ibetac_inva<value_type, value_type, value_type>;
 #else
    funcp = boost::math::ibetac_inva;
@@ -129,11 +134,13 @@ void test_inverses2(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0, 1, 2),
       extract_result<Real>(4));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::ibetac_inva", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "ibetac_inva", test_name);
    //
    // test ibeta_invb(T, T, T) against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef IBETA_INVB_FUNCTION_TO_TEST
+   funcp = IBETA_INVB_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::ibeta_invb<value_type, value_type, value_type>;
 #else
    funcp = boost::math::ibeta_invb;
@@ -142,11 +149,13 @@ void test_inverses2(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0, 1, 2),
       extract_result<Real>(5));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::ibeta_invb", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "ibeta_invb", test_name);
    //
    // test ibetac_invb(T, T, T) against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef IBETAC_INVB_FUNCTION_TO_TEST
+   funcp = IBETAC_INVB_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::ibetac_invb<value_type, value_type, value_type>;
 #else
    funcp = boost::math::ibetac_invb;
@@ -155,12 +164,14 @@ void test_inverses2(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0, 1, 2),
       extract_result<Real>(6));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::ibetac_invb", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "ibetac_invb", test_name);
+#endif
 }
 
 template <class T>
 void test_beta(T, const char* name)
 {
+#if !defined(ERROR_REPORTING_MODE)
    //
    // The actual test data is rather verbose, so it's in a separate file
    //
@@ -186,11 +197,10 @@ void test_beta(T, const char* name)
 
    test_inverses<T>(ibeta_large_data);
 #endif
+#endif
 
 #if !defined(TEST_REAL_CONCEPT) || defined(FULL_TEST) || (TEST_DATA == 4)
-#ifndef FULL_TEST
    if(boost::is_floating_point<T>::value){
-#endif
    //
    // This accuracy test is normally only enabled for "real"
    // floating point types and not for class real_concept.
@@ -200,9 +210,7 @@ void test_beta(T, const char* name)
 #  include "ibeta_inva_data.ipp"
 
    test_inverses2<T>(ibeta_inva_data, name, "Inverse incomplete beta");
-#ifndef FULL_TEST
    }
-#endif
 #endif
 }
 

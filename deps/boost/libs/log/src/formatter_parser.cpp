@@ -433,7 +433,7 @@ private:
 
 //! The function registers a user-defined formatter factory
 template< typename CharT >
-void register_formatter_factory(attribute_name const& name, shared_ptr< formatter_factory< CharT > > const& factory)
+BOOST_LOG_SETUP_API void register_formatter_factory(attribute_name const& name, shared_ptr< formatter_factory< CharT > > const& factory)
 {
     BOOST_ASSERT(!!name);
     BOOST_ASSERT(!!factory);
@@ -445,7 +445,7 @@ void register_formatter_factory(attribute_name const& name, shared_ptr< formatte
 
 //! The function parses a formatter from the string
 template< typename CharT >
-basic_formatter< CharT > parse_formatter(const CharT* begin, const CharT* end)
+BOOST_LOG_SETUP_API basic_formatter< CharT > parse_formatter(const CharT* begin, const CharT* end)
 {
     typedef CharT char_type;
 

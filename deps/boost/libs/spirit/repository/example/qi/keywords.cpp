@@ -173,7 +173,7 @@ main()
         //]
 
         //[reference_keyword_list_constraint_rule
-        /*`The parser definition below uses the kwd directive occurence constraint variants to 
+        /*`The parser definition below uses the kwd directive occurrence constraint variants to 
             make sure that the name and age keyword occur only once and allows the favorite color 
             entry to appear 0 or more times. */
         constraint_person_rule %=
@@ -193,14 +193,14 @@ main()
             ,Hellen);   
         std::cout<<Hellen;
         
-       // Parsing this string will fail because the age and size minimum occurence requirements aren't met.
+       // Parsing this string will fail because the age and size minimum occurrence requirements aren't met.
        test_phrase_parser_attr(
             "name = \"Johny\"  \n favorite color = \"blue\" \n favorite color = \"green\" "
             ,constraint_person_rule
             ,Johny );
         
         /*`Parsing the first string will succeed but fail for the second string as the 
-        occurence constraints aren't met. This code should print:[teletype]
+        occurrence constraints aren't met. This code should print:[teletype]
         
         Person : Hellen, 10, 1.8
         blue

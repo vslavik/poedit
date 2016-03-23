@@ -4,7 +4,7 @@
 # (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
 # Boost library support module.
-# 
+#
 # This module allows to use the boost library from boost-build projects.
 # The location of a boost source tree or the path to a pre-built
 # version of the library can be configured from either site-config.jam
@@ -13,15 +13,15 @@
 # tree. As a last resort it tries to use pre-built libraries from the standard
 # search path of the compiler.
 #
-# If the location to a source tree is known, the module can be configured 
+# If the location to a source tree is known, the module can be configured
 # from the *-config.jam files:
 #
 # using boost : 1.35 : <root>/path-to-boost-root ;
 #
 # If the location to a pre-built version is known:
 #
-# using boost : 1.34 
-#   : <include>/usr/local/include/boost_1_34 
+# using boost : 1.34
+#   : <include>/usr/local/include/boost_1_34
 #     <library>/usr/local/lib
 #   ;
 #
@@ -41,7 +41,7 @@
 #
 # boost.use-project ;
 #
-# The library can be referenced with the project identifier '/boost'. To 
+# The library can be referenced with the project identifier '/boost'. To
 # reference the program_options you would specify:
 #
 # exe myexe : mysrc.cpp : <library>/boost//program_options ;
@@ -76,7 +76,7 @@ __debug = None
 def debug():
     global __debug
     if __debug is None:
-        __debug = "--debug-configuration" in bjam.variable("ARGV")        
+        __debug = "--debug-configuration" in bjam.variable("ARGV")
     return __debug
 
 
@@ -94,9 +94,9 @@ def debug():
 # <include>/path-to-include: The include directory to search.
 #
 # <library>/path-to-library: The library directory to search.
-# 
+#
 # <layout>system or <layout>versioned.
-# 
+#
 # <build-id>my_build_id: The custom build id to use.
 #
 def init(version, options = None):
@@ -130,7 +130,7 @@ rules = projects.project_rules()
 # of the boost library. If the 'version' parameter is omitted either
 # the configured default (first in config files) is used or an auto
 # configuration will be attempted.
-# 
+#
 @bjam_signature(([ "version", "?" ], ))
 def use_project(version = None):
     projects.push_current( projects.current() )
@@ -149,7 +149,7 @@ def use_project(version = None):
             root = opts.get('<root>' )
             inc = opts.get('<include>')
             lib = opts.get('<library>')
-            
+
             if debug():
                 print "notice: using boost library {} {}".format( version, opt.raw() )
 
@@ -171,7 +171,7 @@ def use_project(version = None):
                 root = bjam.variable("BOOST_ROOT")
 
             module = projects.current().project_module()
-            
+
             if root:
                 bjam.call('call-in-module', module, 'use-project', ['boost', root])
             else:
@@ -199,14 +199,15 @@ def boost_std(inc = None, lib = None):
     tag_prop_set = property_set.create([property.Property('<tag>', tag_std)])
     attributes = projects.attributes(projects.current().project_module())
     attributes.requirements = attributes.requirements.refine(tag_prop_set)
-    
+
     alias('headers')
-    
+
     def boost_lib(lib_name, dyn_link_macro):
         if (isinstance(lib_name,str)):
             lib_name = [lib_name]
         builtin.lib(lib_name, usage_requirements=['<link>shared:<define>{}'.format(dyn_link_macro)])
-    
+
+    boost_lib('container'           , 'BOOST_CONTAINER_DYN_LINK'      )
     boost_lib('date_time'           , 'BOOST_DATE_TIME_DYN_LINK'      )
     boost_lib('filesystem'          , 'BOOST_FILE_SYSTEM_DYN_LINK'    )
     boost_lib('graph'               , 'BOOST_GRAPH_DYN_LINK'          )
@@ -267,7 +268,7 @@ def tag_std(name, type, prop_set):
 
 def tag_maybe(param):
     return ['-{}'.format(param)] if param else []
-    
+
 def tag_system(name, type, prop_set):
     return common.format_name(['<base>'] + tag_maybe(__build_id), name, type, prop_set)
 

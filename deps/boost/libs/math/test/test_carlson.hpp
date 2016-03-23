@@ -24,11 +24,14 @@
 template <class Real, typename T>
 void do_test_ellint_rf(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_RF_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_RF_FUNCTION_TO_TEST
+   value_type(*fp)(value_type, value_type, value_type) = ELLINT_RF_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp)(value_type, value_type, value_type) = boost::math::ellint_rf<value_type, value_type, value_type>;
 #else
     value_type (*fp)(value_type, value_type, value_type) = boost::math::ellint_rf;
@@ -40,20 +43,23 @@ void do_test_ellint_rf(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp, 0, 1, 2),
       extract_result<Real>(3));
    handle_test_result(result, data[result.worst()], result.worst(), 
-      type_name, "boost::math::ellint_rf", test);
+      type_name, "ellint_rf", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <class Real, typename T>
 void do_test_ellint_rc(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_RC_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_RC_FUNCTION_TO_TEST
+   value_type(*fp)(value_type, value_type) = ELLINT_RC_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp)(value_type, value_type) = boost::math::ellint_rc<value_type, value_type>;
 #else
     value_type (*fp)(value_type, value_type) = boost::math::ellint_rc;
@@ -65,20 +71,23 @@ void do_test_ellint_rc(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp, 0, 1),
       extract_result<Real>(2));
       handle_test_result(result, data[result.worst()], result.worst(), 
-      type_name, "boost::math::ellint_rc", test);
+      type_name, "ellint_rc", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <class Real, typename T>
 void do_test_ellint_rj(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_RJ_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_RJ_FUNCTION_TO_TEST
+   value_type(*fp)(value_type, value_type, value_type, value_type) = ELLINT_RJ_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp)(value_type, value_type, value_type, value_type) = boost::math::ellint_rj<value_type, value_type, value_type, value_type>;
 #else
     value_type (*fp)(value_type, value_type, value_type, value_type) = boost::math::ellint_rj;
@@ -90,20 +99,23 @@ void do_test_ellint_rj(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp, 0, 1, 2, 3),
       extract_result<Real>(4));
       handle_test_result(result, data[result.worst()], result.worst(), 
-      type_name, "boost::math::ellint_rj", test);
+      type_name, "ellint_rj", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <class Real, typename T>
 void do_test_ellint_rd(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_RD_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_RD_FUNCTION_TO_TEST
+   value_type(*fp)(value_type, value_type, value_type) = ELLINT_RD_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
     value_type (*fp)(value_type, value_type, value_type) = boost::math::ellint_rd<value_type, value_type, value_type>;
 #else
     value_type (*fp)(value_type, value_type, value_type) = boost::math::ellint_rd;
@@ -115,20 +127,23 @@ void do_test_ellint_rd(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp, 0, 1, 2),
       extract_result<Real>(3));
     handle_test_result(result, data[result.worst()], result.worst(), 
-      type_name, "boost::math::ellint_rd", test);
+      type_name, "ellint_rd", test);
 
    std::cout << std::endl;
-
+#endif
 }
 
 template <class Real, typename T>
 void do_test_ellint_rg(T& data, const char* type_name, const char* test)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ELLINT_RD_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    std::cout << "Testing: " << test << std::endl;
 
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ELLINT_RG_FUNCTION_TO_TEST
+   value_type(*fp)(value_type, value_type, value_type) = ELLINT_RG_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    value_type(*fp)(value_type, value_type, value_type) = boost::math::ellint_rg<value_type, value_type, value_type>;
 #else
    value_type(*fp)(value_type, value_type, value_type) = boost::math::ellint_rg;
@@ -140,14 +155,210 @@ void do_test_ellint_rg(T& data, const char* type_name, const char* test)
       bind_func<Real>(fp, 0, 1, 2),
       extract_result<Real>(3));
    handle_test_result(result, data[result.worst()], result.worst(),
-      type_name, "boost::math::ellint_rg", test);
+      type_name, "ellint_rg", test);
 
    std::cout << std::endl;
+#endif
+}
 
+#if !defined(TEST1) && !defined(TEST2) && !defined(TEST3) && !defined(TEST4)
+#define TEST1
+#define TEST2
+#define TEST3
+#define TEST4
+#endif
+
+#ifdef TEST1
+
+template <typename T>
+void t1(T, const char* type_name)
+{
+#include "ellint_rf_data.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_data, type_name, "RF: Random data");
 }
 
 template <typename T>
-void test_spots(T, const char* type_name)
+void t2(T, const char* type_name)
+{
+#include "ellint_rf_xxx.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_xxx, type_name, "RF: x = y = z");
+}
+
+template <typename T>
+void t3(T, const char* type_name)
+{
+#include "ellint_rf_xyy.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_xyy, type_name, "RF: x = y or y = z or x = z");
+}
+
+template <typename T>
+void t4(T, const char* type_name)
+{
+#include "ellint_rf_0yy.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_0yy, type_name, "RF: x = 0, y = z");
+}
+
+template <typename T>
+void t5(T, const char* type_name)
+{
+#include "ellint_rf_xy0.ipp"
+
+   do_test_ellint_rf<T>(ellint_rf_xy0, type_name, "RF: z = 0");
+}
+
+#endif
+#ifdef TEST2
+
+template <typename T>
+void t6(T, const char* type_name)
+{
+#include "ellint_rc_data.ipp"
+
+   do_test_ellint_rc<T>(ellint_rc_data, type_name, "RC: Random data");
+}
+
+template <typename T>
+void t7(T, const char* type_name)
+{
+#include "ellint_rj_data.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_data, type_name, "RJ: Random data");
+}
+
+template <typename T>
+void t8(T, const char* type_name)
+{
+#include "ellint_rj_e4.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_e4, type_name, "RJ: 4 Equal Values");
+}
+
+template <typename T>
+void t9(T, const char* type_name)
+{
+#include "ellint_rj_e3.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_e3, type_name, "RJ: 3 Equal Values");
+}
+
+template <typename T>
+void t10(T, const char* type_name)
+{
+#include "ellint_rj_e2.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_e2, type_name, "RJ: 2 Equal Values");
+}
+
+template <typename T>
+void t11(T, const char* type_name)
+{
+#include "ellint_rj_zp.ipp"
+
+   do_test_ellint_rj<T>(ellint_rj_zp, type_name, "RJ: Equal z and p");
+}
+
+#endif
+#ifdef TEST3
+
+template <typename T>
+void t12(T, const char* type_name)
+{
+#include "ellint_rd_data.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_data, type_name, "RD: Random data");
+}
+
+template <typename T>
+void t13(T, const char* type_name)
+{
+#include "ellint_rd_xyy.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_xyy, type_name, "RD: y = z");
+}
+
+template <typename T>
+void t14(T, const char* type_name)
+{
+#include "ellint_rd_xxz.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_xxz, type_name, "RD: x = y");
+}
+
+template <typename T>
+void t15(T, const char* type_name)
+{
+#include "ellint_rd_0yy.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_0yy, type_name, "RD: x = 0, y = z");
+}
+
+template <typename T>
+void t16(T, const char* type_name)
+{
+#include "ellint_rd_xxx.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_xxx, type_name, "RD: x = y = z");
+}
+
+template <typename T>
+void t17(T, const char* type_name)
+{
+#include "ellint_rd_0xy.ipp"
+
+   do_test_ellint_rd<T>(ellint_rd_0xy, type_name, "RD: x = 0");
+}
+
+#endif
+#ifdef TEST4
+
+template <typename T>
+void t18(T, const char* type_name)
+{
+#include "ellint_rg.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg, type_name, "RG: Random Data");
+}
+
+template <typename T>
+void t19(T, const char* type_name)
+{
+#include "ellint_rg_00x.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_00x, type_name, "RG: two values 0");
+}
+
+template <typename T>
+void t20(T, const char* type_name)
+{
+#include "ellint_rg_xxx.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_xxx, type_name, "RG: All values the same or zero");
+}
+
+template <typename T>
+void t21(T, const char* type_name)
+{
+#include "ellint_rg_xyy.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_xyy, type_name, "RG: two values the same");
+}
+
+template <typename T>
+void t22(T, const char* type_name)
+{
+#include "ellint_rg_xy0.ipp"
+
+   do_test_ellint_rg<T>(ellint_rg_xy0, type_name, "RG: one value zero");
+}
+
+#endif
+
+template <typename T>
+void test_spots(T val, const char* type_name)
 {
 #ifndef TEST_UDT
    using namespace boost::math;
@@ -223,92 +434,35 @@ void test_spots(T, const char* type_name)
    //
    // Now random spot values:
    //
-#include "ellint_rf_data.ipp"
-
-   do_test_ellint_rf<T>(ellint_rf_data, type_name, "RF: Random data");
-
-#include "ellint_rf_xxx.ipp"
-
-   do_test_ellint_rf<T>(ellint_rf_xxx, type_name, "RF: x = y = z");
-
-#include "ellint_rf_xyy.ipp"
-
-   do_test_ellint_rf<T>(ellint_rf_xyy, type_name, "RF: x = y or y = z or x = z");
-
-#include "ellint_rf_0yy.ipp"
-
-   do_test_ellint_rf<T>(ellint_rf_0yy, type_name, "RF: x = 0, y = z");
-
-#include "ellint_rf_xy0.ipp"
-
-   do_test_ellint_rf<T>(ellint_rf_xy0, type_name, "RF: z = 0");
-
-#include "ellint_rc_data.ipp"
-
-   do_test_ellint_rc<T>(ellint_rc_data, type_name, "RC: Random data");
-
-#include "ellint_rj_data.ipp"
-
-   do_test_ellint_rj<T>(ellint_rj_data, type_name, "RJ: Random data");
-
-#include "ellint_rj_e4.ipp"
-
-   do_test_ellint_rj<T>(ellint_rj_e4, type_name, "RJ: 4 Equal Values");
-
-#include "ellint_rj_e3.ipp"
-
-   do_test_ellint_rj<T>(ellint_rj_e3, type_name, "RJ: 3 Equal Values");
-
-#include "ellint_rj_e2.ipp"
-
-   do_test_ellint_rj<T>(ellint_rj_e2, type_name, "RJ: 2 Equal Values");
-
-#include "ellint_rj_zp.ipp"
-
-   do_test_ellint_rj<T>(ellint_rj_zp, type_name, "RJ: Equal z and p");
-
-#include "ellint_rd_data.ipp"
-
-   do_test_ellint_rd<T>(ellint_rd_data, type_name, "RD: Random data");
-
-#include "ellint_rd_xyy.ipp"
-
-   do_test_ellint_rd<T>(ellint_rd_xyy, type_name, "RD: y = z");
-
-#include "ellint_rd_xxz.ipp"
-
-   do_test_ellint_rd<T>(ellint_rd_xxz, type_name, "RD: x = y");
-
-#include "ellint_rd_0yy.ipp"
-
-   do_test_ellint_rd<T>(ellint_rd_0yy, type_name, "RD: x = 0, y = z");
-
-#include "ellint_rd_xxx.ipp"
-
-   do_test_ellint_rd<T>(ellint_rd_xxx, type_name, "RD: x = y = z");
-
-#include "ellint_rd_0xy.ipp"
-
-   do_test_ellint_rd<T>(ellint_rd_0xy, type_name, "RD: x = 0");
-
-#include "ellint_rg.ipp"
-
-   do_test_ellint_rg<T>(ellint_rg, type_name, "RG: Random Data");
-
-#include "ellint_rg_00x.ipp"
-
-   do_test_ellint_rg<T>(ellint_rg_00x, type_name, "RG: two values 0");
-
-#include "ellint_rg_xxx.ipp"
-
-   do_test_ellint_rg<T>(ellint_rg_xxx, type_name, "RG: All values the same or zero");
-
-#include "ellint_rg_xyy.ipp"
-
-   do_test_ellint_rg<T>(ellint_rg_xyy, type_name, "RG: two values the same");
-
-#include "ellint_rg_xy0.ipp"
-
-   do_test_ellint_rg<T>(ellint_rg_xy0, type_name, "RG: one value zero");
+#ifdef TEST1
+   t1(val, type_name);
+   t2(val, type_name);
+   t3(val, type_name);
+   t4(val, type_name);
+   t5(val, type_name);
+#endif
+#ifdef TEST2
+   t6(val, type_name);
+   t7(val, type_name);
+   t8(val, type_name);
+   t9(val, type_name);
+   t10(val, type_name);
+   t11(val, type_name);
+#endif
+#ifdef TEST3
+   t12(val, type_name);
+   t13(val, type_name);
+   t14(val, type_name);
+   t15(val, type_name);
+   t16(val, type_name);
+   t17(val, type_name);
+#endif
+#ifdef TEST4
+   t18(val, type_name);
+   t19(val, type_name);
+   t20(val, type_name);
+   t21(val, type_name);
+   t22(val, type_name);
+#endif
 }
 

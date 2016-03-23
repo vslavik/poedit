@@ -3,6 +3,7 @@
 // Copyright (c) 2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -13,6 +14,7 @@
 #include <sstream>
 
 #include <boost/geometry/io/dsv/write.hpp>
+#include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/range.hpp>
 #include <boost/geometry/algorithms/validity_failure_type.hpp>
 #include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
@@ -52,6 +54,8 @@ inline char const* validity_failure_type_message(validity_failure_type failure)
         return "Geometry has duplicate (consecutive) points";
     case failure_wrong_corner_order:
         return "Box has corners in wrong order";
+    case failure_invalid_coordinate:
+        return "Geometry has point(s) with invalid coordinate(s)";
     default: // to avoid -Wreturn-type warning
         return "";
     }
@@ -65,7 +69,8 @@ private:
     static inline
     validity_failure_type transform_failure_type(validity_failure_type failure)
     {
-        if (AllowDuplicates && failure == failure_duplicate_points)
+        if (BOOST_GEOMETRY_CONDITION(
+                AllowDuplicates && failure == failure_duplicate_points))
         {
             return no_failure;
         }
@@ -76,7 +81,8 @@ private:
     validity_failure_type transform_failure_type(validity_failure_type failure,
                                                  bool is_linear)
     {
-        if (is_linear && AllowSpikes && failure == failure_spikes)
+        if (BOOST_GEOMETRY_CONDITION(
+                is_linear && AllowSpikes && failure == failure_spikes))
         {
             return no_failure;
         }
@@ -117,7 +123,7 @@ private:
                                  bool is_linear,
                                  SpikePoint const& spike_point)
         {
-            if (is_linear && AllowSpikes)
+            if (BOOST_GEOMETRY_CONDITION(is_linear && AllowSpikes))
             {
                 return;
             }
@@ -167,7 +173,7 @@ private:
         static inline void apply(std::ostringstream& oss,
                                  Point const& point)
         {
-            if (AllowDuplicates)
+            if (BOOST_GEOMETRY_CONDITION(AllowDuplicates))
             {
                 return;
             }

@@ -23,49 +23,64 @@
 #include <boost/math/constants/constants.hpp>
 #include <boost/math/special_functions/nonfinite_num_facets.hpp>
 
-
-
 #include <boost/math/special_functions/factorials.hpp>
 #include <boost/math/special_functions/next.hpp>
 #include <boost/math/tools/precision.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp> // is decimal.
 #include <boost/multiprecision/cpp_bin_float.hpp> // is binary.
 
+#define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp> // Boost.Test
-#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/floating_point_comparison.hpp> 
 
-int test_main(int argc, char**const argv)
+static long double const log10Two = 0.30102999566398119521373889472449L; // log10(2.)
+
+template <typename T>
+int max_digits10()
+{
+   int significand_digits = std::numeric_limits<T>::digits;
+  // BOOST_CONSTEXPR_OR_CONST int significand_digits = std::numeric_limits<T>::digits;
+   return static_cast<int>(ceil(1 + significand_digits * log10Two));
+} // template <typename T> int max_digits10()
+
+// Used to test max_digits10<>() function below.
+//#define BOOST_NO_CXX11_NUMERIC_LIMITS
+
+BOOST_AUTO_TEST_CASE(test_numeric_limits_snips)
 {
   try
   {
 
-// Example of portable way to get std::numeric_limits<T>::max_digits10.
-
+// Example of portable way to get `std::numeric_limits<T>::max_digits10`.
 //[max_digits10_1
-/*`For example, to be portable, including older platforms:
+
+/*`For example, to be portable (including obselete platforms) for type `T` where `T` may be:
+ `float`, `double`, `long double`, `128-bit quad type`, `cpp_bin_float_50` ...
 */
 
-  typedef float T; // Any type: `double`, cpp_dec_float_50, bin_128bit_double_type ...
+  typedef float T;
 
-#if defined(BOOST_NO_CXX11_NUMERIC_LIMITS)
-   std::cout.precision(2 + std::numeric_limits<T>::digits * 3010U/10000U);
+#if defined BOOST_NO_CXX11_NUMERIC_LIMITS
+   // No max_digits10 implemented.
+    std::cout.precision(max_digits10<T>());
 #else
-#  if (_MSC_VER <= 1600) // Correct wrong value for float.
-     std::cout.precision(2 + std::numeric_limits<T>::digits * 3010U/10000U);
-#  else
+  #if(_MSC_VER <= 1600) 
+   //  Wrong value for std::numeric_limits<float>::max_digits10.
+    std::cout.precision(max_digits10<T>());
+  #else // Use the C++11 max_digits10.
      std::cout.precision(std::numeric_limits<T>::max_digits10);
-#  endif
+  #endif
 #endif
 
-  std::cout << "std::cout.precision = " << std::cout.precision() << std::endl;
+  std::cout << "std::cout.precision(max_digits10) = " << std::cout.precision() << std::endl; // 9
 
   double x = 1.2345678901234567889;
 
-  std::cout << "x = " << x << std::endl; // 
+  std::cout << "x = " << x << std::endl; //
 
 /*`which should output:
 
-  std::cout.precision = 9
+  std::cout.precision(max_digits10) = 9
   x = 1.23456789
 */
 
@@ -109,7 +124,7 @@ int test_main(int argc, char**const argv)
   typedef number<cpp_dec_float<50> > cpp_dec_float_50; // 50 decimal digits.
 
   using boost::multiprecision::cpp_dec_float_50;
-  
+
   cpp_dec_float_50 pi = boost::math::constants::pi<cpp_dec_float_50>();
   std::cout.precision(std::numeric_limits<cpp_dec_float_50>::max_digits10);
   std::cout << pi << std::endl;
@@ -139,7 +154,7 @@ int test_main(int argc, char**const argv)
 //[max_digits10_6
 
   typedef double T;
- 
+
   bool denorm = std::numeric_limits<T>::denorm_min() < std::numeric_limits<T>::min();
   BOOST_ASSERT(denorm);
 
@@ -147,7 +162,7 @@ int test_main(int argc, char**const argv)
   }
 
   {
-    unsigned char c = 256;
+    unsigned char c = 255;
     std::cout << "char c = " << (int)c << std::endl;
   }
 
@@ -157,7 +172,7 @@ int test_main(int argc, char**const argv)
       << std::setw(std::numeric_limits<short>::digits10 +1 +1) // digits10+1, and +1 for sign.
       << std::showpos << (std::numeric_limits<short>::max)() // +32767
       << std::endl
-      << std::setw(std::numeric_limits<short>::digits10 +1 +1) 
+      << std::setw(std::numeric_limits<short>::digits10 +1 +1)
       << (std::numeric_limits<short>::min)() << std::endl;   // -32767
 //] [/digits10_1]
   }
@@ -216,7 +231,7 @@ int test_main(int argc, char**const argv)
   {
 //[epsilon_2
   double one = 1.;
-  double nad = boost::math::float_next(one); 
+  double nad = boost::math::float_next(one);
   std::cout << nad << "\n"  //  1.0000000000000002
     << nad - one // 2.2204460492503131e-016
     << std::endl;
@@ -227,7 +242,7 @@ int test_main(int argc, char**const argv)
   std::cout.precision(std::numeric_limits<double>::max_digits10);
   double d = 1.;
   double eps = std::numeric_limits<double>::epsilon();
-  double dpeps = d + eps/2; 
+  double dpeps = d + eps/2;
 
   std::cout << std::showpoint // Ensure all trailing zeros are shown.
     << dpeps << "\n"       // 1.0000000000000000
@@ -282,14 +297,14 @@ int test_main(int argc, char**const argv)
 //] [/round_error_1]
   }
 
-  { 
+  {
     typedef double T;
 //[tolerance_1
 /*`For example, if we want a tolerance that might suit about 9 arithmetical operations,
 say sqrt(9) = 3,  we could define:
 */
 
-    T tolerance =  3 * std::numeric_limits<T>::epsilon(); 
+    T tolerance =  3 * std::numeric_limits<T>::epsilon();
 
 /*`This is very widely used in Boost.Math testing
 with Boost.Test's macro `BOOST_CHECK_CLOSE_FRACTION`
@@ -301,7 +316,7 @@ with Boost.Test's macro `BOOST_CHECK_CLOSE_FRACTION`
     BOOST_CHECK_CLOSE_FRACTION(expected, calculated, tolerance);
 
 //] [/tolerance_1]
-  } 
+  }
 
   {
 //[tolerance_2
@@ -315,7 +330,7 @@ with Boost.Test's macro `BOOST_CHECK_CLOSE_FRACTION`
 so the default expression template parameter has been replaced by `et_off`.]
 */
 
-  cpp_dec_float_50 tolerance =  3 * std::numeric_limits<cpp_dec_float_50>::epsilon(); 
+  cpp_dec_float_50 tolerance =  3 * std::numeric_limits<cpp_dec_float_50>::epsilon();
   cpp_dec_float_50 expected = boost::math::constants::two_pi<cpp_dec_float_50>();
   cpp_dec_float_50 calculated = 2 * boost::math::constants::pi<cpp_dec_float_50>();
 
@@ -328,8 +343,8 @@ so the default expression template parameter has been replaced by `et_off`.]
 //[tolerance_3
 
   using boost::multiprecision::cpp_bin_float_quad;
- 
-  cpp_bin_float_quad tolerance =  3 * std::numeric_limits<cpp_bin_float_quad>::epsilon(); 
+
+  cpp_bin_float_quad tolerance =  3 * std::numeric_limits<cpp_bin_float_quad>::epsilon();
   cpp_bin_float_quad expected = boost::math::constants::two_pi<cpp_bin_float_quad>();
   cpp_bin_float_quad calculated = 2 * boost::math::constants::pi<cpp_bin_float_quad>();
 
@@ -344,12 +359,12 @@ so the default expression template parameter has been replaced by `et_off`.]
 /*`NaN can be used with binary multiprecision types like `cpp_bin_float_quad`:
 */
   using boost::multiprecision::cpp_bin_float_quad;
- 
+
   if (std::numeric_limits<cpp_bin_float_quad>::has_quiet_NaN == true)
   {
-    cpp_bin_float_quad tolerance =  3 * std::numeric_limits<cpp_bin_float_quad>::epsilon(); 
+    cpp_bin_float_quad tolerance =  3 * std::numeric_limits<cpp_bin_float_quad>::epsilon();
 
-    cpp_bin_float_quad NaN =  std::numeric_limits<cpp_bin_float_quad>::quiet_NaN(); 
+    cpp_bin_float_quad NaN =  std::numeric_limits<cpp_bin_float_quad>::quiet_NaN();
     std::cout << "cpp_bin_float_quad NaN is "  << NaN << std::endl; //   cpp_bin_float_quad NaN is nan
 
     cpp_bin_float_quad expected = NaN;
@@ -373,7 +388,7 @@ so the default expression template parameter has been replaced by `et_off`.]
 
 /*`
 See [@boost:/libs/math/example/nonfinite_facet_sstream.cpp]
-and we also need 
+and we also need
 
   #include <boost/math/special_functions/nonfinite_num_facets.hpp>
 
@@ -405,7 +420,7 @@ Then we can equally well use a multiprecision type cpp_bin_float_quad:
 /*`
   infinity output was inf
   infinity input was inf
-  
+
 Similarly we can do the same with NaN (except that we cannot use `assert`)
 */
   {
@@ -417,7 +432,7 @@ Similarly we can do the same with NaN (except that we cannot use `assert`)
     T n;
     T NaN = std::numeric_limits<T>::quiet_NaN();
     ss << NaN; // Write out.
-    assert(ss.str() == "nan"); 
+    assert(ss.str() == "nan");
     std::cout << "NaN output was " << ss.str() << std::endl;
     ss >> n; // Read back in.
     std::cout << "NaN input was " << n << std::endl;
@@ -430,6 +445,6 @@ Similarly we can do the same with NaN (except that we cannot use `assert`)
 //] [/facet_1]
   }
 
-  return 0;
 
-} // int main()
+} // BOOST_AUTO_TEST_CASE(test_numeric_limits_snips)
+

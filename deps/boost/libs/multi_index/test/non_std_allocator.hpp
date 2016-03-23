@@ -1,6 +1,6 @@
 /* Used in Boost.MultiIndex tests.
  *
- * Copyright 2003-2008 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -12,6 +12,7 @@
 #define BOOST_MULTI_INDEX_TEST_NON_STD_ALLOCATOR_HPP
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
+#include <boost/throw_exception.hpp>
 #include <iterator>
 #include <cstddef>
 
@@ -28,7 +29,15 @@ public:
   non_raw_pointer(){}
   explicit non_raw_pointer(T* p_):p(p_){}
 
-  T& operator*()const{return *p;}
+  T& operator*()const
+  {
+#if !defined(BOOST_NO_EXCEPTIONS)
+    if(!p)boost::throw_exception(std::runtime_error("null indirection"));
+#endif
+
+    return *p;
+  }
+
   T* operator->()const{return p;}
   non_raw_pointer& operator++(){++p;return *this;}
   non_raw_pointer operator++(int){non_raw_pointer t(*this);++p;return t;}
@@ -38,50 +47,52 @@ public:
   non_raw_pointer& operator-=(std::ptrdiff_t n){p-=n;return *this;}
   T& operator[](std::ptrdiff_t n)const{return p[n];}
 
+  T* raw_ptr()const{return p;}
+
 private:
   T* p;
 };
 
 template<typename T>
 non_raw_pointer<T> operator+(const non_raw_pointer<T>& x,std::ptrdiff_t n)
-{return non_raw_pointer<T>((&*x)+n);}
+{return non_raw_pointer<T>(x.raw_ptr()+n);}
 
 template<typename T>
 non_raw_pointer<T> operator+(std::ptrdiff_t n,const non_raw_pointer<T>& x)
-{return non_raw_pointer<T>(n+(&*x));}
+{return non_raw_pointer<T>(n+x.raw_ptr());}
 
 template<typename T>
 non_raw_pointer<T> operator-(const non_raw_pointer<T>& x,std::ptrdiff_t n)
-{return non_raw_pointer<T>((&*x)-n);}
+{return non_raw_pointer<T>(x.raw_ptr()-n);}
 
 template<typename T>
 std::ptrdiff_t operator-(
   const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)-(&*y);}
+{return x.raw_ptr()-y.raw_ptr();}
 
 template<typename T>
 bool operator==(const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)==(&*y);}
+{return x.raw_ptr()==y.raw_ptr();}
 
 template<typename T>
 bool operator!=(const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)!=(&*y);}
+{return x.raw_ptr()!=y.raw_ptr();}
 
 template<typename T>
 bool operator<(const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)<(&*y);}
+{return x.raw_ptr()<y.raw_ptr();}
 
 template<typename T>
 bool operator>(const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)>(&*y);}
+{return x.raw_ptr()>y.raw_ptr();}
 
 template<typename T>
 bool operator>=(const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)>=(&*y);}
+{return x.raw_ptr()>=y.raw_ptr();}
 
 template<typename T>
 bool operator<=(const non_raw_pointer<T>& x,const non_raw_pointer<T>& y)
-{return (&*x)<=(&*y);}
+{return x.raw_ptr()<=y.raw_ptr();}
 
 template<typename T>
 class non_std_allocator

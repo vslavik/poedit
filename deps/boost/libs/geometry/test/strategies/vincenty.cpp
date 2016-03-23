@@ -5,8 +5,8 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -23,6 +23,7 @@
 #include <boost/concept_check.hpp>
 
 #include <boost/geometry/strategies/geographic/distance_vincenty.hpp>
+#include <boost/geometry/strategies/geographic/side_vincenty.hpp>
 #include <boost/geometry/algorithms/detail/vincenty_inverse.hpp>
 #include <boost/geometry/algorithms/detail/vincenty_direct.hpp>
 
@@ -106,7 +107,7 @@ template <typename P1, typename P2, typename Spheroid>
 void test_vincenty(double lon1, double lat1, double lon2, double lat2,
                    double expected_distance,
                    double expected_azimuth_12,
-                   double expected_azimuth_21,
+                   double /*expected_azimuth_21*/,
                    Spheroid const& spheroid)
 {
     typedef typename bg::promote_floating_point
@@ -121,41 +122,48 @@ void test_vincenty(double lon1, double lat1, double lon2, double lat2,
 
     // formula
     {
-        bg::detail::vincenty_inverse<calc_t> vi(lon1 * bg::math::d2r,
-                                                lat1 * bg::math::d2r,
-                                                lon2 * bg::math::d2r,
-                                                lat2 * bg::math::d2r,
-                                                spheroid);
-        calc_t dist = vi.distance();
-        calc_t az12 = vi.azimuth12();
-        calc_t az21 = vi.azimuth21();
+        double const d2r = bg::math::d2r<double>();
+        double const r2d = bg::math::r2d<double>();
 
-        calc_t az12_deg = az12 * bg::math::r2d;
-        calc_t az21_deg = az21 * bg::math::r2d;
+        typedef bg::detail::vincenty_inverse<calc_t, true, true> inverse_formula;
+        typename inverse_formula::result_type
+            result_i = inverse_formula::apply(lon1 * d2r,
+                                             lat1 * d2r,
+                                             lon2 * d2r,
+                                             lat2 * d2r,
+                                             spheroid);
+        calc_t dist = result_i.distance;
+        calc_t az12 = result_i.azimuth;
+        //calc_t az21 = vi.azimuth21();
+
+        calc_t az12_deg = az12 * r2d;
+        //calc_t az21_deg = az21 * r2d;
         
         BOOST_CHECK_CLOSE(dist, calc_t(expected_distance), tolerance);
         check_deg("az12_deg", az12_deg, calc_t(expected_azimuth_12), tolerance, error);
-        check_deg("az21_deg", az21_deg, calc_t(expected_azimuth_21), tolerance, error);
+        //check_deg("az21_deg", az21_deg, calc_t(expected_azimuth_21), tolerance, error);
 
-        bg::detail::vincenty_direct<calc_t> vd(lon1 * bg::math::d2r,
-                                               lat1 * bg::math::d2r,
-                                               dist,
-                                               az12,
-                                               spheroid);
-        calc_t direct_lon2 = vd.lon2();
-        calc_t direct_lat2 = vd.lat2();
-        calc_t direct_az21 = vd.azimuth21();
+        typedef bg::detail::vincenty_direct<calc_t> direct_formula;
+        typename direct_formula::result_type
+            result_d = direct_formula::apply(lon1 * d2r,
+                                             lat1 * d2r,
+                                             dist,
+                                             az12,
+                                             spheroid);
+        calc_t direct_lon2 = result_d.lon2;
+        calc_t direct_lat2 = result_d.lat2;
+        //calc_t direct_az21 = vd.azimuth21();
 
-        calc_t direct_lon2_deg = direct_lon2 * bg::math::r2d;
-        calc_t direct_lat2_deg = direct_lat2 * bg::math::r2d;
-        calc_t direct_az21_deg = direct_az21 * bg::math::r2d;
+        calc_t direct_lon2_deg = direct_lon2 * r2d;
+        calc_t direct_lat2_deg = direct_lat2 * r2d;
+        //calc_t direct_az21_deg = direct_az21 * r2d;
         
         check_deg("direct_lon2_deg", direct_lon2_deg, calc_t(lon2), tolerance, error);
         check_deg("direct_lat2_deg", direct_lat2_deg, calc_t(lat2), tolerance, error);
-        check_deg("direct_az21_deg", direct_az21_deg, az21_deg, tolerance, error);
+        //check_deg("direct_az21_deg", direct_az21_deg, az21_deg, tolerance, error);
     }
 
-    // strategy
+    // distance strategy
     {
         typedef bg::strategy::distance::vincenty<Spheroid> vincenty_type;
 
@@ -187,6 +195,36 @@ void test_vincenty(double lon1, double lat1, double lon2, double lat2,
     test_vincenty<P1, P2>(lon1, lat1, lon2, lat2,
                           expected_distance, expected_azimuth_12, expected_azimuth_21,
                           bg::srs::spheroid<double>());
+}
+
+template <typename PS, typename P>
+void test_side(double lon1, double lat1,
+               double lon2, double lat2,
+               double lon, double lat,
+               int expected_side)
+{
+    // Set radius type, but for integer coordinates we want to have floating point radius type
+    typedef typename bg::promote_floating_point
+        <
+            typename bg::coordinate_type<PS>::type
+        >::type rtype;
+
+    typedef bg::srs::spheroid<rtype> stype;
+
+    typedef bg::strategy::side::vincenty<stype> strategy_type;
+
+    strategy_type strategy;
+
+    PS p1, p2;
+    P p;
+
+    bg::assign_values(p1, lon1, lat1);
+    bg::assign_values(p2, lon2, lat2);
+    bg::assign_values(p, lon, lat);
+
+    int side = strategy.apply(p1, p2, p);
+
+    BOOST_CHECK_EQUAL(side, expected_side);
 }
 
 template <typename P1, typename P2>
@@ -245,6 +283,19 @@ void test_all()
     test_vincenty<P1, P2>(0, 89, 1, 80, 1005153.5769, azimuth(178,53,23.85), azimuth(359,53,18.35)); // sub-polar
     test_vincenty<P1, P2>(4, 52, 4, 52, 0.0, 0, 0); // no point difference
     test_vincenty<P1, P2>(4, 52, 3, 40, 1336039.890, azimuth(183,41,29.08), azimuth(2,58,5.13)); // normal case
+
+    test_side<P1, P2>(0, 0, 0, 1, 0, 2, 0);
+    test_side<P1, P2>(0, 0, 0, 1, 0, -2, 0);
+    test_side<P1, P2>(10, 0, 10, 1, 10, 2, 0);
+    test_side<P1, P2>(10, 0, 10, -1, 10, 2, 0);
+
+    test_side<P1, P2>(10, 0, 10, 1, 0, 2, 1); // left
+    test_side<P1, P2>(10, 0, 10, -1, 0, 2, -1); // right
+
+    test_side<P1, P2>(-10, -10, 10, 10, 10, 0, -1); // right
+    test_side<P1, P2>(-10, -10, 10, 10, -10, 0, 1); // left
+    test_side<P1, P2>(170, -10, -170, 10, -170, 0, -1); // right
+    test_side<P1, P2>(170, -10, -170, 10, 170, 0, 1); // left
 }
 
 template <typename P>

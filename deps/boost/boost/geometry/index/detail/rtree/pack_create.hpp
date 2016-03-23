@@ -11,6 +11,11 @@
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_RTREE_PACK_CREATE_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_RTREE_PACK_CREATE_HPP
 
+#include <boost/geometry/algorithms/expand.hpp>
+#include <boost/geometry/index/detail/algorithms/bounds.hpp>
+
+#include <boost/geometry/algorithms/detail/expand_by_epsilon.hpp>
+
 namespace boost { namespace geometry { namespace index { namespace detail { namespace rtree {
 
 namespace pack_utils {
@@ -157,8 +162,7 @@ public:
         values_count = static_cast<size_type>(diff);
         entries.reserve(values_count);
         
-        Box hint_box;
-        geometry::assign_inverse(hint_box);
+        expandable_box<Box> hint_box;
         for ( ; first != last ; ++first )
         {
             // NOTE: support for iterators not returning true references adapted
@@ -172,7 +176,7 @@ public:
             // CONSIDER: alternative - ignore invalid indexable or throw an exception
             BOOST_GEOMETRY_INDEX_ASSERT(detail::is_valid(indexable), "Indexable is invalid");
 
-            geometry::expand(hint_box, indexable);
+            hint_box.expand(indexable);
 
             point_type pt;
             geometry::centroid(indexable, pt);
@@ -180,13 +184,54 @@ public:
         }
 
         subtree_elements_counts subtree_counts = calculate_subtree_elements_counts(values_count, parameters, leafs_level);
-        internal_element el = per_level(entries.begin(), entries.end(), hint_box, values_count, subtree_counts,
+        internal_element el = per_level(entries.begin(), entries.end(), hint_box.get(), values_count, subtree_counts,
                                         parameters, translator, allocators);
 
         return el.second;
     }
 
 private:
+    template <typename BoxType>
+    class expandable_box
+    {
+    public:
+        expandable_box()
+            : m_initialized(false)
+        {}
+
+        template <typename Indexable>
+        void expand(Indexable const& indexable)
+        {
+            if ( !m_initialized )
+            {
+                // it's guaranteed that the Box will be initialized
+                // only for Points, Boxes and Segments but that's ok
+                // since only those Geometries can be stored
+                detail::bounds(indexable, m_box);
+                m_initialized = true;
+            }
+            else
+            {
+                geometry::expand(m_box, indexable);
+            }
+        }
+
+        void expand_by_epsilon()
+        {
+            geometry::detail::expand_by_epsilon(m_box);
+        }
+
+        BoxType const& get() const
+        {
+            BOOST_GEOMETRY_INDEX_ASSERT(m_initialized, "uninitialized envelope accessed");
+            return m_box;
+        }
+
+    private:
+        bool m_initialized;
+        BoxType m_box;
+    };
+
     struct subtree_elements_counts
     {
         subtree_elements_counts(std::size_t ma, std::size_t mi) : maxc(ma), minc(mi) {}
@@ -216,19 +261,35 @@ private:
             // reserve space for values
             rtree::elements(l).reserve(values_count);                                                       // MAY THROW (A)
             // calculate values box and copy values
-            Box elements_box;
-            geometry::assign_inverse(elements_box);
+            expandable_box<Box> elements_box;
             for ( ; first != last ; ++first )
             {
                 // NOTE: push_back() must be called at the end in order to support move_iterator.
                 //       The iterator is dereferenced 2x (no temporary reference) to support
                 //       non-true reference types and move_iterator without boost::forward<>.
-                geometry::expand(elements_box, translator(*(first->second)));
+                elements_box.expand(translator(*(first->second)));
                 rtree::elements(l).push_back(*(first->second));                                             // MAY THROW (A?,C)
             }
 
+#ifdef BOOST_GEOMETRY_INDEX_EXPERIMENTAL_ENLARGE_BY_EPSILON
+            // Enlarge bounds of a leaf node.
+            // It's because Points and Segments are compared WRT machine epsilon
+            // This ensures that leafs bounds correspond to the stored elements
+            // NOTE: this is done only if the Indexable is a different kind of Geometry
+            //   than the bounds (only Box for now). Spatial predicates are checked
+            //   the same way for Geometry of the same kind.
+            if ( BOOST_GEOMETRY_CONDITION((
+                    ! index::detail::is_bounding_geometry
+                        <
+                            typename indexable_type<Translator>::type
+                        >::value )) )
+            {
+                elements_box.expand_by_epsilon();
+            }
+#endif
+
             auto_remover.release();
-            return internal_element(elements_box, n);
+            return internal_element(elements_box.get(), n);
         }
 
         // calculate next max and min subtree counts
@@ -245,23 +306,22 @@ private:
         std::size_t nodes_count = calculate_nodes_count(values_count, subtree_counts);
         rtree::elements(in).reserve(nodes_count);                                                           // MAY THROW (A)
         // calculate values box and copy values
-        Box elements_box;
-        geometry::assign_inverse(elements_box);
-
+        expandable_box<Box> elements_box;
+        
         per_level_packets(first, last, hint_box, values_count, subtree_counts, next_subtree_counts,
                           rtree::elements(in), elements_box,
                           parameters, translator, allocators);
 
         auto_remover.release();
-        return internal_element(elements_box, n);
+        return internal_element(elements_box.get(), n);
     }
 
-    template <typename EIt> inline static
+    template <typename EIt, typename ExpandableBox> inline static
     void per_level_packets(EIt first, EIt last, Box const& hint_box,
                            std::size_t values_count,
                            subtree_elements_counts const& subtree_counts,
                            subtree_elements_counts const& next_subtree_counts,
-                           internal_elements & elements, Box & elements_box,
+                           internal_elements & elements, ExpandableBox & elements_box,
                            parameters_type const& parameters, Translator const& translator, Allocators & allocators)
     {
         BOOST_GEOMETRY_INDEX_ASSERT(0 < std::distance(first, last) && static_cast<std::size_t>(std::distance(first, last)) == values_count,
@@ -285,7 +345,7 @@ private:
             elements.push_back(el);                                                 // MAY THROW (A?,C) - however in normal conditions shouldn't
             auto_remover.release();
 
-            geometry::expand(elements_box, el.first);
+            elements_box.expand(el.first);
             return;
         }
         

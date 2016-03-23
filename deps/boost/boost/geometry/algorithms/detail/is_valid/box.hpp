@@ -3,6 +3,7 @@
 // Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -12,11 +13,14 @@
 
 #include <cstddef>
 
+#include <boost/core/ignore_unused.hpp>
+
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/tags.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
 
 #include <boost/geometry/algorithms/validity_failure_type.hpp>
+#include <boost/geometry/algorithms/detail/is_valid/has_invalid_coordinate.hpp>
 #include <boost/geometry/algorithms/dispatch/is_valid.hpp>
 
 
@@ -57,7 +61,23 @@ struct has_valid_corners<Box, 0>
     template <typename VisitPolicy>
     static inline bool apply(Box const&, VisitPolicy& visitor)
     {
+        boost::ignore_unused(visitor);
+
         return visitor.template apply<no_failure>();
+    }
+};
+
+
+template <typename Box>
+struct is_valid_box
+{
+    template <typename VisitPolicy>
+    static inline bool apply(Box const& box, VisitPolicy& visitor)
+    {
+        return
+            ! has_invalid_coordinate<Box>::apply(box, visitor)
+            &&
+            has_valid_corners<Box, dimension<Box>::value>::apply(box, visitor);
     }
 };
 
@@ -80,7 +100,7 @@ namespace dispatch
 // Reference (for polygon validity): OGC 06-103r4 (6.1.11.1)
 template <typename Box>
 struct is_valid<Box, box_tag>
-    : detail::is_valid::has_valid_corners<Box, dimension<Box>::value>
+    : detail::is_valid::is_valid_box<Box>
 {};
 
 

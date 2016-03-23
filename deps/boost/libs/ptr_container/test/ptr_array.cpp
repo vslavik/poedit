@@ -97,7 +97,7 @@ void test_array()
     derived.replace( 1, new Derived_class );
     ptr_array<Base,2> base( derived );
     
-    BOOST_MESSAGE( "finished derived to base test" ); 
+    BOOST_TEST_MESSAGE( "finished derived to base test" ); 
 
     base = derived;   
     ptr_array<Base,2> base2( base );
@@ -124,12 +124,12 @@ void test_array_interface()
     BOOST_DEDUCED_TYPENAME C::reverse_iterator rv2        = c.rend();
     BOOST_DEDUCED_TYPENAME C::const_reverse_iterator cvr2 = c2.rend();
 
-    BOOST_MESSAGE( "finished iterator test" ); 
+    BOOST_TEST_MESSAGE( "finished iterator test" ); 
 
     BOOST_CHECK_EQUAL( c.empty(), false );
     BOOST_CHECK_EQUAL( c.size(), c.max_size() );
     
-    BOOST_MESSAGE( "finished capacity test" ); 
+    BOOST_TEST_MESSAGE( "finished capacity test" ); 
 
     BOOST_CHECK_EQUAL( c.is_null(0), false );
     BOOST_CHECK_EQUAL( c.is_null(1), false );
@@ -154,7 +154,7 @@ void test_array_interface()
     for( size_t i = 0; i < c3.size(); ++i )
         BOOST_CHECK_EQUAL( c3.is_null(i), true );
 
-    BOOST_MESSAGE( "finished element access test" ); 
+    BOOST_TEST_MESSAGE( "finished element access test" ); 
 }
 
 using boost::unit_test::test_suite;

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -111,8 +112,6 @@
       and <code class="computeroutput"><span class="identifier">itest_class</span></code> classes, and
       some other utilities:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="comment">//Iteration and element count defines</span>
 <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">NumIter</span> <span class="special">=</span> <span class="number">100</span><span class="special">;</span>
 <span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">NumElements</span>   <span class="special">=</span> <span class="number">50000</span><span class="special">;</span>
@@ -151,8 +150,6 @@
 <span class="special">};</span>
 </pre>
 <p>
-    </p>
-<p>
       As we can see, <code class="computeroutput"><span class="identifier">test_class</span></code> is
       a very simple class holding an <code class="computeroutput"><span class="keyword">int</span></code>.
       <code class="computeroutput"><span class="identifier">itest_class</span></code> is just a class
@@ -184,8 +181,6 @@
         Let's compare the code to be executed for each container type for different
         insertion tests:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">ilist</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span> <span class="identifier">objects</span><span class="special">(</span><span class="identifier">NumElements</span><span class="special">);</span>
 <span class="identifier">ilist</span> <span class="identifier">l</span><span class="special">;</span>
 <span class="keyword">for</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NumElements</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
@@ -194,25 +189,17 @@
 <span class="comment">//Elements are destroyed in vector's destructor</span>
 </pre>
 <p>
-      </p>
-<p>
         For intrusive containers, all the values are created in a vector and after
         that inserted in the intrusive list.
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">stdlist</span> <span class="identifier">l</span><span class="special">;</span>
 <span class="keyword">for</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NumElements</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
    <span class="identifier">l</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">stdlist</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">(</span><span class="identifier">i</span><span class="special">));</span>
 <span class="comment">//Elements unlinked and destroyed in stdlist's destructor</span>
 </pre>
 <p>
-      </p>
-<p>
         For a standard list, elements are pushed back using push_back().
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">stdlist</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">&gt;</span> <span class="identifier">objects</span><span class="special">(</span><span class="identifier">NumElements</span><span class="special">);</span>
 <span class="identifier">stdptrlist</span> <span class="identifier">l</span><span class="special">;</span>
 <span class="keyword">for</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NumElements</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">)</span>
@@ -221,13 +208,9 @@
 <span class="comment">//Elements destroyed in vector's destructor</span>
 </pre>
 <p>
-      </p>
-<p>
         For a standard compact pointer list, elements are created in a vector and
         pushed back in the pointer list using push_back().
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="identifier">stdlist</span> <span class="identifier">objects</span><span class="special">;</span>  <span class="identifier">stdptrlist</span> <span class="identifier">l</span><span class="special">;</span>
 <span class="keyword">for</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span> <span class="identifier">i</span> <span class="special">&lt;</span> <span class="identifier">NumElements</span><span class="special">;</span> <span class="special">++</span><span class="identifier">i</span><span class="special">){</span>
    <span class="identifier">objects</span><span class="special">.</span><span class="identifier">push_back</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">stdlist</span><span class="special">::</span><span class="identifier">value_type</span><span class="special">(</span><span class="identifier">i</span><span class="special">));</span>
@@ -237,8 +220,6 @@
 <span class="comment">//Elements unlinked and destroyed in stdlist's destructor</span>
 </pre>
 <p>
-      </p>
-<p>
         For a <span class="emphasis"><em>disperse pointer list</em></span>, elements are created in
         a list and pushed back in the pointer list using push_back().
       </p>
@@ -246,7 +227,7 @@
         These are the times in microseconds for each case, and the normalized time:
       </p>
 <div class="table">
-<a name="intrusive.performance.performance_results_push_back.back_insertion___destruction_times_for_visual_c___7_1___windows_xp"></a><p class="title"><b>Table&#160;15.2.&#160;Back insertion + destruction times for Visual C++ 7.1 / Windows XP</b></p>
+<a name="intrusive.performance.performance_results_push_back.back_insertion_destruction_times"></a><p class="title"><b>Table&#160;15.2.&#160;Back insertion + destruction times for Visual C++ 7.1 / Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Back insertion + destruction times for Visual C++ 7.1 / Windows XP">
 <colgroup>
 <col>
@@ -380,7 +361,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_push_back.back_insertion___destruction_times_for_gcc_4_1_1___mingw_over_windows_xp"></a><p class="title"><b>Table&#160;15.3.&#160;Back insertion + destruction times for GCC 4.1.1 / MinGW over Windows
+<a name="intrusive.performance.performance_results_push_back.back_insertion_destruction_time0"></a><p class="title"><b>Table&#160;15.3.&#160;Back insertion + destruction times for GCC 4.1.1 / MinGW over Windows
         XP</b></p>
 <div class="table-contents"><table class="table" summary="Back insertion + destruction times for GCC 4.1.1 / MinGW over Windows
         XP">
@@ -516,7 +497,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_push_back.back_insertion___destruction_times_for_gcc_4_1_2___linux_kernel_2_6_18__opensuse_10_2_"></a><p class="title"><b>Table&#160;15.4.&#160;Back insertion + destruction times for GCC 4.1.2 / Linux Kernel 2.6.18
+<a name="intrusive.performance.performance_results_push_back.back_insertion_destruction_time1"></a><p class="title"><b>Table&#160;15.4.&#160;Back insertion + destruction times for GCC 4.1.2 / Linux Kernel 2.6.18
         (OpenSuse 10.2)</b></p>
 <div class="table-contents"><table class="table" summary="Back insertion + destruction times for GCC 4.1.2 / Linux Kernel 2.6.18
         (OpenSuse 10.2)">
@@ -693,7 +674,7 @@
         These are the results:
       </p>
 <div class="table">
-<a name="intrusive.performance.performance_results_reversing.reverse_times_for_visual_c___7_1___windows_xp"></a><p class="title"><b>Table&#160;15.5.&#160;Reverse times for Visual C++ 7.1 / Windows XP</b></p>
+<a name="intrusive.performance.performance_results_reversing.reverse_times_for_visual_c_7_1_w"></a><p class="title"><b>Table&#160;15.5.&#160;Reverse times for Visual C++ 7.1 / Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Reverse times for Visual C++ 7.1 / Windows XP">
 <colgroup>
 <col>
@@ -827,7 +808,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_reversing.reverse_times_for_gcc_4_1_1___mingw_over_windows_xp"></a><p class="title"><b>Table&#160;15.6.&#160;Reverse times for GCC 4.1.1 / MinGW over Windows XP</b></p>
+<a name="intrusive.performance.performance_results_reversing.reverse_times_for_gcc_4_1_1_ming"></a><p class="title"><b>Table&#160;15.6.&#160;Reverse times for GCC 4.1.1 / MinGW over Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Reverse times for GCC 4.1.1 / MinGW over Windows XP">
 <colgroup>
 <col>
@@ -961,7 +942,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_reversing.reverse_times_for_gcc_4_1_2___linux_kernel_2_6_18__opensuse_10_2_"></a><p class="title"><b>Table&#160;15.7.&#160;Reverse times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)</b></p>
+<a name="intrusive.performance.performance_results_reversing.reverse_times_for_gcc_4_1_2_linu"></a><p class="title"><b>Table&#160;15.7.&#160;Reverse times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)</b></p>
 <div class="table-contents"><table class="table" summary="Reverse times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)">
 <colgroup>
 <col>
@@ -1165,7 +1146,7 @@
         These are the results:
       </p>
 <div class="table">
-<a name="intrusive.performance.performance_results_sorting.sort_times_for_visual_c___7_1___windows_xp"></a><p class="title"><b>Table&#160;15.8.&#160;Sort times for Visual C++ 7.1 / Windows XP</b></p>
+<a name="intrusive.performance.performance_results_sorting.sort_times_for_visual_c_7_1_wind"></a><p class="title"><b>Table&#160;15.8.&#160;Sort times for Visual C++ 7.1 / Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Sort times for Visual C++ 7.1 / Windows XP">
 <colgroup>
 <col>
@@ -1299,7 +1280,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_sorting.sort_times_for_gcc_4_1_1___mingw_over_windows_xp"></a><p class="title"><b>Table&#160;15.9.&#160;Sort times for GCC 4.1.1 / MinGW over Windows XP</b></p>
+<a name="intrusive.performance.performance_results_sorting.sort_times_for_gcc_4_1_1_mingw_o"></a><p class="title"><b>Table&#160;15.9.&#160;Sort times for GCC 4.1.1 / MinGW over Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Sort times for GCC 4.1.1 / MinGW over Windows XP">
 <colgroup>
 <col>
@@ -1433,7 +1414,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_sorting.sort_times_for_gcc_4_1_2___linux_kernel_2_6_18__opensuse_10_2_"></a><p class="title"><b>Table&#160;15.10.&#160;Sort times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)</b></p>
+<a name="intrusive.performance.performance_results_sorting.sort_times_for_gcc_4_1_2_linux_k"></a><p class="title"><b>Table&#160;15.10.&#160;Sort times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)</b></p>
 <div class="table-contents"><table class="table" summary="Sort times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)">
 <colgroup>
 <col>
@@ -1604,7 +1585,7 @@
         These are the results:
       </p>
 <div class="table">
-<a name="intrusive.performance.performance_results_write_access.write_access_times_for_visual_c___7_1___windows_xp"></a><p class="title"><b>Table&#160;15.11.&#160;Write access times for Visual C++ 7.1 / Windows XP</b></p>
+<a name="intrusive.performance.performance_results_write_access.write_access_times_for_visual_c_"></a><p class="title"><b>Table&#160;15.11.&#160;Write access times for Visual C++ 7.1 / Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Write access times for Visual C++ 7.1 / Windows XP">
 <colgroup>
 <col>
@@ -1738,7 +1719,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_write_access.write_access_times_for_gcc_4_1_1___mingw_over_windows_xp"></a><p class="title"><b>Table&#160;15.12.&#160;Write access times for GCC 4.1.1 / MinGW over Windows XP</b></p>
+<a name="intrusive.performance.performance_results_write_access.write_access_times_for_gcc_4_1_1"></a><p class="title"><b>Table&#160;15.12.&#160;Write access times for GCC 4.1.1 / MinGW over Windows XP</b></p>
 <div class="table-contents"><table class="table" summary="Write access times for GCC 4.1.1 / MinGW over Windows XP">
 <colgroup>
 <col>
@@ -1872,7 +1853,7 @@
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="intrusive.performance.performance_results_write_access.write_access_times_for_gcc_4_1_2___linux_kernel_2_6_18__opensuse_10_2_"></a><p class="title"><b>Table&#160;15.13.&#160;Write access times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)</b></p>
+<a name="intrusive.performance.performance_results_write_access.write_access_times_for_gcc_4_1_2"></a><p class="title"><b>Table&#160;15.13.&#160;Write access times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)</b></p>
 <div class="table-contents"><table class="table" summary="Write access times for GCC 4.1.2 / Linux Kernel 2.6.18 (OpenSuse 10.2)">
 <colgroup>
 <col>
@@ -2027,7 +2008,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

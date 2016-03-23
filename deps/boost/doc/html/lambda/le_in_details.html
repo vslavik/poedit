@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -34,8 +35,8 @@
 <dt><span class="section"><a href="le_in_details.html#lambda.lambda_expressions_for_control_structures">Lambda expressions for control structures</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.exceptions">Exceptions</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.construction_and_destruction">Construction and destruction</a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idp314069120">Special lambda expressions</a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idp314120592">Casts, sizeof and typeid</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idm45555241557568">Special lambda expressions</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idm45555241505984">Casts, sizeof and typeid</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.nested_stl_algorithms">Nesting STL algorithm invocations</a></span></dt>
 </dl></div>
 <p>
@@ -123,7 +124,7 @@ int i = 1;
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lambda.operator_expressions"></a>Operator expressions</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="le_in_details.html#idp313785648">Operators that cannot be overloaded</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idm45555241840576">Operators that cannot be overloaded</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.assignment_and_subscript">Assignment and subscript operators</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.logical_operators">Logical operators</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.comma_operator">Comma operator</a></span></dt>
@@ -144,7 +145,7 @@ However, there are some restrictions that originate from the C++ operator overlo
 </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp313785648"></a>Operators that cannot be overloaded</h4></div></div></div>
+<a name="idm45555241840576"></a>Operators that cannot be overloaded</h4></div></div></div>
 <p>
 Some operators cannot be overloaded at all (<code class="literal">::</code>, <code class="literal">.</code>, <code class="literal">.*</code>).
 For some operators, the requirements on return types prevent them to be overloaded to create lambda functors.
@@ -494,7 +495,7 @@ function object class.
 </p>
 <div class="simplesect">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="idp313864592"></a>The result_type typedef</h5></div></div></div>
+<a name="idm45555241762032"></a>The result_type typedef</h5></div></div></div>
 <p>
 
 The BLL supports the standard library convention of declaring the return type
@@ -521,7 +522,7 @@ and <code class="literal">sig</code>, <code class="literal">result_type</code> t
 </div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="idp313871104"></a>The sig template</h5></div></div></div>
+<a name="idm45555241755520"></a>The sig template</h5></div></div></div>
 <p>
 Another mechanism that make BLL aware of the return type(s) of a function object is defining
 member template struct 
@@ -778,7 +779,7 @@ When the lambda functor is invoked, a reference to <code class="literal">x</code
 </p>
 <div class="simplesect">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp313941984"></a>Naming delayed constants and variables</h4></div></div></div>
+<a name="idm45555241684624"></a>Naming delayed constants and variables</h4></div></div></div>
 <p>
 It is possible to predefine and name a delayed variable or constant outside a lambda expression. 
 The templates <code class="literal">var_type</code>, <code class="literal">constant_type</code> 
@@ -821,7 +822,7 @@ for_each(a.begin(),a.end(), cout &lt;&lt; space &lt;&lt; _1);
 </div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp313952976"></a>About assignment and subscript operators</h4></div></div></div>
+<a name="idm45555241673632"></a>About assignment and subscript operators</h4></div></div></div>
 <p>
 As described in <a class="xref" href="le_in_details.html#lambda.assignment_and_subscript" title="Assignment and subscript operators">the section called &#8220;Assignment and subscript operators&#8221;</a>, assignment and subscripting operators are always defined as member functions.
 This means, that for expressions of the form
@@ -1225,17 +1226,17 @@ and the effect of evaluating that expression.
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp314069120"></a>Special lambda expressions</h3></div></div></div>
+<a name="idm45555241557568"></a>Special lambda expressions</h3></div></div></div>
 <div class="toc"><dl class="toc">
-<dt><span class="section"><a href="le_in_details.html#idp314069808">Preventing argument substitution</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idm45555241556880">Preventing argument substitution</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.rvalues_as_actual_arguments">Rvalues as actual arguments to lambda functors</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp314069808"></a>Preventing argument substitution</h4></div></div></div>
+<a name="idm45555241556880"></a>Preventing argument substitution</h4></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="le_in_details.html#lambda.unlambda">Unlambda</a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idp314092944">Protect</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idm45555241533824">Protect</a></span></dt>
 </dl></div>
 <p>
 When a lambda functor is called, the default behavior is to substitute 
@@ -1389,7 +1390,7 @@ int nested(const F&amp; f) {
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="idp314092944"></a>Protect</h5></div></div></div>
+<a name="idm45555241533824"></a>Protect</h5></div></div></div>
 <p>
 The <code class="literal">protect</code> function is related to unlambda. 
 
@@ -1532,12 +1533,12 @@ and are not affected by the non-const rvalue problem.
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idp314120592"></a>Casts, sizeof and typeid</h3></div></div></div>
+<a name="idm45555241505984"></a>Casts, sizeof and typeid</h3></div></div></div>
 <div class="toc"><dl class="toc">
 <dt><span class="section"><a href="le_in_details.html#lambda.cast_expressions">
 Cast expressions
 </a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idp314130016">Sizeof and typeid</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idm45555241496496">Sizeof and typeid</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -1577,7 +1578,7 @@ for_each(a.begin(), a.end(),
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idp314130016"></a>Sizeof and typeid</h4></div></div></div>
+<a name="idm45555241496496"></a>Sizeof and typeid</h4></div></div></div>
 <p>
 The BLL counterparts for these expressions are named 
 <code class="literal">ll_sizeof</code> and <code class="literal">ll_typeid</code>.

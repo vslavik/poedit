@@ -14,7 +14,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_legendre_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -24,10 +23,13 @@
 template <class Real, class T>
 void do_test_laguerre2(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(LAGUERRE_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef LAGUERRE_FUNCTION_TO_TEST
+   pg funcp = LAGUERRE_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::laguerre<value_type>;
 #else
    pg funcp = boost::math::laguerre;
@@ -45,18 +47,22 @@ void do_test_laguerre2(const T& data, const char* type_name, const char* test_na
       data, 
       bind_func_int1<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::laguerre(n, x)", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "laguerre(n, x)", test_name);
 
    std::cout << std::endl;
+#endif
 }
 
 template <class Real, class T>
 void do_test_laguerre3(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(ASSOC_LAGUERRE_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(unsigned, unsigned, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef ASSOC_LAGUERRE_FUNCTION_TO_TEST
+   pg funcp = ASSOC_LAGUERRE_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::laguerre<unsigned, value_type>;
 #else
    pg funcp = boost::math::laguerre;
@@ -74,8 +80,9 @@ void do_test_laguerre3(const T& data, const char* type_name, const char* test_na
       data, 
       bind_func_int2<Real>(funcp, 0, 1, 2), 
       extract_result<Real>(3));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::laguerre(n, m, x)", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "laguerre(n, m, x)", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>

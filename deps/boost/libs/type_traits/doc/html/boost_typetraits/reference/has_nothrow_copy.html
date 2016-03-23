@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_nothrow_copy</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_nothrow_constructor.html" title="has_nothrow_constructor">
-<link rel="next" href="has_nothrow_cp_cons.html" title="has_nothrow_copy_constructor">
+<link rel="next" href="has_nothrow_destruct.html" title="has_nothrow_destructor">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="has_nothrow_constructor.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="has_nothrow_cp_cons.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="has_nothrow_constructor.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="has_nothrow_destruct.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -43,20 +43,15 @@
         These two traits are synonyms for each other.
       </p>
 <p>
-        <span class="bold"><strong>Compiler Compatibility:</strong></span> If the compiler
-        does not support partial-specialization of class templates, then this template
-        can not be used with function types.
-      </p>
-<p>
-        Without some (as yet unspecified) help from the compiler, <code class="computeroutput"><span class="identifier">has_nothrow_copy</span></code>
-        will never report that a class or struct has a non-throwing copy-constructor;
-        this is always safe, if possibly sub-optimal. Currently (May 2011) compilers
-        more recent than Visual C++ 8, GCC-4.3, Greenhills 6.0, Intel-11.0, and Codegear
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> Either requires
+        C++11 <code class="computeroutput"><span class="keyword">noexcept</span></code> and <code class="computeroutput"><span class="keyword">decltype</span></code> or else some (unspecified) help from
+        the compiler. Currently (June 2015) compilers more recent than Visual C++
+        8, GCC-4.3, Greenhills 6.0, Intel-11.0, and Codegear and all recent GCC versions
         have the necessary compiler <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a>
-        to ensure that this trait "just works". You may also test to see
-        if the necessary <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a>
-        are available by checking to see if the macro <code class="computeroutput"><span class="identifier">BOOST_HAS_NOTHROW_COPY</span></code>
-        is defined.
+        to ensure that this trait "just works". You may test to see if
+        the necessary support is available by checking to see if <code class="computeroutput"><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_HAS_NOTHROW_COPY</span><span class="special">)</span> <span class="special">||</span> <span class="special">(!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_CXX11_DECLTYPE</span><span class="special">)</span>
+        <span class="special">&amp;&amp;</span> <span class="special">!</span><span class="identifier">defined</span><span class="special">(</span><span class="identifier">BOOST_NO_CXX11_NOEXCEPT</span><span class="special">))</span></code>
+        is true.
       </p>
 <p>
         <span class="bold"><strong>Header:</strong></span> <code class="computeroutput"> <span class="preprocessor">#include</span>
@@ -78,7 +73,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="has_nothrow_constructor.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="has_nothrow_cp_cons.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="has_nothrow_constructor.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../reference.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="has_nothrow_destruct.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

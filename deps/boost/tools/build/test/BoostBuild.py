@@ -253,6 +253,8 @@ class Tester(TestCmd.TestCmd):
                 elif os.uname()[0] == "Darwin":
                     if os.uname()[4] == "i386":
                         jam_build_dir = "bin.macosxx86"
+                    elif os.uname()[4] == "x86_64":
+                        jam_build_dir = "bin.macosxx86_64"
                     else:
                         jam_build_dir = "bin.macosxppc"
                 elif os.uname()[0] == "AIX":

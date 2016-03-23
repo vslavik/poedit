@@ -1,15 +1,17 @@
 /*
- (c) 2014 Glen Joseph Fernandes
- glenjofe at gmail dot com
+(c) 2014 Glen Joseph Fernandes
+<glenjofe -at- gmail.com>
 
- Distributed under the Boost Software
- License, Version 1.0.
- http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software
+License, Version 1.0.
+http://boost.org/LICENSE_1_0.txt
 */
 #include <boost/config.hpp>
 #include <boost/align/alignment_of.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <cstddef>
+
+#define OFFSET(t, m) ((std::size_t)(&((t*)0)->m))
 
 template<class T>
 struct remove_reference {
@@ -70,25 +72,28 @@ struct remove_cv {
 };
 
 template<class T>
-struct padding {
-    char offset;
+struct alignof_helper {
+    char value;
     typename remove_cv<typename remove_all_extents<typename
         remove_reference<T>::type>::type>::type object;
 };
 
 template<class T>
-std::size_t offset()
+std::size_t result()
 {
-    static padding<T> p = padding<T>();
-    return (char*)&p.object - &p.offset;
+    return boost::alignment::alignment_of<T>::value;
+}
+
+template<class T>
+std::size_t expect()
+{
+    return OFFSET(alignof_helper<T>, object);
 }
 
 template<class T>
 void test_type()
 {
-    std::size_t result = boost::alignment::
-        alignment_of<T>::value;
-    BOOST_TEST_EQ(result, offset<T>());
+    BOOST_TEST_EQ(result<T>(), expect<T>());
 }
 
 template<class T>

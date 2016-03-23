@@ -46,6 +46,8 @@ static const unsigned long maximum_test_size = 1000000UL;
 #include <boost/spirit/home/classic/core/non_terminal/impl/object_with_id.ipp>
 #include <boost/ref.hpp>
 #include <boost/thread/xtime.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/lock_types.hpp>
 #include <vector>
 #include <algorithm>
 #include <boost/detail/lightweight_test.hpp>
@@ -80,7 +82,7 @@ struct test_task
     increase_test_size(unsigned long size)
     {
         static boost::mutex  m;
-        boost::mutex::scoped_lock l(m);
+        boost::unique_lock<boost::mutex> l(m);
 
         if (size<test_size || test_size == maximum_test_size)
             return test_size;

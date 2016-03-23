@@ -15,6 +15,8 @@
 #include <boost/scoped_array.hpp>
 #include <windows.h>
 #endif
+#include <iostream>
+#include <iomanip>
 
 #ifdef BOOST_MSVC
 #pragma warning(disable:4127)

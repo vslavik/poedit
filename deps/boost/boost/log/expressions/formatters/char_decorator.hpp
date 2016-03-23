@@ -28,6 +28,7 @@
 #include <boost/range/value_type.hpp>
 #include <boost/move/core.hpp>
 #include <boost/move/utility.hpp>
+#include <boost/core/enable_if.hpp>
 #include <boost/utility/addressof.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
@@ -109,10 +110,15 @@ public:
      * of each pair is the source pattern, and the second one is the corresponding replacement.
      */
     template< typename RangeT >
-    explicit pattern_replacer(RangeT const& decorations)
+    explicit pattern_replacer(RangeT const& decorations
+#ifndef BOOST_LOG_DOXYGEN_PASS
+        // This is needed for a workaround against an MSVC-10 and older bug in constructor overload resolution
+        , typename boost::enable_if_has_type< typename range_const_iterator< RangeT >::type, int >::type = 0
+#endif
+    )
     {
         typedef typename range_const_iterator< RangeT >::type iterator;
-        for (iterator it = begin(decorations), end_ = end(decorations); it != end_; ++it)
+        for (iterator it = boost::begin(decorations), end_ = boost::end(decorations); it != end_; ++it)
         {
             string_lengths lens;
             {
@@ -140,8 +146,8 @@ public:
     {
         typedef typename range_const_iterator< FromRangeT >::type iterator1;
         typedef typename range_const_iterator< ToRangeT >::type iterator2;
-        iterator1 it1 = begin(from), end1 = end(from);
-        iterator2 it2 = begin(to), end2 = end(to);
+        iterator1 it1 = boost::begin(from), end1 = boost::end(from);
+        iterator2 it2 = boost::begin(to), end2 = boost::end(to);
         for (; it1 != end1 && it2 != end2; ++it1, ++it2)
         {
             string_lengths lens;
@@ -200,25 +206,21 @@ private:
     template< typename RangeT >
     static typename range_const_iterator< RangeT >::type string_begin(RangeT const& r)
     {
-        return begin(r);
+        return boost::begin(r);
     }
 
     static char_type* string_end(char_type* p)
     {
-        while (*p)
-            ++p;
-        return p;
+        return p + std::char_traits< char_type >::length(p);
     }
     static const char_type* string_end(const char_type* p)
     {
-        while (*p)
-            ++p;
-        return p;
+        return p + std::char_traits< char_type >::length(p);
     }
     template< typename RangeT >
     static typename range_const_iterator< RangeT >::type string_end(RangeT const& r)
     {
-        return end(r);
+        return boost::end(r);
     }
 };
 

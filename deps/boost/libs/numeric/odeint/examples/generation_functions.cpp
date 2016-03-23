@@ -64,6 +64,13 @@ struct controller_factory< custom_stepper , custom_controller >
     {
         return custom_controller();
     }
+
+    custom_controller operator()( double abs_tol , double rel_tol , double max_dt ,
+                                  const custom_stepper & ) const
+    {
+        // version with maximal allowed step size max_dt
+        return custom_controller();
+    }
 };
 
 } } }
@@ -77,6 +84,9 @@ int main( int argc , char **argv )
         /*
         //[ generation_functions_syntax_auto
         auto stepper1 = make_controlled( 1.0e-6 , 1.0e-6 , stepper_type() );
+        // or with max step size limit:
+        // auto stepper1 = make_controlled( 1.0e-6 , 1.0e-6 , 0.01, stepper_type() );
+
         auto stepper2 = make_dense_output( 1.0e-6 , 1.0e-6 , stepper_type() );
         //]
         */

@@ -123,11 +123,7 @@ namespace util {
                 "JO","KE","KW","LY","MA","OM","QA","SA","SD","SO",
                 "SY","TN","YE"
             };
-            // workaround for Sun Solaris !@#%@#$%@#$%234
-            #ifdef sun
-            #undef sun
-            #endif
-            static char const * const sun[] = {
+            static char const * const sunday[] = {
                 "AR","AS","AZ","BW","CA","CN","FO","GE","GL","GU",
                 "HK","IL","IN","JM","JP","KG","KR","LA","MH","MN",
                 "MO","MP","MT","NZ","PH","PK","SG","TH","TT","TW",
@@ -137,7 +133,7 @@ namespace util {
                 return 5; // fri
             if(std::binary_search<char const * const *>(sat,sat+sizeof(sat)/(sizeof(sat[0])),terr,comparator))
                 return 6; // sat
-            if(std::binary_search<char const * const *>(sun,sun+sizeof(sun)/(sizeof(sun[0])),terr,comparator))
+            if(std::binary_search<char const * const *>(sunday,sunday+sizeof(sunday)/(sizeof(sunday[0])),terr,comparator))
                 return 0; // sun
             // default
             return 1; // mon

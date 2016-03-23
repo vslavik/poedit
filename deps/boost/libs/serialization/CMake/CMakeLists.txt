@@ -20,9 +20,11 @@ if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" )
   # we use gcc to test for C++03 compatibility
   add_definitions( std=c++03 )
   message(STATUS "compiler is g++ c++03")
+  set(COMPILER_SUPPORTS_CXX11 FALSE)
 elseif( CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" )
   add_definitions( /wd4996 )
   message(STATUS "compiler is MSVC")
+  set(COMPILER_SUPPORTS_CXX11 TRUE)
 elseif( CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" )
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftemplate-depth=300")
   #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98")
@@ -30,6 +32,7 @@ elseif( CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" )
   set(CMAKE_CXX_FLAGS_DEBUG "-g -O0" )
   set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3" )
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -dead_strip")
+  set(COMPILER_SUPPORTS_CXX11 TRUE)
 endif()
 
 #
@@ -143,8 +146,6 @@ add_library(serialization
   ../src/stl_port.cpp
   ../src/text_iarchive.cpp
   ../src/text_oarchive.cpp
-  ../src/text_wiarchive.cpp
-  ../src/text_woarchive.cpp
   ../src/utf8_codecvt_facet.cpp
   ../src/void_cast.cpp
   ../src/xml_archive_exception.cpp
@@ -265,6 +266,7 @@ archive_test(test_interrupts)
 archive_test(test_list A)
 archive_test(test_list_ptrs A)
 archive_test(test_map A)
+archive_test(test_map_boost_unordered A)
 archive_test(test_mi)
 archive_test(test_multiple_ptrs A)
 archive_test(test_multiple_inheritance)
@@ -279,11 +281,11 @@ archive_test(test_object)
 archive_test(test_optional)
 archive_test(test_primitive)
 archive_test(test_priority_queue A)
-# archive_test(test_private_base)
+archive_test(test_private_base)
+archive_test(test_private_base2)
 archive_test(test_queue A)
 archive_test(test_recursion A)
 archive_test(test_registered)
-archive_test(test_set A)
 archive_test(test_shared_ptr)
 archive_test(test_shared_ptr_multi_base)
 archive_test(test_shared_ptr_132)
@@ -297,9 +299,22 @@ archive_test(test_unique_ptr)
 archive_test(test_valarray)
 archive_test(test_variant A)
 archive_test(test_vector A)
+archive_test(test_set A)
+archive_test(test_set_boost_unordered A)
+if(COMPILER_SUPPORTS_CXX11)
+  archive_test(test_set_unordered A)
+elseif()
+  archive_test(test_set_hashed A)
+endif()
+if(COMPILER_SUPPORTS_CXX11)
+  archive_test(test_map_unordered A)
+elseif()
+  archive_test(test_map_hashed A)
+endif()
 
-polymorphic_archive_test(test_polymorphic test_polymorphic_A A )
+polymorphic_archive_test(test_polymorphic test_polymorphic_A A)
 polymorphic_archive_test(test_polymorphic2 test_polymorphic2imp)
+polymorphic_archive_test(test_polymorphic_helper)
 
 # end test targets
 ####################

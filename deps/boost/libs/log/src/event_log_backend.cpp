@@ -16,7 +16,6 @@
 #ifndef BOOST_LOG_WITHOUT_EVENT_LOG
 
 #include "windows_version.hpp"
-#include <memory>
 #include <string>
 #include <vector>
 #include <ostream>
@@ -30,6 +29,7 @@
 #include <boost/log/detail/attachable_sstream_buf.hpp>
 #include <boost/log/detail/code_conversion.hpp>
 #include <boost/log/utility/formatting_ostream.hpp>
+#include "unique_ptr.hpp"
 #include "event_log_registry.hpp"
 #include <windows.h>
 #include <psapi.h>
@@ -257,7 +257,7 @@ BOOST_LOG_API void basic_simple_event_log_backend< CharT >::construct(
         aux::init_event_log_registry(log_name, source_name, reg_mode == event_log::forced, reg_params);
     }
 
-    std::auto_ptr< implementation > p(new implementation());
+    log::aux::unique_ptr< implementation > p(new implementation());
 
     const char_type* target_unc = NULL;
     if (!target.empty())
@@ -496,6 +496,8 @@ BOOST_LOG_API void basic_event_log_backend< CharT >::construct(
 {
     if (reg_mode != event_log::never)
     {
+        if (message_file_name.empty())
+            BOOST_THROW_EXCEPTION(std::invalid_argument("Message file name not specified."));
         aux::registry_params< char_type > reg_params;
         string_type file_name;
         log::aux::code_convert(message_file_name.string(), file_name);
@@ -508,7 +510,7 @@ BOOST_LOG_API void basic_event_log_backend< CharT >::construct(
         aux::init_event_log_registry(log_name, source_name, reg_mode == event_log::forced, reg_params);
     }
 
-    std::auto_ptr< implementation > p(new implementation());
+    log::aux::unique_ptr< implementation > p(new implementation());
 
     const char_type* target_unc = NULL;
     if (!target.empty())

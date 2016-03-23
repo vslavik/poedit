@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -49,27 +50,28 @@
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_alloc</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_delete</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">alignment_of</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">memory</span><span class="special">&gt;</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">aligned_ptr</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">unique_ptr</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_delete</span><span class="special">&gt;;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_delete</span><span class="special">&gt;;</span>
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> <span class="identifier">Args</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="identifier">aligned_ptr</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">make_aligned</span><span class="special">(</span><span class="identifier">Args</span><span class="special">&amp;&amp;...</span> <span class="identifier">args</span><span class="special">)</span>
 <span class="special">{</span>
-  <span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span>
-    <span class="identifier">aligned_alloc</span><span class="special">(</span><span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">),</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">T</span><span class="special">));</span>
-  <span class="keyword">if</span> <span class="special">(!</span><span class="identifier">p</span><span class="special">)</span> <span class="special">{</span>
-    <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">bad_alloc</span><span class="special">();</span>
-  <span class="special">}</span>
-  <span class="keyword">try</span> <span class="special">{</span>
-    <span class="keyword">auto</span> <span class="identifier">q</span> <span class="special">=</span> <span class="special">::</span><span class="keyword">new</span><span class="special">(</span><span class="identifier">p</span><span class="special">)</span> <span class="identifier">T</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Args</span><span class="special">&gt;(</span><span class="identifier">args</span><span class="special">)...);</span>
-    <span class="keyword">return</span> <span class="identifier">aligned_ptr</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">q</span><span class="special">);</span>
-  <span class="special">}</span> <span class="keyword">catch</span> <span class="special">(...)</span> <span class="special">{</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_free</span><span class="special">(</span><span class="identifier">p</span><span class="special">);</span>
-    <span class="keyword">throw</span><span class="special">;</span>
-  <span class="special">}</span>
+    <span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_alloc</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span>
+        <span class="identifier">alignment</span><span class="special">::</span><span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">,</span> <span class="keyword">sizeof</span><span class="special">(</span><span class="identifier">T</span><span class="special">));</span>
+    <span class="keyword">if</span> <span class="special">(!</span><span class="identifier">p</span><span class="special">)</span> <span class="special">{</span>
+        <span class="keyword">throw</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">bad_alloc</span><span class="special">();</span>
+    <span class="special">}</span>
+    <span class="keyword">try</span> <span class="special">{</span>
+        <span class="keyword">auto</span> <span class="identifier">q</span> <span class="special">=</span> <span class="special">::</span><span class="keyword">new</span><span class="special">(</span><span class="identifier">p</span><span class="special">)</span> <span class="identifier">T</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">forward</span><span class="special">&lt;</span><span class="identifier">Args</span><span class="special">&gt;(</span><span class="identifier">args</span><span class="special">)...);</span>
+        <span class="keyword">return</span> <span class="identifier">aligned_ptr</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">q</span><span class="special">);</span>
+    <span class="special">}</span> <span class="keyword">catch</span> <span class="special">(...)</span> <span class="special">{</span>
+        <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_free</span><span class="special">(</span><span class="identifier">p</span><span class="special">);</span>
+        <span class="keyword">throw</span><span class="special">;</span>
+    <span class="special">}</span>
 <span class="special">}</span>
 </pre>
 <h5>
@@ -77,13 +79,13 @@
         <span class="phrase"><a name="align.examples.aligned_ptr.usage"></a></span><a class="link" href="examples.html#align.examples.aligned_ptr.usage">Usage</a>
       </h5>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="keyword">alignas</span><span class="special">(</span><span class="number">16</span><span class="special">)</span> <span class="identifier">type</span> <span class="special">{</span>
-  <span class="keyword">float</span> <span class="identifier">data</span><span class="special">[</span><span class="number">4</span><span class="special">];</span>
+    <span class="keyword">float</span> <span class="identifier">data</span><span class="special">[</span><span class="number">4</span><span class="special">];</span>
 <span class="special">};</span>
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">make_aligned</span><span class="special">&lt;</span><span class="identifier">type</span><span class="special">&gt;();</span>
-  <span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">data</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">=</span> <span class="number">1.0f</span><span class="special">;</span>
+    <span class="keyword">auto</span> <span class="identifier">p</span> <span class="special">=</span> <span class="identifier">make_aligned</span><span class="special">&lt;</span><span class="identifier">type</span><span class="special">&gt;();</span>
+    <span class="identifier">p</span><span class="special">.</span><span class="identifier">reset</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
 </div>
@@ -106,29 +108,29 @@
 
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Alignment</span> <span class="special">=</span> <span class="number">1</span><span class="special">&gt;</span>
 <span class="keyword">using</span> <span class="identifier">aligned_vector</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span>
-  <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_allocator</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Alignment</span><span class="special">&gt;</span> <span class="special">&gt;;</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">alignment</span><span class="special">::</span><span class="identifier">aligned_allocator</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">,</span> <span class="identifier">Alignment</span><span class="special">&gt;</span> <span class="special">&gt;;</span>
 </pre>
 <h5>
 <a name="align.examples.aligned_vector.h1"></a>
         <span class="phrase"><a name="align.examples.aligned_vector.usage"></a></span><a class="link" href="examples.html#align.examples.aligned_vector.usage">Usage</a>
       </h5>
-<pre class="programlisting"><span class="keyword">enum</span> <span class="special">{</span>
-  <span class="identifier">cache_line</span> <span class="special">=</span> <span class="number">64</span>
+<pre class="programlisting"><span class="keyword">enum</span>
+    <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">{</span>
+    <span class="identifier">cache_line</span> <span class="special">=</span> <span class="number">64</span>
 <span class="special">};</span>
 
 <span class="keyword">int</span> <span class="identifier">main</span><span class="special">()</span>
 <span class="special">{</span>
-  <span class="identifier">aligned_vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="identifier">cache_line</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">(</span><span class="number">32</span><span class="special">);</span>
-  <span class="identifier">v</span><span class="special">[</span><span class="number">0</span><span class="special">]</span> <span class="special">=</span> <span class="number">1</span><span class="special">;</span>
+    <span class="identifier">aligned_vector</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">,</span> <span class="identifier">cache_line</span><span class="special">&gt;</span> <span class="identifier">v</span><span class="special">;</span>
+    <span class="identifier">v</span><span class="special">.</span><span class="identifier">emplace_back</span><span class="special">();</span>
 <span class="special">}</span>
 </pre>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2014 Glen Fernandes<p>
-        Distributed under the <a href="http://boost.org/LICENSE_1_0.txt" target="_top">Boost
-        Software License, Version 1.0</a>.
+<td align="right"><div class="copyright-footer">Copyright &#169; 2014, 2015 Glen Joseph Fernandes<p>
+        Distributed under the Boost Software License, Version 1.0.
       </p>
 </div></td>
 </tr></table>

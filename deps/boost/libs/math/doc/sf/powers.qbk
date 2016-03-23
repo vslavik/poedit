@@ -18,12 +18,14 @@
    
 Returns the sine of ['[pi]x].
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the return is `double` when /x/ is an integer type and T otherwise.
 
 [optional_policy]
 
 This function performs exact all-integer arithmetic argument reduction before computing the sine of ['[pi]x].
+
+[table_sin_pi]
 
 [endsect]
 
@@ -45,12 +47,14 @@ This function performs exact all-integer arithmetic argument reduction before co
    
 Returns the cosine of ['[pi]x].
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the return is `double` when /x/ is an integer type and T otherwise.
 
 [optional_policy]
 
 This function performs exact all-integer arithmetic argument reduction before computing the cosine of ['[pi]x].
+
+[table_cos_pi]
 
 [endsect]
 
@@ -72,7 +76,7 @@ This function performs exact all-integer arithmetic argument reduction before co
    
 Returns the natural logarithm of `x+1`.
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the return is `double` when /x/ is an integer type and T otherwise.
 
 [optional_policy]
@@ -107,6 +111,8 @@ The following graph illustrates the behaviour of log1p:
 For built in floating point types `log1p`
 should have approximately 1 epsilon accuracy.
 
+[table_log1p]
+
 [h4 Testing]
 
 A mixture of spot test sanity checks, and random high precision test values
@@ -132,7 +138,7 @@ calculated using NTL::RR at 1000-bit precision.
    
 Returns e[super x] - 1.
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the return is `double` when /x/ is an integer type and T otherwise.
 
 [optional_policy]
@@ -154,6 +160,8 @@ The following graph illustrates the behaviour of expm1:
 
 For built in floating point types `expm1`
 should have approximately 1 epsilon accuracy.
+
+[table_expm1]
 
 [h4 Testing]
 
@@ -180,7 +188,7 @@ calculated using NTL::RR at 1000-bit precision.
    
 Returns the cubed root of x: x[super 1/3].
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the return is `double` when /x/ is an integer type and T otherwise.
 
 [optional_policy]
@@ -195,6 +203,8 @@ The following graph illustrates the behaviour of cbrt:
 
 For built in floating-point types `cbrt`
 should have approximately 2 epsilon accuracy.
+
+[table_cbrt]
 
 [h4 Testing]
 
@@ -221,7 +231,7 @@ calculated using NTL::RR at 1000-bit precision.
    
 Returns `sqrt(1+x) - 1`.
 
-The return type of this function is computed using the __arg_pomotion_rules:
+The return type of this function is computed using the __arg_promotion_rules:
 the return is `double` when /x/ is an integer type and T otherwise.
 
 [optional_policy]
@@ -239,6 +249,8 @@ The following graph illustrates the behaviour of sqrt1pm1:
 
 For built in floating-point types `sqrt1pm1`
 should have approximately 3 epsilon accuracy.
+
+[table_sqrt1pm1]
 
 [h4 Testing]
 
@@ -265,7 +277,7 @@ calculated using NTL::RR at 1000-bit precision.
    
 Returns x[super y ] - 1.
 
-The return type of this function is computed using the __arg_pomotion_rules
+The return type of this function is computed using the __arg_promotion_rules
 when T1 and T2 are dufferent types.
 
 [optional_policy]
@@ -282,6 +294,8 @@ The following graph illustrates the behaviour of powm1:
 [h4 Accuracy]
 
 Should have approximately 2-3 epsilon accuracy.
+
+[table_powm1]
 
 [h4 Testing]
 
@@ -301,7 +315,7 @@ calculated using NTL::RR at 1000-bit precision.
 __effects computes [equation hypot]
 in such a way as to avoid undue underflow and overflow.
 
-The return type of this function is computed using the __arg_pomotion_rules
+The return type of this function is computed using the __arg_promotion_rules
 when T1 and T2 are of different types.
 
 [optional_policy]

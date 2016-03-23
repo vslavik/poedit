@@ -30,7 +30,7 @@ int main()
    // We can declare constants using GCC or Intel's native types, and the Q suffix,
    // these can be declared constexpr if required:
    /*<-*/
-#ifndef BOOST_NO_CONSTEXPR
+#ifndef BOOST_NO_CXX11_CONSTEXPR
    /*->*/
    constexpr float128 pi = 3.1415926535897932384626433832795028841971693993751058Q;
    /*<-*/

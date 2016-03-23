@@ -161,7 +161,7 @@ pending __forced_unwind__ exception.]
             // possibly not re-throw pending exception
         }
 
-[important Do not jump from inside a catch block and than re-throw the
+[important Do not jump from inside a catch block and then re-throw the
 exception in another execution context.]
 
 
@@ -428,7 +428,7 @@ to another symmetric coroutine. Parameter `x` is passed as value into `other`'s 
 [variablelist
 [[Preconditions:] [`*this` is not a __not_a_coro__.]]
 [[Returns:] [Returns data transferred from coroutine-function via
-__push_coro_op__.]]
+__call_coro_op__.]]
 [[Throws:] [`invalid_result`]]
 ]
 

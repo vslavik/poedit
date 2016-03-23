@@ -107,7 +107,7 @@
 
    #elif (defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)))
       /* Custom spin locks for older gcc on x86 */
-      static FORCEINLINE int boost_container_x86_cas_lock(int *sl) {
+      static inline int boost_container_x86_cas_lock(int *sl) {
          int ret;
          int val = 1;
          int cmp = 0;
@@ -118,7 +118,7 @@
          return ret;
       }
 
-      static FORCEINLINE void boost_container_x86_clear_lock(int* sl) {
+      static inline void boost_container_x86_clear_lock(int* sl) {
          assert(*sl != 0);
          int prev = 0;
          int ret;

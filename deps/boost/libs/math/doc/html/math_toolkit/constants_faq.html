@@ -4,7 +4,7 @@
 <title>FAQs</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../constants.html" title="Chapter&#160;4.&#160;Mathematical Constants">
 <link rel="prev" href="new_const.html" title="Defining New Constants">
 <link rel="next" href="../dist.html" title="Chapter&#160;5.&#160;Statistical Distributions and Functions">
@@ -310,8 +310,8 @@
       should be 32. (the default <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">RR</span><span class="special">&gt;::</span><span class="identifier">digits10</span><span class="special">()</span></code>
       should be about 40). (which seems to agree with experiments). We output constants
       (including some noisy bits, an approximation to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">RR</span><span class="special">&gt;::</span><span class="identifier">max_digits10</span><span class="special">()</span></code>)
-      by adding 2 extra decimal digits, so using <code class="computeroutput"><span class="identifier">quad_float</span><span class="special">::</span><span class="identifier">SetOutputPrecision</span><span class="special">(</span><span class="number">32</span> <span class="special">+</span>
-      <span class="number">2</span><span class="special">);</span></code>
+      by adding 2 or 3 extra decimal digits, so using <code class="computeroutput"><span class="identifier">quad_float</span><span class="special">::</span><span class="identifier">SetOutputPrecision</span><span class="special">(</span><span class="number">32</span> <span class="special">+</span>
+      <span class="number">3</span><span class="special">);</span></code>
     </p>
 <p>
       Apple Mac/Darwin uses a similar <span class="emphasis"><em>doubledouble</em></span> 106-bit for
@@ -329,7 +329,7 @@
       </p></td></tr>
 </table></div>
 <p>
-      <span class="bold"><strong>New projects should use <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>.</strong></span>
+      <span class="bold"><strong>New projects should use <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>.</strong></span>
     </p>
 <h6>
 <a name="math_toolkit.constants_faq.h11"></a>
@@ -350,7 +350,7 @@
       to calculate new math constants.
     </p>
 <p>
-      <span class="bold"><strong>New projects should use <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>.</strong></span>
+      <span class="bold"><strong>New projects should use <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>.</strong></span>
     </p>
 <h6>
 <a name="math_toolkit.constants_faq.h12"></a>

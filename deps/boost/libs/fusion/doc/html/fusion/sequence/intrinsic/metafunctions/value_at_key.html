@@ -120,6 +120,10 @@
             <span class="bold"><strong>Return type</strong></span>: Any type.
           </p>
 <p>
+            <span class="bold"><strong>Precondition</strong></span>: <code class="computeroutput"><span class="identifier">has_key</span><span class="special">&lt;</span><span class="identifier">Seq</span><span class="special">,</span> <span class="identifier">Key</span><span class="special">&gt;::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">value</span> <span class="special">==</span> <span class="keyword">true</span></code>
+            (where <code class="computeroutput"><span class="identifier">Seq</span></code> is not <a class="link" href="../../concepts/unbounded_sequence.html" title="Unbounded Sequence">Unbounded Sequence</a>)
+          </p>
+<p>
             <span class="bold"><strong>Semantics</strong></span>: Returns the actual element
             type associated with key type <code class="computeroutput"><span class="identifier">Key</span></code>
             in <code class="computeroutput"><span class="identifier">Seq</span></code>.

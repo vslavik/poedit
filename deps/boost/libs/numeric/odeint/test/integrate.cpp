@@ -97,16 +97,19 @@ struct perform_integrate_const_test
 {
     void operator()( const value_type t_end , const value_type dt )
     {
-        std::cout << "Testing integrate_const with " << typeid( Stepper ).name() << std::endl;
+        // std::cout << "Testing integrate_const with " << typeid( Stepper ).name() << std::endl;
 
         state_type x( 3 , 10.0 ) , x_end( 3 );
 
         std::vector< value_type > times;
 
         size_t steps = integrate_const( Stepper() , lorenz , x , 0.0 , t_end ,
-                         dt , push_back_time( times , x_end ) );
+                                        dt , push_back_time( times , x_end ) );
 
+        std::cout.precision(16);
         std::cout << t_end << " (" << dt << "), " << steps << " , " << times.size() << " , " << 10.0+dt*steps << "=" << x_end[0] << std::endl;
+
+        std::cout << static_cast<int>(floor(t_end/dt)) << " , " << t_end/dt << std::endl;
 
         BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , static_cast<int>(floor(t_end/dt))+1 );
 
@@ -129,7 +132,7 @@ struct perform_integrate_adaptive_test
 {
     void operator()( const value_type t_end = 10.0 , const value_type dt = 0.03 )
     {
-        std::cout << "Testing integrate_adaptive with " << typeid( Stepper ).name() << std::endl;
+        // std::cout << "Testing integrate_adaptive with " << typeid( Stepper ).name() << std::endl;
 
         state_type x( 3 , 10.0 ) , x_end( 3 );
 
@@ -138,7 +141,7 @@ struct perform_integrate_adaptive_test
         size_t steps = integrate_adaptive( Stepper() , lorenz , x , 0.0 , t_end ,
                                         dt , push_back_time( times , x_end ) );
 
-        std::cout << t_end << " , " << steps << " , " << times.size() << " , " << dt << " , " << 10.0+t_end << "=" << x_end[0] << std::endl;
+        // std::cout << t_end << " , " << steps << " , " << times.size() << " , " << dt << " , " << 10.0+t_end << "=" << x_end[0] << std::endl;
 
         BOOST_CHECK_EQUAL( times.size() , steps+1 );
 
@@ -158,7 +161,7 @@ struct perform_integrate_times_test
 {
     void operator()( const int n = 10 , const int dn=1 , const value_type dt = 0.03 )
     {
-        std::cout << "Testing integrate_times with " << typeid( Stepper ).name() << std::endl;
+        // std::cout << "Testing integrate_times with " << typeid( Stepper ).name() << std::endl;
 
         state_type x( 3 ) , x_end( 3 );
         x[0] = x[1] = x[2] = 10.0;
@@ -194,7 +197,8 @@ struct perform_integrate_n_steps_test
 {
     void operator()( const int n = 200 , const value_type dt = 0.01 )
     {
-        std::cout << "Testing integrate_n_steps with " << typeid( Stepper ).name() << std::endl;
+        // std::cout << "Testing integrate_n_steps with " << typeid( Stepper ).name() << ". ";
+        // std::cout << "dt=" << dt << std::endl;
 
         state_type x( 3 ) , x_end( 3 );
         x[0] = x[1] = x[2] = 10.0;
@@ -208,9 +212,10 @@ struct perform_integrate_n_steps_test
         BOOST_CHECK_EQUAL( static_cast<int>(times.size()) , n+1 );
 
         for( size_t i=0 ; i<times.size() ; ++i )
+        {
             // check if observer was called at times 0,1,2,...
-            BOOST_CHECK_SMALL( times[i] - static_cast< value_type >(i)*dt , 2E-16 );
-
+            BOOST_CHECK_SMALL(times[i] - static_cast< value_type >(i) * dt, 2E-16);
+        }
         // check first, trivial, component
         BOOST_CHECK_SMALL( (10.0 + end_time) - x_end[0] , 1E-6 ); // precision of steppers: 1E-6
 //        BOOST_CHECK_EQUAL( x[1] , x_end[1] );

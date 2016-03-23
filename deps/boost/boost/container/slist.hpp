@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2004-2013. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2004-2015. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -442,9 +442,7 @@ class slist
    template <class InpIt>
    void assign(InpIt first, InpIt last
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<InpIt, size_type>::value
-         >::type * = 0
+      , typename container_detail::disable_if_convertible<InpIt, size_type>::type * = 0
       #endif
       )
    {
@@ -686,7 +684,10 @@ class slist
    //!
    //! <b>Complexity</b>: Constant.
    reference front()
-   {  return *this->begin();  }
+   {
+      BOOST_ASSERT(!this->empty());
+      return *this->begin();
+   }
 
    //! <b>Requires</b>: !empty()
    //!
@@ -697,7 +698,10 @@ class slist
    //!
    //! <b>Complexity</b>: Constant.
    const_reference front() const
-   {  return *this->begin();  }
+   {
+      BOOST_ASSERT(!this->empty());
+      return *this->begin();
+   }
 
    //////////////////////////////////////////////
    //
@@ -899,7 +903,10 @@ class slist
    //!
    //! <b>Complexity</b>: Amortized constant time.
    void pop_front()
-   {  this->icont().pop_front_and_dispose(Destroyer(this->node_alloc()));      }
+   {
+      BOOST_ASSERT(!this->empty());
+      this->icont().pop_front_and_dispose(Destroyer(this->node_alloc()));
+   }
 
    //! <b>Effects</b>: Erases the element after the element pointed by prev_p
    //!    of the list.
@@ -941,7 +948,12 @@ class slist
    void swap(slist& x)
       BOOST_NOEXCEPT_IF( allocator_traits_type::propagate_on_container_swap::value
                                 || allocator_traits_type::is_always_equal::value)
-   {  AllocHolder::swap(x);   }
+   {
+      BOOST_ASSERT(allocator_traits_type::propagate_on_container_swap::value ||
+                   allocator_traits_type::is_always_equal::value ||
+                   this->get_stored_allocator() == x.get_stored_allocator());
+      AllocHolder::swap(x);
+   }
 
    //! <b>Effects</b>: Erases all the elements of the list.
    //!
@@ -1654,22 +1666,15 @@ struct has_trivial_destructor_after_move<boost::container::slist<T, Allocator> >
 
 namespace container {
 
-#endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
-
 }} //namespace boost{  namespace container {
+
+#endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
 // Specialization of insert_iterator so that insertions will be constant
 // time rather than linear time.
 
-#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
-
-#if defined(__clang__) && defined(_LIBCPP_VERSION)
-   #define BOOST_CONTAINER_CLANG_INLINE_STD_NS
-   #pragma GCC diagnostic push
-   #pragma GCC diagnostic ignored "-Wc++11-extensions"
-#endif
-
-BOOST_CONTAINER_STD_NS_BEG
+#include <boost/move/detail/std_ns_begin.hpp>
+BOOST_CONTAINER_DOC1ST(namespace std {, BOOST_MOVE_STD_NS_BEG)
 
 template <class T, class Allocator>
 class insert_iterator<boost::container::slist<T, Allocator> >
@@ -1702,14 +1707,8 @@ class insert_iterator<boost::container::slist<T, Allocator> >
    insert_iterator<Container>& operator++(int){ return *this; }
 };
 
-BOOST_CONTAINER_STD_NS_END
-
-#ifdef BOOST_CONTAINER_CLANG_INLINE_STD_NS
-   #pragma GCC diagnostic pop
-   #undef BOOST_CONTAINER_CLANG_INLINE_STD_NS
-#endif   //BOOST_CONTAINER_CLANG_INLINE_STD_NS
-
-#endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
+BOOST_CONTAINER_DOC1ST( }, BOOST_MOVE_STD_NS_END)
+#include <boost/move/detail/std_ns_end.hpp>
 
 #include <boost/container/detail/config_end.hpp>
 

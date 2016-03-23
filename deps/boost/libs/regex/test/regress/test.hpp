@@ -288,5 +288,6 @@ void test_unicode();
 void test_pocessive_repeats();
 void test_mark_resets();
 void test_recursion();
+void test_verbs();
 
 #endif

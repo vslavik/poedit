@@ -18,8 +18,6 @@ int main(int argc, char* argv[])
     std::cout << "Usage: tut0 path\n";
     return 1;
   }
-
   std::cout << argv[1] << '\n';
-
   return 0;
 }

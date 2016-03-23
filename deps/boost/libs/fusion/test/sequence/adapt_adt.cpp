@@ -149,6 +149,9 @@ namespace ns
 
 #endif
 
+class empty_adt{};
+BOOST_FUSION_ADAPT_ADT(empty_adt,)
+
 int
 main()
 {

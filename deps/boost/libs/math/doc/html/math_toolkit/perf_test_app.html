@@ -1,13 +1,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>The Performance Test Application</title>
+<title>The Performance Test Applications</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
-<link rel="up" href="../perf.html" title="Chapter&#160;15.&#160;Performance">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<link rel="up" href="../perf.html" title="Chapter&#160;16.&#160;Performance">
 <link rel="prev" href="comparisons.html" title="Comparisons to Other Open Source Libraries">
-<link rel="next" href="../backgrounders.html" title="Chapter&#160;16.&#160;Backgrounders">
+<link rel="next" href="../backgrounders.html" title="Chapter&#160;17.&#160;Backgrounders">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -24,25 +24,79 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="math_toolkit.perf_test_app"></a><a class="link" href="perf_test_app.html" title="The Performance Test Application">The Performance Test Application</a>
+<a name="math_toolkit.perf_test_app"></a><a class="link" href="perf_test_app.html" title="The Performance Test Applications">The Performance Test Applications</a>
 </h2></div></div></div>
 <p>
-      Under <span class="emphasis"><em>boost-path</em></span>/libs/math/performance you will find a
-      (fairly rudimentary) performance test application for this library.
+      Under <span class="emphasis"><em>boost-path</em></span>/libs/math/reporting/performance you will
+      find some reasonable comprehensive performance test applications for this library.
     </p>
 <p>
-      To run this application yourself, build the all the .cpp files in <span class="emphasis"><em>boost-path</em></span>/libs/math/performance
-      into an application using your usual release-build settings. Run the application
-      with --help to see a full list of options, or with --all to test everything
-      (which takes quite a while), or with --tune to test the <a class="link" href="tuning.html" title="Performance Tuning Macros">available
-      performance tuning options</a>.
+      In order to generate the tables you will have seen in this documentation (or
+      others for your specific compiler) you need to invoke <code class="computeroutput"><span class="identifier">bjam</span></code>
+      in this directory, using a C++11 capable compiler. Note that results extend/overwrite
+      whatever is already present in <span class="emphasis"><em>boost-path</em></span>/libs/math/reporting/performance/doc/performance_tables.qbk,
+      you may want to delete this file before you begin so as to make a fresh start
+      for your particular system.
     </p>
 <p>
-      If you want to use this application to test the effect of changing any of the
-      <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>, then you will need to build and run
-      it twice: once with the default <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a>, and
-      then a second time with the <a class="link" href="../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policies</a> you want
-      to test set as the default.
+      The programs produce results in Boost's Quickbook format which is not terribly
+      human readable. If you configure your user-config.jam to be able to build Docbook
+      documentation, then you will also get a full summary of all the data in HTML
+      format in <span class="emphasis"><em>boost-path</em></span>/libs/math/reporting/performance/html/index.html.
+      Assuming you're on a 'nix-like platform the procedure to do this is to first
+      install the <code class="computeroutput"><span class="identifier">xsltproc</span></code>, <code class="computeroutput"><span class="identifier">Docbook</span> <span class="identifier">DTD</span></code>,
+      and <code class="computeroutput"><span class="identifier">Bookbook</span> <span class="identifier">XSL</span></code>
+      packages. Then:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Copy <span class="emphasis"><em>boost-path</em></span>/tools/build/example/user-config.jam
+          to your home directory.
+        </li>
+<li class="listitem">
+          Add <code class="computeroutput"><span class="keyword">using</span> <span class="identifier">xsltproc</span>
+          <span class="special">;</span></code> to the end of the file (note the
+          space surrounding each token, including the final ";", this is
+          important!) This assumes that <code class="computeroutput"><span class="identifier">xsltproc</span></code>
+          is in your path.
+        </li>
+<li class="listitem">
+          Add <code class="computeroutput"><span class="keyword">using</span> <span class="identifier">boostbook</span>
+          <span class="special">:</span> <span class="identifier">path</span><span class="special">-</span><span class="identifier">to</span><span class="special">-</span><span class="identifier">xsl</span><span class="special">-</span><span class="identifier">stylesheets</span> <span class="special">:</span>
+          <span class="identifier">path</span><span class="special">-</span><span class="identifier">to</span><span class="special">-</span><span class="identifier">dtd</span>
+          <span class="special">;</span></code> to the end of the file. The <code class="computeroutput"><span class="identifier">path</span><span class="special">-</span><span class="identifier">to</span><span class="special">-</span><span class="identifier">dtd</span></code>
+          should point to version 4.2.x of the Docbook DTD, while <code class="computeroutput"><span class="identifier">path</span><span class="special">-</span><span class="identifier">to</span><span class="special">-</span><span class="identifier">xsl</span><span class="special">-</span><span class="identifier">stylesheets</span></code> should point to the folder
+          containing the latest XSLT stylesheets. Both paths should use all forward
+          slashes even on Windows.
+        </li>
+</ul></div>
+<p>
+      At this point you should be able to run the tests and generate the HTML summary,
+      if GSL, RMath or libstdc++ are present in the compilers path they will be automatically
+      tested. For DCDFLIB you will need to place the C source in <span class="emphasis"><em>boost-path</em></span>/libs/math/reporting/performance/third_party/dcdflib.
+    </p>
+<p>
+      If you want to compare multiple compilers, or multiple options for one compiler,
+      then you will need to invoke <code class="computeroutput"><span class="identifier">bjam</span></code>
+      multiple times, once for each compiler. Note that in order to test multiple
+      configurations of the same compiler, each has to be given a unique name in
+      the test program, otherwise they all edit the same table cells. Suppose you
+      want to test GCC with and without the -ffast-math option, in this case bjam
+      would be invoked first as:
+    </p>
+<pre class="programlisting"><span class="identifier">bjam</span> <span class="identifier">toolset</span><span class="special">=</span><span class="identifier">gcc</span> <span class="special">-</span><span class="identifier">a</span> <span class="identifier">cxxflags</span><span class="special">=-</span><span class="identifier">std</span><span class="special">=</span><span class="identifier">gnu</span><span class="special">++</span><span class="number">11</span>
+</pre>
+<p>
+      Which would run the tests using default optimization options (-O3), we can
+      then run again using -ffast-math:
+    </p>
+<pre class="programlisting"><span class="identifier">bjam</span> <span class="identifier">toolset</span><span class="special">=</span><span class="identifier">gcc</span> <span class="special">-</span><span class="identifier">a</span> <span class="identifier">cxxflags</span><span class="special">=</span><span class="char">'-std=gnu++11 -ffast-math'</span> <span class="identifier">define</span><span class="special">=</span><span class="identifier">COMPILER_NAME</span><span class="special">=</span><span class="char">'"GCC with -ffast-math"'</span>
+</pre>
+<p>
+      In the command line above, the -a flag forces a full rebuild, and the preprocessor
+      define COMPILER_NAME needs to be set to a string literal describing the compiler
+      configuration, hence the double quotes - one for the command line, one for
+      the compiler.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

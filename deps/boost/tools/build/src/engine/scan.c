@@ -11,6 +11,7 @@
 
 #include "jam.h"
 #include "scan.h"
+#include "output.h"
 
 #include "constants.h"
 #include "jambase.h"
@@ -72,7 +73,7 @@ void yyerror( char const * s )
      * will hold the information about where the token started while incp will
      * hold the information about where reading it broke.
      */
-    printf( "%s:%d: %s at %s\n", object_str( yylval.file ), yylval.line, s,
+    out_printf( "%s:%d: %s at %s\n", object_str( yylval.file ), yylval.line, s,
             symdump( &yylval ) );
     ++anyerrors;
 }
@@ -361,7 +362,7 @@ int yylex()
     }
 
     if ( DEBUG_SCAN )
-        printf( "scan %s\n", symdump( &yylval ) );
+        out_printf( "scan %s\n", symdump( &yylval ) );
 
     return yylval.type;
 

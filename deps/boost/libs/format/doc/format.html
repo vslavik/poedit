@@ -218,7 +218,7 @@ cout &lt;&lt; fmter2 % 101 ;
 cout &lt;&lt; format("_%1%_ %1% \n") % group(showpos, setw(5), 101);
 
 </pre>
-      </blockquote>The manipulators are applied at each occurence of %1%, and
+      </blockquote>The manipulators are applied at each occurrence of %1%, and
       thus it prints : "_ +101_ +101 \n"
     </li>
 
@@ -738,7 +738,7 @@ cout &lt;&lt; format("%1% %2% %1%\n") % group(hex, showbase, 40) % 50; // prints
   </ol>
 
   <p>Such manipulators are passed to the streams right before the following
-  argument, at every occurence. Note that formatting options specified within
+  argument, at every occurrence. Note that formatting options specified within
   the format string are overridden by stream state modifiers passed this way.
   For instance in the following code, the <i>hex</i> manipulator has priority
   over the <i>d</i> type-specification in the format-string which would set

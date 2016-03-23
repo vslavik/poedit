@@ -133,7 +133,7 @@ struct conversion_grammar
                 // note that "fallback" is the last alternative here !
                 top  = *(class2struct || subscript || fallback),
                 /////////////////////////////////////////////////////////////
-                // replace any occurrance of "class" by "struct"
+                // replace any occurrence of "class" by "struct"
                 class2struct = str_p("class") [emit_constant("struct")],
                 /////////////////////////////////////////////////////////////
                 // if the input maches "[some_number]"

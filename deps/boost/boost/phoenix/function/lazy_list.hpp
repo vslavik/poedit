@@ -1304,28 +1304,28 @@ bool operator<( a_unique_type_for_nil, const list<T>& b ) {
       template <class L, class M, bool b>
       struct CatHelp0;
 
-      template <class L>
-      struct CatHelp0<L,a_unique_type_for_nil,true> {
-        typedef typename result_of::template ListType<L>::LType type;
+      template <class LL>
+      struct CatHelp0<LL,a_unique_type_for_nil,true> {
+        typedef typename result_of::template ListType<LL>::LType type;
       };
 
-      template <class L>
-      struct CatHelp0<const L &,const a_unique_type_for_nil &,true> {
-        typedef typename result_of::template ListType<L>::LType type;
+      template <class LL>
+      struct CatHelp0<const LL &,const a_unique_type_for_nil &,true> {
+        typedef typename result_of::template ListType<LL>::LType type;
         //typedef L type;
       };
 
-      template <class L>
-      struct CatHelp0<L &,a_unique_type_for_nil &,true> {
-        typedef typename result_of::template ListType<L>::LType type;
+      template <class LL>
+      struct CatHelp0<LL &,a_unique_type_for_nil &,true> {
+        typedef typename result_of::template ListType<LL>::LType type;
         //typedef L type;
       };
 
-      template <class L, class M>
-      struct CatHelp0<L,M,false> {
+      template <class LL, class MM>
+      struct CatHelp0<LL,MM,false> {
           // This removes any references from L for correct return type
           // identification.
-        typedef typename result_of::template ListType<L>::LType type;
+        typedef typename result_of::template ListType<LL>::LType type;
         //    typedef typename ConsHelp1<T,LType,
         //   boost::is_base_and_derived<ListLike,LType>::value>::type type;
       };

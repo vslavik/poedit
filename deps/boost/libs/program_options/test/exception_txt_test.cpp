@@ -59,7 +59,7 @@ void test_each_exception_message(const string& test_description, const vector<co
         if (style == -1)
             store(parse_config_file(is, desc), vm);
         else
-            store(parse_command_line(argv.size(), argv.data(), desc, style), vm);
+            store(parse_command_line(argv.size(), &argv[0], desc, style), vm);
         notify(vm);    
     } 
     catch (EXCEPTION& e)

@@ -242,7 +242,21 @@ void divide_unsigned_helper(
       // Update r in a way that won't actually produce a negative result
       // in case the argument types are unsigned:
       //
-      if(r.compare(t) > 0)
+      if(truncated_t && carry)
+      {
+         // We need to calculate 2^n + t - r
+         // where n is the number of bits in this type.
+         // Simplest way is to get 2^n - r by complementing
+         // r, then add t to it.  Note that we can't call eval_complement
+         // in case this is a signed checked type:
+         for(unsigned i = 0; i <= r_order; ++i)
+            r.limbs()[i] = ~prem[i];
+         r.normalize();
+         eval_increment(r);
+         eval_add(r, t);
+         r_neg = !r_neg;
+      }
+      else if(r.compare(t) > 0)
       {
          eval_subtract(r, t);
       }
@@ -540,7 +554,7 @@ BOOST_MP_FORCEINLINE typename enable_if_c<!is_trivial_cpp_int<cpp_int_backend<Mi
       signed_limb_type b)
 {
    bool s = a.sign();
-   divide_unsigned_helper(static_cast<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>* >(0), a, static_cast<limb_type>(std::abs(b)), result);
+   divide_unsigned_helper(static_cast<cpp_int_backend<MinBits1, MaxBits1, SignType1, Checked1, Allocator1>* >(0), a, static_cast<limb_type>(boost::multiprecision::detail::unsigned_abs(b)), result);
    result.sign(s);
 }
 

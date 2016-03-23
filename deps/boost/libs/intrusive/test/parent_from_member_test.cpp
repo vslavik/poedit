@@ -79,6 +79,24 @@ struct MultiInheritance2
    float multiinheritance2_float_;
 } multiinheritance2;
 
+struct VirtualDerivedPoly
+   : public virtual Derived
+{
+   int   virtualderivedpoly_int_;
+   float virtualderivedpoly_float_;
+   virtual void f1(){}
+   virtual void f2(){}
+} virtualderivedpoly;
+
+struct VirtualMultipleDerivedPoly
+   : public virtual Derived, virtual public DerivedPoly
+{
+   int   virtualmultiplederivedpoly_int_;
+   float virtualmultiplederivedpoly_float_;
+   virtual void f1(){}
+   virtual void f2(){}
+} virtualmultiplederivedpoly;
+
 struct VirtualDerived
    : public virtual Derived
 {
@@ -88,16 +106,9 @@ struct VirtualDerived
    virtual void f2(){}
 } virtualderived;
 
-struct VirtualMultipleDerived
-   : public virtual Derived, virtual public DerivedPoly
-{
-   int   virtualmultiplederived_int_;
-   float virtualmultiplederived_float_;
-   virtual void f1(){}
-   virtual void f2(){}
-} virtualmultiplederived;
-
 using namespace boost::intrusive;
+
+//Add new test with https://svn.boost.org/trac/boost/attachment/ticket/8512/Source1.cpp
 
 int main()
 {
@@ -141,14 +152,16 @@ int main()
    BOOST_TEST(&multiinheritance2 == get_parent_from_member(&multiinheritance2.derivedpoly2_float_, &MultiInheritance2::derivedpoly2_float_));
 
    //MSVC pointer to member data uses RTTI info even when not crossing virtual base boundaries
-   #ifdef BOOST_INTRUSIVE_MSVC_ABI_PTR_TO_MEMBER
-   //No access to virtual base data {int_, float_, derived_int_, derived_float_}
+   #ifndef BOOST_INTRUSIVE_MSVC_ABI_PTR_TO_MEMBER
    BOOST_TEST(&virtualderived == get_parent_from_member(&virtualderived.virtualderived_int_,   &VirtualDerived::virtualderived_int_));
    BOOST_TEST(&virtualderived == get_parent_from_member(&virtualderived.virtualderived_float_, &VirtualDerived::virtualderived_float_));
-   BOOST_TEST(&virtualmultiplederived == get_parent_from_member(&virtualmultiplederived.virtualmultiplederived_float_, &VirtualMultipleDerived::virtualmultiplederived_float_));
-   BOOST_TEST(&virtualmultiplederived == get_parent_from_member(&virtualmultiplederived.virtualmultiplederived_int_,   &VirtualMultipleDerived::virtualmultiplederived_int_));
-   BOOST_TEST(&virtualmultiplederived == get_parent_from_member(&virtualmultiplederived.derivedpoly_float_, &VirtualMultipleDerived::derivedpoly_float_));
-   BOOST_TEST(&virtualmultiplederived == get_parent_from_member(&virtualmultiplederived.derivedpoly_int_,   &VirtualMultipleDerived::derivedpoly_int_));
+
+   BOOST_TEST(&virtualderivedpoly == get_parent_from_member(&virtualderivedpoly.virtualderivedpoly_int_,   &VirtualDerivedPoly::virtualderivedpoly_int_));
+   BOOST_TEST(&virtualderivedpoly == get_parent_from_member(&virtualderivedpoly.virtualderivedpoly_float_, &VirtualDerivedPoly::virtualderivedpoly_float_));
+   BOOST_TEST(&virtualmultiplederivedpoly == get_parent_from_member(&virtualmultiplederivedpoly.virtualmultiplederivedpoly_float_, &VirtualMultipleDerivedPoly::virtualmultiplederivedpoly_float_));
+   BOOST_TEST(&virtualmultiplederivedpoly == get_parent_from_member(&virtualmultiplederivedpoly.virtualmultiplederivedpoly_int_,   &VirtualMultipleDerivedPoly::virtualmultiplederivedpoly_int_));
+   BOOST_TEST(&virtualmultiplederivedpoly == get_parent_from_member(&virtualmultiplederivedpoly.derivedpoly_float_, &VirtualMultipleDerivedPoly::derivedpoly_float_));
+   BOOST_TEST(&virtualmultiplederivedpoly == get_parent_from_member(&virtualmultiplederivedpoly.derivedpoly_int_,   &VirtualMultipleDerivedPoly::derivedpoly_int_));
    #endif
 
    return boost::report_errors();

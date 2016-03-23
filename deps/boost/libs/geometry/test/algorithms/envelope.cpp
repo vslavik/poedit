@@ -1,9 +1,14 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+
+// This file was modified by Oracle on 2015.
+// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -12,6 +17,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+#include <boost/numeric/conversion/bounds.hpp>
 
 #include <algorithms/test_envelope.hpp>
 
@@ -57,6 +63,144 @@ void test_3d()
     test_envelope<bg::model::box<P> >("BOX(1 1 1,3 3 3)", 1, 3, 1, 3, 1, 3);
 }
 
+template <typename Geometry>
+void test_empty_geometry(std::string const& wkt)
+{
+    typedef typename bg::coordinate_type<Geometry>::type ct;
+    ct high_val = boost::numeric::bounds<ct>::highest();
+    ct low_val = boost::numeric::bounds<ct>::lowest();
+
+    test_envelope<Geometry>(wkt, high_val, low_val, high_val, low_val);
+}
+
+template <typename P>
+void test_empty()
+{
+    test_empty_geometry<bg::model::linestring<P> >("LINESTRING()");
+    test_empty_geometry<bg::model::ring<P> >("POLYGON(())");
+
+    test_empty_geometry<bg::model::polygon<P> >("POLYGON(())");
+
+    test_empty_geometry<bg::model::multi_point<P> >("MULTIPOINT()");
+
+    test_empty_geometry
+        <
+            bg::model::multi_linestring<bg::model::linestring<P> >
+        >("MULTILINESTRING()");
+
+    test_empty_geometry
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON()");
+}
+
+template <typename P>
+void test_invalid()
+{
+    // polygon with empty exterior and interior rings
+    test_empty_geometry<bg::model::polygon<P> >("POLYGON((),(),())");
+
+    // polygon with empty interior rings
+    test_envelope
+        <
+            bg::model::polygon<P>
+        >("POLYGON((1 2,1 20,22 20,22 2,1 2),(),())",
+          1, 22, 2, 20);
+
+    // another polygon with empty interior rings
+    test_envelope
+        <
+            bg::model::polygon<P>
+        >("POLYGON((1 2,1 20,22 20,22 2,1 2),(),(3 4,19 4,19 18,3 18,3 4),())",
+          1, 22, 2, 20);
+
+    // polygon with empty exterior ring
+    test_envelope
+        <
+            bg::model::polygon<P>
+        >("POLYGON((),(),(3 4,19 4,19 18,3 18,3 4),())",
+          3, 19, 4, 18);
+
+    // another polygon with empty exterior ring
+    test_envelope
+        <
+            bg::model::polygon<P>
+        >("POLYGON((),(),(3 4,19 4,19 18,3 18,3 4),(4 5,18 5,18 17,4 17,4 5))",
+          3, 19, 4, 18);
+
+    // yet one more polygon with empty exterior ring
+    test_envelope
+        <
+            bg::model::polygon<P>
+        >("POLYGON((),(),(4 5,18 5,18 17,4 17,4 5),(3 4,19 4,19 18,3 18,3 4))",
+          3, 19, 4, 18);
+
+    // multilinestring with empty linestrings
+    test_empty_geometry
+        <
+            bg::model::multi_linestring<bg::model::linestring<P> >
+        >("MULTILINESTRING((),(),())");
+
+    // multilinestring with empty and non-empty linestrings
+    test_envelope
+        <
+            bg::model::multi_linestring<bg::model::linestring<P> >
+        >("MULTILINESTRING((),(10 20),())", 10, 10, 20, 20);
+
+    // multipolygon with empty polygon
+    test_empty_geometry
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON((()))");
+
+    // multipolygon with many empty polygons
+    test_empty_geometry
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON(((),(),()),(()),((),(),(),(),()))");
+
+    // multipolygon with empty polygons and non-empty (valid) polygon
+    test_envelope
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON(((),(),()),((10 30,10 40,20 30,10 30)),\
+          ((),(),()),(()))", 10, 20, 30, 40);
+
+    // multipolygon with empty polygons and non-empty (valid) polygon
+    // that has an interior ring
+    test_envelope
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON(((),(),()),(()),\
+          ((1 2,1 20,22 20,22 2,1 2),(3 4,19 4,19 18,3 18,3 4)),(()))",
+          1, 22, 2, 20);
+
+    // multipolygon with empty polygons and non-empty (invalid) polygon
+    // that has an interior ring but empty exterior ring
+    test_envelope
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON(((),(),()),(()),((),(3 4,19 4,19 18,3 18,3 4)),(()))",
+          3, 19, 4, 18);
+
+    // multipolygon with empty polygons and non-empty (invalid) polygon
+    // that has an interior ring but empty exterior ring
+    test_envelope
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON(((),(),()),((),(),(3 4,19 4,19 18,3 18,3 4),()),(()))",
+          3, 19, 4, 18);
+
+    // multipolygon with empty polygons and non-empty (invalid) polygon
+    // that has two non-empty interior rings but empty exterior ring
+    test_envelope
+        <
+            bg::model::multi_polygon<bg::model::polygon<P> >
+        >("MULTIPOLYGON(((),(),()),\
+          ((),(),(3 4,19 4,19 18,3 18,3 4),(4 5,18 5,18 17,4 17,4 5),()),\
+          (()))",
+          3, 19, 4, 18);
+}
 
 int test_main(int, char* [])
 {
@@ -70,6 +214,16 @@ int test_main(int, char* [])
 
     test_3d<test::test_point>();
     test_3d<boost::tuple<int, int, int> >();
+
+    test_empty<boost::tuple<float, float> >();
+    test_empty<bg::model::d2::point_xy<int> >();
+    test_empty<bg::model::d2::point_xy<float> >();
+    test_empty<bg::model::d2::point_xy<double> >();
+
+    test_invalid<boost::tuple<float, float> >();
+    test_invalid<bg::model::d2::point_xy<int> >();
+    test_invalid<bg::model::d2::point_xy<float> >();
+    test_invalid<bg::model::d2::point_xy<double> >();
 
 #ifdef HAVE_TTMATH
     test_2d<bg::model::d2::point_xy<ttmath_big> >();

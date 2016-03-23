@@ -21,6 +21,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <sstream>
 
 namespace boost
 {
@@ -113,12 +114,35 @@ namespace boost
             filtered_test_impl< Container, is_even >();
         }
 
+        void ticket_10988_single_pass()
+        {
+            std::vector<int> v;
+            std::string str("0 1 2 3 4 5");
+            std::istringstream in(str);
+
+            boost::push_back(v,
+                boost::make_iterator_range(
+                    std::istream_iterator<int>(in),
+                    std::istream_iterator<int>())
+                | boost::adaptors::filtered(is_even()));
+
+            std::vector<int> reference;
+            for (int i = 0; i < 6; i += 2)
+            {
+                reference.push_back(i);
+            }
+            BOOST_CHECK_EQUAL_COLLECTIONS(
+                reference.begin(), reference.end(),
+                v.begin(), v.end());
+        }
+
         void filtered_test()
         {
             filtered_test_all_predicates< std::vector< int > >();
             filtered_test_all_predicates< std::list< int > >();
             filtered_test_all_predicates< std::set< int > >();
             filtered_test_all_predicates< std::multiset< int > >();
+            ticket_10988_single_pass();
         }
     }
 }

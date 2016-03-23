@@ -9,7 +9,6 @@
 #include <iostream>
 #include <boost/detail/lightweight_test.hpp>
 
-using namespace std;
 
 #define BOOST_SPIRIT_SWITCH_CASE_LIMIT 6
 #define BOOST_SPIRIT_SELECT_LIMIT 6

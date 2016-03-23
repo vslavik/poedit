@@ -29,41 +29,26 @@
 class execution_monitor
 {
 public:
-    enum wait_type { use_sleep_only, use_mutex, use_condition };
-
-    execution_monitor(wait_type type, int secs)
-        : done(false), m_type(type), m_secs(secs) { }
+    execution_monitor(int secs)
+        : done(false), m_secs(secs) { }
     void start()
     {
-        if (m_type != use_sleep_only) {
-            boost::mutex::scoped_lock lock(mutex); done = false;
-        } else {
-            done = false;
-        }
+        boost::mutex::scoped_lock lock(mutex); 
+        done = false;
     }
     void finish()
     {
-        if (m_type != use_sleep_only) {
-            boost::mutex::scoped_lock lock(mutex);
-            done = true;
-            if (m_type == use_condition)
-                cond.notify_one();
-        } else {
-            done = true;
-        }
+        boost::mutex::scoped_lock lock(mutex);
+        done = true;
+        cond.notify_one();
     }
     bool wait()
     {
         boost::posix_time::time_duration timeout = boost::posix_time::seconds(m_secs);
-        if (m_type != use_condition)
-            boost::this_thread::sleep(timeout);
-        if (m_type != use_sleep_only) {
-            boost::mutex::scoped_lock lock(mutex);
-            while (m_type == use_condition && !done) {
-                if (!cond.timed_wait(lock, timeout))
-                    break;
-            }
-            return done;
+        boost::mutex::scoped_lock lock(mutex);
+        while (!done) {
+            if (!cond.timed_wait(lock, timeout))
+                break;
         }
         return done;
     }
@@ -72,7 +57,6 @@ private:
     boost::mutex mutex;
     boost::condition cond;
     bool done;
-    wait_type m_type;
     int m_secs;
 };
 
@@ -104,10 +88,9 @@ private:
 };
 
 template <typename F>
-void timed_test(F func, int secs,
-    execution_monitor::wait_type type = execution_monitor::use_sleep_only)
+void timed_test(F func, int secs)
 {
-    execution_monitor monitor(type, secs);
+    execution_monitor monitor(secs);
     indirect_adapter<F> ifunc(func, monitor);
     monitor.start();
     boost::thread thrd(ifunc);

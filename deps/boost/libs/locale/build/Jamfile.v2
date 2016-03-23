@@ -52,6 +52,13 @@ exe accepts_shared_option   : ../build/option.cpp
                                 <linkflags>-shared-libgcc
                             ;
 
+# Xlocale
+obj has_xlocale_obj : ../build/has_xlocale.cpp ;
+exe has_xlocale : has_xlocale_obj ;
+explicit has_xlocale ;
+
+#end xlocale
+
 
 ICU_PATH =  [ modules.peek : ICU_PATH ] ;
 ICU_LINK =  [ modules.peek : ICU_LINK ] ;
@@ -342,7 +349,9 @@ rule configure-full ( properties * : flags-only )
  
     if ! <boost.locale.posix> in $(properties:G)
     {
-        if <target-os>linux in $(properties) || <target-os>darwin in $(properties)
+        if <target-os>linux in $(properties) 
+            || <target-os>darwin in $(properties) 
+            || ( <target-os>freebsd in $(properties) && [ configure.builds has_xlocale : $(properties) : "xlocale supported" ] )
         {
             properties += <boost.locale.posix>on ;
         }

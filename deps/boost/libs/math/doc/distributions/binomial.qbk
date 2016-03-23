@@ -2,65 +2,65 @@
 
 ``#include <boost/math/distributions/binomial.hpp>``
 
-   namespace boost{ namespace math{ 
-   
-   template <class RealType = double, 
+   namespace boost{ namespace math{
+
+   template <class RealType = double,
              class ``__Policy``   = ``__policy_class`` >
    class binomial_distribution;
-   
+
    typedef binomial_distribution<> binomial;
-   
+
    template <class RealType, class ``__Policy``>
    class binomial_distribution
    {
    public:
       typedef RealType  value_type;
       typedef Policy    policy_type;
-      
+
       static const ``['unspecified-type]`` clopper_pearson_exact_interval;
       static const ``['unspecified-type]`` jeffreys_prior_interval;
-      
+
       // construct:
       binomial_distribution(RealType n, RealType p);
-      
+
       // parameter access::
       RealType success_fraction() const;
       RealType trials() const;
-      
+
       // Bounds on success fraction:
       static RealType find_lower_bound_on_p(
-         RealType trials, 
+         RealType trials,
          RealType successes,
          RealType probability,
          ``['unspecified-type]`` method = clopper_pearson_exact_interval);
       static RealType find_upper_bound_on_p(
-         RealType trials, 
+         RealType trials,
          RealType successes,
          RealType probability,
          ``['unspecified-type]`` method = clopper_pearson_exact_interval);
-         
+
       // estimate min/max number of trials:
       static RealType find_minimum_number_of_trials(
          RealType k,     // number of events
          RealType p,     // success fraction
          RealType alpha); // risk level
-         
+
       static RealType find_maximum_number_of_trials(
          RealType k,     // number of events
          RealType p,     // success fraction
          RealType alpha); // risk level
    };
-   
+
    }} // namespaces
-   
+
 The class type `binomial_distribution` represents a
 [@http://mathworld.wolfram.com/BinomialDistribution.html binomial distribution]:
-it is used when there are exactly two mutually 
-exclusive outcomes of a trial. These outcomes are labelled 
+it is used when there are exactly two mutually
+exclusive outcomes of a trial. These outcomes are labelled
 "success" and "failure". The
-__binomial_distrib is used to obtain 
-the probability of observing k successes in N trials, with the 
-probability of success on a single trial denoted by p. The 
+__binomial_distrib is used to obtain
+the probability of observing k successes in N trials, with the
+probability of success on a single trial denoted by p. The
 binomial distribution assumes that p is fixed for all trials.
 
 [note The random variable for the binomial distribution is the number of successes,
@@ -84,7 +84,7 @@ vary the success fraction /p/:
 [graph binomial_pdf_2]
 
 [discrete_quantile_warning Binomial]
-   
+
 [h4 Member Functions]
 
 [h5 Construct]
@@ -99,21 +99,21 @@ Requires `0 <= p <= 1`, and `n >= 0`, otherwise calls __domain_error.
 [h5 Accessors]
 
    RealType success_fraction() const;
-   
+
 Returns the parameter /p/ from which this distribution was constructed.
-   
+
    RealType trials() const;
-   
+
 Returns the parameter /n/ from which this distribution was constructed.
 
 [h5 Lower Bound on the Success Fraction]
 
    static RealType find_lower_bound_on_p(
-      RealType trials, 
+      RealType trials,
       RealType successes,
       RealType alpha,
       ``['unspecified-type]`` method = clopper_pearson_exact_interval);
-      
+
 Returns a lower bound on the success fraction:
 
 [variablelist
@@ -127,7 +127,7 @@ Returns a lower bound on the success fraction:
 
 For example, if you observe /k/ successes from /n/ trials the
 best estimate for the success fraction is simply ['k/n], but if you
-want to be 95% sure that the true value is [*greater than] some value, 
+want to be 95% sure that the true value is [*greater than] some value,
 ['p[sub min]], then:
 
    p``[sub min]`` = binomial_distribution<RealType>::find_lower_bound_on_p(
@@ -135,28 +135,28 @@ want to be 95% sure that the true value is [*greater than] some value,
 
 [link math_toolkit.stat_tut.weg.binom_eg.binom_conf See worked example.]
 
-There are currently two possible values available for the /method/ 
-optional parameter: /clopper_pearson_exact_interval/ 
-or /jeffreys_prior_interval/.  These constants are both members of 
+There are currently two possible values available for the /method/
+optional parameter: /clopper_pearson_exact_interval/
+or /jeffreys_prior_interval/.  These constants are both members of
 class template `binomial_distribution`, so usage is for example:
 
    p = binomial_distribution<RealType>::find_lower_bound_on_p(
        n, k, 0.05, binomial_distribution<RealType>::jeffreys_prior_interval);
-       
+
 The default method if this parameter is not specified is the Clopper Pearson
 "exact" interval.  This produces an interval that guarantees at least
 `100(1-alpha)%` coverage, but which is known to be overly conservative,
 sometimes producing intervals with much greater than the requested coverage.
 
-The alternative calculation method produces a non-informative 
+The alternative calculation method produces a non-informative
 Jeffreys Prior interval.  It produces `100(1-alpha)%` coverage only
 ['in the average case], though is typically very close to the requested
 coverage level.  It is one of the main methods of calculation recommended
 in the review by Brown, Cai and DasGupta.
 
 Please note that the "textbook" calculation method using
-a normal approximation (the Wald interval) is deliberately 
-not provided: it is known to produce consistently poor results, 
+a normal approximation (the Wald interval) is deliberately
+not provided: it is known to produce consistently poor results,
 even when the sample size is surprisingly large.
 Refer to Brown, Cai and DasGupta for a full explanation.  Many other methods
 of calculation are available, and may be more appropriate for specific
@@ -187,11 +187,11 @@ Biometrika 26 404-413.
 [h5 Upper Bound on the Success Fraction]
 
    static RealType find_upper_bound_on_p(
-      RealType trials, 
+      RealType trials,
       RealType successes,
       RealType alpha,
       ``['unspecified-type]`` method = clopper_pearson_exact_interval);
-      
+
 Returns an upper bound on the success fraction:
 
 [variablelist
@@ -200,19 +200,19 @@ Returns an upper bound on the success fraction:
 [[alpha][The largest acceptable probability that the true value of
          the success fraction is [*greater than] the value returned.]]
 [[method][An optional parameter that specifies the method to be used
-         to compute the interval. Refer to the documentation for 
-         `find_upper_bound_on_p` above for the meaning of the 
+         to compute the interval. Refer to the documentation for
+         `find_upper_bound_on_p` above for the meaning of the
          method options.]]
 ]
 
 For example, if you observe /k/ successes from /n/ trials the
 best estimate for the success fraction is simply ['k/n], but if you
-want to be 95% sure that the true value is [*less than] some value, 
+want to be 95% sure that the true value is [*less than] some value,
 ['p[sub max]], then:
 
    p``[sub max]`` = binomial_distribution<RealType>::find_upper_bound_on_p(
                        n, k, 0.05);
-                       
+
 [link math_toolkit.stat_tut.weg.binom_eg.binom_conf See worked example.]
 
 [note
@@ -237,9 +237,9 @@ by passing [alpha] = 0.025 to each of the functions.
       RealType k,     // number of events
       RealType p,     // success fraction
       RealType alpha); // probability threshold
-      
+
 This function estimates the minimum number of trials required to ensure that
-more than k events is observed with a level of risk /alpha/ that k or 
+more than k events is observed with a level of risk /alpha/ that k or
 fewer events occur.
 
 [variablelist
@@ -249,19 +249,19 @@ fewer events occur.
 ]
 
 For example:
-   
+
    binomial_distribution<RealType>::find_number_of_trials(10, 0.5, 0.05);
-      
+
 Returns the smallest number of trials we must conduct to be 95% sure
 of seeing 10 events that occur with frequency one half.
-   
+
 [h5 Estimating the Maximum Number of Trials to Ensure no more than a Certain Number of Successes]
 
    static RealType find_maximum_number_of_trials(
       RealType k,     // number of events
       RealType p,     // success fraction
       RealType alpha); // probability threshold
-      
+
 This function estimates the maximum number of trials we can conduct
 to ensure that k successes or fewer are observed, with a risk /alpha/
 that more than k occur.
@@ -273,9 +273,9 @@ that more than k occur.
 ]
 
 For example:
-   
+
    binomial_distribution<RealType>::find_maximum_number_of_trials(0, 1e-6, 0.05);
-      
+
 Returns the largest number of trials we can conduct and still be 95% certain
 of not observing any events that occur with one in a million frequency.
 This is typically used in failure analysis.
@@ -287,10 +287,10 @@ This is typically used in failure analysis.
 All the [link math_toolkit.dist_ref.nmp usual non-member accessor functions]
 that are generic to all distributions are supported: __usual_accessors.
 
-The domain for the random variable /k/ is `0 <= k <= N`, otherwise a 
+The domain for the random variable /k/ is `0 <= k <= N`, otherwise a
 __domain_error is returned.
 
-It's worth taking a moment to define what these accessors actually mean in 
+It's worth taking a moment to define what these accessors actually mean in
 the context of this distribution:
 
 [table Meaning of the non-member accessors
@@ -328,13 +328,13 @@ the context of this distribution:
 
 [h4 Examples]
 
-Various [link math_toolkit.stat_tut.weg.binom_eg worked examples] 
+Various [link math_toolkit.stat_tut.weg.binom_eg worked examples]
 are available illustrating the use of the binomial distribution.
 
 [h4 Accuracy]
 
-This distribution is implemented using the 
-incomplete beta functions __ibeta and __ibetac, 
+This distribution is implemented using the
+incomplete beta functions __ibeta and __ibetac,
 please refer to these functions for information on accuracy.
 
 [h4 Implementation]
@@ -347,7 +347,7 @@ be successful (the success fraction), /n/ is the number of trials,
 [[Function][Implementation Notes]]
 [[pdf][Implementation is in terms of __ibeta_derivative: if [sub n]C[sub k ] is the binomial
        coefficient of a and b, then we have:
-       
+
 [equation binomial_ref1]
 
 Which can be evaluated as `ibeta_derivative(k+1, n-k+1, p) / (n+1)`
@@ -356,10 +356,10 @@ The function __ibeta_derivative is used here, since it has already
        been optimised for the lowest possible error - indeed this is really
        just a thin wrapper around part of the internals of the incomplete
        beta function.
-       
+
 There are also various special cases: refer to the code for details.
        ]]
-[[cdf][Using the relation: 
+[[cdf][Using the relation:
 
 ``
 p = I[sub 1-p](n - k, k + 1)
@@ -373,8 +373,8 @@ There are also various special cases: refer to the code for details.
 There are also various special cases: refer to the code for details. ]]
 [[quantile][Since the cdf is non-linear in variate /k/ none of the inverse
             incomplete beta functions can be used here.  Instead the quantile
-            is found numerically using a derivative free method 
-            ([link math_toolkit.internals1.roots2 TOMS Algorithm 748]).]]
+            is found numerically using a derivative free method
+            (__root_finding_TOMS748).]]
 [[quantile from the complement][Found numerically as above.]]
 [[mean][ `p * n` ]]
 [[variance][ `p * n * (1-p)` ]]
@@ -383,7 +383,7 @@ There are also various special cases: refer to the code for details. ]]
 [[kurtosis][`3 - (6 / n) + (1 / (n * p * (1 - p)))`]]
 [[kurtosis excess][`(1 - 6 * p * q) / (n * p * q)`]]
 [[parameter estimation][The member functions `find_upper_bound_on_p`
-       `find_lower_bound_on_p` and `find_number_of_trials` are 
+       `find_lower_bound_on_p` and `find_number_of_trials` are
        implemented in terms of the inverse incomplete beta functions
        __ibetac_inv, __ibeta_inv, and __ibetac_invb respectively]]
 ]
@@ -391,8 +391,8 @@ There are also various special cases: refer to the code for details. ]]
 [h4 References]
 
 * [@http://mathworld.wolfram.com/BinomialDistribution.html Weisstein, Eric W. "Binomial Distribution." From MathWorld--A Wolfram Web Resource].
-* [@http://en.wikipedia.org/wiki/Beta_distribution Wikipedia binomial distribution]. 
-* [@http://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm  NIST Explorary Data Analysis]. 
+* [@http://en.wikipedia.org/wiki/Beta_distribution Wikipedia binomial distribution].
+* [@http://www.itl.nist.gov/div898/handbook/eda/section3/eda366i.htm  NIST Explorary Data Analysis].
 
 [endsect] [/section:binomial_dist Binomial]
 

@@ -4,7 +4,7 @@
 <title>Why use a high-precision library rather than built-in floating-point types?</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../high_precision.html" title="Using Boost.Math with High-Precision Floating-Point Libraries">
 <link rel="prev" href="../high_precision.html" title="Using Boost.Math with High-Precision Floating-Point Libraries">
 <link rel="next" href="use_multiprecision.html" title="Using Boost.Multiprecision">
@@ -45,13 +45,15 @@
             are the textbook example.
           </li>
 <li class="listitem">
-            Using double is (or may be) too inaccurate.
+            Using <code class="computeroutput"><span class="keyword">double</span></code> is (or may
+            be) too inaccurate.
           </li>
 <li class="listitem">
-            Using long double (or may be) is too inaccurate.
+            Using <code class="computeroutput"><span class="keyword">long</span> <span class="keyword">double</span></code>
+            (or may be) is too inaccurate.
           </li>
 <li class="listitem">
-            Using an extended precision type implemented in software as <a href="http://en.wikipedia.org/wiki/Double-double_(arithmetic)#Double-double_arithmetic" target="_top">double-double</a>
+            Using an extended-precision type implemented in software as <a href="http://en.wikipedia.org/wiki/Double-double_(arithmetic)#Double-double_arithmetic" target="_top">double-double</a>
             (<a href="http://en.wikipedia.org/wiki/Darwin_(operating_system)" target="_top">Darwin</a>)
             is sometimes unpredictably inaccurate.
           </li>
@@ -107,8 +109,8 @@
 </tr>
 <tr><td align="left" valign="top"><p>
           In contrast, reading a value from an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">istream</span></code>
-          into a built-in floating-point type is <span class="bold"><strong>not guaranteed</strong></span>
-          by the C++ Standard to give the nearest representable value.
+          into a built-in floating-point type is <span class="bold"><strong>not guaranteed
+          by the C++ Standard</strong></span> to give the nearest representable value.
         </p></td></tr>
 </table></div>
 <p>

@@ -106,7 +106,7 @@ namespace impl_icu {
     template<>
     std::auto_ptr<formatter<wchar_t> > formatter<wchar_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
 
-    #ifdef BOOST_HAS_CHAR16_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
     ///
     /// Specialization for real implementation
     ///
@@ -114,7 +114,7 @@ namespace impl_icu {
     std::auto_ptr<formatter<char16_t> > formatter<char16_t>::create(std::ios_base &ios,icu::Locale const &l,std::string const &e);
     #endif
 
-    #ifdef BOOST_HAS_CHAR32_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
     ///
     /// Specialization for real implementation
     ///

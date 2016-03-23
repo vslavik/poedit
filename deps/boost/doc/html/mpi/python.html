@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,9 +6,9 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../mpi.html" title="Chapter&#160;20.&#160;Boost.MPI">
+<link rel="up" href="../mpi.html" title="Chapter&#160;21.&#160;Boost.MPI">
 <link rel="prev" href="../boost/mpi/timer.html" title="Class timer">
-<link rel="next" href="../program_options.html" title="Chapter&#160;21.&#160;Boost.Program_options">
+<link rel="next" href="../program_options.html" title="Chapter&#160;22.&#160;Boost.Program_options">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -46,7 +47,7 @@
     </p>
 <p>
       The Boost.MPI Python module can be built and installed from the <code class="computeroutput"><span class="identifier">libs</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">/</span><span class="identifier">build</span></code> directory.
-      Just follow the <a class="link" href="getting_started.html#mpi.config" title="Configure and Build">configuration</a> and <a class="link" href="getting_started.html#mpi.installation" title="Installing and Using Boost.MPI">installation</a>
+      Just follow the <a class="link" href="getting_started.html#mpi.config" title="Configure and Build">configuration</a> and <a class="link" href="getting_started.html#mpi.installation" title="Build and Install">installation</a>
       instructions for the C++ Boost.MPI. Once you have installed the Python module,
       be sure that the installation location is in your <code class="computeroutput"><span class="identifier">PYTHONPATH</span></code>.
     </p>
@@ -133,7 +134,7 @@ I am process 0 of 5.
         If your C++ types come from other Python modules (they probably will!), those
         modules will need to link against the <code class="computeroutput"><span class="identifier">boost_mpi</span></code>
         and <code class="computeroutput"><span class="identifier">boost_mpi_python</span></code> libraries
-        as described in the <a class="link" href="getting_started.html#mpi.installation" title="Installing and Using Boost.MPI">installation section</a>.
+        as described in the <a class="link" href="getting_started.html#mpi.installation" title="Build and Install">installation section</a>.
         Note that you do <span class="bold"><strong>not</strong></span> need to link against
         the Boost.MPI Python extension module.
       </p>
@@ -189,7 +190,7 @@ I am process 0 of 5.
       </p>
 <p>
         To use the skeleton/content mechanism from Python, you must first register
-        the type of your data structure with the skeleton/content mechanism <span class="bold"><strong>from C++</strong></span>. The registration function is <code class="computeroutput"><a class="link" href="../boost/mpi/python/register_skel_idp216244032.html" title="Function template register_skeleton_and_content">register_skeleton_and_content</a></code>
+        the type of your data structure with the skeleton/content mechanism <span class="bold"><strong>from C++</strong></span>. The registration function is <code class="computeroutput"><a class="link" href="../boost/mpi/python/register_idm45507048514256.html" title="Function template register_skeleton_and_content">register_skeleton_and_content</a></code>
         and resides in the <code class="computeroutput"><a class="link" href="reference.html#header.boost.mpi.python_hpp" title="Header &lt;boost/mpi/python.hpp&gt;">&lt;boost/mpi/python.hpp&gt;</a></code>
         header.
       </p>
@@ -322,7 +323,7 @@ I am process 0 of 5.
         distributed and shared memory parallelism. To know how to support that model,
         one need to know what level of threading support is guaranteed by the MPI
         implementation. There are 4 ordered level of possible threading support described
-        by <code class="computeroutput">mpi::threading::level</code>.
+        by <code class="computeroutput"><a class="link" href="../boost/mpi/threading/level.html" title="Type level">mpi::threading::level</a></code>.
         At the lowest level, you should not use threads at all, at the highest level,
         any thread can perform MPI call.
       </p>

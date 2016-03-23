@@ -1,10 +1,10 @@
 /*
- (c) 2014 Glen Joseph Fernandes
- glenjofe at gmail dot com
+(c) 2014 Glen Joseph Fernandes
+<glenjofe -at- gmail.com>
 
- Distributed under the Boost Software
- License, Version 1.0.
- http://boost.org/LICENSE_1_0.txt
+Distributed under the Boost Software
+License, Version 1.0.
+http://boost.org/LICENSE_1_0.txt
 */
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/align/aligned_delete.hpp>
@@ -56,6 +56,7 @@ void test()
 }
 
 class C { };
+union U { };
 
 int main()
 {
@@ -72,6 +73,7 @@ int main()
     test<C>();
     test<int C::*>();
     test<int (C::*)()>();
+    test<U>();
 
     return boost::report_errors();
 }

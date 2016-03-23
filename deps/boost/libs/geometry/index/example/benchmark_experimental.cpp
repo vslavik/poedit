@@ -1,7 +1,7 @@
 // Boost.Geometry Index
 // Additional tests
 
-// Copyright (c) 2011-2013 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,11 +14,15 @@
 #include <boost/chrono.hpp>
 #include <boost/foreach.hpp>
 #include <boost/random.hpp>
+#include <boost/range/algorithm/copy.hpp>
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/index/rtree.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
 #include <boost/geometry/geometries/segment.hpp>
+
+#include <boost/geometry/index/detail/rtree/utilities/are_levels_ok.hpp>
+#include <boost/geometry/index/detail/rtree/utilities/are_boxes_ok.hpp>
 
 namespace bg = boost::geometry;
 namespace bgi = bg::index;
@@ -138,7 +142,10 @@ int main()
             RT t(values.begin(), values.end());
 
             dur_t time = clock_t::now() - start;
-            std::cout << time << " - pack " << values_count << '\n';
+            std::cout << time << " - pack " << values_count /*<< '\n'*/;
+
+            std::cout << (bgi::detail::rtree::utilities::are_levels_ok(t) ? " ok" : " NOK")
+                      << (bgi::detail::rtree::utilities::are_boxes_ok(t) ? " ok\n" : "NOK\n");
 
             {
                 clock_t::time_point start = clock_t::now();
@@ -163,7 +170,10 @@ int main()
             clock_t::time_point start = clock_t::now();
             t.insert(values);
             dur_t time = clock_t::now() - start;
-            std::cout << time << " - insert " << values_count << '\n';
+            std::cout << time << " - insert " << values_count /*<< '\n'*/;
+
+            std::cout << (bgi::detail::rtree::utilities::are_levels_ok(t) ? " ok" : " NOK")
+                      << (bgi::detail::rtree::utilities::are_boxes_ok(t) ? " ok\n" : "NOK\n");
         }
 
         
@@ -461,6 +471,8 @@ int main()
             }
             dur_t time = clock_t::now() - start;
             std::cout << time << " - remove " << values_count / 10 << '\n';
+
+            std::cout << (bgi::detail::rtree::utilities::are_boxes_ok(t) ? " boxes ok\n" : "boxes NOT ok\n");
         }
 
         std::cout << "------------------------------------------------\n";

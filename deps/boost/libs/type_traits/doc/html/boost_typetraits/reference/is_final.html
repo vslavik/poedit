@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>is_final</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="is_enum.html" title="is_enum">
@@ -45,11 +45,12 @@
         never inherit from <a class="link" href="integral_constant.html" title="integral_constant">true_type</a>,
         unless the user explicitly specializes the template for their user-defined
         final class types, or unless the compiler supplies some unspecified intrinsic
-        that implements this functionality. Currently (Aug 2014) compilers more recent
-        than GCC-4.7, and Clang have the necessary compiler <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a>
-        to ensure that this trait "just works". You may also test to see
-        if the necessary <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a>
-        are available by checking to see if the macro <code class="computeroutput"><span class="identifier">BOOST_IS_FINAL</span></code>
+        that implements this functionality. Currently (June 2015) compilers more
+        recent than GCC-4.7, Oracle-12.4, and Clang have the necessary compiler
+        <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a> to ensure that
+        this trait "just works". You may also test to see if the necessary
+        <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a> are available
+        by checking to see if the macro <code class="computeroutput"><span class="identifier">BOOST_IS_FINAL</span></code>
         is defined.
       </p>
 <p>

@@ -13,6 +13,33 @@
 #  include <boost/type_traits/is_nothrow_move_assignable.hpp>
 #endif
 
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+
+struct non_assignable
+{
+   non_assignable();
+   non_assignable& operator=(const non_assignable&) = delete;
+};
+
+#endif
+
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+
+struct noexcept_assignable
+{
+   noexcept_assignable();
+   noexcept_assignable& operator=(const non_assignable&)noexcept;
+};
+
+struct noexcept_move_assignable
+{
+   noexcept_move_assignable();
+   noexcept_move_assignable& operator=(const noexcept_move_assignable&);
+   noexcept_move_assignable& operator=(noexcept_move_assignable&&)noexcept;
+};
+
+#endif
+
 TT_TEST_BEGIN(is_nothrow_move_assignable)
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<bool>::value, true);
@@ -213,6 +240,14 @@ BOOST_CHECK_SOFT_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_assi
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_copy_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<nothrow_construct_UDT>::value, false);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<test_abc1>::value, false);
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<non_assignable>::value, false);
+#endif
+#if !defined(BOOST_NO_CXX11_NOEXCEPT) && !defined(BOOST_NO_SFINAE_EXPR)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<noexcept_assignable>::value, true);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_nothrow_move_assignable<noexcept_move_assignable>::value, true);
+#endif
 
 TT_TEST_END
 

@@ -39,6 +39,11 @@ These concepts pertain to sequence traversal.
 The __associative_sequence__ concept is orthogonal to traversal. An Associative
 Sequence allows efficient retrieval of elements based on keys.
 
+[heading Boundary]
+
+The __unbounded_sequence__ concept is also orthogonal to traversal and associativity.
+A Unbounded Sequence allows out-of-bounds access.
+
 [section Forward Sequence]
 
 [heading Description]
@@ -356,6 +361,55 @@ you can use `__result_of_value_at_key__<S, K>`.]
 * __iterator_range__ (where adapted iterators are __associative_iterator__\ s)
 * __joint_view__     (where adapted sequences are __associative_sequence__\ s and __forward_sequence__\ s)
 * __reverse_view__   (where adapted sequence is an __associative_sequence__ and a __bidirectional_sequence__)
+
+[endsect]
+
+[section Unbounded Sequence]
+
+[heading Description]
+
+A Unbounded Sequence allows Out-of-Bounds access: it will achieve something like a __window_function__.
+Most of the sequences do not meet this concept, but some special usecases do.
+
+[important User extending sequences should handle any parameters or be SFINAE-friendly.]
+
+[variablelist Notation
+    [[`s`]       [An Fusion Sequence]]
+    [[`S`]       [An Fusion Sequence type]]
+    [[`M`]       [An __mpl__ integral constant]]
+    [[`N`]       [An integral constant]]
+    [[`K`]       [An arbitrary /key/ type]]
+    [[`o`]       [An arbitrary object]]
+    [[`e`]       [A Sequence element]]
+]
+
+[heading Valid Expressions]
+
+[table
+    [[Expression]               [Return type]   [Type Requirements]                         [Runtime Complexity]]
+    [[`__at_c__<N>(s)`]         [Any type]      []                                          [Depends on its traversability]]
+    [[`__at_c__<N>(s) = o`]     [Any type]      []                                          [Depends on its traversability]]
+    [[`__at__<M>(s)`]           [Any type]      []                                          [Depends on its traversability]]
+    [[`__at__<M>(s) = o`]       [Any type]      []                                          [Depends on its traversability]]
+    [[`__at_key__<K>(s)`]       [Any type]      [`S` should be __associative_sequence__]    [Depends on its traversability]]
+    [[`__at_key__<K>(s) = o`]   [Any type]      [`S` should be __associative_sequence__]    [Depends on its traversability]]
+]
+
+[heading Result Type Expressions]
+
+[table
+    [[Expression]                               [Compile Time Complexity]]
+    [[`__result_of_at__<S, M>::type`]           [Depends on its traversability]]
+    [[`__result_of_at_c__<S, N>::type`]         [Depends on its traversability]]
+    [[`__result_of_value_at__<S, M>::type`]     [Depends on its traversability]]
+    [[`__result_of_value_at_c__<S, N>::type`]   [Depends on its traversability]]
+    [[`__result_of_at_key__<S, K>::type`]       [Depends on its traversability]]
+    [[`__result_of_value_at_key__<S, K>::type`] [Depends on its traversability]]
+]
+
+[heading Models]
+
+* none.
 
 [endsect]
 
@@ -686,7 +740,7 @@ element from the beginning of the sequence, is a valid expression. Else,
 returns a type convertible to the M-th element from the beginning of the
 sequence.
 
-[*Precondition]: `0 <= M::value < __size__(s)`
+[*Precondition]: `0 <= M::value < __size__(seq)` (where `seq` is not __unbounded_sequence__)
 
 [*Semantics]: Equivalent to
 
@@ -739,7 +793,7 @@ element from the beginning of the sequence, is a valid expression. Else,
 returns a type convertible to the N-th element from the beginning of the
 sequence.
 
-[*Precondition]: `0 <= N < __size__(s)`
+[*Precondition]: `0 <= N < __size__(seq)` (where `seq` is not __unbounded_sequence__)
 
 [*Semantics]: Equivalent to
 
@@ -833,7 +887,7 @@ the sequence `seq` if `seq` is mutable and `e = o`, where `e` is the
 element associated with Key, is a valid expression. Else, returns a type
 convertible to the element associated with Key.
 
-[*Precondition]: `has_key<Key>(seq) == true`
+[*Precondition]: `has_key<Key>(seq) == true` (where `seq` is not __unbounded_sequence__)
 
 [*Semantics]: Returns the element associated with Key.
 
@@ -1149,6 +1203,8 @@ the actual element type, use __result_of_value_at__].
 
 [*Return type]: Any type.
 
+[*Precondition]: `0 <= M::value < __result_of_size__<Seq>::value` (where `Seq` is not __unbounded_sequence__)
+
 [*Semantics]: Returns the result type of using __at__ to access the `M`th element of `Seq`.
 
 [heading Header]
@@ -1190,6 +1246,8 @@ get the actual element type, use __result_of_value_at_c__].
     result_of::at_c<Seq, N>::type
 
 [*Return type]: Any type
+
+[*Precondition]: `0 <= N < __result_of_size__<Seq>::value` (where `Seq` is not __unbounded_sequence__)
 
 [*Semantics]: Returns the result type of using __at_c__ to access the `N`th element of `Seq`.
 
@@ -1350,6 +1408,8 @@ you want to get the actual element type, use __result_of_value_at_key__].
 
 [*Return type]: Any type.
 
+[*Precondition]: `has_key<Seq, Key>::type::value == true` (where `Seq` is not __unbounded_sequence__)
+
 [*Semantics]: Returns the result of using __at_key__ to access the element with key type `Key` in `Seq`.
 
 [heading Header]
@@ -1387,6 +1447,8 @@ Returns the actual element type associated with a Key from the __sequence__.
     result_of::value_at_key<Seq, Key>::type
 
 [*Return type]: Any type.
+
+[*Precondition]: `has_key<Seq, Key>::type::value == true` (where `Seq` is not __unbounded_sequence__)
 
 [*Semantics]: Returns the actual element type associated with key type
 `Key` in `Seq`.

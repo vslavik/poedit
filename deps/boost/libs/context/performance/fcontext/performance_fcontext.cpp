@@ -27,10 +27,6 @@ boost::uint64_t jobs = 1000;
 boost::context::fcontext_t fcm = 0;
 boost::context::fcontext_t fc = 0;
 
-#if __cplusplus >= 201103L
-boost::context::execution_context * mctx = nullptr;
-#endif
-
 static void foo( intptr_t) {
     while ( true) {
         boost::context::jump_fcontext( & fc, fcm, 7, preserve_fpu);
@@ -38,9 +34,10 @@ static void foo( intptr_t) {
 }
 
 #if __cplusplus >= 201103L
-static void bar() {
+static void bar( void * vp) {
+    boost::context::execution_context * mctx = static_cast< boost::context::execution_context * >( vp);
     while ( true) {
-        mctx->resume();
+        ( * mctx)();
     }
 }
 #endif
@@ -64,15 +61,14 @@ duration_type measure_time_fc() {
 #if __cplusplus >= 201103L
 duration_type measure_time_ec() {
     boost::context::execution_context ctx( boost::context::execution_context::current() );
-    mctx = & ctx;
     // cache warum-up
     boost::context::fixedsize_stack alloc;
-    boost::context::execution_context ectx( alloc, bar);
-    ectx.resume();
+    boost::context::execution_context ectx( std::allocator_arg, alloc, bar);
+    ectx( & ctx);
         
     time_point_type start( clock_type::now() );
     for ( std::size_t i = 0; i < jobs; ++i) {
-        ectx.resume();
+        ectx( & ctx);
     }
     duration_type total = clock_type::now() - start;
     total -= overhead_clock(); // overhead of measurement
@@ -103,15 +99,14 @@ cycle_type measure_cycles_fc() {
 # if __cplusplus >= 201103L
 cycle_type measure_cycles_ec() {
     boost::context::execution_context ctx( boost::context::execution_context::current() );
-    mctx = & ctx;
     // cache warum-up
     boost::context::fixedsize_stack alloc;
-    boost::context::execution_context ectx( alloc, bar);
-    ectx.resume();
+    boost::context::execution_context ectx( std::allocator_arg, alloc, bar);
+    ectx( & ctx);
         
     cycle_type start( cycles() );
     for ( std::size_t i = 0; i < jobs; ++i) {
-        ectx.resume();
+        ectx( & ctx);
     }
     cycle_type total = cycles() - start;
     total -= overhead_cycle(); // overhead of measurement

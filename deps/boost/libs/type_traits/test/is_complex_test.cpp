@@ -32,6 +32,15 @@ TT_TEST_BEGIN(is_complex)
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<std::complex<long double> >::value, true);
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<std::complex<double> >::value, true);
    BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<std::complex<float> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<const std::complex<long double> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<const std::complex<double> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<const std::complex<float> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<const volatile std::complex<long double> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<const volatile std::complex<double> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<const volatile std::complex<float> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<volatile std::complex<long double> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<volatile std::complex<double> >::value, true);
+   BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_complex<volatile std::complex<float> >::value, true);
 
 TT_TEST_END
 

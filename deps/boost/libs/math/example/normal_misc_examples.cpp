@@ -370,7 +370,7 @@ double prob =  pdf(s, (x - mean) / sd);
 double qp = quantile(s, 0.95);
 cout << "prob = " << prob << ", quantile(p) " << qp << endl; // p = 0.241971, quantile(p) 1.64485
 // Rearranging, we can directly calculate the required standard deviation:
-double sd95 = abs((x - mean)) / qp;
+double sd95 = std::abs((x - mean)) / qp;
 
 cout << "If we want the "<< p << " th quantile to be located at "
   << x << ", would need a standard deviation of " << sd95 << endl;

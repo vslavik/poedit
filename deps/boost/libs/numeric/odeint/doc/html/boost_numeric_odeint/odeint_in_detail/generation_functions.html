@@ -37,14 +37,19 @@
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">stepper1</span> <span class="special">=</span> <span class="identifier">make_controlled</span><span class="special">(</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="identifier">stepper_type</span><span class="special">()</span> <span class="special">);</span>
+<span class="comment">// or with max step size limit:</span>
+<span class="comment">// auto stepper1 = make_controlled( 1.0e-6 , 1.0e-6 , 0.01, stepper_type() );</span>
+
 <span class="keyword">auto</span> <span class="identifier">stepper2</span> <span class="special">=</span> <span class="identifier">make_dense_output</span><span class="special">(</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="number">1.0e-6</span> <span class="special">,</span> <span class="identifier">stepper_type</span><span class="special">()</span> <span class="special">);</span>
 </pre>
 <p>
       </p>
 <p>
         The first two parameters are the absolute and the relative error tolerances
-        and the third parameter is the stepper. In C++03 you can infer the type from
-        the <code class="computeroutput"><span class="identifier">result_of</span></code> mechanism:
+        and the third parameter is the stepper. Additionally, a second version exists
+        where additionally a maximal step size is supplied which ensures the the
+        step size is not increased above this value. In C++03 you can infer the type
+        from the <code class="computeroutput"><span class="identifier">result_of</span></code> mechanism:
       </p>
 <p>
 </p>
@@ -91,6 +96,13 @@
 <span class="special">{</span>
     <span class="identifier">custom_controller</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="keyword">double</span> <span class="identifier">abs_tol</span> <span class="special">,</span> <span class="keyword">double</span> <span class="identifier">rel_tol</span> <span class="special">,</span> <span class="keyword">const</span> <span class="identifier">custom_stepper</span> <span class="special">&amp;</span> <span class="special">)</span> <span class="keyword">const</span>
     <span class="special">{</span>
+        <span class="keyword">return</span> <span class="identifier">custom_controller</span><span class="special">();</span>
+    <span class="special">}</span>
+
+    <span class="identifier">custom_controller</span> <span class="keyword">operator</span><span class="special">()(</span> <span class="keyword">double</span> <span class="identifier">abs_tol</span> <span class="special">,</span> <span class="keyword">double</span> <span class="identifier">rel_tol</span> <span class="special">,</span> <span class="keyword">double</span> <span class="identifier">max_dt</span> <span class="special">,</span>
+                                  <span class="keyword">const</span> <span class="identifier">custom_stepper</span> <span class="special">&amp;</span> <span class="special">)</span> <span class="keyword">const</span>
+    <span class="special">{</span>
+        <span class="comment">// version with maximal allowed step size max_dt</span>
         <span class="keyword">return</span> <span class="identifier">custom_controller</span><span class="special">();</span>
     <span class="special">}</span>
 <span class="special">};</span>
@@ -297,8 +309,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2012 Karsten
-      Ahnert and Mario Mulansky<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2009-2015 Karsten Ahnert and Mario Mulansky<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

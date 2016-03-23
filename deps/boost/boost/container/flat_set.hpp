@@ -968,17 +968,17 @@ class flat_multiset
       : base_t(static_cast<const base_t&>(x))
    {}
 
-   //! @copydoc ::boost::container::flat_set(flat_set &&)
+   //! @copydoc ::boost::container::flat_set::flat_set(flat_set &&)
    flat_multiset(BOOST_RV_REF(flat_multiset) x)
       : base_t(boost::move(static_cast<base_t&>(x)))
    {}
 
-   //! @copydoc ::boost::container::flat_set(const flat_set &, const allocator_type &)
+   //! @copydoc ::boost::container::flat_set::flat_set(const flat_set &, const allocator_type &)
    flat_multiset(const flat_multiset& x, const allocator_type &a)
       : base_t(static_cast<const base_t&>(x), a)
    {}
 
-   //! @copydoc ::boost::container::flat_set(flat_set &&, const allocator_type &)
+   //! @copydoc ::boost::container::flat_set::flat_set(flat_set &&, const allocator_type &)
    flat_multiset(BOOST_RV_REF(flat_multiset) x, const allocator_type &a)
       : base_t(BOOST_MOVE_BASE(base_t, x), a)
    {}

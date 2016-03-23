@@ -18,6 +18,7 @@ test-suite variant
     [ run test1.cpp class_a.cpp : : : : variant_test1 ]
     [ run test2.cpp : : : : variant_test2 ]
     [ run test3.cpp : : : : variant_test3 ]
+    [ run test3.cpp : : : <rtti>off <define>BOOST_NO_RTTI <define>BOOST_NO_TYPEID : variant_test3_no_rtti ]
     [ run test4.cpp class_a.cpp 
         : : : : variant_test4 ]
     [ run test5.cpp : : : : variant_test5 ]

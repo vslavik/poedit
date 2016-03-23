@@ -26,6 +26,12 @@
 #pragma once
 #endif
 
+#if defined(__GNUC__)
+#pragma message "Boost.Log: This header is deprecated, use Boost.TypeIndex instead."
+#elif defined(_MSC_VER)
+#pragma message("Boost.Log: This header is deprecated, use Boost.TypeIndex instead.")
+#endif
+
 namespace boost {
 
 BOOST_LOG_OPEN_NAMESPACE

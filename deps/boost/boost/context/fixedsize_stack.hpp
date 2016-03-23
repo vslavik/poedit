@@ -32,6 +32,10 @@ namespace context {
 template< typename traitsT >
 class basic_fixedsize_stack {
 private:
+#if defined(BOOST_USE_WINFIBERS)
+    friend class execution_context;
+#endif
+
     std::size_t     size_;
 
 public:
@@ -58,8 +62,10 @@ public:
 
     void deallocate( stack_context & sctx) {
         BOOST_ASSERT( sctx.sp);
+#if ! defined(BOOST_USE_WINFIBERS)
         BOOST_ASSERT( traits_type::minimum_size() <= sctx.size);
         BOOST_ASSERT( traits_type::is_unbounded() || ( traits_type::maximum_size() >= sctx.size) );
+#endif
 
 #if defined(BOOST_USE_VALGRIND)
         VALGRIND_STACK_DEREGISTER( sctx.valgrind_stack_id);
@@ -71,6 +77,9 @@ public:
 };
 
 typedef basic_fixedsize_stack< stack_traits >  fixedsize_stack;
+# if ! defined(BOOST_USE_SEGMENTED_STACKS)
+typedef fixedsize_stack default_stack;
+# endif
 
 }}
 

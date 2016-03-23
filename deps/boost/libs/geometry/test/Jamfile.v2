@@ -19,10 +19,11 @@ project boost-geometry-test
         <toolset>msvc:<cxxflags>/bigobj
         <toolset>clang:<cxxflags>-Wno-unneeded-internal-declaration # supress warning by Boost.None
         <host-os>windows,<toolset>intel:<cxxflags>/bigobj
+        <define>BOOST_NO_AUTO_PTR # disable the deprecated std::auto_ptr support in SmartPtr and Core
     ;
 
 build-project core ;
-build-project point_concept ; 
+build-project concepts ; 
 build-project geometries ;
 build-project arithmetic ;
 build-project algorithms ;

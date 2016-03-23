@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,13 +36,13 @@
 <span class="keyword">struct</span> <a class="link" href="placeholder.html" title="Struct placeholder">placeholder</a> <span class="special">{</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp475847600"></a><h2>Description</h2>
+<a name="idm45555076097984"></a><h2>Description</h2>
 <p>Placeholders are used heavily throughout the library. Every placeholder must derive from <a class="link" href="placeholder.html" title="Struct placeholder">placeholder</a>. The library provides a number of placeholders, out of the box, but you are welcome to define your own, if you want more descriptive names. The placeholder <a class="link" href="_self.html" title="Struct _self">_self</a> is special in that it is used as the default wherever possible.</p>
-<p>What exactly is a placeholder? Placeholders act as a substitute for template parameters in concepts. The library automatically replaces all the placeholders used in a concept with the actual types involved when it stores an object in an any.</p>
+<p>What exactly is a placeholder? Placeholders act as a substitute for template parameters in concepts. The library automatically replaces all the placeholders used in a concept with the actual types involved when it stores an object in an <a class="link" href="any.html" title="Class template any">any</a>.</p>
 <p>For example, in the following,</p>
 <pre class="programlisting"><span class="identifier">any</span><span class="special">&lt;</span><span class="identifier">copy_constructible</span><span class="special">&lt;</span><span class="identifier">_a</span><span class="special">&gt;</span><span class="special">,</span> <span class="identifier">_a</span><span class="special">&gt;</span> <span class="identifier">x</span><span class="special">(</span><span class="number">1</span><span class="special">)</span><span class="special">;</span>
 </pre>
-<p>The library sees that we're constructing an any that uses the <a class="link" href="_a.html" title="Struct _a">_a</a> placeholder with an <code class="computeroutput">int</code>. Thus it binds <a class="link" href="_a.html" title="Struct _a">_a</a> to int and instantiates <a class="link" href="copy_constructible.html" title="Struct template copy_constructible">copy_constructible&lt;int&gt;</a>.</p>
+<p>The library sees that we're constructing an <a class="link" href="any.html" title="Class template any">any</a> that uses the <a class="link" href="_a.html" title="Struct _a">_a</a> placeholder with an <code class="computeroutput">int</code>. Thus it binds <a class="link" href="_a.html" title="Struct _a">_a</a> to int and instantiates <a class="link" href="copy_constructible.html" title="Struct template copy_constructible">copy_constructible&lt;int&gt;</a>.</p>
 <p>When there are multiple placeholders involved, you will have to use <a class="link" href="tuple.html" title="Class template tuple">tuple</a>, or pass the bindings explicitly, but the substitution still works the same way. </p>
 </div>
 </div>

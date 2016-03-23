@@ -11,6 +11,7 @@
 //  DESCRIPTION:   The standard library does not supply C++0x header <codecvt>
 
 #include <codecvt>
+#include <locale> // for wstring_convert
 
 namespace boost_no_cxx11_hdr_codecvt {
 
@@ -19,6 +20,9 @@ int test()
   using std::codecvt_utf8;
   using std::codecvt_utf16;
   using std::codecvt_utf8_utf16;
+#ifndef BOOST_NO_CXX11_CHAR16_T
+  std::wstring_convert<std::codecvt_utf8<char16_t>, char16_t> test;
+#endif
   return 0;
 }
 

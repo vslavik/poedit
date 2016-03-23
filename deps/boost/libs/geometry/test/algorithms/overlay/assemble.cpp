@@ -83,9 +83,9 @@ inline void test_assemble(std::string const& id, Geometry const& p, Geometry con
         type diff_d1 = (area_u - area_q) - area_d1;
         type diff_d2 = (area_u - area_p) - area_d2;
 
-        bool ok = abs(diff) < 0.001
-            && abs(diff_d1) < 0.001
-            && abs(diff_d2) < 0.001;
+        bool ok = bg::math::abs(diff) < 0.001
+            && bg::math::abs(diff_d1) < 0.001
+            && bg::math::abs(diff_d2) < 0.001;
 
         BOOST_CHECK_MESSAGE(ok,
             id << " diff:  "

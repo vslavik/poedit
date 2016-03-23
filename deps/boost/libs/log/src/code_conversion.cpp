@@ -13,6 +13,7 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <cstddef>
 #include <locale>
 #include <string>
 #include <stdexcept>
@@ -114,32 +115,39 @@ inline void code_convert(const SourceCharT* begin, const SourceCharT* end, std::
 }
 
 //! The function converts one string to the character type of another
-BOOST_LOG_API void code_convert(const wchar_t* str1, std::size_t len, std::string& str2, std::locale const& loc)
+BOOST_LOG_API void code_convert_impl(const wchar_t* str1, std::size_t len, std::string& str2, std::locale const& loc)
 {
     code_convert(str1, str1 + len, str2, std::use_facet< std::codecvt< wchar_t, char, std::mbstate_t > >(loc));
 }
 
 //! The function converts one string to the character type of another
-BOOST_LOG_API void code_convert(const char* str1, std::size_t len, std::wstring& str2, std::locale const& loc)
+BOOST_LOG_API void code_convert_impl(const char* str1, std::size_t len, std::wstring& str2, std::locale const& loc)
 {
     code_convert(str1, str1 + len, str2, std::use_facet< std::codecvt< wchar_t, char, std::mbstate_t > >(loc));
 }
 
-// Note: MSVC 2015 (aka VC14) implement char16_t and char32_t types but not codecvt locale facets
-#if !defined(BOOST_MSVC)
+#if !defined(BOOST_LOG_NO_CXX11_CODECVT_FACETS)
 
 #if !defined(BOOST_NO_CXX11_CHAR16_T)
 
 //! The function converts one string to the character type of another
-BOOST_LOG_API void code_convert(const char16_t* str1, std::size_t len, std::string& str2, std::locale const& loc)
+BOOST_LOG_API void code_convert_impl(const char16_t* str1, std::size_t len, std::string& str2, std::locale const& loc)
 {
     code_convert(str1, str1 + len, str2, std::use_facet< std::codecvt< char16_t, char, std::mbstate_t > >(loc));
 }
 
 //! The function converts one string to the character type of another
-BOOST_LOG_API void code_convert(const char* str1, std::size_t len, std::u16string& str2, std::locale const& loc)
+BOOST_LOG_API void code_convert_impl(const char* str1, std::size_t len, std::u16string& str2, std::locale const& loc)
 {
     code_convert(str1, str1 + len, str2, std::use_facet< std::codecvt< char16_t, char, std::mbstate_t > >(loc));
+}
+
+//! The function converts one string to the character type of another
+BOOST_LOG_API void code_convert_impl(const char16_t* str1, std::size_t len, std::wstring& str2, std::locale const& loc)
+{
+    std::string temp_str;
+    code_convert(str1, str1 + len, temp_str, std::use_facet< std::codecvt< char16_t, char, std::mbstate_t > >(loc));
+    code_convert(temp_str.c_str(), temp_str.c_str() + temp_str.size(), str2, std::use_facet< std::codecvt< wchar_t, char, std::mbstate_t > >(loc));
 }
 
 #endif
@@ -147,20 +155,48 @@ BOOST_LOG_API void code_convert(const char* str1, std::size_t len, std::u16strin
 #if !defined(BOOST_NO_CXX11_CHAR32_T)
 
 //! The function converts one string to the character type of another
-BOOST_LOG_API void code_convert(const char32_t* str1, std::size_t len, std::string& str2, std::locale const& loc)
+BOOST_LOG_API void code_convert_impl(const char32_t* str1, std::size_t len, std::string& str2, std::locale const& loc)
 {
     code_convert(str1, str1 + len, str2, std::use_facet< std::codecvt< char32_t, char, std::mbstate_t > >(loc));
 }
 
 //! The function converts one string to the character type of another
-BOOST_LOG_API void code_convert(const char* str1, std::size_t len, std::u32string& str2, std::locale const& loc)
+BOOST_LOG_API void code_convert_impl(const char* str1, std::size_t len, std::u32string& str2, std::locale const& loc)
 {
     code_convert(str1, str1 + len, str2, std::use_facet< std::codecvt< char32_t, char, std::mbstate_t > >(loc));
 }
 
+//! The function converts one string to the character type of another
+BOOST_LOG_API void code_convert_impl(const char32_t* str1, std::size_t len, std::wstring& str2, std::locale const& loc)
+{
+    std::string temp_str;
+    code_convert(str1, str1 + len, temp_str, std::use_facet< std::codecvt< char32_t, char, std::mbstate_t > >(loc));
+    code_convert(temp_str.c_str(), temp_str.c_str() + temp_str.size(), str2, std::use_facet< std::codecvt< wchar_t, char, std::mbstate_t > >(loc));
+}
+
 #endif
 
-#endif // !defined(BOOST_MSVC)
+#if !defined(BOOST_NO_CXX11_CHAR16_T) && !defined(BOOST_NO_CXX11_CHAR32_T)
+
+//! The function converts one string to the character type of another
+BOOST_LOG_API void code_convert_impl(const char16_t* str1, std::size_t len, std::u32string& str2, std::locale const& loc)
+{
+    std::string temp_str;
+    code_convert(str1, str1 + len, temp_str, std::use_facet< std::codecvt< char16_t, char, std::mbstate_t > >(loc));
+    code_convert(temp_str.c_str(), temp_str.c_str() + temp_str.size(), str2, std::use_facet< std::codecvt< char32_t, char, std::mbstate_t > >(loc));
+}
+
+//! The function converts one string to the character type of another
+BOOST_LOG_API void code_convert_impl(const char32_t* str1, std::size_t len, std::u16string& str2, std::locale const& loc)
+{
+    std::string temp_str;
+    code_convert(str1, str1 + len, temp_str, std::use_facet< std::codecvt< char32_t, char, std::mbstate_t > >(loc));
+    code_convert(temp_str.c_str(), temp_str.c_str() + temp_str.size(), str2, std::use_facet< std::codecvt< char16_t, char, std::mbstate_t > >(loc));
+}
+
+#endif
+
+#endif // !defined(BOOST_LOG_NO_CXX11_CODECVT_FACETS)
 
 } // namespace aux
 

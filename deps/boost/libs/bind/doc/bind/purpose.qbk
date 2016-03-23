@@ -215,7 +215,7 @@ argument, so the example below does not work as expected:
 The desired effect can be achieved via a helper function object `apply` that
 applies its first argument, as a function object, to the rest of its argument
 list. For convenience, an implementation of `apply` is provided in the
-[@../../include/boost/bind/apply.hpp apply.hpp] header file. Here is how the
+[@../../../../boost/bind/apply.hpp apply.hpp] header file. Here is how the
 modified version of the previous example looks like:
 
     typedef void (*pf)(int);
@@ -230,7 +230,7 @@ with the help of another function object, `protect`, that masks the type so
 that `bind` does not recognize and evaluate it. When called, protect simply
 forwards the argument list to the other function object unmodified.
 
-The header [@../../include/boost/bind/protect.hpp protect.hpp] contains an
+The header [@../../../../boost/bind/protect.hpp protect.hpp] contains an
 implementation of `protect`. To `protect` a bind function object from
 evaluation, use `protect(bind(f, ...))`.
 

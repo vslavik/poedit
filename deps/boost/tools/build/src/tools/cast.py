@@ -25,18 +25,22 @@
 # > cast, as defining a new target type + generator for that type is somewhat
 # > simpler than defining a main target rule.
 
-import b2.build.targets as targets
-import b2.build.virtual_target as virtual_target
+from b2.build import targets, virtual_target, property_set
 
 from b2.manager import get_manager
-from b2.util import bjam_signature
+from b2.util import bjam_signature, is_iterable_typed
+
 
 class CastTargetClass(targets.TypedTarget):
 
-    def construct(name, source_targets, ps):
+    def construct(self, name, source_targets, ps):
+        assert isinstance(name, basestring)
+        assert is_iterable_typed(source_targets, virtual_target.VirtualTarget)
+        assert isinstance(ps, property_set.PropertySet)
+
         result = []
         for s in source_targets:
-            if not isinstance(s, virtual_targets.FileTarget):
+            if not isinstance(s, virtual_target.FileTarget):
                 get_manager().errors()("Source to the 'cast' metatager is not a file")
 
             if s.action():
@@ -46,18 +50,17 @@ class CastTargetClass(targets.TypedTarget):
             r = s.clone_with_different_type(self.type())
             result.append(get_manager().virtual_targets().register(r))
 
-        return result
-    
+        return property_set.empty(), result
 
 @bjam_signature((["name", "type"], ["sources", "*"], ["requirements", "*"],
                  ["default_build", "*"], ["usage_requirements", "*"]))
 def cast(name, type, sources, requirements, default_build, usage_requirements):
-   
+
     from b2.manager import get_manager
     t = get_manager().targets()
-    
+
     project = get_manager().projects().current()
-        
+
     return t.main_target_alternative(
         CastTargetClass(name, project, type,
                         t.main_target_sources(sources, name),

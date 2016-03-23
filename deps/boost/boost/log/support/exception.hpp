@@ -15,11 +15,11 @@
 #ifndef BOOST_LOG_SUPPORT_EXCEPTION_HPP_INCLUDED_
 #define BOOST_LOG_SUPPORT_EXCEPTION_HPP_INCLUDED_
 
+#include <boost/type_index.hpp>
 #include <boost/exception/info.hpp>
 #include <boost/log/detail/config.hpp>
 #include <boost/log/attributes/attribute_name.hpp>
 #include <boost/log/attributes/named_scope.hpp>
-#include <boost/log/utility/type_info_wrapper.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -38,7 +38,7 @@ typedef error_info< struct attribute_name_info_tag, attribute_name > attribute_n
 /*!
  * Type info exception information
  */
-typedef error_info< struct type_info_info_tag, type_info_wrapper > type_info_info;
+typedef error_info< struct type_info_info_tag, typeindex::type_index > type_info_info;
 
 /*!
  * Parse position exception information

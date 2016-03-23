@@ -261,17 +261,17 @@ __ ../example/node_iterator1.cpp
 
 [h2 A constant `node_iterator`]
 
-[blurb *Constant and Mutable iterators*\n\n
+[blurb *Constant and Mutable iterators*[br][br]
 The term **mutable iterator** means an iterator through which
 the object it references (its "referent") can be modified.  A
 **constant iterator** is one which doesn't allow modification of
-its referent.\n\n  
+its referent.[br][br]  
 The words *constant* and *mutable* don't refer to the ability to
 modify the iterator itself.  For example, an `int const*` is a
 non-\ `const` *constant iterator*, which can be incremented
 but doesn't allow modification of its referent, and `int*
 const` is a `const` *mutable iterator*, which cannot be
-modified but which allows modification of its referent.\n\n
+modified but which allows modification of its referent.[br][br]
 Confusing?  We agree, but those are the standard terms.  It
 probably doesn't help much that a container's constant iterator
 is called `const_iterator`.
@@ -312,7 +312,7 @@ changes:
       node_base **const**\ * m_node;
   };
 
-[blurb `const` and an iterator's `value_type`\n\n
+[blurb `const` and an iterator's `value_type`[br][br]
 The C++ standard requires an iterator's `value_type` *not* be
 `const`\ -qualified, so `iterator_facade` strips the
 `const` from its `Value` parameter in order to produce the

@@ -16,7 +16,6 @@
 
 #include <algorithm>
 
-#include <boost/assert.hpp>
 #include <boost/concept_check.hpp>
 #include <boost/config.hpp>
 #include <boost/range/concepts.hpp>
@@ -26,6 +25,7 @@
 #include <boost/range/size.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/mutable_range.hpp>
 
 namespace boost { namespace geometry { namespace range {
@@ -59,7 +59,7 @@ inline typename boost::range_iterator<RandomAccessRange const>::type
 pos(RandomAccessRange const& rng,
     typename boost::range_size<RandomAccessRange const>::type i)
 {
-    BOOST_ASSERT(i <= boost::size(rng));
+    BOOST_GEOMETRY_ASSERT(i <= boost::size(rng));
     return detail::pos<RandomAccessRange const>::apply(rng, i);
 }
 
@@ -72,7 +72,7 @@ inline typename boost::range_iterator<RandomAccessRange>::type
 pos(RandomAccessRange & rng,
     typename boost::range_size<RandomAccessRange>::type i)
 {
-    BOOST_ASSERT(i <= boost::size(rng));
+    BOOST_GEOMETRY_ASSERT(i <= boost::size(rng));
     return detail::pos<RandomAccessRange>::apply(rng, i);
 }
 
@@ -85,7 +85,7 @@ inline typename boost::range_reference<RandomAccessRange const>::type
 at(RandomAccessRange const& rng,
    typename boost::range_size<RandomAccessRange const>::type i)
 {
-    BOOST_ASSERT(i < boost::size(rng));
+    BOOST_GEOMETRY_ASSERT(i < boost::size(rng));
     return * detail::pos<RandomAccessRange const>::apply(rng, i);
 }
 
@@ -98,7 +98,7 @@ inline typename boost::range_reference<RandomAccessRange>::type
 at(RandomAccessRange & rng,
    typename boost::range_size<RandomAccessRange>::type i)
 {
-    BOOST_ASSERT(i < boost::size(rng));
+    BOOST_GEOMETRY_ASSERT(i < boost::size(rng));
     return * detail::pos<RandomAccessRange>::apply(rng, i);
 }
 
@@ -110,7 +110,7 @@ template <typename Range>
 inline typename boost::range_reference<Range const>::type
 front(Range const& rng)
 {
-    BOOST_ASSERT(!boost::empty(rng));
+    BOOST_GEOMETRY_ASSERT(!boost::empty(rng));
     return *boost::begin(rng);
 }
 
@@ -122,7 +122,7 @@ template <typename Range>
 inline typename boost::range_reference<Range>::type
 front(Range & rng)
 {
-    BOOST_ASSERT(!boost::empty(rng));
+    BOOST_GEOMETRY_ASSERT(!boost::empty(rng));
     return *boost::begin(rng);
 }
 
@@ -137,7 +137,7 @@ inline typename boost::range_reference<BidirectionalRange const>::type
 back(BidirectionalRange const& rng)
 {
     BOOST_RANGE_CONCEPT_ASSERT(( boost::BidirectionalRangeConcept<BidirectionalRange const> ));
-    BOOST_ASSERT(!boost::empty(rng));
+    BOOST_GEOMETRY_ASSERT(!boost::empty(rng));
     return *(boost::rbegin(rng));
 }
 
@@ -150,7 +150,7 @@ inline typename boost::range_reference<BidirectionalRange>::type
 back(BidirectionalRange & rng)
 {
     BOOST_RANGE_CONCEPT_ASSERT((boost::BidirectionalRangeConcept<BidirectionalRange>));
-    BOOST_ASSERT(!boost::empty(rng));
+    BOOST_GEOMETRY_ASSERT(!boost::empty(rng));
     return *(boost::rbegin(rng));
 }
 
@@ -200,7 +200,7 @@ inline void resize(Range & rng,
 template <typename Range>
 inline void pop_back(Range & rng)
 {
-    BOOST_ASSERT(!boost::empty(rng));
+    BOOST_GEOMETRY_ASSERT(!boost::empty(rng));
     range::resize(rng, boost::size(rng) - 1);
 }
 
@@ -260,8 +260,8 @@ inline typename boost::range_iterator<Range>::type
 erase(Range & rng,
       typename boost::range_iterator<Range>::type it)
 {
-    BOOST_ASSERT(!boost::empty(rng));
-    BOOST_ASSERT(it != boost::end(rng));
+    BOOST_GEOMETRY_ASSERT(!boost::empty(rng));
+    BOOST_GEOMETRY_ASSERT(it != boost::end(rng));
 
     typename boost::range_difference<Range>::type const
         d = std::distance(boost::begin(rng), it);
@@ -314,10 +314,10 @@ erase(Range & rng,
 {
     typename boost::range_difference<Range>::type const
         diff = std::distance(first, last);
-    BOOST_ASSERT(diff >= 0);
+    BOOST_GEOMETRY_ASSERT(diff >= 0);
 
     std::size_t const count = static_cast<std::size_t>(diff);
-    BOOST_ASSERT(count <= boost::size(rng));
+    BOOST_GEOMETRY_ASSERT(count <= boost::size(rng));
     
     if ( count > 0 )
     {

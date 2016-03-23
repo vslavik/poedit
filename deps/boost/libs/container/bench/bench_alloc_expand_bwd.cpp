@@ -109,9 +109,9 @@ void vector_test_template(unsigned int num_iterations, unsigned int num_elements
       v.reset_alloc_stats();
       void *first_mem = 0;
       try{
-         first_mem = boost_cont_malloc(sizeof(MyInt)*num_elements*3/2);
+         first_mem = bc::dlmalloc_malloc(sizeof(MyInt)*num_elements*3/2);
          v.push_back(MyInt(0));
-         boost_cont_free(first_mem);
+         bc::dlmalloc_free(first_mem);
 
          for(unsigned int e = 0; e != num_elements; ++e){
             v.push_back(MyInt(e));
@@ -121,12 +121,12 @@ void vector_test_template(unsigned int num_iterations, unsigned int num_elements
          capacity = static_cast<unsigned int>(v.capacity());
       }
       catch(...){
-         boost_cont_free(first_mem);
+         bc::dlmalloc_free(first_mem);
          throw;
       }
    }
 
-   assert(boost_cont_allocated_memory() == 0);
+   assert(bc::dlmalloc_allocated_memory() == 0);
 
    timer.stop();
    nanosecond_type nseconds = timer.elapsed().wall;
@@ -165,7 +165,7 @@ void vector_test_template(unsigned int num_iterations, unsigned int num_elements
                   << "    -----------------------------------    "
                   << std::endl;
    }
-   boost_cont_trim(0);
+   bc::dlmalloc_trim(0);
 }
 
 int main(int argc, const char *argv[])

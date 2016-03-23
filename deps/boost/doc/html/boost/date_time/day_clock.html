@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -37,39 +38,39 @@
   <span class="comment">// types</span>
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a name="boost.date_time.day_clock.ymd_type"></a><span class="identifier">ymd_type</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="day_clock.html#idp86005216-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">date_type</span> <a class="link" href="day_clock.html#idp86005776-bb"><span class="identifier">local_day</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a class="link" href="day_clock.html#idp101160160-bb"><span class="identifier">local_day_ymd</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a class="link" href="day_clock.html#idp43681472-bb"><span class="identifier">universal_day_ymd</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">date_type</span> <a class="link" href="day_clock.html#idp92653616-bb"><span class="identifier">universal_day</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="day_clock.html#idm45507154849760-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">date_type</span> <a class="link" href="day_clock.html#idm45507154849200-bb"><span class="identifier">local_day</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a class="link" href="day_clock.html#idm45507128922320-bb"><span class="identifier">local_day_ymd</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a class="link" href="day_clock.html#idm45507105394208-bb"><span class="identifier">universal_day_ymd</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">date_type</span> <a class="link" href="day_clock.html#idm45507157142816-bb"><span class="identifier">universal_day</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="day_clock.html#idp105377248-bb">private static functions</a></span>
-  <span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a class="link" href="day_clock.html#idp105377824-bb"><span class="identifier">get_local_time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a class="link" href="day_clock.html#idp85931728-bb"><span class="identifier">get_universal_time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="day_clock.html#idm45507086213328-bb">private static functions</a></span>
+  <span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a class="link" href="day_clock.html#idm45507086212752-bb"><span class="identifier">get_local_time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a class="link" href="day_clock.html#idm45507099009056-bb"><span class="identifier">get_universal_time</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp176374896"></a><h2>Description</h2>
+<a name="idm45555377890288"></a><h2>Description</h2>
 <p>This clock uses Posix interfaces as its implementation and hence uses the timezone settings of the operating system. Incorrect user settings will result in incorrect results for the calls to local_day. </p>
 <div class="refsect2">
-<a name="idp176375792"></a><h3>
-<a name="idp86005216-bb"></a><code class="computeroutput">day_clock</code> public static functions</h3>
+<a name="idm45555377889392"></a><h3>
+<a name="idm45507154849760-bb"></a><code class="computeroutput">day_clock</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span> <a name="idp86005776-bb"></a><span class="identifier">local_day</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the local day as a date type. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span> <a name="idm45507154849200-bb"></a><span class="identifier">local_day</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the local day as a date type. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a name="idp101160160-bb"></a><span class="identifier">local_day_ymd</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the local day as a ymd_type. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a name="idm45507128922320-bb"></a><span class="identifier">local_day_ymd</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the local day as a ymd_type. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a name="idp43681472-bb"></a><span class="identifier">universal_day_ymd</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the current day in universal date as a ymd_type. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">ymd_type</span> <a name="idm45507105394208-bb"></a><span class="identifier">universal_day_ymd</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the current day in universal date as a ymd_type. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span> <a name="idp92653616-bb"></a><span class="identifier">universal_day</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the UTC day as a date type. </li>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">date_type</span> <a name="idm45507157142816-bb"></a><span class="identifier">universal_day</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Get the UTC day as a date type. </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp176400944"></a><h3>
-<a name="idp105377248-bb"></a><code class="computeroutput">day_clock</code> private static functions</h3>
+<a name="idm45555377864304"></a><h3>
+<a name="idm45507086213328-bb"></a><code class="computeroutput">day_clock</code> private static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a name="idp105377824-bb"></a><span class="identifier">get_local_time</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span> result<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a name="idp85931728-bb"></a><span class="identifier">get_universal_time</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span> result<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a name="idm45507086212752-bb"></a><span class="identifier">get_local_time</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span> result<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="special">::</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">*</span> <a name="idm45507099009056-bb"></a><span class="identifier">get_universal_time</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tm</span> <span class="special">&amp;</span> result<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

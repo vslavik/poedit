@@ -114,9 +114,10 @@ We set the precision of the output stream, and show trailing zeros to display a 
     std::cout << std::showpoint << std::endl; // Show trailing zeros too.
 
     unsigned int m = 1U;
-    float_type r = boost::math::airy_ai_zero<double>(1U); // 1st root.
+    float_type r = boost::math::airy_ai_zero<float_type>(1U); // 1st root.
     std::cout << "boost::math::airy_bi_zero<float_type>(" << m << ")  = " << r << std::endl;
-    r = boost::math::airy_ai_zero<float_type>(1U); // 1st root.
+    m = 2;
+    r = boost::math::airy_ai_zero<float_type>(2U); // 2nd root.
     std::cout << "boost::math::airy_bi_zero<float_type>(" << m << ")  = " << r << std::endl;
     m = 7U;
     r = boost::math::airy_bi_zero<float_type>(7U); // 7th root.
@@ -145,24 +146,20 @@ We set the precision of the output stream, and show trailing zeros to display a 
   boost::math::airy_ai_zero<double>(1) = -2.33811
   boost::math::airy_ai_zero<double>(2) = -4.08795
   boost::math::airy_bi_zero<double>(3) = -4.83074
-
   airy_ai_zeros:
   -2.33811
   -4.08795
   -5.52056
   -6.78671
   -7.94413
-  
-  boost::math::airy_bi_zero<float_type>(1)  = -2.3381074104597665552773833042010664939880371093750
-  boost::math::airy_bi_zero<float_type>(1)  = -2.3381074104597670384891972524467354406385502908783
-  boost::math::airy_bi_zero<float_type>(7)  = -9.5381943793462388866329885451560196208390720763825
 
+  boost::math::airy_bi_zero<float_type>(1)  = -2.3381074104597670384891972524467354406385401456711
+  boost::math::airy_bi_zero<float_type>(2)  = -4.0879494441309706166369887014573910602247646991085
+  boost::math::airy_bi_zero<float_type>(7)  = -9.5381943793462388866329885451560196208390720763825
   airy_ai_zeros:
-  -2.3381074104597670384891972524467354406385502908783
+  -2.3381074104597670384891972524467354406385401456711
   -4.0879494441309706166369887014573910602247646991085
   -5.5205598280955510591298555129312935737972142806175
-
-
 
 */
 

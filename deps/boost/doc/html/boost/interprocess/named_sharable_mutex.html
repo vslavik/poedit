@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,98 +36,98 @@
 <span class="keyword">class</span> <a class="link" href="named_sharable_mutex.html" title="Class named_sharable_mutex">named_sharable_mutex</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="named_sharable_mutex.html#boost.interprocess.named_sharable_mutexconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="named_sharable_mutex.html#idp56961760-bb"><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
+  <a class="link" href="named_sharable_mutex.html#idm45879389722688-bb"><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
                        <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_sharable_mutex.html#idp56966800-bb"><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
+  <a class="link" href="named_sharable_mutex.html#idm45879389717648-bb"><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">,</span> 
                        <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_sharable_mutex.html#idp56974144-bb"><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="named_sharable_mutex.html#idp56977232-bb"><span class="special">~</span><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_sharable_mutex.html#idm45879389710304-bb"><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="named_sharable_mutex.html#idm45879389707216-bb"><span class="special">~</span><span class="identifier">named_sharable_mutex</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="named_sharable_mutex.html#idp56941760-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idp56942320-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idp56944528-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idp56946816-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idp56949808-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idp56951984-bb"><span class="identifier">lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idp56954176-bb"><span class="identifier">try_lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idp56956448-bb"><span class="identifier">timed_lock_sharable</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idp56959424-bb"><span class="identifier">unlock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="named_sharable_mutex.html#idm45879389742688-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idm45879389742128-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idm45879389739920-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idm45879389737632-bb"><span class="identifier">timed_lock</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idm45879389734640-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idm45879389732464-bb"><span class="identifier">lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idm45879389730272-bb"><span class="identifier">try_lock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idm45879389728000-bb"><span class="identifier">timed_lock_sharable</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="named_sharable_mutex.html#idm45879389725024-bb"><span class="identifier">unlock_sharable</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="named_sharable_mutex.html#idp56978272-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idp56978832-bb"><span class="identifier">remove</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="named_sharable_mutex.html#idm45879389706176-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="keyword">bool</span> <a class="link" href="named_sharable_mutex.html#idm45879389705616-bb"><span class="identifier">remove</span></a><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp243832544"></a><h2>Description</h2>
+<a name="idm45555309983584"></a><h2>Description</h2>
 <p>A sharable mutex with a global name, so it can be found from different processes. This mutex can't be placed in shared memory, and each process should have it's own named sharable mutex. </p>
 <div class="refsect2">
-<a name="idp243833424"></a><h3>
+<a name="idm45555309982704"></a><h3>
 <a name="boost.interprocess.named_sharable_mutexconstruct-copy-destruct"></a><code class="computeroutput">named_sharable_mutex</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idp56961760-bb"></a><span class="identifier">named_sharable_mutex</span><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a> create_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idm45879389722688-bb"></a><span class="identifier">named_sharable_mutex</span><span class="special">(</span><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a> create_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
                      <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> perm <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Creates a global sharable mutex with a name. If the sharable mutex can't be created throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp56966800-bb"></a><span class="identifier">named_sharable_mutex</span><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a> open_or_create<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
+<pre class="literallayout"><a name="idm45879389717648-bb"></a><span class="identifier">named_sharable_mutex</span><span class="special">(</span><a class="link" href="open_or_create_t.html" title="Struct open_or_create_t">open_or_create_t</a> open_or_create<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">,</span> 
                      <span class="keyword">const</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a> <span class="special">&amp;</span> perm <span class="special">=</span> <a class="link" href="permissions.html" title="Class permissions">permissions</a><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Opens or creates a global sharable mutex with a name. If the sharable mutex is created, this call is equivalent to <code class="computeroutput"><a class="link" href="named_sharable_mutex.html" title="Class named_sharable_mutex">named_sharable_mutex</a></code>(<code class="computeroutput"><a class="link" href="create_only_t.html" title="Struct create_only_t">create_only_t</a></code>, ...) If the sharable mutex is already created, this call is equivalent to <code class="computeroutput"><a class="link" href="named_sharable_mutex.html" title="Class named_sharable_mutex">named_sharable_mutex</a></code>(<code class="computeroutput"><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a></code>, ... ). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp56974144-bb"></a><span class="identifier">named_sharable_mutex</span><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a> open_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879389710304-bb"></a><span class="identifier">named_sharable_mutex</span><span class="special">(</span><a class="link" href="open_only_t.html" title="Struct open_only_t">open_only_t</a> open_only<span class="special">,</span> <span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Opens a global sharable mutex with a name if that sharable mutex is previously. created. If it is not previously created this function throws <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp56977232-bb"></a><span class="special">~</span><span class="identifier">named_sharable_mutex</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idm45879389707216-bb"></a><span class="special">~</span><span class="identifier">named_sharable_mutex</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Destroys *this and indicates that the calling process is finished using the resource. The destructor function will deallocate any system resources allocated by the system for use by this process for this resource. The resource can still be opened again calling the open constructor overload. To erase the resource from the system use remove(). </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp243881456"></a><h3>
-<a name="idp56941760-bb"></a><code class="computeroutput">named_sharable_mutex</code> public member functions</h3>
+<a name="idm45555309934736"></a><h3>
+<a name="idm45879389742688-bb"></a><code class="computeroutput">named_sharable_mutex</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56942320-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879389742128-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to obtain exclusive ownership of the mutex, and if another thread has exclusive or sharable ownership of the mutex, it waits until it can obtain the ownership. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56944528-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879389739920-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire exclusive ownership of the mutex without waiting. If no other thread has exclusive or sharable ownership of the mutex this succeeds. Returns: If it can acquire exclusive ownership immediately returns true. If it has to wait, returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56946816-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879389737632-bb"></a><span class="identifier">timed_lock</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire exclusive ownership of the mutex waiting if necessary until no other thread has exclusive, or sharable ownership of the mutex or abs_time is reached. Returns: If acquires exclusive ownership, returns true. Otherwise returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56949808-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879389734640-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Precondition: The thread must have exclusive ownership of the mutex. Effects: The calling thread releases the exclusive ownership of the mutex. Throws: An exception derived from <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56951984-bb"></a><span class="identifier">lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879389732464-bb"></a><span class="identifier">lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to obtain sharable ownership of the mutex, and if another thread has exclusive ownership of the mutex, waits until it can obtain the ownership. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56954176-bb"></a><span class="identifier">try_lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879389730272-bb"></a><span class="identifier">try_lock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire sharable ownership of the mutex without waiting. If no other thread has exclusive ownership of the mutex this succeeds. Returns: If it can acquire sharable ownership immediately returns true. If it has to wait, returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idp56956448-bb"></a><span class="identifier">timed_lock_sharable</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45879389728000-bb"></a><span class="identifier">timed_lock_sharable</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">posix_time</span><span class="special">::</span><span class="identifier">ptime</span> <span class="special">&amp;</span> abs_time<span class="special">)</span><span class="special">;</span></pre>
 <p>Effects: The calling thread tries to acquire sharable ownership of the mutex waiting if necessary until no other thread has exclusive ownership of the mutex or abs_time is reached. Returns: If acquires sharable ownership, returns true. Otherwise returns false. Throws: <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp56959424-bb"></a><span class="identifier">unlock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879389725024-bb"></a><span class="identifier">unlock_sharable</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Precondition: The thread must have sharable ownership of the mutex. Effects: The calling thread releases the sharable ownership of the mutex. Throws: An exception derived from <code class="computeroutput"><a class="link" href="interprocess_exception.html" title="Class interprocess_exception">interprocess_exception</a></code> on error. </p>
 </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp243940880"></a><h3>
-<a name="idp56978272-bb"></a><code class="computeroutput">named_sharable_mutex</code> public static functions</h3>
+<a name="idm45555309875376"></a><h3>
+<a name="idm45879389706176-bb"></a><code class="computeroutput">named_sharable_mutex</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idp56978832-bb"></a><span class="identifier">remove</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="keyword">bool</span> <a name="idm45879389705616-bb"></a><span class="identifier">remove</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">char</span> <span class="special">*</span> name<span class="special">)</span><span class="special">;</span></pre>
 <p>Erases a named sharable mutex from the system. Returns false on error. Never throws. </p>
 </li></ol></div>
 </div>
@@ -134,7 +135,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

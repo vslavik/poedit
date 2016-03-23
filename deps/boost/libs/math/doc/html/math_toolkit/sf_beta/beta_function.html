@@ -4,7 +4,7 @@
 <title>Beta</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_beta.html" title="Beta Functions">
 <link rel="prev" href="../sf_beta.html" title="Beta Functions">
 <link rel="next" href="ibeta_function.html" title="Incomplete Beta Functions">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">beta</span><span class="special">(</span><span class="identifier">T1</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T2</span> <span class="identifier">b</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -56,9 +56,9 @@
         <span class="inlinemediaobject"><img src="../../../graphs/beta.svg" align="middle"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -89,9 +89,10 @@
         zero error</a>.
       </p>
 <div class="table">
-<a name="math_toolkit.sf_beta.beta_function.peak_errors_in_the_beta_function"></a><p class="title"><b>Table&#160;6.7.&#160;Peak Errors In the Beta Function</b></p>
-<div class="table-contents"><table class="table" summary="Peak Errors In the Beta Function">
+<a name="math_toolkit.sf_beta.beta_function.table_beta"></a><p class="title"><b>Table&#160;6.17.&#160;Error rates for beta</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for beta">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -99,29 +100,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
-                </p>
-                <p>
-                  0.4 &lt; a,b &lt; 100
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Errors in range
-                </p>
-                <p>
-                  1e-6 &lt; a,b &lt; 36
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -129,100 +126,94 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Beta Function: Small Values
                 </p>
               </td>
 <td>
                 <p>
-                  Win32, Visual C++ 8
+                  <span class="blue">Max = 1.75&#949; (Mean = 0.828&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=99 Mean=22
-                </p>
-                <p>
-                  (GSL Peak=1178 Mean=238)
-                </p>
-                <p>
-                  (<a href="http://www.netlib.org/cephes/" target="_top">Cephes</a>=1612)
+                  <span class="blue">Max = 2.65&#949; (Mean = 1.22&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 11.9&#949; (Mean = 7.03&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=10.7 Mean=2.6
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 3.94&#949; (Mean = 1.44&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 1.14&#949; (Mean = 0.601&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 1.97&#949; (Mean = 0.934&#949;))
                 </p>
+              </td>
+<td>
                 <p>
-                  (GSL Peak=12 Mean=2.0)
-                </p>
-                <p>
-                  (<a href="http://www.netlib.org/cephes/" target="_top">Cephes</a>=174)
+                  <span class="blue">Max = 2.86&#949; (Mean = 1.31&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  64
+                  Beta Function: Medium Values
                 </p>
               </td>
 <td>
                 <p>
-                  Red Hat Linux IA32, g++ 3.4.4
+                  <span class="blue">Max = 99.1&#949; (Mean = 22.4&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=112.1 Mean=26.9
+                  <span class="blue">Max = 60.4&#949; (Mean = 19.4&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 1.07e+03&#949; (Mean =
+                  264&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=15.8 Mean=3.6
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 0.978&#949; (Mean = 0.0578&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 1.18e+03&#949; (Mean = 238&#949;))<br>
+                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 1.09e+03&#949; (Mean = 265&#949;))<br>
+                  (<span class="emphasis"><em>Cephes:</em></span> Max = 1.5e+03&#949; (Mean = 329&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Red Hat Linux IA64, g++ 3.4.4
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=61.4 Mean=19.5
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=12.2 Mean=3.6
+                  <span class="blue">Max = 107&#949; (Mean = 24.5&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Beta Function: Divergent Values
                 </p>
               </td>
 <td>
                 <p>
-                  HPUX IA64, aCC A.06.06
+                  <span class="blue">Max = 10.7&#949; (Mean = 2.22&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=42.03 Mean=13.94
+                  <span class="blue">Max = 10.3&#949; (Mean = 2.41&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 128&#949; (Mean = 23.8&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=9.8 Mean=3.1
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>GSL
+                  1.16:</em></span> Max = 12.1&#949; (Mean = 1.99&#949;))<br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 176&#949; (Mean = 28&#949;))<br> (<span class="emphasis"><em>Cephes:</em></span>
+                  Max = 175&#949; (Mean = 22&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 19.7&#949; (Mean = 2.75&#949;)</span>
                 </p>
               </td>
 </tr>

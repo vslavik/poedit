@@ -20,12 +20,14 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_WITHIN_POINT_IN_GEOMETRY_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_WITHIN_POINT_IN_GEOMETRY_HPP
 
-#include <boost/assert.hpp>
+
 #include <boost/core/ignore_unused.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/range.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+
+#include <boost/geometry/core/assert.hpp>
 
 #include <boost/geometry/algorithms/detail/equals/point_point.hpp>
 #include <boost/geometry/algorithms/detail/interior_iterator.hpp>
@@ -53,7 +55,7 @@ inline int check_result_type(int result)
 template <typename T>
 inline T check_result_type(T result)
 {
-    BOOST_ASSERT(false);
+    BOOST_GEOMETRY_ASSERT(false);
     return result;
 }
 
@@ -291,7 +293,7 @@ struct point_in_geometry<Geometry, multi_point_tag>
         {
             int pip = point_in_geometry<point_type>::apply(point, *it, strategy);
 
-            //BOOST_ASSERT(pip != 0);
+            //BOOST_GEOMETRY_ASSERT(pip != 0);
             if ( pip > 0 ) // inside
                 return 1;
         }

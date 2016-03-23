@@ -29,8 +29,8 @@ using namespace boost::program_options;
 
 #include <iostream>
 #include <fstream>
+#include <exception>
 using namespace std;
-
 
 int main(int ac, char* av[])
 {
@@ -39,7 +39,7 @@ int main(int ac, char* av[])
         options_description general("General options");
         general.add_options()
             ("help", "produce a help message")
-            ("help-module", value<string>()->implicit(),
+            ("help-module", value<string>(),
                 "produce a help for a given module")
             ("version", "output the version number")
             ;
@@ -91,7 +91,7 @@ int main(int ac, char* av[])
                  << vm["num-threads"].as<int>() << "\n";            
         }                           
     }
-    catch(exception& e) {
+    catch(std::exception& e) {
         cout << e.what() << "\n";
     }
 }

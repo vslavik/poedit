@@ -24,15 +24,13 @@
 
 using namespace boost::intrusive;
 
-class my_tag;
-
 template<class VoidPointer>
 struct hooks
 {
    typedef list_base_hook<void_pointer<VoidPointer> >                base_hook_type;
    typedef list_base_hook< link_mode<auto_unlink>
-                         , void_pointer<VoidPointer>, tag<my_tag> >  auto_base_hook_type;
-   typedef list_member_hook<void_pointer<VoidPointer>, tag<my_tag> > member_hook_type;
+                         , void_pointer<VoidPointer>, tag<void> >    auto_base_hook_type;
+   typedef list_member_hook<void_pointer<VoidPointer>, tag<void> >   member_hook_type;
    typedef list_member_hook< link_mode<auto_unlink>
                            , void_pointer<VoidPointer> >             auto_member_hook_type;
    typedef nonhook_node_member< list_node_traits< VoidPointer >,
@@ -40,29 +38,29 @@ struct hooks
 };
 
 
-template < typename List_Type, typename Value_Container >
+template < typename ListType, typename ValueContainer >
 struct test_list
 {
-   typedef List_Type list_type;
+   typedef ListType list_type;
    typedef typename list_type::value_traits value_traits;
    typedef typename value_traits::value_type value_type;
    typedef typename list_type::node_algorithms node_algorithms;
 
-   static void test_all(Value_Container&);
-   static void test_front_back(Value_Container&);
-   static void test_sort(Value_Container&);
-   static void test_merge(Value_Container&);
-   static void test_remove_unique(Value_Container&);
-   static void test_insert(Value_Container&);
-   static void test_shift(Value_Container&);
-   static void test_swap(Value_Container&);
-   static void test_clone(Value_Container&);
-   static void test_container_from_end(Value_Container&, detail::true_type);
-   static void test_container_from_end(Value_Container&, detail::false_type) {}
+   static void test_all(ValueContainer&);
+   static void test_front_back(ValueContainer&);
+   static void test_sort(ValueContainer&);
+   static void test_merge(ValueContainer&);
+   static void test_remove_unique(ValueContainer&);
+   static void test_insert(ValueContainer&);
+   static void test_shift(ValueContainer&);
+   static void test_swap(ValueContainer&);
+   static void test_clone(ValueContainer&);
+   static void test_container_from_end(ValueContainer&, detail::true_type);
+   static void test_container_from_end(ValueContainer&, detail::false_type) {}
 };
 
-template < typename List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >::test_all(Value_Container& values)
+template < typename ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >::test_all(ValueContainer& values)
 {
    {
       list_type list(values.begin(), values.end());
@@ -70,6 +68,10 @@ void test_list< List_Type, Value_Container >::test_all(Value_Container& values)
       list.clear();
       list.insert(list.end(), values.begin(), values.end());
       test::test_sequence_container(list, values);
+   }
+   {
+      list_type list(values.begin(), values.end());
+      test::test_iterator_bidirectional(list);
    }
 
    test_front_back(values);
@@ -80,13 +82,13 @@ void test_list< List_Type, Value_Container >::test_all(Value_Container& values)
    test_shift(values);
    test_swap(values);
    test_clone(values);
-   test_container_from_end(values, detail::bool_< List_Type::has_container_from_iterator >());
+   test_container_from_end(values, detail::bool_< ListType::has_container_from_iterator >());
 }
 
 //test: push_front, pop_front, push_back, pop_back, front, back, size, empty:
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_front_back(Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_front_back(ValueContainer& values)
 {
    list_type testlist;
    BOOST_TEST (testlist.empty());
@@ -112,9 +114,9 @@ void test_list< List_Type, Value_Container >
 }
 
 //test: constructor, iterator, reverse_iterator, sort, reverse:
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_sort(Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_sort(ValueContainer& values)
 {
    list_type testlist(values.begin(), values.end());
 
@@ -131,9 +133,9 @@ void test_list< List_Type, Value_Container >
 }
 
 //test: merge due to error in merge implementation:
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_remove_unique (Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_remove_unique (ValueContainer& values)
 {
    {
       list_type list(values.begin(), values.end());
@@ -160,7 +162,7 @@ void test_list< List_Type, Value_Container >
       TEST_INTRUSIVE_SEQUENCE( init_values, list.begin() );
    }
    {
-      Value_Container values2(values);
+      ValueContainer values2(values);
       list_type list(values.begin(), values.end());
       list.insert(list.end(), values2.begin(), values2.end());
       list.sort();
@@ -173,9 +175,9 @@ void test_list< List_Type, Value_Container >
 }
 
 //test: merge due to error in merge implementation:
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_merge (Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_merge (ValueContainer& values)
 {
    list_type testlist1, testlist2;
    testlist1.push_front (values[0]);
@@ -189,9 +191,9 @@ void test_list< List_Type, Value_Container >
 }
 
 //test: assign, insert, const_iterator, const_reverse_iterator, erase, s_iterator_to:
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_insert(Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_insert(ValueContainer& values)
 {
    list_type testlist;
    testlist.assign (values.begin() + 2, values.begin() + 5);
@@ -232,9 +234,9 @@ void test_list< List_Type, Value_Container >
       TEST_INTRUSIVE_SEQUENCE( init_values, const_testlist.begin() );  }
 }
 
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_shift(Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_shift(ValueContainer& values)
 {
    list_type testlist;
    const int num_values = (int)values.size();
@@ -267,9 +269,9 @@ void test_list< List_Type, Value_Container >
 }
 
 //test: insert (seq-version), swap, splice, erase (seq-version):
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_swap(Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_swap(ValueContainer& values)
 {
    {
       list_type testlist1 (values.begin(), values.begin() + 2);
@@ -343,18 +345,18 @@ void test_list< List_Type, Value_Container >
    }
 }
 
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_container_from_end(Value_Container& values, detail::true_type)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_container_from_end(ValueContainer& values, detail::true_type)
 {
    list_type testlist1 (values.begin(), values.begin() + values.size());
    BOOST_TEST (testlist1 == list_type::container_from_end_iterator(testlist1.end()));
    BOOST_TEST (testlist1 == list_type::container_from_end_iterator(testlist1.cend()));
 }
 
-template < class List_Type, typename Value_Container >
-void test_list< List_Type, Value_Container >
-   ::test_clone(Value_Container& values)
+template < class ListType, typename ValueContainer >
+void test_list< ListType, ValueContainer >
+   ::test_clone(ValueContainer& values)
 {
       list_type testlist1 (values.begin(), values.begin() + values.size());
       list_type testlist2;
@@ -365,26 +367,26 @@ void test_list< List_Type, Value_Container >
       BOOST_TEST (testlist2.empty());
 }
 
-template < typename Value_Traits, bool ConstantTimeSize, bool Default_Holder, typename Value_Container >
+template < typename ValueTraits, bool ConstantTimeSize, bool Default_Holder, typename ValueContainer >
 struct make_and_test_list
-   : test_list< list< typename Value_Traits::value_type,
-                      value_traits< Value_Traits >,
+   : test_list< list< typename ValueTraits::value_type,
+                      value_traits< ValueTraits >,
                       size_type< std::size_t >,
                       constant_time_size< ConstantTimeSize >
                     >,
-                Value_Container
+                ValueContainer
               >
 {};
 
-template < typename Value_Traits, bool ConstantTimeSize, typename Value_Container >
-struct make_and_test_list< Value_Traits, ConstantTimeSize, false, Value_Container >
-   : test_list< list< typename Value_Traits::value_type,
-                      value_traits< Value_Traits >,
+template < typename ValueTraits, bool ConstantTimeSize, typename ValueContainer >
+struct make_and_test_list< ValueTraits, ConstantTimeSize, false, ValueContainer >
+   : test_list< list< typename ValueTraits::value_type,
+                      value_traits< ValueTraits >,
                       size_type< std::size_t >,
                       constant_time_size< ConstantTimeSize >,
-                      header_holder_type< pointer_holder< typename Value_Traits::node_traits::node > >
+                      header_holder_type< heap_node_holder< typename ValueTraits::pointer > >
                     >,
-                Value_Container
+                ValueContainer
               >
 {};
 
@@ -395,7 +397,7 @@ class test_main_template
    public:
    int operator()()
    {
-      typedef testvalue<hooks<VoidPointer>, ConstantTimeSize> value_type;
+      typedef testvalue< hooks<VoidPointer> > value_type;
       std::vector<value_type> data (5);
       for (int i = 0; i < 5; ++i)
          data[i].value_ = i + 1;
@@ -436,32 +438,10 @@ class test_main_template< VoidPointer, false, Default_Holder >
    public:
    int operator()()
    {
-      typedef testvalue<hooks<VoidPointer>, false> value_type;
+      typedef testvalue< hooks<VoidPointer> > value_type;
       std::vector<value_type> data (5);
       for (int i = 0; i < 5; ++i)
          data[i].value_ = i + 1;
-
-      make_and_test_list < typename detail::get_base_value_traits <
-                              value_type,
-                              typename hooks<VoidPointer>::base_hook_type
-                           >::type,
-                           false,
-                           Default_Holder,
-                           std::vector< value_type >
-                         >::test_all(data);
-      make_and_test_list < typename detail::get_member_value_traits <
-                              member_hook< value_type, typename hooks<VoidPointer>::member_hook_type, &value_type::node_>
-                           >::type,
-                           false,
-                           Default_Holder,
-                           std::vector< value_type >
-                         >::test_all(data);
-
-//      test_list<stateful_value_traits
-//                  < value_type
-//                  , list_node_traits<VoidPointer>
-//                  , safe_link>
-//               >::test_all(data);
 
       make_and_test_list < typename detail::get_base_value_traits <
                               value_type,
@@ -479,12 +459,6 @@ class test_main_template< VoidPointer, false, Default_Holder >
                          std::vector< value_type >
                        >::test_all(data);
 
-//      test_list<stateful_value_traits
-//                  < value_type
-//                  , list_node_traits<VoidPointer>
-//                  , auto_unlink>
-//               >::test_all(data);
-
       return 0;
    }
 };
@@ -499,7 +473,8 @@ struct test_main_template_bptr
       typedef typename list_value_traits::node_ptr node_ptr;
       typedef bounded_allocator< value_type > allocator_type;
 
-      allocator_type::init();
+      bounded_allocator_scope<allocator_type> bounded_scope; (void)bounded_scope;
+
       allocator_type allocator;
 
       {
@@ -521,8 +496,6 @@ struct test_main_template_bptr
           >::test_all(ref_cont);
       }
 
-      assert(allocator_type::is_clear());
-      allocator_type::destroy();
       return 0;
    }
 };

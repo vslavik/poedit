@@ -151,16 +151,16 @@ The following tables compare run-times, compile-times, and binary sizes for the 
 
 Overall, this library has compile-times and generates binary sizes similar to the ones of the other approaches.
 This library run-times on __CXX03__ compilers were measured to be larger than other approaches when compiler optimization is enabled (using `bjam release ...`).
-However, on compilers that allow to pass local types as template parameters (e.g., MSVC 8.0 or GCC 4.5.3 with __CXX11__ features enabled [^-std=c++0x], see also __N2657__ and __Boost_Config__'s `BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS`) this library automatically generates optimized code that runs as fast as the fastest of the other approaches (see the "Boost.LocalFunction" approach below).
+However, on compilers that allow to pass local types as template parameters (e.g., MSVC 8.0 or GCC 4.5.3 with __CXX11__ features enabled [^-std=c++0x], see also __N2657__ and __Boost_Config__'s `BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS`) this library automatically generates optimized code that runs as fast as the fastest of the other approaches (see the "Boost.LocalFunction" approach below).
 When this library local function is specified `inline` (see the "Boost.LocalFunction Inline" approach below and the __Advanced_Topics__ section) its run-times are always comparable to both the "Local Functor" and "Global Functor" approaches.
-However, in these cases the local function cannot be portably passed as template parameter (see __N2657__ and __Boost_Config__'s `BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS`) so `std::for_each` is replaced by a for-loop (on MSVC the for-loop, and not the local function in fact the same applies to local functors, was measured to have worst performances than using `std::for_each`).
+However, in these cases the local function cannot be portably passed as template parameter (see __N2657__ and __Boost_Config__'s `BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS`) so `std::for_each` is replaced by a for-loop (on MSVC the for-loop, and not the local function in fact the same applies to local functors, was measured to have worst performances than using `std::for_each`).
 Finally, this library run-times are always among the fastest when no compiler optimization is enabled (using `bjam debug ...`).
 
 [note
 The run-time performances of this library local functions are explained because on __CXX03__ compliant compilers (e.g., GCC 4.5.3 without [^-std=c++0x]) this library needs to use a function pointer in order to portably pass the local function class as a template parameter (see __N2657__ and the __Implementation__ section).
 For all tested compilers, this function pointer prevents the compiler optimization algorithms from inlining the local function calls.
 Instead, the functors used by other approaches (e.g., __Boost_Phoenix__) have been observed to allow all tested compilers to inline all the function calls for optimization.
-This run-time performance cost is not present on compilers that allow to pass local types as template parameters (e.g., MSVC 8.0 or GCC 4.5.3 with __CXX11__ features enabled [^-std=c++0x], see __Boost_Config__'s `BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS`) because this library does not have to use the extra function pointer to implement the local function call (it directly passes the local class type as template parameter).
+This run-time performance cost is not present on compilers that allow to pass local types as template parameters (e.g., MSVC 8.0 or GCC 4.5.3 with __CXX11__ features enabled [^-std=c++0x], see __Boost_Config__'s `BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS`) because this library does not have to use the extra function pointer to implement the local function call (it directly passes the local class type as template parameter).
 ]
 
 This run-time performance cost on __CXX03__ compilers might or might not be an issue depending on the performance requirements of specific applications.

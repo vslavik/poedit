@@ -78,6 +78,8 @@ test-suite "odeint"
     [ run n_step_time_iterator.cpp ]
     [ run times_iterator.cpp ]
     [ run times_time_iterator.cpp ]
+    [ run step_size_limitation.cpp ]
+    [ run integrate_overflow.cpp ]
     [ compile unwrap_boost_reference.cpp ]
     [ compile unwrap_reference.cpp : <cxxflags>-std=c++0x : unwrap_reference_C++11 ]
     [ compile-fail unwrap_reference.cpp : <cxxflags>-std=c++98 : unwrap_reference_C++98 ]

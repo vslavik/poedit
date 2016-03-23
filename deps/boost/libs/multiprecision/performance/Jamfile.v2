@@ -100,6 +100,21 @@ obj obj_linpack_benchmark_double : linpack-benchmark.cpp
           : release
           ;
 
+obj obj_linpack_benchmark_native_float128 : linpack-benchmark.cpp
+          : release
+          <define>NATIVE_FLOAT128
+          ;
+
+obj obj_linpack_benchmark_float128 : linpack-benchmark.cpp
+          : release
+          <define>TEST_FLOAT128
+          ;
+
+obj obj_linpack_benchmark_cpp_float_quad : linpack-benchmark.cpp
+          : release
+          <define>TEST_CPP_BIN_FLOAT_QUAD
+          ;
+
 lib f2c ;
 
 exe linpack_benchmark_mpfr : obj_linpack_benchmark_mpfr mpfr f2c gmp
@@ -120,6 +135,18 @@ exe linpack_benchmark_cpp_float : obj_linpack_benchmark_cpp_float  f2c
           ;
 
 exe linpack_benchmark_double : obj_linpack_benchmark_double  f2c
+          : release
+          ;
+
+exe linpack_benchmark_native_float128 : obj_linpack_benchmark_native_float128  f2c
+          : release
+          ;
+
+exe linpack_benchmark_float128 : obj_linpack_benchmark_float128  f2c
+          : release
+          ;
+
+exe linpack_benchmark_cpp_quad_float : obj_linpack_benchmark_cpp_quad_float  f2c
           : release
           ;
 

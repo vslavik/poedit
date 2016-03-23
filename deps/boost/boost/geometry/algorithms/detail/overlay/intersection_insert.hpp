@@ -1,9 +1,9 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2014.
-// Modifications copyright (c) 2014 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015.
+// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -39,9 +39,12 @@
 #include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
 
 #include <boost/geometry/views/segment_view.hpp>
+#include <boost/geometry/views/detail/boundary_view.hpp>
 
+#include <boost/geometry/algorithms/detail/check_iterator_range.hpp>
 #include <boost/geometry/algorithms/detail/overlay/linear_linear.hpp>
 #include <boost/geometry/algorithms/detail/overlay/pointlike_pointlike.hpp>
+#include <boost/geometry/algorithms/detail/overlay/pointlike_linear.hpp>
 
 #if defined(BOOST_GEOMETRY_DEBUG_FOLLOW)
 #include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
@@ -173,21 +176,115 @@ template
 struct intersection_of_linestring_with_areal
 {
 #if defined(BOOST_GEOMETRY_DEBUG_FOLLOW)
-        template <typename Turn, typename Operation>
-        static inline void debug_follow(Turn const& turn, Operation op,
-                    int index)
-        {
-            std::cout << index
-                << " at " << op.seg_id
-                << " meth: " << method_char(turn.method)
-                << " op: " << operation_char(op.operation)
-                << " vis: " << visited_char(op.visited)
-                << " of:  " << operation_char(turn.operations[0].operation)
-                << operation_char(turn.operations[1].operation)
-                << " " << geometry::wkt(turn.point)
-                << std::endl;
-        }
+    template <typename Turn, typename Operation>
+    static inline void debug_follow(Turn const& turn, Operation op,
+                                    int index)
+    {
+        std::cout << index
+                  << " at " << op.seg_id
+                  << " meth: " << method_char(turn.method)
+                  << " op: " << operation_char(op.operation)
+                  << " vis: " << visited_char(op.visited)
+                  << " of:  " << operation_char(turn.operations[0].operation)
+                  << operation_char(turn.operations[1].operation)
+                  << " " << geometry::wkt(turn.point)
+                  << std::endl;
+    }
+
+    template <typename Turn>
+    static inline void debug_turn(Turn const& t, bool non_crossing)
+    {
+        std::cout << "checking turn @"
+                  << geometry::wkt(t.point)
+                  << "; " << method_char(t.method)
+                  << ":" << operation_char(t.operations[0].operation)
+                  << "/" << operation_char(t.operations[1].operation)
+                  << "; non-crossing? "
+                  << std::boolalpha << non_crossing << std::noboolalpha
+                  << std::endl;
+    }
 #endif
+
+    class is_crossing_turn
+    {
+        // return true is the operation is intersection or blocked
+        template <std::size_t Index, typename Turn>
+        static inline bool has_op_i_or_b(Turn const& t)
+        {
+            return
+                t.operations[Index].operation == overlay::operation_intersection
+                ||
+                t.operations[Index].operation == overlay::operation_blocked;
+        }
+
+        template <typename Turn>
+        static inline bool has_method_crosses(Turn const& t)
+        {
+            return t.method == overlay::method_crosses;
+        }
+
+        template <typename Turn>
+        static inline bool is_cc(Turn const& t)
+        {
+            return
+                (t.method == overlay::method_touch_interior
+                 ||
+                 t.method == overlay::method_equal
+                 ||
+                 t.method == overlay::method_collinear)
+                &&
+                t.operations[0].operation == t.operations[1].operation
+                &&
+                t.operations[0].operation == overlay::operation_continue
+                ;
+        }
+
+        template <typename Turn>
+        static inline bool has_i_or_b_ops(Turn const& t)
+        {
+            return
+                (t.method == overlay::method_touch
+                 ||
+                 t.method == overlay::method_touch_interior
+                 ||
+                 t.method == overlay::method_collinear)
+                &&
+                t.operations[1].operation != t.operations[0].operation
+                &&
+                (has_op_i_or_b<0>(t) || has_op_i_or_b<1>(t));
+        }
+
+    public:
+        template <typename Turn>
+        static inline bool apply(Turn const& t)
+        {
+            bool const is_crossing
+                = has_method_crosses(t) || is_cc(t) || has_i_or_b_ops(t);
+#if defined(BOOST_GEOMETRY_DEBUG_FOLLOW)
+            debug_turn(t, ! is_crossing);
+#endif
+            return is_crossing;
+        }
+    };
+
+    struct is_non_crossing_turn
+    {
+        template <typename Turn>
+        static inline bool apply(Turn const& t)
+        {
+            return ! is_crossing_turn::apply(t);
+        }
+    };
+
+    template <typename Turns>
+    static inline bool no_crossing_turns_or_empty(Turns const& turns)
+    {
+        return detail::check_iterator_range
+            <
+                is_non_crossing_turn,
+                true // allow an empty turns range
+            >::apply(boost::begin(turns), boost::end(turns));
+    }
 
     template
     <
@@ -210,7 +307,8 @@ struct intersection_of_linestring_with_areal
                     LineStringOut,
                     LineString,
                     Areal,
-                    OverlayType
+                    OverlayType,
+                    false // do not remove spikes for linear geometries
                 > follower;
 
         typedef typename point_type<LineStringOut>::type point_type;
@@ -229,7 +327,7 @@ struct intersection_of_linestring_with_areal
                 detail::overlay::assign_null_policy
             >(linestring, areal, robust_policy, turns, policy);
 
-        if (turns.empty())
+        if (no_crossing_turns_or_empty(turns))
         {
             // No intersection points, it is either completely
             // inside (interior + borders)
@@ -283,7 +381,8 @@ namespace dispatch
 template
 <
     // real types
-    typename Geometry1, typename Geometry2,
+    typename Geometry1,
+    typename Geometry2,
     typename GeometryOut,
     overlay_type OverlayType,
     // orientation
@@ -409,13 +508,13 @@ struct intersection_insert
     template <typename RobustPolicy, typename OutputIterator, typename Strategy>
     static inline OutputIterator apply(Linestring const& linestring,
             Box const& box,
-            RobustPolicy const& ,
+            RobustPolicy const& robust_policy,
             OutputIterator out, Strategy const& )
     {
         typedef typename point_type<GeometryOut>::type point_type;
         strategy::intersection::liang_barsky<Box, point_type> lb_strategy;
         return detail::intersection::clip_range_with_box
-            <GeometryOut>(box, linestring, out, lb_strategy);
+            <GeometryOut>(box, linestring, robust_policy, out, lb_strategy);
     }
 };
 
@@ -487,7 +586,7 @@ struct intersection_insert
     template <typename RobustPolicy, typename OutputIterator, typename Strategy>
     static inline OutputIterator apply(Segment const& segment,
             Box const& box,
-            RobustPolicy const& ,// TODO: propagate to clip_range_with_box
+            RobustPolicy const& robust_policy,
             OutputIterator out, Strategy const& )
     {
         geometry::segment_view<Segment> range(segment);
@@ -495,7 +594,7 @@ struct intersection_insert
         typedef typename point_type<GeometryOut>::type point_type;
         strategy::intersection::liang_barsky<Box, point_type> lb_strategy;
         return detail::intersection::clip_range_with_box
-            <GeometryOut>(box, range, out, lb_strategy);
+            <GeometryOut>(box, range, robust_policy, out, lb_strategy);
     }
 };
 
@@ -573,6 +672,46 @@ struct intersection_insert_reversed
 };
 
 
+// dispatch for intersection(areal, areal, linear)
+template
+<
+    typename Geometry1, typename Geometry2,
+    typename LinestringOut,
+    bool Reverse1, bool Reverse2, bool ReverseOut,
+    typename Tag1, typename Tag2
+>
+struct intersection_insert
+    <
+        Geometry1, Geometry2,
+        LinestringOut,
+        overlay_intersection,
+        Reverse1, Reverse2, ReverseOut,
+        Tag1, Tag2, linestring_tag,
+        true, true, false
+    >
+{
+    template
+    <
+        typename RobustPolicy, typename OutputIterator, typename Strategy
+    >
+    static inline OutputIterator apply(Geometry1 const& geometry1,
+                                       Geometry2 const& geometry2,
+                                       RobustPolicy const& robust_policy,
+                                       OutputIterator oit,
+                                       Strategy const& strategy)
+    {
+        detail::boundary_view<Geometry1 const> view1(geometry1);
+        detail::boundary_view<Geometry2 const> view2(geometry2);
+
+        return detail::overlay::linear_linear_linestring
+            <
+                detail::boundary_view<Geometry1 const>,
+                detail::boundary_view<Geometry2 const>,
+                LinestringOut,
+                overlay_intersection
+            >::apply(view1, view2, robust_policy, oit, strategy);
+    }
+};
 
 // dispatch for non-areal geometries
 template
@@ -698,6 +837,79 @@ struct intersection_insert
             MultiPoint1, MultiPoint2, PointOut, OverlayType
         >
 {};
+
+
+// dispatch for difference/intersection of pointlike-linear geometries
+template
+<
+    typename Point, typename Linear, typename PointOut,
+    overlay_type OverlayType,
+    bool Reverse1, bool Reverse2, bool ReverseOut,
+    typename Tag
+>
+struct intersection_insert
+    <
+        Point, Linear, PointOut, OverlayType,
+        Reverse1, Reverse2, ReverseOut,
+        point_tag, Tag, point_tag,
+        false, false, false
+    > : detail_dispatch::overlay::pointlike_linear_point
+        <
+            Point, Linear, PointOut, OverlayType,
+            point_tag, typename tag_cast<Tag, segment_tag, linear_tag>::type
+        >
+{};
+
+
+template
+<
+    typename MultiPoint, typename Linear, typename PointOut,
+    overlay_type OverlayType,
+    bool Reverse1, bool Reverse2, bool ReverseOut,
+    typename Tag
+>
+struct intersection_insert
+    <
+        MultiPoint, Linear, PointOut, OverlayType,
+        Reverse1, Reverse2, ReverseOut,
+        multi_point_tag, Tag, point_tag,
+        false, false, false
+    > : detail_dispatch::overlay::pointlike_linear_point
+        <
+            MultiPoint, Linear, PointOut, OverlayType,
+            multi_point_tag,
+            typename tag_cast<Tag, segment_tag, linear_tag>::type
+        >
+{};
+
+
+template
+<
+    typename Linestring, typename MultiPoint, typename PointOut,
+    bool Reverse1, bool Reverse2, bool ReverseOut
+>
+struct intersection_insert
+    <
+        Linestring, MultiPoint, PointOut, overlay_intersection,
+        Reverse1, Reverse2, ReverseOut,
+        linestring_tag, multi_point_tag, point_tag,
+        false, false, false
+    >
+{
+    template <typename RobustPolicy, typename OutputIterator, typename Strategy>
+    static inline OutputIterator apply(Linestring const& linestring,
+                                       MultiPoint const& multipoint,
+                                       RobustPolicy const& robust_policy,
+                                       OutputIterator out,
+                                       Strategy const& strategy)
+    {
+        return detail_dispatch::overlay::pointlike_linear_point
+            <
+                MultiPoint, Linestring, PointOut, overlay_intersection,
+                multi_point_tag, linear_tag
+            >::apply(multipoint, linestring, robust_policy, out, strategy);
+    }
+};
 
 
 } // namespace dispatch

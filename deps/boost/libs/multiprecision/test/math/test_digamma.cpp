@@ -34,6 +34,13 @@ void expected_results()
       ".*",                          // compiler
       ".*",                          // stdlib
       ".*",                          // platform
+      ".*cpp_dec_float.*",           // test type(s)
+      ".*Near the Positive Root.*",  // test data group
+      ".*", 2500, 200);              // test function
+   add_expected_result(
+      ".*",                          // compiler
+      ".*",                          // stdlib
+      ".*",                          // platform
       ".*",                          // test type(s)
       ".*",                          // test data group
       ".*", 80, 30);                 // test function

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_SCOPE_EXIT_END_ID</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">
 <link rel="up" href="reference.html#header.boost.scope_exit_hpp" title="Header &lt;boost/scope_exit.hpp&gt;">
 <link rel="prev" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">
@@ -33,8 +33,8 @@
 
 </span>BOOST_SCOPE_EXIT_END_ID(id)</pre></div>
 <div class="refsect1">
-<a name="id839503"></a><h2>Description</h2>
-<p>This macro is equivalent to  <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code> but it can be expanded multiple times on the same line if different identifiers <code class="computeroutput">id</code> are provided for each expansion (see  <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code> for more information).</p>
+<a name="id879457"></a><h2>Description</h2>
+<p>This macro is equivalent to <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code> but it can be expanded multiple times on the same line if different identifiers <code class="computeroutput">id</code> are provided for each expansion (see <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code> for more information).</p>
 <p><span class="bold"><strong>Parameters:</strong></span> </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -49,7 +49,7 @@
 <p>
 </p>
 <p><span class="bold"><strong>Note:</strong></span> This macro can be useful when the scope exit macros are expanded within user-defined macros (because macros all expand on the same line). On some compilers (e.g., MSVC which supports the non standard <code class="computeroutput">__COUNTER__</code> macro) it might not be necessary to use this macro but the use of this macro is always necessary to ensure portability when expanding multiple scope exit macros on the same line (because this library can only portably use <code class="computeroutput">__LINE__</code> to internally generate unique identifiers).</p>
-<p><span class="bold"><strong>See:</strong></span>  <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_ID.html" title="Macro BOOST_SCOPE_EXIT_ID">BOOST_SCOPE_EXIT_ID</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_ID_TPL.html" title="Macro BOOST_SCOPE_EXIT_ID_TPL">BOOST_SCOPE_EXIT_ID_TPL</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code>. </p>
+<p><span class="bold"><strong>See:</strong></span> <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_ID.html" title="Macro BOOST_SCOPE_EXIT_ID">BOOST_SCOPE_EXIT_ID</a></code>, <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_ID_TPL.html" title="Macro BOOST_SCOPE_EXIT_ID_TPL">BOOST_SCOPE_EXIT_ID_TPL</a></code>,  <code class="computeroutput"><a class="link" href="BOOST_SCOPE_EXIT_END.html" title="Macro BOOST_SCOPE_EXIT_END">BOOST_SCOPE_EXIT_END</a></code>. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

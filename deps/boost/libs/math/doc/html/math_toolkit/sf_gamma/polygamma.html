@@ -4,7 +4,7 @@
 <title>Polygamma</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../sf_gamma.html" title="Gamma Functions">
 <link rel="prev" href="trigamma.html" title="Trigamma">
 <link rel="next" href="gamma_ratios.html" title="Ratios of Gamma Functions">
@@ -37,8 +37,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">polygamma</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">z</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">polygamma</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">polygamma</span><span class="special">(</span><span class="keyword">int</span> <span class="identifier">n</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -62,9 +62,9 @@
   <span class="inlinemediaobject"><img src="../../../graphs/polygamma3.svg" align="middle"></span>
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -81,8 +81,11 @@
         various platforms with various floating point types. Unless otherwise specified
         any floating point type that is narrower than the one shown will have <a class="link" href="../relative_error.html#math_toolkit.relative_error.zero_error">effectively zero error</a>.
       </p>
-<div class="informaltable"><table class="table">
+<div class="table">
+<a name="math_toolkit.sf_gamma.polygamma.table_polygamma"></a><p class="title"><b>Table&#160;6.6.&#160;Error rates for polygamma</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for polygamma">
 <colgroup>
+<col>
 <col>
 <col>
 <col>
@@ -90,23 +93,25 @@
 </colgroup>
 <thead><tr>
 <th>
+              </th>
+<th>
                 <p>
-                  Significand Size
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Platform and Compiler
+                  GNU C++ version 5.1.0<br> linux<br> double
                 </p>
               </th>
 <th>
                 <p>
-                  Small-medium positive arguments
+                  GNU C++ version 5.1.0<br> linux<br> long double
                 </p>
               </th>
 <th>
                 <p>
-                  Small-medium negative x
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
                 </p>
               </th>
 </tr></thead>
@@ -114,72 +119,191 @@
 <tr>
 <td>
                 <p>
-                  53
+                  Mathematica Data
                 </p>
               </td>
 <td>
                 <p>
-                  Win32 Visual C++ 12
+                  <span class="blue">Max = 6.34&#949; (Mean = 1.53&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=5.0 Mean=1
+                  <span class="blue">Max = 0.824&#949; (Mean = 0.0574&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 108&#949; (Mean = 15.2&#949;))<br>
+                  (<span class="emphasis"><em>GSL 1.16:</em></span> Max = 62.9&#949; (Mean = 12.8&#949;))
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=1200 Mean=65
-                </p>
-              </td>
-</tr>
-<tr>
-<td>
-                <p>
-                  64
+                  <span class="blue">Max = 7.38&#949; (Mean = 1.84&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Win64 Mingw GCC
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=16 Mean=3
-                </p>
-              </td>
-<td>
-                <p>
-                  Peak=33 Mean=3
+                  <span class="blue">Max = 18.3&#949; (Mean = 4.16&#949;)</span>
                 </p>
               </td>
 </tr>
 <tr>
 <td>
                 <p>
-                  113
+                  Mathematica Data - large arguments
                 </p>
               </td>
 <td>
                 <p>
-                  Win64 Mingw GCC __float128
+                  <span class="blue">Max = 150&#949; (Mean = 15.1&#949;)</span>
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=6.5 Mean=1
+                  <span class="blue">Max = 0.998&#949; (Mean = 0.0592&#949;)</span><br>
+                  <br> (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max
+                  = 1.71e+56&#949; (Mean = 1.01e+55&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_Rmath_3_0_2_Mathematica_Data_large_arguments">And
+                  other failures.</a>)</span><br> (<span class="emphasis"><em>GSL 1.16:</em></span>
+                  Max = 244&#949; (Mean = 32.8&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_GSL_1_16_Mathematica_Data_large_arguments">And
+                  other failures.</a>)
                 </p>
               </td>
 <td>
                 <p>
-                  Peak=30 Mean=4
+                  <span class="blue">Max = 2.23&#949; (Mean = 0.323&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 2.35&#949; (Mean = 0.34&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Mathematica Data - negative arguments
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 497&#949; (Mean = 129&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.516&#949; (Mean = 0.022&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> <span class="red">Max = +INF&#949; (Mean
+                  = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_Rmath_3_0_2_Mathematica_Data_negative_arguments">And
+                  other failures.</a>)</span><br> (<span class="emphasis"><em>GSL 1.16:</em></span>
+                  Max = 36.6&#949; (Mean = 3.04&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_GSL_1_16_Mathematica_Data_negative_arguments">And
+                  other failures.</a>)
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 269&#949; (Mean = 87.7&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 269&#949; (Mean = 87.9&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Mathematica Data - large negative arguments
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 162&#949; (Mean = 101&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_Rmath_3_0_2_Mathematica_Data_large_negative_arguments">And
+                  other failures.</a>)</span><br> (<span class="emphasis"><em>GSL 1.16:</em></span>
+                  Max = 1.79&#949; (Mean = 0.197&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_GSL_1_16_Mathematica_Data_large_negative_arguments">And
+                  other failures.</a>)
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 155&#949; (Mean = 96.4&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 155&#949; (Mean = 96.4&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Mathematica Data - small arguments
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3&#949; (Mean = 0.496&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> Max = 106&#949; (Mean = 20&#949;))<br> (<span class="emphasis"><em>GSL 1.16:</em></span>
+                  Max = 15.2&#949; (Mean = 5.03&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.33&#949; (Mean = 0.75&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 3.33&#949; (Mean = 0.75&#949;)</span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  Mathematica Data - Large orders and other bug cases
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 200&#949; (Mean = 57.2&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0&#949; (Mean = 0&#949;)</span><br> <br> (<span class="emphasis"><em>Rmath
+                  3.0.2:</em></span> <span class="red">Max = +INF&#949; (Mean = +INF&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_Rmath_3_0_2_Mathematica_Data_Large_orders_and_other_bug_cases">And
+                  other failures.</a>)</span><br> (<span class="emphasis"><em>GSL 1.16:</em></span>
+                  Max = 151&#949; (Mean = 39.3&#949;) <a class="link" href="../logs_and_tables/logs.html#errors_GNU_C_version_5_1_0_linux_double_polygamma_GSL_1_16_Mathematica_Data_Large_orders_and_other_bug_cases">And
+                  other failures.</a>)
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 54.5&#949; (Mean = 13.3&#949;)</span>
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 90.1&#949; (Mean = 30.6&#949;)</span>
                 </p>
               </td>
 </tr>
 </tbody>
 </table></div>
-<p>
+</div>
+<br class="table-break"><p>
         As shown above, error rates are generally very acceptable for moderately
         sized arguments. Error rates should stay low for exact inputs, however, please
         note that the function becomes exceptionally sensitive to small changes in

@@ -1,6 +1,6 @@
 /* Boost.MultiIndex test for special set operations.
  *
- * Copyright 2003-2013 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -44,7 +44,7 @@ struct hash_string_as_int
 {
   int operator()(const std::string& x)const
   {
-    return boost::hash<int>()(string_to_int(x));
+    return static_cast<int>(boost::hash<int>()(string_to_int(x)));
   }
 };
 

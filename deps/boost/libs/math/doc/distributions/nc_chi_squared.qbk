@@ -129,28 +129,18 @@ for the noncentral chi-squared distribution.
 [h4 Accuracy]
 
 The following table shows the peak errors
-(in units of [@http://en.wikipedia.org/wiki/Machine_epsilon epsilon]) 
-found on various platforms with various floating-point types, 
-along with comparisons to the [@http://www.r-project.org/ R-2.5.1 Math library].
-Unless otherwise specified, any floating-point type that is narrower
+(in units of [@http://en.wikipedia.org/wiki/Machine_epsilon epsilon])
+found on various platforms with various floating point types.
+The failures in the comparison to the [@http://www.r-project.org/ R Math library],
+seem to be mostly in the corner cases when the probablity would be very small.
+Unless otherwise specified any floating-point type that is narrower
 than the one shown will have __zero_error.
 
-[table Errors In CDF of the Noncentral Chi-Squared
-[[Significand Size] [Platform and Compiler] [[nu],[lambda] < 200]  [[nu],[lambda] > 200]]
-[[53] [Win32, Visual C++ 8] [Peak=50 Mean=9.9
+[table_non_central_chi_squared_CDF]
 
-R Peak=685 Mean=109
-]  [Peak=9780 Mean=718 
+[table_non_central_chi_squared_CDF_complement]
 
-R Peak=3x10[super 8] Mean=2x10[super 7] ] ]
-[[64] [RedHat Linux IA32, gcc-4.1.1] [Peak=270 Mean=27]  [Peak=7900 Mean=900]]
-
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=107 Mean=17]  [Peak=5000 Mean=630]]
-
-[[113] [HPUX IA64, aCC A.06.06] [Peak=270 Mean=20]  [Peak=4600 Mean=560]]
-]
-
-Error rates for the complement of the CDF and for the quantile 
+Error rates for the quantile 
 functions are broadly similar.  Special mention should go to
 the `mode` function: there is no closed form for this function, 
 so it is evaluated numerically by finding the maxima of the PDF:

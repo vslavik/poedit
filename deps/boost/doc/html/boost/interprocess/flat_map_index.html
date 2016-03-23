@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,38 +36,38 @@
 <span class="keyword">class</span> <a class="link" href="flat_map_index.html" title="Class template flat_map_index">flat_map_index</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">flat_map_index_aux</span><span class="special">::</span><span class="identifier">index_t</span><span class="special">&lt;</span> <span class="identifier">MapConfig</span> <span class="special">&gt;</span> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="flat_map_index.html#boost.interprocess.flat_map_indexconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="flat_map_index.html#idp55025648-bb"><span class="identifier">flat_map_index</span></a><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="flat_map_index.html#idm45879391724880-bb"><span class="identifier">flat_map_index</span></a><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="flat_map_index.html#idp55021856-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="flat_map_index.html#idp55022416-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="flat_map_index.html#idp55024336-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="flat_map_index.html#idm45879391728672-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="flat_map_index.html#idm45879391728112-bb"><span class="identifier">reserve</span></a><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="flat_map_index.html#idm45879391726192-bb"><span class="identifier">shrink_to_fit</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp232381568"></a><h2>Description</h2>
+<a name="idm45555321537008"></a><h2>Description</h2>
 <p>Index type based in flat_map. Just derives from flat_map and defines the interface needed by managed memory segments. </p>
 <div class="refsect2">
-<a name="idp232382368"></a><h3>
+<a name="idm45555321536208"></a><h3>
 <a name="boost.interprocess.flat_map_indexconstruct-copy-destruct"></a><code class="computeroutput">flat_map_index</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idp55025648-bb"></a><span class="identifier">flat_map_index</span><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span> segment_mngr<span class="special">)</span><span class="special">;</span></pre>Constructor. Takes a pointer to the segment manager. Can throw. </li></ol></div>
+<pre class="literallayout"><a name="idm45879391724880-bb"></a><span class="identifier">flat_map_index</span><span class="special">(</span><a class="link" href="segment_manager_base.html" title="Class template segment_manager_base">segment_manager_base</a> <span class="special">*</span> segment_mngr<span class="special">)</span><span class="special">;</span></pre>Constructor. Takes a pointer to the segment manager. Can throw. </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp232389968"></a><h3>
-<a name="idp55021856-bb"></a><code class="computeroutput">flat_map_index</code> public member functions</h3>
+<a name="idm45555321528672"></a><h3>
+<a name="idm45879391728672-bb"></a><code class="computeroutput">flat_map_index</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp55022416-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>This reserves memory to optimize the insertion of n elements in the index. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879391728112-bb"></a><span class="identifier">reserve</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">segment_manager_base</span><span class="special">::</span><span class="identifier">size_type</span> n<span class="special">)</span><span class="special">;</span></pre>This reserves memory to optimize the insertion of n elements in the index. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idp55024336-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>This frees all unnecessary memory. </li>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idm45879391726192-bb"></a><span class="identifier">shrink_to_fit</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>This frees all unnecessary memory. </li>
 </ol></div>
 </div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

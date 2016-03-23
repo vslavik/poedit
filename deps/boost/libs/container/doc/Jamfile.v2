@@ -18,6 +18,7 @@ path-constant here : . ;
 doxygen autodoc
    :
       [ glob ../../../boost/container/*.hpp ]
+      [ glob ../../../boost/container/pmr/*.hpp ]
    :
         <doxygen:param>EXTRACT_ALL=NO
         <doxygen:param>HIDE_UNDOC_MEMBERS=YES
@@ -26,6 +27,7 @@ doxygen autodoc
         <doxygen:param>EXPAND_ONLY_PREDEF=YES
         <doxygen:param>MACRO_EXPANSION=YES
         <doxygen:param>"PREDEFINED=\"insert_const_ref_type= const T&\" \\
+                                   \"BOOST_CONSTEXPR_OR_CONST=constexpr\" \\
                                    \"BOOST_CONTAINER_DOXYGEN_INVOKED\" \\
                                    \"BOOST_CONTAINER_IMPDEF(T)=implementation_defined\" \\
                                    \"BOOST_CONTAINER_SEEDOC(T)=see_documentation\" \\
@@ -42,6 +44,7 @@ doxygen autodoc
                                    \"BOOST_CONTAINER_DOCONLY(T)=T\"\\
                                    \"BOOST_CONTAINER_SCOPEDALLOC_DUMMYTRUE=\"\\
                                    \"BOOST_CONTAINER_SCOPEDALLOC_ALLINNER=InnerAllocs...\"\\
+                                   \"BOOST_CONTAINER_DECL=\"\\
                                    "
         <xsl:param>"boost.doxygen.reftitle=Boost.Container Header Reference"
    ;

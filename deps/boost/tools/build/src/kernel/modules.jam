@@ -144,7 +144,7 @@ rule load (
         filename ?= $(module-name).jam ;
 
         # Mark the module loaded so we do not try to load it recursively.
-        .loaded += $(module-name) ;
+        .loaded += $(module-name:B) ;
 
         # Suppress tests if any module loads are already in progress.
         local suppress-test = $(.loading[1]) ;
@@ -263,7 +263,8 @@ rule import ( module-names + : rules-opt * : rename-opt * )
     # Import each specified module
     for local m in $(module-names)
     {
-        if ! $(m) in $(.loaded)
+        local module-name = $(m:B) ;
+        if ! $(module-name) in $(.loaded)
         {
             # If the importing module is not already in the BOOST_BUILD_PATH,
             # prepend it to the path.  We do not want to invert the search order
@@ -285,18 +286,23 @@ rule import ( module-names + : rules-opt * : rename-opt * )
             {
                 search = $(caller-location) $(search) ;
             }
+            
+            if $(m:D)
+            {
+                search = $(caller-location)/$(m:D) $(search)/$(m:D) $(search) ;
+            }
 
-            load $(m) : : $(search) ;
+            load $(module-name) : : $(search) ;
         }
 
-        IMPORT_MODULE $(m) : $(caller) ;
+        IMPORT_MODULE $(module-name) : $(caller) ;
 
         if $(rules-opt)
         {
             local source-names ;
             if $(rules-opt) = *
             {
-                local all-rules = [ RULENAMES $(m) ] ;
+                local all-rules = [ RULENAMES $(module-name) ] ;
                 source-names = $(all-rules) ;
             }
             else
@@ -305,7 +311,7 @@ rule import ( module-names + : rules-opt * : rename-opt * )
             }
             local target-names = $(rename-opt) ;
             target-names ?= $(source-names) ;
-            IMPORT $(m) : $(source-names) : $(caller) : $(target-names) ;
+            IMPORT $(module-name) : $(source-names) : $(caller) : $(target-names) ;
         }
     }
 }

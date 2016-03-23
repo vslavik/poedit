@@ -28,6 +28,31 @@
 </h2></div></div></div>
 <h4>
 <a name="boost_optional.relnotes.h0"></a>
+      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_60"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_60">Boost
+      Release 1.60</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+          Changed the implementation of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">none</span></code>
+          again. Now it is a const object with internal linkage (as any other tag).
+          This fixes <a href="https://svn.boost.org/trac/boost/ticket/11203" target="_top">Trac
+          #11203</a>.
+        </li></ul></div>
+<h4>
+<a name="boost_optional.relnotes.h1"></a>
+      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_59"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_59">Boost
+      Release 1.59</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          For C++03 compilers, added 0-argument overload for member function <code class="computeroutput"><span class="identifier">emplace</span><span class="special">()</span></code>,
+          and therewith removed the dependency on <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">in_place_factory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>.
+        </li>
+<li class="listitem">
+          Fixed <a href="https://svn.boost.org/trac/boost/ticket/11241" target="_top">Trac #11241</a>.
+        </li>
+</ul></div>
+<h4>
+<a name="boost_optional.relnotes.h2"></a>
       <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_58"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_58">Boost
       Release 1.58</a>
     </h4>
@@ -42,7 +67,7 @@
           Improved the trick that prevents streaming out <code class="computeroutput"><span class="identifier">optional</span></code>
           without header <code class="computeroutput"><span class="identifier">optional_io</span><span class="special">.</span><span class="identifier">hpp</span></code>
           by using safe-bool idiom. This addresses <a href="https://svn.boost.org/trac/boost/ticket/10825" target="_top">Trac
-          #10825</a>
+          #10825</a>.
         </li>
 <li class="listitem">
           IOStream operators are now mentioned in documentation.
@@ -50,7 +75,7 @@
 <li class="listitem">
           Added a way to manually disable move semantics: just define macro <code class="computeroutput"><span class="identifier">BOOST_OPTIONAL_CONFIG_NO_RVALUE_REFERENCES</span></code>.
           This can be used to work around <a href="https://svn.boost.org/trac/boost/ticket/10399" target="_top">Trac
-          #10399</a>
+          #10399</a>.
         </li>
 <li class="listitem">
           It is no longer possible to assign <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">U</span><span class="special">&gt;</span></code> to <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code> when <code class="computeroutput"><span class="identifier">U</span></code>
@@ -63,7 +88,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_optional.relnotes.h1"></a>
+<a name="boost_optional.relnotes.h3"></a>
       <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_57"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_57">Boost
       Release 1.57</a>
     </h4>
@@ -73,7 +98,7 @@
           to fix C++03 compile error on <code class="computeroutput"><span class="identifier">logic_error</span><span class="special">(</span><span class="string">"..."</span><span class="special">)</span></code>"</em></span>.
         </li></ul></div>
 <h4>
-<a name="boost_optional.relnotes.h2"></a>
+<a name="boost_optional.relnotes.h4"></a>
       <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_56"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_56">Boost
       Release 1.56</a>
     </h4>

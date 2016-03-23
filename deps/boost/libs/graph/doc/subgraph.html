@@ -83,7 +83,7 @@ typedef subgraph&lt; adjacency_list&lt; vecS, vecS, directedS,
 const int N = 6;
 Graph G0(N);
 
-enum { A, B, C, D, E, F};  // for conveniently refering to vertices in G0
+enum { A, B, C, D, E, F };  // for conveniently refering to vertices in G0
 </pre>
 
 Next we create two empty subgraph objects, specifying <tt>G0</tt> as
@@ -662,5 +662,5 @@ struct my_edge { ... };
 typedef property&lt;edge_index_t, std::size_t, vertex_prop&gt; edge_prop;
 
 typedef adjacency_list&lt;vecS, listS, undirectedS, vertex_prop, edge_prop&gt; Graph;
-typdef subgraph&lt;Graph&gt; Subgraph;
+typedef subgraph&lt;Graph&gt; Subgraph;
 </pre>

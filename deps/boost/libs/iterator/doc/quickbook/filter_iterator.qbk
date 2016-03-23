@@ -178,7 +178,7 @@ operations.
 
   filter_iterator();
 
-[*Requires: ]`Predicate` and `Iterator` must be Default Constructible.\n
+[*Requires: ]`Predicate` and `Iterator` must be Default Constructible.[br]
 [*Effects: ] Constructs a `filter_iterator` whose`m_pred`,  `m_iter`, and `m_end` 
   members are a default constructed.
 
@@ -195,7 +195,7 @@ operations.
   filter_iterator(Iterator x, Iterator end = Iterator());
 
 [*Requires: ] `Predicate` must be Default Constructible and
-  `Predicate` is a class type (not a function pointer).\n
+  `Predicate` is a class type (not a function pointer).[br]
 [*Effects: ] Constructs a `filter_iterator` where `m_iter` is either
     the first position in the range `[x,end)` such that `m_pred(*m_iter) == true` 
     or else`m_iter == end`. The member `m_pred` is default constructed.
@@ -205,9 +205,9 @@ operations.
     filter_iterator(
         filter_iterator<Predicate, OtherIterator> const& t
         , typename enable_if_convertible<OtherIterator, Iterator>::type* = 0 // exposition
-        );`
+        );
 
-[*Requires: ] `OtherIterator` is implicitly convertible to `Iterator`.\n
+[*Requires: ] `OtherIterator` is implicitly convertible to `Iterator`.[br]
 [*Effects: ] Constructs a filter iterator whose members are copied from `t`.
 
 
@@ -235,7 +235,7 @@ operations.
 
 [*Effects: ] Increments `m_iter` and then continues to
   increment `m_iter` until either `m_iter == m_end`
-  or `m_pred(*m_iter) == true`.\n
+  or `m_pred(*m_iter) == true`.[br]
 [*Returns: ] `*this`  
 
 

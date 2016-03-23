@@ -32,7 +32,7 @@ namespace std{
 #endif
 
 
-namespace boost{ namespace re_detail{
+namespace boost{ namespace BOOST_REGEX_DETAIL_NS{
 
 void BOOST_REGEX_CALL raw_storage::resize(size_type n)
 {

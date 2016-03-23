@@ -23,7 +23,7 @@ void icl_map_contains_4_bicremental_types()
 {
     typedef IntervalMap<T,U,Trt> IntervalMapT;
     typedef icl::map<T,U,Trt> MapT;
-    typedef std::set<T> SetT;
+    //CL typedef std::set<T> SetT;
     typedef typename MapT::element_type map_element_type;
 
     IntervalMapT itv_map_a;

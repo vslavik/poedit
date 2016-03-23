@@ -17,6 +17,8 @@ struct user_defined_error{};
 
 namespace boost{ namespace math{ namespace policies{
 
+#ifndef BOOST_NO_EXCEPTIONS
+
 template <class T>
 T user_domain_error(const char* , const char* , const T& )
 {
@@ -58,9 +60,10 @@ T user_indeterminate_result_error(const char* , const char* , const T& )
 {
    throw user_defined_error();
 }
-
+#endif
 }}} // namespaces
 
+#include <boost/math/tools/test.hpp>
 #include <boost/math/concepts/real_concept.hpp>
 #include <boost/math/policies/policy.hpp>
 #include <boost/math/policies/error_handling.hpp>
@@ -108,7 +111,7 @@ policy<
 policy<> default_policy;
 
 #define TEST_EXCEPTION(expression, exception)\
-   BOOST_CHECK_THROW(expression, exception);\
+   BOOST_MATH_CHECK_THROW(expression, exception);\
    try{ expression; }catch(const exception& e){ std::cout << e.what() << std::endl; }
 
 template <class T>
@@ -120,7 +123,7 @@ void test_error(T)
 
    // Check that exception is thrown, catch and show the message, for example:
    // Error in function boost::math::test_function<float>(float, float, float): Error while handling value 0
-
+#ifndef BOOST_NO_EXCEPTIONS
    TEST_EXCEPTION(boost::math::policies::raise_domain_error(func, msg1, T(0.0), throw_policy), std::domain_error);
    TEST_EXCEPTION(boost::math::policies::raise_domain_error(func, 0, T(0.0), throw_policy), std::domain_error);
    TEST_EXCEPTION(boost::math::policies::raise_pole_error(func, msg1, T(0.0), throw_policy), std::domain_error);
@@ -138,13 +141,14 @@ void test_error(T)
    //
    // Now try user error handlers: these should all throw user_error():
    // - because by design these are undefined and must be defined by the user ;-)
-   BOOST_CHECK_THROW(boost::math::policies::raise_domain_error(func, msg1, T(0.0), user_policy), user_defined_error);
-   BOOST_CHECK_THROW(boost::math::policies::raise_pole_error(func, msg1, T(0.0), user_policy), user_defined_error);
-   BOOST_CHECK_THROW(boost::math::policies::raise_overflow_error<T>(func, msg2, user_policy), user_defined_error);
-   BOOST_CHECK_THROW(boost::math::policies::raise_underflow_error<T>(func, msg2, user_policy), user_defined_error);
-   BOOST_CHECK_THROW(boost::math::policies::raise_denorm_error<T>(func, msg2, T(0), user_policy), user_defined_error);
-   BOOST_CHECK_THROW(boost::math::policies::raise_evaluation_error(func, msg1, T(0.0), user_policy), user_defined_error);
-   BOOST_CHECK_THROW(boost::math::policies::raise_indeterminate_result_error(func, msg1, T(0.0), T(0.0), user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_domain_error(func, msg1, T(0.0), user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_pole_error(func, msg1, T(0.0), user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_overflow_error<T>(func, msg2, user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_underflow_error<T>(func, msg2, user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_denorm_error<T>(func, msg2, T(0), user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_evaluation_error(func, msg1, T(0.0), user_policy), user_defined_error);
+   BOOST_MATH_CHECK_THROW(boost::math::policies::raise_indeterminate_result_error(func, msg1, T(0.0), T(0.0), user_policy), user_defined_error);
+#endif
 
    // Test with ignore_error
    BOOST_CHECK((boost::math::isnan)(boost::math::policies::raise_domain_error(func, msg1, T(0.0), ignore_policy)) || !std::numeric_limits<T>::has_quiet_NaN);

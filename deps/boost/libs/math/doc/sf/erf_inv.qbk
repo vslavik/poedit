@@ -22,7 +22,7 @@
    
    }} // namespaces
    
-The return type of these functions is computed using the __arg_pomotion_rules:
+The return type of these functions is computed using the __arg_promotion_rules:
 the return type is `double` if T is an integer type, and T otherwise.
 
 [optional_policy]
@@ -61,6 +61,10 @@ For types up to and including 80-bit long doubles the approximations used
 are accurate to less than ~ 2 epsilon.  For higher precision types these 
 functions have the same accuracy as the 
 [link math_toolkit.sf_erf.error_function forward error functions].
+
+[table_erf_inv]
+
+[table_erfc_inv]
 
 [h4 Testing]
 

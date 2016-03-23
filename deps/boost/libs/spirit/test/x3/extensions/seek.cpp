@@ -18,7 +18,7 @@
 #include <boost/spirit/home/x3/operator/plus.hpp>
 #include <boost/spirit/home/x3/operator/sequence.hpp>
 
-#include <boost/spirit/home/x3/extensions/seek.hpp>
+#include <boost/spirit/home/x3/directive/seek.hpp>
 
 #include "../test.hpp"
 

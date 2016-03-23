@@ -28,24 +28,24 @@
           const &amp;)</a>
 </h5></div></div></div>
 <p>
-            <a class="indexterm" name="idp127277072"></a>
-Returns the query iterator pointing at the begin of the query range.
+            <a class="indexterm" name="idm44837169721680"></a>
+Returns a query iterator pointing at the begin of the query range.
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.h0"></a>
             <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.description"></a></span><a class="link" href="qbegin_predicates_const___.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.description">Description</a>
           </h6>
 <p>
-            This method returns the iterator which may be used to perform iterative
-            queries. For the information about the predicates which may be passed
-            to this method see <a class="link" href="query_predicates_const____outiter_.html#classboost_1_1geometry_1_1index_1_1rtree_1a7baa88eb4e7a5c640ab847513de45b3e">query()</a>.
+            This method returns an iterator which may be used to perform iterative
+            queries. For the information about predicates which may be passed to
+            this method see <a class="link" href="query_predicates_const____outiter_.html#classboost_1_1geometry_1_1index_1_1rtree_1a7baa88eb4e7a5c640ab847513de45b3e">query()</a>.
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.h1"></a>
             <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.synopsis"></a></span><a class="link" href="qbegin_predicates_const___.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><code class="computeroutput"><span class="keyword">template</span><span class="special">&lt;</span></code><code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">Predicates</span></code><code class="computeroutput"><span class="special">&gt;</span></code>
-<code class="literal"><a class="link" href="../boost__geometry__index__rtree.html#classboost_1_1geometry_1_1index_1_1rtree_1a83fce1047d890f327ea195ed252af176">const_query_iterator</a></code> <code class="computeroutput"><span class="identifier">qbegin</span></code><code class="computeroutput"><span class="special">(</span></code><code class="computeroutput"><span class="identifier">Predicates</span> <span class="keyword">const</span> <span class="special">&amp;</span></code> <code class="computeroutput"><span class="identifier">predicates</span></code><code class="computeroutput"><span class="special">)</span></code>
+<code class="literal"><a class="link" href="../boost__geometry__index__rtree.html#classboost_1_1geometry_1_1index_1_1rtree_1ad144a7704ad878caaa84cda79b140855">const_query_iterator</a></code> <code class="computeroutput"><span class="identifier">qbegin</span></code><code class="computeroutput"><span class="special">(</span></code><code class="computeroutput"><span class="identifier">Predicates</span> <span class="keyword">const</span> <span class="special">&amp;</span></code> <code class="computeroutput"><span class="identifier">predicates</span></code><code class="computeroutput"><span class="special">)</span></code>
 </pre>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.h2"></a>
@@ -121,16 +121,44 @@ Returns the query iterator pointing at the begin of the query range.
     <span class="keyword">if</span> <span class="special">(</span> <span class="identifier">has_enough_nearest_values</span><span class="special">()</span> <span class="special">)</span>
         <span class="keyword">break</span><span class="special">;</span>
 <span class="special">}</span>
+
+<span class="comment">// C++11 (auto)</span>
+<span class="keyword">for</span> <span class="special">(</span> <span class="keyword">auto</span> <span class="identifier">it</span> <span class="special">=</span> <span class="identifier">tree</span><span class="special">.</span><span class="identifier">qbegin</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">3</span><span class="special">))</span> <span class="special">;</span> <span class="identifier">it</span> <span class="special">!=</span> <span class="identifier">tree</span><span class="special">.</span><span class="identifier">qend</span><span class="special">()</span> <span class="special">;</span> <span class="special">++</span><span class="identifier">it</span> <span class="special">)</span>
+<span class="special">{</span>
+    <span class="comment">// do something with value</span>
+<span class="special">}</span>
+
+<span class="comment">// C++14 (generic lambda expression)</span>
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">tree</span><span class="special">.</span><span class="identifier">qbegin</span><span class="special">(</span><span class="identifier">bgi</span><span class="special">::</span><span class="identifier">nearest</span><span class="special">(</span><span class="identifier">pt</span><span class="special">,</span> <span class="number">3</span><span class="special">)),</span> <span class="identifier">tree</span><span class="special">.</span><span class="identifier">qend</span><span class="special">(),</span> <span class="special">[](</span><span class="keyword">auto</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">val</span><span class="special">){</span>
+    <span class="comment">// do something with value</span>
+<span class="special">});</span>
 </pre>
 <p>
           </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.h6"></a>
+            <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.iterator_category"></a></span><a class="link" href="qbegin_predicates_const___.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.iterator_category">Iterator
+            category</a>
+          </h6>
+<p>
+            ForwardIterator
+          </p>
+<h6>
+<a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.h7"></a>
             <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.throws"></a></span><a class="link" href="qbegin_predicates_const___.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.qbegin_predicates_const___.throws">Throws</a>
           </h6>
 <p>
             If predicates copy throws. If allocation throws.
           </p>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../../../../../../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+              The modification of the rtree may invalidate the iterators.
+            </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

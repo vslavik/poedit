@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -226,8 +227,6 @@
         insert the object in both a singly and a doubly linked list at the same time.
         This is the definition of the old node:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">link_mode</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">slist</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -244,15 +243,11 @@
 <span class="special">};</span>
 </pre>
 <p>
-      </p>
-<p>
         Now we have to define a NodeTraits class that will implement the functions/typedefs
         that will make the legacy node compatible with <span class="bold"><strong>Boost.Intrusive</strong></span>
         algorithms. After that, we'll define a ValueTraits class that will configure
         <span class="bold"><strong>Boost.Intrusive</strong></span> containers:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="comment">//Define our own NodeTraits that will configure singly and doubly linked</span>
 <span class="comment">//list algorithms. Note that this node traits is compatible with</span>
 <span class="comment">//circular_slist_algorithms and circular_list_algorithms.</span>
@@ -291,26 +286,18 @@
 <span class="special">};</span>
 </pre>
 <p>
-      </p>
-<p>
         Defining a value traits class that simply defines <code class="computeroutput"><span class="identifier">value_type</span></code>
         as <code class="computeroutput"><span class="identifier">legacy_node_traits</span><span class="special">::</span><span class="identifier">node</span></code> is a common approach when defining
         customized intrusive containers, so <span class="bold"><strong>Boost.Intrusive</strong></span>
         offers a templatized <code class="computeroutput"><a class="link" href="../boost/intrusive/trivial_value_traits.html" title="Struct template trivial_value_traits">trivial_value_traits</a></code>
         class that does exactly what we want:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">trivial_value_traits</span><span class="special">&lt;</span><span class="identifier">legacy_node_traits</span><span class="special">,</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">normal_link</span><span class="special">&gt;</span> <span class="identifier">trivial_legacy_value_traits</span><span class="special">;</span>
 </pre>
-<p>
-      </p>
 <p>
         Now we can just define the containers that will store the legacy abi objects
         and write a little test:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="comment">//Now define an intrusive list and slist that will store legacy_value objects</span>
 <span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">legacy_value_traits</span><span class="special">&gt;</span>         <span class="identifier">ValueTraitsOption</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">bi</span><span class="special">::</span><span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">trivial_legacy_value_traits</span><span class="special">&gt;</span> <span class="identifier">TrivialValueTraitsOption</span><span class="special">;</span>
@@ -352,8 +339,6 @@
 <span class="special">}</span>
 </pre>
 <p>
-      </p>
-<p>
         As seen, several key elements of <span class="bold"><strong>Boost.Intrusive</strong></span>
         can be reused with custom user types, if the user does not want to use the
         provided <span class="bold"><strong>Boost.Intrusive</strong></span> facilities.
@@ -379,8 +364,6 @@
         First, we'll define the node to be used in the algorithms. For a linked list,
         we just need a node that stores two pointers:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">link_mode</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
@@ -393,14 +376,10 @@
 <span class="special">};</span>
 </pre>
 <p>
-      </p>
-<p>
         Now we'll define two different types that will be inserted in intrusive lists
         and a templatized <code class="computeroutput"><span class="identifier">ValueTraits</span></code>
         that will work for both types:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">base_1</span><span class="special">{};</span>
 <span class="keyword">class</span> <span class="identifier">base_2</span><span class="special">{};</span>
 
@@ -440,15 +419,11 @@
 <span class="special">};</span>
 </pre>
 <p>
-      </p>
-<p>
         Now define two containers. Both containers will instantiate the same list
         algorithms (<code class="computeroutput"><span class="identifier">circular_list_algorithms</span><span class="special">&lt;</span><span class="identifier">simple_node_traits</span><span class="special">&gt;</span></code>), due to the fact that the value traits
         used to define the containers provide the same <code class="computeroutput"><span class="identifier">node_traits</span></code>
         type:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="comment">//Now define two intrusive lists. Both lists will use the same algorithms:</span>
 <span class="comment">// circular_list_algorithms&lt;simple_node_traits&gt;</span>
 
@@ -456,8 +431,6 @@
 <span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_1</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">simple_value_traits</span><span class="special">&lt;</span><span class="identifier">value_1</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value1List</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_2</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">simple_value_traits</span><span class="special">&lt;</span><span class="identifier">value_2</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value2List</span><span class="special">;</span>
 </pre>
-<p>
-      </p>
 <p>
         All <span class="bold"><strong>Boost.Intrusive</strong></span> containers using predefined
         hooks use this technique to minimize code size: all possible <code class="computeroutput"><a class="link" href="../boost/intrusive/list.html" title="Class template list">list</a></code>
@@ -473,8 +446,6 @@
         The previous example can be further simplified using the <code class="computeroutput"><a class="link" href="../boost/intrusive/derivation_value_traits.html" title="Struct template derivation_value_traits">derivation_value_traits</a></code>
         class to define a value traits class with a value that stores the <code class="computeroutput"><span class="identifier">simple_node</span></code> as a base class:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">base_1</span><span class="special">{};</span>
 <span class="keyword">class</span> <span class="identifier">base_2</span><span class="special">{};</span>
 
@@ -502,16 +473,12 @@
 <span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_2</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits2</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value2List</span><span class="special">;</span>
 </pre>
 <p>
-      </p>
-<p>
         We can even choose to store <code class="computeroutput"><span class="identifier">simple_node</span></code>
         as a member of <code class="computeroutput"><span class="identifier">value_1</span></code> and
         <code class="computeroutput"><span class="identifier">value_2</span></code> classes and use
         <code class="computeroutput"><a class="link" href="../boost/intrusive/member_value_traits.html" title="Struct template member_value_traits">member_value_traits</a></code>
         to define the needed value traits classes:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">base_1</span><span class="special">{};</span>
 <span class="keyword">class</span> <span class="identifier">base_2</span><span class="special">{};</span>
 
@@ -539,8 +506,6 @@
 <span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_1</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits1</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value1List</span><span class="special">;</span>
 <span class="keyword">typedef</span> <span class="identifier">list</span> <span class="special">&lt;</span><span class="identifier">value_2</span><span class="special">,</span> <span class="identifier">value_traits</span><span class="special">&lt;</span><span class="identifier">ValueTraits2</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">Value2List</span><span class="special">;</span>
 </pre>
-<p>
-      </p>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
@@ -625,8 +590,6 @@
         can be indirectly introduced in a list guaranteeing no additional allocation
         apart from the initial resource reservation:
       </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
 <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">intrusive</span><span class="special">;</span>
@@ -702,13 +665,11 @@
    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-      </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

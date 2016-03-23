@@ -9,18 +9,19 @@
 # bring in rules for testing
 import testing ;
 
-test-suite "property_tree"
-   : [ run test_property_tree.cpp /boost/serialization//boost_serialization
-       : : : <define>_SCL_SECURE_NO_WARNINGS=1 ]
-     [ run test_info_parser.cpp
-       : : : <define>_SCL_SECURE_NO_WARNINGS=1 ]
-     [ run test_json_parser.cpp
-       : : : <define>_SCL_SECURE_NO_WARNINGS=1 ]
-     [ run test_ini_parser.cpp
-       : : : <define>_SCL_SECURE_NO_WARNINGS=1 ]
-     [ run test_xml_parser_rapidxml.cpp
-       : : : <define>_SCL_SECURE_NO_WARNINGS=1 ]
+project
+    : requirements
+      <link>static
+      <toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS=1
+    ;
 
-     [ run test_multi_module1.cpp test_multi_module2.cpp
-       : : : <define>_SCL_SECURE_NO_WARNINGS=1 ]
+test-suite "property_tree"
+   : [ run test_property_tree.cpp /boost/serialization//boost_serialization ]
+     [ run test_info_parser.cpp ]
+     [ run test_json_parser.cpp ]
+     [ run test_json_parser2.cpp /boost/test//boost_unit_test_framework ]
+     [ run test_ini_parser.cpp ]
+     [ run test_xml_parser_rapidxml.cpp ]
+
+     [ run test_multi_module1.cpp test_multi_module2.cpp ]
 ;

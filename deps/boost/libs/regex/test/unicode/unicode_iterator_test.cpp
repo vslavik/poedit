@@ -17,10 +17,14 @@
   */
 
 #include <boost/regex/pending/unicode_iterator.hpp>
-#include <boost/test/included/test_exec_monitor.hpp>
+#include <boost/detail/lightweight_main.hpp>
+#include "../test_macros.hpp"
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include <cstring>
 
 #if !defined(TEST_UTF8) && !defined(TEST_UTF16)
 #  define TEST_UTF8
@@ -294,27 +298,12 @@ void test(const std::vector< ::boost::uint32_t>& v)
 #endif
 }
 
-int test_main( int, char* [] ) 
+int cpp_main( int, char* [] ) 
 {
    // test specific value points from the standard:
    spot_checks();
    // now test a bunch of values for self-consistency and round-tripping:
    std::vector< ::boost::uint32_t> v;
-   // start with boundary conditions:
-   /*
-   v.push_back(0);
-   v.push_back(0xD7FF);
-   v.push_back(0xE000);
-   v.push_back(0xFFFF);
-   v.push_back(0x10000);
-   v.push_back(0x10FFFF);
-   v.push_back(0x80u);
-   v.push_back(0x80u - 1);
-   v.push_back(0x800u);
-   v.push_back(0x800u - 1);
-   v.push_back(0x10000u);
-   v.push_back(0x10000u - 1);
-   */
    for(unsigned i = 0; i < 0xD800; ++i)
       v.push_back(i);
    for(unsigned i = 0xDFFF + 1; i < 0x10FFFF; ++i)
@@ -323,4 +312,3 @@ int test_main( int, char* [] )
    return 0;
 }
 
-#include <boost/test/included/test_exec_monitor.hpp>

@@ -92,8 +92,8 @@ struct rbtree_node_checker
 
       if (node_traits::get_color(p) == node_traits::red()){
          //Red nodes have black children
-         const node_ptr p_left(node_traits::get_left(p));
-         const node_ptr p_right(node_traits::get_right(p));
+         const node_ptr p_left(node_traits::get_left(p));   (void)p_left;
+         const node_ptr p_right(node_traits::get_right(p)); (void)p_right;
          BOOST_INTRUSIVE_INVARIANT_ASSERT(!p_left  || node_traits::get_color(p_left)  == node_traits::black());
          BOOST_INTRUSIVE_INVARIANT_ASSERT(!p_right || node_traits::get_color(p_right) == node_traits::black());
          //Red node can't be root
@@ -448,6 +448,7 @@ class rbtree_algorithms
                NodeTraits::set_color(x_parent, NodeTraits::red());
                bstree_algo::rotate_left(x_parent, w, NodeTraits::get_parent(x_parent), header);
                w = NodeTraits::get_right(x_parent);
+               BOOST_INTRUSIVE_INVARIANT_ASSERT(w);
             }
             node_ptr const w_left (NodeTraits::get_left(w));
             node_ptr const w_right(NodeTraits::get_right(w));
@@ -463,6 +464,7 @@ class rbtree_algorithms
                   NodeTraits::set_color(w, NodeTraits::red());
                   bstree_algo::rotate_right(w, w_left, NodeTraits::get_parent(w), header);
                   w = NodeTraits::get_right(x_parent);
+                  BOOST_INTRUSIVE_INVARIANT_ASSERT(w);
                }
                NodeTraits::set_color(w, NodeTraits::get_color(x_parent));
                NodeTraits::set_color(x_parent, NodeTraits::black());
@@ -481,6 +483,7 @@ class rbtree_algorithms
                NodeTraits::set_color(x_parent, NodeTraits::red());
                bstree_algo::rotate_right(x_parent, w, NodeTraits::get_parent(x_parent), header);
                w = NodeTraits::get_left(x_parent);
+               BOOST_INTRUSIVE_INVARIANT_ASSERT(w);
             }
             node_ptr const w_left (NodeTraits::get_left(w));
             node_ptr const w_right(NodeTraits::get_right(w));
@@ -496,6 +499,7 @@ class rbtree_algorithms
                   NodeTraits::set_color(w, NodeTraits::red());
                   bstree_algo::rotate_left(w, w_right, NodeTraits::get_parent(w), header);
                   w = NodeTraits::get_left(x_parent);
+                  BOOST_INTRUSIVE_INVARIANT_ASSERT(w);
                }
                NodeTraits::set_color(w, NodeTraits::get_color(x_parent));
                NodeTraits::set_color(x_parent, NodeTraits::black());

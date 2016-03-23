@@ -62,6 +62,9 @@ int main()
 
    //Get free memory
    managed_shared_memory::size_type free_memory_after_allocation = managed_shm.get_free_memory();
+   //<-
+   (void)free_memory_after_allocation;
+   //->
 
    //Now write the data
    for(std::size_t i = 0; i < first_received_size; ++i) ptr[i] = i;
@@ -74,7 +77,9 @@ int main()
    managed_shared_memory::size_type expanded_size = first_received_size*3;
    std::size_t * ret = managed_shm.allocation_command
       (boost::interprocess::expand_fwd, min_size, expanded_size, ptr);
-
+   //<-
+   (void)ret;
+   //->
    //Check invariants
    assert(ptr != 0);
    assert(ret == ptr);

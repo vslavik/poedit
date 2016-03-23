@@ -14,11 +14,17 @@ test-suite iterator
 
     [ run zip_iterator_test.cpp
         : : :
-
         # stlport's debug mode generates long symbols which overwhelm
         # vc6
         #<msvc-stlport><*><runtime-build>release
     ]
+    [ run zip_iterator_test2_std_tuple.cpp ]
+    [ run zip_iterator_test2_fusion_vector.cpp ]
+    [ run zip_iterator_test2_fusion_list.cpp ]
+#    [ run zip_iterator_test2_fusion_deque.cpp ] // See bug report for fusion https://svn.boost.org/trac/boost/ticket/11572
+    [ run zip_iterator_test_fusion.cpp ]
+    [ run zip_iterator_test_std_tuple.cpp ]
+    [ run zip_iterator_test_std_pair.cpp ]
 
     # These tests should work for just about everything.
     [ compile is_lvalue_iterator.cpp ]

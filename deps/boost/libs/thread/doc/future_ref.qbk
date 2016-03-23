@@ -1,5 +1,6 @@
 [/
   (C) Copyright 2008-11 Anthony Williams.
+  (C) Copyright 2012-2015 Vicente J. Botet Escriba.
   Distributed under the Boost Software License, Version 1.0.
   (See accompanying file LICENSE_1_0.txt or copy at
   http://www.boost.org/LICENSE_1_0.txt).
@@ -28,9 +29,11 @@
 
     enum class launch
     {
+      none = unspecified,
       async = unspecified,
       deferred = unspecified,
       executor = unspecified,
+      inherit = unspecified,
       any = async | deferred
     };
     
@@ -164,13 +167,26 @@
 
     enum class launch
     {
+      none = unspecified,
       async = unspecified,
       deferred = unspecified,
       executor = unspecified,
+      inherit = unspecified,
       any = async | deferred
     };
 
 The enum type launch is a bitmask type with launch::async and launch::deferred denoting individual bits. 
+
+A future created with `promise<>` or with a `packaged_task<>` or with `make_ready_future`/`make_exceptional_future` (has no associated launch policy), has an implicit a launch policy of `launch::none`.
+
+A future created by `async(launch::async, ...)` or `::then(launch::async, ...)` has associated a launch policy `launch::async`.
+A future created by `async(launch::deferred, ...)` or `::then(launch::deferred, ...)` has associated a launch policy `launch::deferred`.
+A future created by `async(Executor, ...)`  or `::then(Executor, ...)` or `::then(launch::executor, ...)` has associated a launch policy `launch::executor`.
+A future created by `async(...)`  or `::then(...)` has associated a launch policy `launch::none`.
+
+A future created by `::then(launch::inherit, ...)` has associated a launch policy parent future.
+
+The `executor` and the `inherit` launch policies have a sense only can be user only on `then()`.
 
 [endsect]
 [///////////////////////////////////////////////////////////////////////////]
@@ -344,7 +360,7 @@ The object's `name` virtual function returns a pointer to the string "future".]]
       then(F&& func); // EXTENSION
       template<typename S, typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
-      then(S& scheduler, F&& func); // EXTENSION
+      then(Ex& executor, F&& func); // EXTENSION
       template<typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(launch policy, F&& func); // EXTENSION
@@ -884,7 +900,7 @@ associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
       then(F&& func); // EXTENSION
       template<typename S, typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
-      then(S& scheduler, F&& func); // EXTENSION
+      then(Ex& executor, F&& func); // EXTENSION
       template<typename F>
       __unique_future__<typename boost::result_of<F(__unique_future__)>::type> 
       then(launch policy, F&& func); // EXTENSION
@@ -897,29 +913,41 @@ There are not too much tests yet, so it is possible that you can find out some t
 [variablelist
 
 [[Notes:] [The three functions differ only by input parameters. The first only takes a callable object which accepts a 
-future object as a parameter. The second function takes a scheduler as the first parameter and a callable object as 
+future object as a parameter. The second function takes a executor as the first parameter and a callable object as 
 the second parameter. The third function takes a launch policy as the first parameter and a callable object as the 
 second parameter.]]
 
+[[Requires:] [`INVOKE(DECAY_COPY (std::forward<F>(func)), std::move(*this))` shall be a valid expression.]]
+
 [[Effects:] [
 
-All the functions create a shared state that is associated with the returned future object. The further behavior of the functions is as follows. 
+All the functions create a shared state that is associated with the returned future object. Additionally,
 
-- The continuation is called when the object's shared state is ready (has a value or exception stored).
+- When the object's shared state is ready, the continuation
+`INVOKE(DECAY_COPY(std::forward<F>(func)), std::move(*this))` is called depending on the overload (see below) with the call to DECAY_COPY() being evaluated in the thread that called then.
 
-- The continuation launches according to the specified policy or scheduler.
+- Any value returned from the continuation is stored as the result in the shared state of the resulting `future`. 
+Any exception propagated from the execution of the continuation is stored as the exceptional result in the shared state of the resulting `future`. 
 
-- When the scheduler or launch policy is not provided the continuation inherits the
-parent's launch policy or scheduler.
 
-- Any value returned from the continuation is stored as the result in the shared state of the resulting `future`. Any exception propagated from the execution of the continuation is stored as the exceptional result in the shared state of the resulting `future`. 
+The continuation launches according to the specified policy or executor or noting.
 
-- If the parent was created with `promise<>` or with a `packaged_task<>` (has no associated launch policy), the 
-continuation behaves the same as the third overload with a policy argument of `launch::async | launch::deferred` and 
-the same argument for `func`.
+- When the launch policy is `launch::none` the continuation is called on an unspecified thread of execution.
 
-- If the parent has a policy of `launch::deferred` and the continuation does not have a specified launch policy or 
-scheduler, then the parent is filled by immediately calling `.wait()`, and the policy of the antecedent is 
+- When the launch policy is `launch::async` the continuation is called on a new thread of execution.
+
+- When the launch policy is `launch::deferred` the continuation is called on demand.
+
+- When the launch policy is `launch::executor` the continuation is called on one of the thread of execution of the executor.
+
+- When the launch policy is `launch::inherit` the continuation inherits the parent's launch policy or executor.
+
+- When the executor or launch policy is not provided (first overload) is if as if launch::none was specified.
+
+- When the executor is provided (second overload) the continuation is called on one of the thread of execution of the executor.
+
+- If the parent has a policy of `launch::deferred` and the continuation does not have a specified launch policy
+executor, then the parent is filled by immediately calling `.wait()`, and the policy of the antecedent is 
 `launch::deferred`.
 
 ]]
@@ -1361,7 +1389,7 @@ associated with `*this` is ready for retrieval, __waiting__ otherwise.]]
       then(F&& func) const; // EXTENSION
       template<typename S, typename F>
       __unique_future__<typename boost::result_of<F(shared_future)>::type> 
-      then(S& scheduler, F&& func) const; // EXTENSION
+      then(Ex& executor, F&& func) const; // EXTENSION
       template<typename F>
       __unique_future__<typename boost::result_of<F(shared_future)>::type> 
       then(launch policy, F&& func) const; // EXTENSION
@@ -1375,26 +1403,42 @@ There are not too much tests yet, so it is possible that you can find out some t
 [variablelist
 
 [[Notes:] [The three functions differ only by input parameters. The first only takes a callable object which accepts a 
-shared_future object as a parameter. The second function takes a scheduler as the first parameter and a callable object as 
+shared_future object as a parameter. The second function takes an executor as the first parameter and a callable object as 
 the second parameter. The third function takes a launch policy as the first parameter and a callable object as the 
 second parameter.]]
 
+[[Requires:] [`INVOKE(DECAY_COPY (std::forward<F>(func)), *this)` shall be a valid expression.]]
+
 [[Effects:] [
 
-- The continuation is called when the object's shared state is ready (has a value or exception stored).
+All the functions create a shared state that is associated with the returned future object. Additionally,
 
-- The continuation launches according to the specified policy or scheduler.
+- When the object's shared state is ready, the continuation
+`INVOKE(DECAY_COPY(std::forward<F>(func)), *this)` is called depending on the overload (see below) with the call to DECAY_COPY() being evaluated in the thread that called then.
 
-- When the scheduler or launch policy is not provided the continuation inherits the
-parent's launch policy or scheduler.
+- Any value returned from the continuation is stored as the result in the shared state of the resulting `future`. 
+Any exception propagated from the execution of the continuation is stored as the exceptional result in the shared state of the resulting `future`. 
 
-- If the parent was created with `promise` or with a `packaged_task` (has no associated launch policy), the 
-continuation behaves the same as the third overload with a policy argument of `launch::async | launch::deferred` and 
-the same argument for func.
 
-- If the parent has a policy of `launch::deferred` and the continuation does not have a specified launch policy or 
-scheduler, then the parent is filled by immediately calling `.wait()`, and the policy of the antecedent is 
-`launch::deferred`
+The continuation launches according to the specified policy or executor or noting.
+
+- When the launch policy is `launch::none` the continuation is called on an unspecified thread of execution.
+
+- When the launch policy is `launch::async` the continuation is called on a new thread of execution.
+
+- When the launch policy is `launch::deferred` the continuation is called on demand.
+
+- When the launch policy is `launch::executor` the continuation is called on one of the thread of execution of the executor.
+
+- When the launch policy is `launch::inherit` the continuation inherits the parent's launch policy or executor.
+
+- When the executor or launch policy is not provided (first overload) is if as if launch::none was specified.
+
+- When the executor is provided (second overload) the continuation is called on one of the thread of execution of the executor.
+
+- If the parent has a policy of `launch::deferred` and the continuation does not have a specified launch policy
+executor, then the parent is filled by immediately calling `.wait()`, and the policy of the antecedent is 
+`launch::deferred`.
 
 ]]
 

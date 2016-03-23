@@ -24,7 +24,7 @@ void reversible_container_test()
 {
     using namespace boost;
     
-    BOOST_MESSAGE( "starting reversible container test" ); 
+    BOOST_TEST_MESSAGE( "starting reversible container test" ); 
     enum { max_cnt = 10, size = 100 };
     C  c;
     set_capacity<C>()( c );
@@ -46,7 +46,7 @@ void reversible_container_test()
         
     c.assign( c3 );
     set_capacity<C>()( c );
-    BOOST_MESSAGE( "finished construction test" ); 
+    BOOST_TEST_MESSAGE( "finished construction test" ); 
 
     C a_copy( c );
     BOOST_CHECK_EQUAL( a_copy.size(), c.size() );
@@ -56,7 +56,7 @@ void reversible_container_test()
     a_copy = a_copy;
     BOOST_CHECK( a_copy.empty() );
     BOOST_CHECK( !c.empty() );
-    BOOST_MESSAGE( "finished copying test" ); 
+    BOOST_TEST_MESSAGE( "finished copying test" ); 
 
     BOOST_DEDUCED_TYPENAME C::allocator_type alloc        = c.get_allocator();
     hide_warning(alloc);
@@ -75,7 +75,7 @@ void reversible_container_test()
     BOOST_CHECK_EQUAL( std::distance( c.rbegin(), c.rend() ),
                        std::distance( c.begin(), c.end() ) );
                          
-    BOOST_MESSAGE( "finished iterator test" ); 
+    BOOST_TEST_MESSAGE( "finished iterator test" ); 
 
     BOOST_DEDUCED_TYPENAME C::size_type s                 = c.size();
     hide_warning(s);
@@ -95,7 +95,7 @@ void reversible_container_test()
     hide_warning(r2);
     BOOST_DEDUCED_TYPENAME C::const_reference cr2         = c2.back();
     hide_warning(cr2);
-    BOOST_MESSAGE( "finished accessors test" ); 
+    BOOST_TEST_MESSAGE( "finished accessors test" ); 
     
     c.push_back( new T );
     BOOST_CHECK_EQUAL( c.size(), 4u );
@@ -127,7 +127,7 @@ void reversible_container_test()
 #else
     swap(c4,c3);
 #endif    
-    BOOST_MESSAGE( "finished modifiers test" ); 
+    BOOST_TEST_MESSAGE( "finished modifiers test" ); 
              
     c.push_back( new T ); c.push_back( new T ); c.push_back( new T ); 
     typedef BOOST_DEDUCED_TYPENAME C::auto_type auto_type;
@@ -141,7 +141,7 @@ void reversible_container_test()
     BOOST_CHECK( !c.empty() );
     auto_type ptr2      = c.replace( c.begin(), new T );
     ptr2                = c.replace( c.begin(), std::auto_ptr<T>( new T ) );
-    BOOST_MESSAGE( "finished release/clone/replace test" ); 
+    BOOST_TEST_MESSAGE( "finished release/clone/replace test" ); 
                      
     c3.push_back( new T );
     c3.push_back( new T );
@@ -157,7 +157,7 @@ void reversible_container_test()
     c3. BOOST_NESTED_TEMPLATE transfer<C>( c3.begin(), c );
     BOOST_CHECK( !c3.empty() );
     BOOST_CHECK( c.empty() );
-    BOOST_MESSAGE( "finished transfer test" );  
+    BOOST_TEST_MESSAGE( "finished transfer test" );  
 
     c3.resize( 0u );
     BOOST_CHECK( c3.empty() );
@@ -165,7 +165,7 @@ void reversible_container_test()
     BOOST_CHECK_EQUAL( c3.size(), 10u );
     c3.resize( 12u, &*c3.begin() );
     BOOST_CHECK_EQUAL( c3.size(), 12u );
-    BOOST_MESSAGE( "finished resize test" );  
+    BOOST_TEST_MESSAGE( "finished resize test" );  
     
 }
 
@@ -174,7 +174,7 @@ void reversible_container_test()
 template< class CDerived, class CBase, class T >
 void test_transfer()
 {
-    BOOST_MESSAGE( "starting transfer test" );
+    BOOST_TEST_MESSAGE( "starting transfer test" );
     CDerived from;
     CBase    to;
 
@@ -184,7 +184,7 @@ void test_transfer()
     from.push_back( new T );
     from.push_back( new T );
     to. BOOST_NESTED_TEMPLATE transfer<CDerived>( to.end(), from );
-    BOOST_MESSAGE( "finished transfer test" );
+    BOOST_TEST_MESSAGE( "finished transfer test" );
 }
 
 
@@ -236,7 +236,7 @@ struct equal_to_int
 template< class IntContainer >
 void random_access_algorithms_test()
 {
-    BOOST_MESSAGE( "starting random accessors algorithms test" );
+    BOOST_TEST_MESSAGE( "starting random accessors algorithms test" );
 
     IntContainer c;
     set_capacity<IntContainer>()( c );
@@ -296,6 +296,6 @@ void random_access_algorithms_test()
     BOOST_CHECK( c2.empty() );
     BOOST_CHECK( c.size() == 9u );
     BOOST_CHECK( is_sorted< std::less_equal<int> >( c ) ); 
-    BOOST_MESSAGE( "finished random accessors algorithms test" );
+    BOOST_TEST_MESSAGE( "finished random accessors algorithms test" );
 }
 

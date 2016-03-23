@@ -255,7 +255,7 @@ does not complete when the specified time has elapsed or reached respectively.
 
 [endsect]
 
-[section:destructor1 Destructor V1]
+[section:destructor1 Destructor V1-2]
 
 When the __thread__ object that represents a thread of execution is destroyed the thread becomes ['detached]. Once a thread is
 detached, it will continue executing until the invocation of the function or callable object supplied on construction has completed,
@@ -264,7 +264,7 @@ object. In this case, the __thread__ object ceases to represent the now-detached
 
 [endsect]
 
-[section:destructor2 Destructor V2]
+[section:destructor2 Destructor V3-X]
 
 When the __thread__ object that represents a thread of execution is destroyed the program terminates if the thread is __joinable__. 
 
@@ -280,7 +280,7 @@ You can use a thread_joiner to ensure that the thread has been joined at the thr
   {
     boost::thread t(my_func);
     boost::thread_joiner g(t);
-    // do someting else
+    // do something else
   } // here the thread_joiner destructor will join the thread before it is destroyed.
 
 [endsect]
@@ -410,7 +410,7 @@ Of course all the synchronization facilities provided by Boost.Thread are also a
 
 The `boost::this_thread` interrupt related functions behave in a degraded mode when called from a thread created using the native interface, i.e. `boost::this_thread::interruption_enabled()` returns false. As consequence the use of `boost::this_thread::disable_interruption` and `boost::this_thread::restore_interruption` will do nothing and calls to `boost::this_thread::interruption_point()` will be just ignored.  
 
-As the single way to interrupt a thread is through a __thread__ instance, `interruption_request()` wiil returns false for the native threads. 
+As the single way to interrupt a thread is through a __thread__ instance, `interruption_request()` will return false for the native threads. 
 
 [heading `pthread_exit` POSIX limitation]
 
@@ -964,7 +964,7 @@ predefined __interruption_points__ with interruption enabled .]]
 
 [section:hardware_concurrency Static member function `hardware_concurrency()`]
 
-    unsigned hardware_concurrency() noexecpt;
+    unsigned hardware_concurrency() noexcept;
 
 [variablelist
 
@@ -979,7 +979,7 @@ or 0 if this information is not available.]]
 
 [section:physical_concurrency Static member function `physical_concurrency()`]
 
-    unsigned physical_concurrency() noexecpt;
+    unsigned physical_concurrency() noexcept;
 
 [variablelist
 
@@ -1290,7 +1290,7 @@ instances of __thread_id__ `a` and `b` is the same if `a==b`, and different if `
 
 [variablelist
 
-[[Effects:] [Constructs a thread atrributes instance with its default values.]]
+[[Effects:] [Constructs a thread attributes instance with its default values.]]
 
 [[Throws:] [Nothing]]
 
@@ -1532,7 +1532,7 @@ do not throw exceptions. __thread_interrupted__ if the current thread of executi
 
 [variablelist
 
-[[Effects:] [Suspends the current thread until the duration specified by
+[[Effects:] [Suspends the current thread until the duration specified
 by `rel_time` has elapsed.]]
 
 [[Throws:] [Nothing if operations of chrono::duration<Rep, Period> do not throw exceptions. __thread_interrupted__ if the current thread of execution is interrupted.]]

@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -43,35 +44,35 @@
   <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">output_iterator_tag</span> <a name="boost.move_insert_iterator.iterator_category"></a><span class="identifier">iterator_category</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="move_insert_iterator.html#boost.move_insert_iteratorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="move_insert_iterator.html#idp141500800-bb"><span class="identifier">move_insert_iterator</span></a><span class="special">(</span><span class="identifier">C</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">C</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idp141502736-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">reference</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idp141504000-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="move_insert_iterator.html#idm45507043666832-bb"><span class="identifier">move_insert_iterator</span></a><span class="special">(</span><span class="identifier">C</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">C</span><span class="special">::</span><span class="identifier">iterator</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idm45507043664896-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">reference</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idm45507043663632-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="move_insert_iterator.html#idp103918272-bb">public member functions</a></span>
-  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idp103918832-bb"><span class="keyword">operator</span><span class="special">*</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idp103919680-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idp103920528-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="move_insert_iterator.html#idm45506999178640-bb">public member functions</a></span>
+  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idm45506999178080-bb"><span class="keyword">operator</span><span class="special">*</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idm45506999177232-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a class="link" href="move_insert_iterator.html#idm45507043668528-bb"><span class="keyword">operator</span><span class="special">++</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp324414352"></a><h2>Description</h2>
+<a name="idm45555231287520"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp324414768"></a><h3>
+<a name="idm45555231287104"></a><h3>
 <a name="boost.move_insert_iteratorconstruct-copy-destruct"></a><code class="computeroutput">move_insert_iterator</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp141500800-bb"></a><span class="identifier">move_insert_iterator</span><span class="special">(</span><span class="identifier">C</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">C</span><span class="special">::</span><span class="identifier">iterator</span> pos<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idp141502736-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">reference</span> x<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idp141504000-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;&amp;</span> x<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45507043666832-bb"></a><span class="identifier">move_insert_iterator</span><span class="special">(</span><span class="identifier">C</span> <span class="special">&amp;</span> x<span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">C</span><span class="special">::</span><span class="identifier">iterator</span> pos<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idm45507043664896-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">reference</span> x<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idm45507043663632-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="identifier">value_type</span> <span class="special">&amp;&amp;</span> x<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idp324438992"></a><h3>
-<a name="idp103918272-bb"></a><code class="computeroutput">move_insert_iterator</code> public member functions</h3>
+<a name="idm45555231262944"></a><h3>
+<a name="idm45506999178640-bb"></a><code class="computeroutput">move_insert_iterator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idp103918832-bb"></a><span class="keyword">operator</span><span class="special">*</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idp103919680-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idp103920528-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idm45506999178080-bb"></a><span class="keyword">operator</span><span class="special">*</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idm45506999177232-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">move_insert_iterator</span> <span class="special">&amp;</span> <a name="idm45507043668528-bb"></a><span class="keyword">operator</span><span class="special">++</span><span class="special">(</span><span class="keyword">int</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

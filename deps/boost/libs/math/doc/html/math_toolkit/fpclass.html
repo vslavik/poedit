@@ -4,7 +4,7 @@
 <title>Floating-Point Classification: Infinities and NaNs</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../utils.html" title="Chapter&#160;2.&#160;Floating Point Utilities">
 <link rel="prev" href="rounding/modf.html" title="Integer and Fractional Part Splitting (modf)">
 <link rel="next" href="sign_functions.html" title="Sign Manipulation Functions">
@@ -64,8 +64,7 @@
 <p>
       These functions provide the same functionality as the macros with the same
       name in C99, indeed if the C99 macros are available, then these functions are
-      implemented in terms of them, otherwise they rely on std::numeric_limits&lt;&gt;
-      to function.
+      implemented in terms of them, otherwise they rely on <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;&gt;</span></code> to function.
     </p>
 <p>
       Note that the definition of these functions <span class="emphasis"><em>does not suppress the
@@ -76,7 +75,7 @@
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">;</span>
 
 <span class="comment">// This might call a global macro if defined,</span>
-<span class="comment">// but might not work if the type of z is unsupported </span>
+<span class="comment">// but might not work if the type of z is unsupported</span>
 <span class="comment">// by the std lib macro:</span>
 <span class="identifier">isnan</span><span class="special">(</span><span class="identifier">z</span><span class="special">);</span>
 <span class="comment">//</span>

@@ -17,7 +17,7 @@ There is absolutely no guarantee that the library implementation uses the exact 
 [heading Local Classes as Template Parameters]
 
 This library uses a local class to implement the local function object.
-However, in __CXX03__ local classes (and therefore the local function objects they implement) cannot be passed as template parameters (e.g., to the `std::for_each` algorithm), this is instead possible in __CXX11__, MSVC, and some other compilers (see __N2657__ and __Boost_Config__'s `BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS`).
+However, in __CXX03__ local classes (and therefore the local function objects they implement) cannot be passed as template parameters (e.g., to the `std::for_each` algorithm), this is instead possible in __CXX11__, MSVC, and some other compilers (see __N2657__ and __Boost_Config__'s `BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS`).
 To work around this limitation, this library investigated the following two "tricks" (both tricks can be extended to support function default parameters):
 
 # The /casting functor trick/ uses a non-local functor that calls a static member function of the local class via a function pointer.
@@ -32,7 +32,7 @@ For example (see also [@../../example/impl_tparam_tricks.cpp =impl_tparam_tricks
 
 The casting functor trick measured slightly better run-time performances than the virtual functor trick so the current implementation of this library uses the casting functor trick (probably because in addition to the indirect function call, the virtual functor trick also requires accessing the [@http://en.wikipedia.org/wiki/Virtual_method_table virtual function table]).
 However, neither one of the two tricks was observed to allow for compiler optimizations that inline the local function calls (because they rely on one indirect function call via either a function pointer or a virtual function respectively).
-Therefore, on compilers that accept local classes as template parameters (MSVC, __CXX11__, etc, see __N2657__ and __Boost_Config__'s `BOOST_NO_LOCAL_CLASS_TEMPLATE_PARAMETERS`), this library automatically generates code that passes the local class type directly as template parameter without using neither one of these two tricks in order to take full advantage of compiler optimizations that inline the local function calls.
+Therefore, on compilers that accept local classes as template parameters (MSVC, __CXX11__, etc, see __N2657__ and __Boost_Config__'s `BOOST_NO_CXX11_LOCAL_CLASS_TEMPLATE_PARAMETERS`), this library automatically generates code that passes the local class type directly as template parameter without using neither one of these two tricks in order to take full advantage of compiler optimizations that inline the local function calls.
 
 [heading Parsing Macros]
 

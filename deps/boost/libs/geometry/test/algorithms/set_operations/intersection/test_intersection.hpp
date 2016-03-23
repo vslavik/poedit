@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -54,7 +54,9 @@ check_result(
     {
         if (expected_point_count > 0)
         {
-            n += bg::num_points(*it, true);
+            // here n should rather be of type std::size_t, but expected_point_count
+            // is set to -1 in some test cases so type int was left for now
+            n += static_cast<int>(bg::num_points(*it, true));
         }
 
         // instead of specialization we check it run-time here
@@ -92,7 +94,16 @@ check_result(
     }
 
     double const detected_length_or_area = boost::numeric_cast<double>(length_or_area);
-    BOOST_CHECK_CLOSE(detected_length_or_area, expected_length_or_area, percentage);
+    if (percentage > 0.0)
+    {
+        BOOST_CHECK_CLOSE(detected_length_or_area, expected_length_or_area, percentage);
+    }
+    else
+    {
+        // In some cases (geos_2) the intersection is either 0, or a tiny rectangle,
+        // depending on compiler/settings. That cannot be tested by CLOSE
+        BOOST_CHECK_LE(detected_length_or_area, expected_length_or_area);
+    }
 #endif
 
     return length_or_area;
@@ -246,6 +257,9 @@ void test_one_lp(std::string const& caseid,
         double percentage = 0.0001,
         bool debug1 = false, bool debug2 = false)
 {
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << caseid << " -- start" << std::endl;
+#endif
     Areal areal;
     bg::read_wkt(wkt_areal, areal);
     bg::correct(areal);
@@ -263,6 +277,9 @@ void test_one_lp(std::string const& caseid,
     test_intersection<OutputType, void>(caseid + "_rev", areal, linear,
         expected_count, expected_point_count,
         expected_length, percentage, debug2);
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    std::cout << caseid << " -- end" << std::endl;
+#endif
 }
 
 template <typename Geometry1, typename Geometry2>

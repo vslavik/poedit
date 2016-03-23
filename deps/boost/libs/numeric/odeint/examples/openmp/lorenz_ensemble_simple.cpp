@@ -57,19 +57,21 @@ int main() {
 
     state_type X(n, point_type(10, 10, 10));
 
-    typedef runge_kutta4<
-        state_type, double,
-        state_type, double,
-        openmp_range_algebra
-    > stepper;
-
     const double t_max = 10.0, dt = 0.01;
 
-    integrate_const(
-        stepper(),
-        sys_func(R), X,
-        0.0, t_max, dt
-    );
+    // Simple stepper with constant step size
+    // typedef runge_kutta4<state_type, double, state_type, double,
+    //                      openmp_range_algebra> stepper;
+
+    // integrate_const(stepper(), sys_func(R), X, 0.0, t_max, dt);
+
+    // Controlled stepper with variable step size
+    typedef runge_kutta_fehlberg78<state_type, double, state_type, double,
+                                   openmp_range_algebra> error_stepper_type;
+    typedef controlled_runge_kutta<error_stepper_type> controlled_stepper_type;
+    controlled_stepper_type controlled_stepper;
+
+    integrate_adaptive(controlled_stepper, sys_func(R), X, 0.0, t_max, dt);
 
     copy( X.begin(), X.end(), ostream_iterator<point_type>(cout, "\n") );
 

@@ -39,6 +39,7 @@
 #include "parse.h"
 #include "pathsys.h"
 #include "strings.h"
+#include "output.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -319,9 +320,9 @@ static LIST * * var_enter( struct module_t * module, OBJECT * symbol )
 
 static void var_dump( OBJECT * symbol, LIST * value, char * what )
 {
-    printf( "%s %s = ", what, object_str( symbol ) );
+    out_printf( "%s %s = ", what, object_str( symbol ) );
     list_print( value );
-    printf( "\n" );
+    out_printf( "\n" );
 }
 
 

@@ -17,7 +17,9 @@ void do_test(const T& data, const char* type_name, const char* test_name)
    typedef Real value_type;
 
    typedef value_type (*pg)(value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef LOG1P_FUNCTION_TO_TEST
+   pg funcp = LOG1P_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = &boost::math::log1p<value_type>;
 #else
    pg funcp = &boost::math::log1p;
@@ -29,21 +31,21 @@ void do_test(const T& data, const char* type_name, const char* test_name)
    //
    // test log1p against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
-   funcp = boost::math::log1p<value_type>;
-#else
-   funcp = &boost::math::log1p;
-#endif
+#if !(defined(ERROR_REPORTING_MODE) && !defined(LOG1P_FUNCTION_TO_TEST))
    result = boost::math::tools::test_hetero<Real>(
       data, 
          bind_func<Real>(funcp, 0), 
          extract_result<Real>(1));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::log1p", "log1p and expm1");
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "log1p", "Random test data");
    std::cout << std::endl;
+#endif
+#if !(defined(ERROR_REPORTING_MODE) && !defined(EXPM1_FUNCTION_TO_TEST))
    //
    // test expm1 against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef EXPM1_FUNCTION_TO_TEST
+   funcp = EXPM1_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::expm1<value_type>;
 #else
    funcp = boost::math::expm1;
@@ -52,8 +54,9 @@ void do_test(const T& data, const char* type_name, const char* test_name)
       data, 
       bind_func<Real>(funcp, 0), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::expm1", "log1p and expm1");
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "expm1", "Random test data");
    std::cout << std::endl;
+#endif
 }
 
 template <class T>
@@ -76,12 +79,14 @@ void test(T, const char* type_name)
       BOOST_CHECK_EQUAL(boost::math::expm1(T(-std::numeric_limits<T>::infinity())), m_one);
       BOOST_CHECK_EQUAL(boost::math::expm1(std::numeric_limits<T>::infinity()), std::numeric_limits<T>::infinity());
 #ifndef __BORLANDC__
+#ifndef BOOST_NO_EXCEPTIONS
       // When building with Borland's compiler, simply the *presence*
       // of these tests cause other unrelated tests to fail!!! :-(
       using namespace boost::math::policies;
       typedef policy<overflow_error<throw_on_error> > pol;
-      BOOST_CHECK_THROW(boost::math::log1p(m_one, pol()), std::overflow_error);
-      BOOST_CHECK_THROW(boost::math::expm1(std::numeric_limits<T>::infinity(), pol()), std::overflow_error);
+      BOOST_MATH_CHECK_THROW(boost::math::log1p(m_one, pol()), std::overflow_error);
+      BOOST_MATH_CHECK_THROW(boost::math::expm1(std::numeric_limits<T>::infinity(), pol()), std::overflow_error);
+#endif
 #endif
    }
 }

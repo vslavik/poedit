@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,13 +23,8 @@ main()
     using spirit_test::test;
 
     using namespace boost::spirit::x3::ascii;
-    //~ using boost::spirit::x3::locals;
     using boost::spirit::x3::rule;
     using boost::spirit::x3::int_;
-    //~ using boost::spirit::x3::uint_;
-    //~ using boost::spirit::x3::fail;
-    //~ using boost::spirit::x3::on_error;
-    //~ using boost::spirit::x3::debug;
     using boost::spirit::x3::lit;
     using boost::spirit::x3::unused_type;
     using boost::spirit::x3::_attr;

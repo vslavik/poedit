@@ -77,7 +77,7 @@ struct holds_element_polymorphic :
     boost::mpl::not_<
         boost::is_same<
             typename boost::mpl::end<typename Variant::types>::type,
-            typename element_polymorphic_iterator_impl<typename Variant::types, T>::type
+            typename element_polymorphic_iterator_impl<typename Variant::types, typename boost::remove_reference<T>::type >::type
         >
     >
 {};

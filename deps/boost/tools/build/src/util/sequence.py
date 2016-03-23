@@ -5,7 +5,11 @@
 
 import operator
 
+from b2.util import is_iterable
+
+
 def unique (values, stable=False):
+    assert is_iterable(values)
     if stable:
         s = set()
         r = []
@@ -21,6 +25,8 @@ def max_element (elements, ordered = None):
     """ Returns the maximum number in 'elements'. Uses 'ordered' for comparisons,
         or '<' is none is provided.
     """
+    assert is_iterable(elements)
+    assert callable(ordered) or ordered is None
     if not ordered: ordered = operator.lt
 
     max = elements [0]
@@ -34,6 +40,8 @@ def select_highest_ranked (elements, ranks):
     """ Returns all of 'elements' for which corresponding element in parallel
         list 'rank' is equal to the maximum value in 'rank'.
     """
+    assert is_iterable(elements)
+    assert is_iterable(ranks)
     if not elements:
         return []
 

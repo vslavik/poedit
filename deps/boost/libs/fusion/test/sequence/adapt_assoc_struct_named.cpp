@@ -38,6 +38,9 @@ BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED(
     (int, y, ns::y_member)
 )
 
+struct empty_struct {};
+BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED(empty_struct, renamed_empty_struct,); 
+
 int
 main()
 {

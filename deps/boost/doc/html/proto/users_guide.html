@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,8 +6,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../proto.html" title="Chapter&#160;23.&#160;Boost.Proto">
-<link rel="prev" href="../proto.html" title="Chapter&#160;23.&#160;Boost.Proto">
+<link rel="up" href="../proto.html" title="Chapter&#160;24.&#160;Boost.Proto">
+<link rel="prev" href="../proto.html" title="Chapter&#160;24.&#160;Boost.Proto">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -243,7 +244,7 @@
           The following table summarizes the discussion above:
         </p>
 <div class="table">
-<a name="boost_proto.users_guide.getting_started.naming.t0"></a><p class="title"><b>Table&#160;23.1.&#160;Proto Naming Conventions</b></p>
+<a name="boost_proto.users_guide.getting_started.naming.t0"></a><p class="title"><b>Table&#160;24.1.&#160;Proto Naming Conventions</b></p>
 <div class="table-contents"><table class="table" summary="Proto Naming Conventions">
 <colgroup>
 <col>
@@ -1019,7 +1020,7 @@
             In the type computation above, <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">as_child</span><span class="special">&lt;&gt;</span></code> is a metafunction that ensures
             its argument is a Proto expression type. If it isn't one already, it
             becomes a Proto terminal. We'll learn more about this metafunction, along
-            with <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>, its runtime counterpart,
+            with <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>, its runtime counterpart,
             <a class="link" href="users_guide.html#boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child" title="Controlling How Child Expressions Are Captured">later</a>.
             For now, you can forget about it.
           </p></td></tr>
@@ -1106,9 +1107,9 @@
 <p>
           We could write a <code class="computeroutput"><span class="identifier">pow</span><span class="special">()</span></code>
           function using code like this, but it's verbose and error prone; it's too
-          easy to introduce subtle bugs by forgetting to call <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>
+          easy to introduce subtle bugs by forgetting to call <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>
           where necessary, resulting in code that seems to work but sometimes doesn't.
-          Proto provides a better way to construct expression nodes: <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>.
+          Proto provides a better way to construct expression nodes: <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>.
         </p>
 <h6>
 <a name="boost_proto.users_guide.front_end.making_lazy_functions.h1"></a>
@@ -1116,7 +1117,7 @@
           Functions Made Simple With <code class="literal">make_expr()</code></a>
         </h6>
 <p>
-          Proto provides a helper for building expression templates called <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>. We can concisely define
+          Proto provides a helper for building expression templates called <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>. We can concisely define
           the <code class="computeroutput"><span class="identifier">pow</span><span class="special">()</span></code>
           function with it as below.
         </p>
@@ -1144,22 +1145,22 @@
 <p>
           Subsequent template parameters to <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_expr</span><span class="special">&lt;&gt;</span></code> represent child nodes. If a child
           type is not already a Proto expression, it is automatically made into a
-          terminal with <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>.
+          terminal with <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>.
           A type such as <code class="computeroutput"><span class="identifier">pow_fun</span><span class="special">&lt;</span><span class="identifier">Exp</span><span class="special">&gt;</span></code> results in terminal that is held by
           value, whereas a type like <code class="computeroutput"><span class="identifier">Arg</span>
           <span class="keyword">const</span> <span class="special">&amp;</span></code>
           (note the reference) indicates that the result should be held by reference.
         </p>
 <p>
-          In the function body is the runtime invocation of <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>.
-          It closely mirrors the return type calculation. <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>
+          In the function body is the runtime invocation of <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>.
+          It closely mirrors the return type calculation. <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>
           requires you to specify the node's tag type as a template parameter. The
           arguments to the function become the node's children. When a child should
           be stored by value, nothing special needs to be done. When a child should
           be stored by reference, you must use the <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">ref</span><span class="special">()</span></code> function to wrap the argument.
         </p>
 <p>
-          And that's it! <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>
+          And that's it! <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>
           is the lazy person's way to make a lazy funtion.
         </p>
 </div>
@@ -1466,7 +1467,7 @@
             and a brief description of each.
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.extends.t0"></a><p class="title"><b>Table&#160;23.2.&#160;Expression Extension Macros</b></p>
+<a name="boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.extends.t0"></a><p class="title"><b>Table&#160;24.2.&#160;Expression Extension Macros</b></p>
 <div class="table-contents"><table class="table" summary="Expression Extension Macros">
 <colgroup>
 <col>
@@ -1824,7 +1825,7 @@
             <code class="literal">as_child</code> vs. <code class="literal">as_expr</code></a>
           </h6>
 <p>
-            Proto lets you independently customize the behavior of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code> and <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code>.
+            Proto lets you independently customize the behavior of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code> and <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code>.
             Both accept an object <code class="literal">x</code> and return a Proto expression
             by turning <code class="literal">x</code> it into a Proto terminal if necessary.
             Although similar, the two functions are used in different situations
@@ -1833,7 +1834,7 @@
             you want.
           </p>
 <p>
-            To wit: <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code> is typically used by
+            To wit: <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code> is typically used by
             <span class="emphasis"><em>you</em></span> to turn an object into a Proto expression that
             is to be held in a local variable, as so:
           </p>
@@ -1845,11 +1846,11 @@
             is guaranteed to be a valid Proto expression. If <code class="computeroutput"><span class="identifier">x</span></code>
             is a non-Proto object, it is turned into a terminal expression that holds
             <code class="computeroutput"><span class="identifier">x</span></code> <span class="emphasis"><em>by value</em></span>.<a href="#ftn.boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child.f0" class="footnote" name="boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child.f0"><sup class="footnote">[7]</sup></a> If <code class="computeroutput"><span class="identifier">x</span></code> is a
-            Proto object already, <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code>
+            Proto object already, <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code>
             returns it <span class="emphasis"><em>by value</em></span> unmodified.
           </p>
 <p>
-            In contrast, <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>
+            In contrast, <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>
             is used internally by Proto to pre-process objects before making them
             children of another expression. Since it's internal to Proto, you don't
             see it explicitly, but it's there behind the scenes in expressions like
@@ -1859,18 +1860,18 @@
 </pre>
 <p>
             In this case, Proto builds a plus node from the two children. Both are
-            pre-processed by passing them to <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>
+            pre-processed by passing them to <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>
             before making them children of the new node. If <code class="computeroutput"><span class="identifier">x</span></code>
             is not a Proto expression, it becomes one by being wrapped in a Proto
-            terminal that holds it <span class="emphasis"><em>by reference</em></span>. If <code class="computeroutput"><span class="identifier">x</span></code> is already a Proto expression, <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code> returns it <span class="emphasis"><em>by
+            terminal that holds it <span class="emphasis"><em>by reference</em></span>. If <code class="computeroutput"><span class="identifier">x</span></code> is already a Proto expression, <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code> returns it <span class="emphasis"><em>by
             reference</em></span> unmodified. Contrast this with the above description
-            for <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code>.
+            for <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code>.
           </p>
 <p>
             The table below summarizes the above description.
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child.t0"></a><p class="title"><b>Table&#160;23.3.&#160;proto::as_expr() vs. proto::as_child()</b></p>
+<a name="boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child.t0"></a><p class="title"><b>Table&#160;24.3.&#160;proto::as_expr() vs. proto::as_child()</b></p>
 <div class="table-contents"><table class="table" summary="proto::as_expr() vs. proto::as_child()">
 <colgroup>
 <col>
@@ -1944,32 +1945,32 @@
 <tr><td align="left" valign="top"><p>
               There is one important place where Proto uses both <code class="computeroutput"><span class="identifier">as_expr</span></code>
               <span class="emphasis"><em>and</em></span> <code class="computeroutput"><span class="identifier">as_child</span></code>:
-              <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>. The <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code> function requires
+              <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>. The <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code> function requires
               you to specify for each child whether it should be held by value or
-              by reference. Proto uses <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code>
-              to pre-process the children to be held by value, and <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code> for the ones to be
+              by reference. Proto uses <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code>
+              to pre-process the children to be held by value, and <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code> for the ones to be
               held by reference.
             </p></td></tr>
 </table></div>
 <p>
-            Now that you know what <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>
-            and <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code> are, where they are
+            Now that you know what <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>
+            and <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code> are, where they are
             used, and what they do by default, you may decide that one or both of
             these functions should have different behavior for your domain. For instance,
-            given the above description of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>,
+            given the above description of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>,
             the following code is always wrong:
           </p>
 <pre class="programlisting"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">literal</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">i</span><span class="special">(</span><span class="number">0</span><span class="special">);</span>
 <span class="keyword">auto</span> <span class="identifier">l</span> <span class="special">=</span> <span class="identifier">i</span> <span class="special">+</span> <span class="number">42</span><span class="special">;</span> <span class="comment">// This is WRONG! Don't do this.</span>
 </pre>
 <p>
-            Why is this wrong? Because <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>
+            Why is this wrong? Because <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>
             will turn the integer literal 42 into a Proto terminal that holds a reference
             to a temporary integer initialized with 42. The lifetime of that temporary
             ends at the semicolon, guaranteeing that the local <code class="computeroutput"><span class="identifier">l</span></code>
             is left holding a dangling reference to a deceased integer. What to do?
-            One answer is to use <code class="computeroutput"><a class="link" href="../boost/proto/deep_copy_idp201107088.html" title="Function template deep_copy">proto::deep_copy()</a></code>.
-            Another is to customize the behavior of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>
+            One answer is to use <code class="computeroutput"><a class="link" href="../boost/proto/deep_cop_idm45506996666736.html" title="Function template deep_copy">proto::deep_copy()</a></code>.
+            Another is to customize the behavior of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>
             for your domain. Read on for the details.
           </p>
 <h6>
@@ -2018,7 +2019,7 @@
           </h6>
 <p>
             Although less common, Proto also lets you customize the behavior of
-            <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code> on a per-domain basis.
+            <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code> on a per-domain basis.
             The technique is identical to that for <code class="literal">as_child</code>. See
             below:
           </p>
@@ -2048,7 +2049,7 @@
 <p>
             Let's look again at the problem described above involving the C++11
             <code class="computeroutput"><span class="keyword">auto</span></code> keyword and the default
-            behavior of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code>.
+            behavior of <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code>.
           </p>
 <pre class="programlisting"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">literal</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">i</span><span class="special">(</span><span class="number">0</span><span class="special">);</span>
 <span class="keyword">auto</span> <span class="identifier">l</span> <span class="special">=</span> <span class="identifier">i</span> <span class="special">+</span> <span class="number">42</span><span class="special">;</span> <span class="comment">// This is WRONG! Don't do this.</span>
@@ -2058,7 +2059,7 @@
             to hold the value 42. The local <code class="computeroutput"><span class="identifier">l</span></code>
             will be left holding a dangling reference to it after its lifetime is
             over. What if we want Proto to make expressions safe to store this way
-            in local variables? We can do so very easily by making <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idp194828928.html" title="Function as_child">proto::as_child()</a></code> behave just like <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code>. The following code
+            in local variables? We can do so very easily by making <code class="computeroutput"><a class="link" href="../boost/proto/as_child_idm45506990983408.html" title="Function as_child">proto::as_child()</a></code> behave just like <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code>. The following code
             achieves this:
           </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="identifier">E</span> <span class="special">&gt;</span>
@@ -2781,7 +2782,7 @@
         </h6>
 <p>
           There is no simpler expression than a terminal, and no more basic operation
-          than extracting its value. As we've already seen, that is what <code class="computeroutput"><a class="link" href="../boost/proto/value_idp194898240.html" title="Function value">proto::value()</a></code> is for.
+          than extracting its value. As we've already seen, that is what <code class="computeroutput"><a class="link" href="../boost/proto/value_idm45506990913840.html" title="Function value">proto::value()</a></code> is for.
         </p>
 <pre class="programlisting"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">terminal</span><span class="special">&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span> <span class="special">&amp;</span> <span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">cout_</span> <span class="special">=</span> <span class="special">{</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">};</span>
 
@@ -2792,7 +2793,7 @@
 <span class="identifier">assert</span><span class="special">(</span> <span class="special">&amp;</span><span class="identifier">sout</span> <span class="special">==</span> <span class="special">&amp;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">);</span>
 </pre>
 <p>
-          To compute the return type of the <code class="computeroutput"><a class="link" href="../boost/proto/value_idp194898240.html" title="Function value">proto::value()</a></code>
+          To compute the return type of the <code class="computeroutput"><a class="link" href="../boost/proto/value_idm45506990913840.html" title="Function value">proto::value()</a></code>
           function, you can use <code class="computeroutput"><a class="link" href="../boost/proto/result_of/value.html" title="Struct template value">proto::result_of::value&lt;&gt;</a></code>.
           When the parameter to <code class="computeroutput"><a class="link" href="../boost/proto/result_of/value.html" title="Struct template value">proto::result_of::value&lt;&gt;</a></code>
           is a non-reference type, the result type of the metafunction is the type
@@ -2807,7 +2808,7 @@
           The following table summarizes the above paragraph.
         </p>
 <div class="table">
-<a name="boost_proto.users_guide.intermediate_form.left_right_child.t0"></a><p class="title"><b>Table&#160;23.4.&#160;Accessing Value Types</b></p>
+<a name="boost_proto.users_guide.intermediate_form.left_right_child.t0"></a><p class="title"><b>Table&#160;24.4.&#160;Accessing Value Types</b></p>
 <div class="table-contents"><table class="table" summary="Accessing Value Types">
 <colgroup>
 <col>
@@ -2924,7 +2925,7 @@
 <p>
           Each non-terminal node in an expression tree corresponds to an operator
           in an expression, and the children correspond to the operands, or arguments
-          of the operator. To access them, you can use the <code class="computeroutput"><a class="link" href="../boost/proto/child_c_idp194879248.html" title="Function child_c">proto::child_c()</a></code>
+          of the operator. To access them, you can use the <code class="computeroutput"><a class="link" href="../boost/proto/child_c_idm45506990932896.html" title="Function child_c">proto::child_c()</a></code>
           function template, as demonstrated below:
         </p>
 <pre class="programlisting"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">terminal</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">i</span> <span class="special">=</span> <span class="special">{</span><span class="number">42</span><span class="special">};</span>
@@ -2972,7 +2973,7 @@
           metafunction.
         </p>
 <div class="table">
-<a name="boost_proto.users_guide.intermediate_form.left_right_child.t1"></a><p class="title"><b>Table&#160;23.5.&#160;Accessing Child Types</b></p>
+<a name="boost_proto.users_guide.intermediate_form.left_right_child.t1"></a><p class="title"><b>Table&#160;24.5.&#160;Accessing Child Types</b></p>
 <div class="table-contents"><table class="table" summary="Accessing Child Types">
 <colgroup>
 <col>
@@ -3090,11 +3091,11 @@
 <p>
           Most operators in C++ are unary or binary, so accessing the only operand,
           or the left and right operands, are very common operations. For this reason,
-          Proto provides the <code class="computeroutput"><a class="link" href="../boost/proto/child_idp194850880.html" title="Function child">proto::child()</a></code>,
-          <code class="computeroutput"><a class="link" href="../boost/proto/left_idp194910704.html" title="Function left">proto::left()</a></code>, and <code class="computeroutput"><a class="link" href="../boost/proto/right_idp194925184.html" title="Function right">proto::right()</a></code>
-          functions. <code class="computeroutput"><a class="link" href="../boost/proto/child_idp194850880.html" title="Function child">proto::child()</a></code> and <code class="computeroutput"><a class="link" href="../boost/proto/left_idp194910704.html" title="Function left">proto::left()</a></code>
+          Proto provides the <code class="computeroutput"><a class="link" href="../boost/proto/child_idm45506990961392.html" title="Function child">proto::child()</a></code>,
+          <code class="computeroutput"><a class="link" href="../boost/proto/left_idm45506990901376.html" title="Function left">proto::left()</a></code>, and <code class="computeroutput"><a class="link" href="../boost/proto/right_idm45506990886896.html" title="Function right">proto::right()</a></code>
+          functions. <code class="computeroutput"><a class="link" href="../boost/proto/child_idm45506990961392.html" title="Function child">proto::child()</a></code> and <code class="computeroutput"><a class="link" href="../boost/proto/left_idm45506990901376.html" title="Function left">proto::left()</a></code>
           are synonymous with <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">child_c</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;()</span></code>,
-          and <code class="computeroutput"><a class="link" href="../boost/proto/right_idp194925184.html" title="Function right">proto::right()</a></code> is synonymous with <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">child_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;()</span></code>.
+          and <code class="computeroutput"><a class="link" href="../boost/proto/right_idm45506990886896.html" title="Function right">proto::right()</a></code> is synonymous with <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">child_c</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;()</span></code>.
         </p>
 <p>
           There are also <code class="computeroutput"><a class="link" href="../boost/proto/result_of/child.html" title="Struct template child">proto::result_of::child&lt;&gt;</a></code>,
@@ -3129,7 +3130,7 @@
           all intermediate nodes and the terminals are held <span class="emphasis"><em>by value</em></span>.
           That way, you can safely assign the expression template to a local variable
           or return it from a function without worrying about dangling references.
-          You can do this with <code class="computeroutput"><a class="link" href="../boost/proto/deep_copy_idp201107088.html" title="Function template deep_copy">proto::deep_copy()</a></code>
+          You can do this with <code class="computeroutput"><a class="link" href="../boost/proto/deep_cop_idm45506996666736.html" title="Function template deep_copy">proto::deep_copy()</a></code>
           as fo llows:
         </p>
 <pre class="programlisting"><span class="comment">// OK, "ex" has no dangling references</span>
@@ -3164,7 +3165,7 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-            <code class="computeroutput"><a class="link" href="../boost/proto/deep_copy_idp201107088.html" title="Function template deep_copy">proto::deep_copy()</a></code> makes no exception for
+            <code class="computeroutput"><a class="link" href="../boost/proto/deep_cop_idm45506996666736.html" title="Function template deep_copy">proto::deep_copy()</a></code> makes no exception for
             arrays, which it stores by value. That can potentially cause a large
             amount of data to be copied.
           </p></td></tr>
@@ -3177,7 +3178,7 @@
 </h4></div></div></div>
 <p>
           Proto provides a utility for pretty-printing expression trees that comes
-          in very handy when you're trying to debug your EDSL. It's called <code class="computeroutput"><a class="link" href="../boost/proto/display_expr_idp201006864.html" title="Function display_expr">proto::display_expr()</a></code>, and you pass it the expression
+          in very handy when you're trying to debug your EDSL. It's called <code class="computeroutput"><a class="link" href="../boost/proto/display__idm45506996767344.html" title="Function display_expr">proto::display_expr()</a></code>, and you pass it the expression
           to print and optionally, an <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span></code>
           to which to send the output. Consider:
         </p>
@@ -3194,7 +3195,7 @@
   , terminal(42)
 )</pre>
 <p>
-          In order to call <code class="computeroutput"><a class="link" href="../boost/proto/display_expr_idp201006864.html" title="Function display_expr">proto::display_expr()</a></code>,
+          In order to call <code class="computeroutput"><a class="link" href="../boost/proto/display__idm45506996767344.html" title="Function display_expr">proto::display_expr()</a></code>,
           all the terminals in the expression must be Streamable (that is, they can
           be written to a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ostream</span></code>). In addition, the tag types
           must all be Streamable as well. Here is an example that includes a custom
@@ -3249,7 +3250,7 @@
           usable as grammars for matching such nodes, as well as pass-through transforms.
         </p>
 <div class="table">
-<a name="boost_proto.users_guide.intermediate_form.tags_and_metafunctions.t0"></a><p class="title"><b>Table&#160;23.6.&#160;Operators, Tags and Metafunctions</b></p>
+<a name="boost_proto.users_guide.intermediate_form.tags_and_metafunctions.t0"></a><p class="title"><b>Table&#160;24.6.&#160;Operators, Tags and Metafunctions</b></p>
 <div class="table-contents"><table class="table" summary="Operators, Tags and Metafunctions">
 <colgroup>
 <col>
@@ -4108,8 +4109,8 @@
           <span class="special">+</span> <span class="number">2</span> <span class="special">+</span> <span class="number">3</span> <span class="special">+</span>
           <span class="number">4</span></code> does not describe a flat sequence
           of terminals --- it describes a binary tree. We can treat it as a flat
-          sequence of terminals, however, using Proto's <code class="computeroutput"><a class="link" href="../boost/proto/flatten_idp199043440.html" title="Function flatten">proto::flatten()</a></code>
-          function. <code class="computeroutput"><a class="link" href="../boost/proto/flatten_idp199043440.html" title="Function flatten">proto::flatten()</a></code> returns a view which makes
+          sequence of terminals, however, using Proto's <code class="computeroutput"><a class="link" href="../boost/proto/flatten_idm45506975343680.html" title="Function flatten">proto::flatten()</a></code>
+          function. <code class="computeroutput"><a class="link" href="../boost/proto/flatten_idm45506975343680.html" title="Function flatten">proto::flatten()</a></code> returns a view which makes
           a tree appear as a flat Fusion sequence. If the top-most node has a tag
           type <code class="computeroutput"><span class="identifier">T</span></code>, then the elements
           of the flattened sequence are the child nodes that do <span class="emphasis"><em>not</em></span>
@@ -4383,7 +4384,7 @@ Input!
             and references.
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.intermediate_form.expression_introspection.fuzzy_and_exact_matches_of_terminals.t0"></a><p class="title"><b>Table&#160;23.7.&#160;proto::matches&lt;&gt; and Reference / CV-Qualification of Terminals</b></p>
+<a name="boost_proto.users_guide.intermediate_form.expression_introspection.fuzzy_and_exact_matches_of_terminals.t0"></a><p class="title"><b>Table&#160;24.7.&#160;proto::matches&lt;&gt; and Reference / CV-Qualification of Terminals</b></p>
 <div class="table-contents"><table class="table" summary="proto::matches&lt;&gt; and Reference / CV-Qualification of Terminals">
 <colgroup>
 <col>
@@ -5144,8 +5145,8 @@ expression  ::= term (('+' term) | ('-' term))*
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
             A <span class="emphasis"><em>context</em></span> is like a function object that you pass
-            along with an expression to the <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>
-            function. It associates behaviors with node types. <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>
+            along with an expression to the <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>
+            function. It associates behaviors with node types. <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>
             walks the expression and invokes your context at each node.
           </li>
 <li class="listitem">
@@ -5185,13 +5186,13 @@ expression  ::= term (('+' term) | ('-' term))*
 </dl></div>
 <p>
           Once you have constructed a Proto expression tree, either by using Proto's
-          operator overloads or with <code class="computeroutput"><a class="link" href="../boost/proto/make_expr_idp199332176.html" title="Function make_expr">proto::make_expr()</a></code>
+          operator overloads or with <code class="computeroutput"><a class="link" href="../boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr()</a></code>
           and friends, you probably want to actually <span class="emphasis"><em>do</em></span> something
           with it. The simplest option is to use <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">eval</span><span class="special">()</span></code>, a generic expression evaluator. To use
-          <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>, you'll need to define
-          a <span class="emphasis"><em>context</em></span> that tells <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>
+          <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>, you'll need to define
+          a <span class="emphasis"><em>context</em></span> that tells <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>
           how each node should be evaluated. This section goes through the nuts and
-          bolts of using <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>, defining evaluation contexts,
+          bolts of using <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>, defining evaluation contexts,
           and using the contexts that Proto provides.
         </p>
 <div class="note"><table border="0" summary="Note">
@@ -5262,11 +5263,11 @@ expression  ::= term (('+' term) | ('-' term))*
 <span class="special">}</span>
 </pre>
 <p>
-            Given an expression and an evaluation context, using <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>
-            is quite simple. Simply pass the expression and the context to <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code> and it does the rest
+            Given an expression and an evaluation context, using <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>
+            is quite simple. Simply pass the expression and the context to <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code> and it does the rest
             and returns the result. You can use the <code class="computeroutput"><span class="identifier">eval</span><span class="special">&lt;&gt;</span></code> metafunction in the <code class="computeroutput"><span class="identifier">proto</span><span class="special">::</span><span class="identifier">result_of</span></code> namespace to compute the
-            return type of <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>. The following demonstrates
-            a use of <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>:
+            return type of <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>. The following demonstrates
+            a use of <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>:
           </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Expr</span><span class="special">&gt;</span>
 <span class="keyword">typename</span> <span class="identifier">proto</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">eval</span><span class="special">&lt;</span><span class="identifier">Expr</span> <span class="keyword">const</span><span class="special">,</span> <span class="identifier">MyContext</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -5280,9 +5281,9 @@ expression  ::= term (('+' term) | ('-' term))*
 <span class="special">}</span>
 </pre>
 <p>
-            What <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code> does is also very simple.
+            What <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code> does is also very simple.
             It defers most of the work to the context itself. Here essentially is
-            the implementation of <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code>:
+            the implementation of <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code>:
           </p>
 <pre class="programlisting"><span class="comment">// eval() dispatches to a nested "eval&lt;&gt;" function</span>
 <span class="comment">// object within the Context:</span>
@@ -5295,7 +5296,7 @@ expression  ::= term (('+' term) | ('-' term))*
 <span class="special">}</span>
 </pre>
 <p>
-            Really, <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code> is nothing more than
+            Really, <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code> is nothing more than
             a thin wrapper that dispatches to the appropriate handler within the
             context class. In the next section, we'll see how to implement a context
             class from scratch.
@@ -5307,7 +5308,7 @@ expression  ::= term (('+' term) | ('-' term))*
           an Evaluation Context</a>
 </h5></div></div></div>
 <p>
-            As we saw in the previous section, there is really not much to the <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code> function. Rather, all
+            As we saw in the previous section, there is really not much to the <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code> function. Rather, all
             the interesting expression evaluation goes on within a context class.
             This section shows how to implement one from scratch.
           </p>
@@ -5413,7 +5414,7 @@ expression  ::= term (('+' term) | ('-' term))*
 <span class="special">};</span>
 </pre>
 <p>
-            Now we can use <code class="computeroutput"><a class="link" href="../boost/proto/eval_idp201270464.html" title="Function eval">proto::eval()</a></code> with the context class
+            Now we can use <code class="computeroutput"><a class="link" href="../boost/proto/eval_idm45506996501744.html" title="Function eval">proto::eval()</a></code> with the context class
             above to evaluate calculator expressions as follows:
           </p>
 <pre class="programlisting"><span class="comment">// Evaluate an expression with a calculator_context</span>
@@ -6230,7 +6231,7 @@ j = 11
             these 5 constituents.
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.back_end.expression_transformation.example__calculator_arity.t0"></a><p class="title"><b>Table&#160;23.8.&#160;Calculator Sub-Expression Arities</b></p>
+<a name="boost_proto.users_guide.back_end.expression_transformation.example__calculator_arity.t0"></a><p class="title"><b>Table&#160;24.8.&#160;Calculator Sub-Expression Arities</b></p>
 <div class="table-contents"><table class="table" summary="Calculator Sub-Expression Arities">
 <colgroup>
 <col>
@@ -6888,7 +6889,7 @@ terminal(1)</pre>
             The same is true for any primitive transform. The following are all equivalent:
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.back_end.expression_transformation.implicit_params.t0"></a><p class="title"><b>Table&#160;23.9.&#160;Implicit Parameters to Primitive Transforms</b></p>
+<a name="boost_proto.users_guide.back_end.expression_transformation.implicit_params.t0"></a><p class="title"><b>Table&#160;24.9.&#160;Implicit Parameters to Primitive Transforms</b></p>
 <div class="table-contents"><table class="table" summary="Implicit Parameters to Primitive Transforms">
 <colgroup><col></colgroup>
 <thead><tr><th>
@@ -6979,7 +6980,7 @@ terminal(1)</pre>
             these two transforms are equivalent. Can you see why?
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.back_end.expression_transformation.implicit_params.t1"></a><p class="title"><b>Table&#160;23.10.&#160;Two Equivalent Transforms</b></p>
+<a name="boost_proto.users_guide.back_end.expression_transformation.implicit_params.t1"></a><p class="title"><b>Table&#160;24.10.&#160;Two Equivalent Transforms</b></p>
 <div class="table-contents"><table class="table" summary="Two Equivalent Transforms">
 <colgroup>
 <col>
@@ -7646,7 +7647,7 @@ terminal(1)</pre>
             transforms:
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.back_end.expression_transformation.canned_transforms.t0"></a><p class="title"><b>Table&#160;23.11.&#160;Class Templates With Pass-Through Transforms</b></p>
+<a name="boost_proto.users_guide.back_end.expression_transformation.canned_transforms.t0"></a><p class="title"><b>Table&#160;24.11.&#160;Class Templates With Pass-Through Transforms</b></p>
 <div class="table-contents"><table class="table" summary="Class Templates With Pass-Through Transforms">
 <colgroup><col></colgroup>
 <thead><tr><th>
@@ -8066,7 +8067,7 @@ minus(
             generally useful. They are specified in the table below:
           </p>
 <div class="table">
-<a name="boost_proto.users_guide.back_end.expression_transformation.primitives.t0"></a><p class="title"><b>Table&#160;23.12.&#160;proto::transform_impl&lt;Expr, State, Data&gt; typedefs</b></p>
+<a name="boost_proto.users_guide.back_end.expression_transformation.primitives.t0"></a><p class="title"><b>Table&#160;24.12.&#160;proto::transform_impl&lt;Expr, State, Data&gt; typedefs</b></p>
 <div class="table-contents"><table class="table" summary="proto::transform_impl&lt;Expr, State, Data&gt; typedefs">
 <colgroup>
 <col>
@@ -11033,7 +11034,7 @@ minus(
 <div class="footnotes">
 <br><hr style="width:100; text-align:left;margin-left: 0">
 <div id="ftn.boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child.f0" class="footnote"><p><a href="#boost_proto.users_guide.front_end.customizing_expressions_in_your_domain.per_domain_as_child.f0" class="para"><sup class="para">[7] </sup></a>
-              It's not always possible to hold something by value. By default, <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idp194807024.html" title="Function as_expr">proto::as_expr()</a></code> makes an exception
+              It's not always possible to hold something by value. By default, <code class="computeroutput"><a class="link" href="../boost/proto/as_expr_idm45506991005376.html" title="Function as_expr">proto::as_expr()</a></code> makes an exception
               for functions, abstract types, and iostreams (types derived from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span></code>). These objects are held
               by reference. All others are held by value, even arrays.
             </p></div>

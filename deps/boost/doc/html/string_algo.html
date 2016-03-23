@@ -1,7 +1,8 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;29.&#160;Boost String Algorithms Library</title>
+<title>Chapter&#160;30.&#160;Boost String Algorithms Library</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
@@ -25,13 +26,13 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="string_algo"></a>Chapter&#160;29.&#160;Boost String Algorithms Library</h2></div>
+<a name="string_algo"></a>Chapter&#160;30.&#160;Boost String Algorithms Library</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Pavol</span> <span class="surname">Droba</span>
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2002-2004 Pavol Droba</p></div>
 <div><div class="legalnotice">
-<a name="idp424633232"></a><p>Use, modification and distribution is subject to the Boost
+<a name="idm45555128724992"></a><p>Use, modification and distribution is subject to the Boost
                 Software License, Version 1.0. (See accompanying file
                 <code class="filename">LICENSE_1_0.txt</code> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
             </p>
@@ -44,21 +45,21 @@
 <dt><span class="section"><a href="string_algo/release_notes.html">Release Notes</a></span></dt>
 <dt><span class="section"><a href="string_algo/usage.html">Usage</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="string_algo/usage.html#idp424671488">First Example</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424694160">Case conversion</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424701520">Predicates and Classification</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424711840">Trimming</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424718864">Find algorithms</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424731952">Replace Algorithms</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424745488">Find Iterator</a></span></dt>
-<dt><span class="section"><a href="string_algo/usage.html#idp424756880">Split</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128686640">First Example</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128664032">Case conversion</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128656672">Predicates and Classification</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128646416">Trimming</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128639392">Find algorithms</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128626240">Replace Algorithms</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128612704">Find Iterator</a></span></dt>
+<dt><span class="section"><a href="string_algo/usage.html#idm45555128601440">Split</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="string_algo/quickref.html">Quick Reference</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="string_algo/quickref.html#idp424773760">Algorithms</a></span></dt>
-<dt><span class="section"><a href="string_algo/quickref.html#idp425016368">Finders and Formatters</a></span></dt>
-<dt><span class="section"><a href="string_algo/quickref.html#idp425061520">Iterators</a></span></dt>
-<dt><span class="section"><a href="string_algo/quickref.html#idp425072176">Classification</a></span></dt>
+<dt><span class="section"><a href="string_algo/quickref.html#idm45555128584624">Algorithms</a></span></dt>
+<dt><span class="section"><a href="string_algo/quickref.html#idm45555128342528">Finders and Formatters</a></span></dt>
+<dt><span class="section"><a href="string_algo/quickref.html#idm45555128297360">Iterators</a></span></dt>
+<dt><span class="section"><a href="string_algo/quickref.html#idm45555128286720">Classification</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="string_algo/design.html">Design Topics</a></span></dt>
 <dd><dl>
@@ -71,7 +72,7 @@
 </dl></dd>
 <dt><span class="section"><a href="string_algo/concept.html">Concepts</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="string_algo/concept.html#idp425186176">Definitions</a></span></dt>
+<dt><span class="section"><a href="string_algo/concept.html#idm45555128172848">Definitions</a></span></dt>
 <dt><span class="section"><a href="string_algo/concept.html#string_algo.finder_concept">Finder Concept</a></span></dt>
 <dt><span class="section"><a href="string_algo/concept.html#string_algo.formatter_concept">Formatter concept</a></span></dt>
 </dl></dd>
@@ -104,15 +105,15 @@
 </dl></dd>
 <dt><span class="section"><a href="string_algo/rationale.html">Rationale</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="string_algo/rationale.html#idp433788688">Locales</a></span></dt>
+<dt><span class="section"><a href="string_algo/rationale.html#idm45555119571808">Locales</a></span></dt>
 <dt><span class="section"><a href="string_algo/rationale.html#string_algo.regex">Regular Expressions</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="string_algo/env.html">Environment</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="string_algo/env.html#idp433799920">Build</a></span></dt>
-<dt><span class="section"><a href="string_algo/env.html#idp433802688">Examples</a></span></dt>
-<dt><span class="section"><a href="string_algo/env.html#idp433804272">Tests</a></span></dt>
-<dt><span class="section"><a href="string_algo/env.html#idp433805776">Portability</a></span></dt>
+<dt><span class="section"><a href="string_algo/env.html#idm45555119560640">Build</a></span></dt>
+<dt><span class="section"><a href="string_algo/env.html#idm45555119557872">Examples</a></span></dt>
+<dt><span class="section"><a href="string_algo/env.html#idm45555119556288">Tests</a></span></dt>
+<dt><span class="section"><a href="string_algo/env.html#idm45555119554784">Portability</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="string_algo/credits.html">Credits</a></span></dt>
 <dd><dl><dt><span class="section"><a href="string_algo/credits.html#string_algo.ack">Acknowledgments</a></span></dt></dl></dd>

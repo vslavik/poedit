@@ -67,7 +67,7 @@ import os.path
 import string
 import types
 
-from b2.util import path, utility, set
+from b2.util import path, utility, set, is_iterable_typed
 from b2.util.utility import add_grist, get_grist, ungrist, replace_grist, get_value
 from b2.util.sequence import unique
 from b2.tools import common
@@ -110,6 +110,7 @@ class VirtualTargetRegistry:
             and equal action. If such target is found it is retured and 'target' is not registered.
             Otherwise, 'target' is registered and returned.
         """
+        assert isinstance(target, VirtualTarget)
         if target.path():
             signature = target.path() + "-" + target.name()
         else:
@@ -156,6 +157,11 @@ class VirtualTargetRegistry:
             for the project, and use that path to determine if the target was already created.
             TODO: passing project with all virtual targets starts to be annoying.
         """
+        if __debug__:
+            from .targets import ProjectTarget
+            assert isinstance(file, basestring)
+            assert isinstance(file_location, basestring)
+            assert isinstance(project, ProjectTarget)
         # Check if we've created a target corresponding to this file.
         path = os.path.join(os.getcwd(), file_location, file)
         path = os.path.normpath(path)
@@ -192,6 +198,8 @@ class VirtualTargetRegistry:
         return [t for t in targets if b2.build.type.is_sybtype(t.type(), type)]
 
     def register_actual_name (self, actual_name, virtual_target):
+        assert isinstance(actual_name, basestring)
+        assert isinstance(virtual_target, VirtualTarget)
         if self.actual_.has_key (actual_name):
             cs1 = self.actual_ [actual_name].creating_subvariant ()
             cs2 = virtual_target.creating_subvariant ()
@@ -238,6 +246,9 @@ class VirtualTargetRegistry:
         """ Appends the suffix appropriate to 'type/property_set' combination
             to the specified name and returns the result.
         """
+        assert isinstance(specified_name, basestring)
+        assert isinstance(file_type, basestring)
+        assert isinstance(prop_set, property_set.PropertySet)
         suffix = b2.build.type.generated_target_suffix (file_type, prop_set)
 
         if suffix:
@@ -254,6 +265,10 @@ class VirtualTarget:
         project: project to which this target belongs.
     """
     def __init__ (self, name, project):
+        if __debug__:
+            from .targets import ProjectTarget
+            assert isinstance(name, basestring)
+            assert isinstance(project, ProjectTarget)
         self.name_ = name
         self.project_ = project
         self.dependencies_ = []
@@ -302,6 +317,9 @@ class VirtualTarget:
 
             If scanner is not specified, then actual target is returned.
         """
+        if __debug__:
+            from .scanner import Scanner
+            assert scanner is None or isinstance(scanner, Scanner)
         actual_name = self.actualize_no_scanner ()
 
         if self.always_:
@@ -373,6 +391,9 @@ class AbstractFileTarget (VirtualTarget):
         type:   optional type of this target.
     """
     def __init__ (self, name, type, project, action = None, exact=False):
+        assert isinstance(type, basestring) or type is None
+        assert action is None or isinstance(action, Action)
+        assert isinstance(exact, (int, bool))
         VirtualTarget.__init__ (self, name, project)
 
         self.type_ = type
@@ -402,6 +423,7 @@ class AbstractFileTarget (VirtualTarget):
         """ Sets the path. When generating target name, it will override any path
             computation from properties.
         """
+        assert isinstance(path, basestring)
         self.path_ = os.path.normpath(path)
 
     def action (self):
@@ -413,6 +435,7 @@ class AbstractFileTarget (VirtualTarget):
         """ Sets/gets the 'root' flag. Target is root is it directly correspods to some
             variant of a main target.
         """
+        assert isinstance(set, (int, bool, type(None)))
         if set:
             self.root_ = True
         return self.root_
@@ -425,6 +448,7 @@ class AbstractFileTarget (VirtualTarget):
         s:  If specified, specified the value to set,
                 which should be instance of 'subvariant' class.
         """
+        assert s is None or isinstance(s, Subvariant)
         if s and not self.creating_subvariant ():
             if self.creating_subvariant ():
                 raise BaseException ("Attempt to change 'dg'")
@@ -435,6 +459,7 @@ class AbstractFileTarget (VirtualTarget):
         return self.creating_subvariant_
 
     def actualize_action (self, target):
+        assert isinstance(target, basestring)
         if self.action_:
             self.action_.actualize ()
 
@@ -513,7 +538,7 @@ class AbstractFileTarget (VirtualTarget):
         If not <tag> property is specified, or the rule specified by
         <tag> returns nothing, returns the result of calling
         virtual-target.add-suffix"""
-
+        assert isinstance(specified_name, basestring)
         if self.action_:
             ps = self.action_.properties()
         else:
@@ -627,6 +652,9 @@ class FileTarget (AbstractFileTarget):
             - the suffix which correspond to the target's type.
     """
     def __init__ (self, name, type, project, action = None, path=None, exact=False):
+        assert isinstance(type, basestring) or type is None
+        assert action is None or isinstance(action, Action)
+        assert isinstance(exact, (int, bool))
         AbstractFileTarget.__init__ (self, name, type, project, action, exact)
 
         self.path_ = path
@@ -638,10 +666,12 @@ class FileTarget (AbstractFileTarget):
             return self.name_
 
     def clone_with_different_type(self, new_type):
+        assert isinstance(new_type, basestring)
         return FileTarget(self.name_, new_type, self.project_,
                           self.action_, self.path_, exact=True)
 
     def actualize_location (self, target):
+        assert isinstance(target, basestring)
         engine = self.project_.manager_.engine ()
 
         if self.action_:
@@ -714,6 +744,7 @@ class FileTarget (AbstractFileTarget):
 class NotFileTarget(AbstractFileTarget):
 
     def __init__(self, name, project, action):
+        assert isinstance(action, Action)
         AbstractFileTarget.__init__(self, name, None, project, action)
 
     def path(self):
@@ -721,6 +752,7 @@ class NotFileTarget(AbstractFileTarget):
         return None
 
     def actualize_location(self, target):
+        assert isinstance(target, basestring)
         bjam.call("NOTFILE", target)
         bjam.call("ALWAYS", target)
         bjam.call("NOUPDATE", target)
@@ -735,8 +767,9 @@ class Action:
         not establish dependency relationship, but should do everything else.
     """
     def __init__ (self, manager, sources, action_name, prop_set):
+        assert is_iterable_typed(sources, VirtualTarget)
+        assert isinstance(action_name, basestring) or action_name is None
         assert(isinstance(prop_set, property_set.PropertySet))
-        assert type(sources) == types.ListType
         self.sources_ = sources
         self.action_name_ = action_name
         if not prop_set:
@@ -758,11 +791,14 @@ class Action:
 
 
     def add_targets (self, targets):
+        assert is_iterable_typed(targets, VirtualTarget)
         self.targets_ += targets
 
 
-    def replace_targets (old_targets, new_targets):
-        self.targets_ = [t for t in targets if not t in old_targets] + new_targets
+    def replace_targets(self, old_targets, new_targets):
+        assert is_iterable_typed(old_targets, VirtualTarget)
+        assert is_iterable_typed(new_targets, VirtualTarget)
+        self.targets_ = [t for t in self.targets_ if not t in old_targets] + new_targets
 
     def targets (self):
         return self.targets_
@@ -826,6 +862,8 @@ class Action:
             For each passed source, actualizes it with the appropriate scanner.
             Returns the actualized virtual targets.
         """
+        assert is_iterable_typed(sources, VirtualTarget)
+        assert isinstance(prop_set, property_set.PropertySet)
         result = []
         for i in sources:
             scanner = None
@@ -852,6 +890,8 @@ class Action:
             New values will be *appended* to the variables. They may be non-empty,
             if caller wants it.
         """
+        assert is_iterable_typed(sources, VirtualTarget)
+        assert isinstance(prop_set, property_set.PropertySet)
         dependencies = self.properties_.get ('<dependency>')
 
         self.dependency_only_sources_ += self.actualize_source_type (dependencies, prop_set)
@@ -879,6 +919,7 @@ class Action:
             to get generated headers correctly. Default implementation returns
             its argument.
         """
+        assert isinstance(prop_set, property_set.PropertySet)
         return prop_set
 
 
@@ -889,6 +930,7 @@ class NullAction (Action):
         actions which create them.
     """
     def __init__ (self, manager, prop_set):
+        assert isinstance(prop_set, property_set.PropertySet)
         Action.__init__ (self, manager, [], None, prop_set)
 
     def actualize (self):
@@ -908,7 +950,8 @@ class NonScanningAction(Action):
         Action.__init__(self, b2.manager.get_manager(), sources, action_name, property_set)
 
     def actualize_source_type(self, sources, property_set):
-
+        assert is_iterable_typed(sources, VirtualTarget)
+        assert isinstance(property_set, property_set.PropertySet)
         result = []
         for s in sources:
             result.append(s.actualize())
@@ -920,6 +963,9 @@ def traverse (target, include_roots = False, include_sources = False):
         found during traversal, it's either included or not, dependencing of the
         value of 'include_roots'. In either case, sources of root are not traversed.
     """
+    assert isinstance(target, VirtualTarget)
+    assert isinstance(include_roots, (int, bool))
+    assert isinstance(include_sources, (int, bool))
     result = []
 
     if target.action ():
@@ -951,7 +997,12 @@ def clone_action (action, new_project, new_action_name, new_properties):
     and all produced target. The rule-name and properties are set
     to 'new-rule-name' and 'new-properties', if those are specified.
     Returns the cloned action."""
-
+    if __debug__:
+        from .targets import ProjectTarget
+        assert isinstance(action, Action)
+        assert isinstance(new_project, ProjectTarget)
+        assert isinstance(new_action_name, basestring)
+        assert isinstance(new_properties, property_set.PropertySet)
     if not new_action_name:
         new_action_name = action.action_name()
 
@@ -990,6 +1041,14 @@ class Subvariant:
         sources_usage_requirements:  Properties propagated from sources
         created_targets:             Top-level created targets
         """
+        if __debug__:
+            from .targets import AbstractTarget
+            assert isinstance(main_target, AbstractTarget)
+            assert isinstance(prop_set, property_set.PropertySet)
+            assert is_iterable_typed(sources, VirtualTarget)
+            assert isinstance(build_properties, property_set.PropertySet)
+            assert isinstance(sources_usage_requirements, property_set.PropertySet)
+            assert is_iterable_typed(created_targets, VirtualTarget)
         self.main_target_ = main_target
         self.properties_ = prop_set
         self.sources_ = sources
@@ -1028,6 +1087,7 @@ class Subvariant:
         return self.sources_usage_requirements_
 
     def set_usage_requirements (self, usage_requirements):
+        assert isinstance(usage_requirements, property_set.PropertySet)
         self.usage_requirements_ = usage_requirements
 
     def usage_requirements (self):
@@ -1038,7 +1098,9 @@ class Subvariant:
         either directly or indirectly, and either as sources,
         or as dependency properties. Targets referred with
         dependency property are returned a properties, not targets."""
-
+        if __debug__:
+            from .targets import GenerateResult
+            assert isinstance(result, GenerateResult)
         # Find directly referenced targets.
         deps = self.build_properties().dependency()
         all_targets = self.sources_ + deps
@@ -1071,7 +1133,8 @@ class Subvariant:
             if 'target_type' is not specified), the result will contain
             <$(feature)>path-to-that-target.
         """
-
+        assert isinstance(feature, basestring)
+        assert isinstance(target_type, basestring)
         if not target_type:
             key = feature
         else:
@@ -1088,6 +1151,7 @@ class Subvariant:
         return result
 
     def all_target_directories(self, target_type = None):
+        assert isinstance(target_type, (basestring, type(None)))
         # TODO: does not appear to use target_type in deciding
         # if we've computed this already.
         if not self.target_directories_:
@@ -1095,6 +1159,7 @@ class Subvariant:
         return self.target_directories_
 
     def compute_target_directories(self, target_type=None):
+        assert isinstance(target_type, (basestring, type(None)))
         result = []
         for t in self.created_targets():
             if not target_type or b2.build.type.is_derived(t.type(), target_type):

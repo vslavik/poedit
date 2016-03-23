@@ -4,7 +4,7 @@
 <title>Geometric Distribution Examples</title>
 <link rel="stylesheet" href="../../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../weg.html" title="Worked Examples">
 <link rel="prev" href="binom_eg/binom_size_eg.html" title="Estimating Sample Sizes for a Binomial Distribution.">
 <link rel="next" href="neg_binom_eg.html" title="Negative Binomial Distribution Examples">
@@ -338,7 +338,7 @@
           divide alpha by two.
         </p>
 <pre class="programlisting"><span class="keyword">double</span> <span class="identifier">alpha</span> <span class="special">=</span> <span class="number">0.05</span><span class="special">;</span>
-<span class="keyword">double</span> <span class="identifier">k</span> <span class="special">=</span> <span class="number">100</span><span class="special">;</span> <span class="comment">// So frequency of occurence is 1/100.</span>
+<span class="keyword">double</span> <span class="identifier">k</span> <span class="special">=</span> <span class="number">100</span><span class="special">;</span> <span class="comment">// So frequency of occurrence is 1/100.</span>
 <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"Probability is failure is "</span> <span class="special">&lt;&lt;</span> <span class="number">1</span><span class="special">/</span><span class="identifier">k</span> <span class="special">&lt;&lt;</span> <span class="identifier">endl</span><span class="special">;</span>
 <span class="keyword">double</span> <span class="identifier">t</span> <span class="special">=</span> <span class="identifier">geometric</span><span class="special">::</span><span class="identifier">find_lower_bound_on_p</span><span class="special">(</span><span class="identifier">k</span><span class="special">,</span> <span class="identifier">alpha</span><span class="special">/</span><span class="number">2</span><span class="special">);</span>
 <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"geometric::find_lower_bound_on_p("</span> <span class="special">&lt;&lt;</span> <span class="keyword">int</span><span class="special">(</span><span class="identifier">k</span><span class="special">)</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">alpha</span><span class="special">/</span><span class="number">2</span> <span class="special">&lt;&lt;</span> <span class="string">") = "</span>

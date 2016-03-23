@@ -30,9 +30,7 @@
 #define DIGIT_COUNT 100
 #endif
 
-#define HAS_STD_CHRONO
-
-#if defined(HAS_STD_CHRONO)
+#if !defined(BOOST_NO_CXX11_HDR_CHRONO)
   #include <chrono>
   #define STD_CHRONO std::chrono
 #else

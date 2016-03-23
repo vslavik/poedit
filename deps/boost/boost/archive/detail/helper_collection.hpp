@@ -55,11 +55,12 @@ class helper_collection
     collection m_collection;
 
     struct predicate {
+        BOOST_DELETED_FUNCTION(predicate & operator=(const predicate & rhs))
+    public:
         const void * const m_ti;
         bool operator()(helper_value_type const &rhs) const {
             return m_ti == rhs.first;
         }
-        predicate & operator=(const void * ti); // to suppress warning
         predicate(const void * ti) :
             m_ti(ti)
         {}
@@ -69,7 +70,7 @@ protected:
     ~helper_collection(){}
 public:
     template<typename Helper>
-    Helper& get_helper(void * const id = 0) {
+    Helper& find_helper(void * const id = 0) {
         collection::const_iterator it =
             std::find_if(
                 m_collection.begin(),

@@ -15,19 +15,17 @@
 
 #include <string>
 #include <stdexcept>
+#include <boost/log/detail/config.hpp>
 #include <boost/log/exceptions.hpp>
 #include <boost/log/detail/thread_specific.hpp>
 
 #if !defined(BOOST_LOG_NO_THREADS)
 
-#include <boost/thread/tss.hpp> // To hook on Boost.Thread configuration macros
-#include <boost/log/detail/header.hpp>
-
-
 #if defined(BOOST_THREAD_PLATFORM_WIN32)
 
 #include "windows_version.hpp"
 #include <windows.h>
+#include <boost/log/detail/header.hpp>
 
 namespace boost {
 
@@ -37,27 +35,26 @@ namespace aux {
 
 thread_specific_base::thread_specific_base()
 {
-    m_Key.as_dword = TlsAlloc();
-    if (m_Key.as_dword == TLS_OUT_OF_INDEXES)
+    m_Key = TlsAlloc();
+    if (BOOST_UNLIKELY(m_Key == TLS_OUT_OF_INDEXES))
     {
         BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
     }
-    set_content(0);
 }
 
 thread_specific_base::~thread_specific_base()
 {
-    TlsFree(m_Key.as_dword);
+    TlsFree(m_Key);
 }
 
 void* thread_specific_base::get_content() const
 {
-    return TlsGetValue(m_Key.as_dword);
+    return TlsGetValue(m_Key);
 }
 
 void thread_specific_base::set_content(void* value) const
 {
-    TlsSetValue(m_Key.as_dword, value);
+    TlsSetValue(m_Key, value);
 }
 
 } // namespace aux
@@ -68,9 +65,9 @@ BOOST_LOG_CLOSE_NAMESPACE // namespace log
 
 #elif defined(BOOST_THREAD_PLATFORM_PTHREAD)
 
+#include <cstddef>
 #include <pthread.h>
-#include <boost/type_traits/is_pointer.hpp>
-#include <boost/type_traits/alignment_of.hpp>
+#include <boost/log/detail/header.hpp>
 
 namespace boost {
 
@@ -80,141 +77,141 @@ namespace aux {
 
 BOOST_LOG_ANONYMOUS_NAMESPACE {
 
-    //! A helper template to disable early name binding
-    template< typename NonDependentT, typename DependentT >
-    struct make_dependent
+//! Some portability magic to detect how to store the TLS key
+template< typename KeyT, bool IsStoreableV = sizeof(KeyT) <= sizeof(void*) >
+struct pthread_key_traits
+{
+    typedef KeyT pthread_key_type;
+
+    static void allocate(void*& stg)
     {
-        typedef NonDependentT type;
-    };
-
-    //! Some portability magic to detect where to store the TLS key
-    template<
-        typename StorageT,
-        bool IsStoreableV = sizeof(pthread_key_t) <= sizeof(StorageT)
-            && alignment_of< pthread_key_t >::value <= alignment_of< StorageT >::value,
-        bool IsPointerV = is_pointer< pthread_key_t >::value
-    >
-    struct pthread_key_traits;
-
-    //! Worst case - the key is probably some structure
-    template< typename StorageT, bool IsPointerV >
-    struct pthread_key_traits< StorageT, false, IsPointerV >
-    {
-        typedef typename make_dependent< pthread_key_t, StorageT >::type pthread_key_type;
-
-        static void allocate(StorageT& stg)
+        pthread_key_type* pkey = new pthread_key_type();
+        const int res = pthread_key_create(pkey, NULL);
+        if (BOOST_UNLIKELY(res != 0))
         {
-            pthread_key_type* pkey = new pthread_key_type;
-            if (pthread_key_create(pkey, 0) != 0)
-            {
-                delete pkey;
-                BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
-            }
-            stg.as_pointer = pkey;
-        }
-
-        static void deallocate(StorageT& stg)
-        {
-            pthread_key_type* pkey = static_cast< pthread_key_type* >(stg.as_pointer);
-            pthread_key_delete(*pkey);
             delete pkey;
+            BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
         }
+        stg = pkey;
+    }
 
-        static void set_value(StorageT const& stg, void* value)
-        {
-            pthread_setspecific(*static_cast< pthread_key_type* >(stg.as_pointer), value);
-        }
-
-        static void* get_value(StorageT const& stg)
-        {
-            return pthread_getspecific(*static_cast< pthread_key_type* >(stg.as_pointer));
-        }
-    };
-
-    //! The key is a pointer
-    template< typename StorageT >
-    struct pthread_key_traits< StorageT, true, true >
+    static void deallocate(void* stg)
     {
-        typedef typename make_dependent< pthread_key_t, StorageT >::type pthread_key_type;
+        pthread_key_type* pkey = static_cast< pthread_key_type* >(stg);
+        pthread_key_delete(*pkey);
+        delete pkey;
+    }
 
-        static void allocate(StorageT& stg)
-        {
-            if (pthread_key_create(reinterpret_cast< pthread_key_type* >(&stg.as_pointer), 0) != 0)
-            {
-                BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
-            }
-        }
-
-        static void deallocate(StorageT& stg)
-        {
-            pthread_key_delete(reinterpret_cast< pthread_key_type >(stg.as_pointer));
-        }
-
-        static void set_value(StorageT const& stg, void* value)
-        {
-            pthread_setspecific(reinterpret_cast< const pthread_key_type >(stg.as_pointer), value);
-        }
-
-        static void* get_value(StorageT const& stg)
-        {
-            return pthread_getspecific(reinterpret_cast< const pthread_key_type >(stg.as_pointer));
-        }
-    };
-
-    //! The most probable case - the key is an integral or a structure that contains one
-    template< typename StorageT >
-    struct pthread_key_traits< StorageT, true, false >
+    static void set_value(void* stg, void* value)
     {
-        typedef typename make_dependent< pthread_key_t, StorageT >::type pthread_key_type;
+        pthread_setspecific(*static_cast< pthread_key_type* >(stg), value);
+    }
 
-        static void allocate(StorageT& stg)
-        {
-            if (pthread_key_create(reinterpret_cast< pthread_key_type* >(&stg.as_dword), 0) != 0)
-            {
-                BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
-            }
-        }
+    static void* get_value(void* stg)
+    {
+        return pthread_getspecific(*static_cast< pthread_key_type* >(stg));
+    }
+};
 
-        static void deallocate(StorageT& stg)
-        {
-            pthread_key_delete(*reinterpret_cast< pthread_key_type* >(&stg.as_dword));
-        }
+template< typename KeyT >
+struct pthread_key_traits< KeyT, true >
+{
+    typedef KeyT pthread_key_type;
 
-        static void set_value(StorageT const& stg, void* value)
-        {
-            pthread_setspecific(*reinterpret_cast< pthread_key_type const* >(&stg.as_dword), value);
-        }
-
-        static void* get_value(StorageT const& stg)
-        {
-            return pthread_getspecific(*reinterpret_cast< pthread_key_type const* >(&stg.as_dword));
-        }
+    union pthread_key_caster
+    {
+        void* as_storage;
+        pthread_key_type as_key;
     };
+
+    static void allocate(void*& stg)
+    {
+        pthread_key_caster caster = {};
+        const int res = pthread_key_create(&caster.as_key, NULL);
+        if (BOOST_UNLIKELY(res != 0))
+        {
+            BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
+        }
+        stg = caster.as_storage;
+    }
+
+    static void deallocate(void* stg)
+    {
+        pthread_key_caster caster;
+        caster.as_storage = stg;
+        pthread_key_delete(caster.as_key);
+    }
+
+    static void set_value(void* stg, void* value)
+    {
+        pthread_key_caster caster;
+        caster.as_storage = stg;
+        pthread_setspecific(caster.as_key, value);
+    }
+
+    static void* get_value(void* stg)
+    {
+        pthread_key_caster caster;
+        caster.as_storage = stg;
+        return pthread_getspecific(caster.as_key);
+    }
+};
+
+template< typename KeyT >
+struct pthread_key_traits< KeyT*, true >
+{
+    typedef KeyT* pthread_key_type;
+
+    static void allocate(void*& stg)
+    {
+        pthread_key_type key = NULL;
+        const int res = pthread_key_create(&key, NULL);
+        if (BOOST_UNLIKELY(res != 0))
+        {
+            BOOST_LOG_THROW_DESCR(system_error, "TLS capacity depleted");
+        }
+        stg = static_cast< void* >(key);
+    }
+
+    static void deallocate(void* stg)
+    {
+        pthread_key_delete(static_cast< pthread_key_type >(stg));
+    }
+
+    static void set_value(void* stg, void* value)
+    {
+        pthread_setspecific(static_cast< pthread_key_type >(stg), value);
+    }
+
+    static void* get_value(void* stg)
+    {
+        return pthread_getspecific(static_cast< pthread_key_type >(stg));
+    }
+};
 
 } // namespace
 
 thread_specific_base::thread_specific_base()
 {
-    typedef pthread_key_traits< key_storage > traits_t;
+    typedef pthread_key_traits< pthread_key_t > traits_t;
     traits_t::allocate(m_Key);
-    set_content(0);
 }
 
 thread_specific_base::~thread_specific_base()
 {
-    typedef pthread_key_traits< key_storage > traits_t;
+    typedef pthread_key_traits< pthread_key_t > traits_t;
     traits_t::deallocate(m_Key);
 }
 
 void* thread_specific_base::get_content() const
 {
-    typedef pthread_key_traits< key_storage > traits_t;
+    typedef pthread_key_traits< pthread_key_t > traits_t;
     return traits_t::get_value(m_Key);
 }
 
 void thread_specific_base::set_content(void* value) const
 {
-    typedef pthread_key_traits< key_storage > traits_t;
+    typedef pthread_key_traits< pthread_key_t > traits_t;
     traits_t::set_value(m_Key, value);
 }
 

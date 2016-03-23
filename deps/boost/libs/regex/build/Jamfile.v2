@@ -115,7 +115,21 @@ if ! $(disable-icu)
 
 }
 
-exe has_icu : ./has_icu_test.cpp  : $(ICU_OPTS) ;
+actions regex_simple_run_action
+{
+      $(>) > $(<)
+}
+
+rule regex-run-simple ( sources + : args * : input-files * : requirements * : target-name )
+{
+   exe $(target-name)_exe : $(sources) : $(requirements) ;
+   explicit $(target-name)_exe ;
+   make $(target-name).output : $(target-name)_exe : @regex_simple_run_action ;
+   explicit $(target-name).output ;
+   alias $(target-name) : $(target-name).output ;
+}
+
+regex-run-simple has_icu_test.cpp : : : $(ICU_OPTS) : has_icu ;
 explicit has_icu ;
 
 alias icu_options : : : : [ check-target-builds has_icu : $(ICU_OPTS) : ] ;
@@ -146,6 +160,7 @@ lib boost_regex : ../src/$(SOURCES) icu_options
 	     #<toolset>gcc-mw:<link>static
 	     #<toolset>gcc-mingw:<link>static
 	     <toolset>gcc-cygwin:<link>static
+        <toolset>sun:<link>static
     ;
 
 boost-install boost_regex ;

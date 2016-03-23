@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,8 +6,8 @@
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../jam.html" title="Chapter&#160;42.&#160;Boost.Jam : 3.1.19">
-<link rel="prev" href="../jam.html" title="Chapter&#160;42.&#160;Boost.Jam : 3.1.19">
+<link rel="up" href="../jam.html" title="Chapter&#160;43.&#160;Boost.Jam : 3.1.19">
+<link rel="prev" href="../jam.html" title="Chapter&#160;43.&#160;Boost.Jam : 3.1.19">
 <link rel="next" href="miscellaneous.html" title="Miscellaneous">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -132,9 +133,7 @@
         value is the value of its last statement, though only the following statements
         have values: 'if' (value of the leg chosen), 'switch' (value of the case
         chosen), set (value of the resulting variable), and 'return' (value of its
-        arguments). Note that 'return' doesn't actually cause a return, i.e., is
-        a no-op unless it is the last statement of the last block executed within
-        rule body.
+        arguments).
       </p>
 <p>
         The <code class="literal">b2</code> statements for defining and invoking rules are
@@ -857,6 +856,10 @@ for local subkey in $(subkeys)
                     Don't capture the output of the command. Instead an empty ("")
                     string value is returned in place of the output.
                   </p></dd>
+<dt><span class="term"><code class="literal">strip-eol</code></span></dt>
+<dd><p>
+                    Remove trailing end-of-line character from output, if any.
+                  </p></dd>
 </dl>
 </div>
 <p>
@@ -1060,10 +1063,7 @@ for local subkey in $(subkeys)
 </pre>
 <p>
         Within a rule body, the return statement sets the return value for an invocation
-        of the rule. It does <span class="bold"><strong>not</strong></span> cause the rule
-        to return; a rule's value is actually the value of the last statement executed,
-        so a return should be the last statement executed before the rule "naturally"
-        returns.
+        of the rule and returns to the caller.
       </p>
 <pre class="programlisting">switch <span class="emphasis"><em>value</em></span>
 {
@@ -1109,6 +1109,16 @@ for local subkey in $(subkeys)
         Repeatedly execute <span class="emphasis"><em>statements</em></span> while <span class="emphasis"><em>cond</em></span>
         remains true upon entry. (See the description of <span class="emphasis"><em>cond</em></span>
         expression syntax under if, above).
+      </p>
+<pre class="programlisting">break ;
+</pre>
+<p>
+        Immediately exits the nearest enclosing while or for loop.
+      </p>
+<pre class="programlisting">continue ;
+</pre>
+<p>
+        Jumps to the top of the nearest enclosing while or for loop.
       </p>
 </div>
 <div class="section">

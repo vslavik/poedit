@@ -18,13 +18,14 @@
 
 #include <string>
 #include <boost/regex.hpp>
-#include <boost/test/test_tools.hpp>
+#include <boost/detail/lightweight_main.hpp>
+#include "../test_macros.hpp"
 
 #ifdef BOOST_INTEL
 #pragma warning(disable:1418 981 983 383)
 #endif
 
-int test_main( int , char* [] )
+int cpp_main( int , char* [] )
 {
    std::string bad_text(1024, ' ');
    std::string good_text(200, ' ');
@@ -56,6 +57,4 @@ int test_main( int , char* [] )
 
    return 0;
 }
-
-#include <boost/test/included/test_exec_monitor.hpp>
 

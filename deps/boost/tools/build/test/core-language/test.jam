@@ -317,7 +317,7 @@ rule call-foreach ( values * )
     }
 }
 
-check-equal foreach-result : [ call-foreach 1 2 3 ] : ;
+check-equal foreach-result : [ call-foreach 1 2 3 ] : 1 ;
 
 result = ;
 local varname = x ;
@@ -406,7 +406,7 @@ rule test-rule
     }
 }
 
-check-equal if-false-result : [ test-rule ] : ;
+check-equal if-false-result : [ test-rule ] : result ;
 
 rule test-rule
 {
@@ -1203,7 +1203,147 @@ rule test-rule
     }
 }
 
-check-equal while-result-2 : [ test-rule ] : ;
+check-equal while-result-2 : [ test-rule ] : x ;
+
+}
+
+
+#
+# test break
+#
+
+{
+
+local z = original ;
+local done ;
+while ! $(done)
+{
+    local z = inner ;
+    mark-order r1 ;
+    break ;
+    mark-order r2 ;
+    done = true ;
+}
+
+check-order break-while-exec : r1 ;
+check-equal break-while-cleanup : $(z) : original ;
+
+local values = v1 v2 ;
+
+for y in $(values)
+{
+    local z = inner ;
+    mark-order r1-$(y) ;
+    break ;
+    mark-order r2-$(y) ;
+}
+
+check-order break-for-exec : r1-v1 ;
+check-equal break-for-cleanup : $(z) : original ; 
+
+for local y in $(values)
+{
+    local z = inner ;
+    mark-order r1-$(y) ;
+    break ;
+    mark-order r2-$(y) ;
+}
+
+check-order break-for-local-exec : r1-v1 ;
+check-equal break-for-local-cleanup : $(z) : original ; 
+
+local z1 = z1val ;
+local z2 = z2val ;
+done = ;
+while ! $(done)
+{
+    local z1 = z1new ;
+    mark-order r1 ;
+    for local y in $(values)
+    {
+        local z2 = z2new ;
+        mark-order r2 ;
+        break ;
+        mark-order r3 ;
+    }
+    mark-order r4 ;
+    break ;
+    mark-order r5 ;
+    done = true ;
+}
+
+check-order break-nested-exec : r1 r2 r4 ;
+check-equal break-nested-cleanup1 : $(z1) : z1val ;
+check-equal break-nested-cleanup2 : $(z2) : z2val ;
+
+}
+
+#
+# test continue
+#
+
+{
+
+local z = original ;
+local done ;
+while ! [ mark-order r1 : $(done) ]
+{
+    local z = inner ;
+    done = true ;
+    mark-order r2 ;
+    continue ;
+    mark-order r3 ;
+}
+
+check-order continue-while-exec : r1 r2 r1 ;
+check-equal continue-while-cleanup : $(z) : original ;
+
+local values = v1 v2 ;
+for y in $(values)
+{
+    local z = inner ;
+    mark-order r1-$(y) ;
+    continue ;
+    mark-order r2-$(y) ;
+}
+
+check-order continue-for-exec : r1-v1 r1-v2 ;
+check-equal continue-for-cleanup : $(z) : original ;
+
+for local y in $(values)
+{
+    local z = inner ;
+    mark-order r1-$(y) ;
+    continue ;
+    mark-order r2-$(y) ;
+}
+
+check-order continue-for-local-exec : r1-v1 r1-v2 ;
+check-equal continue-for-local-cleanup : $(z) : original ;
+
+local z1 = z1val ;
+local z2 = z2val ;
+done = ;
+while ! [ mark-order r1 : $(done) ]
+{
+    local z1 = z1new ;
+    done = true ;
+    mark-order r2 ;
+    for local y in $(values)
+    {
+        local z2 = z2new ;
+        mark-order r3-$(y) ;
+        continue ;
+        mark-order r4-$(y) ;
+    }
+    mark-order r5 ;
+    continue ;
+    mark-order r6 ;
+}
+
+check-order continue-nested-exec : r1 r2 r3-v1 r3-v2 r5 r1 ;
+check-equal continue-nested-cleanup1 : $(z1) : z1val ;
+check-equal continue-nested-cleanup2 : $(z2) : z2val ;
 
 }
 

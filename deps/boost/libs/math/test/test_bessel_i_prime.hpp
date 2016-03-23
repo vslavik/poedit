@@ -14,7 +14,6 @@
 #include "functor.hpp"
 
 #include "handle_test_result.hpp"
-#include "test_bessel_hooks.hpp"
 #include "table_type.hpp"
 
 #ifndef SC_
@@ -24,18 +23,27 @@
 template <class T>
 T cyl_bessel_i_prime_int_wrapper(T v, T x)
 {
+#ifdef BESSEL_IPN_FUNCTION_TO_TEST
+   return static_cast<T>(
+      BESSEL_IPN_FUNCTION_TO_TEST(
+      boost::math::itrunc(v), x));
+#else
    return static_cast<T>(
       boost::math::cyl_bessel_i_prime(
       boost::math::itrunc(v), x));
+#endif
 }
 
 template <class Real, class T>
 void do_test_cyl_bessel_i_prime(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_IP_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef BESSEL_IP_FUNCTION_TO_TEST
+   pg funcp = BESSEL_IP_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::cyl_bessel_i_prime<value_type, value_type>;
 #else
    pg funcp = boost::math::cyl_bessel_i_prime;
@@ -53,13 +61,15 @@ void do_test_cyl_bessel_i_prime(const T& data, const char* type_name, const char
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_bessel_i_prime", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_bessel_i_prime", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class Real, class T>
 void do_test_cyl_bessel_i_prime_int(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(BESSEL_IPN_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type, value_type);
@@ -81,13 +91,15 @@ void do_test_cyl_bessel_i_prime_int(const T& data, const char* type_name, const 
       data, 
       bind_func<Real>(funcp, 0, 1), 
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cyl_bessel_i_prime", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cyl_bessel_i_prime (integer orders)", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>
 void test_bessel(T, const char* name)
 {
+    BOOST_MATH_STD_USING
     // function values calculated on wolframalpha.com
     static const boost::array<boost::array<T, 3>, 10> i0_prime_data = {{
         {{ SC_(0.0), SC_(0.0), SC_(0.0) }},
@@ -146,7 +158,7 @@ void test_bessel(T, const char* name)
 #if LDBL_MAX_10_EXP > 326
         {{ SC_(-1.125), static_cast<T>(ldexp(0.5, -512)), SC_(4.0715272050947359203430409041001937149343363573066460226173390878707e327) }},
 #else
-        {{ SC_(-1.125), static_cast<T>(ldexp(0.5, -400)), SC_(9.2176109325125492442218016833983080399738569000864e255) }},
+        { { SC_(-1.125), static_cast<T>(ldexp(0.5, -512)), std::numeric_limits<T>::has_infinity ? std::numeric_limits<T>::infinity() : boost::math::tools::max_value<T>() } },
 #endif
     }};
 
@@ -165,7 +177,7 @@ void test_bessel(T, const char* name)
 #include "bessel_i_prime_data.ipp"
     do_test_cyl_bessel_i_prime<T>(bessel_i_prime_data, name, "Bessel I'v: Random Data");
 
-    if(0 != static_cast<T>(ldexp(0.5, -700)))
+    if(0 != static_cast<T>(ldexp(static_cast<T>(0.5), -700)))
       do_test_cyl_bessel_i_prime<T>(iv_prime_large_data, name, "Bessel I'v: Mathworld Data (large values)");
 }
 

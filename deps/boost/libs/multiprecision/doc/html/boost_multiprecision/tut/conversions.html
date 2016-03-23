@@ -66,18 +66,18 @@
 </pre>
 </li>
 <li class="listitem">
-            Conversions to rational numbers from floating point ones are always allowed,
+            Conversions to rational numbers from floating-point ones are always allowed,
             and are exact and implicit as long as the rational number uses an unbounded
             integer type. Please be aware that constructing a rational number from
-            an extended precision floating point type with a large exponent range
+            an extended precision floating-point type with a large exponent range
             can effectively run the system out of memory, as in the extreme case
             <span class="emphasis"><em>2<sup>max_exponent</sup> / CHAR_BITS</em></span> bytes of storage may be
-            required. This does not represent a problem for built in floating point
+            required. This does not represent a problem for built in floating-point
             types however, as the exponent range for these is rather limited.
           </li>
 <li class="listitem">
-            Conversions to floating point numbers from rational ones are rounded
-            to nearest (less than 0.5ulp error) as long as the floating point number
+            Conversions to floating-point numbers from rational ones are rounded
+            to nearest (less than 0.5ulp error) as long as the floating-point number
             is binary, and the integer type used by the rational number is unbounded.
           </li>
 </ul></div>
@@ -153,11 +153,11 @@
           </p>
 <pre class="programlisting"><span class="identifier">int128_t</span>     <span class="identifier">i128</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="identifier">int266_t</span>     <span class="identifier">i256</span> <span class="special">=</span> <span class="identifier">i128</span><span class="special">;</span>  <span class="comment">// OK implicit widening conversion</span>
-<span class="identifier">i128_t</span>            <span class="special">=</span> <span class="identifier">i256</span><span class="special">;</span>  <span class="comment">// Error, no assignment operator found, narrowing conversion is explicit</span>
-<span class="identifier">i128_t</span>            <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">int128_t</span><span class="special">&gt;(</span><span class="identifier">i256</span><span class="special">);</span> <span class="comment">// OK, explicit narrowing conversion</span>
+<span class="identifier">i128_t</span>            <span class="special">=</span> <span class="identifier">i256</span><span class="special">;</span>  <span class="comment">// Error, no assignment operator found, narrowing conversion is explicit.</span>
+<span class="identifier">i128_t</span>            <span class="special">=</span> <span class="keyword">static_cast</span><span class="special">&lt;</span><span class="identifier">int128_t</span><span class="special">&gt;(</span><span class="identifier">i256</span><span class="special">);</span> <span class="comment">// OK, explicit narrowing conversion.</span>
 
 <span class="identifier">mpz_int</span>      <span class="identifier">z</span>    <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
-<span class="identifier">mpf_float</span>    <span class="identifier">f</span>    <span class="special">=</span> <span class="identifier">z</span><span class="special">;</span>    <span class="comment">// OK, GMP handles this conversion natively, and it's not lossy and therefore implicit</span>
+<span class="identifier">mpf_float</span>    <span class="identifier">f</span>    <span class="special">=</span> <span class="identifier">z</span><span class="special">;</span>    <span class="comment">// OK, GMP handles this conversion natively, and it's not lossy and therefore implicit.</span>
 
 <span class="identifier">mpf_float_50</span> <span class="identifier">f50</span>  <span class="special">=</span> <span class="number">2</span><span class="special">;</span>
 <span class="identifier">f</span>                 <span class="special">=</span> <span class="identifier">f50</span><span class="special">;</span>  <span class="comment">// OK, conversion from fixed to variable precision, f will have 50 digits precision.</span>

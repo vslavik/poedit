@@ -14,6 +14,8 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_GET_TURN_INFO_LA_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_GET_TURN_INFO_LA_HPP
 
+#include <boost/geometry/core/assert.hpp>
+
 #include <boost/geometry/util/condition.hpp>
 
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
@@ -569,7 +571,7 @@ struct get_turn_info_linear_areal
                     tp.operations[0].is_collinear = true;
                     //tp.operations[1].is_collinear = false;
 
-                    BOOST_ASSERT(inters.i_info().count > 1);
+                    BOOST_GEOMETRY_ASSERT(inters.i_info().count > 1);
                     base_turn_handler::assign_point(tp, method_touch_interior, inters.i_info(), 1);
 
                     AssignPolicy::apply(tp, inters.pi(), inters.qi(), inters);
@@ -816,7 +818,7 @@ struct get_turn_info_linear_areal
             
             if ( inters.i_info().count > 1 )
             {
-                //BOOST_ASSERT( result.template get<1>().dir_a == 0 && result.template get<1>().dir_b == 0 );
+                //BOOST_GEOMETRY_ASSERT( result.template get<1>().dir_a == 0 && result.template get<1>().dir_b == 0 );
                 tp.operations[0].is_collinear = true;
                 tp.operations[1].operation = opposite ? operation_continue : operation_union;
             }

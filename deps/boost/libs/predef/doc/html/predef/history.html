@@ -4,8 +4,8 @@
 <title>History</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Predef 1.2">
-<link rel="up" href="../index.html" title="Predef 1.2">
+<link rel="home" href="../index.html" title="Predef 1.4">
+<link rel="up" href="../index.html" title="Predef 1.4">
 <link rel="prev" href="check_utilities.html" title="Check Utilities">
 <link rel="next" href="to_do.html" title="To Do">
 </head>
@@ -19,6 +19,55 @@
 </h2></div></div></div>
 <h4>
 <a name="predef.history.h0"></a>
+      <span class="phrase"><a name="predef.history.1_4"></a></span><a class="link" href="history.html#predef.history.1_4">1.4</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Add detection of SIMD hardware. With the addition of the <code class="computeroutput"><span class="identifier">BOOST_HW_</span><span class="special">*</span></code>
+          category (from Charly Chevalier).
+        </li>
+<li class="listitem">
+          Add compile only version of check utilities to address cross-compile use
+          cases. And changed the BBv2 check support to use compile only checks.
+        </li>
+<li class="listitem">
+          Fix test warnings.
+        </li>
+<li class="listitem">
+          Fix typos on <code class="computeroutput"><span class="identifier">AVAILABLE</span></code>
+          macros for Windows Platform. (from Vemund Handeland)
+        </li>
+</ul></div>
+<h4>
+<a name="predef.history.h1"></a>
+      <span class="phrase"><a name="predef.history.1_3"></a></span><a class="link" href="history.html#predef.history.1_3">1.3</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          Fix many problems with <code class="computeroutput"><span class="identifier">predef_check</span></code>
+          functionality.
+        </li>
+<li class="listitem">
+          Update SunPro detection to accomodate latest version of compiler from Oracle.
+        </li>
+<li class="listitem">
+          Addition of Travis-CI and Appveyor testing.
+        </li>
+<li class="listitem">
+          Add <code class="computeroutput"><span class="keyword">and</span></code> and <code class="computeroutput"><span class="keyword">or</span></code> logical operators for <code class="computeroutput"><span class="identifier">predef_check</span></code>
+          expression on the Boost Build side.
+        </li>
+<li class="listitem">
+          Fix <code class="computeroutput"><span class="identifier">BOOST_ARCH_PARISC</span></code> to
+          correctly spelled name (from Graham Hanson).
+        </li>
+<li class="listitem">
+          Fix <code class="computeroutput"><span class="identifier">MAKE_YYYYM</span></code> macros to
+          correctly limit the month (from rick68).
+        </li>
+</ul></div>
+<h4>
+<a name="predef.history.h2"></a>
       <span class="phrase"><a name="predef.history.1_2"></a></span><a class="link" href="history.html#predef.history.1_2">1.2</a>
     </h4>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
@@ -42,7 +91,7 @@
         </li>
 </ul></div>
 <h4>
-<a name="predef.history.h1"></a>
+<a name="predef.history.h3"></a>
       <span class="phrase"><a name="predef.history.1_1"></a></span><a class="link" href="history.html#predef.history.1_1">1.1</a>
     </h4>
 <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
@@ -84,7 +133,8 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2014 Rene Rivera<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2015 Rene
+      Rivera<br>Copyright &#169; 2015 Charly Chevalier<br>Copyright &#169; 2015 Joel Falcou<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

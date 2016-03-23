@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -5,9 +6,9 @@
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="../../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../geometric_distribution.html#idp396235328" title="Description">
+<link rel="up" href="../geometric_distribution.html#idm45555158604768" title="Description">
 <link rel="prev" href="../geometric_distribution.html" title="Class template geometric_distribution">
-<link rel="next" href="../independent_bits_engine.html" title="Class template independent_bits_engine">
+<link rel="next" href="../hyperexp_idm45507086672304.html" title="Class template hyperexponential_distribution">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../geometric_distribution.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../geometric_distribution.html#idp396235328"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../independent_bits_engine.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../geometric_distribution.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../geometric_distribution.html#idm45555158604768"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../hyperexp_idm45507086672304.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.random.geometric_distribution.param_type"></a><div class="titlepage"></div>
@@ -39,65 +40,65 @@
   <span class="keyword">typedef</span> <a class="link" href="../geometric_distribution.html" title="Class template geometric_distribution">geometric_distribution</a> <a name="boost.random.geometric_distribution.param_type.distribution_type"></a><span class="identifier">distribution_type</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="param_type.html#boost.random.geometric_distribution.param_typeconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="param_type.html#idp153790016-bb"><span class="identifier">param_type</span></a><span class="special">(</span><span class="identifier">RealType</span> <span class="special">=</span> <span class="number">0</span><span class="special">.</span><span class="number">5</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="param_type.html#idm45506972947824-bb"><span class="identifier">param_type</span></a><span class="special">(</span><span class="identifier">RealType</span> <span class="special">=</span> <span class="number">0</span><span class="special">.</span><span class="number">5</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="param_type.html#idp212292112-bb">public member functions</a></span>
-  <span class="identifier">RealType</span> <a class="link" href="param_type.html#idp212291536-bb"><span class="identifier">p</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="param_type.html#idm45506972946368-bb">public member functions</a></span>
+  <span class="identifier">RealType</span> <a class="link" href="param_type.html#idm45506972947568-bb"><span class="identifier">p</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="param_type.html#idp153788288-bb">friend functions</a></span>
+  <span class="comment">// <a class="link" href="param_type.html#idm45506993511200-bb">friend functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
     <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-    <a class="link" href="param_type.html#idp153787488-bb"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="param_type.html#idm45506972951072-bb"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
     <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-    <a class="link" href="param_type.html#idp153782992-bb"><span class="keyword">operator</span><span class="special">&gt;&gt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="param_type.html#idp107648560-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="param_type.html#idp107646272-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="param_type.html#idm45507043627744-bb"><span class="keyword">operator</span><span class="special">&gt;&gt;</span></a><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="param_type.html#idm45507043632512-bb"><span class="keyword">operator</span><span class="special">==</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">friend</span> <span class="keyword">bool</span> <a class="link" href="param_type.html#idm45507043635360-bb"><span class="keyword">operator</span><span class="special">!=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp396486224"></a><h2>Description</h2>
+<a name="idm45555158353648"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp396486640"></a><h3>
+<a name="idm45555158353232"></a><h3>
 <a name="boost.random.geometric_distribution.param_typeconstruct-copy-destruct"></a><code class="computeroutput">param_type</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp153790016-bb"></a><span class="identifier">param_type</span><span class="special">(</span><span class="identifier">RealType</span> p <span class="special">=</span> <span class="number">0</span><span class="special">.</span><span class="number">5</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45506972947824-bb"></a><span class="identifier">param_type</span><span class="special">(</span><span class="identifier">RealType</span> p <span class="special">=</span> <span class="number">0</span><span class="special">.</span><span class="number">5</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Constructs the parameters with p. </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp396496480"></a><h3>
-<a name="idp212292112-bb"></a><code class="computeroutput">param_type</code> public member functions</h3>
+<a name="idm45555158343408"></a><h3>
+<a name="idm45506972946368-bb"></a><code class="computeroutput">param_type</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">RealType</span> <a name="idp212291536-bb"></a><span class="identifier">p</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">RealType</span> <a name="idm45506972947568-bb"></a><span class="identifier">p</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Returns the p parameter of the distribution. </p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp396504000"></a><h3>
-<a name="idp153788288-bb"></a><code class="computeroutput">param_type</code> friend functions</h3>
+<a name="idm45555158336016"></a><h3>
+<a name="idm45506993511200-bb"></a><code class="computeroutput">param_type</code> friend functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
   <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-  <a name="idp153787488-bb"></a><span class="keyword">operator</span><span class="special">&lt;&lt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> os<span class="special">,</span> 
+  <a name="idm45506972951072-bb"></a><span class="keyword">operator</span><span class="special">&lt;&lt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> os<span class="special">,</span> 
              <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> param<span class="special">)</span><span class="special">;</span></pre>
 <p>Writes the parameters to a std::ostream. </p>
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> Traits<span class="special">&gt;</span> 
   <span class="keyword">friend</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> 
-  <a name="idp153782992-bb"></a><span class="keyword">operator</span><span class="special">&gt;&gt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> is<span class="special">,</span> 
+  <a name="idm45507043627744-bb"></a><span class="keyword">operator</span><span class="special">&gt;&gt;</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_istream</span><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">Traits</span> <span class="special">&gt;</span> <span class="special">&amp;</span> is<span class="special">,</span> 
              <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> param<span class="special">)</span><span class="special">;</span></pre>
 <p>Reads the parameters from a std::istream. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp107648560-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idm45507043632512-bb"></a><span class="keyword">operator</span><span class="special">==</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>Returns true if the two sets of parameters are equal. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idp107646272-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">friend</span> <span class="keyword">bool</span> <a name="idm45507043635360-bb"></a><span class="keyword">operator</span><span class="special">!=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> lhs<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="param_type.html" title="Class param_type">param_type</a> <span class="special">&amp;</span> rhs<span class="special">)</span><span class="special">;</span></pre>
 <p>Returns true if the two sets of parameters are different. </p>
 </li>
 </ol></div>
@@ -114,7 +115,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="../geometric_distribution.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../geometric_distribution.html#idp396235328"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../independent_bits_engine.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="../geometric_distribution.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../geometric_distribution.html#idm45555158604768"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../hyperexp_idm45507086672304.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

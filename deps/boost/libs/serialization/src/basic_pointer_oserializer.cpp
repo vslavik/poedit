@@ -15,14 +15,14 @@ namespace boost {
 namespace archive {
 namespace detail {
 
-BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
+BOOST_ARCHIVE_DECL 
 basic_pointer_oserializer::basic_pointer_oserializer(
     const boost::serialization::extended_type_info & eti
 ) :
     basic_serializer(eti)
 {}
 
-BOOST_ARCHIVE_DECL(BOOST_PP_EMPTY()) 
+BOOST_ARCHIVE_DECL 
 basic_pointer_oserializer::~basic_pointer_oserializer() {}
 
 } // namespace detail

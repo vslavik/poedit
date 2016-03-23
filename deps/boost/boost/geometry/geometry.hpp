@@ -70,6 +70,7 @@
 #include <boost/geometry/algorithms/for_each.hpp>
 #include <boost/geometry/algorithms/intersection.hpp>
 #include <boost/geometry/algorithms/intersects.hpp>
+#include <boost/geometry/algorithms/is_empty.hpp>
 #include <boost/geometry/algorithms/is_simple.hpp>
 #include <boost/geometry/algorithms/is_valid.hpp>
 #include <boost/geometry/algorithms/length.hpp>
@@ -80,6 +81,8 @@
 #include <boost/geometry/algorithms/num_segments.hpp>
 #include <boost/geometry/algorithms/overlaps.hpp>
 #include <boost/geometry/algorithms/perimeter.hpp>
+#include <boost/geometry/algorithms/relate.hpp>
+#include <boost/geometry/algorithms/relation.hpp>
 #include <boost/geometry/algorithms/remove_spikes.hpp>
 #include <boost/geometry/algorithms/reverse.hpp>
 #include <boost/geometry/algorithms/simplify.hpp>
@@ -89,10 +92,6 @@
 #include <boost/geometry/algorithms/union.hpp>
 #include <boost/geometry/algorithms/unique.hpp>
 #include <boost/geometry/algorithms/within.hpp>
-
-// Include multi a.o. because it can give weird effects
-// if you don't (e.g. area=0 of a multipolygon)
-#include <boost/geometry/multi/multi.hpp>
 
 // check includes all concepts
 #include <boost/geometry/geometries/concepts/check.hpp>

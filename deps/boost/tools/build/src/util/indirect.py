@@ -1,6 +1,6 @@
 # Status: minimally ported. This module is not supposed to be used much
 # with Boost.Build/Python.
-# 
+#
 # Copyright 2003 Dave Abrahams
 # Copyright 2003 Vladimir Prus
 # Distributed under the Boost Software License, Version 1.0.

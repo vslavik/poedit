@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -47,25 +48,25 @@
   <span class="keyword">typedef</span> <span class="identifier">time_res_traits</span><span class="special">::</span><span class="identifier">impl_type</span>               <a name="boost.posix_time.time_duration.impl_type"></a><span class="identifier">impl_type</span><span class="special">;</span>              
 
   <span class="comment">// <a class="link" href="time_duration.html#boost.posix_time.time_durationconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="time_duration.html#idp90696144-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">hour_type</span><span class="special">,</span> <span class="identifier">min_type</span><span class="special">,</span> <span class="identifier">sec_type</span><span class="special">,</span> <span class="identifier">fractional_seconds_type</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="time_duration.html#idp90699472-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="time_duration.html#idp90699760-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="time_duration.html#idp90701792-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">impl_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="time_duration.html#idm45507099603040-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">hour_type</span><span class="special">,</span> <span class="identifier">min_type</span><span class="special">,</span> <span class="identifier">sec_type</span><span class="special">,</span> <span class="identifier">fractional_seconds_type</span> <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="time_duration.html#idm45507099599712-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="time_duration.html#idm45507099599424-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="time_duration.html#idm45507099597392-bb"><span class="identifier">time_duration</span></a><span class="special">(</span><span class="identifier">impl_type</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp197767088"></a><h2>Description</h2>
+<a name="idm45555356779424"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idp197767504"></a><h3>
+<a name="idm45555356779008"></a><h3>
 <a name="boost.posix_time.time_durationconstruct-copy-destruct"></a><code class="computeroutput">time_duration</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a name="idp90696144-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="identifier">hour_type</span> hour<span class="special">,</span> <span class="identifier">min_type</span> min<span class="special">,</span> <span class="identifier">sec_type</span> sec<span class="special">,</span> 
+<li class="listitem"><pre class="literallayout"><a name="idm45507099603040-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="identifier">hour_type</span> hour<span class="special">,</span> <span class="identifier">min_type</span> min<span class="special">,</span> <span class="identifier">sec_type</span> sec<span class="special">,</span> 
               <span class="identifier">fractional_seconds_type</span> fs <span class="special">=</span> <span class="number">0</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a name="idp90699472-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a name="idm45507099599712-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><a name="idp90699760-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span> sv<span class="special">)</span><span class="special">;</span></pre>Construct from special_values. </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idp90701792-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="identifier">impl_type</span> tick_count<span class="special">)</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><a name="idm45507099599424-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">special_values</span> sv<span class="special">)</span><span class="special">;</span></pre>Construct from special_values. </li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45507099597392-bb"></a><span class="identifier">time_duration</span><span class="special">(</span><span class="identifier">impl_type</span> tick_count<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

@@ -110,10 +110,10 @@ where
 * `q` denotes a value of type `Q`, 
 * `e` denotes a value of type Q::value_type, 
 * `u` denotes a value of type Q::size_type, 
-* `lve` denotes a lvalue referece of type Q::value_type, 
-* `rve` denotes a rvalue referece of type Q::value_type:
+* `lve` denotes an lvalue reference of type Q::value_type, 
+* `rve` denotes an rvalue reference of type Q::value_type:
 [/* `spe` denotes a shared_ptr<Q::value_type>]
-* `qs` denotes a variable of of type `queus_op_status`, 
+* `qs` denotes a variable of of type `queue_op_status`, 
 
 
 [/////////////////////////////////////]
@@ -246,8 +246,8 @@ where
 * `e` denotes a value of type `Q::value_type`, 
 * `s` denotes a value of type `queue_status`, 
 * `u` denotes a value of type `Q::size_type`, 
-* `lve` denotes a lvalue referece of type Q::value_type, 
-* `rve` denotes a rvalue referece of type Q::value_type:
+* `lve` denotes an lvalue reference of type Q::value_type, 
+* `rve` denotes an rvalue reference of type Q::value_type:
 [/* `spe` denotes a shared_ptr<Q::value_type>]
 
 
@@ -357,8 +357,8 @@ where
 * `q` denotes a value of type `Q`, 
 * `e` denotes a value of type Q::value_type, 
 * `s` denotes a value of type `queue_status`, 
-* `lve` denotes a lvalue referece of type Q::value_type, 
-* `rve` denotes a rvalue referece of type Q::value_type:
+* `lve` denotes an lvalue reference of type Q::value_type, 
+* `rve` denotes an rvalue reference of type Q::value_type:
 [/* `spe` denotes a shared_ptr<Q::value_type>]
 
 
@@ -545,7 +545,7 @@ Closed queues add the following valid expressions
 
 [[Return:] [
 
-- If the queue is closed retun `queue_op_status::closed`,
+- If the queue is closed return `queue_op_status::closed`,
 
 - otherwise, return `queue_op_status::success` if no exception is thrown.
 

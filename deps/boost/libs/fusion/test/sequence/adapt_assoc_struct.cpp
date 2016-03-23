@@ -71,6 +71,9 @@ namespace ns
 
 #endif
 
+struct empty_struct {};
+BOOST_FUSION_ADAPT_ASSOC_STRUCT(empty_struct,); 
+
 int
 main()
 {

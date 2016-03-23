@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.ScopeExit 1.1.0">
 <link rel="next" href="scope_exit/getting_started.html" title="Getting Started">
 </head>
@@ -38,7 +38,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl>
+<dl class="toc">
 <dt><span class="section"><a href="index.html#scope_exit.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="scope_exit/getting_started.html">Getting Started</a></span></dt>
 <dd><dl>
@@ -70,7 +70,7 @@
 <p>
     This library allows to execute arbitrary code when the enclosing scope exits.
   </p>
-<div class="section scope_exit_introduction">
+<div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="scope_exit.introduction"></a><a class="link" href="index.html#scope_exit.introduction" title="Introduction">Introduction</a>
 </h2></div></div></div>
@@ -86,7 +86,7 @@
       Programmers can put resource acquisition directly in their code and next to
       it, they can write code that releases the resource using this library. For
       example (see also <a href="../../test/world.cpp" target="_top"><code class="literal">world.cpp</code></a>):
-      <sup>[<a name="scope_exit.introduction.f0" href="#ftn.scope_exit.introduction.f0" class="footnote">1</a>]</sup>
+      <a href="#ftn.scope_exit.introduction.f0" class="footnote" name="scope_exit.introduction.f0"><sup class="footnote">[1]</sup></a>
     </p>
 <p>
 </p>
@@ -108,8 +108,8 @@
     </p>
 </div>
 <div class="footnotes">
-<br><hr width="100" align="left">
-<div class="footnote"><p><sup>[<a id="ftn.scope_exit.introduction.f0" href="#scope_exit.introduction.f0" class="para">1</a>] </sup>
+<br><hr style="width:100; text-align:left;margin-left: 0">
+<div id="ftn.scope_exit.introduction.f0" class="footnote"><p><a href="#scope_exit.introduction.f0" class="para"><sup class="para">[1] </sup></a>
         Older versions of this library used a <a href="http://www.boost.org/libs/preprocessor" target="_top">Boost.Preprocessor</a>
         sequence to specify the list of captured variables. While maintaining full
         backward compatibility, it is now possible to specify the captured variables
@@ -120,7 +120,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: April 28, 2012 at 01:48:44 GMT</small></p></td>
+<td align="left"><p><small>Last revised: October 15, 2015 at 00:12:00 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

@@ -1,4 +1,4 @@
-// Copyright 2013-2014 Antony Polukhin
+// Copyright 2013-2015 Antony Polukhin
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See the accompanying file LICENSE_1_0.txt
@@ -18,10 +18,14 @@
 #include <boost/type_index.hpp>
 //] [/type_index_my_type_index_worldwide_macro]
 
+#include <boost/core/lightweight_test.hpp>
+#ifdef assert
+#   undef assert
+#endif
+#define assert(X) BOOST_TEST(X)
 
 
 using namespace my_namespace;
-#include <cassert>
 
 int main() {
 //[type_index_my_type_index_usage

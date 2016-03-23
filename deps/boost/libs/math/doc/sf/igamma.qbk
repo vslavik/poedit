@@ -49,7 +49,7 @@ the result of __domain_error.
 
 [optional_policy]
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1 and T2 are different types, otherwise the return type is simply T1.
 
    template <class T1, class T2>
@@ -117,109 +117,13 @@ reflect the more extreme nature of the tests conducted for these types.
 
 All values are in units of epsilon.
 
-[table Errors In the Function gamma_p(a,z)
-[[Significand Size] [Platform and Compiler] 
-   [0.5 < a < 100
+[table_gamma_p]
 
-   and
+[table_gamma_q]
 
-   0.01*a < z < 100*a]  
-      [1x10[super -12] < a < 5x10[super -2]
+[table_tgamma_lower]
 
-      and
-
-      0.01*a < z < 100*a] 
-         [1e-6 < a < 1.7x10[super 6]
-
-         and
-
-         1 < z < 100*a]]
-[[53] [Win32, Visual C++ 8] 
-   [Peak=36 Mean=9.1
-
-   (GSL Peak=342 Mean=46)
-
-   (__cephes Peak=491 Mean=102)]  
-      [Peak=4.5 Mean=1.4
-
-      (GSL Peak=4.8 Mean=0.76)
-
-      (__cephes Peak=21 Mean=5.6)] 
-         [Peak=244 Mean=21
-
-         (GSL Peak=1022 Mean=1054)
-
-         (__cephes Peak~8x10[super 6] Mean~7x10[super 4])]]
-[[64] [RedHat Linux IA32, gcc-3.3] [Peak=241 Mean=36]  [Peak=4.7 Mean=1.5] [Peak~30,220 Mean=1929]]
-[[64] [Redhat Linux IA64, gcc-3.4] [Peak=41 Mean=10]  [Peak=4.7 Mean=1.4] [Peak~30,790 Mean=1864]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=40.2 Mean=10.2]  [Peak=5 Mean=1.6] [Peak=5,476 Mean=440]]
-]
-
-[table Errors In the Function gamma_q(a,z)
-[[Significand Size] [Platform and Compiler] 
-[0.5 < a < 100
-
-and
-
-0.01*a < z < 100*a]  
-[1x10[super -12] < a < 5x10[super -2]
-
-and
-
-0.01*a < z < 100*a] [1x10[super -6] < a < 1.7x10[super 6]
-
-and
-
-1 < z < 100*a]]
-[[53] [Win32, Visual C++ 8] [Peak=28.3 Mean=7.2
-
-(GSL Peak=201 Mean=13)
-
-(__cephes Peak=556 Mean=97)]  [Peak=4.8 Mean=1.6
-
-(GSL Peak~1.3x10[super 10] Mean=1x10[super +9])
-
-(__cephes Peak~3x10[super 11] Mean=4x10[super 10])] [Peak=469 Mean=33
-
-(GSL Peak=27,050 Mean=2159)
-
-(__cephes Peak~8x10[super 6] Mean~7x10[super 5])]]
-[[64] [RedHat Linux IA32, gcc-3.3] [Peak=280 Mean=33]  [Peak=4.1 Mean=1.6] [Peak=11,490 Mean=732]]
-[[64] [Redhat Linux IA64, gcc-3.4] [Peak=32 Mean=9.4]  [Peak=4.7 Mean=1.5] [Peak=6815 Mean=414]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=37 Mean=10]  [Peak=11.2 Mean=2.0] [Peak=4,999 Mean=298]]
-]
-
-[table Errors In the Function tgamma_lower(a,z)
-[[Significand Size] [Platform and Compiler] [0.5 < a < 100
-
-and
-
-0.01*a < z < 100*a]  [1x10[super -12] < a < 5x10[super -2]
-
-and
-
-0.01*a < z < 100*a]]
-[[53] [Win32, Visual C++ 8] [Peak=5.5 Mean=1.4]  [Peak=3.6 Mean=0.78]]
-[[64] [RedHat Linux IA32, gcc-3.3] [Peak=402 Mean=79]  [Peak=3.4 Mean=0.8]]
-[[64] [Redhat Linux IA64, gcc-3.4] [Peak=6.8 Mean=1.4]  [Peak=3.4 Mean=0.78]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=6.1 Mean=1.8]  [Peak=3.7 Mean=0.89]]
-]
-
-[table Errors In the Function tgamma(a,z)
-[[Significand Size] [Platform and Compiler] [0.5 < a < 100
-
-and
-
-0.01*a < z < 100*a]  [1x10[super -12] < a < 5x10[super -2]
-
-and
-
-0.01*a < z < 100*a]]
-[[53] [Win32, Visual C++ 8] [Peak=5.9 Mean=1.5]  [Peak=1.8 Mean=0.6]]
-[[64] [RedHat Linux IA32, gcc-3.3] [Peak=596 Mean=116]  [Peak=3.2 Mean=0.84]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=40.2 Mean=2.5]  [Peak=3.2 Mean=0.8]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=364 Mean=17.6]  [Peak=12.7 Mean=1.8]]
-]
+[table_tgamma_incomplete_]
 
 [h4 Testing]
 

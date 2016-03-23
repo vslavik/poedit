@@ -70,6 +70,7 @@ run test_arithmetic_cpp_bin_float_3.cpp ;
 run test_arithmetic_mpf_50.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 run test_arithmetic_mpf.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 run test_arithmetic_mpz.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
+run test_arithmetic_mpz_rat.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 run test_arithmetic_mpz_br.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 run test_arithmetic_mpq.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
 
@@ -78,6 +79,7 @@ run test_arithmetic_mpfr_50.cpp mpfr gmp : : : [ check-target-builds ../config//
 run test_arithmetic_mpfr_50_static.cpp mpfr gmp : : : [ check-target-builds ../config//has_mpfr : : <build>no ] ;
 
 run test_arithmetic_tommath.cpp $(TOMMATH) : : : [ check-target-builds ../config//has_tommath : : <build>no ] ;
+run test_arithmetic_tommath_rat.cpp $(TOMMATH) : : : [ check-target-builds ../config//has_tommath : : <build>no ] ;
 run test_arithmetic_tommath_br.cpp $(TOMMATH) : : : [ check-target-builds ../config//has_tommath : : <build>no ] ;
 
 run test_arithmetic_cpp_int_1.cpp ;
@@ -156,7 +158,7 @@ run test_numeric_limits.cpp gmp
          [ check-target-builds ../config//has_gmp : : <build>no ]
         : test_numeric_limits_mpq ;
 
-run test_numeric_limits.cpp mpfr
+run test_numeric_limits.cpp mpfr gmp
         : # command line
         : # input files
         : # requirements
@@ -164,7 +166,7 @@ run test_numeric_limits.cpp mpfr
          [ check-target-builds ../config//has_mpfr : : <build>no ]
         : test_numeric_limits_mpfr ;
 
-run test_numeric_limits.cpp mpfr
+run test_numeric_limits.cpp mpfr gmp
         : # command line
         : # input files
         : # requirements
@@ -296,7 +298,7 @@ run test_constants.cpp gmp
          [ check-target-builds ../config//has_gmp : : <build>no ]
         : test_constants_mpf50 ;
 
-run test_constants.cpp mpfr
+run test_constants.cpp mpfr gmp
         : # command line
         : # input files
         : # requirements
@@ -613,6 +615,7 @@ build-project ../example ;
 
 
 run test_cpp_int_conv.cpp ;
+run test_cpp_int_import_export.cpp ;
 run test_native_integer.cpp ;
 
 run test_mixed_cpp_int.cpp ;
@@ -670,6 +673,18 @@ run test_float128_serial.cpp ../../serialization/build//boost_serialization quad
 run test_cpp_bin_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST1 : test_bin_dec_float_serial_1 ;
 run test_cpp_bin_float_serial.cpp ../../serialization/build//boost_serialization : : : release <define>TEST2 : test_bin_dec_float_serial_2 ;
 
+#
+# Mixed mode comparison tests, see: https://svn.boost.org/trac/boost/ticket/11328
+#
+run test_checked_mixed_cpp_int.cpp ;
+run test_mixed_cpp_bin_float.cpp ;
+run test_mixed_cpp_dec_float.cpp ;
+run test_mixed_mpf_float.cpp gmp : : : [ check-target-builds ../config//has_gmp : : <build>no ] ;
+run test_mixed_mpfr_float.cpp  mpfr gmp : : : [ check-target-builds ../config//has_mpfr : : <build>no ] ;
+#
+# Check for narrowing conversions:
+#
+run test_float_conversions.cpp ;
 
 if $(enable-specfun)
 {
@@ -687,7 +702,9 @@ if $(enable-specfun)
             <define>TEST_MPFR_50
             <optimization>speed
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <toolset>msvc:<cxxflags>-bigobj
+            <include>../../math/include_private
             release
            : $(source:B)_mpfr ;
       run $(source) gmp 
@@ -701,7 +718,9 @@ if $(enable-specfun)
             <optimization>speed
             <define>TEST_MPF_50
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <toolset>msvc:<cxxflags>-bigobj
+            <include>../../math/include_private
             release
            : $(source:B)_mpf ;
       run $(source) /boost/test//boost_unit_test_framework/<link>static 
@@ -712,8 +731,10 @@ if $(enable-specfun)
            : # requirements
             <define>TEST_CPP_DEC_FLOAT
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <optimization>speed
             <toolset>msvc:<cxxflags>-bigobj
+            <include>../../math/include_private
             release
            : $(source:B)_cpp_dec_float ;
       run $(source) /boost/test//boost_unit_test_framework/<link>static 
@@ -724,8 +745,10 @@ if $(enable-specfun)
            : # requirements
             <define>TEST_CPP_BIN_FLOAT
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <optimization>speed
             <toolset>msvc:<cxxflags>-bigobj
+            <include>../../math/include_private
             release
            : $(source:B)_cpp_bin_float ;
       run $(source) quadmath 
@@ -739,7 +762,9 @@ if $(enable-specfun)
             <optimization>speed
             <define>TEST_FLOAT128
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <toolset>msvc:<cxxflags>-bigobj
+            <include>../../math/include_private
             release
            : $(source:B)_float128 ;
       run $(source)
@@ -753,7 +778,9 @@ if $(enable-specfun)
             <optimization>speed
             <define>TEST_FLOAT128
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <toolset>msvc:<cxxflags>-bigobj
+            <include>../../math/include_private
             release
            : $(source:B)_intel_quad ;
    }
@@ -771,8 +798,10 @@ if $(enable-specfun)
            : # requirements
             <optimization>speed
             <define>BOOST_ALL_NO_LIB
+            <define>BOOST_OPTIONAL_USE_OLD_DEFINITION_OF_NONE
             <toolset>msvc:<cxxflags>-bigobj
             [ check-target-builds ../config//has_mpfr : <define>TEST_MPFR <source>gmp <source>mpfr :  ]
+            <include>../../math/include_private
             release ;
    }
 }

@@ -11,10 +11,10 @@
 
 
 #include <boost/array.hpp>
-#include <boost/assert.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/range.hpp>
 
+#include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/ring_type.hpp>
 #include <boost/geometry/core/exterior_ring.hpp>
 #include <boost/geometry/core/interior_rings.hpp>
@@ -43,8 +43,8 @@ struct copy_segment_point_range
     {
         detail::normalized_view<Range const> view(range);
 
-        signed_index_type const n = boost::size(view);
-        signed_index_type index = seg_id.segment_index;
+        signed_size_type const n = boost::size(view);
+        signed_size_type index = seg_id.segment_index;
         if (second)
         {
             index++;
@@ -54,7 +54,7 @@ struct copy_segment_point_range
             }
         }
 
-        BOOST_ASSERT(index >= 0 && index < n);
+        BOOST_GEOMETRY_ASSERT(index >= 0 && index < n);
 
         geometry::convert(*(boost::begin(view) + index), point);
         return true;
@@ -95,7 +95,7 @@ struct copy_segment_point_box
             SegmentIdentifier const& seg_id, bool second,
             PointOut& point)
     {
-        signed_index_type index = seg_id.segment_index;
+        signed_size_type index = seg_id.segment_index;
         if (second)
         {
             index++;
@@ -123,7 +123,7 @@ struct copy_segment_point_multi
                              PointOut& point)
     {
 
-        BOOST_ASSERT
+        BOOST_GEOMETRY_ASSERT
             (
                 seg_id.multi_index >= 0
                 && seg_id.multi_index < int(boost::size(multi))
@@ -306,7 +306,7 @@ inline bool copy_segment_point(Geometry1 const& geometry1, Geometry2 const& geom
     concept::check<Geometry1 const>();
     concept::check<Geometry2 const>();
 
-    BOOST_ASSERT(seg_id.source_index == 0 || seg_id.source_index == 1);
+    BOOST_GEOMETRY_ASSERT(seg_id.source_index == 0 || seg_id.source_index == 1);
 
     if (seg_id.source_index == 0)
     {

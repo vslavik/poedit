@@ -4,7 +4,7 @@
 <title>Finding the Next Representable Value in a Specific Direction (nextafter)</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../next_float.html" title="Floating-Point Representation Distance (ULP), and Finding Adjacent Floating-Point Values">
 <link rel="prev" href="../next_float.html" title="Floating-Point Representation Distance (ULP), and Finding Adjacent Floating-Point Values">
 <link rel="next" href="float_next.html" title="Finding the Next Greater Representable Value (float_next)">
@@ -48,8 +48,10 @@
 <p>
         This is an implementation of the <code class="computeroutput"><span class="identifier">nextafter</span></code>
         function included in the C99 standard. (It is also effectively an implementation
-        of the C99 'nexttoward' legacy function which differs only having a long
-        double direction, and can generally serve in its place if required).
+        of the C99 <code class="computeroutput"><span class="identifier">nexttoward</span></code> legacy
+        function which differs only having a <code class="computeroutput"><span class="keyword">long</span>
+        <span class="keyword">double</span></code> direction, and can generally
+        serve in its place if required).
       </p>
 <div class="note"><table border="0" summary="Note">
 <tr>
@@ -57,8 +59,9 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          The C99 functions must use suffixes f and l to distinguish float and long
-          double versions. C++ uses the template mechanism instead.
+          The C99 functions must use suffixes f and l to distinguish <code class="computeroutput"><span class="keyword">float</span></code> and <code class="computeroutput"><span class="keyword">long</span>
+          <span class="keyword">double</span></code> versions. C++ uses the template
+          mechanism instead.
         </p></td></tr>
 </table></div>
 <p>

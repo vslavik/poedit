@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-// (C) Copyright Ion Gaztanaga 2005-2013. Distributed under the Boost
+// (C) Copyright Ion Gaztanaga 2005-2015. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying file
 // LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
@@ -43,6 +43,7 @@
 #include <boost/intrusive/sgtree.hpp>
 // intrusive/detail
 #include <boost/intrusive/detail/minimal_pair_header.hpp>   //pair
+#include <boost/intrusive/detail/tree_value_compare.hpp>    //tree_value_compare
 // move
 #include <boost/move/utility_core.hpp>
 // move/detail
@@ -52,57 +53,15 @@
 // other
 #include <boost/core/no_exceptions_support.hpp>
 
+
+
+#include <boost/container/detail/std_fwd.hpp>
+
 namespace boost {
 namespace container {
 namespace container_detail {
 
-template<class Key, class T, class Compare, class KeyOfValue>
-struct tree_value_compare
-   :  public Compare
-{
-   typedef T        value_type;
-   typedef Compare   key_compare;
-   typedef KeyOfValue   key_of_value;
-   typedef Key          key_type;
-
-   explicit tree_value_compare(const key_compare &kcomp)
-      :  Compare(kcomp)
-   {}
-
-   tree_value_compare()
-      :  Compare()
-   {}
-
-   const key_compare &key_comp() const
-   {  return static_cast<const key_compare &>(*this);  }
-
-   key_compare &key_comp()
-   {  return static_cast<key_compare &>(*this);  }
-
-   template<class U>
-   struct is_key
-   {
-      static const bool value = is_same<const U, const key_type>::value;
-   };
-
-   template<class U>
-   typename enable_if_c<is_key<U>::value, const key_type &>::type
-      key_forward(const U &key) const
-   {  return key; }
-
-   template<class U>
-   typename enable_if_c<!is_key<U>::value, const key_type &>::type
-      key_forward(const U &key) const
-   {  return KeyOfValue()(key);  }
-
-   template<class KeyType, class KeyType2>
-   bool operator()(const KeyType &key1, const KeyType2 &key2) const
-   {  return key_compare::operator()(this->key_forward(key1), this->key_forward(key2));  }
-
-   template<class KeyType, class KeyType2>
-   bool operator()(const KeyType &key1, const KeyType2 &key2)
-   {  return key_compare::operator()(this->key_forward(key1), this->key_forward(key2));  }
-};
+using boost::intrusive::tree_value_compare;
 
 template<class VoidPointer, boost::container::tree_type_enum tree_type_value, bool OptimizeSize>
 struct intrusive_tree_hook;
@@ -156,7 +115,7 @@ struct tree_internal_data_type
 template<class T1, class T2>
 struct tree_internal_data_type< std::pair<T1, T2> >
 {
-   typedef pair<T1, T2> type;
+   typedef pair<typename boost::move_detail::remove_const<T1>::type, T2> type;
 };
 
 //The node to be store in the tree
@@ -454,8 +413,11 @@ struct key_node_compare
    {  return node.get_data();  }
 
    template<class T>
-   typename enable_if_c<!is_node<T>::value, const T &>::type
-      key_forward(const T &key) const
+   #if defined(BOOST_MOVE_HELPERS_RETURN_SFINAE_BROKEN)
+   const T &key_forward(const T &key, typename enable_if_c<!is_node<T>::value>::type* =0) const
+   #else
+   typename enable_if_c<!is_node<T>::value, const T &>::type key_forward(const T &key) const
+   #endif
    {  return key; }
 
    template<class KeyType, class KeyType2>
@@ -549,9 +511,10 @@ class tree
    tree(bool unique_insertion, InputIterator first, InputIterator last, const key_compare& comp,
           const allocator_type& a
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < container_detail::is_input_iterator<InputIterator>::value
-            || container_detail::is_same<alloc_version, version_1>::value
+      , typename container_detail::enable_if_or
+         < void
+         , container_detail::is_same<alloc_version, version_1>
+         , container_detail::is_input_iterator<InputIterator>
          >::type * = 0
       #endif
          )
@@ -577,9 +540,10 @@ class tree
    tree(bool unique_insertion, InputIterator first, InputIterator last, const key_compare& comp,
           const allocator_type& a
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < !(container_detail::is_input_iterator<InputIterator>::value
-            || container_detail::is_same<alloc_version, version_1>::value)
+      , typename container_detail::disable_if_or
+         < void
+         , container_detail::is_same<alloc_version, version_1>
+         , container_detail::is_input_iterator<InputIterator>
          >::type * = 0
       #endif
          )
@@ -606,10 +570,11 @@ class tree
    tree( ordered_range_t, InputIterator first, InputIterator last
          , const key_compare& comp = key_compare(), const allocator_type& a = allocator_type()
          #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-         , typename container_detail::enable_if_c
-            < container_detail::is_input_iterator<InputIterator>::value
-               || container_detail::is_same<alloc_version, version_1>::value
-            >::type * = 0
+      , typename container_detail::enable_if_or
+         < void
+         , container_detail::is_same<alloc_version, version_1>
+         , container_detail::is_input_iterator<InputIterator>
+         >::type * = 0
          #endif
          )
       : AllocHolder(value_compare(comp), a)
@@ -623,10 +588,11 @@ class tree
    tree( ordered_range_t, InputIterator first, InputIterator last
          , const key_compare& comp = key_compare(), const allocator_type& a = allocator_type()
          #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-         , typename container_detail::enable_if_c
-            < !(container_detail::is_input_iterator<InputIterator>::value
-               || container_detail::is_same<alloc_version, version_1>::value)
-            >::type * = 0
+      , typename container_detail::disable_if_or
+         < void
+         , container_detail::is_same<alloc_version, version_1>
+         , container_detail::is_input_iterator<InputIterator>
+         >::type * = 0
          #endif
          )
       : AllocHolder(value_compare(comp), a)
@@ -663,7 +629,7 @@ class tree
       }
       else{
          this->icont().clone_from
-            (x.icont(), typename AllocHolder::move_cloner(*this), Destroyer(this->node_alloc()));
+            (boost::move(x.icont()), typename AllocHolder::move_cloner(*this), Destroyer(this->node_alloc()));
       }
    }
 
@@ -730,7 +696,7 @@ class tree
 
          //Now recreate the source tree reusing nodes stored by other_tree
          this->icont().clone_from
-            (x.icont()
+            (::boost::move(x.icont())
             , RecyclingCloner<AllocHolder, true>(*this, other_tree)
             , Destroyer(this->node_alloc()));
 
@@ -848,6 +814,7 @@ class tree
    std::pair<iterator,bool> insert_unique_check
       (const_iterator hint, const key_type& key, insert_commit_data &data)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       std::pair<iiterator, bool> ret =
          this->icont().insert_unique_check(hint.get(), key, KeyNodeCompare(value_comp()), data);
       return std::pair<iterator, bool>(iterator(ret.first), ret.second);
@@ -898,6 +865,15 @@ class tree
 
    private:
 
+   bool priv_is_linked(const_iterator const position) const
+   {
+      iiterator const cur(position.get());
+      return   cur == this->icont().end() ||
+               cur == this->icont().root() ||
+               iiterator(cur).go_parent().go_left()  == cur ||
+               iiterator(cur).go_parent().go_right() == cur;
+   }
+
    template<class MovableConvertible>
    void push_back_impl(BOOST_FWD_REF(MovableConvertible) v)
    {
@@ -925,6 +901,7 @@ class tree
 
    iterator emplace_unique_hint_impl(const_iterator hint, NodePtr p)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       value_type &v = p->get_data();
       insert_commit_data data;
       std::pair<iterator,bool> ret =
@@ -961,6 +938,7 @@ class tree
    template <class... Args>
    iterator emplace_hint_equal(const_iterator hint, BOOST_FWD_REF(Args)... args)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       NodePtr tmp(AllocHolder::create_node(boost::forward<Args>(args)...));
       scoped_destroy_deallocator<NodeAlloc> destroy_deallocator(tmp, this->node_alloc());
       iterator ret(this->icont().insert_equal(hint.get(), *tmp));
@@ -992,6 +970,7 @@ class tree
    BOOST_MOVE_TMPL_LT##N BOOST_MOVE_CLASS##N BOOST_MOVE_GT##N \
    iterator emplace_hint_equal(const_iterator hint BOOST_MOVE_I##N BOOST_MOVE_UREF##N)\
    {\
+      BOOST_ASSERT((priv_is_linked)(hint));\
       NodePtr tmp(AllocHolder::create_node(BOOST_MOVE_FWD##N));\
       scoped_destroy_deallocator<NodeAlloc> destroy_deallocator(tmp, this->node_alloc());\
       iterator ret(this->icont().insert_equal(hint.get(), *tmp));\
@@ -1006,6 +985,7 @@ class tree
 
    iterator insert_unique(const_iterator hint, const value_type& v)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       insert_commit_data data;
       std::pair<iterator,bool> ret =
          this->insert_unique_check(hint, KeyOfValue()(v), data);
@@ -1017,6 +997,7 @@ class tree
    template<class MovableConvertible>
    iterator insert_unique(const_iterator hint, BOOST_FWD_REF(MovableConvertible) v)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       insert_commit_data data;
       std::pair<iterator,bool> ret =
          this->insert_unique_check(hint, KeyOfValue()(v), data);
@@ -1053,6 +1034,7 @@ class tree
 
    iterator insert_equal(const_iterator hint, const value_type& v)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       NodePtr tmp(AllocHolder::create_node(v));
       scoped_destroy_deallocator<NodeAlloc> destroy_deallocator(tmp, this->node_alloc());
       iterator ret(this->icont().insert_equal(hint.get(), *tmp));
@@ -1063,6 +1045,7 @@ class tree
    template<class MovableConvertible>
    iterator insert_equal(const_iterator hint, BOOST_FWD_REF(MovableConvertible) v)
    {
+      BOOST_ASSERT((priv_is_linked)(hint));
       NodePtr tmp(AllocHolder::create_node(boost::forward<MovableConvertible>(v)));
       scoped_destroy_deallocator<NodeAlloc> destroy_deallocator(tmp, this->node_alloc());
       iterator ret(this->icont().insert_equal(hint.get(), *tmp));
@@ -1078,13 +1061,20 @@ class tree
    }
 
    iterator erase(const_iterator position)
-   {  return iterator(this->icont().erase_and_dispose(position.get(), Destroyer(this->node_alloc()))); }
+   {
+      BOOST_ASSERT(position != this->cend() && (priv_is_linked)(position));
+      return iterator(this->icont().erase_and_dispose(position.get(), Destroyer(this->node_alloc())));
+   }
 
    size_type erase(const key_type& k)
    {  return AllocHolder::erase_key(k, KeyNodeCompare(value_comp()), alloc_version()); }
 
    iterator erase(const_iterator first, const_iterator last)
-   {  return iterator(AllocHolder::erase_range(first.get(), last.get(), alloc_version())); }
+   {
+      BOOST_ASSERT(first == last || (first != this->cend() && (priv_is_linked)(first)));
+      BOOST_ASSERT(first == last || (priv_is_linked)(last));
+      return iterator(AllocHolder::erase_range(first.get(), last.get(), alloc_version()));
+   }
 
    void clear()
    {  AllocHolder::clear(alloc_version());  }

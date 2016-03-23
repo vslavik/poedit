@@ -64,7 +64,7 @@ struct distance_func
 
     template <typename Iterator1, typename Iterator2>
     typename result<Iterator1, Iterator2>::type 
-    operator()(Iterator1& begin, Iterator2& end) const
+    operator()(Iterator1 const& begin, Iterator2 const& end) const
     {
         return std::distance(begin, end);
     }

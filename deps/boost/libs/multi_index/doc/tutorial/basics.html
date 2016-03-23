@@ -497,11 +497,15 @@ Currently, Boost.MultiIndex provides the following index types:
     provide a similar interface. There are <i>unique</i> and <i>non-unique</i>
     variants: the former do not allow for duplicates, while the latter permit
     them (like <code>std::multiset</code>.)</li>
+  <li>Ranked indices are a variation of ordered indices providing extra capabilities
+    for querying and accessing elements based on their <i>rank</i> (the numerical position
+    they occupy in the index).
+  </li>
   <li>Sequenced indices are modeled after the semantics and interface of
     <code>std::list</code>: they arrange the elements as if in a bidirectional
     list.</li>
   <li>Hashed indices provide fast access to the elements through hashing
-    tecnhiques, in a similar way as non-standard <code>hash_set</code>s provided
+    techniques, in a similar way as non-standard <code>hash_set</code>s provided
     by some vendors. Recently, <i>unordered associative containers</i> have been
     proposed as part of an extension of the C++ standard library known
     in the standardization commitee as TR1. Hashed indices closely model this
@@ -1248,9 +1252,9 @@ Index types
 
 <br>
 
-<p>Revised November 11th 2014</p>
+<p>Revised November 24th 2015</p>
 
-<p>&copy; Copyright 2003-2014 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
+<p>&copy; Copyright 2003-2015 Joaqu&iacute;n M L&oacute;pez Mu&ntilde;oz.
 Distributed under the Boost Software 
 License, Version 1.0. (See accompanying file <a href="../../../../LICENSE_1_0.txt">
 LICENSE_1_0.txt</a> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">

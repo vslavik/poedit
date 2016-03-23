@@ -106,22 +106,22 @@ void test_spots(RealType)
     // Note that these assume that  BOOST_MATH_OVERFLOW_ERROR_POLICY is NOT throw_on_error.
     // #define BOOST_MATH_OVERFLOW_ERROR_POLICY == throw_on_error would give a throw here.
     // #define BOOST_MATH_DOMAIN_ERROR_POLICY == throw_on_error IS defined, so the throw path
-    // of error handling is tested below with BOOST_CHECK_THROW tests.
+    // of error handling is tested below with BOOST_MATH_CHECK_THROW tests.
 
-     BOOST_CHECK_THROW( // x == infinity should NOT be OK.
+     BOOST_MATH_CHECK_THROW( // x == infinity should NOT be OK.
        pdf(uniform_distribution<RealType>(0, 1), static_cast<RealType>(std::numeric_limits<RealType>::infinity())), 
        std::domain_error);
 
-     BOOST_CHECK_THROW( // x == minus infinity should be OK too.
+     BOOST_MATH_CHECK_THROW( // x == minus infinity should be OK too.
        pdf(uniform_distribution<RealType>(0, 1), static_cast<RealType>(-std::numeric_limits<RealType>::infinity())), 
        std::domain_error);
    }
    if(std::numeric_limits<RealType>::has_quiet_NaN)
    { // BOOST_CHECK tests for NaN using std::numeric_limits<>::has_quiet_NaN() - should throw.
-     BOOST_CHECK_THROW(
+     BOOST_MATH_CHECK_THROW(
        pdf(uniform_distribution<RealType>(0, 1), static_cast<RealType>(std::numeric_limits<RealType>::quiet_NaN())), 
        std::domain_error);
-     BOOST_CHECK_THROW(
+     BOOST_MATH_CHECK_THROW(
        pdf(uniform_distribution<RealType>(0, 1), static_cast<RealType>(-std::numeric_limits<RealType>::quiet_NaN())), 
        std::domain_error);
    } // test for x = NaN using std::numeric_limits<>::quiet_NaN()
@@ -215,7 +215,7 @@ void test_spots(RealType)
       tolerance);
    BOOST_CHECK_CLOSE_FRACTION(
       quantile(complement(uniform_distribution<RealType>(0, 1), static_cast<RealType>(1))), 
-      static_cast<RealType>(1), 
+      static_cast<RealType>(0), 
       tolerance);
 
    // Some tests using a different location & scale, neight zero or unity.
@@ -332,10 +332,10 @@ void test_spots(RealType)
     // Note that these assume that  BOOST_MATH_OVERFLOW_ERROR_POLICY is NOT throw_on_error.
     // #define BOOST_MATH_OVERFLOW_ERROR_POLICY == throw_on_error would give a throw here.
     // #define BOOST_MATH_DOMAIN_ERROR_POLICY == throw_on_error IS defined, so the throw path
-    // of error handling is tested below with BOOST_CHECK_THROW tests.
+    // of error handling is tested below with BOOST_MATH_CHECK_THROW tests.
 
-    BOOST_CHECK_THROW(pdf(distu01, std::numeric_limits<RealType>::infinity()),  std::domain_error);
-    BOOST_CHECK_THROW(pdf(distu01, -std::numeric_limits<RealType>::infinity()),  std::domain_error);
+    BOOST_MATH_CHECK_THROW(pdf(distu01, std::numeric_limits<RealType>::infinity()),  std::domain_error);
+    BOOST_MATH_CHECK_THROW(pdf(distu01, -std::numeric_limits<RealType>::infinity()),  std::domain_error);
    } // test for infinity using std::numeric_limits<>::infinity()
    else
    { // real_concept case, does has_infinfity == false, so can't check it throws.
@@ -344,9 +344,9 @@ void test_spots(RealType)
      // value of std::numeric_limits<RealType>::infinity() is zero, so FPclassify is zero,
      // so (boost::math::isfinite)(std::numeric_limits<RealType>::infinity()) does not detect infinity.
      // so these tests would never throw.
-     //BOOST_CHECK_THROW(pdf(distu01, std::numeric_limits<RealType>::infinity()),  std::domain_error);
-     //BOOST_CHECK_THROW(pdf(distu01, std::numeric_limits<RealType>::quiet_NaN()),  std::domain_error);
-     // BOOST_CHECK_THROW(pdf(distu01, boost::math::tools::max_value<RealType>() * 2),  std::domain_error); // Doesn't throw.
+     //BOOST_MATH_CHECK_THROW(pdf(distu01, std::numeric_limits<RealType>::infinity()),  std::domain_error);
+     //BOOST_MATH_CHECK_THROW(pdf(distu01, std::numeric_limits<RealType>::quiet_NaN()),  std::domain_error);
+     // BOOST_MATH_CHECK_THROW(pdf(distu01, boost::math::tools::max_value<RealType>() * 2),  std::domain_error); // Doesn't throw.
      BOOST_CHECK_EQUAL(pdf(distu01, boost::math::tools::max_value<RealType>()), 0); 
    }
    // Special cases:
@@ -359,16 +359,16 @@ void test_spots(RealType)
    BOOST_CHECK(quantile(distu01, 0) == 0);
    BOOST_CHECK(quantile(complement(distu01, 0)) == 1);
    BOOST_CHECK(quantile(distu01, 1) == 1);
-   BOOST_CHECK(quantile(complement(distu01, 1)) == 1);
+   BOOST_CHECK(quantile(complement(distu01, 1)) == 0);
 
    // Error checks:
    if(std::numeric_limits<RealType>::has_quiet_NaN)
    { // BOOST_CHECK tests for constructing with quiet_NaN (not for real_concept, for example - see notes above).
-     BOOST_CHECK_THROW(uniform_distribution<RealType>(0, std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
-     BOOST_CHECK_THROW(uniform_distribution<RealType>(0, -std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
+     BOOST_MATH_CHECK_THROW(uniform_distribution<RealType>(0, std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
+     BOOST_MATH_CHECK_THROW(uniform_distribution<RealType>(0, -std::numeric_limits<RealType>::quiet_NaN()), std::domain_error);
    }
-   BOOST_CHECK_THROW(uniform_distribution<RealType>(1, 0), std::domain_error); // lower > upper!
-   BOOST_CHECK_THROW(uniform_distribution<RealType>(1, 1), std::domain_error); // lower == upper!
+   BOOST_MATH_CHECK_THROW(uniform_distribution<RealType>(1, 0), std::domain_error); // lower > upper!
+   BOOST_MATH_CHECK_THROW(uniform_distribution<RealType>(1, 1), std::domain_error); // lower == upper!
 
    check_out_of_range<uniform_distribution<RealType> >(1, 5);
 } // template <class RealType>void test_spots(RealType)
@@ -387,18 +387,20 @@ BOOST_AUTO_TEST_CASE( test_main )
 
   // Test on extreme values of random variate x, using just double because it has numeric_limit infinity etc..
   // No longer allow x to be + or - infinity, then these tests should throw.
-  BOOST_CHECK_THROW(pdf(unistd, +std::numeric_limits<double>::infinity()), std::domain_error); // x = + infinity
-  BOOST_CHECK_THROW(pdf(unistd, -std::numeric_limits<double>::infinity()), std::domain_error); // x = - infinity
-  BOOST_CHECK_THROW(cdf(unistd, +std::numeric_limits<double>::infinity()), std::domain_error); // x = + infinity
-  BOOST_CHECK_THROW(cdf(unistd, -std::numeric_limits<double>::infinity()), std::domain_error); // x = - infinity
+  BOOST_MATH_CHECK_THROW(pdf(unistd, +std::numeric_limits<double>::infinity()), std::domain_error); // x = + infinity
+  BOOST_MATH_CHECK_THROW(pdf(unistd, -std::numeric_limits<double>::infinity()), std::domain_error); // x = - infinity
+  BOOST_MATH_CHECK_THROW(cdf(unistd, +std::numeric_limits<double>::infinity()), std::domain_error); // x = + infinity
+  BOOST_MATH_CHECK_THROW(cdf(unistd, -std::numeric_limits<double>::infinity()), std::domain_error); // x = - infinity
 
   BOOST_CHECK_EQUAL(pdf(unistd, +(std::numeric_limits<double>::max)()), 0); // x = + max
   BOOST_CHECK_EQUAL(pdf(unistd, -(std::numeric_limits<double>::min)()), 0); // x = - min
   BOOST_CHECK_EQUAL(cdf(unistd, +(std::numeric_limits<double>::max)()), 1); // x = + max
   BOOST_CHECK_EQUAL(cdf(unistd, -(std::numeric_limits<double>::min)()), 0); // x = - min
-
-  BOOST_CHECK_THROW(uniform_distribution<> zinf(0, +std::numeric_limits<double>::infinity()), std::domain_error); // zero to infinity using default RealType double.
-
+#ifndef BOOST_NO_EXCEPTIONS
+  BOOST_MATH_CHECK_THROW(uniform_distribution<> zinf(0, +std::numeric_limits<double>::infinity()), std::domain_error); // zero to infinity using default RealType double.
+#else
+  BOOST_MATH_CHECK_THROW(uniform_distribution<>(0, +std::numeric_limits<double>::infinity()), std::domain_error); // zero to infinity using default RealType double.
+#endif
    uniform_distribution<> zmax(0, +(std::numeric_limits<double>::max)()); // zero to max using default RealType double.
   BOOST_CHECK_EQUAL(zmax.lower(), 0); // Check defaults again.
   BOOST_CHECK_EQUAL(zmax.upper(), +(std::numeric_limits<double>::max)());
@@ -406,15 +408,18 @@ BOOST_AUTO_TEST_CASE( test_main )
   BOOST_CHECK_EQUAL(pdf(zmax, -1), 0); // pdf is 1/(0 - max) = almost zero for all x
   BOOST_CHECK_EQUAL(pdf(zmax, 0), (std::numeric_limits<double>::min)()/4); // x = 
   BOOST_CHECK_EQUAL(pdf(zmax, 1), (std::numeric_limits<double>::min)()/4); // x = 
-  BOOST_CHECK_THROW(pdf(zmax, +std::numeric_limits<double>::infinity()), std::domain_error); // pdf is 1/(0 - infinity) = zero for all x
-  BOOST_CHECK_THROW(pdf(zmax, -std::numeric_limits<double>::infinity()), std::domain_error); 
+  BOOST_MATH_CHECK_THROW(pdf(zmax, +std::numeric_limits<double>::infinity()), std::domain_error); // pdf is 1/(0 - infinity) = zero for all x
+  BOOST_MATH_CHECK_THROW(pdf(zmax, -std::numeric_limits<double>::infinity()), std::domain_error); 
   BOOST_CHECK_EQUAL(pdf(zmax, +(std::numeric_limits<double>::max)()), (std::numeric_limits<double>::min)()/4); // x = 
   BOOST_CHECK_EQUAL(pdf(zmax, -(std::numeric_limits<double>::max)()), 0); // x = 
-
+#ifndef BOOST_NO_EXCEPTIONS
   // Ensure NaN throws an exception.
-  BOOST_CHECK_THROW(uniform_distribution<> zNaN(0, std::numeric_limits<double>::quiet_NaN()), std::domain_error);
-  BOOST_CHECK_THROW(pdf(unistd, std::numeric_limits<double>::quiet_NaN()), std::domain_error);
-
+  BOOST_MATH_CHECK_THROW(uniform_distribution<> zNaN(0, std::numeric_limits<double>::quiet_NaN()), std::domain_error);
+  BOOST_MATH_CHECK_THROW(pdf(unistd, std::numeric_limits<double>::quiet_NaN()), std::domain_error);
+#else
+  BOOST_MATH_CHECK_THROW(uniform_distribution<>(0, std::numeric_limits<double>::quiet_NaN()), std::domain_error);
+  BOOST_MATH_CHECK_THROW(pdf(unistd, std::numeric_limits<double>::quiet_NaN()), std::domain_error);
+#endif
     // Basic sanity-check spot values.
    // (Parameter value, arbitrarily zero, only communicates the floating point type).
   test_spots(0.0F); // Test float. OK at decdigits = 0 tolerance = 0.0001 %
@@ -428,7 +433,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
 
    

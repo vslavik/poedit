@@ -105,6 +105,12 @@ if $(with-python)
     }
 }
 
+if $(--python-include) || $(--python-lib)
+{
+    ECHO "Python includes: $(--python-include:J=)" ;
+    ECHO "Python includes: $(--python-lib:J=)" ;
+}
+
 # Boehm GC?
 if --gc in $(ARGV)
 {
@@ -336,13 +342,22 @@ toolset tru64cxx cc : "-o " : -D
     [ opt --debug : -g -O0 -pg ]
     -I$(--python-include) -I$(--extra-include)
     : -L$(--python-lib[1]) -l$(--python-lib[2]) ;
-## IBM VisualAge C++
+## IBM VisualAge C++ or IBM XL C/C++ for Aix or IBM XL C/C++ for Linux (Big endian)
 toolset vacpp xlc : "-o " : -D
     :
     [ opt --release : -s -O3 -qstrict -qinline ]
     [ opt --debug : -g -qNOOPTimize -qnoinline -pg ]
     -I$(--python-include) -I$(--extra-include)
     : -L$(--python-lib[1]) -l$(--python-lib[2]) [ if-os AIX : -bmaxdata:0x40000000 ] ;
+    
+## IBM XL C/C++ for Linux (little endian)
+toolset xlcpp xlC :  "-o " : -D
+    : -Wno-unused -Wno-format
+    [ opt --release : -s  ]
+    [ opt --debug : -g -qNOOPTimize -qnoinline -pg ]
+    -I$(--python-include) -I$(--extra-include)
+    : -L$(--python-lib[1]) -l$(--python-lib[2]) ;    
+    
 ## Microsoft Visual C++ .NET 7.x
 toolset vc7 cl : /Fe /Fe /Fd /Fo : -D
     : /nologo

@@ -27,11 +27,9 @@
 
 #include <boost/geometry/geometries/concepts/point_concept.hpp>
 
-#ifdef BOOST_GEOMETRY_EXPERIMENTAL_ENABLE_INITIALIZER_LIST
 #include <boost/config.hpp>
 #ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
 #include <initializer_list>
-#endif
 #endif
 
 namespace boost { namespace geometry
@@ -50,6 +48,7 @@ namespace model
 \tparam Container container type, for example std::vector, std::deque
 \tparam Allocator container-allocator-type
 
+\qbk{[include reference/geometries/ring.qbk]}
 \qbk{before.synopsis,
 [heading Model of]
 [link geometry.reference.concepts.concept_ring Ring Concept]
@@ -80,7 +79,6 @@ public :
         : base_type(begin, end)
     {}
 
-#ifdef BOOST_GEOMETRY_EXPERIMENTAL_ENABLE_INITIALIZER_LIST
 #ifndef BOOST_NO_CXX11_HDR_INITIALIZER_LIST
 
     /// \constructor_initializer_list{ring}
@@ -101,7 +99,6 @@ public :
 //    }
 //#endif
 
-#endif
 #endif
 };
 

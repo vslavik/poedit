@@ -11,7 +11,6 @@
 #include <boost/detail/lightweight_test.hpp>
 #include <string>
 
-using namespace std;
 
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_parametric.hpp>

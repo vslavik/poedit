@@ -218,10 +218,10 @@ void test_spots(RealType)
 
    // error tests
    check_out_of_range<boost::math::gamma_distribution<RealType> >(1, 1);
-   BOOST_CHECK_THROW(boost::math::gamma_distribution<RealType>(0, 1), std::domain_error);
-   BOOST_CHECK_THROW(boost::math::gamma_distribution<RealType>(-1, 1), std::domain_error);
-   BOOST_CHECK_THROW(boost::math::gamma_distribution<RealType>(1, 0), std::domain_error);
-   BOOST_CHECK_THROW(boost::math::gamma_distribution<RealType>(1, -1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(boost::math::gamma_distribution<RealType>(0, 1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(boost::math::gamma_distribution<RealType>(-1, 1), std::domain_error);
+   BOOST_MATH_CHECK_THROW(boost::math::gamma_distribution<RealType>(1, 0), std::domain_error);
+   BOOST_MATH_CHECK_THROW(boost::math::gamma_distribution<RealType>(1, -1), std::domain_error);
 
 } // template <class RealType>void test_spots(RealType)
 
@@ -240,7 +240,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
 
    

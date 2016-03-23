@@ -258,9 +258,9 @@ BOOST_AUTO_TEST_CASE(test_size_types)
 
 BOOST_AUTO_TEST_CASE(test_chrono_identity_elements)
 {
-    boost::chrono::duration<int> idel_i = icl::identity_element<boost::chrono::duration<int> >::value();
+    //boost::chrono::duration<int> idel_i = icl::identity_element<boost::chrono::duration<int> >::value();
     //cout << "dur<int>0 = " << idel_i << endl;
-    boost::chrono::duration<double> idel_d = icl::identity_element<boost::chrono::duration<int> >::value();
+    //boost::chrono::duration<double> idel_d = icl::identity_element<boost::chrono::duration<int> >::value();
     //cout << "dur<dbl>0 = " << idel_d << endl;
 
     BOOST_CHECK(( boost::is_same<              boost::chrono::duration<int>

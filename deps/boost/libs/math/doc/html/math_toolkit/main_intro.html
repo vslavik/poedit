@@ -4,7 +4,7 @@
 <title>About the Math Toolkit</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../overview.html" title="Chapter&#160;1.&#160;Overview">
 <link rel="prev" href="../overview.html" title="Chapter&#160;1.&#160;Overview">
 <link rel="next" href="navigation.html" title="Navigation">
@@ -75,7 +75,7 @@
     </p>
 <p>
       All the implementations are fully generic and support the use of arbitrary
-      "real-number" types, including <a href="http://www.boost.org/doc/libs/1_53_0_beta1/libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>,
+      "real-number" types, including <a href="../../../../../libs/multiprecision/doc/html/index.html" target="_top">Boost.Multiprecision</a>,
       although they are optimised for use with types with known-about <a href="http://en.wikipedia.org/wiki/Significand" target="_top">significand
       (or mantissa)</a> sizes: typically <code class="computeroutput"><span class="keyword">float</span></code>,
       <code class="computeroutput"><span class="keyword">double</span></code> or <code class="computeroutput"><span class="keyword">long</span>
@@ -87,31 +87,38 @@
       Toolkit</a>
     </h5>
 <p>
-      Provides <a class="link" href="../toolkit.html" title="Chapter&#160;12.&#160;Internals (Series, Rationals and Continued Fractions, Root Finding, Function Minimization, Testing and Development Tools)">many of the tools</a> required to implement
-      mathematical special functions: hopefully the presence of these will encourage
-      other authors to contribute more special function implementations in the future.
-      These tools are currently considered experimental: they are "exposed implementation
-      details" whose interfaces and/or implementations may change.
+      The section <a class="link" href="internals_overview.html" title="Overview">Internal tools</a>
+      provides many of the tools required to implement mathematical special functions:
+      hopefully the presence of these will encourage other authors to contribute
+      more special function implementations in the future.
     </p>
 <p>
-      There are helpers for the <a class="link" href="internals1/series_evaluation.html" title="Series Evaluation">evaluation
-      of infinite series</a>, <a class="link" href="internals1/cf.html" title="Continued Fraction Evaluation">continued
-      fractions</a> and <a class="link" href="internals1/rational.html" title="Polynomial and Rational Function Evaluation">rational
-      approximations</a>.
+      Some tools are now considered well-tried and their signatures stable and unlikely
+      to change.
     </p>
 <p>
-      There is a fairly comprehensive set of root finding and <a class="link" href="internals1/minima.html" title="Locating Function Minima: Brent's algorithm">function
-      minimisation algorithms</a>: the root finding algorithms are both <a class="link" href="internals1/roots.html" title="Root Finding With Derivatives: Newton-Raphson, Halley &amp; Schroeder">with</a> and <a class="link" href="internals1/roots2.html" title="Root Finding Without Derivatives: Bisection, Bracket and TOMS748">without</a>
-      derivative support.
+      There is a fairly comprehensive set of root finding both <a class="link" href="roots/roots_noderiv.html" title="Root Finding Without Derivatives">root-finding
+      without derivatives</a> and <a class="link" href="roots/roots_deriv.html" title="Root Finding With Derivatives: Newton-Raphson, Halley &amp; Schr&#246;der">root-finding
+      with derivatives</a> with derivative support, and function minimization
+      using <a class="link" href="roots/brent_minima.html" title="Locating Function Minima using Brent's algorithm">Brent's method</a>.
     </p>
 <p>
-      A <a class="link" href="internals2/minimax.html" title="Minimax Approximations and the Remez Algorithm">Remez algorithm implementation</a>
-      allows for the locating of minimax rational approximations.
+      Other <a class="link" href="internals_overview.html" title="Overview">Internal tools</a>
+      are currently still considered experimental: they are "exposed implementation
+      details" whose interfaces and/or implementations may change without notice.
     </p>
 <p>
-      There are also (experimental) classes for the <a class="link" href="internals2/polynomials.html" title="Polynomials">manipulation
-      of polynomials</a>, for <a class="link" href="internals2/error_test.html" title="Relative Error and Testing">testing
-      a special function against tabulated test data</a>, and for the <a class="link" href="internals2/test_data.html" title="Graphing, Profiling, and Generating Test Data for Special Functions">rapid
+      There are helpers for the <a class="link" href="internals/series_evaluation.html" title="Series Evaluation">evaluation
+      of infinite series</a>, <a class="link" href="internals/cf.html" title="Continued Fraction Evaluation">continued
+      fractions</a> and <a class="link" href="internals/rational.html" title="Polynomial and Rational Function Evaluation">rational
+      approximations</a>. A <a class="link" href="internals/minimax.html" title="Minimax Approximations and the Remez Algorithm">Remez
+      algorithm implementation</a> allows for the locating of minimax rational
+      approximations.
+    </p>
+<p>
+      There are also (experimental) classes for the <a class="link" href="internals/polynomials.html" title="Polynomials">manipulation
+      of polynomials</a>, for <a class="link" href="internals/error_test.html" title="Relative Error and Testing">testing
+      a special function against tabulated test data</a>, and for the <a class="link" href="internals/test_data.html" title="Graphing, Profiling, and Generating Test Data for Special Functions">rapid
       generation of test data</a> and/or data for output to an external graphing
       application.
     </p>

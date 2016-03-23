@@ -432,14 +432,7 @@ public:
      * */
     void update (handle_type handle)
     {
-        node_pointer n = handle.node_;
-        node_pointer parent = n->get_parent();
-
-        if (parent) {
-            n->parent = NULL;
-            roots.splice(roots.begin(), parent->children, node_list_type::s_iterator_to(*n));
-        }
-        add_children_to_root(n);
+        update_lazy(handle);
         consolidate();
     }
 
@@ -458,6 +451,9 @@ public:
             roots.splice(roots.begin(), parent->children, node_list_type::s_iterator_to(*n));
         }
         add_children_to_root(n);
+
+        if (super_t::operator()(top_element->value, n->value))
+            top_element = n;
     }
 
 
@@ -735,7 +731,7 @@ private:
                 aux[node_rank] = n;
             }
 
-            if (super_t::operator()(top_element->value, n->value))
+            if (!super_t::operator()(n->value, top_element->value))
                 top_element = n;
         }
         while (it != roots.end());

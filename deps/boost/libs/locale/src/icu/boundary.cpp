@@ -31,7 +31,11 @@ index_type map_direct(boundary_type t,icu::BreakIterator *it,int reserve)
 {
     index_type indx;
     indx.reserve(reserve);
+#if U_ICU_VERSION_MAJOR_NUM >= 52
+    icu::BreakIterator *rbbi=it;
+#else
     icu::RuleBasedBreakIterator *rbbi=dynamic_cast<icu::RuleBasedBreakIterator *>(it);
+#endif
     
     indx.push_back(break_info());
     it->first();
@@ -207,11 +211,11 @@ namespace impl_icu {
             return std::locale(in,new boundary_indexing_impl<char>(cd));
         case wchar_t_facet:
             return std::locale(in,new boundary_indexing_impl<wchar_t>(cd));
-        #ifdef BOOST_HAS_CHAR16_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
         case char16_t_facet:
             return std::locale(in,new boundary_indexing_impl<char16_t>(cd));
         #endif
-        #ifdef BOOST_HAS_CHAR32_T
+        #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
         case char32_t_facet:
             return std::locale(in,new boundary_indexing_impl<char32_t>(cd));
         #endif

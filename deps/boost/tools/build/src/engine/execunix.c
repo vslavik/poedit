@@ -164,11 +164,11 @@ void exec_cmd
     if ( DEBUG_EXECCMD )
     {
         int i;
-        printf( "Using shell: " );
+        out_printf( "Using shell: " );
         list_print( shell );
-        printf( "\n" );
+        out_printf( "\n" );
         for ( i = 0; argv[ i ]; ++i )
-            printf( "    argv[%d] = '%s'\n", i, argv[ i ] );
+            out_printf( "    argv[%d] = '%s'\n", i, argv[ i ] );
     }
 
     /* Create pipes for collecting child output. */
@@ -528,7 +528,7 @@ void exec_wait()
                         break;
                 if ( pid != cmdtab[ i ].pid )
                 {
-                    printf( "unknown pid %d with errno = %d\n", pid, errno );
+                    err_printf( "unknown pid %d with errno = %d\n", pid, errno );
                     exit( EXITBAD );
                 }
 
@@ -592,7 +592,7 @@ static int get_free_cmdtab_slot()
     for ( slot = 0; slot < MAXJOBS; ++slot )
         if ( !cmdtab[ slot ].pid )
             return slot;
-    printf( "no slots for child!\n" );
+    err_printf( "no slots for child!\n" );
     exit( EXITBAD );
 }
 

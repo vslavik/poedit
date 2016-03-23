@@ -80,7 +80,10 @@ TT_TEST_BEGIN(is_copy_constructible)
 // Main part of the test
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<has>::value, true);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<has2>::value, true);
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<has3>::value, true);
+// Only constructible from has3& not from const-reference, this only works if we have decltype:
+#if !defined(BOOST_NO_CXX11_DECLTYPE) && !BOOST_WORKAROUND(BOOST_MSVC, < 1800)
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<has3>::value, false);
+#endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<has4>::value, true);
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<has_not>::value, false);
 #if !defined(BOOST_NO_CXX11_DELETED_FUNCTIONS) && !defined(BOOST_INTEL_CXX_VERSION)
@@ -260,18 +263,9 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<enum_UDT>::value, true
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<int&>::value, true);
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
-// Code like `int&& a = 10;` or 
-//      struct nonc {
-//          nonc() = default;
-//          nonc(const nonc&) = delete;
-//          nonc(nonc&&) = delete;
-//          nonc& operator=(const nonc&) = delete;
-//          nonc& operator=(nonc&&) = delete;
-//      };
-//
-//      nonc && a = nonc();
-// is legal in C++11. so this trait MUST return true.
-BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<int&&>::value, true);
+// This is debatable, we used to insist this was true, but copy-constructibility
+// implies copying a constant-object, and that isn't the case here:
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<int&&>::value, false);
 #endif
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_copy_constructible<const int&>::value, true);
 

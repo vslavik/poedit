@@ -94,10 +94,18 @@ public:
 
     static const unsigned predicates_len = index::detail::predicates_length<Predicates>::value;
 
+    inline spatial_query_incremental()
+        : m_translator(NULL)
+//        , m_pred()
+        , m_values(NULL)
+        , m_current()
+    {}
+
     inline spatial_query_incremental(Translator const& t, Predicates const& p)
         : m_translator(::boost::addressof(t))
         , m_pred(p)
-        , m_values(0)
+        , m_values(NULL)
+        , m_current()
     {}
 
     inline void operator()(internal_node const& n)

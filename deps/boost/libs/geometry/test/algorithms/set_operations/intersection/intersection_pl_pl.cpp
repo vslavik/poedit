@@ -20,7 +20,7 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include "../test_set_ops_pl_pl.hpp"
+#include "../test_set_ops_pointlike.hpp"
 
 #include <boost/geometry/geometries/multi_point.hpp>
 
@@ -51,16 +51,18 @@ BOOST_AUTO_TEST_CASE( test_intersection_point_point )
         > tester;
 
     tester::apply
-        (from_wkt<P>("POINT(0 0)"),
+        ("ppi01",
+         from_wkt<P>("POINT(0 0)"),
          from_wkt<P>("POINT(1 1)"),
-         from_wkt<MP>("MULTIPOINT()"),
-         "ppi01");
+         from_wkt<MP>("MULTIPOINT()")
+         );
 
     tester::apply
-        (from_wkt<P>("POINT(0 0)"),
+        ("ppi02",
          from_wkt<P>("POINT(0 0)"),
-         from_wkt<MP>("MULTIPOINT(0 0)"),
-         "ppi02");
+         from_wkt<P>("POINT(0 0)"),
+         from_wkt<MP>("MULTIPOINT(0 0)")
+         );
 }
 
 
@@ -81,52 +83,60 @@ BOOST_AUTO_TEST_CASE( test_intersection_multipoint_point )
         > tester;
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0)"),
-         from_wkt<P>("POINT(1 1)"),
-         from_wkt<MP>("MULTIPOINT()"),
-         "mppi01");
-
-    tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0)"),
-         from_wkt<P>("POINT(0 0)"),
+        ("mppi01",
          from_wkt<MP>("MULTIPOINT(0 0)"),
-         "mppi02");
-
-    tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,0 0)"),
          from_wkt<P>("POINT(1 1)"),
-         from_wkt<MP>("MULTIPOINT()"),
-         "mppi03");
+         from_wkt<MP>("MULTIPOINT()")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,0 0)"),
-         from_wkt<P>("POINT(0 0)"),
+        ("mppi02",
          from_wkt<MP>("MULTIPOINT(0 0)"),
-         "mppi04");
+         from_wkt<P>("POINT(0 0)"),
+         from_wkt<MP>("MULTIPOINT(0 0)")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,0 0,1 0)"),
+        ("mppi03",
+         from_wkt<MP>("MULTIPOINT(0 0,0 0)"),
          from_wkt<P>("POINT(1 1)"),
-         from_wkt<MP>("MULTIPOINT()"),
-         "mppi05");
+         from_wkt<MP>("MULTIPOINT()")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,0 0,1 0)"),
+        ("mppi04",
+         from_wkt<MP>("MULTIPOINT(0 0,0 0)"),
+         from_wkt<P>("POINT(0 0)"),
+         from_wkt<MP>("MULTIPOINT(0 0)")
+         );
+
+    tester::apply
+        ("mppi05",
+         from_wkt<MP>("MULTIPOINT(0 0,0 0,1 0)"),
+         from_wkt<P>("POINT(1 1)"),
+         from_wkt<MP>("MULTIPOINT()")
+         );
+
+    tester::apply
+        ("mppi06",
+         from_wkt<MP>("MULTIPOINT(0 0,0 0,1 0)"),
          from_wkt<P>("POINT(1 0)"),
-         from_wkt<MP>("MULTIPOINT(1 0)"),
-         "mppi06");
+         from_wkt<MP>("MULTIPOINT(1 0)")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,0 0,1 0)"),
+        ("mppi07",
+         from_wkt<MP>("MULTIPOINT(0 0,0 0,1 0)"),
          from_wkt<P>("POINT(0 0)"),
-         from_wkt<MP>("MULTIPOINT(0 0)"),
-         "mppi07");
+         from_wkt<MP>("MULTIPOINT(0 0)")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT()"),
-         from_wkt<P>("POINT(0 0)"),
+        ("mppi08",
          from_wkt<MP>("MULTIPOINT()"),
-         "mppi08");
+         from_wkt<P>("POINT(0 0)"),
+         from_wkt<MP>("MULTIPOINT()")
+         );
 }
 
 
@@ -146,40 +156,46 @@ BOOST_AUTO_TEST_CASE( test_intersection_multipoint_multipoint )
         > tester;
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(2 2,3 3,0 0,0 0,2 2,1 1,1 1,1 0,1 0)"),
+        ("mpmpi01",
+         from_wkt<MP>("MULTIPOINT(2 2,3 3,0 0,0 0,2 2,1 1,1 1,1 0,1 0)"),
          from_wkt<MP>("MULTIPOINT(1 0,1 1,1 1,1 1)"),
-         from_wkt<MP>("MULTIPOINT(1 0,1 1,1 1,1 1)"),
-         "mpmpi01");
+         from_wkt<MP>("MULTIPOINT(1 0,1 1,1 1,1 1)")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,1 1,1 0,1 1)"),
-         from_wkt<MP>("MULTIPOINT(1 0,0 0,1 1,0 0)"),
+        ("mpmp02",
          from_wkt<MP>("MULTIPOINT(0 0,1 1,1 0,1 1)"),
          from_wkt<MP>("MULTIPOINT(1 0,0 0,1 1,0 0)"),
-         "mpmpi02");
+         from_wkt<MP>("MULTIPOINT(0 0,1 1,1 0,1 1)"),
+         from_wkt<MP>("MULTIPOINT(1 0,0 0,1 1,0 0)")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT()"),
+        ("mpmpi03",
+         from_wkt<MP>("MULTIPOINT()"),
          from_wkt<MP>("MULTIPOINT(1 0,0 0,1 1,0 0)"),
-         from_wkt<MP>("MULTIPOINT()"),
-         "mpmpi03");
+         from_wkt<MP>("MULTIPOINT()")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,1 1,1 0,1 1)"),
+        ("mpmpi04",
+         from_wkt<MP>("MULTIPOINT(0 0,1 1,1 0,1 1)"),
          from_wkt<MP>("MULTIPOINT()"),
-         from_wkt<MP>("MULTIPOINT()"),
-         "mpmpi04");
+         from_wkt<MP>("MULTIPOINT()")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT()"),
+        ("mpmpi05",
          from_wkt<MP>("MULTIPOINT()"),
          from_wkt<MP>("MULTIPOINT()"),
-         "mpmpi05");
+         from_wkt<MP>("MULTIPOINT()")
+         );
 
     tester::apply
-        (from_wkt<MP>("MULTIPOINT(0 0,1 0,2 0,3 0,0 0,1 0,2 0)"),
+        ("mpmpi06",
+         from_wkt<MP>("MULTIPOINT(0 0,1 0,2 0,3 0,0 0,1 0,2 0)"),
          from_wkt<MP>("MULTIPOINT(0 1,0 2,1 0,0 0,2 0)"),
-         from_wkt<MP>("MULTIPOINT(1 0,0 0,2 0)"),
-         "mpmpi06");
+         from_wkt<MP>("MULTIPOINT(1 0,0 0,2 0)")
+         );
 }
 

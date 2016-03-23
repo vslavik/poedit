@@ -3,14 +3,14 @@
 // See http://www.boost.org for updates, documentation, and revision history.
 //-----------------------------------------------------------------------------
 //
-// Copyright (c) 2014 Antony Polukhin
+// Copyright (c) 2014-2015 Antony Polukhin
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-#include "boost/variant/variant.hpp"
 #include "boost/variant/get.hpp"
+#include "boost/variant/variant.hpp"
 #include "boost/variant/polymorphic_get.hpp"
 #include "boost/variant/recursive_wrapper.hpp"
 #include "boost/test/minimal.hpp"
@@ -53,7 +53,12 @@ struct recursive_structure { var_req_t var; };
 template <class T, class V, class TestType>
 inline void check_polymorphic_get_on_types_impl_single_type(V* v)
 {
-    if (!!boost::is_same<T, TestType>::value) {
+    typedef typename boost::add_reference<TestType>::type ref_test_t;
+    typedef typename boost::add_reference<const TestType>::type cref_test_t;
+    const bool exact_same = !!boost::is_same<T, TestType>::value;
+    const bool ref_same = !!boost::is_same<T, ref_test_t>::value;
+
+    if (exact_same || ref_same) {
         BOOST_CHECK(boost::polymorphic_get<TestType>(v));
         BOOST_CHECK(boost::polymorphic_get<const TestType>(v));
         BOOST_CHECK(boost::polymorphic_strict_get<TestType>(v));
@@ -61,6 +66,15 @@ inline void check_polymorphic_get_on_types_impl_single_type(V* v)
         BOOST_CHECK(boost::polymorphic_relaxed_get<TestType>(v));
         BOOST_CHECK(boost::polymorphic_relaxed_get<const TestType>(v));
     } else {
+        if (ref_same) {
+            BOOST_CHECK(boost::polymorphic_get<ref_test_t>(v));
+            BOOST_CHECK(boost::polymorphic_get<cref_test_t>(v));
+            BOOST_CHECK(boost::polymorphic_strict_get<ref_test_t>(v));
+            BOOST_CHECK(boost::polymorphic_strict_get<cref_test_t>(v));
+            BOOST_CHECK(boost::polymorphic_relaxed_get<ref_test_t>(v));
+            BOOST_CHECK(boost::polymorphic_relaxed_get<cref_test_t>(v));
+        }
+
         BOOST_CHECK(!boost::polymorphic_get<TestType>(v));
         BOOST_CHECK(!boost::polymorphic_get<const TestType>(v));
         BOOST_CHECK(!boost::polymorphic_strict_get<TestType>(v));
@@ -73,14 +87,32 @@ inline void check_polymorphic_get_on_types_impl_single_type(V* v)
 template <class T, class V, class TestType>
 inline void check_get_on_types_impl_single_type(V* v)
 {
-    if (!!boost::is_same<T, TestType>::value) {
+    typedef typename boost::add_reference<TestType>::type ref_test_t;
+    typedef typename boost::add_reference<const TestType>::type cref_test_t;
+    const bool exact_same = !!boost::is_same<T, TestType>::value;
+    const bool ref_same = !!boost::is_same<T, ref_test_t>::value;
+
+    if (exact_same || ref_same) {
         BOOST_CHECK(boost::get<TestType>(v));
         BOOST_CHECK(boost::get<const TestType>(v));
         BOOST_CHECK(boost::strict_get<TestType>(v));
         BOOST_CHECK(boost::strict_get<const TestType>(v));
         BOOST_CHECK(boost::relaxed_get<TestType>(v));
         BOOST_CHECK(boost::relaxed_get<const TestType>(v));
+
+        BOOST_CHECK(boost::get<cref_test_t>(v));
+        BOOST_CHECK(boost::strict_get<cref_test_t>(v));
+        BOOST_CHECK(boost::relaxed_get<cref_test_t>(v));
     } else {
+        if (ref_same) {
+            BOOST_CHECK(boost::get<ref_test_t>(v));
+            BOOST_CHECK(boost::get<cref_test_t>(v));
+            BOOST_CHECK(boost::strict_get<ref_test_t>(v));
+            BOOST_CHECK(boost::strict_get<cref_test_t>(v));
+            BOOST_CHECK(boost::relaxed_get<ref_test_t>(v));
+            BOOST_CHECK(boost::relaxed_get<cref_test_t>(v));
+        }
+
         BOOST_CHECK(!boost::get<TestType>(v));
         BOOST_CHECK(!boost::get<const TestType>(v));
         BOOST_CHECK(!boost::strict_get<TestType>(v));

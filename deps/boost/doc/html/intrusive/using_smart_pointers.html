@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -36,8 +37,6 @@
       is passed to the containers. For example, if the following hook is configured
       with a smart pointer (for example, an offset pointer from <span class="bold"><strong>Boost.Interprocess</strong></span>):
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">intrusive</span><span class="special">/</span><span class="identifier">list</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">offset_ptr</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -57,15 +56,11 @@
 <span class="special">};</span>
 </pre>
 <p>
-    </p>
-<p>
       Any intrusive list constructed using this hook will be ready for shared memory,
       because the intrusive list will also use offset pointers internally. For example,
       we can create an intrusive list in shared memory combining <span class="bold"><strong>Boost.Interprocess</strong></span>
       and <span class="bold"><strong>Boost.Intrusive</strong></span>:
     </p>
-<p>
-</p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">containers</span><span class="special">/</span><span class="identifier">vector</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">allocators</span><span class="special">/</span><span class="identifier">allocator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -120,8 +115,6 @@
    <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 </pre>
-<p>
-    </p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="intrusive.using_smart_pointers.smart_pointers_requirements"></a><a class="link" href="using_smart_pointers.html#intrusive.using_smart_pointers.smart_pointers_requirements" title="Requirements for smart pointers compatible with Boost.Intrusive">Requirements
@@ -150,7 +143,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2013 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005 Olaf Krzikalla<br>Copyright &#169; 2006-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

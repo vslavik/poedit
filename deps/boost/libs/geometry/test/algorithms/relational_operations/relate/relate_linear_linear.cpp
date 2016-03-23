@@ -1,15 +1,15 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
 // This file was modified by Oracle on 2013, 2014, 2015.
 // Modifications copyright (c) 2013-2015 Oracle and/or its affiliates.
 
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
-
-// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 #include "test_relate.hpp"
 
@@ -211,16 +211,25 @@ void test_linestring_linestring()
         bg::read_wkt("LINESTRING(2 0,4 0)", ls2);
         bg::read_wkt("LINESTRING(1 0,1 1)", ls3);
         bg::read_wkt("LINESTRING(1 0,4 0)", ls4);
-        BOOST_CHECK(bgdr::relate(ls1, ls2, bgdr::mask9("FT*******")
-                                        || bgdr::mask9("F**T*****")
-                                        || bgdr::mask9("F***T****")));
-        BOOST_CHECK(bgdr::relate(ls1, ls3, bgdr::mask9("FT*******")
-                                        || bgdr::mask9("F**T*****")
-                                        || bgdr::mask9("F***T****")));
-        BOOST_CHECK(bgdr::relate(ls3, ls1, bgdr::mask9("FT*******")
-                                        || bgdr::mask9("F**T*****")
-                                        || bgdr::mask9("F***T****")));
-        BOOST_CHECK(bgdr::relate(ls2, ls4, bgdr::mask9("T*F**F***"))); // within
+        BOOST_CHECK(bg::relate(ls1, ls2, bg::de9im::mask("FT*******")
+                                      || bg::de9im::mask("F**T*****")
+                                      || bg::de9im::mask("F***T****")));
+        BOOST_CHECK(bg::relate(ls1, ls3, bg::de9im::mask("FT*******")
+                                      || bg::de9im::mask("F**T*****")
+                                      || bg::de9im::mask("F***T****")));
+        BOOST_CHECK(bg::relate(ls3, ls1, bg::de9im::mask("FT*******")
+                                      || bg::de9im::mask("F**T*****")
+                                      || bg::de9im::mask("F***T****")));
+        BOOST_CHECK(bg::relate(ls2, ls4, bg::de9im::mask("T*F**F***"))); // within
+
+        BOOST_CHECK(bg::relate(ls1, ls2, bg::de9im::static_mask<'F','T'>()
+                                      || bg::de9im::static_mask<'F','*','*','T'>()
+                                      || bg::de9im::static_mask<'F','*','*','*','T'>()));
+        BOOST_CHECK(bg::relate(ls1, ls2, bg::de9im::mask("FT")
+                                      || bg::de9im::mask("F**T")
+                                      || bg::de9im::mask("F***T**************")));
+
+        BOOST_CHECK_THROW(bg::relate(ls1, ls2, bg::de9im::mask("A")), bg::invalid_input_exception);
     }
 
     // spike - boundary and interior on the same point

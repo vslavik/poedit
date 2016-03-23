@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -441,7 +442,7 @@
 <p>
         To simplify this usage, <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">boost::interprocess::shared_ptr</a></code>
         header offers a shared pointer definition helper class (<code class="computeroutput"><a class="link" href="../boost/interprocess/managed_shared_ptr.html" title="Struct template managed_shared_ptr">managed_shared_ptr</a></code>)
-        and a function (<code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_s_idp56247856.html" title="Function template make_managed_shared_ptr">make_managed_shared_ptr</a></code>)
+        and a function (<code class="computeroutput"><a class="link" href="../boost/interprocess/make_man_idm45879390481424.html" title="Function template make_managed_shared_ptr">make_managed_shared_ptr</a></code>)
         to easily construct a shared pointer from a type allocated in a managed segment
         with an allocator that will allocate the reference count also in the managed
         segment and a deleter that will erase the object from the segment.
@@ -463,14 +464,14 @@
 </pre>
 <p>
         <span class="bold"><strong>Boost.Interprocess</strong></span> also offers a weak pointer
-        named <code class="computeroutput">weak_ptr</code>
+        named <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code>
         (with its corresponding <code class="computeroutput"><a class="link" href="../boost/interprocess/managed_weak_ptr.html" title="Struct template managed_weak_ptr">managed_weak_ptr</a></code>
         and <code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_weak_ptr.html" title="Function template make_managed_weak_ptr">make_managed_weak_ptr</a></code>
         utilities) to implement non-owning observers of an object owned by <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code>.
       </p>
 <p>
         Now let's see a detailed example of the use of <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code>:
-        and <code class="computeroutput">weak_ptr</code>
+        and <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code>
       </p>
 <p>
 </p>
@@ -590,7 +591,7 @@
 <p>
       </p>
 <p>
-        In general, using <span class="bold"><strong>Boost.Interprocess</strong></span>' <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code> and <code class="computeroutput">weak_ptr</code> is very similar
+        In general, using <span class="bold"><strong>Boost.Interprocess</strong></span>' <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">shared_ptr</a></code> and <code class="computeroutput"><a class="link" href="../boost/interprocess/weak_ptr.html" title="Class template weak_ptr">weak_ptr</a></code> is very similar
         to their counterparts <a href="http://www.boost.org/libs/smart_ptr/shared_ptr.htm" target="_top">boost::shared_ptr</a>
         and <a href="http://www.boost.org/libs/smart_ptr/weak_ptr.htm" target="_top">boost::weak_ptr</a>,
         but they need more template parameters and more run-time parameters in their
@@ -789,7 +790,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2012 Ion Gaztanaga<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005-2015 Ion Gaztanaga<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -77,6 +77,10 @@ BOOST_FUSION_ADAPT_ADT_NAMED(
 
 #endif // BOOST_PP_VARIADICS
 
+
+class empty_adt{};
+BOOST_FUSION_ADAPT_ADT_NAMED(empty_adt,renamed_empty_adt,)
+
 int
 main()
 {

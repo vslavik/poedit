@@ -11,6 +11,7 @@
 // alternatively you could define init function yourself
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
+namespace bt = boost::unit_test;
 
 //____________________________________________________________________________//
 
@@ -18,7 +19,7 @@
 BOOST_AUTO_TEST_CASE( test1 )
 {
     // reports 'error in "test1": test 2 == 1 failed'
-    BOOST_CHECK( 2 == 1 );
+    BOOST_TEST( 2 == 1 );
 }
 
 //____________________________________________________________________________//
@@ -29,9 +30,9 @@ BOOST_AUTO_TEST_CASE( test2 )
     int i = 0;
 
     // reports 'error in "test2": check i == 2 failed [0 != 2]'
-    BOOST_CHECK_EQUAL( i, 2 );
+    BOOST_TEST( i == 2 );
 
-    BOOST_CHECK_EQUAL( i, 0 );
+    BOOST_TEST( i == 0 );
 }
 
 //____________________________________________________________________________//

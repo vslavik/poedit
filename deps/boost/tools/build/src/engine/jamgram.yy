@@ -84,6 +84,9 @@
 # define psete( s,l,s1,f ) 	parse_make( PARSE_SETEXEC,l,P0,P0,s,s1,f )
 # define pswitch( l,r )   	parse_make( PARSE_SWITCH,l,r,P0,S0,S0,0 )
 # define pwhile( l,r )   	parse_make( PARSE_WHILE,l,r,P0,S0,S0,0 )
+# define preturn( l )       parse_make( PARSE_RETURN,l,P0,P0,S0,S0,0 )
+# define pbreak()           parse_make( PARSE_BREAK,P0,P0,P0,S0,S0,0 )
+# define pcontinue()        parse_make( PARSE_CONTINUE,P0,P0,P0,S0,S0,0 )
 
 # define pnode( l,r )    	parse_make( F0,l,r,P0,S0,S0,0 )
 # define psnode( s,l )     	parse_make( F0,l,P0,P0,s,S0,0 )
@@ -152,7 +155,11 @@ rule	: `{` block `}`
 	| arg `on` list assign list `;`
 		{ $$.parse = pset1( $1.parse, $3.parse, $5.parse, $4.number ); }
 	| `return` list `;`
-		{ $$.parse = $2.parse; }
+		{ $$.parse = preturn( $2.parse ); }
+    | `break` `;`
+        { $$.parse = pbreak(); }
+    | `continue` `;`
+        { $$.parse = pcontinue(); }
 	| `for` local_opt ARG `in` list `{` block `}`
 		{ $$.parse = pfor( $3.string, $5.parse, $7.parse, $2.number ); }
 	| `switch` list `{` cases `}`

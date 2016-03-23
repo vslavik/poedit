@@ -348,6 +348,9 @@ The platform has the POSIX header `<dirent.h>`.
 [[`BOOST_HAS_EXPM1`][Platform][
 The platform has the functions `expm1`, `expm1f` and `expm1l` in `<math.h>`
 ]]
+[[`BOOST_HAS_FLOAT128`][Compiler][
+The compiler has `__float128` as a native type which is distinct
+from all the regular C++ floating point types.]]
 [[`BOOST_HAS_FTIME`][Platform][
 The platform has the Win32 API type FTIME.
 ]]
@@ -670,6 +673,9 @@ compilers implementing an early draft of the C++11 standard (in particular, inco
 ]]
 [[`BOOST_NO_CXX11_NULLPTR`][The compiler does not support `nullptr`. 
 ]]
+[[`BOOST_NO_CXX11_NUMERIC_LIMITS`][The standard library `<limits>` header does
+not support the C++11 version of `numeric_limits`. 
+]]
 [[`BOOST_NO_CXX11_RANGE_BASED_FOR`][The compiler does not support
 range-based for statements. 
 ]]
@@ -894,6 +900,7 @@ Foo foo = { 0 };
 [[`BOOST_NO_CXX14_DECLTYPE_AUTO`][The compiler does not support `decltype(auto)`.]]
 [[`BOOST_NO_CXX14_DIGIT_SEPARATORS`][The compiler does not support digit separators (e.g. `1'000'000`).]]
 [[`BOOST_NO_CXX14_GENERIC_LAMBDAS`][The compiler does not support generic lambda (e.g. `[](auto v){ }`).]]
+[[`BOOST_NO_CXX14_HDR_SHARED_MUTEX`][The standard library does not provide header <shared_mutex>.]]
 [[`BOOST_NO_CXX14_INITIALIZED_LAMBDA_CAPTURES`][The compiler does not support initialized lambda capture (e.g. `[foo = 42]{ }`).]]
 [[`BOOST_NO_CXX14_RETURN_TYPE_DEDUCTION`][The compiler does not support return type deduction for normal functions (e.g. `auto f() { return val; }`).]]
 [[`BOOST_NO_CXX14_VARIABLE_TEMPLATES`][The compiler does not support variable template (e.g. `template <class T> T kibi = T(1024);`).]]

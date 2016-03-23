@@ -162,11 +162,11 @@ void test_wide_io()
     std::cout << "  wchar_t" << std::endl;
     test_for_char<wchar_t>();
     
-    #if defined BOOST_HAS_CHAR16_T && !defined(BOOST_NO_CHAR16_T_CODECVT)
+    #if defined BOOST_LOCALE_ENABLE_CHAR16_T && !defined(BOOST_NO_CHAR16_T_CODECVT)
     std::cout << "  char16_t" << std::endl;
     test_for_char<char16_t>();
     #endif
-    #if defined BOOST_HAS_CHAR32_T && !defined(BOOST_NO_CHAR32_T_CODECVT)
+    #if defined BOOST_LOCALE_ENABLE_CHAR32_T && !defined(BOOST_NO_CHAR32_T_CODECVT)
     std::cout << "  char32_t" << std::endl;
     test_for_char<char32_t>();
     #endif
@@ -343,10 +343,10 @@ void test_skip(char const *enc,char const *utf,char const *name,char const *opt=
     }
     TEST(boost::locale::conv::to_utf<char>(enc,name) == utf);
     TEST(boost::locale::conv::to_utf<wchar_t>(enc,name) == boost::locale::conv::utf_to_utf<wchar_t>(utf));
-    #ifdef BOOST_HAS_CHAR16_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
     TEST(boost::locale::conv::to_utf<char16_t>(enc,name) == boost::locale::conv::utf_to_utf<char16_t>(utf));
     #endif
-    #ifdef BOOST_HAS_CHAR32_T
+    #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
     TEST(boost::locale::conv::to_utf<char32_t>(enc,name) == boost::locale::conv::utf_to_utf<char32_t>(utf));
     #endif
 }
@@ -485,13 +485,13 @@ int main()
             test_to<char>();
             std::cout << "  wchar_t" << std::endl;
             test_to<wchar_t>();
-            #ifdef BOOST_HAS_CHAR16_T
+            #ifdef BOOST_LOCALE_ENABLE_CHAR16_T
             if(bname == "icu" || bname == "std") {
                 std::cout << "  char16_t" << std::endl;
                 test_to<char16_t>();
             }
             #endif
-            #ifdef BOOST_HAS_CHAR32_T
+            #ifdef BOOST_LOCALE_ENABLE_CHAR32_T
             if(bname == "icu" || bname == "std") {
                 std::cout << "  char32_t" << std::endl;
                 test_to<char32_t>();

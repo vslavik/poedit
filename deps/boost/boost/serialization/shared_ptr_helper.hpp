@@ -57,7 +57,7 @@ template<template<class T> class SPT>
 class shared_ptr_helper {
     typedef std::map<
         const void *, // address of object
-        SPT<void> // address shared ptr to single instance
+        SPT<const void> // address shared ptr to single instance
     > object_shared_pointer_map;
 
     // list of shared_pointers create accessable by raw pointer. This
@@ -71,7 +71,9 @@ class shared_ptr_helper {
         void operator()(void const *) const {}
     };
 
-#if defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS) || defined(BOOST_MSVC)
+#if defined(BOOST_NO_MEMBER_TEMPLATE_FRIENDS) \
+|| defined(BOOST_MSVC) \
+|| defined(__SUNPRO_CC)
 public:
 #else
     template<class Archive, class U>
@@ -92,7 +94,7 @@ public:
     // by a change in load_construct_data below.  It makes this file suitable
     // only for loading pointers into a 1.33 or later boost system.
     std::list<boost_132::shared_ptr<const void> > * m_pointers_132;
-    BOOST_ARCHIVE_DECL(void)
+    BOOST_ARCHIVE_DECL void
     append(const boost_132::shared_ptr<const void> & t){
         if(NULL == m_pointers_132)
             m_pointers_132 = new std::list<boost_132::shared_ptr<const void> >;

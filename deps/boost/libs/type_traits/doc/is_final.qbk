@@ -20,7 +20,7 @@ class types declared with the final specifier using only standard C++,
 as a result this type will never inherit from __true_type, unless the user explicitly
 specializes the template for their user-defined final class types, or unless the compiler
 supplies some unspecified intrinsic that implements this functionality.
-Currently (Aug 2014) compilers more recent than GCC-4.7, and Clang
+Currently (June 2015) compilers more recent than GCC-4.7, Oracle-12.4, and Clang
 have the necessary compiler __intrinsics to ensure that this
 trait "just works".  You may also test to see if the necessary __intrinsics are available
 by checking to see if the macro `BOOST_IS_FINAL` is defined.

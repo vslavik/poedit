@@ -18,7 +18,7 @@
 
 #include <string>
 
-// See powerpoint
+// For case 1..79, See powerpoint doc/other/test_cases/overlay_cases.ppt
 
 static std::string case_1[2] = {
         "POLYGON((0 1,2 5,5 3,0 1))",
@@ -310,7 +310,7 @@ static std::string case_58[3] = {
         "POLYGON((3 3,3 4,4 4,4 3,3 3))",
         // ST: self-tangent
         "POLYGON((0 2,0 5,4 4,1 4,1 3,4 4,2 3,2 2,4 4,3 2,4 2,4 4,5 0,0 2))",
-        // IET: inner/ext tangency
+        // IET: inner/ext tangency (the correct version)
         "POLYGON((0 2,0 5,4 4,5 0,0 2),(4 4,1 4,1 3,4 4),(4 4,2 3,2 2,4 4),(4 4,3 2,4 2,4 4))"
     };
 
@@ -348,9 +348,23 @@ static std::string case_72[2] = {
         "POLYGON((0 0,1 4,3 3,4 1,0 0))"
     };
 
+// 73..78: multi
+
 static std::string case_79[2] = {
         "POLYGON((0 0,0 5,5 5,5 3,2 3,2 2,5 2,5 0,0 0))",
         "POLYGON((0 0,0 5,5 5,5 0,2 0,2 2,1 2,1 0,0 0))"
+    };
+
+// Two colocations of interior/exterior ring
+static std::string case_80[2] = {
+        "POLYGON((0 5,5 10,10 5,5 0,0 5),(10 5,4 6,5 4,10 5))",
+        "POLYGON((10 0,10 10,20 10,20 0,10 0),(10 5,15 3,18 8,10 5))"
+    };
+
+// Interior ring touches other ring in the middle
+static std::string case_81[2] = {
+        "POLYGON((0 0,0 10,10 10,10 0,0 0),(10 4,2 7,5 1,10 4))",
+        "POLYGON((10 0,10 10,20 10,20 0,10 0),(10 6,15 3,18 8,10 6))"
     };
 
 static std::string case_many_situations[2] = {
@@ -863,5 +877,68 @@ static std::string ticket_11121[2] =
         "POLYGON((-8042 -1485,-8042 250,-8042 250,15943 254,15943 -1485,-8042 -1485))",
         "POLYGON((-7901 -1485,-7901 529,-7901 529,15802 544,15802 -1485,-7901 -1485))"
     };
+
+
+static std::string ticket_11725[2] =
+    {
+        "POLYGON((0 0, 0 1, 3 1, 3 0, 0 0))",
+        "POLYGON((0 1, 0 3, 3 3, 3 1, 2 2, 1 2 , 1 1, 0 1))"
+    };
+
+static std::string ticket_11725_2[2] =
+    {
+        "POLYGON((0 0, 0 3, 3 3, 3 0, 0 0))",
+        "POLYGON((3 1, 1 1, 1 2, 2 2, 3 1))",
+    };
+
+// Integer, ccw, open
+static std::string ticket_11676[2] =
+    {
+        "POLYGON((1920 1660,1920 1462,3720 1462,3720 3262,1920 3262,1920 1959,2218 2189,1920 1660),(3718 1561,3360 2233,3718 1957,3718 1561),(2818 2653,2218 2189,2818 3253,3360 2233,2818 2653))",
+        "POLYGON((1918 2155,1918 1957,2818 2653,3718 1957,3718 2154,2818 3055,1918 2155))",
+    };
+
+static std::string mysql_21964079_1[2] =
+    {
+        "POLYGON((7 3,0 10,0 -6,9 -5, 7 7, 7 3), (0 8, 2 3, 2 -2, 0 8))",
+        "POLYGON((0 8,-8 14,-11 18,-19 11, -3 1, 0 8))"
+    };
+
+static std::string mysql_21964079_2[2] =
+    {
+        "POLYGON((0 0,0 10,10 10,10 0,0 0), (0 8, 4 4, 4 6, 0 8))",
+        "POLYGON((0 8,-8 8,-10 4,0 8))"
+    };
+
+static std::string mysql_21964049[2] =
+    {
+        "POLYGON((7 0,10 -3,7 1,7 0))",
+        "POLYGON((7 4,-14 10,7 -17,7 4),(7 1,0 3,-2 4,7 1))"
+    };
+
+static std::string mysql_21964465[2] =
+    {
+        "POLYGON((0 0,0 10,10 10,10 0, 0 0), (0 8, 4 4, 4 6, 0 8))",
+        "POLYGON((0 8,-8 8,-2 2,0 8))",
+    };
+
+static std::string mysql_21977775[2] =
+    {
+        "POLYGON((8 6, 5 7, -1 4, -8 -7, 0 -17, 8 6), (3 6, 5 5, 0 -2, 3 6))",
+        "POLYGON((3 3, -17 11, -8 -3, 3 3))",
+    };
+
+static std::string mysql_21965285[2] =
+    {
+        "POLYGON((7 3, 0 10, 0 -6, 9 -5, 7 7, 7 3), (0 8, 2 3, 2 -2, 0 8))",
+        "POLYGON((0 6, 0 8, -14 13, 0 6))",
+    };
+
+static std::string mysql_21965285_b_inv[2] =
+    {
+        "POLYGON((3 0, -19 -19, -7 3, -2 10, 15 0, 3 0))",
+        "POLYGON((-20 -20,-20 20,20 20,20 -20,-20 -20),(1 1, -4 -3, 19 -8, 3 0, 1 1),(3 0, 8 12, 1 19, -3 16, -2 7, 3 0))"
+    };
+
 
 #endif // BOOST_GEOMETRY_TEST_OVERLAY_CASES_HPP

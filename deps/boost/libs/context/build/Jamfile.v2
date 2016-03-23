@@ -28,20 +28,27 @@ project boost/context
       <toolset>clang,<segmented-stacks>on:<cxxflags>-fsplit-stack
       <toolset>clang,<segmented-stacks>on:<cxxflags>-DBOOST_USE_SEGMENTED_STACKS
       <toolset>clang,<segmented-stacks>on:<linkflags>"-static-libgcc"
+      <toolset>intel,<link>shared:<define>BOOST_CONTEXT_EXPORT=EXPORT
+      <toolset>intel,<link>static:<define>BOOST_CONTEXT_EXPORT=
+      <toolset>msvc,<link>shared:<define>BOOST_CONTEXT_EXPORT=EXPORT
+      <toolset>msvc,<link>static:<define>BOOST_CONTEXT_EXPORT=
       <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
       <define>BOOST_CONTEXT_SOURCE
       <threading>multi
     : usage-requirements
       <link>shared:<define>BOOST_CONTEXT_DYN_LINK=1
+      <optimization>speed:<define>BOOST_DISABLE_ASSERTS
+      <variant>release:<define>BOOST_DISABLE_ASSERTS
     : source-location ../src
     ;
 
 local rule default_binary_format ( )
 {
     local tmp = elf ;
-    if [ os.name ] = "MACOSX" { tmp = mach-o ; }
     if [ os.name ] = "NT" { tmp = pe ; }
-    if [ os.name ] = "AIX" { tmp = xcoff ; }
+    else if [ os.name ] = "CYGWIN" { tmp = pe ; }
+    else if [ os.name ] = "AIX" { tmp = xcoff ; }
+    else if [ os.name ] = "MACOSX" { tmp = mach-o ; }
     return $(tmp) ;
 }
 
@@ -59,6 +66,7 @@ local rule default_abi ( )
 {
     local tmp = sysv ;
     if [ os.name ] = "NT" { tmp = ms ; }
+    else if [ os.name ] = "CYGWIN" { tmp = ms ; }
     else if [ os.platform ] = "ARM" { tmp = aapcs ; }
     else if [ os.platform ] = "MIPS" { tmp = o32 ; }
     return $(tmp) ;
@@ -654,6 +662,17 @@ alias asm_context_sources
    ;
 
 alias asm_context_sources
+   : asm/make_i386_ms_pe_gas.asm
+     asm/jump_i386_ms_pe_gas.asm
+     dummy.cpp
+   : <abi>ms
+     <address-model>32
+     <architecture>x86
+     <binary-format>pe
+     <toolset>gcc
+   ;
+
+alias asm_context_sources
    : asm/make_i386_ms_pe_masm.asm
      asm/jump_i386_ms_pe_masm.asm
      dummy.cpp
@@ -785,6 +804,17 @@ alias asm_context_sources
      <address-model>64
      <architecture>x86
      <binary-format>pe
+   ;
+
+alias asm_context_sources
+   : asm/make_x86_64_ms_pe_gas.asm
+     asm/jump_x86_64_ms_pe_gas.asm
+     dummy.cpp
+   : <abi>ms
+     <address-model>64
+     <architecture>x86
+     <binary-format>pe
+     <toolset>gcc
    ;
 
 alias asm_context_sources

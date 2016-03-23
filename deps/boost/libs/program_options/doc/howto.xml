@@ -21,7 +21,7 @@ options groups/hidden options
 -->
   <section>
     <title>Non-conventional Syntax</title>
-    
+
     <para>Sometimes, standard command line syntaxes are not enough. For
     example, the gcc compiler has "-frtti" and -fno-rtti" options, and this
     syntax is not directly supported.
@@ -57,14 +57,14 @@ store(command_line_parser(ac, av).options(desc).extra_parser(reg_foo)
         .run(), vm);
 </programlisting>
       The complete example can be found in the "example/custom_syntax.cpp"
-      file.                
+      file.
     </para>
   </section>
 
   <section>
     <title>Response Files</title>
 
-    <indexterm><primary>response files</primary></indexterm> 
+    <indexterm><primary>response files</primary></indexterm>
 
     <para>Some operating system have very low limits of the command line
       length. The common way to work around those limitations is using
@@ -79,7 +79,7 @@ store(command_line_parser(ac, av).options(desc).extra_parser(reg_foo)
     <para>
       First, you need to define an option for the response file:
 <programlisting>
-("response-file", value&lt;string&gt;(), 
+("response-file", value&lt;string&gt;(),
      "can be specified with '@name', too")
 </programlisting>
     </para>
@@ -120,14 +120,14 @@ if (vm.count("response-file")) {
      vector<string> args;
      copy(tok.begin(), tok.end(), back_inserter(args));
      // Parse the file and store the options
-     store(command_line_parser(args).options(desc).run(), vm);     
+     store(command_line_parser(args).options(desc).run(), vm);
 }
 ]]>
 </programlisting>
       The complete example can be found in the "example/response_file.cpp"
-      file.                
+      file.
     </para>
- 
+
   </section>
 
   <section>
@@ -146,7 +146,7 @@ if (vm.count("response-file")) {
 <programlisting>
 vector&lt;string&gt; args = split_winmain(lpCmdLine);
 store(command_line_parser(args).options(desc).run(), vm);
-</programlisting>      
+</programlisting>
       The <code>split_winmain</code> function is overloaded for <code>wchar_t</code> strings, so can
       also be used in Unicode applications.
     </para>
@@ -223,7 +223,7 @@ visible.add(general).add(gui);
 variables_map vm;
 store(parse_command_line(ac, av, all), vm);
 
-if (vm.count("help")) 
+if (vm.count("help"))
 {
     cout << visible;
     return 0;
@@ -235,7 +235,7 @@ if (vm.count("help-module")) {
     } else if (s == "backend") {
         cout << backend;
     } else {
-        cout << "Unknown module '" 
+        cout << "Unknown module '"
              << s << "' in the --help-module option\n";
         return 1;
     }
@@ -243,8 +243,8 @@ if (vm.count("help-module")) {
 }
 if (vm.count("num-threads")) {
     cout << "The 'num-threads' options was set to "
-         << vm["num-threads"].as<int>() << "\n";            
-}                           
+         << vm["num-threads"].as<int>() << "\n";
+}
 ]]></programlisting>
       When parsing the command line, all options are allowed. The "--help"
       message, however, does not include the "Backend options" group -- the
@@ -253,7 +253,7 @@ if (vm.count("num-threads")) {
       option. The complete example can be found in the
       "example/option_groups.cpp" file.
     </para>
-  
+
   </section>
 
   <section>
@@ -276,7 +276,7 @@ public:
 };
 ]]></programlisting> and then overload the <code>validate</code> function:
 <programlisting><![CDATA[
-void validate(boost::any& v, 
+void validate(boost::any& v,
               const std::vector<std::string>& values,
               magic_number* target_type, int)
 {
@@ -290,16 +290,16 @@ void validate(boost::any& v,
     // one string, it's an error, and exception will be thrown.
     const string& s = validators::get_single_string(values);
 
-    // Do regex match and convert the interesting part to 
+    // Do regex match and convert the interesting part to
     // int.
     smatch match;
     if (regex_match(s, match, r)) {
         v = any(magic_number(lexical_cast<int>(match[1])));
     } else {
         throw validation_error(validation_error::invalid_option_value);
-    }        
+    }
 }
-]]>        
+]]>
 </programlisting>The function takes four parameters. The first is the storage
       for the value, and in this case is either empty or contains an instance of
       the <code>magic_number</code> class. The second is the list of strings
@@ -372,7 +372,7 @@ void validate(boost::any& v,
 locale::global(locale(""));
       </programlisting>
       which would set up the conversion facet according to the user's selected
-      locale. 
+      locale.
     </para>
 
     <para>It's wise to check the status of the C++ locale support on your
@@ -382,7 +382,7 @@ locale::global(locale(""));
           <para>Go the the "test" directory and build the "test_convert" binary.</para>
         </listitem>
         <listitem>
-          <para>Set some non-ascii locale in the environmemt. On Linux, one can
+          <para>Set some non-ascii locale in the environment. On Linux, one can
           run, for example: <screen>
 $ export LC_CTYPE=ru_RU.KOI8-R
 </screen>
@@ -402,37 +402,37 @@ $ export LC_CTYPE=ru_RU.KOI8-R
     <section>
       <title>Allowing Unknown Options</title>
 
-      <para>Usually, the library throws an exception on unknown option names. This 
-      behaviour can be changed. For example, only some part of your application uses 
+      <para>Usually, the library throws an exception on unknown option names. This
+      behaviour can be changed. For example, only some part of your application uses
       <libraryname>Program_options</libraryname>, and you wish to pass unrecognized options to another part of
       the program, or even to another application.</para>
 
-      <para>To allow unregistered options on the command line, you need to use 
+      <para>To allow unregistered options on the command line, you need to use
       the &basic_command_line_parser; class for parsing (not &parse_command_line;)
-      and call the <methodname alt="boost::program_options::basic_command_line_parser::allow_unregistered">allow_unregistered</methodname> 
+      and call the <methodname alt="boost::program_options::basic_command_line_parser::allow_unregistered">allow_unregistered</methodname>
       method of that class:
       <programlisting>
-parsed_options parsed = 
-    command_line_parser(argc, argv).options(desc).allow_unregistered().run();      
+parsed_options parsed =
+    command_line_parser(argc, argv).options(desc).allow_unregistered().run();
       </programlisting>
-      
-      For each token that looks like an option, but does not have a known name, 
-      an instance of &basic_option; will be added to the result. 
-      The <code>string_key</code> and <code>value</code> fields of the instance will contain results 
+
+      For each token that looks like an option, but does not have a known name,
+      an instance of &basic_option; will be added to the result.
+      The <code>string_key</code> and <code>value</code> fields of the instance will contain results
       of syntactic parsing of the token, the <code>unregistered</code> field will be set to <code>true</code>,
       and the <code>original_tokens</code> field will contain the token as it appeared on the command line.
       </para>
 
-      <para>If you want to pass the unrecognized options further, the 
+      <para>If you want to pass the unrecognized options further, the
       <functionname alt="boost::program_options::collect_unrecognized">collect_unrecognized</functionname> function can be used.
       The function will collect original tokens for all unrecognized values, and optionally, all found positional options.
-      Say, if your code handles a few options, but does not handles positional options at all, you can use the function like this:
+      Say, if your code handles a few options, but does not handle positional options at all, you can use the function like this:
       <programlisting>
 vector&lt;string&gt; to_pass_further = collect_unrecognized(parsed.options, include_positional);
       </programlisting>
-      
-      </para>     
-            
+
+      </para>
+
     </section>
 
 </section>

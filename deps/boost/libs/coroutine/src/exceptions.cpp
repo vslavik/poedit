@@ -4,7 +4,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          http://www.boost.org/LICENSE_1_0.txt)
 
-#include <boost/coroutine/exceptions.hpp>
+#include "boost/coroutine/exceptions.hpp"
 
 namespace boost {
 namespace coroutines {
@@ -27,6 +27,7 @@ public:
     }
 };
 
+BOOST_COROUTINES_DECL
 system::error_category const& coroutine_category() BOOST_NOEXCEPT
 {
     static coroutines::coroutine_error_category cat;

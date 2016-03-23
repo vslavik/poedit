@@ -26,8 +26,13 @@
 #include <limits.h> // To bring in libc macros
 #include <boost/config.hpp>
 
+// The library requires dynamic_cast in a few places
 #if defined(BOOST_NO_RTTI)
 #   error Boost.Log: RTTI is required by the library
+#endif
+
+#if defined(BOOST_WINDOWS)
+#include <boost/detail/winapi/config.hpp>
 #endif
 
 #if defined(_MSC_VER) && _MSC_VER >= 1600
@@ -94,6 +99,13 @@
 #if defined(BOOST_MSVC) && BOOST_MSVC <= 1600
     // MSVC cannot interpret constant expressions in certain contexts, such as non-type template parameters
 #   define BOOST_LOG_BROKEN_CONSTANT_EXPRESSIONS
+#endif
+
+#if defined(BOOST_NO_CXX11_HDR_CODECVT)
+    // The compiler does not support std::codecvt<char16_t> and std::codecvt<char32_t> specializations.
+    // The BOOST_NO_CXX11_HDR_CODECVT means there's no usable <codecvt>, which is slightly different from this macro.
+    // But in order for <codecvt> to be implemented the std::codecvt specializations have to be implemented as well.
+#   define BOOST_LOG_NO_CXX11_CODECVT_FACETS
 #endif
 
 #if defined(__CYGWIN__)
@@ -174,13 +186,8 @@
 #   endif
 
 #   if defined(BOOST_LOG_DLL)
-#       if defined(BOOST_SYMBOL_IMPORT)
-#           define BOOST_LOG_API BOOST_SYMBOL_IMPORT
-#       elif defined(BOOST_HAS_DECLSPEC)
-#           define BOOST_LOG_API __declspec(dllimport)
-#       endif
-#   endif
-#   ifndef BOOST_LOG_API
+#       define BOOST_LOG_API BOOST_SYMBOL_IMPORT
+#   else
 #       define BOOST_LOG_API
 #   endif
 //
@@ -214,13 +221,8 @@
 #else // !defined(BOOST_LOG_BUILDING_THE_LIB)
 
 #   if defined(BOOST_LOG_DLL)
-#       if defined(BOOST_SYMBOL_EXPORT)
-#           define BOOST_LOG_API BOOST_SYMBOL_EXPORT
-#       elif defined(BOOST_HAS_DECLSPEC)
-#           define BOOST_LOG_API __declspec(dllexport)
-#       endif
-#   endif
-#   ifndef BOOST_LOG_API
+#       define BOOST_LOG_API BOOST_SYMBOL_EXPORT
+#   else
 #       define BOOST_LOG_API BOOST_SYMBOL_VISIBLE
 #   endif
 
@@ -280,11 +282,11 @@ namespace boost {
 #           if defined(BOOST_THREAD_PLATFORM_PTHREAD)
 #               define BOOST_LOG_VERSION_NAMESPACE v2_mt_posix
 #           elif defined(BOOST_THREAD_PLATFORM_WIN32)
-#               if defined(BOOST_LOG_USE_WINNT6_API)
+#               if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 #                   define BOOST_LOG_VERSION_NAMESPACE v2_mt_nt6
 #               else
 #                   define BOOST_LOG_VERSION_NAMESPACE v2_mt_nt5
-#               endif // defined(BOOST_LOG_USE_WINNT6_API)
+#               endif
 #           else
 #               define BOOST_LOG_VERSION_NAMESPACE v2_mt
 #           endif
@@ -296,11 +298,11 @@ namespace boost {
 #           if defined(BOOST_THREAD_PLATFORM_PTHREAD)
 #               define BOOST_LOG_VERSION_NAMESPACE v2s_mt_posix
 #           elif defined(BOOST_THREAD_PLATFORM_WIN32)
-#               if defined(BOOST_LOG_USE_WINNT6_API)
+#               if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 #                   define BOOST_LOG_VERSION_NAMESPACE v2s_mt_nt6
 #               else
 #                   define BOOST_LOG_VERSION_NAMESPACE v2s_mt_nt5
-#               endif // defined(BOOST_LOG_USE_WINNT6_API)
+#               endif
 #           else
 #               define BOOST_LOG_VERSION_NAMESPACE v2s_mt
 #           endif

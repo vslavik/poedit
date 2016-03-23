@@ -8,13 +8,12 @@
 [section:mpl MPL Interoperability]
 
 All the value based traits in this library conform to MPL's requirements
-for an [@../../../../libs/mpl/doc/refmanual/integral-constant.html Integral Constant type]: that includes a number of rather intrusive
-workarounds for broken compilers.  
+for an [@../../../../libs/mpl/doc/refmanual/integral-constant.html Integral Constant type].  
 
-Purely as an implementation detail, this
-means that `__true_type` inherits from [@../../../../libs/mpl/doc/refmanual/bool.html `boost::mpl::true_`], `__false_type` inherits
-from [@../../../../libs/mpl/doc/refmanual/bool.html `boost::mpl::false_`], and `__integral_constant<T, v>` inherits from
-[@../../../../libs/mpl/doc/refmanual/integral-c.html `boost::mpl::integral_c<T,v>`] (provided `T` is not `bool`)
+Please note that these types no longer inherit from `mpl::true_` or `mpl::false_` etc, and the library
+will no longer implicitly include any MPL header.  However there is an implicit conversion from
+`integral_constant` to the corresponding MPL types, therefore tag-dispatching that uses MPL types
+in function overloads will still work as before.
 
 [endsect]
 

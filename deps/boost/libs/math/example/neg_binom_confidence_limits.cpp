@@ -38,7 +38,7 @@ interval:
 
 /*`
 Confidence value as % is (1 - alpha) * 100, so alpha 0.05 == 95% confidence
-that the true occurence frequency lies *inside* the calculated interval.
+that the true occurrence frequency lies *inside* the calculated interval.
 
 We need a function to calculate and print confidence limits
 for an observed frequency of occurrence 

@@ -59,10 +59,10 @@ public:
 
     concurrent_runner(
         const boost::function<bool(size_t)> & fn)
-        : finished_(false), failure_(false),
-        first_thread_(boost::bind(&concurrent_runner::thread_function, this, fn, 0)),
-        second_thread_(boost::bind(&concurrent_runner::thread_function, this, fn, 1))
+        : finished_(false), failure_(false)
     {
+        boost::thread(boost::bind(&concurrent_runner::thread_function, this, fn, 0)).swap(first_thread_);
+        boost::thread(boost::bind(&concurrent_runner::thread_function, this, fn, 1)).swap(second_thread_);
     }
 
     void

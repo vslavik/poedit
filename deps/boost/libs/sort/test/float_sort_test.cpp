@@ -42,7 +42,27 @@ rand_32(bool sign = true) {
    return result;
 }
 
-static const unsigned input_count = 100000;
+static const unsigned input_count = 1000000;
+
+// Helper class to run tests across all float_sort interface variants.
+template<class FloatType, class RightShift>
+void test_vector(vector<FloatType> base_vec, RightShift shifter) {
+  vector<FloatType> sorted_vec = base_vec;
+  vector<FloatType> test_vec = base_vec;
+  std::sort(sorted_vec.begin(), sorted_vec.end());
+  //Testing boost::sort::spreadsort version
+  test_vec = base_vec;
+  boost::sort::spreadsort::spreadsort(test_vec.begin(), test_vec.end());
+  BOOST_CHECK(test_vec == sorted_vec);
+  //One functor
+  test_vec = base_vec;
+  float_sort(test_vec.begin(), test_vec.end(), shifter);
+  BOOST_CHECK(test_vec == sorted_vec);
+  //Both functors
+  test_vec = base_vec;
+  float_sort(test_vec.begin(), test_vec.end(), shifter, less<FloatType>());
+  BOOST_CHECK(test_vec == sorted_vec);
+}
 
 void float_test()
 {
@@ -59,49 +79,58 @@ void float_test()
     else
       base_vec.push_back(val);
   }
-  vector<float> sorted_vec = base_vec;
-  vector<float> test_vec = base_vec;
-  std::sort(sorted_vec.begin(), sorted_vec.end());
-  //Testing boost::sort::spreadsort version
-  test_vec = base_vec;
-  boost::sort::spreadsort::spreadsort(test_vec.begin(), test_vec.end());
-  BOOST_CHECK(test_vec == sorted_vec);
-  //One functor
-  test_vec = base_vec;
-  float_sort(test_vec.begin(), test_vec.end(), rightshift());
-  BOOST_CHECK(test_vec == sorted_vec);
-  //Both functors
-  test_vec = base_vec;
-  float_sort(test_vec.begin(), test_vec.end(), rightshift(), less<float>());
-  BOOST_CHECK(test_vec == sorted_vec);
+  test_vector(base_vec, rightshift());
+
+  // Trying both positive and negative sorted and reverse sorted data.
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(-i);
+  test_vector(base_vec, rightshift());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i - input_count);
+  test_vector(base_vec, rightshift());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(input_count - i);
+  test_vector(base_vec, rightshift());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i);
+  test_vector(base_vec, rightshift());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i);
+  for (size_t i = 0; i < input_count; i += 2) base_vec[i] *= -1;
+  test_vector(base_vec, rightshift());
 }
 
 void double_test() {
-  vector<double> long_base_vec;
+  vector<double> base_vec;
   for (unsigned u = 0; u < input_count; ++u) {
     double val = double
     ((((boost::int64_t)rand_32()) << ((8 * sizeof(int)) -1)) + rand_32(false));
     //As std::sort gives arbitrary results for NaNs and 0.0 vs. -0.0, 
     //treat all those as just 0.0 for testing
     if (!(val < 0.0) && !(0.0 < val))
-      long_base_vec.push_back(0.0);
+      base_vec.push_back(0.0);
     else
-      long_base_vec.push_back(val);
+      base_vec.push_back(val);
   }
-  vector<double> long_sorted_vec = long_base_vec;
-  vector<double> long_test_vec = long_base_vec;
-  float_sort(long_test_vec.begin(), long_test_vec.end());
-  std::sort(long_sorted_vec.begin(), long_sorted_vec.end());
-  BOOST_CHECK(long_test_vec == long_sorted_vec);
-  //One functor
-  long_test_vec = long_base_vec;
-  float_sort(long_test_vec.begin(), long_test_vec.end(), rightshift_64());
-  BOOST_CHECK(long_test_vec == long_sorted_vec);
-  //Both functors
-  long_test_vec = long_base_vec;
-  float_sort(long_test_vec.begin(), long_test_vec.end(), rightshift_64(),
-             less<double>());
-  BOOST_CHECK(long_test_vec == long_sorted_vec);
+  test_vector(base_vec, rightshift_64());
+
+  // Trying both positive and negative sorted and reverse sorted data.
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(-i);
+  test_vector(base_vec, rightshift_64());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i - input_count);
+  test_vector(base_vec, rightshift_64());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(input_count - i);
+  test_vector(base_vec, rightshift_64());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i);
+  test_vector(base_vec, rightshift_64());
+  base_vec.clear();
+  for (size_t i = 0; i < input_count; ++i) base_vec.push_back(i);
+  for (size_t i = 0; i < input_count; i += 2) base_vec[i] *= -1;
+  test_vector(base_vec, rightshift_64());
 }
 
 // Verify that 0 and 1 elements work correctly.
@@ -121,6 +150,6 @@ int test_main( int, char*[] )
   srand(1);
   float_test();
   double_test();
-  corner_test();    
+  corner_test();
   return 0;
 }

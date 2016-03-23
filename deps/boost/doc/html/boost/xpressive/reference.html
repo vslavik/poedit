@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
@@ -35,13 +36,13 @@
 <span class="keyword">struct</span> <a class="link" href="reference.html" title="Struct template reference">reference</a> <span class="special">:</span> <span class="keyword">public</span> proto::extends&lt; proto::terminal&lt; reference_wrapper&lt; T &gt; &gt;::type, reference&lt; T &gt; &gt;
 <span class="special">{</span>
   <span class="comment">// <a class="link" href="reference.html#boost.xpressive.referenceconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">explicit</span> <a class="link" href="reference.html#idp352659568-bb"><span class="identifier">reference</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="reference.html#idm45506840445376-bb"><span class="identifier">reference</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="reference.html#idp352657424-bb">public member functions</a></span>
-  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="reference.html#idp352657984-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="reference.html#idm45506840447520-bb">public member functions</a></span>
+  <span class="identifier">T</span> <span class="special">&amp;</span> <a class="link" href="reference.html#idm45506840446960-bb"><span class="identifier">get</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idp531345712"></a><h2>Description</h2>
+<a name="idm45555020527728"></a><h2>Description</h2>
 <p>
 Here is an example of how to use <code class="computeroutput">reference&lt;&gt;</code> to create a lazy reference to an existing object so it can be read and written in an xpressive semantic action.</p>
 <pre class="programlisting"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">xpressive</span><span class="special">;</span>
@@ -55,19 +56,19 @@ Here is an example of how to use <code class="computeroutput">reference&lt;&gt;<
 </pre>
 <p> </p>
 <div class="refsect2">
-<a name="idp531391024"></a><h3>Template Parameters</h3>
+<a name="idm45555020482416"></a><h3>Template Parameters</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <pre class="literallayout"><span class="keyword">typename</span> T</pre>
 <p>The type of the referent.</p>
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp531394160"></a><h3>
+<a name="idm45555020479280"></a><h3>
 <a name="boost.xpressive.referenceconstruct-copy-destruct"></a><code class="computeroutput">reference</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp352659568-bb"></a><span class="identifier">reference</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Store a reference to <code class="computeroutput">t</code>. <p>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45506840445376-bb"></a><span class="identifier">reference</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre>Store a reference to <code class="computeroutput">t</code>. <p>
 </p>
 <div class="variablelist"><table border="0" class="variablelist compact">
 <colgroup>
@@ -91,10 +92,10 @@ Here is an example of how to use <code class="computeroutput">reference&lt;&gt;<
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idp531406112"></a><h3>
-<a name="idp352657424-bb"></a><code class="computeroutput">reference</code> public member functions</h3>
+<a name="idm45555020467392"></a><h3>
+<a name="idm45506840447520-bb"></a><code class="computeroutput">reference</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idp352657984-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Fetch the stored value. </li></ol></div>
+<pre class="literallayout"><span class="identifier">T</span> <span class="special">&amp;</span> <a name="idm45506840446960-bb"></a><span class="identifier">get</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Fetch the stored value. </li></ol></div>
 </div>
 </div>
 </div>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>has_trivial_copy</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.TypeTraits">
 <link rel="up" href="../reference.html" title="Alphabetical Reference">
 <link rel="prev" href="has_trivial_constructor.html" title="has_trivial_constructor">
@@ -46,19 +46,17 @@
         can be safely replaced with a call to <code class="computeroutput"><span class="identifier">memcpy</span></code>.
       </p>
 <p>
-        <span class="bold"><strong>Compiler Compatibility:</strong></span> If the compiler
-        does not support partial-specialization of class templates, then this template
-        can not be used with function types.
-      </p>
-<p>
-        Without some (as yet unspecified) help from the compiler, has_trivial_copy
-        will never report that a user-defined class or struct has a trivial constructor;
-        this is always safe, if possibly sub-optimal. Currently (May 2011) compilers
-        more recent than Visual C++ 8, GCC-4.3, Greenhills 6.0, Intel-11.0, and Codegear
-        have the necessary compiler <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a>
-        to ensure that this trait "just works". You may also test to see
-        if the necessary <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a>
-        are available by checking to see if the macro <code class="computeroutput"><span class="identifier">BOOST_HAS_TRIVIAL_COPY</span></code>
+        <span class="bold"><strong>Compiler Compatibility:</strong></span> Without some (as
+        yet unspecified) help from the compiler, has_trivial_copy will never report
+        that a user-defined class or struct has a trivial constructor; this is always
+        safe, if possibly sub-optimal. In addition, in order to correctly handle
+        deleted or private copy-constructors then C++11's <code class="computeroutput"><span class="identifier">dectype</span></code>
+        is required. Currently (May 2015) compilers more recent than Visual C++ 8,
+        GCC-4.3, Greenhills 6.0, Intel-11.0, and Codegear have the necessary compiler
+        <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a> to ensure that
+        this trait "just works". You may also test to see if the necessary
+        <a class="link" href="../intrinsics.html" title="Support for Compiler Intrinsics">intrinsics</a> are available
+        by checking to see if the macro <code class="computeroutput"><span class="identifier">BOOST_HAS_TRIVIAL_COPY</span></code>
         is defined.
       </p>
 <p>

@@ -12,6 +12,50 @@
 #  include <boost/type_traits/has_nothrow_constructor.hpp>
 #endif
 
+class bug11324_base
+{
+public:
+   bug11324_base & operator=(const bug11324_base&){ throw int(); }
+   virtual ~bug11324_base() {}
+};
+
+class bug11324_derived : public bug11324_base
+{
+public:
+   char data;
+   explicit bug11324_derived(char arg) : data(arg) {}
+};
+
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+
+struct deleted_default_construct
+{
+   deleted_default_construct() = delete;
+   deleted_default_construct(char val) : member(val) {}
+   char member;
+};
+
+#endif
+
+struct private_default_construct
+{
+private:
+   private_default_construct();
+public:
+   private_default_construct(char val) : member(val) {}
+   char member;
+};
+
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+struct noexcept_default_construct
+{
+   noexcept_default_construct()noexcept;
+   noexcept_default_construct(char val)noexcept : member(val) {}
+   char member;
+};
+#endif
+
+
 TT_TEST_BEGIN(has_nothrow_constructor)
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<bool>::value, true);
@@ -162,6 +206,14 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<nothrow_assign_UDT>:
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<nothrow_copy_UDT>::value, false);
 
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<test_abc1>::value, false);
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<bug11324_derived>::value, false);
+#ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<deleted_default_construct>::value, false);
+#endif
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<private_default_construct>::value, false);
+#ifndef BOOST_NO_CXX11_NOEXCEPT
+BOOST_CHECK_INTEGRAL_CONSTANT(::tt::has_nothrow_constructor<noexcept_default_construct>::value, true);
+#endif
 
 TT_TEST_END
 

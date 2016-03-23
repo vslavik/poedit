@@ -35,7 +35,7 @@
    
    }} // namespaces
    
-The return type of these functions is computed using the __arg_pomotion_rules:
+The return type of these functions is computed using the __arg_promotion_rules:
 note than when there is a single template argument the result is the same type 
 as that argument or `double` if the template argument is an integer type.
 
@@ -193,48 +193,16 @@ for various domains of input arguments.
 Note that only results for the widest floating point type on the system are 
 given as narrower types have __zero_error.
 
-[table Peak Errors In the Legendre P Function
-[[Significand Size] [Platform and Compiler] [Errors in range
+[table_legendre_p]
 
-0 < l < 20]  [Errors in range
+[table_legendre_q]
 
-20 < l < 120]]
-[[53] [Win32, Visual C++ 8] [Peak=211 Mean=20]  [Peak=300 Mean=33]]
-[[64] [SUSE Linux IA32, g++ 4.1] [Peak=70 Mean=10]  [Peak=700 Mean=60]]
-[[64] [Red Hat Linux IA64, g++ 3.4.4] [Peak=70 Mean=10]  [Peak=700 Mean=60]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=35 Mean=6]  [Peak=292 Mean=41]]
-]
-
-[table Peak Errors In the Associated Legendre P Function
-[[Significand Size] [Platform and Compiler] [Errors in range
-
-0 < l < 20] ]
-[[53] [Win32, Visual C++ 8] [Peak=1200 Mean=7]]
-[[64] [SUSE Linux IA32, g++ 4.1] [Peak=80 Mean=5]]
-[[64] [Red Hat Linux IA64, g++ 3.4.4] [Peak=80 Mean=5] ]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=42 Mean=4] ]
-]
-
-[table Peak Errors In the Legendre Q Function
-[[Significand Size] [Platform and Compiler] [Errors in range
-
-0 < l < 20]  [Errors in range
-
-20 < l < 120]]
-[[53] [Win32, Visual C++ 8] [Peak=50 Mean=7]  [Peak=4600 Mean=370]]
-[[64] [SUSE Linux IA32, g++ 4.1] [Peak=51 Mean=8]  [Peak=6000 Mean=480]]
-[[64] [Red Hat Linux IA64, g++ 3.4.4] [Peak=51 Mean=8]  [Peak=6000 Mean=480]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=90 Mean=10]  [Peak=1700 Mean=140]]
-]
+[table_legendre_p_associated_]
 
 Note that the worst errors occur when the order increases, values greater than
 ~120 are very unlikely to produce sensible results, especially in the associated
 polynomial case when the degree is also large.  Further the relative errors
 are likely to grow arbitrarily large when the function is very close to a root.
-
-No comparisons to other libraries are shown here: there appears to be only one
-viable implementation method for these functions, the comparisons to other
-libraries that have been run show identical error rates to those given here.
 
 [h4 Testing]
 

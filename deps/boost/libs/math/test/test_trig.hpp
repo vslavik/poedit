@@ -23,10 +23,13 @@
 template <class Real, class T>
 void do_test_trig(const T& data, const char* type_name, const char* test_name)
 {
+#if !(defined(ERROR_REPORTING_MODE) && !defined(SIN_PI_RATIO_FUNCTION_TO_TEST))
    typedef Real                   value_type;
 
    typedef value_type (*pg)(value_type);
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef SIN_PI_RATIO_FUNCTION_TO_TEST
+   pg funcp = SIN_PI_RATIO_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    pg funcp = boost::math::sin_pi<value_type>;
 #else
    pg funcp = boost::math::sin_pi;
@@ -44,11 +47,13 @@ void do_test_trig(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0),
       extract_result<Real>(1));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::sin_pi", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "sin_pi", test_name);
    //
    // test cos_pi against data:
    //
-#if defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
+#ifdef COS_PI_RATIO_FUNCTION_TO_TEST
+   funcp = COS_PI_RATIO_FUNCTION_TO_TEST;
+#elif defined(BOOST_MATH_NO_DEDUCED_FUNCTION_POINTERS)
    funcp = boost::math::cos_pi<value_type>;
 #else
    funcp = boost::math::cos_pi;
@@ -57,8 +62,9 @@ void do_test_trig(const T& data, const char* type_name, const char* test_name)
       data,
       bind_func<Real>(funcp, 0),
       extract_result<Real>(2));
-   handle_test_result(result, data[result.worst()], result.worst(), type_name, "boost::math::cos_pi", test_name);
+   handle_test_result(result, data[result.worst()], result.worst(), type_name, "cos_pi", test_name);
    std::cout << std::endl;
+#endif
 }
 
 template <class T>

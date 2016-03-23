@@ -48,9 +48,8 @@ extern "C" void* __cxa_get_globals();
 #endif
 #elif defined(_MSC_VER)
 #if _MSC_VER >= 1900
-// Visual Studio 14 has redesigned CRT
-#define BOOST_LOG_HAS_PROCESSING_THROW
-extern "C" int* __processing_throw();
+// Visual Studio 14 supports N4152 std::uncaught_exceptions()
+#define BOOST_LOG_HAS_UNCAUGHT_EXCEPTIONS
 #elif _MSC_VER >= 1400
 #define BOOST_LOG_HAS_GETPTD
 extern "C" void* _getptd();
@@ -62,15 +61,15 @@ extern "C" void* _getptd();
 //! Returns the number of currently pending exceptions
 BOOST_LOG_API unsigned int unhandled_exception_count() BOOST_NOEXCEPT
 {
-#if defined(BOOST_LOG_HAS_CXA_GET_GLOBALS)
+#if defined(BOOST_LOG_HAS_UNCAUGHT_EXCEPTIONS)
+    // C++17 implementation
+    return static_cast< unsigned int >(std::uncaught_exceptions());
+#elif defined(BOOST_LOG_HAS_CXA_GET_GLOBALS)
     // Tested on {clang 3.2,GCC 3.5.6,GCC 4.1.2,GCC 4.4.6,GCC 4.4.7}x{x32,x64}
     return *(reinterpret_cast< const unsigned int* >(static_cast< const char* >(__cxa_get_globals()) + sizeof(void*))); // __cxa_eh_globals::uncaughtExceptions, x32 offset - 0x4, x64 - 0x8
 #elif defined(BOOST_LOG_HAS_GETPTD)
     // MSVC specific. Tested on {MSVC2005SP1,MSVC2008SP1,MSVC2010SP1,MSVC2012}x{x32,x64}.
     return *(reinterpret_cast< const unsigned int* >(static_cast< const char* >(_getptd()) + (sizeof(void*) == 8 ? 0x100 : 0x90))); // _tiddata::_ProcessingThrow, x32 offset - 0x90, x64 - 0x100
-#elif defined(BOOST_LOG_HAS_PROCESSING_THROW)
-    // MSVC specific. Tested on {MSVC 14 CTP}x{x32,x64}.
-    return static_cast< unsigned int >(*__processing_throw());
 #else
     // Portable implementation. Does not allow to detect multiple nested exceptions.
     return static_cast< unsigned int >(std::uncaught_exception());

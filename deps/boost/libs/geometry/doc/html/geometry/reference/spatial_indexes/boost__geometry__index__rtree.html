@@ -67,6 +67,8 @@
 <dt><span class="section"><a href="boost__geometry__index__rtree/qbegin_predicates_const___.html">qbegin(Predicates
           const &amp;)</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/qend__.html">qend()</a></span></dt>
+<dt><span class="section"><a href="boost__geometry__index__rtree/begin__.html">begin()</a></span></dt>
+<dt><span class="section"><a href="boost__geometry__index__rtree/end__.html">end()</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/size__.html">size()</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/empty__.html">empty()</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/clear__.html">clear()</a></span></dt>
@@ -79,7 +81,7 @@
 <dt><span class="section"><a href="boost__geometry__index__rtree/get_allocator__.html">get_allocator()</a></span></dt>
 </dl></div>
 <p>
-          <a class="indexterm" name="idp125711984"></a><a class="indexterm" name="idp125712672"></a><a class="indexterm" name="idp125713360"></a><a class="indexterm" name="idp125714048"></a>
+          <a class="indexterm" name="idm44837171349552"></a><a class="indexterm" name="idm44837171348864"></a><a class="indexterm" name="idm44837171348176"></a><a class="indexterm" name="idm44837171347488"></a>
 The R-tree spatial index.
         </p>
 <h6>
@@ -446,12 +448,24 @@ The R-tree spatial index.
 <tr>
 <td>
                   <p>
-                    <a name="classboost_1_1geometry_1_1index_1_1rtree_1a83fce1047d890f327ea195ed252af176"></a><code class="computeroutput"><span class="identifier">const_query_iterator</span></code>
+                    <a name="classboost_1_1geometry_1_1index_1_1rtree_1a701f65f0d6cf2e8b7be7f1c4b8fb7fde"></a><code class="computeroutput"><span class="identifier">const_iterator</span></code>
                   </p>
                 </td>
 <td>
                   <p>
-                    Type of const query iterator.
+                    Type of const iterator, category ForwardIterator.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <a name="classboost_1_1geometry_1_1index_1_1rtree_1ad144a7704ad878caaa84cda79b140855"></a><code class="computeroutput"><span class="identifier">const_query_iterator</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Type of const query iterator, category ForwardIterator.
                   </p>
                 </td>
 </tr>
@@ -798,8 +812,7 @@ The R-tree spatial index.
                 </td>
 <td>
                   <p>
-                    Returns the query iterator pointing at the begin of the query
-                    range.
+                    Returns a query iterator pointing at the begin of the query range.
                   </p>
                 </td>
 </tr>
@@ -816,7 +829,43 @@ The R-tree spatial index.
                 </td>
 <td>
                   <p>
-                    Returns the query iterator pointing at the end of the query range.
+                    Returns a query iterator pointing at the end of the query range.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">const</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <a class="link" href="boost__geometry__index__rtree/begin__.html#classboost_1_1geometry_1_1index_1_1rtree_1a23219a7705ac491862c67be8baa34f0d"><code class="computeroutput"><span class="identifier">begin</span><span class="special">()</span></code></a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Returns the iterator pointing at the begin of the rtree values
+                    range.
+                  </p>
+                </td>
+</tr>
+<tr>
+<td>
+                  <p>
+                    <code class="computeroutput"><span class="keyword">const</span></code>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    <a class="link" href="boost__geometry__index__rtree/end__.html#classboost_1_1geometry_1_1index_1_1rtree_1a513f1bd9dfcd022acb208e62115b29b1"><code class="computeroutput"><span class="identifier">end</span><span class="special">()</span></code></a>
+                  </p>
+                </td>
+<td>
+                  <p>
+                    Returns the iterator pointing at the end of the rtree values
+                    range.
                   </p>
                 </td>
 </tr>

@@ -75,9 +75,36 @@ void scoped_connection_test()
   BOOST_CHECK(sig() == 0);
 }
 
+// testsignal that returns a reference type
+
+struct ref_returner
+{
+  static int i;
+  
+  int& ref_return_slot()
+  {
+    return i;
+  }
+};
+
+int ref_returner::i = 0;
+
+void reference_return_test()
+{
+  boost::signals2::signal<int& ()> rTest;
+  ref_returner rr;
+  rTest.connect(boost::bind(&ref_returner::ref_return_slot, &rr));
+  int& r = *rTest();
+  BOOST_CHECK(ref_returner::i == 0);
+  r = 1;
+  BOOST_CHECK(ref_returner::i == 1);
+}
+
 int test_main(int, char*[])
 {
   slot_connect_test();
   scoped_connection_test();
+	reference_return_test();
+	
   return 0;
 }

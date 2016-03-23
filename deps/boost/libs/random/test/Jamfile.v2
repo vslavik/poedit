@@ -121,6 +121,8 @@ run test_laplace.cpp ;
 run test_laplace_distribution.cpp /boost//unit_test_framework ;
 run test_non_central_chi_squared.cpp ;
 run test_non_central_chi_squared_distribution.cpp /boost//unit_test_framework ;
+run test_hyperexponential.cpp ;
+run test_hyperexponential_distribution.cpp /boost//unit_test_framework ;
 
 # run nondet_random_speed.cpp ;
 # run random_device.cpp ;
@@ -132,3 +134,10 @@ explicit statistic_tests.exe ;
 
 install statistic_tests : statistic_tests.exe : <install-type>EXE <location>. ;
 explicit statistic_tests ;
+
+#
+# Multiprecision tests:
+#
+run multiprecision_int_test.cpp /boost//unit_test_framework ;
+# This one runs too slow in debug mode, we really need inline expansions turned on amonst other things:
+run multiprecision_float_test.cpp /boost//unit_test_framework : : : release ;

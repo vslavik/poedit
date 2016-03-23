@@ -8,7 +8,7 @@
 [library Boost.Container
     [quickbook 1.5]
     [authors [Gaztanaga, Ion]]
-    [copyright 2009-2013 Ion Gaztanaga]
+    [copyright 2009-2015 Ion Gaztanaga]
     [id container]
     [dirname container]
     [purpose Containers library]
@@ -27,7 +27,7 @@
 [*Boost.Container] library implements several well-known containers, including
 STL containers. The aim of the library is to offers advanced features not present
 in standard containers or to offer the latest standard draft features for compilers
-that comply with C++03.
+that don't comply with the latest C++ standard.
 
 In short, what does [*Boost.Container] offer?
 
@@ -49,13 +49,16 @@ In short, what does [*Boost.Container] offer?
 
 [section:introduction_building_container Building Boost.Container]
 
-There is no need to compile [*Boost.Container] if you don't use [link container.extended_functionality.extended_allocators Extended Allocators]
-since in that case it's a header-only library. Just include your Boost header directory in your compiler include path.
+There is no need to compile [*Boost.Container], since it's a header-only library,
+just include your Boost header directory in your compiler include path *except if you use*:
 
-[link container.extended_functionality.extended_allocators Extended Allocators] are
-implemented as a separately compiled library, so you must install binaries in a location that can be found by your linker
-when using these classes. If you followed the [@http://www.boost.org/doc/libs/release/more/getting_started/index.html Boost Getting Started] instructions,
-that's already been done for you.
+*  [link container.extended_functionality.extended_allocators Extended Allocators]
+*  Some [link container.extended_functionality.polymorphic_memory_resources Polymorphic Memory Resources] classes.
+   
+Those exceptions are are implemented as a separately compiled library, so in those cases you must install binaries
+in a location that can be found by your linker.
+If you followed the [@http://www.boost.org/doc/libs/release/more/getting_started/index.html Boost Getting Started]
+instructions, that's already been done for you.
 
 [endsect]
 
@@ -672,11 +675,7 @@ allocator and offers an C API to implement memory expansion and burst allocation
 and speed efficient, and this allocator is used as the basis of many malloc implementations, including multithreaded
 allocators built above DLmalloc (See [@http://www.malloc.de/en/ ptmalloc2, ptmalloc3] or
 [@http://www.nedprod.com/programs/portable/nedmalloc/ nedmalloc]). This low-level allocator is implemented as
-a separately compiled library whereas [classref boost::container::allocator allocator],
-[classref boost::container::adaptive_pool adaptive_pool] and [classref boost::container::node_allocator node_allocator]
-are header-only classes.
-
-The following extended allocators are provided:
+a separately compiled library and the following extended allocators depend on the library:
 
 *  [classref boost::container::allocator allocator]: This extended allocator offers expansion, shrink-in place
    and burst allocation capabilities implemented as a thin wrapper around the modified DLMalloc.
@@ -699,6 +698,124 @@ Use them simply specifying the new allocator in the corresponding template argum
 
 [import ../example/doc_extended_allocators.cpp]
 [doc_extended_allocators]
+
+[endsect]
+
+[section:polymorphic_memory_resources Polymorphic Memory Resources ]
+
+The document
+[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4480.html C++ Extensions for Library Fundamentals (Final draft: N4480)]
+includes classes that provide allocator type erasure and runtime polymorphism. As Pablo Halpern, the author of the proposal,
+explains in the paper ([@https://isocpp.org/files/papers/N3916.pdf N3916 Polymorphic Memory Resources (r2)]):
+
+["['A significant impediment to effective memory management in C++ has been the 
+inability to use allocators in non-generic contexts.  In large software systems,
+most of  the application program consists of non-generic procedural or
+object-oriented code that is compiled once and linked many times.]]
+
+["['Allocators in C++, however, have historically relied solely on
+compile-time polymorphism, and therefore have not been suitable for use in vocabulary
+types, which are passed through interfaces between separately-compiled modules,
+because the allocator type necessarily affects the type of the object that uses it.
+This proposal builds upon the improvements made to allocators in 
+C++11 and describes a set of facilities for runtime polymorphic memory 
+resources that interoperate with the existing compile-time polymorphic 
+allocators.]]
+
+[*Boost.Container] implements nearly all classes of the proposal under
+the namespace `boost::container::pmr`. There are two groups,
+
+*  Header only utilities (these don't require the separately compiled library): 
+   *	[classref boost::container::pmr::memory_resource memory_resource].
+   *	[classref boost::container::pmr::resource_adaptor resource_adaptor].
+
+*  Utilities that require the the separately compiled library: 
+   *	[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator].
+   *	[classref boost::container::pmr::monotonic_buffer_resource monotonic_buffer_resource].
+   *	[classref boost::container::pmr::unsynchronized_pool_resource unsynchronized_pool_resource].
+   *	[classref boost::container::pmr::synchronized_pool_resource synchronized_pool_resource].
+   *  Global resource functions: [funcref  boost::container::pmr::get_default_resource get_default_resource]/
+      [funcref  boost::container::pmr::set_default_resource set_default_resource]/
+      [funcref  boost::container::pmr::new_delete_resource  new_delete_resource]/
+      [funcref  boost::container::pmr::null_memory_resource null_memory_resource]
+   *  Aliases for boost containers using the polymorphic allocator
+      (like [classref boost::container::pmr::vector pmr::vector], etc.)
+
+[*Boost.Container]'s polymorphic resource library is usable from C++03 containers,
+and offers some alternative utilities if the required C++11 features of the
+['Library Fundamentals] specification are not available.
+
+[import ../example/doc_pmr.cpp]
+
+Let's review the usage example given in
+[@https://isocpp.org/files/papers/N3916.pdf N3916] and see how it can be implemented
+using [*Boost.Container]: ['Suppose we are processing a series of shopping lists, where a shopping list is a
+container of strings, and storing them in a collection (a list) of shopping lists.
+Each shopping list being processed uses a bounded amount of memory that is needed for
+a short period of time, while the collection of shopping lists uses an unbounded
+amount of memory and will exist for a longer period of time. For efficiency, we can
+use a more time-efficient memory allocator based on a finite buffer for the temporary
+shopping lists.]
+
+Let's see how `ShoppingList` can be defined to support an polymorphic memory resource
+that can allocate memory from different underlying mechanisms. The most important
+details are:
+
+* It should declare that supports an allocator defining an `allocator_type` typedef.
+  This `allocator_type` will be of type [classref boost::container::pmr::memory_resource memory_resource *],
+  which is a base class for polymorphic resources.
+* It must define constructors that take the 
+  the allocator as argument. It can be implemented in two ways:
+   * `ShoppingList` has constructors taking
+      [classref boost::container::pmr::memory_resource memory_resource*] as the last argument.
+   * `ShoppingList` has constructors taking
+      [classref boost::container::allocator_arg_t allocator_arg_t] as the first argument
+     and [classref boost::container::pmr::memory_resource memory_resource*] as the second argument.
+
+[*Note:] ['In C++03 compilers, it is required that the programmer specializes as `true`
+[classref boost::container::constructible_with_allocator_suffix constructible_with_allocator_suffix] or
+[classref boost::container::constructible_with_allocator_prefix constructible_with_allocator_prefix]
+as in C++03 there is no way to automatically detect the chosen option at compile time. If
+no specialization is done, [*Boost.Container] assumes the suffix option].
+
+[doc_pmr_ShoppingList_hpp]
+
+['However, this time-efficient allocator is not appropriate for the longer
+lived collection of shopping lists. This example shows how those temporary shopping
+lists, using a time-efficient allocator, can be used to populate the long lived collection
+of shopping lists, using a general purpose allocator, something that would be
+annoyingly difficult without the polymorphic allocators.]
+
+In [*Boost.Container] for the time-efficient allocation we can use
+[classref boost::container::pmr::monotonic_buffer_resource monotonic_buffer_resource],
+providing an external buffer that will be used until it's exhausted. In the default
+configuration, when the buffer is exhausted, the default memory resource will be used
+instead.
+
+[doc_pmr_main_cpp]
+
+['Notice that the shopping lists within `folder` use the default allocator resource
+whereas the shopping list `temporaryShoppingList` uses the short-lived but very fast
+`buf_rsrc`. Despite using different allocators, you can insert
+`temporaryShoppingList` into folder because they have the same `ShoppingList`
+type. Also, while `ShoppingList` uses memory_resource directly,
+[classref boost::container::pmr::list pmr::list],
+[classref boost::container::pmr::vector pmr::vector]
+and [classref boost::container::pmr::string pmr::string] all use 
+[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator].]
+
+['The resource passed to the `ShoppingList` constructor is propagated to the vector and
+each string within that `ShoppingList`. Similarly, the resource used to construct
+`folder` is propagated to the constructors of the ShoppingLists that are inserted into
+the list (and to the strings within those `ShoppingLists`). The
+[classref boost::container::pmr::polymorphic_allocator polymorphic_allocator]
+template is designed to be almost interchangeable with a pointer to
+[classref boost::container::pmr::memory_resource memory_resource],
+thus producing a ['bridge] between the template-policy
+style of allocator and the polymorphic-base-class style of allocator.]
+
+This example actually shows how easy is to use [*Boost.Container] to write
+type-erasured allocator-capable classes even in C++03 compilers.
 
 [endsect]
 
@@ -1096,6 +1213,31 @@ use [*Boost.Container]? There are several reasons for that:
 
 [section:release_notes Release Notes]
 
+[section:release_notes_boost_1_60_00 Boost 1.60 Release]
+
+* Implemented [link container.extended_functionality.polymorphic_memory_resources Polymorphic Memory Resources].
+* Add more BOOST_ASSERT checks to test preconditions in some operations (like `pop_back`, `pop_front`, `back`, `front`, etc.)
+* Added C++11 `back`/`front` operations to [classref boost::container::basic_string basic_string].
+* Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/11627 Trac #11627: ['"small_vector<T,n>::swap() appears to be broken"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11628 Trac #11628: ['"small_vector<int,n> iterates over elements in destructor"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11697 Trac #11697: ['"Wrong initialization order in tuple copy-constructor"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11698 Trac #11698: ['"Missing return statement in static_storage_allocator"]].
+   * [@https://github.com/boostorg/container/pull/29 GitHub #29: ['Doc fixes for flap_map complexity requirements]].
+   * [@https://github.com/boostorg/container/pull/31 GitHub #31: ['DL_SIZE_IMPL also dereference addr]].
+
+[endsect]
+
+[section:release_notes_boost_1_59_00 Boost 1.59 Release]
+
+* [@https://github.com/boostorg/container/pull/26 GitHub #26: ['Fix bug in stable_vector::capacity()]]. Thanks to timsong-cpp/Arindam Mukerjee.
+* [@https://github.com/boostorg/container/pull/27 GitHub #27: ['fix stable_vector's index_of's doxygen comment]]. Thanks to kariya-mitsuru.
+* [@https://svn.boost.org/trac/boost/ticket/11380 Trac #11380: ['"Container library std forward declarations incorrect in std_fwd.hpp on libc++ with gcc"]].
+* [@https://svn.boost.org/trac/boost/ticket/11388 Trac #11388: ['"boost::container::list::emplace_back broken on Visual Studio 2010"]].
+* [@https://svn.boost.org/trac/boost/ticket/11339 Trac #11339: ['"VC12 LNK2005 error with boost::container::adaptive_pool"]].
+
+[endsect]
+
 [section:release_notes_boost_1_58_00 Boost 1.58 Release]
 *  Experimental [classref boost::container::small_vector small_vector] container.
 *  Massive dependency reorganization. Now [*Boost.Container] depends on very basic utilities like Boost.Core
@@ -1105,10 +1247,12 @@ use [*Boost.Container]? There are several reasons for that:
 *  Updated containers to implement new constructors as specified in
    [@http://www.open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#2210 2210. Missing allocator-extended constructor for allocator-aware containers].
 *  Fixed bugs:
-   * [@https://svn.boost.org/trac/boost/ticket/9931 #9931: ['"flat_map::insert(ordered_unique_range_t...) fails with move_iterators"]] (reopened).
-   * [@https://svn.boost.org/trac/boost/ticket/11076 #11076: ['"Unqualified calls to memmove/memcpy in container/detail/copy_move_algo.hpp"]].
-   * [@https://svn.boost.org/trac/boost/ticket/10790 Trac #10790 (['long long errors from container"])].
-   * [@https://svn.boost.org/trac/boost/ticket/10808 Trac #10808 (['compare equal operator of vector is broken"])].
+   * [@https://svn.boost.org/trac/boost/ticket/9931  Trac #9931: ['"flat_map::insert(ordered_unique_range_t...) fails with move_iterators"]] (reopened).
+   * [@https://svn.boost.org/trac/boost/ticket/11076 Trac #11076: ['"Unqualified calls to memmove/memcpy in container/detail/copy_move_algo.hpp"]].
+   * [@https://svn.boost.org/trac/boost/ticket/10790 Trac #10790 (['"long long errors from container"])].
+   * [@https://svn.boost.org/trac/boost/ticket/10808 Trac #10808 (['"compare equal operator of vector is broken"])].
+   * [@https://svn.boost.org/trac/boost/ticket/10930 Trac #10930 (['"container std_fwd.hpp neglects custom std namespaces"])].
+   * [@https://svn.boost.org/trac/boost/ticket/11139 Trac #11139 (['"boost::container::vector<std::shared_ptr<const T>...>::const_iterator allows changing dereferenced elements"])].
 * [*Source Breaking]: [classref boost::container::scoped_allocator_adaptor scoped_allocator_adaptor]'s
    `propagate_on_container_copy_assignment`, `propagate_on_container_move_assignment` and `propagate_on_container_swap`
    are no longer `::boost::integral_constant<bool, true/false>` types. The dependency reorganization needed to break

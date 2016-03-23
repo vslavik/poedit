@@ -1,6 +1,6 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2014, Oracle and/or its affiliates.
+// Copyright (c) 2014-2015, Oracle and/or its affiliates.
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -23,7 +23,7 @@
 #include "test_union_linear_linear.hpp"
 
 #include <boost/geometry/geometries/linestring.hpp>
-#include <boost/geometry/multi/geometries/multi_linestring.hpp>
+#include <boost/geometry/geometries/multi_linestring.hpp>
 #include <boost/geometry/algorithms/union.hpp>
 
 typedef bg::model::point<double,2,bg::cs::cartesian>  point_type;

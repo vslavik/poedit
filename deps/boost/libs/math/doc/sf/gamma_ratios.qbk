@@ -52,7 +52,7 @@ Note that the result is calculated accurately even when /delta/ is
 small compared to /a/: indeed even if /a+delta ~ a/.  The function is
 typically used when /a/ is large and /delta/ is very small.
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1 and T2 are different types, otherwise the result type is simple T1.
 
 [graph tgamma_delta_ratio]
@@ -64,25 +64,9 @@ found on various platforms with various floating point types.
 Unless otherwise specified any floating point type that is narrower
 than the one shown will have __zero_error.
 
-[table Errors In the Function tgamma_delta_ratio(a, delta)
-[[Significand Size] [Platform and Compiler] [20 < a < 80
+[table_tgamma_delta_ratio]
 
-and
-
-delta < 1]]
-[[53] [Win32, Visual C++ 8] [Peak=16.9 Mean=1.7] ]
-[[64] [Redhat Linux IA32, gcc-3.4.4] [Peak=24 Mean=2.7]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=12.8 Mean=1.8]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=21.4 Mean=2.3] ]
-]
-
-[table Errors In the Function tgamma_ratio(a, b)
-[[Significand Size] [Platform and Compiler] [6 < a,b < 50]]
-[[53] [Win32, Visual C++ 8] [Peak=34 Mean=9] ]
-[[64] [Redhat Linux IA32, gcc-3.4.4] [Peak=91 Mean=23]]
-[[64] [Redhat Linux IA64, gcc-3.4.4] [Peak=35.6 Mean=9.3]]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=43.9 Mean=13.2] ]
-]
+[table_tgamma_ratio]
 
 [h4 Testing]
 

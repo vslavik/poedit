@@ -129,14 +129,14 @@ void expected_results()
       "[^|]*",                          // platform
       "float|double",                   // test type(s)
       "[^|]*small[^|]*",                    // test data group
-      "boost::math::gamma_p_inv", 500, 60);   // test function
+      "gamma_p_inv", 500, 60);   // test function
    add_expected_result(
       "[^|]*",                          // compiler
       "[^|]*",                          // stdlib
       "[^|]*",                          // platform
       "float|double",                   // test type(s)
       "[^|]*",                          // test data group
-      "boost::math::gamma_q_inv", 350, 60);   // test function
+      "gamma_q_inv", 350, 60);   // test function
    add_expected_result(
       "[^|]*",                          // compiler
       "[^|]*",                          // stdlib
@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE( test_main )
    std::cout << "<note>The long double tests have been disabled on this platform "
       "either because the long double overloads of the usual math functions are "
       "not available at all, or because they are too inaccurate for these tests "
-      "to pass.</note>" << std::cout;
+      "to pass.</note>" << std::endl;
 #endif
    
 }

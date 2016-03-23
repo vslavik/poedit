@@ -1,5 +1,5 @@
 /*=============================================================================
-    Copyright (c) 2001-2013 Joel de Guzman
+    Copyright (c) 2001-2015 Joel de Guzman
     Copyright (c) 2001-2010 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -13,8 +13,6 @@
 
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/spirit/home/x3.hpp>
-//~ #include <boost/phoenix/core.hpp>
-//~ #include <boost/phoenix/operator.hpp>
 #include <boost/type_traits/is_same.hpp>
 
 #include <iostream>
@@ -239,19 +237,17 @@ main()
         BOOST_TEST(attr == 'a');
     }
 
-    // $$$ Not yet implemented $$$
-    //~ {   // test action
+    {   // test action
+        using namespace boost::spirit::x3::ascii;
+        using boost::spirit::x3::_attr;
+        char ch;
+        auto f = [&](auto& ctx){ ch = _attr(ctx); };
 
-        //~ using namespace boost::spirit::x3::ascii;
-        //~ using boost::phoenix::ref;
-        //~ using boost::spirit::x3::_1;
-        //~ char ch;
-
-        //~ BOOST_TEST(test("x", alnum[ref(ch) = _1]));
-        //~ BOOST_TEST(ch == 'x');
-        //~ BOOST_TEST(test("   A", alnum[ref(ch) = _1], space));
-        //~ BOOST_TEST(ch == 'A');
-    //~ }
+        BOOST_TEST(test("x", alnum[f]));
+        BOOST_TEST(ch == 'x');
+        BOOST_TEST(test("   A", alnum[f], space));
+        BOOST_TEST(ch == 'A');
+    }
 
     return boost::report_errors();
 }

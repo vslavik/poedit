@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Boost Macro Reference</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../index.html" title="Boost.Config">
 <link rel="up" href="../index.html" title="Boost.Config">
 <link rel="prev" href="../index.html" title="Boost.Config">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_config.boost_macro_reference"></a><a class="link" href="boost_macro_reference.html" title="Boost Macro Reference">Boost Macro Reference</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_c__03_defects">Macros
       that describe C++03 defects</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_that_describe_optional_features">Macros
@@ -1423,6 +1423,25 @@
                 <p>
                   The platform has the functions <code class="computeroutput"><span class="identifier">expm1</span></code>,
                   <code class="computeroutput"><span class="identifier">expm1f</span></code> and <code class="computeroutput"><span class="identifier">expm1l</span></code> in <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">math</span><span class="special">.</span><span class="identifier">h</span><span class="special">&gt;</span></code>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_HAS_FLOAT128</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Compiler
+                </p>
+              </td>
+<td>
+                <p>
+                  The compiler has <code class="computeroutput"><span class="identifier">__float128</span></code>
+                  as a native type which is distinct from all the regular C++ floating
+                  point types.
                 </p>
               </td>
 </tr>
@@ -2962,6 +2981,19 @@
 <tr>
 <td>
                 <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_NUMERIC_LIMITS</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">limits</span><span class="special">&gt;</span></code>
+                  header does not support the C++11 version of <code class="computeroutput"><span class="identifier">numeric_limits</span></code>.
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
                   <code class="computeroutput"><span class="identifier">BOOST_NO_CXX11_RANGE_BASED_FOR</span></code>
                 </p>
               </td>
@@ -3565,6 +3597,18 @@
                   The compiler does not support generic lambda (e.g. <code class="computeroutput"><span class="special">[](</span><span class="keyword">auto</span>
                   <span class="identifier">v</span><span class="special">){</span>
                   <span class="special">}</span></code>).
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">BOOST_NO_CXX14_HDR_SHARED_MUTEX</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The standard library does not provide header &lt;shared_mutex&gt;.
                 </p>
               </td>
 </tr>
@@ -5566,7 +5610,7 @@
 <a name="boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code"></a><a class="link" href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code" title="Macros for libraries with separate source code">Macros
       for libraries with separate source code</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code.macros_controlling_shared_library_symbol_visibility">Macros
         controlling shared library symbol visibility</a></span></dt>
 <dt><span class="section"><a href="boost_macro_reference.html#boost_config.boost_macro_reference.macros_for_libraries_with_separate_source_code.abi_fixing">ABI

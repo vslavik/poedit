@@ -9,6 +9,8 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_GET_LEFT_TURNS_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_GET_LEFT_TURNS_HPP
 
+#include <boost/geometry/core/assert.hpp>
+
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/algorithms/detail/overlay/segment_identifier.hpp>
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
@@ -154,8 +156,8 @@ template <typename AngleCollection, typename Turns>
 inline void get_left_turns(AngleCollection const& sorted_angles,
         Turns& turns)
 {
-    std::set<int> good_incoming;
-    std::set<int> good_outgoing;
+    std::set<std::size_t> good_incoming;
+    std::set<std::size_t> good_outgoing;
 
     for (typename boost::range_iterator<AngleCollection const>::type it =
         sorted_angles.begin(); it != sorted_angles.end(); ++it)
@@ -195,7 +197,7 @@ template <typename Point, typename AngleCollection>
 inline std::size_t assign_cluster_indices(AngleCollection& sorted, Point const& origin)
 {
     // Assign same cluster_index for all turns in same direction
-    BOOST_ASSERT(boost::size(sorted) >= 4u);
+    BOOST_GEOMETRY_ASSERT(boost::size(sorted) >= 4u);
 
     angle_equal_to<Point> comparator(origin);
     typename boost::range_iterator<AngleCollection>::type it = sorted.begin();
@@ -218,7 +220,7 @@ inline std::size_t assign_cluster_indices(AngleCollection& sorted, Point const& 
 template <typename AngleCollection>
 inline void block_turns(AngleCollection& sorted, std::size_t cluster_size)
 {
-    BOOST_ASSERT(boost::size(sorted) >= 4u && cluster_size > 0);
+    BOOST_GEOMETRY_ASSERT(boost::size(sorted) >= 4u && cluster_size > 0);
 
     std::vector<std::pair<bool, bool> > directions;
     for (std::size_t i = 0; i < cluster_size; i++)
@@ -242,14 +244,14 @@ inline void block_turns(AngleCollection& sorted, std::size_t cluster_size)
     for (typename boost::range_iterator<AngleCollection>::type it = sorted.begin();
         it != sorted.end(); ++it)
     {
-        int cluster_index = it->cluster_index;
-        int previous_index = cluster_index - 1;
+        signed_size_type cluster_index = static_cast<signed_size_type>(it->cluster_index);
+        signed_size_type previous_index = cluster_index - 1;
         if (previous_index < 0)
         {
             previous_index = cluster_size - 1;
         }
-        int next_index = cluster_index + 1;
-        if (next_index >= static_cast<int>(cluster_size))
+        signed_size_type next_index = cluster_index + 1;
+        if (next_index >= static_cast<signed_size_type>(cluster_size))
         {
             next_index = 0;
         }

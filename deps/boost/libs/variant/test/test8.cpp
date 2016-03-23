@@ -64,7 +64,7 @@ void check_fail(Variant& v)
     {
         T& r = relaxed_get<T>(v);
         (void)r; // suppress warning about r not being used
-        BOOST_CHECK(false && &r); // should never reach
+        BOOST_CHECK(false && relaxed_get<T>(&v)); // should never reach
     }
     catch(const boost::bad_get& e)
     {

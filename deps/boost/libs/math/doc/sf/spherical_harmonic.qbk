@@ -30,7 +30,7 @@
 
 [h4 Description]
 
-The return type of these functions is computed using the __arg_pomotion_rules
+The return type of these functions is computed using the __arg_promotion_rules
 when T1 and T2 are different types.
 
 [optional_policy]
@@ -107,15 +107,9 @@ roots of the associated Legendre function.
 
 All values are in units of epsilon.
 
-[table Peak Errors In the Sperical Harmonic Functions
-[[Significand Size] [Platform and Compiler] [Errors in range
+[table_spherical_harmonic_r]
 
-0 < l < 20] ]
-[[53] [Win32, Visual C++ 8] [Peak=2x10[super 4] Mean=700] ]
-[[64] [SUSE Linux IA32, g++ 4.1] [Peak=2900 Mean=100]]
-[[64] [Red Hat Linux IA64, g++ 3.4.4] [Peak=2900 Mean=100] ]
-[[113] [HPUX IA64, aCC A.06.06] [Peak=6700 Mean=230]]
-]
+[table_spherical_harmonic_i]
 
 Note that the worst errors occur when the degree increases, values greater than
 ~120 are very unlikely to produce sensible results, especially 

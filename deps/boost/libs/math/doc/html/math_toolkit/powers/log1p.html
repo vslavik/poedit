@@ -4,7 +4,7 @@
 <title>log1p</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../powers.html" title="Basic Functions">
 <link rel="prev" href="cos_pi.html" title="cos_pi">
 <link rel="next" href="expm1.html" title="expm1">
@@ -33,8 +33,8 @@
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">log1p</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">);</span>
 
-<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
-<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">log1p</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
+<span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&gt;</span>
+<a class="link" href="../result_type.html" title="Calculation of the Type of the Result"><span class="emphasis"><em>calculated-result-type</em></span></a> <span class="identifier">log1p</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a><span class="special">&amp;);</span>
 
 <span class="special">}}</span> <span class="comment">// namespaces</span>
 </pre>
@@ -47,9 +47,9 @@
         when <span class="emphasis"><em>x</em></span> is an integer type and T otherwise.
       </p>
 <p>
-        The final <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
+        The final <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">Policy</a> argument is optional and can
         be used to control the behaviour of the function: how it handles errors,
-        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;14.&#160;Policies: Controlling Precision, Error Handling etc">policy
+        what level of precision to use etc. Refer to the <a class="link" href="../../policy.html" title="Chapter&#160;15.&#160;Policies: Controlling Precision, Error Handling etc">policy
         documentation for more details</a>.
       </p>
 <p>
@@ -92,7 +92,76 @@
         For built in floating point types <code class="computeroutput"><span class="identifier">log1p</span></code>
         should have approximately 1 epsilon accuracy.
       </p>
-<h5>
+<div class="table">
+<a name="math_toolkit.powers.log1p.table_log1p"></a><p class="title"><b>Table&#160;6.78.&#160;Error rates for log1p</b></p>
+<div class="table-contents"><table class="table" summary="Error rates for log1p">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+              </th>
+<th>
+                <p>
+                  Microsoft Visual C++ version 12.0<br> Win32<br> double
+                </p>
+              </th>
+<th>
+                <p>
+                  GNU C++ version 5.1.0<br> linux<br> double
+                </p>
+              </th>
+<th>
+                <p>
+                  GNU C++ version 5.1.0<br> linux<br> long double
+                </p>
+              </th>
+<th>
+                <p>
+                  Sun compiler version 0x5130<br> Sun Solaris<br> long double
+                </p>
+              </th>
+</tr></thead>
+<tbody><tr>
+<td>
+                <p>
+                  Random test data
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.509&#949; (Mean = 0.057&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.509&#949; (Mean = 0.057&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.846&#949; (Mean = 0.153&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>Rmath 3.0.2:</em></span> Max = 0.846&#949; (Mean = 0.153&#949;))<br>
+                  (<span class="emphasis"><em>Cephes:</em></span> Max = 0.799&#949; (Mean = 0.122&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 0.818&#949; (Mean = 0.227&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;tr1/cmath&gt;:</em></span> Max = 0.818&#949; (Mean = 0.227&#949;))<br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.818&#949; (Mean = 0.227&#949;))
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="blue">Max = 1.53&#949; (Mean = 0.627&#949;)</span><br> <br>
+                  (<span class="emphasis"><em>&lt;math.h&gt;:</em></span> Max = 0.818&#949; (Mean = 0.249&#949;))
+                </p>
+              </td>
+</tr></tbody>
+</table></div>
+</div>
+<br class="table-break"><h5>
 <a name="math_toolkit.powers.log1p.h1"></a>
         <span class="phrase"><a name="math_toolkit.powers.log1p.testing"></a></span><a class="link" href="log1p.html#math_toolkit.powers.log1p.testing">Testing</a>
       </h5>

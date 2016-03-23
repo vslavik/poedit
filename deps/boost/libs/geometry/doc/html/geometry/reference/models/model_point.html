@@ -27,7 +27,7 @@
 <a name="geometry.reference.models.model_point"></a><a class="link" href="model_point.html" title="model::point">model::point</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idp124506272"></a><a class="indexterm" name="idp124506960"></a>
+          <a class="indexterm" name="idm44837174085648"></a><a class="indexterm" name="idm44837174084960"></a>
 Basic point class, having coordinates defined in a neutral way.
         </p>
 <h6>
@@ -359,11 +359,12 @@ Basic point class, having coordinates defined in a neutral way.
 <span class="special">{</span>
     <span class="identifier">bg</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="number">2</span><span class="special">,</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span><span class="special">&gt;</span> <span class="identifier">point1</span><span class="special">;</span>
     <span class="identifier">bg</span><span class="special">::</span><span class="identifier">model</span><span class="special">::</span><span class="identifier">point</span><span class="special">&lt;</span><span class="keyword">double</span><span class="special">,</span> <span class="number">3</span><span class="special">,</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">cs</span><span class="special">::</span><span class="identifier">cartesian</span><span class="special">&gt;</span> <span class="identifier">point2</span><span class="special">(</span><span class="number">1.0</span><span class="special">,</span> <span class="number">2.0</span><span class="special">,</span> <span class="number">3.0</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_point.c0" href="model_point.html#geometry.reference.models.model_point.c1"><img src="../../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
-    <span class="identifier">point1</span><span class="special">.</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="number">1.0</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_point.c2" href="model_point.html#geometry.reference.models.model_point.c3"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
-    <span class="identifier">point1</span><span class="special">.</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="number">2.0</span><span class="special">);</span>
 
-    <span class="keyword">double</span> <span class="identifier">x</span> <span class="special">=</span> <span class="identifier">point1</span><span class="special">.</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;();</span> <a class="co" name="geometry.reference.models.model_point.c4" href="model_point.html#geometry.reference.models.model_point.c5"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
-    <span class="keyword">double</span> <span class="identifier">y</span> <span class="special">=</span> <span class="identifier">point1</span><span class="special">.</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;();</span>
+    <span class="identifier">bg</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">point1</span><span class="special">,</span> <span class="number">1.0</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_point.c2" href="model_point.html#geometry.reference.models.model_point.c3"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+    <span class="identifier">point1</span><span class="special">.</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;(</span><span class="number">2.0</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_point.c4" href="model_point.html#geometry.reference.models.model_point.c5"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+
+    <span class="keyword">double</span> <span class="identifier">x</span> <span class="special">=</span> <span class="identifier">bg</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">point1</span><span class="special">);</span> <a class="co" name="geometry.reference.models.model_point.c6" href="model_point.html#geometry.reference.models.model_point.c7"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
+    <span class="keyword">double</span> <span class="identifier">y</span> <span class="special">=</span> <span class="identifier">point1</span><span class="special">.</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;();</span> <a class="co" name="geometry.reference.models.model_point.c8" href="model_point.html#geometry.reference.models.model_point.c9"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a>
 
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">x</span> <span class="special">&lt;&lt;</span> <span class="string">", "</span> <span class="special">&lt;&lt;</span> <span class="identifier">y</span> <span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
@@ -381,17 +382,27 @@ Basic point class, having coordinates defined in a neutral way.
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_point.c3"></a><a href="#geometry.reference.models.model_point.c2"><img src="../../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
-              Set a coordinate. <span class="bold"><strong>Note</strong></span>: prefer using
-              <code class="computeroutput"><span class="identifier">bg</span><span class="special">::</span><span class="identifier">set</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">point1</span><span class="special">,</span>
-              <span class="number">1.0</span><span class="special">);</span></code>
+              Set a coordinate, generic.
             </p></td>
 </tr>
 <tr>
 <td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_point.c5"></a><a href="#geometry.reference.models.model_point.c4"><img src="../../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a> </p></td>
 <td valign="top" align="left"><p>
-              Get a coordinate. <span class="bold"><strong>Note</strong></span>: prefer using
-              <code class="computeroutput"><span class="identifier">x</span> <span class="special">=</span>
-              <span class="identifier">bg</span><span class="special">::</span><span class="identifier">get</span><span class="special">&lt;</span><span class="number">0</span><span class="special">&gt;(</span><span class="identifier">point1</span><span class="special">);</span></code>
+              Set a coordinate, class-specific (<span class="bold"><strong>Note</strong></span>:
+              prefer <code class="computeroutput"><span class="identifier">bg</span><span class="special">::</span><span class="identifier">set</span><span class="special">()</span></code>).
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_point.c7"></a><a href="#geometry.reference.models.model_point.c6"><img src="../../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Get a coordinate, generic.
+            </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="geometry.reference.models.model_point.c9"></a><a href="#geometry.reference.models.model_point.c8"><img src="../../../../../../../doc/src/images/callouts/5.png" alt="5" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              Get a coordinate, class-specific (<span class="bold"><strong>Note</strong></span>:
+              prefer <code class="computeroutput"><span class="identifier">bg</span><span class="special">::</span><span class="identifier">get</span><span class="special">()</span></code>).
             </p></td>
 </tr>
 </table></div>

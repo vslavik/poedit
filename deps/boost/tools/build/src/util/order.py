@@ -9,26 +9,26 @@ class Order:
         The primary use case is the gcc toolset, which is sensitive to
         library order: if library 'a' uses symbols from library 'b',
         then 'a' must be present before 'b' on the linker's command line.
-        
+
         This requirement can be lifted for gcc with GNU ld, but for gcc with
         Solaris LD (and for Solaris toolset as well), the order always matters.
-        
+
         So, we need to store order requirements and then order libraries
         according to them. It it not possible to use dependency graph as
         order requirements. What we need is "use symbols" relationship
         while dependency graph provides "needs to be updated" relationship.
-        
+
         For example::
           lib a : a.cpp b;
           lib b ;
-        
+
         For static linking, the 'a' library need not depend on 'b'. However, it
         still should come before 'b' on the command line.
     """
 
     def __init__ (self):
         self.constraints_ = []
-        
+
     def add_pair (self, first, second):
         """ Adds the constraint that 'first' should precede 'second'.
         """
@@ -37,7 +37,7 @@ class Order:
     def order (self, objects):
         """ Given a list of objects, reorder them so that the constains specified
             by 'add_pair' are satisfied.
-            
+
             The algorithm was adopted from an awk script by Nikita Youshchenko
             (yoush at cs dot msu dot su)
         """
@@ -46,11 +46,11 @@ class Order:
         # rather removing edges.
         result = []
 
-        if not objects: 
+        if not objects:
             return result
 
         constraints = self.__eliminate_unused_constraits (objects)
-        
+
         # Find some library that nobody depends upon and add it to
         # the 'result' array.
         obj = None
@@ -68,7 +68,7 @@ class Order:
                     new_objects.append (obj)
                     obj = None
                     objects = objects [1:]
-            
+
             if not obj:
                 raise BaseException ("Circular order dependencies")
 
@@ -82,7 +82,7 @@ class Order:
             # Add the remaining objects for further processing
             # on the next iteration
             objects = new_objects
-            
+
         return result
 
     def __eliminate_unused_constraits (self, objects):
@@ -96,9 +96,9 @@ class Order:
                 result.append (c)
 
         return result
-    
+
     def __has_no_dependents (self, obj, constraints):
-        """ Returns true if there's no constraint in 'constraints' where 
+        """ Returns true if there's no constraint in 'constraints' where
             'obj' comes second.
         """
         failed = False
@@ -111,7 +111,7 @@ class Order:
             constraints = constraints [1:]
 
         return not failed
-    
+
     def __remove_satisfied (self, constraints, obj):
         result = []
         for c in constraints:

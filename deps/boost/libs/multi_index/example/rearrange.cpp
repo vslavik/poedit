@@ -1,6 +1,6 @@
 /* Boost.MultiIndex example of use of rearrange facilities.
  *
- * Copyright 2003-2008 Joaquin M Lopez Munoz.
+ * Copyright 2003-2015 Joaquin M Lopez Munoz.
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -24,6 +24,10 @@
 #include <iostream>
 #include <iterator>
 #include <vector>
+
+#if !defined(BOOST_NO_CXX11_HDR_RANDOM)
+#include <random>
+#endif
 
 using boost::multi_index_container;
 using namespace boost::multi_index;
@@ -178,22 +182,38 @@ private:
 };
 
 /* A truly random shuffle (up to stdlib implementation quality) using
- * std::random_shuffle.
+ * std::shuffle.
  */
 
 struct random_shuffler
 {
-  void operator()(deck& d)const
+  void operator()(deck& d)
   {
     dv.clear();
     dv.reserve(d.size());
     std::copy(d.begin(),d.end(),std::back_inserter(dv));
-    std::random_shuffle(dv.begin(),dv.end()); /* do the shuffling  */
+    shuffle_view();
     d.rearrange(dv.begin());                  /* apply to the deck */
   }
 
 private:
-  mutable deck_view dv;
+  deck_view    dv;
+
+#if !defined(BOOST_NO_CXX11_HDR_RANDOM)
+  std::mt19937 e;
+
+  void shuffle_view()
+  {
+    std::shuffle(dv.begin(),dv.end(),e);
+  }
+#else
+  /* for pre-C++11 compilers we use std::random_shuffle */
+
+  void shuffle_view()
+  {
+    std::random_shuffle(dv.begin(),dv.end());
+  }
+#endif
 };
 
 /* Repeat a given shuffling algorithm repeats_num times

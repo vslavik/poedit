@@ -4,7 +4,7 @@
 <title>GCD Function Object</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.2.0">
+<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
 <link rel="up" href="../gcd_lcm.html" title="Chapter&#160;11.&#160;Integer Utilities (Greatest Common Divisor and Least Common Multiple)">
 <link rel="prev" href="synopsis.html" title="Synopsis">
 <link rel="next" href="lcm_function_object.html" title="LCM Function Object">
@@ -44,17 +44,17 @@
 <span class="special">};</span>
 </pre>
 <p>
-      The boost::math::gcd_evaluator class template defines a function object class
-      to return the greatest common divisor of two integers. The template is parameterized
-      by a single type, called IntegerType here. This type should be a numeric type
-      that represents integers. The result of the function object is always nonnegative,
-      even if either of the operator arguments is negative.
+      The <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">math</span><span class="special">::</span><span class="identifier">gcd</span></code>_evaluator
+      class template defines a function object class to return the greatest common
+      divisor of two integers. The template is parameterized by a single type, called
+      <code class="computeroutput"><span class="identifier">IntegerType</span></code> here. This type
+      should be a numeric type that represents integers. The result of the function
+      object is always nonnegative, even if either of the operator arguments is negative.
     </p>
 <p>
       This function object class template is used in the corresponding version of
       the GCD function template. If a numeric type wants to customize evaluations
-      of its greatest common divisors, then the type should specialize on the gcd_evaluator
-      class template.
+      of its greatest common divisors, then the type should specialize on the <code class="computeroutput"><span class="identifier">gcd_evaluator</span></code> class template.
     </p>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

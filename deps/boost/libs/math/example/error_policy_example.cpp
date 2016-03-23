@@ -31,7 +31,7 @@ using boost::math::policies::ignore_error;
    using std::endl;
 
 #include <stdexcept>
-   using std::exception;
+   
 
 // Define a (bad?) policy to ignore domain errors ('bad' arguments):
 typedef policy<

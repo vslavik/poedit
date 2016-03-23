@@ -1588,19 +1588,19 @@ int main( int argc, char const* argv[] )
 
             "Usage:\n"
             "\n"
-            "    boostdep --list-modules\n";
-            "    boostdep --list-buildable\n";
-            "    boostdep [--track-sources] --list-dependencies\n";
-            "\n";
-            "    boostdep [options] --module-overview\n";
-            "    boostdep [options] --module-levels\n";
-            "    boostdep [options] --module-weights\n";
-            "\n";
-            "    boostdep [options] [--primary] <module>\n";
-            "    boostdep [options] --secondary <module>\n";
-            "    boostdep [options] --reverse <module>\n";
-            "    boostdep [options] [--header] <header>\n";
-            "\n";
+            "    boostdep --list-modules\n"
+            "    boostdep --list-buildable\n"
+            "    boostdep [--track-sources] --list-dependencies\n"
+            "\n"
+            "    boostdep [options] --module-overview\n"
+            "    boostdep [options] --module-levels\n"
+            "    boostdep [options] --module-weights\n"
+            "\n"
+            "    boostdep [options] [--primary] <module>\n"
+            "    boostdep [options] --secondary <module>\n"
+            "    boostdep [options] --reverse <module>\n"
+            "    boostdep [options] [--header] <header>\n"
+            "\n"
             "    [options]: [--track-sources] [--title <title>] [--footer <footer>] [--html]\n";
 
         return -1;

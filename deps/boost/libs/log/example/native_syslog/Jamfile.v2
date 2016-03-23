@@ -17,6 +17,7 @@ project
         <toolset>msvc:<cxxflags>/wd4503 # decorated name length exceeded, name was truncated
         <toolset>msvc:<cxxflags>/wd4456 # declaration of 'A' hides previous local declaration
         <toolset>msvc:<cxxflags>/wd4459 # declaration of 'A' hides global declaration
+        <toolset>msvc:<cxxflags>/wd4003 # not enough actual parameters for macro 'X' - caused by BOOST_PP_IS_EMPTY and BOOST_PP_IS_BEGIN_PARENS which are used by Fusion
         <toolset>intel-win:<define>_SCL_SECURE_NO_WARNINGS
         <toolset>intel-win:<define>_SCL_SECURE_NO_DEPRECATE
         <toolset>intel-win:<define>_CRT_SECURE_NO_WARNINGS

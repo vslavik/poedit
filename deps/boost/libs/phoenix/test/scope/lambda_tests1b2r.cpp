@@ -12,6 +12,11 @@
 
 #include <typeinfo>
 
+// Test of workaround for MSVC 12 and 14
+#include <boost/config.hpp>
+#if defined(BOOST_MSVC) && (BOOST_MSVC >= 1700)
+#define BOOST_RESULT_OF_USE_TR1
+#endif
 #include <boost/detail/lightweight_test.hpp>
 #include <boost/phoenix/core.hpp>
 #include <boost/phoenix/operator.hpp>
@@ -63,13 +68,13 @@ main()
         int z;
         BOOST_TEST(
         (
-                _3 = _1 +
+                _1 +
                 lambda(_a = _1)
                 [
                   _a + lambda[_a + 2]
                 ]
             )
-        (x)(y)(z) == 1+1+1+2
+        (x)()(x) == 1+1+1+2
         );
 #else
         BOOST_TEST(
