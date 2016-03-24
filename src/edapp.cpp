@@ -1,5 +1,5 @@
 ﻿/*
- *  This file is part of Poedit (http://poedit.net)
+ *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 1999-2016 Vaclav Slavik
  *
@@ -1058,7 +1058,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 #endif
     about.SetCopyright(L"Copyright \u00a9 1999-2016 Václav Slavík");
 #ifdef __WXGTK__ // other ports would show non-native about dlg
-    about.SetWebSite("http://poedit.net");
+    about.SetWebSite("https://poedit.net");
 #endif
 
     wxAboutBox(about);
@@ -1142,7 +1142,7 @@ void PoeditApp::OpenPoeditWeb(const wxString& path)
 {
     wxLaunchDefaultBrowser
     (
-        wxString::Format("http://poedit.net%s?fromVersion=%s",
+        wxString::Format("https://poedit.net%s?fromVersion=%s",
                          path,
                          GetAppVersion())
     );
