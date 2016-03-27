@@ -3,7 +3,9 @@
 import os, sys
 from ninja_syntax import Writer
 
-_exclusion_list = ['Debug', 'Debug_static', 'Release', 'Release_static',
+_exclusion_list = ['.DS_Store',
+                   'autom4te.cache', 'build_windows',
+                   'Debug', 'Debug_static', 'Release', 'Release_static',
                    'bin',
                    'docs', 'doc', 'examples', 'test', 'tests']
 def _is_excluded(e):
