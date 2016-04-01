@@ -88,8 +88,8 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
     buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
     buttons->AddStretchSpacer();
-    buttons->Add(m_signIn, wxSizerFlags().Right());
-    buttons->Add(m_signOut, wxSizerFlags().Right());
+    buttons->Add(m_signIn, wxSizerFlags());
+    buttons->Add(m_signOut, wxSizerFlags());
 
     if (flags & DialogButtons)
     {
