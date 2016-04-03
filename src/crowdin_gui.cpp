@@ -50,6 +50,10 @@
 #include <wx/weakref.h>
 #include <wx/windowptr.h>
 
+#if !wxCHECK_VERSION(3,1,0)
+    #define CenterVertical() Center()
+#endif
+
 #include <boost/algorithm/string.hpp>
 
 CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)

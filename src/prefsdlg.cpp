@@ -49,6 +49,10 @@
 #include <wx/xrc/xmlres.h>
 #include <wx/numformatter.h>
 
+#if !wxCHECK_VERSION(3,1,0)
+    #define CenterVertical() Center()
+#endif
+
 #include "prefsdlg.h"
 #include "edapp.h"
 #include "edframe.h"
