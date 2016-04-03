@@ -164,15 +164,15 @@ public:
         sizer->Add(translator, wxSizerFlags().Expand());
 
         auto nameLabel = new wxStaticText(this, wxID_ANY, _("Name:"));
-        translator->Add(nameLabel, wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+        translator->Add(nameLabel, wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
         m_userName = new wxTextCtrl(this, wxID_ANY);
         m_userName->SetHint(_("Your Name"));
-        translator->Add(m_userName, wxSizerFlags(1).Expand().Center());
+        translator->Add(m_userName, wxSizerFlags(1).Expand().CenterVertical());
         auto emailLabel = new wxStaticText(this, wxID_ANY, _("Email:"));
-        translator->Add(emailLabel, wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+        translator->Add(emailLabel, wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
         m_userEmail = new wxTextCtrl(this, wxID_ANY);
         m_userEmail->SetHint(_("your_email@example.com"));
-        translator->Add(m_userEmail, wxSizerFlags(1).Expand().Center());
+        translator->Add(m_userEmail, wxSizerFlags(1).Expand().CenterVertical());
         translator->AddSpacer(PX(1));
         translator->Add(new ExplanationLabel(this, _("Your name and email address are only used to set the Last-Translator header of GNU gettext files.")), wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
 #ifdef __WXOSX__
@@ -219,10 +219,10 @@ public:
         m_fontText = new wxFontPickerCtrl(this, wxID_ANY);
         m_fontText->SetMinSize(wxSize(PX(120), -1));
 
-        appearance->Add(m_useFontList, wxSizerFlags().Center().Left());
-        appearance->Add(m_fontList, wxSizerFlags().Center().Expand());
-        appearance->Add(m_useFontText, wxSizerFlags().Center().Left());
-        appearance->Add(m_fontText, wxSizerFlags().Center().Expand());
+        appearance->Add(m_useFontList, wxSizerFlags().CenterVertical().Left());
+        appearance->Add(m_fontList, wxSizerFlags().CenterVertical().Expand());
+        appearance->Add(m_useFontText, wxSizerFlags().CenterVertical().Left());
+        appearance->Add(m_fontText, wxSizerFlags().CenterVertical().Expand());
 
 #if NEED_CHOOSELANG_UI 
         m_uiLanguage = new wxButton(this, wxID_ANY, _("Change UI language"));

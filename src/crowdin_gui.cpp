@@ -88,16 +88,16 @@ CrowdinLoginPanel::CrowdinLoginPanel(wxWindow *parent, int flags)
     sizer->Add(buttons, wxSizerFlags().Expand().Border(wxBOTTOM, 1));
     buttons->Add(learnMore, wxSizerFlags().Center().Border(wxLEFT, PX(LearnMoreLink::EXTRA_INDENT)));
     buttons->AddStretchSpacer();
-    buttons->Add(m_signIn, wxSizerFlags().Right());
-    buttons->Add(m_signOut, wxSizerFlags().Right());
+    buttons->Add(m_signIn, wxSizerFlags());
+    buttons->Add(m_signOut, wxSizerFlags());
 
     if (flags & DialogButtons)
     {
         auto cancel = new wxButton(this, wxID_CANCEL);
 #ifdef __WXMSW__
-        buttons->Add(cancel, wxSizerFlags().Right().Border(wxLEFT, PX(3)));
+        buttons->Add(cancel, wxSizerFlags().Border(wxLEFT, PX(3)));
 #else
-        buttons->Insert(2, cancel, wxSizerFlags().Right().Border(wxRIGHT, PX(6)));
+        buttons->Insert(2, cancel, wxSizerFlags().Border(wxRIGHT, PX(6)));
 #endif
         m_signIn->SetDefault();
         m_signIn->SetFocus();
@@ -270,22 +270,22 @@ public:
         topsizer->Add(pickers, wxSizerFlags().Expand().PXDoubleBorderAll());
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("Project:")),
-                     wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+                     wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
         m_project = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_project, wxSizerFlags().Expand().Center());
+        pickers->Add(m_project, wxSizerFlags().Expand().CenterVertical());
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("Language:")),
-                     wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+                     wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
         m_language = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_language, wxSizerFlags().Expand().Center());
+        pickers->Add(m_language, wxSizerFlags().Expand().CenterVertical());
 
         pickers->AddSpacer(PX(5));
         pickers->AddSpacer(PX(5));
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("File:")),
-                     wxSizerFlags().Center().Right().BORDER_OSX(wxTOP, 1));
+                     wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
         m_file = new wxChoice(this, wxID_ANY);
-        pickers->Add(m_file, wxSizerFlags().Expand().Center());
+        pickers->Add(m_file, wxSizerFlags().Expand().CenterVertical());
 
         m_activity = new ActivityIndicator(this);
         topsizer->AddSpacer(PX(5));
