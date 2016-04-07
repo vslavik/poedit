@@ -135,7 +135,7 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
     m_text.Replace("\n", " ");
 
     SetInitialSize(wxSize(10,10));
-    Bind(wxEVT_SIZE, &ExplanationLabel::OnSize, this);
+    Bind(wxEVT_SIZE, &AutoWrappingText::OnSize, this);
 }
 
 void AutoWrappingText::SetAlignment(int align)
