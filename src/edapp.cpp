@@ -1047,6 +1047,18 @@ void PoeditApp::OnAbout(wxCommandEvent&)
     // TRANSLATORS: This is version information in about dialog, "%s" will be
     //              version number when used
     _("Version %s");
+
+    // TRANSLATORS: OS X item in app menu
+    _("Services");
+    // TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+    _("Hide %s");
+    // TRANSLATORS: OS X item in app menu
+    _("Hide Others");
+    // TRANSLATORS: OS X item in app menu
+    _("Show All");
+    // TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+    _("Quit %s");
+    _("Preferences...");
 #endif
 
     wxAboutDialogInfo about;
