@@ -87,6 +87,19 @@ ManagerFrame::ManagerFrame() :
 
     wxXmlResource::Get()->LoadToolBar(this, "manager_toolbar");
     wxXmlResource::Get()->LoadMenuBar(this, "manager_menu");
+#ifdef __WXMSW__
+    // De-uglify the toolbar a bit on Windows 10:
+    if (IsWindows10OrGreater())
+    {
+        auto menuClr = wxSystemSettings::GetColour(wxSYS_COLOUR_MENUBAR);
+        // Windows 10 lies about this color. Check it for the default value, which is
+        // a shade of gray even though the menubar is actually white, and change it to
+        // white. This way other colors, e.g. from hi-contrast themes, will be preserved.
+        if (menuClr.GetRGB() == 0xF0F0F0)
+            menuClr.SetRGB(0xFFFFFF);
+        GetToolBar()->SetBackgroundColour(menuClr);
+    }
+#endif
 
     wxPanel *panel = wxXmlResource::Get()->LoadPanel(this, "manager_panel");
 
