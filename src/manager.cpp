@@ -86,7 +86,6 @@ ManagerFrame::ManagerFrame() :
     ms_instance = this;
 
     wxXmlResource::Get()->LoadToolBar(this, "manager_toolbar");
-    wxXmlResource::Get()->LoadMenuBar(this, "manager_menu");
 #ifdef __WXMSW__
     // De-uglify the toolbar a bit on Windows 10:
     if (IsWindows10OrGreater())
