@@ -592,6 +592,8 @@ bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
 
 void FindFrame::OnReplace(wxCommandEvent&)
 {
+    if (!m_lastItem)
+        return;
     DoReplaceInItem(m_lastItem);
     m_listCtrl->Refresh();
 }
