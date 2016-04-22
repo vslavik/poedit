@@ -45,6 +45,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  utility.cpp utility.h ThreadPool.h concurrency.cpp concurrency.h \
                  version.h errors.h \
                  str_helpers.h logcapture.h \
+                 unicode_helpers.h unicode_helpers.cpp \
                  language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
                  languagectrl.cpp languagectrl.h \
                  welcomescreen.cpp welcomescreen.h \

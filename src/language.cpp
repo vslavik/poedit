@@ -255,12 +255,12 @@ void Language::Init(const std::string& code)
     if (IsValid())
     {
         m_tag = DoGetLanguageTag(*this);
-        m_isRTL = DoIsRTL(*this);
+        m_direction = DoIsRTL(*this) ? TextDirection::RTL : TextDirection::LTR;
     }
     else
     {
         m_tag.clear();
-        m_isRTL = false;
+        m_direction = TextDirection::LTR;
     }
 }
 

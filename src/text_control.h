@@ -30,6 +30,7 @@
 #include <memory>
 #include <vector>
 
+#include "language.h"
 #include "syntaxhighlighter.h"
 
 
@@ -102,14 +103,14 @@ public:
     AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style = 0);
     ~AnyTranslatableTextCtrl();
 
-    void SetLanguageRTL(bool isRTL);
+    void SetLanguage(const Language& lang);
 
     // Set and get control's text as plain/raw text, with no escaping or formatting.
     // This is the "true" representation, with e.g newlines included. The version
     // displayed to the user includes syntax highlighting and escaping of some characters
     // (e.g. tabs shown as \t, newlines as \n followed by newline).
-    void SetPlainText(const wxString& s) { SetValue(EscapePlainText(s)); }
-    wxString GetPlainText() const { return UnescapePlainText(GetValue()); }
+    void SetPlainText(const wxString& s);
+    wxString GetPlainText() const;
 
     // Apply escaping as described in SetPlainText:
     static wxString EscapePlainText(const wxString& s);
@@ -124,8 +125,6 @@ protected:
 #ifdef __WXMSW__
     void DoSetValue(const wxString& value, int flags) override;
     void UpdateRTLStyle();
-
-    bool m_isRTL;
 #endif // __WXMSW__
 
 #ifdef __WXGTK__
@@ -138,6 +137,7 @@ protected:
     class Attributes;
     SyntaxHighlighter m_syntax;
     std::unique_ptr<Attributes> m_attrs;
+    Language m_language;
 };
 
 

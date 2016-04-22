@@ -122,6 +122,7 @@
 		B2DAD7111AD198C000DCB398 /* export_html.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CE216F629D30018AF7E /* export_html.cpp */; };
 		B2DAD7121AD198DE00DCB398 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
 		B2DFCCFB19B5FD15003DFAD0 /* sidebar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */; };
+		B2E02A361CB812C500D18F5C /* unicode_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */; };
 		B2E11F121A2C66FB00E4E42C /* text_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E11F101A2C66FB00E4E42C /* text_control.cpp */; };
 		B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */; };
 		B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B2E836DD1709ECD600F31559 /* dsa_pub.pem */; };
@@ -492,6 +493,8 @@
 		B2D76A4B181D028B0083C9D9 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_thread.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sidebar.cpp; sourceTree = "<group>"; };
 		B2DFCCFA19B5FD15003DFAD0 /* sidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sidebar.h; sourceTree = "<group>"; };
+		B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unicode_helpers.cpp; sourceTree = "<group>"; };
+		B2E02A351CB812C500D18F5C /* unicode_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unicode_helpers.h; sourceTree = "<group>"; };
 		B2E11F101A2C66FB00E4E42C /* text_control.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = text_control.cpp; sourceTree = "<group>"; };
 		B2E11F111A2C66FB00E4E42C /* text_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text_control.h; sourceTree = "<group>"; };
 		B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = syntaxhighlighter.cpp; sourceTree = "<group>"; };
@@ -743,6 +746,8 @@
 				B28F1CE416F629D30018AF7E /* pl_evaluate.h */,
 				B28F1CE316F629D30018AF7E /* pl_evaluate.cpp */,
 				B29FC6891821616C00BFC15D /* str_helpers.h */,
+				B2E02A351CB812C500D18F5C /* unicode_helpers.h */,
+				B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */,
 				B28F1CE016F629D30018AF7E /* version.h */,
 			);
 			name = "Non-GUI";
@@ -1127,7 +1132,6 @@
 				fa,
 				ro,
 				bg,
-				nb,
 				uk,
 				fi,
 				sq,
@@ -1351,6 +1355,7 @@
 				B2C62E191AA8A29000901D63 /* http_client.cpp in Sources */,
 				B28F1CEA16F629D30018AF7E /* cat_sorting.cpp in Sources */,
 				B26D064F182506E40069C378 /* languagectrl.cpp in Sources */,
+				B2E02A361CB812C500D18F5C /* unicode_helpers.cpp in Sources */,
 				B28F1CEB16F629D30018AF7E /* chooselang.cpp in Sources */,
 				B28F1CEC16F629D30018AF7E /* commentdlg.cpp in Sources */,
 				B28F1CED16F629D30018AF7E /* digger.cpp in Sources */,
@@ -1383,11 +1388,11 @@
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
 				B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */,
 				B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */,
-				B25D94941AE3D7E3003BC368 /* concurrency.cpp in Sources */,
 				B2579C821920C02C00BEBC31 /* REUtil.m in Sources */,
-				B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */,
+				B25D94941AE3D7E3003BC368 /* concurrency.cpp in Sources */,
 				B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */,
 				B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */,
+				B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

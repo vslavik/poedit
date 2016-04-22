@@ -50,6 +50,7 @@
 
 #include "spellchecking.h"
 #include "str_helpers.h"
+#include "unicode_helpers.h"
 
 
 namespace
@@ -470,36 +471,46 @@ AnyTranslatableTextCtrl::AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID wi
         HighlightText();
     });
 
-#ifdef __WXMSW__
-    m_isRTL = false;
-#endif
+    m_language = Language::English();
 }
 
 AnyTranslatableTextCtrl::~AnyTranslatableTextCtrl()
 {
 }
 
-void AnyTranslatableTextCtrl::SetLanguageRTL(bool isRTL)
+void AnyTranslatableTextCtrl::SetLanguage(const Language& lang)
 {
+    m_language = lang;
+
 #ifdef __WXOSX__
     NSTextView *text = TextView(this);
-    [text setBaseWritingDirection:isRTL ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
+    [text setBaseWritingDirection:lang.IsRTL() ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
 #endif
 #ifdef __WXMSW__
-    m_isRTL = isRTL;
-
     BIDIOPTIONS bidi;
     ::ZeroMemory(&bidi, sizeof(bidi));
     bidi.cbSize = sizeof(bidi);
     bidi.wMask = BOM_UNICODEBIDI;
-    bidi.wEffects = isRTL ? BOE_UNICODEBIDI : 0;
+    bidi.wEffects = lang.IsRTL() ? BOE_UNICODEBIDI : 0;
     ::SendMessage((HWND)GetHWND(), EM_SETBIDIOPTIONS, 0, (LPARAM) &bidi);
 
-    ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, isRTL ? SES_BIDI : 0, SES_BIDI);
+    ::SendMessage((HWND)GetHWND(), EM_SETEDITSTYLE, lang.IsRTL() ? SES_BIDI : 0, SES_BIDI);
 
     UpdateRTLStyle();
 #endif
 }
+
+
+void AnyTranslatableTextCtrl::SetPlainText(const wxString& s)
+{
+    SetValue(EscapePlainText(s));
+}
+
+wxString AnyTranslatableTextCtrl::GetPlainText() const
+{
+    return UnescapePlainText(bidi::strip_pointless_control_chars(GetValue(), m_language.Direction()));
+}
+
 
 wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
 {
@@ -640,7 +651,7 @@ void AnyTranslatableTextCtrl::UpdateRTLStyle()
     ::ZeroMemory(&pf, sizeof(pf));
     pf.cbSize = sizeof(pf);
     pf.dwMask |= PFM_RTLPARA;
-    if (m_isRTL)
+    if (m_language.IsRTL())
         pf.wEffects |= PFE_RTLPARA;
 
     long start, end;
@@ -704,7 +715,7 @@ void AnyTranslatableTextCtrl::HighlightText()
 SourceTextCtrl::SourceTextCtrl(wxWindow *parent, wxWindowID winid)
     : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
 {
-    SetLanguageRTL(false); // English is LTR
+    SetLanguage(Language::English());
 }
 
 

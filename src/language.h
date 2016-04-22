@@ -31,6 +31,14 @@
 #include <vector>
 #include <unicode/locid.h>
 
+/// Language's text writing direction
+enum class TextDirection
+{
+    LTR,
+    RTL
+};
+
+
 /// Representation of translation's language.
 class Language
 {
@@ -90,8 +98,11 @@ public:
      */
     std::string DefaultPluralFormsExpr() const;
 
+    /// Returns language's text writing direction
+    TextDirection Direction() const { return m_direction; }
+
     /// Returns true if the language is written right-to-left.
-    bool IsRTL() const { return m_isRTL; }
+    bool IsRTL() const { return m_direction == TextDirection::RTL; }
 
     /**
         Tries to parse the string as language identification.
@@ -161,7 +172,7 @@ private:
 private:
     std::string m_code;
     std::string m_tag;
-    bool m_isRTL;
+    TextDirection m_direction;
 };
 
 #endif // Poedit_language_h
