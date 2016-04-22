@@ -59,7 +59,7 @@ void LoadPNGImage(wxImage& img, const wxString& filename)
 #endif // NEEDS_MANUAL_HIDPI
 
 
-wxBitmap LoadScaledBitmap(const wxString& name)
+wxBitmap LoadScaledBitmap(const wxString& name, bool mirror)
 {
     const wxString filename(name + ".png");
     if (!wxFileExists(filename))
@@ -97,5 +97,9 @@ wxBitmap LoadScaledBitmap(const wxString& name)
     // else: load normally
 #endif
 
-    return wxBitmap(wxImage(filename, wxBITMAP_TYPE_PNG));
+    auto img = wxImage(filename, wxBITMAP_TYPE_PNG);
+    if (mirror)
+        return wxBitmap(img.Mirror());
+    else
+        return wxBitmap(img);
 }

@@ -27,15 +27,20 @@
 #include <wx/stdpaths.h>
 #include <wx/image.h>
 
+#include <set>
+
 #include "icons.h"
 #include "edapp.h"
 #include "hidpi.h"
 
 #ifndef __WXOSX__
 
+namespace
+{
+
 #ifdef __WXGTK20__
 // translates poedit item id or Tango stock item id to "legacy" GNOME id:
-static wxString GetGnomeStockId(const wxString& id)
+wxString GetGnomeStockId(const wxString& id)
 {
     #define MAP(poedit, gnome) if ( id == _T(poedit) ) return _T(gnome)
 
@@ -53,6 +58,29 @@ static wxString GetGnomeStockId(const wxString& id)
 }
 #endif // __WXGTK20__
 
+// Check if a given icon needs mirroring in right-to-left locales:
+bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
+{
+    static std::set<wxString> s_directional = {
+        "ContributeOn",
+        "poedit-status-comment",
+        "follow-link",
+        "sidebar",
+        "sidebar-disabled"
+    };
+
+    bool mirror = s_directional.find(id) != s_directional.end();
+
+#ifdef __WXMSW__
+    // Toolbar is already mirrored
+    if (client == wxART_TOOLBAR)
+        mirror = !mirror;
+#endif
+
+    return mirror;
+}
+
+} // anonymous namespace
 
 wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
                                          const wxArtClient& client,
@@ -93,10 +121,14 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
         return wxNullBitmap;
     }
 
+    bool mirror = false;
+    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
+        mirror = ShouldBeMirorredInRTL(id, client);
+
     wxString icon;
     icon.Printf("%s/%s", iconsdir.c_str(), id.c_str());
     wxLogTrace("poedit.icons", "loading from %s", icon.c_str());
-    return LoadScaledBitmap(icon);
+    return LoadScaledBitmap(icon, mirror);
 }
 
 #endif // !__WXOSX__

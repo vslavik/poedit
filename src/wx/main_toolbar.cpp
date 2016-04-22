@@ -26,6 +26,7 @@
 #include "main_toolbar.h"
 
 #include "utility.h"
+#include "unicode_helpers.h"
 
 #include <wx/intl.h>
 #include <wx/settings.h>
@@ -77,13 +78,13 @@ public:
         {
             tool->SetLabel(_("Sync"));
             tool->SetShortHelp(_("Synchronize the translation with Crowdin"));
-            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync"));
+            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync", wxART_TOOLBAR));
         }
         else
         {
             tool->SetLabel(_("Update"));
             tool->SetShortHelp(_("Update catalog - synchronize it with sources"));
-            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update"));
+            m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update", wxART_TOOLBAR));
         }
     }
 
