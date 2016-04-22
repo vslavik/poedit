@@ -49,6 +49,7 @@
 #endif
 
 #include "str_helpers.h"
+#include "unicode_helpers.h"
 
 #include <memory>
 
@@ -59,6 +60,13 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
 {
     if (text_.empty())
         return text_;
+
+#ifdef BIDI_NEEDS_DIRECTION_ON_EACH_LINE
+    wchar_t directionMark = 0;
+    if (bidi::is_direction_mark(*text_.begin()))
+        directionMark = *text_.begin();
+#endif
+        
     auto text = str::to_icu(text_);
 
     static std::unique_ptr<icu::BreakIterator> iter;
@@ -97,7 +105,13 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
                 out += previousSubstr;
                 lineStart = previousPos;
             }
+
             out += '\n';
+#ifdef BIDI_NEEDS_DIRECTION_ON_EACH_LINE
+            if (directionMark)
+                out += directionMark;
+#endif
+
             previousSubstr.clear();
         }
         else if (pos > 0 && text[pos-1] == '\n') // forced line feed
@@ -138,17 +152,33 @@ AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)
     Bind(wxEVT_SIZE, &AutoWrappingText::OnSize, this);
 }
 
-void AutoWrappingText::SetAlignment(int align)
+void AutoWrappingText::SetLanguage(Language lang)
 {
-    if (GetWindowStyleFlag() & align)
+    m_language = lang;
+    SetAlignment(m_language.Direction());
+}
+
+void AutoWrappingText::SetAlignment(TextDirection dir)
+{
+    // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
+    // for alignments
+    bool isRTL = (dir == TextDirection::RTL);
+    if (GetLayoutDirection() == wxLayout_RightToLeft)
+        isRTL = !isRTL;
+
+    const int align = isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT;
+    if (HasFlag(align))
         return;
     SetWindowStyleFlag(wxST_NO_AUTORESIZE | align);
 }
 
 void AutoWrappingText::SetAndWrapLabel(const wxString& label)
 {
+    m_text = bidi::platform_mark_direction(label);
+    if (!m_language.IsValid())
+        SetAlignment(bidi::get_base_direction(m_text));
+
     wxWindowUpdateLocker lock(this);
-    m_text = label;
     m_wrapWidth = GetSize().x;
     SetLabelText(WrapTextAtWidth(label, m_wrapWidth, m_language, this));
 

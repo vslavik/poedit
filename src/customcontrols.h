@@ -56,9 +56,9 @@ class AutoWrappingText : public wxStaticText
 public:
     AutoWrappingText(wxWindow *parent, const wxString& label);
 
-    void SetLanguage(Language lang) { m_language = lang; }
+    void SetLanguage(Language lang);
+    void SetAlignment(TextDirection dir);
 
-    void SetAlignment(int align);
     void SetAndWrapLabel(const wxString& label);
 
 protected:

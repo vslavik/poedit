@@ -32,6 +32,7 @@
 #include "errors.h"
 #include "hidpi.h"
 #include "utility.h"
+#include "unicode_helpers.h"
 
 #include "tm/suggestions.h"
 #include "tm/transmem.h"
@@ -207,7 +208,6 @@ public:
     {
         auto text = CommentDialog::RemoveStartHash(item->GetComment());
         text.Trim();
-        m_comment->SetLanguage(m_parent->GetCurrentLanguage());
         m_comment->SetAndWrapLabel(text);
     }
 
@@ -262,8 +262,6 @@ class SuggestionWidget : public wxPanel
 public:
     SuggestionWidget(wxWindow *parent) : wxPanel(parent, wxID_ANY)
     {
-        m_appIsRTL = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft);
-
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
@@ -290,7 +288,7 @@ public:
         }
     }
 
-    void SetValue(int index, const Suggestion& s, Language lang, bool isRTL, const wxBitmap& icon, const wxString& tooltip)
+    void SetValue(int index, const Suggestion& s, Language lang, const wxBitmap& icon, const wxString& tooltip)
     {
         m_value = s;
 
@@ -314,19 +312,8 @@ public:
 
         m_icon->SetBitmap(icon);
 
-        auto text = wxControl::EscapeMnemonics(s.text);
-        if (isRTL)
-            text = L"\u202b" + text;
-        else
-            text = L"\u202a" + text;
-        m_text->SetAndWrapLabel(text);
+        auto text = wxControl::EscapeMnemonics(bidi::mark_direction(s.text, lang));
 
-        // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
-        // for alignments
-        if (m_appIsRTL)
-            isRTL = !isRTL;
-
-        m_text->SetAlignment(isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT);
         m_text->SetLanguage(lang);
         m_text->SetAndWrapLabel(text);
 
@@ -387,7 +374,6 @@ private:
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxColour m_bg, m_bgHighlight;
-    bool m_appIsRTL;
 };
 
 
@@ -506,11 +492,10 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
 
     // update shown suggestions:
     auto lang = m_parent->GetCurrentLanguage();
-    bool isRTL = lang.IsRTL();
     for (size_t i = 0; i < m_suggestions.size(); ++i)
     {
         auto s = m_suggestions[i];
-        m_suggestionsWidgets[i]->SetValue((int)i, s, lang, isRTL, GetIconForSuggestion(s), GetTooltipForSuggestion(s));
+        m_suggestionsWidgets[i]->SetValue((int)i, s, lang, GetIconForSuggestion(s), GetTooltipForSuggestion(s));
     }
 
     m_innerSizer->Layout();
