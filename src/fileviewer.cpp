@@ -43,6 +43,7 @@
 #include "customcontrols.h"
 #include "hidpi.h"
 #include "utility.h"
+#include "unicode_helpers.h"
 
 namespace
 {
@@ -335,7 +336,7 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
     else
     {
         for (auto& r: m_references)
-            m_file->Append(r);
+            m_file->Append(bidi::platform_mark_direction(r));
         m_file->SetSelection(defaultReference);
         SelectReference(m_references[defaultReference]);
     }

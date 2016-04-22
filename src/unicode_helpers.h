@@ -30,6 +30,11 @@
 
 #include <wx/string.h>
 
+#ifdef __WXMSW__
+    #define BIDI_NEEDS_DIRECTION_ON_EACH_LINE
+    #define BIDI_PLATFORM_DOESNT_DETECT_DIRECTION
+#endif
+
 namespace bidi
 {
 
@@ -48,6 +53,21 @@ static const wchar_t RLM = L'\u200f';  // RIGHT-TO-LEFT MARK
 static const wchar_t ALM = L'\u061c';  // ARABIC LETTER MARK
 
 
+/// Is the character a directional control character?
+inline bool is_direction_mark(wchar_t c)
+{
+    return (c >= LRE && c <= RLO) ||
+           (c >= LRI && c <= PDI) ||
+           (c >= LRM && c <= RLM) ||
+           (c == ALM);
+}
+
+/**
+    Determine base direction of the text provided according to the
+    Unicode Bidirectional Algorithm.
+ */
+TextDirection get_base_direction(const wxString& text);
+
 /**
     Removes leading directional control characters that don't make sense for
     text in given language. For example, prefixing RTL text with RLE is redundant;
@@ -57,6 +77,34 @@ static const wchar_t ALM = L'\u061c';  // ARABIC LETTER MARK
     editing text in language different from the UI's language.
  */
 wxString strip_pointless_control_chars(const wxString& text, TextDirection dir);
+
+/**
+    Remove leading directional control characters.
+
+    For use if the text has known direction or can't have control characters. 
+ */
+wxString strip_control_chars(const wxString& text);
+
+/**
+    Prepend directional mark to text, for display purposes on platforms that
+    don't detect text's directionality on their own or when showing text in
+    different directionality.
+ */
+wxString mark_direction(const wxString& text, TextDirection dir);
+
+inline wxString mark_direction(const wxString& text, const Language& lang)
+    { return mark_direction(text, lang.Direction()); }
+
+inline wxString mark_direction(const wxString& text)
+    { return mark_direction(text, get_base_direction(text)); }
+
+#ifdef BIDI_PLATFORM_DOESNT_DETECT_DIRECTION
+inline wxString platform_mark_direction(const wxString& text)
+    { return mark_direction(text); }
+#else
+inline wxString platform_mark_direction(const wxString& text)
+    { return text; }
+#endif
 
 } // namespace bidi
 

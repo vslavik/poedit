@@ -29,6 +29,7 @@
 #include "hidpi.h"
 #include "language.h"
 #include "cat_sorting.h"
+#include "unicode_helpers.h"
 #include "utility.h"
 
 #include <wx/wx.h>
@@ -478,7 +479,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 
         // Add RTL Unicode mark to render bidi texts correctly
         if (m_appIsRTL)
-            return L"\u202a" + orig;
+            return bidi::LRE + orig;
         else
             return orig;
     }
@@ -488,7 +489,7 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
 
         // Add RTL Unicode mark to render bidi texts correctly
         if (m_isRTL && !m_appIsRTL)
-            return L"\u202b" + trans;
+            return bidi::RLE + trans;
         else
             return trans;
     }

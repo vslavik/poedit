@@ -44,6 +44,7 @@
     #include <boost/locale/encoding_utf.hpp>
 #endif
 
+#include <wx/buffer.h>
 #include <wx/string.h>
 
 /**
@@ -187,6 +188,25 @@ inline icu::UnicodeString to_icu(const std::wstring& str)
     #error "WTF?!"
 #endif
 }
+
+/**
+    Create buffer with raw UChar* string.
+
+    Notice that the resulting string is only valid for the input's lifetime.
+ */
+inline wxScopedCharTypeBuffer<UChar> to_icu_raw(const wxString& str)
+{
+    static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
+#if SIZEOF_WCHAR_T == 2
+    // read-only aliasing ctor, doesn't copy data
+    return wxScopedCharTypeBuffer<UChar>::CreateNonOwned((const UChar*)str.wx_str(), str.length());
+#else
+    auto buf = wxMBConvUTF16().cWC2MB(str.wc_str());
+    auto len = buf.length();
+    return wxCharTypeBuffer<UChar>::CreateOwned((UChar*)buf.release(), len);
+#endif
+}
+
 
 /// Create wxString from icu::UnicodeString, making a copy.
 inline wxString to_wx(const icu::UnicodeString& str)

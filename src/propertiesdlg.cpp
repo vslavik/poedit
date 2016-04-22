@@ -57,6 +57,7 @@
 #include "hidpi.h"
 #include "language.h"
 #include "str_helpers.h"
+#include "unicode_helpers.h"
 #include "pluralforms/pl_evaluate.h"
 #include "utility.h"
 
@@ -229,7 +230,7 @@ public:
 
     void SetPath(const wxString& path)
     {
-        SetLabel(path);
+        SetLabel(bidi::platform_mark_direction(path));
     }
 };
 
@@ -298,10 +299,12 @@ public:
         m_list->Clear();
         for (auto& p: Array())
         {
+            wxString s;
             if (wxIsWild(p))
-                m_list->Append(p);
+                s = p;
             else
-                m_list->Append(RelativePath(p, m_data->basepath, wxPATH_NATIVE));
+                s = RelativePath(p, m_data->basepath, wxPATH_NATIVE);
+            m_list->Append(bidi::platform_mark_direction(s));
         }
     }
 
@@ -641,7 +644,7 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
         if (pf_cat == "nplurals=INTEGER; plural=EXPRESSION;")
             pf_cat = pf_def;
 
-        m_pluralFormsExpr->SetValue(pf_cat);
+        m_pluralFormsExpr->SetValue(bidi::mark_direction(pf_cat, TextDirection::LTR));
         if (!pf_cat.empty() && pf_cat == pf_def)
             m_pluralFormsDefault->SetValue(true);
         else
@@ -680,7 +683,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
 
         if (pluralForms.empty())
         {
-            pluralForms = m_pluralFormsExpr->GetValue().Strip(wxString::both);
+            pluralForms = bidi::strip_control_chars(m_pluralFormsExpr->GetValue().Strip(wxString::both));
             if ( !pluralForms.empty() && !pluralForms.EndsWith(";") )
                 pluralForms += ";";
         }
@@ -746,7 +749,7 @@ void PropertiesDialog::OnPluralFormsDefault(wxCommandEvent& event)
     {
         wxString defaultForm = lang.DefaultPluralFormsExpr();
         if (!defaultForm.empty())
-            m_pluralFormsExpr->SetValue(defaultForm);
+            m_pluralFormsExpr->SetValue(bidi::mark_direction(defaultForm, TextDirection::LTR));
     }
 
     event.Skip();
@@ -771,7 +774,7 @@ bool PropertiesDialog::Validate()
         m_validatedPlural = 1;
         if (m_pluralFormsCustom->GetValue())
         {
-            wxString form = m_pluralFormsExpr->GetValue();
+            wxString form = bidi::strip_control_chars(m_pluralFormsExpr->GetValue());
             if (!form.empty())
             {
                 std::unique_ptr<PluralFormsCalculator> calc(PluralFormsCalculator::make(form.ToAscii()));

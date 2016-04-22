@@ -66,6 +66,7 @@
 #include "spellchecking.h"
 #include "utility.h"
 #include "customcontrols.h"
+#include "unicode_helpers.h"
 
 #ifdef __WXMSW__
 #include <winsparkle.h>
@@ -606,7 +607,7 @@ public:
         m_list->Clear();
         for (const auto& item: m_extractors.Data)
         {
-            auto index = m_list->Append(item.Name);
+            auto index = m_list->Append(bidi::platform_mark_direction(item.Name));
             m_list->Check(index, item.Enabled);
         }
 
@@ -639,12 +640,12 @@ private:
 
         {
             const Extractor& nfo = m_extractors.Data[num];
-            extractor_language->SetValue(nfo.Name);
-            extractor_extensions->SetValue(nfo.Extensions);
-            extractor_command->SetValue(nfo.Command);
-            extractor_keywords->SetValue(nfo.KeywordItem);
-            extractor_files->SetValue(nfo.FileItem);
-            extractor_charset->SetValue(nfo.CharsetItem);
+            extractor_language->SetValue(bidi::platform_mark_direction(nfo.Name));
+            extractor_extensions->SetValue(bidi::mark_direction(nfo.Extensions, TextDirection::LTR));
+            extractor_command->SetValue(bidi::mark_direction(nfo.Command, TextDirection::LTR));
+            extractor_keywords->SetValue(bidi::mark_direction(nfo.KeywordItem, TextDirection::LTR));
+            extractor_files->SetValue(bidi::mark_direction(nfo.FileItem, TextDirection::LTR));
+            extractor_charset->SetValue(bidi::mark_direction(nfo.CharsetItem, TextDirection::LTR));
         }
 
         dlg->Bind
@@ -667,12 +668,12 @@ private:
             if (retcode == wxID_OK)
             {
                 Extractor& nfo = m_extractors.Data[num];
-                nfo.Name = extractor_language->GetValue().Strip(wxString::both);
-                nfo.Extensions = extractor_extensions->GetValue().Strip(wxString::both);
-                nfo.Command = extractor_command->GetValue().Strip(wxString::both);
-                nfo.KeywordItem = extractor_keywords->GetValue().Strip(wxString::both);
-                nfo.FileItem = extractor_files->GetValue().Strip(wxString::both);
-                nfo.CharsetItem = extractor_charset->GetValue().Strip(wxString::both);
+                nfo.Name = bidi::strip_control_chars(extractor_language->GetValue().Strip(wxString::both));
+                nfo.Extensions = bidi::strip_control_chars(extractor_extensions->GetValue().Strip(wxString::both));
+                nfo.Command = bidi::strip_control_chars(extractor_command->GetValue().Strip(wxString::both));
+                nfo.KeywordItem = bidi::strip_control_chars(extractor_keywords->GetValue().Strip(wxString::both));
+                nfo.FileItem = bidi::strip_control_chars(extractor_files->GetValue().Strip(wxString::both));
+                nfo.CharsetItem = bidi::strip_control_chars(extractor_charset->GetValue().Strip(wxString::both));
                 m_list->SetString(num, nfo.Name);
             }
             completionHandler(retcode == wxID_OK);

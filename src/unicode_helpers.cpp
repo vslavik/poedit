@@ -32,6 +32,27 @@
 namespace bidi
 {
 
+TextDirection get_base_direction(const wxString& text)
+{
+    if (text.empty())
+        return TextDirection::LTR;
+
+    auto s = str::to_icu_raw(text);
+    switch (ubidi_getBaseDirection(s.data(), (int)s.length()))
+    {
+        case UBIDI_RTL:
+            return TextDirection::RTL;
+        case UBIDI_LTR:
+        case UBIDI_NEUTRAL:
+            return TextDirection::LTR;
+        case UBIDI_MIXED:
+            assert(false); // impossible value here
+            return TextDirection::LTR;
+    }
+    return TextDirection::LTR; // VC++ is stupid
+}
+
+
 wxString strip_pointless_control_chars(const wxString& text, TextDirection dir)
 {
     if (text.empty())
@@ -67,6 +88,37 @@ wxString strip_pointless_control_chars(const wxString& text, TextDirection dir)
     }
 
     return text;
+}
+
+
+wxString strip_control_chars(const wxString& text)
+{
+    if (text.empty())
+        return text;
+
+    const wchar_t first = *text.begin();
+    switch (first)
+    {
+        case LRE:
+        case LRO:
+        case LRI:
+        case LRM:
+        case RLE:
+        case RLO:
+        case RLI:
+        case RLM:
+            return text.substr(1);
+        default:
+            break;
+    }
+    return text;
+}
+
+
+wxString mark_direction(const wxString& text, TextDirection dir)
+{
+    auto mark = (dir == TextDirection::LTR) ? LRE : RLE;
+    return mark + text;
 }
 
 } // namespace bidi
