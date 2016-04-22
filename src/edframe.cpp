@@ -1043,10 +1043,10 @@ void PoeditFrame::UpdateTextLanguage()
 
     InitSpellchecker();
 
-    auto isRTL = m_catalog->GetLanguage().IsRTL();
-    m_textTrans->SetLanguageRTL(isRTL);
+    auto lang = m_catalog->GetLanguage();
+    m_textTrans->SetLanguage(lang);
     for (auto tp : m_textTransPlural)
-        tp->SetLanguageRTL(isRTL);
+        tp->SetLanguage(lang);
 
     if (m_sidebar)
         m_sidebar->RefreshContent();
