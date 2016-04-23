@@ -51,6 +51,7 @@
 #include "str_helpers.h"
 #include "unicode_helpers.h"
 
+#include <map>
 #include <memory>
 
 namespace
@@ -69,13 +70,21 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
         
     auto text = str::to_icu(text_);
 
-    static std::unique_ptr<icu::BreakIterator> iter;
-    if (!iter)
+    static std::map<std::string, std::shared_ptr<icu::BreakIterator>> lang_iters;
+    std::shared_ptr<icu::BreakIterator> iter;
+    auto lang_name = lang.IcuLocaleName();
+    auto li = lang_iters.find(lang_name);
+    if (li == lang_iters.end())
     {
         UErrorCode err = U_ZERO_ERROR;
         iter.reset(icu::BreakIterator::createLineInstance(lang.IsValid() ? lang.ToIcu() : icu::Locale(), err));
         if (!iter)
             iter.reset(icu::BreakIterator::createLineInstance(icu::Locale::getEnglish(), err));
+        lang_iters[lang_name] = iter;
+    }
+    else
+    {
+        iter = li->second;
     }
 
     iter->setText(text);
