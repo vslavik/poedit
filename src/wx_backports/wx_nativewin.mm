@@ -32,6 +32,27 @@
 // implementation
 // ============================================================================
 
+namespace
+{
+
+class wxNativeWidgetCocoaImpl : public wxWidgetCocoaImpl
+{
+public:
+    wxNativeWidgetCocoaImpl(wxWindowMac* peer, WXWidget w) : wxWidgetCocoaImpl(peer, w)
+    {}
+
+    virtual void SetInitialLabel(const wxString& WXUNUSED(title), wxFontEncoding WXUNUSED(encoding))
+    {
+        // Don't set initial label, because the control was created by the
+        // caller and is already fully setup. And some controls (notably
+        // NSPathControl) assert if an unexpected string value, such as an empty
+        // string, is set.
+    }
+};
+
+} // anonymous namespace
+
+
 bool
 wxNativeWindow::Create(wxWindow* parent,
                        wxWindowID winid,
@@ -61,7 +82,7 @@ wxNativeWindow::Create(wxWindow* parent,
     else if ( [view respondsToSelector:@selector(stringValue)] )
         m_label = wxCFStringRef::AsString([(id)view stringValue]);
 
-    SetPeer(new wxWidgetCocoaImpl(this, view));
+    SetPeer(new wxNativeWidgetCocoaImpl(this, view));
     [view retain];
 
     // It doesn't seem necessary to use MacPostControlCreate() here as we never
