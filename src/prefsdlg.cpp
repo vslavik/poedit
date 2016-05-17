@@ -574,7 +574,7 @@ public:
         sizer->Add(horizontal, wxSizerFlags(1).Expand());
 
         m_list = new wxCheckListBox(this, wxID_ANY);
-        m_list->SetMinSize(wxSize(PX(250),PX(300)));
+        m_list->SetMinSize(wxSize(PX(300),PX(300)));
 #ifdef __WXOSX__
         m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
@@ -825,7 +825,7 @@ public:
     UpdatesPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(PX(350), -1); // for OS X look, wouldn't fit the toolbar otherwise
+        topsizer->SetMinSize(PX(400), -1); // for OS X look, wouldn't fit the toolbar otherwise
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
         topsizer->Add(sizer, wxSizerFlags().Expand().PXDoubleBorderAll());
