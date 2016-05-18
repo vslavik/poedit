@@ -262,7 +262,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     explain->SetForegroundColour(m_clrNorm);
     sizer->Add(explain, wxSizerFlags());
 
-    auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("(Learn more about GNU gettext)"), "http://www.gnu.org/software/gettext/manual/");
+    auto learnMore = new wxHyperlinkCtrl(this, wxID_ANY, _("(Learn more about GNU gettext)"), "http://www.gnu.org/software/gettext/manual/html_node/");
     learnMore->SetFont(m_fntNorm);
     sizer->Add(learnMore, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM).Align(wxALIGN_RIGHT));
 
