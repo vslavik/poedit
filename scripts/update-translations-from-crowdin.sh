@@ -20,6 +20,10 @@ remove_unsupported_languages()
 
     rm -f locales/win/windows_strings-Esperanto.rc
     rm -f locales/win/windows_strings-Kabyle.rc  # Win10 supports, but no LCID
+
+    # No LTR support on OS X yet:
+    rm -rf */osx/ar.lproj
+    rm -rf */osx/he.lproj
 }
 
 # Crowdin tools create empty .strings files for all translations, even the ones
