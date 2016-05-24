@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-02-02 18:06+0100\n"
-"PO-Revision-Date: 2016-02-02 04:18-0500\n"
+"POT-Creation-Date: 2016-05-24 15:02+0200\n"
+"PO-Revision-Date: 2016-05-24 08:25-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -248,7 +248,7 @@ msgid "handle a poedit:// URI"
 msgstr "poedit:// URI を処理"
 
 msgid "Failed to communicate with Poedit process."
-msgstr ""
+msgstr "Poedit プロセスとの通信に失敗しました。"
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
@@ -275,6 +275,31 @@ msgstr "%s について"
 #, c-format
 msgid "Version %s"
 msgstr "バージョン %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Services"
+msgstr "サービス"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "%s を非表示"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Hide Others"
+msgstr "他を非表示"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Show All"
+msgstr "すべて表示"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "%s を終了"
+
+msgid "Preferences..."
+msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poeditは使いやすい翻訳エディタです。"
@@ -503,11 +528,16 @@ msgstr "翻訳プロジェクトを新規作成する"
 
 msgid "Upgrade to Windows 10 (for free) to enable spellchecking in Poedit."
 msgstr ""
+"スペルチェックを有効にするには、Windows 10 へのアップデート (無料) を行ってく"
+"ださい。"
 
 msgid ""
 "Poedit needs Windows 8 or newer for spellchecking, but you only have Windows "
 "7. Microsoft is offering free upgrades to Windows 10 until July 29, 2016."
 msgstr ""
+"Poedit のスペルチェックを利用するには Windows 8 以上が必要ですが、現在 "
+"Windows 7 を使用中です。Microsoft は2016年6月29日まで、Windows 10 の無料アッ"
+"プデートを提供しています。"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -1254,6 +1284,11 @@ msgstr "既存ファイルのフォーマットを保護する"
 msgid "Advanced"
 msgstr "上級者モード"
 
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "%s 環境設定"
+
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
 "\n"
@@ -1351,18 +1386,6 @@ msgstr "参照"
 msgid "Add directory to the list"
 msgstr "ディレクトリをリストに追加"
 
-msgid "&Preferences..."
-msgstr "設定… (&P)"
-
-msgid "&Close"
-msgstr "閉じる (&C)"
-
-msgid "E&xit"
-msgstr "終了 (&X)"
-
-msgid "Quit"
-msgstr "終了"
-
 msgid "&New..."
 msgstr "新規カタログ… (&N)"
 
@@ -1384,6 +1407,9 @@ msgstr "Crowdin から開く…"
 msgid "Open From Crowdin..."
 msgstr "Crowdin から開く…"
 
+msgid "&Close"
+msgstr "閉じる (&C)"
+
 msgid "&Save"
 msgstr "保存 (&S)"
 
@@ -1402,17 +1428,26 @@ msgstr "HTML としてエクスポート… (&E)"
 msgid "Check for updates..."
 msgstr "更新を確認…"
 
+msgid "&Preferences..."
+msgstr "設定… (&P)"
+
 msgid "Catalogs &manager"
 msgstr "カタログマネージャ (&M)"
 
 msgid "Catalogs &Manager"
 msgstr "カタログマネージャ (&M)"
 
+msgid "E&xit"
+msgstr "終了 (&X)"
+
+msgid "Quit"
+msgstr "終了"
+
 msgid "Copy from singular"
-msgstr ""
+msgstr "単数形から複製"
 
 msgid "Copy From Singular"
-msgstr ""
+msgstr "単数形から複製"
 
 msgid "Translation is &fuzzy"
 msgstr "未確定翻訳 (&F)"
@@ -1577,16 +1612,16 @@ msgid "Ne&xt Unfinished"
 msgstr "次の未訳または未確定 (&X)"
 
 msgid "Previous plural form"
-msgstr ""
+msgstr "前の複数形"
 
 msgid "Previous Plural Form"
-msgstr ""
+msgstr "前の複数形"
 
 msgid "Next plural form"
-msgstr ""
+msgstr "次の複数形"
 
 msgid "Next Plural Form"
-msgstr ""
+msgstr "次の複数形"
 
 msgid "&Online help"
 msgstr "オンラインヘルプ (&O)"
@@ -1656,7 +1691,7 @@ msgstr "ソースコードの文字符号化法:"
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
+"only if source code charset was given. %c expands to charset value."
 msgstr ""
 "ソースコードの文字符号化法が指定された場合のみ\n"
 "コマンドラインに追加されます。%c に符号化法の値が展開されます。"

@@ -50,6 +50,12 @@ fixup_windows_rc_files()
         lang=`echo $stripped | cut -d_ -f1`
         lang="${lang/KAZAKH/KAZAK}"
         sublang=`echo $stripped | cut -s -d_ -f2`
+        if [ "$lang" = "BOSNIAN" ] ; then
+            sublang="BOSNIA_HERZEGOVINA_LATIN"
+        fi
+        if [ "$lang" = "CROATIAN" ] ; then
+            sublang="CROATIA"
+        fi
         if [ -n "$sublang" ] ; then
             code="LANG_${lang}, SUBLANG_${lang}_${sublang}"
         else

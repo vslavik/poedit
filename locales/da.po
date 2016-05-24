@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-02-02 18:06+0100\n"
-"PO-Revision-Date: 2016-02-02 04:18-0500\n"
+"POT-Creation-Date: 2016-05-24 15:02+0200\n"
+"PO-Revision-Date: 2016-05-24 08:24-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -127,7 +127,7 @@ msgid ""
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
 "Crowdin er en online lokaliseringhåndterings platform og et kollaborativt "
-"oversættelsesværktøj. Poedit kan uden problemer synkronisere PO filer der "
+"oversættelsesværktøj. Poedit kan uden problemer synkronisere PO-filer der "
 "bliver håndteret på Crowdin."
 
 msgid "Sign In"
@@ -273,6 +273,31 @@ msgstr "Om %s"
 #, c-format
 msgid "Version %s"
 msgstr "Version %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Services"
+msgstr "Services"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "Skjul %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Hide Others"
+msgstr "Skjul øvrige"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Show All"
+msgstr "Vis alle"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Afslut %s"
+
+msgid "Preferences..."
+msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit er et værktøj som gør det nemt at oversætte."
@@ -508,8 +533,8 @@ msgid ""
 "7. Microsoft is offering free upgrades to Windows 10 until July 29, 2016."
 msgstr ""
 "Poedit skal bruge Windows 8 eller nyere for stavekontrol, men du har kun "
-"Windows 8. Microsoft tilbyder gratis opdateringer til Windows 10 indtil 29 "
-"Juli, 2016."
+"Windows 7. Microsoft tilbyder gratis opdatering til Windows 10 frem til 29. "
+"juli, 2016."
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -589,7 +614,7 @@ msgstr[0] "Fandt %d problem med oversættelsen."
 msgstr[1] "Fandt %d problemer med oversættelsen."
 
 msgid "Validation results"
-msgstr "Valideringsresultater"
+msgstr "Valideringsresultat"
 
 msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
@@ -605,14 +630,14 @@ msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Filen blev gemt korrekt og kompileret til MO format, men den vil "
+"Filen blev gemt korrekt og kompileret til MO-format, men den vil "
 "sandsynligvis ikke virke korrekt."
 
 msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
-"Denne blev gemt korrekt, men den kan ikke kompileres til MO format og bruges."
+"Denne blev gemt korrekt, men den kan ikke kompileres til MO-format og bruges."
 
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
@@ -632,7 +657,7 @@ msgid "The translation is ready for use, but %d entry is not translated yet."
 msgid_plural ""
 "The translation is ready for use, but %d entries are not translated yet."
 msgstr[0] "Oversættelsen er klar til brug, men %d emne er ikke oversat endnu."
-msgstr[1] "Oversættelsen er klar til brug, men %d emner er ikke oversat endnu."
+msgstr[1] "Oversættelsen er klar til brug, men %d emne er endnu ikke oversat."
 
 msgid "The translation is ready for use."
 msgstr "Oversættelsen er klar til brug."
@@ -826,7 +851,7 @@ msgid ""
 "is only effective for semi-automatic translations after Poedit learns enough "
 "from files that you translated manually."
 msgstr ""
-"TM indeholder ikke nogen strenge der svarer til indholdet af denne fil. Den "
+"OH indeholder ikke nogen strenge der svarer til indholdet af denne fil. Den "
 "er kun god til halv-automatiske oversættelser når Poedit har lært nok fra "
 "filer du har oversat manuelt."
 
@@ -834,7 +859,7 @@ msgid "Translating"
 msgstr "Oversætter"
 
 msgid "Filling missing translations from TM..."
-msgstr "Udfylder manglende oversættelser fra TM..."
+msgstr "Udfylder manglende oversættelser fra OH..."
 
 #, c-format
 msgid "Translated %u string"
@@ -1145,7 +1170,7 @@ msgid "Reset"
 msgstr "Nulstil"
 
 msgid "Consult TM when updating from sources"
-msgstr "Tjek TM ved opdatering fra kilder"
+msgstr "Tjek OH ved opdatering fra kilder"
 
 msgid ""
 "If enabled, Poedit will try to fill in new entries using your previous\n"
@@ -1155,9 +1180,9 @@ msgid ""
 msgstr ""
 "Hvis aktiveret, vil Poedit prøver at udfylde nye emner ved at bruge dine "
 "tidligere\n"
-"oversættelser som er gemt i oversættelseshukommelsen. Hvis TM næsten er\n"
+"oversættelser som er gemt i oversættelseshukommelsen. Hvis OH næsten er\n"
 "tom, vil den ikke være særlig effektiv. Jo flere oversættelser\n"
-"du redigerer og jo større TM vokser, jo bedre bliver den."
+"du redigerer og jo større OH vokser, jo bedre bliver den."
 
 msgid "Stored translations:"
 msgstr "Gemte oversættelser:"
@@ -1267,6 +1292,11 @@ msgstr "Bevar formatering af eksisterende filer"
 msgid "Advanced"
 msgstr "Avanceret"
 
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "%s indstillinger"
+
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
 "\n"
@@ -1365,26 +1395,14 @@ msgstr "Gennemse"
 msgid "Add directory to the list"
 msgstr "Tilføj mappe til listen"
 
-msgid "&Preferences..."
-msgstr "&Indstillinger..."
-
-msgid "&Close"
-msgstr "&Luk"
-
-msgid "E&xit"
-msgstr "&Afslut"
-
-msgid "Quit"
-msgstr "Afslut"
-
 msgid "&New..."
 msgstr "&Ny..."
 
 msgid "New from &POT/PO file..."
-msgstr "Ny fra &POT/PO fil..."
+msgstr "Ny fra &POT-/PO-fil..."
 
 msgid "New From &POT/PO File..."
-msgstr "Ny fra &POT/PO fil..."
+msgstr "Ny fra &POT-/PO-fil..."
 
 msgid "&Open..."
 msgstr "&Åbn..."
@@ -1397,6 +1415,9 @@ msgstr "Åbn fra Crowdin..."
 
 msgid "Open From Crowdin..."
 msgstr "Åbn fra Crowdin..."
+
+msgid "&Close"
+msgstr "&Luk"
 
 msgid "&Save"
 msgstr "&Gem"
@@ -1411,16 +1432,25 @@ msgid "Compile to MO..."
 msgstr "Kompiler til MO..."
 
 msgid "E&xport as HTML..."
-msgstr "E&ksporter som HTML..."
+msgstr "E&ksportér som HTML..."
 
 msgid "Check for updates..."
 msgstr "Søg efter opdateringer..."
+
+msgid "&Preferences..."
+msgstr "&Indstillinger..."
 
 msgid "Catalogs &manager"
 msgstr "&Kataloghåndtering"
 
 msgid "Catalogs &Manager"
 msgstr "&Kataloghåndtering"
+
+msgid "E&xit"
+msgstr "&Afslut"
+
+msgid "Quit"
+msgstr "Afslut"
 
 msgid "Copy from singular"
 msgstr "Kopiér fra ental"
@@ -1510,10 +1540,10 @@ msgid "Entries with Errors First"
 msgstr "Emner med fejl først"
 
 msgid "&Untranslated entries first"
-msgstr "&Ikke oversatte tekster først"
+msgstr "&Ikke-oversatte poster først"
 
 msgid "&Untranslated Entries First"
-msgstr "&Ikke oversatte tekster først"
+msgstr "&Ikke-oversatte poster først"
 
 msgid "Show sidebar"
 msgstr "Vis sidebjælke"
@@ -1537,7 +1567,7 @@ msgid "Update from &POT File..."
 msgstr "Opdatér fra &POT-fil..."
 
 msgid "Sync with Crowdin"
-msgstr "Synkroniser med Crowdin"
+msgstr "Synkronisér med Crowdin"
 
 msgid "Fill missing translations from &TM..."
 msgstr "Udfyld manglende oversættelser fra &TM..."
@@ -1552,10 +1582,10 @@ msgid "&Purge Deleted Translations"
 msgstr "&Fjern slettede oversættelser"
 
 msgid "&Validate translations"
-msgstr "&Valider oversættelser"
+msgstr "&Validér oversættelser"
 
 msgid "&Validate Translations"
-msgstr "&Valider oversættelser"
+msgstr "&Validér oversættelser"
 
 msgid "&Properties..."
 msgstr "&Egenskaber..."
@@ -1603,10 +1633,10 @@ msgid "Next Plural Form"
 msgstr "Næste flertalsform"
 
 msgid "&Online help"
-msgstr "&Online hjælp"
+msgstr "&Onlinehjælp"
 
 msgid "&Online Help"
-msgstr "&Online hjælp"
+msgstr "&Onlinehjælp"
 
 msgid "&GNU gettext manual"
 msgstr "&GNU gettext manual"
@@ -1670,7 +1700,7 @@ msgstr "Tegnsæt for oprindelig tekst:"
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
+"only if source code charset was given. %c expands to charset value."
 msgstr ""
 "Dette vil blive vedhæftet til kommandolinjen, dog kun\n"
 "hvis kildekodens tegnsæt er givet. %c erstattes med tegnsætværdien."
@@ -1772,7 +1802,7 @@ msgid "Update catalog - synchronize it with sources"
 msgstr "Opdatér katalog - synkronisér med kilder"
 
 msgid "Toggled if selected string has fuzzy translation"
-msgstr "Skifter om den valgte oversættelse er uafklaret"
+msgstr "Slået til hvis den valgte streng er uafklaret"
 
 msgid "Show or hide the sidebar"
 msgstr "Vis eller skjul sidepanelet"
@@ -1873,7 +1903,7 @@ msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
 msgstr ""
-"Tag en eksisterende PO fil eller POT skabelon og opret en  ny oversættelse "
+"Tag en eksisterende PO-fil eller POT-skabelon og opret en ny oversættelse "
 "fra den."
 
 msgid "Collaborate on a translation with Crowdin"
@@ -1882,7 +1912,7 @@ msgstr "Samarbejd om en oversættelse med Crowdin"
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
 msgstr ""
-"Download en fil fra et Crowdin projekt, oversæt og synkroniser dine "
+"Download en fil fra et Crowdin-projekt, oversæt og synkronisér dine "
 "ændringer tilbage."
 
 msgid "What is Crowdin?"
@@ -1931,4 +1961,4 @@ msgid "Sync"
 msgstr "Synk"
 
 msgid "Synchronize the translation with Crowdin"
-msgstr "Synkroniser oversættelsen med Crowdin"
+msgstr "Synkronisér oversættelsen med Crowdin"

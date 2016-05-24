@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-02-02 18:06+0100\n"
-"PO-Revision-Date: 2016-02-02 04:19-0500\n"
+"POT-Creation-Date: 2016-05-24 15:02+0200\n"
+"PO-Revision-Date: 2016-05-24 08:26-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -83,7 +83,7 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Katalogen kunde inte sparas i '%s' som anges i kataloginställningar. \n"
+"Katalogen kunde inte sparas i '%s' som anges i kataloginställningar.\n"
 "\n"
 "Den sparades i UTF-8 istället och inställningen ändrades därefter."
 
@@ -223,7 +223,7 @@ msgid "Parsing %s files..."
 msgstr "Parsar %s filer..."
 
 msgid "Failed to load extracted catalog."
-msgstr "Det gick inte att läsa extraherad katalog"
+msgstr "Det gick inte att läsa extraherad katalog."
 
 msgid "&Help"
 msgstr "&Hjälp"
@@ -275,6 +275,31 @@ msgstr "Om %s"
 #, c-format
 msgid "Version %s"
 msgstr "Version %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Services"
+msgstr "Tjänster"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "Dölj %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Hide Others"
+msgstr "Dölj andra"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Show All"
+msgstr "Visa alla"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Avsluta %s"
+
+msgid "Preferences..."
+msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit är en lättanvänd översättningseditor."
@@ -543,7 +568,7 @@ msgid "Don't save"
 msgstr "Spara inte"
 
 msgid "Don't Save"
-msgstr "Spara Inte"
+msgstr "Spara inte"
 
 msgid "Save as..."
 msgstr "Spara som..."
@@ -609,7 +634,7 @@ msgid ""
 "The file was saved safely and compiled into the MO format, but it will "
 "probably not work correctly."
 msgstr ""
-"Filen var sparade säkert och sammanställts till MO-format, men det kommer "
+"Filen sparades säkert och kompilerades till MO-format, men den kommer "
 "förmodligen inte fungera korrekt."
 
 msgid ""
@@ -1162,9 +1187,8 @@ msgstr ""
 "Om aktiverad, kommer Poedit försöker fylla i nya poster med hjälp av dina "
 "tidigare\n"
 "översättningar som sparats i översättningsminnet. Om översättningsminnet är\n"
-"nästan tomt kommer det inte vara effektivt. Desto fler översättningar\n"
-"du redigerar och desto större översättningsminnet växer, desto bättre blir "
-"det."
+"nästan tomt kommer det inte vara effektivt. Ju fler översättningar\n"
+"du redigerar och ju större översättningsminnet växer, desto bättre blir det."
 
 msgid "Stored translations:"
 msgstr "Lagrade översättningar:"
@@ -1272,7 +1296,12 @@ msgid "Preserve formatting of existing files"
 msgstr "Bevara formateringen av befintliga filer"
 
 msgid "Advanced"
-msgstr "Advancerat"
+msgstr "Avancerat"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "Inställningar %s"
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1305,7 +1334,7 @@ msgid "Add files..."
 msgstr "Lägg till filer..."
 
 msgid "Add Wildcard..."
-msgstr "Lägg till Jokertecken..."
+msgstr "Lägg till jokertecken..."
 
 msgid "Add wildcard..."
 msgstr "Lägg till jokertecken..."
@@ -1371,18 +1400,6 @@ msgstr "Bläddra"
 msgid "Add directory to the list"
 msgstr "Lägg till katalog till listan"
 
-msgid "&Preferences..."
-msgstr "&Inställningar..."
-
-msgid "&Close"
-msgstr "&Stäng"
-
-msgid "E&xit"
-msgstr "&Avsluta"
-
-msgid "Quit"
-msgstr "Avsluta"
-
 msgid "&New..."
 msgstr "&Ny..."
 
@@ -1404,14 +1421,17 @@ msgstr "Öppna från Crowdin..."
 msgid "Open From Crowdin..."
 msgstr "Öppna från Crowdin..."
 
+msgid "&Close"
+msgstr "&Stäng"
+
 msgid "&Save"
 msgstr "&Spara"
 
 msgid "Save &as..."
-msgstr "Spara s&om"
+msgstr "Spara s&om..."
 
 msgid "Save &As..."
-msgstr "Spara S&om"
+msgstr "Spara s&om..."
 
 msgid "Compile to MO..."
 msgstr "Kompilera till MO..."
@@ -1422,11 +1442,20 @@ msgstr "E&xportera som HTML..."
 msgid "Check for updates..."
 msgstr "Sök efter uppdateringar..."
 
+msgid "&Preferences..."
+msgstr "&Inställningar..."
+
 msgid "Catalogs &manager"
 msgstr "&Kataloghanterare"
 
 msgid "Catalogs &Manager"
 msgstr "&Kataloghanterare"
+
+msgid "E&xit"
+msgstr "&Avsluta"
+
+msgid "Quit"
+msgstr "Avsluta"
 
 msgid "Copy from singular"
 msgstr "Kopiera från singular"
@@ -1676,7 +1705,7 @@ msgstr "Källkod teckenuppsättning:"
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
+"only if source code charset was given. %c expands to charset value."
 msgstr ""
 "Detta kommer att bifogas till kommandoraden\n"
 "endast om källkodsteckenuppsättningen har angetts. %c expanderar till "

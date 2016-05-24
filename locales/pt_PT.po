@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-02-02 18:06+0100\n"
-"PO-Revision-Date: 2016-02-02 04:18-0500\n"
+"POT-Creation-Date: 2016-05-24 15:02+0200\n"
+"PO-Revision-Date: 2016-05-24 08:25-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -33,8 +33,7 @@ msgstr[1] "%i linhas do ficheiro '%s' não foram carregadas corretamente."
 
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
-msgstr ""
-"A linha %d do ficheiro '%s' encontra-se corrompida. (dados %s inválidos)."
+msgstr "A linha %d do ficheiro '%s' está corrompida (dados %s inválidos)."
 
 #, c-format
 msgid "Malformed header: '%s'"
@@ -43,7 +42,8 @@ msgstr "Cabeçalho danificado: '%s'"
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
 msgstr ""
-"Ficheiro danificado: usada forma singular msgstr em conjunto com msgid_plural"
+"Ficheiro danificado: usada a forma singular msgstr em conjunto com "
+"msgid_plural"
 
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr "Ficheiro danificado: usadas formas plurais msgstr sem msgid_plural"
@@ -64,8 +64,8 @@ msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"O ficheiro %s é de leitura e não pode ser guardado.\n"
-"Por favor utilize um nome diferente."
+"O ficheiro %s é apenas de leitura e não pode ser guardado.\n"
+"Por favor, guarde-o com um nome diferente."
 
 #, c-format
 msgid "Couldn't save file %s."
@@ -278,6 +278,31 @@ msgstr "Acerca do %s"
 msgid "Version %s"
 msgstr "Versão %s"
 
+#. TRANSLATORS: OS X item in app menu
+msgid "Services"
+msgstr "Serviços"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "Ocultar %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Hide Others"
+msgstr "Ocultar outros"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Show All"
+msgstr "Mostrar tudo"
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Sair do %s"
+
+msgid "Preferences..."
+msgstr ""
+
 msgid "Poedit is an easy to use translations editor."
 msgstr "O Poedit é um editor de traduções fácil de usar."
 
@@ -333,7 +358,7 @@ msgid "Smart Quotes"
 msgstr "Aspas inteligentes"
 
 msgid "Smart Dashes"
-msgstr "Travessões iteligentes"
+msgstr "Travessões inteligentes"
 
 msgid "Smart Links"
 msgstr "Ligações inteligentes"
@@ -1281,6 +1306,11 @@ msgstr "Manter formatação dos ficheiros existentes"
 msgid "Advanced"
 msgstr "Avançado"
 
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "Preferências do %s"
+
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
 "\n"
@@ -1378,18 +1408,6 @@ msgstr "Explorar"
 msgid "Add directory to the list"
 msgstr "Adicionar diretório à lista"
 
-msgid "&Preferences..."
-msgstr "&Preferências..."
-
-msgid "&Close"
-msgstr "Fe&char"
-
-msgid "E&xit"
-msgstr "&Sair"
-
-msgid "Quit"
-msgstr "Sair"
-
 msgid "&New..."
 msgstr "&Novo..."
 
@@ -1411,6 +1429,9 @@ msgstr "Abrir do Crowdin..."
 msgid "Open From Crowdin..."
 msgstr "Abrir do Crowdin..."
 
+msgid "&Close"
+msgstr "Fe&char"
+
 msgid "&Save"
 msgstr "&Guardar"
 
@@ -1429,11 +1450,20 @@ msgstr "E&xportar como HTML"
 msgid "Check for updates..."
 msgstr "Procurar atualizações..."
 
+msgid "&Preferences..."
+msgstr "&Preferências..."
+
 msgid "Catalogs &manager"
 msgstr "Gest&or de catálogos"
 
 msgid "Catalogs &Manager"
 msgstr "Gest&or de catálogos"
+
+msgid "E&xit"
+msgstr "&Sair"
+
+msgid "Quit"
+msgstr "Sair"
 
 msgid "Copy from singular"
 msgstr "Copiar da forma singular"
@@ -1683,7 +1713,7 @@ msgstr "Codificação do código fonte:"
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
+"only if source code charset was given. %c expands to charset value."
 msgstr ""
 "Isto será anexado à linha de comandos se a codificação\n"
 "do código fonte tiver sido fornecida. %c será substituído pela codificação."

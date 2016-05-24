@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-02-02 18:06+0100\n"
-"PO-Revision-Date: 2016-02-02 04:19-0500\n"
+"POT-Creation-Date: 2016-05-24 15:02+0200\n"
+"PO-Revision-Date: 2016-05-24 08:24-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Croatian\n"
 "Language: hr_HR\n"
@@ -21,7 +21,7 @@ msgid "Hide this notification message"
 msgstr "Sakrij ovu poruku"
 
 msgid "Don't Show Again"
-msgstr ""
+msgstr "Ovo više ne pokazuj"
 
 msgid "Don't show again"
 msgstr "Nemoj ponovo prikazati"
@@ -31,7 +31,7 @@ msgid "%i line of file '%s' was not loaded correctly."
 msgid_plural "%i lines of file '%s' were not loaded correctly."
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
+msgstr[2] "%i redaka datoteke '%s' nije pravilno učitano."
 
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
@@ -102,7 +102,7 @@ msgid "POT Translation Templates"
 msgstr "POT predlošci prijevoda"
 
 msgid "All Translation Files"
-msgstr ""
+msgstr "Svi prevedene datoteke"
 
 msgid "Merging differences..."
 msgstr "Spajanje razlika"
@@ -124,45 +124,48 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "Ponovo pokrenite Poedit kako bi promjena imala učinak"
 
 msgid "Downloading translations is disabled in this project."
-msgstr ""
+msgstr "Preuzimanje prijevoda nije omogućeno u ovom projektu."
 
 msgid "Not authorized, please sign in again."
-msgstr ""
+msgstr "Nije autorizirano, prijavite se ponovo."
 
 msgid ""
 "Crowdin is an online localization management platform and collaborative "
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
+"Crowdin je online platforma za upravljanje procesom lokaliziranja i alat za "
+"timsko prevođenje. Poedit može bez problema sinkronizirati PO datoteke "
+"procesirane u Crowdin."
 
 msgid "Sign In"
-msgstr ""
+msgstr "Prijava"
 
 msgid "Sign in"
-msgstr ""
+msgstr "Prijava"
 
 msgid "Sign Out"
-msgstr ""
+msgstr "Odjava"
 
 msgid "Sign out"
-msgstr ""
+msgstr "Odjava"
 
 msgid "Waiting for authentication…"
-msgstr ""
+msgstr "Čekanje na autenitifikaciju…"
 
 msgid "Updating user information…"
-msgstr ""
+msgstr "Ažuriranje informacija o korisniku…"
 
 msgid "Signed in as:"
-msgstr ""
+msgstr "Ulogiran Kao:"
 
 msgid "Learn More About Crowdin"
-msgstr ""
+msgstr "Saznajte Više O Crowdin-u"
 
 msgid "Learn more about Crowdin"
-msgstr ""
+msgstr "Saznajte Više O Crowdin-u"
 
 msgid "Sign in to Crowdin"
-msgstr ""
+msgstr "Ulogirajte se u Crowdin"
 
 msgid "Open Crowdin translation"
 msgstr ""
@@ -277,6 +280,31 @@ msgstr "O %s"
 #, c-format
 msgid "Version %s"
 msgstr "Inačica %s"
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Services"
+msgstr ""
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr ""
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Hide Others"
+msgstr ""
+
+#. TRANSLATORS: OS X item in app menu
+msgid "Show All"
+msgstr ""
+
+#. TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr ""
+
+msgid "Preferences..."
+msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit je uređivač prijevoda jednostavan za upotrebu"
@@ -1250,6 +1278,11 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr ""
+
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
 "\n"
@@ -1340,18 +1373,6 @@ msgstr "Pregledaj"
 msgid "Add directory to the list"
 msgstr "Dodaj mapu na popis"
 
-msgid "&Preferences..."
-msgstr "&Postavke..."
-
-msgid "&Close"
-msgstr "&Zatvori"
-
-msgid "E&xit"
-msgstr "&Izlaz"
-
-msgid "Quit"
-msgstr "Izađi"
-
 msgid "&New..."
 msgstr "&Novo..."
 
@@ -1373,6 +1394,9 @@ msgstr ""
 msgid "Open From Crowdin..."
 msgstr ""
 
+msgid "&Close"
+msgstr "&Zatvori"
+
 msgid "&Save"
 msgstr "&Spremi"
 
@@ -1391,11 +1415,20 @@ msgstr "I&zvezi kao HTML..."
 msgid "Check for updates..."
 msgstr "Provjeri ima li ažuriranja..."
 
+msgid "&Preferences..."
+msgstr "&Postavke..."
+
 msgid "Catalogs &manager"
 msgstr "upravitelj &kataloga"
 
 msgid "Catalogs &Manager"
 msgstr "Upravitelj &kataloga"
+
+msgid "E&xit"
+msgstr "&Izlaz"
+
+msgid "Quit"
+msgstr "Izađi"
 
 msgid "Copy from singular"
 msgstr ""
@@ -1645,7 +1678,7 @@ msgstr "Kodna stranica izvornog koda"
 #, c-format
 msgid ""
 "This will be attached to the command line\n"
-"only if source codecharset was given. %c expands to charset value."
+"only if source code charset was given. %c expands to charset value."
 msgstr ""
 "Ovo će se dodati naredbenom retku\n"
 "samo ako je priložen izvorni kod. %c se dodaje na vrijednost kodne stranice."
