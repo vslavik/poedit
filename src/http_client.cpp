@@ -81,6 +81,12 @@ void urlencoded_data::add_value(const std::string& name, const std::string& valu
 }
 
 
+json_data::json_data(const json& data)
+{
+    m_body = data.dump();
+}
+
+
 std::string http_client::url_encode(const std::string& s)
 {
     std::ostringstream escaped;

@@ -15,7 +15,8 @@ CROWDIN_SUPPORT_SRC = \
                  http_client.h http_client.cpp http_client_casablanca.cpp \
                  crowdin_client.h crowdin_client.cpp \
                  crowdin_gui.h crowdin_gui.cpp \
-                 keychain/keytar_posix.cc keychain/keytar.h
+                 keychain/keytar_posix.cc keychain/keytar.h \
+                 json.h json/src/json.hpp
 CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS) $(LIBSECRET_LIBS)
 endif
 

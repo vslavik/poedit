@@ -28,6 +28,8 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include "json.h"
+
 #include <exception>
 #include <functional>
 #include <map>
@@ -106,6 +108,19 @@ public:
     void add_value(const std::string& name, const std::string& value);
 
     std::string content_type() const override { return "application/x-www-form-urlencoded"; }
+    std::string body() const override { return m_body; }
+
+private:
+    std::string m_body;
+};
+
+/// Stores application/json data
+class json_data : public http_body_data
+{
+public:
+    json_data(const json& data);
+
+    std::string content_type() const override { return "application/json"; }
     std::string body() const override { return m_body; }
 
 private:
