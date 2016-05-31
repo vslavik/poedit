@@ -76,7 +76,19 @@ inline wxString RelativePath(const wxString& fn, const wxString& to, wxPathForma
     if (fn == to || fn + wxFILE_SEP_PATH == to)
         return ".";
     auto f = MakeFileName(fn);
-    f.MakeRelativeTo(to);
+    if (!f.MakeRelativeTo(to))
+    {
+#ifdef __WXMSW__
+        if (format == wxPATH_UNIX)
+        {
+            // Paths on different volumes, which are ignored in UNIX path formatting.
+            // The best we can do is to use Windows path with / instead of \ ...
+            wxString dos = f.GetFullPath(wxPATH_DOS);
+            dos.Replace("\\", "/");
+            return dos;
+        }
+#endif
+    }
     return f.GetFullPath(format);
 }
 
