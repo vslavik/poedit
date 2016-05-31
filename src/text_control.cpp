@@ -57,11 +57,42 @@ namespace
 {
 
 #ifdef __WXOSX__
+
 inline NSTextView *TextView(const wxTextCtrl *ctrl)
 {
     NSScrollView *scroll = (NSScrollView*)ctrl->GetHandle();
     return [scroll documentView];
 }
+
+class DisableAutomaticSubstitutions
+{
+public:
+    DisableAutomaticSubstitutions(wxTextCtrl *ctrl) : m_view(TextView(ctrl))
+    {
+        m_dash = m_view.automaticDashSubstitutionEnabled;
+        m_quote = m_view.automaticQuoteSubstitutionEnabled;
+        m_text = m_view.automaticTextReplacementEnabled;
+        m_spelling = m_view.automaticSpellingCorrectionEnabled;
+
+        m_view.automaticDashSubstitutionEnabled = NO;
+        m_view.automaticQuoteSubstitutionEnabled = NO;
+        m_view.automaticTextReplacementEnabled = NO;
+        m_view.automaticSpellingCorrectionEnabled = NO;
+    }
+
+    DisableAutomaticSubstitutions()
+    {
+        m_view.automaticDashSubstitutionEnabled = m_dash;
+        m_view.automaticQuoteSubstitutionEnabled = m_quote;
+        m_view.automaticTextReplacementEnabled = m_text;
+        m_view.automaticSpellingCorrectionEnabled = m_spelling;
+    }
+
+private:
+    NSTextView *m_view;
+    BOOL m_quote, m_dash, m_text, m_spelling;
+};
+
 #endif // __WXOSX__
 
 
@@ -779,6 +810,11 @@ void TranslationTextCtrl::DoSetValue(const wxString& value, int flags)
 void TranslationTextCtrl::SetPlainTextUserWritten(const wxString& value)
 {
     UndoGroup undo(this);
+
+#ifdef __WXOSX__
+    DisableAutomaticSubstitutions disableAuto(this);
+#endif
+
     SelectAll();
     WriteText(EscapePlainText(value));
     SetInsertionPointEnd();
