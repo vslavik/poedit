@@ -39,6 +39,11 @@
 #include <wx/image.h>
 #include <wx/wupdlock.h>
 
+#ifdef __WXMSW__
+#include <wx/msw/uxtheme.h>
+#include <vssym32.h>
+#endif
+
 #include <algorithm>
 
 
@@ -239,6 +244,38 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
         m_attrId.SetTextColour(wxColour("#A1A1A1"));
 
     SetCustomFont(wxNullFont);
+
+#ifdef __WXMSW__
+    // Setup custom header font & color on Windows 10, where the default look is a bit odd
+    if (IsWindows10OrGreater())
+    {
+        wxItemAttr headerAttr;
+
+        // Use the same text color as Explorer's headers use
+        const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
+        if (theme)
+        {
+            wxUxThemeHandle hTheme(this, L"ItemsView::Header");
+            COLORREF clr;
+            HRESULT hr = theme->GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
+            if (SUCCEEDED(hr))
+                headerAttr.SetTextColour(wxRGBToColour(clr));
+        }
+
+        // In HiDPI modes, standard header has smaller height than Explorer's and it isn't
+        // separated from the content well. wxListCtrl doesn't allow for customized header
+        // height (unlike wxDVC), so as a temporary workaround, at least make the text
+        // slightly larger to compensate. 
+        if (HiDPIScalingFactor() > 1.0)
+        {
+            auto headerFont = visual.font;
+            headerFont.SetPointSize(headerFont.GetPointSize() + 1);
+            headerAttr.SetFont(headerFont);
+        }
+
+        SetHeaderAttr(headerAttr);
+    }
+#endif // __WXMSW__
 }
 
 PoeditListCtrl::~PoeditListCtrl()
