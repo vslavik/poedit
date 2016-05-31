@@ -44,8 +44,8 @@
     #include <boost/locale/encoding_utf.hpp>
 #endif
 
-#include <wx/buffer.h>
 #include <wx/string.h>
+#include <wx/buffer.h>
 
 /**
     Defines conversions between various string types.
