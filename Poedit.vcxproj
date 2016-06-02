@@ -144,6 +144,10 @@
     <ClCompile Include="src\unicode_helpers.cpp" />
     <ClCompile Include="src\utility.cpp" />
     <ClCompile Include="src\welcomescreen.cpp" />
+    <ClCompile Include="src\windows\win10_menubar.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">deps/mctrl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">deps/mctrl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="src\wx\main_toolbar.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +197,7 @@
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\version.h" />
     <ClInclude Include="src\welcomescreen.h" />
+    <ClInclude Include="src\windows\win10_menubar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="locales\win\windows_strings.rc" />

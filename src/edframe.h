@@ -46,6 +46,13 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 #include "edlistctrl.h"
 #include "edapp.h"
 
+#ifdef __WXMSW__
+  #include "windows/win10_menubar.h"
+  typedef wxFrameWithWindows10Menubar PoeditFrameBase;
+#else
+  typedef wxFrame PoeditFrameBase;
+#endif
+
 class ListHandler;
 class TextctrlHandler;
 class TransTextctrlHandler;
@@ -62,7 +69,7 @@ class Sidebar;
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
  */
-class PoeditFrame : public wxFrame
+class PoeditFrame : public PoeditFrameBase
 {
     public:
         /** Public constructor functions. Creates and shows frame
