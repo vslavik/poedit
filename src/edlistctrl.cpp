@@ -515,6 +515,9 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
             orig = d->GetString();
 
         orig = orig.substr(0, GetMaxColChars());
+#ifdef __WXMSW__
+        orig.Replace("\n", " ");
+#endif
 
         // Add RTL Unicode mark to render bidi texts correctly
         if (m_appTextDir != m_sourceTextDir)
@@ -525,6 +528,9 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
     else if (column == m_colTrans)
     {
         auto trans = d->GetTranslation().substr(0, GetMaxColChars());
+#ifdef __WXMSW__
+        trans.Replace("\n", " ");
+#endif
 
         // Add RTL Unicode mark to render bidi texts correctly
         if (m_appTextDir != m_transTextDir)
