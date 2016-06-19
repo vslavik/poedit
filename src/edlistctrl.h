@@ -37,6 +37,7 @@ class WXDLLIMPEXP_FWD_CORE wxListEvent;
 
 #include "catalog.h"
 #include "cat_sorting.h"
+#include "language.h"
 
 // list control with both columns equally wide:
 class PoeditListCtrl : public wxListView
@@ -189,7 +190,7 @@ class PoeditListCtrl : public wxListView
         bool m_displayIDs;
         int m_colSource, m_colTrans, m_colId;
         unsigned m_colWidth;
-        bool m_isRTL, m_appIsRTL;
+        TextDirection m_sourceTextDir, m_transTextDir, m_appTextDir;
 
         CatalogPtr m_catalog;
 

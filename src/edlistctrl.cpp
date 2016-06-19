@@ -162,8 +162,8 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
 
     m_displayIDs = dispIDs;
 
-    m_isRTL = false;
-    m_appIsRTL = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft);
+    m_sourceTextDir = m_transTextDir = TextDirection::LTR;
+    m_appTextDir = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft) ? TextDirection::RTL : TextDirection::LTR;
 
     sortOrder = SortOrder::Default();
 
@@ -328,7 +328,7 @@ void PoeditListCtrl::CreateColumns()
         m_colId = -1;
 
 #ifdef __WXMSW__
-    if (m_appIsRTL)
+    if (m_appTextDir == TextDirection::RTL)
     {
         // another wx quirk: if we truly need left alignment, we must lie under RTL locales
         wxListItem colInfoOrig;
@@ -406,13 +406,15 @@ void PoeditListCtrl::ReadCatalog(bool resetSizeAndSelection)
 
     auto srclang = m_catalog->GetSourceLanguage();
     auto lang = m_catalog->GetLanguage();
+    m_sourceTextDir = srclang.Direction();
+    m_transTextDir = lang.Direction();
+
     auto isRTL = lang.IsRTL();
 #ifdef __WXMSW__
     // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
-    if (m_appIsRTL)
+    if (m_appTextDir == TextDirection::RTL)
         isRTL = !isRTL;
 #endif
-    m_isRTL = isRTL;
 
     wxListItem colInfo;
     colInfo.SetMask(wxLIST_MASK_TEXT);
@@ -515,8 +517,8 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
         orig = orig.substr(0, GetMaxColChars());
 
         // Add RTL Unicode mark to render bidi texts correctly
-        if (m_appIsRTL)
-            return bidi::LRE + orig;
+        if (m_appTextDir != m_sourceTextDir)
+            return bidi::mark_direction(orig, m_sourceTextDir);
         else
             return orig;
     }
@@ -525,8 +527,8 @@ wxString PoeditListCtrl::OnGetItemText(long item, long column) const
         auto trans = d->GetTranslation().substr(0, GetMaxColChars());
 
         // Add RTL Unicode mark to render bidi texts correctly
-        if (m_isRTL && !m_appIsRTL)
-            return bidi::RLE + trans;
+        if (m_appTextDir != m_transTextDir)
+            return bidi::mark_direction(trans, m_transTextDir);
         else
             return trans;
     }
