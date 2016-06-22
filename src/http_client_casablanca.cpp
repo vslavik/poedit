@@ -36,6 +36,7 @@
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 
+#define CPPREST_TARGET_XP
 #include <cpprest/asyncrt_utils.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
@@ -43,9 +44,13 @@
 
 #ifdef _WIN32
     #include <windows.h>
-    #include <wininet.h>
+    #include <winhttp.h>
     #include <netlistmgr.h>
     #pragma comment(lib, "ole32.lib")
+
+    // can't include both winhttp.h and wininet.h, so put a declaration here
+    //#include <wininet.h>
+    EXTERN_C DECLSPEC_IMPORT BOOL STDAPICALLTYPE InternetGetConnectedState(__out LPDWORD lpdwFlags, __reserved DWORD dwReserved);
 #endif
 
 using namespace web;
@@ -164,7 +169,7 @@ class http_client::impl
 {
 public:
     impl(http_client& owner, const std::string& url_prefix, int flags)
-        : m_owner(owner), m_native(sanitize_url(url_prefix, flags))
+        : m_owner(owner), m_native(sanitize_url(url_prefix, flags), get_client_config())
     {
         #define make_wide_str(x) make_wide_str_(x)
         #define make_wide_str_(x) L ## x
@@ -354,6 +359,34 @@ private:
         }
     #endif
         return to_string_t(url);
+    }
+
+    // prepare WinHttp configuration
+    static http::client::http_client_config get_client_config()
+    {
+        http::client::http_client_config c;
+    #ifdef _WIN32
+        // WinHttp doesn't share WinInet/MSIE's proxy settings and has its own,
+        // but many users don't have properly configured both. Adopting proxy
+        // settings like this in desktop software is recommended behavior, see
+        // https ://blogs.msdn.microsoft.com/ieinternals/2013/10/11/understanding-web-proxy-configuration/
+        WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ieConfig = { 0 };
+        if (WinHttpGetIEProxyConfigForCurrentUser(&ieConfig))
+        {
+            if (ieConfig.fAutoDetect)
+            {
+                c.set_proxy(web_proxy::use_auto_discovery);
+            }
+            if (ieConfig.lpszProxy)
+            {
+                // Explicitly add // to the URL to work around a bug in C++ REST SDK's
+                // parsing of proxies with port number in their address
+                // (see https://github.com/Microsoft/cpprestsdk/issues/57)
+                c.set_proxy(uri(L"//" + std::wstring(ieConfig.lpszProxy)));
+            }
+        }
+    #endif
+        return c;
     }
 
 private:
