@@ -61,6 +61,9 @@ wxString GetGnomeStockId(const wxString& id)
 // Check if a given icon needs mirroring in right-to-left locales:
 bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
 {
+    // Silence warning about unused parameter in some of the builds
+    (void)client;
+
     static std::set<wxString> s_directional = {
         "ContributeOn",
         "poedit-status-comment",
