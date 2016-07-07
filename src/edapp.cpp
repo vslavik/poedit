@@ -369,26 +369,6 @@ bool PoeditApp::OnInit()
     if (!wxFileName::DirExists(configDir))
         wxFileName::Mkdir(configDir, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
     wxString configFile = configDir + "/config";
-
-    // Move legacy config locations to XDG compatible ones:
-    if (!wxFileExists(configFile))
-    {
-        wxString oldconfig = wxGetHomeDir() + "/.poedit";
-        if (wxDirExists(oldconfig))
-        {
-            if (wxFileExists(oldconfig + "/config"))
-                wxRenameFile(oldconfig + "/config", configFile);
-            {
-                wxLogNull null;
-                wxRmdir(oldconfig);
-            }
-        }
-        else if (wxFileExists(oldconfig))
-        {
-            // even older dotfile
-            wxRenameFile(oldconfig, configDir + "/config");
-        }
-    }
 #endif // __UNIX__
 
 #if defined(__WXOSX__)
@@ -397,15 +377,6 @@ bool PoeditApp::OnInit()
     #define CFG_FILE configFile
 #else
     #define CFG_FILE wxEmptyString
-#endif
-
-#ifdef __WXOSX__
-    // upgrade from the old location of config file:
-    wxString oldcfgfile = wxStandardPaths::Get().GetUserConfigDir() + "/poedit.cfg";
-    if (wxFileExists(oldcfgfile) && !wxFileExists(CFG_FILE))
-    {
-        wxRenameFile(oldcfgfile, CFG_FILE);
-    }
 #endif
 
     wxConfigBase::Set(
