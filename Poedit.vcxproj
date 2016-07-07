@@ -51,7 +51,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>HAVE_CLD2;HAVE_HTTP_CLIENT;XML_STATIC;_NO_ASYNCRTIMP;WIN32;_DEBUG;DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <DisableSpecificWarnings>4800</DisableSpecificWarnings>
@@ -79,7 +79,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>HAVE_CLD2;HAVE_HTTP_CLIENT;XML_STATIC;_NO_ASYNCRTIMP;WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\expat\lib;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;deps\custom_build\config;deps\wx\include;deps\boost;deps\winsparkle\include;deps\lucene;deps\lucene\LucenePlusPlus\include;deps\cld2;deps\icu4c\include;deps\icu4c\source\i18n;deps\casablanca\Release\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableSpecificWarnings>4800</DisableSpecificWarnings>
       <PrecompiledHeaderFile>Poedit-Prefix.pch</PrecompiledHeaderFile>
@@ -138,7 +138,6 @@
     <ClCompile Include="src\syntaxhighlighter.cpp" />
     <ClCompile Include="src\text_control.cpp" />
     <ClCompile Include="src\tm\suggestions.cpp" />
-    <ClCompile Include="src\tm\tm_migrate.cpp" />
     <ClCompile Include="src\tm\transmem.cpp" />
     <ClCompile Include="src\unicode_helpers.cpp" />
     <ClCompile Include="src\utility.cpp" />
@@ -226,9 +225,6 @@
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\cld2.vcxproj">
       <Project>{0f2968c8-6b72-52c5-857d-c1bbda8e9dd0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="deps\custom_build\expat.vcxproj">
-      <Project>{8d88ae38-ff38-5a85-83d1-bb6816ed2f58}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\wx_adv.vcxproj">
       <Project>{24c45343-fd20-5c92-81c1-35a2ae841e79}</Project>

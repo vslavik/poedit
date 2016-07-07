@@ -92,10 +92,6 @@ struct PoeditApp::RecentMenuData
 };
 #endif
 
-#ifndef DONT_MIGRATE_LEGACY_TM
-extern bool MigrateLegacyTranslationMemory();
-#endif
-
 
 #ifndef __WXOSX__
 
@@ -423,12 +419,6 @@ bool PoeditApp::OnInit()
 
 #ifndef __WXOSX__
     FileHistory().Load(*wxConfig::Get());
-#endif
-
-#ifndef DONT_MIGRATE_LEGACY_TM
-    // NB: It's important to do this before TM is used for the first time.
-    if ( !MigrateLegacyTranslationMemory() )
-        return false;
 #endif
 
 #ifdef __WXMSW__

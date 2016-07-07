@@ -96,7 +96,6 @@ DisableDirPage=auto
 
 [Files]
 Source: {#CONFIG}\Poedit.exe; DestDir: {app}; Flags: ignoreversion
-Source: {#CONFIG}\dump-legacy-tm.exe; DestDir: {app}; Flags: ignoreversion
 Source: {#CONFIG}\*.dll; DestDir: {app}; Flags: ignoreversion
 Source: {#CONFIG}\icudt*.dat; DestDir: {app}
 Source: deps\gettext\COPYING; DestDir: {app}\Docs; DestName: GNU_Gettext_COPYING.txt

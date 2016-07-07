@@ -1,15 +1,8 @@
 
-DB_LIBS = @DB_LIBS@
 LUCENE_LIBS = @LUCENE_LIBS@
 WX_LIBS = @WX_LIBS@
 
 bin_PROGRAMS = poedit
-
-if MIGRATE_LEGACY_TM
-libexec_PROGRAMS = poedit-dump-legacy-tm
-poedit_dump_legacy_tm_SOURCES = tm/dump_legacy_tm.cpp
-poedit_dump_legacy_tm_LDADD = $(DB_LIBS)
-endif
 
 WX_BACKPORT_SRC = wx_backports/wx_gtk_activityindicator.cpp \
                   wx_backports/activityindicator.h \
@@ -36,7 +29,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  gexecute.cpp summarydlg.h summarydlg.cpp \
                  spellchecking.h spellchecking.cpp \
                  findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
-                 tm/suggestions.cpp tm/suggestions.h tm/transmem.cpp tm/transmem.h tm/tm_migrate.cpp \
+                 tm/suggestions.cpp tm/suggestions.h tm/transmem.cpp tm/transmem.h \
                  manager.h manager.cpp chooselang.cpp chooselang.h \
                  export_html.cpp icons.h icons.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
@@ -59,7 +52,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  $(WX_BACKPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
-poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(EXPAT_LIBS) $(CLD2_LIBS) $(CROWDIN_SUPPORT_LIBS) \
+poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(CROWDIN_SUPPORT_LIBS) \
                $(BOOST_LDFLAGS) $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \

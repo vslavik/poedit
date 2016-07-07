@@ -36,8 +36,6 @@
 		B22E69111A93699E002C06C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22E69101A93699E002C06C7 /* SystemConfiguration.framework */; };
 		B230E2281A73F81400FB1E57 /* hidpi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B230E2261A73F81400FB1E57 /* hidpi.cpp */; };
 		B2380F9A1A9B821200B7D8C9 /* crowdin_gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2380F981A9B821200B7D8C9 /* crowdin_gui.cpp */; };
-		B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */; };
-		B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */ = {isa = PBXBuildFile; fileRef = B23D1F6418142CF400E6B212 /* dump-legacy-tm */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B240FFC719C6F1A600777AFE /* suggestions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B240FFC619C6F1A600777AFE /* suggestions.cpp */; };
 		B24ACD5F16F6201F00399242 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B24ACD5E16F6201F00399242 /* Cocoa.framework */; };
 		B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B24ACD6716F6201F00399242 /* InfoPlist.strings */; };
@@ -140,7 +138,6 @@
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
 		B2EC60A41812D9D40059756A /* icudt55l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt55l.dat */; };
-		B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F14DD3181E510100E212B5 /* tm_migrate.cpp */; };
 		B2F25F0D199E327C00127FF9 /* spellchecking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F25F0C199E327C00127FF9 /* spellchecking.cpp */; };
 		B2F287C0170DCC63004C1F41 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B248B2DF170D765100EBA58E /* CoreFoundation.framework */; };
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
@@ -150,20 +147,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B23D1F6D18142D0100E6B212 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B23D1F6318142CF400E6B212;
-			remoteInfo = "dump-legacy-tm";
-		};
-		B23D1F6F18142D0C00E6B212 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = ant_external_deps;
-		};
 		B248B2EB170D772800EBA58E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
@@ -208,7 +191,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				B23D1F731814470200E6B212 /* dump-legacy-tm in Copy Auxiliary Binaries */,
 			);
 			name = "Copy Auxiliary Binaries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,8 +287,6 @@
 		B230E2271A73F81400FB1E57 /* hidpi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hidpi.h; sourceTree = "<group>"; };
 		B2380F981A9B821200B7D8C9 /* crowdin_gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crowdin_gui.cpp; sourceTree = "<group>"; };
 		B2380F991A9B821200B7D8C9 /* crowdin_gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crowdin_gui.h; sourceTree = "<group>"; };
-		B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dump_legacy_tm.cpp; path = tm/dump_legacy_tm.cpp; sourceTree = "<group>"; };
-		B23D1F6418142CF400E6B212 /* dump-legacy-tm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "dump-legacy-tm"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B240FFC519C6E32900777AFE /* suggestions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = suggestions.h; path = tm/suggestions.h; sourceTree = "<group>"; };
 		B240FFC619C6F1A600777AFE /* suggestions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = suggestions.cpp; path = tm/suggestions.cpp; sourceTree = "<group>"; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -512,7 +492,6 @@
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
 		B2EC60A31812D9D40059756A /* icudt55l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt55l.dat; path = deps/icu4c/source/data/in/icudt55l.dat; sourceTree = "<group>"; };
-		B2F14DD3181E510100E212B5 /* tm_migrate.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = tm_migrate.cpp; path = tm/tm_migrate.cpp; sourceTree = "<group>"; };
 		B2F25F0B199E23B300127FF9 /* spellchecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spellchecking.h; sourceTree = "<group>"; };
 		B2F25F0C199E327C00127FF9 /* spellchecking.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = spellchecking.cpp; sourceTree = "<group>"; };
 		B2F287C2170DCC92004C1F41 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AUTHORS; path = deps/gettext/AUTHORS; sourceTree = SOURCE_ROOT; };
@@ -534,13 +513,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B23D1F6118142CF400E6B212 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B248B2DB170D765100EBA58E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -645,8 +617,6 @@
 				B240FFC619C6F1A600777AFE /* suggestions.cpp */,
 				B28F1CD916F629D30018AF7E /* transmem.h */,
 				B28F1CD816F629D30018AF7E /* transmem.cpp */,
-				B2F14DD3181E510100E212B5 /* tm_migrate.cpp */,
-				B23D1F5E18142CAB00E6B212 /* dump_legacy_tm.cpp */,
 			);
 			name = TM;
 			path = src;
@@ -778,7 +748,6 @@
 			children = (
 				B24ACD5B16F6201F00399242 /* Poedit.app */,
 				B248B2DE170D765100EBA58E /* GettextTools.bundle */,
-				B23D1F6418142CF400E6B212 /* dump-legacy-tm */,
 				B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */,
 			);
 			name = Products;
@@ -984,23 +953,6 @@
 /* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
-		B23D1F6318142CF400E6B212 /* dump-legacy-tm */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B23D1F6A18142CF400E6B212 /* Build configuration list for PBXNativeTarget "dump-legacy-tm" */;
-			buildPhases = (
-				B23D1F6018142CF400E6B212 /* Sources */,
-				B23D1F6118142CF400E6B212 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B23D1F7018142D0C00E6B212 /* PBXTargetDependency */,
-			);
-			name = "dump-legacy-tm";
-			productName = "dump-legacy-tm";
-			productReference = B23D1F6418142CF400E6B212 /* dump-legacy-tm */;
-			productType = "com.apple.product-type.tool";
-		};
 		B248B2DD170D765100EBA58E /* GettextTools */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */;
@@ -1041,7 +993,6 @@
 				B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */,
 				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
 				B2CE6D281AD00897007E6863 /* PBXTargetDependency */,
-				B23D1F6E18142D0100E6B212 /* PBXTargetDependency */,
 			);
 			name = Poedit;
 			productName = Poedit;
@@ -1146,7 +1097,6 @@
 				B27115F8170830A800B936D5 /* external_deps */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
 				B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */,
-				B23D1F6318142CF400E6B212 /* dump-legacy-tm */,
 			);
 		};
 /* End PBXProject section */
@@ -1319,14 +1269,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B23D1F6018142CF400E6B212 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B23D1F7118142D1900E6B212 /* dump_legacy_tm.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		B248B2DA170D765100EBA58E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1340,7 +1282,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B25504A81A2201E800EE2CEE /* main_toolbar.cpp in Sources */,
-				B2F14DD4181E510100E212B5 /* tm_migrate.cpp in Sources */,
 				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
 				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,
 				B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */,
@@ -1407,16 +1348,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B23D1F6E18142D0100E6B212 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B23D1F6318142CF400E6B212 /* dump-legacy-tm */;
-			targetProxy = B23D1F6D18142D0100E6B212 /* PBXContainerItemProxy */;
-		};
-		B23D1F7018142D0C00E6B212 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* external_deps */;
-			targetProxy = B23D1F6F18142D0C00E6B212 /* PBXContainerItemProxy */;
-		};
 		B248B2EC170D772800EBA58E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B27115F8170830A800B936D5 /* external_deps */;
@@ -1556,54 +1487,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		B23D1F6B18142CF400E6B212 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEPS_BUILD_DIR)/db/include",
-				);
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
-				OTHER_LDFLAGS = "-ldb_cxx";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		B23D1F6C18142CF400E6B212 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEPS_BUILD_DIR)/db/include",
-				);
-				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/db/lib";
-				OTHER_LDFLAGS = "-ldb_cxx";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 		B248B2E8170D765100EBA58E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1691,10 +1574,7 @@
 					deps/AFNetworking/AFNetworking,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(DEPS_BUILD_DIR)/icu/lib",
-					"$(DEPS_BUILD_DIR)/db/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				POEDIT_FEATURES = "";
@@ -1748,10 +1628,7 @@
 					deps/AFNetworking/AFNetworking,
 					"$(DEPS_BUILD_DIR)/icu/include",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(DEPS_BUILD_DIR)/icu/lib",
-					"$(DEPS_BUILD_DIR)/db/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(DEPS_BUILD_DIR)/icu/lib";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				POEDIT_FEATURES = "";
 				POEDIT_VERSION = 2.0beta1;
@@ -1774,7 +1651,6 @@
 					"-licuuc",
 					"-licudata",
 					"-licui18n",
-					"-ldb_cxx",
 				);
 				POEDIT_FEATURES = "USE_SPARKLE HAVE_CLD2 HAVE_HTTP_CLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
@@ -1797,7 +1673,6 @@
 					"-licuuc",
 					"-licudata",
 					"-licui18n",
-					"-ldb_cxx",
 				);
 				POEDIT_FEATURES = "USE_SPARKLE HAVE_CLD2 HAVE_HTTP_CLIENT";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.${PRODUCT_NAME:rfc1034identifier}";
@@ -1908,15 +1783,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B23D1F6A18142CF400E6B212 /* Build configuration list for PBXNativeTarget "dump-legacy-tm" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B23D1F6B18142CF400E6B212 /* Debug */,
-				B23D1F6C18142CF400E6B212 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		B248B2EA170D765100EBA58E /* Build configuration list for PBXNativeTarget "GettextTools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

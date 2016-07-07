@@ -125,25 +125,6 @@ with open('build.ninja', 'w') as buildfile:
                                      'strip -x $destdir/lib/lib*.*.dylib',
                                  ]))
 
-    targets.append(gen_configure(n, 'db',
-                                 srcdir='db',
-                                 configure='cd build_unix && ../dist/configure',
-                                 flags=[
-                                     '--prefix=/',
-                                     'CC=$cc',
-                                     'CXX=$cxx',
-                                     'CFLAGS="$cflags -DU_STATIC_IMPLEMENTATION"',
-                                     'CXXFLAGS="$cxxflags -DU_STATIC_IMPLEMENTATION"',
-                                     'LDFLAGS="$ldflags"',
-                                     '--enable-cxx',
-                                     '--disable-shared',
-                                     '--disable-cryptography',
-                                     '--disable-replication',
-                                     '--disable-statistics',
-                                     '--disable-queue',
-                                     '--disable-verify',
-                                 ]))
-
     targets.append(gen_configure(n, 'icu',
                                  srcdir='icu4c',
                                  configure='./source/configure',
