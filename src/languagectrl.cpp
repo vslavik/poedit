@@ -61,21 +61,19 @@ void LanguageCtrl::Init(Language lang)
         Append(x);
     NSComboBox *cb = (NSComboBox*) GetHandle();
     [cb setCompletes:YES];
-    if (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7)
-    {
-        // default completion is case-sensitive, we'd rather be case-insensitive, so plug in
-        // customized completedString: implementation
-        RESetBlock(cb.cell, @selector(completedString:), NO, nil, ^(NSComboBox *receiver, NSString *string) {
-            for (NSString *item in receiver.objectValues) {
-                if ([item compare:string
-                          options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch
-                            range:NSMakeRange(0, std::min([item length], [string length]))
-                           locale:[NSLocale currentLocale]] == NSOrderedSame)
-                    return item;
-            }
-            return (NSString*)nil;
-        });
-    }
+
+    // default completion is case-sensitive, we'd rather be case-insensitive, so plug in
+    // customized completedString: implementation
+    RESetBlock(cb.cell, @selector(completedString:), NO, nil, ^(NSComboBox *receiver, NSString *string) {
+        for (NSString *item in receiver.objectValues) {
+            if ([item compare:string
+                      options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch
+                        range:NSMakeRange(0, std::min([item length], [string length]))
+                       locale:[NSLocale currentLocale]] == NSOrderedSame)
+                return item;
+        }
+        return (NSString*)nil;
+    });
 #else
     static wxArrayString choices;
     if (choices.empty())
