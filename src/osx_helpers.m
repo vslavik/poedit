@@ -44,9 +44,6 @@
 
 void Sparkle_Initialize(bool checkForBeta)
 {
-    /* Remove config key for Sparkle < 1.5. */
-    UserDefaults_RemoveValue("SUCheckAtStartup");
-
     @autoreleasepool {
         // For Preferences window, have default in sync with Info.plist:
         NSDictionary *sparkleDefaults = @{ @"SUEnableAutomaticChecks": @YES };
