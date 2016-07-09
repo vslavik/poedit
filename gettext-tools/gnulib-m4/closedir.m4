@@ -1,5 +1,5 @@
-# closedir.m4 serial 2
-dnl Copyright (C) 2011-2015 Free Software Foundation, Inc.
+# closedir.m4 serial 5
+dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,4 +22,9 @@ AC_DEFUN([gl_FUNC_CLOSEDIR],
       fi
     fi
   ])
+  dnl Replace closedir() for supporting the gnulib-defined dirfd() function.
+  case $host_os,$HAVE_CLOSEDIR in
+    os2*,1)
+      REPLACE_CLOSEDIR=1;;
+  esac
 ])

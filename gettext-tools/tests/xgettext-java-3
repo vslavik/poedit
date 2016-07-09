@@ -14,8 +14,8 @@ class TestCase {
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-j-3.tmp xg-j-3.java || exit 1
-LC_ALL=C tr -d '\r' < xg-j-3.tmp.po > xg-j-3.po || exit 1
+${XGETTEXT} --omit-header --no-location -d xg-j-3.tmp xg-j-3.java || Exit 1
+LC_ALL=C tr -d '\r' < xg-j-3.tmp.po > xg-j-3.po || Exit 1
 
 cat <<EOF > xg-j-3.ok
 msgid "test 1"

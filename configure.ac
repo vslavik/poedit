@@ -1,5 +1,5 @@
 dnl Configuration for the toplevel directory of GNU gettext
-dnl Copyright (C) 1995-2003, 2005-2006, 2009-2010, 2015 Free Software
+dnl Copyright (C) 1995-2003, 2005-2006, 2009-2010, 2015-2016 Free Software
 dnl Foundation, Inc.
 dnl
 dnl This program is free software: you can redistribute it and/or modify

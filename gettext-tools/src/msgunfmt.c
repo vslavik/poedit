@@ -1,6 +1,6 @@
 /* msgunfmt - converts binary .mo files to Uniforum style .po files
-   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012, 2015 Free
-   Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012, 2015-2016 Free Software
+   Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -265,7 +265,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 "),
-              "1995-1998, 2000-2010");
+              "1995-1998, 2000-2016");
       printf (_("Written by %s.\n"), proper_name ("Ulrich Drepper"));
       exit (EXIT_SUCCESS);
     }

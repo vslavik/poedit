@@ -1,5 +1,5 @@
-# opendir.m4 serial 2
-dnl Copyright (C) 2011-2015 Free Software Foundation, Inc.
+# opendir.m4 serial 4
+dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -22,4 +22,10 @@ AC_DEFUN([gl_FUNC_OPENDIR],
       fi
     fi
   ])
+  dnl Replace opendir() on OS/2 kLIBC to support dirfd() function replaced
+  dnl by gnulib.
+  case $host_os,$HAVE_OPENDIR in
+    os2*,1)
+      REPLACE_OPENDIR=1;;
+  esac
 ])

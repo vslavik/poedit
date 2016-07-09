@@ -22,8 +22,8 @@ puts [format [::msgcat::mc "%s is replaced by %s."] "FF" "EUR"]
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header -k_ program.tcl || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header -k_ program.tcl || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<EOF > prog.ok
 #: program.tcl:5
@@ -37,7 +37,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -55,16 +55,16 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d msgs || mkdir msgs
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --tcl -d msgs -l fr fr.po || exit 1
+${MSGFMT} --tcl -d msgs -l fr fr.po || Exit 1
 
 # Test for presence of tclsh with msgcat extension.
 cat <<\EOF > version.tcl
@@ -73,7 +73,7 @@ puts $tcl_version
 EOF
 (tclsh version.tcl) >/dev/null 2>/dev/null \
   || { echo "Skipping test: tclsh not found or msgcat extension not present"
-       exit 77
+       Exit 77
      }
 
 : ${DIFF=diff}
@@ -90,15 +90,15 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LANG=$LOCALE_FR LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > prog.tmp || exit 1
-  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LANG=$LOCALE_FR LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > prog.tmp || Exit 1
+  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || Exit 1
+  ${DIFF} prog.ok prog.out || Exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
-  LANGUAGE= LANG=$LOCALE_FR_UTF8 LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > prog.tmp || exit 1
-  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LANG=$LOCALE_FR_UTF8 LC_MESSAGES= LC_CTYPE= LC_ALL= tclsh program.tcl > prog.tmp || Exit 1
+  LC_ALL=C tr -d '\r' < prog.tmp > prog.out || Exit 1
+  ${DIFF} prog.oku prog.out || Exit 1
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then
@@ -106,7 +106,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
-exit 0
+Exit 0

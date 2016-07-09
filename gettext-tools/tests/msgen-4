@@ -31,8 +31,8 @@ msgstr[1] ""
 EOF
 
 : ${MSGEN=msgen}
-${MSGEN} --add-location=file -o men-test1.tmp men-test1.po || exit 1
-LC_ALL=C tr -d '\r' < men-test1.tmp > men-test1.out || exit 1
+${MSGEN} --add-location=file -o men-test1.tmp men-test1.po || Exit 1
+LC_ALL=C tr -d '\r' < men-test1.tmp > men-test1.out || Exit 1
 
 cat <<EOF > men-test1.ok
 # HEADER.

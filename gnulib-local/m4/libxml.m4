@@ -1,5 +1,5 @@
 # libxml.m4 serial 6 (gettext-0.18.2)
-dnl Copyright (C) 2006, 2008, 2015 Free Software Foundation, Inc.
+dnl Copyright (C) 2006, 2008, 2015-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -44,8 +44,12 @@ AC_DEFUN([gl_LIBXML],
       LIBS="$gl_save_LIBS $LIBXML2 $LIBICONV"
       AC_TRY_LINK([#include <libxml/xmlversion.h>
                    #include <libxml/xmlmemory.h>
+                   #include <libxml/xpath.h>
                   ],
-        [xmlCheckVersion (0); xmlFree ((void *) 0);],
+        [xmlCheckVersion (0);
+         xmlFree ((void *) 0);
+         xmlXPathSetContextNode ((void *)0, (void *)0);
+        ],
         [gl_cv_libxml=yes
          gl_cv_LIBXML="$LIBXML2 $LIBICONV"
          gl_cv_LTLIBXML="$LTLIBXML2 $LTLIBICONV"
@@ -55,8 +59,12 @@ AC_DEFUN([gl_LIBXML],
         CPPFLAGS="$CPPFLAGS $INCXML2"
         AC_TRY_LINK([#include <libxml/xmlversion.h>
                      #include <libxml/xmlmemory.h>
+                     #include <libxml/xpath.h>
                     ],
-          [xmlCheckVersion (0); xmlFree ((void *) 0);],
+          [xmlCheckVersion (0);
+           xmlFree ((void *) 0);
+           xmlXPathSetContextNode ((void *)0, (void *)0);
+          ],
           [gl_cv_libxml=yes
            gl_cv_LIBXML="$LIBXML2 $LIBICONV"
            gl_cv_LTLIBXML="$LTLIBXML2 $LTLIBICONV"
@@ -82,8 +90,12 @@ AC_DEFUN([gl_LIBXML],
             CPPFLAGS="$gl_save_CPPFLAGS -I$libxml2_include_dir"
             AC_TRY_LINK([#include <libxml/xmlversion.h>
                          #include <libxml/xmlmemory.h>
+                         #include <libxml/xpath.h>
                         ],
-              [xmlCheckVersion (0); xmlFree ((void *) 0);],
+              [xmlCheckVersion (0);
+               xmlFree ((void *) 0);
+               xmlXPathSetContextNode ((void *)0, (void *)0);
+              ],
               [gl_cv_libxml=yes
                gl_cv_LIBXML="$LIBXML2 $LIBICONV"
                gl_cv_LTLIBXML="$LTLIBXML2 $LTLIBICONV"

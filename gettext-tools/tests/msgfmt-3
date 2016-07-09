@@ -22,7 +22,7 @@ LC_MESSAGES=C LC_ALL= \
 ${MSGFMT} -o mftest3.mo mf-test3.po >mftest3.err 2>&1
 result=$?
 cat mftest3.err | grep -v 'warning: Charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 test ! -f mftest3.mo
 result=$?

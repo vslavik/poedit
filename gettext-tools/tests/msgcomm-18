@@ -18,8 +18,8 @@ msgstr "1x"
 EOF
 
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} --more-than=0 -o mcomm-test18.tmp mcomm-test18.in1 mcomm-test18.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test18.tmp > mcomm-test18.out || exit 1
+${MSGCOMM} --more-than=0 -o mcomm-test18.tmp mcomm-test18.in1 mcomm-test18.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test18.tmp > mcomm-test18.out || Exit 1
 
 cat << EOF > mcomm-test18.ok
 # Sure.

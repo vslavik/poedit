@@ -1,5 +1,5 @@
 /* markup.c -- simple XML-like parser
-   Copyright (C) 2015 Free Software Foundation, Inc.
+   Copyright (C) 2015-2016 Free Software Foundation, Inc.
 
    This file is not part of the GNU gettext program, but is used with
    GNU gettext.

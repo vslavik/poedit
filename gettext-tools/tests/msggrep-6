@@ -115,8 +115,8 @@ EOF
 LC_MESSAGES=C LC_ALL= \
 ${MSGGREP} --properties-input --properties-output -K -e error -T -e Speicher -o mg-test6.tmp mg-test6.properties
 result=$?
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < mg-test6.tmp > mg-test6.out || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < mg-test6.tmp > mg-test6.out || Exit 1
 
 cat <<\EOF > mg-test6.ok
 #: copy-file.c:60

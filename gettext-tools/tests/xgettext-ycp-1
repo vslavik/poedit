@@ -9,8 +9,8 @@ title = sformat (_("%1 package", "%1 packages", num), num);
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -k:1,2 -d xg-y-1.tmp xg-y-1.ycp || exit 1
-LC_ALL=C tr -d '\r' < xg-y-1.tmp.po > xg-y-1.po || exit 1
+${XGETTEXT} --omit-header --no-location -k:1,2 -d xg-y-1.tmp xg-y-1.ycp || Exit 1
+LC_ALL=C tr -d '\r' < xg-y-1.tmp.po > xg-y-1.po || Exit 1
 
 cat <<EOF > xg-y-1.ok
 #, ycp-format

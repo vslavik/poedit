@@ -54,8 +54,8 @@ msgstr[1] ""
 EOF
 
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} -o mcomm-test27.tmp mcomm-test27.in1 mcomm-test27.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test27.tmp > mcomm-test27.out || exit 1
+${MSGCOMM} -o mcomm-test27.tmp mcomm-test27.in1 mcomm-test27.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test27.tmp > mcomm-test27.out || Exit 1
 
 cat << EOF > mcomm-test27.ok
 #, c-format

@@ -1,5 +1,5 @@
 /* Test of setting the current locale.
-   Copyright (C) 2011-2015 Free Software Foundation, Inc.
+   Copyright (C) 2011-2016 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -54,6 +54,8 @@ main (int argc, char *argv[])
 
   /* Test that the two results are the same.  */
   ASSERT (strcmp (name1, name2) == 0);
+  free (name1);
+  free (name2);
 
   return 0;
 }

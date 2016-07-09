@@ -94,8 +94,8 @@ while read comment; do
   read string
   n=`expr $n + 1`
   echo "x.y=${string}" | sed -e "s/\"/'/g" > f-op-1-$n.in
-  ${XGETTEXT} -L RST -o f-op-1-$n.po f-op-1-$n.in || exit 1
-  test -f f-op-1-$n.po || exit 1
+  ${XGETTEXT} -L RST -o f-op-1-$n.po f-op-1-$n.in || Exit 1
+  test -f f-op-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep object-pascal-format f-op-1-$n.po > /dev/null; then
@@ -115,9 +115,9 @@ while read comment; do
     cat f-op-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-op-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-op-1-$n.in f-op-1-$n.po
 done < f-op-1.data
 
-exit 0
+Exit 0

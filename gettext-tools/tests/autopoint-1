@@ -5,14 +5,14 @@
 
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
-  || { echo "Skipping test: autoconf not found"; exit 77; }
+  || { echo "Skipping test: autoconf not found"; Exit 77; }
 
 cat <<\EOF >configure.ac
 AC_PREREQ([2.60])
 EOF
 
 ${AUTOCONF} >/dev/null 2>/dev/null \
-  || { echo "Skipping test: autoconf version too old"; exit 77; }
+  || { echo "Skipping test: autoconf version too old"; Exit 77; }
 
 rm -f configure.ac
 
@@ -23,11 +23,11 @@ export gettext_datadir
 
 # no configure.ac
 $gettext_datadir/autopoint 2>&1 | grep 'Missing configure.in or configure.ac' 2>&1 >/dev/null \
-    || exit 1
+    || Exit 1
 
-test ! -d intl || exit 1
-test ! -d m4 || exit 1
-test ! -d po || exit 1
+test ! -d intl || Exit 1
+test ! -d m4 || Exit 1
+test ! -d po || Exit 1
 
 # configure.ac without AM_GNU_GETTEXT_VERSION
 cat <<\EOF >configure.ac
@@ -41,11 +41,11 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint 2>&1 | grep 'Missing version' 2>&1 >/dev/null \
-    || exit 1
+    || Exit 1
 
-test ! -d intl || exit 1
-test ! -d m4 || exit 1
-test ! -d po || exit 1
+test ! -d intl || Exit 1
+test ! -d m4 || Exit 1
+test ! -d po || Exit 1
 
 # VERSION specified through intl/VERSION file, but in wrong format
 cat <<\EOF >configure.ac
@@ -62,10 +62,10 @@ test -d intl || mkdir intl
 echo bogus-version > intl/VERSION
 
 $gettext_datadir/autopoint 2>&1 | grep 'Missing version' 2>&1 >/dev/null \
-    || exit 1
+    || Exit 1
 
-test ! -d m4 || exit 1
-test ! -d po || exit 1
+test ! -d m4 || Exit 1
+test ! -d po || Exit 1
 
 # VERSION specified through intl/VERSION file
 cat <<\EOF >configure.ac
@@ -84,15 +84,15 @@ echo gettext-0.15 > intl/VERSION
 
 # For further investigation, autopoint keeps autopoint.diff in $TMPDIR
 # if there is a mismatch.  Set TMPDIR not to pollute /tmp.
-TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 | grep 'locally modified' 2>&1 >/dev/null || exit 1
+TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 | grep 'locally modified' 2>&1 >/dev/null || Exit 1
 
-test ! -d m4 || exit 1
-test ! -d po || exit 1
+test ! -d m4 || Exit 1
+test ! -d po || Exit 1
 
 echo 'GNU gettext library from gettext-0.15' > intl/VERSION
 
-TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 || exit 1
+TMPDIR="$PWD" $gettext_datadir/autopoint 2>&1 || Exit 1
 
 rm -fr intl
 
-exit 0
+Exit 0

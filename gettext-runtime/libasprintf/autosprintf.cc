@@ -1,5 +1,5 @@
 /* Class autosprintf - formatted output to an ostream.
-   Copyright (C) 2002, 2013, 2015 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2013, 2015-2016 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
    This program is free software: you can redistribute it and/or modify

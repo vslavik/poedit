@@ -10,7 +10,7 @@ exactly\ 2\ input\ files\ required=\u6b64\u529f\u80fd\u9700\u8981\u6070\u597d\u6
 EOF
 
 : ${MSGCAT=msgcat}
-${MSGCAT} --properties-input --properties-output -t Big5 -o mcat-p-2.out mcat-p-2.properties || exit 1
+${MSGCAT} --properties-input --properties-output -t Big5 -o mcat-p-2.out mcat-p-2.properties || Exit 1
 
 : ${DIFF=diff}
 # Redirect stdout, so as not to fill the user's screen with non-ASCII bytes.

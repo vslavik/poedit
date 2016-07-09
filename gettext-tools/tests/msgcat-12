@@ -44,6 +44,6 @@ EOF
 rm -f mcat-test12.out
 : ${MSGCAT=msgcat}
 ${MSGCAT} -o mcat-test12.out mcat-test12.in1 mcat-test12.in2 2>/dev/null
-test $? = 1 || { exit 1; }
+test $? = 1 || { Exit 1; }
 
-exit 0
+Exit 0

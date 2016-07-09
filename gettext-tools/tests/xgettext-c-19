@@ -11,7 +11,7 @@ cat <<\EOF > err1.c
 gettext ("\U00110000");
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err1.c 2>&1; exit) | grep 'invalid Unicode character' || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err1.c 2>&1; exit) | grep 'invalid Unicode character' || Exit 1
 
 cat <<\EOF > xg-c-19.in.c
 /* 最初のコメント */
@@ -29,12 +29,12 @@ EOF
 
 : ${ICONV=iconv}
 iconv -f UTF-8 -t EUC-JP < xg-c-19.in.c > xg-c-19.c \
-  || { echo "Skipping test: iconv does not work for EUC-JP"; exit 77; }
+  || { echo "Skipping test: iconv does not work for EUC-JP"; Exit 77; }
 
 ${XGETTEXT} --from-code=EUC-JP --add-comments --no-location --no-wrap \
 	    -o - xg-c-19.c | grep -v 'POT-Creation-Date' > xg-c-19.tmp.po \
-	    || exit 1
-LC_ALL=C tr -d '\r' < xg-c-19.tmp.po > xg-c-19.po || exit 1
+	    || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-19.tmp.po > xg-c-19.po || Exit 1
 
 cat <<\EOF > xg-c-19.ok
 # SOME DESCRIPTIVE TITLE.

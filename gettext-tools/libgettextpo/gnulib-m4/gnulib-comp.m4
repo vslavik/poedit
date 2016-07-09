@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,6 +77,7 @@ AC_DEFUN([gtpo_EARLY],
   # Code from module gettext-h:
   # Code from module gettimeofday:
   # Code from module gperf:
+  # Code from module hard-locale:
   # Code from module hash:
   # Code from module havelib:
   # Code from module iconv:
@@ -270,6 +271,7 @@ AC_DEFUN([gtpo_INIT],
     gl_PREREQ_GETTIMEOFDAY
   fi
   gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
+  gl_HARD_LOCALE
   AM_ICONV
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
@@ -317,11 +319,11 @@ AC_DEFUN([gtpo_INIT],
   gl_STRING_MODULE_INDICATOR([memchr])
   gl_MINMAX
   gl_MOO
-  gl_MSVC_INVAL
+  AC_REQUIRE([gl_MSVC_INVAL])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-inval])
   fi
-  gl_MSVC_NOTHROW
+  AC_REQUIRE([gl_MSVC_NOTHROW])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-nothrow])
   fi
@@ -704,6 +706,8 @@ AC_DEFUN([gtpo_FILE_LIST], [
   lib/glthread/threadlib.c
   lib/glthread/tls.c
   lib/glthread/tls.h
+  lib/hard-locale.c
+  lib/hard-locale.h
   lib/hash.c
   lib/hash.h
   lib/iconv.c
@@ -877,6 +881,7 @@ AC_DEFUN([gtpo_FILE_LIST], [
   m4/gettimeofday.m4
   m4/glibc21.m4
   m4/gnulib-common.m4
+  m4/hard-locale.m4
   m4/iconv.m4
   m4/iconv_h.m4
   m4/iconv_open.m4

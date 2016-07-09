@@ -161,8 +161,8 @@ LC_MESSAGES=C LC_ALL= \
 ${MSGGREP} -K -e error -T -e Speicher -o mg-test3.tmp mg-test3.po >mg-test3.err 2>&1
 result=$?
 cat mg-test3.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < mg-test3.tmp > mg-test3.out || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < mg-test3.tmp > mg-test3.out || Exit 1
 
 cat <<\EOF > mg-test3.ok
 # German translations for GNU gettext package.

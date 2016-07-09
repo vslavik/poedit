@@ -15,7 +15,7 @@
   esac
 } || {
   echo "Skipping test: not a glibc or Mac OS X system"
-  exit 77
+  Exit 77
 }
 
 # This test works only on systems that have a de_DE.ISO-8859-1 and
@@ -27,7 +27,7 @@ if test -n "$missing_locale"; then
   else
     echo "Skipping test: locale ${missing_locale} not supported"
   fi
-  exit 77
+  Exit 77
 fi
 
 test -d gt-7 || mkdir gt-7
@@ -42,11 +42,11 @@ case $? in
   0) ;;
   77)
     echo "Skipping test: not a glibc >= 2.3 or MacOS X >= 10.5 system"
-    exit 77
+    Exit 77
     ;;
   *)
-    exit 1
+    Exit 1
     ;;
 esac
 
-exit 0
+Exit 0

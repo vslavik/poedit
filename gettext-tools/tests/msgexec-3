@@ -43,7 +43,7 @@ EOF
 chmod a+x mex-test3.sh
 
 : ${MSGEXEC=msgexec}
-${MSGEXEC} --properties-input -i mex-test3.properties ./mex-test3.sh > mex-test3.out || exit 1
+${MSGEXEC} --properties-input -i mex-test3.properties ./mex-test3.sh > mex-test3.out || Exit 1
 
 cat <<\EOF > mex-test3.ok
 ========================= mex-test3.properties:3 =========================

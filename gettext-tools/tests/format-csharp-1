@@ -54,8 +54,8 @@ while read comment; do
   cat <<EOF > f-cs-1-$n.in
 GetString(${string});
 EOF
-  ${XGETTEXT} -L C# -o f-cs-1-$n.po f-cs-1-$n.in || exit 1
-  test -f f-cs-1-$n.po || exit 1
+  ${XGETTEXT} -L C# -o f-cs-1-$n.po f-cs-1-$n.in || Exit 1
+  test -f f-cs-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep csharp-format f-cs-1-$n.po > /dev/null; then
@@ -75,9 +75,9 @@ EOF
     cat f-cs-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-cs-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-cs-1-$n.in f-cs-1-$n.po
 done < f-cs-1.data
 
-exit 0
+Exit 0

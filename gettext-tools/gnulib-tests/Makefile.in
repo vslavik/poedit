@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ TESTS = test-set-mode-acl.sh test-set-mode-acl-1.sh \
 	test-log10$(EXEEXT) test-lseek.sh test-lstat$(EXEEXT) \
 	test-malloca$(EXEEXT) test-math$(EXEEXT) test-mbrtowc1.sh \
 	test-mbrtowc2.sh test-mbrtowc3.sh test-mbrtowc4.sh \
-	test-mbrtowc-w32-1.sh test-mbrtowc-w32-2.sh \
+	test-mbrtowc5.sh test-mbrtowc-w32-1.sh test-mbrtowc-w32-2.sh \
 	test-mbrtowc-w32-3.sh test-mbrtowc-w32-4.sh \
 	test-mbrtowc-w32-5.sh test-mbsinit.sh test-mbsrtowcs1.sh \
 	test-mbsrtowcs2.sh test-mbsrtowcs3.sh test-mbsrtowcs4.sh \
@@ -194,7 +194,7 @@ TESTS = test-set-mode-acl.sh test-set-mode-acl-1.sh \
 	test-wcrtomb-w32-3.sh test-wcrtomb-w32-4.sh \
 	test-wcrtomb-w32-5.sh test-wctype-h$(EXEEXT) \
 	test-wcwidth$(EXEEXT) test-write$(EXEEXT) test-xalloc-die.sh \
-	test-xvasprintf$(EXEEXT)
+	test-xmemdup0$(EXEEXT) test-xvasprintf$(EXEEXT)
 XFAIL_TESTS =
 noinst_PROGRAMS =
 check_PROGRAMS = test-set-mode-acl$(EXEEXT) test-copy-acl$(EXEEXT) \
@@ -278,7 +278,7 @@ check_PROGRAMS = test-set-mode-acl$(EXEEXT) test-copy-acl$(EXEEXT) \
 	test-wcrtomb$(EXEEXT) test-wcrtomb-w32$(EXEEXT) \
 	test-wctype-h$(EXEEXT) test-wcwidth$(EXEEXT) \
 	test-write$(EXEEXT) test-xalloc-die$(EXEEXT) \
-	test-xvasprintf$(EXEEXT)
+	test-xmemdup0$(EXEEXT) test-xvasprintf$(EXEEXT)
 @POSIX_SPAWN_PORTED_TRUE@am__append_1 = test-posix_spawn1 test-posix_spawn2
 @POSIX_SPAWN_PORTED_TRUE@am__append_2 = test-posix_spawn1 test-posix_spawn2
 @POSIX_SPAWN_PORTED_TRUE@am__append_3 = test-posix_spawn1.sh \
@@ -326,6 +326,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/ctype.m4 \
 	$(top_srcdir)/gnulib-m4/curses.m4 \
 	$(top_srcdir)/gnulib-m4/dirent_h.m4 \
+	$(top_srcdir)/gnulib-m4/dirfd.m4 \
 	$(top_srcdir)/gnulib-m4/double-slash-root.m4 \
 	$(top_srcdir)/gnulib-m4/dup.m4 $(top_srcdir)/gnulib-m4/dup2.m4 \
 	$(top_srcdir)/gnulib-m4/eaccess.m4 \
@@ -362,6 +363,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/gettimeofday.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-comp.m4 \
+	$(top_srcdir)/gnulib-m4/hard-locale.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_h.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_open.m4 \
 	$(top_srcdir)/gnulib-m4/include_next.m4 \
@@ -1421,6 +1423,9 @@ test_write_DEPENDENCIES = libtests.a ../gnulib-lib/libgettextlib.la \
 test_xalloc_die_SOURCES = test-xalloc-die.c
 test_xalloc_die_OBJECTS = test-xalloc-die.$(OBJEXT)
 test_xalloc_die_DEPENDENCIES = $(am__DEPENDENCIES_2)
+test_xmemdup0_SOURCES = test-xmemdup0.c
+test_xmemdup0_OBJECTS = test-xmemdup0.$(OBJEXT)
+test_xmemdup0_DEPENDENCIES = $(am__DEPENDENCIES_2)
 test_xvasprintf_SOURCES = test-xvasprintf.c
 test_xvasprintf_OBJECTS = test-xvasprintf.$(OBJEXT)
 test_xvasprintf_DEPENDENCIES = $(am__DEPENDENCIES_2)
@@ -1512,7 +1517,7 @@ SOURCES = $(libtests_a_SOURCES) $(EXTRA_libtests_a_SOURCES) \
 	test-vasnprintf.c test-vasprintf.c test-verify.c \
 	test-vsnprintf.c test-wchar.c test-wcrtomb.c \
 	test-wcrtomb-w32.c test-wctype-h.c test-wcwidth.c test-write.c \
-	test-xalloc-die.c test-xvasprintf.c
+	test-xalloc-die.c test-xmemdup0.c test-xvasprintf.c
 DIST_SOURCES = $(am__libtests_a_SOURCES_DIST) \
 	$(EXTRA_libtests_a_SOURCES) test-alignof.c test-alloca-opt.c \
 	test-areadlink.c test-argmatch.c test-array_list.c \
@@ -1568,7 +1573,7 @@ DIST_SOURCES = $(am__libtests_a_SOURCES_DIST) \
 	test-unsetenv.c test-vasnprintf.c test-vasprintf.c \
 	test-verify.c test-vsnprintf.c test-wchar.c test-wcrtomb.c \
 	test-wcrtomb-w32.c test-wctype-h.c test-wcwidth.c test-write.c \
-	test-xalloc-die.c test-xvasprintf.c
+	test-xalloc-die.c test-xmemdup0.c test-xvasprintf.c
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -3272,8 +3277,8 @@ EXTRA_DIST = test-set-mode-acl.sh test-set-mode-acl-1.sh \
 	lseek.c test-lseek.c test-lseek.sh signature.h macros.h \
 	test-lstat.h test-lstat.c signature.h macros.h test-malloca.c \
 	test-math.c macros.h test-mbrtowc1.sh test-mbrtowc2.sh \
-	test-mbrtowc3.sh test-mbrtowc4.sh test-mbrtowc.c \
-	test-mbrtowc-w32-1.sh test-mbrtowc-w32-2.sh \
+	test-mbrtowc3.sh test-mbrtowc4.sh test-mbrtowc5.sh \
+	test-mbrtowc.c test-mbrtowc-w32-1.sh test-mbrtowc-w32-2.sh \
 	test-mbrtowc-w32-3.sh test-mbrtowc-w32-4.sh \
 	test-mbrtowc-w32-5.sh test-mbrtowc-w32.c signature.h macros.h \
 	test-mbsinit.sh test-mbsinit.c signature.h macros.h \
@@ -3370,7 +3375,8 @@ EXTRA_DIST = test-set-mode-acl.sh test-set-mode-acl-1.sh \
 	signature.h macros.h wctob.c wctomb-impl.h wctomb.c \
 	test-wctype-h.c macros.h test-wcwidth.c signature.h macros.h \
 	test-write.c signature.h macros.h test-xalloc-die.c \
-	test-xalloc-die.sh test-xvasprintf.c macros.h
+	test-xalloc-die.sh test-xmemdup0.c macros.h test-xvasprintf.c \
+	macros.h
 
 # The BUILT_SOURCES created by this Makefile snippet are not used via #include
 # statements but through direct file reference. Therefore this snippet must be
@@ -3389,11 +3395,16 @@ EXTRA_DIST = test-set-mode-acl.sh test-set-mode-acl-1.sh \
 BUILT_SOURCES = ctype.h inttypes.h $(am__append_3) arg-nonnull.h \
 	c++defs.h unused-parameter.h warn-on-use.h $(STDALIGN_H)
 SUFFIXES = 
+
+# This test expects compilation of test-verify.c to fail, and
+# each time it fails, the makefile rule does not perform the usual
+#  "mv -f $name.Tpo $name.po, so tell make clean to remove that file.
 MOSTLYCLEANFILES = core *.stackdump ctype.h ctype.h-t t-ftell3.tmp \
 	t-ftello3.tmp test-getdelim.txt test-getline.txt inttypes.h \
 	inttypes.h-t $(am__append_4) arg-nonnull.h arg-nonnull.h-t \
 	c++defs.h c++defs.h-t unused-parameter.h unused-parameter.h-t \
-	warn-on-use.h warn-on-use.h-t stdalign.h stdalign.h-t
+	warn-on-use.h warn-on-use.h-t stdalign.h stdalign.h-t \
+	.deps/test-verify.Tpo
 MOSTLYCLEANDIRS = 
 CLEANFILES = 
 DISTCLEANFILES = 
@@ -3487,6 +3498,7 @@ test_u8_strlen_LDADD = $(LDADD) $(LIBUNISTRING)
 test_u8_uctomb_SOURCES = unistr/test-u8-uctomb.c
 test_u8_uctomb_LDADD = $(LDADD) $(LIBUNISTRING)
 test_xalloc_die_LDADD = $(LDADD) @LIBINTL@
+test_xmemdup0_LDADD = $(LDADD) @LIBINTL@
 test_xvasprintf_LDADD = $(LDADD) @LIBINTL@
 all: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -4307,6 +4319,10 @@ test-xalloc-die$(EXEEXT): $(test_xalloc_die_OBJECTS) $(test_xalloc_die_DEPENDENC
 	@rm -f test-xalloc-die$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_xalloc_die_OBJECTS) $(test_xalloc_die_LDADD) $(LIBS)
 
+test-xmemdup0$(EXEEXT): $(test_xmemdup0_OBJECTS) $(test_xmemdup0_DEPENDENCIES) $(EXTRA_test_xmemdup0_DEPENDENCIES) 
+	@rm -f test-xmemdup0$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(test_xmemdup0_OBJECTS) $(test_xmemdup0_LDADD) $(LIBS)
+
 test-xvasprintf$(EXEEXT): $(test_xvasprintf_OBJECTS) $(test_xvasprintf_DEPENDENCIES) $(EXTRA_test_xvasprintf_DEPENDENCIES) 
 	@rm -f test-xvasprintf$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_xvasprintf_OBJECTS) $(test_xvasprintf_LDADD) $(LIBS)
@@ -4498,6 +4514,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-wcwidth.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-write.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-xalloc-die.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-xmemdup0.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-xvasprintf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wcrtomb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wctob.Po@am__quote@
@@ -5411,6 +5428,13 @@ test-mbrtowc4.sh.log: test-mbrtowc4.sh
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test-mbrtowc5.sh.log: test-mbrtowc5.sh
+	@p='test-mbrtowc5.sh'; \
+	b='test-mbrtowc5.sh'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 test-mbrtowc-w32-1.sh.log: test-mbrtowc-w32-1.sh
 	@p='test-mbrtowc-w32-1.sh'; \
 	b='test-mbrtowc-w32-1.sh'; \
@@ -6149,6 +6173,13 @@ test-write.log: test-write$(EXEEXT)
 test-xalloc-die.sh.log: test-xalloc-die.sh
 	@p='test-xalloc-die.sh'; \
 	b='test-xalloc-die.sh'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+test-xmemdup0.log: test-xmemdup0$(EXEEXT)
+	@p='test-xmemdup0$(EXEEXT)'; \
+	b='test-xmemdup0'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \

@@ -44,13 +44,13 @@ EOF
 # Without use of msgcat, expect a "duplicate message definition" error.
 : ${MSGFMT=msgfmt}
 if ${MSGFMT} -o mf-1/LC_MESSAGES/gen.mo mf-1-module1.po mf-1-module2.po 2> /dev/null; then
-  exit 1
+  Exit 1
 fi
 
 # With msgcat, it should work.
 : ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
-${MSGCAT} --use-first -o mf-1-modules.po mf-1-module1.po mf-1-module2.po || exit 1
-${MSGFMT} -o mf-1/LC_MESSAGES/gen.mo mf-1-modules.po || exit 1
+${MSGCAT} --use-first -o mf-1-modules.po mf-1-module1.po mf-1-module2.po || Exit 1
+${MSGFMT} -o mf-1/LC_MESSAGES/gen.mo mf-1-modules.po || Exit 1
 
 : ${GETTEXT=gettext}
 TEXTDOMAINDIR=. LANGUAGE=mf-1 \

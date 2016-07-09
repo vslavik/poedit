@@ -1,5 +1,5 @@
 /* Return the name-within-directory of a file name.
-   Copyright (C) 1996-2002, 2004, 2006, 2010, 2012, 2015 Free Software
+   Copyright (C) 1996-2002, 2004, 2006, 2010, 2012, 2015-2016 Free Software
    Foundation, Inc.
 
    NOTE: The canonical source of this file is maintained with the GNU C Library.

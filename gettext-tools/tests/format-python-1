@@ -104,8 +104,8 @@ gettext(${string});
 EOF
   # Hide xgettext's "The translator cannot reorder the arguments." warnings.
   ${XGETTEXT} -L Python -o f-p-1-$n.po f-p-1-$n.in 2> f-p-1.err \
-    || { cat f-p-1.err 1>&2; exit 1; }
-  test -f f-p-1-$n.po || exit 1
+    || { cat f-p-1.err 1>&2; Exit 1; }
+  test -f f-p-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep python-format f-p-1-$n.po > /dev/null; then
@@ -125,9 +125,9 @@ EOF
     cat f-p-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-p-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-p-1-$n.in f-p-1-$n.po
 done < f-p-1.data
 
-exit 0
+Exit 0

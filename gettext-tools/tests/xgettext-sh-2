@@ -17,8 +17,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
-  -d xg-sh-2.tmp xg-sh-2.sh || exit 1
-LC_ALL=C tr -d '\r' < xg-sh-2.tmp.po > xg-sh-2.po || exit 1
+  -d xg-sh-2.tmp xg-sh-2.sh || Exit 1
+LC_ALL=C tr -d '\r' < xg-sh-2.tmp.po > xg-sh-2.po || Exit 1
 
 cat <<EOF > xg-sh-2.ok
 msgid "help"

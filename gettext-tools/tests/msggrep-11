@@ -154,8 +154,8 @@ EOF
 
 : ${MSGGREP=msggrep}
 ${MSGGREP} --add-location=file -N pipe-bidi.c -o mg-test11.tmp mg-test11.po \
-    || exit 1
-LC_ALL=C tr -d '\r' < mg-test11.tmp > mg-test11.out || exit 1
+    || Exit 1
+LC_ALL=C tr -d '\r' < mg-test11.tmp > mg-test11.out || Exit 1
 
 cat <<\EOF > mg-test11.ok
 # German translations for GNU gettext package.

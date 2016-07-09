@@ -1,5 +1,5 @@
 /* Error handling during reading and writing of PO files.
-   Copyright (C) 2004, 2006, 2012, 2015 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006, 2012, 2015-2016 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2004.
 
    This program is free software: you can redistribute it and/or modify

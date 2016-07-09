@@ -39,8 +39,8 @@ msgstr "eins"
 EOF
 
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test1.tmp mcat-test1.in1 mcat-test1.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcat-test1.tmp > mcat-test1.out || exit 1
+${MSGCAT} -o mcat-test1.tmp mcat-test1.in1 mcat-test1.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test1.tmp > mcat-test1.out || Exit 1
 
 cat << EOF > mcat-test1.ok
 msgid ""

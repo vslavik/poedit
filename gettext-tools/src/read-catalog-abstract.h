@@ -1,6 +1,6 @@
 /* Reading PO files, abstract class.
    Copyright (C) 1995-1996, 1998, 2000-2003, 2005-2006, 2008-2009, 2012,
-   2015 Free Software Foundation, Inc.
+   2015-2016 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 

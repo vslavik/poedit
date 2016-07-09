@@ -1,5 +1,5 @@
 /* Unicode CLDR plural rule parser and converter
-   Copyright (C) 2015 Free Software Foundation, Inc.
+   Copyright (C) 2015-2016 Free Software Foundation, Inc.
 
    This file was written by Daiki Ueno <ueno@gnu.org>, 2015.
 

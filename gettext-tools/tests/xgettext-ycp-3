@@ -11,8 +11,8 @@ print (_("John\n"
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-y-3.tmp xg-y-3.ycp || exit 1
-LC_ALL=C tr -d '\r' < xg-y-3.tmp.po > xg-y-3.po || exit 1
+${XGETTEXT} --omit-header --no-location -d xg-y-3.tmp xg-y-3.ycp || Exit 1
+LC_ALL=C tr -d '\r' < xg-y-3.tmp.po > xg-y-3.po || Exit 1
 
 cat <<\EOF > xg-y-3.ok
 msgid ""

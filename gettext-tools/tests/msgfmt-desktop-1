@@ -67,16 +67,16 @@ EOF
 
 ${MSGFMT} --desktop --template=mf.desktop -l fr fr.po \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 ${MSGFMG} --desktop --template=mf.desktop fr.po -o mf.desktop.out \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 # Proceed to the .desktop file generation.
 
 ${MSGFMT} --desktop --template=mf.desktop -l fr fr.po -o mf.desktop.out \
-  || exit 1
+  || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mf.desktop.ok mf.desktop.out

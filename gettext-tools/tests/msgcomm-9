@@ -39,8 +39,8 @@ EOF
 
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=1 --no-location -o mcomm-test9.tmp \
-    mcomm-test9.in1 mcomm-test9.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test9.tmp > mcomm-test9.out || exit 1
+    mcomm-test9.in1 mcomm-test9.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test9.tmp > mcomm-test9.out || Exit 1
 
 cat << EOF > mcomm-test9.ok
 msgid ""

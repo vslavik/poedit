@@ -9,8 +9,8 @@ gettext ("%1% on, %2% off");
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-c-12.tmp xg-c-12.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-12.tmp.po > xg-c-12.po || exit 1
+${XGETTEXT} --omit-header --no-location -d xg-c-12.tmp xg-c-12.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-12.tmp.po > xg-c-12.po || Exit 1
 
 cat <<EOF > xg-c-12.ok
 msgid "%1% on, %2% off"

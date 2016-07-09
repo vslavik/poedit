@@ -1,5 +1,5 @@
 /* Temporary directories and temporary files with automatic cleanup.
-   Copyright (C) 2001, 2003, 2006-2007, 2009-2015 Free Software Foundation,
+   Copyright (C) 2001, 2003, 2006-2007, 2009-2016 Free Software Foundation,
    Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
@@ -584,7 +584,7 @@ supports_delete_on_close ()
 
       /* According to
          <http://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx>
-         this structure must be initialised as follows:  */
+         this structure must be initialized as follows:  */
       v.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 
       if (GetVersionEx (&v))

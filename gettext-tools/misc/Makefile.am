@@ -1,5 +1,5 @@
 ## Makefile for the gettext-tools/misc subdirectory of GNU gettext
-## Copyright (C) 1995-1997, 2000-2003, 2005-2007, 2009-2010, 2015 Free
+## Copyright (C) 1995-1997, 2000-2003, 2005-2007, 2009-2010, 2015-2016 Free
 ## Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify

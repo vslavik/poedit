@@ -1,5 +1,5 @@
-# dup.m4 serial 3
-dnl Copyright (C) 2011-2015 Free Software Foundation, Inc.
+# dup.m4 serial 4
+dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -19,6 +19,26 @@ AC_DEFUN([gl_FUNC_DUP],
       REPLACE_DUP=1
     fi
   ])
+  AC_CACHE_CHECK([whether dup works], [gl_cv_func_dup_works],
+    [AC_RUN_IFELSE(
+      [AC_LANG_PROGRAM([[#include <unistd.h>
+                         #include <fcntl.h>
+                         #include <errno.h>]],
+         [[/* On OS/2 kLIBC, dup does not work on a directory fd.  */
+           int fd = open (".", O_RDONLY);
+           return fd < 0 ? 1 : dup (fd) < 0 ? 2 : 0;
+         ]])
+      ],
+      [gl_cv_func_dup_works=yes],
+      [gl_cv_func_dup_works=no],
+      [gl_cv_func_dup_works='guessing yes'])
+    ])
+  case "$gl_cv_func_dup_works" in
+    *yes) ;;
+    *)
+      REPLACE_DUP=1
+      ;;
+  esac
 ])
 
 # Prerequisites of lib/dup.c.

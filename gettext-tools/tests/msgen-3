@@ -41,8 +41,8 @@ msgstr ""
 EOF
 
 : ${MSGEN=msgen}
-${MSGEN} -o men-test3.tmp men-test3.pot || exit 1
-LC_ALL=C tr -d '\r' < men-test3.tmp > men-test3.out || exit 1
+${MSGEN} -o men-test3.tmp men-test3.pot || Exit 1
+LC_ALL=C tr -d '\r' < men-test3.tmp > men-test3.out || Exit 1
 
 cat <<\EOF > men-test3.ok
 msgid ""

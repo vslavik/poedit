@@ -35,8 +35,8 @@ still\ existing=here is normally no comment
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --properties-input --properties-output -o mm-p-1.tmp mm-p-1.in1 mm-p-1.in2 || exit 1
-LC_ALL=C tr -d '\r' < mm-p-1.tmp > mm-p-1.out || exit 1
+${MSGMERGE} -q --properties-input --properties-output -o mm-p-1.tmp mm-p-1.in1 mm-p-1.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mm-p-1.tmp > mm-p-1.out || Exit 1
 
 cat << EOF > mm-p-1.ok
 #: file3:102

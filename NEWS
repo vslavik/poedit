@@ -1,3 +1,24 @@
+Version 0.19.8 - June 2016
+
+* Support for reproducible builds:
+  - msgfmt now produces little-endian .mo files by default.
+
+* Programming languages support:
+  - XML:
+    xgettext and msgfmt now look for .its files in directories
+    supplied through the GETTEXTDATADIRS or XDG_DATA_DIRS environment
+    variable.
+  - JavaScript:
+    xgettext and msgfmt now recognize numbered arguments in format
+    strings.
+
+* Portability:
+  - Improve OS/2 kLIBC support.
+  - Fix libintl compilation issue with pre-C99 compilers.  It was a
+    regression since 0.19.5.
+  - The AM_GNU_GETTEXT Autoconf macro can now detect musl-libc's
+    gettext as a compatible implementation.
+
 Version 0.19.7 - December 2015
 
 * Programming languages support:

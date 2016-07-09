@@ -22,8 +22,8 @@ _("")
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -d xg-test2.tmp -k_ --omit-header --no-location xg-test2.in.c || exit 1
-LC_ALL=C tr -d '\r' < xg-test2.tmp.po > xg-test2.po || exit 1
+${XGETTEXT} -d xg-test2.tmp -k_ --omit-header --no-location xg-test2.in.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-test2.tmp.po > xg-test2.po || Exit 1
 
 cat <<EOF > xg-test2.ok
 #, no-c-format

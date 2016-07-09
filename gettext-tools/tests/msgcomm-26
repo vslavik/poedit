@@ -68,8 +68,8 @@ msgstr "%s: ungültige Optionen -- %c\n"
 EOF
 
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} -o mcomm-test26.tmp mcomm-test26.in1 mcomm-test26.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test26.tmp > mcomm-test26.out || exit 1
+${MSGCOMM} -o mcomm-test26.tmp mcomm-test26.in1 mcomm-test26.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test26.tmp > mcomm-test26.out || Exit 1
 
 cat <<\EOF > mcomm-test26.ok
 msgid ""

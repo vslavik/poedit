@@ -12,8 +12,8 @@ if (days > 7 && days < 14)
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-c-18.tmp xg-c-18.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-18.tmp.po > xg-c-18.po || exit 1
+${XGETTEXT} --omit-header --no-location -d xg-c-18.tmp xg-c-18.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-18.tmp.po > xg-c-18.po || Exit 1
 
 cat <<EOF > xg-c-18.ok
 #, c-format, range: 1..6

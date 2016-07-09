@@ -55,8 +55,8 @@ EOF
 
 : ${MSGATTRIB=msgattrib}
 ${MSGATTRIB} --translated --add-location=file -o ma-test18.tmp ma-test18.po \
-    || exit 1
-LC_ALL=C tr -d '\r' < ma-test18.tmp > ma-test18.out || exit 1
+    || Exit 1
+LC_ALL=C tr -d '\r' < ma-test18.tmp > ma-test18.out || Exit 1
 
 cat <<\EOF > ma-test18.ok
 # HEADER.

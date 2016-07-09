@@ -43,8 +43,8 @@ EOF
 
 rm -f mcat-test15.tmp1
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test15.tmp1 mcat-test15.in || exit 1
-LC_ALL=C tr -d '\r' < mcat-test15.tmp1 > mcat-test15.out1 || exit 1
+${MSGCAT} -o mcat-test15.tmp1 mcat-test15.in || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test15.tmp1 > mcat-test15.out1 || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mcat-test15.in mcat-test15.out1
@@ -52,8 +52,8 @@ result=$?
 
 rm -f mcat-test15.tmp2
 : ${MSGCAT=msgcat}
-${MSGCAT} --indent -o mcat-test15.tmp2 mcat-test15.in || exit 1
-LC_ALL=C tr -d '\r' < mcat-test15.tmp2 > mcat-test15.out2 || exit 1
+${MSGCAT} --indent -o mcat-test15.tmp2 mcat-test15.in || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test15.tmp2 > mcat-test15.out2 || Exit 1
 
 cat <<\EOF > mcat-test15.ok
 msgid   ""

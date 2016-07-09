@@ -63,8 +63,8 @@ EOF
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header -n \
   -k__ \
-  -d xg-pl-8.tmp xg-pl-8.pl || exit 1
-LC_ALL=C tr -d '\r' < xg-pl-8.tmp.po > xg-pl-8.po || exit 1
+  -d xg-pl-8.tmp xg-pl-8.pl || Exit 1
+LC_ALL=C tr -d '\r' < xg-pl-8.tmp.po > xg-pl-8.po || Exit 1
 
 cat <<\EOF > xg-pl-8.ok
 #: xg-pl-8.pl:1

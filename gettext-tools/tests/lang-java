@@ -11,15 +11,15 @@
 # Test whether we can build and test Java programs.
 test "${JAVA_CHOICE}" != no || {
   echo "Skipping test: configured with --disable-java"
-  exit 77
+  Exit 77
 }
 test "${BUILDJAVA}" = yes || {
   echo "Skipping test: Java compiler or jar not found"
-  exit 77
+  Exit 77
 }
 test "${TESTJAVA}" = yes || {
   echo "Skipping test: Java engine not found"
-  exit 77
+  Exit 77
 }
 
 cat <<\EOF > Program.java
@@ -61,11 +61,11 @@ EOF
 
 : ${JAVACOMP="/bin/sh ../../javacomp.sh"}
 CLASSPATH=../../../gettext-runtime/intl-java/libintl.jar ${JAVACOMP} -d . Program.java 2>prog.err \
-  || { cat prog.err 1>&2; exit 1; }
+  || { cat prog.err 1>&2; Exit 1; }
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location Program.java || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location Program.java || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
@@ -95,7 +95,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -134,14 +134,14 @@ msgstr "Le nouveau {1} remplace le vieux {0}."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -j -d . -r prog -l fr fr.po || exit 1
+${MSGFMT} -j -d . -r prog -l fr fr.po || Exit 1
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
@@ -151,7 +151,7 @@ if test $LOCALE_FR != none; then
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
@@ -159,7 +159,7 @@ if test $LOCALE_FR_UTF8 != none; then
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
@@ -168,7 +168,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
 : ${DIFF=diff}
@@ -192,13 +192,13 @@ EOF
 : ${JAVAEXEC="/bin/sh ../../javaexec.sh"}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LC_ALL=$LOCALE_FR CLASSPATH=.:../../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 ISO-8859-1 > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR CLASSPATH=.:../../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 ISO-8859-1 > prog.out || Exit 1
+  ${DIFF} prog.ok prog.out || Exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 CLASSPATH=.:../../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 UTF-8 > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 CLASSPATH=.:../../../gettext-runtime/intl-java/libintl.jar ${JAVAEXEC} Program 2 UTF-8 > prog.out || Exit 1
+  ${DIFF} prog.oku prog.out || Exit 1
 fi
 
-exit 0
+Exit 0

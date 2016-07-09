@@ -2,7 +2,7 @@
 
 #line 1 "styled-ostream.oo.c"
 /* Abstract output stream for CSS styled text.
-   Copyright (C) 2006, 2015 Free Software Foundation, Inc.
+   Copyright (C) 2006, 2015-2016 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify

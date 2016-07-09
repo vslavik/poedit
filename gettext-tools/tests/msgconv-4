@@ -10,7 +10,7 @@ exactly\ 2\ input\ files\ required=\u6b64\u529f\u80fd\u9700\u8981\u6070\u597d\u6
 EOF
 
 : ${MSGCONV=msgconv}
-${MSGCONV} --properties-input --properties-output -t Big5 -o mco-test4.out mco-test4.properties || exit 1
+${MSGCONV} --properties-input --properties-output -t Big5 -o mco-test4.out mco-test4.properties || Exit 1
 
 : ${DIFF=diff}
 # Redirect stdout, so as not to fill the user's screen with non-ASCII bytes.

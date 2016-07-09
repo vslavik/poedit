@@ -44,8 +44,8 @@ msgstr[1] ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test22.tmp.po mm-test22.po mm-test22.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test22.tmp.po > mm-test22.new.po || exit 1
+${MSGMERGE} -q -o mm-test22.tmp.po mm-test22.po mm-test22.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test22.tmp.po > mm-test22.new.po || Exit 1
 
 cat <<\EOF > mm-test22.ok
 msgid ""
@@ -70,9 +70,9 @@ msgstr[1] "Engadir %n recursos dende o libro de enderezos"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test22.ok mm-test22.new.po || exit 1
+${DIFF} mm-test22.ok mm-test22.new.po || Exit 1
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o mm-test22.mo mm-test22.new.po || exit 1
+${MSGFMT} --check -o mm-test22.mo mm-test22.new.po || Exit 1
 
-exit 0
+Exit 0

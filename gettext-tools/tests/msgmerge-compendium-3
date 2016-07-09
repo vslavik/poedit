@@ -34,8 +34,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -C mm-c-3.com -o mm-c-3.tmp mm-c-3.in1 mm-c-3.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-3.tmp > mm-c-3.out || exit 1
+${MSGMERGE} -q -C mm-c-3.com -o mm-c-3.tmp mm-c-3.in1 mm-c-3.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-3.tmp > mm-c-3.out || Exit 1
 
 cat << EOF > mm-c-3.ok
 #: file.c:123

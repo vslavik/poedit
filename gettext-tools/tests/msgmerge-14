@@ -55,8 +55,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test14.tmp mm-test14-ru.po mm-test14.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test14.tmp > mm-test14.out || exit 1
+${MSGMERGE} -q -o mm-test14.tmp mm-test14-ru.po mm-test14.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test14.tmp > mm-test14.out || Exit 1
 
 cat <<\EOF > mm-test14.ok
 # Russian messages for CLISP

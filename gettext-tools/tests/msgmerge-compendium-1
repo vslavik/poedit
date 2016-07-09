@@ -26,8 +26,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -C mm-c-1.com -o mm-c-1.tmp mm-c-1.in1 mm-c-1.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-1.tmp > mm-c-1.out || exit 1
+${MSGMERGE} -q -C mm-c-1.com -o mm-c-1.tmp mm-c-1.in1 mm-c-1.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-1.tmp > mm-c-1.out || Exit 1
 
 cat << EOF > mm-c-1.ok
 #: file.c:123

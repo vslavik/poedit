@@ -4,8 +4,8 @@
 # Test 'I' format directive flag.
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o fc5.tmp --omit-header --no-location "$abs_srcdir"/format-c-5-prg.c || exit 1
-LC_ALL=C tr -d '\r' < fc5.tmp > fc5.pot || exit 1
+${XGETTEXT} -o fc5.tmp --omit-header --no-location "$abs_srcdir"/format-c-5-prg.c || Exit 1
+LC_ALL=C tr -d '\r' < fc5.tmp > fc5.pot || Exit 1
 
 cat <<EOF > fc5.ok
 #, c-format
@@ -14,7 +14,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} fc5.ok fc5.pot || exit 1
+${DIFF} fc5.ok fc5.pot || Exit 1
 
 # This should better be Farsi, not German. Can some translator help me?
 cat <<EOF > fa.po
@@ -30,11 +30,11 @@ test -d fa/LC_MESSAGES || mkdir fa/LC_MESSAGES
 ${MSGFMT} -o fa/LC_MESSAGES/fc5.mo fa.po
 
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o fa.po.tmp fa/LC_MESSAGES/fc5.mo || exit 1
-LC_ALL=C tr -d '\r' < fa.po.tmp > fa.po.un || exit 1
+${MSGUNFMT} -o fa.po.tmp fa/LC_MESSAGES/fc5.mo || Exit 1
+LC_ALL=C tr -d '\r' < fa.po.tmp > fa.po.un || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fa.po fa.po.un || exit 1
+${DIFF} fa.po fa.po.un || Exit 1
 
 LANGUAGE= ../fc5 fa_IR
 case $? in
@@ -45,8 +45,8 @@ case $? in
     else
       echo "Skipping test: locale fa_IR not supported"
     fi
-    exit 77;;
-  *) exit 1;;
+    Exit 77;;
+  *) Exit 1;;
 esac
 
-exit 0
+Exit 0

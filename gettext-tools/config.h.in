@@ -47,6 +47,9 @@
 /* Define to 1 if using `alloca.c'. */
 #undef C_ALLOCA
 
+/* Define to 1 if the C locale may have encoding errors. */
+#undef C_LOCALE_MAYBE_EILSEQ
+
 /* Define as the bit index in the word where to find bit 0 of the exponent of
    'double'. */
 #undef DBL_EXPBIT0_BIT
@@ -59,6 +62,16 @@
 
 /* Define as the word index where to find the sign of 'double'. */
 #undef DBL_SIGNBIT_WORD
+
+/* the name of the file descriptor member of DIR */
+#undef DIR_FD_MEMBER_NAME
+
+#ifdef DIR_FD_MEMBER_NAME
+# define DIR_TO_FD(Dir_p) ((Dir_p)->DIR_FD_MEMBER_NAME)
+#else
+# define DIR_TO_FD(Dir_p) -1
+#endif
+
 
 /* Define to 1 if // is a file system root distinct from /. */
 #undef DOUBLE_SLASH_IS_DISTINCT_ROOT
@@ -179,6 +192,9 @@
 
 /* Define to 1 when the gnulib module closedir should be tested. */
 #undef GNULIB_TEST_CLOSEDIR
+
+/* Define to 1 when the gnulib module dirfd should be tested. */
+#undef GNULIB_TEST_DIRFD
 
 /* Define to 1 when the gnulib module dup should be tested. */
 #undef GNULIB_TEST_DUP
@@ -636,6 +652,10 @@
    don't. */
 #undef HAVE_DECL_COPYSIGNL
 
+/* Define to 1 if you have the declaration of `dirfd', and to 0 if you don't.
+   */
+#undef HAVE_DECL_DIRFD
+
 /* Define to 1 if you have the declaration of `feof_unlocked', and to 0 if you
    don't. */
 #undef HAVE_DECL_FEOF_UNLOCKED
@@ -806,6 +826,9 @@
 
 /* Define to 1 if you have the <dirent.h> header file. */
 #undef HAVE_DIRENT_H
+
+/* Define to 1 if you have the `dirfd' function. */
+#undef HAVE_DIRFD
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
@@ -2543,6 +2566,9 @@
 /* Define to 1 if readlink fails to recognize a trailing slash. */
 #undef READLINK_TRAILING_SLASH_BUG
 
+/* Define to 1 if gnulib's dirfd() replacement is used. */
+#undef REPLACE_DIRFD
+
 /* Define to 1 if stat needs help when passed a directory name with a trailing
    slash */
 #undef REPLACE_FUNC_STAT_DIR
@@ -2761,6 +2787,12 @@
    used. */
 #undef __GETOPT_PREFIX
 
+/* Define to 1 if the system <stdint.h> predates C++11. */
+#undef __STDC_CONSTANT_MACROS
+
+/* Define to 1 if the system <stdint.h> predates C++11. */
+#undef __STDC_LIMIT_MACROS
+
 /* Define as 'access' if you don't have the eaccess() function. */
 #undef eaccess
 
@@ -2810,6 +2842,7 @@
       ? defined __GNUC_STDC_INLINE__ && __GNUC_STDC_INLINE__ \
       : (199901L <= __STDC_VERSION__ \
          && !defined __HP_cc \
+         && !defined __PGI \
          && !(defined __SUNPRO_C && __STDC__))) \
      && !defined _GL_EXTERN_INLINE_STDHEADER_BUG)
 # define _GL_INLINE inline

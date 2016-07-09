@@ -1,5 +1,5 @@
 /* xgettext Perl backend.
-   Copyright (C) 2002-2003, 2006, 2010, 2015 Free Software Foundation,
+   Copyright (C) 2002-2003, 2006, 2010, 2015-2016 Free Software Foundation,
    Inc.
    Written by Guido Flohr <guido@imperia.net>, 2002-2003
 

@@ -63,8 +63,8 @@ EOF
 # --unique is shorthand for --less-than=2; do we've to test both
 # switches?  Are 'for' loops allowed? -ke-
 ${MSGCOMM} --less-than=2 --no-location --force-po -o mcomm-test14.tmp \
-    mcomm-test14.in1 mcomm-test14.in2 mcomm-test14.in3 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test14.tmp > mcomm-test14.out || exit 1
+    mcomm-test14.in1 mcomm-test14.in2 mcomm-test14.in3 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test14.tmp > mcomm-test14.out || Exit 1
 
 cat << EOF > mcomm-test14.ok
 msgid ""

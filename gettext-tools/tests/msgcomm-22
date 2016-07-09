@@ -64,8 +64,8 @@ rm -f mcomm-test22.tmp
 : ${MSGCOMM=msgcomm}
 
 ${MSGCOMM} --less-than=2 -o mcomm-test22.tmp \
-    mcomm-test22.in1 mcomm-test22.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test22.tmp > mcomm-test22.out || exit 1
+    mcomm-test22.in1 mcomm-test22.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test22.tmp > mcomm-test22.out || Exit 1
 
 cat << \EOF > mcomm-test22.ok
 # German translations for GNU gettext package.

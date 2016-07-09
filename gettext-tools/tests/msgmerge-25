@@ -37,8 +37,8 @@ EOF
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} --add-location=file -q -o mm-test25.tmp mm-test25.in1 mm-test25.in2 \
-    || exit 1
-LC_ALL=C tr -d '\r' < mm-test25.tmp > mm-test25.out || exit 1
+    || Exit 1
+LC_ALL=C tr -d '\r' < mm-test25.tmp > mm-test25.out || Exit 1
 
 cat << EOF > mm-test25.ok
 # first

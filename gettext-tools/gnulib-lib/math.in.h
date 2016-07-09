@@ -1,6 +1,6 @@
 /* A GNU-like <math.h>.
 
-   Copyright (C) 2002-2003, 2007-2015 Free Software Foundation, Inc.
+   Copyright (C) 2002-2003, 2007-2016 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -2205,7 +2205,8 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
 
 
 #if @GNULIB_SIGNBIT@
-# if @REPLACE_SIGNBIT_USING_GCC@
+# if (@REPLACE_SIGNBIT_USING_GCC@ \
+      && (!defined __cplusplus || __cplusplus < 201103))
 #  undef signbit
    /* GCC 4.0 and newer provides three built-ins for signbit.  */
 #  define signbit(x) \

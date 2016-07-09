@@ -12,8 +12,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
-  -d xg-j-6.tmp xg-j-6.java || exit 1
-LC_ALL=C tr -d '\r' < xg-j-6.tmp.po > xg-j-6.po || exit 1
+  -d xg-j-6.tmp xg-j-6.java || Exit 1
+LC_ALL=C tr -d '\r' < xg-j-6.tmp.po > xg-j-6.po || Exit 1
 
 cat <<EOF > xg-j-6.ok
 #. a

@@ -5,14 +5,14 @@
 
 : ${AUTOCONF=autoconf}
 ${AUTOCONF} --version >/dev/null 2>/dev/null \
-  || { echo "Skipping test: autoconf not found"; exit 77; }
+  || { echo "Skipping test: autoconf not found"; Exit 77; }
 
 cat <<\EOF >configure.ac
 AC_PREREQ([2.60])
 EOF
 
 ${AUTOCONF} >/dev/null 2>/dev/null \
-  || { echo "Skipping test: autoconf version too old"; exit 77; }
+  || { echo "Skipping test: autoconf version too old"; Exit 77; }
 
 rm -f configure.ac
 
@@ -35,16 +35,16 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >/dev/null 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-test ! -d intl || exit 1
-test -d m4 || exit 1
-test -d po || exit 1
-test -d build-aux || exit 1
+test ! -d intl || Exit 1
+test -d m4 || Exit 1
+test -d po || Exit 1
+test -d build-aux || Exit 1
 
-test -f m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
-test -f build-aux/config.rpath || exit 1
+test -f m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1
+test -f build-aux/config.rpath || Exit 1
 
 rm -fr m4 po
 
@@ -63,15 +63,15 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >/dev/null 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-test -d intl || exit 1
-test -d m4 || exit 1
-test -d po || exit 1
+test -d intl || Exit 1
+test -d m4 || Exit 1
+test -d po || Exit 1
 
-test -f intl/VERSION || exit 1
-test -f m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
+test -f intl/VERSION || Exit 1
+test -f m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1
 
 rm -fr intl m4 po
 
@@ -96,15 +96,15 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >/dev/null 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-test ! -d intl || exit 1
-test ! -d m4 || exit 1
-test -d gettext-m4 || exit 1
-test -d po || exit 1
+test ! -d intl || Exit 1
+test ! -d m4 || Exit 1
+test -d gettext-m4 || Exit 1
+test -d po || Exit 1
 
-test -f gettext-m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
+test -f gettext-m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1
 
 rm -fr gettext-m4 po
 
@@ -124,14 +124,14 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >/dev/null 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-test ! -d intl || exit 1
-test -d m4 || exit 1
-test -d po || exit 1
+test ! -d intl || Exit 1
+test -d m4 || Exit 1
+test -d po || Exit 1
 
-test -f m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
+test -f m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1
 
 rm -fr m4 po
 
@@ -156,14 +156,14 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >/dev/null 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-test ! -d intl || exit 1
-test -d m4 || exit 1
-test -d po || exit 1
+test ! -d intl || Exit 1
+test -d m4 || Exit 1
+test -d po || Exit 1
 
-test -f m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
+test -f m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1
 
 rm -fr m4 po
 
@@ -182,14 +182,14 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >/dev/null 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-test ! -d intl || exit 1
-test -d m4 || exit 1
-test -d po || exit 1
+test ! -d intl || Exit 1
+test -d m4 || Exit 1
+test -d po || Exit 1
 
-test -f m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
+test -f m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1
 
 # Check for the case where both AM_GNU_GETTEXT_REQUIRE_VERSION and
 # AM_GNU_GETTEXT_VERSION are used.
@@ -211,18 +211,18 @@ AC_OUTPUT
 EOF
 
 $gettext_datadir/autopoint >autopoint.out 2>autopoint.err
-test $? = 0 || { cat autopoint.err; exit 1; }
+test $? = 0 || { cat autopoint.err; Exit 1; }
 
-grep 'using AM_GNU_GETTEXT_REQUIRE_VERSION' autopoint.out 2>&1 >/dev/null || exit 1
+grep 'using AM_GNU_GETTEXT_REQUIRE_VERSION' autopoint.out 2>&1 >/dev/null || Exit 1
 
-test -d intl || exit 1
-test -d m4 || exit 1
-test -d po || exit 1
+test -d intl || Exit 1
+test -d m4 || Exit 1
+test -d po || Exit 1
 
 cat >autopoint.ver <<EOF
 GNU gettext library from gettext-$ARCHIVE_VERSION
 EOF
 : ${DIFF=diff}
-${DIFF} autopoint.ver intl/VERSION || exit 1
-test -f m4/po.m4 || exit 1
-test -f po/Makefile.in.in || exit 1
+${DIFF} autopoint.ver intl/VERSION || Exit 1
+test -f m4/po.m4 || Exit 1
+test -f po/Makefile.in.in || Exit 1

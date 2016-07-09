@@ -42,8 +42,8 @@ msgstr "Argumente fehlen."
 EOF
 
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --clear-previous -o ma-test17.tmp ma-test17.po || exit 1
-LC_ALL=C tr -d '\r' < ma-test17.tmp > ma-test17.out || exit 1
+${MSGATTRIB} --clear-previous -o ma-test17.tmp ma-test17.po || Exit 1
+LC_ALL=C tr -d '\r' < ma-test17.tmp > ma-test17.out || Exit 1
 
 cat <<\EOF > ma-test17.ok
 msgid ""

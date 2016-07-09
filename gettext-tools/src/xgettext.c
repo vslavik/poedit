@@ -1,6 +1,5 @@
 /* Extracts strings from C source file to Uniforum style .po file.
-   Copyright (C) 1995-1998, 2000-2015 Free Software Foundation,
-   Inc.
+   Copyright (C) 1995-1998, 2000-2016 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -74,6 +73,7 @@
 #include "unistr.h"
 #include "its.h"
 #include "locating-rule.h"
+#include "search-path.h"
 #include "gettext.h"
 
 /* A convenience macro.  I don't like writing gettext() every time.  */
@@ -329,7 +329,8 @@ main (int argc, char *argv[])
   bool some_additional_keywords = false;
   bool sort_by_msgid = false;
   bool sort_by_filepos = false;
-  char *its_dirs[2] = { NULL, NULL };
+  char **dirs;
+  char **its_dirs;
   char *explicit_its_filename = NULL;
   const char *file_name;
   const char *files_from = NULL;
@@ -638,13 +639,15 @@ main (int argc, char *argv[])
         break;
 
       case CHAR_MAX + 17: /* --check */
-        if (strcmp (optarg, "ellipsis-unicode") == 0)
-          default_syntax_check[sc_ellipsis_unicode] = yes;
-        else if (strcmp (optarg, "space-ellipsis") == 0)
-          default_syntax_check[sc_space_ellipsis] = yes;
-        else if (strcmp (optarg, "quote-unicode") == 0)
-          default_syntax_check[sc_quote_unicode] = yes;
-        else
+        for (i = 0; i < NSYNTAXCHECKS; i++)
+          {
+            if (strcmp (optarg, syntax_check_name[i]) == 0)
+              {
+                default_syntax_check[i] = yes;
+                break;
+              }
+          }
+        if (i == NSYNTAXCHECKS)
           error (EXIT_FAILURE, 0, _("syntax check '%s' unknown"), optarg);
         break;
 
@@ -680,7 +683,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 "),
-              "1995-1998, 2000-2013");
+              "1995-1998, 2000-2016");
       printf (_("Written by %s.\n"), proper_name ("Ulrich Drepper"));
       exit (EXIT_SUCCESS);
     }
@@ -725,35 +728,19 @@ xgettext cannot work without keywords to look for"));
       usage (EXIT_FAILURE);
     }
 
-  {
-    const char *gettextdatadir;
-    char *versioned_gettextdatadir;
-
-    /* Make it possible to override the locator file location.  This
-       is necessary for running the testsuite before "make
-       install".  */
-    gettextdatadir = getenv ("GETTEXTDATADIR");
-    if (gettextdatadir == NULL || gettextdatadir[0] == '\0')
-      gettextdatadir = relocate (GETTEXTDATADIR);
-
-    its_dirs[0] = xconcatenated_filename (gettextdatadir, "its", NULL);
-
-    versioned_gettextdatadir =
-      xasprintf ("%s%s", relocate (GETTEXTDATADIR), PACKAGE_SUFFIX);
-    its_dirs[1] = xconcatenated_filename (versioned_gettextdatadir, "its",
-                                          NULL);
-    free (versioned_gettextdatadir);
-
-    its_locating_rules = locating_rule_list_alloc ();
-    for (i = 0; i < SIZEOF (its_dirs); i++)
-      locating_rule_list_add_from_directory (its_locating_rules, its_dirs[i]);
-  }
-
   /* Explicit ITS file selection and language specification are
      mutually exclusive.  */
   if (explicit_its_filename != NULL && language != NULL)
     error (EXIT_FAILURE, 0, _("%s and %s are mutually exclusive"),
            "--its", "--language");
+
+  if (explicit_its_filename == NULL)
+    {
+      its_dirs = get_search_path ("its");
+      its_locating_rules = locating_rule_list_alloc ();
+      for (dirs = its_dirs; *dirs != NULL; dirs++)
+        locating_rule_list_add_from_directory (its_locating_rules, *dirs);
+    }
 
   /* Determine extractor from language.  */
   if (language != NULL)
@@ -929,7 +916,7 @@ warning: ITS rule file '%s' does not exist"), explicit_its_filename);
                     its_rule_list_add_from_string (its_rules,
                                                    ITS_ROOT_UNTRANSLATABLE);
 
-                  for (j = 0; j < SIZEOF (its_dirs); j++)
+                  for (j = 0; its_dirs[j] != NULL; j++)
                     {
                       char *its_filename =
                         xconcatenated_filename (its_dirs[j], its_basename,
@@ -944,7 +931,7 @@ warning: ITS rule file '%s' does not exist"), explicit_its_filename);
                       if (ok)
                         break;
                     }
-                  if (j == SIZEOF (its_dirs))
+                  if (its_dirs[j] == NULL)
                     {
                       error (0, 0, _("\
 warning: ITS rule file '%s' does not exist; check your gettext installation"),
@@ -1029,8 +1016,9 @@ warning: file '%s' extension '%s' is unknown; will try C"), filename, extension)
   if (its_locating_rules)
     locating_rule_list_free (its_locating_rules);
 
-  for (i = 0; i < SIZEOF (its_dirs); i++)
+  for (i = 0; its_dirs[i] != NULL; i++)
     free (its_dirs[i]);
+  free (its_dirs);
 
   exit (EXIT_SUCCESS);
 }
@@ -1117,7 +1105,7 @@ Operation mode:\n"));
       printf (_("\
       --check=NAME            perform syntax check on messages\n\
                                 (ellipsis-unicode, space-ellipsis,\n\
-                                 quote-unicode)\n"));
+                                 quote-unicode, bullet-unicode)\n"));
       printf (_("\
       --sentence-end=TYPE     type describing the end of sentence\n\
                                 (single-space, which is the default, \n\
@@ -1152,6 +1140,10 @@ Language specific options:\n"));
   -T, --trigraphs             understand ANSI C trigraphs for input\n"));
       printf (_("\
                                 (only languages C, C++, ObjectiveC)\n"));
+      printf (_("\
+      --its=FILE              apply ITS rules from FILE\n"));
+      printf (_("\
+                                (only XML based languages)\n"));
       printf (_("\
       --qt                    recognize Qt format strings\n"));
       printf (_("\
@@ -1193,8 +1185,6 @@ Output details:\n"));
       --properties-output     write out a Java .properties file\n"));
       printf (_("\
       --stringtable-output    write out a NeXTstep/GNUstep .strings file\n"));
-      printf (_("\
-      --its=FILE              apply ITS rules from FILE\n"));
       printf (_("\
       --itstool               write out itstool comments\n"));
       printf (_("\

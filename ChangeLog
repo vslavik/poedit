@@ -1,4 +1,405 @@
+2016-06-11  Daiki Ueno  <ueno@gnu.org>
+
+	build: Fix unintentional soname bump
+	* gettext-runtime/intl/Makefile.in: Revert LTV_CURRENT and increment
+	LTV_REVISION.
+	* gettext-tools/libgettextpo/Makefile.am: Likewise.
+
+2016-06-09  Daiki Ueno  <ueno@gnu.org>
+
+	Update translations
+	* gettext-runtime/po/eo.po: Update from Felipe Castro <fefcas@gmail.com>
+	* gettext-runtime/po/hr.po: Update from Božidar Putanec <bozidarp@yahoo.com>
+	* gettext-runtime/po/sv.po: Update from Göran Uddeborg <goeran@uddeborg.se>
+	* gettext-tools/examples/po/eo.po: Update from Felipe Castro <fefcas@gmail.com>
+	* gettext-tools/examples/po/hr.po: Update from Božidar Putanec <bozidarp@yahoo.com>
+	* gettext-tools/examples/po/sv.po: Update from Göran Uddeborg <goeran@uddeborg.se>
+	* gettext-tools/po/bg.po: Update from Roumen Petrov <transl@roumenpetrov.info>
+	* gettext-tools/po/es.po: Update from Antonio Ceballos <aceballos@gmail.com>
+	* gettext-tools/po/fr.po: Update from Stéphane Aulery <lkppo@free.fr>
+	* gettext-tools/po/ja.po: Update from Masahito Yamaga <ma@yama-ga.com>
+	* gettext-tools/po/ko.po: Update from Changwoo Ryu <cwryu@debian.org>
+	* gettext-tools/po/nl.po: Update from Benno Schulenberg <benno@vertaalt.nl>
+	* gettext-tools/po/pl.po: Update from Rafał Maszkowski <rzm@icm.edu.pl>
+	* gettext-tools/po/sk.po: Update from Marcel Telka <marcel@telka.sk>
+	* gettext-tools/po/sr.po: Update from Мирослав Николић <miroslavnikolic@rocketmail.com>
+	* gettext-tools/po/sv.po: Update from Göran Uddeborg <goeran@uddeborg.se>
+	* gettext-tools/po/tr.po: Update from Nilgün Belma Bugüner <nilgun@buguner.name.tr>
+	* gettext-tools/po/uk.po: Update from Yuri Chornoivan <yurchor@ukr.net>
+	* gettext-tools/po/vi.po: Update from Trần Ngọc Quân <vnwildman@gmail.com>
+
+	Update matrix
+
+	NEWS: Fix release date of 0.19.8
+
+	Prepare for 0.19.8
+
+	THANKS: Update
+
+2016-06-08  Daiki Ueno  <ueno@gnu.org>
+
+	gnulib-local: Work around regcomp.c compile error
+	* gnulib-local/Makefile.am (EXTRA_DIST): Add lib/regcomp.c.diff.
+	* gnulib-local/lib/regcomp.c.diff: New file, partially revert Gnulib
+	commit f97745b0.
+
+	tests: Use Exit instead of exit if init.sh is used
+	* gettext-tools/tests/*: Use Exit instead of exit, as suggested by
+	init.sh.
+
+2016-06-07  Daiki Ueno  <ueno@gnu.org>
+
+	build: Create intl/ChangeLog
+	* autogen.sh: Create an empty ChangeLog for gettext-runtime/intl, which
+	is necessary when running "make dist" from the top level directory.
+
+2016-06-02  Daiki Ueno  <ueno@gnu.org>
+
+	build: Simplify placeholder ChangeLog creation
+	* autogen.sh: Use empty ChangeLog for placeholder.  Bail out if any
+	error occurs in autoreconf phase.
+
+	maint: Update release steps
+
+2016-06-01  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Check invalid input in sentence-1-prg
+	* gettext-tools/tests/sentence-1-prg.c (main): Check input buffer
+	overflow, while it is not possible with the current test case.
+
+	tests: Fix test data for sentence-1
+	* gettext-tools/tests/sentence-1: Use NO-BREAK SPACE instead of
+	IDEOGRAPHIC SPACE.
+
+2016-05-31  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Fix location of valgrind suppression file
+	* gettext-tools/tests/Makefile.am (CHECKER): Use $(abs_srcdir) instead
+	of $(srcdir).
+
+	tests: Turn sentence test into a shell script
+	For consistency with other tests.  Also it fixes a test failure when
+	built with --disable-shared, since LOG_COMPILER set to $(SHELL) doesn't
+	recognize binary executable.
+	* gettext-tools/tests/Makefile.am (TESTS): Rename 'sentence' to
+	'sentence-1'.
+	(check_PROGRAMS): Rename 'sentence' to 'sentence-1-prg'.
+	(sentence_1_prg_SOURCES): Rename from 'sentence_SOURCES'.
+	(sentence_1_prg_CPPFLAGS): Rename from 'sentence_CPPFLAGS'.
+	(sentence_1_prg_LDADD): Rename from 'sentence_LDADD'.
+	* gettext-tools/tests/sentence-1: New file.
+	* gettext-tools/tests/sentence-1-prg.c: Rename from sentence.c, move the
+	test data to sentence-1.
+	* gettext-tools/tests/.gitignore: Ignore sentence-1-prg.
+
+2016-05-30  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Update copyright year
+
+	xgettext: Update usage documentation
+	* gettext-tools/src/xgettext.c (usage): Mention 'bullet-unicode' check.
+
+2016-05-28  Daniel Burr  <dburr@dburr.net>  (tiny change)
+
+	build: Make libxml2 check tighter
+	* gnulib-local/m4/libxml.m4 (gl_LIBXML): Try to check
+	xmlXPathSetContextNode, which is available in libxml2 2.9.1 or later.
+	Problem reported by Dominyk in:
+	http://savannah.gnu.org/bugs/?46844
+
+2016-05-27  Daiki Ueno  <ueno@gnu.org>
+
+	desktop: Add missing "extern" in header
+	* gettext-tools/src/read-desktop.h: Add "extern" to each function
+	declaration.
+	Possibly related to: https://savannah.gnu.org/bugs/?45896
+
+	NEWS: Mention gettext.m4 change
+
+	m4: Rely less on internal symbols
+	* gettext-runtime/m4/gettext.m4 (AM_GNU_GETTEXT): Skip checks for the
+	internal symbols _nl_msg_cat_cntr, _nl_domain_bindings, and
+	_nl_expand_alias, if __GNU_GETTEXT_SUPPORTED_REVISION is defined.
+	Problem reported and fix suggested by Masanori Ogino in:
+	https://lists.gnu.org/archive/html/bug-gettext/2016-04/msg00000.html
+	The rationale behind this is: (1) those symbol checks are for detecting
+	certain broken implementations, namely NetBSD and Solaris 7, and
+	(2) __GNU_GETTEXT_SUPPORTED_REVISION is not defined in those
+	implementations, while it is defined on compatible implementations, such
+	as musl-libc which doesn't have those internal symbols.
+
+2016-05-25  Daiki Ueno  <ueno@gnu.org>
+
+	NEWS: Add 0.19.8 changes
+
+	intl: Pacify pre-C99 compilers
+	* gettext-runtime/intl/plural-exp.h (HAVE_STRUCT_INITIALIZER): New
+	macro, based on the check previously in plural-exp.c.  Also add check
+	for __SUNPRO_C for Solaris Studio C compiler.
+	(GERMANIC_PLURAL): Define as 'struct expression' not 'const struct
+	expression' if struct/union initializers are not supported by the
+	compiler.
+	* gettext-runtime/intl/plural-exp.c: Use HAVE_STRUCT_INITIALIZER.
+	Reported by Dagobert Michelsen and investigated by pan7 in:
+	https://savannah.gnu.org/support/?108743
+
+2016-05-24  David Shea  <dshea@redhat.com>
+
+	desktop: Fix invalid memory access
+	* gettext-tools/src/read-desktop.c (desktop_lex): Don't access memory
+	deallocated with realloc().  Reported in:
+	http://savannah.gnu.org/bugs/?47991
+
+2016-05-23  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add more tests for JavaScript format string
+	* gettext-tools/tests/format-javascript-1: Add test for multiple uses of
+	same argument.
+	* gettext-tools/tests/format-javascript-2: Use proper flag to activate
+	javascript format checker.
+
+	javascript: Fix format type compatibility check
+	* gettext-tools/src/format-javascript.c (format_check): Check if the two
+	argument types are the same.
+
+2016-05-20  Daiki Ueno  <ueno@gnu.org>
+
+	tests: Add test for ITS search path
+	* gettext-tools/tests/Makefile.am (TESTS): Add new test.
+	* gettext-tools/tests/xgettext-its-2: New file.
+
+	search-path: Fix XDG_DATA_DIRS traversal
+	* gettext-tools/src/search-path.c (foreach_elements): Append "gettext"
+	suffix to each element from XDG_DATA_DIRS.
+
+	search-path: Don't relocate dirs given as envvar
+	* gettext-tools/src/search-path.c (foreach_function_ty): New typedef.
+	(path_array_ty): New struct.
+	(foreach_components, increment, fill): New functions.
+	(get_search_path): Rewrite using those functions.  Relocate
+	GETTEXTDATADIR here.
+	* gettext-tools/src/search-path.h (get_search_path): Update documentation.
+	* gettext-tools/src/msgfmt.c (main): Don't relocate directories in ITS
+	search path.
+	* gettext-tools/src/xgettext.c (main): Likewise.
+
+2016-05-19  Daiki Ueno  <ueno@gnu.org>
+
+	Update after Gnulib changed
+	* gnulib-local/lib/gettext.h: Update from gnulib.
+	* gettext-runtime/m4/extern-inline.m4: Likewise.
+	* gettext-runtime/m4/intdiv0.m4: Likewise.
+
+	Update gnulib
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Explicitly pull 'gettext',
+	as the module is now marked as obsolete.
+	* gnulib-local/Makefile.am (EXTRA_DIST): Remove m4/hard-locale.m4.diff.
+	* gnulib-local/m4/hard-locale.m4.diff: Remove, as it is no longer
+	needed.
+	* gettext-tools/gnulib-lib/.gitignore: Ignore files brought by gnulib-tool.
+	* gettext-tools/gnulib-tests/.gitignore: Likewise.
+	* gettext-tools/libgettextpo/.gitignore: Likewise.
+
+2016-05-18  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Add --no-git option to autogen.sh
+	* autogen.sh: Port --no-git option from Gnulib's bootstrap.
+
+2016-05-16  Daiki Ueno  <ueno@gnu.org>
+
+	msgfmt, xgettext: Respect XDG_DATA_DIRS
+	Suggested in https://savannah.gnu.org/bugs/?47123
+	* autogen.sh (GNULIB_MODULES_TOOLS_FOR_SRC): Add 'xmemdup0'.
+	* gettext-tools/gnulib-lib/.gitignore: Ignore files brought by gnulib-tool.
+	* gettext-tools/gnulib-tests/.gitignore: Likewise.
+	* gettext-tools/src/search-path.c: New file.
+	* gettext-tools/src/search-path.h: New file.
+	* gettext-tools/src/Makefile.am (noinst_HEADERS): Add search-path.h.
+	(libgettextsrc_la_SOURCES): Add search-path.c.
+	* gettext-tools/src/msgfmt.c: Include "search-path.h".
+	(main): Use get_search_path to locate ITS directories.
+	* gettext-tools/src/xgettext.c: Include "search-path.h".
+	(main): Use get_search_path to locate ITS directories.
+
+	javascript: Avoid uninitialized variable
+	* gettext-tools/src/format-javascript.c (format_check): Fix
+	loop initialization.  Spotted by clang-analyzer.
+
+2016-03-26  Hanno Boeck  <hanno@gentoo.org>  (tiny change)
+
+	lua: Avoid heap buffer overflow
+	* gettext-tools/src/x-lua.c (string_end): Allocate a room for
+	terminating NUL.  Reported in: http://savannah.gnu.org/bugs/?4753
+
+2016-03-23  Daiki Ueno  <ueno@gnu.org>
+
+	format-python-brace: Support chained expression
+	* gettext-tools/src/format-python-brace.c (parse_directive): Recognize
+	chained getattr/getitem expressions.
+	* gettext-tools/tests/format-python-brace-1: Add test for the case where
+	both getattr and getitem are used.
+	Reported by Paul Franklin in:
+	https://lists.gnu.org/archive/html/bug-gettext/2016-03/msg00017.html
+
+	doc: Fix ngettext usage example
+	* gettext-tools/doc/gettext.texi (Plural forms): Fix positional argument
+	syntax in the C example.  Reported by Jonathan Leffler in:
+	http://lists.gnu.org/archive/html/bug-gettext/2016-03/msg00002.html
+
+2016-03-22  Daiki Ueno  <ueno@gnu.org>
+
+	javascript: Fix invalid memory access
+	* gettext-tools/src/format-javascript.c (format_parse): Fix numbered_arg
+	allocation for the unnumbered case.
+
+	Reported by Roger Mc Murtrie in: <http://savannah.gnu.org/bugs/?47492>.
+
+2016-03-22  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Clean up .gitignore
+	* gettext-tools/gnulib-lib/.gitignore: Sort lines.
+
+2016-03-02  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Put --its help in the right section
+	* gettext-tools/src/xgettext.c (usage): Move --its=FILE option under
+	"Language specific options" from "Output details".
+
+2016-02-22  Daiki Ueno  <ueno@gnu.org>
+
+	xgettext: Add new check bullet-unicode
+	* gettext-tools/src/xgettext.c (main): Generalize --check option
+	handling.
+	* gettext-tools/src/message.h (enum syntax_check_type): New enum value
+	sc_bullet_unicode.
+	(NSYNTAXCHECKS): Increment.
+	* gettext-tools/src/message.c (syntax_check_name): Add name for
+	sc_bullet_unicode.
+	* gettext-tools/src/msgl-check.c (struct bullet_ty, struct
+	bullet_stack_ty): New struct.
+	(bullet_stack): New variable.
+	(syntax_check_bullet_unicode): New function.
+	(sc_funcs): Register syntax_check_bullet_unicode as a check function for
+	sc_bullet_unicode.
+	* gettext-tools/tests/xgettext-14: Add tests for --check=bullet-unicode
+
+2016-02-10  Daiki Ueno  <ueno@gnu.org>
+
+	doc: Mention the behavior stripping *.in
+	* gettext-tools/doc/gettext.texi (Preparing ITS Rules): Add footnote
+	explaining the matching behavior if the input file name has the .in
+	suffix.  Suggested by Jan Synacek.
+
+2016-02-08  Daiki Ueno  <ueno@gnu.org>
+
+	javascript: Support '%m$' in format strings
+	Gjs has had support for numbered arguments in format strings since 1.40.
+	Recognize it as well in format-javascript, so msgfmt -c doesn't fail
+	when numbered arguments are in msgstr.  Reported by Sean Burke in:
+	https://lists.gnu.org/archive/html/bug-gettext/2015-10/msg00002.html
+	* gettext-tools/src/format-javascript.c (struct numbered_arg): New
+	struct.
+	(struct spec): Rename format_args_count to numbered_arg_count.  Add
+	NUMBERED field in place of FORMAT_ARGS.  All callers changed.
+	(numbered_arg_compare): New function.
+	(format_parse): Handle numbered arguments.  Based on format-awk.c.
+	(format_check): Add check for numbered arguments.
+	* gettext-tools/tests/format-javascript-1: Add tests for numbered
+	arguments.
+	* gettext-tools/tests/lang-javascript: Use numbered argument in format
+	strings.  Add check for Gjs version >= 1.40.
+
+	moopp: Revert file modes accidentally set
+
+2016-01-20  KO Myung-Hun  <komh78@gmail.com>
+
+	gettext-tools: Use a short name for DLLs on OS/2
+	OS/2 does not support a DLL name longer than 8 characters.
+
+	* gettext-tools/configure.ac (OS2): Define on OS/2.
+	* gettext-tools/gnulib-lib/Makefile.am (libgettextlib_la_LDFLAGS):
+	Set a DLL name to gtlib on OS/2.
+	* gettext-tools/libgettextpo/Makefile.am (libgettextpo_la_LDFLAGS):
+	Set a DLL name to gtpo on OS/2.
+	* gettext-tools/src/Makefile.am (libgettextsrc_la_LDFLAGS): Set a DLL
+	name to gtsrc on OS/2.
+
+2016-01-20  KO Myung-Hun  <komh78@gmail.com>
+
+	libasprintf: Build a shared library on OS/2
+	* gettext-runtime/libasprintf/configure.ac (LTNOUNDEF): Set to
+	-no-undefined on OS/2.
+
+2016-01-20  KO Myung-Hun  <komh78@gmail.com>
+
+	intl: Support UNIXROOT in BINDTEXTDOMAIN () on EMX
+	$UNIXROOT is a drive on which a root of FHS is.
+
+	* gettext-runtime/intl/bindtextdom.c (BINDTEXTDOMAIN): Prepend
+	$UNIXROOT to dirname if it is started '/' or it is an empty string.
+
+2016-01-20  KO Myung-Hun  <komh78@gmail.com>
+
+	moop: Replace CR as well as LF with a space
+	On OS/2, EOL marker is CR+LF.
+
+	* gnulib-local/bulid-aux/moopp (func_check_header_syntax):
+	Replace CR as well as LF with a space.
+
+2016-01-15  Bruno Haible  <bruno@clisp.org>
+
+	Change msgfmt to produce little-endian .mo files by default.
+	* gettext-tools/src/msgfmt.c (main): Initialize 'byteswap' so as to
+	produce little-endian .mo files by default.
+	* gettext-tools/doc/gettext.texi: Update documentation.
+	* gettext-tools/doc/msgfmt.texi (--endianness): Likewise.
+
+2016-01-13  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Revert copyright year changes in test data
+	Some test programs started failing after mass update of copyright notice
+	for year 2016 (commit 7fa0c277), because of embedded test data with
+	fixed copyright dates.  Revert the commit for those files.
+	Reported by Bruno Haible.
+	* .x-update-copyright: Exclude test programs embedding copyright date.
+	* gettext-tools/tests/msgcomm-22: Revert the last change.
+	* gettext-tools/tests/msgfilter-sr-latin-1: Likewise.
+	* gettext-tools/tests/msggrep-1: Likewise.
+	* gettext-tools/tests/msggrep-2: Likewise.
+	* gettext-tools/tests/msggrep-3: Likewise.
+	* gettext-tools/tests/msggrep-4: Likewise.
+	* gettext-tools/tests/msggrep-5: Likewise.
+	* gettext-tools/tests/msggrep-9: Likewise.
+	* gettext-tools/tests/msggrep-11: Likewise.
+	* gettext-tools/tests/msgmerge-14: Likewise.
+
+2016-01-07  Daiki Ueno  <ueno@gnu.org>
+
+	its: Recognize *.glade as a GtkBuilder file too
+
+2016-01-05  Santiago Vila  <sanvila@unex.es>  (tiny change)
+
+	* PACKAGING: List version specific files
+
+2016-01-02  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Update copyright year
+
+	Update gnulib
+
+	maint: Use maintainer-makefile from gnulib
+	* autogen.sh: Pull GNUmakefile, maint.mk, and dependency scripts in
+	build-aux.
+	* cfg.mk (update-copyright-env): Adjust for gettext.
+	* .x-update-copyright: New file.
+	* .gitignore: Ignore files brought in by gnulib-tool.
+
 2015-12-28  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Update release-steps to current practice
+	* Admin/release-steps: Split document into two sections ('Making a
+	snapshot release' and 'Making an official release'), reorder some steps,
+	and remove mention of manual generation of PO/POT files.
 
 	Update translations
 	* gettext-runtime/po/fr.po: Update from Stéphane Aulery <lkppo@free.fr>.

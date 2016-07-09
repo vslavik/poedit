@@ -33,8 +33,8 @@ ${XGETTEXT} -o prog.tmp --omit-header --no-location prog.bash \
   >prog.err 2>&1
 result=$?
 cat prog.err | grep -v 'warning: the syntax \$"\.\.\." is deprecated due to security reasons'
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<\EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
@@ -48,7 +48,7 @@ msgstr[1] ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -68,11 +68,11 @@ msgstr[1] "$n morceaux de gateau"
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d fr || mkdir fr
 test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
@@ -82,10 +82,10 @@ ${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 # Test for presence of bash version 2.0 or newer.
 (bash -c :) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: bash not found"; exit 77; }
+  || { echo "Skipping test: bash not found"; Exit 77; }
 case `bash -c 'echo $BASH_VERSION'` in
   [2-9].*) ;;
-  *) echo "Skipping test: bash version too old"; exit 77;;
+  *) echo "Skipping test: bash version too old"; Exit 77;;
 esac
 
 # Test which of the fr_FR locales are installed.
@@ -96,7 +96,7 @@ if test $LOCALE_FR != none; then
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
@@ -104,7 +104,7 @@ if test $LOCALE_FR_UTF8 != none; then
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
@@ -113,18 +113,18 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
 case "$host_os" in
   darwin*)
     if test $LOCALE_FR != none; then
       LC_ALL=$LOCALE_FR bash --help \
-        | grep '^Utilisation' > /dev/null 2>&1 || exit 77
+        | grep '^Utilisation' > /dev/null 2>&1 || Exit 77
     fi
     if test $LOCALE_FR_UTF8 != none; then
       LC_ALL=$LOCALE_FR_UTF8 bash --help \
-        | grep '^Utilisation' > /dev/null 2>&1 || exit 77
+        | grep '^Utilisation' > /dev/null 2>&1 || Exit 77
     fi
   ;;
 esac
@@ -148,23 +148,23 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LC_ALL=$LOCALE_FR bash ./prog.bash 2 > prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR bash ./prog.bash 2 > prog.out || Exit 1
   : ${DIFF=diff}
   ${DIFF} prog.nok prog.out > /dev/null && {
     echo "Skipping test: bash is built without i18n support"
-    exit 77
+    Exit 77
   }
-  ${DIFF} prog.ok prog.out || exit 1
+  ${DIFF} prog.ok prog.out || Exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 bash ./prog.bash 2 > prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 bash ./prog.bash 2 > prog.out || Exit 1
   : ${DIFF=diff}
   ${DIFF} prog.nok prog.out > /dev/null && {
     echo "Skipping test: bash is built without i18n support"
-    exit 77
+    Exit 77
   }
-  ${DIFF} prog.oku prog.out || exit 1
+  ${DIFF} prog.oku prog.out || Exit 1
 fi
 
-exit 0
+Exit 0

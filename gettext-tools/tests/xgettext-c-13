@@ -15,8 +15,8 @@ ${XGETTEXT} --omit-header --no-location -d xg-c-13.tmp \
   --qt \
   --flag=foo:1:qt-format --flag=gettext:1:pass-qt-format \
   --keyword=tr:1,1t --keyword=tr:1,2c,2t --keyword=tr:1,1,2c,3t \
-  xg-c-13.cc || exit 1
-LC_ALL=C tr -d '\r' < xg-c-13.tmp.po > xg-c-13.po || exit 1
+  xg-c-13.cc || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-13.tmp.po > xg-c-13.po || Exit 1
 
 cat <<EOF > xg-c-13.ok
 #, qt-format

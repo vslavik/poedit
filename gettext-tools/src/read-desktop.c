@@ -1,6 +1,6 @@
 /* Reading Desktop Entry files.
-   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2014-2015
-   Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2014-2016 Free
+   Software Foundation, Inc.
    This file was written by Daiki Ueno <ueno@gnu.org>.
 
    This program is free software: you can redistribute it and/or modify
@@ -326,8 +326,9 @@ desktop_lex (token_ty *tp)
         case '0': case '1': case '2': case '3': case '4':
         case '5': case '6': case '7': case '8': case '9':
           {
-            const char *locale = NULL;
-            const char *value = NULL;
+            size_t locale_start;
+            bool found_locale = false;
+            size_t value_start;
             for (;;)
               {
                 APPEND (c);
@@ -353,7 +354,8 @@ desktop_lex (token_ty *tp)
                   case '[':
                     /* Finish the key part and start the locale part.  */
                     APPEND (0);
-                    locale = &buffer[bufpos];
+                    found_locale = true;
+                    locale_start = bufpos;
 
                     for (;;)
                       {
@@ -428,7 +430,7 @@ desktop_lex (token_ty *tp)
                 break;
               }
 
-            value = &buffer[bufpos];
+            value_start = bufpos;
             for (;;)
               {
                 c = phase2_getc ();
@@ -439,8 +441,8 @@ desktop_lex (token_ty *tp)
             APPEND (0);
             tp->type = token_type_pair;
             tp->string = xmemdup (buffer, bufpos);
-            tp->locale = locale;
-            tp->value = value;
+            tp->locale = found_locale ? &buffer[locale_start] : NULL;
+            tp->value = &buffer[value_start];
             return;
           }
         default:

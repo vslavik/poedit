@@ -1,16 +1,16 @@
 # La teksto por la mesaĝoj de la programo "gettext".
-# Copyright (C) 2006, 2007, 2013 Free Software Foundation, Inc.
+# Copyright (C) 2006, 2007, 2013, 2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gettext package.
 # D. Dale Gulledge <dsplat@rochester.rr.com> 2006.
 # Edmund GRIMLEY EVANS <edmundo@rano.org> 2006, 2007.
-# Felipe Castro <fefcas@gmail.com>, 2013.
+# Felipe Castro <fefcas@gmail.com>, 2013, 2016.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gettext-runtime 0.18.2\n"
+"Project-Id-Version: gettext-runtime 0.19.4.73\n"
 "Report-Msgid-Bugs-To: bug-gnu-gettext@gnu.org\n"
-"POT-Creation-Date: 2015-12-28 08:26+0900\n"
-"PO-Revision-Date: 2013-10-30 16:17-0300\n"
+"POT-Creation-Date: 2016-06-11 22:08+0900\n"
+"PO-Revision-Date: 2016-02-22 18:47-0300\n"
 "Last-Translator: Felipe Castro <fefcas@gmail.com>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "Language: eo\n"
@@ -33,9 +33,9 @@ msgid "%s: option '%s' is ambiguous; possibilities:"
 msgstr "%s: la modifilo '%s' estas plursenca; ebloj:"
 
 #: gnulib-lib/getopt.c:619
-#, fuzzy, c-format
+#, c-format
 msgid "%s: option '%s' is ambiguous\n"
-msgstr "%s: la modifilo '-W %s' estas plursenca\n"
+msgstr "%s: la modifilo '%s' estas plursenca\n"
 
 #: gnulib-lib/getopt.c:654 gnulib-lib/getopt.c:658
 #, c-format
@@ -93,7 +93,7 @@ msgstr "%s: la modifilo '-W %s' bezonas argumenton\n"
 msgid "memory exhausted"
 msgstr "memoro elĉerpita"
 
-#: src/envsubst.c:112 src/gettext.c:134 src/ngettext.c:124
+#: src/envsubst.c:112 src/gettext.c:134 src/ngettext.c:123
 #, c-format, no-wrap
 msgid ""
 "Copyright (C) %s Free Software Foundation, Inc.\n"
@@ -106,7 +106,7 @@ msgstr ""
 "Ĉi tio estas libera programo; vi estas libera ŝanĝi kaj redistribui ĝin.\n"
 "Estas NENIA GARANTIO, ĝis la grado leĝe permesata.\n"
 
-#: src/envsubst.c:118 src/gettext.c:140 src/ngettext.c:130
+#: src/envsubst.c:118 src/gettext.c:140 src/ngettext.c:129
 #, c-format
 msgid "Written by %s.\n"
 msgstr "Verkita de %s.\n"
@@ -116,17 +116,17 @@ msgstr "Verkita de %s.\n"
 msgid "Bruno Haible"
 msgstr "Bruno Haible"
 
-#: src/envsubst.c:127 src/gettext.c:158 src/ngettext.c:142
+#: src/envsubst.c:127 src/gettext.c:158 src/ngettext.c:141
 #, c-format
 msgid "too many arguments"
 msgstr "tro da argumentoj"
 
-#: src/envsubst.c:138 src/gettext.c:168 src/ngettext.c:154
+#: src/envsubst.c:138 src/gettext.c:168 src/ngettext.c:153
 #, c-format
 msgid "missing arguments"
 msgstr "argumentoj mankas"
 
-#: src/envsubst.c:171 src/gettext.c:239 src/ngettext.c:208
+#: src/envsubst.c:171 src/gettext.c:239 src/ngettext.c:207
 #, c-format
 msgid "Try '%s --help' for more information.\n"
 msgstr "Provu '%s --help' por pli da informoj.\n"
@@ -197,7 +197,7 @@ msgstr ""
 #. for this package.  Please add _another line_ saying
 #. "Report translation bugs to <...>\n" with the address for translation
 #. bugs (typically your translation team's web or email address).
-#: src/envsubst.c:219 src/gettext.c:280 src/ngettext.c:246
+#: src/envsubst.c:219 src/gettext.c:280 src/ngettext.c:245
 msgid "Report bugs to <bug-gnu-gettext@gnu.org>.\n"
 msgstr "Raportu cimojn al <bug-gnu-gettext@gnu.org>.\n"
 
@@ -211,7 +211,7 @@ msgid "standard input"
 msgstr "normala enigo"
 
 #. This is a proper name. See the gettext manual, section Names.
-#: src/gettext.c:140 src/ngettext.c:130
+#: src/gettext.c:140 src/ngettext.c:129
 msgid "Ulrich Drepper"
 msgstr "Ulrich Drepper"
 
@@ -270,12 +270,12 @@ msgstr ""
 "anstataŭe, tiuj mesaĝoj trovitaj en la elektita katalogo estas tradukataj.\n"
 "Normala serĉdosierujo: %s\n"
 
-#: src/ngettext.c:213
+#: src/ngettext.c:212
 #, c-format, no-wrap
 msgid "Usage: %s [OPTION] [TEXTDOMAIN] MSGID MSGID-PLURAL COUNT\n"
 msgstr "Uzado: %s [MODIFILO] [TEXTDOMAIN] MSGID MSGID-PLURAL COUNT\n"
 
-#: src/ngettext.c:218
+#: src/ngettext.c:217
 #, c-format, no-wrap
 msgid ""
 "Display native language translation of a textual message whose grammatical\n"
@@ -284,7 +284,7 @@ msgstr ""
 "Montri lokalingvan tradukon de teksta mesaĝo, kies gramatika formo\n"
 "dependas de nombro.\n"
 
-#: src/ngettext.c:223
+#: src/ngettext.c:222
 #, c-format, no-wrap
 msgid ""
 "  -d, --domain=TEXTDOMAIN   retrieve translated message from TEXTDOMAIN\n"
@@ -305,7 +305,7 @@ msgstr ""
 "  MSGID MSGID-PLURAL        traduki MSGID (singulare) / MSGID-PLURAL (plurale)\n"
 "  COUNT                     elekti singularon/pluralon per ĉi tiu valoro\n"
 
-#: src/ngettext.c:234
+#: src/ngettext.c:233
 #, c-format, no-wrap
 msgid ""
 "If the TEXTDOMAIN parameter is not given, the domain is determined from the\n"
