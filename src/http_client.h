@@ -152,8 +152,8 @@ public:
     /// Connection flags for the client.
     enum flags
     {
-        /// The host uses SNI for SSL. Will use http instead of https on Windows XP.
-        uses_sni = 1
+        // currently no flags are used
+        default_flags = 0
     };
 
     /**
@@ -164,7 +164,7 @@ public:
         
         @param flags OR-combination of http_client::flags values.
      */
-    http_client(const std::string& url_prefix, int flags = 0);
+    http_client(const std::string& url_prefix, int flags = default_flags);
     virtual ~http_client();
 
     /// Return true if the server is reachable, i.e. client is online

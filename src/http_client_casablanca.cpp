@@ -36,7 +36,6 @@
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 
-#define CPPREST_TARGET_XP
 #include <cpprest/asyncrt_utils.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
@@ -210,7 +209,7 @@ public:
             if (SUCCEEDED(hr))
                 return result & (NLM_CONNECTIVITY_IPV4_INTERNET|NLM_CONNECTIVITY_IPV6_INTERNET);
         }
-        // XP or manager fallback (IPv6 ignorant):
+        // manager fallback (IPv6 ignorant):
         DWORD flags;
         return ::InternetGetConnectedState(&flags, 0);
     #else
@@ -340,24 +339,9 @@ private:
         throw http::http_exception(status_code, msg);
     }
 
-    // convert to wstring and make WinXP ready
-    static string_t sanitize_url(const std::string& url, int flags)
+    // convert to wstring
+    static string_t sanitize_url(const std::string& url, int /*flags*/)
     {
-        (void)flags;
-    #ifdef _WIN32
-        if (flags & http_client::uses_sni)
-        {
-            // Windows XP doesn't support SNI and so can't connect over SSL to
-            // hosts that use it. The use of SNI is increasingly common and some
-            // APIs Poedit needs to connect to use it. To keep things simple, just
-            // disable SSL on Windows XP.
-            if (is_windows_xp())
-            {
-                if (boost::starts_with(url, "https://"))
-                    return U("http://") + string_t(url.begin() + 8, url.end());
-            }
-        }
-    #endif
         return to_string_t(url);
     }
 
@@ -391,15 +375,6 @@ private:
 
 private:
 #ifdef _WIN32
-    static bool is_windows_xp()
-    {
-        OSVERSIONINFOEX info;
-        ZeroMemory(&info, sizeof(info));
-        info.dwOSVersionInfoSize = sizeof(info);
-        GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
-        return (info.dwMajorVersion < 6); // XP
-    }
-
     static std::wstring windows_version()
     {
         OSVERSIONINFOEX info;

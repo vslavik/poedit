@@ -452,8 +452,6 @@ bool PoeditApp::OnInit()
         // Beta versions use unstable feed.
         appcast = "https://poedit.net/updates/win/appcast/beta";
     }
-    if (!wxPlatformInfo().CheckOSVersion(6,0)) // XP doesn't support SNI
-        appcast.Replace("https://", "http://");
 
     win_sparkle_set_appcast_url(appcast.utf8_str());
     win_sparkle_set_can_shutdown_callback(&PoeditApp::WinSparkle_CanShutdown);

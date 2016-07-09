@@ -58,8 +58,7 @@ public:
                 m_tb->SetBackgroundColour(wxRGBToColour(theme->GetThemeSysColor(hTheme, COLOR_WINDOW)));
             }
         }
-        if (!IsWindowsXP())
-            m_tb->SetDoubleBuffered(true);
+        m_tb->SetDoubleBuffered(true);
 #endif
     }
 
