@@ -42,8 +42,8 @@ EOF
 
 : ${MSGATTRIB=msgattrib}
 ${MSGATTRIB} --clear-fuzzy --empty -o ma-test19.tmp ma-test19.po \
-    || exit 1
-LC_ALL=C tr -d '\r' < ma-test19.tmp > ma-test19.out || exit 1
+    || Exit 1
+LC_ALL=C tr -d '\r' < ma-test19.tmp > ma-test19.out || Exit 1
 
 cat <<\EOF > ma-test19.ok
 # HEADER.

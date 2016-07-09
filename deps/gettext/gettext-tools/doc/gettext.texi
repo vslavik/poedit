@@ -79,7 +79,7 @@ This file provides documentation for GNU @code{gettext} utilities.
 It also serves as a reference for the free Translation Project.
 
 @copying
-Copyright (C) 1995-1998, 2001-2015 Free Software Foundation, Inc.
+Copyright (C) 1995-1998, 2001-2016 Free Software Foundation, Inc.
 
 This manual is free documentation.  It is dually licensed under the
 GNU FDL and the GNU GPL.  This means that you can redistribute this
@@ -5325,8 +5325,8 @@ which appears below.
 @cindex magic signature of MO files
 The first two words serve the identification of the file.  The magic
 number will always signal GNU MO files.  The number is stored in the
-byte order of the generating machine, so the magic number really is
-two numbers: @code{0x950412de} and @code{0xde120495}.
+byte order used when the MO file was generated, so the magic number
+really is two numbers: @code{0x950412de} and @code{0xde120495}.
 
 The second word describes the current revision of the file format,
 composed of a major and a minor revision number.  The revision numbers
@@ -6133,8 +6133,8 @@ argument.  Instead, you have to reorder the arguments so that @samp{n}
 comes last:
 
 @smallexample
-printf (ngettext ("%$2d file removed from directory %$1s",
-                  "%$2d files removed from directory %$1s",
+printf (ngettext ("%2$d file removed from directory %1$s",
+                  "%2$d files removed from directory %1$s",
                   n),
         dir, n);
 @end smallexample
@@ -12351,7 +12351,12 @@ an ITS rule with an XML file.  If the above ITS file is saved as
 
 The @code{locatingRule} element must have a @code{pattern} attribute,
 which denotes either a literal file name or a wildcard pattern of the
-XML file.  The @code{locatingRule} element can have child
+XML file@footnote{Note that the file name matching is done after
+removing any @code{.in} suffix from the input file name.  Thus the
+@code{pattern} attribute must not include a pattern matching @code{.in}.
+For example, if the input file name is @file{foo.msg.in}, the pattern
+should be either @code{*.msg} or just @code{*}, rather than
+@code{*.in}.}.  The @code{locatingRule} element can have child
 @code{documentRule} element, which adds checks on the content of the XML
 file.
 

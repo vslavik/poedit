@@ -1,4 +1,4 @@
-/* Copyright (C) 1995, 2000-2003, 2005-2006, 2015 Free Software
+/* Copyright (C) 1995, 2000-2003, 2005-2006, 2015-2016 Free Software
  * Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

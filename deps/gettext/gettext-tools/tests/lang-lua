@@ -18,8 +18,8 @@ print(string.format(_[==[%s is replaced by %s.]==], "FF", "EUR"))
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.lua || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.lua || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<\EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
@@ -37,7 +37,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -60,11 +60,11 @@ msgstr "%s remplace %s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d fr || mkdir fr
 test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
@@ -75,14 +75,14 @@ ${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 # Test for presence of lua version 5.0 or newer with gettext support.
 (lua -v) >/dev/null 2>/dev/null
 test $? -le 1 \
-  || { echo "Skipping test: lua not found"; exit 77; }
+  || { echo "Skipping test: lua not found"; Exit 77; }
 case `lua -v 2>&1 | sed -e 's/^[^0-9]*//'` in
   [5-9].*) ;;
-  *) echo "Skipping test: lua version too old"; exit 77;;
+  *) echo "Skipping test: lua version too old"; Exit 77;;
 esac
 { lua -v -l gettext > /dev/null 2>/dev/null; } \
   || { echo "Skipping test: lua gettext module not found"
-       exit 77
+       Exit 77
      }
 
 # Test which of the fr_FR locales are installed.
@@ -93,7 +93,7 @@ if test $LOCALE_FR != none; then
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
@@ -101,7 +101,7 @@ if test $LOCALE_FR_UTF8 != none; then
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
@@ -110,7 +110,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
 : ${DIFF=diff}
@@ -129,13 +129,13 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LC_ALL=$LOCALE_FR lua -l gettext prog.lua > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR lua -l gettext prog.lua > prog.out || Exit 1
+  ${DIFF} prog.ok prog.out || Exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 lua -l gettext prog.lua > prog.out || exit 1
-  ${DIFF} prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 lua -l gettext prog.lua > prog.out || Exit 1
+  ${DIFF} prog.oku prog.out || Exit 1
 fi
 
-exit 0
+Exit 0

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) 2003-2015 Free Software Foundation, Inc.
+# Copyright (C) 2003-2016 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 # data files used by the autopoint program.  If you already have the
 # file, place it under gettext-tools/misc, before running this script.
 #
-# Usage: ./autogen.sh [--skip-gnulib]
+# Usage: ./autogen.sh [--skip-gnulib] [--no-git]
 #
 # Usage after a git clone:              ./autogen.sh
 # Usage from a released tarball:        ./autogen.sh --skip-gnulib
@@ -42,12 +42,20 @@
 (unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
 skip_gnulib=false
+
+# Use git to update gnulib sources
+use_git=true
+
 while :; do
   case "$1" in
     --skip-gnulib) skip_gnulib=true; shift;;
+    --no-git) use_git=false; shift;;
     *) break ;;
   esac
 done
+
+$use_git || test -d "$GNULIB_SRCDIR" \
+  || die "Error: --no-git requires --gnulib-srcdir"
 
 cleanup_gnulib() {
   status=$?
@@ -90,7 +98,7 @@ if ! $skip_gnulib; then
     ;;
   *)
     # Use GNULIB_SRCDIR as a reference.
-    if test -d "$GNULIB_SRCDIR"/.git && \
+    if $use_git && test -d "$GNULIB_SRCDIR"/.git && \
           git_modules_config submodule.gnulib.url >/dev/null; then
       echo "$0: getting gnulib files..."
       if git submodule -h|grep -- --reference > /dev/null; then
@@ -200,6 +208,7 @@ if ! $skip_gnulib; then
       gcd
       getline
       getopt-gnu
+      gettext
       gettext-h
       hash
       html-styled-ostream
@@ -261,8 +270,9 @@ if ! $skip_gnulib; then
       write
       xalloc
       xconcat-filename
-      xmalloca
       xerror
+      xmalloca
+      xmemdup0
       xsetenv
       xstriconv
       xstriconveh
@@ -380,6 +390,11 @@ if ! $skip_gnulib; then
     $GNULIB_TOOL --copy-file tests/init.sh gettext-tools || exit $?
     $GNULIB_TOOL --copy-file build-aux/git-version-gen || exit $?
     $GNULIB_TOOL --copy-file build-aux/gitlog-to-changelog || exit $?
+    $GNULIB_TOOL --copy-file build-aux/update-copyright || exit $?
+    $GNULIB_TOOL --copy-file build-aux/useless-if-before-free || exit $?
+    $GNULIB_TOOL --copy-file build-aux/vc-list-files || exit $?
+    $GNULIB_TOOL --copy-file top/GNUmakefile . || exit $?
+    $GNULIB_TOOL --copy-file top/maint.mk . || exit $?
   fi
 fi
 
@@ -417,48 +432,37 @@ if ! test -f gettext-tools/misc/archive.dir.tar; then
   test $retval -eq 0 || exit $retval
 fi
 
-# Automake requires that ChangeLog exist.
-for dir in . gettext-runtime gettext-runtime/libasprintf \
-           gettext-tools gettext-tools/examples \
-	   gettext-runtime/intl gettext-runtime/po gettext-tools/po; do
-  cat > "$dir/ChangeLog" <<\EOF
-No more ChangeLog files
-========================
-Do not modify any of the ChangeLog files in gettext.  Starting on
-October 14th, 2015 we put changelog information only in the git commit
-log, and generate a top-level ChangeLog file from logs at "make dist"
-time.
-
-Local Variables:
-buffer-read-only: t
-mode: text
-End:
-EOF
-done
-
 # Generate configure script in each subdirectories.
-(cd gettext-runtime/libasprintf
- echo "$0: generating configure in gettext-runtime/libasprintf..."
- aclocal -I ../../m4 -I ../m4 -I gnulib-m4
- autoconf
- autoheader && touch config.h.in
- automake --add-missing --copy
-)
+dir0=`pwd`
 
-(cd gettext-runtime
- echo "$0: generating configure in gettext-runtime..."
- aclocal -I m4 -I ../m4 -I gnulib-m4
- autoconf
- autoheader && touch config.h.in
- automake --add-missing --copy
-)
+echo "$0: generating configure in gettext-runtime/libasprintf..."
+cd gettext-runtime/libasprintf
+aclocal -I ../../m4 -I ../m4 -I gnulib-m4 \
+  && autoconf \
+  && autoheader \
+  && touch ChangeLog config.h.in \
+  && automake --add-missing --copy \
+  || exit $?
+cd "$dir0"
 
-(cd gettext-tools/examples
- echo "$0: generating configure in gettext-tools/examples..."
- aclocal -I ../../gettext-runtime/m4 -I ../../m4
- autoconf
- automake --add-missing --copy
-)
+echo "$0: generating configure in gettext-runtime..."
+cd gettext-runtime
+aclocal -I m4 -I ../m4 -I gnulib-m4 \
+  && autoconf \
+  && autoheader \
+  && touch ChangeLog intl/ChangeLog config.h.in \
+  && automake --add-missing --copy \
+  || exit $?
+cd "$dir0"
+
+echo "$0: generating configure in gettext-tools/examples..."
+cd gettext-tools/examples
+aclocal -I ../../gettext-runtime/m4 -I ../../m4 \
+  && autoconf \
+  && touch ChangeLog \
+  && automake --add-missing --copy \
+  || exit $?
+cd "$dir0"
 
 echo "$0: copying common files from gettext-runtime to gettext-tools..."
 cp -p gettext-runtime/ABOUT-NLS gettext-tools/ABOUT-NLS
@@ -484,15 +488,16 @@ for file in intl.m4 po.m4; do
   fi
 done
 
-(cd gettext-tools
- echo "$0: generating configure in gettext-tools..."
- aclocal -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4
- autoconf
- autoheader && touch config.h.in
- test -d intl || mkdir intl
- automake --add-missing --copy
-)
+echo "$0: generating configure in gettext-tools..."
+cd gettext-tools
+aclocal -I m4 -I ../gettext-runtime/m4 -I ../m4 -I gnulib-m4 -I libgrep/gnulib-m4 -I libgettextpo/gnulib-m4 \
+  && autoconf \
+  && autoheader && touch ChangeLog config.h.in \
+  && test -d intl || mkdir intl \
+  && automake --add-missing --copy \
+  || exit $?
+cd "$dir0"
 
-aclocal -I m4
-autoconf
-automake
+aclocal -I m4 && autoconf && touch ChangeLog && automake || exit $?
+
+echo "$0: done.  Now you can run './configure'."

@@ -12,7 +12,7 @@ EOF
 ${XGETTEXT} -o xg-gl-1.pot xg-gl-1-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  exit 77
+  Exit 77
 }
 
 cat <<EOF > xg-gl-1-widgets.glade
@@ -1330,7 +1330,7 @@ for said code in libglade.</text>
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments -o - xg-gl-1-widgets.glade | grep -v 'POT-Creation-Date' > xg-gl-1.pot || exit 1
+${XGETTEXT} --add-comments -o - xg-gl-1-widgets.glade | grep -v 'POT-Creation-Date' > xg-gl-1.pot || Exit 1
 
 cat <<EOF > xg-gl-1.ok
 # SOME DESCRIPTIVE TITLE.

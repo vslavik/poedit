@@ -10,7 +10,7 @@ if test $LOCALE_FR_UTF8 != none; then
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 = none; then
@@ -19,7 +19,7 @@ if test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french UTF-8 locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
 cat <<\EOF > rec-srl-1.in
@@ -34,7 +34,7 @@ EOF
 : ${RECODE=recode}
 LC_ALL=$LOCALE_FR_UTF8 \
 ${RECODE}-sr-latin < rec-srl-1.in > rec-srl-1.out \
-  || { exit 1; }
+  || { Exit 1; }
 
 cat <<\EOF > rec-srl-1.ok
 Ispravni argumenti su

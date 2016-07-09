@@ -82,6 +82,8 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-runtime/gnulib-lib/glthread/lock.c $
     gettext/gettext-runtime/gnulib-lib/glthread/lock.h $
     gettext/gettext-runtime/gnulib-lib/glthread/threadlib.c $
+    gettext/gettext-runtime/gnulib-lib/hard-locale.c $
+    gettext/gettext-runtime/gnulib-lib/hard-locale.h $
     gettext/gettext-runtime/gnulib-lib/iconv.c $
     gettext/gettext-runtime/gnulib-lib/iconv.in.h $
     gettext/gettext-runtime/gnulib-lib/iconv_close.c $
@@ -214,6 +216,7 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-runtime/gnulib-m4/gnulib-cache.m4 $
     gettext/gettext-runtime/gnulib-m4/gnulib-common.m4 $
     gettext/gettext-runtime/gnulib-m4/gnulib-comp.m4 $
+    gettext/gettext-runtime/gnulib-m4/hard-locale.m4 $
     gettext/gettext-runtime/gnulib-m4/iconv_h.m4 $
     gettext/gettext-runtime/gnulib-m4/iconv_open.m4 $
     gettext/gettext-runtime/gnulib-m4/include_next.m4 $
@@ -617,6 +620,7 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/gnulib-lib/diffseq.h $
     gettext/gettext-tools/gnulib-lib/dirent-private.h $
     gettext/gettext-tools/gnulib-lib/dirent.in.h $
+    gettext/gettext-tools/gnulib-lib/dirfd.c $
     gettext/gettext-tools/gnulib-lib/dosname.h $
     gettext/gettext-tools/gnulib-lib/dup-safer-flag.c $
     gettext/gettext-tools/gnulib-lib/dup-safer.c $
@@ -710,6 +714,8 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/gnulib-lib/glthread/threadlib.c $
     gettext/gettext-tools/gnulib-lib/glthread/tls.c $
     gettext/gettext-tools/gnulib-lib/glthread/tls.h $
+    gettext/gettext-tools/gnulib-lib/hard-locale.c $
+    gettext/gettext-tools/gnulib-lib/hard-locale.h $
     gettext/gettext-tools/gnulib-lib/hash.c $
     gettext/gettext-tools/gnulib-lib/hash.h $
     gettext/gettext-tools/gnulib-lib/html-ostream.c $
@@ -1169,6 +1175,8 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/gnulib-lib/xmalloc.c $
     gettext/gettext-tools/gnulib-lib/xmalloca.c $
     gettext/gettext-tools/gnulib-lib/xmalloca.h $
+    gettext/gettext-tools/gnulib-lib/xmemdup0.c $
+    gettext/gettext-tools/gnulib-lib/xmemdup0.h $
     gettext/gettext-tools/gnulib-lib/xreadlink.c $
     gettext/gettext-tools/gnulib-lib/xreadlink.h $
     gettext/gettext-tools/gnulib-lib/xsetenv.c $
@@ -1205,6 +1213,7 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/gnulib-m4/ctype.m4 $
     gettext/gettext-tools/gnulib-m4/curses.m4 $
     gettext/gettext-tools/gnulib-m4/dirent_h.m4 $
+    gettext/gettext-tools/gnulib-m4/dirfd.m4 $
     gettext/gettext-tools/gnulib-m4/double-slash-root.m4 $
     gettext/gettext-tools/gnulib-m4/dup.m4 $
     gettext/gettext-tools/gnulib-m4/dup2.m4 $
@@ -1243,6 +1252,7 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/gnulib-m4/gnulib-cache.m4 $
     gettext/gettext-tools/gnulib-m4/gnulib-common.m4 $
     gettext/gettext-tools/gnulib-m4/gnulib-comp.m4 $
+    gettext/gettext-tools/gnulib-m4/hard-locale.m4 $
     gettext/gettext-tools/gnulib-m4/iconv_h.m4 $
     gettext/gettext-tools/gnulib-m4/iconv_open.m4 $
     gettext/gettext-tools/gnulib-m4/include_next.m4 $
@@ -1478,6 +1488,8 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/libgettextpo/glthread/tls.h $
     gettext/gettext-tools/libgettextpo/gnulib-m4/gnulib-cache.m4 $
     gettext/gettext-tools/libgettextpo/gnulib-m4/gnulib-comp.m4 $
+    gettext/gettext-tools/libgettextpo/hard-locale.c $
+    gettext/gettext-tools/libgettextpo/hard-locale.h $
     gettext/gettext-tools/libgettextpo/hash.c $
     gettext/gettext-tools/libgettextpo/hash.h $
     gettext/gettext-tools/libgettextpo/iconv.c $
@@ -1949,6 +1961,8 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gettext-tools/src/read-tcl.c $
     gettext/gettext-tools/src/read-tcl.h $
     gettext/gettext-tools/src/recode-sr-latin.c $
+    gettext/gettext-tools/src/search-path.c $
+    gettext/gettext-tools/src/search-path.h $
     gettext/gettext-tools/src/sentence.c $
     gettext/gettext-tools/src/sentence.h $
     gettext/gettext-tools/src/str-list.c $
@@ -2235,6 +2249,7 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gnulib-local/lib/ostream.oo.c $
     gettext/gnulib-local/lib/ostream.oo.h $
     gettext/gnulib-local/lib/progname.h.diff $
+    gettext/gnulib-local/lib/regcomp.c.diff $
     gettext/gnulib-local/lib/regex_internal.h.diff $
     gettext/gnulib-local/lib/regexec.c.diff $
     gettext/gnulib-local/lib/spawn-pipe.c.diff $
@@ -2252,11 +2267,10 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/gnulib-local/lib/xgetcwd.h gettext/gnulib-local/lib/xmalloc.c $
     gettext/gnulib-local/lib/xstrdup.c gettext/gnulib-local/m4/alloca.m4 $
     gettext/gnulib-local/m4/backupfile.m4 gettext/gnulib-local/m4/curses.m4 $
-    gettext/gnulib-local/m4/gcj.m4 $
-    gettext/gnulib-local/m4/hard-locale.m4.diff $
-    gettext/gnulib-local/m4/java.m4 gettext/gnulib-local/m4/libcroco.m4 $
-    gettext/gnulib-local/m4/libglib.m4 gettext/gnulib-local/m4/libxml.m4 $
-    gettext/gnulib-local/m4/moo.m4 gettext/gnulib-local/m4/term-ostream.m4 $
+    gettext/gnulib-local/m4/gcj.m4 gettext/gnulib-local/m4/java.m4 $
+    gettext/gnulib-local/m4/libcroco.m4 gettext/gnulib-local/m4/libglib.m4 $
+    gettext/gnulib-local/m4/libxml.m4 gettext/gnulib-local/m4/moo.m4 $
+    gettext/gnulib-local/m4/term-ostream.m4 $
     gettext/gnulib-local/m4/termcap.m4 gettext/gnulib-local/m4/terminfo.m4 $
     gettext/gnulib-local/m4/unionwait.m4 gettext/gnulib-local/Makefile.am $
     gettext/gnulib-local/Makefile.in $
@@ -2299,15 +2313,15 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/README gettext/README.woe32 gettext/THANKS $
     gettext/windows/gettext.rc gettext/windows/windres-options
   name = gettext
-  workdir = $intdir/gettext
+  configure = ./configure
   configure_flags = --prefix=/ CC=$cc CXX=$cxx CFLAGS="$cflags $
       -Dalarm=alarm_disabled" CXXFLAGS="$cxxflags" LDFLAGS="$ldflags" $
-      GSED=$sed --with-libiconv-prefix=$SDKROOT/usr --disable-static $
-      --disable-java --disable-csharp --disable-rpath $
+      GSED=$sed YACC=$yacc --with-libiconv-prefix=$SDKROOT/usr $
+      --disable-static --disable-java --disable-csharp --disable-rpath $
       --disable-dependency-tracking --enable-silent-rules
-  configure = ./configure
   srcdir = $top_srcdir/gettext
   destdir = $builddir/gettext
+  workdir = $intdir/gettext
 rule db_build
   command = rm -rf "$workdir" "$destdir" && mkdir -p "$workdir" && cp -aR $
       "$srcdir/" "$workdir" && cd "$workdir" && $configure $configure_flags $
@@ -3337,15 +3351,15 @@ build $intdir/db.done: db_build db/btree/bt_compact.c db/btree/bt_compare.c $
     db/txn/txn_recover.c db/txn/txn_region.c db/txn/txn_stat.c $
     db/txn/txn_util.c
   name = db
-  workdir = $intdir/db
+  configure = cd build_unix && ../dist/configure
   configure_flags = --prefix=/ CC=$cc CXX=$cxx CFLAGS="$cflags $
       -DU_STATIC_IMPLEMENTATION" CXXFLAGS="$cxxflags $
       -DU_STATIC_IMPLEMENTATION" LDFLAGS="$ldflags" --enable-cxx $
       --disable-shared --disable-cryptography --disable-replication $
       --disable-statistics --disable-queue --disable-verify
-  configure = cd build_unix && ../dist/configure
   srcdir = $top_srcdir/db
   destdir = $builddir/db
+  workdir = $intdir/db
 rule icu_build
   command = rm -rf "$workdir" "$destdir" && mkdir -p "$workdir" && cp -aR $
       "$srcdir/" "$workdir" && cd "$workdir" && $configure $configure_flags $
@@ -3357,7 +3371,99 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/as_is/os390/unpax-icu.sh icu4c/as_is/os400/bldiculd.sh $
     icu4c/as_is/os400/convertConfigure.sed icu4c/as_is/os400/cxxfilt.cpp $
     icu4c/as_is/os400/fixup-icu.sh icu4c/as_is/os400/iculd.c $
-    icu4c/as_is/os400/unpax-icu.sh icu4c/icu4c.css icu4c/license.html $
+    icu4c/as_is/os400/unpax-icu.sh icu4c/icu4c.css $
+    icu4c/include/unicode/alphaindex.h icu4c/include/unicode/appendable.h $
+    icu4c/include/unicode/basictz.h icu4c/include/unicode/brkiter.h $
+    icu4c/include/unicode/bytestream.h icu4c/include/unicode/bytestrie.h $
+    icu4c/include/unicode/bytestriebuilder.h $
+    icu4c/include/unicode/calendar.h icu4c/include/unicode/caniter.h $
+    icu4c/include/unicode/chariter.h icu4c/include/unicode/choicfmt.h $
+    icu4c/include/unicode/coleitr.h icu4c/include/unicode/coll.h $
+    icu4c/include/unicode/compactdecimalformat.h $
+    icu4c/include/unicode/curramt.h icu4c/include/unicode/currpinf.h $
+    icu4c/include/unicode/currunit.h icu4c/include/unicode/datefmt.h $
+    icu4c/include/unicode/dbbi.h icu4c/include/unicode/dcfmtsym.h $
+    icu4c/include/unicode/decimfmt.h icu4c/include/unicode/docmain.h $
+    icu4c/include/unicode/dtfmtsym.h icu4c/include/unicode/dtintrv.h $
+    icu4c/include/unicode/dtitvfmt.h icu4c/include/unicode/dtitvinf.h $
+    icu4c/include/unicode/dtptngen.h icu4c/include/unicode/dtrule.h $
+    icu4c/include/unicode/enumset.h icu4c/include/unicode/errorcode.h $
+    icu4c/include/unicode/fieldpos.h icu4c/include/unicode/fmtable.h $
+    icu4c/include/unicode/format.h icu4c/include/unicode/fpositer.h $
+    icu4c/include/unicode/gender.h icu4c/include/unicode/gregocal.h $
+    icu4c/include/unicode/icudataver.h icu4c/include/unicode/icuplug.h $
+    icu4c/include/unicode/idna.h icu4c/include/unicode/listformatter.h $
+    icu4c/include/unicode/localpointer.h icu4c/include/unicode/locdspnm.h $
+    icu4c/include/unicode/locid.h icu4c/include/unicode/measfmt.h $
+    icu4c/include/unicode/measunit.h icu4c/include/unicode/measure.h $
+    icu4c/include/unicode/messagepattern.h icu4c/include/unicode/msgfmt.h $
+    icu4c/include/unicode/normalizer2.h icu4c/include/unicode/normlzr.h $
+    icu4c/include/unicode/numfmt.h icu4c/include/unicode/numsys.h $
+    icu4c/include/unicode/parseerr.h icu4c/include/unicode/parsepos.h $
+    icu4c/include/unicode/platform.h icu4c/include/unicode/plurfmt.h $
+    icu4c/include/unicode/plurrule.h icu4c/include/unicode/ptypes.h $
+    icu4c/include/unicode/putil.h icu4c/include/unicode/rbbi.h $
+    icu4c/include/unicode/rbnf.h icu4c/include/unicode/rbtz.h $
+    icu4c/include/unicode/regex.h icu4c/include/unicode/region.h $
+    icu4c/include/unicode/reldatefmt.h icu4c/include/unicode/rep.h $
+    icu4c/include/unicode/resbund.h icu4c/include/unicode/schriter.h $
+    icu4c/include/unicode/scientificnumberformatter.h $
+    icu4c/include/unicode/search.h icu4c/include/unicode/selfmt.h $
+    icu4c/include/unicode/simpletz.h icu4c/include/unicode/smpdtfmt.h $
+    icu4c/include/unicode/sortkey.h icu4c/include/unicode/std_string.h $
+    icu4c/include/unicode/strenum.h icu4c/include/unicode/stringpiece.h $
+    icu4c/include/unicode/stringtriebuilder.h $
+    icu4c/include/unicode/stsearch.h icu4c/include/unicode/symtable.h $
+    icu4c/include/unicode/tblcoll.h icu4c/include/unicode/timezone.h $
+    icu4c/include/unicode/tmunit.h icu4c/include/unicode/tmutamt.h $
+    icu4c/include/unicode/tmutfmt.h icu4c/include/unicode/translit.h $
+    icu4c/include/unicode/tzfmt.h icu4c/include/unicode/tznames.h $
+    icu4c/include/unicode/tzrule.h icu4c/include/unicode/tztrans.h $
+    icu4c/include/unicode/ubidi.h icu4c/include/unicode/ubrk.h $
+    icu4c/include/unicode/ucal.h icu4c/include/unicode/ucasemap.h $
+    icu4c/include/unicode/ucat.h icu4c/include/unicode/uchar.h $
+    icu4c/include/unicode/ucharstrie.h $
+    icu4c/include/unicode/ucharstriebuilder.h $
+    icu4c/include/unicode/uchriter.h icu4c/include/unicode/uclean.h $
+    icu4c/include/unicode/ucnv.h icu4c/include/unicode/ucnv_cb.h $
+    icu4c/include/unicode/ucnv_err.h icu4c/include/unicode/ucnvsel.h $
+    icu4c/include/unicode/ucol.h icu4c/include/unicode/ucoleitr.h $
+    icu4c/include/unicode/uconfig.h icu4c/include/unicode/ucsdet.h $
+    icu4c/include/unicode/ucurr.h icu4c/include/unicode/udat.h $
+    icu4c/include/unicode/udata.h $
+    icu4c/include/unicode/udateintervalformat.h $
+    icu4c/include/unicode/udatpg.h icu4c/include/unicode/udisplaycontext.h $
+    icu4c/include/unicode/uenum.h icu4c/include/unicode/ufieldpositer.h $
+    icu4c/include/unicode/uformattable.h icu4c/include/unicode/ugender.h $
+    icu4c/include/unicode/uidna.h icu4c/include/unicode/uiter.h $
+    icu4c/include/unicode/uldnames.h icu4c/include/unicode/ulistformatter.h $
+    icu4c/include/unicode/uloc.h icu4c/include/unicode/ulocdata.h $
+    icu4c/include/unicode/umachine.h icu4c/include/unicode/umisc.h $
+    icu4c/include/unicode/umsg.h icu4c/include/unicode/unifilt.h $
+    icu4c/include/unicode/unifunct.h icu4c/include/unicode/unimatch.h $
+    icu4c/include/unicode/unirepl.h icu4c/include/unicode/uniset.h $
+    icu4c/include/unicode/unistr.h icu4c/include/unicode/unorm.h $
+    icu4c/include/unicode/unorm2.h icu4c/include/unicode/unum.h $
+    icu4c/include/unicode/unumsys.h icu4c/include/unicode/uobject.h $
+    icu4c/include/unicode/upluralrules.h icu4c/include/unicode/uregex.h $
+    icu4c/include/unicode/uregion.h icu4c/include/unicode/urename.h $
+    icu4c/include/unicode/urep.h icu4c/include/unicode/ures.h $
+    icu4c/include/unicode/uscript.h icu4c/include/unicode/usearch.h $
+    icu4c/include/unicode/uset.h icu4c/include/unicode/usetiter.h $
+    icu4c/include/unicode/ushape.h icu4c/include/unicode/uspoof.h $
+    icu4c/include/unicode/usprep.h icu4c/include/unicode/ustring.h $
+    icu4c/include/unicode/ustringtrie.h icu4c/include/unicode/utext.h $
+    icu4c/include/unicode/utf.h icu4c/include/unicode/utf16.h $
+    icu4c/include/unicode/utf32.h icu4c/include/unicode/utf8.h $
+    icu4c/include/unicode/utf_old.h icu4c/include/unicode/utmscale.h $
+    icu4c/include/unicode/utrace.h icu4c/include/unicode/utrans.h $
+    icu4c/include/unicode/utypes.h icu4c/include/unicode/uvernum.h $
+    icu4c/include/unicode/uversion.h icu4c/include/unicode/vtzone.h $
+    icu4c/lib/icudt.exp icu4c/lib/icudt.lib icu4c/lib/icuin.exp $
+    icu4c/lib/icuin.lib icu4c/lib/icuin.pdb icu4c/lib/icuind.exp $
+    icu4c/lib/icuind.lib icu4c/lib/icuind.pdb icu4c/lib/icuuc.exp $
+    icu4c/lib/icuuc.lib icu4c/lib/icuuc.pdb icu4c/lib/icuucd.exp $
+    icu4c/lib/icuucd.lib icu4c/lib/icuucd.pdb icu4c/license.html $
     icu4c/packaging/PACKAGES icu4c/packaging/README $
     icu4c/packaging/rpm/icu.spec icu4c/readme.html $
     icu4c/source/acinclude.m4 icu4c/source/aclocal.m4 $
@@ -5580,6 +5686,7 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/stubdata/Makefile.in icu4c/source/stubdata/stubdata.c $
     icu4c/source/stubdata/stubdata.vcxproj $
     icu4c/source/stubdata/stubdata.vcxproj.filters $
+    icu4c/source/stubdata/stubdatabuilt.txt $
     icu4c/source/tools/ctestfw/ctest.c $
     icu4c/source/tools/ctestfw/ctestfw.vcxproj $
     icu4c/source/tools/ctestfw/ctestfw.vcxproj.filters $
@@ -5757,13 +5864,13 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/tools/tzcode/tzselect.ksh $
     icu4c/source/tools/tzcode/zdump.c icu4c/source/tools/tzcode/zic.c
   name = icu
-  workdir = $intdir/icu
+  configure = ./source/configure
   configure_flags = --prefix=/ CC=$cc CXX=$cxx CFLAGS="$cflags $
       -DU_STATIC_IMPLEMENTATION" CXXFLAGS="$cxxflags $
       -DU_STATIC_IMPLEMENTATION" LDFLAGS="$ldflags" --disable-shared $
       --enable-static --with-data-packaging=archive --disable-tests $
       --disable-samples
-  configure = ./source/configure
   srcdir = $top_srcdir/icu4c
   destdir = $builddir/icu
+  workdir = $intdir/icu
 default $intdir/gettext.done $intdir/db.done $intdir/icu.done

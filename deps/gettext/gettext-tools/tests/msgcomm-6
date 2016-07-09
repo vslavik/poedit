@@ -28,8 +28,8 @@ EOF
 
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=0 --no-location -o mcomm-test6.tmp \
-    mcomm-test6.in1 mcomm-test6.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test6.tmp > mcomm-test6.out || exit 1
+    mcomm-test6.in1 mcomm-test6.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test6.tmp > mcomm-test6.out || Exit 1
 
 cat << EOF > mcomm-test6.ok
 msgid ""

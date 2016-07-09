@@ -39,8 +39,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test7.tmp mm-test7.po mm-test7.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test7.tmp > mm-test7.out || exit 1
+${MSGMERGE} -q -o mm-test7.tmp mm-test7.po mm-test7.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test7.tmp > mm-test7.out || Exit 1
 
 cat <<\EOF > mm-test7.ok
 domain "foo-de"

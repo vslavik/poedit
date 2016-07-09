@@ -1,6 +1,6 @@
 /* Reading Desktop Entry files.
-   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2014-2015
-   Free Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2014-2016 Free
+   Software Foundation, Inc.
    This file was written by Daiki Ueno <ueno@gnu.org>.
 
    This program is free software: you can redistribute it and/or modify
@@ -85,34 +85,37 @@ struct desktop_reader_ty
   DESKTOP_READER_TY
 };
 
-desktop_reader_ty *desktop_reader_alloc (desktop_reader_class_ty *methods);
-void desktop_reader_free (desktop_reader_ty *reader);
+extern desktop_reader_ty *
+       desktop_reader_alloc (desktop_reader_class_ty *methods);
+extern void desktop_reader_free (desktop_reader_ty *reader);
 
-void desktop_reader_handle_group (desktop_reader_ty *reader,
-                                  const char *group);
+extern void desktop_reader_handle_group (desktop_reader_ty *reader,
+                                         const char *group);
 
-void desktop_reader_handle_pair (desktop_reader_ty *reader,
-                                 lex_pos_ty *key_pos,
+extern void desktop_reader_handle_pair (desktop_reader_ty *reader,
+                                        lex_pos_ty *key_pos,
                                  const char *key,
                                  const char *locale,
                                  const char *value);
 
-void desktop_reader_handle_comment (desktop_reader_ty *reader,
-                                    const char *s);
+extern void desktop_reader_handle_comment (desktop_reader_ty *reader,
+                                           const char *s);
 
-void desktop_reader_handle_blank (desktop_reader_ty *reader,
-                                  const char *s);
-
-
-void desktop_parse (desktop_reader_ty *reader, FILE *file,
-                    const char *real_filename, const char *logical_filename);
+extern void desktop_reader_handle_blank (desktop_reader_ty *reader,
+                                         const char *s);
 
 
-char *desktop_escape_string (const char *s, bool is_list);
-char *desktop_unescape_string (const char *s, bool is_list);
+extern void desktop_parse (desktop_reader_ty *reader, FILE *file,
+                           const char *real_filename,
+                           const char *logical_filename);
 
-void desktop_add_keyword (hash_table *keywords, const char *name, bool is_list);
-void desktop_add_default_keywords (hash_table *keywords);
+
+extern char *desktop_escape_string (const char *s, bool is_list);
+extern char *desktop_unescape_string (const char *s, bool is_list);
+
+extern void desktop_add_keyword (hash_table *keywords, const char *name,
+                                 bool is_list);
+extern void desktop_add_default_keywords (hash_table *keywords);
 
 #ifdef __cplusplus
 }

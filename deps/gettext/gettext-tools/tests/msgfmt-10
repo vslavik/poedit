@@ -36,7 +36,7 @@ msgstr[1] "%d yararsýz kurals"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-test10.po1 || exit 1
+${MSGFMT} --check -o /dev/null mf-test10.po1 || Exit 1
 
 cat <<\EOF > mf-test10.po2
 # SOME DESCRIPTIVE TITLE.

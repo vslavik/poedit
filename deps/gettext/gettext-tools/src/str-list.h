@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1996, 1998, 2000-2004, 2009, 2015 Free Software
+   Copyright (C) 1995-1996, 1998, 2000-2004, 2009, 2015-2016 Free Software
    Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>

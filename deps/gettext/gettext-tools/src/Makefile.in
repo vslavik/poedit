@@ -96,11 +96,14 @@ bin_PROGRAMS = msgcmp$(EXEEXT) msgfmt$(EXEEXT) msgmerge$(EXEEXT) \
 noinst_PROGRAMS = hostname$(EXEEXT) urlget$(EXEEXT) \
 	cldr-plurals$(EXEEXT)
 
+# OS/2 does not support a DLL name longer than 8 characters.
+@OS2_TRUE@am__append_1 = -os2dllname gtsrc
+
 # Tell the mingw or Cygwin linker which symbols to export.
-@WOE32DLL_TRUE@am__append_1 = ../woe32dll/gettextsrc-exports.c
-@WOE32DLL_TRUE@am__append_2 = -Wl,--export-all-symbols
-@WOE32DLL_TRUE@am__append_3 = $(GETTEXTLIB_EXPORTS_FLAGS)
-@WOE32_TRUE@am__append_4 = gettext.res
+@WOE32DLL_TRUE@am__append_2 = ../woe32dll/gettextsrc-exports.c
+@WOE32DLL_TRUE@am__append_3 = -Wl,--export-all-symbols
+@WOE32DLL_TRUE@am__append_4 = $(GETTEXTLIB_EXPORTS_FLAGS)
+@WOE32_TRUE@am__append_5 = gettext.res
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps =  \
@@ -133,6 +136,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/ctype.m4 \
 	$(top_srcdir)/gnulib-m4/curses.m4 \
 	$(top_srcdir)/gnulib-m4/dirent_h.m4 \
+	$(top_srcdir)/gnulib-m4/dirfd.m4 \
 	$(top_srcdir)/gnulib-m4/double-slash-root.m4 \
 	$(top_srcdir)/gnulib-m4/dup.m4 $(top_srcdir)/gnulib-m4/dup2.m4 \
 	$(top_srcdir)/gnulib-m4/eaccess.m4 \
@@ -169,6 +173,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/gettimeofday.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-comp.m4 \
+	$(top_srcdir)/gnulib-m4/hard-locale.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_h.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_open.m4 \
 	$(top_srcdir)/gnulib-m4/include_next.m4 \
@@ -417,7 +422,7 @@ am__libgettextsrc_la_SOURCES_DIST = message.c po-error.c po-xerror.c \
 	format-qt-plural.c format-kde.c format-kde-kuit.c \
 	format-boost.c format-lua.c format-javascript.c \
 	../woe32dll/c++format.cc read-desktop.c locating-rule.c its.c \
-	../woe32dll/gettextsrc-exports.c
+	search-path.c ../woe32dll/gettextsrc-exports.c
 am__objects_1 = libgettextsrc_la-message.lo \
 	libgettextsrc_la-po-error.lo libgettextsrc_la-po-xerror.lo \
 	libgettextsrc_la-read-catalog-abstract.lo \
@@ -499,7 +504,7 @@ am_libgettextsrc_la_OBJECTS = $(am__objects_1) \
 	libgettextsrc_la-plural-table.lo libgettextsrc_la-sentence.lo \
 	$(am__objects_2) libgettextsrc_la-read-desktop.lo \
 	libgettextsrc_la-locating-rule.lo libgettextsrc_la-its.lo \
-	$(am__objects_3)
+	libgettextsrc_la-search-path.lo $(am__objects_3)
 libgettextsrc_la_OBJECTS = $(am_libgettextsrc_la_OBJECTS)
 PROGRAMS = $(bin_PROGRAMS) $(noinst_PROGRAMS)
 am_cldr_plurals_OBJECTS = cldr_plurals-cldr-plural.$(OBJEXT) \
@@ -2163,7 +2168,7 @@ AUTOMAKE_OPTIONS = 1.5 gnits no-dependencies subdir-objects
 # Special rules for Tcl auxiliary program.
 EXTRA_DIST = FILES project-id gnu/gettext/DumpResource.java \
 	gnu/gettext/GetURL.java msgfmt.cs msgunfmt.cs msgunfmt.tcl
-MOSTLYCLEANFILES = core *.stackdump $(am__append_4)
+MOSTLYCLEANFILES = core *.stackdump $(am__append_5)
 CLEANFILES = gnu.gettext.DumpResource$(EXEEXT) \
 	gnu.gettext.GetURL$(EXEEXT) gettext.jar gnu/gettext/*.class \
 	msgfmt.net.exe msgfmt.net.exe.mdb msgunfmt.net.exe \
@@ -2177,7 +2182,7 @@ read-po.h read-properties.h read-stringtable.h \
 str-list.h \
 color.h write-catalog.h write-po.h write-properties.h write-stringtable.h \
 dir-list.h file-list.h po-gram-gen.h po-gram-gen2.h cldr-plural.h \
-cldr-plural-exp.h locating-rule.h its.h \
+cldr-plural-exp.h locating-rule.h its.h search-path.h \
 msgl-charset.h msgl-equal.h msgl-iconv.h msgl-ascii.h msgl-cat.h msgl-header.h \
 msgl-english.h msgl-check.h msgl-fsearch.h msgfmt.h msgunfmt.h \
 plural-count.h plural-eval.h plural-distrib.h \
@@ -2258,7 +2263,8 @@ libgettextsrc_la_SOURCES = $(COMMON_SOURCE) read-catalog.c color.c \
 	msgl-header.c msgl-english.c msgl-check.c file-list.c \
 	msgl-charset.c po-time.c plural-exp.c plural-eval.c \
 	plural-table.c quote.h sentence.h sentence.c $(FORMAT_SOURCE) \
-	read-desktop.c locating-rule.c its.c $(am__append_1)
+	read-desktop.c locating-rule.c its.c search-path.c \
+	$(am__append_2)
 
 # msggrep needs pattern matching.
 LIBGREP = ../libgrep/libgrep.a
@@ -2329,8 +2335,8 @@ cldr_plurals_LDADD = libgettextsrc.la $(LDADD)
 # use iconv().
 libgettextsrc_la_LDFLAGS = -release @VERSION@ \
 	../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ \
-	@LTLIBICONV@ -lc -no-undefined $(am__append_2)
-libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS) $(INCXML) $(am__append_3)
+	@LTLIBICONV@ -lc -no-undefined $(am__append_1) $(am__append_3)
+libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS) $(INCXML) $(am__append_4)
 
 # Compile-time flags for particular source files.
 msgmerge_CFLAGS = $(AM_CFLAGS) $(OPENMP_CFLAGS)
@@ -3007,6 +3013,9 @@ libgettextsrc_la-locating-rule.lo: locating-rule.c
 
 libgettextsrc_la-its.lo: its.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libgettextsrc_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libgettextsrc_la-its.lo `test -f 'its.c' || echo '$(srcdir)/'`its.c
+
+libgettextsrc_la-search-path.lo: search-path.c
+	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libgettextsrc_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libgettextsrc_la-search-path.lo `test -f 'search-path.c' || echo '$(srcdir)/'`search-path.c
 
 ../woe32dll/libgettextsrc_la-gettextsrc-exports.lo: ../woe32dll/gettextsrc-exports.c
 	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libgettextsrc_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o ../woe32dll/libgettextsrc_la-gettextsrc-exports.lo `test -f '../woe32dll/gettextsrc-exports.c' || echo '$(srcdir)/'`../woe32dll/gettextsrc-exports.c

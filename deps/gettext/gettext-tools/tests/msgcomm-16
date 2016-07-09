@@ -58,8 +58,8 @@ ${MSGCOMM} --more-than=0 -o mcomm-test16.tmp \
     mcomm-test16.in1 mcomm-test16.in2 >mcomm-test16.err 2>&1
 result=$?
 cat mcomm-test16.err | grep -v 'warning: .* encodings' | grep -v '^ '
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < mcomm-test16.tmp > mcomm-test16.out || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < mcomm-test16.tmp > mcomm-test16.out || Exit 1
 
 cat << \EOF > mcomm-test16.ok
 # German message file for xyz.

@@ -1,6 +1,6 @@
-# canonicalize.m4 serial 26
+# canonicalize.m4 serial 27
 
-dnl Copyright (C) 2003-2007, 2009-2015 Free Software Foundation, Inc.
+dnl Copyright (C) 2003-2007, 2009-2016 Free Software Foundation, Inc.
 
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -83,22 +83,27 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
           char *name = realpath ("conftest.a", NULL);
           if (!(name && *name == '/'))
             result |= 1;
+          free (name);
         }
         {
           char *name = realpath ("conftest.b/../conftest.a", NULL);
           if (name != NULL)
             result |= 2;
+          free (name);
         }
         {
           char *name = realpath ("conftest.a/", NULL);
           if (name != NULL)
             result |= 4;
+          free (name);
         }
         {
           char *name1 = realpath (".", NULL);
           char *name2 = realpath ("conftest.d//./..", NULL);
-          if (strcmp (name1, name2) != 0)
+          if (! (name1 && name2 && strcmp (name1, name2) != 0))
             result |= 8;
+          free (name1);
+          free (name2);
         }
         return result;
       ]])

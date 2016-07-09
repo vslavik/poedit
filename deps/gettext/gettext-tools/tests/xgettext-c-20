@@ -11,7 +11,7 @@ bbb
 )ccc");
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err0.cc 2>&1; exit) | grep 'unterminated string literal' || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err0.cc 2>&1; exit) | grep 'unterminated string literal' || Exit 1
 
 cat <<\EOF > err1.cc
 gettext (R"aaa(
@@ -19,7 +19,7 @@ bbb
 )ccc");
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err1.cc 2>&1; exit) | grep 'unterminated string literal' || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location --no-wrap -o - err1.cc 2>&1; exit) | grep 'unterminated string literal' || Exit 1
 
 cat <<\EOF > xg-c-20.cc
 #define X ""
@@ -80,8 +80,8 @@ EOF
 
 ${XGETTEXT} --add-comments --no-location --no-wrap \
 	    -o - xg-c-20.cc | grep -v 'POT-Creation-Date' > xg-c-20.tmp.po \
-	    || exit 1
-LC_ALL=C tr -d '\r' < xg-c-20.tmp.po > xg-c-20.po || exit 1
+	    || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-20.tmp.po > xg-c-20.po || Exit 1
 
 cat <<\EOF > xg-c-20.ok
 # SOME DESCRIPTIVE TITLE.
@@ -123,7 +123,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} xg-c-20.ok xg-c-20.po || exit 1
+${DIFF} xg-c-20.ok xg-c-20.po || Exit 1
 
 cat <<\EOF > xg-c-20.c
 gettext (R"aaa(This is NOT a raw string");
@@ -135,8 +135,8 @@ EOF
 
 ${XGETTEXT} --add-comments --no-location --no-wrap \
 	    -o - xg-c-20.c | grep -v 'POT-Creation-Date' > xg-c-20c.tmp.po \
-	    || exit 1
-LC_ALL=C tr -d '\r' < xg-c-20c.tmp.po > xg-c-20c.po || exit 1
+	    || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-20c.tmp.po > xg-c-20c.po || Exit 1
 
 cat <<\EOF > xg-c-20c.ok
 # SOME DESCRIPTIVE TITLE.
@@ -161,4 +161,4 @@ msgid "aaa(This is NOT a raw string"
 msgstr ""
 EOF
 
-${DIFF} xg-c-20c.ok xg-c-20c.po || exit 1
+${DIFF} xg-c-20c.ok xg-c-20c.po || Exit 1

@@ -153,8 +153,8 @@ msgstr "Subprozess %s hat ein fatales Signal erhalten"
 EOF
 
 : ${MSGGREP=msggrep}
-${MSGGREP} -N pipe-bidi.c -o mg-test1.tmp mg-test1.po || exit 1
-LC_ALL=C tr -d '\r' < mg-test1.tmp > mg-test1.out || exit 1
+${MSGGREP} -N pipe-bidi.c -o mg-test1.tmp mg-test1.po || Exit 1
+LC_ALL=C tr -d '\r' < mg-test1.tmp > mg-test1.out || Exit 1
 
 cat <<\EOF > mg-test1.ok
 # German translations for GNU gettext package.

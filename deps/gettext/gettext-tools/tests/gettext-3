@@ -8,7 +8,7 @@
 : ${GLIBC2=no}
 test "$GLIBC2" = yes || {
   echo "Skipping test: not a glibc system"
-  exit 77
+  Exit 77
 }
 
 # This test works only on systems that have a de_DE and fr_FR locale installed.
@@ -18,7 +18,7 @@ LC_ALL=de_DE ../testlocale || {
   else
     echo "Skipping test: locale de_DE not supported"
   fi
-  exit 77
+  Exit 77
 }
 LC_ALL=fr_FR ../testlocale || {
   if test -f /usr/bin/localedef; then
@@ -26,7 +26,7 @@ LC_ALL=fr_FR ../testlocale || {
   else
     echo "Skipping test: locale fr_FR not supported"
   fi
-  exit 77
+  Exit 77
 }
 
 test -d gt-3 || mkdir gt-3
@@ -48,9 +48,9 @@ String1 - First string for testing.
 String2 - Another string for testing.
 EOF
 
-../gettext-3-prg > gt-3.out || exit 1
+../gettext-3-prg > gt-3.out || Exit 1
 
 : ${DIFF=diff}
-${DIFF} gt-3.ok gt-3.out || exit 1
+${DIFF} gt-3.ok gt-3.out || Exit 1
 
-exit 0
+Exit 0

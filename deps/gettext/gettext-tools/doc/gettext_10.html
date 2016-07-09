@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 28 December 2015 -->
+     from gettext.texi on 11 June 2016 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 10  Producing Binary MO Files</TITLE>
@@ -522,14 +522,13 @@ Align strings to <VAR>number</VAR> bytes (default: 1).
 <DD>
 <A NAME="IDX1047"></A>
 Write out 32-bit numbers in the given byte order.  The possible values are
-<CODE>big</CODE> and <CODE>little</CODE>.  The default depends on the platform, namely
-on the endianness of the CPU.
+<CODE>big</CODE> and <CODE>little</CODE>.  The default is <CODE>little</CODE>.
 
 MO files of any endianness can be used on any platform.  When a MO file has
 an endianness other than the platform's one, the 32-bit numbers from the MO
 file are swapped at runtime.  The performance impact is negligible.
 
-This option can be useful to produce MO files that are independent of the
+This option can be useful to produce MO files that are optimized for one
 platform.
 
 <DT><SAMP>&lsquo;--no-hash&rsquo;</SAMP>
@@ -897,8 +896,8 @@ which appears below.
 <A NAME="IDX1105"></A>
 The first two words serve the identification of the file.  The magic
 number will always signal GNU MO files.  The number is stored in the
-byte order of the generating machine, so the magic number really is
-two numbers: <CODE>0x950412de</CODE> and <CODE>0xde120495</CODE>.
+byte order used when the MO file was generated, so the magic number
+really is two numbers: <CODE>0x950412de</CODE> and <CODE>0xde120495</CODE>.
 
 </P>
 <P>

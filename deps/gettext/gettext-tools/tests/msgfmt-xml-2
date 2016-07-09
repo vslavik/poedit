@@ -160,13 +160,13 @@ unset LINGUAS
 
 ${MSGFMT} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.out \
           >/dev/null 2>/dev/null \
-  exit 1
+  Exit 1
 
 test -d po/LINGUAS || mkdir po/LINGUAS
 
 ${MSGFMT} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.out \
           >/dev/null 2>/dev/null \
-  exit 1
+  Exit 1
 
 rm -fr po/LINGUAS
 
@@ -177,27 +177,27 @@ EOF
 
 ${MSGFMT} --xml --template=mf.appdata.xml -d po \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 ${MSGFMG} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.out -l fr \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 ${MSGFMG} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.out po/fr.po \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 # Proceed to the .desktop file generation.
 
-${MSGFMT} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.out || exit 1
+${MSGFMT} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.out || Exit 1
 : ${DIFF=diff}
 ${DIFF} mf.appdata.xml.ok mf.appdata.xml.out
-test $? = 0 || exit 1
+test $? = 0 || Exit 1
 
 # Restrict the desired languages with the LINGUAS envvar.
 
-LINGUAS="fr ja" ${MSGFMT} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.desired.out || exit 1
+LINGUAS="fr ja" ${MSGFMT} --xml --template=mf.appdata.xml -d po -o mf.appdata.xml.desired.out || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mf.appdata.xml.desired.ok mf.appdata.xml.desired.out
-test $? = 0 || exit 1
+test $? = 0 || Exit 1

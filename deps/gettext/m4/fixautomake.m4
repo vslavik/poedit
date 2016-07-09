@@ -1,5 +1,5 @@
 # fixautomake.m4 serial 8 (gettext-0.18)
-dnl Copyright (C) 2002-2003, 2006, 2009, 2015 Free Software Foundation,
+dnl Copyright (C) 2002-2003, 2006, 2009, 2015-2016 Free Software Foundation,
 dnl Inc.
 dnl This file is free software, distributed under the terms of the GNU
 dnl General Public License.  As a special exception to the GNU General

@@ -1,5 +1,5 @@
 /* xgettext Vala backend.
-   Copyright (C) 2002-2003, 2006, 2013, 2015 Free Software Foundation,
+   Copyright (C) 2002-2003, 2006, 2013, 2015-2016 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 # DO NOT EDIT! GENERATED AUTOMATICALLY!
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -103,6 +103,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module diffseq:
   # Code from module dirent:
   # Code from module dirent-tests:
+  # Code from module dirfd:
   # Code from module dosname:
   # Code from module double-slash-root:
   # Code from module dup:
@@ -180,6 +181,7 @@ AC_DEFUN([gl_EARLY],
   # Code from module gettimeofday:
   # Code from module gettimeofday-tests:
   # Code from module gperf:
+  # Code from module hard-locale:
   # Code from module hash:
   # Code from module havelib:
   # Code from module html-ostream:
@@ -524,6 +526,8 @@ AC_DEFUN([gl_EARLY],
   # Code from module xerror:
   # Code from module xlist:
   # Code from module xmalloca:
+  # Code from module xmemdup0:
+  # Code from module xmemdup0-tests:
   # Code from module xreadlink:
   # Code from module xsetenv:
   # Code from module xsize:
@@ -586,6 +590,13 @@ AC_DEFUN([gl_INIT],
   # You need to invoke gt_CSHARPEXEC yourself, possibly with arguments.
   AC_CONFIG_FILES([csharpexec.sh:../build-aux/csharpexec.sh.in])
   gl_DIRENT_H
+  gl_FUNC_DIRFD
+  if test $ac_cv_func_dirfd = no && test $gl_cv_func_dirfd_macro = no \
+     || test $REPLACE_DIRFD = 1; then
+    AC_LIBOBJ([dirfd])
+    gl_PREREQ_DIRFD
+  fi
+  gl_DIRENT_MODULE_INDICATOR([dirfd])
   gl_DOUBLE_SLASH_ROOT
   gl_FUNC_DUP2
   if test $HAVE_DUP2 = 0 || test $REPLACE_DUP2 = 1; then
@@ -689,6 +700,7 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_GETTIMEOFDAY
   fi
   gl_SYS_TIME_MODULE_INDICATOR([gettimeofday])
+  gl_HARD_LOCALE
   AM_ICONV
   m4_ifdef([gl_ICONV_MODULE_INDICATOR],
     [gl_ICONV_MODULE_INDICATOR([iconv])])
@@ -846,11 +858,11 @@ AC_DEFUN([gl_INIT],
   fi
   gl_STDLIB_MODULE_INDICATOR([mkdtemp])
   gl_MOO
-  gl_MSVC_INVAL
+  AC_REQUIRE([gl_MSVC_INVAL])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-inval])
   fi
-  gl_MSVC_NOTHROW
+  AC_REQUIRE([gl_MSVC_NOTHROW])
   if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
     AC_LIBOBJ([msvc-nothrow])
   fi
@@ -1215,6 +1227,7 @@ AC_DEFUN([gl_INIT],
     gl_PREREQ_WRITE
   fi
   gl_UNISTD_MODULE_INDICATOR([write])
+  AC_LIBOBJ([xmemdup0])
   gl_XSIZE
   gl_XVASPRINTF
   m4_ifdef([AM_XGETTEXT_OPTION],
@@ -1609,6 +1622,7 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/diffseq.h
   lib/dirent-private.h
   lib/dirent.in.h
+  lib/dirfd.c
   lib/dosname.h
   lib/dup-safer-flag.c
   lib/dup-safer.c
@@ -1694,6 +1708,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/glthread/threadlib.c
   lib/glthread/tls.c
   lib/glthread/tls.h
+  lib/hard-locale.c
+  lib/hard-locale.h
   lib/hash.c
   lib/hash.h
   lib/html-ostream.oo.c
@@ -2121,6 +2137,8 @@ AC_DEFUN([gl_FILE_LIST], [
   lib/xmalloc.c
   lib/xmalloca.c
   lib/xmalloca.h
+  lib/xmemdup0.c
+  lib/xmemdup0.h
   lib/xreadlink.c
   lib/xreadlink.h
   lib/xsetenv.c
@@ -2158,6 +2176,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/ctype.m4
   m4/curses.m4
   m4/dirent_h.m4
+  m4/dirfd.m4
   m4/double-slash-root.m4
   m4/dup.m4
   m4/dup2.m4
@@ -2199,6 +2218,7 @@ AC_DEFUN([gl_FILE_LIST], [
   m4/glibc2.m4
   m4/glibc21.m4
   m4/gnulib-common.m4
+  m4/hard-locale.m4
   m4/iconv.m4
   m4/iconv_h.m4
   m4/iconv_open.m4
@@ -2501,6 +2521,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-mbrtowc2.sh
   tests/test-mbrtowc3.sh
   tests/test-mbrtowc4.sh
+  tests/test-mbrtowc5.sh
   tests/test-mbsinit.c
   tests/test-mbsinit.sh
   tests/test-mbsrtowcs.c
@@ -2647,6 +2668,7 @@ AC_DEFUN([gl_FILE_LIST], [
   tests/test-write.c
   tests/test-xalloc-die.c
   tests/test-xalloc-die.sh
+  tests/test-xmemdup0.c
   tests/test-xvasprintf.c
   tests/uniconv/test-u8-conv-from-enc.c
   tests/unictype/test-ctype_space.c

@@ -464,8 +464,8 @@ EOF
 : ${XGETTEXT=xgettext}
 # Here we use ngettext with two signatures: ngettext:1 and ngettext:1,2.
 ${XGETTEXT} --omit-header --no-location --keyword=ngettext:1 \
-  -d xg-sh-1.tmp xg-sh-1.sh || exit 1
-LC_ALL=C tr -d '\r' < xg-sh-1.tmp.po > xg-sh-1.po || exit 1
+  -d xg-sh-1.tmp xg-sh-1.sh || Exit 1
+LC_ALL=C tr -d '\r' < xg-sh-1.tmp.po > xg-sh-1.po || Exit 1
 
 cat <<\EOF > xg-sh-1.ok
 msgid "depth_0_none_0_x"

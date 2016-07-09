@@ -13,9 +13,9 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --no-location -k_ -o xg-test5.po xg-test5.c 2>/dev/null
-test $? = 1 || { exit 1; }
-${XGETTEXT} --no-location -k_ --from-code=iso-8859-2 -o xg-test5.tmp xg-test5.c || exit 1
-LC_ALL=C tr -d '\r' < xg-test5.tmp > xg-test5.po || exit 1
+test $? = 1 || { Exit 1; }
+${XGETTEXT} --no-location -k_ --from-code=iso-8859-2 -o xg-test5.tmp xg-test5.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-test5.tmp > xg-test5.po || Exit 1
 
 sed -e '/POT-Creation-Date/d' < xg-test5.po > xg-test5.pot
 

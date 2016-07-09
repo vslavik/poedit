@@ -1,6 +1,5 @@
 ## Makefile for the gettext-tools/libgettextpo subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2011, 2015 Free Software Foundation,
-## Inc.
+## Copyright (C) 1995-1998, 2000-2011, 2015-2016 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -100,7 +99,7 @@ libgettextpo_la_AUXSOURCES = \
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
 LTV_CURRENT=5
-LTV_REVISION=3
+LTV_REVISION=4
 LTV_AGE=5
 
 # How to build libgettextpo.la.
@@ -116,6 +115,11 @@ libgettextpo_la_LDFLAGS = \
 if WOE32DLL
 libgettextpo_la_SOURCES += ../woe32dll/gettextpo-exports.c
 libgettextpo_la_LDFLAGS += -Wl,--export-all-symbols
+endif
+
+# OS/2 does not support a DLL name longer than 8 characters.
+if OS2
+libgettextpo_la_LDFLAGS += -os2dllname gtpo
 endif
 
 # Version information according to Woe32 conventions.

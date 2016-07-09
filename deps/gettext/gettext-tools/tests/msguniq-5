@@ -54,8 +54,8 @@ msgstr "photocopieur"
 EOF
 
 : ${MSGUNIQ-msguniq}
-${MSGUNIQ} -o msguniq-5.tmp msguniq-5.po || exit 1
-LC_ALL=C tr -d '\r' < msguniq-5.tmp > msguniq-5.out || exit 1
+${MSGUNIQ} -o msguniq-5.tmp msguniq-5.po || Exit 1
+LC_ALL=C tr -d '\r' < msguniq-5.tmp > msguniq-5.out || Exit 1
 
 cat <<\EOF > msguniq-5.ok
 msgid ""

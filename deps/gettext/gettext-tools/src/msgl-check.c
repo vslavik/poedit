@@ -1,6 +1,5 @@
 /* Checking of messages in PO files.
-   Copyright (C) 1995-1998, 2000-2008, 2010-2015 Free Software
-   Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2008, 2010-2016 Free Software Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -1069,13 +1068,116 @@ syntax_check_quote_unicode (const message_ty *mp, const char *msgid)
   return arg.seen_errors;
 }
 
+struct bullet_ty
+{
+  int c;
+  size_t depth;
+};
+
+struct bullet_stack_ty
+{
+  struct bullet_ty *items;
+  size_t nitems;
+  size_t nitems_max;
+};
+
+static struct bullet_stack_ty bullet_stack;
+
+static int
+syntax_check_bullet_unicode (const message_ty *mp, const char *msgid)
+{
+  const char *str = msgid;
+  const char *str_limit = str + strlen (msgid);
+  struct bullet_ty *last_bullet = NULL;
+  bool seen_error = false;
+
+  bullet_stack.nitems = 0;
+
+  while (str < str_limit)
+    {
+      const char *p = str, *end;
+
+      while (p < str_limit && c_isspace (*p))
+        p++;
+
+      if ((*p == '*' || *p == '-') && *(p + 1) == ' ')
+        {
+          size_t depth = p - str;
+          if (last_bullet == NULL || depth > last_bullet->depth)
+            {
+              struct bullet_ty bullet;
+
+              bullet.c = *p;
+              bullet.depth = depth;
+
+              if (bullet_stack.nitems >= bullet_stack.nitems_max)
+                {
+                  bullet_stack.nitems_max = 2 * bullet_stack.nitems_max + 4;
+                  bullet_stack.items = xrealloc (bullet_stack.items,
+                                                 bullet_stack.nitems_max
+                                                 * sizeof (struct bullet_ty));
+                }
+
+              last_bullet = &bullet_stack.items[bullet_stack.nitems++];
+              memcpy (last_bullet, &bullet, sizeof (struct bullet_ty));
+            }
+          else
+            {
+              if (depth < last_bullet->depth)
+                {
+                  if (bullet_stack.nitems > 1)
+                    {
+                      bullet_stack.nitems--;
+                      last_bullet =
+                        &bullet_stack.items[bullet_stack.nitems - 1];
+                    }
+                  else
+                    last_bullet = NULL;
+                }
+
+              if (last_bullet && depth == last_bullet->depth)
+                {
+                  if (last_bullet->c != *p)
+                    last_bullet->c = *p;
+                  else
+                    {
+                      seen_error = true;
+                      break;
+                    }
+                }
+            }
+        }
+      else
+        {
+          bullet_stack.nitems = 0;
+          last_bullet = NULL;
+        }
+
+      end = strchrnul (str, '\n');
+      str = end + 1;
+    }
+
+  if (seen_error)
+    {
+      char *msg;
+      msg = xasprintf (_("ASCII bullet ('%c') instead of Unicode"),
+                       last_bullet->c);
+      po_xerror (PO_SEVERITY_ERROR, mp, NULL, 0, 0, false, msg);
+      free (msg);
+      return 1;
+    }
+
+  return 0;
+}
+
 
 typedef int (* syntax_check_function) (const message_ty *mp, const char *msgid);
 static const syntax_check_function sc_funcs[NSYNTAXCHECKS] =
 {
   syntax_check_ellipsis_unicode,
   syntax_check_space_ellipsis,
-  syntax_check_quote_unicode
+  syntax_check_quote_unicode,
+  syntax_check_bullet_unicode
 };
 
 /* Perform all syntax checks on a non-obsolete message.

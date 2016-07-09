@@ -24,8 +24,8 @@ _("after double")
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -d xg-c-2.tmp -k_ --omit-header --no-location xg-c-2.in.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-2.tmp.po > xg-c-2.po || exit 1
+${XGETTEXT} -d xg-c-2.tmp -k_ --omit-header --no-location xg-c-2.in.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-2.tmp.po > xg-c-2.po || Exit 1
 
 cat <<EOF > xg-c-2.ok
 #, no-c-format

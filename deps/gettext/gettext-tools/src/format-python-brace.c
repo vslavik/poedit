@@ -1,5 +1,5 @@
 /* Python brace format strings.
-   Copyright (C) 2004, 2006-2007, 2013, 2015 Free Software Foundation,
+   Copyright (C) 2004, 2006-2007, 2013, 2015-2016 Free Software Foundation,
    Inc.
    Written by Daiki Ueno <ueno@gnu.org>, 2013.
 
@@ -140,42 +140,49 @@ parse_directive (struct spec *spec,
       return false;
     }
 
-  c = *format;
-  if (c == '.')
+  /* Parse '.' (getattr) or '[..]' (getitem) operators followed by a
+     name.  If must not recurse, but can be specifed in a chain, such
+     as "foo.bar.baz[0]".  */
+  for (;;)
     {
-      format++;
-      if (!parse_named_field (spec, &format, translated, fdi,
-                              invalid_reason))
-        {
-          *invalid_reason =
-            xasprintf (_("In the directive number %u, '%c' cannot start a getattr argument."), spec->directives, *format);
-          FDI_SET (format, FMTDIR_ERROR);
-          return false;
-        }
       c = *format;
-    }
-  else if (c == '[')
-    {
-      format++;
-      if (!parse_named_field (spec, &format, translated, fdi,
-                              invalid_reason)
-          && !parse_numeric_field (spec, &format, translated, fdi,
-                                   invalid_reason))
-        {
-          *invalid_reason =
-            xasprintf (_("In the directive number %u, '%c' cannot start a getitem argument."), spec->directives, *format);
-          FDI_SET (format, FMTDIR_ERROR);
-          return false;
-        }
 
-      c = *format++;
-      if (c != ']')
+      if (c == '.')
         {
-          *invalid_reason = INVALID_UNTERMINATED_DIRECTIVE ();
-          FDI_SET (format, FMTDIR_ERROR);
-          return false;
+          format++;
+          if (!parse_named_field (spec, &format, translated, fdi,
+                                  invalid_reason))
+            {
+              *invalid_reason =
+                xasprintf (_("In the directive number %u, '%c' cannot start a getattr argument."), spec->directives, *format);
+              FDI_SET (format, FMTDIR_ERROR);
+              return false;
+            }
         }
-      c = *format;
+      else if (c == '[')
+        {
+          format++;
+          if (!parse_named_field (spec, &format, translated, fdi,
+                                  invalid_reason)
+              && !parse_numeric_field (spec, &format, translated, fdi,
+                                       invalid_reason))
+            {
+              *invalid_reason =
+                xasprintf (_("In the directive number %u, '%c' cannot start a getitem argument."), spec->directives, *format);
+              FDI_SET (format, FMTDIR_ERROR);
+              return false;
+            }
+
+          c = *format++;
+          if (c != ']')
+            {
+              *invalid_reason = INVALID_UNTERMINATED_DIRECTIVE ();
+              FDI_SET (format, FMTDIR_ERROR);
+              return false;
+            }
+        }
+      else
+        break;
     }
 
   if (c == ':')

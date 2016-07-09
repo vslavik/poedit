@@ -30,8 +30,8 @@ with\ wives\ who\ never\ understand=und ihre Frauen verstehen sie nicht
 EOF
 
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --translated --properties-input --properties-output -o ma-s-1.tmp ma-s-1.properties || exit 1
-LC_ALL=C tr -d '\r' < ma-s-1.tmp > ma-s-1.out || exit 1
+${MSGATTRIB} --translated --properties-input --properties-output -o ma-s-1.tmp ma-s-1.properties || Exit 1
+LC_ALL=C tr -d '\r' < ma-s-1.tmp > ma-s-1.out || Exit 1
 
 cat <<\EOF > ma-s-1.ok
 # HEADER.

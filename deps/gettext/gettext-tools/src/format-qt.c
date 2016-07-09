@@ -1,5 +1,5 @@
 /* Qt format strings.
-   Copyright (C) 2003-2004, 2006-2007, 2009, 2015 Free Software
+   Copyright (C) 2003-2004, 2006-2007, 2009, 2015-2016 Free Software
    Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 

@@ -1,6 +1,6 @@
 /* Converts Uniforum style .po files to binary .mo files
-   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012, 2015 Free
-   Software Foundation, Inc.
+   Copyright (C) 1995-1998, 2000-2007, 2009-2010, 2012, 2015-2016 Free Software
+   Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 
    This program is free software: you can redistribute it and/or modify
@@ -65,6 +65,7 @@
 #include "concat-filename.h"
 #include "its.h"
 #include "locating-rule.h"
+#include "search-path.h"
 #include "gettext.h"
 
 #define _(str) gettext (str)
@@ -251,6 +252,7 @@ main (int argc, char *argv[])
 
   /* Set default value for global variables.  */
   alignment = DEFAULT_OUTPUT_ALIGNMENT;
+  byteswap = 0 ^ ENDIANNESS;
 
   /* Set program name for messages.  */
   set_program_name (argv[0]);
@@ -446,7 +448,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 "),
-              "1995-1998, 2000-2010");
+              "1995-1998, 2000-2016");
       printf (_("Written by %s.\n"), proper_name ("Ulrich Drepper"));
       exit (EXIT_SUCCESS);
     }
@@ -663,31 +665,15 @@ There is NO WARRANTY, to the extent permitted by law.\n\
 
   if (xml_mode)
     {
-      const char *gettextdatadir;
-      char *versioned_gettextdatadir;
-      char *its_dirs[2] = { NULL, NULL };
+      char **its_dirs;
+      char **dirs;
       locating_rule_list_ty *its_locating_rules;
       const char *its_basename;
-      size_t i;
 
-      /* Make it possible to override the locator file location.  This
-         is necessary for running the testsuite before "make
-         install".  */
-      gettextdatadir = getenv ("GETTEXTDATADIR");
-      if (gettextdatadir == NULL || gettextdatadir[0] == '\0')
-        gettextdatadir = relocate (GETTEXTDATADIR);
-
-      its_dirs[0] = xconcatenated_filename (gettextdatadir, "its", NULL);
-
-      versioned_gettextdatadir =
-        xasprintf ("%s%s", relocate (GETTEXTDATADIR), PACKAGE_SUFFIX);
-      its_dirs[1] = xconcatenated_filename (versioned_gettextdatadir, "its",
-                                            NULL);
-      free (versioned_gettextdatadir);
-
+      its_dirs = get_search_path ("its");
       its_locating_rules = locating_rule_list_alloc ();
-      for (i = 0; i < SIZEOF (its_dirs); i++)
-        locating_rule_list_add_from_directory (its_locating_rules, its_dirs[i]);
+      for (dirs = its_dirs; *dirs != NULL; dirs++)
+        locating_rule_list_add_from_directory (its_locating_rules, *dirs);
 
       its_basename = locating_rule_list_locate (its_locating_rules,
                                                 xml_template_name,
@@ -698,7 +684,7 @@ There is NO WARRANTY, to the extent permitted by law.\n\
           size_t j;
 
           xml_its_rules = its_rule_list_alloc ();
-          for (j = 0; j < SIZEOF (its_dirs); j++)
+          for (j = 0; its_dirs[j] != NULL; j++)
             {
               char *its_filename =
                 xconcatenated_filename (its_dirs[j], its_basename, NULL);
@@ -711,13 +697,17 @@ There is NO WARRANTY, to the extent permitted by law.\n\
               if (ok)
                 break;
             }
-          if (j == SIZEOF (its_dirs))
+          if (its_dirs[j] == NULL)
             {
               its_rule_list_free (xml_its_rules);
               xml_its_rules = NULL;
             }
         }
       locating_rule_list_free (its_locating_rules);
+
+      for (dirs = its_dirs; *dirs != NULL; dirs++)
+        free (*dirs);
+      free (its_dirs);
 
       if (xml_its_rules == NULL)
         error (EXIT_FAILURE, 0, _("cannot locate ITS rules for %s"),

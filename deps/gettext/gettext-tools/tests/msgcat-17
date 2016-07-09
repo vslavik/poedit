@@ -20,8 +20,8 @@ EOF
 
 rm -f mcat-test17.tmp
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test17.tmp --width=80 mcat-test17.in || exit 1
-LC_ALL=C tr -d '\r' < mcat-test17.tmp > mcat-test17.out || exit 1
+${MSGCAT} -o mcat-test17.tmp --width=80 mcat-test17.in || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test17.tmp > mcat-test17.out || Exit 1
 
 cat <<\EOF > mcat-test17.ok
 msgid ""

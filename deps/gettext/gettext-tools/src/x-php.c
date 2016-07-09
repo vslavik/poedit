@@ -1,6 +1,5 @@
 /* xgettext PHP backend.
-   Copyright (C) 2001-2003, 2005-2010, 2015 Free Software Foundation,
-   Inc.
+   Copyright (C) 2001-2003, 2005-2010, 2015-2016 Free Software Foundation, Inc.
 
    This file was written by Bruno Haible <bruno@clisp.org>, 2002.
 

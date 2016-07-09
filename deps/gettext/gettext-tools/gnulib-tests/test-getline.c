@@ -1,5 +1,5 @@
 /* Test of getline() function.
-   Copyright (C) 2007-2015 Free Software Foundation, Inc.
+   Copyright (C) 2007-2016 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -71,8 +71,8 @@ main (void)
   free (line);
 
   /* Test growth of buffer, must not leak.  */
-  line = malloc (1);
-  len = 0;
+  len = 1;
+  line = malloc (len);
   result = getline (&line, &len, f);
   ASSERT (result == 3);
   ASSERT (strcmp (line, "bc\n") == 0);

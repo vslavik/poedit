@@ -36,8 +36,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test1.tmp mm-test1.in1 mm-test1.in2 || exit 1
-LC_ALL=C tr -d '\r' < mm-test1.tmp > mm-test1.out || exit 1
+${MSGMERGE} -q -o mm-test1.tmp mm-test1.in1 mm-test1.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mm-test1.tmp > mm-test1.out || Exit 1
 
 cat << EOF > mm-test1.ok
 # first

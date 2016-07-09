@@ -1,5 +1,5 @@
 /* Reading PO files.
-   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2015 Free
+   Copyright (C) 1995-1998, 2000-2003, 2005-2006, 2008-2009, 2015-2016 Free
    Software Foundation, Inc.
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 

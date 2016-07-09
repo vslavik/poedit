@@ -17,8 +17,8 @@ EOF
 
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --add-location=file --more-than=0 \
-           -o mcomm-test28.tmp mcomm-test28.in1 mcomm-test28.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test28.tmp > mcomm-test28.out || exit 1
+           -o mcomm-test28.tmp mcomm-test28.in1 mcomm-test28.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test28.tmp > mcomm-test28.out || Exit 1
 
 cat << EOF > mcomm-test28.ok
 #: first.c

@@ -26,8 +26,8 @@ NSLocalizedString(@"Information", @"")
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header -k_ -kNSLocalizedString -d xg-ob-1.tmp xg-ob-1.m || exit 1
-LC_ALL=C tr -d '\r' < xg-ob-1.tmp.po > xg-ob-1.po || exit 1
+${XGETTEXT} --omit-header -k_ -kNSLocalizedString -d xg-ob-1.tmp xg-ob-1.m || Exit 1
+LC_ALL=C tr -d '\r' < xg-ob-1.tmp.po > xg-ob-1.po || Exit 1
 
 cat <<\EOF > xg-ob-1.ok
 #: xg-ob-1.m:2

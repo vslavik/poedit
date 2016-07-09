@@ -39,8 +39,8 @@ EOF
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --add-location=file \
-          -o mcat-test19.tmp mcat-test19.in1 mcat-test19.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcat-test19.tmp > mcat-test19.out || exit 1
+          -o mcat-test19.tmp mcat-test19.in1 mcat-test19.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test19.tmp > mcat-test19.out || Exit 1
 
 cat << EOF > mcat-test19.ok
 msgid ""

@@ -78,8 +78,8 @@ ${XGETTEXT} --omit-header --no-location -d xg-test6.tmp \
   --flag=my_printf:1:python-format \
   xg-test6.c xg-test6.sh xg-test6.py xg-test6.lisp xg-test6.el \
   xg-test6.jl xg-test6.java xg-test6.awk xg-test6.ycp xg-test6.tcl \
-  xg-test6.pl xg-test6.php  || exit 1
-LC_ALL=C tr -d '\r' < xg-test6.tmp.po > xg-test6.po || exit 1
+  xg-test6.pl xg-test6.php  || Exit 1
+LC_ALL=C tr -d '\r' < xg-test6.tmp.po > xg-test6.po || Exit 1
 
 cat <<\EOF > xg-test6.ok
 #, c-format

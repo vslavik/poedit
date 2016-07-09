@@ -55,8 +55,8 @@ EOF
 
 rm -f mcat-test18.tmp
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test18.tmp mcat-test18.in1 mcat-test18.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcat-test18.tmp > mcat-test18.out || exit 1
+${MSGCAT} -o mcat-test18.tmp mcat-test18.in1 mcat-test18.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test18.tmp > mcat-test18.out || Exit 1
 
 cat <<\EOF > mcat-test18.ok
 #, c-format

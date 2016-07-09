@@ -19,8 +19,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} -k_ --omit-header --no-location --add-comments=TRANSLATORS: \
-  -d xg-sc-4.tmp xg-sc-4.scm || exit 1
-LC_ALL=C tr -d '\r' < xg-sc-4.tmp.po > xg-sc-4.po || exit 1
+  -d xg-sc-4.tmp xg-sc-4.scm || Exit 1
+LC_ALL=C tr -d '\r' < xg-sc-4.tmp.po > xg-sc-4.po || Exit 1
 
 cat <<EOF > xg-sc-4.ok
 msgid "New _Brush..."

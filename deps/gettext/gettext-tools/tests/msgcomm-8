@@ -39,8 +39,8 @@ EOF
 
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=1 -o mcomm-test8.tmp \
-    mcomm-test8.in1 mcomm-test8.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test8.tmp > mcomm-test8.out || exit 1
+    mcomm-test8.in1 mcomm-test8.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test8.tmp > mcomm-test8.out || Exit 1
 
 cat << EOF > mcomm-test8.ok
 msgid ""

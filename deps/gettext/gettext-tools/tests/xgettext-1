@@ -12,7 +12,7 @@ ${XGETTEXT} -k_ -d zero-domain -x "$abs_top_srcdir"/po/gettext-tools.pot \
   "$abs_top_srcdir"/src/xgettext.c >xg-test1.err 2>&1
 result=$?
 cat xg-test1.err | grep -v 'warning: Charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 test ! -f zero-domain.po
 result=$?

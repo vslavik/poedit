@@ -56,8 +56,8 @@ rm -f mcat-test6.tmp
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --more-than=0 -o mcat-test6.tmp \
-    mcat-test6.in1 mcat-test6.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcat-test6.tmp > mcat-test6.out || exit 1
+    mcat-test6.in1 mcat-test6.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test6.tmp > mcat-test6.out || Exit 1
 
 cat << \EOF > mcat-test6.ok
 # German message file for xyz.

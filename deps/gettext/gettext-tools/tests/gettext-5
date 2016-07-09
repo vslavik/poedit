@@ -8,7 +8,7 @@
 : ${GLIBC2=no}
 test "$GLIBC2" = yes || {
   echo "Skipping test: not a glibc system"
-  exit 77
+  Exit 77
 }
 
 # This test works only on systems that have a de_DE.ISO-8859-1 and
@@ -19,7 +19,7 @@ LC_ALL=de_DE.ISO-8859-1 ../testlocale || {
   else
     echo "Skipping test: locale de_DE.ISO-8859-1 not supported"
   fi
-  exit 77
+  Exit 77
 }
 LC_ALL=de_DE.UTF-8 ../testlocale || {
   if test -f /usr/bin/localedef; then
@@ -27,7 +27,7 @@ LC_ALL=de_DE.UTF-8 ../testlocale || {
   else
     echo "Skipping test: locale de_DE.UTF-8 not supported"
   fi
-  exit 77
+  Exit 77
 }
 
 test -d gt-5 || mkdir gt-5
@@ -37,6 +37,6 @@ test -d gt-5/de_DE/LC_MESSAGES || mkdir gt-5/de_DE/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o gt-5/de_DE/LC_MESSAGES/codeset.mo "$abs_srcdir"/gettext-5.po
 
-../gettext-5-prg || exit 1
+../gettext-5-prg || Exit 1
 
-exit 0
+Exit 0

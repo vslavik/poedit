@@ -4,8 +4,8 @@
 # Test ISO C 99 <inttypes.h> format string directives.
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o fc3.tmp --omit-header --no-location "$abs_srcdir"/format-c-3-prg.c || exit 1
-LC_ALL=C tr -d '\r' < fc3.tmp > fc3.pot || exit 1
+${XGETTEXT} -o fc3.tmp --omit-header --no-location "$abs_srcdir"/format-c-3-prg.c || Exit 1
+LC_ALL=C tr -d '\r' < fc3.tmp > fc3.pot || Exit 1
 
 cat <<EOF > fc3.ok
 #, c-format
@@ -14,7 +14,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} fc3.ok fc3.pot || exit 1
+${DIFF} fc3.ok fc3.pot || Exit 1
 
 cat <<EOF > fc3-de.po
 #, c-format
@@ -30,11 +30,11 @@ test -d fc3-dir/de/LC_MESSAGES || mkdir fc3-dir/de/LC_MESSAGES
 ${MSGFMT} -o fc3-dir/de/LC_MESSAGES/fc3.mo fc3-de.po
 
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o fc3-de.po.tmp fc3-dir/de/LC_MESSAGES/fc3.mo || exit 1
-LC_ALL=C tr -d '\r' < fc3-de.po.tmp > fc3-de.po.un || exit 1
+${MSGUNFMT} -o fc3-de.po.tmp fc3-dir/de/LC_MESSAGES/fc3.mo || Exit 1
+LC_ALL=C tr -d '\r' < fc3-de.po.tmp > fc3-de.po.un || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fc3-de.po fc3-de.po.un || exit 1
+${DIFF} fc3-de.po fc3-de.po.un || Exit 1
 
 LANGUAGE= ../fc3 de_DE
 result=$?

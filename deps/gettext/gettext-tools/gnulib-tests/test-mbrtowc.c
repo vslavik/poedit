@@ -1,5 +1,5 @@
 /* Test of conversion of multibyte character to wide character.
-   Copyright (C) 2008-2015 Free Software Foundation, Inc.
+   Copyright (C) 2008-2016 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -72,6 +72,10 @@ main (int argc, char *argv[])
     for (c = 0; c < 0x100; c++)
       switch (c)
         {
+        default:
+          if (! (c && 1 < argc && argv[1][0] == '5'))
+            break;
+          /* Fall through.  */
         case '\t': case '\v': case '\f':
         case ' ': case '!': case '"': case '#': case '%':
         case '&': case '\'': case '(': case ')': case '*':
@@ -93,7 +97,8 @@ main (int argc, char *argv[])
         case 'p': case 'q': case 'r': case 's': case 't':
         case 'u': case 'v': case 'w': case 'x': case 'y':
         case 'z': case '{': case '|': case '}': case '~':
-          /* c is in the ISO C "basic character set".  */
+          /* c is in the ISO C "basic character set", or argv[1] starts
+             with '5' so we are testing all nonnull bytes.  */
           buf[0] = c;
           wc = (wchar_t) 0xBADFACE;
           ret = mbrtowc (&wc, buf, 1, &state);
@@ -333,6 +338,10 @@ main (int argc, char *argv[])
           ASSERT (wc == 'r');
           ASSERT (mbsinit (&state));
         }
+        return 0;
+
+      case '5':
+        /* C locale; tested above.  */
         return 0;
       }
 

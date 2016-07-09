@@ -59,8 +59,8 @@ ${MSGCAT} --use-first --more-than=0 -o mcat-test3.tmp \
     mcat-test3.in1 mcat-test3.in2 >mcat-test3.err 2>&1
 result=$?
 cat mcat-test3.err | grep -v 'warning: .* encodings' | grep -v '^ '
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < mcat-test3.tmp > mcat-test3.out || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < mcat-test3.tmp > mcat-test3.out || Exit 1
 
 cat << \EOF > mcat-test3.ok
 # German message file for xyz.

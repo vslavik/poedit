@@ -19,8 +19,8 @@ print(_("%s is replaced by %s.").format("FF", "EUR"));
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.js || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.js || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
@@ -32,7 +32,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -44,15 +44,15 @@ msgstr "«Votre commande, s'il vous plait», dit le garçon."
 # Reverse the arguments.
 #, javascript-format
 msgid "%s is replaced by %s."
-msgstr "%s remplace %s."
+msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d fr || mkdir fr
 test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
@@ -62,11 +62,13 @@ ${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 # Test for presence of gjs.
 (gjs -h) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gjs not found"; exit 77; }
+  || { echo "Skipping test: gjs not found"; Exit 77; }
 (gjs -c imports.gettext) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gjs gettext module not found"; exit 77; }
+  || { echo "Skipping test: gjs gettext module not found"; Exit 77; }
 (gjs -c imports.format) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gjs format module not found"; exit 77; }
+    || { echo "Skipping test: gjs format module not found"; Exit 77; }
+(pkg-config gjs-1.0 --atleast-version=1.40) >/dev/null 2>/dev/null \
+    || { echo "Skipping test: gjs version is older than 1.40"; Exit 77; }
 
 # Test which of the fr_FR locales are installed.
 : ${LOCALE_FR=fr_FR}
@@ -76,7 +78,7 @@ if test $LOCALE_FR != none; then
   case $? in
     0) ;;
     77) LOCALE_FR=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
@@ -84,7 +86,7 @@ if test $LOCALE_FR_UTF8 != none; then
   case $? in
     0) ;;
     77) LOCALE_FR_UTF8=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
@@ -93,30 +95,30 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
 : ${DIFF=diff}
 cat <<\EOF > prog.ok
 «Votre commande, s'il vous plait», dit le garçon.
-FF remplace EUR.
+EUR remplace FF.
 EOF
 cat <<\EOF > prog.oku
 Â«Votre commande, s'il vous plaitÂ», dit le garÃ§on.
-FF remplace EUR.
+EUR remplace FF.
 EOF
 
 : ${LOCALE_FR=fr_FR}
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LC_ALL=$LOCALE_FR gjs prog.js > prog.out || exit 1
-  ${DIFF} prog.ok prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR gjs prog.js > prog.out || Exit 1
+  ${DIFF} prog.ok prog.out || Exit 1
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gjs prog.js > prog.out || exit 1
-  ${DIFF} -u prog.oku prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gjs prog.js > prog.out || Exit 1
+  ${DIFF} -u prog.oku prog.out || Exit 1
 fi
 
-exit 0
+Exit 0

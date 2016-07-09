@@ -13,11 +13,11 @@ msgstr "schneide bei %<PRIuMAX> Bytes in Ausgabedatei %s ab"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o mu-2.mo mu-2.in || exit 1
+${MSGFMT} -o mu-2.mo mu-2.in || Exit 1
 
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o mu-2.tmp mu-2.mo || exit 1
-LC_ALL=C tr -d '\r' < mu-2.tmp > mu-2.out || exit 1
+${MSGUNFMT} -o mu-2.tmp mu-2.mo || Exit 1
+LC_ALL=C tr -d '\r' < mu-2.tmp > mu-2.out || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mu-2.in mu-2.out

@@ -50,8 +50,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test3.tmp mm-test3.in1 mm-test3.in2 || exit 1
-LC_ALL=C tr -d '\r' < mm-test3.tmp > mm-test3.out || exit 1
+${MSGMERGE} -q -o mm-test3.tmp mm-test3.in1 mm-test3.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mm-test3.tmp > mm-test3.out || Exit 1
 
 cat << EOF > mm-test3.ok
 #: file3:102

@@ -1,5 +1,5 @@
 ## Makefile for the gettext-runtime/doc subdirectory of GNU gettext
-## Copyright (C) 1995-1997, 2001-2003, 2006, 2015 Free Software
+## Copyright (C) 1995-1997, 2001-2003, 2006, 2015-2016 Free Software
 ## Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify

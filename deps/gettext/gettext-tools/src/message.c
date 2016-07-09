@@ -1,6 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2009, 2015 Free Software Foundation,
-   Inc.
+   Copyright (C) 1995-1998, 2000-2009, 2015-2016 Free Software Foundation, Inc.
 
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -111,7 +110,8 @@ const char *const syntax_check_name[NSYNTAXCHECKS] =
 {
   /* sc_ellipsis_unicode */     "ellipsis-unicode",
   /* sc_space_ellipsis */       "space-ellipsis",
-  /* sc_quote_unicode */        "quote-unicode"
+  /* sc_quote_unicode */        "quote-unicode",
+  /* sc_bullet_unicode */       "bullet-unicode"
 };
 
 

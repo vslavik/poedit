@@ -1,5 +1,5 @@
 # unionwait.m4 serial 1 (gettext-0.11)
-dnl Copyright (C) 1993-2002, 2015 Free Software Foundation, Inc.
+dnl Copyright (C) 1993-2002, 2015-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.

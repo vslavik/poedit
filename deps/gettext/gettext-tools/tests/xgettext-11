@@ -17,8 +17,8 @@ gettext ("def");
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --no-location --omit-header --add-comments=TRANSLATORS: -d xg-test11.tmp xg-test11.c || exit 1
-LC_ALL=C tr -d '\r' < xg-test11.tmp.po > xg-test11.po || exit 1
+${XGETTEXT} --no-location --omit-header --add-comments=TRANSLATORS: -d xg-test11.tmp xg-test11.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-test11.tmp.po > xg-test11.po || Exit 1
 
 cat <<\EOF > xg-test11.ok
 #. TRANSLATORS: this

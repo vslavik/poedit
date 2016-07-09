@@ -1,5 +1,5 @@
 /* Extended regular expression matching and search library.
-   Copyright (C) 2002-2015 Free Software Foundation, Inc.
+   Copyright (C) 2002-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Isamu Hasegawa <isamu@yamato.ibm.com>.
 
@@ -151,31 +151,22 @@
 # define __attribute__(arg)
 #endif
 
-typedef __re_idx_t Idx;
+#ifndef SSIZE_MAX
+# define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
+#endif
+
+/* The type of indexes into strings.  This is signed, not size_t,
+   since the API requires indexes to fit in regoff_t anyway, and using
+   signed integers makes the code a bit smaller and presumably faster.
+   The traditional GNU regex implementation uses int for indexes.
+   The POSIX-compatible implementation uses a possibly-wider type.
+   The name 'Idx' is three letters to minimize the hassle of
+   reindenting a lot of regex code that formerly used 'int'.  */
+typedef regoff_t Idx;
 #ifdef _REGEX_LARGE_OFFSETS
-# define IDX_MAX (SIZE_MAX - 2)
+# define IDX_MAX SSIZE_MAX
 #else
 # define IDX_MAX INT_MAX
-#endif
-
-/* Special return value for failure to match.  */
-#define REG_MISSING ((Idx) -1)
-
-/* Special return value for internal error.  */
-#define REG_ERROR ((Idx) -2)
-
-/* Test whether N is a valid index, and is not one of the above.  */
-#ifdef _REGEX_LARGE_OFFSETS
-# define REG_VALID_INDEX(n) ((Idx) (n) < REG_ERROR)
-#else
-# define REG_VALID_INDEX(n) (0 <= (n))
-#endif
-
-/* Test whether N is a valid nonzero index.  */
-#ifdef _REGEX_LARGE_OFFSETS
-# define REG_VALID_NONZERO_INDEX(n) ((Idx) ((n) - 1) < (Idx) (REG_ERROR - 1))
-#else
-# define REG_VALID_NONZERO_INDEX(n) (0 < (n))
 #endif
 
 /* A hash value, suitable for computing hash tables.  */

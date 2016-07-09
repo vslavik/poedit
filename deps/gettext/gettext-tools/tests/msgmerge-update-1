@@ -59,7 +59,7 @@ EOF
 cp mm-u-1.po mm-u-1.bak
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --update mm-u-1.po mm-u-1.pot || exit 1
+${MSGMERGE} -q --update mm-u-1.po mm-u-1.pot || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mm-u-1.bak mm-u-1.po

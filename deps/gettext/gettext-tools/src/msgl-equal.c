@@ -1,5 +1,5 @@
 /* Message list test for equality.
-   Copyright (C) 2001-2002, 2005-2006, 2008, 2015 Free Software
+   Copyright (C) 2001-2002, 2005-2006, 2008, 2015-2016 Free Software
    Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 

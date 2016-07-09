@@ -82,7 +82,7 @@ LC_ALL=C \
 ${MSGEXEC} -i mex-test4.po ./mex-test4.sh > mex-test4.out 2> mex-test4.err
 result=$?
 cat mex-test4.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 cat <<\EOF > mex-test4.ok
 ========================= mex-test4.po:2 =========================

@@ -55,8 +55,8 @@ EOF
 
 : ${MSGMERGE=msgmerge}
 LC_MESSAGES=C LC_ALL= \
-${MSGMERGE} -q -o mm-test6.tmp mm-test6.in1.po mm-test6.in2.po || exit 1
-LC_ALL=C tr -d '\r' < mm-test6.tmp > mm-test6.out || exit 1
+${MSGMERGE} -q -o mm-test6.tmp mm-test6.in1.po mm-test6.in2.po || Exit 1
+LC_ALL=C tr -d '\r' < mm-test6.tmp > mm-test6.out || Exit 1
 
 cat <<\EOF > mm-test6.ok
 # SOME DESCRIPTIVE TITLE.

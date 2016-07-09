@@ -19,63 +19,63 @@ ${MSGCONV} --to-code=UTF-8 -o mm-ko-comp.utf-8.po "$abs_srcdir"/mm-ko-comp.euc-k
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-AEE.tmp \
   --compendium "$abs_srcdir"/mm-ko-comp.euc-kr.po \
-  "$abs_srcdir"/mm-ko.euc-kr.po "$abs_srcdir"/mm-ko.ascii.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-AEE.tmp > mm-c-6-AEE.out || exit 1
+  "$abs_srcdir"/mm-ko.euc-kr.po "$abs_srcdir"/mm-ko.ascii.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-AEE.tmp > mm-c-6-AEE.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-AEU.tmp \
   --compendium mm-ko-comp.utf-8.po \
-  "$abs_srcdir"/mm-ko.euc-kr.po "$abs_srcdir"/mm-ko.ascii.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-AEU.tmp > mm-c-6-AEU.out || exit 1
+  "$abs_srcdir"/mm-ko.euc-kr.po "$abs_srcdir"/mm-ko.ascii.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-AEU.tmp > mm-c-6-AEU.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-AUE.tmp \
   --compendium "$abs_srcdir"/mm-ko-comp.euc-kr.po \
-  mm-ko.utf-8.po "$abs_srcdir"/mm-ko.ascii.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-AUE.tmp > mm-c-6-AUE.out || exit 1
+  mm-ko.utf-8.po "$abs_srcdir"/mm-ko.ascii.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-AUE.tmp > mm-c-6-AUE.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-AUU.tmp \
   --compendium mm-ko-comp.utf-8.po \
-  mm-ko.utf-8.po "$abs_srcdir"/mm-ko.ascii.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-AUU.tmp > mm-c-6-AUU.out || exit 1
+  mm-ko.utf-8.po "$abs_srcdir"/mm-ko.ascii.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-AUU.tmp > mm-c-6-AUU.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-UEE.tmp \
   --compendium "$abs_srcdir"/mm-ko-comp.euc-kr.po \
-  "$abs_srcdir"/mm-ko.euc-kr.po mm-ko.utf-8.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-UEE.tmp > mm-c-6-UEE.out || exit 1
+  "$abs_srcdir"/mm-ko.euc-kr.po mm-ko.utf-8.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-UEE.tmp > mm-c-6-UEE.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-UEU.tmp \
   --compendium mm-ko-comp.utf-8.po \
-  "$abs_srcdir"/mm-ko.euc-kr.po mm-ko.utf-8.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-UEU.tmp > mm-c-6-UEU.out || exit 1
+  "$abs_srcdir"/mm-ko.euc-kr.po mm-ko.utf-8.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-UEU.tmp > mm-c-6-UEU.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-UUE.tmp \
   --compendium "$abs_srcdir"/mm-ko-comp.euc-kr.po \
-  mm-ko.utf-8.po mm-ko.utf-8.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-UUE.tmp > mm-c-6-UUE.out || exit 1
+  mm-ko.utf-8.po mm-ko.utf-8.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-UUE.tmp > mm-c-6-UUE.out || Exit 1
 
 : ${MSGMERGE=msgmerge}
 ${MSGMERGE} -q -o mm-c-6-UUU.tmp \
   --compendium mm-ko-comp.utf-8.po \
-  mm-ko.utf-8.po mm-ko.utf-8.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-c-6-UUU.tmp > mm-c-6-UUU.out || exit 1
+  mm-ko.utf-8.po mm-ko.utf-8.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-c-6-UUU.tmp > mm-c-6-UUU.out || Exit 1
 
 : ${MSGCONV=msgconv}
 ${MSGCONV} --to-code=UTF-8 mm-c-6-UUU.out | LC_ALL=C tr -d '\r' > mm-c-6-U.ok
 ${MSGCONV} --to-code=EUC-KR mm-c-6-UUU.out | LC_ALL=C sed -e 's,EUC-KR,euc-kr,' | LC_ALL=C tr -d '\r' > mm-c-6-E.ok
 
 : ${DIFF=diff}
-${DIFF} mm-c-6-E.ok mm-c-6-AEE.out || { exit 1; }
-${DIFF} mm-c-6-E.ok mm-c-6-AEU.out || { exit 1; }
-${DIFF} mm-c-6-U.ok mm-c-6-AUE.out || { exit 1; }
-${DIFF} mm-c-6-U.ok mm-c-6-AUU.out || { exit 1; }
-${DIFF} mm-c-6-U.ok mm-c-6-UEE.out || { exit 1; }
-${DIFF} mm-c-6-U.ok mm-c-6-UEU.out || { exit 1; }
-${DIFF} mm-c-6-U.ok mm-c-6-UUE.out || { exit 1; }
-${DIFF} mm-c-6-U.ok mm-c-6-UUU.out || { exit 1; }
+${DIFF} mm-c-6-E.ok mm-c-6-AEE.out || { Exit 1; }
+${DIFF} mm-c-6-E.ok mm-c-6-AEU.out || { Exit 1; }
+${DIFF} mm-c-6-U.ok mm-c-6-AUE.out || { Exit 1; }
+${DIFF} mm-c-6-U.ok mm-c-6-AUU.out || { Exit 1; }
+${DIFF} mm-c-6-U.ok mm-c-6-UEE.out || { Exit 1; }
+${DIFF} mm-c-6-U.ok mm-c-6-UEU.out || { Exit 1; }
+${DIFF} mm-c-6-U.ok mm-c-6-UUE.out || { Exit 1; }
+${DIFF} mm-c-6-U.ok mm-c-6-UUU.out || { Exit 1; }
 
-exit 0
+Exit 0

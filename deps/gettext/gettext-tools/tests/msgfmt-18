@@ -28,8 +28,8 @@ EOF
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check-accelerators -o /dev/null mf-18.po 2>/dev/null
-test $? = 1 || { exit 1; }
+test $? = 1 || { Exit 1; }
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check-accelerators='_' -o /dev/null mf-18.po 2>/dev/null
-test $? = 1 || { exit 1; }
+test $? = 1 || { Exit 1; }

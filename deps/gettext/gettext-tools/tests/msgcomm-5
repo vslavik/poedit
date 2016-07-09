@@ -28,8 +28,8 @@ EOF
 
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=0 --omit-header -o mcomm-test5.tmp \
-    mcomm-test5.in1 mcomm-test5.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test5.tmp > mcomm-test5.out || exit 1
+    mcomm-test5.in1 mcomm-test5.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test5.tmp > mcomm-test5.out || Exit 1
 
 cat << EOF > mcomm-test5.ok
 #: first.c:123

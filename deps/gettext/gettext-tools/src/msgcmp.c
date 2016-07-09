@@ -1,5 +1,5 @@
 /* GNU gettext - internationalization aids
-   Copyright (C) 1995-1998, 2000-2010, 2012, 2015 Free Software
+   Copyright (C) 1995-1998, 2000-2010, 2012, 2015-2016 Free Software
    Foundation, Inc.
    This file was written by Peter Miller <millerp@canb.auug.org.au>
 
@@ -175,7 +175,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 "),
-              "1995-1998, 2000-2010");
+              "1995-1998, 2000-2016");
       printf (_("Written by %s.\n"), proper_name ("Peter Miller"));
       exit (EXIT_SUCCESS);
     }

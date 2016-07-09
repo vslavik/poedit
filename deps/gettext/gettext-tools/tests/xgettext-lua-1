@@ -26,8 +26,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --add-comments=TRANSLATORS: \
-  -d xg-lu-1.tmp xg-lu-1.lua || exit 1
-LC_ALL=C tr -d '\r' < xg-lu-1.tmp.po > xg-lu-1.po || exit 1
+  -d xg-lu-1.tmp xg-lu-1.lua || Exit 1
+LC_ALL=C tr -d '\r' < xg-lu-1.tmp.po > xg-lu-1.po || Exit 1
 
 cat <<EOF > xg-lu-1.ok
 msgid "This is a test string."

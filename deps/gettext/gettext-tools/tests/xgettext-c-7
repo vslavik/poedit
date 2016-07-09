@@ -38,8 +38,8 @@ main()
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -c --c++ -d xg-c-7.tmp xg-c-7.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-7.tmp.po > xg-c-7.po || exit 1
+${XGETTEXT} --omit-header --no-location -c --c++ -d xg-c-7.tmp xg-c-7.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-7.tmp.po > xg-c-7.po || Exit 1
 
 cat <<EOF > xg-c-7.ok
 #. This is a comment which immediately before a keyword.

@@ -92,16 +92,16 @@ EOF
 
 ${MSGFMT} --xml --template=mf.appdata.xml -l fr fr.po \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 ${MSGFMG} --xml --template=mf.appdata.xml fr.po -o mf.appdata.xml.out \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 # Proceed to the XML file generation.
 
 ${MSGFMT} --xml --template=mf.appdata.xml -l fr fr.po -o mf.appdata.xml.out \
-  || exit 1
+  || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mf.appdata.xml.ok mf.appdata.xml.out
@@ -111,7 +111,7 @@ test $result = 0 || exit $result
 # Test -L option.
 cp mf.appdata.xml mf.xml
 ${MSGFMT} --xml --template=mf.xml -L AppData -l fr fr.po -o mf.appdata.xml.out \
-  || exit 1
+  || Exit 1
 ${DIFF} mf.appdata.xml.ok mf.appdata.xml.out
 result=$?
 test $result = 0 || exit $result

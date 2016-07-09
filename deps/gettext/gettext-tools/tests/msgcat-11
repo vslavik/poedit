@@ -31,8 +31,8 @@ msgstr "immer"
 EOF
 
 : ${MSGCAT=msgcat}
-${MSGCAT} -o mcat-test11.tmp mcat-test11.in || exit 1
-LC_ALL=C tr -d '\r' < mcat-test11.tmp > mcat-test11.out || exit 1
+${MSGCAT} -o mcat-test11.tmp mcat-test11.in || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test11.tmp > mcat-test11.out || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mcat-test11.in mcat-test11.out

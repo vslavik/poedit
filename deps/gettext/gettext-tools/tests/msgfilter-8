@@ -81,9 +81,9 @@ LC_ALL=C ${MSGFILTER} --newline -i mfi-test8.po -o mfi-test8.out \
       ${CONFIG_SHELL} filter.sh >mfi-test8.err 2>&1
 result=$?
 cat mfi-test8.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 cat mfi-test8.err | grep 'msgfilter: filter output is not terminated with a newline' >/dev/null
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 cat <<\EOF > mfi-test8.ok
 # HEADER.

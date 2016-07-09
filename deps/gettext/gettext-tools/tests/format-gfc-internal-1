@@ -74,8 +74,8 @@ while read comment; do
   cat <<EOF > f-gf-1-$n.in
 gettext(${string});
 EOF
-  ${XGETTEXT} -L GCC-source -o f-gf-1-$n.po f-gf-1-$n.in || exit 1
-  test -f f-gf-1-$n.po || exit 1
+  ${XGETTEXT} -L GCC-source -o f-gf-1-$n.po f-gf-1-$n.in || Exit 1
+  test -f f-gf-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep gfc-internal-format f-gf-1-$n.po > /dev/null; then
@@ -95,9 +95,9 @@ EOF
     cat f-gf-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-gf-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-gf-1-$n.in f-gf-1-$n.po
 done < f-gf-1.data
 
-exit 0
+Exit 0

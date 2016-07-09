@@ -43,17 +43,17 @@ EOF
 # is found in the build directory, regardless of -I options present in
 # ${CFLAGS} or ${CPPFLAGS}.
 ${CC} -I../.. -I"$abs_top_srcdir"/gnulib-lib -I../../intl ${CFLAGS} \
-      ${CPPFLAGS} -c prog.c || exit 1
+      ${CPPFLAGS} -c prog.c || Exit 1
 
 : ${CONFIG_SHELL=${SHELL-/bin/sh}}
 ${CONFIG_SHELL} "$top_builddir"/libtool --quiet --tag=CC --mode=link \
                 ${CC} ${CFLAGS} -o prog prog.${OBJEXT} \
                 ../../gnulib-lib/libgettextlib.la ${LDFLAGS} ${LTLIBINTL} \
-		|| exit 1
+		|| Exit 1
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location -k_ prog.c || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location -k_ prog.c || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<EOF > prog.ok
 #, c-format
@@ -72,7 +72,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -98,11 +98,11 @@ msgstr "%2$s remplace %1$s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d fr || mkdir fr
 test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
@@ -128,18 +128,18 @@ if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
   LANGUAGE= ./prog $LOCALE_FR 2 > prog.out
   case $? in
-    0) ${DIFF} prog.ok prog.out || exit 1;;
+    0) ${DIFF} prog.ok prog.out || Exit 1;;
     77) LOCALE_FR=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
   LANGUAGE= ./prog $LOCALE_FR_UTF8 2 > prog.out
   case $? in
-    0) ${DIFF} prog.oku prog.out || exit 1;;
+    0) ${DIFF} prog.oku prog.out || Exit 1;;
     77) LOCALE_FR_UTF8=none;;
-    *) exit 1;;
+    *) Exit 1;;
   esac
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
@@ -148,7 +148,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
-exit 0
+Exit 0

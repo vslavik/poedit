@@ -1,5 +1,5 @@
 /* gettext - retrieve text string from message catalog and print it.
-   Copyright (C) 1995-1997, 2000-2007, 2012, 2015 Free Software
+   Copyright (C) 1995-1997, 2000-2007, 2012, 2015-2016 Free Software
    Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, May 1995.
 

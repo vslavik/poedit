@@ -31,8 +31,8 @@ third line");
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -c -d xg-cs-1.tmp xg-cs-1.cs || exit 1
-LC_ALL=C tr -d '\r' < xg-cs-1.tmp.po > xg-cs-1.po || exit 1
+${XGETTEXT} --omit-header --no-location -c -d xg-cs-1.tmp xg-cs-1.cs || Exit 1
+LC_ALL=C tr -d '\r' < xg-cs-1.tmp.po > xg-cs-1.po || Exit 1
 
 cat <<EOF > xg-cs-1.ok
 #. standard usage

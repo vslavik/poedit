@@ -102,8 +102,8 @@ while read comment; do
   cat <<EOF > f-el-1-$n.in
 (_ ${string});
 EOF
-  ${XGETTEXT} -L EmacsLisp -o f-el-1-$n.po f-el-1-$n.in || exit 1
-  test -f f-el-1-$n.po || exit 1
+  ${XGETTEXT} -L EmacsLisp -o f-el-1-$n.po f-el-1-$n.in || Exit 1
+  test -f f-el-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep elisp-format f-el-1-$n.po > /dev/null; then
@@ -123,9 +123,9 @@ EOF
     cat f-el-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-el-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-el-1-$n.in f-el-1-$n.po
 done < f-el-1.data
 
-exit 0
+Exit 0

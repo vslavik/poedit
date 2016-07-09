@@ -65,7 +65,7 @@ msgstr[7] "7"
 msgstr[8] "8"
 msgstr[9] "9"
 EOF
-  ${MSGFMT} -o plural-2-dir/ll/LC_MESSAGES/plural.mo plural-2-ll.po || exit 1
+  ${MSGFMT} -o plural-2-dir/ll/LC_MESSAGES/plural.mo plural-2-ll.po || Exit 1
   (for i in '' 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19; do
      LANGUAGE= TEXTDOMAIN=plural TEXTDOMAINDIR=plural-2-dir \
        $NGETTEXT --env LC_ALL=ll X Y ${i}0 ${i}1 ${i}2 ${i}3 ${i}4 ${i}5 ${i}6 ${i}7 ${i}8 ${i}9
@@ -75,8 +75,8 @@ EOF
     echo "plural=${formula}" 1>&2
     echo "Expected: $dataok" 1>&2
     echo "Got:      "`cat dataout` 1>&2
-    exit 1
+    Exit 1
   }
 done < plural-2.data
 
-exit 0
+Exit 0

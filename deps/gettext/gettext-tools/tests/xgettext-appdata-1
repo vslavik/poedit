@@ -12,7 +12,7 @@ EOF
 ${XGETTEXT} -o xg-gs-1.pot xg-gs-1-empty.appdata.xml 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without AppData support"
-  exit 77
+  Exit 77
 }
 
 cat <<EOF > xg-gs-1.appdata.xml
@@ -57,7 +57,7 @@ cat <<EOF > xg-gs-1.appdata.xml
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments -o - xg-gs-1.appdata.xml | grep -v 'POT-Creation-Date' > xg-gs-1.pot || exit 1
+${XGETTEXT} --add-comments -o - xg-gs-1.appdata.xml | grep -v 'POT-Creation-Date' > xg-gs-1.pot || Exit 1
 
 cat <<EOF > xg-gs-1.ok
 # SOME DESCRIPTIVE TITLE.

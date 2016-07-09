@@ -49,8 +49,8 @@ msgstr "photocopieur"
 EOF
 
 : ${MSGCONV=msgconv}
-${MSGCONV} --to-code=UTF-8 -o mco-test5.tmp mco-test5.po || exit 1
-LC_ALL=C tr -d '\r' < mco-test5.tmp > mco-test5.out || exit 1
+${MSGCONV} --to-code=UTF-8 -o mco-test5.tmp mco-test5.po || Exit 1
+LC_ALL=C tr -d '\r' < mco-test5.tmp > mco-test5.out || Exit 1
 
 cat <<\EOF > mco-test5.ok
 msgid ""

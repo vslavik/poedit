@@ -1,5 +1,5 @@
 /* xgettext Smalltalk backend.
-   Copyright (C) 2002-2003, 2005-2009, 2011, 2015 Free Software
+   Copyright (C) 2002-2003, 2005-2009, 2011, 2015-2016 Free Software
    Foundation, Inc.
 
    This file was written by Bruno Haible <haible@clisp.cons.org>, 2002.

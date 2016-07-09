@@ -1,5 +1,5 @@
 /* Creates an English translation catalog.
-   Copyright (C) 2001-2007, 2009-2010, 2012, 2015 Free Software
+   Copyright (C) 2001-2007, 2009-2010, 2012, 2015-2016 Free Software
    Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
@@ -244,7 +244,7 @@ License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 "),
-              "2001-2010");
+              "2001-2016");
       printf (_("Written by %s.\n"), proper_name ("Bruno Haible"));
       exit (EXIT_SUCCESS);
     }

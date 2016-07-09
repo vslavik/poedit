@@ -1,6 +1,6 @@
 ;;; po-compat.el --- basic support of PO translation files -*- coding: latin-1; -*-
 
-;; Copyright (C) 1995-2002, 2010, 2015 Free Software Foundation, Inc.
+;; Copyright (C) 1995-2002, 2010, 2015-2016 Free Software Foundation, Inc.
 
 ;; Authors: François Pinard <pinard@iro.umontreal.ca>,
 ;;          Greg McGary <gkm@magilla.cichlid.com>,

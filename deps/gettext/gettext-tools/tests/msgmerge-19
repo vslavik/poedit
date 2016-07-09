@@ -77,8 +77,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.po mm-test19.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new1.po || exit 1
+${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.po mm-test19.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new1.po || Exit 1
 
 cat <<\EOF > mm-test19.ok1
 msgid ""
@@ -120,7 +120,7 @@ msgstr "%s: ungültige Option -- %c\n"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test19.ok1 mm-test19.new1.po || exit 1
+${DIFF} mm-test19.ok1 mm-test19.new1.po || Exit 1
 
 cat <<\EOF > mm-test19.pot
 # SOME DESCRIPTIVE TITLE.
@@ -161,8 +161,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.new1.po mm-test19.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new2.po || exit 1
+${MSGMERGE} -q --previous -o mm-test19.tmp.po mm-test19.new1.po mm-test19.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test19.tmp.po > mm-test19.new2.po || Exit 1
 
 cat <<\EOF > mm-test19.ok2
 msgid ""
@@ -203,6 +203,6 @@ msgstr "Argumente fehlen"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test19.ok2 mm-test19.new2.po || exit 1
+${DIFF} mm-test19.ok2 mm-test19.new2.po || Exit 1
 
-exit 0
+Exit 0

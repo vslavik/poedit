@@ -22,8 +22,8 @@ msgstr "Volle 360 Grad"
 EOF
 
 : ${MSGCONV=msgconv}
-${MSGCONV} --to-code=ISO-8859-1 -o mco-test6.tmp mco-test6.po || exit 1
-LC_ALL=C tr -d '\r' < mco-test6.tmp > mco-test6.out || exit 1
+${MSGCONV} --to-code=ISO-8859-1 -o mco-test6.tmp mco-test6.po || Exit 1
+LC_ALL=C tr -d '\r' < mco-test6.tmp > mco-test6.out || Exit 1
 
 cat <<\EOF > mco-test6.ok
 msgid ""

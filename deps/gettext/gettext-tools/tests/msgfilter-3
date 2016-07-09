@@ -19,13 +19,13 @@ fi
 # spaces.
 echo abc | fold -b -s -w 20 >/dev/null 2>&1 || {
   echo "Skipping test: fold program not POSIX compliant"
-  exit 77
+  Exit 77
 }
 
 # Some fold programs (like NetBSD 5.0) remove trailing spaces when wrapping.
 echo ab cd | fold -b -s -w 3 | grep ' ' >/dev/null || {
   echo "Skipping test: fold program trims trailing spaces"
-  exit 77
+  Exit 77
 }
 
 # Some fold programs (like HP-UX) insert a newline at the end, if the last
@@ -34,7 +34,7 @@ foldoutputcount=`echo $ac_n "abc$ac_c" | fold -b -s -w 20 | wc -c`
 foldoutputcount=`echo "$foldoutputcount" | sed -e 's/[ 	]//g'`
 test "$foldoutputcount" = 3 || {
   echo "Skipping test: fold program inserts extra newline"
-  exit 77
+  Exit 77
 }
 
 cat <<\EOF > mfi-test3.properties
@@ -67,7 +67,7 @@ EOF
 LC_ALL=C \
 ${MSGFILTER} --properties-input --properties-output -i mfi-test3.properties -o mfi-test3.out fold -b -s -w 20
 result=$?
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 cat <<\EOF > mfi-test3.ok
 # HEADER.

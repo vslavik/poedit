@@ -131,9 +131,9 @@ EOF
   if test -n "$fail"; then
     echo "Format string checking error:" 1>&2
     cat f-t-2-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-t-2-$n.po f-t-2-$n.mo
 done < f-t-2.data
 
-exit 0
+Exit 0

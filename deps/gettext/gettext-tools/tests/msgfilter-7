@@ -69,7 +69,7 @@ LC_ALL=C ${MSGFILTER} -i mfi-test7.po -o mfi-test7.out \
       ./mf-test7.sh >mfi-test7.err 2>&1
 result=$?
 cat mfi-test7.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 cat <<\EOF > mfi-test7.ok
 # HEADER.

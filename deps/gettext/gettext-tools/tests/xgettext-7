@@ -18,8 +18,8 @@ gettext ("abc");
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --add-comments -d xg-test7.tmp xg-test7.c || exit 1
-LC_ALL=C tr -d '\r' < xg-test7.tmp.po > xg-test7.po || exit 1
+${XGETTEXT} --omit-header --add-comments -d xg-test7.tmp xg-test7.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-test7.tmp.po > xg-test7.po || Exit 1
 
 cat <<\EOF > xg-test7.ok
 #. first comment

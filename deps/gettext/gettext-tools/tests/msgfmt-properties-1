@@ -24,13 +24,13 @@ EOF
 # Without use of msgcat, expect a "duplicate message definition" error.
 : ${MSGFMT=msgfmt}
 if ${MSGFMT} --properties-input -o mf-p-1/LC_MESSAGES/gen.mo mf-p-1-1.properties mf-p-1-2.properties 2> /dev/null; then
-  exit 1
+  Exit 1
 fi
 
 # With msgcat, it should work.
 : ${MSGCAT=msgcat} ${MSGFMT=msgfmt}
-${MSGCAT} --properties-input --properties-output --use-first -o mf-p-1-s.properties mf-p-1-1.properties mf-p-1-2.properties || exit 1
-${MSGFMT} --properties-input -o mf-p-1/LC_MESSAGES/gen.mo mf-p-1-s.properties || exit 1
+${MSGCAT} --properties-input --properties-output --use-first -o mf-p-1-s.properties mf-p-1-1.properties mf-p-1-2.properties || Exit 1
+${MSGFMT} --properties-input -o mf-p-1/LC_MESSAGES/gen.mo mf-p-1-s.properties || Exit 1
 
 : ${GETTEXT=gettext}
 TEXTDOMAINDIR=. LANGUAGE=mf-p-1 \
