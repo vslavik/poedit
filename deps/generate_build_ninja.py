@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os, sys
+from collections import OrderedDict
 from ninja_syntax import Writer
 
 _exclusion_list = ['.DS_Store',
@@ -58,14 +59,14 @@ def gen_configure(n, prj, srcdir=None, configure='configure', flags=[], build_co
     n.build([target],
             '%s_build' % prj,
             inputs=list(collect_files(srcdir)),
-            variables={
-                'name': prj,
-                'configure': configure,
-                'configure_flags': all_flags,
-                'srcdir': '$top_srcdir/%s' % srcdir,
-                'destdir': '$builddir/%s' % prj,
-                'workdir': '$intdir/%s' % prj,
-            })
+            variables=OrderedDict([
+                ('name', prj),
+                ('configure', configure),
+                ('configure_flags', all_flags),
+                ('srcdir', '$top_srcdir/%s' % srcdir),
+                ('destdir', '$builddir/%s' % prj),
+                ('workdir', '$intdir/%s' % prj),
+            ]))
     return target
 
 
@@ -94,6 +95,7 @@ with open('build.ninja', 'w') as buildfile:
                                      'CXXFLAGS="$cxxflags"',
                                      'LDFLAGS="$ldflags"',
                                      'GSED=$sed',
+                                     'YACC=$yacc',
                                      '--with-libiconv-prefix=$SDKROOT/usr',
                                      '--disable-static',
                                      '--disable-java',
