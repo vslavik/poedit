@@ -78,13 +78,6 @@ inline bool IsWindows10OrGreater()
     return wxGetOsVersion(&osmajor, nullptr) == wxOS_WINDOWS_NT && osmajor >= 10;
 }
 
-inline bool IsWindows7OrGreater()
-{
-    int verMaj, verMin;
-    wxGetOsVersion(&verMaj, &verMin);
-    return verMaj > 6 || (verMaj == 6 && verMin >= 1);
-}
-
 #endif // __WXMSW__
 
 // ----------------------------------------------------------------------

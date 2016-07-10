@@ -186,30 +186,29 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
     wxVisualAttributes visual = GetDefaultAttributes();
     wxColour shaded = visual.colBg;
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__)
     // On Windows 7, shaded list items make it impossible to see the selection,
     // so use different color for it (see bug #336).
-    if (IsWindows7OrGreater())
     {
         shaded.Set(int(0.99 * shaded.Red()),
                    int(0.99 * shaded.Green()),
                    shaded.Blue());
     }
-    else
-#endif // __WXMSW__
-#ifdef __WXOSX__
+#else // !__WXMSW__
+  #ifdef __WXOSX__
     if ( shaded == *wxWHITE )
     {
         // use standard shaded color from finder/databrowser:
         shaded.Set("#f0f5fd");
     }
     else
-#endif // __WXOSX__
+  #endif // __WXOSX__
     {
         shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
                    int(DARKEN_FACTOR * shaded.Green()),
                    int(DARKEN_FACTOR * shaded.Blue()));
     }
+#endif // !__WXMSW__
 
     m_attrNormal[1].SetBackgroundColour(shaded);
     m_attrUntranslated[1].SetBackgroundColour(shaded);
