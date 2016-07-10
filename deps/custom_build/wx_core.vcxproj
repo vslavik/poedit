@@ -165,7 +165,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\wx\src\common\effects.cpp" />
     <ClCompile Include="..\wx\src\common\event.cpp" />
     <ClCompile Include="..\wx\src\common\fddlgcmn.cpp" />
     <ClCompile Include="..\wx\src\common\filectrlcmn.cpp" />
@@ -245,8 +244,10 @@
     <ClCompile Include="..\wx\src\common\windowid.cpp" />
     <ClCompile Include="..\wx\src\common\wrapsizer.cpp" />
     <ClCompile Include="..\wx\src\common\xpmdecod.cpp" />
+    <ClCompile Include="..\wx\src\generic\collheaderctrlg.cpp" />
     <ClCompile Include="..\wx\src\msw\accel.cpp" />
     <ClCompile Include="..\wx\src\msw\customdraw.cpp" />
+    <ClCompile Include="..\wx\src\msw\graphicsd2d.cpp" />
     <ClCompile Include="..\wx\src\msw\ole\activex.cpp" />
     <ClCompile Include="..\wx\src\msw\anybutton.cpp" />
     <ClCompile Include="..\wx\src\msw\app.cpp" />
@@ -311,7 +312,6 @@
     <ClCompile Include="..\wx\src\msw\ole\oleutils.cpp" />
     <ClCompile Include="..\wx\src\msw\ownerdrw.cpp" />
     <ClCompile Include="..\wx\src\msw\palette.cpp" />
-    <ClCompile Include="..\wx\src\msw\panel.cpp" />
     <ClCompile Include="..\wx\src\msw\pen.cpp" />
     <ClCompile Include="..\wx\src\msw\popupwin.cpp" />
     <ClCompile Include="..\wx\src\msw\progdlg.cpp" />
@@ -331,6 +331,7 @@
     <ClCompile Include="..\wx\src\msw\statline.cpp" />
     <ClCompile Include="..\wx\src\msw\stattext.cpp" />
     <ClCompile Include="..\wx\src\msw\statusbar.cpp" />
+    <ClCompile Include="..\wx\src\msw\systhemectrl.cpp" />
     <ClCompile Include="..\wx\src\msw\textctrl.cpp" />
     <ClCompile Include="..\wx\src\msw\textentry.cpp" />
     <ClCompile Include="..\wx\src\msw\textmeasure.cpp" />
@@ -476,7 +477,6 @@
     <ClInclude Include="..\wx\include\wx\msw\msvcrt.h" />
     <ClInclude Include="..\wx\include\wx\msw\nonownedwnd.h" />
     <ClInclude Include="..\wx\include\wx\msw\notebook.h" />
-    <ClInclude Include="..\wx\include\wx\msw\notifmsg.h" />
     <ClInclude Include="..\wx\include\wx\msw\ole\oleutils.h" />
     <ClInclude Include="..\wx\include\wx\msw\ownerdrw.h" />
     <ClInclude Include="..\wx\include\wx\msw\palette.h" />
@@ -870,7 +870,6 @@
     <ClInclude Include="..\wx\include\wx\wxhtml.h" />
     <ClInclude Include="..\wx\include\wx\xrc\xh_all.h" />
     <ClInclude Include="..\wx\include\wx\xrc\xh_animatctrl.h" />
-    <ClInclude Include="..\wx\include\wx\xrc\xh_auinotbk.h" />
     <ClInclude Include="..\wx\include\wx\xrc\xh_bannerwindow.h" />
     <ClInclude Include="..\wx\include\wx\xrc\xh_bmp.h" />
     <ClInclude Include="..\wx\include\wx\xrc\xh_bmpbt.h" />

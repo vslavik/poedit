@@ -47,7 +47,6 @@
 		B2579C7F1920BFA000BEBC31 /* NSObject+REResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C7E1920BFA000BEBC31 /* NSObject+REResponder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B2579C821920C02C00BEBC31 /* REUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B2579C811920C02C00BEBC31 /* REUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B25D94941AE3D7E3003BC368 /* concurrency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25D94921AE3D7E3003BC368 /* concurrency.cpp */; };
-		B263ED921AC1DC3B0012EEA8 /* wx_activityindicator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B263ED911AC1DC3B0012EEA8 /* wx_activityindicator.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B26897B4197A830200B42764 /* MoveApplication.strings in Resources */ = {isa = PBXBuildFile; fileRef = B26897B2197A830200B42764 /* MoveApplication.strings */; };
 		B26A088C19E450480031719B /* poedit-status-bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = B26A088B19E450480031719B /* poedit-status-bookmark.png */; };
 		B26D064F182506E40069C378 /* languagectrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D064D182506E40069C378 /* languagectrl.cpp */; };
@@ -143,7 +142,6 @@
 		B2F287C4170DCC92004C1F41 /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C2170DCC92004C1F41 /* AUTHORS */; };
 		B2F287C5170DCC92004C1F41 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = B2F287C3170DCC92004C1F41 /* COPYING */; };
 		B2FE296B1AC85FFF005588E4 /* keytar_mac.cc in Sources */ = {isa = PBXBuildFile; fileRef = B2FE29691AC85FFF005588E4 /* keytar_mac.cc */; };
-		B2FF21B11B790772009466AF /* wx_nativewin.mm in Sources */ = {isa = PBXBuildFile; fileRef = B2FF21B01B790772009466AF /* wx_nativewin.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -318,7 +316,6 @@
 		B25D94921AE3D7E3003BC368 /* concurrency.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = concurrency.cpp; sourceTree = "<group>"; };
 		B25D94931AE3D7E3003BC368 /* concurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = concurrency.h; sourceTree = "<group>"; };
 		B26251EA197A83DB00278503 /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MoveApplication.strings; sourceTree = "<group>"; };
-		B263ED911AC1DC3B0012EEA8 /* wx_activityindicator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = wx_activityindicator.mm; path = src/wx_backports/wx_activityindicator.mm; sourceTree = "<group>"; };
 		B26897B3197A830200B42764 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B26A088B19E450480031719B /* poedit-status-bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-bookmark.png"; sourceTree = "<group>"; };
 		B26B74EF1822CA12006E2B76 /* language_impl_legacy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language_impl_legacy.h; sourceTree = "<group>"; };
@@ -509,7 +506,6 @@
 		B2F672E1197A843F00DBFDB0 /* zh_Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = zh_Hans; path = zh_Hans.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2FE29691AC85FFF005588E4 /* keytar_mac.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = keytar_mac.cc; path = keychain/keytar_mac.cc; sourceTree = "<group>"; };
 		B2FE296A1AC85FFF005588E4 /* keytar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = keytar.h; path = keychain/keytar.h; sourceTree = "<group>"; };
-		B2FF21B01B790772009466AF /* wx_nativewin.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = wx_nativewin.mm; path = src/wx_backports/wx_nativewin.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -600,7 +596,6 @@
 		B2284A4D183BE39900E097C7 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				B263ED901AC1DC280012EEA8 /* wxBackports */,
 				B22083AA197A82CD009355BB /* LetsMove */,
 				B2579C801920C02C00BEBC31 /* REKit.h */,
 				B2579C811920C02C00BEBC31 /* REUtil.m */,
@@ -835,15 +830,6 @@
 				B25504A61A2201DC00EE2CEE /* main_toolbar.h */,
 			);
 			name = Native;
-			sourceTree = "<group>";
-		};
-		B263ED901AC1DC280012EEA8 /* wxBackports */ = {
-			isa = PBXGroup;
-			children = (
-				B263ED911AC1DC3B0012EEA8 /* wx_activityindicator.mm */,
-				B2FF21B01B790772009466AF /* wx_nativewin.mm */,
-			);
-			name = wxBackports;
 			sourceTree = "<group>";
 		};
 		B27EB05C1709DA2B009C1328 /* XRC Resources */ = {
@@ -1316,8 +1302,6 @@
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B230E2281A73F81400FB1E57 /* hidpi.cpp in Sources */,
-				B263ED921AC1DC3B0012EEA8 /* wx_activityindicator.mm in Sources */,
-				B2FF21B11B790772009466AF /* wx_nativewin.mm in Sources */,
 				B280E84D1A92776D009F4A98 /* http_client_osx.mm in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
