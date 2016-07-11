@@ -1,0 +1,123 @@
+
+srcdir ../mctrl;
+
+import ../common-settings.bkl;
+
+includedirs += ../custom_build/config/mctrl include windrawlib/include;
+
+defines += UNICODE _UNICODE
+           _CRT_SECURE_NO_WARNINGS
+           "_WIN32_IE=0x0501" "_WIN32_WINNT=0x0600" "WINVER=_WIN32_WINNT"
+           WIN32_LEAN_AND_MEAN
+           COBJMACROS;
+
+configuration Debug {
+    defines += DEBUG;
+}
+
+shared-library mctrl {
+    vs2015.projectfile = ../custom_build/mctrl.vcxproj;
+
+    basename = mCtrl;
+
+    defines += MCTRL_BUILD;
+
+    libs += gdi32 comctl32 ole32 oleaut32 uuid windowscodecs;
+
+    headers {
+        mctrl/anim.h
+        mctrl/button.h
+        mctrl/chart.h
+        mctrl/color.h
+        mctrl/compat.h
+        mctrl/debug.h
+        mctrl/dialog.h
+        mctrl/doublebuffer.h
+        mctrl/dsa.h
+        mctrl/dwm.h
+        mctrl/expand.h
+        mctrl/generic.h
+        mctrl/grid.h
+        mctrl/html.h
+        mctrl/husl.h
+        mctrl/imgview.h
+        mctrl/labeledit.h
+        mctrl/mditab.h
+        mctrl/menubar.h
+        mctrl/misc.h
+        mctrl/module.h
+        mctrl/mousedrag.h
+        mctrl/mousewheel.h
+        mctrl/resource.h
+        mctrl/rgn16.h
+        mctrl/table.h
+        mctrl/theme.h
+        mctrl/tooltip.h
+        mctrl/treelist.h
+        mctrl/viewlist.h
+        mctrl/xcom.h
+
+        windrawlib/include/wdl.h
+        windrawlib/backend-d2d.h
+        windrawlib/backend-dwrite.h
+        windrawlib/backend-gdix.h
+        windrawlib/backend-wic.h
+        windrawlib/lock.h
+        windrawlib/memstream.h
+        windrawlib/misc.h
+    }
+
+    sources {
+        mctrl/anim.c
+        mctrl/button.c
+        mctrl/chart.c
+        mctrl/color.c
+        mctrl/compat.c
+        mctrl/debug.c
+        mctrl/dialog.c
+        mctrl/doublebuffer.c
+        mctrl/dsa.c
+        mctrl/dwm.c
+        mctrl/expand.c
+        mctrl/generic.c
+        mctrl/grid.c
+        mctrl/html.c
+        mctrl/husl.c
+        mctrl/imgview.c
+        mctrl/labeledit.c
+        mctrl/mditab.c
+        mctrl/menubar.c
+        mctrl/misc.c
+        mctrl/module.c
+        mctrl/mousedrag.c
+        mctrl/mousewheel.c
+        mctrl/rgn16.c
+        mctrl/table.c
+        mctrl/theme.c
+        mctrl/tooltip.c
+        mctrl/treelist.c
+        mctrl/version.c
+        mctrl/viewlist.c
+        mctrl/xcom.c
+
+        mctrl/resource.rc
+
+        windrawlib/backend-d2d.c
+        windrawlib/backend-dwrite.c
+        windrawlib/backend-gdix.c
+        windrawlib/backend-wic.c
+        windrawlib/bitblt.c
+        windrawlib/brush.c
+        windrawlib/cachedimage.c
+        windrawlib/canvas.c
+        windrawlib/draw.c
+        windrawlib/fill.c
+        windrawlib/font.c
+        windrawlib/image.c
+        windrawlib/init.c
+        windrawlib/memstream.c
+        windrawlib/misc.c
+        windrawlib/path.c
+        windrawlib/string.c
+    }
+}

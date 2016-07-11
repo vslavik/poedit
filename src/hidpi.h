@@ -80,6 +80,6 @@ inline double HiDPIScalingFactor() { return 1.0; }
 
     Note that @a name is given *without* the ".png" extension.
  */
-extern wxBitmap LoadScaledBitmap(const wxString& name, bool mirror);
+extern wxBitmap LoadScaledBitmap(const wxString& name, bool mirror, int padding = 0);
 
 #endif // Poedit_hidpi_h

@@ -42,6 +42,7 @@ void InitHiDPIHandling()
 
 namespace
 {
+
 void LoadPNGImage(wxImage& img, const wxString& filename)
 {
     img.LoadFile(filename, wxBITMAP_TYPE_PNG);
@@ -54,28 +55,22 @@ void LoadPNGImage(wxImage& img, const wxString& filename)
     }
 }
 
-} // anonymous namespace
-
-#endif // NEEDS_MANUAL_HIDPI
-
-
-wxBitmap LoadScaledBitmap(const wxString& name, bool mirror)
+bool LoadAndScale(wxImage& img, const wxString& name)
 {
     const wxString filename(name + ".png");
     if (!wxFileExists(filename))
-        return wxNullBitmap;
+        return false;
 
 #ifdef NEEDS_MANUAL_HIDPI
     if (HiDPIScalingFactor() > 1.0)
     {
-        wxImage img;
         double imgScale = HiDPIScalingFactor();
         const wxString filename_2x(name + "@2x.png");
         if (wxFileExists(filename_2x))
         {
             LoadPNGImage(img, filename_2x);
             if (HiDPIScalingFactor() == 2.0)
-                return wxBitmap(img);
+                return true;
             else
                 imgScale /= 2.0;
         }
@@ -92,12 +87,34 @@ wxBitmap LoadScaledBitmap(const wxString& name, bool mirror)
         else
             quality = wxIMAGE_QUALITY_BICUBIC;
         img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale, quality);
-        return wxBitmap(img);
+        return true;
     }
     // else: load normally
 #endif
 
-    auto img = wxImage(filename, wxBITMAP_TYPE_PNG);
+    img = wxImage(filename, wxBITMAP_TYPE_PNG);
+    return true;
+}
+
+} // anonymous namespace
+
+#endif // NEEDS_MANUAL_HIDPI
+
+
+wxBitmap LoadScaledBitmap(const wxString& name, bool mirror, int padding)
+{
+    wxImage img;
+    if (!LoadAndScale(img, name))
+        return wxNullBitmap;
+
+    if (padding)
+    {
+        int pad = PX(padding);
+        auto sz = img.GetSize();
+        sz.IncBy(pad * 2);
+        img.Resize(sz, wxPoint(pad, pad));
+    }
+
     if (mirror)
         return wxBitmap(img.Mirror());
     else

@@ -63,6 +63,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>deps\wx\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>mCtrl.dll</DelayLoadDLLs>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>deps\wx\include\msvc;deps\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -92,6 +93,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>deps\wx\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>rpcrt4.lib;advapi32.lib;shlwapi.lib;ws2_32.lib;comctl32.lib;Winhttp.lib;wininet.lib;httpapi.lib;bcrypt.lib;crypt32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>mCtrl.dll</DelayLoadDLLs>
     </Link>
     <ResourceCompile>
       <AdditionalIncludeDirectories>deps\wx\include\msvc;deps\wx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -142,6 +144,10 @@
     <ClCompile Include="src\unicode_helpers.cpp" />
     <ClCompile Include="src\utility.cpp" />
     <ClCompile Include="src\welcomescreen.cpp" />
+    <ClCompile Include="src\windows\win10_menubar.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">deps/mctrl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">deps/mctrl/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="src\wx\main_toolbar.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +197,7 @@
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\version.h" />
     <ClInclude Include="src\welcomescreen.h" />
+    <ClInclude Include="src\windows\win10_menubar.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="locales\win\windows_strings.rc" />
@@ -223,6 +230,9 @@
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\cld2.vcxproj">
       <Project>{0f2968c8-6b72-52c5-857d-c1bbda8e9dd0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="deps\custom_build\mctrl.vcxproj">
+      <Project>{c3f44d23-c639-5285-94a4-70f3a2a46541}</Project>
     </ProjectReference>
     <ProjectReference Include="deps\custom_build\wx_adv.vcxproj">
       <Project>{24c45343-fd20-5c92-81c1-35a2ae841e79}</Project>
