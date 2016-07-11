@@ -32,6 +32,7 @@
 #include "icons.h"
 #include "edapp.h"
 #include "hidpi.h"
+#include "utility.h"
 
 #ifndef __WXOSX__
 
@@ -128,10 +129,16 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
         mirror = ShouldBeMirorredInRTL(id, client);
 
+    int padding = 0;
+#ifdef __WXMSW__
+    if (IsWindows10OrGreater())
+        padding = 2;
+#endif
+
     wxString icon;
     icon.Printf("%s/%s", iconsdir.c_str(), id.c_str());
     wxLogTrace("poedit.icons", "loading from %s", icon.c_str());
-    return LoadScaledBitmap(icon, mirror);
+    return LoadScaledBitmap(icon, mirror, padding);
 }
 
 #endif // !__WXOSX__
