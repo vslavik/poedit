@@ -254,7 +254,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
         const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
         if (theme)
         {
-            wxUxThemeHandle hTheme(this, L"ItemsView::Header");
+            wxUxThemeHandle hTheme(this->GetParent(), L"ItemsView::Header");
             COLORREF clr;
             HRESULT hr = theme->GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
             if (SUCCEEDED(hr))
