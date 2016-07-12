@@ -139,7 +139,7 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
     wxScopedPtr<wxProcess> process(new wxProcess);
     process->Redirect();
 
-    long retcode = wxExecute(cmdline, wxEXEC_BLOCK, process.get(), &env);
+    long retcode = wxExecute(cmdline, wxEXEC_BLOCK | wxEXEC_NODISABLE | wxEXEC_NOEVENTS, process.get(), &env);
 
 	wxInputStream *std_err = process->GetErrorStream();
     if ( std_err && !ReadOutput(*std_err, gstderr) )
