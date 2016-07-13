@@ -169,8 +169,8 @@ void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
             [callback](const json_dict& r){
                 auto profile = r.subdict("profile");
                 UserInfo u;
-                u.name = profile.wstring("name");
                 u.login = profile.wstring("login");
+                u.name = !profile.is_null("name") ? profile.wstring("name") : u.login;
                 callback(u);
             },
             // error:
