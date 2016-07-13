@@ -1,7 +1,7 @@
 /*
 ******************************************************************************
 *
-*   Copyright (C) 2002-2014, International Business Machines
+*   Copyright (C) 2002-2016, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 *
 ******************************************************************************
@@ -230,7 +230,7 @@ static void TestStringFunctions()
         if(temp[k] != 0xa4)
             log_err("something threw an error in u_strncpy()\n");
 
-        u_memset(temp, 0x3F, (sizeof(temp) / sizeof(UChar)) - 1);
+        u_memset(temp, 0x3F, UPRV_LENGTHOF(temp) - 1);
         u_uastrncpy(temp, raw[i][j], k-1);
         if(u_strncmp(temp, dataTable[i][j],k-1)!=0)
             log_err("something threw an error in u_uastrncpy(k-1)\n");
@@ -238,7 +238,7 @@ static void TestStringFunctions()
         if(temp[k-1] != 0x3F)
             log_err("something threw an error in u_uastrncpy(k-1)\n");
 
-        u_memset(temp, 0x3F, (sizeof(temp) / sizeof(UChar)) - 1);
+        u_memset(temp, 0x3F, UPRV_LENGTHOF(temp) - 1);
         u_uastrncpy(temp, raw[i][j], k+1);
         if(u_strcmp(temp, dataTable[i][j])!=0)
             log_err("something threw an error in u_uastrncpy(k+1)\n");
@@ -246,7 +246,7 @@ static void TestStringFunctions()
         if(temp[k] != 0)
             log_err("something threw an error in u_uastrncpy(k+1)\n");
 
-        u_memset(temp, 0x3F, (sizeof(temp) / sizeof(UChar)) - 1);
+        u_memset(temp, 0x3F, UPRV_LENGTHOF(temp) - 1);
         u_uastrncpy(temp, raw[i][j], k);
         if(u_strncmp(temp, dataTable[i][j], k)!=0)
             log_err("something threw an error in u_uastrncpy(k)\n");
@@ -362,7 +362,7 @@ static void TestStringFunctions()
             currToken++;
         }
 
-        if (currToken != sizeof(tokens)/sizeof(tokens[0])) {
+        if (currToken != UPRV_LENGTHOF(tokens)) {
             log_err("Didn't get correct number of tokens\n");
         }
         state = delimBuf;       /* Give it an "invalid" saveState */
@@ -426,7 +426,7 @@ static void TestStringFunctions()
         UCharIterator iter1, iter2;
         int32_t len1, len2, r1, r2;
 
-        for(i=0; i<(sizeof(strings)/sizeof(strings[0])-1); ++i) {
+        for(i=0; i<(UPRV_LENGTHOF(strings)-1); ++i) {
             if(u_strcmpCodePointOrder(strings[i], strings[i+1])>=0) {
                 log_err("error: u_strcmpCodePointOrder() fails for string %d and the following one\n", i);
             }
@@ -1093,18 +1093,18 @@ TestUnescape() {
         0x50, 0x72, 0x69, 0x76, 0x61, 0x74, 0x65, 0x73, 0x20,
         0x5a, 0x65, 0x69, 0x63, 0x68, 0x65, 0x6e, 0x3a, 0x20, 0xdbc8, 0xdf45, 0x1b, 0x03, 0x0a, 0x20, 0x1b, 0x263A, 0
     };
-    static const int32_t explength = sizeof(expect)/sizeof(expect[0])-1;
+    static const int32_t explength = UPRV_LENGTHOF(expect)-1;
     int32_t length;
 
     /* test u_unescape() */
-    length=u_unescape(input, buffer, sizeof(buffer)/sizeof(buffer[0]));
+    length=u_unescape(input, buffer, UPRV_LENGTHOF(buffer));
     if(length!=explength || u_strcmp(buffer, expect)!=0) {
         log_err("failure in u_unescape(): length %d!=%d and/or incorrect result string\n", length,
                 explength);
     }
 
     /* try preflighting */
-    length=u_unescape(input, NULL, sizeof(buffer)/sizeof(buffer[0]));
+    length=u_unescape(input, NULL, UPRV_LENGTHOF(buffer));
     if(length!=explength || u_strcmp(buffer, expect)!=0) {
         log_err("failure in u_unescape(preflighting): length %d!=%d\n", length, explength);
     }
@@ -1160,7 +1160,7 @@ TestCountChar32() {
         buffer[length]=0;
         for(i=0; i<=length; ++i) {
             for(number=-1; number<=((length-i)+2); ++number) {
-                _testStrHasMoreChar32Than(string+i, i, -1, number);
+                _testStrHasMoreChar32Than(buffer+i, i, -1, number);
             }
         }
         --length;

@@ -1,6 +1,6 @@
 /********************************************************************
  * COPYRIGHT: 
- * Copyright (c) 1997-2014, International Business Machines Corporation and
+ * Copyright (c) 1997-2016, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 
@@ -34,9 +34,11 @@ extern IntlTest *createBytesTrieTest();
 static IntlTest *createLocalPointerTest();
 extern IntlTest *createUCharsTrieTest();
 static IntlTest *createEnumSetTest();
-extern IntlTest *createSimplePatternFormatterTest();
+extern IntlTest *createSimpleFormatterTest();
 extern IntlTest *createUnifiedCacheTest();
 extern IntlTest *createQuantityFormatterTest();
+extern IntlTest *createPluralMapTest(); 
+
 
 #define CASE(id, test) case id:                               \
                           name = #test;                       \
@@ -100,10 +102,10 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
             }
             break;
         case 20:
-            name = "SimplePatternFormatterTest";
+            name = "SimpleFormatterTest";
             if (exec) {
-                logln("TestSuite SimplePatternFormatterTest---"); logln();
-                LocalPointer<IntlTest> test(createSimplePatternFormatterTest());
+                logln("TestSuite SimpleFormatterTest---"); logln();
+                LocalPointer<IntlTest> test(createSimpleFormatterTest());
                 callTest(*test, par);
             }
             break;
@@ -122,6 +124,14 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
                 LocalPointer<IntlTest> test(createQuantityFormatterTest());
                 callTest(*test, par);
             }
+            break;
+        case 23: 
+            name = "PluralMapTest"; 
+            if (exec) { 
+                logln("TestSuite PluralMapTest---"); logln(); 
+                LocalPointer<IntlTest> test(createPluralMapTest()); 
+                callTest(*test, par); 
+            } 
             break;
         default: name = ""; break; //needed to end loop
     }
@@ -250,8 +260,11 @@ public:
     void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
 
     void TestLocalPointer();
+    void TestLocalPointerMoveSwap();
     void TestLocalArray();
+    void TestLocalArrayMoveSwap();
     void TestLocalXyzPointer();
+    void TestLocalXyzPointerMoveSwap();
     void TestLocalXyzPointerNull();
 };
 
@@ -265,13 +278,16 @@ void LocalPointerTest::runIndexedTest(int32_t index, UBool exec, const char *&na
     }
     TESTCASE_AUTO_BEGIN;
     TESTCASE_AUTO(TestLocalPointer);
+    TESTCASE_AUTO(TestLocalPointerMoveSwap);
     TESTCASE_AUTO(TestLocalArray);
+    TESTCASE_AUTO(TestLocalArrayMoveSwap);
     TESTCASE_AUTO(TestLocalXyzPointer);
+    TESTCASE_AUTO(TestLocalXyzPointerMoveSwap);
     TESTCASE_AUTO(TestLocalXyzPointerNull);
     TESTCASE_AUTO_END;
 }
 
-// Exercise every LocalPointer and LocalPointerBase method.
+// Exercise almost every LocalPointer and LocalPointerBase method.
 void LocalPointerTest::TestLocalPointer() {
     // constructor
     LocalPointer<UnicodeString> s(new UnicodeString((UChar32)0x50005));
@@ -294,7 +310,6 @@ void LocalPointerTest::TestLocalPointer() {
         errln("LocalPointer orphan() failure");
     }
     delete orphan;
-    // destructor
     s.adoptInstead(new UnicodeString());
     if(s->length()!=0) {
         errln("LocalPointer adoptInstead(empty) failure");
@@ -302,31 +317,31 @@ void LocalPointerTest::TestLocalPointer() {
 
     // LocalPointer(p, errorCode) sets U_MEMORY_ALLOCATION_ERROR if p==NULL.
     UErrorCode errorCode = U_ZERO_ERROR;
-    LocalPointer<CharString> cs(new CharString("some chars", errorCode), errorCode);
-    if(cs.isNull() && U_SUCCESS(errorCode)) {
+    LocalPointer<CharString> csx(new CharString("some chars", errorCode), errorCode);
+    if(csx.isNull() && U_SUCCESS(errorCode)) {
         errln("LocalPointer(p, errorCode) failure");
         return;
     }
     errorCode = U_ZERO_ERROR;
-    cs.adoptInsteadAndCheckErrorCode(new CharString("different chars", errorCode), errorCode);
-    if(cs.isNull() && U_SUCCESS(errorCode)) {
+    csx.adoptInsteadAndCheckErrorCode(new CharString("different chars", errorCode), errorCode);
+    if(csx.isNull() && U_SUCCESS(errorCode)) {
         errln("adoptInsteadAndCheckErrorCode(p, errorCode) failure");
         return;
     }
     // Incoming failure: Keep the current object and delete the input object.
     errorCode = U_ILLEGAL_ARGUMENT_ERROR;
-    cs.adoptInsteadAndCheckErrorCode(new CharString("unused", errorCode), errorCode);
-    if(cs.isValid() && strcmp(cs->data(), "different chars") != 0) {
+    csx.adoptInsteadAndCheckErrorCode(new CharString("unused", errorCode), errorCode);
+    if(csx.isValid() && strcmp(csx->data(), "different chars") != 0) {
         errln("adoptInsteadAndCheckErrorCode(p, U_FAILURE) did not retain the old object");
         return;
     }
     errorCode = U_ZERO_ERROR;
-    cs.adoptInsteadAndCheckErrorCode(NULL, errorCode);
+    csx.adoptInsteadAndCheckErrorCode(NULL, errorCode);
     if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
         errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
         return;
     }
-    if(cs.isValid()) {
+    if(csx.isValid()) {
         errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) kept the object");
         return;
     }
@@ -336,9 +351,50 @@ void LocalPointerTest::TestLocalPointer() {
         errln("LocalPointer(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
         return;
     }
+
+    // destructor
 }
 
-// Exercise every LocalArray method (but not LocalPointerBase).
+void LocalPointerTest::TestLocalPointerMoveSwap() {
+    UnicodeString *p1 = new UnicodeString((UChar)0x61);
+    UnicodeString *p2 = new UnicodeString((UChar)0x62);
+    LocalPointer<UnicodeString> s1(p1);
+    LocalPointer<UnicodeString> s2(p2);
+    s1.swap(s2);
+    if(s1.getAlias() != p2 || s2.getAlias() != p1) {
+        errln("LocalPointer.swap() did not swap");
+    }
+    swap(s1, s2);
+    if(s1.getAlias() != p1 || s2.getAlias() != p2) {
+        errln("swap(LocalPointer) did not swap back");
+    }
+    LocalPointer<UnicodeString> s3;
+    s3.moveFrom(s1);
+    if(s3.getAlias() != p1 || s1.isValid()) {
+        errln("LocalPointer.moveFrom() did not move");
+    }
+#if U_HAVE_RVALUE_REFERENCES
+    infoln("TestLocalPointerMoveSwap() with rvalue references");
+    s1 = static_cast<LocalPointer<UnicodeString> &&>(s3);
+    if(s1.getAlias() != p1 || s3.isValid()) {
+        errln("LocalPointer move assignment operator did not move");
+    }
+    LocalPointer<UnicodeString> s4(static_cast<LocalPointer<UnicodeString> &&>(s2));
+    if(s4.getAlias() != p2 || s2.isValid()) {
+        errln("LocalPointer move constructor did not move");
+    }
+#else
+    infoln("TestLocalPointerMoveSwap() without rvalue references");
+#endif
+
+    // Move self assignment leaves the object valid but in an undefined state.
+    // Do it to make sure there is no crash,
+    // but do not check for any particular resulting value.
+    s1.moveFrom(s1);
+    s3.moveFrom(s3);
+}
+
+// Exercise almost every LocalArray method (but not LocalPointerBase).
 void LocalPointerTest::TestLocalArray() {
     // constructor
     LocalArray<UnicodeString> a(new UnicodeString[2]);
@@ -354,7 +410,85 @@ void LocalPointerTest::TestLocalArray() {
     if(a[3].length()!=2 || a[3][1]!=0x62) {
         errln("LocalArray adoptInstead() failure");
     }
+
+    // LocalArray(p, errorCode) sets U_MEMORY_ALLOCATION_ERROR if p==NULL.
+    UErrorCode errorCode = U_ZERO_ERROR;
+    LocalArray<UnicodeString> ua(new UnicodeString[3], errorCode);
+    if(ua.isNull() && U_SUCCESS(errorCode)) {
+        errln("LocalArray(p, errorCode) failure");
+        return;
+    }
+    errorCode = U_ZERO_ERROR;
+    UnicodeString *u4 = new UnicodeString[4];
+    ua.adoptInsteadAndCheckErrorCode(u4, errorCode);
+    if(ua.isNull() && U_SUCCESS(errorCode)) {
+        errln("adoptInsteadAndCheckErrorCode(p, errorCode) failure");
+        return;
+    }
+    // Incoming failure: Keep the current object and delete the input object.
+    errorCode = U_ILLEGAL_ARGUMENT_ERROR;
+    ua.adoptInsteadAndCheckErrorCode(new UnicodeString[5], errorCode);
+    if(ua.isValid() && ua.getAlias() != u4) {
+        errln("adoptInsteadAndCheckErrorCode(p, U_FAILURE) did not retain the old array");
+        return;
+    }
+    errorCode = U_ZERO_ERROR;
+    ua.adoptInsteadAndCheckErrorCode(NULL, errorCode);
+    if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
+        errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
+        return;
+    }
+    if(ua.isValid()) {
+        errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) kept the array");
+        return;
+    }
+    errorCode = U_ZERO_ERROR;
+    LocalArray<UnicodeString> null(NULL, errorCode);
+    if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
+        errln("LocalArray(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
+        return;
+    }
+
     // destructor
+}
+
+void LocalPointerTest::TestLocalArrayMoveSwap() {
+    UnicodeString *p1 = new UnicodeString[2];
+    UnicodeString *p2 = new UnicodeString[3];
+    LocalArray<UnicodeString> a1(p1);
+    LocalArray<UnicodeString> a2(p2);
+    a1.swap(a2);
+    if(a1.getAlias() != p2 || a2.getAlias() != p1) {
+        errln("LocalArray.swap() did not swap");
+    }
+    swap(a1, a2);
+    if(a1.getAlias() != p1 || a2.getAlias() != p2) {
+        errln("swap(LocalArray) did not swap back");
+    }
+    LocalArray<UnicodeString> a3;
+    a3.moveFrom(a1);
+    if(a3.getAlias() != p1 || a1.isValid()) {
+        errln("LocalArray.moveFrom() did not move");
+    }
+#if U_HAVE_RVALUE_REFERENCES
+    infoln("TestLocalArrayMoveSwap() with rvalue references");
+    a1 = static_cast<LocalArray<UnicodeString> &&>(a3);
+    if(a1.getAlias() != p1 || a3.isValid()) {
+        errln("LocalArray move assignment operator did not move");
+    }
+    LocalArray<UnicodeString> a4(static_cast<LocalArray<UnicodeString> &&>(a2));
+    if(a4.getAlias() != p2 || a2.isValid()) {
+        errln("LocalArray move constructor did not move");
+    }
+#else
+    infoln("TestLocalArrayMoveSwap() without rvalue references");
+#endif
+
+    // Move self assignment leaves the object valid but in an undefined state.
+    // Do it to make sure there is no crash,
+    // but do not check for any particular resulting value.
+    a1.moveFrom(a1);
+    a3.moveFrom(a3);
 }
 
 #include "unicode/ucnvsel.h"
@@ -473,6 +607,60 @@ void LocalPointerTest::TestLocalXyzPointer() {
 #endif /* !UCONFIG_NO_TRANSLITERATION */
 
     // destructors
+}
+
+void LocalPointerTest::TestLocalXyzPointerMoveSwap() {
+#if !UCONFIG_NO_NORMALIZATION
+    IcuTestErrorCode errorCode(*this, "TestLocalXyzPointerMoveSwap");
+    const UNormalizer2 *nfc=unorm2_getNFCInstance(errorCode);
+    const UNormalizer2 *nfd=unorm2_getNFDInstance(errorCode);
+    if(errorCode.logIfFailureAndReset("unorm2_getNF[CD]Instance()")) {
+        return;
+    }
+    UnicodeSet emptySet;
+    UNormalizer2 *p1 = unorm2_openFiltered(nfc, emptySet.toUSet(), errorCode);
+    UNormalizer2 *p2 = unorm2_openFiltered(nfd, emptySet.toUSet(), errorCode);
+    LocalUNormalizer2Pointer f1(p1);
+    LocalUNormalizer2Pointer f2(p2);
+    if(errorCode.logIfFailureAndReset("unorm2_openFiltered()")) {
+        return;
+    }
+    if(f1.isNull() || f2.isNull()) {
+        errln("LocalUNormalizer2Pointer failure");
+        return;
+    }
+    f1.swap(f2);
+    if(f1.getAlias() != p2 || f2.getAlias() != p1) {
+        errln("LocalUNormalizer2Pointer.swap() did not swap");
+    }
+    swap(f1, f2);
+    if(f1.getAlias() != p1 || f2.getAlias() != p2) {
+        errln("swap(LocalUNormalizer2Pointer) did not swap back");
+    }
+    LocalUNormalizer2Pointer f3;
+    f3.moveFrom(f1);
+    if(f3.getAlias() != p1 || f1.isValid()) {
+        errln("LocalUNormalizer2Pointer.moveFrom() did not move");
+    }
+#if U_HAVE_RVALUE_REFERENCES
+    infoln("TestLocalXyzPointerMoveSwap() with rvalue references");
+    f1 = static_cast<LocalUNormalizer2Pointer &&>(f3);
+    if(f1.getAlias() != p1 || f3.isValid()) {
+        errln("LocalUNormalizer2Pointer move assignment operator did not move");
+    }
+    LocalUNormalizer2Pointer f4(static_cast<LocalUNormalizer2Pointer &&>(f2));
+    if(f4.getAlias() != p2 || f2.isValid()) {
+        errln("LocalUNormalizer2Pointer move constructor did not move");
+    }
+#else
+    infoln("TestLocalXyzPointerMoveSwap() without rvalue references");
+#endif
+    // Move self assignment leaves the object valid but in an undefined state.
+    // Do it to make sure there is no crash,
+    // but do not check for any particular resulting value.
+    f1.moveFrom(f1);
+    f3.moveFrom(f3);
+#endif /* !UCONFIG_NO_NORMALIZATION */
 }
 
 // Try LocalXyzPointer types with NULL pointers.

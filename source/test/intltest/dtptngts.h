@@ -1,6 +1,6 @@
 /********************************************************************
- * COPYRIGHT: 
- * Copyright (c) 1997-2001,2009,2013, International Business Machines Corporation and
+ * COPYRIGHT:
+ * Copyright (c) 1997-2016 International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 
@@ -17,7 +17,7 @@
  * Test basic functionality of various API functions
  **/
 class IntlTestDateTimePatternGeneratorAPI : public IntlTest {
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );  
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );
 
 private:
     /**
@@ -26,6 +26,8 @@ private:
     void testAPI(/* char* par */);
     void testOptions(/* char* par */);
     void testAllFieldPatterns(/* char* par */);
+    void testStaticGetSkeleton(/* char* par */);
+    void testC();
 };
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

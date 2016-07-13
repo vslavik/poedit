@@ -1,6 +1,6 @@
 /*  
 **********************************************************************
-*   Copyright (C) 2002-2015, International Business Machines
+*   Copyright (C) 2002-2016, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 **********************************************************************
 *   file name:  uconfig.h
@@ -135,6 +135,15 @@
 #endif
 
 /**
+ * \def UCONFIG_ENABLE_PLUGINS
+ * Determines whether to enable ICU plugins.
+ * @internal
+ */
+#ifndef UCONFIG_ENABLE_PLUGINS
+#define UCONFIG_ENABLE_PLUGINS 0
+#endif
+
+/**
  * \def U_ENABLE_DYLOAD
  * Whether to enable Dynamic loading in ICU.
  * @internal
@@ -151,7 +160,6 @@
 #ifndef U_CHECK_DYLOAD
 #define U_CHECK_DYLOAD 1
 #endif
-
 
 /**
  * \def U_DEFAULT_SHOW_DRAFT
@@ -278,7 +286,7 @@
  * This is not possible on EBCDIC platforms
  * because they need ibm-37 or ibm-1047 default converters.
  *
- * @draft ICU 55
+ * @stable ICU 55
  */
 #ifndef UCONFIG_ONLY_HTML_CONVERSION
 #   define UCONFIG_ONLY_HTML_CONVERSION 0
@@ -437,9 +445,6 @@
  */
 #ifndef UCONFIG_NO_FILTERED_BREAK_ITERATION
 #   define UCONFIG_NO_FILTERED_BREAK_ITERATION 0
-
-
-
 #endif
 
 #endif

@@ -1,7 +1,7 @@
 /*
 *******************************************************************************
-* Copyright (C) 2007-2014, International Business Machines Corporation and
-* others. All Rights Reserved.                                                *
+* Copyright (C) 2007-2016, International Business Machines Corporation and
+* others. All Rights Reserved.
 *******************************************************************************
 *
 * File DTPTNGEN.H
@@ -9,10 +9,11 @@
 *******************************************************************************
 */
 
-#include "uvector.h"
-
 #ifndef __DTPTNGEN_IMPL_H__
 #define __DTPTNGEN_IMPL_H__
+
+#include "unicode/udatpg.h"
+#include "uvector.h"
 
 // TODO(claireho): Split off Builder class.
 // TODO(claireho): If splitting off Builder class: As subclass or independent?
@@ -38,6 +39,7 @@
 #define DOT               ((UChar)0x002E)
 #define COLON             ((UChar)0x003A)
 #define CAP_A             ((UChar)0x0041)
+#define CAP_B             ((UChar)0x0042)
 #define CAP_C             ((UChar)0x0043)
 #define CAP_D             ((UChar)0x0044)
 #define CAP_E             ((UChar)0x0045)
@@ -60,6 +62,7 @@
 #define CAP_Z             ((UChar)0x005A)
 #define LOWLINE           ((UChar)0x005F)
 #define LOW_A             ((UChar)0x0061)
+#define LOW_B             ((UChar)0x0062)
 #define LOW_C             ((UChar)0x0063)
 #define LOW_D             ((UChar)0x0064)
 #define LOW_E             ((UChar)0x0065)
@@ -145,12 +148,11 @@ public:
     FormatParser();
     virtual ~FormatParser();
     void set(const UnicodeString& patternString);
-    UBool isQuoteLiteral(const UnicodeString& s) const;
     void getQuoteLiteral(UnicodeString& quote, int32_t *itemIndex);
-    int32_t getCanonicalIndex(const UnicodeString& s) { return getCanonicalIndex(s, TRUE); }
-    int32_t getCanonicalIndex(const UnicodeString& s, UBool strict);
     UBool isPatternSeparator(UnicodeString& field);
-    void setFilter(UErrorCode &status);
+    static UBool isQuoteLiteral(const UnicodeString& s);
+    static int32_t getCanonicalIndex(const UnicodeString& s) { return getCanonicalIndex(s, TRUE); }
+    static int32_t getCanonicalIndex(const UnicodeString& s, UBool strict);
 
 private:
    typedef enum TokenStatus {

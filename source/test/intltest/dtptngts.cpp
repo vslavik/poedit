@@ -1,6 +1,6 @@
 /********************************************************************
- * COPYRIGHT: 
- * Copyright (c) 2008-2015, International Business Machines Corporation and
+ * COPYRIGHT:
+ * Copyright (c) 2008-2016, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 
@@ -10,12 +10,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "dtptngts.h" 
+#include "dtptngts.h"
 
 #include "unicode/calendar.h"
 #include "unicode/smpdtfmt.h"
 #include "unicode/dtfmtsym.h"
 #include "unicode/dtptngen.h"
+#include "cmemory.h"
 #include "loctest.h"
 
 
@@ -30,11 +31,13 @@ void IntlTestDateTimePatternGeneratorAPI::runIndexedTest( int32_t index, UBool e
         TESTCASE(0, testAPI);
         TESTCASE(1, testOptions);
         TESTCASE(2, testAllFieldPatterns);
+        TESTCASE(3, testStaticGetSkeleton);
+        TESTCASE(4, testC);
         default: name = ""; break;
     }
 }
 
-#define MAX_LOCALE   11  
+#define MAX_LOCALE   11
 
 /**
  * Test various generic API methods of DateTimePatternGenerator for API coverage.
@@ -61,7 +64,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         UnicodeString("JJmm"),      // 16
         UnicodeString(),
      };
-     
+
     const char* testLocale[MAX_LOCALE][4] = {
         {"en", "US", "", ""},                   // 0
         {"en", "US", "", "calendar=japanese"},  // 1
@@ -75,7 +78,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         {"ru", "", "", ""},                     // 9
         {"zh", "", "", "calendar=chinese"},    // 10
      };
-    
+
     // For Weds, Jan 13, 1999, 23:58:59
     UnicodeString patternResults[] = {
         // en_US                                              // 0 en_US
@@ -230,7 +233,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         CharsToUnicodeString("\\u4E0B\\u534811:58:59.123"),               // 15: jmmssSSS -> "ah:mm:ss.SSS"
         UnicodeString("11:58"),                                           // 16: JJmm
 
-        // zh_TW@calendar=roc                                             // 8 zh_TW@calendar=roc 
+        // zh_TW@calendar=roc                                             // 8 zh_TW@calendar=roc
         CharsToUnicodeString("\\u6C11\\u570B88/1"),                       // 00: yM    -> Gy/M
         CharsToUnicodeString("\\u6C11\\u570B88\\u5E741\\u6708"),          // 01: yMMM  -> Gy\u5E74M\u6708
         CharsToUnicodeString("\\u6C11\\u570B88/1/13"),                    // 02: yMd   -> Gy/M/d
@@ -251,20 +254,20 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
 
         // ru                                                             // 9 ru
         UnicodeString("01.1999"),                                         // 00: yM    -> MM.y
-        CharsToUnicodeString("\\u044F\\u043D\\u0432. 1999"),              // 01: yMMM  -> LLL y
+        CharsToUnicodeString("\\u044F\\u043D\\u0432. 1999 \\u0433."),     // 01: yMMM  -> LLL y
         UnicodeString("13.01.1999"),                                      // 02: yMd   -> dd.MM.y
         CharsToUnicodeString("13 \\u044F\\u043D\\u0432. 1999 \\u0433."),  // 03: yMMMd -> d MMM y
         UnicodeString("13.01"),                                           // 04: Md    -> dd.MM
         CharsToUnicodeString("13 \\u044F\\u043D\\u0432."),                // 05: MMMd  -> d MMM
         CharsToUnicodeString("13 \\u044F\\u043D\\u0432\\u0430\\u0440\\u044F"), // 06: MMMMd  -> d MMMM
         CharsToUnicodeString("1-\\u0439 \\u043A\\u0432. 1999 \\u0433."),  // 07: yQQQ  -> y QQQ
-        UnicodeString("11:58 PM"),                                        // 07: hhmm  -> hh:mm a
+        CharsToUnicodeString("11:58 \\u041F\\u041F"),                     // 08: hhmm  -> hh:mm a
         UnicodeString("23:58"),                                           // 09: HHmm  -> HH:mm
         UnicodeString("23:58"),                                           // 10: jjmm  -> HH:mm
         UnicodeString("58:59"),                                           // 11: mmss  -> mm:ss
-        CharsToUnicodeString("\\u044F\\u043D\\u0432\\u0430\\u0440\\u044C 1999"), // 12: yyyyMMMM -> LLLL y
-        CharsToUnicodeString("\\u0421\\u0440, 13 \\u044F\\u043D\\u0432."), // 13: MMMEd -> ccc, d MMM
-        CharsToUnicodeString("\\u0421\\u0440, 13"),                       // 14: Ed    -> EEE, d
+        CharsToUnicodeString("\\u044F\\u043D\\u0432\\u0430\\u0440\\u044C 1999 \\u0433."), // 12: yyyyMMMM -> LLLL y
+        CharsToUnicodeString("\\u0441\\u0440, 13 \\u044F\\u043D\\u0432."), // 13: MMMEd -> ccc, d MMM
+        CharsToUnicodeString("\\u0441\\u0440, 13"),                       // 14: Ed    -> EEE, d
         UnicodeString("23:58:59,123"),                                    // 15: jmmssSSS -> "H:mm:ss,SSS"
         UnicodeString("23:58"),                                           // 16: JJmm
 
@@ -336,17 +339,17 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         UnicodeString("6:58 AM GMT"),
         UnicodeString(""),
     };
-    
+
     // results for getSkeletons() and getPatternForSkeleton()
-    const UnicodeString testSkeletonsResults[] = { 
-        UnicodeString("HH:mm"), 
-        UnicodeString("MMMMd"), 
-        UnicodeString("MMMMMdd"), 
+    const UnicodeString testSkeletonsResults[] = {
+        UnicodeString("HH:mm"),
+        UnicodeString("MMMMd"),
+        UnicodeString("MMMMMdd"),
     };
-          
-    const UnicodeString testBaseSkeletonsResults[] = {        
-        UnicodeString("Hm"),  
-        UnicodeString("MMMMd"), 
+
+    const UnicodeString testBaseSkeletonsResults[] = {
+        UnicodeString("Hm"),
+        UnicodeString("MMMMd"),
         UnicodeString("MMMMMd"),
     };
 
@@ -361,7 +364,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
 
     // ======= Test CreateInstance with default locale
     logln("Testing DateTimePatternGenerator createInstance from default locale");
-    
+
     DateTimePatternGenerator *instFromDefaultLocale=DateTimePatternGenerator::createInstance(status);
     if (U_FAILURE(status)) {
         dataerrln("ERROR: Could not create DateTimePatternGenerator (default) - exitting");
@@ -371,7 +374,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         delete instFromDefaultLocale;
     }
 
-    // ======= Test CreateInstance with given locale    
+    // ======= Test CreateInstance with given locale
     logln("Testing DateTimePatternGenerator createInstance from French locale");
     status = U_ZERO_ERROR;
     DateTimePatternGenerator *instFromLocale=DateTimePatternGenerator::createInstance(Locale::getFrench(), status);
@@ -380,10 +383,10 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         return;
     }
 
-    // ======= Test clone DateTimePatternGenerator    
+    // ======= Test clone DateTimePatternGenerator
     logln("Testing DateTimePatternGenerator::clone()");
     status = U_ZERO_ERROR;
-    
+
 
     UnicodeString decimalSymbol = instFromLocale->getDecimal();
     UnicodeString newDecimalSymbol = UnicodeString("*");
@@ -397,15 +400,15 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
     if ( !(*cloneDTPatternGen == *instFromLocale) ) {
         errln("ERROR: inconsistency is found in cloned object.");
     }
-    
+
     if ( *cloneDTPatternGen != *instFromLocale ) {
         errln("ERROR: inconsistency is found in cloned object.");
     }
-    
+
     delete instFromLocale;
     delete cloneDTPatternGen;
-    
-    // ======= Test simple use cases    
+
+    // ======= Test simple use cases
     logln("Testing simple use cases");
     status = U_ZERO_ERROR;
     Locale deLocale=Locale::getGermany();
@@ -439,7 +442,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
     }
     // add new pattern
     status = U_ZERO_ERROR;
-    conflictingStatus = gen->addPattern(UnicodeString("d'. von' MMMM", -1, US_INV), true, conflictingPattern, status); 
+    conflictingStatus = gen->addPattern(UnicodeString("d'. von' MMMM", -1, US_INV), true, conflictingPattern, status);
     if (U_FAILURE(status)) {
         errln("ERROR: Could not addPattern - d\'. von\' MMMM");
     }
@@ -454,9 +457,9 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         errln(UnicodeString("ERROR: Simple test addPattern failed!: d\'. von\' MMMM   Got: ") + dateReturned + UnicodeString(" Expected: ") + expectedResult);
     }
     delete format;
-    
+
     // get a pattern and modify it
-    format = (SimpleDateFormat *)DateFormat::createDateTimeInstance(DateFormat::kFull, DateFormat::kFull, 
+    format = (SimpleDateFormat *)DateFormat::createDateTimeInstance(DateFormat::kFull, DateFormat::kFull,
                                                                   deLocale);
     format->setTimeZone(*zone);
     UnicodeString pattern;
@@ -468,8 +471,8 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         errln("ERROR: Simple test uses full date format.");
         errln(UnicodeString(" Got: ") + dateReturned + UnicodeString(" Expected: ") + expectedResult);
     }
-     
-    // modify it to change the zone.  
+
+    // modify it to change the zone.
     UnicodeString newPattern = gen->replaceFieldTypes(pattern, UnicodeString("vvvv"), status);
     format->applyPattern(newPattern);
     dateReturned.remove();
@@ -479,31 +482,31 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         errln("ERROR: Simple test modify the timezone!");
         errln(UnicodeString(" Got: ")+ dateReturned + UnicodeString(" Expected: ") + expectedResult);
     }
-    
+
     // setDeciaml(), getDeciaml()
     gen->setDecimal(newDecimal);
     if (newDecimal != gen->getDecimal()) {
         errln("ERROR: unexpected result from setDecimal() and getDecimal()!.\n");
     }
-    
+
     // setAppenItemName() , getAppendItemName()
     gen->setAppendItemName(UDATPG_HOUR_FIELD, newAppendItemName);
     if (newAppendItemName != gen->getAppendItemName(UDATPG_HOUR_FIELD)) {
         errln("ERROR: unexpected result from setAppendItemName() and getAppendItemName()!.\n");
     }
-    
+
     // setAppenItemFormat() , getAppendItemFormat()
     gen->setAppendItemFormat(UDATPG_HOUR_FIELD, newAppendItemFormat);
     if (newAppendItemFormat != gen->getAppendItemFormat(UDATPG_HOUR_FIELD)) {
         errln("ERROR: unexpected result from setAppendItemFormat() and getAppendItemFormat()!.\n");
     }
-    
+
     // setDateTimeFormat() , getDateTimeFormat()
     gen->setDateTimeFormat(newDateTimeFormat);
     if (newDateTimeFormat != gen->getDateTimeFormat()) {
         errln("ERROR: unexpected result from setDateTimeFormat() and getDateTimeFormat()!.\n");
     }
-    
+
     // ======== Test getSkeleton and getBaseSkeleton
     status = U_ZERO_ERROR;
     pattern = UnicodeString("dd-MMM");
@@ -536,7 +539,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
     delete format;
     delete zone;
     delete gen;
-    
+
     {
         // Trac# 6104
         status = U_ZERO_ERROR;
@@ -559,10 +562,10 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         logln(UnicodeString("  Formatted date:") + rDate);
 
         if ( expR!= rDate ) {
-            errln(UnicodeString("\nERROR: Test Japanese month hack Got: ") + rDate + 
+            errln(UnicodeString("\nERROR: Test Japanese month hack Got: ") + rDate +
                   UnicodeString(" Expected: ") + expR );
         }
-        
+
         delete patGen;
     }
     {   // Trac# 6104
@@ -583,10 +586,10 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         logln(UnicodeString(" zh locale with skeleton: YYYYMMM  Best Pattern:") + bPattern);
         logln(UnicodeString("  Formatted date:") + rDate);
         if ( expR!= rDate ) {
-            errln(UnicodeString("\nERROR: Test Chinese month hack Got: ") + rDate + 
+            errln(UnicodeString("\nERROR: Test Chinese month hack Got: ") + rDate +
                   UnicodeString(" Expected: ") + expR );
         }
-        delete patGen;   
+        delete patGen;
     }
 
     {
@@ -604,27 +607,27 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
          logln(UnicodeString(" en locale with skeleton: hmv  Best Pattern:") + bPattern);
 
          if ( expR!= bPattern ) {
-             errln(UnicodeString("\nERROR: Test EN time format Got: ") + bPattern + 
+             errln(UnicodeString("\nERROR: Test EN time format Got: ") + bPattern +
                    UnicodeString(" Expected: ") + expR );
          }
-         
+
          delete patGen;
      }
-     
-    
+
+
     // ======= Test various skeletons.
     logln("Testing DateTimePatternGenerator with various skeleton");
-   
+
     status = U_ZERO_ERROR;
     int32_t localeIndex=0;
     int32_t resultIndex=0;
     UnicodeString resultDate;
     UDate testDate= LocaleTest::date(99, 0, 13, 23, 58, 59) + 123.0;
     while (localeIndex < MAX_LOCALE )
-    {       
+    {
         int32_t dataIndex=0;
         UnicodeString bestPattern;
-        
+
         Locale loc(testLocale[localeIndex][0], testLocale[localeIndex][1], testLocale[localeIndex][2], testLocale[localeIndex][3]);
         logln("\n\n Locale: %s_%s_%s@%s", testLocale[localeIndex][0], testLocale[localeIndex][1], testLocale[localeIndex][2], testLocale[localeIndex][3]);
         DateTimePatternGenerator *patGen=DateTimePatternGenerator::createInstance(loc, status);
@@ -636,7 +639,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
             log(patternData[dataIndex]);
             bestPattern = patGen->getBestPattern(patternData[dataIndex++], status);
             logln(UnicodeString(" -> ") + bestPattern);
-            
+
             SimpleDateFormat sdf(bestPattern, loc, status);
             resultDate.remove();
             resultDate = sdf.format(testDate, resultDate);
@@ -644,21 +647,21 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
                 errln(UnicodeString("\nERROR: Test various skeletons[") + (dataIndex-1) + UnicodeString("], localeIndex ") + localeIndex +
                       UnicodeString(". Got: \"") + resultDate + UnicodeString("\" Expected: \"") + patternResults[resultIndex] + "\"" );
             }
-            
+
             resultIndex++;
         }
         delete patGen;
         localeIndex++;
     }
-    
+
     // ======= More tests ticket#6110
     logln("Testing DateTimePatternGenerator with various skeleton");
-   
+
     status = U_ZERO_ERROR;
     localeIndex=0;
     resultIndex=0;
     testDate= LocaleTest::date(99, 9, 13, 23, 58, 59);
-    {       
+    {
         int32_t dataIndex=0;
         UnicodeString bestPattern;
         logln("\n\n Test various skeletons for English locale...");
@@ -673,7 +676,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
             delete patGen;
             return;
         }
-        SimpleDateFormat *enFormat = (SimpleDateFormat *)DateFormat::createDateTimeInstance(DateFormat::kFull, 
+        SimpleDateFormat *enFormat = (SimpleDateFormat *)DateFormat::createDateTimeInstance(DateFormat::kFull,
                          DateFormat::kFull, Locale::getEnglish());
         enFormat->setTimeZone(*enZone);
         while (patternTests2[dataIndex].length() > 0) {
@@ -685,7 +688,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
             resultDate = enFormat->format(testDate, resultDate);
             if ( resultDate != patternResults2[resultIndex] ) {
                 errln(UnicodeString("\nERROR: Test various skeletons[") + dataIndex
-                    + UnicodeString("]. Got: ") + resultDate + UnicodeString(" Expected: ") + 
+                    + UnicodeString("]. Got: ") + resultDate + UnicodeString(" Expected: ") +
                     patternResults2[resultIndex] );
             }
             dataIndex++;
@@ -698,7 +701,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
 
 
 
-    // ======= Test random skeleton 
+    // ======= Test random skeleton
     DateTimePatternGenerator *randDTGen= DateTimePatternGenerator::createInstance(status);
     if (U_FAILURE(status)) {
         dataerrln("ERROR: Could not create DateTimePatternGenerator (Locale::getFrench()) - exitting");
@@ -717,35 +720,35 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         UnicodeString bestPattern = randDTGen->getBestPattern(randomSkeleton, status);
     }
     delete randDTGen;
-    
+
     // UnicodeString randomString=Unicode
     // ======= Test getStaticClassID()
 
     logln("Testing getStaticClassID()");
     status = U_ZERO_ERROR;
     DateTimePatternGenerator *test= DateTimePatternGenerator::createInstance(status);
-    
+
     if(test->getDynamicClassID() != DateTimePatternGenerator::getStaticClassID()) {
         errln("ERROR: getDynamicClassID() didn't return the expected value");
     }
     delete test;
-    
+
     // ====== Test createEmptyInstance()
-    
+
     logln("Testing createEmptyInstance()");
     status = U_ZERO_ERROR;
-    
+
     test = DateTimePatternGenerator::createEmptyInstance(status);
     if(U_FAILURE(status)) {
          errln("ERROR: Fail to create an empty instance ! - exitting.\n");
          delete test;
          return;
     }
-    
-    conflictingStatus = test->addPattern(UnicodeString("MMMMd"), true, conflictingPattern, status); 
+
+    conflictingStatus = test->addPattern(UnicodeString("MMMMd"), true, conflictingPattern, status);
     status = U_ZERO_ERROR;
     testPattern=test->getBestPattern(UnicodeString("MMMMdd"), status);
-    conflictingStatus = test->addPattern(UnicodeString("HH:mm"), true, conflictingPattern, status); 
+    conflictingStatus = test->addPattern(UnicodeString("HH:mm"), true, conflictingPattern, status);
     conflictingStatus = test->addPattern(UnicodeString("MMMMMdd"), true, conflictingPattern, status); //duplicate pattern
     StringEnumeration *output=NULL;
     output = test->getRedundants(status);
@@ -757,7 +760,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
             errln("ERROR: Fail in getRedundants !\n");
         }
     }
-    
+
     // ======== Test getSkeletons and getBaseSkeletons
     StringEnumeration* ptrSkeletonEnum = test->getSkeletons(status);
     if(U_FAILURE(status)) {
@@ -778,7 +781,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
     StringEnumeration* ptrBaseSkeletonEnum = test->getBaseSkeletons(status);
     if(U_FAILURE(status)) {
         errln("ERROR: Fail to get base skeletons !\n");
-    }   
+    }
     count=ptrBaseSkeletonEnum->count(status);
     for (i=0; i<count; ++i) {
         ptrSkeleton = (UnicodeString *)ptrBaseSkeletonEnum->snext(status);
@@ -792,16 +795,16 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
     Locale locale = Locale::getFrench();
     status = U_ZERO_ERROR;
     DateTimePatternGenerator *generator = DateTimePatternGenerator::createInstance( locale, status);
-        
+
     // get a pattern for an abbreviated month and day
-    pattern = generator->getBestPattern(UnicodeString("MMMd"), status); 
-    SimpleDateFormat formatter(pattern, locale, status); 
+    pattern = generator->getBestPattern(UnicodeString("MMMd"), status);
+    SimpleDateFormat formatter(pattern, locale, status);
 
     zone = TimeZone::createTimeZone(UnicodeString("GMT"));
     formatter.setTimeZone(*zone);
     // use it to format (or parse)
     UnicodeString formatted;
-    formatted = formatter.format(Calendar::getNow(), formatted, status); 
+    formatted = formatter.format(Calendar::getNow(), formatted, status);
     // for French, the result is "13 sept."
     formatted.remove();
     // cannot use the result from getNow() because the value change evreyday.
@@ -856,12 +859,12 @@ void IntlTestDateTimePatternGeneratorAPI::testOptions(/*char *par*/)
         { "en", "Hmm",  "HH:mm",   UDATPG_MATCH_HOUR_FIELD_LENGTH },
         { "en", "HHmm", "HH:mm",   UDATPG_MATCH_HOUR_FIELD_LENGTH },
         { "en", "hhmm", "hh:mm a", UDATPG_MATCH_HOUR_FIELD_LENGTH },
-        { "be", "Hmm",  "HH.mm",   UDATPG_MATCH_NO_OPTIONS        },
-        { "be", "HHmm", "HH.mm",   UDATPG_MATCH_NO_OPTIONS        },
-        { "be", "hhmm", "h.mm a",  UDATPG_MATCH_NO_OPTIONS        },
-        { "be", "Hmm",  "H.mm",    UDATPG_MATCH_HOUR_FIELD_LENGTH },
-        { "be", "HHmm", "HH.mm",   UDATPG_MATCH_HOUR_FIELD_LENGTH },
-        { "be", "hhmm", "hh.mm a", UDATPG_MATCH_HOUR_FIELD_LENGTH },
+        { "da", "Hmm",  "HH.mm",   UDATPG_MATCH_NO_OPTIONS        },
+        { "da", "HHmm", "HH.mm",   UDATPG_MATCH_NO_OPTIONS        },
+        { "da", "hhmm", "h.mm a",  UDATPG_MATCH_NO_OPTIONS        },
+        { "da", "Hmm",  "H.mm",    UDATPG_MATCH_HOUR_FIELD_LENGTH },
+        { "da", "HHmm", "HH.mm",   UDATPG_MATCH_HOUR_FIELD_LENGTH },
+        { "da", "hhmm", "hh.mm a", UDATPG_MATCH_HOUR_FIELD_LENGTH },
         //
         { "en",                   "yyyy",  "yyyy",  UDATPG_MATCH_NO_OPTIONS },
         { "en",                   "YYYY",  "YYYY",  UDATPG_MATCH_NO_OPTIONS },
@@ -886,10 +889,10 @@ void IntlTestDateTimePatternGeneratorAPI::testOptions(/*char *par*/)
         { "zh@calendar=chinese",  "yMMM",  "rU\\u5E74MMM", UDATPG_MATCH_NO_OPTIONS },
         { "zh@calendar=chinese",  "GUMMM", "rU\\u5E74MMM", UDATPG_MATCH_NO_OPTIONS },
     };
-    
-    int count = sizeof(testData) / sizeof(testData[0]);
+
+    int count = UPRV_LENGTHOF(testData);
     const DTPtnGenOptionsData * testDataPtr = testData;
-    
+
     for (; count-- > 0; ++testDataPtr) {
         UErrorCode status = U_ZERO_ERROR;
 
@@ -993,7 +996,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAllFieldPatterns(/*char *par*/)
         { 'X',  {1,2,3,4,5,0},  "X"    }, // x
         { 'x',  {1,2,3,4,5,0},  "x"    }, // x
     };
-    
+
     const char ** localeNamesPtr = localeNames;
     const char * localeName;
     while ( (localeName = *localeNamesPtr++) != NULL) {
@@ -1002,7 +1005,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAllFieldPatterns(/*char *par*/)
         DateTimePatternGenerator * dtpg = DateTimePatternGenerator::createInstance(locale, status);
         if (U_SUCCESS(status)) {
             const AllFieldsTestItem * testDataPtr = testData;
-            int itemCount = sizeof(testData) / sizeof(testData[0]);
+            int itemCount = UPRV_LENGTHOF(testData);
             for (; itemCount-- > 0; ++testDataPtr) {
                 char skelBuf[FIELD_LENGTH_MAX];
                 int32_t chrIndx, lenIndx;
@@ -1046,7 +1049,7 @@ void IntlTestDateTimePatternGeneratorAPI::testAllFieldPatterns(/*char *par*/)
                                     ", skeleton " + skeleton +
                                     ", produces pattern without required chars: " + pattern);
                         }
-                        
+
                     }
                 }
             }
@@ -1057,4 +1060,52 @@ void IntlTestDateTimePatternGeneratorAPI::testAllFieldPatterns(/*char *par*/)
         }
     }
 }
+
+void IntlTestDateTimePatternGeneratorAPI::testStaticGetSkeleton(/*char *par*/)
+{
+    // Verify that staticGetSkeleton() doesn't mangle skeletons. (Ticket #11985)
+    static const char* const testData[] = {
+        "jmm",
+        "jjmm",
+        "Jmm",
+        "JJmm"
+    };
+
+    for (size_t i = 0; i < UPRV_LENGTHOF(testData); i++) {
+        UErrorCode status = U_ZERO_ERROR;
+        UnicodeString skeleton = DateTimePatternGenerator::staticGetSkeleton(testData[i], status);
+        if (!assertSuccess("staticGetSkeleton", status)) {
+            return;
+        }
+        assertEquals("Skeleton", testData[i], skeleton);
+    }
+}
+
+void IntlTestDateTimePatternGeneratorAPI::testC() {
+    UErrorCode status = U_ZERO_ERROR;
+    const int32_t numLocales = 6;
+
+    const char* tests[numLocales][3] = {
+            {"zh", "Cm", "Bh:mm"},
+            {"de", "Cm", "HH:mm"},
+            {"en", "Cm", "h:mm a"},
+            {"en-BN", "Cm", "h:mm b"},
+            {"gu-IN", "Cm", "h:mm B"},
+            {"und-IN", "Cm", "h:mm a"},
+    };
+
+    for (int32_t i = 0; i < numLocales; ++i) {
+        DateTimePatternGenerator *gen = DateTimePatternGenerator::createInstance(Locale(tests[i][0]), status);
+        UnicodeString pattern = gen->getBestPattern(tests[i][1], status);
+        UnicodeString expectedPattern = tests[i][2];
+
+        char message[100] = "\0";
+        strcat(message, tests[i][0]);
+        strcat(message, "/");
+        strcat(message, tests[i][1]);
+        assertEquals(message, expectedPattern, pattern);
+        delete gen;
+    }
+}
+
 #endif /* #if !UCONFIG_NO_FORMATTING */

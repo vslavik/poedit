@@ -1,6 +1,6 @@
 /************************************************************************
  * COPYRIGHT:
- * Copyright (c) 1997-2015, International Business Machines Corporation
+ * Copyright (c) 1997-2016, International Business Machines Corporation
  * and others. All Rights Reserved.
  ************************************************************************/
 
@@ -14,6 +14,19 @@
 #include "unicode/numfmt.h"
 #include "unicode/decimfmt.h"
 #include "caltztst.h"
+
+/**
+ * Expected field positions from field position iterator. Tests should
+ * stack allocate an array of these making sure that the last element is
+ * {0, -1, 0} (The sentinel element indicating end of iterator). Then test
+ * should call verifyFieldPositionIterator() passing both this array of
+ * expected results and the field position iterator from the format method.
+ */
+struct NumberFormatTest_Attributes {
+    int32_t id;
+    int32_t spos;
+    int32_t epos;
+};
 
 /**
  * Performs various in-depth test on NumberFormat
@@ -183,8 +196,25 @@ class NumberFormatTest: public CalendarTimeZoneTest {
     void TestEquality();
 
     void TestCurrencyUsage();
+    void TestNumberFormatTestTuple();
+    void TestDataDriven();
+
     void TestDoubleLimit11439();
     void TestFastPathConsistent11524();
+    void TestGetAffixes();
+    void TestToPatternScientific11648();
+    void TestBenchmark();
+    void TestCtorApplyPatternDifference();
+    void TestFractionalDigitsForCurrency();
+    void TestFormatCurrencyPlural();
+    void Test11868();
+    void Test10727_RoundingZero();
+    void Test11376_getAndSetPositivePrefix();
+    void Test11475_signRecognition();
+    void Test11640_getAffixes();
+    void Test11649_toPatternWithMultiCurrency();
+
+    void checkExceptionIssue11735();
 
  private:
     UBool testFormattableAsUFormattable(const char *file, int line, Formattable &f);
@@ -304,6 +334,10 @@ class NumberFormatTest: public CalendarTimeZoneTest {
         const char * const *descriptions,
         int32_t valueSize,
         int32_t roundingModeSize);
+
+    void verifyFieldPositionIterator(
+            NumberFormatTest_Attributes *expected,
+            FieldPositionIterator &iter);
 
 };
 

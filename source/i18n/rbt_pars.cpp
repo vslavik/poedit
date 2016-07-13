@@ -1,6 +1,6 @@
 /*
  **********************************************************************
- *   Copyright (C) 1999-2014, International Business Machines
+ *   Copyright (C) 1999-2016, International Business Machines
  *   Corporation and others.  All Rights Reserved.
  **********************************************************************
  *   Date        Name        Description
@@ -1102,7 +1102,7 @@ void TransliteratorParser::parseRules(const UnicodeString& rule,
 
             for (int32_t j = 0; j < data->variablesLength; j++) {
                 data->variables[j] =
-                    ((UnicodeSet*)variablesVector.elementAt(j));
+                    static_cast<UnicodeFunctor *>(variablesVector.elementAt(j));
             }
             
             data->variableNames.removeAll();
@@ -1674,11 +1674,18 @@ utrans_stripRules(const UChar *source, int32_t sourceLen, UChar *target, UErrorC
                     target--;
                 }
                 do {
+                    if (source == sourceLimit) {
+                        c = U_SENTINEL;
+                        break;
+                    }
                     c = *(source++);
                 }
                 while (c != CR && c != LF);
+                if (c < 0) {
+                    break;
+                }
             }
-            else if (c == ESCAPE) {
+            else if (c == ESCAPE && source < sourceLimit) {
                 UChar32   c2 = *source;
                 if (c2 == CR || c2 == LF) {
                     /* A backslash at the end of a line. */

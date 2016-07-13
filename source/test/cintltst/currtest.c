@@ -1,6 +1,6 @@
 /********************************************************************
  * COPYRIGHT:
- * Copyright (c) 2005-2014, International Business Machines Corporation and
+ * Copyright (c) 2005-2016, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 #include "unicode/utypes.h"
@@ -10,6 +10,7 @@
 #include "unicode/ucurr.h"
 #include "unicode/ustring.h"
 #include "cintltst.h"
+#include "cmemory.h"
 #include "cstring.h"
 
 static void expectInList(const char *isoCurrency, uint32_t currencyType, UBool isExpected) {
@@ -159,29 +160,29 @@ static void TestFractionDigitOverride(void) {
     UNumberFormat *fmt = unum_open(UNUM_CURRENCY, NULL, 0, "hu_HU", NULL, &status);
     UChar buffer[256];
     UChar expectedBuf[256];
-    const char expectedFirst[] = "123,46\\u00A0HUF"; /* changed to use 2 fraction digits */
-    const char expectedSecond[] = "123,46\\u00A0HUF";
-    const char expectedThird[] = "123,456\\u00A0HUF";
+    const char expectedFirst[] = "123,46\\u00A0Ft"; /* changed to use 2 fraction digits */
+    const char expectedSecond[] = "123,46\\u00A0Ft";
+    const char expectedThird[] = "123,456\\u00A0Ft";
     if (U_FAILURE(status)) {
        log_data_err("Error: unum_open returned %s (Are you missing data?)\n", myErrorName(status));
        return;
     }
     /* Make sure that you can format normal fraction digits. */
-    unum_formatDouble(fmt, 123.456, buffer, sizeof(buffer)/sizeof(buffer[0]), NULL, &status);
+    unum_formatDouble(fmt, 123.456, buffer, UPRV_LENGTHOF(buffer), NULL, &status);
     u_unescape(expectedFirst, expectedBuf, strlen(expectedFirst)+1);
     if (u_strcmp(buffer, expectedBuf) != 0) {
        log_err("Error: unum_formatDouble didn't return %s\n", expectedFirst);
     }
     /* Make sure that you can format 2 fraction digits. */
     unum_setAttribute(fmt, UNUM_FRACTION_DIGITS, 2);
-    unum_formatDouble(fmt, 123.456, buffer, sizeof(buffer)/sizeof(buffer[0]), NULL, &status);
+    unum_formatDouble(fmt, 123.456, buffer, UPRV_LENGTHOF(buffer), NULL, &status);
     u_unescape(expectedSecond, expectedBuf, strlen(expectedSecond)+1);
     if (u_strcmp(buffer, expectedBuf) != 0) {
        log_err("Error: unum_formatDouble didn't return %s\n", expectedSecond);
     }
     /* Make sure that you can format more fraction digits. */
     unum_setAttribute(fmt, UNUM_FRACTION_DIGITS, 3);
-    unum_formatDouble(fmt, 123.456, buffer, sizeof(buffer)/sizeof(buffer[0]), NULL, &status);
+    unum_formatDouble(fmt, 123.456, buffer, UPRV_LENGTHOF(buffer), NULL, &status);
     u_unescape(expectedThird, expectedBuf, strlen(expectedThird)+1);
     if (u_strcmp(buffer, expectedBuf) != 0) {
        log_err("Error: unum_formatDouble didn't return %s\n", expectedThird);
@@ -244,12 +245,13 @@ static const NumCodeTestEntry NUMCODE_TESTDATA[] = {
 };
 
 static void TestNumericCode(void) {
-    UChar code[4];
+    UChar code[8];  // at least one longer than the longest alphaCode
     int32_t i;
     int32_t numCode;
 
     for (i = 0; NUMCODE_TESTDATA[i].alphaCode; i++) {
-        u_charsToUChars(NUMCODE_TESTDATA[i].alphaCode, code, sizeof(code)/sizeof(code[0]));
+        int32_t length = uprv_strlen(NUMCODE_TESTDATA[i].alphaCode);
+        u_charsToUChars(NUMCODE_TESTDATA[i].alphaCode, code, length + 1);  // +1 includes the NUL
         numCode = ucurr_getNumericCode(code);
         if (numCode != NUMCODE_TESTDATA[i].numericCode) {
             log_data_err("Error: ucurr_getNumericCode returned %d for currency %s, expected - %d\n",

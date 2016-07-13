@@ -1,6 +1,6 @@
 /*
  **********************************************************************
- *   Copyright (C) 2005-2014, International Business Machines
+ *   Copyright (C) 2005-2016, International Business Machines
  *   Corporation and others.  All Rights Reserved.
  **********************************************************************
  */
@@ -40,7 +40,6 @@ char testId[100];
     dataerrln("Failure in file %s, line %d, test ID \"%s\", status = \"%s\"", \
           __FILE__, __LINE__, testId, u_errorName(errcode));}}
 
-#define ARRAY_SIZE(array) (sizeof array / sizeof array[0])
 #define NEW_ARRAY(type, count) (type *) uprv_malloc((count) * sizeof(type))
 #define DELETE_ARRAY(array) uprv_free((void *) (array))
 
@@ -368,12 +367,10 @@ OrderList::OrderList(UCollator *coll, const UnicodeString &string, int32_t strin
     {
     default:
         strengthMask |= UCOL_TERTIARYORDERMASK;
-        /* fall through */
-
+        U_FALLTHROUGH;
     case UCOL_SECONDARY:
         strengthMask |= UCOL_SECONDARYORDERMASK;
-        /* fall through */
-
+        U_FALLTHROUGH;
     case UCOL_PRIMARY:
         strengthMask |= UCOL_PRIMARYORDERMASK;
     }
@@ -615,7 +612,7 @@ void SSearchTest::offsetTest()
         "pe\\u0302che",
     };
 
-    int32_t testCount = ARRAY_SIZE(test);
+    int32_t testCount = UPRV_LENGTHOF(test);
     UErrorCode status = U_ZERO_ERROR;
     RuleBasedCollator *col = (RuleBasedCollator *) Collator::createInstance(Locale::getEnglish(), status);
     if (U_FAILURE(status)) {
@@ -749,7 +746,7 @@ void SSearchTest::sharpSTest()
                                                            &status));
     TEST_ASSERT_SUCCESS(status);
 
-    for (uint32_t t = 0; t < (sizeof(targets)/sizeof(targets[0])); t += 1) {
+    for (uint32_t t = 0; t < UPRV_LENGTHOF(targets); t += 1) {
         UBool bFound;
         UnicodeString target = targets[t].unescape();
 
@@ -1393,12 +1390,12 @@ void SSearchTest::monkeyTest(char *params)
         &expansionMonkey,
         &contractionMonkey,
         &expansionMonkey};
-    int32_t monkeyCount = sizeof(monkeys) / sizeof(monkeys[0]);
+    int32_t monkeyCount = UPRV_LENGTHOF(monkeys);
     // int32_t nonMatchCount = 0;
 
     UCollationStrength strengths[] = {UCOL_PRIMARY, UCOL_SECONDARY, UCOL_TERTIARY};
     const char *strengthNames[] = {"primary", "secondary", "tertiary"};
-    int32_t strengthCount = sizeof(strengths) / sizeof(strengths[0]);
+    int32_t strengthCount = UPRV_LENGTHOF(strengths);
     int32_t loopCount = quick? 1000 : 10000;
     int32_t firstStrength = 0;
     int32_t lastStrength  = strengthCount - 1; //*/ 0;

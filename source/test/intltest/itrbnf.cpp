@@ -1,7 +1,7 @@
 /*
  *******************************************************************************
- * Copyright (C) 1996-2015, International Business Machines Corporation and    *
- * others. All Rights Reserved.                                                *
+ * Copyright (C) 1996-2016, International Business Machines Corporation and
+ * others. All Rights Reserved.
  *******************************************************************************
  */
 
@@ -19,6 +19,8 @@
 #include "unicode/ustring.h"
 #include "unicode/decimfmt.h"
 #include "unicode/udata.h"
+#include "cmemory.h"
+#include "putilimp.h"
 #include "testutil.h"
 
 #include <string.h>
@@ -67,6 +69,8 @@ void IntlTestRBNF::runIndexedTest(int32_t index, UBool exec, const char* &name, 
         TESTCASE(19, TestSetDecimalFormatSymbols);
         TESTCASE(20, TestPluralRules);
         TESTCASE(21, TestMultiplePluralRules);
+        TESTCASE(22, TestInfinityNaN);
+        TESTCASE(23, TestVariableDecimalPoint);
 #else
         TESTCASE(0, TestRBNFDisabled);
 #endif
@@ -351,11 +355,17 @@ void IntlTestRBNF::TestMultiplePluralRules() {
     UnicodeString rules("%spellout-cardinal-feminine-genitive:"
                 "0: zero;"
                 "1: ono;"
+                "2: two;"
                 "1000: << $(cardinal,one{thousand}few{thousanF}other{thousanO})$[ >>];"
                 "%spellout-cardinal-feminine:"
+                "x.x: [<< $(cardinal,one{singleton}other{plurality})$ ]>%%fractions>;"
                 "0: zero;"
                 "1: one;"
-                "1000: << $(cardinal,one{thousand}few{thousanF}other{thousanO})$[ >>];");
+                "2: two;"
+                "1000: << $(cardinal,one{thousand}few{thousanF}other{thousanO})$[ >>];"
+                "%%fractions:"
+                "10: <%spellout-cardinal-feminine< $(cardinal,one{oneth}other{tenth})$;"
+                "100: <%spellout-cardinal-feminine< $(cardinal,one{1hundredth}other{hundredth})$;");
     UErrorCode status = U_ZERO_ERROR;
     UParseError pError;
     RuleBasedNumberFormat formatter(rules, Locale("ru"), pError, status);
@@ -385,6 +395,21 @@ void IntlTestRBNF::TestMultiplePluralRules() {
         errln("RuleBasedNumberFormat(spellout-cardinal-feminine) did not return the correct value. Got: %d", result.getLong());
         errln(resultStr);
     }
+    static const char* const testData[][2] = {
+        { "0", "zero" },
+        { "1", "one" },
+        { "2", "two" },
+        { "0.1", "one oneth" },
+        { "0.2", "two tenth" },
+        { "1.1", "one singleton one oneth" },
+        { "1.2", "one singleton two tenth" },
+        { "2.1", "two plurality one oneth" },
+        { "2.2", "two plurality two tenth" },
+        { "0.01", "one 1hundredth" },
+        { "0.02", "two hundredth" },
+        { NULL, NULL }
+    };
+    doTest(&formatter, testData, TRUE);
 }
 
 void IntlTestRBNF::TestFractionalRuleSet()
@@ -472,7 +497,7 @@ void IntlTestRBNF::TestFractionalRuleSet()
             { "1.2856", "1 2/7" },
             { NULL, NULL }
         };
-       doTest(&formatter, testData, FALSE); // exact values aren't parsable from fractions
+        doTest(&formatter, testData, FALSE); // exact values aren't parsable from fractions
     }
 }
 
@@ -935,7 +960,7 @@ void IntlTestRBNF::TestLLong()
             &NEG_TWO_TO_32X5, &TWO_TO_32, &NEG_FIVE
         };
         const int TUPLE_WIDTH = 3;
-        const int TUPLE_COUNT = (int)(sizeof(tuples)/sizeof(tuples[0]))/TUPLE_WIDTH;
+        const int TUPLE_COUNT = UPRV_LENGTHOF(tuples)/TUPLE_WIDTH;
         for (int i = 0; i < TUPLE_COUNT; ++i) {
             const llong lhs = *tuples[i*TUPLE_WIDTH+0];
             const llong rhs = *tuples[i*TUPLE_WIDTH+1];
@@ -1015,7 +1040,7 @@ void IntlTestRBNF::TestLLong()
             &BIG_FIVEp1, &FIVE, &ONE
         };
         const int TUPLE_WIDTH = 3;
-        const int TUPLE_COUNT = (int)(sizeof(tuples)/sizeof(tuples[0]))/TUPLE_WIDTH;
+        const int TUPLE_COUNT = UPRV_LENGTHOF(tuples)/TUPLE_WIDTH;
         for (int i = 0; i < TUPLE_COUNT; ++i) {
             const llong lhs = *tuples[i*TUPLE_WIDTH+0];
             const llong rhs = *tuples[i*TUPLE_WIDTH+1];
@@ -1141,9 +1166,8 @@ IntlTestRBNF::TestEnglishSpellout()
         doTest(formatter, testData, TRUE);
 
 #if !UCONFIG_NO_COLLATION
-        if( !logKnownIssue("9503") ) {
-          formatter->setLenient(TRUE);
-          static const char* lpTestData[][2] = {
+        formatter->setLenient(TRUE);
+        static const char* lpTestData[][2] = {
             { "fifty-7", "57" },
             { " fifty-7", "57" },
             { "  fifty-7", "57" },
@@ -1151,9 +1175,8 @@ IntlTestRBNF::TestEnglishSpellout()
             { "fifteen hundred and zero", "1,500" },
             { "FOurhundred     thiRTY six", "436" },
             { NULL, NULL}
-          };
-          doLenientParseTest(formatter, lpTestData);
-        }
+        };
+        doLenientParseTest(formatter, lpTestData);
 #endif
     }
     delete formatter;
@@ -1789,7 +1812,7 @@ IntlTestRBNF::TestLocalizations(void)
                 "<<%main>,<'en', \"it's ok\">>", // double quotes work too
                 "  \n <\n  <\n  %main\n  >\n  , \t <\t   en\t  ,  \tfoo \t\t > \n\n >  \n ", // Pattern_White_Space ok
            }; 
-            int32_t goodLocsLen = sizeof(goodLocs)/sizeof(goodLocs[0]);
+            int32_t goodLocsLen = UPRV_LENGTHOF(goodLocs);
 
             static const char* badLocs[] = {
                 " ", // non-zero length
@@ -1816,7 +1839,7 @@ IntlTestRBNF::TestLocalizations(void)
                 "<<%main>> x", // extra non-space text at end
 
             };
-            int32_t badLocsLen = sizeof(badLocs)/sizeof(badLocs[0]);
+            int32_t badLocsLen = UPRV_LENGTHOF(badLocs);
 
             for (i = 0; i < goodLocsLen; ++i) {
                 logln("[%d] '%s'", i, goodLocs[i]);
@@ -1871,7 +1894,7 @@ IntlTestRBNF::TestAllLocales()
                 continue;
             }
 #if !UCONFIG_NO_COLLATION
-            for (unsigned int numidx = 0; numidx < sizeof(numbers)/sizeof(double); numidx++) {
+            for (unsigned int numidx = 0; numidx < UPRV_LENGTHOF(numbers); numidx++) {
                 double n = numbers[numidx];
                 UnicodeString str;
                 f->format(n, str);
@@ -2106,6 +2129,93 @@ void IntlTestRBNF::TestPluralRules() {
 
 }
 
+void IntlTestRBNF::TestInfinityNaN() {
+    UErrorCode status = U_ZERO_ERROR;
+    UParseError parseError;
+    UnicodeString enRules("%default:"
+            "-x: minus >>;"
+            "Inf: infinite;"
+            "NaN: not a number;"
+            "0: =#,##0=;");
+    RuleBasedNumberFormat enFormatter(enRules, Locale::getEnglish(), parseError, status);
+    const char * const enTestData[][2] = {
+            {"1", "1"},
+            {"\\u221E", "infinite"},
+            {"-\\u221E", "minus infinite"},
+            {"NaN", "not a number"},
+            { NULL, NULL }
+    };
+    if (U_FAILURE(status)) {
+        dataerrln("Unable to create RuleBasedNumberFormat - " + UnicodeString(u_errorName(status)));
+        return;
+    }
+
+    doTest(&enFormatter, enTestData, true);
+
+    // Test the default behavior when the rules are undefined.
+    UnicodeString enRules2("%default:"
+            "-x: ->>;"
+            "0: =#,##0=;");
+    RuleBasedNumberFormat enFormatter2(enRules2, Locale::getEnglish(), parseError, status);
+    if (U_FAILURE(status)) {
+        errln("Unable to create RuleBasedNumberFormat - " + UnicodeString(u_errorName(status)));
+        return;
+    }
+    const char * const enDefaultTestData[][2] = {
+            {"1", "1"},
+            {"\\u221E", "\\u221E"},
+            {"-\\u221E", "-\\u221E"},
+            {"NaN", "NaN"},
+            { NULL, NULL }
+    };
+
+    doTest(&enFormatter2, enDefaultTestData, true);
+}
+
+void IntlTestRBNF::TestVariableDecimalPoint() {
+    UErrorCode status = U_ZERO_ERROR;
+    UParseError parseError;
+    UnicodeString enRules("%spellout-numbering:"
+            "-x: minus >>;"
+            "x.x: << point >>;"
+            "x,x: << comma >>;"
+            "0.x: xpoint >>;"
+            "0,x: xcomma >>;"
+            "0: zero;"
+            "1: one;"
+            "2: two;"
+            "3: three;"
+            "4: four;"
+            "5: five;"
+            "6: six;"
+            "7: seven;"
+            "8: eight;"
+            "9: nine;");
+    RuleBasedNumberFormat enFormatter(enRules, Locale::getEnglish(), parseError, status);
+    const char * const enTestPointData[][2] = {
+            {"1.1", "one point one"},
+            {"1.23", "one point two three"},
+            {"0.4", "xpoint four"},
+            { NULL, NULL }
+    };
+    if (U_FAILURE(status)) {
+        dataerrln("Unable to create RuleBasedNumberFormat - " + UnicodeString(u_errorName(status)));
+        return;
+    }
+    doTest(&enFormatter, enTestPointData, true);
+
+    DecimalFormatSymbols decimalFormatSymbols(Locale::getEnglish(), status);
+    decimalFormatSymbols.setSymbol(DecimalFormatSymbols::kDecimalSeparatorSymbol, UNICODE_STRING_SIMPLE(","));
+    enFormatter.setDecimalFormatSymbols(decimalFormatSymbols);
+    const char * const enTestCommaData[][2] = {
+            {"1.1", "one comma one"},
+            {"1.23", "one comma two three"},
+            {"0.4", "xcomma four"},
+            { NULL, NULL }
+    };
+    doTest(&enFormatter, enTestCommaData, true);
+}
+
 void 
 IntlTestRBNF::doTest(RuleBasedNumberFormat* formatter, const char* const testData[][2], UBool testParsing) 
 {
@@ -2124,7 +2234,8 @@ IntlTestRBNF::doTest(RuleBasedNumberFormat* formatter, const char* const testDat
 
             log("[%i] %s = ", i, numString);
             Formattable expectedNumber;
-            decFmt.parse(numString, expectedNumber, status);
+            UnicodeString escapedNumString = UnicodeString(numString, -1, US_INV).unescape();
+            decFmt.parse(escapedNumString, expectedNumber, status);
             if (U_FAILURE(status)) {
                 errln("FAIL: decFmt could not parse %s", numString);
                 break;
@@ -2161,7 +2272,9 @@ IntlTestRBNF::doTest(RuleBasedNumberFormat* formatter, const char* const testDat
                                 errln(msg);
                                 break;
                             } else {
-                                if (parsedNumber != expectedNumber) {
+                                if (parsedNumber != expectedNumber
+                                    && (!uprv_isNaN(parsedNumber.getDouble()) || !uprv_isNaN(expectedNumber.getDouble())))
+                                {
                                     UnicodeString msg = "FAIL: parse failed for ";
                                     msg.append(actualString);
                                     msg.append(", expected ");

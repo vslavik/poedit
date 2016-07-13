@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -89,7 +89,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderOutputFile>.\x86\Debug/intltest.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\x86\Debug/</AssemblerListingLocation>
@@ -129,7 +129,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>true</BufferSecurityCheck>
-      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderOutputFile>.\x64\Debug/intltest.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\x64\Debug/</AssemblerListingLocation>
@@ -164,7 +164,7 @@
       <PreprocessorDefinitions>U_ATTRIBUTE_DEPRECATED=;WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderOutputFile>.\x86\Release/intltest.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\x86\Release/</AssemblerListingLocation>
@@ -199,7 +199,7 @@
       <PreprocessorDefinitions>U_ATTRIBUTE_DEPRECATED=;WIN64;WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PrecompiledHeaderOutputFile>.\x64\Release/intltest.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\x64\Release/</AssemblerListingLocation>
@@ -238,6 +238,7 @@
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="rbbitst.cpp" />
+    <ClCompile Include="rbbimonkeytest.cpp" />
     <ClCompile Include="itspoof.cpp" />
     <ClCompile Include="allcoll.cpp" />
     <ClCompile Include="alphaindextst.cpp" />
@@ -267,16 +268,10 @@
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="strtest.cpp">
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="tsmthred.cpp">
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DisableLanguageExtensions>
-      <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DisableLanguageExtensions>
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="tsputil.cpp" />
     <ClCompile Include="uobjtest.cpp">
@@ -284,7 +279,9 @@
     </ClCompile>
     <ClCompile Include="astrotst.cpp" />
     <ClCompile Include="calcasts.cpp" />
-    <ClCompile Include="callimts.cpp" />
+    <ClCompile Include="callimts.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
     <ClCompile Include="calregts.cpp" />
     <ClCompile Include="caltest.cpp" />
     <ClCompile Include="caltztst.cpp">
@@ -293,13 +290,16 @@
     <ClCompile Include="compactdecimalformattest.cpp" />
     <ClCompile Include="dadrcal.cpp" />
     <ClCompile Include="dadrfmt.cpp" />
+    <ClCompile Include="datadrivennumberformattestsuite.cpp" />
     <ClCompile Include="dcfmapts.cpp" />
     <ClCompile Include="dcfmtest.cpp" />
     <ClCompile Include="dtfmapts.cpp" />
     <ClCompile Include="dtfmrgts.cpp" />
     <ClCompile Include="dtfmtrtts.cpp" />
     <ClCompile Include="dtfmttst.cpp" />
-    <ClCompile Include="dtifmtts.cpp" />
+    <ClCompile Include="dtifmtts.cpp">
+      <DisableLanguageExtensions>false</DisableLanguageExtensions>
+    </ClCompile>
     <ClCompile Include="dtptngts.cpp" />
     <ClCompile Include="fldset.cpp" />
     <ClCompile Include="genderinfotest.cpp" />
@@ -314,8 +314,11 @@
     <ClCompile Include="msfmrgts.cpp" />
     <ClCompile Include="nmfmapts.cpp" />
     <ClCompile Include="nmfmtrt.cpp" />
+    <ClCompile Include="numberformattesttuple.cpp" />
+    <ClCompile Include="numberformat2test.cpp" />
     <ClCompile Include="numfmtst.cpp" />
     <ClCompile Include="numrgts.cpp" />
+    <ClCompile Include="pluralmaptest.cpp" />
     <ClCompile Include="plurfmts.cpp" />
     <ClCompile Include="plurults.cpp" />
     <ClCompile Include="pptest.cpp" />
@@ -327,7 +330,7 @@
     <ClCompile Include="sdtfmtts.cpp" />
     <ClCompile Include="selfmts.cpp" />
     <ClCompile Include="tchcfmt.cpp" />
-    <ClCompile Include="simplepatternformattertest.cpp" />
+    <ClCompile Include="simpleformattertest.cpp" />
     <ClCompile Include="tfsmalls.cpp" />
     <ClCompile Include="tmsgfmt.cpp" />
     <ClCompile Include="tsdate.cpp" />
@@ -432,6 +435,7 @@
     <ClInclude Include="itrbbi.h" />
     <ClInclude Include="rbbiapts.h" />
     <ClInclude Include="rbbitst.h" />
+    <ClInclude Include="rbbimonkeytest.h" />
     <ClInclude Include="itspoof.h" />
     <ClInclude Include="allcoll.h" />
     <ClInclude Include="alphaindextst.h" />
@@ -471,6 +475,7 @@
     <ClInclude Include="caltztst.h" />
     <ClInclude Include="dadrcal.h" />
     <ClInclude Include="dadrfmt.h" />
+    <ClInclude Include="datadrivennumberformattestsuite.h" />
     <ClInclude Include="dcfmapts.h" />
     <ClInclude Include="dcfmtest.h" />
     <ClInclude Include="dtfmapts.h" />
@@ -490,6 +495,7 @@
     <ClInclude Include="msfmrgts.h" />
     <ClInclude Include="nmfmapts.h" />
     <ClInclude Include="nmfmtrt.h" />
+    <ClInclude Include="numberformattesttuple.h" />
     <ClInclude Include="numfmtst.h" />
     <ClInclude Include="numrgts.h" />
     <ClInclude Include="plurfmts.h" />

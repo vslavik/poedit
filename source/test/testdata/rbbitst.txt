@@ -1,4 +1,4 @@
-﻿# Copyright (c) 2001-2015 International Business Machines
+﻿# Copyright (c) 2001-2016 International Business Machines
 # Corporation and others. All Rights Reserved.
 #
 # RBBI Test Data
@@ -31,6 +31,23 @@
 #  are merged back into ICU4C's copy of the file, lest they get overwritten later.
 # TODO:  figure out how to have a single copy of the file for use by both C and Java.
 
+
+## FILTERED BREAK TESTS
+
+# (William Bradford, public domain. http://catalog.hathitrust.org/Record/008651224 ) - edited.
+<locale en>
+<sent>
+<data>\
+•In the meantime Mr. •Weston arrived with his small ship, which he had now recovered. •Capt. •Gorges, who informed the Sgt. here that one purpose of his going east was to meet with Mr. •Weston, took this opportunity to call him to account for some abuses he had to lay to his charge.•</data>
+
+<locale en@ss=standard>
+<sent>
+<data>\
+•In the meantime Mr. Weston arrived with his small ship, which he had now recovered. •Capt. Gorges, who informed the Sgt. here that one purpose of his going east was to meet with Mr. Weston, took this opportunity to call him to account for some abuses he had to lay to his charge.•</data>
+
+## END FILTERED BREAK TESTS
+
+<locale>
 
 #   Temp debugging tests 
 <sent>
@@ -252,6 +269,10 @@
 
 # User guide example:
 <data>•Parlez<200>-•vous<200> •français<200> •?•</data>
+
+# Test for #11673
+<word>
+<data>•ジョージア<400> •</data>
 
 ########################################################################################
 #
@@ -492,6 +513,18 @@ What is the proper use of the abbreviation pp.? •Yes, I am definatelly 12" tal
 <data>•  •\uF8FF\u2028<100>\uF8FF•</data>
 <data>•   \u200B\u2028<100>\u200B•</data>
 
+# Regional Indicator sequences. They group in pairs. The reverse rules are tricky.
+#    Sequences are long enough that the non-exaustive monkey test won't reliably pick up problems.
+
+<data>•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•</data>
+<data>•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6•</data>
+
+<data>•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6\u00a0\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•</data>
+<data>•\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6\u00a0\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6•</data>
+<data>•\U0001F1E6\U0001F1E6•\U0001F1E6\u00a0\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•</data>
+<data>•\U0001F1E6\U0001F1E6•\U0001F1E6\u00a0\U0001F1E6\U0001F1E6•\U0001F1E6\U0001F1E6•\U0001F1E6•</data>
+
+
 # User Guide example
 
 <data>•Parlez-•vous •français ?•</data>
@@ -708,6 +741,10 @@ Bangkok)•</data>
 # Test for #11019
 <line>
 <data>•เบ•เบราว์เซอร์•โพ•โพสต์•โพสท์•</data>
+
+# Test for #11688
+<line>
+<data>•อัปเดต•อีเวนต์•</data>
 
 ##########################################################################################
 #

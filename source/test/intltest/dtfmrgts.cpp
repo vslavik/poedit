@@ -1,6 +1,6 @@
 /********************************************************************
  * COPYRIGHT: 
- * Copyright (c) 1997-2014, International Business Machines Corporation and
+ * Copyright (c) 1997-2016, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 
@@ -15,6 +15,7 @@
 #include "unicode/datefmt.h"
 #include "unicode/simpletz.h"
 #include "unicode/resbund.h"
+#include "cmemory.h"
 
 // *****************************************************************************
 // class DateFormatRegressionTest
@@ -1133,7 +1134,7 @@ void DateFormatRegressionTest::Test4182066(void) {
         "09/12/+1",
         "09/12/001",
     };
-    int32_t STRINGS_COUNT = (int32_t)(sizeof(STRINGS) / sizeof(STRINGS[0]));
+    int32_t STRINGS_COUNT = UPRV_LENGTHOF(STRINGS);
     UDate FAIL_DATE = (UDate) 0;
     UDate DATES[] = {
         date(2000-1900, UCAL_FEBRUARY, 29),
@@ -1327,7 +1328,7 @@ void DateFormatRegressionTest::Test1684(void)
     new Test1684Data(2001,12,30, /*2002, 1,  6,*/  2002,1,1,UCAL_SUNDAY,    "2002 01 01 Sun", "2001 12 06 Sun")
   };
 
-#define kTest1684Count  ((int32_t)(sizeof(tests)/sizeof(tests[0])))
+#define kTest1684Count  UPRV_LENGTHOF(tests)
 
   int32_t pass = 0, error = 0, warning = 0;
   int32_t i;
@@ -1542,14 +1543,14 @@ void DateFormatRegressionTest::TestT10334(void) {
         return;
     }
 
-    format.setBooleanAttribute(UDAT_PARSE_PARTIAL_MATCH, FALSE, status);
+    format.setBooleanAttribute(UDAT_PARSE_PARTIAL_LITERAL_MATCH, FALSE, status);
     format.parse(text, status);
     if (!U_FAILURE(status)) {
         errln("parse partial match did NOT fail in strict mode - %s", u_errorName(status));
     }
 
     status = U_ZERO_ERROR;
-    format.setBooleanAttribute(UDAT_PARSE_PARTIAL_MATCH, TRUE, status);
+    format.setBooleanAttribute(UDAT_PARSE_PARTIAL_LITERAL_MATCH, TRUE, status);
     format.parse(text, status);
     if (U_FAILURE(status)) {
         errln("parse partial match failure in lenient mode - %s", u_errorName(status));
@@ -1636,7 +1637,7 @@ void DateFormatRegressionTest::TestT10619(void) {
             sdmft->setLenient(itemPtr->leniency);
             sdmft->setBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, itemPtr->leniency, status);
             sdmft->setBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, itemPtr->leniency, status);
-            sdmft->setBooleanAttribute(UDAT_PARSE_PARTIAL_MATCH, itemPtr->leniency, status);
+            sdmft->setBooleanAttribute(UDAT_PARSE_PARTIAL_LITERAL_MATCH, itemPtr->leniency, status);
             sdmft->parse(itemPtr->parseString, pos);
 
             delete sdmft;

@@ -1,6 +1,6 @@
 /*
 **********************************************************************
-*   Copyright (C) 2000-2015, International Business Machines
+*   Copyright (C) 2000-2016, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 **********************************************************************
 *   file name:  ucnv2022.cpp
@@ -971,9 +971,9 @@ DONE:
                         *err = U_UNSUPPORTED_ESCAPE_SEQUENCE;
                         break;
                     }
-                    /*fall through*/
+                    U_FALLTHROUGH;
                 case GB2312_1:
-                    /*fall through*/
+                    U_FALLTHROUGH;
                 case CNS_11643_1:
                     myData2022->toU2022State.cs[1]=(int8_t)tempState;
                     break;
@@ -1421,8 +1421,8 @@ static const StateEnum jpCharsetPref[]={
     ASCII,
     JISX201,
     ISO8859_1,
-    ISO8859_7,
     JISX208,
+    ISO8859_7,
     JISX212,
     GB2312,
     KSC5601,
@@ -2160,7 +2160,6 @@ escape:
             /* ISO-2022-JP does not use single-byte (C1) SS2 and SS3 */
 
             case CR:
-                /*falls through*/
             case LF:
                 /* automatically reset to single-byte mode */
                 if((StateEnum)pToU2022State->cs[0] != ASCII && (StateEnum)pToU2022State->cs[0] != JISX201) {
@@ -2168,7 +2167,7 @@ escape:
                 }
                 pToU2022State->cs[2] = 0;
                 pToU2022State->g = 0;
-                /* falls through */
+                U_FALLTHROUGH;
             default:
                 /* convert one or two bytes */
                 myData->isEmptySegment = FALSE;
@@ -3343,10 +3342,9 @@ escape:
             /* ISO-2022-CN does not use single-byte (C1) SS2 and SS3 */
 
             case CR:
-                /*falls through*/
             case LF:
                 uprv_memset(pToU2022State, 0, sizeof(ISO2022State));
-                /* falls through */
+                U_FALLTHROUGH;
             default:
                 /* convert one or two bytes */
                 myData->isEmptySegment = FALSE;
@@ -3806,16 +3804,8 @@ static const UConverterStaticData _ISO2022StaticData={
     0,
     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } /* reserved */
 };
-const UConverterSharedData _ISO2022Data={
-    sizeof(UConverterSharedData),
-    ~((uint32_t) 0),
-    NULL,
-    NULL,
-    &_ISO2022StaticData,
-    FALSE,
-    &_ISO2022Impl,
-    0, UCNV_MBCS_TABLE_INITIALIZER
-};
+const UConverterSharedData _ISO2022Data=
+        UCNV_IMMUTABLE_SHARED_DATA_INITIALIZER(&_ISO2022StaticData, &_ISO2022Impl);
 
 /*************JP****************/
 static const UConverterImpl _ISO2022JPImpl={
@@ -3862,16 +3852,8 @@ static const UConverterStaticData _ISO2022JPStaticData={
 
 namespace {
 
-const UConverterSharedData _ISO2022JPData={
-    sizeof(UConverterSharedData),
-    ~((uint32_t) 0),
-    NULL,
-    NULL,
-    &_ISO2022JPStaticData,
-    FALSE,
-    &_ISO2022JPImpl,
-    0, UCNV_MBCS_TABLE_INITIALIZER
-};
+const UConverterSharedData _ISO2022JPData=
+        UCNV_IMMUTABLE_SHARED_DATA_INITIALIZER(&_ISO2022JPStaticData, &_ISO2022JPImpl);
 
 }  // namespace
 
@@ -3909,7 +3891,7 @@ static const UConverterStaticData _ISO2022KRStaticData={
     UCNV_IBM,
     UCNV_ISO_2022,
     1,
-    3, /* max 3 bytes per UChar: SO+DBCS */
+    8, /* max 8 bytes per UChar */
     { 0x1a, 0, 0, 0 },
     1,
     FALSE,
@@ -3921,16 +3903,8 @@ static const UConverterStaticData _ISO2022KRStaticData={
 
 namespace {
 
-const UConverterSharedData _ISO2022KRData={
-    sizeof(UConverterSharedData),
-    ~((uint32_t) 0),
-    NULL,
-    NULL,
-    &_ISO2022KRStaticData,
-    FALSE,
-    &_ISO2022KRImpl,
-    0, UCNV_MBCS_TABLE_INITIALIZER
-};
+const UConverterSharedData _ISO2022KRData=
+        UCNV_IMMUTABLE_SHARED_DATA_INITIALIZER(&_ISO2022KRStaticData, &_ISO2022KRImpl);
 
 }  // namespace
 
@@ -3980,16 +3954,8 @@ static const UConverterStaticData _ISO2022CNStaticData={
 
 namespace {
 
-const UConverterSharedData _ISO2022CNData={
-    sizeof(UConverterSharedData),
-    ~((uint32_t) 0),
-    NULL,
-    NULL,
-    &_ISO2022CNStaticData,
-    FALSE,
-    &_ISO2022CNImpl,
-    0, UCNV_MBCS_TABLE_INITIALIZER
-};
+const UConverterSharedData _ISO2022CNData=
+        UCNV_IMMUTABLE_SHARED_DATA_INITIALIZER(&_ISO2022CNStaticData, &_ISO2022CNImpl);
 
 }  // namespace
 #endif /* #if !UCONFIG_ONLY_HTML_CONVERSION */

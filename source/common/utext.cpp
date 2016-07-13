@@ -1,7 +1,7 @@
 /*
 *******************************************************************************
 *
-*   Copyright (C) 2005-2014, International Business Machines
+*   Copyright (C) 2005-2016, International Business Machines
 *   Corporation and others.  All Rights Reserved.
 *
 *******************************************************************************
@@ -2028,6 +2028,9 @@ utext_openReplaceable(UText *ut, Replaceable *rep, UErrorCode *status)
         return NULL;
     }
     ut = utext_setup(ut, sizeof(ReplExtra), status);
+    if(U_FAILURE(*status)) {
+        return ut;
+    }
 
     ut->providerProperties = I32_FLAG(UTEXT_PROVIDER_WRITABLE);
     if(rep->hasMetaData()) {
@@ -2524,6 +2527,7 @@ ucstrTextExtract(UText *ut,
             ut->chunkLength         = si;
             ut->nativeIndexingLimit = si;
             strLength               = si;
+            limit32                 = si;
             break;
         }
         U_ASSERT(di>=0); /* to ensure di never exceeds INT32_MAX, which must not happen logically */
@@ -2545,16 +2549,21 @@ ucstrTextExtract(UText *ut,
     // If the limit index points to a lead surrogate of a pair,
     //   add the corresponding trail surrogate to the destination.
     if (si>0 && U16_IS_LEAD(s[si-1]) &&
-        ((si<strLength || strLength<0)  && U16_IS_TRAIL(s[si])))
+            ((si<strLength || strLength<0)  && U16_IS_TRAIL(s[si])))
     {
         if (di<destCapacity) {
             // store only if there is space in the output buffer.
-            dest[di++] = s[si++];
+            dest[di++] = s[si];
         }
+        si++;
     }
 
     // Put iteration position at the point just following the extracted text
-    ut->chunkOffset = uprv_min(strLength, start32 + destCapacity);
+    if (si <= ut->chunkNativeLimit) {
+        ut->chunkOffset = si;
+    } else {
+        ucstrTextAccess(ut, si, TRUE);
+    }
 
     // Add a terminating NUL if space in the buffer permits,
     // and set the error status as required.
@@ -2733,6 +2742,9 @@ charIterTextClone(UText *dest, const UText *src, UBool deep, UErrorCode * status
         CharacterIterator *srcCI =(CharacterIterator *)src->context;
         srcCI = srcCI->clone();
         dest = utext_openCharacterIterator(dest, srcCI, status);
+        if (U_FAILURE(*status)) {
+            return dest;
+        }
         // cast off const on getNativeIndex.
         //   For CharacterIterator based UTexts, this is safe, the operation is const.
         int64_t  ix = utext_getNativeIndex((UText *)src);

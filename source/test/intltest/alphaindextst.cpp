@@ -1,6 +1,6 @@
 /********************************************************************
  * COPYRIGHT:
- * Copyright (c) 2012-2014, International Business Machines Corporation
+ * Copyright (c) 2012-2016, International Business Machines Corporation
  * and others. All Rights Reserved.
  ********************************************************************/
 //
@@ -429,7 +429,7 @@ void AlphabeticIndexTest::HackPinyinTest() {
     AlphabeticIndex aindex(Locale::createFromName("zh"), status);
     TEST_CHECK_STATUS; 
 
-    UnicodeString names[sizeof(pinyinTestData) / sizeof(pinyinTestData[0])];
+    UnicodeString names[UPRV_LENGTHOF(pinyinTestData)];
     int32_t  nameCount;
     for (nameCount=0; pinyinTestData[nameCount] != NULL; nameCount++) {
         names[nameCount] = UnicodeString(pinyinTestData[nameCount], -1, UnicodeString::kInvariant).unescape();
@@ -717,8 +717,9 @@ void AlphabeticIndexTest::TestChineseUnihan() {
     // bucketIndex = radical number, adjusted for simplified radicals in lower buckets.
     int32_t bucketIndex = index.getBucketIndex(UnicodeString((UChar)0x4e5d), status);
     assertEquals("getBucketIndex(U+4E5D)", 5, bucketIndex);
+    // radical 100, and there is a 90' since Unicode 8
     bucketIndex = index.getBucketIndex(UnicodeString((UChar)0x7527), status);
-    assertEquals("getBucketIndex(U+7527)", 100, bucketIndex);
+    assertEquals("getBucketIndex(U+7527)", 101, bucketIndex);
 }
 
 #endif

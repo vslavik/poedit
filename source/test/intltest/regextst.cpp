@@ -1,6 +1,6 @@
 /********************************************************************
  * COPYRIGHT:
- * Copyright (c) 2002-2015, International Business Machines Corporation and
+ * Copyright (c) 2002-2016, International Business Machines Corporation and
  * others. All Rights Reserved.
  ********************************************************************/
 
@@ -23,6 +23,10 @@
 #include "intltest.h"
 #if !UCONFIG_NO_REGULAR_EXPRESSIONS
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "unicode/localpointer.h"
 #include "unicode/regex.h"
 #include "unicode/uchar.h"
@@ -31,13 +35,12 @@
 #include "unicode/uregex.h"
 #include "unicode/usetiter.h"
 #include "unicode/ustring.h"
+#include "unicode/utext.h"
+
 #include "regextst.h"
 #include "regexcmp.h"
 #include "uvector.h"
 #include "util.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 #include "cmemory.h"
 #include "cstring.h"
 #include "uinvchar.h"
@@ -232,7 +235,7 @@ const char* RegexTest::extractToAssertBuf(const UnicodeString& message) {
   return ASSERT_BUF;
 }
 
-#define REGEX_VERBOSE_TEXT(text) {char buf[200];utextToPrintable(buf,sizeof(buf)/sizeof(buf[0]),text);logln("%s:%d: UText %s=\"%s\"", __FILE__, __LINE__, #text, buf);}
+#define REGEX_VERBOSE_TEXT(text) {char buf[200];utextToPrintable(buf,UPRV_LENGTHOF(buf),text);logln("%s:%d: UText %s=\"%s\"", __FILE__, __LINE__, #text, buf);}
 
 #define REGEX_CHECK_STATUS {if (U_FAILURE(status)) {dataerrln("%s:%d: RegexTest failure.  status=%s", \
                                                               __FILE__, __LINE__, u_errorName(status)); return;}}
@@ -292,8 +295,8 @@ void RegexTest::assertUText(const char *expected, UText *actual, const char *fil
     if (!testUTextEqual(&expectedText, actual)) {
         char buf[201 /*21*/];
         char expectedBuf[201];
-        utextToPrintable(buf, sizeof(buf)/sizeof(buf[0]), actual);
-        utextToPrintable(expectedBuf, sizeof(expectedBuf)/sizeof(expectedBuf[0]), &expectedText);
+        utextToPrintable(buf, UPRV_LENGTHOF(buf), actual);
+        utextToPrintable(expectedBuf, UPRV_LENGTHOF(expectedBuf), &expectedText);
         errln("%s:%d: assertUText: Failure: expected \"%s\" (%d chars), got \"%s\" (%d chars)", file, line, expectedBuf, (int)utext_nativeLength(&expectedText), buf, (int)utext_nativeLength(actual));
     }
     utext_close(&expectedText);
@@ -314,8 +317,8 @@ void RegexTest::assertUTextInvariant(const char *expected, UText *actual, const 
     if (!testUTextEqual(&expectedText, actual)) {
         char buf[201 /*21*/];
         char expectedBuf[201];
-        utextToPrintable(buf, sizeof(buf)/sizeof(buf[0]), actual);
-        utextToPrintable(expectedBuf, sizeof(expectedBuf)/sizeof(expectedBuf[0]), &expectedText);
+        utextToPrintable(buf, UPRV_LENGTHOF(buf), actual);
+        utextToPrintable(expectedBuf, UPRV_LENGTHOF(expectedBuf), &expectedText);
         errln("%s:%d: assertUTextInvariant: Failure: expected \"%s\" (%d uchars), got \"%s\" (%d chars)", file, line, expectedBuf, (int)utext_nativeLength(&expectedText), buf, (int)utext_nativeLength(actual));
     }
     utext_close(&expectedText);
@@ -3580,7 +3583,7 @@ void RegexTest::regex_find(const UnicodeString &pattern,
 
         if (UTF8Matcher == NULL) {
             // UTF-8 does not allow unpaired surrogates, so this could actually happen without being a failure of the engine
-          logln("Unable to create UTF-8 matcher, skipping UTF-8 tests for %s:%d", srcPath, line);
+            logln("Unable to create UTF-8 matcher, skipping UTF-8 tests for %s:%d", srcPath, line);
             status = U_ZERO_ERROR;
         }
     }
@@ -3589,6 +3592,9 @@ void RegexTest::regex_find(const UnicodeString &pattern,
     //  Generate native indices for UTF8 versions of region and capture group info
     //
     if (UTF8Matcher != NULL) {
+        if (flags.indexOf((UChar)0x74) >= 0) {   //  't' trace flag
+            UTF8Matcher->setTrace(TRUE);
+        }
         if (regionStart>=0)    (void) utextOffsetToNative(&inputText, regionStart, regionStartUTF8);
         if (regionEnd>=0)      (void) utextOffsetToNative(&inputText, regionEnd, regionEndUTF8);
 
@@ -3668,6 +3674,9 @@ void RegexTest::regex_find(const UnicodeString &pattern,
         }
     }
     matcher->setTrace(FALSE);
+    if (UTF8Matcher) {
+        UTF8Matcher->setTrace(FALSE);
+    }
     if (U_FAILURE(status)) {
         errln("Error at line %d. ICU ErrorCode is %s", u_errorName(status));
     }
@@ -3689,16 +3698,17 @@ void RegexTest::regex_find(const UnicodeString &pattern,
         failed = TRUE;
         goto cleanupAndReturn;
     }
+    if (isMatch && groupStarts.size() == 0) {
+        errln("Error at line %d: No match expected, but one found at position %d.", line, matcher->start(status));
+        failed = TRUE;
+    }
+    if (UTF8Matcher && isUTF8Match && groupStarts.size() == 0) {
+        errln("Error at line %d: No match expected, but one found at position %d (UTF-8).", line, UTF8Matcher->start(status));
+        failed = TRUE;
+    }
 
     if (flags.indexOf((UChar)0x47 /*G*/) >= 0) {
         // Only check for match / no match.  Don't check capture groups.
-        if (isMatch && groupStarts.size() == 0) {
-            errln("Error at line %d:  No match expected, but one found.", line);
-            failed = TRUE;
-        } else if (UTF8Matcher != NULL && isUTF8Match && groupStarts.size() == 0) {
-            errln("Error at line %d:  No match expected, but one found. (UTF8)", line);
-            failed = TRUE;
-        }
         goto cleanupAndReturn;
     }
 
@@ -5780,7 +5790,7 @@ void RegexTest::TestBug11371() {
 void RegexTest::TestBug11480() {
     // C API, get capture group of a group that does not participate in the match.
     //        (Returns a zero length string, with nul termination,
-    //         indistinguishable from a group with a zero lenght match.)
+    //         indistinguishable from a group with a zero length match.)
 
     UErrorCode status = U_ZERO_ERROR;
     URegularExpression *re = uregex_openC("(A)|(B)", 0, NULL, &status);
@@ -5796,6 +5806,29 @@ void RegexTest::TestBug11480() {
     REGEX_ASSERT(buf[1] == 0);
     REGEX_ASSERT(buf[2] == 13);
     uregex_close(re);
+
+    // UText C++ API, length of match is 0 for non-participating matches.
+    UText ut = UTEXT_INITIALIZER;
+    utext_openUnicodeString(&ut, &text, &status);
+    RegexMatcher matcher(UnicodeString("(A)|(B)"), 0, status);
+    REGEX_CHECK_STATUS;
+    matcher.reset(&ut);
+    REGEX_ASSERT(matcher.lookingAt(0, status));
+
+    // UText C++ API, Capture group 1 matches "A", position 0, length 1.
+    int64_t groupLen = -666;
+    UText group = UTEXT_INITIALIZER;
+    matcher.group(1, &group, groupLen, status);
+    REGEX_CHECK_STATUS;
+    REGEX_ASSERT(groupLen == 1);
+    REGEX_ASSERT(utext_getNativeIndex(&group) == 0);
+
+    // Capture group 2, the (B), does not participate in the match.
+    matcher.group(2, &group, groupLen, status);
+    REGEX_CHECK_STATUS;
+    REGEX_ASSERT(groupLen == 0);
+    REGEX_ASSERT(matcher.start(2, status) == -1);
+    REGEX_CHECK_STATUS;
 }
 
 

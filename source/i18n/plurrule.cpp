@@ -1,6 +1,6 @@
 /*
 *******************************************************************************
-* Copyright (C) 2007-2014, International Business Machines Corporation and
+* Copyright (C) 2007-2016, International Business Machines Corporation and
 * others. All Rights Reserved.
 *******************************************************************************
 *
@@ -31,12 +31,13 @@
 #include "uvectr32.h"
 #include "sharedpluralrules.h"
 #include "unifiedcache.h"
+#include "digitinterval.h" 
+#include "visibledigits.h"
+
 
 #if !UCONFIG_NO_FORMATTING
 
 U_NAMESPACE_BEGIN
-
-#define ARRAY_SIZE(array) (int32_t)(sizeof array  / sizeof array[0])
 
 static const UChar PLURAL_KEYWORD_OTHER[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,0};
 static const UChar PLURAL_DEFAULT_RULE[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,0};
@@ -252,6 +253,16 @@ PluralRules::select(const FixedDecimal &number) const {
         return mRules->select(number);
     }
 }
+
+UnicodeString
+PluralRules::select(const VisibleDigitsWithExponent &number) const {
+    if (number.getExponent() != NULL) {
+        return UnicodeString(TRUE, PLURAL_DEFAULT_RULE, -1);
+    }
+    return select(FixedDecimal(number.getMantissa()));
+}
+
+
 
 StringEnumeration*
 PluralRules::getKeywords(UErrorCode& status) const {
@@ -481,6 +492,7 @@ PluralRuleParser::parse(const UnicodeString& ruleData, PluralRules *prules, UErr
 
         case tNotEqual:
             curAndConstraint->negated=TRUE;
+            U_FALLTHROUGH;
         case tIn:
         case tWithin:
         case tEqual:
@@ -1046,7 +1058,7 @@ PluralRuleParser::getNumberValue(const UnicodeString& token) {
     int32_t i;
     char digits[128];
 
-    i = token.extract(0, token.length(), digits, ARRAY_SIZE(digits), US_INV);
+    i = token.extract(0, token.length(), digits, UPRV_LENGTHOF(digits), US_INV);
     digits[i]='\0';
 
     return((int32_t)atoi(digits));
@@ -1370,7 +1382,14 @@ PluralKeywordEnumeration::count(UErrorCode& /*status*/) const {
 PluralKeywordEnumeration::~PluralKeywordEnumeration() {
 }
 
-
+FixedDecimal::FixedDecimal(const VisibleDigits &digits) {
+    digits.getFixedDecimal(
+            source, intValue, decimalDigits,
+            decimalDigitsWithoutTrailingZeros,
+            visibleDecimalDigitCount, hasIntegerValue);
+    isNegative = digits.isNegative();
+    isNanOrInfinity = digits.isNaNOrInfinity();
+}
 
 FixedDecimal::FixedDecimal(double n, int32_t v, int64_t f) {
     init(n, v, f);
