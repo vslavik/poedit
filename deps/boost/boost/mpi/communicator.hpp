@@ -1257,7 +1257,7 @@ communicator::array_recv_impl(int source, int tag, T* values, int n,
   ia >> count;
 
   // Deserialize the data in the message
-  boost::serialization::array<T> arr(values, count > n? n : count);
+  boost::serialization::array_wrapper<T> arr(values, count > n? n : count);
   ia >> arr;
 
   if (count > n) {
@@ -1459,7 +1459,7 @@ namespace detail {
     ia >> count;
     
     // Deserialize the data in the message
-    boost::serialization::array<T> arr(values, count > n? n : count);
+    boost::serialization::array_wrapper<T> arr(values, count > n? n : count);
     ia >> arr;
     
     if (count > n) {

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>erase</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="clear.html" title="clear">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase.h0"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase.description"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.description">Description</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase.description"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.description">Description</a>
           </h6>
 <p>
             Returns a new sequence, containing all the elements of the original except
@@ -36,7 +36,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase.h1"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase.synopsis"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.synopsis">Synopsis</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase.synopsis"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">,</span>
@@ -139,7 +139,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.transformation.functions.erase.h2"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase.expression_semantics"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.expression_semantics">Expression
+            <span><a name="fusion.algorithm.transformation.functions.erase.expression_semantics"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="erase.html" title="erase"><code class="computeroutput"><span class="identifier">erase</span></code></a><span class="special">(</span><span class="identifier">seq</span><span class="special">,</span> <span class="identifier">pos</span><span class="special">);</span>
@@ -147,7 +147,7 @@
 <p>
             <span class="bold"><strong>Return type</strong></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 A model of <a class="link" href="../../../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward
                 Sequence</a>.
@@ -169,7 +169,7 @@
 <p>
             <span class="bold"><strong>Return type</strong></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 A model of <a class="link" href="../../../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward
                 Sequence</a>.
@@ -188,21 +188,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase.h3"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase.complexity"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.complexity">Complexity</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase.complexity"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.complexity">Complexity</a>
           </h6>
 <p>
             Constant. Returns a view which is lazily evaluated.
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase.h4"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase.header"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.header">Header</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase.header"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">transformation</span><span class="special">/</span><span class="identifier">erase</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">erase</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase.h5"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase.example"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.example">Example</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase.example"></a></span><a class="link" href="erase.html#fusion.algorithm.transformation.functions.erase.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">const</span> <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="keyword">char</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="number">2.0</span><span class="special">,</span> <span class="char">'c'</span><span class="special">);</span>
 <span class="identifier">assert</span><span class="special">(</span><a class="link" href="erase.html" title="erase"><code class="computeroutput"><span class="identifier">erase</span></code></a><span class="special">(</span><span class="identifier">vec</span><span class="special">,</span> <a class="link" href="../../../iterator/functions/next.html" title="next"><code class="computeroutput"><span class="identifier">next</span></code></a><span class="special">(</span><a class="link" href="../../../sequence/intrinsic/functions/begin.html" title="begin"><code class="computeroutput"><span class="identifier">begin</span></code></a><span class="special">(</span><span class="identifier">vec</span><span class="special">)))</span> <span class="special">==</span> <a class="link" href="../../../container/generation/functions/make_vector.html" title="make_vector"><code class="computeroutput"><span class="identifier">make_vector</span></code></a><span class="special">(</span><span class="number">1</span><span class="special">,</span> <span class="char">'c'</span><span class="special">));</span>

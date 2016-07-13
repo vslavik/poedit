@@ -1096,7 +1096,7 @@ And they also can receive an additional option:
 
 *  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
    in containers. The comparison functor must induce a strict weak ordering.
-   Default: `compare< std::less<T> >`
+   Default: `compare< std::less<key_type> >`
 
 *  [*`key_of_value<class KeyOfValueFunctionObject>`]: A function object that will
    define the `key_type` of the value type to be stored. This type will allow a map-like interface. See
@@ -1512,7 +1512,7 @@ And they also can receive an additional option:
 
 *  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
    in containers. The comparison functor must induce a strict weak ordering.
-   Default: `compare< std::less<T> >`
+   Default: `compare< std::less<key_type> >`
 
 *  [*`key_of_value<class KeyOfValueFunctionObject>`]: A function object that will
    define the `key_type` of the value type to be stored. This type will allow a map-like interface. See
@@ -1614,7 +1614,7 @@ And they also can receive an additional option:
 
 *  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
    in containers. The comparison functor must induce a strict weak ordering.
-   Default: `compare< std::less<T> >`
+   Default: `compare< std::less<key_type> >`
 
 *  [*`key_of_value<class KeyOfValueFunctionObject>`]: A function object that will
    define the `key_type` of the value type to be stored. This type will allow a map-like interface. See
@@ -1725,7 +1725,7 @@ And they also can receive additional options:
 
 *  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
    in containers. The comparison functor must induce a strict weak ordering.
-   Default: `compare< std::less<T> >`
+   Default: `compare< std::less<key_type> >`
 
 *  [*`floating_point<bool Enable>`]:
    When this option is deactivated, the scapegoat tree loses the ability to change
@@ -1828,11 +1828,11 @@ And they also can receive additional options:
 
 *  [*`compare<class Compare>`]: Comparison function for the objects to be inserted
    in containers. The comparison functor must induce a strict weak ordering.
-   Default: `compare< std::less<T> >`
+   Default: `compare< std::less<key_type> >`
 
 *  [*`priority<class PriorityCompare>`]: Priority Comparison function for the objects to be inserted
    in containers. The comparison functor must induce a strict weak ordering.
-   Default: `priority< priority_compare<T> >`
+   Default: `priority< priority_compare<key_type> >`
 
 *  [*`key_of_value<class KeyOfValueFunctionObject>`]: A function object that will
    define the `key_type` of the value type to be stored. This type will allow a map-like interface. See
@@ -3834,6 +3834,16 @@ to be inserted in intrusive containers are allocated using `std::vector` or `std
 [endsect]
 
 [section:release_notes Release Notes]
+
+[section:release_notes_boost_1_61_00 Boost 1.61 Release]
+
+*  Fixed bugs:
+   *  [@https://svn.boost.org/trac/boost/ticket/11832 Boost Trac #11832: ['clang-cl + boost intrusive = miscompile]]
+   *  [@https://svn.boost.org/trac/boost/ticket/11865 Boost Trac #11865: ['Intrusive list explicit ctor error with Clang 3.6 (C++11/14)]]
+   *  [@https://svn.boost.org/trac/boost/ticket/11992 Boost Trac #11992: ['Add an overload of insert_check taking a key_type]]
+   *  [@https://github.com/boostorg/intrusive/pull/19 GitHub Pull #19: ['ebo_functor_holder: compile fix for copy constructor]]
+
+[endsect]
 
 [section:release_notes_boost_1_60_00 Boost 1.60 Release]
 

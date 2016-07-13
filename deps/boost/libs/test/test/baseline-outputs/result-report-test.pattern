@@ -162,3 +162,28 @@ Test suite "Fake Test Suite Hierarchy" has failed with:
 <TestResult><TestSuite name="Fake Test Suite Hierarchy" result="failed" assertions_passed="0" assertions_failed="2" warnings_failed="0" expected_failures="1" test_cases_passed="3" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="3" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
 <TestResult><TestSuite name="Fake Test Suite Hierarchy" result="failed" assertions_passed="0" assertions_failed="2" warnings_failed="0" expected_failures="1" test_cases_passed="3" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="3" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
 <TestResult><TestSuite name="Fake Test Suite Hierarchy" result="failed" assertions_passed="0" assertions_failed="2" warnings_failed="0" expected_failures="1" test_cases_passed="3" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="3" test_cases_aborted="0"><TestSuite name="1 test cases inside" result="failed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="0" test_cases_passed="1" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="0" assertions_failed="0" warnings_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="failed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="0"></TestCase></TestSuite><TestSuite name="2 test cases inside" result="passed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="1" test_cases_passed="2" test_cases_passed_with_warnings="0" test_cases_failed="0" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="0" assertions_failed="0" warnings_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo" result="passed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="1"></TestCase></TestSuite><TestSuite name="3 test cases inside" result="skipped" assertions_passed="0" assertions_failed="0" warnings_failed="0" expected_failures="0" test_cases_passed="0" test_cases_passed_with_warnings="0" test_cases_failed="0" test_cases_skipped="3" test_cases_aborted="0"></TestSuite></TestSuite></TestResult>*************************************************************************
+
+*** 1 failure is detected in the test suite "Char escaping"
+*************************************************************************
+
+Test suite "Char escaping" has failed with:
+  1 test case out of 2 passed
+  1 test case out of 2 failed
+  1 assertion out of 1 failed
+
+*************************************************************************
+
+Test suite "Char escaping" has failed with:
+  1 test case out of 2 passed
+  1 test case out of 2 failed
+  1 assertion out of 1 failed
+
+  Test case "Char escaping/good_foo" has passed
+
+  Test case "Char escaping/bad_foo<h>" has failed with:
+    1 assertion out of 1 failed
+
+*************************************************************************
+<TestResult><TestSuite name="Char escaping" result="failed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="0" test_cases_passed="1" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Char escaping" result="failed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="0" test_cases_passed="1" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="0" test_cases_aborted="0"></TestSuite></TestResult>*************************************************************************
+<TestResult><TestSuite name="Char escaping" result="failed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="0" test_cases_passed="1" test_cases_passed_with_warnings="0" test_cases_failed="1" test_cases_skipped="0" test_cases_aborted="0"><TestCase name="good_foo" result="passed" assertions_passed="0" assertions_failed="0" warnings_failed="0" expected_failures="0"></TestCase><TestCase name="bad_foo&lt;h&gt;" result="failed" assertions_passed="0" assertions_failed="1" warnings_failed="0" expected_failures="0"></TestCase></TestSuite></TestResult>*************************************************************************

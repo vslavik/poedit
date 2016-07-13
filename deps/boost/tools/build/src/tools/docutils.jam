@@ -51,13 +51,20 @@ rule init ( docutils-dir ? : tools-dir ? )
     if ! $(.initialized)
     {
         .initialized = true ;
-        .docutils-dir = $(docutils-dir) ;
-        .tools-dir = $(tools-dir:R="") ;
-       
-        .setup = [ 
-          common.prepend-path-variable-command PYTHONPATH 
-            : $(.docutils-dir) $(.docutils-dir)/extras ] ;
-	RST2XXX = [ common.find-tool rst2html ] ;
+        if $(docutils-dir)
+        {
+            .docutils-dir = $(docutils-dir) ;
+            .tools-dir = $(tools-dir:R="") ;
+           
+            .setup = [ 
+                common.prepend-path-variable-command PYTHONPATH 
+                    : $(.docutils-dir) $(.docutils-dir)/extras ] ;
+            RST2XXX = [ common.find-tool rst2html ] ;
+        }
+        else
+        {
+            RST2XXX_PY = [ common.find-tool rst2html.py ] ;
+        }
     }
 }
 
@@ -66,7 +73,7 @@ rule html ( target : source : properties *  )
     if ! [ on $(target) return $(RST2XXX) ]
     {
         local python-cmd = [ property.select <python.interpreter> : $(properties) ] ;
-        if ! $(.tools-dir) {
+        if ! $(.tools-dir) && ! $(RST2XXX_PY) {
             errors.user-error
             "The docutils module is used, but not configured. "
             : ""
@@ -79,7 +86,26 @@ rule html ( target : source : properties *  )
             : "On Windows, you can install from http://docutils.sourceforge.net/."
             ;
         }
-        RST2XXX on $(target) = $(python-cmd:G=:E="python") $(.tools-dir)/rst2html.py ;
+        
+        if $(RST2XXX_PY)
+        {
+            if $(RST2XXX_PY:D)
+            {
+                # If we have a path to the rst2html.py script, we need to use
+                # the python interpreter to load it up.
+                RST2XXX on $(target) = $(python-cmd:G=:E="python") $(RST2XXX_PY) ;
+            }
+            else
+            {
+                # Otherwise, bare rst2html.py, we can just exec that directly.
+                # This work for both Nix, and the standard Windows Python installs.
+                RST2XXX on $(target) = $(RST2XXX_PY) ;
+            }
+        }
+        else
+        {
+            RST2XXX on $(target) = $(python-cmd:G=:E="python") $(.tools-dir)/rst2html.py ;
+        }
     }
 }
 

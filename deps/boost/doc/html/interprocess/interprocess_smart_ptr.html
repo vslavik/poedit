@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Ownership smart pointers</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;14.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
 <link rel="prev" href="streams.html" title="Direct iostream formatting: vectorstream and bufferstream">
 <link rel="next" href="architecture.html" title="Architecture and internals">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interprocess.interprocess_smart_ptr"></a><a class="link" href="interprocess_smart_ptr.html" title="Ownership smart pointers">Ownership smart pointers</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="interprocess_smart_ptr.html#interprocess.interprocess_smart_ptr.intrusive_ptr">Intrusive
       pointer</a></span></dt>
 <dt><span class="section"><a href="interprocess_smart_ptr.html#interprocess.interprocess_smart_ptr.scoped_ptr">Scoped
@@ -355,7 +355,7 @@
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">VoidAllocator</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Deleter</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">shared_ptr</span><span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             T is the type of the pointed type.
           </li>
@@ -442,7 +442,7 @@
 <p>
         To simplify this usage, <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_ptr.html" title="Class template shared_ptr">boost::interprocess::shared_ptr</a></code>
         header offers a shared pointer definition helper class (<code class="computeroutput"><a class="link" href="../boost/interprocess/managed_shared_ptr.html" title="Struct template managed_shared_ptr">managed_shared_ptr</a></code>)
-        and a function (<code class="computeroutput"><a class="link" href="../boost/interprocess/make_man_idm45879390481424.html" title="Function template make_managed_shared_ptr">make_managed_shared_ptr</a></code>)
+        and a function (<code class="computeroutput"><a class="link" href="../boost/interprocess/make_managed_s_idp23933248.html" title="Function template make_managed_shared_ptr">make_managed_shared_ptr</a></code>)
         to easily construct a shared pointer from a type allocated in a managed segment
         with an allocator that will allocate the reference count also in the managed
         segment and a deleter that will erase the object from the segment.
@@ -631,7 +631,7 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">D</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">unique_ptr</span><span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             T is the type of the object pointed by <code class="computeroutput"><span class="identifier">unique_ptr</span></code>.
           </li>

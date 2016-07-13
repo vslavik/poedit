@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template subscriptable</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.operators_hpp" title="Header &lt;boost/type_erasure/operators.hpp&gt;">
-<link rel="prev" href="right_shiftable.html" title="Struct template right_shiftable">
-<link rel="next" href="subtract_assignable.html" title="Struct template subtract_assignable">
+<link rel="prev" href="less_than_comparable.html" title="Struct template less_than_comparable">
+<link rel="next" href="ostreamable.html" title="Struct template ostreamable">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="right_shiftable.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.operators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="subtract_assignable.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="less_than_comparable.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.operators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="ostreamable.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.type_erasure.subscriptable"></a><div class="titlepage"></div>
@@ -35,15 +35,15 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> R<span class="special">,</span> <span class="keyword">typename</span> T <span class="special">=</span> <a class="link" href="_self.html" title="Struct _self">_self</a><span class="special">,</span> <span class="keyword">typename</span> N <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ptrdiff_t</span><span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="subscriptable.html" title="Struct template subscriptable">subscriptable</a> <span class="special">{</span>
 
-  <span class="comment">// <a class="link" href="subscriptable.html#idm45506893411408-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">R</span> <a class="link" href="subscriptable.html#idm45506893410848-bb"><span class="identifier">apply</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">N</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="subscriptable.html#idp321409840-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">R</span> <a class="link" href="subscriptable.html#idp321410400-bb"><span class="identifier">apply</span></a><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">N</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555077185936"></a><h2>Description</h2>
+<a name="idp450737312"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idm45555077185520"></a><h3>
-<a name="idm45506893411408-bb"></a><code class="computeroutput">subscriptable</code> public static functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">R</span> <a name="idm45506893410848-bb"></a><span class="identifier">apply</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> arg<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">N</span> <span class="special">&amp;</span> index<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp450737728"></a><h3>
+<a name="idp321409840-bb"></a><code class="computeroutput">subscriptable</code> public static functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">R</span> <a name="idp321410400-bb"></a><span class="identifier">apply</span><span class="special">(</span><span class="identifier">T</span> <span class="special">&amp;</span> arg<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">N</span> <span class="special">&amp;</span> index<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -57,7 +57,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="right_shiftable.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.operators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="subtract_assignable.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="less_than_comparable.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.operators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="ostreamable.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

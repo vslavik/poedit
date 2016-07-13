@@ -66,6 +66,7 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/print.hpp>
 #include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/bool_fwd.hpp>
 #include <boost/static_assert.hpp>
 
 namespace boost {

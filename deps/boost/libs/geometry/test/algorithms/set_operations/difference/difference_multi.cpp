@@ -29,7 +29,6 @@
 
 #include <boost/geometry/algorithms/correct.hpp>
 #include <boost/geometry/algorithms/intersection.hpp>
-#include <boost/geometry/algorithms/within.hpp> // only for testing #77
 
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/multi_point.hpp>
@@ -77,14 +76,17 @@ void test_areal()
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_65_multi",
         case_65_multi[0], case_65_multi[1],
             0, 0, 0, 2, 10, 3);
-    /* TODO: fix
+
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_72_multi",
         case_72_multi[0], case_72_multi[1],
             3, 13, 1.65, 3, 17, 6.15);
+
+    // 77_b, fixed by sorting colocated ix/ix turns like ux/ux
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_77_multi",
         case_77_multi[0], case_77_multi[1],
-            6, 31, 7, 6, 36, 13);
-    */
+            6, 31, 7.0,
+            5, 36, 13.0,
+            4, 43, 7.0 + 13.0);
 
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_78_multi",
         case_78_multi[0], case_78_multi[1],
@@ -146,38 +148,97 @@ void test_areal()
 
     }
 
-    /* TODO: fix
+    // Areas and #clips correspond with POSTGIS (except sym case)
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_101_multi",
         case_101_multi[0], case_101_multi[1],
-            5, 23, 4.75, 5, 40, 12.75);
+            5, 23, 4.75,
+            5, 40, 12.75,
+            4, 48, 4.75 + 12.75);
+
+    // Areas and #clips correspond with POSTGIS
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_102_multi",
         case_102_multi[0], case_102_multi[1],
-            2, 8, 0.75, 6, 25, 3.75);
+            2, 8, 0.75,
+            6, 25, 3.75,
+            6, 27, 0.75 + 3.75);
+
+    // Areas and #clips correspond with POSTGIS (except sym case)
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_107_multi",
         case_107_multi[0], case_107_multi[1],
-            2, 11, 2.25, 3, 14, 3.0);
-    */
-    /*
+            2, 11, 2.25,
+            3, 14, 3.0,
+            3, 21, 5.25);
+
+    // Areas correspond with POSTGIS,
+    // #clips in PostGIS is 11,11,5 but should most probably be be 12,12,6
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_1",
         case_recursive_boxes_1[0], case_recursive_boxes_1[1],
-            1, 1, 1, 1, 1, 1);
+            10, 75, 26.0,
+            11, 77, 24.0,
+             3, 98, 50.0);
+
+    // Areas and #clips correspond with POSTGIS
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_2",
         case_recursive_boxes_2[0], case_recursive_boxes_2[1],
-            1, 1, 1, 1, 1, 1);
+            3, 15, 3.0,
+            5, 33, 7.0);
 
-     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_3",
-         case_recursive_boxes_3[0], case_recursive_boxes_3[1],
-            1, 1, 1, 1, 1, 1);
-*/
+    // Areas and #clips by POSTGIS (except sym case)
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_3",
+        case_recursive_boxes_3[0], case_recursive_boxes_3[1],
+            24, -1, 21.5,
+            25, -1, 22.5,
+            18, -1, 44.0);
 
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
+    // 4, input is not valid
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_5",
+        case_recursive_boxes_5[0], case_recursive_boxes_5[1],
+            15, -1, 22.0, // #clips should be 16
+            11, -1, 27.0, // #clips should be 12
+             7, -1, 49.0);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_6",
+        case_recursive_boxes_6[0], case_recursive_boxes_6[1],
+            6, -1, 3.5,
+            3, -1, 1.5,
+            7, -1, 5.0);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_7",
+        case_recursive_boxes_7[0], case_recursive_boxes_7[1],
+            3, 15, 2.75,
+            4, 19, 2.75,
+            2, 22, 5.5);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_8",
+        case_recursive_boxes_8[0], case_recursive_boxes_8[1],
+            2, -1, 2.50,
+            4, -1, 5.75,
+            3, -1, 8.25);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_9",
+        case_recursive_boxes_9[0], case_recursive_boxes_9[1],
+            3, -1, 1.5,
+            4, -1, 2.5,
+            4, -1, 4.0);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_10",
+        case_recursive_boxes_10[0], case_recursive_boxes_10[1],
+            2, -1, 1.25,
+            2, -1, 0.75,
+            4, -1, 2.00);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_11",
+        case_recursive_boxes_11[0], case_recursive_boxes_11[1],
+            3, -1, 2.5,
+            3, -1, 4.5,
+            2, -1, 7.0);
+
     test_one<Polygon, MultiPolygon, MultiPolygon>("mysql_21965285_b",
         mysql_21965285_b[0],
         mysql_21965285_b[1],
         2, -1, 183.71376870369406,
-        2, -1, 131.21376870369406,
-        4, -1, 183.71376870369406 + 131.21376870369406);
-#endif
+        2, -1, 131.21376870369406);
 }
 
 

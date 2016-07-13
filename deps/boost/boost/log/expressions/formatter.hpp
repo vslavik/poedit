@@ -128,6 +128,16 @@ public:
         strm << static_cast< T&& >(val);
         return strm;
     }
+#if defined(BOOST_MSVC) && BOOST_MSVC < 1800
+    // MSVC 10 and 11 generate broken code for the perfect forwarding version above if T is an array type (e.g. a string literal)
+    template< typename T, unsigned int N >
+    BOOST_FORCEINLINE StreamT& operator<< (T (&val)[N]) const
+    {
+        StreamT& strm = this->get();
+        strm << val;
+        return strm;
+    }
+#endif
 #else
     template< typename T >
     BOOST_FORCEINLINE StreamT& operator<< (T& val) const
@@ -364,13 +374,13 @@ public:
     basic_formatter(FunT&& fun) : m_Formatter(boost::forward< FunT >(fun))
     {
     }
-#elif !defined(BOOST_MSVC) || BOOST_MSVC > 1400
+#elif !defined(BOOST_MSVC) || BOOST_MSVC >= 1600
     template< typename FunT >
     basic_formatter(FunT const& fun, typename disable_if_c< move_detail::is_rv< FunT >::value, int >::type = 0) : m_Formatter(fun)
     {
     }
 #else
-    // MSVC 8 blows up in unexpected ways if we use SFINAE to disable constructor instantiation
+    // MSVC 9 blows up in unexpected ways if we use SFINAE to disable constructor instantiation
     template< typename FunT >
     basic_formatter(FunT const& fun) : m_Formatter(fun)
     {

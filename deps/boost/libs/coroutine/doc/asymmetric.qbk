@@ -423,8 +423,7 @@ resumed with __push_coro_op__, __pull_coro_op__).]
 [[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
 when ! is_stack_unbounded().]]
 [[Effects:] [Creates a coroutine which will execute `fn`, and enters it.
-Argument `attr` determines stack clean-up and preserving floating-point
-registers.]]
+Argument `attr` determines stack clean-up.]]
 [[Throws:] [Exceptions thrown inside __coro_fn__.]]
 ]
 
@@ -434,7 +433,7 @@ registers.]]
 [[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
 when ! is_stack_unbounded().]]
 [[Effects:] [Creates a coroutine which will execute `fn`. Argument `attr`
-determines stack clean-up and preserving floating-point registers.
+determines stack clean-up.
 For allocating/deallocating the stack `stack_alloc` is used.]]
 [[Throws:] [Exceptions thrown inside __coro_fn__.]]
 ]
@@ -590,7 +589,7 @@ would return `false`.]]
 [[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
 when ! is_stack_unbounded().]]
 [[Effects:] [Creates a coroutine which will execute `fn`. Argument `attr`
-determines stack clean-up and preserving floating-point registers.]]
+determines stack clean-up.]]
 ]
 
 [heading `template< typename Fn, typename StackAllocator >
@@ -599,7 +598,7 @@ determines stack clean-up and preserving floating-point registers.]]
 [[Preconditions:] [`size` >= minimum_stacksize(), `size` <= maximum_stacksize()
 when ! is_stack_unbounded().]]
 [[Effects:] [Creates a coroutine which will execute `fn`. Argument `attr`
-determines stack clean-up and preserving floating-point registers.
+determines stack clean-up.
 For allocating/deallocating the stack `stack_alloc` is used.]]
 ]
 

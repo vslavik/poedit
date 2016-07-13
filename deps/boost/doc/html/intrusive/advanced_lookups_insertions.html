@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Advanced lookup and insertion functions for associative containers</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="bst_hooks.html" title="Binary search tree hooks: bs_set_base_hook and bs_set_member_hook">
 <link rel="next" href="erasing_and_disposing.html" title="Erasing and disposing values from Boost.Intrusive containers">
 </head>
@@ -28,7 +28,7 @@
 <a name="intrusive.advanced_lookups_insertions"></a><a class="link" href="advanced_lookups_insertions.html" title="Advanced lookup and insertion functions for associative containers">Advanced lookup
     and insertion functions for associative containers</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_lookups">Advanced
       lookups</a></span></dt>
 <dt><span class="section"><a href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_insertions">Advanced
@@ -41,7 +41,7 @@
 <a name="intrusive.advanced_lookups_insertions.advanced_lookups"></a><a class="link" href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_lookups" title="Advanced lookups">Advanced
       lookups</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_lookups.advanced_lookups_example">Example</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_lookups.advanced_lookups_example">Example</a></span></dt></dl></div>
 <p>
         <span class="bold"><strong>Boost.Intrusive</strong></span> associative containers offer
         an interface similar to STL associative containers. However, STL's ordered
@@ -68,7 +68,7 @@
 <p>
         Requirements for such functions are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             For unordered container the provided comparison and hashing function
             with the given key shall induce the same hash and equivalence as <code class="computeroutput"><span class="identifier">key_compare</span></code> and <code class="computeroutput"><span class="identifier">hasher</span></code>.
@@ -218,7 +218,7 @@
 <a name="intrusive.advanced_lookups_insertions.advanced_insertions"></a><a class="link" href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_insertions" title="Advanced insertions">Advanced
       insertions</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_insertions.advanced_insertions_example">Example</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="advanced_lookups_insertions.html#intrusive.advanced_lookups_insertions.advanced_insertions.advanced_insertions_example">Example</a></span></dt></dl></div>
 <p>
         A similar issue happens with insertions in simple ordered and unordered associative
         containers with unique keys (<code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">set</span></code> and
@@ -234,7 +234,7 @@
         or not and if it's not present, a function to insert it immediately (<code class="computeroutput"><span class="identifier">insert_commit</span></code>) without any further lookup.
         Requirements for functions that check the existence of such value are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             For unordered container the provided comparison and hashing function
             with the given key shall induce the same hash and equivalence as <code class="computeroutput"><span class="identifier">key_compare</span></code> and <code class="computeroutput"><span class="identifier">hasher</span></code>.
@@ -249,7 +249,7 @@
         similar to a normal <code class="computeroutput"><span class="identifier">insert</span></code>
         but:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">insert_check</span></code> can be used
             with arbitrary keys
@@ -258,7 +258,7 @@
             if the insertion is possible (there is no equivalent value) <code class="computeroutput"><span class="identifier">insert_check</span></code> collects all the needed
             information in an <code class="computeroutput"><span class="identifier">insert_commit_data</span></code>
             structure, so that <code class="computeroutput"><span class="identifier">insert_commit</span></code>:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <span class="bold"><strong>does not execute</strong></span> further comparisons
                 </li>

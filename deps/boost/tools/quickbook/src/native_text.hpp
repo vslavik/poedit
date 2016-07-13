@@ -130,9 +130,10 @@ namespace quickbook
         ostream& out();
 
         // Preformats an error/warning message so that it can be parsed by
-        // common IDEs. Uses the ms_errors global to determine if VS format
+        // common IDEs. Set 'ms_errors' to determine if VS format
         // or GCC format. Returns the stream to continue ouput of the verbose
         // error message.
+        void set_ms_errors(bool);
         ostream& outerr();
         ostream& outerr(fs::path const& file, int line = -1);
         ostream& outwarn(fs::path const& file, int line = -1);

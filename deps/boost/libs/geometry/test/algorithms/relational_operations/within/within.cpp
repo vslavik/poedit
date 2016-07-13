@@ -3,8 +3,8 @@
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2014, 2015.
-// Modifications copyright (c) 2014-2015 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2014, 2015, 2016.
+// Modifications copyright (c) 2014-2016 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -52,34 +52,6 @@ void test_all()
     test_within_code<box_type, box_type>("BOX(1 1,3 2)", "BOX(0 0,3 3)", 0);
     test_within_code<box_type, box_type>("BOX(1 1,3 4)", "BOX(0 0,3 3)", -1);
     */
-}
-
-template <typename Point>
-void test_spherical()
-{
-    // Test spherical boxes
-    // See also http://www.gcmap.com/mapui?P=1E45N-19E45N-19E55N-1E55N-1E45N,10E55.1N,10E45.1N
-    bg::model::box<Point> box;
-    bg::read_wkt("POLYGON((1 45,19 55))", box);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 55.1), box), true);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 55.2), box), true);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 55.3), box), true);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 55.4), box), false);
-
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 45.1), box), false);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 45.2), box), false);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 45.3), box), false);
-    BOOST_CHECK_EQUAL(bg::within(Point(10, 45.4), box), true);
-
-    // Crossing the dateline (Near Tuvalu)
-    // http://www.gcmap.com/mapui?P=178E10S-178W10S-178W6S-178E6S-178E10S,180W5.999S,180E9.999S
-    // http://en.wikipedia.org/wiki/Tuvalu
-
-    bg::model::box<Point> tuvalu(Point(178, -10), Point(-178, -6));
-    BOOST_CHECK_EQUAL(bg::within(Point(180, -8), tuvalu), true);
-    BOOST_CHECK_EQUAL(bg::within(Point(-180, -8), tuvalu), true);
-    BOOST_CHECK_EQUAL(bg::within(Point(180, -5.999), tuvalu), false);
-    BOOST_CHECK_EQUAL(bg::within(Point(180, -10.001), tuvalu), true);
 }
 
 void test_3d()
@@ -176,8 +148,6 @@ int test_main( int , char* [] )
     test_all<bg::model::d2::point_xy<int> >();
     test_all<bg::model::d2::point_xy<double> >();
 
-    test_spherical<bg::model::point<double, 2, bg::cs::spherical_equatorial<bg::degree> > >();
-
     test_mixed();
     test_3d();
     test_strategy();
@@ -185,7 +155,6 @@ int test_main( int , char* [] )
 
 #if defined(HAVE_TTMATH)
     test_all<bg::model::d2::point_xy<ttmath_big> >();
-    test_spherical<bg::model::point<ttmath_big, 2, bg::cs::spherical_equatorial<bg::degree> > >();
 #endif
 
     return 0;

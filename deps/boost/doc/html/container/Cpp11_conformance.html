@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>C++11/C++14 Conformance</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
 <link rel="prev" href="extended_functionality.html" title="Extended functionality">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="container.Cpp11_conformance"></a><a class="link" href="Cpp11_conformance.html" title="C++11/C++14 Conformance">C++11/C++14 Conformance</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.move_emplace">Move and Emplace</a></span></dt>
 <dt><span class="section"><a href="Cpp11_conformance.html#container.Cpp11_conformance.alloc_traits_move_traits">Stateful
       allocators</a></span></dt>
@@ -140,8 +140,8 @@
         class and <span class="bold"><strong>backports this feature also to C++03 compilers</strong></span>.
         Due to C++03 limitations, in those compilers the allocator propagation implemented
         by <code class="computeroutput"><span class="identifier">scoped_allocator_adaptor</span><span class="special">::</span><span class="identifier">construct</span></code>
-        functions will be based on traits (<code class="computeroutput"><a class="link" href="../boost/container/construc_idm46583867843104.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
-        and <code class="computeroutput"><a class="link" href="../boost/container/construc_idm46583867853472.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>)
+        functions will be based on traits (<code class="computeroutput"><a class="link" href="../boost/container/constructible__idp22241136.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
+        and <code class="computeroutput"><a class="link" href="../boost/container/constructible__idp22250512.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>)
         proposed in <a href="http://www.open-std.org/jtc1/sc22/WG21/docs/papers/2008/n2554.pdf" target="_top">N2554:
         The Scoped Allocator Model (Rev 2) proposal</a>. In conforming C++11
         compilers or compilers supporting SFINAE expressions (when <code class="computeroutput"><span class="identifier">BOOST_NO_SFINAE_EXPR</span></code> is NOT defined), traits
@@ -167,7 +167,7 @@
         implements the C++11 changes that were specified in <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1780.html" target="_top">N1780
         <span class="emphasis"><em>Comments on LWG issue 233: Insertion hints in associative containers</em></span></a>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">a_eq</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code>:
             If a range containing elements equivalent to t exists in a_eq, t is inserted
@@ -301,7 +301,7 @@
         solution. For issues with <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code>
         see the following papers:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <a href="http://howardhinnant.github.io/onvectorbool.html" target="_top">On <code class="computeroutput"><span class="identifier">vector</span><span class="special">&lt;</span><span class="keyword">bool</span><span class="special">&gt;</span></code></a>
           </li>
@@ -321,7 +321,7 @@
 <p>
         Quotes:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="quote">&#8220;<span class="quote"><span class="emphasis"><em>But it is a shame that the C++ committee gave this excellent
             data structure the name vector&lt;bool&gt; and that it gives no guidance

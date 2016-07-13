@@ -185,6 +185,21 @@ int main()
       BOOST_CHECK_EQUAL(test_type(ceil(a)), ceil(ta));
       BOOST_CHECK_EQUAL(test_type(ceil(-a)), ceil(-ta));
 
+#ifdef TEST_MPFR
+      //
+      // Conversions:
+      //
+      BOOST_CHECK_EQUAL(a.convert_to<double>(), ta.convert_to<double>());
+      BOOST_CHECK_EQUAL(a.convert_to<float>(), ta.convert_to<float>());
+      BOOST_CHECK_EQUAL(b.convert_to<double>(), tb.convert_to<double>());
+      BOOST_CHECK_EQUAL(b.convert_to<float>(), tb.convert_to<float>());
+#else
+      BOOST_CHECK_EQUAL(a, ta.convert_to<double>());
+      BOOST_CHECK_EQUAL(static_cast<float>(a), ta.convert_to<float>());
+      BOOST_CHECK_EQUAL(b, tb.convert_to<double>());
+      BOOST_CHECK_EQUAL(static_cast<float>(b), tb.convert_to<float>());
+#endif
+
       static boost::random::mt19937 i_gen;
 
       int si = i_gen();

@@ -29,15 +29,7 @@
 #include <boost/archive/basic_xml_iarchive.hpp>
 #include <boost/archive/detail/register_archive.hpp>
 #include <boost/serialization/item_version_type.hpp>
-
-#ifdef BOOST_NO_CXX11_HDR_CODECVT
-    #include <boost/archive/detail/utf8_codecvt_facet.hpp>
-#else
-    #include <codecvt>
-    namespace boost { namespace archive { namespace detail {
-        typedef std::codecvt_utf8<wchar_t> utf8_codecvt_facet;
-    } } }
-#endif
+// #include <boost/archive/detail/utf8_codecvt_facet.hpp>
 
 #include <boost/archive/detail/abi_prefix.hpp> // must be the last header
 
@@ -66,17 +58,9 @@ class BOOST_SYMBOL_VISIBLE xml_wiarchive_impl :
 public:
 #else
 protected:
-    #if BOOST_WORKAROUND(BOOST_MSVC, < 1500)
-        // for some inexplicable reason insertion of "class" generates compile erro
-        // on msvc 7.1
-        friend detail::interface_iarchive<Archive>;
-        friend basic_xml_iarchive<Archive>;
-        friend load_access;
-    #else
-        friend class detail::interface_iarchive<Archive>;
-        friend class basic_xml_iarchive<Archive>;
-        friend class load_access;
-    #endif
+    friend class detail::interface_iarchive<Archive>;
+    friend class basic_xml_iarchive<Archive>;
+    friend class load_access;
 #endif
     boost::scoped_ptr<xml_wgrammar> gimpl;
     std::wistream & get_is(){

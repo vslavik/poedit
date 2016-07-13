@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Language</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../jam.html" title="Chapter&#160;43.&#160;Boost.Jam : 3.1.19">
-<link rel="prev" href="../jam.html" title="Chapter&#160;43.&#160;Boost.Jam : 3.1.19">
+<link rel="up" href="../jam.html" title="Chapter&#160;45.&#160;Boost.Jam : 3.1.19">
+<link rel="prev" href="../jam.html" title="Chapter&#160;45.&#160;Boost.Jam : 3.1.19">
 <link rel="next" href="miscellaneous.html" title="Miscellaneous">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="jam.language"></a><a class="link" href="language.html" title="Language">Language</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="language.html#jam.language.lexical">Lexical Features</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.target">Targets</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.rules">Rules</a></span></dt>
@@ -69,7 +69,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="jam.language.target"></a><a class="link" href="language.html#jam.language.target" title="Targets">Targets</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="language.html#jam.language.target.binding_detection">Binding Detection</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="language.html#jam.language.target.binding_detection">Binding Detection</a></span></dt></dl></div>
 <p>
         The essential <code class="literal">b2</code> data entity is a target. Build targets
         are files to be updated. Source targets are the files used in updating built
@@ -115,7 +115,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="jam.language.rules"></a><a class="link" href="language.html#jam.language.rules" title="Rules">Rules</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="language.html#jam.language.rules.action_modifiers">Action Modifiers</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.rules.argument_lists">Argument lists</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.rules.builtins">Built-in Rules</a></span></dt>
@@ -214,7 +214,7 @@ on <span class="emphasis"><em>target</em></span> $(<span class="emphasis"><em>va
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">actions bind <span class="emphasis"><em>vars</em></span></code></span></dt>
 <dd><p>
                 <code class="literal">$(<span class="emphasis"><em>vars</em></span>)</code> will be replaced
@@ -357,7 +357,7 @@ report I 2 : sorry : Joe Dave Pete ;
 <div class="titlepage"><div><div><h4 class="title">
 <a name="jam.language.rules.builtins"></a><a class="link" href="language.html#jam.language.rules.builtins" title="Built-in Rules">Built-in Rules</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="language.html#jam.language.rules.builtins.dependency_building">Dependency
           Building</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.rules.builtins.modifying_binding">Modifying
@@ -663,7 +663,46 @@ INCLUDES foo.c : foo.h ;
               to all-lowercase before matching against the pattern; you can use this
               to do case-insensitive matching using lowercase patterns. The paths
               returned will still have mixed case if the OS supplies them. On Windows
-              NT and Cygwin, filenames are always downcased before matching.
+              NT and Cygwin, and OpenVMS, filenames are always downcased before matching.
+            </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h6 class="title">
+<a name="jam.language.rules.builtins.utility._glob_archive__"></a><a class="link" href="language.html#jam.language.rules.builtins.utility._glob_archive__" title="GLOB_ARCHIVE"><code class="literal">GLOB_ARCHIVE</code>
+            </a>
+</h6></div></div></div>
+<p>
+              The <code class="literal">GLOB_ARCHIVE</code> rule does name globbing of object
+              archive members.
+            </p>
+<pre class="programlisting">rule GLOB_ARCHIVE ( <span class="emphasis"><em>archives</em></span> * : <span class="emphasis"><em>member-patterns</em></span> * : <span class="emphasis"><em>downcase-opt</em></span> ? : <span class="emphasis"><em>symbol-patterns</em></span> ? )
+</pre>
+<p>
+              Similarly to <code class="literal">GLOB</code>, this rule is used to match names
+              of member files in an archive (static object library). List of successfully
+              matched members is returned or null otherwise. The resulting member
+              names are qualified with pathname of the containing archive in the
+              form <code class="literal">archive-path(member-name)</code>. Member patterns
+              are for matching member name only; when no wildcards specified -- an
+              exact match is assumed. Member names generally correspond to object
+              file names and as such are platform-specific -- use of platform-defined
+              object suffix in the matching patterns can allow for portability.
+            </p>
+<p>
+              If <span class="emphasis"><em>downcase-opt</em></span> is supplied, the member names
+              are converted to all-lowercase before matching against the pattern;
+              you can use this to do case-insensitive matching using lowercase patterns.
+              The paths returned will still have mixed case if the OS supplies them.
+              On Windows NT, Cygwin, and OpenVMS, filenames are always downcased
+              before matching.
+            </p>
+<p>
+              Additionally, members can be matched with symbol/function patterns
+              on supported platforms (currently, OpenVMS only). In this case, members
+              containing the matching symbols are returned. Member and symbol patterns
+              are applied as OR conditions, with member patterns taking precedence.
+              On unsupported platforms, null is returned when any symbol patterns
+              are specified.
             </p>
 </div>
 <div class="section">
@@ -747,7 +786,7 @@ UPDATE $(previous-updates) a-new-target ;
               value must conform to MS key path format and must be prefixed with
               one of the predefined root keys. As usual,
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                   '<code class="literal">HKLM</code>' is equivalent to '<code class="literal">HKEY_LOCAL_MACHINE</code>'.
                 </li>
@@ -796,7 +835,7 @@ UPDATE $(previous-updates) a-new-target ;
             </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">subkeys</code></span></dt>
 <dd><p>
                     Names of all direct subkeys of '<span class="emphasis"><em>path</em></span>'.
@@ -845,7 +884,7 @@ for local subkey in $(subkeys)
             </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">exit-status</code></span></dt>
 <dd><p>
                     In addition to the output the result status of the executed command
@@ -976,7 +1015,7 @@ for local subkey in $(subkeys)
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal"><span class="emphasis"><em>a</em></span></code></span></dt>
 <dd><p>
               true if any <span class="emphasis"><em>a</em></span> element is a non-zero-length string
@@ -1080,7 +1119,7 @@ for local subkey in $(subkeys)
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">?</code></span></dt>
 <dd><p>
               match any single character
@@ -1125,7 +1164,7 @@ for local subkey in $(subkeys)
 <div class="titlepage"><div><div><h3 class="title">
 <a name="jam.language.variables"></a><a class="link" href="language.html#jam.language.variables" title="Variables">Variables</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="language.html#jam.language.variables.expansion">Variable Expansion</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.variables.local_for_loop_variables">Local
         For Loop Variables</a></span></dt>
@@ -1229,7 +1268,7 @@ $(Z) -&gt;
         </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">[<span class="emphasis"><em>n</em></span>]</code></span></dt>
 <dd><p>
                 Select element number <span class="emphasis"><em>n</em></span> (starting at 1). If
@@ -1301,13 +1340,28 @@ $(Z) -&gt;
                 it can be important to pass them true windows-style paths. The <code class="literal">:W</code>
                 modifier, <span class="bold"><strong>under Cygwin only</strong></span>, turns
                 a cygwin path into a Win32 path using the <a href="http://www.cygwin.com/cygwin-api/func-cygwin-conv-to-win32-path.html" target="_top"><code class="literal">cygwin_conv_to_win32_path</code></a>
-                function. On other platforms, the string is unchanged. For example
+                function. For example
 </p>
 <pre class="programlisting"><span class="identifier">x</span> <span class="special">=</span> <span class="string">"/cygdrive/c/Program Files/Borland"</span> <span class="special">;</span> <span class="identifier">ECHO</span> <span class="error">$</span><span class="special">(</span><span class="identifier">x</span><span class="special">:</span><span class="identifier">W</span><span class="special">)</span> <span class="special">;</span>
 </pre>
 <p>
                 prints <code class="literal">"C:\Program Files\Borland"</code> on
                 Cygwin
+              </p>
+<p>
+                Similarly, when used on OpenVMS, the <code class="literal">:W</code> modifier
+                translates a POSIX-style path into native VMS-style format using
+                <code class="literal">decc$to_vms</code> CRTL function. This modifier is generally
+                used inside action blocks to properly specify file paths in VMS-specific
+                commands. For example
+</p>
+<pre class="programlisting"><span class="identifier">x</span> <span class="special">=</span> <span class="string">"subdir/filename.c"</span> <span class="special">;</span> <span class="identifier">ECHO</span> <span class="error">$</span><span class="special">(</span><span class="identifier">x</span><span class="special">:</span><span class="identifier">W</span><span class="special">)</span> <span class="special">;</span>
+</pre>
+<p>
+                prints <code class="literal">"[.subdir]filename.c"</code> on OpenVMS
+              </p>
+<p>
+                On other platforms, the string is unchanged.
               </p>
 </dd>
 <dt><span class="term"><code class="literal">:<span class="emphasis"><em>chars</em></span></code></span></dt>
@@ -1389,7 +1443,7 @@ ECHO $(y) ;     # prints "4 5 6"
 <div class="titlepage"><div><div><h4 class="title">
 <a name="jam.language.variables.builtins"></a><a class="link" href="language.html#jam.language.variables.builtins" title="Built-in Variables">Built-in Variables</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="language.html#jam.language.variables.builtins.search">SEARCH and
           LOCATE</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.variables.builtins.hdrscan">HDRSCAN
@@ -1426,7 +1480,7 @@ ECHO $(y) ;     # prints "4 5 6"
             directory, but the settings of <code class="literal">$(LOCATE)</code> and <code class="literal">$(SEARCH)</code>
             alter this:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 If <code class="literal">$(LOCATE)</code> is set then the target is bound relative
                 to the first directory in <code class="literal">$(LOCATE)</code>. Only the
@@ -1504,7 +1558,7 @@ ECHO $(y) ;     # prints "4 5 6"
             It is sometimes desirable to disallow parallel execution of some actions.
             For example:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 Old versions of yacc use files with fixed names. So, running two
                 yacc actions is dangerous.
@@ -1540,7 +1594,7 @@ ECHO $(y) ;     # prints "4 5 6"
           </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">OS</code></span></dt>
 <dd><p>
                   OS identifier string
@@ -1579,7 +1633,7 @@ ECHO $(y) ;     # prints "4 5 6"
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">JAMDATE</code></span></dt>
 <dd><p>
                   Time and date at <code class="literal">b2</code> start-up as an ISO-8601
@@ -1676,7 +1730,7 @@ esac
           </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="literal">args</code></span></dt>
 <dd><p>
                   Any values following the rule name in the <code class="literal">__TIMING_RULE__</code>
@@ -1738,7 +1792,7 @@ esac
 <div class="titlepage"><div><div><h3 class="title">
 <a name="jam.language.modules"></a><a class="link" href="language.html#jam.language.modules" title="Modules">Modules</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="language.html#jam.language.modules.declaration">Declaration</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.modules.variable_scope">Variable Scope</a></span></dt>
 <dt><span class="section"><a href="language.html#jam.language.modules.local_rules">Local Rules</a></span></dt>

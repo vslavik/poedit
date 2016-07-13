@@ -3,11 +3,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct fcontext_t</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="prev" href="requirements.html" title="Requirements">
-<link rel="next" href="econtext.html" title="Class execution_context">
+<link rel="next" href="abstract_context.html" title="Context classes">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -20,7 +20,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="requirements.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="econtext.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="requirements.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="abstract_context.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -66,12 +66,12 @@
 </table></div>
 <h4>
 <a name="context.context.h0"></a>
-      <span class="phrase"><a name="context.context.executing_a_context"></a></span><a class="link" href="context.html#context.context.executing_a_context">Executing
+      <span><a name="context.context.executing_a_context"></a></span><a class="link" href="context.html#context.context.executing_a_context">Executing
       a context</a>
     </h4>
 <p>
       A new context supposed to execute a <span class="emphasis"><em>context-function</em></span> (returning
-      void and accepting intptr_t as argument) will be created on top of the stack
+      void and accepting void * as argument) will be created on top of the stack
       (at 16 byte boundary) by function <span class="emphasis"><em>make_fcontext()</em></span>.
     </p>
 <pre class="programlisting"><span class="comment">// context-function</span>
@@ -98,7 +98,7 @@
     </p>
 <pre class="programlisting"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">fcontext_t</span> <span class="identifier">fcm</span><span class="special">,</span><span class="identifier">fc1</span><span class="special">,</span><span class="identifier">fc2</span><span class="special">;</span>
 
-<span class="keyword">void</span> <span class="identifier">f1</span><span class="special">(</span><span class="identifier">intptr_t</span><span class="special">)</span>
+<span class="keyword">void</span> <span class="identifier">f1</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*)</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"f1: entered"</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"f1: call jump_fcontext( &amp; fc1, fc2, 0)"</span><span class="special">&lt;&lt;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -107,7 +107,7 @@
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fc1</span><span class="special">,</span><span class="identifier">fcm</span><span class="special">,</span><span class="number">0</span><span class="special">);</span>
 <span class="special">}</span>
 
-<span class="keyword">void</span> <span class="identifier">f2</span><span class="special">(</span><span class="identifier">intptr_t</span><span class="special">)</span>
+<span class="keyword">void</span> <span class="identifier">f2</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*)</span>
 <span class="special">{</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"f2: entered"</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
     <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="string">"f2: call jump_fcontext( &amp; fc2, fc1, 0)"</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
@@ -173,14 +173,14 @@
 </table></div>
 <h4>
 <a name="context.context.h1"></a>
-      <span class="phrase"><a name="context.context.transfer_of_data"></a></span><a class="link" href="context.html#context.context.transfer_of_data">Transfer
+      <span><a name="context.context.transfer_of_data"></a></span><a class="link" href="context.html#context.context.transfer_of_data">Transfer
       of data</a>
     </h4>
 <p>
       The third argument passed to <span class="emphasis"><em>jump_fcontext()</em></span>, in one context,
       is passed as the first argument of the <span class="emphasis"><em>context-function</em></span>
       if the context is started for the first time. In all following invocations
-      of <span class="emphasis"><em>jump_fcontext()</em></span> the intptr_t passed to <span class="emphasis"><em>jump_fcontext()</em></span>,
+      of <span class="emphasis"><em>jump_fcontext()</em></span> the void * passed to <span class="emphasis"><em>jump_fcontext()</em></span>,
       in one context, is returned by <span class="emphasis"><em>jump_fcontext()</em></span> in the
       other context.
     </p>
@@ -188,11 +188,11 @@
 
 <span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">pair_t</span><span class="special">;</span>
 
-<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="identifier">intptr_t</span> <span class="identifier">param</span><span class="special">)</span>
+<span class="keyword">void</span> <span class="identifier">f</span><span class="special">(</span><span class="keyword">void</span> <span class="special">*</span> <span class="identifier">param</span><span class="special">)</span>
 <span class="special">{</span>
     <span class="identifier">pair_t</span><span class="special">*</span> <span class="identifier">p</span><span class="special">=(</span><span class="identifier">pair_t</span><span class="special">*)</span><span class="identifier">param</span><span class="special">;</span>
-    <span class="identifier">p</span><span class="special">=(</span><span class="identifier">pair_t</span><span class="special">*)</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fc</span><span class="special">,</span><span class="identifier">fcm</span><span class="special">,(</span><span class="identifier">intptr_t</span><span class="special">)(</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">first</span><span class="special">+</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">second</span><span class="special">));</span>
-    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fc</span><span class="special">,</span><span class="identifier">fcm</span><span class="special">,(</span><span class="identifier">intptr_t</span><span class="special">)(</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">first</span><span class="special">+</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">second</span><span class="special">));</span>
+    <span class="identifier">p</span><span class="special">=(</span><span class="identifier">pair_t</span><span class="special">*)</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fc</span><span class="special">,</span><span class="identifier">fcm</span><span class="special">,(</span><span class="keyword">void</span> <span class="special">*)(</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">first</span><span class="special">+</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">second</span><span class="special">));</span>
+    <span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fc</span><span class="special">,</span><span class="identifier">fcm</span><span class="special">,(</span><span class="keyword">void</span> <span class="special">*)(</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">first</span><span class="special">+</span><span class="identifier">p</span><span class="special">-&gt;</span><span class="identifier">second</span><span class="special">));</span>
 <span class="special">}</span>
 
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">(</span><span class="number">8192</span><span class="special">);</span>
@@ -201,11 +201,11 @@
 <span class="identifier">pair_t</span> <span class="identifier">p</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_pair</span><span class="special">(</span><span class="number">2</span><span class="special">,</span><span class="number">7</span><span class="special">));</span>
 <span class="identifier">fc</span><span class="special">=</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">make_fcontext</span><span class="special">(</span><span class="identifier">sp</span><span class="special">,</span><span class="identifier">size</span><span class="special">,</span><span class="identifier">f</span><span class="special">);</span>
 
-<span class="keyword">int</span> <span class="identifier">res</span><span class="special">=(</span><span class="keyword">int</span><span class="special">)</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fcm</span><span class="special">,</span><span class="identifier">fc</span><span class="special">,(</span><span class="identifier">intptr_t</span><span class="special">)&amp;</span><span class="identifier">p</span><span class="special">);</span>
+<span class="keyword">int</span> <span class="identifier">res</span><span class="special">=(</span><span class="keyword">int</span><span class="special">)</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fcm</span><span class="special">,</span><span class="identifier">fc</span><span class="special">,(</span><span class="keyword">void</span> <span class="special">*)&amp;</span><span class="identifier">p</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="identifier">p</span><span class="special">.</span><span class="identifier">first</span><span class="special">&lt;&lt;</span><span class="string">" + "</span><span class="special">&lt;&lt;</span><span class="identifier">p</span><span class="special">.</span><span class="identifier">second</span><span class="special">&lt;&lt;</span><span class="string">" == "</span><span class="special">&lt;&lt;</span><span class="identifier">res</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
 <span class="identifier">p</span><span class="special">=</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">make_pair</span><span class="special">(</span><span class="number">5</span><span class="special">,</span><span class="number">6</span><span class="special">);</span>
-<span class="identifier">res</span><span class="special">=(</span><span class="keyword">int</span><span class="special">)</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fcm</span><span class="special">,</span><span class="identifier">fc</span><span class="special">,(</span><span class="identifier">intptr_t</span><span class="special">)&amp;</span><span class="identifier">p</span><span class="special">);</span>
+<span class="identifier">res</span><span class="special">=(</span><span class="keyword">int</span><span class="special">)</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">context</span><span class="special">::</span><span class="identifier">jump_fcontext</span><span class="special">(&amp;</span><span class="identifier">fcm</span><span class="special">,</span><span class="identifier">fc</span><span class="special">,(</span><span class="keyword">void</span> <span class="special">*)&amp;</span><span class="identifier">p</span><span class="special">);</span>
 <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span><span class="special">&lt;&lt;</span><span class="identifier">p</span><span class="special">.</span><span class="identifier">first</span><span class="special">&lt;&lt;</span><span class="string">" + "</span><span class="special">&lt;&lt;</span><span class="identifier">p</span><span class="special">.</span><span class="identifier">second</span><span class="special">&lt;&lt;</span><span class="string">" == "</span><span class="special">&lt;&lt;</span><span class="identifier">res</span><span class="special">&lt;&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">endl</span><span class="special">;</span>
 
 <span class="identifier">output</span><span class="special">:</span>
@@ -214,7 +214,7 @@
 </pre>
 <h4>
 <a name="context.context.h2"></a>
-      <span class="phrase"><a name="context.context.exceptions_in__emphasis_context_function__emphasis_"></a></span><a class="link" href="context.html#context.context.exceptions_in__emphasis_context_function__emphasis_">Exceptions
+      <span><a name="context.context.exceptions_in__emphasis_context_function__emphasis_"></a></span><a class="link" href="context.html#context.context.exceptions_in__emphasis_context_function__emphasis_">Exceptions
       in <span class="emphasis"><em>context-function</em></span></a>
     </h4>
 <p>
@@ -243,27 +243,7 @@
 </table></div>
 <h4>
 <a name="context.context.h3"></a>
-      <span class="phrase"><a name="context.context.preserving_floating_point_registers"></a></span><a class="link" href="context.html#context.context.preserving_floating_point_registers">Preserving
-      floating point registers</a>
-    </h4>
-<p>
-      Preserving the floating point registers increases the cycle count for a context
-      switch (see performance tests). The fourth argument of <span class="emphasis"><em>jump_fcontext()</em></span>
-      controls if fpu registers should be preserved by the context jump.
-    </p>
-<div class="important"><table border="0" summary="Important">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../doc/src/images/important.png"></td>
-<th align="left">Important</th>
-</tr>
-<tr><td align="left" valign="top"><p>
-        The use of the fpu controlling argument of <span class="emphasis"><em>jump_fcontext()</em></span>
-        must be consistent in the application. Otherwise the behaviour is undefined.
-      </p></td></tr>
-</table></div>
-<h4>
-<a name="context.context.h4"></a>
-      <span class="phrase"><a name="context.context.stack_unwinding"></a></span><a class="link" href="context.html#context.context.stack_unwinding">Stack
+      <span><a name="context.context.stack_unwinding"></a></span><a class="link" href="context.html#context.context.stack_unwinding">Stack
       unwinding</a>
     </h4>
 <p>
@@ -272,8 +252,8 @@
       The user is responsible for this task.
     </p>
 <h4>
-<a name="context.context.h5"></a>
-      <span class="phrase"><a name="context.context._code__phrase_role__identifier__fcontext_t__phrase___code__and_related_functions"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__fcontext_t__phrase___code__and_related_functions"><code class="computeroutput"><span class="identifier">fcontext_t</span></code> and related functions</a>
+<a name="context.context.h4"></a>
+      <span><a name="context.context._code__phrase_role__identifier__fcontext_t__phrase___code__and_related_functions"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__fcontext_t__phrase___code__and_related_functions"><code class="computeroutput"><span class="identifier">fcontext_t</span></code> and related functions</a>
     </h4>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">stack_t</span>
 <span class="special">{</span>
@@ -283,16 +263,16 @@
 
 <span class="keyword">typedef</span> <span class="special">&lt;</span><span class="identifier">opaque</span> <span class="identifier">pointer</span> <span class="special">&gt;</span> <span class="identifier">fcontext_t</span><span class="special">;</span>
 
-<span class="identifier">intptr_t</span> <span class="identifier">jump_fcontext</span><span class="special">(</span><span class="identifier">fcontext_t</span><span class="special">*</span> <span class="identifier">ofc</span><span class="special">,</span><span class="identifier">fcontext_t</span> <span class="identifier">nfc</span><span class="special">,</span><span class="identifier">intptr_t</span> <span class="identifier">vp</span><span class="special">,</span><span class="keyword">bool</span> <span class="identifier">preserve_fpu</span><span class="special">=</span><span class="keyword">true</span><span class="special">);</span>
-<span class="identifier">fcontext_t</span> <span class="identifier">make_fcontext</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">sp</span><span class="special">,</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span><span class="keyword">void</span><span class="special">(*</span><span class="identifier">fn</span><span class="special">)(</span><span class="identifier">intptr_t</span><span class="special">));</span>
+<span class="keyword">void</span> <span class="special">*</span> <span class="identifier">jump_fcontext</span><span class="special">(</span><span class="identifier">fcontext_t</span><span class="special">*</span> <span class="identifier">ofc</span><span class="special">,</span><span class="identifier">fcontext_t</span> <span class="identifier">nfc</span><span class="special">,</span><span class="keyword">void</span> <span class="special">*</span> <span class="identifier">vp</span><span class="special">);</span>
+<span class="identifier">fcontext_t</span> <span class="identifier">make_fcontext</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">sp</span><span class="special">,</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span><span class="keyword">void</span><span class="special">(*</span><span class="identifier">fn</span><span class="special">)(</span><span class="keyword">void</span> <span class="special">*));</span>
 </pre>
 <h4>
-<a name="context.context.h6"></a>
-      <span class="phrase"><a name="context.context._code__phrase_role__identifier__sp__phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__sp__phrase___code_"><code class="computeroutput"><span class="identifier">sp</span></code></a>
+<a name="context.context.h5"></a>
+      <span><a name="context.context._code__phrase_role__identifier__sp__phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__sp__phrase___code_"><code class="computeroutput"><span class="identifier">sp</span></code></a>
     </h4>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Member:</span></dt>
 <dd><p>
             Pointer to the beginning of the stack (depending of the architecture
@@ -301,12 +281,12 @@
 </dl>
 </div>
 <h4>
-<a name="context.context.h7"></a>
-      <span class="phrase"><a name="context.context._code__phrase_role__identifier__size__phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__size__phrase___code_"><code class="computeroutput"><span class="identifier">size</span></code></a>
+<a name="context.context.h6"></a>
+      <span><a name="context.context._code__phrase_role__identifier__size__phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__size__phrase___code_"><code class="computeroutput"><span class="identifier">size</span></code></a>
     </h4>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Member:</span></dt>
 <dd><p>
             Size of the stack in bytes.
@@ -314,12 +294,12 @@
 </dl>
 </div>
 <h4>
-<a name="context.context.h8"></a>
-      <span class="phrase"><a name="context.context._code__phrase_role__identifier__fc_stack__phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__fc_stack__phrase___code_"><code class="computeroutput"><span class="identifier">fc_stack</span></code></a>
+<a name="context.context.h7"></a>
+      <span><a name="context.context._code__phrase_role__identifier__fc_stack__phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__fc_stack__phrase___code_"><code class="computeroutput"><span class="identifier">fc_stack</span></code></a>
     </h4>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Member:</span></dt>
 <dd><p>
             Tracks the memory for the context's stack.
@@ -327,24 +307,23 @@
 </dl>
 </div>
 <h4>
-<a name="context.context.h9"></a>
-      <span class="phrase"><a name="context.context._code__phrase_role__identifier__intptr_t__phrase___phrase_role__identifier__jump_fcontext__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase__phrase_role__special_____phrase___phrase_role__identifier__ofc__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__nfc__phrase__phrase_role__special_____phrase__phrase_role__identifier__intptr_t__phrase___phrase_role__identifier__p__phrase__phrase_role__special_____phrase__phrase_role__keyword__bool__phrase___phrase_role__identifier__preserve_fpu__phrase__phrase_role__special_____phrase__phrase_role__keyword__true__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__intptr_t__phrase___phrase_role__identifier__jump_fcontext__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase__phrase_role__special_____phrase___phrase_role__identifier__ofc__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__nfc__phrase__phrase_role__special_____phrase__phrase_role__identifier__intptr_t__phrase___phrase_role__identifier__p__phrase__phrase_role__special_____phrase__phrase_role__keyword__bool__phrase___phrase_role__identifier__preserve_fpu__phrase__phrase_role__special_____phrase__phrase_role__keyword__true__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="identifier">intptr_t</span> <span class="identifier">jump_fcontext</span><span class="special">(</span><span class="identifier">fcontext_t</span><span class="special">*</span> <span class="identifier">ofc</span><span class="special">,</span><span class="identifier">fcontext_t</span> <span class="identifier">nfc</span><span class="special">,</span><span class="identifier">intptr_t</span> <span class="identifier">p</span><span class="special">,</span><span class="keyword">bool</span>
-      <span class="identifier">preserve_fpu</span><span class="special">=</span><span class="keyword">true</span><span class="special">)</span></code></a>
+<a name="context.context.h8"></a>
+      <span><a name="context.context._code__phrase_role__keyword__void__phrase___phrase_role__special_____phrase___phrase_role__identifier__jump_fcontext__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase__phrase_role__special_____phrase___phrase_role__identifier__ofc__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__nfc__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase___phrase_role__special_____phrase___phrase_role__identifier__p__phrase__phrase_role__special_____phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__keyword__void__phrase___phrase_role__special_____phrase___phrase_role__identifier__jump_fcontext__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase__phrase_role__special_____phrase___phrase_role__identifier__ofc__phrase__phrase_role__special_____phrase__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__nfc__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase___phrase_role__special_____phrase___phrase_role__identifier__p__phrase__phrase_role__special_____phrase___code_"><code class="computeroutput"><span class="keyword">void</span> <span class="special">*</span> <span class="identifier">jump_fcontext</span><span class="special">(</span><span class="identifier">fcontext_t</span><span class="special">*</span> <span class="identifier">ofc</span><span class="special">,</span><span class="identifier">fcontext_t</span> <span class="identifier">nfc</span><span class="special">,</span><span class="keyword">void</span> <span class="special">*</span>
+      <span class="identifier">p</span><span class="special">)</span></code></a>
     </h4>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
             Stores the current context data (stack pointer, instruction pointer,
             and CPU registers) to <code class="computeroutput"><span class="special">*</span><span class="identifier">ofc</span></code> and restores the context data from
             <code class="computeroutput"><span class="identifier">nfc</span></code>, which implies jumping
-            to <code class="computeroutput"><span class="identifier">nfc</span></code>'s execution context.
-            The intptr_t argument, <code class="computeroutput"><span class="identifier">p</span></code>,
+            to execution context <code class="computeroutput"><span class="identifier">nfc</span></code>.
+            The void * argument, <code class="computeroutput"><span class="identifier">p</span></code>,
             is passed to the current context to be returned by the most recent call
             to <code class="computeroutput"><span class="identifier">jump_fcontext</span><span class="special">()</span></code>
-            in the same thread. The last argument controls if fpu registers have
-            to be preserved.
+            in the same thread.
           </p></dd>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
@@ -354,14 +333,14 @@
 </dl>
 </div>
 <h4>
-<a name="context.context.h10"></a>
-      <span class="phrase"><a name="context.context._code__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__make_fcontext__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special_____phrase___phrase_role__identifier__sp__phrase__phrase_role__special_____phrase__phrase_role__identifier__std__phrase__phrase_role__special______phrase__phrase_role__identifier__size_t__phrase___phrase_role__identifier__size__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special______phrase__phrase_role__identifier__fn__phrase__phrase_role__special______phrase__phrase_role__identifier__intptr_t__phrase__phrase_role__special______phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__make_fcontext__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special_____phrase___phrase_role__identifier__sp__phrase__phrase_role__special_____phrase__phrase_role__identifier__std__phrase__phrase_role__special______phrase__phrase_role__identifier__size_t__phrase___phrase_role__identifier__size__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special______phrase__phrase_role__identifier__fn__phrase__phrase_role__special______phrase__phrase_role__identifier__intptr_t__phrase__phrase_role__special______phrase___code_"><code class="computeroutput"><span class="identifier">fcontext_t</span> <span class="identifier">make_fcontext</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span>
+<a name="context.context.h9"></a>
+      <span><a name="context.context._code__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__make_fcontext__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special_____phrase___phrase_role__identifier__sp__phrase__phrase_role__special_____phrase__phrase_role__identifier__std__phrase__phrase_role__special______phrase__phrase_role__identifier__size_t__phrase___phrase_role__identifier__size__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special______phrase__phrase_role__identifier__fn__phrase__phrase_role__special______phrase__phrase_role__keyword__void__phrase___phrase_role__special_______phrase___code_"></a></span><a class="link" href="context.html#context.context._code__phrase_role__identifier__fcontext_t__phrase___phrase_role__identifier__make_fcontext__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special_____phrase___phrase_role__identifier__sp__phrase__phrase_role__special_____phrase__phrase_role__identifier__std__phrase__phrase_role__special______phrase__phrase_role__identifier__size_t__phrase___phrase_role__identifier__size__phrase__phrase_role__special_____phrase__phrase_role__keyword__void__phrase__phrase_role__special______phrase__phrase_role__identifier__fn__phrase__phrase_role__special______phrase__phrase_role__keyword__void__phrase___phrase_role__special_______phrase___code_"><code class="computeroutput"><span class="identifier">fcontext_t</span> <span class="identifier">make_fcontext</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span>
       <span class="identifier">sp</span><span class="special">,</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
-      <span class="identifier">size</span><span class="special">,</span><span class="keyword">void</span><span class="special">(*</span><span class="identifier">fn</span><span class="special">)(</span><span class="identifier">intptr_t</span><span class="special">))</span></code></a>
+      <span class="identifier">size</span><span class="special">,</span><span class="keyword">void</span><span class="special">(*</span><span class="identifier">fn</span><span class="special">)(</span><span class="keyword">void</span> <span class="special">*))</span></code></a>
     </h4>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
             Stack <code class="computeroutput"><span class="identifier">sp</span></code> and function
@@ -392,7 +371,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="requirements.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="econtext.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="requirements.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="abstract_context.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

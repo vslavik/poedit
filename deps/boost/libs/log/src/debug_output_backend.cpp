@@ -14,7 +14,7 @@
 
 #ifndef BOOST_LOG_WITHOUT_DEBUG_OUTPUT
 
-#include "windows_version.hpp"
+#include <boost/log/detail/config.hpp>
 #include <string>
 #include <boost/log/sinks/debug_output_backend.hpp>
 #include <windows.h>

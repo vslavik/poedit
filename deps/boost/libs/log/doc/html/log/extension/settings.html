@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Extending library settings support</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../extension.html" title="Extending the library">
 <link rel="prev" href="attributes.html" title="Writing your own attributes">
@@ -27,7 +27,7 @@
       </p>
 <h5>
 <a name="log.extension.settings.h0"></a>
-        <span class="phrase"><a name="log.extension.settings.adding_support_for_user_defined_types_to_the_formatter_parser"></a></span><a class="link" href="settings.html#log.extension.settings.adding_support_for_user_defined_types_to_the_formatter_parser">Adding
+        <span><a name="log.extension.settings.adding_support_for_user_defined_types_to_the_formatter_parser"></a></span><a class="link" href="settings.html#log.extension.settings.adding_support_for_user_defined_types_to_the_formatter_parser">Adding
         support for user-defined types to the formatter parser</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.setup.formatter_parser_hpp" title="Header &lt;boost/log/utility/setup/formatter_parser.hpp&gt;">boost/log/utility/setup/formatter_parser.hpp</a></code><span class="special">&gt;</span>
@@ -68,7 +68,7 @@
       </p>
 <p>
         Then, in order to register this type with the simple formatter factory, a
-        single call to <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673585520.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
+        single call to <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp24846368.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
         will suffice:
       </p>
 <p>
@@ -125,8 +125,8 @@
 <p>
         The simple formatter factory ignores all additional parameters from the format
         string, so we have to implement our own factory instead. Custom factories
-        are registered with the <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673598224.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
-        function, which is similar to <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673585520.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
+        are registered with the <code class="computeroutput"><a class="link" href="../../boost/log/register_forma_idp24833664.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
+        function, which is similar to <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp24846368.html" title="Function template register_simple_formatter_factory">register_simple_formatter_factory</a></code>
         but accepts a pointer to the factory instead of the explicit template parameters.
       </p>
 <p>
@@ -210,7 +210,7 @@
         wrapper which can be empty if the value is not present.
       </p>
 <p>
-        Lastly, the call to <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673598224.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
+        Lastly, the call to <code class="computeroutput"><a class="link" href="../../boost/log/register_forma_idp24833664.html" title="Function template register_formatter_factory">register_formatter_factory</a></code>
         creates the factory and adds it to the library.
       </p>
 <p>
@@ -218,7 +218,7 @@
       </p>
 <h5>
 <a name="log.extension.settings.h1"></a>
-        <span class="phrase"><a name="log.extension.settings.adding_support_for_user_defined_types_to_the_filter_parser"></a></span><a class="link" href="settings.html#log.extension.settings.adding_support_for_user_defined_types_to_the_filter_parser">Adding
+        <span><a name="log.extension.settings.adding_support_for_user_defined_types_to_the_filter_parser"></a></span><a class="link" href="settings.html#log.extension.settings.adding_support_for_user_defined_types_to_the_filter_parser">Adding
         support for user-defined types to the filter parser</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.setup.filter_parser_hpp" title="Header &lt;boost/log/utility/setup/filter_parser.hpp&gt;">boost/log/utility/setup/filter_parser.hpp</a></code><span class="special">&gt;</span>
@@ -254,7 +254,7 @@
           </li>
 </ol></div>
 <p>
-        Naturally, all these operators must be visible from the point of the <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673667632.html" title="Function template register_simple_filter_factory">register_simple_filter_factory</a></code>
+        Naturally, all these operators must be visible from the point of the <code class="computeroutput"><a class="link" href="../../boost/log/register_simpl_idp24764160.html" title="Function template register_simple_filter_factory">register_simple_filter_factory</a></code>
         call. Note that unlike the simple formatter factory, the filter factory requires
         the user's type to support reading from a stream. This is so because the
         filter factory would have to parse the argument of the filter relation from
@@ -328,7 +328,7 @@
 <p>
       </p>
 <p>
-        Having called the <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673680528.html" title="Function template register_filter_factory">register_filter_factory</a></code>
+        Having called the <code class="computeroutput"><a class="link" href="../../boost/log/register_filte_idp24751264.html" title="Function template register_filter_factory">register_filter_factory</a></code>
         function, whenever the <a class="link" href="../detailed/utilities.html#log.detailed.utilities.setup.filter_formatter" title="Filter and formatter parsers">filter
         parser</a> encounters the "Coordinates" attribute mentioned
         in the filter, it will use the <code class="computeroutput"><span class="identifier">point_filter_factory</span></code>
@@ -457,7 +457,7 @@
       </p>
 <h5>
 <a name="log.extension.settings.h2"></a>
-        <span class="phrase"><a name="log.extension.settings.adding_support_for_user_defined_sinks"></a></span><a class="link" href="settings.html#log.extension.settings.adding_support_for_user_defined_sinks">Adding
+        <span><a name="log.extension.settings.adding_support_for_user_defined_sinks"></a></span><a class="link" href="settings.html#log.extension.settings.adding_support_for_user_defined_sinks">Adding
         support for user-defined sinks</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.setup.from_settings_hpp" title="Header &lt;boost/log/utility/setup/from_settings.hpp&gt;">boost/log/utility/setup/from_settings.hpp</a></code><span class="special">&gt;</span>
@@ -589,7 +589,7 @@
         custom "StatCollector" sink.
       </p>
 <p>
-        After defining the factory we only have to register it with the <code class="computeroutput"><a class="link" href="../../boost/log/register_idm45635673536064.html" title="Function template register_sink_factory">register_sink_factory</a></code>
+        After defining the factory we only have to register it with the <code class="computeroutput"><a class="link" href="../../boost/log/register_sink__idp24894992.html" title="Function template register_sink_factory">register_sink_factory</a></code>
         call. The first argument is the new value of the "Destination"
         parameter in the settings. Whenever the library finds sink description with
         destination "StatCollector", our factory will be invoked to create
@@ -625,8 +625,7 @@ WriteInterval=30
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

@@ -6,7 +6,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 */
 #include <boost/predef/detail/test_def.h>
 
-int main(int argc, const char ** argv)
+int main()
 {
     unsigned x = 0;
     create_predef_entries();

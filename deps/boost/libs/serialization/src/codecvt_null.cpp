@@ -8,6 +8,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 #define BOOST_WARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/codecvt_null.hpp>
 
 // codecvt implementation for passing wchar_t objects to char output

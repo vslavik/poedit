@@ -44,6 +44,21 @@ void path_get_temp_path_( string * buffer )
 
 
 /*
+ * path_translate_to_os_()
+ */
+
+int path_translate_to_os_( char const * f, string * file )
+{
+    int translated = 0;
+
+    /* by default, pass on the original path */
+    string_copy( file, f );
+
+    return translated;
+}
+
+
+/*
  * path_register_key()
  */
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Getting Started</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Boost.LocalFunction 1.0.0">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_localfunction.getting_started"></a><a class="link" href="getting_started.html" title="Getting Started">Getting Started</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="getting_started.html#boost_localfunction.getting_started.this_documentation">This
       Documentation</a></span></dt>
 <dt><span class="section"><a href="getting_started.html#boost_localfunction.getting_started.compilers_and_platforms">Compilers
@@ -63,7 +63,7 @@
         macro is conceptually similar to <code class="computeroutput"><span class="identifier">assert</span></code>
         but a failure of the checked condition does not abort the program, instead
         it makes <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">report_errors</span></code> return a non-zero program
-        exit code. <a href="#ftn.boost_localfunction.getting_started.this_documentation.f0" class="footnote" name="boost_localfunction.getting_started.this_documentation.f0"><sup class="footnote">[3]</sup></a>
+        exit code. <sup>[<a name="boost_localfunction.getting_started.this_documentation.f0" href="#ftn.boost_localfunction.getting_started.this_documentation.f0" class="footnote">3</a>]</sup>
       </p>
 </div>
 <div class="section">
@@ -121,9 +121,9 @@
       </p>
 <p>
         The followings are part of the library private API, they are not documented,
-        and they should not be directly used by programmers: <a href="#ftn.boost_localfunction.getting_started.installation.f0" class="footnote" name="boost_localfunction.getting_started.installation.f0"><sup class="footnote">[4]</sup></a>
+        and they should not be directly used by programmers: <sup>[<a name="boost_localfunction.getting_started.installation.f0" href="#ftn.boost_localfunction.getting_started.installation.f0" class="footnote">4</a>]</sup>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Any symbol defined by files within the <code class="literal">boost/local_function/aux_/</code>
             or <code class="literal">boost/local_function/detail/</code> directory (these header
@@ -144,19 +144,19 @@
         Some of the library behaviour can be changed at compile-time by defining
         special <span class="emphasis"><em>configuration macros</em></span>. If a configuration macro
         is left undefined, the library will use an appropriate default value for
-        it. All configuration macros are defined in the header file <code class="computeroutput"><a class="link" href="../reference.html#header.boost.local_function.config_hpp" title="Header &lt;boost/local_function/config.hpp&gt;">boost/local_function/config.hpp</a></code>.
+        it. All configuration macros are defined in the header file <code class="computeroutput">boost/local_function/config.hpp</code>.
         It is strongly recommended not to change the library configuration macro
         definitions unless strictly necessary.
       </p>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.boost_localfunction.getting_started.this_documentation.f0" class="footnote"><p><a href="#boost_localfunction.getting_started.this_documentation.f0" class="para"><sup class="para">[3] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.getting_started.this_documentation.f0" href="#boost_localfunction.getting_started.this_documentation.f0" class="para">3</a>] </sup>
           <span class="bold"><strong>Rationale.</strong></span> Using Boost.Detail/LightweightTest
           allows to add the examples to the library regression tests so to make sure
           that they always compile and run correctly.
         </p></div>
-<div id="ftn.boost_localfunction.getting_started.installation.f0" class="footnote"><p><a href="#boost_localfunction.getting_started.installation.f0" class="para"><sup class="para">[4] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.boost_localfunction.getting_started.installation.f0" href="#boost_localfunction.getting_started.installation.f0" class="para">4</a>] </sup>
           <span class="bold"><strong>Rationale.</strong></span> This library concatenates symbols
           specified by the programmers (e.g., the local function name) with other
           symbols (e.g., special prefixes or file line numbers) to make internal

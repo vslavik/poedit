@@ -68,9 +68,12 @@ public :
         if(phase == 0)
         {
             map_pieces(collection.m_pieces, collection.offsetted_rings, true, true);
+        }
+        if (phase == 1)
+        {
             map_turns(collection.m_turns, true, false);
         }
-        if (phase == 1 && ! m_zoom)
+        if (phase == 2 && ! m_zoom)
         {
 //        map_traversed_rings(collection.traversed_rings);
 //        map_offsetted_rings(collection.offsetted_rings);
@@ -134,11 +137,6 @@ private :
                 default:
                     ; // to avoid "enumeration value not handled" warning
             }
-            if (!it->selectable_start)
-            {
-                fill = "fill:rgb(255,192,0);";
-                color = 'o'; // orange
-            }
             if (it->blocked())
             {
                 fill = "fill:rgb(128,128,128);";
@@ -153,7 +151,12 @@ private :
             if ((label_good_turns && is_good) || (label_wrong_turns && ! is_good))
             {
                 std::ostringstream out;
-                out << it->turn_index
+                out << it->turn_index;
+                if (it->cluster_id >= 0)
+                {
+                   out << " ("  << it->cluster_id << ")";
+                }
+                out
                     << " " << it->operations[0].piece_index << "/" << it->operations[1].piece_index
                     << " " << si(it->operations[0].seg_id) << "/" << si(it->operations[1].seg_id)
 

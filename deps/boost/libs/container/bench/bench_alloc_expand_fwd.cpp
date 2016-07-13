@@ -238,14 +238,14 @@ int main(int argc, const char *argv[])
    #define SINGLE_TEST
    #ifndef SINGLE_TEST
       #ifdef NDEBUG
-      unsigned int numit []  = { 10000, 100000, 1000000, 10000000 };
+      unsigned int numit []  = { 1000, 10000, 100000, 1000000 };
       #else
       unsigned int numit []  = { 100, 1000, 10000, 100000 };
       #endif
       unsigned int numele [] = { 10000, 1000,   100,     10       };
    #else
       #ifdef NDEBUG
-      std::size_t numit [] = { 10000 };
+      std::size_t numit [] = { 1000 };
       #else
       std::size_t numit [] = { 100 };
       #endif

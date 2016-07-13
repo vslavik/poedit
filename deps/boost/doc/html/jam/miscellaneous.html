@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Miscellaneous</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../jam.html" title="Chapter&#160;43.&#160;Boost.Jam : 3.1.19">
+<link rel="up" href="../jam.html" title="Chapter&#160;45.&#160;Boost.Jam : 3.1.19">
 <link rel="prev" href="language.html" title="Language">
 <link rel="next" href="history.html" title="History">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="jam.miscellaneous"></a><a class="link" href="miscellaneous.html" title="Miscellaneous">Miscellaneous</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="miscellaneous.html#jam.miscellaneous.diagnostics">Diagnostics</a></span></dt>
 <dt><span class="section"><a href="miscellaneous.html#jam.miscellaneous.bugs__limitations">Bugs, Limitations</a></span></dt>
 <dt><span class="section"><a href="miscellaneous.html#jam.miscellaneous.fundamentals">Fundamentals</a></span></dt>
@@ -110,7 +110,7 @@
         altogether. We hope it will be useful to anyone wishing to become familiar
         with Jam and the Boost build system.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Jam "<code class="literal">rules</code>" are actually simple procedural
             entities. Think of them as functions. Arguments are separated by colons.
@@ -150,7 +150,7 @@
             In addition to local and global variables, jam allows you to set a variable
             <code class="literal">on</code> a target. Target-specific variable values can usually
             not be read, and take effect only in the following contexts:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   In updating actions, variable values are first looked up <code class="literal">on</code>
                   the target named by the first argument (the target being updated).

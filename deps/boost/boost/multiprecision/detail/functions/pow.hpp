@@ -459,26 +459,31 @@ inline void eval_pow(T& result, const T& x, const T& a)
    
    typename boost::multiprecision::detail::canonical<boost::intmax_t, T>::type an;
    T fa;
+#ifndef BOOST_NO_EXCEPTIONS
    try
    {
+#endif
       eval_convert_to(&an, a);
       if(a.compare(an) == 0)
       {
          detail::pow_imp(result, x, an, mpl::true_());
          return;
       }
+#ifndef BOOST_NO_EXCEPTIONS
    }
    catch(const std::exception&)
    {
       // conversion failed, just fall through, value is not an integer.
       an = (std::numeric_limits<boost::intmax_t>::max)();
    }
-
+#endif
    if((eval_get_sign(x) < 0))
    {
       typename boost::multiprecision::detail::canonical<boost::uintmax_t, T>::type aun;
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          eval_convert_to(&aun, a);
          if(a.compare(aun) == 0)
          {
@@ -489,11 +494,13 @@ inline void eval_pow(T& result, const T& x, const T& a)
                result.negate();
             return;
          }
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const std::exception&)
       {
          // conversion failed, just fall through, value is not an integer.
       }
+#endif
       if(std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
       else

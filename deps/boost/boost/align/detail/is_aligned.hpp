@@ -9,20 +9,25 @@ http://boost.org/LICENSE_1_0.txt
 #ifndef BOOST_ALIGN_DETAIL_IS_ALIGNED_HPP
 #define BOOST_ALIGN_DETAIL_IS_ALIGNED_HPP
 
-#include <boost/assert.hpp>
-#include <boost/config.hpp>
-#include <boost/align/detail/address.hpp>
 #include <boost/align/detail/is_alignment.hpp>
-#include <cstddef>
+#include <boost/align/is_aligned_forward.hpp>
+#include <boost/assert.hpp>
 
 namespace boost {
 namespace alignment {
+
+inline bool is_aligned(const void* ptr, std::size_t alignment)
+    BOOST_NOEXCEPT
+{
+    BOOST_ASSERT(detail::is_alignment(alignment));
+    return is_aligned(reinterpret_cast<std::size_t>(ptr), alignment);
+}
 
 inline bool is_aligned(std::size_t alignment, const void* ptr)
     BOOST_NOEXCEPT
 {
     BOOST_ASSERT(detail::is_alignment(alignment));
-    return (detail::address(ptr) & (alignment - 1)) == 0;
+    return is_aligned(reinterpret_cast<std::size_t>(ptr), alignment);
 }
 
 } /* .alignment */

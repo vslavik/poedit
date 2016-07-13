@@ -65,6 +65,12 @@ int set_test_copyable(boost::container::container_detail::true_type)
    MyBoostMultiSet &boostmultiset = *pboostmultiset;
    MyStdMultiSet   &stdmultiset   = *pstdmultiset;
 
+   //Just to test move aware catch conversions
+   boostset.insert(boostset.cbegin(), boostset.cend());
+   boostmultiset.insert(boostmultiset.cbegin(), boostmultiset.cend());
+   boostset.insert(boostset.begin(), boostset.end());
+   boostmultiset.insert(boostmultiset.begin(), boostmultiset.end());
+
    for(int i = 0; i < max; ++i){
       IntType move_me(i);
       boostset.insert(boost::move(move_me));

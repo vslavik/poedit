@@ -21,7 +21,7 @@
 
 namespace boost { namespace container { namespace test {
 
-static const int NumIt = 2000;
+static const int NumIt = 200;
 
 enum deallocation_type { DirectDeallocation, InverseDeallocation, MixedDeallocation, EndDeallocationType };
 

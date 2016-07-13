@@ -59,7 +59,7 @@ void bcp_implementation::copy_path(const fs::path& p)
    //
    // do text based copy if requested:
    //
-   if(p.leaf() == "Jamroot")
+   if((p.leaf() == "Jamroot") && m_namespace_name.size())
    {
       static std::vector<char> v1, v2;
       v1.clear();

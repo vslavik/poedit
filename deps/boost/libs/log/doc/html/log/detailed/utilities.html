@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Utilities</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="attributes.html" title="Attributes">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.utilities"></a><a class="link" href="utilities.html" title="Utilities">Utilities</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.string_literal">String literals</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.type_info_wrapper">Type information
         wrapper</a></span></dt>
@@ -332,7 +332,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.type_dispatch.h0"></a>
-          <span class="phrase"><a name="log.detailed.utilities.type_dispatch.static_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.static_type_dispatcher">Static
+          <span><a name="log.detailed.utilities.type_dispatch.static_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.static_type_dispatcher">Static
           type dispatcher</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.type_dispatch.static_type_dispatcher_hpp" title="Header &lt;boost/log/utility/type_dispatch/static_type_dispatcher.hpp&gt;">boost/log/utility/type_dispatch/static_type_dispatcher.hpp</a></code><span class="special">&gt;</span>
@@ -419,7 +419,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.type_dispatch.h1"></a>
-          <span class="phrase"><a name="log.detailed.utilities.type_dispatch.dynamic_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.dynamic_type_dispatcher">Dynamic
+          <span><a name="log.detailed.utilities.type_dispatch.dynamic_type_dispatcher"></a></span><a class="link" href="utilities.html#log.detailed.utilities.type_dispatch.dynamic_type_dispatcher">Dynamic
           type dispatcher</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.type_dispatch.dynamic_type_dispatcher_hpp" title="Header &lt;boost/log/utility/type_dispatch/dynamic_type_dispatcher.hpp&gt;">boost/log/utility/type_dispatch/dynamic_type_dispatcher.hpp</a></code><span class="special">&gt;</span>
@@ -844,7 +844,7 @@
           also supports applying a visitor function object to the referred object.
           This can be done by calling one of the following methods:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">apply_visitor</span></code>. This
               method should only be used on a valid (non-empty) reference. The method
@@ -939,7 +939,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.record_ordering.h0"></a>
-          <span class="phrase"><a name="log.detailed.utilities.record_ordering.abstract_record_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.abstract_record_ordering">Abstract
+          <span><a name="log.detailed.utilities.record_ordering.abstract_record_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.abstract_record_ordering">Abstract
           record ordering</a>
         </h6>
 <p>
@@ -963,7 +963,7 @@
         </p>
 <h6>
 <a name="log.detailed.utilities.record_ordering.h1"></a>
-          <span class="phrase"><a name="log.detailed.utilities.record_ordering.attribute_value_based_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.attribute_value_based_ordering">Attribute
+          <span><a name="log.detailed.utilities.record_ordering.attribute_value_based_ordering"></a></span><a class="link" href="utilities.html#log.detailed.utilities.record_ordering.attribute_value_based_ordering">Attribute
           value based ordering</a>
         </h6>
 <p>
@@ -993,7 +993,7 @@
           equivalent is used.
         </p>
 <p>
-          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_att_idm45635673815968.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
+          You can also use the <code class="computeroutput"><a class="link" href="../../boost/log/make_attr_orde_idp24615264.html" title="Function template make_attr_ordering">make_attr_ordering</a></code> generator
           function to automatically generate the <code class="computeroutput"><a class="link" href="../../boost/log/attribute_value_ordering.html" title="Class template attribute_value_ordering">attribute_value_ordering</a></code>
           instance based on the attribute value name and the ordering function. This
           might be useful if the ordering function has a non-trivial type, like the
@@ -1021,7 +1021,7 @@
           by the library, therefore in order to reacquire the exception object it
           has to rethrow it. The header defines an <code class="computeroutput"><a class="link" href="../../boost/log/exception_handler.html" title="Class template exception_handler">exception_handler</a></code>
           template functor that does just that and then forwards the exception object
-          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exc_idm45635679744128.html" title="Function template make_exception_handler">make_exception_handler</a></code>
+          to a unary user-defined functional object. The <code class="computeroutput"><a class="link" href="../../boost/log/make_exception_idp19056208.html" title="Function template make_exception_handler">make_exception_handler</a></code>
           function can be used to simplify the handler construction. All expected
           exception types should be specified explicitly in the call, in the order
           they would appear in the <code class="computeroutput"><span class="keyword">catch</span></code>
@@ -1121,7 +1121,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="log.detailed.utilities.manipulators"></a><a class="link" href="utilities.html#log.detailed.utilities.manipulators" title="Output manipulators">Output manipulators</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.manipulators.to_log">Customized
           logging manipulator</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.manipulators.add_value">Attribute
@@ -1141,7 +1141,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.to_log_hpp" title="Header &lt;boost/log/utility/manipulators/to_log.hpp&gt;">boost/log/utility/manipulators/to_log.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idm45635673880624.html" title="Function template to_log">to_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp24551712.html" title="Function template to_log">to_log</a></code>
             function creates a stream manipulator that simply outputs the adopted
             value to the stream. By default its behavior is equivalent to simply
             putting the value to the stream. However, the user is able to overload
@@ -1182,7 +1182,7 @@
             value contexts as well. The library uses this feature to allow different
             formatting ruled for different attribute values, even if the stored value
             type is the same. To do so one has to specify an explicit template argument
-            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idm45635673880624.html" title="Function template to_log">to_log</a></code>,
+            for <code class="computeroutput"><a class="link" href="../../boost/log/to_log_idp24551712.html" title="Function template to_log">to_log</a></code>,
             a tag type, which will be embedded into the manipulator type and thus
             will allow to define different insertion operators:
           </p>
@@ -1270,7 +1270,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../utilities.html#header.boost.log.utility.manipulators.dump_hpp" title="Header &lt;boost/log/utility/manipulators/dump.hpp&gt;">boost/log/utility/manipulators/dump.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idm45635673922336.html" title="Function template dump">dump</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp24510000.html" title="Function template dump">dump</a></code>
             function creates a manipulator that outputs binary contents of a contiguous
             memory region. This can be useful for logging some low level binary data,
             such as encoded network packets or entries of a binary file. The use
@@ -1294,12 +1294,12 @@
 <span class="special">}</span>
 </pre>
 <p>
-            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_ele_idm45635673917024.html" title="Function template dump_elements">dump_elements</a></code> for printing
+            There is another manipulator called <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp24515312.html" title="Function template dump_elements">dump_elements</a></code> for printing
             binary representation of non-byte array elements. The special manipulator
             for this case is necessary because the units of the size argument of
-            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idm45635673922336.html" title="Function template dump">dump</a></code>
-            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idm45635673922336.html" title="Function template dump">dump</a></code>
-            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_ele_idm45635673917024.html" title="Function template dump_elements">dump_elements</a></code> accepts
+            <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp24510000.html" title="Function template dump">dump</a></code>
+            can be confusing (is it in bytes or in elements?). Therefore <code class="computeroutput"><a class="link" href="../../boost/log/dump_idp24510000.html" title="Function template dump">dump</a></code>
+            will not compile when used for non-byte input data. <code class="computeroutput"><a class="link" href="../../boost/log/dump_elements_idp24515312.html" title="Function template dump_elements">dump_elements</a></code> accepts
             the same arguments, and its size-related arguments always designate the
             number of elements to process.
           </p>
@@ -1326,7 +1326,7 @@
 <a name="log.detailed.utilities.setup"></a><a class="link" href="utilities.html#log.detailed.utilities.setup" title="Simplified library initialization tools">Simplified library initialization
         tools</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.setup.convenience">Convenience
           functions</a></span></dt>
 <dt><span class="section"><a href="utilities.html#log.detailed.utilities.setup.filter_formatter">Filter
@@ -1385,7 +1385,7 @@
 <p>
             Pretty easy, isn't it? There is also the <code class="computeroutput"><span class="identifier">wadd_console_log</span></code>
             function for wide-character console. If you want to put logs to some
-            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_cons_idm45635673792736.html" title="Function template add_console_log">add_console_log</a></code> function
+            other standard stream, you can pass the stream to the <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp24638480.html" title="Function template add_console_log">add_console_log</a></code> function
             as an argument. E.g. enabling logging to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span></code>
             instead of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">clog</span></code> would look like this:
           </p>
@@ -1431,7 +1431,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-            The <code class="computeroutput"><a class="link" href="../../boost/log/add_cons_idm45635673792736.html" title="Function template add_console_log">add_console_log</a></code>
+            The <code class="computeroutput"><a class="link" href="../../boost/log/add_console_lo_idp24638480.html" title="Function template add_console_log">add_console_log</a></code>
             and <code class="computeroutput"><a class="link" href="../../boost/log/add_file_log.html" title="Function template add_file_log">add_file_log</a></code>
             functions do not conflict and may be combined freely, so it is possible
             to set up logging to the console and a couple of files, including filtering
@@ -1701,7 +1701,7 @@ relation:
             divided into sections. The container is implemented with the <code class="computeroutput"><a class="link" href="../../boost/log/basic_settings.html" title="Class template basic_settings">basic_settings</a></code> class template.
             There are several constraints on how parameters are stored in the container:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 Every parameter must reside in a section. There can be no parameters
                 that do not belong to a section.
@@ -2184,6 +2184,25 @@ relation:
 <tr>
 <td>
                     <p>
+                      MaxFiles
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Unsigned integer
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      Total number of files in the target directory, upon which the
+                      oldest file will be deleted. If not specified, no count-based
+                      file cleanup will be performed.
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
                       ScanForFiles
                     </p>
                   </td>
@@ -2224,7 +2243,7 @@ relation:
             according to the <a href="http://www.boost.org/doc/libs/release/doc/html/date_time/date_time_io.html#date_time.format_flags" target="_top">Boost.DateTime</a>
             format notation:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 "%H:%M:%S". In this case, file rotation will be performed
                 on a daily basis, at the specified time. For example, "12:00:00".
@@ -2522,8 +2541,7 @@ AutoFlush=true
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

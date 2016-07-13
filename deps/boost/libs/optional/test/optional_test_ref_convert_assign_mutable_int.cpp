@@ -23,7 +23,8 @@
 
 int main()
 {
-  test_converting_assignment<int>();
+  test_converting_assignment<int, int>();
+  test_converting_assignment<int, const int>();
   
   return boost::report_errors();
 }

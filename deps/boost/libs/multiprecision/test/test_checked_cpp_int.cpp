@@ -23,6 +23,7 @@ void test()
    if(std::numeric_limits<test_type>::is_bounded)
    {
       test_type val = (std::numeric_limits<test_type>::max)();
+#ifndef BOOST_NO_EXCEPTIONS
       BOOST_CHECK_THROW(++val, std::overflow_error);
       val = (std::numeric_limits<test_type>::max)();
       BOOST_CHECK_THROW(test_type(1 + val), std::overflow_error);
@@ -50,8 +51,10 @@ void test()
          val = (std::numeric_limits<test_type>::min)();
          BOOST_CHECK_THROW(test_type(val - 1), std::range_error);
       }
+#endif
    }
 
+#ifndef BOOST_NO_EXCEPTIONS
    if(std::numeric_limits<test_type>::is_signed)
    {
       test_type a = -1;
@@ -90,6 +93,7 @@ void test()
       BOOST_CHECK_THROW(test_type(-2).str(0, std::ios_base::hex), std::runtime_error);
       BOOST_CHECK_THROW(test_type(-2).str(0, std::ios_base::oct), std::runtime_error);
    }
+#endif
 }
 
 int main()

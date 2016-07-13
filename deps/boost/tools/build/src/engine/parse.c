@@ -57,6 +57,8 @@ void parse_file( OBJECT * f, FRAME * frame )
         list_free( function_run( func, frame, stack_global() ) );
         function_free( func );
     }
+
+    yyfdone();
 }
 
 

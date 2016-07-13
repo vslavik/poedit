@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function xrange</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../../../header/boost/test/data/monomorphic/generators/xrange_hpp.html" title="Header &lt;boost/test/data/monomorphic/generators/xrange.hpp&gt;">
 <link rel="prev" href="monomorphic/xrange_t.html" title="Class template xrange_t">
@@ -49,16 +49,16 @@
   <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">SampleType</span> <span class="keyword">const</span> <span class="special">&amp;</span> begin_val<span class="special">,</span> <span class="identifier">SampleType</span> <span class="keyword">const</span> <span class="special">&amp;</span> end_val<span class="special">,</span> 
          <span class="identifier">StepType</span> <span class="keyword">const</span> <span class="special">&amp;</span> step_val<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm46570756031424"></a><h2>Description</h2>
+<a name="idp26974320"></a><h2>Description</h2>
 <p>The following overloads are available: </p>
-<pre class="programlisting"><span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">end_val</span><span class="special">)</span><span class="special">;</span>
-<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">end_val</span><span class="special">,</span> <span class="identifier">param</span><span class="special">)</span><span class="special">;</span>
-<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">begin_val</span><span class="special">,</span> <span class="identifier">end_val</span><span class="special">)</span><span class="special">;</span>
-<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">begin_val</span><span class="special">,</span> <span class="identifier">end_val</span><span class="special">,</span> <span class="identifier">step_val</span><span class="special">)</span><span class="special">;</span>
-<span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">param</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"> <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+ <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">end_val</span><span class="special">)</span><span class="special">;</span>
+ <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">end_val</span><span class="special">,</span> <span class="identifier">param</span><span class="special">)</span><span class="special">;</span>
+ <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">begin_val</span><span class="special">,</span> <span class="identifier">end_val</span><span class="special">)</span><span class="special">;</span>
+ <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">begin_val</span><span class="special">,</span> <span class="identifier">end_val</span><span class="special">,</span> <span class="identifier">step_val</span><span class="special">)</span><span class="special">;</span>
+ <span class="keyword">auto</span> <span class="identifier">d</span> <span class="special">=</span> <span class="identifier">xrange</span><span class="special">(</span><span class="identifier">param</span><span class="special">)</span><span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p><code class="computeroutput">begin_val</code> indicates the start of the sequence (default to 0).</p></li>
 <li class="listitem"><p><code class="computeroutput">end_val</code> is the end of the sequence. If ommited, the dataset has infinite size.<br>
 </p></li>
@@ -66,7 +66,7 @@
 </p></li>
 <li class="listitem">
 <p><code class="computeroutput">param</code> is the named parameters that describe the sequence. The following parameters are accepted:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem"><p><code class="computeroutput">begin:</code> same meaning <code class="computeroutput">begin_val</code> </p></li>
 <li class="listitem"><p><code class="computeroutput">end:</code> same meaning as <code class="computeroutput">end_val</code> </p></li>
 <li class="listitem"><p><code class="computeroutput">step:</code> same meaning as <code class="computeroutput">step_val</code> </p></li>
@@ -91,7 +91,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

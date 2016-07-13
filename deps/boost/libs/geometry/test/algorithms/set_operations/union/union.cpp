@@ -1,9 +1,9 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
-// Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
-// Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
+// Copyright (c) 2007-2016 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2016 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2016 Mateusz Loskot, London, UK.
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -169,7 +169,7 @@ void test_areal()
     test_one<Polygon, Polygon, Polygon>("33",
                 case_33[0], case_33[1], 2, 0, 8, 4.5);
     test_one<Polygon, Polygon, Polygon>("36",
-                case_36[0], case_36[1], 1, 0, 10, 14.375);
+                case_36[0], case_36[1], 1, 1, 10, 14.375);
     test_one<Polygon, Polygon, Polygon>("40",
                 case_40[0], case_40[1], 2, 0, 18, 11);
 
@@ -178,14 +178,53 @@ void test_areal()
                 case_53[0], case_53[2], 1, 1, 16, 16);
     test_one<Polygon, Polygon, Polygon>("58_iet",
                 case_58[0], case_58[2], 1, 3, 20, 12.16666);
+
     test_one<Polygon, Polygon, Polygon>("59_iet",
                 case_59[0], case_59[2], 1, 1, 14, 17.20833);
 
+    // #holes should be 2
     test_one<Polygon, Polygon, Polygon>("80",
-                case_80[0], case_80[1], 2, 2, 18, 129.0);
+                case_80[0], case_80[1], 2, 0, 18, 129.0);
 
     test_one<Polygon, Polygon, Polygon>("81",
                 case_81[0], case_81[1], 1, 2, 15, 163.5);
+
+    test_one<Polygon, Polygon, Polygon>("82",
+                case_82[0], case_82[1], 1, 1, 21, 19.75);
+
+    test_one<Polygon, Polygon, Polygon>("83",
+                case_83[0], case_83[1], 1, 0, 7, 20.0);
+
+    test_one<Polygon, Polygon, Polygon>("90",
+                case_90[0], case_90[1], 1, 2, 17, 221.3688);
+
+    test_one<Polygon, Polygon, Polygon>("91",
+                case_91[0], case_91[1], 1, 1, 9, 147.5);
+
+    test_one<Polygon, Polygon, Polygon>("92",
+                case_92[0], case_92[1], 2, 0, 9, 175.0);
+
+    test_one<Polygon, Polygon, Polygon>("93",
+                case_93[0], case_93[1], 1, 2, 12, 172.9167);
+
+    test_one<Polygon, Polygon, Polygon>("94",
+                case_94[0], case_94[1], 2, 0, 12, 170.0);
+
+    // Has two separate but touching interior rings
+    test_one<Polygon, Polygon, Polygon>("95",
+                case_95[0], case_95[1], 1, 2, 15, 1320.0);
+
+    test_one<Polygon, Polygon, Polygon>("96",
+                case_96[0], case_96[1], 1, 1, 10, 1500.0);
+
+    test_one<Polygon, Polygon, Polygon>("97",
+                case_97[0], case_97[1], 1, 0, 10, 286.799);
+
+    test_one<Polygon, Polygon, Polygon>("98",
+                case_98[0], case_98[1], 1, 1, 14, 653.067);
+
+    test_one<Polygon, Polygon, Polygon>("99",
+                case_99[0], case_99[1], 1, 0, 5, 1600.0);
 
     /*
     test_one<Polygon, Polygon, Polygon>(102,
@@ -311,6 +350,12 @@ void test_areal()
             1, 0, 10, 2424.3449);
 #endif
 
+    test_one<Polygon, Polygon, Polygon>("ticket_10866", ticket_10866[0], ticket_10866[1],
+            1, 0, 14, 332760303.5);
+
+    test_one<Polygon, Polygon, Polygon>("ticket_11725", ticket_11725[0], ticket_11725[1],
+            1, 1, 10, 7.5);
+
     test_one<Polygon, Polygon, Polygon>("geos_1", geos_1[0], geos_1[1],
             1, 0, -1, 3461.3203125);
     test_one<Polygon, Polygon, Polygon>("geos_2", geos_2[0], geos_2[1],
@@ -388,23 +433,18 @@ void test_areal()
                 1, 0, if_typed_tt<ct>(93, 91), 22.815);
 
     test_one<Polygon, Polygon, Polygon>("buffer_mp2", buffer_mp2[0], buffer_mp2[1],
-                1, 0, 217, 36.752837);
+                1, 1, 217, 36.752837);
 
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    test_one<Polygon, Polygon, Polygon>("ticket_11725",
-        ticket_11725[0], ticket_11725[1],
-        1, 1, -1, 7.5);
-#endif
-
+    // #holes should be 1 (for the 3 cases below)
     test_one<Polygon, Polygon, Polygon>("mysql_21964079_1",
         mysql_21964079_1[0], mysql_21964079_1[1],
-        2, 1, -1, 234.5);
+        2, 0, -1, 234.5);
     test_one<Polygon, Polygon, Polygon>("mysql_21964079_2",
         mysql_21964079_2[0], mysql_21964079_2[1],
-        2, 1, -1, 112.0);
+        2, 0, -1, 112.0);
     test_one<Polygon, Polygon, Polygon>("mysql_21964049",
         mysql_21964049[0], mysql_21964049[1],
-        1, 1, -1, 220.5);
+        1, 0, -1, 220.5);
 }
 
 template <typename P>

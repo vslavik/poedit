@@ -14,7 +14,7 @@ namespace utf = boost::unit_test;
 const bool io_implemented = true;
 const bool db_implemented = false;
 
-BOOST_AUTO_TEST_SUITE(suite1, * utf::disabled());
+BOOST_AUTO_TEST_SUITE(suite1, * utf::disabled())
 
   BOOST_AUTO_TEST_CASE(test_1)
   {
@@ -38,5 +38,5 @@ BOOST_AUTO_TEST_SUITE(suite1, * utf::disabled());
     BOOST_TEST(4 != 4);
   }
 
-BOOST_AUTO_TEST_SUITE_END();
+BOOST_AUTO_TEST_SUITE_END()
 //]

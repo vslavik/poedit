@@ -190,7 +190,7 @@ private:
 public:
    BOOST_STATIC_CONSTANT(unsigned, limb_bits = sizeof(limb_type) * CHAR_BIT);
    BOOST_STATIC_CONSTANT(limb_type, max_limb_value = ~static_cast<limb_type>(0u));
-   BOOST_STATIC_CONSTANT(limb_type, sign_bit_mask = 1u << (limb_bits - 1));
+   BOOST_STATIC_CONSTANT(limb_type, sign_bit_mask = static_cast<limb_type>(1u) << (limb_bits - 1));
    BOOST_STATIC_CONSTANT(unsigned, internal_limb_count =
       MinBits
          ? (MinBits / limb_bits + ((MinBits % limb_bits) ? 1 : 0))
@@ -413,7 +413,7 @@ struct cpp_int_base<MinBits, MinBits, signed_magnitude, Checked, void, false>
 public:
    BOOST_STATIC_CONSTANT(unsigned, limb_bits = sizeof(limb_type) * CHAR_BIT);
    BOOST_STATIC_CONSTANT(limb_type, max_limb_value = ~static_cast<limb_type>(0u));
-   BOOST_STATIC_CONSTANT(limb_type, sign_bit_mask = 1u << (limb_bits - 1));
+   BOOST_STATIC_CONSTANT(limb_type, sign_bit_mask = static_cast<limb_type>(1u) << (limb_bits - 1));
    BOOST_STATIC_CONSTANT(unsigned, internal_limb_count = MinBits / limb_bits + ((MinBits % limb_bits) ? 1 : 0));
    BOOST_STATIC_CONSTANT(bool, variable = false);
    BOOST_STATIC_CONSTANT(limb_type, upper_limb_mask = (MinBits % limb_bits) ? (limb_type(1) << (MinBits % limb_bits)) -1 : (~limb_type(0)));
@@ -565,7 +565,7 @@ struct cpp_int_base<MinBits, MinBits, unsigned_magnitude, Checked, void, false>
 public:
    BOOST_STATIC_CONSTANT(unsigned, limb_bits = sizeof(limb_type) * CHAR_BIT);
    BOOST_STATIC_CONSTANT(limb_type, max_limb_value = ~static_cast<limb_type>(0u));
-   BOOST_STATIC_CONSTANT(limb_type, sign_bit_mask = 1u << (limb_bits - 1));
+   BOOST_STATIC_CONSTANT(limb_type, sign_bit_mask = static_cast<limb_type>(1u) << (limb_bits - 1));
    BOOST_STATIC_CONSTANT(unsigned, internal_limb_count = MinBits / limb_bits + ((MinBits % limb_bits) ? 1 : 0));
    BOOST_STATIC_CONSTANT(bool, variable = false);
    BOOST_STATIC_CONSTANT(limb_type, upper_limb_mask = (MinBits % limb_bits) ? (limb_type(1) << (MinBits % limb_bits)) -1 : (~limb_type(0)));

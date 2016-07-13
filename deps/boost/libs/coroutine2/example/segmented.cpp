@@ -54,7 +54,7 @@ int main() {
     
     sink();
 
-    std::cout << "main: done" << std::endl;
+    std::cout << "main: Done" << std::endl;
 
     return 0;
 }

@@ -19,17 +19,17 @@ int main()
 {
    using namespace boost::multiprecision;
 
-   BOOST_STATIC_ASSERT(boost::is_convertible<float, cpp_bin_float_single>::value);
-   BOOST_STATIC_ASSERT(!boost::is_convertible<double, cpp_bin_float_single>::value);
-   BOOST_STATIC_ASSERT(!boost::is_convertible<long double, cpp_bin_float_single>::value);
+   BOOST_STATIC_ASSERT((boost::is_convertible<float, cpp_bin_float_single>::value));
+   BOOST_STATIC_ASSERT(!(boost::is_convertible<double, cpp_bin_float_single>::value));
+   BOOST_STATIC_ASSERT(!(boost::is_convertible<long double, cpp_bin_float_single>::value));
 
    cpp_bin_float_single s = boost::math::constants::pi<cpp_bin_float_single>();
 
    typedef number<backends::cpp_bin_float<11, backends::digit_base_2, void, boost::int8_t, -14, 15>, et_off> cpp_bin_float_half;
 
-   BOOST_STATIC_ASSERT(!boost::is_convertible<float, cpp_bin_float_half>::value);
-   BOOST_STATIC_ASSERT(!boost::is_convertible<double, cpp_bin_float_half>::value);
-   BOOST_STATIC_ASSERT(!boost::is_convertible<long double, cpp_bin_float_half>::value);
+   BOOST_STATIC_ASSERT(!(boost::is_convertible<float, cpp_bin_float_half>::value));
+   BOOST_STATIC_ASSERT(!(boost::is_convertible<double, cpp_bin_float_half>::value));
+   BOOST_STATIC_ASSERT(!(boost::is_convertible<long double, cpp_bin_float_half>::value));
 
    cpp_bin_float_half hs = boost::math::constants::pi<cpp_bin_float_half>();
 

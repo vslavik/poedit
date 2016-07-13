@@ -9,6 +9,8 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/serialization/export.hpp>
+
+#define POLYMORPHIC_BASE_EXPORT
 #include "polymorphic_base.hpp"
 
 BOOST_CLASS_EXPORT_IMPLEMENT(polymorphic_base)

@@ -192,6 +192,18 @@ void test_zigzag()
 
 
 template <typename P>
+void test_3d()
+{
+    test_geometry<bg::model::linestring<P> >(
+        "LINESTRING(0 0 0,1 1 1,2 2 0)",
+        "LINESTRING(0 0 0,2 2 0)", 1.0001);
+    test_geometry<bg::model::linestring<P> >(
+        "LINESTRING(0 0 0,1 1 1,2 2 0)",
+        "LINESTRING(0 0 0,1 1 1,2 2 0)", 0.9999);
+}
+
+
+template <typename P>
 void test_spherical()
 {
     test_geometry<bg::model::linestring<P> >(
@@ -207,6 +219,8 @@ int test_main(int, char* [])
 
     test_all<bg::model::d2::point_xy<float> >();
     test_all<bg::model::d2::point_xy<double> >();
+
+    test_3d<bg::model::point<double, 3, bg::cs::cartesian> >();
 
     test_spherical<bg::model::point<double, 2, bg::cs::spherical_equatorial<bg::degree> > >();
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Coroutine</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Coroutine">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Coroutine">
 <link rel="prev" href="motivation.html" title="Motivation">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="coroutine.coroutine"></a><a class="link" href="coroutine.html" title="Coroutine">Coroutine</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="coroutine/asymmetric.html">Asymmetric coroutine</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="coroutine/asymmetric/pull_coro.html">Class <code class="computeroutput"><span class="identifier">asymmetric_coroutine</span><span class="special">&lt;&gt;::</span><span class="identifier">pull_type</span></code></a></span></dt>
@@ -46,11 +46,11 @@
 <p>
       Symmetric coroutines occur usually in the context of concurrent programming
       in order to represent independent units of execution. Implementations that
-      produce sequences of values typically use asymmetric coroutines. <a href="#ftn.coroutine.coroutine.f0" class="footnote" name="coroutine.coroutine.f0"><sup class="footnote">[5]</sup></a>
+      produce sequences of values typically use asymmetric coroutines. <sup>[<a name="coroutine.coroutine.f0" href="#ftn.coroutine.coroutine.f0" class="footnote">5</a>]</sup>
     </p>
 <h4>
 <a name="coroutine.coroutine.h0"></a>
-      <span class="phrase"><a name="coroutine.coroutine.stackful"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.stackful">stackful</a>
+      <span><a name="coroutine.coroutine.stackful"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.stackful">stackful</a>
     </h4>
 <p>
       Each instance of a coroutine has its own stack.
@@ -62,7 +62,7 @@
     </p>
 <h4>
 <a name="coroutine.coroutine.h1"></a>
-      <span class="phrase"><a name="coroutine.coroutine.move_only"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.move_only">move-only</a>
+      <span><a name="coroutine.coroutine.move_only"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.move_only">move-only</a>
     </h4>
 <p>
       A coroutine is moveable-only.
@@ -78,7 +78,7 @@
     </p>
 <h4>
 <a name="coroutine.coroutine.h2"></a>
-      <span class="phrase"><a name="coroutine.coroutine.clean_up"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.clean_up">clean-up</a>
+      <span><a name="coroutine.coroutine.clean_up"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.clean_up">clean-up</a>
     </h4>
 <p>
       On coroutine destruction the associated stack will be unwound.
@@ -90,7 +90,7 @@
     </p>
 <h4>
 <a name="coroutine.coroutine.h3"></a>
-      <span class="phrase"><a name="coroutine.coroutine.segmented_stack"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.segmented_stack">segmented
+      <span><a name="coroutine.coroutine.segmented_stack"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.segmented_stack">segmented
       stack</a>
     </h4>
 <p>
@@ -108,7 +108,7 @@
       stack (macro SIGSTKSZ on POSIX).
     </p>
 <p>
-      At this time of writing only GCC (4.7) <a href="#ftn.coroutine.coroutine.f1" class="footnote" name="coroutine.coroutine.f1"><sup class="footnote">[6]</sup></a> is known to support segmented stacks. With version 1.54 <span class="bold"><strong>Boost.Coroutine</strong></span> provides support for segmented stacks.
+      At this time of writing only GCC (4.7) <sup>[<a name="coroutine.coroutine.f1" href="#ftn.coroutine.coroutine.f1" class="footnote">6</a>]</sup> is known to support segmented stacks. With version 1.54 <span class="bold"><strong>Boost.Coroutine</strong></span> provides support for segmented stacks.
     </p>
 <p>
       The destructor releases the associated stack. The implementer is free to deallocate
@@ -116,7 +116,7 @@
     </p>
 <h4>
 <a name="coroutine.coroutine.h4"></a>
-      <span class="phrase"><a name="coroutine.coroutine.context_switch"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.context_switch">context
+      <span><a name="coroutine.coroutine.context_switch"></a></span><a class="link" href="coroutine.html#coroutine.coroutine.context_switch">context
       switch</a>
     </h4>
 <p>
@@ -168,13 +168,13 @@
 <span class="identifier">coro</span><span class="special">();</span>
 </pre>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.coroutine.coroutine.f0" class="footnote"><p><a href="#coroutine.coroutine.f0" class="para"><sup class="para">[5] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.coroutine.coroutine.f0" href="#coroutine.coroutine.f0" class="para">5</a>] </sup>
         Moura, Ana Lucia De and Ierusalimschy, Roberto. "Revisiting coroutines".
         ACM Trans. Program. Lang. Syst., Volume 31 Issue 2, February 2009, Article
         No. 6
       </p></div>
-<div id="ftn.coroutine.coroutine.f1" class="footnote"><p><a href="#coroutine.coroutine.f1" class="para"><sup class="para">[6] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.coroutine.coroutine.f1" href="#coroutine.coroutine.f1" class="para">6</a>] </sup>
         <a href="http://gcc.gnu.org/wiki/SplitStacks" target="_top">Ian Lance Taylor, Split
         Stacks in GCC</a>
       </p></div>

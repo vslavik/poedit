@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>POSIX Basic Regular Expression Syntax</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Boost.Regex 5.0.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Boost.Regex 5.1.1">
 <link rel="up" href="../syntax.html" title="Regular Expression Syntax">
 <link rel="prev" href="basic_extended.html" title="POSIX Extended Regular Expression Syntax">
 <link rel="next" href="character_classes.html" title="Character Class Names">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h4>
 <a name="boost_regex.syntax.basic_syntax.h0"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.synopsis"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.synopsis">Synopsis</a>
+        <span><a name="boost_regex.syntax.basic_syntax.synopsis"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.synopsis">Synopsis</a>
       </h4>
 <p>
         The POSIX-Basic regular expression syntax is used by the Unix utility <code class="computeroutput"><span class="identifier">sed</span></code>, and variations are used by <code class="computeroutput"><span class="identifier">grep</span></code> and <code class="computeroutput"><span class="identifier">emacs</span></code>.
@@ -44,7 +44,7 @@
 </pre>
 <a name="boost_regex.posix_basic"></a><h4>
 <a name="boost_regex.syntax.basic_syntax.h1"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.posix_basic_syntax"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.posix_basic_syntax">POSIX
+        <span><a name="boost_regex.syntax.basic_syntax.posix_basic_syntax"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.posix_basic_syntax">POSIX
         Basic Syntax</a>
       </h4>
 <p>
@@ -54,13 +54,13 @@
 <pre class="programlisting">.[\*^$</pre>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h2"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.wildcard"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.wildcard">Wildcard:</a>
+        <span><a name="boost_regex.syntax.basic_syntax.wildcard"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.wildcard">Wildcard:</a>
       </h5>
 <p>
         The single character '.' when used outside of a character set will match
         any single character except:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The NULL character when the flag <code class="computeroutput"><span class="identifier">match_no_dot_null</span></code>
             is passed to the matching algorithms.
@@ -72,7 +72,7 @@
 </ul></div>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h3"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.anchors"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.anchors">Anchors:</a>
+        <span><a name="boost_regex.syntax.basic_syntax.anchors"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.anchors">Anchors:</a>
       </h5>
 <p>
         A '^' character shall match the start of a line when used as the first character
@@ -84,7 +84,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h4"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.marked_sub_expressions"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.marked_sub_expressions">Marked sub-expressions:</a>
+        <span><a name="boost_regex.syntax.basic_syntax.marked_sub_expressions"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.marked_sub_expressions">Marked sub-expressions:</a>
       </h5>
 <p>
         A section beginning <code class="computeroutput"><span class="special">\(</span></code> and ending
@@ -95,7 +95,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h5"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.repeats"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.repeats">Repeats:</a>
+        <span><a name="boost_regex.syntax.basic_syntax.repeats"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.repeats">Repeats:</a>
       </h5>
 <p>
         Any atom (a single character, a marked sub-expression, or a character class)
@@ -153,7 +153,7 @@ aaaa
       </p>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h6"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.back_references"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.back_references">Back
+        <span><a name="boost_regex.syntax.basic_syntax.back_references"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.back_references">Back
         references:</a>
       </h5>
 <p>
@@ -172,7 +172,7 @@ aaaa
 <pre class="programlisting">aaabba</pre>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h7"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.character_sets"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.character_sets">Character
+        <span><a name="boost_regex.syntax.basic_syntax.character_sets"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.character_sets">Character
         sets:</a>
       </h5>
 <p>
@@ -185,7 +185,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h8"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.single_characters"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.single_characters">Single
+        <span><a name="boost_regex.syntax.basic_syntax.single_characters"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.single_characters">Single
         characters:</a>
       </h6>
 <p>
@@ -194,7 +194,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h9"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.character_ranges"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.character_ranges">Character
+        <span><a name="boost_regex.syntax.basic_syntax.character_ranges"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.character_ranges">Character
         ranges:</a>
       </h6>
 <p>
@@ -210,7 +210,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h10"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.negation"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.negation">Negation:</a>
+        <span><a name="boost_regex.syntax.basic_syntax.negation"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.negation">Negation:</a>
       </h6>
 <p>
         If the bracket-expression begins with the ^ character, then it matches the
@@ -219,7 +219,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h11"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.character_classes"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.character_classes">Character
+        <span><a name="boost_regex.syntax.basic_syntax.character_classes"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.character_classes">Character
         classes:</a>
       </h6>
 <p>
@@ -229,7 +229,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h12"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.collating_elements"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.collating_elements">Collating
+        <span><a name="boost_regex.syntax.basic_syntax.collating_elements"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.collating_elements">Collating
         Elements:</a>
       </h6>
 <p>
@@ -258,7 +258,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h13"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.equivalence_classes"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.equivalence_classes">Equivalence
+        <span><a name="boost_regex.syntax.basic_syntax.equivalence_classes"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.equivalence_classes">Equivalence
         classes:</a>
       </h6>
 <p>
@@ -275,7 +275,7 @@ aaaa
       </p>
 <h6>
 <a name="boost_regex.syntax.basic_syntax.h14"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.combinations"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.combinations">Combinations:</a>
+        <span><a name="boost_regex.syntax.basic_syntax.combinations"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.combinations">Combinations:</a>
       </h6>
 <p>
         All of the above can be combined in one character set declaration, for example:
@@ -283,7 +283,7 @@ aaaa
       </p>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h15"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.escapes"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.escapes">Escapes</a>
+        <span><a name="boost_regex.syntax.basic_syntax.escapes"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.escapes">Escapes</a>
       </h5>
 <p>
         With the exception of the escape sequences \{, \}, \(, and \), which are
@@ -298,7 +298,7 @@ aaaa
       </p>
 <h4>
 <a name="boost_regex.syntax.basic_syntax.h16"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.what_gets_matched"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.what_gets_matched">What
+        <span><a name="boost_regex.syntax.basic_syntax.what_gets_matched"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.what_gets_matched">What
         Gets Matched</a>
       </h4>
 <p>
@@ -308,11 +308,11 @@ aaaa
       </p>
 <h4>
 <a name="boost_regex.syntax.basic_syntax.h17"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.variations"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.variations">Variations</a>
+        <span><a name="boost_regex.syntax.basic_syntax.variations"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.variations">Variations</a>
       </h4>
 <a name="boost_regex.grep_syntax"></a><h5>
 <a name="boost_regex.syntax.basic_syntax.h18"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.grep"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.grep">Grep</a>
+        <span><a name="boost_regex.syntax.basic_syntax.grep"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.grep">Grep</a>
       </h5>
 <p>
         When an expression is compiled with the flag <code class="computeroutput"><span class="identifier">grep</span></code>
@@ -330,7 +330,7 @@ aaaa
       </p>
 <h5>
 <a name="boost_regex.syntax.basic_syntax.h19"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.emacs"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.emacs">emacs</a>
+        <span><a name="boost_regex.syntax.basic_syntax.emacs"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.emacs">emacs</a>
       </h5>
 <p>
         In addition to the <a class="link" href="basic_syntax.html#boost_regex.posix_basic">POSIX-Basic features</a>
@@ -380,7 +380,7 @@ aaaa
 </tr>
 <tr>
 <td>
-                <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                       ?
                     </li></ul></div>
               </td>
@@ -610,7 +610,7 @@ aaaa
       </p>
 <h4>
 <a name="boost_regex.syntax.basic_syntax.h20"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.options"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.options">Options</a>
+        <span><a name="boost_regex.syntax.basic_syntax.options"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.options">Options</a>
       </h4>
 <p>
         There are a <a class="link" href="../ref/syntax_option_type/syntax_option_type_basic.html" title="Options for POSIX Basic Regular Expressions">variety
@@ -624,7 +624,7 @@ aaaa
       </p>
 <h4>
 <a name="boost_regex.syntax.basic_syntax.h21"></a>
-        <span class="phrase"><a name="boost_regex.syntax.basic_syntax.references"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.references">References</a>
+        <span><a name="boost_regex.syntax.basic_syntax.references"></a></span><a class="link" href="basic_syntax.html#boost_regex.syntax.basic_syntax.references">References</a>
       </h4>
 <p>
         <a href="http://www.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap09.html" target="_top">IEEE

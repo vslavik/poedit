@@ -126,12 +126,12 @@ rule check-target-builds ( target message ? : true-properties * : false-properti
 
         <para>This function can only be used when passing requirements or usage
         requirements to a metatarget rule. For example, to make an application link
-        to a library if it's avavailable, one has use the following:</para>
+        to a library if it's available, one has use the following:</para>
         <programlisting>
 exe app : app.cpp : [ check-target-builds has_foo "System has foo" : &lt;library&gt;foo : &lt;define&gt;FOO_MISSING=1 ] ;
         </programlisting>
 
-        <para>For another example, the alias rule can be used to consolidate configuraiton
+        <para>For another example, the alias rule can be used to consolidate configuration
         choices and make them available to other metatargets, like so:</para>
         <programlisting>
 alias foobar : : : : [ check-target-builds has_foo "System has foo" : &lt;library&gt;foo : &lt;library&gt;bar ] ;
@@ -221,7 +221,7 @@ ECHO [ glob-tree *.cpp : .svn ] ;
         <term><literal>always</literal></term>
         <indexterm><primary>always building a metatarget</primary></indexterm>
 
-        <listitem><para>The <literal>always</literal> funciton takes a single
+        <listitem><para>The <literal>always</literal> function takes a single
         parameter&#x2014;a list of metatarget names. The top-level targets produced
         by the named metatargets will be always considered out of date. Consider this example:
         </para>
@@ -366,7 +366,7 @@ path-constant DATA : data/a.txt ;
             <literal>static</literal></para>
 
           <simpara>
-            A feature controling how libraries are built.
+            A feature controlling how libraries are built.
           </simpara>
 
         </listitem>
@@ -529,7 +529,7 @@ path-constant DATA : data/a.txt ;
             Specify an additional directory where the system should
             look for shared libraries when the executable or shared
             library is run. This feature only affects Unix
-            compilers. Plase see <xref linkend="bbv2.faq.dll-path"/>
+            compilers. Please see <xref linkend="bbv2.faq.dll-path"/>
             in <xref linkend="bbv2.faq"/> for details.
           </simpara>
         </listitem></varlistentry>
@@ -551,7 +551,7 @@ path-constant DATA : data/a.txt ;
             As the result, the executable can be run without changing system
             paths to shared libraries or installing the libraries to system
             paths. This <!-- you need an antecedent.  This _what_? --> is very
-            convenient during development. Plase see the <link linkend=
+            convenient during development. Please see the <link linkend=
             "bbv2.faq.dll-path">FAQ entry</link> for details. Note that on Mac
             OSX, the paths are unconditionally hardcoded by the linker, and it
             is not possible to disable that behaviour.</para>
@@ -745,7 +745,7 @@ path-constant DATA : data/a.txt ;
           </para>
 
           <para>The <literal>architecture</literal> features specifies
-          the general processor familty to generate code for.</para>
+          the general processor family to generate code for.</para>
 
         </listitem>
       </varlistentry>
@@ -931,6 +931,30 @@ using gcc : &toolset_ops; ;</programlisting>
                         parse="xml"/>
 
             <varlistentry>
+              <term><literal>archiver</literal></term>
+
+              <listitem>
+                <para>Specifies the archiver command that is used to produce static
+                libraries. Normally, it is autodetected using gcc
+                <command>-print-prog-name</command> option or defaulted to <command>ar</command>,
+                 but in some cases you might want to override it, for example to expliitly
+                 use a system version instead of one included with gcc.</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
+              <term><literal>ranlib</literal></term>
+
+              <listitem>
+                <para>Specifies the ranlib command that is used to generated symbol table
+                for static libraries. Normally, it is autodetected using gcc
+                <command>-print-prog-name</command> option or defaulted to <command>ranlib</command>,
+                 but in some cases you might want to override it, for example to expliitly
+                 use a system version instead of one included with gcc.</para>
+              </listitem>
+            </varlistentry>
+
+            <varlistentry>
               <term><literal>rc</literal></term>
 
               <listitem>
@@ -1101,7 +1125,7 @@ using msvc : &toolset_ops; ;
               script has been explicitly specified for the current target
               platform. Used setup script will be passed the target platform
               identifier (x86, x86_amd64, x86_ia64, amd64 or ia64) as a
-              arameter. If not specified a default script is chosen based on the
+              parameter. If not specified a default script is chosen based on the
               used compiler binary, e.g. <command>vcvars32.bat</command> or
               <command>vsvars32.bat</command>.</para></listitem>
             </varlistentry>
@@ -1380,7 +1404,7 @@ using como-linux : &toolset_ops; ;</programlisting>
           originally produced by Metrowerks and presently developed by
           Freescale. Boost.Build supports only the versions of the compiler that
           target x86 processors. All such versions were released by Metrowerks
-          before aquisition and are not sold any longer. The last version known
+          before acquisition and are not sold any longer. The last version known
           to work is 9.4.</para>
 
           <para>The module is initialized using the following syntax:</para>
@@ -1510,7 +1534,7 @@ using sun : &toolset_ops; ;</programlisting>
 
           <para>When using this compiler on complex C++ code, such as the
           <ulink url="http://boost.org">Boost C++ library</ulink>, it is
-          recommended to specify the following options when intializing the
+          recommended to specify the following options when initializing the
           <code>sun</code> module:
           <screen>
 -library=stlport4 -features=tmplife -features=tmplrefstatic
@@ -1566,7 +1590,7 @@ using vacpp ;</programlisting>
 
           <para>The <ulink url="http://stlport.org">STLport</ulink> library
           is an alternative implementation of C++ runtime library. Boost.Build
-          supports using that library on Windows platfrom.  Linux is
+          supports using that library on Windows platform.  Linux is
           hampered by different naming of libraries in each STLport
           version and is not officially supported.</para>
 
@@ -2232,8 +2256,8 @@ import path : native make : native-path make-path ;
           <simpara>
             If there's one viable alternative, it's choosen. Otherwise,
             an attempt is made to find one best alternative. An alternative
-            a is better than another alternative b, iff the set of properties
-            in b's condition is a strict subset of the set of properities of
+            a is better than another alternative b, if the set of properties
+            in b's condition is a strict subset of the set of properties of
             'a's condition. If there's one viable alternative, which is
             better than all others, it's selected. Otherwise, an error is
             reported.
@@ -2273,7 +2297,7 @@ import path : native make : native-path make-path ;
             request or requirements.</para></listitem>
 
         <listitem><para>If requirements include a conditional property, and
-            condiiton of this property is true in context of common
+            condition of this property is true in context of common
             properties, then the conditional property should be in common
             properties as well.</para></listitem>
 
@@ -2303,7 +2327,7 @@ exe a : a.cpp
 
       <para>Several factors determine the location of a concrete
       file target.  All files in a project are built under
-      the directory bin unless this is overriden by the build-dir project
+      the directory bin unless this is overridden by the build-dir project
       attribute.  Under bin is a path that depends on the properties
       used to build each target.  This path is uniquely determined by
       all non-free, non-incidental properties.  For example,
@@ -2379,7 +2403,7 @@ exe a : a.cpp
         <literal>subvalue1</literal>...<literal>subvalueN</literal> are legal values of some
         of <emphasis role="bold">F</emphasis>'s subfeatures. For example, the properties
         <literal>&lt;toolset&gt;gcc &lt;toolset-version&gt;3.0.1</literal> can be
-        expressed more conscisely using a value-string, as
+        expressed more concisely using a value-string, as
         <literal>&lt;toolset&gt;gcc-3.0.1</literal>.</para>
 
       <para>A <emphasis>property set</emphasis> is a set of properties (i.e. a
@@ -2453,7 +2477,7 @@ exe a : a.cpp
               propagated
               property, the build systems attempts to use the same property
               when building any of its dependencies as part of that main
-              target. For instance, when an optimized exectuable is
+              target. For instance, when an optimized executable is
               requested, one usually wants it to be linked with optimized
               libraries. Thus, the <literal>&lt;optimization&gt;</literal> feature is
               propagated.</para>
@@ -2495,7 +2519,7 @@ exe a : a.cpp
 
             <para>Normally a feature only generates a subvariant directory
               when its value differs from its default value,
-              leading to an assymmetric subvariant directory structure for
+              leading to an asymmetric subvariant directory structure for
               certain values of the feature. A symmetric feature
               always generates a corresponding
               subvariant directory.</para>
@@ -2689,7 +2713,7 @@ lib/b.cpp                            -- regular file
       <itemizedlist>
         <listitem>
           <simpara>
-            It emphasises that projects and targets are different things.
+            It emphasis that projects and targets are different things.
           </simpara>
         </listitem>
 
@@ -2705,7 +2729,7 @@ lib/b.cpp                            -- regular file
             of targets, and it's reasonable to use them directly from other
             project.
 
-            2. The rule for unpacking tar is inplemented in terms of
+            2. The rule for unpacking tar is implemented in terms of
             "patch-file", for maintainability, and therefore, must use main
             target name that contains slashes?
 

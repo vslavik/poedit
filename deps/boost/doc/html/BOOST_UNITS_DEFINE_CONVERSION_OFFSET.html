@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_UNITS_DEFINE_CONVERSION_OFFSET</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="boost_units/Reference.html#header.boost.units.absolute_hpp" title="Header &lt;boost/units/absolute.hpp&gt;">
 <link rel="prev" href="boost/units/absolute.html" title="Class template absolute">
@@ -34,9 +34,9 @@
 
 </span>BOOST_UNITS_DEFINE_CONVERSION_OFFSET(From, To, type_, value_)</pre></div>
 <div class="refsect1">
-<a name="idm45555065300048"></a><h2>Description</h2>
+<a name="idp462052768"></a><h2>Description</h2>
 <p>Macro to define the offset between two absolute units. Requires the value to be in the destination units e.g </p>
-<pre class="programlisting"><span class="identifier">BOOST_UNITS_DEFINE_CONVERSION_OFFSET</span><span class="special">(</span><span class="identifier">celsius_base_unit</span><span class="special">,</span> <span class="identifier">fahrenheit_base_unit</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="number">32</span><span class="special">.</span><span class="number">0</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting"> <span class="identifier">BOOST_UNITS_DEFINE_CONVERSION_OFFSET</span><span class="special">(</span><span class="identifier">celsius_base_unit</span><span class="special">,</span> <span class="identifier">fahrenheit_base_unit</span><span class="special">,</span> <span class="keyword">double</span><span class="special">,</span> <span class="number">32</span><span class="special">.</span><span class="number">0</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> <code class="computeroutput">BOOST_UNITS_DEFINE_CONVERSION_FACTOR</code> is also necessary to specify the conversion factor. Like <code class="computeroutput">BOOST_UNITS_DEFINE_CONVERSION_FACTOR</code> this macro defines both forward and reverse conversions so defining, e.g., the conversion from celsius to fahrenheit as above will also define the inverse conversion from fahrenheit to celsius. </p>
 </div>

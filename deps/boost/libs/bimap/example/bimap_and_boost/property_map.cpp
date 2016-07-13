@@ -39,7 +39,7 @@ void foo(AddressMap & address_map)
 
     value_type address;
     key_type fred = "Fred";
-    std::cout << get(address_map, fred);
+    std::cout << boost::get(address_map, fred);
 }
 
 int main()

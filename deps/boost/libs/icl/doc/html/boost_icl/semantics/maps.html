@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Maps</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Icl">
 <link rel="up" href="../semantics.html" title="Semantics">
 <link rel="prev" href="sets.html" title="Sets">
@@ -22,7 +22,7 @@
 <div class="spirit-nav">
 <a accesskey="p" href="sets.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../semantics.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="collectors__maps_of_sets.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section boost_icl_semantics_maps" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_icl.semantics.maps"></a><a class="link" href="maps.html" title="Maps">Maps</a>
 </h3></div></div></div>
@@ -43,7 +43,6 @@
         associated to intervals,
       </p>
 <p>
-        
 </p>
 <pre class="programlisting"><span class="identifier">interval_map</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">&gt;</span> <span class="identifier">cat_map</span><span class="special">;</span>
 <span class="identifier">cat_map</span> <span class="special">+=</span> <span class="identifier">make_pair</span><span class="special">(</span><span class="identifier">interval</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">rightopen</span><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">5</span><span class="special">),</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="string">"Hello"</span><span class="special">));</span>
@@ -54,10 +53,10 @@
       </p>
 <p>
         we won't be able to apply <code class="computeroutput"><span class="keyword">operator</span>
-        <span class="special">-=</span></code> 
+        <span class="special">-=</span></code>
 </p>
-<pre class="programlisting"><span class="comment">// This will not compile because string::operator -= is missing.
-</span><span class="identifier">cat_map</span> <span class="special">-=</span> <span class="identifier">make_pair</span><span class="special">(</span><span class="identifier">interval</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">rightopen</span><span class="special">(</span><span class="number">3</span><span class="special">,</span><span class="number">7</span><span class="special">),</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="string">" World"</span><span class="special">));</span>
+<pre class="programlisting"><span class="comment">// This will not compile because string::operator -= is missing.</span>
+<span class="identifier">cat_map</span> <span class="special">-=</span> <span class="identifier">make_pair</span><span class="special">(</span><span class="identifier">interval</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;::</span><span class="identifier">rightopen</span><span class="special">(</span><span class="number">3</span><span class="special">,</span><span class="number">7</span><span class="special">),</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span><span class="special">(</span><span class="string">" World"</span><span class="special">));</span>
 </pre>
 <p>
         because, as std::sting does not implement <code class="computeroutput"><span class="special">-=</span></code>
@@ -72,16 +71,16 @@
         Currently we have investigated and validated two major instantiations of
         icl::Maps,
       </p>
-<div class="itemizedlist"><ul type="disc">
-<li>
-<span class="emphasis"><em><span class="bold"><strong>Maps of Sets</strong></span></em></span> that
-          will be called <span class="emphasis"><em><span class="bold"><strong>Collectors</strong></span></em></span>
-          and
-        </li>
-<li>
-<span class="emphasis"><em><span class="bold"><strong>Maps of Numbers</strong></span></em></span> which
-          will be called <span class="emphasis"><em><span class="bold"><strong>Quantifiers</strong></span></em></span>
-</li>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            <span class="emphasis"><em><span class="bold"><strong>Maps of Sets</strong></span></em></span> that
+            will be called <span class="emphasis"><em><span class="bold"><strong>Collectors</strong></span></em></span>
+            and
+          </li>
+<li class="listitem">
+            <span class="emphasis"><em><span class="bold"><strong>Maps of Numbers</strong></span></em></span>
+            which will be called <span class="emphasis"><em><span class="bold"><strong>Quantifiers</strong></span></em></span>
+          </li>
 </ul></div>
 <p>
         both of which seem to have many interesting use cases for practical applications.
@@ -112,54 +111,54 @@
 </colgroup>
 <thead><tr>
 <th>
-              <p>
-                Kind of Map
-              </p>
+                <p>
+                  Kind of Map
+                </p>
               </th>
 <th>
-              <p>
-                Alias
-              </p>
+                <p>
+                  Alias
+                </p>
               </th>
 <th>
-              <p>
-                Behavior
-              </p>
+                <p>
+                  Behavior
+                </p>
               </th>
 </tr></thead>
 <tbody>
 <tr>
 <td>
-              <p>
-                Maps of Sets
-              </p>
+                <p>
+                  Maps of Sets
+                </p>
               </td>
 <td>
-              <p>
-                Collector
-              </p>
+                <p>
+                  Collector
+                </p>
               </td>
 <td>
-              <p>
-                Collects items <span class="bold"><strong>for</strong></span> key values
-              </p>
+                <p>
+                  Collects items <span class="bold"><strong>for</strong></span> key values
+                </p>
               </td>
 </tr>
 <tr>
 <td>
-              <p>
-                Maps of Numbers
-              </p>
+                <p>
+                  Maps of Numbers
+                </p>
               </td>
 <td>
-              <p>
-                Quantifier
-              </p>
+                <p>
+                  Quantifier
+                </p>
               </td>
 <td>
-              <p>
-                Counts or quantifies <span class="bold"><strong>the</strong></span> key values
-              </p>
+                <p>
+                  Counts or quantifies <span class="bold"><strong>the</strong></span> key values
+                </p>
               </td>
 </tr>
 </tbody>
@@ -172,7 +171,9 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -2010 Joachim Faulhaber<br>Copyright &#169; 1999 -2006 Cortex Software GmbH<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Joachim
+      Faulhaber<br>Copyright &#169; 1999-2006 Cortex Software
+      GmbH<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

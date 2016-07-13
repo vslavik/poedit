@@ -14,6 +14,7 @@ import quickbook ;
 doxygen autodoc
    :
       [ glob ../../../boost/move/*.hpp ]
+      [ glob ../../../boost/move/algo/*.hpp ]
    :
    <doxygen:param>HIDE_UNDOC_MEMBERS=YES
    <doxygen:param>HIDE_UNDOC_MEMBERS=YES
@@ -30,6 +31,7 @@ doxygen autodoc
                               \"BOOST_MOVE_DOC0PTR(T)=std::nullptr_t\" \\
                               \"BOOST_MOVE_DOC1ST(T1, T2)=T1\" \\
                               \"BOOST_MOVE_DOCIGN(T1) \"\\
+                              \"BOOST_MOVE_FORCEINLINE=inline\" \\
                   "
    ;
 

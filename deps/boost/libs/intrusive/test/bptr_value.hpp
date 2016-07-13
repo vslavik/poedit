@@ -15,6 +15,7 @@
 #define BOOST_INTRUSIVE_BPTR_VALUE_HPP
 
 #include <cassert>
+#include <iostream>
 #include "bounded_pointer.hpp"
 #include "common_functors.hpp"
 
@@ -103,6 +104,9 @@ struct BPtr_Value
    {  return !(other1.value_ == other2);  }
 
 }; // class BPtr_Value
+
+std::ostream& operator<<(std::ostream& s, const BPtr_Value& t)
+{  return s << t.value_.int_value();   }
 
 template < typename Node_Algorithms >
 void swap_nodes(bounded_reference< BPtr_Value > lhs, bounded_reference< BPtr_Value > rhs)

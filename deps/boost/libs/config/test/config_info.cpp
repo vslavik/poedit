@@ -330,6 +330,13 @@ void print_compiler_macros()
   PRINT_MACRO(_NTO_VERSION);
   PRINT_MACRO(__OPEN64__);
   PRINT_MACRO(__open64);
+  PRINT_MACRO(__NVCC__);
+  PRINT_MACRO(__CUDACC__);
+  PRINT_MACRO(__CUDACC_RDC__);
+  PRINT_MACRO(__CUDACC_VER_MAJOR__);
+  PRINT_MACRO(__CUDACC_VER_MINOR__);
+  PRINT_MACRO(__CUDACC_VER_BUILD__);
+  PRINT_MACRO(__CUDACC_VER__);
 }
 
 void print_stdlib_macros()

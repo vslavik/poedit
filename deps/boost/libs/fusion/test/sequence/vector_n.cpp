@@ -136,7 +136,7 @@ main()
 
     {
         typedef vector7<bool, char, short, int, long, float, double> type;
-        type vec(false, 'x', 3, 4, 5, 6.0, 7.0);
+        type vec(false, 'x', 3, 4, 5, 6.f, 7.0);
 
         BOOST_TEST(at_c<0>(vec) == false);
         BOOST_TEST(at_c<1>(vec) == 'x');

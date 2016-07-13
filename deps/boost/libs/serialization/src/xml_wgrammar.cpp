@@ -15,12 +15,12 @@
 #else
 
 #define BOOST_WARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/impl/basic_xml_grammar.hpp>
 
 using namespace boost::spirit::classic;
 
 // fixup for RogueWave
-#include <boost/config.hpp>
 #if ! defined(__SGI_STL_PORT) \
 && defined(BOOST_RWSTD_VER) && BOOST_RWSTD_VER<=0x020101
 #include <string>

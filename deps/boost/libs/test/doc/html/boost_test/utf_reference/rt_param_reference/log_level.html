@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>log_level</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../rt_param_reference.html" title="Runtime parameters reference">
 <link rel="prev" href="log_format.html" title="log_format">
@@ -43,7 +43,7 @@
         </p>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.log_level.h0"></a>
-          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.log_level.acceptable_values"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.acceptable_values">Acceptable
+          <span><a name="boost_test.utf_reference.rt_param_reference.log_level.acceptable_values"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.acceptable_values">Acceptable
           values</a>
         </h5>
 <p>
@@ -113,7 +113,7 @@
                 </td>
 <td>
                   <p>
-                    User generated messages (using BOOST_MESSAGE tool)
+                    User generated messages (using <a class="link" href="../testout_reference/test_output_macro_message.html" title="BOOST_TEST_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a> tool)
                   </p>
                 </td>
 </tr>
@@ -125,7 +125,8 @@
                 </td>
 <td>
                   <p>
-                    Messages describing failed assertion on WARN level (BOOST_WARN_...
+                    Messages describing failed assertion on <code class="computeroutput"><span class="identifier">WARN</span></code>
+                    level ( <a class="link" href="../testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST_WARN</span></code></a> / <code class="computeroutput"><span class="identifier">BOOST_WARN_</span><span class="special">...</span></code>
                     tools)
                   </p>
                 </td>
@@ -138,7 +139,8 @@
                 </td>
 <td>
                   <p>
-                    Messages describing failed assertion on CHECK level (BOOST_WARN_...
+                    Messages describing failed assertion on <code class="computeroutput"><span class="identifier">CHECK</span></code>
+                    level (<a class="link" href="../testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST</span></code></a> / <code class="computeroutput"><span class="identifier">BOOST_CHECK_</span><span class="special">...</span></code>
                     tools)
                   </p>
                 </td>
@@ -178,7 +180,9 @@
                   <p>
                     Messages reporting user or system originated fatal errors. For
                     example, memory access violation. Also all the messages describing
-                    failed assertion on REQUIRE level (BOOST_REQUIRE_... tools)
+                    failed assertion on <code class="computeroutput"><span class="identifier">REQUIRE</span></code>
+                    level (<a class="link" href="../testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST_REQUIRE</span></code></a> /
+                    <code class="computeroutput"><span class="identifier">BOOST_REQUIRE_</span><span class="special">...</span></code> tools)
                   </p>
                 </td>
 </tr>
@@ -198,10 +202,10 @@
 </table></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.log_level.h1"></a>
-          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax">Command
+          <span><a name="boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.command_line_syntax">Command
           line syntax</a>
         </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="special">--</span><span class="identifier">log_level</span><span class="special">=&lt;</span><span class="identifier">level</span><span class="special">&gt;</span></code>
             </li>
@@ -212,7 +216,7 @@
 </ul></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.log_level.h2"></a>
-          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.log_level.environment_variable"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.environment_variable">Environment
+          <span><a name="boost_test.utf_reference.rt_param_reference.log_level.environment_variable"></a></span><a class="link" href="log_level.html#boost_test.utf_reference.rt_param_reference.log_level.environment_variable">Environment
           variable</a>
         </h5>
 <pre class="programlisting"><span class="identifier">BOOST_TEST_LOG_LEVEL</span>
@@ -220,7 +224,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

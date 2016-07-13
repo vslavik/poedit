@@ -55,7 +55,7 @@ namespace ns
         (X)(Y)(Z),
         (ns::point)(X)(Y)(Z),
         (int, x, ns::x_member)
-        (Y, y, ns::y_member)
+        (auto, y, ns::y_member)
         (z, ns::z_member)
     )
 
@@ -65,7 +65,7 @@ namespace ns
       (ns::point)(X)(Y)(Z),
       (int, x, ns::x_member)
       (Y, y, ns::y_member)
-      (BOOST_FUSION_ADAPT_AUTO, z, ns::z_member)
+      (auto, z, ns::z_member)
   )
 #endif
 
@@ -117,9 +117,9 @@ main()
     }
 
     {
-        vector<int, float, int> v1(4, 2, 2);
-        point v2 = {5, 3, 3};
-        vector<long, double, float> v3(5, 4, 4.13f);
+        vector<int, float, int> v1(4, 2.f, 2);
+        point v2 = {5, 3, 3.f};
+        vector<long, double, float> v3(5, 4., 4.13f);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);
@@ -132,14 +132,14 @@ main()
 
     {
         // conversion from point to vector
-        point p = {5, 3, 3};
+        point p = {5, 3, 3.f};
         vector<int, long, int> v(p);
         v = p;
     }
 
     {
         // conversion from point to list
-        point p = {5, 3, 3};
+        point p = {5, 3, 3.f};
         list<int, long, int> l(p);
         l = p;
     }
@@ -155,7 +155,7 @@ main()
         BOOST_MPL_ASSERT((boost::is_same<boost::fusion::result_of::value_at_key<point, ns::y_member>::type, int>));
         BOOST_MPL_ASSERT((boost::is_same<boost::fusion::result_of::value_at_key<point, ns::z_member>::type, float>));
 
-        point p = {5, 3, 9};
+        point p = {5, 3, 9.f};
         
         BOOST_TEST(at_key<ns::x_member>(p) == 5);
         BOOST_TEST(at_key<ns::y_member>(p) == 3);

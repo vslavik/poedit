@@ -3,22 +3,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Logging sources</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="log/reference.html" title="Reference">
 <link rel="prev" href="boost/log/expressions/record.html" title="Global record">
-<link rel="next" href="boost/log/sources/basic_composite_logger.html" title="Class template basic_composite_logger">
+<link rel="next" href="boost/log/sources/basic_logger.html" title="Class template basic_logger">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr><td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../boost.png"></td></tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="boost/log/expressions/record.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="log/reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost/log/sources/basic_composite_logger.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="boost/log/expressions/record.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="log/reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost/log/sources/basic_logger.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="logging_sources"></a>Logging sources</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="logging_sources.html#header.boost.log.sources.basic_logger_hpp">Header &lt;boost/log/sources/basic_logger.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="logging_sources.html#header.boost.log.sources.channel_feature_hpp">Header &lt;boost/log/sources/channel_feature.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="logging_sources.html#header.boost.log.sources.channel_logger_hpp">Header &lt;boost/log/sources/channel_logger.hpp&gt;</a></span></dt>
@@ -57,17 +57,16 @@ The header contains implementation of a base class for loggers. Convenience macr
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
     <span class="keyword">namespace</span> <span class="identifier">sources</span> <span class="special">{</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> FinalT<span class="special">,</span> <span class="keyword">typename</span> ThreadingModelT<span class="special">&gt;</span> 
+        <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_logger.html" title="Class template basic_logger">basic_logger</a><span class="special">;</span>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> FinalT<span class="special">,</span> <span class="keyword">typename</span> ThreadingModelT<span class="special">,</span> 
                <span class="keyword">typename</span> FeaturesT<span class="special">&gt;</span> 
         <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_composite_logger.html" title="Class template basic_composite_logger">basic_composite_logger</a><span class="special">;</span>
 
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> FinalT<span class="special">,</span> <span class="keyword">typename</span> FeaturesT<span class="special">&gt;</span> 
-        <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_co_idm45635679615872.html" title="Class template basic_composite_logger&lt;CharT, FinalT, single_thread_model, FeaturesT&gt;">basic_composite_logger</a><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">FinalT</span><span class="special">,</span> <span class="identifier">single_thread_model</span><span class="special">,</span> <span class="identifier">FeaturesT</span><span class="special">&gt;</span><span class="special">;</span>
-
+        <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_composit_idp18810256.html" title="Class template basic_composite_logger&lt;CharT, FinalT, single_thread_model, FeaturesT&gt;">basic_composite_logger</a><span class="special">&lt;</span><span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">FinalT</span><span class="special">,</span> <span class="identifier">single_thread_model</span><span class="special">,</span> <span class="identifier">FeaturesT</span><span class="special">&gt;</span><span class="special">;</span>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> FinalT<span class="special">,</span> <span class="keyword">typename</span> ThreadingModelT<span class="special">&gt;</span> 
-        <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_logger.html" title="Class template basic_logger">basic_logger</a><span class="special">;</span>
-      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> CharT<span class="special">,</span> <span class="keyword">typename</span> FinalT<span class="special">,</span> <span class="keyword">typename</span> ThreadingModelT<span class="special">&gt;</span> 
-        <span class="keyword">void</span> <a class="link" href="boost/log/sources/swap_idm45635679869552.html" title="Function template swap"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="boost/log/sources/basic_logger.html" title="Class template basic_logger">basic_logger</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">FinalT</span><span class="special">,</span> <span class="identifier">ThreadingModelT</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
+        <span class="keyword">void</span> <a class="link" href="boost/log/sources/swap_idp18836896.html" title="Function template swap"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="boost/log/sources/basic_logger.html" title="Class template basic_logger">basic_logger</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">FinalT</span><span class="special">,</span> <span class="identifier">ThreadingModelT</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">,</span> 
                   <a class="link" href="boost/log/sources/basic_logger.html" title="Class template basic_logger">basic_logger</a><span class="special">&lt;</span> <span class="identifier">CharT</span><span class="special">,</span> <span class="identifier">FinalT</span><span class="special">,</span> <span class="identifier">ThreadingModelT</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
@@ -128,7 +127,7 @@ The header contains implementation of an exception handler support feature. </p>
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
     <span class="keyword">namespace</span> <span class="identifier">sources</span> <span class="special">{</span>
-      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> BaseT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_ex_idm45635679500352.html" title="Class template basic_exception_handler_logger">basic_exception_handler_logger</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> BaseT<span class="special">&gt;</span> <span class="keyword">class</span> <a class="link" href="boost/log/sources/basic_exceptio_idp18577728.html" title="Class template basic_exception_handler_logger">basic_exception_handler_logger</a><span class="special">;</span>
 
       <span class="keyword">struct</span> <a class="link" href="boost/log/sources/exception_handler.html" title="Struct exception_handler">exception_handler</a><span class="special">;</span>
     <span class="special">}</span>
@@ -213,13 +212,13 @@ This header contains a wrapper class around a logging record that allows to comp
     <span class="keyword">typedef</span> <a class="link" href="boost/log/basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a><span class="special">&lt;</span> <span class="keyword">char</span> <span class="special">&gt;</span> <a name="boost.log.record_ostream"></a><span class="identifier">record_ostream</span><span class="special">;</span>  <span class="comment">// Convenience typedef for narrow-character logging. </span>
     <span class="keyword">typedef</span> <a class="link" href="boost/log/basic_record_ostream.html" title="Class template basic_record_ostream">basic_record_ostream</a><span class="special">&lt;</span> <span class="keyword">wchar_t</span> <span class="special">&gt;</span> <a name="boost.log.wrecord_ostream"></a><span class="identifier">wrecord_ostream</span><span class="special">;</span>  <span class="comment">// Convenience typedef for wide-character logging. </span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StreamT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idm45635676826080.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idp21504880.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StreamT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idm45635676822320.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idp21508640.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StreamT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idm45635676818560.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idp21512400.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> StreamT<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
-      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idm45635676814800.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+      <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <a class="link" href="boost/log/operator_idp21516160.html" title="Function template operator&lt;&lt;"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></a><span class="special">(</span><span class="identifier">StreamT</span> <span class="special">&amp;&amp;</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
 </div>
@@ -246,7 +245,7 @@ The header contains implementation of a logger with severity level and channel s
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LevelT <span class="special">=</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> ChannelT <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">wstring</span><span class="special">&gt;</span> 
         <span class="keyword">class</span> <a class="link" href="boost/log/sources/wseverity_channel_logger.html" title="Class template wseverity_channel_logger">wseverity_channel_logger</a><span class="special">;</span>
       <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> LevelT <span class="special">=</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> ChannelT <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">wstring</span><span class="special">&gt;</span> 
-        <span class="keyword">class</span> <a class="link" href="boost/log/sources/wseverit_idm45635676755040.html" title="Class template wseverity_channel_logger_mt">wseverity_channel_logger_mt</a><span class="special">;</span>
+        <span class="keyword">class</span> <a class="link" href="boost/log/sources/wseverity_chan_idp21575920.html" title="Class template wseverity_channel_logger_mt">wseverity_channel_logger_mt</a><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
@@ -306,8 +305,8 @@ The header contains definition of threading models that can be used in loggers. 
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">log</span> <span class="special">{</span>
     <span class="keyword">namespace</span> <span class="identifier">sources</span> <span class="special">{</span>
-      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> MutexT<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="boost/log/sources/multi_thread_model.html" title="Struct template multi_thread_model">multi_thread_model</a><span class="special">;</span>
       <span class="keyword">struct</span> <a class="link" href="boost/log/sources/single_thread_model.html" title="Struct single_thread_model">single_thread_model</a><span class="special">;</span>
+      <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> MutexT<span class="special">&gt;</span> <span class="keyword">struct</span> <a class="link" href="boost/log/sources/multi_thread_model.html" title="Struct template multi_thread_model">multi_thread_model</a><span class="special">;</span>
     <span class="special">}</span>
   <span class="special">}</span>
 <span class="special">}</span></pre>
@@ -315,8 +314,7 @@ The header contains definition of threading models that can be used in loggers. 
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>
@@ -324,7 +322,7 @@ The header contains definition of threading models that can be used in loggers. 
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="boost/log/expressions/record.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="log/reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost/log/sources/basic_composite_logger.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="boost/log/expressions/record.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="log/reference.html"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="boost/log/sources/basic_logger.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

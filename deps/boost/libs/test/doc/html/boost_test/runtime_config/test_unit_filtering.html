@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test unit filtering</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../runtime_config.html" title="Runtime parameters">
 <link rel="prev" href="../runtime_config.html" title="Runtime parameters">
@@ -33,7 +33,7 @@
       </p>
 <a name="ref_default_run_status"></a><h4>
 <a name="boost_test.runtime_config.test_unit_filtering.h0"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.default_run_status"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.default_run_status">Default
+        <span><a name="boost_test.runtime_config.test_unit_filtering.default_run_status"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.default_run_status">Default
         run status</a>
       </h4>
 <p>
@@ -71,7 +71,7 @@
       </p>
 <h6>
 <a name="boost_test.runtime_config.test_unit_filtering.h1"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.example_descr"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr">Example:
+        <span><a name="boost_test.runtime_config.test_unit_filtering.example_descr"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr">Example:
         default run status</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -90,7 +90,7 @@
 <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">io_implemented</span> <span class="special">=</span> <span class="keyword">true</span><span class="special">;</span>
 <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">db_implemented</span> <span class="special">=</span> <span class="keyword">false</span><span class="special">;</span>
 
-<span class="identifier">BOOST_AUTO_TEST_SUITE</span><span class="special">(</span><span class="identifier">suite1</span><span class="special">,</span> <span class="special">*</span> <span class="identifier">utf</span><span class="special">::</span><span class="identifier">disabled</span><span class="special">());</span>
+<span class="identifier">BOOST_AUTO_TEST_SUITE</span><span class="special">(</span><span class="identifier">suite1</span><span class="special">,</span> <span class="special">*</span> <span class="identifier">utf</span><span class="special">::</span><span class="identifier">disabled</span><span class="special">())</span>
 
   <span class="identifier">BOOST_AUTO_TEST_CASE</span><span class="special">(</span><span class="identifier">test_1</span><span class="special">)</span>
   <span class="special">{</span>
@@ -114,7 +114,7 @@
     <span class="identifier">BOOST_TEST</span><span class="special">(</span><span class="number">4</span> <span class="special">!=</span> <span class="number">4</span><span class="special">);</span>
   <span class="special">}</span>
 
-<span class="identifier">BOOST_AUTO_TEST_SUITE_END</span><span class="special">();</span>
+<span class="identifier">BOOST_AUTO_TEST_SUITE_END</span><span class="special">()</span>
 </pre>
               </td></tr></tbody>
 </table></div>
@@ -144,7 +144,7 @@
 </table></div>
 <a name="ref_dynamic_test_dependency"></a><h4>
 <a name="boost_test.runtime_config.test_unit_filtering.h2"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.dynamic_test_dependencies"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.dynamic_test_dependencies">Dynamic
+        <span><a name="boost_test.runtime_config.test_unit_filtering.dynamic_test_dependencies"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.dynamic_test_dependencies">Dynamic
         test dependencies</a>
       </h4>
 <p>
@@ -165,7 +165,7 @@
 </ol></div>
 <a name="ref_command_line_control"></a><h4>
 <a name="boost_test.runtime_config.test_unit_filtering.h3"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.command_line_control"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.command_line_control">Command-line
+        <span><a name="boost_test.runtime_config.test_unit_filtering.command_line_control"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.command_line_control">Command-line
         control</a>
       </h4>
 <p>
@@ -188,7 +188,7 @@
 </ol></div>
 <a name="ref_command_line_control_absolute"></a><h5>
 <a name="boost_test.runtime_config.test_unit_filtering.h4"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.absolute_specification"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.absolute_specification">Absolute
+        <span><a name="boost_test.runtime_config.test_unit_filtering.absolute_specification"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.absolute_specification">Absolute
         specification</a>
       </h5>
 <p>
@@ -441,7 +441,7 @@ suite_1/suite_2/test_2
       </p>
 <h6>
 <a name="boost_test.runtime_config.test_unit_filtering.h5"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.example_descr0"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr0">Example:
+        <span><a name="boost_test.runtime_config.test_unit_filtering.example_descr0"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr0">Example:
         run_test and dynamic dependencies</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -509,7 +509,7 @@ suite_1/suite_2/test_2
 </table></div>
 <a name="ref_command_line_control_enablers"></a><h5>
 <a name="boost_test.runtime_config.test_unit_filtering.h6"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.relative_specification"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.relative_specification">Relative
+        <span><a name="boost_test.runtime_config.test_unit_filtering.relative_specification"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.relative_specification">Relative
         specification</a>
       </h5>
 <p>
@@ -589,7 +589,7 @@ suite_1/suite_2/test_2
       </p>
 <h6>
 <a name="boost_test.runtime_config.test_unit_filtering.h7"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.example_descr1"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr1">Example:
+        <span><a name="boost_test.runtime_config.test_unit_filtering.example_descr1"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr1">Example:
         command-line enabler</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -661,7 +661,7 @@ suite_1/suite_2/test_2
       </p>
 <h6>
 <a name="boost_test.runtime_config.test_unit_filtering.h8"></a>
-        <span class="phrase"><a name="boost_test.runtime_config.test_unit_filtering.example_descr2"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr2">Example:
+        <span><a name="boost_test.runtime_config.test_unit_filtering.example_descr2"></a></span><a class="link" href="test_unit_filtering.html#boost_test.runtime_config.test_unit_filtering.example_descr2">Example:
         command-line disabler</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -744,7 +744,7 @@ suite_1/suite_2/test_2
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

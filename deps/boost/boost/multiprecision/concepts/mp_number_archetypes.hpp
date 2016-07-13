@@ -66,14 +66,18 @@ struct number_backend_float_architype
    }
    number_backend_float_architype& operator = (const char* s)
    {
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          m_value = boost::lexical_cast<long double>(s);
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const std::exception&)
       {
          BOOST_THROW_EXCEPTION(std::runtime_error(std::string("Unable to parse input string: \"") + s + std::string("\" as a valid floating point number.")));
       }
+#endif
       std::cout << "const char* Assignment (" << s << ")" << std::endl;
       return *this;
    }

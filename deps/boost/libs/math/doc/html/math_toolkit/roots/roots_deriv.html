@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Root Finding With Derivatives: Newton-Raphson, Halley &amp; Schr&#246;der</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
 <link rel="up" href="../roots.html" title="Root finding">
 <link rel="prev" href="roots_noderiv/implementation.html" title="Implementation">
 <link rel="next" href="root_finding_examples.html" title="Examples of Root-Finding (with and without derivatives)">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.roots.roots_deriv.h0"></a>
-        <span class="phrase"><a name="math_toolkit.roots.roots_deriv.synopsis"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.synopsis">Synopsis</a>
+        <span><a name="math_toolkit.roots.roots_deriv.synopsis"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">roots</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -60,13 +60,13 @@
 </pre>
 <h5>
 <a name="math_toolkit.roots.roots_deriv.h1"></a>
-        <span class="phrase"><a name="math_toolkit.roots.roots_deriv.description"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.description">Description</a>
+        <span><a name="math_toolkit.roots.roots_deriv.description"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.description">Description</a>
       </h5>
 <p>
         These functions all perform iterative root-finding <span class="bold"><strong>using
         derivatives</strong></span>:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">newton_raphson_iterate</span></code>
             performs second-order <a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.newton">Newton-Raphson
@@ -84,7 +84,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b>Parameters of the root finding functions</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">F f</span></dt>
 <dd>
 <p>
@@ -133,7 +133,7 @@
 <p>
         When using these functions you should note that:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Default <code class="computeroutput"><span class="identifier">max_iter</span> <span class="special">=</span>
             <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">numeric_limits</span><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">uintmax_t</span><span class="special">&gt;::</span><span class="identifier">max</span><span class="special">)()</span></code> is effectively 'iterate for ever'.
@@ -212,7 +212,7 @@
 </ul></div>
 <h5>
 <a name="math_toolkit.roots.roots_deriv.h2"></a>
-        <span class="phrase"><a name="math_toolkit.roots.roots_deriv.newton"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.newton">Newton
+        <span><a name="math_toolkit.roots.roots_deriv.newton"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.newton">Newton
         Raphson Method</a>
       </h5>
 <p>
@@ -231,7 +231,7 @@
       </p>
 <h5>
 <a name="math_toolkit.roots.roots_deriv.h3"></a>
-        <span class="phrase"><a name="math_toolkit.roots.roots_deriv.halley"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.halley">Halley's
+        <span><a name="math_toolkit.roots.roots_deriv.halley"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.halley">Halley's
         Method</a>
       </h5>
 <p>
@@ -253,7 +253,7 @@
       </p>
 <h5>
 <a name="math_toolkit.roots.roots_deriv.h4"></a>
-        <span class="phrase"><a name="math_toolkit.roots.roots_deriv.schroder"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.schroder">Schr&#246;der's
+        <span><a name="math_toolkit.roots.roots_deriv.schroder"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.schroder">Schr&#246;der's
         Method</a>
       </h5>
 <p>
@@ -289,7 +289,7 @@
       </p>
 <h5>
 <a name="math_toolkit.roots.roots_deriv.h5"></a>
-        <span class="phrase"><a name="math_toolkit.roots.roots_deriv.examples"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.examples">Examples</a>
+        <span><a name="math_toolkit.roots.roots_deriv.examples"></a></span><a class="link" href="roots_deriv.html#math_toolkit.roots.roots_deriv.examples">Examples</a>
       </h5>
 <p>
         See <a class="link" href="root_finding_examples.html" title="Examples of Root-Finding (with and without derivatives)">root-finding
@@ -300,8 +300,8 @@
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
       Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
-      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
+      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

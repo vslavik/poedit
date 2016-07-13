@@ -2,6 +2,7 @@
 
 //  Copyright 2010 Vicente J. Botet Escriba
 //  Copyright 2015 Andrey Semashev
+//  Copyright 2016 Jorge Lodos
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -12,7 +13,7 @@
 
 #include <stdarg.h>
 #include <boost/detail/winapi/basic_types.hpp>
-#include <boost/detail/winapi/GetLastError.hpp>
+#include <boost/detail/winapi/get_last_error.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -41,6 +42,9 @@ FormatMessageW(
     boost::detail::winapi::LPWSTR_ lpBuffer,
     boost::detail::winapi::DWORD_ nSize,
     va_list *Arguments);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::UINT_ WINAPI
+SetErrorMode(boost::detail::winapi::UINT_ uMode);
 }
 #endif
 
@@ -68,6 +72,11 @@ BOOST_FORCEINLINE WORD_ MAKELANGID_(WORD_ p, WORD_ s)
     return MAKELANGID(p,s);
 }
 
+const DWORD_ SEM_FAILCRITICALERRORS_ =     SEM_FAILCRITICALERRORS;
+const DWORD_ SEM_NOGPFAULTERRORBOX_ =      SEM_NOGPFAULTERRORBOX;
+const DWORD_ SEM_NOALIGNMENTFAULTEXCEPT_ = SEM_NOALIGNMENTFAULTEXCEPT;
+const DWORD_ SEM_NOOPENFILEERRORBOX_ =     SEM_NOOPENFILEERRORBOX;
+
 #else
 
 const DWORD_ FORMAT_MESSAGE_ALLOCATE_BUFFER_= 0x00000100;
@@ -85,8 +94,13 @@ const WORD_ SUBLANG_DEFAULT_=               0x01;    // user default
 
 BOOST_FORCEINLINE WORD_ MAKELANGID_(WORD_ p, WORD_ s)
 {
-    return ((((WORD_)(s)) << 10) | (WORD_)(p));
+    return (WORD_)((((WORD_)(s)) << 10) | (WORD_)(p));
 }
+
+const DWORD_ SEM_FAILCRITICALERRORS_ =     0x0001;
+const DWORD_ SEM_NOGPFAULTERRORBOX_ =      0x0002;
+const DWORD_ SEM_NOALIGNMENTFAULTEXCEPT_ = 0x0004;
+const DWORD_ SEM_NOOPENFILEERRORBOX_ =     0x8000;
 
 #endif
 
@@ -94,6 +108,7 @@ BOOST_FORCEINLINE WORD_ MAKELANGID_(WORD_ p, WORD_ s)
 using ::FormatMessageA;
 #endif
 using ::FormatMessageW;
+using ::SetErrorMode;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE DWORD_ format_message(

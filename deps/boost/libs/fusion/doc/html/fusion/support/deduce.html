@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>deduce</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../support.html" title="Support">
 <link rel="prev" href="category_of.html" title="category_of">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="fusion.support.deduce.h0"></a>
-        <span class="phrase"><a name="fusion.support.deduce.description"></a></span><a class="link" href="deduce.html#fusion.support.deduce.description">Description</a>
+        <span><a name="fusion.support.deduce.description"></a></span><a class="link" href="deduce.html#fusion.support.deduce.description">Description</a>
       </h5>
 <p>
         Metafunction to apply <a class="link" href="../notes.html#fusion.notes.element_conversion"><span class="emphasis"><em>element
@@ -37,18 +37,18 @@
 <p>
         It removes references to <code class="computeroutput"><span class="keyword">const</span></code>,
         references to array types are kept, even if the array is <code class="computeroutput"><span class="keyword">const</span></code>.
-        Reference wrappers are removed (see <a class="link" href="../notes.html#fusion.notes.reference_wrappers"><code class="computeroutput"><span class="identifier">Reference</span> <span class="identifier">Wrappers</span></code></a>)<a href="#ftn.fusion.support.deduce.f0" class="footnote" name="fusion.support.deduce.f0"><sup class="footnote">[5]</sup></a>.
+        Reference wrappers are removed (see <a class="link" href="../notes.html#fusion.notes.reference_wrappers"><code class="computeroutput"><span class="identifier">Reference</span> <span class="identifier">Wrappers</span></code></a>)<sup>[<a name="fusion.support.deduce.f0" href="#ftn.fusion.support.deduce.f0" class="footnote">5</a>]</sup>.
       </p>
 <h5>
 <a name="fusion.support.deduce.h1"></a>
-        <span class="phrase"><a name="fusion.support.deduce.header"></a></span><a class="link" href="deduce.html#fusion.support.deduce.header">Header</a>
+        <span><a name="fusion.support.deduce.header"></a></span><a class="link" href="deduce.html#fusion.support.deduce.header">Header</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">support</span><span class="special">/</span><span class="identifier">deduce</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">deduce</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h5>
 <a name="fusion.support.deduce.h2"></a>
-        <span class="phrase"><a name="fusion.support.deduce.synopsis"></a></span><a class="link" href="deduce.html#fusion.support.deduce.synopsis">Synopsis</a>
+        <span><a name="fusion.support.deduce.synopsis"></a></span><a class="link" href="deduce.html#fusion.support.deduce.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">traits</span>
 <span class="special">{</span>
@@ -61,7 +61,7 @@
 </pre>
 <h5>
 <a name="fusion.support.deduce.h3"></a>
-        <span class="phrase"><a name="fusion.support.deduce.example"></a></span><a class="link" href="deduce.html#fusion.support.deduce.example">Example</a>
+        <span><a name="fusion.support.deduce.example"></a></span><a class="link" href="deduce.html#fusion.support.deduce.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">holder</span>
@@ -81,15 +81,15 @@
 </pre>
 <h5>
 <a name="fusion.support.deduce.h4"></a>
-        <span class="phrase"><a name="fusion.support.deduce.see_also"></a></span><a class="link" href="deduce.html#fusion.support.deduce.see_also">See
+        <span><a name="fusion.support.deduce.see_also"></a></span><a class="link" href="deduce.html#fusion.support.deduce.see_also">See
         also</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             <a class="link" href="deduce_sequence.html" title="deduce_sequence"><code class="computeroutput"><span class="identifier">deduce_sequence</span></code></a>
           </li></ul></div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.fusion.support.deduce.f0" class="footnote"><p><a href="#fusion.support.deduce.f0" class="para"><sup class="para">[5] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.fusion.support.deduce.f0" href="#fusion.support.deduce.f0" class="para">5</a>] </sup>
           Since C++11, the standard reference wrappers are also removed.
         </p></div>
 </div>

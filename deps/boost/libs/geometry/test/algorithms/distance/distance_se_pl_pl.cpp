@@ -1,9 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014, Oracle and/or its affiliates.
+// Copyright (c) 2014-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -63,6 +64,9 @@ template <typename Strategy>
 void test_distance_point_point(Strategy const& strategy,
                                bool is_comparable_strategy = false)
 {
+    double pi = bg::math::pi<double>();
+    double r = strategy.radius();
+
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::cout << std::endl;
     std::cout << "point/point distance tests" << std::endl;
@@ -74,7 +78,7 @@ void test_distance_point_point(Strategy const& strategy,
                   "POINT(0 0)",
                   (is_comparable_strategy
                    ? 0.0150768448035229
-                   : (0.24619691677893202 * strategy.radius())),
+                   : (0.24619691677893202 * r)),
                   0.0150768448035229,
                   strategy);
     tester::apply("p-p-02",
@@ -89,7 +93,7 @@ void test_distance_point_point(Strategy const& strategy,
                   "POINT(180 -10)",
                   (is_comparable_strategy
                    ? 1.0
-                   : (bg::math::pi<double>() * strategy.radius())),
+                   : (pi * r)),
                   1.0,
                   strategy);
     tester::apply("p-p-04",
@@ -97,8 +101,26 @@ void test_distance_point_point(Strategy const& strategy,
                   "POINT(180 0)",
                   (is_comparable_strategy
                    ? 1.0
-                   : (bg::math::pi<double>() * strategy.radius())),
+                   : (pi * r)),
                   1.0,
+                  strategy);
+
+    // https://svn.boost.org/trac/boost/ticket/11982
+    tester::apply("p-p-05",
+                  "POINT(10.521812 59.887214)",
+                  "POINT(10.4 63.43)",
+                  (is_comparable_strategy
+                   ? 0.00095578716185788
+                   : (0.06184146915711819 * r)),
+                  0.00095578716185788,
+                  strategy);
+    tester::apply("p-p-06",
+                  "POINT(10.733557 59.911923)",
+                  "POINT(10.4 63.43)",
+                  (is_comparable_strategy
+                   ? 0.0009441561071329
+                   : (0.0614639773975828 * r)),
+                  0.000944156107132969,
                   strategy);
 }
 

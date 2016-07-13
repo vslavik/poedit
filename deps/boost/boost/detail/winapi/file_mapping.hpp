@@ -2,6 +2,7 @@
 
 //  Copyright 2010 Vicente J. Botet Escriba
 //  Copyright 2015 Andrey Semashev
+//  Copyright 2016 Jorge Lodos
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -51,6 +52,14 @@ OpenFileMappingW(
     boost::detail::winapi::LPCWSTR_ lpName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
+MapViewOfFile(
+    boost::detail::winapi::HANDLE_ hFileMappingObject,
+    boost::detail::winapi::DWORD_ dwDesiredAccess,
+    boost::detail::winapi::DWORD_ dwFileOffsetHigh,
+    boost::detail::winapi::DWORD_ dwFileOffsetLow,
+    boost::detail::winapi::SIZE_T_ dwNumberOfBytesToMap);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::LPVOID_ WINAPI
 MapViewOfFileEx(
     boost::detail::winapi::HANDLE_ hFileMappingObject,
     boost::detail::winapi::DWORD_ dwDesiredAccess,
@@ -73,10 +82,69 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
+#if defined( BOOST_USE_WINDOWS_H )
+
+const DWORD_ SEC_FILE_ = SEC_FILE;
+const DWORD_ SEC_IMAGE_ = SEC_IMAGE;
+const DWORD_ SEC_RESERVE_ = SEC_RESERVE;
+const DWORD_ SEC_COMMIT_ = SEC_COMMIT;
+const DWORD_ SEC_NOCACHE_ = SEC_NOCACHE;
+
+// These permission flags are undocumented and some of them are equivalent to the FILE_MAP_* flags.
+// SECTION_QUERY enables NtQuerySection.
+// http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FSection%2FNtQuerySection.html
+const DWORD_ SECTION_QUERY_ = SECTION_QUERY;
+const DWORD_ SECTION_MAP_WRITE_ = SECTION_MAP_WRITE;
+const DWORD_ SECTION_MAP_READ_ = SECTION_MAP_READ;
+const DWORD_ SECTION_MAP_EXECUTE_ = SECTION_MAP_EXECUTE;
+const DWORD_ SECTION_EXTEND_SIZE_ = SECTION_EXTEND_SIZE;
+const DWORD_ SECTION_ALL_ACCESS_ = SECTION_ALL_ACCESS;
+
+const DWORD_ FILE_MAP_COPY_ = FILE_MAP_COPY;
+const DWORD_ FILE_MAP_WRITE_ = FILE_MAP_WRITE;
+const DWORD_ FILE_MAP_READ_ = FILE_MAP_READ;
+const DWORD_ FILE_MAP_ALL_ACCESS_ = FILE_MAP_ALL_ACCESS;
+
+#else // defined( BOOST_USE_WINDOWS_H )
+
+const DWORD_ SEC_FILE_ = 0x800000;
+const DWORD_ SEC_IMAGE_ = 0x1000000;
+const DWORD_ SEC_RESERVE_ = 0x4000000;
+const DWORD_ SEC_COMMIT_ = 0x8000000;
+const DWORD_ SEC_NOCACHE_ = 0x10000000;
+
+// These permission flags are undocumented and some of them are equivalent to the FILE_MAP_* flags.
+// SECTION_QUERY enables NtQuerySection.
+// http://undocumented.ntinternals.net/index.html?page=UserMode%2FUndocumented%20Functions%2FNT%20Objects%2FSection%2FNtQuerySection.html
+const DWORD_ SECTION_QUERY_ = 0x00000001;
+const DWORD_ SECTION_MAP_WRITE_ = 0x00000002;
+const DWORD_ SECTION_MAP_READ_ = 0x00000004;
+const DWORD_ SECTION_MAP_EXECUTE_ = 0x00000008;
+const DWORD_ SECTION_EXTEND_SIZE_ = 0x00000010;
+const DWORD_ SECTION_ALL_ACCESS_ = 0x000F001F; // STANDARD_RIGHTS_REQUIRED | SECTION_*
+
+const DWORD_ FILE_MAP_COPY_ = SECTION_QUERY_;
+const DWORD_ FILE_MAP_WRITE_ = SECTION_MAP_WRITE_;
+const DWORD_ FILE_MAP_READ_ = SECTION_MAP_READ_;
+const DWORD_ FILE_MAP_ALL_ACCESS_ = SECTION_ALL_ACCESS_;
+
+#endif // defined( BOOST_USE_WINDOWS_H )
+
+// These constants are not defined in Windows SDK up until the one shipped with MSVC 8 and MinGW (as of 2016-02-14)
+const DWORD_ SECTION_MAP_EXECUTE_EXPLICIT_ = 0x00000020; // not included in SECTION_ALL_ACCESS
+const DWORD_ FILE_MAP_EXECUTE_ = SECTION_MAP_EXECUTE_EXPLICIT_; // not included in FILE_MAP_ALL_ACCESS
+
+// These constants are not defined in Windows SDK up until 6.0A and MinGW (as of 2016-02-14)
+const DWORD_ SEC_PROTECTED_IMAGE_ = 0x2000000;
+const DWORD_ SEC_WRITECOMBINE_ = 0x40000000;
+const DWORD_ SEC_LARGE_PAGES_ = 0x80000000;
+const DWORD_ SEC_IMAGE_NO_EXECUTE_ = (SEC_IMAGE_ | SEC_NOCACHE_);
+
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::OpenFileMappingA;
 #endif
 using ::OpenFileMappingW;
+using ::MapViewOfFile;
 using ::MapViewOfFileEx;
 using ::FlushViewOfFile;
 using ::UnmapViewOfFile;
@@ -102,7 +170,7 @@ BOOST_FORCEINLINE HANDLE_ CreateFileMappingA(
 
 BOOST_FORCEINLINE HANDLE_ CreateFileMappingW(
     HANDLE_ hFile,
-    ::_SECURITY_ATTRIBUTES* lpFileMappingAttributes,
+    SECURITY_ATTRIBUTES_* lpFileMappingAttributes,
     DWORD_ flProtect,
     DWORD_ dwMaximumSizeHigh,
     DWORD_ dwMaximumSizeLow,
@@ -143,7 +211,7 @@ BOOST_FORCEINLINE HANDLE_ open_file_mapping(DWORD_ dwDesiredAccess, BOOL_ bInher
 
 BOOST_FORCEINLINE HANDLE_ create_file_mapping(
     HANDLE_ hFile,
-    ::_SECURITY_ATTRIBUTES* lpFileMappingAttributes,
+    SECURITY_ATTRIBUTES_* lpFileMappingAttributes,
     DWORD_ flProtect,
     DWORD_ dwMaximumSizeHigh,
     DWORD_ dwMaximumSizeLow,

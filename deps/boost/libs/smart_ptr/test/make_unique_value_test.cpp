@@ -1,22 +1,23 @@
 /*
- * Copyright (c) 2014 Glen Joseph Fernandes
- * glenfe at live dot com
- *
- * Distributed under the Boost Software License,
- * Version 1.0. (See accompanying file LICENSE_1_0.txt
- * or copy at http://boost.org/LICENSE_1_0.txt)
- */
+(c) 2014 Glen Joseph Fernandes
+<glenjofe -at- gmail.com>
+
+Distributed under the Boost Software
+License, Version 1.0.
+http://boost.org/LICENSE_1_0.txt
+*/
 #include <boost/config.hpp>
 #if !defined(BOOST_NO_CXX11_SMART_PTR)
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/smart_ptr/make_unique_object.hpp>
+#include <boost/smart_ptr/make_unique.hpp>
 
 struct type {
     int x;
     int y;
 };
 
-int main() {
+int main()
+{
     {
         std::unique_ptr<type> a1 = boost::make_unique<type>();
         BOOST_TEST(a1.get() != 0);
@@ -51,7 +52,8 @@ int main() {
 }
 #else
 
-int main() {
+int main()
+{
     return 0;
 }
 

@@ -1834,7 +1834,7 @@ has to be specified manually.  It may also result in compiler warnings about the
 [tip If you're exporting to non-native byte layout, then use 
 [@http://www.boost.org/doc/libs/release/libs/endian/doc/index.html 
 Boost.Endian] to create a custom OutputIterator that
-reverses the byte order prior to actually storing the result.]
+reverses the byte order of each chunk prior to actually storing the result.]
 
       template <unsigned MinBits, unsigned MaxBits, cpp_integer_type SignType, cpp_int_check_type Checked, class Allocator, 
                 expression_template_option ExpressionTemplates, class ForwardIterator>
@@ -1853,8 +1853,12 @@ bit/byte order.  When `chunk_size` is zero, then assumes that each chunk contain
 `std::numeric_limits<std::iterator_traits<ForwardIterator>::value_type>::digits`, note that this will give the wrong result
 if dereferencing the iterators leads to a signed-integer type, [*and] the sign bit is significant (be particularly careful
 if you expect type `char` to contain 8-bit values, as by default it will extract only 7-bits at a time if `char` is signed).
-As with exporting, if the external data is to be in a non-native byte order, then you will need to create an iterator adaptor
+As with exporting, if the external data is to be in a non-native byte order (within each chunk), then you will need to create an iterator adaptor
 that presents it in native order (see [@http://www.boost.org/doc/libs/release/libs/endian/doc/index.html Boost.Endian]).
+
+[note
+Note that this function is optimized for the case where the data can be memcpy'ed from the source to the integer - in this case both
+iterators much be pointers, and everything must be little-endian.]
 
 [h4 Examples]
 
@@ -3059,6 +3063,10 @@ which may be useful to ensure that columns line up.
    ResultType& subtract(ResultType& result, const Source1& a, const Source2& b);
    template <class ResultType, class Source1 class Source2>
    ResultType& multiply(ResultType& result, const Source1& a, const Source2& b);
+
+   // min and max overloads:
+   ``['number]``                                    min    (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
+   ``['number]``                                    max    (const ``['number-or-expression-template-type]``&, const ``['number-or-expression-template-type]``&);
 
    // Non-member function standard library support:
    ``['unmentionable-expression-template-type]``    abs    (const ``['number-or-expression-template-type]``&);
@@ -5073,6 +5081,28 @@ Windows Vista machine.
 [section:map Roadmap]
 
 [section:hist History]
+
+[h4 Multiprecision-2.2.7 (Boost-1.61)]
+
+* Fixed bug in stream input for integer types, see [@https://svn.boost.org/trac/boost/ticket/11857 #11857].
+* Fixed some ambiguous conversions involving expression templates see [@https://svn.boost.org/trac/boost/ticket/11922 #11922].
+* Add expression template aware min/max overloads see [@https://svn.boost.org/trac/boost/ticket/11149 #11149].
+* Fix bug in right shifting negative small integers in cpp_int see [@https://svn.boost.org/trac/boost/ticket/11999 #11999].
+* Use memmove for bitshifts in cpp_int when possible see [@https://svn.boost.org/trac/boost/ticket/9233 #9233].
+* Use memcpy for data import into cpp_int where possible, see [@https://svn.boost.org/trac/boost/ticket/9235 #9235].
+* Changed `cpp_bin_float.convert_to<double>()` to a function template rather than proceding via `long double` to avoid
+double-rounding bug, see [@https://svn.boost.org/trac/boost/ticket/12039 #12039].
+* Fixed conversions from NaN's and Infinities, see [@https://svn.boost.org/trac/boost/ticket/12112 #12112].
+* Enabled better support for Clang on Windows.
+* Fixed handling of NaN's and Infinities in basic arithmetic for cpp_dec_float and cpp_bin_float, see [@https://svn.boost.org/trac/boost/ticket/12090 #12090].
+* Fixed fencepost error in cpp_bin_float subtraction.
+* Fixed double-rounding in conversion to float routines for cpp_bin_float, see [@https://svn.boost.org/trac/boost/ticket/12039 #12039].
+* Make float128 denorm aware, see [@https://svn.boost.org/trac/boost/ticket/12075 #12075].
+* Allow the library and tests to be used without exception handling support, see [@https://svn.boost.org/trac/boost/ticket/12070 #12070].
+* Fixed buggy comparison operator overloads for boost::rational.
+* Added some workarounds for Oracle C++.
+* Fixed some missing typecasts for cases where cpp_int's limb_type is wider than unsigned.
+
 
 [h4 Multiprecision-2.2.6 (Boost-1.60)]
 

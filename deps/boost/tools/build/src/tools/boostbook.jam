@@ -54,8 +54,8 @@ project boostbook ;
     ] ] ;
 
 feature.feature format
-    : html xhtml htmlhelp onehtml man pdf ps docbook fo tests
-    : incidental implicit composite propagated ;
+    : html xhtml htmlhelp onehtml man pdf ps docbook fo tests none
+    : implicit composite propagated ;
 
 type.register DTDXML : dtdxml ;
 type.register XML : xml ;
@@ -643,6 +643,7 @@ class boostbook-target-class : basic-target
     import generators ;
     import property-set ;
     import virtual-target ;
+    import path ;
 
     rule construct ( name : sources * : property-set )
     {
@@ -690,6 +691,11 @@ class boostbook-target-class : basic-target
             target = $(target[2]) ;
             local name = [ $(property-set).get <name> ] ;
             name ?= $(format) ;
+            if ! [ path.is-rooted $(name) ]
+            {
+                local p = [ project ] ;
+                name = [ path.join [ $(p).location ] $(name) ] ;
+            }
             $(target).set-path $(name) ;
         }
         else

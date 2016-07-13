@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>make_fused</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="../functions.html" title="Functions">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h0"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.description"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.description">Description</a>
+            <span><a name="fusion.functional.generation.functions.mk_fused.description"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.description">Description</a>
           </h6>
 <p>
             Creates a <a class="link" href="../../adapters/fused.html" title="fused"><code class="computeroutput"><span class="identifier">fused</span></code></a> adapter for a given <a class="link" href="../../concepts/def_callable.html" title="Deferred Callable Object">Deferred Callable Object</a>.
@@ -37,7 +37,7 @@
           </p>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h1"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.synopsis"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.synopsis">Synopsis</a>
+            <span><a name="fusion.functional.generation.functions.mk_fused.synopsis"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="keyword">inline</span> <span class="keyword">typename</span> <a class="link" href="../metafunctions/mk_fused.html" title="make_fused"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">make_fused</span></code></a><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -45,7 +45,7 @@
 </pre>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h2"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.parameters"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.parameters">Parameters</a>
+            <span><a name="fusion.functional.generation.functions.mk_fused.parameters"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.parameters">Parameters</a>
           </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -91,7 +91,7 @@
 </table></div>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h3"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.expression_semantics"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.expression_semantics">Expression
+            <span><a name="fusion.functional.generation.functions.mk_fused.expression_semantics"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><span class="identifier">make_fused</span><span class="special">(</span><span class="identifier">f</span><span class="special">);</span>
@@ -104,14 +104,14 @@
           </p>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h4"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.header"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.header">Header</a>
+            <span><a name="fusion.functional.generation.functions.mk_fused.header"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">functional</span><span class="special">/</span><span class="identifier">generation</span><span class="special">/</span><span class="identifier">make_fused</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">make_fused</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h5"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.example"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.example">Example</a>
+            <span><a name="fusion.functional.generation.functions.mk_fused.example"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">float</span> <span class="identifier">sub</span><span class="special">(</span><span class="keyword">float</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">float</span> <span class="identifier">b</span><span class="special">)</span> <span class="special">{</span> <span class="keyword">return</span> <span class="identifier">a</span> <span class="special">-</span> <span class="identifier">b</span><span class="special">;</span> <span class="special">}</span>
 
@@ -126,10 +126,10 @@
 </pre>
 <h6>
 <a name="fusion.functional.generation.functions.mk_fused.h6"></a>
-            <span class="phrase"><a name="fusion.functional.generation.functions.mk_fused.see_also"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.see_also">See
+            <span><a name="fusion.functional.generation.functions.mk_fused.see_also"></a></span><a class="link" href="mk_fused.html#fusion.functional.generation.functions.mk_fused.see_also">See
             also</a>
           </h6>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 <a class="link" href="../../adapters/fused.html" title="fused"><code class="computeroutput"><span class="identifier">fused</span></code></a>
               </li>

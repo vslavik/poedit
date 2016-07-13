@@ -9,6 +9,7 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/basic_xml_archive.hpp>
 
 namespace boost {

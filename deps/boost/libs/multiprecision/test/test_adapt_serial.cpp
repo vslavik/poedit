@@ -66,8 +66,10 @@ template <class T>
 void test_neg(const T& x, const boost::mpl::true_&)
 {
    T val = -x;
+#ifndef BOOST_NO_EXCEPTIONS
    try
    {
+#endif
       std::stringstream ss;
       boost::archive::text_oarchive oa(ss);
       oa << static_cast<const T&>(val);
@@ -82,6 +84,7 @@ void test_neg(const T& x, const boost::mpl::true_&)
       boost::archive::binary_iarchive ib(ss);
       ib >> val2;
       BOOST_CHECK_EQUAL(val, val2);
+#ifndef BOOST_NO_EXCEPTIONS
    }
    catch(const boost::exception& e)
    {
@@ -93,6 +96,7 @@ void test_neg(const T& x, const boost::mpl::true_&)
       std::cout << "Caught std::exception with:\n";
       std::cout << e.what() << std::endl;
    }
+#endif
 }
 template <class T>
 void test_neg(const T& , const boost::mpl::false_&){}
@@ -109,8 +113,10 @@ void test()
    while(true)
    {
       T val = generate_random<T>(d(gen));
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          std::stringstream ss;
          boost::archive::text_oarchive oa(ss);
          oa << static_cast<const T&>(val);
@@ -125,6 +131,7 @@ void test()
          boost::archive::binary_iarchive ib(ss);
          ib >> val2;
          BOOST_CHECK_EQUAL(val, val2);
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const boost::exception& e)
       {
@@ -136,7 +143,7 @@ void test()
          std::cout << "Caught std::exception with:\n";
          std::cout << e.what() << std::endl;
       }
-      
+#endif      
       test_neg(val, boost::mpl::bool_<std::numeric_limits<T>::is_signed>());
       //
       // Check to see if test is taking too long.

@@ -69,3 +69,19 @@ BOOST_AUTO_TEST_CASE(test_zeros) {
     std::vector<double> val = dist(gen);
     BOOST_CHECK(!(boost::math::isnan)(val[0]));
 }
+
+BOOST_AUTO_TEST_CASE(test_valid_output) {
+    boost::random::minstd_rand0 gen;
+    for(int n = 0; n < 10; ++n) {
+        boost::random::uniform_on_sphere<> dist(n);
+        std::vector<double> result = dist(gen);
+        BOOST_TEST(result.size() == static_cast<std::size_t>(n));
+        if(n > 0) {
+            double sum_sq = 0;
+            for(std::size_t j = 0; j < result.size(); ++j) {
+                sum_sq += result[j] * result[j];
+            }
+            BOOST_CHECK_CLOSE_FRACTION(sum_sq, 1.0, 1e-5);
+        }
+    }
+}

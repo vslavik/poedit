@@ -61,13 +61,13 @@ namespace ns
     BOOST_FUSION_ADAPT_STRUCT_NAMED(
         ns::point, point,
         (int, x)
-        (int, y)
-        (BOOST_FUSION_ADAPT_AUTO, z)
+        (BOOST_FUSION_ADAPT_AUTO, y)
+        (auto, z)
     )
 
     // this creates a fusion view: ns1::s1
     struct s { int m; };
-    BOOST_FUSION_ADAPT_STRUCT_NAMED_NS(s, (ns1), s1, (BOOST_FUSION_ADAPT_AUTO, m))
+    BOOST_FUSION_ADAPT_STRUCT_NAMED_NS(s, (ns1), s1, (auto, m))
 
 #endif 
 
@@ -109,11 +109,11 @@ main()
     }
 
     {
-        fusion::vector<int, float, int> v1(4, 2, 2);
+        fusion::vector<int, float, int> v1(4, 2.f, 2);
         ns::point p = {5, 3, 3};
         adapted::point v2(p);
 
-        fusion::vector<long, double, int> v3(5, 4, 4);
+        fusion::vector<long, double, int> v3(5, 4., 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);

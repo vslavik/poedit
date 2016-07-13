@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Synchronization</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;31.&#160;Thread 4.6.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
 <link rel="prev" href="ScopedThreads.html" title="Scoped Threads">
 <link rel="next" href="thread_local_storage.html" title="Thread Local Storage">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.synchronization"></a><a class="link" href="synchronization.html" title="Synchronization">Synchronization</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial">Tutorial</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts">Mutex Concepts</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_option">Lock Options</a></span></dt>
@@ -53,7 +53,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.tutorial"></a><a class="link" href="synchronization.html#thread.synchronization.tutorial" title="Tutorial">Tutorial</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial.internal_locking">Internal
         Locking</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial.external_locking_____strict_lock__and__externally_locked__classes">External
@@ -81,7 +81,7 @@
 <a name="thread.synchronization.tutorial.internal_locking"></a><a class="link" href="synchronization.html#thread.synchronization.tutorial.internal_locking" title="Internal Locking">Internal
         Locking</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial.internal_locking.concurrent_threads_of_execution">Concurrent
           threads of execution</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial.internal_locking.internal_locking">Internal
@@ -305,7 +305,7 @@
             Notice that the code above doesn't compile, the <code class="computeroutput"><span class="identifier">mtx_</span></code>
             field is private. We have two possibilities:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 make <code class="computeroutput"><span class="identifier">mtx_</span></code> public
                 which seems odd
@@ -378,7 +378,7 @@
             Notice that now acct is being locked by Withdraw after it has already
             been locked by guard. When running such code, one of two things happens.
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 Your mutex implementation might support the so-called recursive mutex
                 semantics. This means that the same thread can lock the same mutex
@@ -447,7 +447,7 @@
         Locking -- <code class="computeroutput"><span class="identifier">strict_lock</span></code> and
         <code class="computeroutput"><span class="identifier">externally_locked</span></code> classes</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial.external_locking_____strict_lock__and__externally_locked__classes.locks_as_permits">Locks
           as permits</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.tutorial.external_locking_____strict_lock__and__externally_locked__classes.improving_external_locking">Improving
@@ -473,7 +473,7 @@
 <p>
             So what to do? Ideally, the BankAccount class should do the following:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 Support both locking models (internal and external).
               </li>
@@ -548,14 +548,14 @@
             as what you can do. Let's see what you can and what you cannot do with
             a <code class="computeroutput"><span class="identifier">strict_lock</span></code> instantiation:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                 You can create a <code class="computeroutput"><span class="identifier">strict_lock</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code> only starting from a valid T
                 object. Notice that there is no other way you can create a <code class="computeroutput"><span class="identifier">strict_lock</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code>.
               </li></ul></div>
 <pre class="programlisting"><span class="identifier">BankAccount</span> <span class="identifier">myAccount</span><span class="special">(</span><span class="string">"John Doe"</span><span class="special">,</span> <span class="string">"123-45-6789"</span><span class="special">);</span>
 <span class="identifier">strict_lock</span><span class="special">&lt;</span><span class="identifier">BankAccount</span><span class="special">&gt;</span> <span class="identifier">myLock</span><span class="special">(</span><span class="identifier">myAccount</span><span class="special">);</span> <span class="comment">// ok</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                 You cannot copy <code class="computeroutput"><span class="identifier">strict_lock</span></code>s
                 to one another. In particular, you cannot pass <code class="computeroutput"><span class="identifier">strict_lock</span></code>s
                 by value to functions or have them returned by functions:
@@ -563,7 +563,7 @@
 <pre class="programlisting"><span class="keyword">extern</span> <span class="identifier">strict_lock</span><span class="special">&lt;</span><span class="identifier">BankAccount</span><span class="special">&gt;</span> <span class="identifier">Foo</span><span class="special">();</span> <span class="comment">// compile-time error</span>
 <span class="keyword">extern</span> <span class="keyword">void</span> <span class="identifier">Bar</span><span class="special">(</span><span class="identifier">strict_lock</span><span class="special">&lt;</span><span class="identifier">BankAccount</span><span class="special">&gt;);</span> <span class="comment">// compile-time error</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                 However, you still can pass <code class="computeroutput"><span class="identifier">strict_lock</span></code>s
                 by reference to and from functions:
               </li></ul></div>
@@ -590,7 +590,7 @@
             how do we harness its power in defining a safe, flexible interface for
             BankAccount? The idea is as follows:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 Each of BankAccount's interface functions (in our case, Deposit and
                 Withdraw) comes in two overloaded variants.
@@ -1118,7 +1118,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.mutex_concepts"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts" title="Mutex Concepts">Mutex Concepts</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable"><code class="computeroutput"><span class="identifier">BasicLockable</span></code> Concept</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.lockable"><code class="computeroutput"><span class="identifier">Lockable</span></code> Concept</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.recursive">Recursive
@@ -1146,7 +1146,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.mutex_concepts.basic_lockable"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable" title="BasicLockable Concept"><code class="computeroutput"><span class="identifier">BasicLockable</span></code> Concept</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.lock"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">lock</span><span class="special">();</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.unlock"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">();</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.is_basic_lockable"><code class="computeroutput"><span class="identifier">is_basic_lockable</span></code> trait -- EXTENSION</a></span></dt>
@@ -1168,7 +1168,7 @@
           (<code class="computeroutput"><span class="identifier">m</span></code> denotes a value of type
           <code class="computeroutput"><span class="identifier">L</span></code>):
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.lock" title="m.lock();"><code class="computeroutput"><span class="identifier">lock</span></code></a><span class="special">();</span></code>
             </li>
@@ -1186,7 +1186,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The calling thread doesn't owns the mutex if the mutex is not recursive.
@@ -1243,7 +1243,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The current thread owns <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -1307,7 +1307,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.mutex_concepts.lockable"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable" title="Lockable Concept"><code class="computeroutput"><span class="identifier">Lockable</span></code> Concept</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.lockable.try_lock"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">try_lock</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.lockable.is_lockable"><code class="computeroutput"><span class="identifier">is_lockable</span></code> trait -- EXTENSION</a></span></dt>
 </dl></div>
@@ -1325,7 +1325,7 @@
           (<code class="computeroutput"><span class="identifier">m</span></code> denotes a value of type
           <code class="computeroutput"><span class="identifier">L</span></code>):
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable.try_lock" title="m.try_lock()"><code class="computeroutput"><span class="identifier">try_lock</span></code></a><span class="special">()</span></code>
             </li></ul></div>
 <p>
@@ -1338,7 +1338,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The calling thread doesn't owns the mutex if the mutex is not recursive.
@@ -1419,7 +1419,7 @@
 <a name="thread.synchronization.mutex_concepts.recursive"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.recursive" title="Recursive Lockable Concept">Recursive
         Lockable Concept</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.recursive.is_recursive_mutex_sur_parole"><code class="computeroutput"><span class="identifier">is_recursive_mutex_sur_parole</span></code> trait --
           EXTENSION</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.recursive.is_recursive_basic_lockable"><code class="computeroutput"><span class="identifier">is_recursive_basic_lockable</span></code> trait --
@@ -1504,7 +1504,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.mutex_concepts.timed_lockable"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable" title="TimedLockable Concept"><code class="computeroutput"><span class="identifier">TimedLockable</span></code> Concept</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable.try_lock_until"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">try_lock_until</span><span class="special">(</span><span class="identifier">abs_time</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable.try_lock_for"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">try_lock_for</span><span class="special">(</span><span class="identifier">rel_time</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable.timed_lock"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">timed_lock</span><span class="special">(</span><span class="identifier">abs_time</span><span class="special">)</span></code></a></span></dt>
@@ -1531,7 +1531,7 @@
 <p>
           <span class="bold"><strong>Variables:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span></code> denotes a value of
               type <code class="computeroutput"><span class="identifier">L</span></code>,
@@ -1549,7 +1549,7 @@
 <p>
           <span class="bold"><strong>Expressions:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable.try_lock_for" title="m.try_lock_for(rel_time)"><code class="computeroutput"><span class="identifier">try_lock_for</span></code></a><span class="special">(</span><span class="identifier">rel_time</span><span class="special">)</span></code>
             </li>
@@ -1567,7 +1567,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The calling thread doesn't owns the mutex if the mutex is not recursive.
@@ -1611,7 +1611,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The calling thread doesn't owns the mutex if the mutex is not recursive.
@@ -1646,7 +1646,7 @@
 <p>
           <span class="bold"><strong>Variables:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">rel_time</span></code> denotes a
               value of an instantiation of an unspecified <code class="computeroutput"><span class="identifier">DurationType</span></code>
@@ -1661,7 +1661,7 @@
 <p>
           <span class="bold"><strong>Expressions:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable.timed_lock_duration" title="m.timed_lock(rel_time)"><code class="computeroutput"><span class="identifier">timed_lock</span></code></a><span class="special">(</span><span class="identifier">rel_time</span><span class="special">)</span></code>
             </li>
@@ -1679,7 +1679,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Attempt to obtain ownership for the current thread. Blocks until
@@ -1711,7 +1711,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   As-if <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.timed_lockable.timed_lock" title="m.timed_lock(abs_time)"><code class="computeroutput"><span class="identifier">timed_lock</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">get_system_time</span><span class="special">()+</span><span class="identifier">rel_time</span><span class="special">)</span></code></a>.
@@ -1724,7 +1724,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.mutex_concepts.shared_lockable"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable" title="SharedLockable Concept -- C++14"><code class="computeroutput"><span class="identifier">SharedLockable</span></code> Concept -- C++14</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable.lock_shared"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">lock_shared</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable.try_lock_shared"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">try_lock_shared</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable.try_lock_shared_for"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">try_lock_shared_for</span><span class="special">(</span><span class="identifier">rel_time</span><span class="special">)</span></code></a></span></dt>
@@ -1757,7 +1757,7 @@
 <p>
           <span class="bold"><strong>Variables:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span></code> denotes a value of
               type <code class="computeroutput"><span class="identifier">L</span></code>,
@@ -1775,7 +1775,7 @@
 <p>
           <span class="bold"><strong>Expressions:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable.lock_shared" title="m.lock_shared()"><code class="computeroutput"><span class="identifier">lock_shared</span><span class="special">()</span></code></a><span class="special">();</span></code>
             </li>
@@ -1804,7 +1804,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   The current thread blocks until shared ownership can be obtained
@@ -1828,7 +1828,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Attempt to obtain shared ownership for the current thread without
@@ -1859,7 +1859,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Attempt to obtain shared ownership for the current thread. Blocks
@@ -1892,7 +1892,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Attempt to obtain shared ownership for the current thread. Blocks
@@ -1925,7 +1925,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread has shared ownership of <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -1964,14 +1964,14 @@
 <p>
           <span class="bold"><strong>Variables:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               <code class="computeroutput"><span class="identifier">abs_time</span></code> denotes a
               value of an instantiation of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">system_time</span></code>:
             </li></ul></div>
 <p>
           <span class="bold"><strong>Expressions:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">timed_lock_shared</span><span class="special">(</span><span class="identifier">abs_time</span><span class="special">);</span></code>
             </li></ul></div>
 <p>
@@ -1984,7 +1984,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Attempt to obtain shared ownership for the current thread. Blocks
@@ -2016,7 +2016,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.mutex_concepts.upgrade_lockable"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.upgrade_lockable" title="UpgradeLockable Concept -- EXTENSION"><code class="computeroutput"><span class="identifier">UpgradeLockable</span></code> Concept -- EXTENSION</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.upgrade_lockable.lock_upgrade"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">lock_upgrade</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.upgrade_lockable.unlock_upgrade"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">unlock_upgrade</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_concepts.upgrade_lockable.try_lock_upgrade"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">try_lock_upgrade</span><span class="special">()</span></code></a></span></dt>
@@ -2080,7 +2080,7 @@
 <p>
           <span class="bold"><strong>Variables:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span></code> denotes a value of
               type <code class="computeroutput"><span class="identifier">L</span></code>,
@@ -2098,7 +2098,7 @@
 <p>
           <span class="bold"><strong>Expressions:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.upgrade_lockable.lock_upgrade" title="m.lock_upgrade()"><code class="computeroutput"><span class="identifier">lock_upgrade</span></code></a><span class="special">();</span></code>
             </li>
@@ -2140,7 +2140,7 @@
           If `BOOST_THREAD_PROVIDES_SHARED_MUTEX_UPWARDS_CONVERSION is defined the
           following expressions are also required:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.upgrade_lockable.try_unlock_shared_and_lock" title="m.try_unlock_shared_and_lock()"><code class="computeroutput"><span class="identifier">try_unlock_shared_and_lock</span></code></a><span class="special">();</span></code>
             </li>
@@ -2173,7 +2173,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread has no ownership of the mutex.
@@ -2206,7 +2206,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread has upgrade ownership of <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -2238,7 +2238,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread has no ownership of the mutex.
@@ -2278,7 +2278,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread has no ownership of the mutex.
@@ -2330,7 +2330,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread has no ownership of the mutex.
@@ -2378,7 +2378,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread must hold a shared lock on the mutex.
@@ -2427,7 +2427,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread shall hold a shared lock on the mutex.
@@ -2485,7 +2485,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread shall hold a shared lock on the mutex.
@@ -2541,7 +2541,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread shall hold an exclusive lock on <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -2573,7 +2573,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread shall hold a shared lock on the mutex.
@@ -2621,7 +2621,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread shall hold a shared lock on the mutex.
@@ -2679,7 +2679,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The calling thread shall hold a shared lock on the mutex.
@@ -2734,7 +2734,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread has exclusive ownership of <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -2766,7 +2766,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread has upgrade ownership of <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -2799,10 +2799,10 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
-                  The calling thread shall hold a upgrade lock on the mutex.
+                  The calling thread shall hold an upgrade lock on the mutex.
                 </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -2847,10 +2847,10 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
-                  The calling thread shall hold a upgrade lock on the mutex.
+                  The calling thread shall hold an upgrade lock on the mutex.
                 </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -2905,10 +2905,10 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
-                  The calling thread shall hold a upgrade lock on the mutex.
+                  The calling thread shall hold an upgrade lock on the mutex.
                 </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -2960,7 +2960,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread has upgrade ownership of <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -2992,7 +2992,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.lock_option"></a><a class="link" href="synchronization.html#thread.synchronization.lock_option" title="Lock Options">Lock Options</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_option.lock_tags">Lock
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_option.lock_tags">Lock
         option tags</a></span></dt></dl></div>
 <pre class="programlisting"><span class="comment">// #include &lt;boost/thread/locks.hpp&gt; </span>
 <span class="comment">// #include &lt;boost/thread/locks_options.hpp&gt; </span>
@@ -3025,7 +3025,7 @@
           These tags are used in scoped locks constructors to specify a specific
           behavior.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">defer_lock_t</span></code>: is used
               to construct the scoped lock without locking it.
@@ -3045,7 +3045,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.lock_guard"></a><a class="link" href="synchronization.html#thread.synchronization.lock_guard" title="Lock Guard">Lock Guard</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_guard.lock_guard">Class
         template <code class="computeroutput"><span class="identifier">lock_guard</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_guard.make_lock_guard">Non
@@ -3074,7 +3074,7 @@
 <a name="thread.synchronization.lock_guard.lock_guard"></a><a class="link" href="synchronization.html#thread.synchronization.lock_guard.lock_guard" title="Class template lock_guard">Class
         template <code class="computeroutput"><span class="identifier">lock_guard</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_guard.lock_guard.constructor"><code class="computeroutput"><span class="identifier">lock_guard</span><span class="special">(</span><span class="identifier">Lockable</span> <span class="special">&amp;</span>
           <span class="identifier">m</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_guard.lock_guard.constructor_adopt"><code class="computeroutput"><span class="identifier">lock_guard</span><span class="special">(</span><span class="identifier">Lockable</span> <span class="special">&amp;</span>
@@ -3111,7 +3111,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3131,7 +3131,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread owns a lock on <code class="computeroutput"><span class="identifier">m</span></code>
@@ -3155,7 +3155,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Invokes <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.unlock" title="m.unlock();"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code></a>
@@ -3180,7 +3180,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 a lock_guard as if initialized with <code class="computeroutput"><span class="special">{</span><span class="identifier">m</span><span class="special">}</span></code>.
@@ -3202,7 +3202,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 a lock_guard as if initialized with <code class="computeroutput"><span class="special">{</span><span class="identifier">m</span><span class="special">,</span> <span class="identifier">adopt_lock</span><span class="special">}</span></code>.
@@ -3219,7 +3219,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.with_lock_guard"></a><a class="link" href="synchronization.html#thread.synchronization.with_lock_guard" title="With Lock Guard">With Lock Guard</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.with_lock_guard.with_lock_guard">Non
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.with_lock_guard.with_lock_guard">Non
         Member Function <code class="computeroutput"><span class="identifier">with_lock_guard</span></code></a></span></dt></dl></div>
 <pre class="programlisting"><span class="comment">// #include &lt;boost/thread/with_lock_guard.hpp&gt;</span>
 
@@ -3243,7 +3243,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">m</span></code> must be in unlocked
@@ -3291,14 +3291,14 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.lock_concepts"></a><a class="link" href="synchronization.html#thread.synchronization.lock_concepts" title="Lock Concepts">Lock Concepts</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_concepts.StrictLock">StrictLock
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_concepts.StrictLock">StrictLock
         -- EXTENSION</a></span></dt></dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.lock_concepts.StrictLock"></a><a class="link" href="synchronization.html#thread.synchronization.lock_concepts.StrictLock" title="StrictLock -- EXTENSION">StrictLock
         -- EXTENSION</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_concepts.StrictLock.mutex_type"><code class="computeroutput"><span class="identifier">L</span><span class="special">::</span><span class="identifier">mutex_type</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_concepts.StrictLock.is_strict_lock_sur_parole"><code class="computeroutput"><span class="identifier">is_strict_lock_sur_parole</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">&gt;</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_concepts.StrictLock.owns_lock"><code class="computeroutput"><span class="identifier">cl</span><span class="special">.</span><span class="identifier">owns_lock</span><span class="special">(</span><span class="identifier">m</span><span class="special">);</span></code></a></span></dt>
@@ -3322,7 +3322,7 @@
           requirements if the following expressions are well-formed and have the
           specified semantics
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">L</span><span class="special">::</span><span class="identifier">mutex_type</span></code>
             </li>
@@ -3339,7 +3339,7 @@
 <p>
           where
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">cl</span></code> denotes a value
               of type <code class="computeroutput"><span class="identifier">L</span> <span class="keyword">const</span><span class="special">&amp;</span></code>,
@@ -3377,7 +3377,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return Type:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">bool</span></code>
@@ -3400,7 +3400,7 @@
 <p>
             The following classes are models of <code class="computeroutput"><span class="identifier">StrictLock</span></code>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 strict_lock: ensured by construction,
               </li>
@@ -3422,7 +3422,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.locks"></a><a class="link" href="synchronization.html#thread.synchronization.locks" title="Lock Types">Lock Types</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.locks.unique_lock">Class template
         <code class="computeroutput"><span class="identifier">unique_lock</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.locks.shared_lock">Class template
@@ -3463,7 +3463,7 @@
 <a name="thread.synchronization.locks.unique_lock"></a><a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock" title="Class template unique_lock">Class template
         <code class="computeroutput"><span class="identifier">unique_lock</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.locks.unique_lock.defaultconstructor"><code class="computeroutput"><span class="identifier">unique_lock</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.locks.unique_lock.constructor"><code class="computeroutput"><span class="identifier">unique_lock</span><span class="special">(</span><span class="identifier">Lockable</span> <span class="special">&amp;</span>
           <span class="identifier">m</span><span class="special">)</span></code></a></span></dt>
@@ -3605,7 +3605,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Creates a lock object with no associated mutex.
@@ -3630,7 +3630,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3656,7 +3656,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread owns an exclusive lock on <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3686,7 +3686,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3711,7 +3711,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3744,7 +3744,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The supplied <code class="computeroutput"><span class="identifier">Mutex</span></code>
@@ -3795,7 +3795,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The supplied <code class="computeroutput"><span class="identifier">Mutex</span></code>
@@ -3846,7 +3846,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The supplied <code class="computeroutput"><span class="identifier">Mutex</span></code>
@@ -3897,7 +3897,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3930,7 +3930,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3962,7 +3962,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -3992,7 +3992,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Invokes <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock.mutex" title="Lockable* mutex() const noexcept"><code class="computeroutput"><span class="identifier">mutex</span><span class="special">()</span></code></a><code class="computeroutput"><span class="special">-&gt;</span></code> <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.unlock" title="m.unlock();"><code class="computeroutput"><span class="identifier">unlock</span><span class="special">()</span></code></a>
@@ -4012,7 +4012,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">true</span></code> if the <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -4032,7 +4032,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   A pointer to the <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable" title="Lockable Concept"><code class="computeroutput"><span class="identifier">Lockable</span></code></a> object associated
@@ -4055,7 +4055,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"> <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock.owns_lock" title="bool owns_lock() const"><code class="computeroutput"><span class="identifier">owns_lock</span><span class="special">()</span></code></a><span class="special">()</span></code>.
@@ -4073,7 +4073,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   The association between <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> and the <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable" title="Lockable Concept"><code class="computeroutput"><span class="identifier">Lockable</span></code></a> object is removed,
@@ -4111,7 +4111,7 @@
 <a name="thread.synchronization.locks.shared_lock"></a><a class="link" href="synchronization.html#thread.synchronization.locks.shared_lock" title="Class template shared_lock - C++14">Class template
         <code class="computeroutput"><span class="identifier">shared_lock</span></code> - C++14</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.locks.shared_lock.defaultconstructor"><code class="computeroutput"><span class="identifier">shared_lock</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.locks.shared_lock.constructor"><code class="computeroutput"><span class="identifier">shared_lock</span><span class="special">(</span><span class="identifier">Lockable</span> <span class="special">&amp;</span>
           <span class="identifier">m</span><span class="special">)</span></code></a></span></dt>
@@ -4225,7 +4225,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Creates a lock object with no associated mutex.
@@ -4250,7 +4250,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -4276,7 +4276,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread owns an exclusive lock on <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -4306,7 +4306,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -4331,7 +4331,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -4363,7 +4363,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -4394,7 +4394,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Invokes <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock.mutex" title="Lockable* mutex() const noexcept"><code class="computeroutput"><span class="identifier">mutex</span><span class="special">()</span></code></a><code class="computeroutput"><span class="special">-&gt;</span></code> <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable.unlock_shared" title="m.unlock_shared()"><code class="computeroutput"><span class="identifier">unlock_shared</span><span class="special">()</span></code></a>
@@ -4414,7 +4414,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">true</span></code> if the <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -4434,7 +4434,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   A pointer to the <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable" title="Lockable Concept"><code class="computeroutput"><span class="identifier">Lockable</span></code></a> object associated
@@ -4457,7 +4457,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <a class="link" href="synchronization.html#thread.synchronization.locks.shared_lock.owns_lock" title="bool owns_lock() const"><code class="computeroutput"><span class="identifier">owns_lock</span><span class="special">()</span></code></a>.
@@ -4475,7 +4475,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   The association between <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> and the <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable" title="Lockable Concept"><code class="computeroutput"><span class="identifier">Lockable</span></code></a> object is removed,
@@ -4700,7 +4700,7 @@
 <a name="thread.synchronization.other_locks"></a><a class="link" href="synchronization.html#thread.synchronization.other_locks" title="Other Lock Types - EXTENSION">Other Lock Types
       - EXTENSION</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.strict_locks">Strict
         Locks</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.lock_ptrs">Locking
@@ -4717,7 +4717,7 @@
 <a name="thread.synchronization.other_locks.strict_locks"></a><a class="link" href="synchronization.html#thread.synchronization.other_locks.strict_locks" title="Strict Locks">Strict
         Locks</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.strict_locks.strict_lock">Class
           template <code class="computeroutput"><span class="identifier">strict_lock</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.strict_locks.nested_strict_lock">Class
@@ -4787,8 +4787,8 @@
           </p>
 <h6>
 <a name="thread.synchronization.other_locks.strict_locks.strict_lock.h0"></a>
-            <span class="phrase"><a name="thread.synchronization.other_locks.strict_locks.strict_lock.see_also__link_linkend__thread_synchronization_lock_guard_lock_guard___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__lock_guard__phrase___code___link_"></a></span><a class="link" href="synchronization.html#thread.synchronization.other_locks.strict_locks.strict_lock.see_also__link_linkend__thread_synchronization_lock_guard_lock_guard___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__lock_guard__phrase___code___link_">See
-            also <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lock_guard</span></code></a>
+            <span><a name="thread.synchronization.other_locks.strict_locks.strict_lock.see_also__link_linkend__thread_synchronization_lock_guard_lock_guard___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__lock_guard__phrase___code___link_"></a></span><a class="link" href="synchronization.html#thread.synchronization.other_locks.strict_locks.strict_lock.see_also__link_linkend__thread_synchronization_lock_guard_lock_guard___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__lock_guard__phrase___code___link_">See
+            also <a class="link" href="synchronization.html#thread.synchronization.lock_guard.lock_guard" title="Class template lock_guard"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">lock_guard</span></code></a></a>
           </h6>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
@@ -4797,7 +4797,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -4816,7 +4816,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invokes <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.unlock" title="m.unlock();"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code></a>
@@ -4858,14 +4858,14 @@
           </p>
 <p>
             A nested strict lock is a scoped lock guard ensuring a mutex is locked
-            on its scope, by taking ownership of an nesting lock, locking the mutex
+            on its scope, by taking ownership of a nesting lock, locking the mutex
             on construction if not already locked and restoring the ownership to
             the nesting lock on destruction.
           </p>
 <h6>
 <a name="thread.synchronization.other_locks.strict_locks.nested_strict_lock.h0"></a>
-            <span class="phrase"><a name="thread.synchronization.other_locks.strict_locks.nested_strict_lock.see_also__link_linkend__thread_synchronization_other_locks_strict_locks_strict_lock___code__phrase_role__identifier__strict_lock__phrase___code___link_____link_linkend__thread_synchronization_locks_unique_lock___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__unique_lock__phrase___code___link_"></a></span><a class="link" href="synchronization.html#thread.synchronization.other_locks.strict_locks.nested_strict_lock.see_also__link_linkend__thread_synchronization_other_locks_strict_locks_strict_lock___code__phrase_role__identifier__strict_lock__phrase___code___link_____link_linkend__thread_synchronization_locks_unique_lock___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__unique_lock__phrase___code___link_">See
-            also <code class="computeroutput"><span class="identifier">strict_lock</span></code>, <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unique_lock</span></code></a>
+            <span><a name="thread.synchronization.other_locks.strict_locks.nested_strict_lock.see_also__link_linkend__thread_synchronization_other_locks_strict_locks_strict_lock___code__phrase_role__identifier__strict_lock__phrase___code___link_____link_linkend__thread_synchronization_locks_unique_lock___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__unique_lock__phrase___code___link_"></a></span><a class="link" href="synchronization.html#thread.synchronization.other_locks.strict_locks.nested_strict_lock.see_also__link_linkend__thread_synchronization_other_locks_strict_locks_strict_lock___code__phrase_role__identifier__strict_lock__phrase___code___link_____link_linkend__thread_synchronization_locks_unique_lock___code__phrase_role__identifier__boost__phrase__phrase_role__special______phrase__phrase_role__identifier__unique_lock__phrase___code___link_">See
+            also <a class="link" href="synchronization.html#thread.synchronization.other_locks.strict_locks.strict_lock" title="Class template strict_lock"><code class="computeroutput"><span class="identifier">strict_lock</span></code></a>, <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock" title="Class template unique_lock"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unique_lock</span></code></a></a>
           </h6>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
@@ -4874,7 +4874,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">lk</span><span class="special">.</span><span class="identifier">mutex</span><span class="special">()</span>
@@ -4909,7 +4909,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Restores ownership to the nesting lock.
@@ -4926,7 +4926,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     Whether if this lock is locking that mutex.
@@ -4945,7 +4945,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   a strict_lock as if initialized with <code class="computeroutput"><span class="special">{</span><span class="identifier">m</span><span class="special">}</span></code>.
@@ -4967,7 +4967,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   a nested_strict_lock as if initialized with <code class="computeroutput"><span class="special">{</span><span class="identifier">lk</span><span class="special">}</span></code>.
@@ -4985,7 +4985,7 @@
 <a name="thread.synchronization.other_locks.lock_ptrs"></a><a class="link" href="synchronization.html#thread.synchronization.other_locks.lock_ptrs" title="Locking pointers">Locking
         pointers</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.lock_ptrs.const_strict_lock_ptr">Class
           template <code class="computeroutput"><span class="identifier">const_strict_lock_ptr</span>
           </code></a></span></dt>
@@ -5042,7 +5042,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invokes <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.lock" title="m.lock();"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">lock</span><span class="special">()</span></code></a>,
@@ -5063,7 +5063,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Stores a reference to it and to the value type <code class="computeroutput"><span class="identifier">val</span></code>.
@@ -5083,7 +5083,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invokes <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.unlock" title="m.unlock();"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code></a>
@@ -5106,7 +5106,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     return a constant pointer to the protected value.
@@ -5127,7 +5127,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     return a constant reference to the protected value.
@@ -5172,7 +5172,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invokes <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.lock" title="m.lock();"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">lock</span><span class="special">()</span></code></a>,
@@ -5193,7 +5193,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Stores a reference to it and to the value type <code class="computeroutput"><span class="identifier">val</span></code>.
@@ -5213,7 +5213,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invokes <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.unlock" title="m.unlock();"><code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code></a>
@@ -5235,7 +5235,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     return a pointer to the protected value.
@@ -5255,7 +5255,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     return a reference to the protected value.
@@ -5274,7 +5274,7 @@
 <a name="thread.synchronization.other_locks.externally_locked"></a><a class="link" href="synchronization.html#thread.synchronization.other_locks.externally_locked" title="Externally Locked">Externally
         Locked</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.externally_locked.externally_locked">Template
           Class <code class="computeroutput"><span class="identifier">externally_locked</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.externally_locked.externally_locked_ref">Template
@@ -5357,7 +5357,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of CopyConstructible.
@@ -5382,7 +5382,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of Movable.
@@ -5407,7 +5407,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of DefaultConstructible.
@@ -5432,7 +5432,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of Movable.
@@ -5457,7 +5457,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of Copyable.
@@ -5482,7 +5482,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of Movable.
@@ -5507,7 +5507,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of Copyable.
@@ -5533,7 +5533,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     The <code class="computeroutput"><span class="identifier">lk</span></code> parameter
@@ -5563,7 +5563,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">mutex_type</span><span class="special">,</span>
@@ -5594,7 +5594,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">Lock</span></code> is a model
@@ -5681,7 +5681,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs an externally locked object copying the cloaked reference.
@@ -5697,7 +5697,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Moves an externally locked object by moving the cloaked type
@@ -5714,7 +5714,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Move assigns an externally locked object by copying the cloaked
@@ -5731,7 +5731,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     T is a model of Copyable.
@@ -5757,7 +5757,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     The <code class="computeroutput"><span class="identifier">lk</span></code> parameter
@@ -5787,7 +5787,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">mutex_type</span><span class="special">,</span>
@@ -5818,7 +5818,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">Lock</span></code> is a model
@@ -5855,7 +5855,7 @@
 <a name="thread.synchronization.other_locks.shared_lock_guard"></a><a class="link" href="synchronization.html#thread.synchronization.other_locks.shared_lock_guard" title="Class template shared_lock_guard">Class
         template <code class="computeroutput"><span class="identifier">shared_lock_guard</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.shared_lock_guard.constructor"><code class="computeroutput"><span class="identifier">shared_lock_guard</span><span class="special">(</span><span class="identifier">SharedLockable</span> <span class="special">&amp;</span>
           <span class="identifier">m</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.shared_lock_guard.constructor_adopt"><code class="computeroutput"><span class="identifier">shared_lock_guard</span><span class="special">(</span><span class="identifier">SharedLockable</span> <span class="special">&amp;</span>
@@ -5895,7 +5895,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -5915,7 +5915,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   The current thread owns a lock on <code class="computeroutput"><span class="identifier">m</span></code>
@@ -5939,7 +5939,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Invokes <code class="computeroutput"><span class="identifier">m</span><span class="special">.</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable.unlock_shared" title="m.unlock_shared()"><code class="computeroutput"><span class="identifier">unlock_shared</span><span class="special">()</span></code></a><span class="special">()</span></code> on the <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.shared_lockable" title="SharedLockable Concept -- C++14"><code class="computeroutput"><span class="identifier">SharedLockable</span></code></a> object
@@ -5958,7 +5958,7 @@
 <a name="thread.synchronization.other_locks.reverse_lock"></a><a class="link" href="synchronization.html#thread.synchronization.other_locks.reverse_lock" title="Class template reverse_lock">Class
         template <code class="computeroutput"><span class="identifier">reverse_lock</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.reverse_lock.constructor"><code class="computeroutput"><span class="identifier">reverse_lock</span><span class="special">(</span><span class="identifier">Lock</span> <span class="special">&amp;</span>
           <span class="identifier">m</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.other_locks.reverse_lock.destructor"><code class="computeroutput"><span class="special">~</span><span class="identifier">reverse_lock</span><span class="special">()</span></code></a></span></dt>
@@ -5996,7 +5996,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Stores a reference to <code class="computeroutput"><span class="identifier">m</span></code>.
@@ -6022,7 +6022,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Let be mtx the stored mutex*. If not 0 Invokes <code class="computeroutput"><span class="identifier">mtx</span><span class="special">-&gt;</span><a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.basic_lockable.lock" title="m.lock();"><code class="computeroutput"><span class="identifier">lock</span></code></a><span class="special">()</span></code>
@@ -6050,7 +6050,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.lock_functions"></a><a class="link" href="synchronization.html#thread.synchronization.lock_functions" title="Lock functions">Lock functions</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_functions.lock_multiple">Non-member
         function <code class="computeroutput"><span class="identifier">lock</span><span class="special">(</span><span class="identifier">Lockable1</span><span class="special">,</span><span class="identifier">Lockable2</span><span class="special">,...)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_functions.lock_range">Non-member
@@ -6088,7 +6088,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                 Locks the <a class="link" href="synchronization.html#thread.synchronization.mutex_concepts.lockable" title="Lockable Concept"><code class="computeroutput"><span class="identifier">Lockable</span></code></a> objects supplied
@@ -6126,7 +6126,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 The <code class="computeroutput"><span class="identifier">value_type</span></code> of
@@ -6178,7 +6178,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -6228,7 +6228,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                 The <code class="computeroutput"><span class="identifier">value_type</span></code> of
@@ -6280,7 +6280,7 @@
 <a name="thread.synchronization.lock_factories"></a><a class="link" href="synchronization.html#thread.synchronization.lock_factories" title="Lock Factories - EXTENSION">Lock Factories
       - EXTENSION</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_factories.make_unique_lock">Non
         Member Function <code class="computeroutput"><span class="identifier">make_unique_lock</span><span class="special">(</span><span class="identifier">Lockable</span><span class="special">&amp;)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.lock_factories.make_unique_lock_t">Non
@@ -6317,7 +6317,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 a <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock" title="Class template unique_lock"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unique_lock</span></code></a> as if initialized
@@ -6346,7 +6346,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 a <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock" title="Class template unique_lock"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">unique_lock</span></code></a> as if initialized
@@ -6370,7 +6370,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effect:</span></dt>
 <dd><p>
                 Locks all the mutexes.
@@ -6392,7 +6392,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.mutex_types"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_types" title="Mutex Types">Mutex Types</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.mutex">Class <code class="computeroutput"><span class="identifier">mutex</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.try_mutex">Typedef
         <code class="computeroutput"><span class="identifier">try_mutex</span></code></a></span></dt>
@@ -6415,7 +6415,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.mutex_types.mutex"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_types.mutex" title="Class mutex">Class <code class="computeroutput"><span class="identifier">mutex</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.mutex.nativehandle">Member
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.mutex.nativehandle">Member
           function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt></dl></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -6456,7 +6456,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Returns an instance of <code class="computeroutput"><span class="identifier">native_handle_type</span></code>
@@ -6493,7 +6493,7 @@
 <a name="thread.synchronization.mutex_types.timed_mutex"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_types.timed_mutex" title="Class timed_mutex">Class
         <code class="computeroutput"><span class="identifier">timed_mutex</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.timed_mutex.nativehandle">Member
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.timed_mutex.nativehandle">Member
           function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt></dl></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -6549,7 +6549,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Returns an instance of <code class="computeroutput"><span class="identifier">native_handle_type</span></code>
@@ -6571,7 +6571,7 @@
 <a name="thread.synchronization.mutex_types.recursive_mutex"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_types.recursive_mutex" title="Class recursive_mutex">Class
         <code class="computeroutput"><span class="identifier">recursive_mutex</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.recursive_mutex.nativehandle">Member
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.recursive_mutex.nativehandle">Member
           function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt></dl></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">recursive_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -6619,7 +6619,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Returns an instance of <code class="computeroutput"><span class="identifier">native_handle_type</span></code>
@@ -6655,7 +6655,7 @@
 <a name="thread.synchronization.mutex_types.recursive_timed_mutex"></a><a class="link" href="synchronization.html#thread.synchronization.mutex_types.recursive_timed_mutex" title="Class recursive_timed_mutex">Class
         <code class="computeroutput"><span class="identifier">recursive_timed_mutex</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.recursive_timed_mutex.nativehandle">Member
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.mutex_types.recursive_timed_mutex.nativehandle">Member
           function <code class="computeroutput"><span class="identifier">native_handle</span><span class="special">()</span></code></a></span></dt></dl></div>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">thread</span><span class="special">/</span><span class="identifier">recursive_mutex</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 
@@ -6721,7 +6721,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Returns an instance of <code class="computeroutput"><span class="identifier">native_handle_type</span></code>
@@ -6996,7 +6996,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.condvar_ref"></a><a class="link" href="synchronization.html#thread.synchronization.condvar_ref" title="Condition Variables">Condition Variables</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable">Class
         <code class="computeroutput"><span class="identifier">condition_variable</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any">Class
@@ -7008,7 +7008,7 @@
 </dl></div>
 <h5>
 <a name="thread.synchronization.condvar_ref.h0"></a>
-        <span class="phrase"><a name="thread.synchronization.condvar_ref.synopsis"></a></span><a class="link" href="synchronization.html#thread.synchronization.condvar_ref.synopsis">Synopsis</a>
+        <span><a name="thread.synchronization.condvar_ref.synopsis"></a></span><a class="link" href="synchronization.html#thread.synchronization.condvar_ref.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span>
 <span class="special">{</span>
@@ -7103,7 +7103,7 @@
 <a name="thread.synchronization.condvar_ref.condition_variable"></a><a class="link" href="synchronization.html#thread.synchronization.condvar_ref.condition_variable" title="Class condition_variable">Class
         <code class="computeroutput"><span class="identifier">condition_variable</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable.constructor"><code class="computeroutput"><span class="identifier">condition_variable</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable.destructor"><code class="computeroutput"><span class="special">~</span><span class="identifier">condition_variable</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable.notify_one"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">notify_one</span><span class="special">()</span></code></a></span></dt>
@@ -7203,7 +7203,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Constructs an object of class <code class="computeroutput"><span class="identifier">condition_variable</span></code>.
@@ -7222,7 +7222,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   All threads waiting on <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> have been notified by a call
@@ -7249,7 +7249,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   If any threads are currently <span class="emphasis"><em>blocked</em></span> waiting
@@ -7271,7 +7271,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   If any threads are currently <span class="emphasis"><em>blocked</em></span> waiting
@@ -7293,7 +7293,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">lock</span></code> is locked
@@ -7340,7 +7340,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -7365,7 +7365,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">lock</span></code> is locked
@@ -7420,7 +7420,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">lock</span></code> is locked
@@ -7485,7 +7485,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -7514,7 +7514,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">lock</span></code> is locked
@@ -7570,7 +7570,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">lock</span></code> is locked
@@ -7638,7 +7638,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -7668,7 +7668,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -7688,7 +7688,7 @@
 <a name="thread.synchronization.condvar_ref.condition_variable_any"></a><a class="link" href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any" title="Class condition_variable_any">Class
         <code class="computeroutput"><span class="identifier">condition_variable_any</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any.constructor"><code class="computeroutput"><span class="identifier">condition_variable_any</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any.destructor"><code class="computeroutput"><span class="special">~</span><span class="identifier">condition_variable_any</span><span class="special">()</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.condvar_ref.condition_variable_any.notify_one"><code class="computeroutput"><span class="keyword">void</span> <span class="identifier">notify_one</span><span class="special">()</span></code></a></span></dt>
@@ -7791,7 +7791,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Constructs an object of class <code class="computeroutput"><span class="identifier">condition_variable_any</span></code>.
@@ -7810,7 +7810,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   All threads waiting on <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> have been notified by a call
@@ -7837,7 +7837,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   If any threads are currently <span class="emphasis"><em>blocked</em></span> waiting
@@ -7859,7 +7859,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   If any threads are currently <span class="emphasis"><em>blocked</em></span> waiting
@@ -7882,7 +7882,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Atomically call <code class="computeroutput"><span class="identifier">lock</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code> and blocks the current thread.
@@ -7917,7 +7917,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -7941,7 +7941,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Atomically call <code class="computeroutput"><span class="identifier">lock</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code> and blocks the current thread.
@@ -7986,7 +7986,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Atomically call <code class="computeroutput"><span class="identifier">lock</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code> and blocks the current thread.
@@ -8040,7 +8040,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -8070,7 +8070,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Atomically call <code class="computeroutput"><span class="identifier">lock</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code> and blocks the current thread.
@@ -8115,7 +8115,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Atomically call <code class="computeroutput"><span class="identifier">lock</span><span class="special">.</span><span class="identifier">unlock</span><span class="special">()</span></code> and blocks the current thread.
@@ -8170,7 +8170,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -8200,7 +8200,7 @@
 </h5></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -8247,7 +8247,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">lk</span></code> is locked by the
@@ -8281,7 +8281,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.once"></a><a class="link" href="synchronization.html#thread.synchronization.once" title="One-time Initialization">One-time Initialization</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.once.once_flag">Typedef <code class="computeroutput"><span class="identifier">once_flag</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.once.call_once">Non-member function
         <code class="computeroutput"><span class="identifier">call_once</span></code></a></span></dt>
@@ -8360,7 +8360,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="identifier">Function</span></code> and each
@@ -8433,7 +8433,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.barriers"></a><a class="link" href="synchronization.html#thread.synchronization.barriers" title="Barriers -- EXTENSION">Barriers -- EXTENSION</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.barriers.barrier">Class <code class="computeroutput"><span class="identifier">barrier</span></code></a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.barriers.barrier">Class <code class="computeroutput"><span class="identifier">barrier</span></code></a></span></dt></dl></div>
 <p>
         A barrier is a simple concept. Also known as a <span class="emphasis"><em>rendezvous</em></span>,
         it is a synchronization point between multiple threads. The barrier is configured
@@ -8447,7 +8447,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.barriers.barrier"></a><a class="link" href="synchronization.html#thread.synchronization.barriers.barrier" title="Class barrier">Class <code class="computeroutput"><span class="identifier">barrier</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.barriers.barrier.constructor__barrier_unsigned_int__">Constructor
           <code class="computeroutput"><span class="identifier">barrier</span><span class="special">(</span><span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.barriers.barrier.constructor__barrier_unsigned_int__f____">Constructor
@@ -8489,7 +8489,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Construct a barrier for <code class="computeroutput"><span class="identifier">count</span></code>
@@ -8512,7 +8512,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The result type of the completion function call <code class="computeroutput"><span class="identifier">completion</span><span class="special">()</span></code> is <code class="computeroutput"><span class="keyword">void</span></code>
@@ -8540,7 +8540,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   No threads are waiting on <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -8565,7 +8565,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Block until <code class="computeroutput"><span class="identifier">count</span></code>
@@ -8617,7 +8617,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Block until <code class="computeroutput"><span class="identifier">count</span></code>
@@ -8660,7 +8660,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.latches"></a><a class="link" href="synchronization.html#thread.synchronization.latches" title="Latches -- EXPERIMENTAL">Latches -- EXPERIMENTAL</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.latches.introdcution">Introdcution</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.latches.examples">Examples</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.latches.latch">Class <code class="computeroutput"><span class="identifier">latch</span></code></a></span></dt>
@@ -8681,7 +8681,7 @@
 <p>
           Sample use cases for the latch include:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Setting multiple threads to perform a task, and then waiting until
               all threads have reached a common point.
@@ -8736,7 +8736,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.latches.latch"></a><a class="link" href="synchronization.html#thread.synchronization.latches.latch" title="Class latch">Class <code class="computeroutput"><span class="identifier">latch</span></code></a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.latches.latch.constructor__latch_std__size_t__">Constructor
           <code class="computeroutput"><span class="identifier">latch</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.latches.latch.destructor___latch___">Destructor
@@ -8796,7 +8796,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Construct a latch with is initial value for the internal counter.
@@ -8821,7 +8821,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Precondition:</span></dt>
 <dd><p>
                   No threads are waiting or invoking count_down on <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -8847,7 +8847,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Block the calling thread until the internal count reaches the value
@@ -8883,7 +8883,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   Returns true if the internal count is 0, and false otherwise. Does
@@ -8908,7 +8908,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Block the calling thread until the internal count reaches the value
@@ -8951,7 +8951,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   Block the calling thread until the internal count reaches the value
@@ -8993,7 +8993,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The internal counter is non zero.
@@ -9033,7 +9033,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   The internal counter is non zero.
@@ -9077,7 +9077,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   This function may only be invoked when there are no other threads
@@ -9105,7 +9105,7 @@
 <a name="thread.synchronization.executors"></a><a class="link" href="synchronization.html#thread.synchronization.executors" title="Executors and Schedulers -- EXPERIMENTAL">Executors and Schedulers
       -- EXPERIMENTAL</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.examples">Examples</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.rationale">Design
@@ -9266,7 +9266,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.executors.examples"></a><a class="link" href="synchronization.html#thread.synchronization.executors.examples" title="Examples">Examples</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.examples.quick_sort">Parallel
+<div class="toc"><dl><dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.examples.quick_sort">Parallel
           Quick Sort</a></span></dt></dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
@@ -9334,7 +9334,7 @@
 </h4></div></div></div>
 <p>
           The authors of Boost.Thread have taken a different approach respect to
-          N3785. Instead of basing all the design on a abstract executor class we
+          N3785. Instead of basing all the design on an abstract executor class we
           make executor concepts. We believe that this is the good direction as a
           static polymorphic executor can be seen as a dynamic polymorphic executor
           using a simple adaptor. We believe also that it would make the library
@@ -9350,7 +9350,7 @@
           to it, usually asynchronously. There could be multiple models of the Executor
           class. Some specific design notes:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Thread pools are well know models of the Executor concept, and this
               library does indeed include a basic_thread_pool class, but other implementations
@@ -9394,7 +9394,7 @@
 </ul></div>
 <h6>
 <a name="thread.synchronization.executors.rationale.h0"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.closure"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.closure">Closure</a>
+          <span><a name="thread.synchronization.executors.rationale.closure"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.closure">Closure</a>
         </h6>
 <p>
           One important question is just what a closure is. This library has a very
@@ -9442,7 +9442,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.executors.rationale.h1"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.scheduled_work"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.scheduled_work">Scheduled
+          <span><a name="thread.synchronization.executors.rationale.scheduled_work"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.scheduled_work">Scheduled
           work</a>
         </h6>
 <p>
@@ -9469,7 +9469,7 @@
 <p>
           This has several advantages:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               The scheduled operations are available for all the executors via wrappers.
             </li>
@@ -9487,7 +9487,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.executors.rationale.h2"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.not_handled_exceptions"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.not_handled_exceptions">Not
+          <span><a name="thread.synchronization.executors.rationale.not_handled_exceptions"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.not_handled_exceptions">Not
           Handled Exceptions</a>
         </h6>
 <p>
@@ -9500,7 +9500,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.executors.rationale.h3"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.at_thread_entry"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.at_thread_entry">At
+          <span><a name="thread.synchronization.executors.rationale.at_thread_entry"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.at_thread_entry">At
           thread entry</a>
         </h6>
 <p>
@@ -9517,7 +9517,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.executors.rationale.h4"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.cancelation"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.cancelation">Cancelation</a>
+          <span><a name="thread.synchronization.executors.rationale.cancelation"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.cancelation">Cancelation</a>
         </h6>
 <p>
           The library does not provision yet for the ability to cancel/interrupt
@@ -9537,7 +9537,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.executors.rationale.h5"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.current_executor"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.current_executor">Current
+          <span><a name="thread.synchronization.executors.rationale.current_executor"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.current_executor">Current
           executor</a>
         </h6>
 <p>
@@ -9563,7 +9563,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.executors.rationale.h6"></a>
-          <span class="phrase"><a name="thread.synchronization.executors.rationale.default_executor"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.default_executor">Default
+          <span><a name="thread.synchronization.executors.rationale.default_executor"></a></span><a class="link" href="synchronization.html#thread.synchronization.executors.rationale.default_executor">Default
           executor</a>
         </h6>
 <p>
@@ -9586,7 +9586,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.executors.ref"></a><a class="link" href="synchronization.html#thread.synchronization.executors.ref" title="Reference">Reference</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.ref.concept_closure">Concept
           <code class="computeroutput"><span class="identifier">Closure</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.executors.ref.concept_executor">Concept
@@ -9644,7 +9644,7 @@
             A type <code class="computeroutput"><span class="identifier">E</span></code> meets the <code class="computeroutput"><span class="identifier">Executor</span></code> requirements if the following
             expressions are well-formed and have the specified semantics
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">e</span><span class="special">.</span><span class="identifier">submit</span><span class="special">(</span><span class="identifier">lc</span><span class="special">);</span></code>
               </li>
@@ -9668,18 +9668,18 @@
 <p>
             where
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">e</span></code> denotes a value
                 of type <code class="computeroutput"><span class="identifier">E</span></code>,
               </li>
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">lc</span></code> denotes a lvalue
-                referece of type <code class="computeroutput"><span class="identifier">Closure</span></code>,
+                reference of type <code class="computeroutput"><span class="identifier">Closure</span></code>,
               </li>
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">rc</span></code> denotes a rvalue
-                referece of type <code class="computeroutput"><span class="identifier">Closure</span></code>
+                reference of type <code class="computeroutput"><span class="identifier">Closure</span></code>
               </li>
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">p</span></code> denotes a value
@@ -9692,7 +9692,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     The specified closure will be scheduled for execution at some
@@ -9722,11 +9722,11 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h6 class="title">
-<a name="thread.synchronization.executors.ref.concept_executor.submitrc"></a><a class="link" href="synchronization.html#thread.synchronization.executors.ref.concept_executor.submitrc" title="e.submit(lc);"><code class="computeroutput"><span class="identifier">e</span><span class="special">.</span><span class="identifier">submit</span><span class="special">(</span><span class="identifier">lc</span><span class="special">);</span></code></a>
+<a name="thread.synchronization.executors.ref.concept_executor.submitrc"></a><a class="link" href="synchronization.html#thread.synchronization.executors.ref.concept_executor.submitrc" title="e.submit(rc);"><code class="computeroutput"><span class="identifier">e</span><span class="special">.</span><span class="identifier">submit</span><span class="special">(</span><span class="identifier">rc</span><span class="special">);</span></code></a>
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     The specified closure will be scheduled for execution at some
@@ -9760,7 +9760,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     close the executor <code class="computeroutput"><span class="identifier">e</span></code>
@@ -9777,7 +9777,7 @@
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
-                    Whatever exception that can be throw while ensuring the thread
+                    Whatever exception that can be thrown while ensuring the thread
                     safety.
                   </p></dd>
 <dt><span class="term">Exception safety:</span></dt>
@@ -9793,7 +9793,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return type:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">bool</span></code>.
@@ -9816,7 +9816,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     try to execute one work.
@@ -9847,10 +9847,10 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
-                    This must be called from an scheduled work
+                    This must be called from a scheduled work
                   </p></dd>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
@@ -9885,7 +9885,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   work is a model of 'Closure'
@@ -9937,10 +9937,10 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                    Constructs a executor.
+                    Constructs an executor.
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -9958,7 +9958,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the executor.
@@ -10019,10 +10019,10 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                    Constructs a executor_adaptor.
+                    Constructs an executor_adaptor.
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -10040,7 +10040,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the executor_adaptor.
@@ -10062,7 +10062,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying executor instance.
@@ -10157,7 +10157,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a <code class="computeroutput"><span class="identifier">scheduler</span></code>.
@@ -10178,7 +10178,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the scheduler.
@@ -10201,7 +10201,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Schedule a <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10224,7 +10224,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Schedule a <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10289,7 +10289,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a <code class="computeroutput"><span class="identifier">at_executor</span></code>.
@@ -10310,7 +10310,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the <code class="computeroutput"><span class="identifier">at_executor</span></code>.
@@ -10332,7 +10332,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying scheduler instance.
@@ -10350,7 +10350,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Schedule the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10374,7 +10374,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Schedule a <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10397,7 +10397,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Schedule a <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10465,7 +10465,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a <code class="computeroutput"><span class="identifier">scheduler_executor_wrapper</span></code>.
@@ -10486,7 +10486,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the <code class="computeroutput"><span class="identifier">scheduler_executor_wrapper</span></code>.
@@ -10508,7 +10508,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying scheduler instance.
@@ -10525,7 +10525,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying executor instance.
@@ -10543,7 +10543,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Submit the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10566,7 +10566,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Resubmit the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10589,7 +10589,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Resubmit the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10659,7 +10659,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a <code class="computeroutput"><span class="identifier">resubmit_at_executor</span></code>.
@@ -10680,7 +10680,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the executor_adaptor.
@@ -10702,7 +10702,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying executor instance.
@@ -10719,7 +10719,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying scheduler instance.
@@ -10737,7 +10737,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Resubmit the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10761,7 +10761,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Resubmit the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10784,7 +10784,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Resubmit the <code class="computeroutput"><span class="identifier">closure</span></code>
@@ -10844,7 +10844,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a serial_executor.
@@ -10865,7 +10865,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the serial_executor.
@@ -10887,7 +10887,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying executor instance.
@@ -10945,7 +10945,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a serial_executor.
@@ -10966,7 +10966,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the serial_executor.
@@ -10988,7 +10988,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     The underlying executor instance.
@@ -11038,10 +11038,10 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                    Constructs a inline_executor.
+                    Constructs an inline_executor.
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -11059,7 +11059,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the inline_executor.
@@ -11116,7 +11116,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     creates a thread pool that runs closures on <code class="computeroutput"><span class="identifier">thread_count</span></code>
@@ -11138,7 +11138,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the thread pool.
@@ -11190,7 +11190,7 @@
 </h6></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     creates a thread_executor.
@@ -11211,7 +11211,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Waits for closures (if any) to complete, then joins and destroys
@@ -11270,10 +11270,10 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
-                    creates a executor that runs closures using one of its closure-executing
+                    creates an executor that runs closures using one of its closure-executing
                     methods.
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
@@ -11292,7 +11292,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys the executor.
@@ -11314,7 +11314,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     reschedule works until <code class="computeroutput"><span class="identifier">closed</span><span class="special">()</span></code> or empty.
@@ -11336,7 +11336,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Return:</span></dt>
 <dd><p>
                     reschedule the enqueued works.
@@ -11356,7 +11356,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.synchronization.futures"></a><a class="link" href="synchronization.html#thread.synchronization.futures" title="Futures">Futures</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.futures.overview">Overview</a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.futures.creating">Creating asynchronous
         values</a></span></dt>
@@ -11646,7 +11646,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.futures.shared.h0"></a>
-          <span class="phrase"><a name="thread.synchronization.futures.shared.multiple_get"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.multiple_get">Multiple get</a>
+          <span><a name="thread.synchronization.futures.shared.multiple_get"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.multiple_get">Multiple get</a>
         </h6>
 <p>
           The second <code class="computeroutput"><span class="identifier">get</span><span class="special">()</span></code>
@@ -11684,7 +11684,7 @@
 </pre>
 <h6>
 <a name="thread.synchronization.futures.shared.h1"></a>
-          <span class="phrase"><a name="thread.synchronization.futures.shared.share__"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.share__">share()</a>
+          <span><a name="thread.synchronization.futures.shared.share__"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.share__">share()</a>
         </h6>
 <p>
           Naming the return type when declaring the <code class="computeroutput"><span class="identifier">shared_future</span></code>
@@ -11707,7 +11707,7 @@
 </pre>
 <h6>
 <a name="thread.synchronization.futures.shared.h2"></a>
-          <span class="phrase"><a name="thread.synchronization.futures.shared.writing_on_get__"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.writing_on_get__">Writing
+          <span><a name="thread.synchronization.futures.shared.writing_on_get__"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.shared.writing_on_get__">Writing
           on get()</a>
         </h6>
 <p>
@@ -11761,7 +11761,7 @@
         </p>
 <h6>
 <a name="thread.synchronization.futures.make_ready_future.h0"></a>
-          <span class="phrase"><a name="thread.synchronization.futures.make_ready_future.make_ready_future"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.make_ready_future.make_ready_future">make_ready_future</a>
+          <span><a name="thread.synchronization.futures.make_ready_future.make_ready_future"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.make_ready_future.make_ready_future">make_ready_future</a>
         </h6>
 <p>
           This function creates a future for a given value. If no value is given
@@ -11839,7 +11839,7 @@
 <p>
           Some points to note are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Each continuation will not begin until the preceding has completed.
             </li>
@@ -11851,7 +11851,7 @@
 <p>
           Input Parameters:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Lambda function: One option which can be considered is to take two
               functions, one for success and one for error handling. However this
@@ -11887,7 +11887,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.synchronization.futures.reference"></a><a class="link" href="synchronization.html#thread.synchronization.futures.reference" title="Futures Reference">Futures Reference</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.futures.reference.future_state">Enumeration
           <code class="computeroutput"><span class="identifier">state</span></code></a></span></dt>
 <dt><span class="section"><a href="synchronization.html#thread.synchronization.futures.reference.future_errc">Enumeration
@@ -12165,7 +12165,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">error_code</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">e</span><span class="special">),</span>
@@ -12186,7 +12186,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">error_condition</span><span class="special">(</span><span class="keyword">static_cast</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">e</span><span class="special">),</span> <span class="identifier">future_category</span><span class="special">())</span></code>.
@@ -12203,7 +12203,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                   A reference to an object of a type derived from class error_category.
@@ -12241,7 +12241,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a future_error.
@@ -12266,7 +12266,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     The value of <code class="computeroutput"><span class="identifier">ec</span></code>
@@ -12311,7 +12311,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     The exception that is passed in to the constructor or the current
@@ -12412,7 +12412,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs an uninitialized <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a>.
@@ -12437,7 +12437,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -12458,7 +12458,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a new <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a>, and transfers
@@ -12506,7 +12506,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd>
 <p>
@@ -12552,7 +12552,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Transfers ownership of the shared state associated with <code class="computeroutput"><span class="identifier">other</span></code> to <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -12589,7 +12589,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Swaps ownership of the shared states associated with <code class="computeroutput"><span class="identifier">other</span></code> and <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -12624,7 +12624,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -12701,7 +12701,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -12756,7 +12756,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -12820,7 +12820,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -12894,7 +12894,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -12953,7 +12953,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13024,7 +13024,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13093,7 +13093,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13122,7 +13122,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13153,7 +13153,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13182,7 +13182,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13211,7 +13211,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13222,7 +13222,7 @@
                   </p></dd>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
-                    a exception_ptr, storring or not an exception.
+                    an exception_ptr, storing or not an exception.
                   </p></dd>
 <dt><span class="term">Remarks:</span></dt>
 <dd><p>
@@ -13246,7 +13246,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Determine the state of the shared state associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>,
@@ -13279,7 +13279,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">shared_future</span><span class="special">&lt;</span><span class="identifier">R</span><span class="special">&gt;(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">move</span><span class="special">(*</span><span class="keyword">this</span><span class="special">))</span></code>.
@@ -13332,12 +13332,12 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                     The three functions differ only by input parameters. The first
                     only takes a callable object which accepts a future object as
-                    a parameter. The second function takes a executor as the first
+                    a parameter. The second function takes an executor as the first
                     parameter and a callable object as the second parameter. The
                     third function takes a launch policy as the first parameter and
                     a callable object as the second parameter.
@@ -13477,7 +13477,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                     Removes the outermost future and returns a future with the associated
@@ -13580,7 +13580,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs an uninitialized shared_future.
@@ -13608,7 +13608,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13659,7 +13659,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13708,7 +13708,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13767,7 +13767,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13826,7 +13826,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13897,7 +13897,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13966,7 +13966,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -13990,7 +13990,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -14015,7 +14015,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -14039,7 +14039,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="keyword">true</span></code> if <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -14063,7 +14063,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -14074,7 +14074,7 @@
                   </p></dd>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
-                    a exception_ptr, storring or not an exception.
+                    an exception_ptr, storing or not an exception.
                   </p></dd>
 <dt><span class="term">Throws:</span></dt>
 <dd><p>
@@ -14093,7 +14093,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Determine the state of the shared state associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>,
@@ -14153,7 +14153,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Notes:</span></dt>
 <dd><p>
                     The three functions differ only by input parameters. The first
@@ -14315,7 +14315,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a new <a class="link" href="synchronization.html#thread.synchronization.futures.reference.promise" title="promise class template"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">promise</span></code></a> with no associated
@@ -14338,7 +14338,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a new <a class="link" href="synchronization.html#thread.synchronization.futures.reference.promise" title="promise class template"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">promise</span></code></a> with no associated
@@ -14364,7 +14364,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a new <a class="link" href="synchronization.html#thread.synchronization.futures.reference.promise" title="promise class template"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">promise</span></code></a>, and transfers
@@ -14394,7 +14394,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Transfers ownership of the result associated with <code class="computeroutput"><span class="identifier">other</span></code> to <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>, leaving <code class="computeroutput"><span class="identifier">other</span></code>
@@ -14425,7 +14425,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -14450,7 +14450,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     If <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>
@@ -14480,7 +14480,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -14533,7 +14533,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd>
 <p>
@@ -14584,7 +14584,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Stores the value r in the shared state without making that state
@@ -14624,7 +14624,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Stores the exception pointer p in the shared state without making
@@ -14668,7 +14668,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                     The expression <code class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> where <code class="computeroutput"><span class="identifier">t</span></code>
@@ -14758,7 +14758,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">f</span><span class="special">()</span></code>
@@ -14807,7 +14807,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">f</span><span class="special">()</span></code>
@@ -14846,7 +14846,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Constructs a new <a class="link" href="synchronization.html#thread.synchronization.futures.reference.packaged_task" title="packaged_task class template"><code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">packaged_task</span></code></a>, and transfers
@@ -14876,7 +14876,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Transfers ownership of the task associated with <code class="computeroutput"><span class="identifier">other</span></code> to <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>, leaving <code class="computeroutput"><span class="identifier">other</span></code>
@@ -14906,7 +14906,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Destroys <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code>.
@@ -14931,7 +14931,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Returns a <a class="link" href="synchronization.html#thread.synchronization.futures.reference.unique_future" title="future class template"><code class="computeroutput"><span class="identifier">future</span></code></a> associated with
@@ -14956,7 +14956,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invoke the task associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> and store the result in the
@@ -14993,7 +14993,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Invoke the task associated with <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span></code> and store the result in the
@@ -15029,7 +15029,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                     Reset the state of the packaged_task so that it can be called
@@ -15054,7 +15054,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                     The expression <code class="computeroutput"><span class="identifier">f</span><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> where <code class="computeroutput"><span class="identifier">t</span></code>
@@ -15107,7 +15107,7 @@
           </p>
 <h6>
 <a name="thread.synchronization.futures.reference.async.h0"></a>
-            <span class="phrase"><a name="thread.synchronization.futures.reference.async.non_variadic_variant"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.reference.async.non_variadic_variant">Non-Variadic
+            <span><a name="thread.synchronization.futures.reference.async.non_variadic_variant"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.reference.async.non_variadic_variant">Non-Variadic
             variant</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">&gt;</span>
@@ -15122,7 +15122,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd>
 <p>
@@ -15259,7 +15259,7 @@
 </div>
 <h6>
 <a name="thread.synchronization.futures.reference.async.h1"></a>
-            <span class="phrase"><a name="thread.synchronization.futures.reference.async.variadic_variant"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.reference.async.variadic_variant">Variadic
+            <span><a name="thread.synchronization.futures.reference.async.variadic_variant"></a></span><a class="link" href="synchronization.html#thread.synchronization.futures.reference.async.variadic_variant">Variadic
             variant</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">F</span><span class="special">,</span> <span class="keyword">class</span><span class="special">...</span> <span class="identifier">Args</span><span class="special">&gt;</span>
@@ -15286,7 +15286,7 @@
 </table></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd>
 <p>
@@ -15445,7 +15445,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                   The types <code class="computeroutput"><span class="identifier">Fn</span></code> shall
@@ -15504,7 +15504,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Preconditions:</span></dt>
 <dd><p>
                   The types <code class="computeroutput"><span class="identifier">Fn</span></code> shall
@@ -15543,7 +15543,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   - For the first overload, <code class="computeroutput"><span class="identifier">InputIterator</span></code>'s
@@ -15667,7 +15667,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires:</span></dt>
 <dd><p>
                   - For the first overload, <code class="computeroutput"><span class="identifier">InputIterator</span></code>'s
@@ -15792,7 +15792,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Remark:</span></dt>
 <dd><p>
                   where <code class="computeroutput"><span class="identifier">V</span></code> is determined
@@ -15859,7 +15859,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   The exception that is passed in to the function or the current
@@ -15887,7 +15887,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   The value that is passed into the function is moved to the shared
@@ -15930,7 +15930,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects:</span></dt>
 <dd><p>
                   The value that is passed in to the function is moved to the shared

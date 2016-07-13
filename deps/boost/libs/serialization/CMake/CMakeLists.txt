@@ -2,6 +2,13 @@
 
 cmake_minimum_required(VERSION 3.0)
 
+if (POLICY CMP0054)
+  cmake_policy (SET CMP0054 NEW)
+endif (POLICY CMP0054)
+
+if (POLICY CMP0063)
+  cmake_policy (SET CMP0063 NEW)
+endif (POLICY CMP0063)
 
 if(Boost_USE_STATIC_LIBS)
   project("Serialization-Static")
@@ -114,15 +121,22 @@ elseif()
 endif()
 
 if(Boost_USE_STATIC_LIBS)
-  set(BUILD_SHARED_LIBRARIES OFF)
+  message(STATUS "Building static libraries")
+  set(LINK_TYPE "STATIC")
 else()
-  set(BUILD_SHARED_LIBRARIES ON)
+  message(STATUS "Building shared libraries")
+  set(LINK_TYPE "SHARED")
+  add_definitions( "-DBOOST_ALL_DYN_LINK=1")
+  add_definitions( "-DBOOST_ALL_NO_LIB=1")
+  add_definitions( "-DBOOST_LIB_DIAGNOSTICS=1")
 endif()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(VISIBILITY_INLINES_HIDDEN)
 
 ###########################
 # library builds
 
-add_library(serialization
+add_library(serialization ${LINK_TYPE}
   ../src/archive_exception.cpp
   ../src/basic_archive.cpp
   ../src/basic_iarchive.cpp
@@ -137,35 +151,39 @@ add_library(serialization
   ../src/basic_xml_archive.cpp
   ../src/binary_iarchive.cpp
   ../src/binary_oarchive.cpp
-  ../src/codecvt_null.cpp
   ../src/extended_type_info_no_rtti.cpp
   ../src/extended_type_info_typeid.cpp
   ../src/extended_type_info.cpp
   ../src/polymorphic_iarchive.cpp
   ../src/polymorphic_oarchive.cpp
+  ../src/singleton.cpp
   ../src/stl_port.cpp
   ../src/text_iarchive.cpp
   ../src/text_oarchive.cpp
-  ../src/utf8_codecvt_facet.cpp
   ../src/void_cast.cpp
   ../src/xml_archive_exception.cpp
   ../src/xml_iarchive.cpp
   ../src/xml_oarchive.cpp
   ../src/xml_grammar.cpp
-  # ../src/basic_xml_grammar.ipp # doesn't show up in "Source Files" in Xcode"'
+  ../src/utf8_codecvt_facet.cpp
+  ../src/basic_xml_grammar.ipp # doesn't show up in "Source Files" in Xcode"'
 )
 
-add_library(wserialization
+# target_compile_options(serialization PRIVATE -fvisibility=hidden -fvisibility-inlines-hidden )
+
+add_library(wserialization  ${LINK_TYPE}
+  ../src/codecvt_null.cpp
   ../src/basic_text_wiprimitive.cpp
   ../src/basic_text_woprimitive.cpp
   ../src/text_wiarchive.cpp
   ../src/text_woarchive.cpp
-  ../src/utf8_codecvt_facet.cpp
   ../src/xml_wiarchive.cpp
   ../src/xml_woarchive.cpp
-  ../src/codecvt_null.cpp
   ../src/xml_wgrammar.cpp
+  ../src/basic_xml_grammar.ipp # doesn't show up in "Source Files" in Xcode"'
 )
+
+#target_compile_options(wserialization PRIVATE -fvisibility=hidden -fvisibility-inlines-hidden )
 
 # end library build
 ###########################
@@ -243,10 +261,14 @@ serialization_test(test_iterators)
 serialization_test(test_iterators_base64)
 serialization_test(test_inclusion)
 serialization_test(test_smart_cast)
-serialization_test(test_utf8_codecvt ../src/utf8_codecvt_facet)
+serialization_test(test_utf8_codecvt )
 serialization_test(test_codecvt_null ../src/codecvt_null)
 
-archive_test(test_array A)
+archive_test(test_native_array A)
+archive_test(test_boost_array A)
+if(COMPILER_SUPPORTS_CXX11)
+  archive_test(test_array A)
+endif()
 archive_test(test_binary)
 archive_test(test_bitset)
 archive_test(test_class_info_save)
@@ -261,6 +283,8 @@ archive_test(test_derived_class A)
 archive_test(test_diamond)
 archive_test(test_diamond_complex)
 archive_test(test_exported polymorphic_base)
+archive_test(test_forward_list A)
+archive_test(test_forward_list_ptrs A)
 archive_test(test_helper_support)
 archive_test(test_interrupts)
 archive_test(test_list A)
@@ -372,8 +396,7 @@ file(GLOB x
   RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" 
   "${CMAKE_CURRENT_SOURCE_DIR}/../include/boost/archive/*_w*.hpp"
 )
-
-add_custom_target(wserialization_headers SOURCES ${x} "${CMAKE_CURRENT_SOURCE_DIR}/../include/boost/archive/codecvt_null.hpp")
+add_custom_target(wserialization_headers SOURCES ${x})
 set_property(TARGET wserialization_headers PROPERTY FOLDER "wserialization")
 
 # end headers in IDE

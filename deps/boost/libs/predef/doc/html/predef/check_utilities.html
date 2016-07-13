@@ -2,16 +2,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Check Utilities</title>
-<link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
-<link rel="home" href="../index.html" title="Predef 1.4">
-<link rel="up" href="../index.html" title="Predef 1.4">
+<link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Predef 1.4.1">
+<link rel="up" href="../index.html" title="Predef 1.4.1">
 <link rel="prev" href="reference/version_definition_macros.html" title="Version definition macros">
 <link rel="next" href="history.html" title="History">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../../../boost.png"></td>
+<td align="center"><a href="../../../../../index.html">Home</a></td>
+<td align="center"><a href="../../../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reference/version_definition_macros.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="history.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="reference/version_definition_macros.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="history.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
@@ -24,7 +33,7 @@
     </p>
 <h4>
 <a name="predef.check_utilities.h0"></a>
-      <span class="phrase"><a name="predef.check_utilities.predef_check_programs"></a></span><a class="link" href="check_utilities.html#predef.check_utilities.predef_check_programs"><code class="literal">predef_check</code>
+      <span><a name="predef.check_utilities.predef_check_programs"></a></span><a class="link" href="check_utilities.html#predef.check_utilities.predef_check_programs"><code class="literal">predef_check</code>
       programs</a>
     </h4>
 <p>
@@ -64,7 +73,7 @@
 </pre>
 <h4>
 <a name="predef.check_utilities.h1"></a>
-      <span class="phrase"><a name="predef.check_utilities.using_with_boost_build"></a></span><a class="link" href="check_utilities.html#predef.check_utilities.using_with_boost_build">Using
+      <span><a name="predef.check_utilities.using_with_boost_build"></a></span><a class="link" href="check_utilities.html#predef.check_utilities.using_with_boost_build">Using
       with Boost.Build</a>
     </h4>
 <p>
@@ -73,7 +82,7 @@
       gets built as part of your project based on the detailed version information
       available in Predef. The basic use is simple:
     </p>
-<pre class="programlisting">import path-to-predef-src/check/predef
+<pre class="programlisting">import path-to-predef-src/tools/check/predef
     : check require
     : predef-check predef-require ;
 
@@ -85,7 +94,7 @@ exe my_windows_program : windows_source.cpp
       unless one is building for Windows. Like the direct <code class="literal">predef_check</code>
       you can pass mutiple expressions using relational comparisons. For example:
     </p>
-<pre class="programlisting">import path-to-predef-src/check/predef
+<pre class="programlisting">import path-to-predef-src/tools/check/predef
     : check require
     : predef-check predef-require ;
 
@@ -106,7 +115,7 @@ lib my_special_lib : source.cpp
       The expression can also use explicit "and", "or" logical
       operators to for more complex checks:
     </p>
-<pre class="programlisting">import path-to-predef-src/check/predef
+<pre class="programlisting">import path-to-predef-src/tools/check/predef
     : check require
     : predef-check predef-require ;
 
@@ -127,7 +136,7 @@ lib my_special_lib : source.cpp
       as requirements. For example you could use it to enable or disable features
       in your programs:
     </p>
-<pre class="programlisting">import path-to-predef-src/check/predef
+<pre class="programlisting">import path-to-predef-src/tools/check/predef
     : check require
     : predef-check predef-require ;
 
@@ -145,8 +154,7 @@ exe my_special_exe : source.cpp
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2015 Rene
-      Rivera<br>Copyright &#169; 2015 Charly Chevalier<br>Copyright &#169; 2015 Joel Falcou<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2005, 2008-2016 Rene Rivera<br>Copyright &#169; 2015 Charly Chevalier<br>Copyright &#169; 2015 Joel Falcou<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -154,7 +162,7 @@ exe my_special_exe : source.cpp
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="reference/version_definition_macros.html"><img src="../images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../images/home.png" alt="Home"></a><a accesskey="n" href="history.html"><img src="../images/next.png" alt="Next"></a>
+<a accesskey="p" href="reference/version_definition_macros.html"><img src="../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="history.html"><img src="../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

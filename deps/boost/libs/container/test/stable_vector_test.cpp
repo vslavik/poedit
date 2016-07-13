@@ -12,9 +12,7 @@
 #include <memory>
 
 #include <boost/container/stable_vector.hpp>
-#include <boost/container/allocator.hpp>
 #include <boost/container/node_allocator.hpp>
-#include <boost/container/adaptive_pool.hpp>
 
 #include "check_equal_containers.hpp"
 #include "movable_int.hpp"
@@ -33,21 +31,7 @@ namespace container {
 
 //Explicit instantiation to detect compilation errors
 template class stable_vector<test::movable_and_copyable_int,
-   test::dummy_test_allocator<test::movable_and_copyable_int> >;
-
-template class stable_vector<test::movable_and_copyable_int,
    test::simple_allocator<test::movable_and_copyable_int> >;
-
-template class stable_vector<test::movable_and_copyable_int,
-   std::allocator<test::movable_and_copyable_int> >;
-
-template class stable_vector
-   < test::movable_and_copyable_int
-   , allocator<test::movable_and_copyable_int> >;
-
-template class stable_vector
-   < test::movable_and_copyable_int
-   , adaptive_pool<test::movable_and_copyable_int> >;
 
 template class stable_vector
    < test::movable_and_copyable_int
@@ -159,19 +143,9 @@ int main()
       std::cerr << "test_cont_variants< std::allocator<void> > failed" << std::endl;
       return 1;
    }
-   //       boost::container::allocator
-   if(test_cont_variants< allocator<void> >()){
-      std::cerr << "test_cont_variants< allocator<void> > failed" << std::endl;
-      return 1;
-   }
    //       boost::container::node_allocator
    if(test_cont_variants< node_allocator<void> >()){
       std::cerr << "test_cont_variants< node_allocator<void> > failed" << std::endl;
-      return 1;
-   }
-   //       boost::container::adaptive_pool
-   if(test_cont_variants< adaptive_pool<void> >()){
-      std::cerr << "test_cont_variants< adaptive_pool<void> > failed" << std::endl;
       return 1;
    }
 

@@ -1,15 +1,16 @@
 [/============================================================================
   Boost.Geometry (aka GGL, Generic Geometry Library)
 
-  Copyright (c) 2009-2015 Barend Gehrels, Geodan, Amsterdam, the Netherlands.
-  Copyright (c) 2009-2015 Bruno Lalande, Paris, France.
-  Copyright (c) 2009-2015 Mateusz Loskot <mateusz@loskot.net>, London, UK
-  Copyright (c) 2011-2015 Adam Wulkiewicz
+  Copyright (c) 2009-2016 Barend Gehrels, Geodan, Amsterdam, the Netherlands.
+  Copyright (c) 2009-2016 Bruno Lalande, Paris, France.
+  Copyright (c) 2009-2016 Mateusz Loskot <mateusz@loskot.net>, London, UK.
+  Copyright (c) 2011-2016 Adam Wulkiewicz, Lodz, Poland.
 
-  This file was modified by Oracle on 2015.
-  Modifications copyright (c) 2015, Oracle and/or its affiliates.
+  This file was modified by Oracle on 2015, 2016.
+  Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
   Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+  Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
   Use, modification and distribution is subject to the Boost Software License,
   Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -17,6 +18,41 @@
 =============================================================================/]
 
 [section:release_notes Release Notes]
+
+[/=================]
+[heading Boost 1.61]
+[/=================]
+
+[*Additional functionality]
+
+* Support within and covered_by for Box/Box in spherical and geographic coordinate systems.
+
+[*Improvements]
+
+* Overlay: handle_tangencies replaced by clusters, fixing many cases with colocated turns
+
+[*Solved tickets]
+
+* [@https://svn.boost.org/trac/boost/ticket/10866 10866] union_ doesn't work in 1.56 and 1.57.
+* [@https://svn.boost.org/trac/boost/ticket/11018 11018] Invalid geometry intersection
+* [@https://svn.boost.org/trac/boost/ticket/11576 11576] Intersection gives wrong results.
+* [@https://svn.boost.org/trac/boost/ticket/11637 11637] Unused parameter warning.
+* [@https://svn.boost.org/trac/boost/ticket/11725 11725] union_ fails to create holes
+* [@https://svn.boost.org/trac/boost/ticket/11789 11789] Assertion failure or invalid result of set operations for spherical_equatorial coordinate system.
+* [@https://svn.boost.org/trac/boost/ticket/11917 11917] Andoyer distance strategy returns 0 for antipodal points (default geographic distance).
+* [@https://svn.boost.org/trac/boost/ticket/11928 11928] Improvement of the accuracy of surveyor area strategy.
+* [@https://svn.boost.org/trac/boost/ticket/11966 11966] Compilation error in svg() for box and non-int coordinate type.
+* [@https://svn.boost.org/trac/boost/ticket/11984 11984] union_() generates self-intersecting polygon
+* [@https://svn.boost.org/trac/boost/ticket/11987 11987] rtree::remove() not compiling for geographic CS.
+* [@https://svn.boost.org/trac/boost/ticket/12000 12000] Uninitialized reference in (unused) constructor of relate's mask_handler.
+* [@https://svn.boost.org/trac/boost/ticket/12106 12106] Invalid assertion failure in envelope() for non-cartesian very short segments.
+
+[*Bugfixes]
+
+* Fix intersects and disjoints for Segment/Box in cartesian coordinate system when Segment is parallel to Box's face.
+* Fix relation operations for Point/Areal in spherical and geographic coordinate systems for edge cases.
+* Fix intersect and disjoint for Point/Box and Box/Box in spherical and geographic coordinate systems for some cases.
+* Fix within and covered_by for Point/Box in spherical and geographic coordinate systems for some cases.
 
 [/=================]
 [heading Boost 1.60]
@@ -35,7 +71,9 @@
 [*Bugfixes]
 
 * Fix colocations of touching interior ring / exterior ring, where it also touches another polygon
-* Fix removing values from an empty rtree - no effect and 0 returned instead of assertion failure.
+* Fix removing values from an empty rtree - no effect and 0 returned instead of assertion failure
+* Fix segfault in centroid for multi geometries containing empty single geometries (thanks to Jiri Drbalek)
+* Fix liang_barsky strategy for integral coordinates (thanks to Dane Springmeyer)
 
 [/=================]
 [heading Boost 1.59]

@@ -240,9 +240,9 @@ The following class describes a so-called monitor pattern.
   template <
       typename Lockable=mutex
   >
-  class basic_monitor : protected basic_lockable_adapter<Lockable> { // behaves like an BasicLockable for the derived classes 
+  class basic_monitor : protected basic_lockable_adapter<Lockable> { // behaves like a BasicLockable for the derived classes 
   protected:
-      typedef unspecified synchronizer; // is an strict lock guard 
+      typedef unspecified synchronizer; // is a strict lock guard 
   };
 
 [/shared_monitor]

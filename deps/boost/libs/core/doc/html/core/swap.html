@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>swap</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Core">
 <link rel="prev" href="scoped_enum.html" title="scoped_enum">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="core.swap"></a><a class="link" href="swap.html" title="swap">swap</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="swap.html#core.swap.header_boost_core_swap_hpp">Header &lt;boost/core/swap.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="swap.html#core.swap.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="swap.html#core.swap.rationale">Rationale</a></span></dt>
@@ -37,8 +37,8 @@
 </dl></div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45877771711984"></a>Authors</h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<a name="idp7070576"></a>Authors</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Niels Dekker
         </li>
@@ -85,7 +85,7 @@
         restrictive and unnecessarily slow. In addition, where the generic swap implementation
         provides only the basic guarantee, specialized swap functions are often able
         to provide the no-throw exception guarantee (and it is considered best practice
-        to do so where possible <a href="#ftn.core.swap.rationale.f0" class="footnote" name="core.swap.rationale.f0"><sup class="footnote">[1]</sup></a>.
+        to do so where possible <sup>[<a name="core.swap.rationale.f0" href="#ftn.core.swap.rationale.f0" class="footnote">1</a>]</sup>.
       </p>
 <p>
         The alternative to using argument dependent lookup in this situation is to
@@ -98,7 +98,7 @@
         <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">swap</span></code> also supports swapping built-in arrays.
         Note that <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">swap</span></code> originally did not do so, but a request
         to add an overload of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">swap</span></code>
-        for built-in arrays has been accepted by the C++ Standards Committee<a href="#ftn.core.swap.rationale.f1" class="footnote" name="core.swap.rationale.f1"><sup class="footnote">[2]</sup></a>.
+        for built-in arrays has been accepted by the C++ Standards Committee<sup>[<a name="core.swap.rationale.f1" href="#ftn.core.swap.rationale.f1" class="footnote">2</a>]</sup>.
       </p>
 </div>
 <div class="section">
@@ -123,7 +123,7 @@
 <p>
         Either:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             T must be assignable
           </li>
@@ -134,21 +134,21 @@
 <p>
         Or:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             A function with the signature <code class="computeroutput"><span class="identifier">swap</span><span class="special">(</span><span class="identifier">T</span><span class="special">&amp;,</span><span class="identifier">T</span><span class="special">&amp;)</span></code> is available via argument dependent
             lookup
           </li></ul></div>
 <p>
         Or:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             A template specialization of <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">swap</span></code>
             exists for T
           </li></ul></div>
 <p>
         Or:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             T is a built-in array of swappable elements
           </li></ul></div>
 </div>
@@ -167,7 +167,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="core.swap.credits"></a><a class="link" href="swap.html#core.swap.credits" title="Credits">Credits</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="bold"><strong>Niels Dekker</strong></span> - for implementing and
             documenting support for built-in arrays
@@ -184,12 +184,12 @@
 </ul></div>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.core.swap.rationale.f0" class="footnote"><p><a href="#core.swap.rationale.f0" class="para"><sup class="para">[1] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.core.swap.rationale.f0" href="#core.swap.rationale.f0" class="para">1</a>] </sup>
           Scott Meyers, Effective C++ Third Edition, Item 25: "Consider support
           for a non-throwing swap"
         </p></div>
-<div id="ftn.core.swap.rationale.f1" class="footnote"><p><a href="#core.swap.rationale.f1" class="para"><sup class="para">[2] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.core.swap.rationale.f1" href="#core.swap.rationale.f1" class="para">2</a>] </sup>
           <a href="http://open-std.org/jtc1/sc22/wg21/docs/lwg-defects.html#809" target="_top">LWG
           Defect Report 809: std::swap should be overloaded for array types</a>
         </p></div>

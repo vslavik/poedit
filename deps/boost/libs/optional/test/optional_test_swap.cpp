@@ -23,6 +23,11 @@
 
 #include "boost/core/lightweight_test.hpp"
 
+#if __cplusplus < 201103L
+#include <algorithm>
+#else
+#include <utility>
+#endif
 
 using boost::optional;
 using boost::none;
@@ -202,13 +207,13 @@ namespace boost {
 //
 
 template <> struct optional_swap_should_use_default_constructor<
-  optional_swap_test::class_whose_default_ctor_should_be_used> : mpl::true_ {} ;
+  optional_swap_test::class_whose_default_ctor_should_be_used> : true_type {} ;
 
 template <> struct optional_swap_should_use_default_constructor<
-  optional_swap_test::class_whose_default_ctor_should_not_be_used> : mpl::false_ {} ;
+  optional_swap_test::class_whose_default_ctor_should_not_be_used> : false_type {} ;
 
 template <class T> struct optional_swap_should_use_default_constructor<
-  optional_swap_test::template_whose_default_ctor_should_be_used<T> > : mpl::true_ {} ;
+  optional_swap_test::template_whose_default_ctor_should_be_used<T> > : true_type {} ;
 
 
 //

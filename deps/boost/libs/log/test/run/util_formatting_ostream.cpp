@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <boost/config.hpp>
 #include <boost/test/unit_test.hpp>
-#include <boost/utility/string_ref.hpp>
+#include <boost/utility/string_view.hpp>
 #include <boost/log/utility/formatting_ostream.hpp>
 #include "char_definitions.hpp"
 
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(width_formatting, CharT, char_types)
     typedef test_impl< CharT > test;
     test::BOOST_NESTED_TEMPLATE width_formatting< const CharT* >();
     test::BOOST_NESTED_TEMPLATE width_formatting< typename test::string_type >();
-    test::BOOST_NESTED_TEMPLATE width_formatting< boost::basic_string_ref< CharT > >();
+    test::BOOST_NESTED_TEMPLATE width_formatting< boost::basic_string_view< CharT > >();
 }
 
 // Test support for filler character setup
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(fill_formatting, CharT, char_types)
     typedef test_impl< CharT > test;
     test::BOOST_NESTED_TEMPLATE fill_formatting< const CharT* >();
     test::BOOST_NESTED_TEMPLATE fill_formatting< typename test::string_type >();
-    test::BOOST_NESTED_TEMPLATE fill_formatting< boost::basic_string_ref< CharT > >();
+    test::BOOST_NESTED_TEMPLATE fill_formatting< boost::basic_string_view< CharT > >();
 }
 
 // Test support for text alignment
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(alignment, CharT, char_types)
     typedef test_impl< CharT > test;
     test::BOOST_NESTED_TEMPLATE alignment< const CharT* >();
     test::BOOST_NESTED_TEMPLATE alignment< typename test::string_type >();
-    test::BOOST_NESTED_TEMPLATE alignment< boost::basic_string_ref< CharT > >();
+    test::BOOST_NESTED_TEMPLATE alignment< boost::basic_string_view< CharT > >();
 }
 
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(rvalue_stream, CharT, char_types)
     typedef test_impl< CharT > test;
     test::BOOST_NESTED_TEMPLATE rvalue_stream< const CharT* >();
     test::BOOST_NESTED_TEMPLATE rvalue_stream< typename test::string_type >();
-    test::BOOST_NESTED_TEMPLATE rvalue_stream< boost::basic_string_ref< CharT > >();
+    test::BOOST_NESTED_TEMPLATE rvalue_stream< boost::basic_string_view< CharT > >();
 }
 #endif
 
@@ -395,8 +395,8 @@ BOOST_AUTO_TEST_CASE(character_code_conversion)
     test_widening_code_conversion< const char* >();
     test_narrowing_code_conversion< std::wstring >();
     test_widening_code_conversion< std::string >();
-    test_narrowing_code_conversion< boost::wstring_ref >();
-    test_widening_code_conversion< boost::string_ref >();
+    test_narrowing_code_conversion< boost::wstring_view >();
+    test_widening_code_conversion< boost::string_view >();
 }
 
 #endif

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function wait_some</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../mpi/reference.html#header.boost.mpi.nonblocking_hpp" title="Header &lt;boost/mpi/nonblocking.hpp&gt;">
 <link rel="prev" href="test_all.html" title="Function test_all">
@@ -41,24 +41,18 @@
   <span class="identifier">BidirectionalIterator</span> 
   <span class="identifier">wait_some</span><span class="special">(</span><span class="identifier">BidirectionalIterator</span> first<span class="special">,</span> <span class="identifier">BidirectionalIterator</span> last<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555220489088"></a><h2>Description</h2>
+<a name="idp306772912"></a><h2>Description</h2>
 <p>This routine takes in a set of requests stored in the iterator range <code class="computeroutput"></code>[first,last) and waits until at least one of the requests has completed. It then completes all of the requests it can, partitioning the input sequence into pending requests followed by completed requests. If an output iterator is provided, <code class="computeroutput">status</code> objects will be emitted for each of the completed requests. This routine provides functionality equivalent to <code class="computeroutput">MPI_Waitsome</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">first</code></span></p></td>

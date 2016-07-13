@@ -7,7 +7,10 @@
 #
 #  See http://www.boost.org for updates, documentation, and revision history.
 
-path-constant boost-root : [ modules.peek : BOOST ] ;
+local BOOST = $(BOOST_ROOT) ;
+BOOST ?= [ modules.peek : BOOST_ROOT ] ;
+BOOST ?= [ modules.peek : BOOST ] ;
+path-constant boost-root : $(BOOST) ;
 path-constant images_location : images ; # location of SVG and PNG images referenced by Quickbook.
 
 import modules ;

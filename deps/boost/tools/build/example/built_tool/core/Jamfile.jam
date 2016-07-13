@@ -1,5 +1,6 @@
 
 import toolset ;
+import os ;
 
 project : requirements <tblgen>../tblgen//tblgen ;
 
@@ -27,4 +28,12 @@ rule tblgen ( targets * : sources * : properties * )
 actions tblgen bind COMMAND
 {
     $(COMMAND:E=tblgen) > $(<)
+}
+
+if [ os.name ] = VMS
+{
+    actions tblgen bind COMMAND
+    {
+        PIPE MCR $(COMMAND:WE=tblgen) > $(<:W)
+    }
 }

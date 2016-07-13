@@ -81,9 +81,13 @@ class sg_set_impl
    static const bool constant_time_size = tree_type::constant_time_size;
 
    public:
+   //! @copydoc ::boost::intrusive::sgtree::sgtree()
+   sg_set_impl()
+      :  tree_type()
+   {}
+
    //! @copydoc ::boost::intrusive::sgtree::sgtree(const key_compare &,const value_traits &)
-   explicit sg_set_impl( const key_compare &cmp = key_compare()
-                    , const value_traits &v_traits = value_traits())
+   explicit sg_set_impl( const key_compare &cmp, const value_traits &v_traits = value_traits())
       :  tree_type(cmp, v_traits)
    {}
 
@@ -193,6 +197,17 @@ class sg_set_impl
    //! @copydoc ::boost::intrusive::sgtree::insert_unique(const_iterator,reference)
    iterator insert(const_iterator hint, reference value)
    {  return tree_type::insert_unique(hint, value);  }
+
+   //! @copydoc ::boost::intrusive::sgtree::insert_unique_check(const key_type&,insert_commit_data&)
+   std::pair<iterator, bool> insert_check
+      (const key_type &key, insert_commit_data &commit_data)
+   {  return tree_type::insert_unique_check(key, commit_data); }
+
+   //! @copydoc ::boost::intrusive::sgtree::insert_unique_check(const_iterator,const key_type&,insert_commit_data&)
+   std::pair<iterator, bool> insert_check
+      (const_iterator hint, const key_type &key
+      ,insert_commit_data &commit_data)
+   {  return tree_type::insert_unique_check(hint, key, commit_data); }
 
    //! @copydoc ::boost::intrusive::sgtree::insert_unique_check(const KeyType&,KeyTypeKeyCompare,insert_commit_data&)
    template<class KeyType, class KeyTypeKeyCompare>
@@ -319,21 +334,21 @@ class sg_set_impl
 
    #endif   //   #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
-   //! @copydoc ::boost::intrusive::rbtree::equal_range(const key_type &)
+   //! @copydoc ::boost::intrusive::sgtree::equal_range(const key_type &)
    std::pair<iterator,iterator> equal_range(const key_type &key)
    {  return this->tree_type::lower_bound_range(key); }
 
-   //! @copydoc ::boost::intrusive::rbtree::equal_range(const KeyType&,KeyTypeKeyCompare)
+   //! @copydoc ::boost::intrusive::sgtree::equal_range(const KeyType&,KeyTypeKeyCompare)
    template<class KeyType, class KeyTypeKeyCompare>
    std::pair<iterator,iterator> equal_range(const KeyType& key, KeyTypeKeyCompare comp)
    {  return this->tree_type::equal_range(key, comp); }
 
-   //! @copydoc ::boost::intrusive::rbtree::equal_range(const key_type &)const
+   //! @copydoc ::boost::intrusive::sgtree::equal_range(const key_type &)const
    std::pair<const_iterator, const_iterator>
       equal_range(const key_type &key) const
    {  return this->tree_type::lower_bound_range(key); }
 
-   //! @copydoc ::boost::intrusive::rbtree::equal_range(const KeyType&,KeyTypeKeyCompare)const
+   //! @copydoc ::boost::intrusive::sgtree::equal_range(const KeyType&,KeyTypeKeyCompare)const
    template<class KeyType, class KeyTypeKeyCompare>
    std::pair<const_iterator, const_iterator>
       equal_range(const KeyType& key, KeyTypeKeyCompare comp) const
@@ -487,8 +502,11 @@ class sg_set
    //Assert if passed value traits are compatible with the type
    BOOST_STATIC_ASSERT((detail::is_same<typename value_traits::value_type, T>::value));
 
-   explicit sg_set( const key_compare &cmp = key_compare()
-                  , const value_traits &v_traits = value_traits())
+   sg_set()
+      :  Base()
+   {}
+
+   explicit sg_set( const key_compare &cmp, const value_traits &v_traits = value_traits())
       :  Base(cmp, v_traits)
    {}
 
@@ -584,9 +602,13 @@ class sg_multiset_impl
    static const bool constant_time_size = tree_type::constant_time_size;
 
    public:
+   //! @copydoc ::boost::intrusive::sgtree::sgtree()
+   sg_multiset_impl()
+      :  tree_type()
+   {}
+
    //! @copydoc ::boost::intrusive::sgtree::sgtree(const key_compare &,const value_traits &)
-   explicit sg_multiset_impl( const key_compare &cmp = key_compare()
-                         , const value_traits &v_traits = value_traits())
+   explicit sg_multiset_impl( const key_compare &cmp, const value_traits &v_traits = value_traits())
       :  tree_type(cmp, v_traits)
    {}
 
@@ -960,8 +982,11 @@ class sg_multiset
    //Assert if passed value traits are compatible with the type
    BOOST_STATIC_ASSERT((detail::is_same<typename value_traits::value_type, T>::value));
 
-   sg_multiset( const key_compare &cmp = key_compare()
-           , const value_traits &v_traits = value_traits())
+   sg_multiset()
+      :  Base()
+   {}
+
+   explicit sg_multiset( const key_compare &cmp, const value_traits &v_traits = value_traits())
       :  Base(cmp, v_traits)
    {}
 

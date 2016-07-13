@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Relation to other Boost libraries</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../lambda.html" title="Chapter&#160;16.&#160;Boost.Lambda">
+<link rel="up" href="../lambda.html" title="Chapter&#160;17.&#160;Boost.Lambda">
 <link rel="prev" href="s07.html" title="Practical considerations">
 <link rel="next" href="s09.html" title="Contributors">
 </head>
@@ -25,14 +25,14 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idm45555241281984"></a>Relation to other Boost libraries</h2></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="s08.html#idm45555241281296">Boost Function</a></span></dt>
-<dt><span class="section"><a href="s08.html#idm45555241272544">Boost Bind</a></span></dt>
+<a name="idp247918224"></a>Relation to other Boost libraries</h2></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="s08.html#idp247918912">Boost Function</a></span></dt>
+<dt><span class="section"><a href="s08.html#idp247927664">Boost Bind</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555241281296"></a>Boost Function</h3></div></div></div>
+<a name="idp247918912"></a>Boost Function</h3></div></div></div>
 <p>Sometimes it is convenient to store lambda functors in variables.
 However, the types of even the simplest lambda functors are long and unwieldy, and it is in general unfeasible to declare variables with lambda functor types.
 <span class="emphasis"><em>The Boost Function library</em></span> <a class="xref" href="../lambda.html#cit:boost::function" title="Boost Function Library">[<abbr class="abbrev">function</abbr>]</a> defines wrappers for arbitrary function objects, for example 
@@ -80,8 +80,8 @@ counter(3); // error, *sum does not exist anymore
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555241272544"></a>Boost Bind</h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="s08.html#idm45555241266912">First argument of bind expression</a></span></dt></dl></div>
+<a name="idp247927664"></a>Boost Bind</h3></div></div></div>
+<div class="toc"><dl><dt><span class="section"><a href="s08.html#idp247933296">First argument of bind expression</a></span></dt></dl></div>
 <p>
 <span class="emphasis"><em>The Boost Bind</em></span> <a class="xref" href="../lambda.html#cit:boost::bind" title="Boost Bind Library">[<abbr class="abbrev">bind</abbr>]</a> library has partially overlapping functionality with the BLL. 
 Basically, the Boost Bind library (BB in the sequel) implements the bind expression part of BLL.
@@ -107,7 +107,7 @@ between the bind expressions in BB and BLL.
 </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm45555241266912"></a>First argument of bind expression</h4></div></div></div>
+<a name="idp247933296"></a>First argument of bind expression</h4></div></div></div>
 
 In BB the first argument of the bind expression, the target function, 
 is treated differently from the other arguments, 

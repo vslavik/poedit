@@ -185,4 +185,5 @@ execfile("make_qbk.py")
 os.chdir("..")
 
 # Use either bjam or b2 or ../../../b2 (the last should be done on Release branch)
-run_command("b2")
+if "--release-build" not in sys.argv:
+    run_command("b2")

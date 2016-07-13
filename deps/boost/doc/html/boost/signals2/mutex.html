@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class mutex</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../signals2/reference.html#header.boost.signals2.mutex_hpp" title="Header &lt;boost/signals2/mutex.hpp&gt;">
 <link rel="prev" href="no_slots_error.html" title="Class no_slots_error">
@@ -35,12 +35,12 @@
 </span>
 <span class="keyword">class</span> <a class="link" href="mutex.html" title="Class mutex">mutex</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
-  <span class="keyword">void</span> <a class="link" href="mutex.html#idm45507038541024-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="mutex.html#idm45507047265360-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="mutex.html#idm45507106472528-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="mutex.html#idp65952304-bb"><span class="identifier">lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="mutex.html#idp134916624-bb"><span class="identifier">try_lock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="mutex.html#idp134915056-bb"><span class="identifier">unlock</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555131428144"></a><h2>Description</h2>
+<a name="idp395807616"></a><h2>Description</h2>
 <p>
             The <code class="computeroutput">mutex</code> class implements the <code class="computeroutput">Lockable</code>
             concept of Boost.Thread, and is the default <code class="computeroutput">Mutex</code> template parameter
@@ -64,23 +64,20 @@
             use the <a class="link" href="dummy_mutex.html" title="Class dummy_mutex">signals2::dummy_mutex</a> class as the <code class="computeroutput">Mutex</code>
             template type for your signal.
           </p>
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507038541024-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp65952304-bb"></a><span class="identifier">lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Locks the mutex.
               </p>
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45507047265360-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp134916624-bb"></a><span class="identifier">try_lock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Makes a non-blocking attempt to lock the mutex.
               </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p><code class="computeroutput">true</code> on success.</p></td>
 </tr></tbody>
 </table></div>
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507106472528-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp134915056-bb"></a><span class="identifier">unlock</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Unlocks the mutex.
               </p>
 </div>

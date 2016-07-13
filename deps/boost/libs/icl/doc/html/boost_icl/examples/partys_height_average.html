@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Party's height average</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.74.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Icl">
 <link rel="up" href="../examples.html" title="Examples">
 <link rel="prev" href="overlap_counter.html" title="Overlap counter">
@@ -22,9 +22,9 @@
 <div class="spirit-nav">
 <a accesskey="p" href="overlap_counter.html"><img src="../../../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../examples.html"><img src="../../../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="partys_tallest_guests.html"><img src="../../../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
-<div class="section boost_icl_examples_partys_height_average" lang="en">
+<div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="boost_icl.examples.partys_height_average"></a><a class="link" href="partys_height_average.html" title="Party's height average"> Party's height
+<a name="boost_icl.examples.partys_height_average"></a><a class="link" href="partys_height_average.html" title="Party's height average">Party's height
       average</a>
 </h3></div></div></div>
 <p>
@@ -39,13 +39,10 @@
         interval_map.
       </p>
 <p>
-        </p>
-<p>
-          
 </p>
-<pre class="programlisting"><span class="comment">// The next line includes &lt;boost/date_time/posix_time/posix_time.hpp&gt;
-</span><span class="comment">// and a few lines of adapter code.
-</span><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">icl</span><span class="special">/</span><span class="identifier">ptime</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span> 
+<pre class="programlisting"><span class="comment">// The next line includes &lt;boost/date_time/posix_time/posix_time.hpp&gt;</span>
+<span class="comment">// and a few lines of adapter code.</span>
+<span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">icl</span><span class="special">/</span><span class="identifier">ptime</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">iostream</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">icl</span><span class="special">/</span><span class="identifier">interval_map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">icl</span><span class="special">/</span><span class="identifier">split_interval_map</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -74,7 +71,7 @@
 <span class="special">};</span>
 
 <span class="keyword">bool</span> <span class="keyword">operator</span> <span class="special">==</span> <span class="special">(</span><span class="keyword">const</span> <span class="identifier">counted_sum</span><span class="special">&amp;</span> <span class="identifier">left</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">counted_sum</span><span class="special">&amp;</span> <span class="identifier">right</span><span class="special">)</span>
-<span class="special">{</span> <span class="keyword">return</span> <span class="identifier">left</span><span class="special">.</span><span class="identifier">sum</span><span class="special">()==</span><span class="identifier">right</span><span class="special">.</span><span class="identifier">sum</span><span class="special">()</span> <span class="special">&amp;&amp;</span> <span class="identifier">left</span><span class="special">.</span><span class="identifier">count</span><span class="special">()==</span><span class="identifier">right</span><span class="special">.</span><span class="identifier">count</span><span class="special">();</span> <span class="special">}</span> 
+<span class="special">{</span> <span class="keyword">return</span> <span class="identifier">left</span><span class="special">.</span><span class="identifier">sum</span><span class="special">()==</span><span class="identifier">right</span><span class="special">.</span><span class="identifier">sum</span><span class="special">()</span> <span class="special">&amp;&amp;</span> <span class="identifier">left</span><span class="special">.</span><span class="identifier">count</span><span class="special">()==</span><span class="identifier">right</span><span class="special">.</span><span class="identifier">count</span><span class="special">();</span> <span class="special">}</span>
 
 
 <span class="keyword">void</span> <span class="identifier">partys_height_average</span><span class="special">()</span>
@@ -82,40 +79,40 @@
     <span class="identifier">interval_map</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">,</span> <span class="identifier">counted_sum</span><span class="special">&gt;</span> <span class="identifier">height_sums</span><span class="special">;</span>
 
     <span class="identifier">height_sums</span> <span class="special">+=</span>
-      <span class="identifier">make_pair</span><span class="special">(</span> 
+      <span class="identifier">make_pair</span><span class="special">(</span>
         <span class="identifier">discrete_interval</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">&gt;::</span><span class="identifier">right_open</span><span class="special">(</span>
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 19:30"</span><span class="special">),</span> 
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 23:00"</span><span class="special">)),</span> 
-        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">165</span><span class="special">));</span> <span class="comment">// Mary is 1,65 m tall.
-</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 19:30"</span><span class="special">),</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 23:00"</span><span class="special">)),</span>
+        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">165</span><span class="special">));</span> <span class="comment">// Mary is 1,65 m tall.</span>
+
     <span class="identifier">height_sums</span> <span class="special">+=</span>
-      <span class="identifier">make_pair</span><span class="special">(</span> 
+      <span class="identifier">make_pair</span><span class="special">(</span>
         <span class="identifier">discrete_interval</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">&gt;::</span><span class="identifier">right_open</span><span class="special">(</span>
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 19:30"</span><span class="special">),</span> 
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 23:00"</span><span class="special">)),</span> 
-        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">180</span><span class="special">));</span> <span class="comment">// Harry is 1,80 m tall.
-</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 19:30"</span><span class="special">),</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 23:00"</span><span class="special">)),</span>
+        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">180</span><span class="special">));</span> <span class="comment">// Harry is 1,80 m tall.</span>
+
     <span class="identifier">height_sums</span> <span class="special">+=</span>
-      <span class="identifier">make_pair</span><span class="special">(</span> 
+      <span class="identifier">make_pair</span><span class="special">(</span>
         <span class="identifier">discrete_interval</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">&gt;::</span><span class="identifier">right_open</span><span class="special">(</span>
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 20:10"</span><span class="special">),</span> 
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-21 00:00"</span><span class="special">)),</span> 
-        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">170</span><span class="special">));</span> <span class="comment">// Diana is 1,70 m tall.
-</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 20:10"</span><span class="special">),</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-21 00:00"</span><span class="special">)),</span>
+        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">170</span><span class="special">));</span> <span class="comment">// Diana is 1,70 m tall.</span>
+
     <span class="identifier">height_sums</span> <span class="special">+=</span>
-      <span class="identifier">make_pair</span><span class="special">(</span> 
+      <span class="identifier">make_pair</span><span class="special">(</span>
         <span class="identifier">discrete_interval</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">&gt;::</span><span class="identifier">right_open</span><span class="special">(</span>
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 20:10"</span><span class="special">),</span> 
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-21 00:00"</span><span class="special">)),</span> 
-        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">165</span><span class="special">));</span> <span class="comment">// Susan is 1,65 m tall.
-</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 20:10"</span><span class="special">),</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-21 00:00"</span><span class="special">)),</span>
+        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">165</span><span class="special">));</span> <span class="comment">// Susan is 1,65 m tall.</span>
+
     <span class="identifier">height_sums</span> <span class="special">+=</span>
-      <span class="identifier">make_pair</span><span class="special">(</span> 
+      <span class="identifier">make_pair</span><span class="special">(</span>
         <span class="identifier">discrete_interval</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">&gt;::</span><span class="identifier">right_open</span><span class="special">(</span>
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 22:15"</span><span class="special">),</span> 
-          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-21 00:30"</span><span class="special">)),</span> 
-        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">200</span><span class="special">));</span> <span class="comment">// Peters height is 2,00 m
-</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-20 22:15"</span><span class="special">),</span>
+          <span class="identifier">time_from_string</span><span class="special">(</span><span class="string">"2008-05-21 00:30"</span><span class="special">)),</span>
+        <span class="identifier">counted_sum</span><span class="special">(</span><span class="number">200</span><span class="special">));</span> <span class="comment">// Peters height is 2,00 m</span>
+
     <span class="identifier">interval_map</span><span class="special">&lt;</span><span class="identifier">ptime</span><span class="special">,</span> <span class="identifier">counted_sum</span><span class="special">&gt;::</span><span class="identifier">iterator</span> <span class="identifier">height_sum_</span> <span class="special">=</span> <span class="identifier">height_sums</span><span class="special">.</span><span class="identifier">begin</span><span class="special">();</span>
     <span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="string">"-------------- History of average guest height -------------------\n"</span><span class="special">;</span>
     <span class="keyword">while</span><span class="special">(</span><span class="identifier">height_sum_</span> <span class="special">!=</span> <span class="identifier">height_sums</span><span class="special">.</span><span class="identifier">end</span><span class="special">())</span>
@@ -138,8 +135,8 @@
     <span class="keyword">return</span> <span class="number">0</span><span class="special">;</span>
 <span class="special">}</span>
 
-<span class="comment">// Program output:
-</span><span class="comment">/*-----------------------------------------------------------------------------
+<span class="comment">// Program output:</span>
+<span class="comment">/*-----------------------------------------------------------------------------
 &gt;&gt;Interval Container Library: Sample partys_height_average.cpp  &lt;&lt;
 ------------------------------------------------------------------
 -------------- History of average guest height -------------------
@@ -150,8 +147,6 @@
 [2008-May-21 00:00:00 - 2008-May-21 00:30:00): 200 cm = 6.56 ft
 -----------------------------------------------------------------------------*/</span>
 </pre>
-<p>
-        </p>
 <p>
       </p>
 <p>
@@ -178,7 +173,9 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007 -2010 Joachim Faulhaber<br>Copyright &#169; 1999 -2006 Cortex Software GmbH<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2010 Joachim
+      Faulhaber<br>Copyright &#169; 1999-2006 Cortex Software
+      GmbH<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

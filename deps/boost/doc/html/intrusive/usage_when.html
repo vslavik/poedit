@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>When to use?</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="usage.html" title="How to use Boost.Intrusive">
 <link rel="next" href="concepts_summary.html" title="Concept summary">
 </head>
@@ -31,7 +31,7 @@
       Intrusive containers can be used for highly optimized algorithms, where speed
       is a crucial issue and:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           additional memory management should be avoided.
         </li>
@@ -60,7 +60,7 @@
       of those objects (<code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">Object</span><span class="special">*&gt;</span></code>),
       then operating on an Object from the list iterator (<code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">list</span><span class="special">&lt;</span><span class="identifier">Object</span><span class="special">*&gt;::</span><span class="identifier">iterator</span></code>) requires two steps:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Access from the iterator (usually on the stack) to the list node storing
           a pointer to <code class="computeroutput"><span class="identifier">Object</span></code>.

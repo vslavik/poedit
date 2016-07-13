@@ -83,6 +83,14 @@ type.register LINK         :        : TEST ;
 type.register UNIT_TEST    : passed : TEST ;
 
 
+# Suffix to denote test target directory
+#
+.TEST-DIR-SUFFIX = ".test" ;
+if [ os.name ] = VMS
+{
+    .TEST-DIR-SUFFIX = "$test" ;
+}
+
 # Declare the rules which create main targets. While the 'type' module already
 # creates rules with the same names for us, we need extra convenience: default
 # name of main target, so write our own versions.
@@ -104,11 +112,11 @@ rule make-test ( target-type : sources + : requirements * : target-name ? )
 
     local project = [ project.current ] ;
     # The <location-prefix> forces the build system for generate paths in the
-    # form '$build_dir/array1.test/gcc/debug'. This is necessary to allow
-    # post-processing tools to work.
+    # form '$build_dir/array1$(.TEST-DIR-SUFFIX)/gcc/debug'. This is necessary
+    # to allow post-processing tools to work.
     local t = [ targets.create-typed-target [ type.type-from-rule-name
         $(target-type) ] : $(project) : $(real-name) : $(sources) :
-        $(requirements) <location-prefix>$(real-name).test ] ;
+        $(requirements) <location-prefix>$(real-name)$(.TEST-DIR-SUFFIX) ] ;
 
     # The alias to the real target, per period replacement above.
     if $(real-name) != $(target-name)
@@ -266,8 +274,8 @@ rule dump-test ( target )
         }
     }
 
-    local target-name = [ $(project).get location ] // [ $(target).name ] .test
-        ;
+    local target-name =
+        [ $(project).get location ] // [ $(target).name ] $(.TEST-DIR-SUFFIX) ;
     target-name = $(target-name:J=) ;
 
     local r = [ $(target).requirements ] ;
@@ -366,13 +374,13 @@ rule **passed**
 }
 
 
+
 # Used to create test files signifying passed tests.
 #
 actions **passed**
 {
     echo passed > "$(<)"
 }
-
 
 # Used to create replacement object files that do not get created during tests
 # that are expected to fail.
@@ -382,6 +390,19 @@ actions (failed-as-expected)
     echo failed as expected > "$(<)"
 }
 
+
+if [ os.name ] = VMS
+{
+    actions **passed**
+    {
+        PIPE WRITE SYS$OUTPUT "passed" > $(<:W)
+    }
+
+    actions (failed-as-expected)
+    {
+        PIPE WRITE SYS$OUTPUT "failed as expected" > $(<:W)
+    }
+}
 
 rule run-path-setup ( target : source : properties * )
 {
@@ -395,7 +416,12 @@ rule run-path-setup ( target : source : properties * )
     dll-paths = [ sequence.unique $(dll-paths) ] ;
     if $(dll-paths)
     {
-        dll-paths = [ sequence.transform path.native : $(dll-paths) ] ;
+        translate-to-os = path.native ;
+        if [ os.name ] = VMS
+        {
+            translate-to-os = path.to-VMS ;
+        }
+        dll-paths = [ sequence.transform $(translate-to-os) : $(dll-paths) ] ;
         PATH_SETUP on $(target) = [ common.prepend-path-variable-command
             [ os.shared-library-path-variable ] : $(dll-paths) ] ;
     }
@@ -456,7 +482,7 @@ rule capture-output ( target : source : properties * : targets-to-remove * )
     {
         DISABLE_TEST_EXECUTION on $(target) = 1 ;
     }
-    
+
     if [ feature.get-values preserve-test-targets : $(properties) ] = off
         || $(.preserve-test-targets) = off
     {
@@ -465,6 +491,12 @@ rule capture-output ( target : source : properties * : targets-to-remove * )
         {
             rmtemp-all-sources $(to-remove) ;
         }
+    }
+
+    if ! [ feature.get-values testing.launcher : $(properties) ]
+    {
+        ## On VMS set default launcher to MCR
+        if [ os.name ] = VMS { LAUNCHER on $(target) = MCR ; }
     }
 }
 
@@ -530,11 +562,34 @@ if [ os.name ] = NT
     .STATUS        = %status% ;
     .SET_STATUS    = "set status=%ERRORLEVEL%" ;
     .RUN_OUTPUT_NL = "echo." ;
-    .STATUS_0      = "%status% EQU 0 (" ;
-    .STATUS_NOT_0  = "%status% NEQ 0 (" ;
-    .VERBOSE       = "%verbose% EQU 1 (" ;
+    .THEN          = "(" ;
+    .EXIT_SUCCESS  = "0" ;
+    .STATUS_0      = "%status% EQU 0 $(.THEN)" ;
+    .STATUS_NOT_0  = "%status% NEQ 0 $(.THEN)" ;
+    .VERBOSE       = "%verbose% EQU 1 $(.THEN)" ;
     .ENDIF         = ")" ;
     .SHELL_SET     = "set " ;
+    .CATENATE      = type ;
+    .CP            = copy ;
+    .NULLIN        = ;
+}
+else if [ os.name ] = VMS
+{
+    local nl = "
+" ;
+
+    .STATUS        = "''status'" ;
+    .SET_STATUS    = "status=$STATUS" ;
+    .SAY           = "pipe write sys$output" ; ## not really echo
+    .RUN_OUTPUT_NL = "$(.SAY) \"\"" ;
+    .THEN          = "$(nl)then" ;
+    .EXIT_SUCCESS  = "1" ;
+    .SUCCESS       = "status .eq. $(.EXIT_SUCCESS) $(.THEN)" ;
+    .STATUS_0      = "status .eq. 0 $(.THEN)" ;
+    .STATUS_NOT_0  = "status .ne. 0 $(.THEN)" ;
+    .VERBOSE       = "verbose .eq. 1 $(.THEN)" ;
+    .ENDIF         = "endif" ;
+    .SHELL_SET     = "" ;
     .CATENATE      = type ;
     .CP            = copy ;
     .NULLIN        = ;
@@ -544,9 +599,11 @@ else
     .STATUS        = "$status" ;
     .SET_STATUS    = "status=$?" ;
     .RUN_OUTPUT_NL = "echo" ;
-    .STATUS_0      = "test $status -eq 0 ; then" ;
-    .STATUS_NOT_0  = "test $status -ne 0 ; then" ;
-    .VERBOSE       = "test $verbose -eq 1 ; then" ;
+    .THEN          = "; then" ;
+    .EXIT_SUCCESS  = "0" ;
+    .STATUS_0      = "test $status -eq 0 $(.THEN)" ;
+    .STATUS_NOT_0  = "test $status -ne 0 $(.THEN)" ;
+    .VERBOSE       = "test $verbose -eq 1 $(.THEN)" ;
     .ENDIF         = "fi" ;
     .SHELL_SET     = "" ;
     .CATENATE      = cat ;
@@ -571,7 +628,7 @@ actions capture-output bind INPUT_FILES output-file
     $(.SHELL_SET)status=$(DISABLE_TEST_EXECUTION)
     if $(.STATUS_NOT_0)
         echo Skipping test execution due to testing.execute=off
-        exit 0
+        exit $(.EXIT_SUCCESS)
     $(.ENDIF)
     $(LAUNCHER) "$(>)" $(ARGS) "$(INPUT_FILES)" > "$(output-file)" 2>&1 $(.NULLIN)
     $(.SET_STATUS)
@@ -598,6 +655,52 @@ actions quietly updated ignore piecemeal together RmTemps
     $(.RM) "$(>)"
 }
 
+if [ os.name ] = VMS
+{
+    actions capture-output bind INPUT_FILES output-file
+    {
+        $(PATH_SETUP)
+        $(.SHELL_SET)status=$(DISABLE_TEST_EXECUTION)
+        if $(.STATUS_NOT_0)
+            $(.SAY) "Skipping test execution due to testing.execute=off"
+            exit "$(.EXIT_SUCCESS)"
+        $(.ENDIF)
+        !! Execute twice - first for status, second for output
+        set noon
+        pipe $(LAUNCHER) $(>:W) $(ARGS) $(INPUT_FILES:W) 2>NL: >NL:
+        $(.SET_STATUS)
+        pipe $(LAUNCHER) $(>:W) $(ARGS) $(INPUT_FILES:W) | type sys$input /out=$(output-file:W)
+        set on
+        !! Harmonize VMS success status with POSIX
+        if $(.SUCCESS)
+            $(.SHELL_SET)status="0"
+        $(.ENDIF)
+        $(.RUN_OUTPUT_NL) | append /new sys$input $(output-file:W)
+        $(.SAY) "EXIT STATUS: $(.STATUS)" | append /new sys$input $(output-file:W)
+        if $(.STATUS_0)
+            $(.CP) $(output-file:W) $(<:W)
+        $(.ENDIF)
+        $(.SHELL_SET)verbose=$(.VERBOSE_TEST)
+        if $(.STATUS_NOT_0)
+            $(.SHELL_SET)verbose=1
+        $(.ENDIF)
+        if $(.VERBOSE)
+            $(.SAY) "====== BEGIN OUTPUT ======"
+            $(.CATENATE) $(output-file:W)
+            $(.SAY) "====== END OUTPUT ======"
+        $(.ENDIF)
+        !! Harmonize VMS success status with POSIX on exit
+        if $(.STATUS_0)
+            $(.SHELL_SET)status="$(.EXIT_SUCCESS)"
+        $(.ENDIF)
+        exit "$(.STATUS)"
+    }
+
+    actions quietly updated ignore piecemeal together RmTemps
+    {
+        $(.RM) $(>:WJ=;*,);*
+    }
+}
 
 .MAKE_FILE = [ common.file-creation-command ] ;
 
@@ -608,6 +711,12 @@ toolset.flags testing.unit-test ARGS <testing.arg> ;
 rule unit-test ( target : source : properties * )
 {
     run-path-setup $(target) : $(source) : $(properties) ;
+
+    if ! [ feature.get-values testing.launcher : $(properties) ]
+    {
+        ## On VMS set default launcher to MCR
+        if [ os.name ] = VMS { LAUNCHER on $(target) = MCR ; }
+    }
 }
 
 
@@ -617,6 +726,14 @@ actions unit-test
     $(LAUNCHER) "$(>)" $(ARGS) && $(.MAKE_FILE) "$(<)"
 }
 
+if [ os.name ] = VMS
+{
+    actions unit-test
+    {
+        $(PATH_SETUP)
+        pipe $(LAUNCHER) $(>:W) $(ARGS) && $(.MAKE_FILE) $(<:W)
+    }
+}
 
 IMPORT $(__name__) : compile compile-fail run run-fail link link-fail
     : : compile compile-fail run run-fail link link-fail ;
@@ -672,4 +789,16 @@ actions time
 
     echo user: $(USER_TIME_SECONDS) > "$(<)"
     echo system: $(SYSTEM_TIME_SECONDS) >> "$(<)"
+}
+
+if [ os.name ] = VMS
+{
+    actions time
+    {
+        WRITE SYS$OUTPUT "user: ", "$(USER_TIME)"
+        WRITE SYS$OUTPUT "system: ", "(SYSTEM_TIME)"
+
+        PIPE WRITE SYS$OUTPUT "user: ", "$(USER_TIME_SECONDS)" | TYPE SYS$INPUT /OUT=$(<:W)
+        PIPE WRITE SYS$OUTPUT "system: ", "$(SYSTEM_TIME_SECONDS)" | APPEND /NEW SYS$INPUT $(<:W)
+    }
 }

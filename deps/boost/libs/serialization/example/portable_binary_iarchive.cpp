@@ -47,7 +47,7 @@ portable_binary_iarchive::load_impl(boost::intmax_t & l, char maxsize){
     #else
         if(m_flags & endian_big)
     #endif
-            reverse_bytes(size, cptr);
+    reverse_bytes(size, cptr);
     
     if(negative)
         l = -l;
@@ -55,11 +55,11 @@ portable_binary_iarchive::load_impl(boost::intmax_t & l, char maxsize){
 
 void
 portable_binary_iarchive::load_override(
-    boost::archive::class_name_type & t, int
+    boost::archive::class_name_type & t
 ){
     std::string cn;
     cn.reserve(BOOST_SERIALIZATION_MAX_KEY_SIZE);
-    load_override(cn, 0);
+    load_override(cn);
     if(cn.size() > (BOOST_SERIALIZATION_MAX_KEY_SIZE - 1))
         boost::serialization::throw_exception(
             boost::archive::archive_exception(

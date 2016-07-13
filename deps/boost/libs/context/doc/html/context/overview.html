@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Overview</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Context">
@@ -31,21 +31,20 @@
       provides a sort of cooperative multitasking on a single thread. By providing
       an abstraction of the current execution state in the current thread, including
       the stack (with local variables) and stack pointer, all registers and CPU flags,
-      and the instruction pointer, a <span class="emphasis"><em>fcontext_t</em></span> instance represents
+      and the instruction pointer, a <span class="emphasis"><em>execution_context</em></span> represents
       a specific point in the application's execution path. This is useful for building
       higher-level abstractions, like <span class="emphasis"><em>coroutines</em></span>, <span class="emphasis"><em>cooperative
       threads (userland threads)</em></span> or an equivalent to <a href="http://msdn.microsoft.com/en-us/library/9k7k7cf0%28v=vs.80%29.aspx" target="_top">C#
       keyword <span class="emphasis"><em>yield</em></span></a> in C++.
     </p>
 <p>
-      A <span class="emphasis"><em>fcontext_t</em></span> provides the means to suspend the current
+      <span class="emphasis"><em>execution_context</em></span> provides the means to suspend the current
       execution path and to transfer execution control, thereby permitting another
-      <span class="emphasis"><em>fcontext_t</em></span> to run on the current thread. This state full
-      transfer mechanism enables a <span class="emphasis"><em>fcontext_t</em></span> to suspend execution
-      from within nested functions and, later, to resume from where it was suspended.
-      While the execution path represented by a <span class="emphasis"><em>fcontext_t</em></span> only
-      runs on a single thread, it can be migrated to another thread at any given
-      time.
+      context to run on the current thread. This state full transfer mechanism enables
+      a context to suspend execution from within nested functions and, later, to
+      resume from where it was suspended. While the execution path represented by
+      a <span class="emphasis"><em>execution_context</em></span> only runs on a single thread, it can
+      be migrated to another thread at any given time.
     </p>
 <p>
       A context switch between threads requires system calls (involving the OS kernel),
@@ -66,6 +65,15 @@
 <p>
       All functions and classes are contained in the namespace <span class="emphasis"><em>boost::context</em></span>.
     </p>
+<div class="important"><table border="0" summary="Important">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="../../../../../doc/src/images/important.png"></td>
+<th align="left">Important</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        <span class="emphasis"><em>execution_context</em></span> requires C++11!
+      </p></td></tr>
+</table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

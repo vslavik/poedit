@@ -47,6 +47,7 @@
 #include <boost/geometry/algorithms/detail/overlay/get_turns.hpp>
 #include <boost/geometry/algorithms/detail/overlay/enrich_intersection_points.hpp>
 #include <boost/geometry/algorithms/detail/overlay/overlay_type.hpp>
+#include <boost/geometry/algorithms/detail/overlay/overlay.hpp>
 #include <boost/geometry/algorithms/detail/overlay/traverse.hpp>
 
 #include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
@@ -143,7 +144,7 @@ struct test_traverse
             << " " << id
             << (ccw ? "_ccw" : "")
             << " " << string_from_type<typename bg::coordinate_type<G1>::type>::name()
-            << "("  << operation(Direction) << ")" << std::endl;
+            << "("  << OverlayType << ")" << std::endl;
 
         //std::cout << bg::area(g1) << " " << bg::area(g2) << std::endl;
 #endif
@@ -181,11 +182,13 @@ struct test_traverse
         typedef std::vector<ring_type> out_vector;
         out_vector v;
 
+        bg::detail::overlay::overlay_null_visitor visitor;
+
         bg::detail::overlay::traverse
             <
                 Reverse1, Reverse2,
                 G1, G2
-            >::apply(g1, g2, op, rescale_policy, turns, v);
+            >::apply(g1, g2, op, rescale_policy, turns, v, visitor);
 
         // Check number of resulting rings
         BOOST_CHECK_MESSAGE(expected_count == boost::size(v),
@@ -221,7 +224,7 @@ struct test_traverse
             mapper.add(g1);
             mapper.add(g2);
 
-            // Input shapes in green/blue
+            // Input shapes in green (src=0) / blue (src=1)
             mapper.map(g1, "fill-opacity:0.5;fill:rgb(153,204,0);"
                     "stroke:rgb(153,204,0);stroke-width:3");
             mapper.map(g2, "fill-opacity:0.3;fill:rgb(51,51,153);"
@@ -262,14 +265,14 @@ struct test_traverse
                             );
                 std::string style =  "fill:rgb(0,0,0);font-family:Arial;font-size:8px";
 
-                if (turn.discarded)
+                if (turn.colocated)
+                {
+                    style =  "fill:rgb(255,0,0);font-family:Arial;font-size:8px";
+                }
+                else if (turn.discarded)
                 {
                     style =  "fill:rgb(92,92,92);font-family:Arial;font-size:6px";
                     lineheight = 6;
-                }
-                else if (turn.colocated)
-                {
-                    style =  "fill:rgb(255,0,0);font-family:Arial;font-size:8px";
                 }
 
                 //if (! turn.is_discarded() && ! turn.blocked() && ! turn.both(bg::detail::overlay::operation_union))
@@ -569,8 +572,20 @@ void test_all(bool test_self_tangencies = true, bool test_mixed = false)
     test_traverse_intersection::apply("79",
         2, 20, case_79[0], case_79[1]);
 
+    // Should be 3 shapes
+    test_traverse_intersection::apply("82a",
+        2, 2.0, case_82[0], case_82[1]);
+    // Should be 3 shapes
+    test_traverse_intersection::apply("82b",
+        2, 2.0, case_82[0], case_82[2]);
     // other
 
+#ifdef BOOST_GEOMETRY_ENABLE_FAILING_TESTS
+    // simplified version of 82, area should be different
+    // missing IP at (1.5 3.5) from (1 4,1.5 3.5,2 4)x(2 4,1 3)
+    test_traverse_intersection::apply("83",
+        1, 0.0, case_83[0], case_83[1]);
+#endif
 
     // pies (went wrong when not all cases where implemented, especially some collinear (opposite) cases
     test_traverse_intersection::apply("pie_16_4_12",

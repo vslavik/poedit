@@ -143,7 +143,7 @@ void test_areal()
 
     test_one<Polygon, Polygon, Polygon>("distance_zero",
         distance_zero[0], distance_zero[1],
-        1, 0 /* f: 4, other: 5 */, 0.29516139, 0.01);
+        1, 0 /* f: 4, other: 5 */, 0.29516139, ut_settings(0.01));
 
     test_one<Polygon, Polygon, Polygon>("equal_holes_disjoint",
         equal_holes_disjoint[0], equal_holes_disjoint[1],
@@ -166,19 +166,19 @@ void test_areal()
 
     test_one<Polygon, Polygon, Polygon>("pie_2_3_23_0",
         pie_2_3_23_0[0], pie_2_3_23_0[1],
-        1, 4, 163292.679042133, 0.1);
+        1, 4, 163292.679042133, ut_settings(0.1));
 
     test_one<Polygon, Polygon, Polygon>("isovist",
         isovist1[0], isovist1[1],
         1, 19, 88.19203,
-        if_typed_tt<ct>(0.01, 0.1));
+        ut_settings(if_typed_tt<ct>(0.01, 0.1)));
 
     // SQL Server gives: 88.1920416352664
     // PostGIS gives:    88.19203677911
 
     test_one<Polygon, Polygon, Polygon>("geos_1",
         geos_1[0], geos_1[1],
-            1, -1, 3461.0214843, 0.005); // MSVC 14 reports 3461.025390625
+            1, -1, 3461.0214843, ut_settings(0.005)); // MSVC 14 reports 3461.025390625
 
     // Expectations:
     // In most cases: 0 (no intersection)
@@ -186,7 +186,7 @@ void test_areal()
     // In some cases: 5.6022983000000002e-05 (powerpc64le-gcc-6-0)
     test_one<Polygon, Polygon, Polygon>("geos_2",
         geos_2[0], geos_2[1],
-            0, 0, 6.0e-5, -1.0); // -1 denotes: compare with <=
+            0, 0, 6.0e-5, ut_settings(-1.0)); // -1 denotes: compare with <=
 
 #if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
     test_one<Polygon, Polygon, Polygon>("geos_3",
@@ -208,7 +208,7 @@ void test_areal()
             ggl_list_20110306_javier[0], ggl_list_20110306_javier[1],
             1, if_typed<ct, float>(4, 5),
             0.6649875,
-            if_typed<ct, float>(1.0, 0.01));
+            ut_settings(if_typed<ct, float>(1.0, 0.01)));
     }
 
     // SQL Server reports: 0.400390625
@@ -221,7 +221,7 @@ void test_areal()
         #if defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
             0.40
         #else
-            0.397162651, 0.01
+            0.397162651, ut_settings(0.01)
         #endif
             );
 
@@ -237,23 +237,20 @@ void test_areal()
 
     test_one<Polygon, Polygon, Polygon>("ggl_list_20131119_james",
         ggl_list_20131119_james[0], ggl_list_20131119_james[1],
-        1, 4, 6.6125873045, 0.1);
+        1, 4, 6.6125873045, ut_settings(0.1));
 
     test_one<Polygon, Polygon, Polygon>("ggl_list_20140223_shalabuda",
         ggl_list_20140223_shalabuda[0], ggl_list_20140223_shalabuda[1],
-        1, 4, 3.77106, 0.001);
+        1, 4, 3.77106, ut_settings(0.001));
 
-#if 0
-    // TODO: fix this testcase, it should give 0 but instead it gives one of the input polygons
     // Mailed to the Boost.Geometry list on 2014/03/21 by 7415963@gmail.com
     test_one<Polygon, Polygon, Polygon>("ggl_list_20140321_7415963",
         ggl_list_20140321_7415963[0], ggl_list_20140321_7415963[1],
-        0, 0, 0, 0.1);
-#endif
+        0, 0, 0, ut_settings(0.1));
 
 #if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
     test_one<Polygon, Polygon, Polygon>("buffer_rt_f", buffer_rt_f[0], buffer_rt_f[1],
-                1, 4,  0.00029437899183903937, 0.01);
+                1, 4,  0.00029437899183903937, ut_settings(0.01));
 #endif
 
     test_one<Polygon, Polygon, Polygon>("buffer_rt_g", buffer_rt_g[0], buffer_rt_g[1],
@@ -311,6 +308,10 @@ void test_areal()
                 ticket_10747_e[0], ticket_10747_e[1],
                 1, 4, 7.0368748575710959e-15);
 
+    test_one<Polygon, Polygon, Polygon>("ticket_11576",
+                ticket_11576[0], ticket_11576[1],
+                1, 0, 5.585617332907136e-07);
+
 #if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
     test_one<Polygon, Polygon, Polygon>("ticket_9563", ticket_9563[0], ticket_9563[1],
                 1, 8, 129.90381);
@@ -344,12 +345,10 @@ void test_areal()
         mysql_21964465[0], mysql_21964465[1],
         0, -1, 0.0);
 
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
     test_one<Polygon, Polygon, Polygon>("mysql_21965285_b_inv",
         mysql_21965285_b_inv[0],
         mysql_21965285_b_inv[1],
         2, -1, 183.71376870369406);
-#endif
 
     return;
 
@@ -830,7 +829,9 @@ int test_main(int, char* [])
 
 #endif
 
-    test_exception<bg::model::d2::point_xy<double> >();
+    // Commented, because exception is now disabled:
+    // test_exception<bg::model::d2::point_xy<double> >();
+
     test_pointer_version();
 #if ! defined(BOOST_GEOMETRY_RESCALE_TO_ROBUST)
     test_rational<bg::model::d2::point_xy<boost::rational<int> > >();

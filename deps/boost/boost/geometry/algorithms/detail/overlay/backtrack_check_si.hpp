@@ -48,7 +48,6 @@ inline void clear_visit_info(Turns& turns)
         {
             op_it->visited.clear();
         }
-        it->discarded = false;
     }
 }
 
@@ -62,6 +61,34 @@ struct backtrack_state
 };
 
 
+enum traverse_error_type
+{
+    traverse_error_none,
+    traverse_error_no_next_ip_at_start,
+    traverse_error_no_next_ip,
+    traverse_error_dead_end_at_start,
+    traverse_error_dead_end,
+    traverse_error_visit_again,
+    traverse_error_endless_loop
+};
+
+inline std::string traverse_error_string(traverse_error_type error)
+{
+    switch (error)
+    {
+        case traverse_error_none : return "";
+        case traverse_error_no_next_ip_at_start : return "No next IP at start";
+        case traverse_error_no_next_ip : return "No next IP";
+        case traverse_error_dead_end_at_start : return "Dead end at start";
+        case traverse_error_dead_end : return "Dead end";
+        case traverse_error_visit_again : return "Visit again";
+        case traverse_error_endless_loop : return "Endless loop";
+        default : return "";
+    }
+    return "";
+}
+
+
 template
 <
     typename Geometry1,
@@ -73,23 +100,28 @@ class backtrack_check_self_intersections
     {
         bool m_checked;
         inline state()
-            : m_checked()
+            : m_checked(true)
         {}
     };
 public :
     typedef state state_type;
 
-    template <typename Operation, typename Rings, typename Ring, typename Turns, typename RobustPolicy>
+    template <typename Operation, typename Rings, typename Ring, typename Turns, typename RobustPolicy, typename Visitor>
     static inline void apply(std::size_t size_at_start,
                 Rings& rings, Ring& ring,
-                Turns& turns, Operation& operation,
-                std::string const& ,
+                Turns& turns,
+                typename boost::range_value<Turns>::type const& turn,
+                Operation& operation,
+                traverse_error_type traverse_error,
                 Geometry1 const& geometry1,
                 Geometry2 const& geometry2,
                 RobustPolicy const& robust_policy,
-                state_type& state
+                state_type& state,
+                Visitor& visitor
                 )
     {
+        visitor.visit_traverse_reject(turns, turn, operation, traverse_error);
+
         state.m_good = false;
 
         // Check self-intersections and throw exception if appropriate

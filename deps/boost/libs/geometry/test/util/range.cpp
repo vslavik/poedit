@@ -14,6 +14,9 @@
 
 #include <iterator>
 #include <vector>
+
+#include <boost/range/iterator_range.hpp>
+
 #include <boost/geometry/util/range.hpp>
 
 namespace bgt {
@@ -65,7 +68,7 @@ struct NonMovable
     NonMovable(int ii = 0) : i(ii) {}
     NonMovable(NonMovable const& ii) : i(ii.i) {}
     NonMovable & operator=(NonMovable const& ii) { i = ii.i; return *this; }
-    operator int() { return i; }
+    bool operator==(NonMovable const& ii) const { return i == ii.i; }
     int i;
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 private:
@@ -79,7 +82,7 @@ struct CopyableAndMovable
     CopyableAndMovable(int ii = 0) : i(ii) {}
     CopyableAndMovable(CopyableAndMovable const& ii) : i(ii.i) {}
     CopyableAndMovable & operator=(CopyableAndMovable const& ii) { i = ii.i; return *this; }
-    operator int() { return i; }
+    bool operator==(CopyableAndMovable const& ii) const { return i == ii.i; }
     int i;
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     CopyableAndMovable(CopyableAndMovable && ii) : i(std::move(ii.i)) {}
@@ -106,6 +109,12 @@ void test_all()
     for (int i = 0 ; i < 20 ; ++i)
     {
         BOOST_CHECK(bgr::at(v, i) == i);
+    }
+
+    {
+        std::vector<T> w;
+        std::copy(v.begin(), v.end(), bgr::back_inserter(w));
+        BOOST_CHECK(v.size() == w.size() && std::equal(v.begin(), v.end(), w.begin()));
     }
 
     BOOST_CHECK(bgr::front(v) == 0);
@@ -191,7 +200,7 @@ void test_detail()
 
     // Storing pointers in a std::vector is not possible in MinGW C++98
 #if __cplusplus >= 201103L
-    std::vector<bgt::NonMovable*> v2(10, 0);
+    std::vector<bgt::NonMovable*> v2(10, (bgt::NonMovable*)NULL);
     bgr::detail::copy_or_move(v2.begin() + 1, v2.begin() + 10, v2.begin());
     BOOST_CHECK(boost::size(v2) == 10);
     bgr::erase(v2, v2.begin() + 1);

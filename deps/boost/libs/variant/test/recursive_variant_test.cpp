@@ -81,11 +81,12 @@ struct printer
 #if !defined(BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES) && !defined(BOOST_NO_CXX11_HDR_TUPLE)
     template <int...> struct indices {};
     template <typename... Ts, int... Is>
-    std::string operator()(const std::tuple<Ts...>& tup, indices<Is...>)
+    std::string operator()(const std::tuple<Ts...>& tup, indices<Is...>) const
     {
         std::ostringstream ost;
         ost << "( ";
-        (void) (int []){0, (ost << printer()( std::get<Is>(tup) ), 0)... };
+        int a[] = {0, (ost << printer()( std::get<Is>(tup) ), 0)... };
+        (void)a;
         ost << ") ";
         return ost.str();
     }

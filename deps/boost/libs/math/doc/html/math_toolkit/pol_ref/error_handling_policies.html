@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Error Handling Policies</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
 <link rel="up" href="../pol_ref.html" title="Policy Reference">
 <link rel="prev" href="../pol_ref.html" title="Policy Reference">
 <link rel="next" href="internal_promotion.html" title="Internal Floating-point Promotion Policies">
@@ -30,7 +30,7 @@
 <p>
         There are two orthogonal aspects to error handling:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             What to do (if anything) with the error.
           </li>
@@ -40,7 +40,7 @@
 </ul></div>
 <h5>
 <a name="math_toolkit.pol_ref.error_handling_policies.h0"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.available_actions_when_an_error_"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.available_actions_when_an_error_">Available
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.available_actions_when_an_error_"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.available_actions_when_an_error_">Available
         Actions When an Error is Raised</a>
       </h5>
 <p>
@@ -63,7 +63,7 @@
       </p>
 <h6>
 <a name="math_toolkit.pol_ref.error_handling_policies.h1"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.throw_on_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.throw_on_error">throw_on_error</a>
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.throw_on_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.throw_on_error">throw_on_error</a>
       </h6>
 <p>
         Will throw one of the following exceptions, depending upon the type of the
@@ -175,7 +175,7 @@
 </table></div>
 <h6>
 <a name="math_toolkit.pol_ref.error_handling_policies.h2"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.errno_on_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.errno_on_error">errno_on_error</a>
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.errno_on_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.errno_on_error">errno_on_error</a>
       </h6>
 <p>
         Will set global <a href="http://en.wikipedia.org/wiki/Errno" target="_top"><code class="computeroutput"><span class="special">::</span><span class="identifier">errno</span></code></a>
@@ -290,7 +290,7 @@
 </table></div>
 <h6>
 <a name="math_toolkit.pol_ref.error_handling_policies.h3"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.ignore_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.ignore_error">ignore_error</a>
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.ignore_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.ignore_error">ignore_error</a>
       </h6>
 <p>
         Will return one of the values below depending on the error type (<code class="computeroutput"><span class="special">::</span><span class="identifier">errno</span></code>
@@ -403,7 +403,7 @@
 </table></div>
 <h6>
 <a name="math_toolkit.pol_ref.error_handling_policies.h4"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.user_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.user_error">user_error</a>
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.user_error"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.user_error">user_error</a>
       </h6>
 <p>
         Will call a user defined error handler: these are forward declared in boost/math/policies/error_handling.hpp,
@@ -452,7 +452,7 @@
       </p>
 <h5>
 <a name="math_toolkit.pol_ref.error_handling_policies.h5"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.kinds_of_error_raised"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.kinds_of_error_raised">Kinds
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.kinds_of_error_raised"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.kinds_of_error_raised">Kinds
         of Error Raised</a>
       </h5>
 <p>
@@ -690,7 +690,7 @@
 </table></div>
 <h5>
 <a name="math_toolkit.pol_ref.error_handling_policies.h6"></a>
-        <span class="phrase"><a name="math_toolkit.pol_ref.error_handling_policies.examples"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.examples">Examples</a>
+        <span><a name="math_toolkit.pol_ref.error_handling_policies.examples"></a></span><a class="link" href="error_handling_policies.html#math_toolkit.pol_ref.error_handling_policies.examples">Examples</a>
       </h5>
 <p>
         Suppose we want a call to <code class="computeroutput"><span class="identifier">tgamma</span></code>
@@ -758,8 +758,8 @@
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
       Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
-      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
+      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

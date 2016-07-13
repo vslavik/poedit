@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Changelog</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="prev" href="../boost/log/current_scope.html" title="Function current_scope">
@@ -21,13 +21,51 @@
 </h2></div></div></div>
 <h4>
 <a name="log.changelog.h0"></a>
-      <span class="phrase"><a name="log.changelog.2_7__boost_1_60"></a></span><a class="link" href="changelog.html#log.changelog.2_7__boost_1_60">2.7,
+      <span><a name="log.changelog.2_8__boost_1_61"></a></span><a class="link" href="changelog.html#log.changelog.2_8__boost_1_61">2.8,
+      Boost 1.61</a>
+    </h4>
+<p>
+      <span class="bold"><strong>General changes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          The support for <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">basic_string_ref</span></code> and its specializations
+          is deprecated; users are encouraged to switch to <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">basic_string_view</span></code>,
+          which is now supported for output to the formatting streams. The support
+          for <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">basic_string_ref</span></code> will be removed in future
+          releases.
+        </li>
+<li class="listitem">
+          Added support for limiting the number of stored log files in the target
+          directory of the file collector. The limit can be specified in the <code class="computeroutput"><span class="identifier">max_files</span></code> named parameter to the <code class="computeroutput"><span class="identifier">make_collector</span></code> or <code class="computeroutput"><span class="identifier">add_file_log</span></code>
+          calls or as the "MaxFiles" parameter for the sink in the settings
+          file. Thanks to Erich Keane for the patch. ( <a href="https://svn.boost.org/trac/boost/ticket/8746" target="_top">#8746</a>)
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bug fixes:</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          Fixed various compilation problems for Windows CE.
+        </li>
+<li class="listitem">
+          Fixed compilation problems on Solaris.
+        </li>
+<li class="listitem">
+          Added a workaround for MSVC-10 and 11 generating broken code for formatters
+          in some cases. ( <a href="https://svn.boost.org/trac/boost/ticket/12025" target="_top">#12025</a>)
+        </li>
+</ul></div>
+<h4>
+<a name="log.changelog.h1"></a>
+      <span><a name="log.changelog.2_7__boost_1_60"></a></span><a class="link" href="changelog.html#log.changelog.2_7__boost_1_60">2.7,
       Boost 1.60</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           On Windows, the configuration macro <code class="computeroutput"><span class="identifier">BOOST_LOG_USE_WINNT6_API</span></code>
           is no longer used by the library. The target Windows version should be
@@ -51,7 +89,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed compilation for Android using Google NDK. ( <a href="https://svn.boost.org/trac/boost/ticket/11559" target="_top">#11559</a>)
         </li>
@@ -88,14 +126,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h1"></a>
-      <span class="phrase"><a name="log.changelog.2_6__boost_1_59"></a></span><a class="link" href="changelog.html#log.changelog.2_6__boost_1_59">2.6,
+<a name="log.changelog.h2"></a>
+      <span><a name="log.changelog.2_6__boost_1_59"></a></span><a class="link" href="changelog.html#log.changelog.2_6__boost_1_59">2.6,
       Boost 1.59</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           On systems with <a href="https://gcc.gnu.org/wiki/Visibility" target="_top">symbol
           visibility</a> support (e.g. Linux) the library is now built with all
@@ -108,7 +146,7 @@
           for its underlying type info management tool. This improved library compatibility
           with hidden symbol visibility mode on some compilers. This affected the
           following public interfaces:
-          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                 <code class="computeroutput"><span class="identifier">invalid_type</span></code> exceptions
                 thrown by the library now have <code class="computeroutput"><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_index</span></code>
@@ -165,7 +203,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed incorrect behavior of <code class="computeroutput"><span class="identifier">attribute_value_set</span><span class="special">::</span><span class="identifier">insert</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">attribute_value_set</span></code>
           constructor in some cases. The inserted elements could have made some previously
@@ -178,14 +216,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h2"></a>
-      <span class="phrase"><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
+<a name="log.changelog.h3"></a>
+      <span><a name="log.changelog.2_5__boost_1_58"></a></span><a class="link" href="changelog.html#log.changelog.2_5__boost_1_58">2.5,
       Boost 1.58</a>
     </h4>
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed thread id formatting. The thread identifiers could be presented as
           zeros on big-endian platforms. Also the lower 4 bits of the ids were lost
@@ -214,14 +252,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h3"></a>
-      <span class="phrase"><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
+<a name="log.changelog.h4"></a>
+      <span><a name="log.changelog.2_4__boost_1_57"></a></span><a class="link" href="changelog.html#log.changelog.2_4__boost_1_57">2.4,
       Boost 1.57</a>
     </h4>
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a class="link" href="detailed/expressions.html#log.detailed.expressions.formatters.decorators" title="Character decorators">XML character
           decorator</a> now escapes quote (") characters.
@@ -238,14 +276,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h4"></a>
-      <span class="phrase"><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
+<a name="log.changelog.h5"></a>
+      <span><a name="log.changelog.2_3__boost_1_56"></a></span><a class="link" href="changelog.html#log.changelog.2_3__boost_1_56">2.3,
       Boost 1.56</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           For Windows targets, the library now compiles for Windows XP by default.
         </li>
@@ -306,7 +344,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed <a class="link" href="detailed/utilities.html#log.detailed.utilities.manipulators.dump" title="Binary dump manipulator"><code class="computeroutput"><span class="identifier">dump</span></code></a> manipulator output on AVX2-enabled
           CPUs (e.g. Intel Haswell).
@@ -334,14 +372,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h5"></a>
-      <span class="phrase"><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
+<a name="log.changelog.h6"></a>
+      <span><a name="log.changelog.2_2__boost_1_55"></a></span><a class="link" href="changelog.html#log.changelog.2_2__boost_1_55">2.2,
       Boost 1.55</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Added a new configuration macro <code class="computeroutput"><span class="identifier">BOOST_LOG_WITHOUT_DEFAULT_FACTORIES</span></code>.
           By defining this macro the user can disable compilation of the default
@@ -372,7 +410,7 @@
 <p>
       <span class="bold"><strong>Bug fixes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed <a class="link" href="detailed/attributes.html#log.detailed.attributes.timer" title="Stop watch (timer)"><code class="computeroutput"><span class="identifier">timer</span></code></a>
           attribute generating incorrect time readings on Windows on heavy thread
@@ -397,14 +435,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h6"></a>
-      <span class="phrase"><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
+<a name="log.changelog.h7"></a>
+      <span><a name="log.changelog.2_1__boost_1_54"></a></span><a class="link" href="changelog.html#log.changelog.2_1__boost_1_54">2.1,
       Boost 1.54</a>
     </h4>
 <p>
       <span class="bold"><strong>Breaking changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <code class="computeroutput"><a class="link" href="../boost/log/basic_formatting_ostream.html" title="Class template basic_formatting_ostream">basic_formatting_ostream</a></code>
           no longer derives from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_ostream</span></code>,
           but rather reimplements its and its base classes interface closely. This
@@ -422,7 +460,7 @@
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Removed the use of deprecated macros of <a href="http://www.boost.org/doc/libs/release/libs/config/doc/html/index.html" target="_top">Boost.Config</a>.
         </li>
@@ -444,14 +482,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h7"></a>
-      <span class="phrase"><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
+<a name="log.changelog.h8"></a>
+      <span><a name="log.changelog.2_0__13_april_2013"></a></span><a class="link" href="changelog.html#log.changelog.2_0__13_april_2013">2.0,
       13 April 2013</a>
     </h4>
 <p>
       <span class="bold"><strong>General changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           The library is now compatible with Boost 1.53 or newer. <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" target="_top">Boost.Filesystem</a>
           v2 no longer supported.
@@ -535,7 +573,7 @@
 <p>
       <span class="bold"><strong>Attributes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Changed the interface and the way of handling attribute values. The value
           is now a pimpl wrapper around the value holder. The <code class="computeroutput"><a class="link" href="../boost/log/attribute_value.html" title="Class attribute_value">attribute_value</a></code>
@@ -626,7 +664,7 @@
 <p>
       <span class="bold"><strong>Logging sources:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed compilation problems with exception handling logger feature.
         </li>
@@ -660,7 +698,7 @@
 <p>
       <span class="bold"><strong>Logging sinks:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Types for integral constants for syslog and event log were renamed to drop
           the <code class="computeroutput"><span class="identifier">_t</span></code> suffix.
@@ -709,7 +747,7 @@
 <p>
       <span class="bold"><strong>Filters and formatters:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           As a result of character type unification, filters no longer depend on
           the character type.
@@ -771,7 +809,7 @@
 <p>
       <span class="bold"><strong>Documentation changes:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Most code examples from the docs have been extracted into compilable standalone
           examples, which can be used for testing and experimenting with the library.
@@ -784,7 +822,7 @@
 <p>
       <span class="bold"><strong>Miscellaneous:</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fixed a bug: the logging core could enter an infinite loop inside <code class="computeroutput"><span class="identifier">push_record</span></code> if a sink throws and the
           exception is suppressed by the exception handler set in the core.
@@ -819,14 +857,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h8"></a>
-      <span class="phrase"><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
+<a name="log.changelog.h9"></a>
+      <span><a name="log.changelog.1_1__02_december_2011"></a></span><a class="link" href="changelog.html#log.changelog.1_1__02_december_2011">1.1,
       02 December 2011</a>
     </h4>
 <p>
       This release mostly fixes bugs in the code and documentation.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Added support for <a href="http://www.boost.org/doc/libs/release/libs/filesystem/doc/index.htm" target="_top">Boost.Filesystem</a>
           v3.
@@ -839,8 +877,8 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h9"></a>
-      <span class="phrase"><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
+<a name="log.changelog.h10"></a>
+      <span><a name="log.changelog.1_0__09_may_2010"></a></span><a class="link" href="changelog.html#log.changelog.1_0__09_may_2010">1.0,
       09 May 2010</a>
     </h4>
 <p>
@@ -848,7 +886,7 @@
       release (2.0) will contain breaking changes and feature additions. The 1.0
       branch will not receive any feature updates.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Added some optimization for thread local storage. In Windows setups, if
           you dynamically load Boost.Log binaries during the application run time,
@@ -879,11 +917,11 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h10"></a>
-      <span class="phrase"><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
+<a name="log.changelog.h11"></a>
+      <span><a name="log.changelog.release_candidate_4__08_jan_2010"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_4__08_jan_2010">Release
       Candidate 4, 08 Jan 2010</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Substantial documentation improvement. The tutorial section has been reorganized.
         </li>
@@ -974,11 +1012,11 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h11"></a>
-      <span class="phrase"><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
+<a name="log.changelog.h12"></a>
+      <span><a name="log.changelog.release_candidate_3__08_feb_2009"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_3__08_feb_2009">Release
       Candidate 3, 08 Feb 2009</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Substantial documentation improvement.
         </li>
@@ -1008,8 +1046,8 @@
         </li>
 </ul></div>
 <h4>
-<a name="log.changelog.h12"></a>
-      <span class="phrase"><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
+<a name="log.changelog.h13"></a>
+      <span><a name="log.changelog.release_candidate_2"></a></span><a class="link" href="changelog.html#log.changelog.release_candidate_2">Release
       Candidate 2</a>
     </h4>
 <p>
@@ -1018,8 +1056,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

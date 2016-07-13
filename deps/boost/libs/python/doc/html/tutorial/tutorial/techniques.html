@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>General Techniques</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Boost.Python Tutorial">
 <link rel="up" href="../index.html" title="Boost.Python Tutorial">
 <link rel="prev" href="exception.html" title="Exception Translation">
@@ -18,7 +18,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="tutorial.techniques"></a><a class="link" href="techniques.html" title="General Techniques">General Techniques</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="techniques.html#tutorial.techniques.creating_packages">Creating Packages</a></span></dt>
 <dt><span class="section"><a href="techniques.html#tutorial.techniques.extending_wrapped_objects_in_pyt">Extending
       Wrapped Objects in Python</a></span></dt>
@@ -257,7 +257,7 @@
 <span class="special">}</span>
 </pre>
 <p>
-        If we are using the technique from the previous session, <a class="link" href="../">Creating
+        If we are using the technique from the previous session, <a class="link" href="techniques.html#tutorial.techniques.creating_packages" title="Creating Packages">Creating
         Packages</a>, we can code directly into <code class="literal">geom/__init__.py</code>:
       </p>
 <pre class="programlisting"><span class="keyword">from</span> <span class="identifier">_geom</span> <span class="keyword">import</span> <span class="special">*</span>
@@ -273,7 +273,7 @@
         <span class="bold"><strong>All</strong></span> point instances created from C++ will
         also have this member function! This technique has several advantages:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Cut down compile times to zero for these additional functions
           </li>
@@ -405,20 +405,9 @@
 <th align="left">Note</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          If you're exporting your classes with <a href="../../../../../pyste/index.html" target="_top">Pyste</a>,
-          take a look at the <code class="literal">--multiple</code> option, that generates
-          the wrappers in various files as demonstrated here.
-        </p></td></tr>
-</table></div>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>
           This method is useful too if you are getting the error message <span class="emphasis"><em>"fatal
           error C1204:Compiler limit:internal structure overflow"</em></span>
-          when compiling a large source file, as explained in the <a href="../../../../v2/faq.html#c1204" target="_top">FAQ</a>.
+          when compiling a large source file, as explained in the <a href="../../faq/fatal_error_c1204_compiler_limit.html" target="_top">FAQ</a>.
         </p></td></tr>
 </table></div>
 </div>

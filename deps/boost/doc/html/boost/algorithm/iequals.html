@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template iequals</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../string_algo/reference.html#header.boost.algorithm.string.predicate_hpp" title="Header &lt;boost/algorithm/string/predicate.hpp&gt;">
 <link rel="prev" href="equals.html" title="Function equals">
@@ -37,7 +37,7 @@
   <span class="keyword">bool</span> <span class="identifier">iequals</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Range1T</span> <span class="special">&amp;</span> Input<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Range2T</span> <span class="special">&amp;</span> Test<span class="special">,</span> 
                <span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> Loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555123440624"></a><h2>Description</h2>
+<a name="idp403791488"></a><h2>Description</h2>
 <p>This predicate holds when the test container is equal to the input container i.e. all elements in both containers are same. Elements are compared case insensitively.</p>
 <p>
 
@@ -47,32 +47,20 @@
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
 <th align="left">Note</th>
 </tr>
-<tr><td align="left" valign="top"><p>This is a two-way version of <code class="computeroutput">std::equal</code> algorithm</p></td></tr>
+<tr><td align="left" valign="top">
+<p>This is a two-way version of <code class="computeroutput">std::equal</code> algorithm</p>
+<p>This function provides the strong exception-safety guarantee </p>
+</td></tr>
 </table></div>
 <p>
 </p>
-<div class="note"><table border="0" summary="Note">
-<tr>
-<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../../doc/src/images/note.png"></td>
-<th align="left">Note</th>
-</tr>
-<tr><td align="left" valign="top"><p>This function provides the strong exception-safety guarantee </p></td></tr>
-</table></div>
-<p>
-</p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">Input</code></span></p></td>

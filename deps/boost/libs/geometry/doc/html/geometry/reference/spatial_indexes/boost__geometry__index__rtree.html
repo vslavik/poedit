@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>boost::geometry::index::rtree</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../spatial_indexes.html" title="Spatial Indexes">
 <link rel="prev" href="../spatial_indexes.html" title="Spatial Indexes">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree"></a><a name="classboost_1_1geometry_1_1index_1_1rtree"></a><a class="link" href="boost__geometry__index__rtree.html" title="boost::geometry::index::rtree">boost::geometry::index::rtree</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="boost__geometry__index__rtree/rtree__.html">rtree()</a></span></dt>
 <dt><span class="section"><a href="boost__geometry__index__rtree/rtree_parameters_type_const____indexable_getter_const____value_equal_const____allocator_type_const___.html">rtree(parameters_type
           const &amp;, indexable_getter const &amp;, value_equal const &amp;, allocator_type
@@ -81,12 +81,12 @@
 <dt><span class="section"><a href="boost__geometry__index__rtree/get_allocator__.html">get_allocator()</a></span></dt>
 </dl></div>
 <p>
-          <a class="indexterm" name="idm44837171349552"></a><a class="indexterm" name="idm44837171348864"></a><a class="indexterm" name="idm44837171348176"></a><a class="indexterm" name="idm44837171347488"></a>
+          <a class="indexterm" name="idp96624272"></a><a class="indexterm" name="idp96624960"></a><a class="indexterm" name="idp96625648"></a><a class="indexterm" name="idp96626336"></a>
 The R-tree spatial index.
         </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h0"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.description"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.description">Description</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.description"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.description">Description</a>
         </h6>
 <p>
           This is self-balancing spatial index capable to store various types of
@@ -94,7 +94,7 @@ The R-tree spatial index.
         </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h1"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.parameters"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.parameters">Parameters</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.parameters"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.parameters">Parameters</a>
         </h6>
 <p>
           The user must pass a type defining the Parameters which will be used in
@@ -104,7 +104,7 @@ The R-tree spatial index.
 <p>
           Predefined algorithms with compile-time parameters are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="literal"><a class="link" href="parameters/boost__geometry__index__linear.html#structboost_1_1geometry_1_1index_1_1linear">boost::geometry::index::linear</a></code>,
             </li>
@@ -118,7 +118,7 @@ The R-tree spatial index.
 <p>
           Predefined algorithms with run-time parameters are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="literal"><a class="link" href="parameters/boost__geometry__index__dynamic_linear.html#classboost_1_1geometry_1_1index_1_1dynamic__linear">boost::geometry::index::dynamic_linear</a></code>,
             </li>
@@ -131,7 +131,7 @@ The R-tree spatial index.
 </ul></div>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h2"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.indexablegetter"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.indexablegetter">IndexableGetter</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.indexablegetter"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.indexablegetter">IndexableGetter</a>
         </h6>
 <p>
           The object of IndexableGetter type translates from Value to Indexable each
@@ -151,7 +151,7 @@ The R-tree spatial index.
         </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h3"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.equalto"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.equalto">EqualTo</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.equalto"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.equalto">EqualTo</a>
         </h6>
 <p>
           The object of EqualTo type compares Values and returns <code class="literal"><code class="computeroutput"><span class="keyword">true</span></code></code> if they are equal. It's similar
@@ -162,14 +162,14 @@ The R-tree spatial index.
         </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h4"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.header"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.header">Header</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.header"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.header">Header</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">index</span><span class="special">/</span><span class="identifier">rtree</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>
         </p>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h5"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.synopsis"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.synopsis">Synopsis</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.synopsis"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.synopsis">Synopsis</a>
         </h6>
 <pre class="programlisting"><code class="computeroutput"><span class="keyword">template</span><span class="special">&lt;</span></code><code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">Value</span></code><code class="computeroutput"><span class="special">,</span></code>
          <code class="computeroutput"><span class="keyword">typename</span> <span class="identifier">Parameters</span></code><code class="computeroutput"><span class="special">,</span></code>
@@ -183,7 +183,7 @@ The R-tree spatial index.
 </pre>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h6"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.template_parameter_s_"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.template_parameter_s_">Template
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.template_parameter_s_"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -269,7 +269,7 @@ The R-tree spatial index.
 </table></div>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h7"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.typedef_s_"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.typedef_s_">Typedef(s)</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.typedef_s_"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.typedef_s_">Typedef(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -473,7 +473,7 @@ The R-tree spatial index.
 </table></div>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h8"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.constructor_s__and_destructor"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.constructor_s__and_destructor">Constructor(s)
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.constructor_s__and_destructor"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.constructor_s__and_destructor">Constructor(s)
           and destructor</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -618,7 +618,7 @@ The R-tree spatial index.
 </table></div>
 <h6>
 <a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.h9"></a>
-          <span class="phrase"><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.member_s_"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.member_s_">Member(s)</a>
+          <span><a name="geometry.reference.spatial_indexes.boost__geometry__index__rtree.member_s_"></a></span><a class="link" href="boost__geometry__index__rtree.html#geometry.reference.spatial_indexes.boost__geometry__index__rtree.member_s_">Member(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>

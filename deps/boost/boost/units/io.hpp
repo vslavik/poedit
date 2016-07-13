@@ -41,7 +41,7 @@ namespace serialization {
 
 /// Boost Serialization library support for units.
 template<class Archive,class System,class Dim>
-inline void serialize(Archive& ar,boost::units::unit<Dim,System>&,const unsigned int /*version*/)
+inline void serialize(Archive& /*ar*/,boost::units::unit<Dim,System>&,const unsigned int /*version*/)
 { }
 
 /// Boost Serialization library support for quantities.

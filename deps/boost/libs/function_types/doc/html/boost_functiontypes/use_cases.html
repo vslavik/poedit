@@ -72,11 +72,11 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">C</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">accept_function</span><span class="special">(</span><span class="identifier">R</span><span class="special">(</span><span class="identifier">C</span><span class="special">::*</span> <span class="identifier">func</span><span class="special">)(...)</span> <span class="keyword">const</span> <span class="keyword">volatile</span><span class="special">);</span>
 
-<span class="comment">// ...
-</span>
-<span class="comment">// needs to be repeated for every additional function parameter
-</span><span class="comment">// times the number of possible calling conventions
-</span></pre>
+<span class="comment">// ...</span>
+
+<span class="comment">// needs to be repeated for every additional function parameter</span>
+<span class="comment">// times the number of possible calling conventions</span>
+</pre>
 <p>
       The "overloading approach" obviously does not scale well: There might
       be several functions that accept callable arguments in one library and client
@@ -92,8 +92,8 @@
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">F</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">accept_function</span><span class="special">(</span><span class="identifier">F</span> <span class="identifier">f</span><span class="special">)</span>
 <span class="special">{</span>
-  <span class="comment">// ... use Boost.FunctionTypes to analyse F
-</span><span class="special">}</span>
+  <span class="comment">// ... use Boost.FunctionTypes to analyse F</span>
+<span class="special">}</span>
 </pre>
 <p>
       The combination with a tuples library that provides an invoker component, such
@@ -113,9 +113,9 @@
 
 <span class="keyword">void</span> <span class="identifier">foo</span><span class="special">(</span><span class="keyword">float</span><span class="special">(*</span><span class="identifier">func</span><span class="special">)(</span><span class="keyword">float</span><span class="special">));</span>
 
-<span class="keyword">void</span> <span class="identifier">bar</span><span class="special">()</span> 
-<span class="special">{</span> 
-  <span class="identifier">foo</span><span class="special">(&amp;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">abs</span><span class="special">);</span> 
+<span class="keyword">void</span> <span class="identifier">bar</span><span class="special">()</span>
+<span class="special">{</span>
+  <span class="identifier">foo</span><span class="special">(&amp;</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">abs</span><span class="special">);</span>
 <span class="special">}</span>
 
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Examples</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../align.html" title="Chapter&#160;2.&#160;Boost.Align">
 <link rel="prev" href="tutorial.html" title="Tutorial">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="align.examples"></a><a class="link" href="examples.html" title="Examples">Examples</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="examples.html#align.examples.aligned_ptr">aligned_ptr and make_aligned</a></span></dt>
 <dt><span class="section"><a href="examples.html#align.examples.aligned_vector">aligned_vector</a></span></dt>
 </dl></div>
@@ -46,7 +46,7 @@
       </p>
 <h5>
 <a name="align.examples.aligned_ptr.h0"></a>
-        <span class="phrase"><a name="align.examples.aligned_ptr.implementation"></a></span><a class="link" href="examples.html#align.examples.aligned_ptr.implementation">Implementation</a>
+        <span><a name="align.examples.aligned_ptr.implementation"></a></span><a class="link" href="examples.html#align.examples.aligned_ptr.implementation">Implementation</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_alloc</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_delete</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -76,7 +76,7 @@
 </pre>
 <h5>
 <a name="align.examples.aligned_ptr.h1"></a>
-        <span class="phrase"><a name="align.examples.aligned_ptr.usage"></a></span><a class="link" href="examples.html#align.examples.aligned_ptr.usage">Usage</a>
+        <span><a name="align.examples.aligned_ptr.usage"></a></span><a class="link" href="examples.html#align.examples.aligned_ptr.usage">Usage</a>
       </h5>
 <pre class="programlisting"><span class="keyword">struct</span> <span class="keyword">alignas</span><span class="special">(</span><span class="number">16</span><span class="special">)</span> <span class="identifier">type</span> <span class="special">{</span>
     <span class="keyword">float</span> <span class="identifier">data</span><span class="special">[</span><span class="number">4</span><span class="special">];</span>
@@ -101,7 +101,7 @@
       </p>
 <h5>
 <a name="align.examples.aligned_vector.h0"></a>
-        <span class="phrase"><a name="align.examples.aligned_vector.implementation"></a></span><a class="link" href="examples.html#align.examples.aligned_vector.implementation">Implementation</a>
+        <span><a name="align.examples.aligned_vector.implementation"></a></span><a class="link" href="examples.html#align.examples.aligned_vector.implementation">Implementation</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">align</span><span class="special">/</span><span class="identifier">aligned_allocator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">vector</span><span class="special">&gt;</span>
@@ -112,7 +112,7 @@
 </pre>
 <h5>
 <a name="align.examples.aligned_vector.h1"></a>
-        <span class="phrase"><a name="align.examples.aligned_vector.usage"></a></span><a class="link" href="examples.html#align.examples.aligned_vector.usage">Usage</a>
+        <span><a name="align.examples.aligned_vector.usage"></a></span><a class="link" href="examples.html#align.examples.aligned_vector.usage">Usage</a>
       </h5>
 <pre class="programlisting"><span class="keyword">enum</span>
     <span class="special">:</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="special">{</span>

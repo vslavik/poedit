@@ -13,6 +13,7 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include "spirit_encoding.hpp"

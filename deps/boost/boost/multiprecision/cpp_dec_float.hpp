@@ -662,6 +662,12 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
       return operator=(v);
    }
 
+   if((v.isnan)() || (v.isinf)())
+   {
+      *this = v;
+      return *this;
+   }
+
    // Get the offset for the add/sub operation.
    static const ExponentType max_delta_exp = static_cast<ExponentType>((cpp_dec_float_elem_number - 1) * cpp_dec_float_elem_digits10);
 
@@ -1888,7 +1894,9 @@ std::string cpp_dec_float<Digits10, ExponentType, Allocator>::str(boost::intmax_
 template <unsigned Digits10, class ExponentType, class Allocator>
 bool cpp_dec_float<Digits10, ExponentType, Allocator>::rd_string(const char* const s)
 {
+#ifndef BOOST_NO_EXCEPTIONS
    try{
+#endif
 
    std::string str(s);
 
@@ -2146,6 +2154,7 @@ bool cpp_dec_float<Digits10, ExponentType, Allocator>::rd_string(const char* con
       }
    }
 
+#ifndef BOOST_NO_EXCEPTIONS
    }
    catch(const bad_lexical_cast&)
    {
@@ -2155,7 +2164,7 @@ bool cpp_dec_float<Digits10, ExponentType, Allocator>::rd_string(const char* con
       msg += "\" as a floating point value.";
       throw std::runtime_error(msg);
    }
-
+#endif
    return true;
 }
 
@@ -2227,7 +2236,12 @@ cpp_dec_float<Digits10, ExponentType, Allocator>& cpp_dec_float<Digits10, Expone
       return *this = one();
 
    if((boost::math::isinf)(a))
-      return *this = inf();
+   {
+      *this = inf();
+      if(a < 0)
+         this->negate();
+      return *this;
+   }
 
    if((boost::math::isnan)(a))
       return *this = nan();

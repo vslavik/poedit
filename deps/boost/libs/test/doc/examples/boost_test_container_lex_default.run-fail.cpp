@@ -12,7 +12,7 @@
 
 namespace tt = boost::test_tools;
 
-BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>);
+BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
 
 BOOST_AUTO_TEST_CASE( test_collections_vectors_lex )
 {

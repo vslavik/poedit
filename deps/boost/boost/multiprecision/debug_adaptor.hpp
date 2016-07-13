@@ -28,9 +28,12 @@ private:
 public:
    void update_view()
    {
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          debug_value = m_value.str(0, static_cast<std::ios_base::fmtflags>(0));
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const std::exception& e)
       {
@@ -38,6 +41,7 @@ public:
          debug_value += e.what();
          debug_value += "\"";
       }
+#endif
    }
    debug_adaptor()
    {

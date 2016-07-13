@@ -200,6 +200,13 @@ private:
         {}
 
         template <typename Indexable>
+        explicit expandable_box(Indexable const& indexable)
+            : m_initialized(true)
+        {
+            detail::bounds(indexable, m_box);
+        }
+
+        template <typename Indexable>
         void expand(Indexable const& indexable)
         {
             if ( !m_initialized )
@@ -260,9 +267,12 @@ private:
 
             // reserve space for values
             rtree::elements(l).reserve(values_count);                                                       // MAY THROW (A)
+
             // calculate values box and copy values
-            expandable_box<Box> elements_box;
-            for ( ; first != last ; ++first )
+            //   initialize the box explicitly to avoid GCC-4.4 uninitialized variable warnings with O2
+            expandable_box<Box> elements_box(translator(*(first->second)));
+            rtree::elements(l).push_back(*(first->second));                                                 // MAY THROW (A?,C)
+            for ( ++first ; first != last ; ++first )
             {
                 // NOTE: push_back() must be called at the end in order to support move_iterator.
                 //       The iterator is dereferenced 2x (no temporary reference) to support

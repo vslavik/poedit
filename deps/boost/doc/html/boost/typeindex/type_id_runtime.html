@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template type_id_runtime</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeindex_header_reference.html#header.boost.type_index_hpp" title="Header &lt;boost/type_index.hpp&gt;">
 <link rel="prev" href="type_id_with_cvr.html" title="Function template type_id_with_cvr">
@@ -35,36 +35,30 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">type_index</span> <span class="identifier">type_id_runtime</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> runtime_val<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555074302352"></a><h2>Description</h2>
+<a name="idp452952800"></a><h2>Description</h2>
 <p>Function that works exactly like C++ typeid(rtti_val) call, but returns boost::type_index.</p>
 <p>Retunrs runtime information about specified type.</p>
 <p><span class="bold"><strong>Requirements:</strong></span> RTTI available or Base and Derived classes must be marked with BOOST_TYPE_INDEX_REGISTER_CLASS.</p>
 <p><span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">Base</span> <span class="special">{</span> <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">Base</span><span class="special">(</span><span class="special">)</span><span class="special">{</span><span class="special">}</span> <span class="special">}</span><span class="special">;</span>
-<span class="keyword">struct</span> <span class="identifier">Derived</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Base</span>  <span class="special">{</span><span class="special">}</span><span class="special">;</span>
-<span class="special">...</span>
-<span class="identifier">Derived</span> <span class="identifier">d</span><span class="special">;</span>
-<span class="identifier">Base</span><span class="special">&amp;</span> <span class="identifier">b</span> <span class="special">=</span> <span class="identifier">d</span><span class="special">;</span>
-<span class="identifier">type_index</span> <span class="identifier">ti</span> <span class="special">=</span> <span class="identifier">type_id_runtime</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ti</span><span class="special">.</span><span class="identifier">pretty_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// Outputs 'Derived'</span>
+<pre class="programlisting"> <span class="keyword">struct</span> <span class="identifier">Base</span> <span class="special">{</span> <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">Base</span><span class="special">(</span><span class="special">)</span><span class="special">{</span><span class="special">}</span> <span class="special">}</span><span class="special">;</span>
+ <span class="keyword">struct</span> <span class="identifier">Derived</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Base</span>  <span class="special">{</span><span class="special">}</span><span class="special">;</span>
+ <span class="special">...</span>
+ <span class="identifier">Derived</span> <span class="identifier">d</span><span class="special">;</span>
+ <span class="identifier">Base</span><span class="special">&amp;</span> <span class="identifier">b</span> <span class="special">=</span> <span class="identifier">d</span><span class="special">;</span>
+ <span class="identifier">type_index</span> <span class="identifier">ti</span> <span class="special">=</span> <span class="identifier">type_id_runtime</span><span class="special">(</span><span class="identifier">b</span><span class="special">)</span><span class="special">;</span>
+ <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ti</span><span class="special">.</span><span class="identifier">pretty_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// Outputs 'Derived'</span>
 </pre>
 <p>
 
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">runtime_val</code></span></p></td>
 <td><p>Varaible which runtime type must be returned. </p></td>

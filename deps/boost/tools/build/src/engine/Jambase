@@ -9,6 +9,7 @@
 # This file is ALSO:
 # Copyright 2001-2004 David Abrahams.
 # Copyright 2002-2004 Rene Rivera.
+# Copyright 2015 Artur Shepilko.
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or http://www.boost.org/LICENSE_1_0.txt)
 
@@ -223,6 +224,7 @@ else
 # 11/21/96 (peterk) - Support for BeOS
 # 07/19/99 (sickel) - Support for Mac OS X Server (and maybe client)
 # 02/18/00 (belmonte)- Support for Cygwin.
+# 02/19/15 (shepilko)- On VMS use POSIX path in rules, translate to VMS via $(:W).
 
 # Special targets defined in this file:
 #
@@ -743,6 +745,9 @@ else if $(OS2)
 }
 else if $(VMS)
 {
+    ## DECC CRTL supports POSIX-style path, JAM is retrofitted to call it.
+    ## Use POSIX-style path for general handling in JAM rule-scope.
+    ## Translate the POSIX path to VMS in JAM actions-scope via $(:W) modifier.
     C++         ?= cxx ;
     C++FLAGS    ?= ;
     CC          ?= cc ;
@@ -750,8 +755,8 @@ else if $(VMS)
     CHMOD       ?= set file/prot= ;
     CP          ?= copy/replace ;
     CRELIB      ?= true ;
-    DOT         ?= [] ;
-    DOTDOT      ?= [-] ;
+    DOT         ?= . ;   ## Use POSIX CRTL
+    DOTDOT      ?= .. ;  ## Use POSIX CRTL
     EXEMODE     ?= (w:e) ;
     FILEMODE    ?= (w:r) ;
     HDRS        ?= ;
@@ -759,12 +764,12 @@ else if $(VMS)
     LINKFLAGS   ?= "" ;
     LINKLIBS    ?= ;
     MKDIR       ?= create/dir ;
-    MV          ?= rename ;
+    MV          ?= rename /noconf ;
     OPTIM       ?= "" ;
-    RM          ?= delete ;
+    RM          ?= delete /noconf ;
     RUNVMS      ?= mcr ;
     SHELLMODE   ?= (w:er) ;
-    SLASH       ?= . ;
+    SLASH       ?= / ;   ## Use POSIX CRTL
     STDHDRS     ?= decc$library_include ;
     SUFEXE      ?= .exe ;
     SUFLIB      ?= .olb ;
@@ -1087,7 +1092,7 @@ rule Cc
 
     if $(VMS) && $(_h)
     {
-        SLASHINC on $(<) = "/inc=(" $(_h[1]) ,$(_h[2-]) ")" ;
+        SLASHINC on $(<) = "/inc=(" \"$(_h[1])\" ,\"$(_h[2-])\" ")" ;
     }
     else if $(MAC) && $(_h)
     {
@@ -1117,7 +1122,7 @@ rule C++
 
     if $(VMS) && $(_h)
     {
-        SLASHINC on $(<) = "/inc=(" $(_h[1]) ,$(_h[2-]) ")" ;
+        SLASHINC on $(<) = "/inc=(" \"$(_h[1])\" ,\"$(_h[2-])\" ")" ;
     }
     else if $(MAC) && $(_h)
     {
@@ -1865,27 +1870,28 @@ rule FDirName
     {
         _s = $(DOT) ;
     }
-    else if $(VMS)
-    {
-        # This handles the following cases:
-        #   a -> [.a]
-        #   a b c -> [.a.b.c]
-        #   x: -> x:
-        #   x: a -> x:[a]
-        #   x:[a] b -> x:[a.b]
-
-        switch $(<[1])
-        {
-        case *:* : _s = $(<[1]) ;
-        case \\[*\\] : _s = $(<[1]) ;
-        case * : _s = [.$(<[1])] ;
-        }
-
-        for _i in [.$(<[2-])]
-        {
-        _s = $(_i:R=$(_s)) ;
-        }
-    }
+    ## On VMS use general POSIX path handling, JAM resolves it through VMS CRTL.
+    #else if $(VMS)
+    #{
+    #    # This handles the following cases:
+    #    #   a -> [.a]
+    #    #   a b c -> [.a.b.c]
+    #    #   x: -> x:
+    #    #   x: a -> x:[a]
+    #    #   x:[a] b -> x:[a.b]
+    #
+    #    switch $(<[1])
+    #    {
+    #    case *:* : _s = $(<[1]) ;
+    #    case \\[*\\] : _s = $(<[1]) ;
+    #    case * : _s = [.$(<[1])] ;
+    #    }
+    #
+    #    for _i in [.$(<[2-])]
+    #    {
+    #    _s = $(_i:R=$(_s)) ;
+    #    }
+    #}
     else if $(MAC)
     {
         _s = $(DOT) ;
@@ -2371,47 +2377,63 @@ else if $(VMS)
 {
     actions updated together piecemeal Archive
     {
-    lib/replace $(<) $(>[1]) ,$(>[2-])
+    lib/replace $(<:W) $(>[1]:W) ,$(>[2-]:W)
     }
 
     actions Cc
     {
-    $(CC)/obj=$(<) $(CCFLAGS) $(OPTIM) $(SLASHINC) $(>)
+    $(CC)/obj=$(<:W) $(CCFLAGS) $(OPTIM) $(SLASHINC) $(>:W)
     }
 
     actions C++
     {
-    $(C++)/obj=$(<) $(C++FLAGS) $(OPTIM) $(SLASHINC) $(>)
+    $(C++)/obj=$(<:W) $(C++FLAGS) $(OPTIM) $(SLASHINC) $(>:W)
     }
 
     actions piecemeal together existing Clean
     {
-    $(RM) $(>[1]);* ,$(>[2-]);*
+    $(RM) $(>[1]:W);* ,$(>[2-]:W);*
     }
 
     actions together quietly CreLib
     {
-    if f$search("$(<)") .eqs. "" then lib/create $(<)
+    if f$search("$(<:W)") .eqs. "" then lib/create $(<:W)
     }
 
     actions GenFile1
     {
-    mcr $(>[1]) $(<) $(>[2-])
+    mcr $(>[1]:W) $(<:W) $(>[2-]:W)
+    }
+
+    actions MkDir1
+    {
+    $(MKDIR) $(<:W)
+    }
+
+    actions Yacc1
+    {
+    $(YACC) $(YACCFLAGS) $(>:W)
+    }
+
+    actions YaccMv
+    {
+    $(MV) $(YACCFILES).c $(<[1]:W)
+    $(MV) $(YACCFILES).h $(<[2]:W)
     }
 
     actions Link bind NEEDLIBS
     {
-    $(LINK)/exe=$(<) $(LINKFLAGS) $(>[1]) ,$(>[2-]) ,$(NEEDLIBS)/lib ,$(LINKLIBS)
+    $(LINK)/exe=$(<:W) $(LINKFLAGS) $(>[1]:W) ,$(>[2-]:W) ,$(NEEDLIBS:W)/lib ,$(LINKLIBS:W)
     }
 
     actions quietly updated piecemeal together RmTemps
     {
-    $(RM) $(>[1]);* ,$(>[2-]);*
+    $(RM) $(>[1]:W);* ,$(>[2-]:W);*
     }
 
     actions Shell
     {
-    $(CP) $(>) $(<)
+    $(CP) $(>:W) $(<:W)
     }
 }
 

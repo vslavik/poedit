@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Generic macros for working with data types</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="prev" href="vmd_specific/vmd_identifying.html" title="Identifying data types">
@@ -27,7 +27,7 @@
 <a name="variadic_macro_data.vmd_generic"></a><a class="link" href="vmd_generic.html" title="Generic macros for working with data types">Generic macros for working
     with data types</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence">Parsing
       sequences</a></span></dt>
 <dd><dl>
@@ -50,7 +50,7 @@
 <a name="variadic_macro_data.vmd_generic.vmd_sequence"></a><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence" title="Parsing sequences">Parsing
       sequences</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_convert">Converting
         sequences</a></span></dt>
 <dt><span class="section"><a href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_access">Accessing
@@ -70,7 +70,7 @@
 <p>
         This is the standard macro design and internally it is the easiest way to
         pass macro data back and forth. The Boost PP library has a rich set of functionality
-        to deal with all of its high-level data types and variadic data, with its
+        to deal with all of its high-level data types, and variadic data, with its
         own simpler functionality, also offers another alternative to representing
         data.
       </p>
@@ -100,10 +100,12 @@
 <p>
         VMD has functionality which allows more than one type of preprocessing token,
         excluding an 'empty' token which always refers to some entire input, to be
-        part of a single parameter of input data as a series of data, as long as
-        all the top-level data of such a single parameter is of some VMD data type.
-        What this means is that if some input consists of a series of data types
-        it is possible to extract the data for each data type in that series.
+        part of a single parameter of input data. These preprocessing tokens as a
+        single parameter are syntactically a consecutive series of data. The single
+        limitation of this consecutive series of data is that each top-level part
+        of the data of this series is of some VMD data type. What this means is that
+        if some input consists of a series of data types it is possible to extract
+        the data for each data type in that series.
       </p>
 <p>
         In practicality what this means is that, given the examples just above, if
@@ -113,7 +115,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.h0"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_definition"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_definition">Sequence
+        <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_definition"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_definition">Sequence
         definition</a>
       </h5>
 <p>
@@ -130,7 +132,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.h1"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_parsing"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_parsing">Sequence
+        <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_parsing"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_parsing">Sequence
         parsing</a>
       </h5>
 <p>
@@ -141,20 +143,19 @@
         parsing of a sequence is a forward iterator.
       </p>
 <p>
-        Working with a sequence is equivalent to using VMD macros generically.
+        Working with a sequence is equivalent to using VMD macros 'generically'.
       </p>
 <p>
         Before I give an explanation of how to use a sequence using VMD generic functionality
         I would like to make two points:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The possibility of working with a sequence which contains more than one
-            data type for the preprocessor metaprogrammer can be easily abused. In
-            general keeping things simple is usually better than making things overly
-            complicated when it comes to the syntactical side of things in a computer
-            language. A macro parameter syntactical possibility has to be understandable
-            to be used.
+            data type can be easily abused. In general keeping things simple is usually
+            better than making things overly complicated when it comes to the syntactical
+            side of things in a computer language. A macro parameter syntactical
+            possibility has to be understandable to be used.
           </li>
 <li class="listitem">
             Using VMD to parse the individual data types of a sequence takes more
@@ -195,9 +196,9 @@
 <p>
         you will not be able to parse the data using VMD since '&amp;', "string
         literal", '+', '+=', and "4.3" are preprocessor tokens which
-        are not top-level data types and therefore VMD cannot handle them at the
-        parsing level. You can still of course pass such data as preprocessing input
-        to macros but you cannot use VMD to recognize the parts of such data.
+        are not VMD top-level data types and therefore VMD cannot handle them at
+        the parsing level. You can still of course pass such data as preprocessing
+        input to macros but you cannot use VMD to recognize the parts of such data.
       </p>
 <p>
         This is similar to the fact that VMD cannot tell you what type preprocessor
@@ -231,7 +232,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.h2"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_types"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_types">Sequence
+        <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_types"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_types">Sequence
         types</a>
       </h5>
 <p>
@@ -302,7 +303,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.h3"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_size"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_size">Sequence
+        <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.sequence_size"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.sequence_size">Sequence
         size</a>
       </h5>
 <p>
@@ -319,7 +320,7 @@
 </pre>
 <h5>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.h4"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.using_vmd_to_parse_sequence_inpu"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.using_vmd_to_parse_sequence_inpu">Using
+        <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.using_vmd_to_parse_sequence_inpu"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.using_vmd_to_parse_sequence_inpu">Using
         VMD to parse sequence input</a>
       </h5>
 <p>
@@ -355,13 +356,14 @@
 <p>
           The easiest way to work with a sequence is to convert it to a Boost PP
           data type. Likewise you can also convert a sequence to variadic data even
-          though the Boost PP data types have much greater functionality.
+          though the Boost PP data types have much greater functionality than variadic
+          data in Boost PP.
         </p>
 <p>
           To convert a sequence to a Boost PP data type or variadic data the macros
           to be used are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               BOOST_VMD_TO_ARRAY(sequence) to convert the sequence to an array
             </li>
@@ -420,7 +422,7 @@
 </pre>
 <h6>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_convert.h0"></a>
-          <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_convert.usage"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_convert.usage">Usage</a>
+          <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_convert.usage"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_convert.usage">Usage</a>
         </h6>
 <p>
           You can use the general header file:
@@ -480,7 +482,7 @@
         </p>
 <h6>
 <a name="variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_access.h0"></a>
-          <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_access.usage"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_access.usage">Usage</a>
+          <span><a name="variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_access.usage"></a></span><a class="link" href="vmd_generic.html#variadic_macro_data.vmd_generic.vmd_sequence.vmd_sequence_access.usage">Usage</a>
         </h6>
 <p>
           You can use the general header file:

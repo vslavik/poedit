@@ -96,7 +96,7 @@ rule load-used-projects ( module-name )
 # 'jamroot'. With the latter, we would get duplicate matches on Windows and
 # would have to eliminate duplicates.
 JAMROOT ?= [ modules.peek : JAMROOT ] ;
-JAMROOT ?= project-root.jam [Jj]amroot [Jj]amroot.jam ;
+JAMROOT ?= project-root.jam [Jj]amroot [Jj]amroot. [Jj]amroot.jam ;
 
 
 # Loads parent of Jamfile at 'location'. Issues an error if nothing is found.
@@ -191,7 +191,7 @@ rule module-name ( jamfile-location )
 # Default patterns to search for the Jamfiles to use for build declarations.
 #
 JAMFILE = [ modules.peek : JAMFILE ] ;
-JAMFILE ?= [Bb]uild.jam [Jj]amfile.v2 [Jj]amfile [Jj]amfile.jam ;
+JAMFILE ?= [Bb]uild.jam [Jj]amfile.v2 [Jj]amfile [Jj]amfile. [Jj]amfile.jam ;
 
 
 # Find the Jamfile at the given location. This returns the exact names of all

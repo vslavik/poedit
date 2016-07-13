@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct is_not_igreater</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../string_algo/reference.html#header.boost.algorithm.string.compare_hpp" title="Header &lt;boost/algorithm/string/compare.hpp&gt;">
 <link rel="prev" href="is_not_greater.html" title="Struct is_not_greater">
@@ -35,35 +35,29 @@
 </span>
 <span class="keyword">struct</span> <a class="link" href="is_not_igreater.html" title="Struct is_not_igreater">is_not_igreater</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="is_not_igreater.html#boost.algorithm.is_not_igreaterconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="is_not_igreater.html#idm45506971002720-bb"><span class="identifier">is_not_igreater</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="is_not_igreater.html#idp71541568-bb"><span class="identifier">is_not_igreater</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="is_not_igreater.html#idm45507099834896-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="is_not_igreater.html#idp134138992-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T1<span class="special">,</span> <span class="keyword">typename</span> T2<span class="special">&gt;</span> 
-    <span class="keyword">bool</span> <a class="link" href="is_not_igreater.html#idm45507037689424-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">bool</span> <a class="link" href="is_not_igreater.html#idp134139552-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555127007040"></a><h2>Description</h2>
+<a name="idp400229152"></a><h2>Description</h2>
 <p>Case insensitive comparison predicate. Comparison is done using specified locales. </p>
 <div class="refsect2">
-<a name="idm45555127006272"></a><h3>
+<a name="idp400229920"></a><h3>
 <a name="boost.algorithm.is_not_igreaterconstruct-copy-destruct"></a><code class="computeroutput">is_not_igreater</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idm45506971002720-bb"></a><span class="identifier">is_not_igreater</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> Loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructor. <p>
+<pre class="literallayout"><a name="idp71541568-bb"></a><span class="identifier">is_not_igreater</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> Loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructor. <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">Loc</code></span></p></td>
 <td><p>locales used for comparison </p></td>
@@ -74,11 +68,11 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555126990512"></a><h3>
-<a name="idm45507099834896-bb"></a><code class="computeroutput">is_not_igreater</code> public member functions</h3>
+<a name="idp400245616"></a><h3>
+<a name="idp134138992-bb"></a><code class="computeroutput">is_not_igreater</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T1<span class="special">,</span> <span class="keyword">typename</span> T2<span class="special">&gt;</span> 
-  <span class="keyword">bool</span> <a name="idm45507037689424-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span> Arg1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span> Arg2<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Function operator. <p>Compare two operands. Case is ignored. </p>
+  <span class="keyword">bool</span> <a name="idp134139552-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span> Arg1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span> Arg2<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Function operator. <p>Compare two operands. Case is ignored. </p>
 </li></ol></div>
 </div>
 </div>

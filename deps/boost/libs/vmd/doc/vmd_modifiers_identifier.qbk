@@ -5,7 +5,7 @@
   http://www.boost.org/LICENSE_1_0.txt).
 ]
 
-[section:vmd_modifiers_filter Identifier modifiers]
+[section:vmd_modifiers_identifier Identifier modifiers]
 
 Identifier modifiers are optional parameters which 
 specify a set of identifiers to search in order to look 
@@ -38,9 +38,9 @@ As an example:
  #define BOOST_VMD_DETECT_green_green
  #define BOOST_VMD_DETECT_blue_blue
  
- BOOST_VMD_IS_IDENTIFIER(some_input,yellow) // returns 1 only if 'some_input is 'yellow', else 0
- BOOST_VMD_IS_IDENTIFIER(some_input,yellow,blue) // returns 1 only if 'some_input is 'yellow' or 'blue', else 0
- BOOST_VMD_IS_IDENTIFIER(some_input,(yellow,green)) // returns 1 if 'some_input' is 'yellow' or 'green', else 0
+ BOOST_VMD_IS_IDENTIFIER(some_input,yellow) // returns 1 only if 'some_input is 'yellow', else returns 0
+ BOOST_VMD_IS_IDENTIFIER(some_input,yellow,blue) // returns 1 only if 'some_input is 'yellow' or 'blue', else returns 0
+ BOOST_VMD_IS_IDENTIFIER(some_input,(yellow,green)) // returns 1 if 'some_input' is 'yellow' or 'green', else returns 0
  
  BOOST_VMD_IS_IDENTIFIER(some_input,red) 
     // always returns 0, even if 'some_input' is 'red' since 'red' has not been pre-detected
@@ -52,6 +52,17 @@ whereas
 If you invoke BOOST_VMD_IS_IDENTIFIER with the optional parameter(s), the invocation will
 only return 1 if the input matches one the identifier(s) of the optional parameters and the 
 identifier it matches has been registered and pre-detected.
+
+Both VMD numbers and v-types are identifier subtypes so you can also use them
+as identifier modifiers. You do not have to register or pre-detect VMD numbers
+or v-types since VMD has already done that for you.
+
+As an example of using VMD numbers or v-types as identifier modifiers with BOOST_VMD_IS_IDENTIFIER:
+
+ BOOST_VMD_IS_IDENTIFIER(some_input,1,3,5) // returns 1 only if 'some_input' is 1 or 3 or 5, else returns 0
+ BOOST_VMD_IS_IDENTIFIER(some_input,BOOST_VMD_TYPE_TUPLE,BOOST_VMD_TYPE_LIST,59) 
+    // returns 1 only if 'some_input is the v-type BOOST_VMD_TYPE_TUPLE or the v-type BOOST_VMD_TYPE_LIST or 59, else returns 0
+
 
 [heading Usage with BOOST_VMD_ELEM]
 
@@ -75,7 +86,9 @@ Since filter modifiers, which are v-types, are also identifiers, if
 you want to use v-types as identifier modifiers you must use the form
 which places all identifier modifiers as part of a tuple. Otherwise any
 v-types specified singly as optional parameters are seen as filter
-modifiers and never as identifier modifiers.
+modifiers and never as identifier modifiers. VMD numbers are also identifiers
+and may be used as identifier modifiers, but in this case VMD numbers as
+identifier modifiers do not need to be part of a tuple to be detected.
 
 Let's see how this works:
 

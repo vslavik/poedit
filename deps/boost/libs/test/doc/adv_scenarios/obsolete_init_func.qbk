@@ -1,11 +1,11 @@
 [/
- / Copyright (c) 2003 Boost.Test contributors 
+ / Copyright (c) 2003 Boost.Test contributors
  /
  / Distributed under the Boost Software License, Version 1.0. (See accompanying
  / file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  /]
 
-[section:obsolete_init_func The obsolete initialization function] 
+[section:obsolete_init_func The obsolete initialization function]
 
 For backwards compatibility, the __UTF__ also allows the customization of an initialization function of a different type.
 This is called the ['obsolete initialization function]. Its signature is:
@@ -31,11 +31,13 @@ In the shared-library usage variant, it is not possible to use the obsolete init
 
 Even if you decide to us the obsolete initialization function, it is recommended that:
 
-# You always return a null-pointer value and install the master test suite via [memberref
-boost::unit_test::test_suite::add `test_suite::add`] as illustrated [link ref_BOOST_TEST_CASE here]. The current
-framework does no longer treat the null-pointer value as failure. # You signal the failure by throwing [classref
-boost::unit_test::framework::setup_error] exception. # You access the command-line arguments through the interface of
-the __master_test_suite__, and ignore the function's arguments `argc` and `argv`.
+# You always return a null-pointer value and install the master test suite via
+  [memberref boost::unit_test::test_suite::add `test_suite::add`] as illustrated
+  [link ref_BOOST_TEST_CASE here]. The current framework does no longer treat the
+  null-pointer value as failure. 
+# You signal the failure by throwing [classref boost::unit_test::framework::setup_error] exception.
+# You access the command-line arguments through the interface of the __master_test_suite__,
+  and ignore the function's arguments `argc` and `argv`.
 
 [caution The obsolete initialization function is deprecated. It is recommended, to move from the old initialization
 function API, and rely on the automated test unit registration and [link boost_test.tests_organization.fixtures

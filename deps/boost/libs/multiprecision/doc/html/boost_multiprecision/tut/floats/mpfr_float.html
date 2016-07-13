@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>mpfr_float</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../floats.html" title="floating-point Numbers">
 <link rel="prev" href="gmp_float.html" title="gmp_float">
@@ -80,7 +80,7 @@
           digit counts. Note that we can not guarantee that using <code class="computeroutput"><span class="identifier">allocate_stack</span></code>
           won't cause any calls to mpfr's allocation routines, as mpfr may call these
           inside it's own code. The following table gives an idea of the performance
-          tradeoff's at 50 decimal digits precision<a href="#ftn.boost_multiprecision.tut.floats.mpfr_float.f0" class="footnote"><sup class="footnote"><a name="boost_multiprecision.tut.floats.mpfr_float.f0"></a>[2]</sup></a>:
+          tradeoff's at 50 decimal digits precision<sup>[<a name="boost_multiprecision.tut.floats.mpfr_float.f0" href="#ftn.boost_multiprecision.tut.floats.mpfr_float.f0" class="footnote">2</a>]</sup>:
         </p>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -169,7 +169,7 @@
           of <code class="computeroutput"><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">mpfr_float_backend</span><span class="special">&lt;</span><span class="identifier">N</span><span class="special">&gt;</span> <span class="special">&gt;</span></code> are copy constructible and assignable
           from:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               The <a href="http://gmplib.org" target="_top">GMP</a> native types <code class="computeroutput"><span class="identifier">mpf_t</span></code>, <code class="computeroutput"><span class="identifier">mpz_t</span></code>,
               <code class="computeroutput"><span class="identifier">mpq_t</span></code>.
@@ -190,7 +190,7 @@
 <p>
           Things you should know when using this type:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               A default constructed <code class="computeroutput"><span class="identifier">mpfr_float_backend</span></code>
               is set to a NaN (this is the default <a href="http://www.mpfr.org" target="_top">MPFR</a>
@@ -226,7 +226,7 @@
 </ul></div>
 <h6>
 <a name="boost_multiprecision.tut.floats.mpfr_float.h0"></a>
-          <span class="phrase"><a name="boost_multiprecision.tut.floats.mpfr_float.mpfr_example"></a></span><a class="link" href="mpfr_float.html#boost_multiprecision.tut.floats.mpfr_float.mpfr_example"> MPFR example:</a>
+          <span><a name="boost_multiprecision.tut.floats.mpfr_float.mpfr_example"></a></span><a class="link" href="mpfr_float.html#boost_multiprecision.tut.floats.mpfr_float.mpfr_example"> <a href="http://www.mpfr.org" target="_top">MPFR</a> example:</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">multiprecision</span><span class="special">/</span><span class="identifier">mpfr</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">gamma</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -261,8 +261,8 @@
 <span class="special">}</span>
 </pre>
 <div class="footnotes">
-<br><hr style="width:100; align:left;">
-<div id="ftn.boost_multiprecision.tut.floats.mpfr_float.f0" class="footnote"><p><a href="#boost_multiprecision.tut.floats.mpfr_float.f0" class="para"><sup class="para">[2] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.boost_multiprecision.tut.floats.mpfr_float.f0" href="#boost_multiprecision.tut.floats.mpfr_float.f0" class="para">2</a>] </sup>
             Compiled with VC++10 and /Ox, with MPFR-3.0.0 and MPIR-2.3.0
           </p></div>
 </div>

@@ -18,7 +18,7 @@ contain different data types of elements.
  
 This is the standard macro design and internally it is the easiest way
 to pass macro data back and forth. The Boost PP library has a rich set of 
-functionality to deal with all of its high-level data types and variadic data,
+functionality to deal with all of its high-level data types, and variadic data,
 with its own simpler functionality, also offers another alternative to 
 representing data.
 
@@ -43,10 +43,11 @@ with such mixed token input ?
 
 VMD has functionality which allows more than one type of preprocessing token, 
 excluding an 'empty' token which always refers to some entire input, to be part of a 
-single parameter of input data as a series of data, as long as all the top-level 
-data of such a single parameter is of some VMD data type. What this means is that 
-if some input consists of a series of data types it is possible to extract the 
-data for each data type in that series.
+single parameter of input data. These preprocessing tokens as a single parameter are 
+syntactically a consecutive series of data. The single limitation of this consecutive
+series of data is that each top-level part of the data of this series is of some VMD data type.
+What this means is that if some input consists of a series of data types it is possible 
+to extract the data for each data type in that series.
 
 In practicality what this means is that, given the examples just above, if 
 'areturn', 'afunction', and 'data' are identifiers it would be possible to
@@ -73,13 +74,13 @@ next element. Parsing is sequential and can only be done in a forward direction,
 but it can be done any number of times. In C++ iterator terms parsing of a 
 sequence is a forward iterator.
 
-Working with a sequence is equivalent to using VMD macros generically.
+Working with a sequence is equivalent to using VMD macros 'generically'.
 
 Before I give an explanation of how to use a sequence using VMD generic 
 functionality I would like to make two points:
 
 * The possibility of working with a sequence which contains more than one 
-data type for the preprocessor metaprogrammer can be easily abused. In general 
+data type can be easily abused. In general 
 keeping things simple is usually better than making things overly complicated 
 when it comes to the syntactical side of things in a computer language. A macro 
 parameter syntactical possibility has to be understandable to be used.
@@ -112,7 +113,7 @@ or
 etc. etc.
  
 you will not be able to parse the data using VMD since '&', "string literal",
-'+', '+=', and "4.3" are preprocessor tokens which are not top-level data types and 
+'+', '+=', and "4.3" are preprocessor tokens which are not VMD top-level data types and 
 therefore VMD cannot handle them at the parsing level. You can still of course
 pass such data as preprocessing input to macros but you cannot use VMD to recognize
 the parts of such data.

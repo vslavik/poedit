@@ -547,7 +547,7 @@ typically in folder `/mylibrary/lib/example`.
 
 [pre
 # All example source files, assuming no sub-folders.
-!scan-path "libs\/mylibrary\/example" ".*\\.cpp" 
+!scan-path "libs\/mylibrary\/example" ".*\.cpp" 
 ] [/pre]
 
 Often the ['scan] or ['scan-path] rules will bring in too many terms
@@ -964,10 +964,10 @@ well be an absolute path, and contain either forward or backward slash path sepa
 If, when the first file is scanned, there are no scanners whose ['type] is "class_name", "typedef_name", "macro_name" or 
 "function_name", then the defaults are installed.  These are equivalent to:
 
-   !define-scanner class_name "^[[:space:]]*(template[[:space:]]*<[^;:{]+>[[:space:]]*)?(class|struct)[[:space:]]*(\<\w+\>([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\<\w*\>)[[:space:]]*(<[^;:{]+>)?[[:space:]]*(\{|:[^;\{()]*\{)" "(?:class|struct)[^;{]+\\<\5\\>[^;{]+\\{" \5
-   !define-scanner typedef_name "typedef[^;{}#]+?(\w+)\s*;"  "typedef[^;]+\\<\1\\>\\s*;" "\1"
-   !define-scanner "macro_name" "^\s*#\s*define\s+(\w+)" "\\<\1\\>" "\1"
-   !define-scanner "function_name" "\w+(?:\s*<[^>]>)?[\s&*]+?(\w+)\s*(?:BOOST_[[:upper:]_]+\s*)?\([^\)]*\)\s*[;{]" "\\<\\w+\\>(?:\\s+<[^>]*>)?[\\s&*]+\\<\1\\>\\s*\\([^;{]*\\)" "\1"
+   !define-scanner class_name "^[[:space:]]*(template[[:space:]]*<[^;:{]+>[[:space:]]*)?(class|struct)[[:space:]]*(\<\w+\>([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\<\w*\>)[[:space:]]*(<[^;:{]+>)?[[:space:]]*(\{|:[^;\{()]*\{)" "(?:class|struct)[^;{]+\<\5\>[^;{]+\{" \5
+   !define-scanner typedef_name "typedef[^;{}#]+?(\w+)\s*;"  "typedef[^;]+\<\1\>\s*;" "\1"
+   !define-scanner "macro_name" "^\s*#\s*define\s+(\w+)" "\<\1\>" "\1"
+   !define-scanner "function_name" "\w++(?:\s*+<[^>]++>)?[\s&*]+?(\w+)\s*(?:BOOST_[[:upper:]_]+\s*)?\([^;{}]*\)\s*[;{]" "\\<\\w+\\>(?:\\s+<[^>]*>)*[\\s&*]+\\<\1\\>\\s*\\([^;{]*\\)" "\1"
 
 Note that these defaults are not installed if you have provided your own versions with these ['type] names. In this case if
 you want the default scanners to be in effect as well as your own, you should include the above in your script file.  
@@ -987,7 +987,7 @@ If this isn't how you want things, then include the ['class_name] scanner defini
 above in your script file, and change
 the ['xml-regex-formatter] field to something more permissive, for example: 
 
-   !define-scanner class_name "^[[:space:]]*(template[[:space:]]*<[^;:{]+>[[:space:]]*)?(class|struct)[[:space:]]*(\<\w+\>([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\<\w*\>)[[:space:]]*(<[^;:{]+>)?[[:space:]]*(\{|:[^;\{()]*\{)" "\\<\5\\>" \5
+   !define-scanner class_name "^[[:space:]]*(template[[:space:]]*<[^;:{]+>[[:space:]]*)?(class|struct)[[:space:]]*(\<\w+\>([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\<\w*\>)[[:space:]]*(<[^;:{]+>)?[[:space:]]*(\{|:[^;\{()]*\{)" "\<\5\>" \5
 
 Will look for ['any] occurrence of whatever class names the scanner may find in the documentation.
 

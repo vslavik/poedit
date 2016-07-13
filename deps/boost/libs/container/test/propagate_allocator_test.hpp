@@ -88,7 +88,7 @@ class alloc_propagate_wrapper
    {}
 
    alloc_propagate_wrapper &operator=(BOOST_COPY_ASSIGN_REF(alloc_propagate_wrapper) x)
-   {  this->Base::operator=(x);  return *this; }
+   {  this->Base::operator=((const Base &)x);  return *this; }
 
    alloc_propagate_wrapper &operator=(BOOST_RV_REF(alloc_propagate_wrapper) x)
    {  this->Base::operator=(boost::move(static_cast<Base&>(x)));  return *this; }

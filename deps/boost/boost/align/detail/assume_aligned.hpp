@@ -12,6 +12,6 @@ http://boost.org/LICENSE_1_0.txt
 #ifndef BOOST_ALIGN_DETAIL_ASSUME_ALIGNED_HPP
 #define BOOST_ALIGN_DETAIL_ASSUME_ALIGNED_HPP
 
-#define BOOST_ALIGN_ASSUME_ALIGNED(ptr, alignment)
+#define BOOST_ALIGN_ASSUME_ALIGNED(p, n)
 
 #endif

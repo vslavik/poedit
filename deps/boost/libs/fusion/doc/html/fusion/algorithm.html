@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Algorithm</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="prev" href="adapted/define_assoc_tpl_struct.html" title="BOOST_FUSION_DEFINE_ASSOC_TPL_STRUCT">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="fusion.algorithm"></a><a class="link" href="algorithm.html" title="Algorithm">Algorithm</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="algorithm/auxiliary.html">Auxiliary</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="algorithm/auxiliary/functions.html">Functions</a></span></dt>
@@ -50,12 +50,12 @@
 </dl></div>
 <h4>
 <a name="fusion.algorithm.h0"></a>
-      <span class="phrase"><a name="fusion.algorithm.lazy_evaluation"></a></span><a class="link" href="algorithm.html#fusion.algorithm.lazy_evaluation">Lazy
+      <span><a name="fusion.algorithm.lazy_evaluation"></a></span><a class="link" href="algorithm.html#fusion.algorithm.lazy_evaluation">Lazy
       Evaluation</a>
     </h4>
 <p>
       Unlike <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, Fusion
-      algorithms are lazy<a href="#ftn.fusion.algorithm.f0" class="footnote" name="fusion.algorithm.f0"><sup class="footnote">[12]</sup></a> and non sequence-type preserving <a href="#ftn.fusion.algorithm.f1" class="footnote" name="fusion.algorithm.f1"><sup class="footnote">[13]</sup></a>. This is by design. Runtime efficiency is given a high priority.
+      algorithms are lazy<sup>[<a name="fusion.algorithm.f0" href="#ftn.fusion.algorithm.f0" class="footnote">12</a>]</sup> and non sequence-type preserving <sup>[<a name="fusion.algorithm.f1" href="#ftn.fusion.algorithm.f1" class="footnote">13</a>]</sup>. This is by design. Runtime efficiency is given a high priority.
       Like <a href="http://www.boost.org/libs/mpl/index.html" target="_top">MPL</a>, and
       unlike <a href="http://en.wikipedia.org/wiki/Standard_Template_Library" target="_top">STL</a>,
       fusion algorithms are mostly functional in nature such that algorithms are
@@ -71,7 +71,7 @@
     </p>
 <h4>
 <a name="fusion.algorithm.h1"></a>
-      <span class="phrase"><a name="fusion.algorithm.sequence_extension"></a></span><a class="link" href="algorithm.html#fusion.algorithm.sequence_extension">Sequence
+      <span><a name="fusion.algorithm.sequence_extension"></a></span><a class="link" href="algorithm.html#fusion.algorithm.sequence_extension">Sequence
       Extension</a>
     </h4>
 <p>
@@ -95,18 +95,18 @@
     </p>
 <h4>
 <a name="fusion.algorithm.h2"></a>
-      <span class="phrase"><a name="fusion.algorithm.header"></a></span><a class="link" href="algorithm.html#fusion.algorithm.header">Header</a>
+      <span><a name="fusion.algorithm.header"></a></span><a class="link" href="algorithm.html#fusion.algorithm.header">Header</a>
     </h4>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.fusion.algorithm.f0" class="footnote"><p><a href="#fusion.algorithm.f0" class="para"><sup class="para">[12] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.fusion.algorithm.f0" href="#fusion.algorithm.f0" class="para">12</a>] </sup>
         Except for some special cases such as <a class="link" href="algorithm/iteration/functions/for_each.html" title="for_each"><code class="computeroutput"><span class="identifier">for_each</span></code></a> and <a class="link" href="algorithm/auxiliary/functions/copy.html" title="copy"><code class="computeroutput"><span class="identifier">copy</span></code></a> which are inherently imperative
         algorithms.
       </p></div>
-<div id="ftn.fusion.algorithm.f1" class="footnote"><p><a href="#fusion.algorithm.f1" class="para"><sup class="para">[13] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.fusion.algorithm.f1" href="#fusion.algorithm.f1" class="para">13</a>] </sup>
         What does that mean? It means that when you operate on a sequence through
         a Fusion algorithm that returns a sequence, the sequence returned may not
         be of the same class as the original

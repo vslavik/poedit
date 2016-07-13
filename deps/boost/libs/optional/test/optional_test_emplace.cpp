@@ -24,7 +24,7 @@
 using boost::optional;
 using boost::none;
 
-#if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
 class Guard
 {
@@ -90,7 +90,7 @@ void test_emplace()
 
 #endif
 
-#if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES)
 
 
 struct ThrowOnMove
@@ -120,7 +120,7 @@ struct Thrower
     
 private:
     Thrower(Thrower const&);
-#if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES)
     Thrower(Thrower&&);
 #endif
 };
@@ -192,10 +192,10 @@ void test_emplace()
 
 int main()
 {
-#if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+#if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES) && (!defined BOOST_NO_CXX11_VARIADIC_TEMPLATES)
     test_emplace();
 #endif
-#if (!defined BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if (!defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES)
     test_no_moves_on_emplacement();
 #endif
     test_clear_on_throw();

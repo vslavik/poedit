@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct is_iequal</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../string_algo/reference.html#header.boost.algorithm.string.compare_hpp" title="Header &lt;boost/algorithm/string/compare.hpp&gt;">
 <link rel="prev" href="is_equal.html" title="Struct is_equal">
-<link rel="next" href="is_iless.html" title="Struct is_iless">
+<link rel="next" href="is_less.html" title="Struct is_less">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_equal.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../string_algo/reference.html#header.boost.algorithm.string.compare_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="is_iless.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="is_equal.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../string_algo/reference.html#header.boost.algorithm.string.compare_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="is_less.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.algorithm.is_iequal"></a><div class="titlepage"></div>
@@ -35,35 +35,29 @@
 </span>
 <span class="keyword">struct</span> <a class="link" href="is_iequal.html" title="Struct is_iequal">is_iequal</a> <span class="special">{</span>
   <span class="comment">// <a class="link" href="is_iequal.html#boost.algorithm.is_iequalconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="is_iequal.html#idm45507094739008-bb"><span class="identifier">is_iequal</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="is_iequal.html#idp69040464-bb"><span class="identifier">is_iequal</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="is_iequal.html#idm45506984576624-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="is_iequal.html#idp72947008-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T1<span class="special">,</span> <span class="keyword">typename</span> T2<span class="special">&gt;</span> 
-    <span class="keyword">bool</span> <a class="link" href="is_iequal.html#idm45506984576064-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="keyword">bool</span> <a class="link" href="is_iequal.html#idp72947568-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555127225488"></a><h2>Description</h2>
+<a name="idp400010752"></a><h2>Description</h2>
 <p>Case insensitive comparison predicate. Comparison is done using specified locales. </p>
 <div class="refsect2">
-<a name="idm45555127224720"></a><h3>
+<a name="idp400011520"></a><h3>
 <a name="boost.algorithm.is_iequalconstruct-copy-destruct"></a><code class="computeroutput">is_iequal</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><a name="idm45507094739008-bb"></a><span class="identifier">is_iequal</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> Loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructor. <p>
+<pre class="literallayout"><a name="idp69040464-bb"></a><span class="identifier">is_iequal</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span> <span class="special">&amp;</span> Loc <span class="special">=</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">locale</span><span class="special">(</span><span class="special">)</span><span class="special">)</span><span class="special">;</span></pre>Constructor. <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">Loc</code></span></p></td>
 <td><p>locales used for comparison </p></td>
@@ -74,11 +68,11 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555127209024"></a><h3>
-<a name="idm45506984576624-bb"></a><code class="computeroutput">is_iequal</code> public member functions</h3>
+<a name="idp400027152"></a><h3>
+<a name="idp72947008-bb"></a><code class="computeroutput">is_iequal</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T1<span class="special">,</span> <span class="keyword">typename</span> T2<span class="special">&gt;</span> 
-  <span class="keyword">bool</span> <a name="idm45506984576064-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span> Arg1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span> Arg2<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Function operator. <p>Compare two operands. Case is ignored. </p>
+  <span class="keyword">bool</span> <a name="idp72947568-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T1</span> <span class="special">&amp;</span> Arg1<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T2</span> <span class="special">&amp;</span> Arg2<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Function operator. <p>Compare two operands. Case is ignored. </p>
 </li></ol></div>
 </div>
 </div>
@@ -93,7 +87,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="is_equal.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../string_algo/reference.html#header.boost.algorithm.string.compare_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="is_iless.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="is_equal.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../string_algo/reference.html#header.boost.algorithm.string.compare_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="is_less.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

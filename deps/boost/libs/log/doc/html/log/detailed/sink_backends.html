@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Sink backends</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="sink_frontends.html" title="Sink frontends">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.sink_backends"></a><a class="link" href="sink_backends.html" title="Sink backends">Sink backends</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.text_ostream">Text stream
         backend</a></span></dt>
 <dt><span class="section"><a href="sink_backends.html#log.detailed.sink_backends.text_file">Text file backend</a></span></dt>
@@ -96,7 +96,7 @@
           an extended set of features suitable for file-based logging. The features
           include:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Log file rotation based on file size and/or time
             </li>
@@ -125,7 +125,7 @@
 </table></div>
 <h6>
 <a name="log.detailed.sink_backends.text_file.h0"></a>
-          <span class="phrase"><a name="log.detailed.sink_backends.text_file.file_rotation"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.file_rotation">File rotation</a>
+          <span><a name="log.detailed.sink_backends.text_file.file_rotation"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.file_rotation">File rotation</a>
         </h6>
 <p>
           File rotation is implemented by the sink backend itself. The file name
@@ -200,7 +200,7 @@
               Time point rotations: <code class="computeroutput"><a class="link" href="../../boost/log/sinks/file/rotation_at_time_point.html" title="Class rotation_at_time_point">rotation_at_time_point</a></code>
               class. This kind of rotation takes place whenever the specified time
               point is reached. The following variants are available:
-              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+              <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                     Every day rotation, at the specified time. This is what was presented
                     in the code snippet above:
@@ -275,7 +275,7 @@
           The file name pattern may contain a number of wildcards, like the one you
           can see in the example above. Supported placeholders are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Current date and time components. The placeholders conform to the ones
               specified by <a href="http://www.boost.org/doc/libs/release/doc/html/date_time.html" target="_top">Boost.DateTime</a>
@@ -453,7 +453,7 @@
         </p>
 <h6>
 <a name="log.detailed.sink_backends.text_file.h1"></a>
-          <span class="phrase"><a name="log.detailed.sink_backends.text_file.managing_rotated_files"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.managing_rotated_files">Managing
+          <span><a name="log.detailed.sink_backends.text_file.managing_rotated_files"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.text_file.managing_rotated_files">Managing
           rotated files</a>
         </h6>
 <p>
@@ -471,7 +471,8 @@
     <span class="identifier">sink</span><span class="special">-&gt;</span><span class="identifier">locked_backend</span><span class="special">()-&gt;</span><span class="identifier">set_file_collector</span><span class="special">(</span><span class="identifier">sinks</span><span class="special">::</span><span class="identifier">file</span><span class="special">::</span><span class="identifier">make_collector</span><span class="special">(</span>
         <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">target</span> <span class="special">=</span> <span class="string">"logs"</span><span class="special">,</span>                      <a class="co" name="log.detailed.sink_backends.text_file.c12" href="sink_backends.html#log.detailed.sink_backends.text_file.c13"><img src="../../../../../../doc/src/images/callouts/1.png" alt="1" border="0"></a>
         <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">max_size</span> <span class="special">=</span> <span class="number">16</span> <span class="special">*</span> <span class="number">1024</span> <span class="special">*</span> <span class="number">1024</span><span class="special">,</span>          <a class="co" name="log.detailed.sink_backends.text_file.c14" href="sink_backends.html#log.detailed.sink_backends.text_file.c15"><img src="../../../../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
-        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">min_free_space</span> <span class="special">=</span> <span class="number">100</span> <span class="special">*</span> <span class="number">1024</span> <span class="special">*</span> <span class="number">1024</span>    <a class="co" name="log.detailed.sink_backends.text_file.c16" href="sink_backends.html#log.detailed.sink_backends.text_file.c17"><img src="../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">min_free_space</span> <span class="special">=</span> <span class="number">100</span> <span class="special">*</span> <span class="number">1024</span> <span class="special">*</span> <span class="number">1024</span><span class="special">,</span>   <a class="co" name="log.detailed.sink_backends.text_file.c16" href="sink_backends.html#log.detailed.sink_backends.text_file.c17"><img src="../../../../../../doc/src/images/callouts/3.png" alt="3" border="0"></a>
+        <span class="identifier">keywords</span><span class="special">::</span><span class="identifier">max_files</span> <span class="special">=</span> <span class="number">512</span>                       <a class="co" name="log.detailed.sink_backends.text_file.c18" href="sink_backends.html#log.detailed.sink_backends.text_file.c19"><img src="../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a>
     <span class="special">));</span>
 <span class="special">}</span>
 </pre>
@@ -496,11 +497,17 @@
               minimum free space on the drive, in bytes
             </p></td>
 </tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="log.detailed.sink_backends.text_file.c19"></a><a href="#log.detailed.sink_backends.text_file.c18"><img src="../../../../../../doc/src/images/callouts/4.png" alt="4" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+              maximum number of stored files
+            </p></td>
+</tr>
 </table></div>
 <p>
-          The <code class="computeroutput"><span class="identifier">max_size</span></code> and <code class="computeroutput"><span class="identifier">min_free_space</span></code> parameters are optional,
-          the corresponding threshold will not be taken into account if the parameter
-          is not specified.
+          The <code class="computeroutput"><span class="identifier">max_size</span></code>, <code class="computeroutput"><span class="identifier">min_free_space</span></code> and <code class="computeroutput"><span class="identifier">max_files</span></code>
+          parameters are optional, the corresponding threshold will not be taken
+          into account if the parameter is not specified.
         </p>
 <p>
           One can create multiple file sink backends that collect files into the
@@ -871,7 +878,7 @@
 <a name="log.detailed.sink_backends.event_log"></a><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log" title="Windows event log backends">Windows event
         log backends</a>
 </h4></div></div></div>
-<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span>[boost/log/sinks/event_log_backend.hpp]<span class="special">&gt;</span>
+<pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../../sinks.html#header.boost.log.sinks.event_log_backend_hpp" title="Header &lt;boost/log/sinks/event_log_backend.hpp&gt;">boost/log/sinks/event_log_backend.hpp</a></code><span class="special">&gt;</span>
 </pre>
 <p>
           Windows operating system provides a special API for publishing events related
@@ -904,11 +911,11 @@
         </p>
 <h6>
 <a name="log.detailed.sink_backends.event_log.h0"></a>
-          <span class="phrase"><a name="log.detailed.sink_backends.event_log.simple_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.simple_event_log_backend">Simple
+          <span><a name="log.detailed.sink_backends.event_log.simple_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.simple_event_log_backend">Simple
           event log backend</a>
         </h6>
 <p>
-          The <code class="computeroutput"><a class="link" href="../../boost/log/sinks/basic_si_idm45635675969616.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>
+          The <code class="computeroutput"><a class="link" href="../../boost/log/sinks/basic_simple_e_idp22306752.html" title="Class template basic_simple_event_log_backend">basic_simple_event_log_backend</a></code>
           backend is intended to encapsulate as much of the event log API as possible,
           leaving interface and usage model very similar to other sink backends.
           It contains all resources that are needed for the Event Viewer to function
@@ -979,7 +986,7 @@
         </p>
 <h6>
 <a name="log.detailed.sink_backends.event_log.h1"></a>
-          <span class="phrase"><a name="log.detailed.sink_backends.event_log.advanced_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.advanced_event_log_backend">Advanced
+          <span><a name="log.detailed.sink_backends.event_log.advanced_event_log_backend"></a></span><a class="link" href="sink_backends.html#log.detailed.sink_backends.event_log.advanced_event_log_backend">Advanced
           event log backend</a>
         </h6>
 <p>
@@ -1240,8 +1247,7 @@ Operation finished successfully in %1 seconds.
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

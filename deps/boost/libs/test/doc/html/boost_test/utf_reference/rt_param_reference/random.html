@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>random</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../rt_param_reference.html" title="Runtime parameters reference">
 <link rel="prev" href="output_format.html" title="output_format">
@@ -29,40 +29,70 @@
 <p>
           Parameter <span class="emphasis"><em>random</em></span> instructs the <span class="emphasis"><em>Unit Test
           Framework</em></span> to execute the test cases in random order. This parameter
-          accepts optional unsigned integer argument. By default test cases are executed
-          in some specific order defined by order of test units in test files and
-          dependency between test units. If parameter is specified without the argument
-          value testing order is randomized based on current time. Alternatively
-          you can specify any positive value greater than 1 and it will be used as
-          random seed for the run.
+          accepts an optional <code class="computeroutput"><span class="keyword">unsigned</span> <span class="identifier">integer</span></code> argument for the seed of the
+          random generator:
         </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              By default (value <code class="computeroutput"><span class="number">0</span></code>), the
+              test cases are executed in some specific order defined by the order
+              of test units in the test files, and the dependencies between test
+              units.
+            </li>
+<li class="listitem">
+              If the parameter is specified without the argument value, or with value
+              <code class="computeroutput"><span class="number">1</span></code>, the testing order is
+              randomized based on current time.
+            </li>
+<li class="listitem">
+              Alternatively, any positive value greater than <code class="computeroutput"><span class="number">1</span></code>
+              will be used as random seed for the run.
+            </li>
+</ul></div>
+<div class="tip"><table border="0" summary="Tip">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="../../../../../../../doc/src/images/tip.png"></td>
+<th align="left">Tip</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+            in case <code class="computeroutput"><span class="special">--</span><span class="identifier">random</span></code>
+            is specified, the value of the seed is logged using <a class="link" href="../testout_reference/test_output_macro_message.html" title="BOOST_TEST_MESSAGE"><code class="computeroutput"><span class="identifier">BOOST_TEST_MESSAGE</span></code></a>, so that
+            it is possible to replay exactly the same sequence of unit test in case
+            of failure. For the seed to be visible in the logs, make sure the proper
+            <a class="link" href="log_level.html" title="log_level"><code class="computeroutput"><span class="special">--</span><span class="identifier">log_level</span></code></a>
+            is set.
+          </p></td></tr>
+</table></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.random.h0"></a>
-          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.random.acceptable_values"></a></span><a class="link" href="random.html#boost_test.utf_reference.rt_param_reference.random.acceptable_values">Acceptable
+          <span><a name="boost_test.utf_reference.rt_param_reference.random.acceptable_values"></a></span><a class="link" href="random.html#boost_test.utf_reference.rt_param_reference.random.acceptable_values">Acceptable
           values</a>
         </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
-              <span class="bold"><strong>0</strong></span> (default)
+              <span class="bold"><strong>0</strong></span> (default): no randomization
             </li>
 <li class="listitem">
-              1
+              <code class="computeroutput"><span class="number">1</span></code>: random seed based on
+              the current time
             </li>
 <li class="listitem">
-              <a class="link" href="../rt_param_reference.html#regular_param_value">integer</a> value &gt; 1
+              <a class="link" href="../rt_param_reference.html#regular_param_value">integer</a> <code class="computeroutput"><span class="identifier">value</span>
+              <span class="special">&gt;</span> <span class="number">1</span></code>
+              : seed for the random number generator
             </li>
 </ul></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.random.h1"></a>
-          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.random.command_line_syntax"></a></span><a class="link" href="random.html#boost_test.utf_reference.rt_param_reference.random.command_line_syntax">Command
+          <span><a name="boost_test.utf_reference.rt_param_reference.random.command_line_syntax"></a></span><a class="link" href="random.html#boost_test.utf_reference.rt_param_reference.random.command_line_syntax">Command
           line syntax</a>
         </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               <code class="computeroutput"><span class="special">--</span><span class="identifier">random</span><span class="special">=&lt;</span><span class="identifier">seed</span><span class="special">&gt;</span></code>
             </li></ul></div>
 <h5>
 <a name="boost_test.utf_reference.rt_param_reference.random.h2"></a>
-          <span class="phrase"><a name="boost_test.utf_reference.rt_param_reference.random.environment_variable"></a></span><a class="link" href="random.html#boost_test.utf_reference.rt_param_reference.random.environment_variable">Environment
+          <span><a name="boost_test.utf_reference.rt_param_reference.random.environment_variable"></a></span><a class="link" href="random.html#boost_test.utf_reference.rt_param_reference.random.environment_variable">Environment
           variable</a>
         </h5>
 <pre class="programlisting"><span class="identifier">BOOST_TEST_RANDOM</span>
@@ -70,7 +100,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

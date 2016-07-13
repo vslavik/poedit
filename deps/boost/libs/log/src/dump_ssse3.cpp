@@ -16,10 +16,10 @@
 // NOTE: You should generally avoid including headers as much as possible here, because this file
 //       is compiled with special compiler options, and any included header may result in generation of
 //       unintended code with these options and violation of ODR.
+#include <boost/log/detail/config.hpp>
 #include <ostream>
 #include <tmmintrin.h>
 #include <boost/cstdint.hpp>
-#include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
 #if defined(__x86_64) || defined(__x86_64__) || \

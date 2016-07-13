@@ -127,7 +127,7 @@ After being closed, the rotated files can be collected. In order to do so one ha
 
 [example_sinks_xml_file_collecting]
 
-The `max_size` and `min_free_space` parameters are optional, the corresponding threshold will not be taken into account if the parameter is not specified.
+The `max_size`, `min_free_space` and `max_files` parameters are optional, the corresponding threshold will not be taken into account if the parameter is not specified.
 
 One can create multiple file sink backends that collect files into the same target directory. In this case the most strict thresholds are combined for this target directory. The files from this directory will be erased without regard for which sink backend wrote it, i.e. in the strict chronological order.
 
@@ -198,7 +198,7 @@ Note that the sink backend is templated on the character type. This type defines
 
 [section:event_log Windows event log backends]
 
-    #include <``[boost/log/sinks/event_log_backend.hpp]``>
+    #include <``[boost_log_sinks_event_log_backend_hpp]``>
 
 Windows operating system provides a special API for publishing events related to application execution. A wide range of applications, including Windows components, use this facility to provide the user with all essential information about computer health in a single place - an event log. There can be more than one event log. However, typically all user-space applications use the common Application log. Records from different applications or their parts can be selected from the log by a record source name. Event logs can be read with a standard utility, an Event Viewer, that comes with Windows.
 

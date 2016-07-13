@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Design Overview</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../variant.html" title="Chapter&#160;39.&#160;Boost.Variant">
+<link rel="up" href="../variant.html" title="Chapter&#160;41.&#160;Boost.Variant">
 <link rel="prev" href="../boost/visitor_ptr.html" title="Function template visitor_ptr">
 <link rel="next" href="misc.html" title="Miscellaneous Notes">
 </head>
@@ -26,11 +26,11 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="variant.design"></a>Design Overview</h2></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="design.html#variant.design.never-empty">"Never-Empty" Guarantee</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="design.html#variant.design.never-empty">"Never-Empty" Guarantee</a></span></dt></dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="variant.design.never-empty"></a>"Never-Empty" Guarantee</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="design.html#variant.design.never-empty.guarantee">The Guarantee</a></span></dt>
 <dt><span class="section"><a href="design.html#variant.design.never-empty.problem">The Implementation Problem</a></span></dt>
 <dt><span class="section"><a href="design.html#variant.design.never-empty.memcpy-solution">The "Ideal" Solution: False Hopes</a></span></dt>
@@ -262,7 +262,7 @@
         types are met:
 
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">For each bounded type <code class="computeroutput">T</code> that is nothrow
             copy-constructible (as indicated by
             <code class="computeroutput">boost::has_nothrow_copy</code>), the

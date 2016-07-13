@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../mpi.html" title="Chapter&#160;21.&#160;Boost.MPI">
+<link rel="up" href="../mpi.html" title="Chapter&#160;23.&#160;Boost.MPI">
 <link rel="prev" href="getting_started.html" title="Getting started">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="mpi.tutorial"></a>Tutorial</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#mpi.point_to_point">Point-to-Point communication</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#mpi.collectives">Collective operations</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#mpi.communicators">Managing communicators</a></span></dt>
@@ -109,7 +109,7 @@ I am process 3 of 7.
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.point_to_point"></a>Point-to-Point communication</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#mpi.nonblocking">Non-blocking communication</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#mpi.user_data_types">User-defined data types</a></span></dt>
 </dl></div>
@@ -160,8 +160,8 @@ I am process 3 of 7.
         it receives, along with a comma, then passes the message "world"
         back to processor 0 with a different tag. The first processor then writes
         this message with the "!" and exits. All sends are accomplished
-        with the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986507456-bb">communicator::send</a></code>
-        method and all receives use a corresponding <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506995186000-bb">communicator::recv</a></code>
+        with the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp200113664-bb">communicator::send</a></code>
+        method and all receives use a corresponding <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp125860960-bb">communicator::recv</a></code>
         call.
       </p>
 <div class="section">
@@ -232,15 +232,15 @@ I am process 3 of 7.
 <span class="special">}</span>
 </pre>
 <p>
-          We have replaced calls to the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986507456-bb">communicator::send</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506995186000-bb">communicator::recv</a></code>
-          members with similar calls to their non-blocking counterparts, <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507098455152-bb">communicator::isend</a></code>
-          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507109768256-bb">communicator::irecv</a></code>.
+          We have replaced calls to the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp200113664-bb">communicator::send</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp125860960-bb">communicator::recv</a></code>
+          members with similar calls to their non-blocking counterparts, <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp79047792-bb">communicator::isend</a></code>
+          and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp136361168-bb">communicator::irecv</a></code>.
           The prefix <span class="bold"><strong>i</strong></span> indicates that the operations
           return immediately with a <code class="computeroutput"><a class="link" href="../boost/mpi/request.html" title="Class request">mpi::request</a></code>
           object, which allows one to query the status of a communication request
-          (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idm45507105930544-bb">test</a></code>
-          method) or wait until it has completed (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idm45507105932368-bb">wait</a></code>
+          (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp78533776-bb">test</a></code>
+          method) or wait until it has completed (see the <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp78531952-bb">wait</a></code>
           method). Multiple requests can be completed at the same time with the
           <code class="computeroutput"><a class="link" href="../boost/mpi/wait_all.html" title="Function wait_all">wait_all</a></code> operation.
         </p>
@@ -372,7 +372,7 @@ I am process 3 of 7.
 <p>
           The redundant copy elimination optimization can only be applied when the
           shape of the data type is completely fixed. Variable-length types (e.g.,
-          strings, linked lists) and types that store pointers cannot use the optimiation,
+          strings, linked lists) and types that store pointers cannot use the optimization,
           but Boost.MPI will be unable to detect this error at compile time. Attempting
           to perform this optimization when it is not correct will likely result
           in segmentation faults and other strange program behavior.
@@ -389,7 +389,7 @@ I am process 3 of 7.
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.collectives"></a>Collective operations</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#mpi.broadcast">Broadcast</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#mpi.gather">Gather</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#mpi.reduce">Reduce</a></span></dt>
@@ -682,8 +682,8 @@ Process #6 thought of 650073868
 <p>
           In that example we provide both input and output values, requiring twice
           as much space, which can be a problem depending on the size of the transmitted
-          data. If there is no need to preserve the input value, the ouput value
-          can be omitted. In that case the input value will be overriden with the
+          data. If there is no need to preserve the input value, the output value
+          can be omitted. In that case the input value will be overridden with the
           output value and Boost.MPI is able, in some situation, to implement the
           operation with a more space efficient solution (using the <code class="computeroutput"><span class="identifier">MPI_IN_PLACE</span></code> flag of the MPI C mapping),
           as in the following example (<code class="computeroutput"><span class="identifier">in_place_global_min</span><span class="special">.</span><span class="identifier">cpp</span></code>):
@@ -888,7 +888,7 @@ Process #6 thought of 650073868
 </pre>
 <p>
         The skeletons and content of any Serializable data type can be transmitted
-        either via the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986507456-bb">send</a></code> and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506995186000-bb">recv</a></code> members of the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html" title="Class communicator">communicator</a></code>
+        either via the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp200113664-bb">send</a></code> and <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp125860960-bb">recv</a></code> members of the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html" title="Class communicator">communicator</a></code>
         class (for point-to-point communicators) or broadcast via the <code class="computeroutput"><a class="link" href="../boost/mpi/broadcast.html" title="Function broadcast">broadcast()</a></code> collective. When separating
         a data structure into a skeleton and content, be careful not to modify the
         data structure (either on the sender side or the receiver side) without transmitting
@@ -900,7 +900,7 @@ Process #6 thought of 650073868
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.performance_optimizations"></a>Performance optimizations</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#mpi.serialization_optimizations">Serialization optimizations</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#mpi.homogeneous_machines">Homogeneous Machines</a></span></dt>
 </dl></div>
@@ -913,7 +913,7 @@ Process #6 thought of 650073868
           Boost.MPI and Boost.Serialization.
         </p>
 <p>
-          It was alredy discussed that fixed length types containing no pointers
+          It was already discussed that fixed length types containing no pointers
           can be using as <code class="computeroutput"><a class="link" href="../boost/mpi/is_mpi_datatype.html" title="Struct template is_mpi_datatype">is_mpi_datatype</a></code>, e.g.:
         </p>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">mpi</span> <span class="special">{</span>
@@ -969,7 +969,7 @@ Process #6 thought of 650073868
         or for porting existing parallel programs to Boost.MPI.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t0"></a><p class="title"><b>Table&#160;21.1.&#160;Point-to-point communication</b></p>
+<a name="mpi.tutorial.c_mapping.t0"></a><p class="title"><b>Table&#160;23.1.&#160;Point-to-point communication</b></p>
 <div class="table-contents"><table class="table" summary="Point-to-point communication">
 <colgroup>
 <col>
@@ -1068,7 +1068,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idm45507105926464-bb">request::cancel</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp77923248-bb">request::cancel</a></code>
                 </p>
               </td>
 </tr>
@@ -1080,7 +1080,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idm45506993577760-bb">status::count</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idp130382512-bb">status::count</a></code>
                 </p>
               </td>
 </tr>
@@ -1104,7 +1104,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507089907504-bb">communicator::iprobe</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp42165808-bb">communicator::iprobe</a></code>
                 </p>
               </td>
 </tr>
@@ -1128,7 +1128,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507098455152-bb">communicator::isend</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp79047792-bb">communicator::isend</a></code>
                 </p>
               </td>
 </tr>
@@ -1152,7 +1152,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507098455152-bb">communicator::irecv</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp79047792-bb">communicator::irecv</a></code>
                 </p>
               </td>
 </tr>
@@ -1164,7 +1164,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507091935280-bb">communicator::probe</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp67821120-bb">communicator::probe</a></code>
                 </p>
               </td>
 </tr>
@@ -1188,7 +1188,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506995186000-bb">communicator::recv</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp125860960-bb">communicator::recv</a></code>
                 </p>
               </td>
 </tr>
@@ -1248,7 +1248,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986507456-bb">communicator::send</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp200113664-bb">communicator::send</a></code>
                 </p>
               </td>
 </tr>
@@ -1344,7 +1344,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idm45507105932368-bb">request::test</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp78531952-bb">request::test</a></code>
                 </p>
               </td>
 </tr>
@@ -1392,7 +1392,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idm45506993579376-bb">status::cancelled</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/status.html#idp130380896-bb">status::cancelled</a></code>
                 </p>
               </td>
 </tr>
@@ -1404,7 +1404,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idm45507105932368-bb">request::wait</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/request.html#idp78531952-bb">request::wait</a></code>
                 </p>
               </td>
 </tr>
@@ -1453,7 +1453,7 @@ Process #6 thought of 650073868
         constants.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t1"></a><p class="title"><b>Table&#160;21.2.&#160;Datatypes</b></p>
+<a name="mpi.tutorial.c_mapping.t1"></a><p class="title"><b>Table&#160;23.2.&#160;Datatypes</b></p>
 <div class="table-contents"><table class="table" summary="Datatypes">
 <colgroup>
 <col>
@@ -1742,8 +1742,8 @@ Process #6 thought of 650073868
 <br class="table-break"><p>
         Boost.MPI does not provide direct wrappers to the MPI derived datatypes functionality.
         Instead, Boost.MPI relies on the <a href="../../../libs/serialization/doc" target="_top">Boost.Serialization</a>
-        library to construct MPI datatypes for user-defined classe. The section on
-        <a class="link" href="tutorial.html#mpi.user_data_types" title="User-defined data types">user-defined data types</a> describes
+        library to construct MPI datatypes for user-defined classes. The section
+        on <a class="link" href="tutorial.html#mpi.user_data_types" title="User-defined data types">user-defined data types</a> describes
         this mechanism, which is used for types that marked as "MPI datatypes"
         using <code class="computeroutput"><a class="link" href="../boost/mpi/is_mpi_datatype.html" title="Struct template is_mpi_datatype">is_mpi_datatype</a></code>.
       </p>
@@ -1755,7 +1755,7 @@ Process #6 thought of 650073868
         from the user, many of these operations are called internally by Boost.MPI.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t2"></a><p class="title"><b>Table&#160;21.3.&#160;Derived datatypes</b></p>
+<a name="mpi.tutorial.c_mapping.t2"></a><p class="title"><b>Table&#160;23.3.&#160;Derived datatypes</b></p>
 <div class="table-contents"><table class="table" summary="Derived datatypes">
 <colgroup>
 <col>
@@ -1967,7 +1967,7 @@ Process #6 thought of 650073868
         can be used to pack or unpack a contiguous buffer using MPI's facilities.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t3"></a><p class="title"><b>Table&#160;21.4.&#160;Packing and unpacking</b></p>
+<a name="mpi.tutorial.c_mapping.t3"></a><p class="title"><b>Table&#160;23.4.&#160;Packing and unpacking</b></p>
 <div class="table-contents"><table class="table" summary="Packing and unpacking">
 <colgroup>
 <col>
@@ -2031,7 +2031,7 @@ Process #6 thought of 650073868
         will be invoked when it is possible (and efficient) to do so.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t4"></a><p class="title"><b>Table&#160;21.5.&#160;Collectives</b></p>
+<a name="mpi.tutorial.c_mapping.t4"></a><p class="title"><b>Table&#160;23.5.&#160;Collectives</b></p>
 <div class="table-contents"><table class="table" summary="Collectives">
 <colgroup>
 <col>
@@ -2118,7 +2118,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507089898528-bb">communicator::barrier</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp190055216-bb">communicator::barrier</a></code>
                 </p>
               </td>
 </tr>
@@ -2228,7 +2228,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  supported implicitly by <code class="computeroutput"><a class="link" href="../boost/mpi/all_reduce.html" title="Function all_reduce">all_reduce by omiting the ouput
+                  supported implicitly by <code class="computeroutput"><a class="link" href="../boost/mpi/all_reduce.html" title="Function all_reduce">all_reduce by omitting the output
                   value</a></code>
                 </p>
               </td>
@@ -2245,7 +2245,7 @@ Process #6 thought of 650073868
         reduction operations can be mapped between the C MPI and Boost.MPI.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t5"></a><p class="title"><b>Table&#160;21.6.&#160;Reduction operations</b></p>
+<a name="mpi.tutorial.c_mapping.t5"></a><p class="title"><b>Table&#160;23.6.&#160;Reduction operations</b></p>
 <div class="table-contents"><table class="table" summary="Reduction operations">
 <colgroup>
 <col>
@@ -2444,7 +2444,7 @@ Process #6 thought of 650073868
         class in Boost.MPI.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t6"></a><p class="title"><b>Table&#160;21.7.&#160;Predefined communicators</b></p>
+<a name="mpi.tutorial.c_mapping.t6"></a><p class="title"><b>Table&#160;23.7.&#160;Predefined communicators</b></p>
 <div class="table-contents"><table class="table" summary="Predefined communicators">
 <colgroup>
 <col>
@@ -2508,7 +2508,7 @@ Process #6 thought of 650073868
         Boost.MPI supports groups of processes through its <code class="computeroutput"><a class="link" href="../boost/mpi/group.html" title="Class group">group</a></code> class.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t7"></a><p class="title"><b>Table&#160;21.8.&#160;Group operations and constants</b></p>
+<a name="mpi.tutorial.c_mapping.t7"></a><p class="title"><b>Table&#160;23.8.&#160;Group operations and constants</b></p>
 <div class="table-contents"><table class="table" summary="Group operations and constants">
 <colgroup>
 <col>
@@ -2547,7 +2547,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idm45507092394704-bb">group::size</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp130007200-bb">group::size</a></code>
                 </p>
               </td>
 </tr>
@@ -2635,7 +2635,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986509632-bb">communicator::group</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp200111456-bb">communicator::group</a></code>
                 </p>
               </td>
 </tr>
@@ -2684,7 +2684,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idm45506982689072-bb">group::include</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp126049936-bb">group::include</a></code>
                 </p>
               </td>
 </tr>
@@ -2696,7 +2696,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idm45506982689072-bb">group::exclude</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/group.html#idp126049936-bb">group::exclude</a></code>
                 </p>
               </td>
 </tr>
@@ -2743,7 +2743,7 @@ Process #6 thought of 650073868
         Boost.MPI provides manipulation of communicators through the <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html" title="Class communicator">communicator</a></code> class.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t8"></a><p class="title"><b>Table&#160;21.9.&#160;Communicator operations</b></p>
+<a name="mpi.tutorial.c_mapping.t8"></a><p class="title"><b>Table&#160;23.9.&#160;Communicator operations</b></p>
 <div class="table-contents"><table class="table" summary="Communicator operations">
 <colgroup>
 <col>
@@ -2770,7 +2770,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986386624-bb">communicator::size</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp76264560-bb">communicator::size</a></code>
                 </p>
               </td>
 </tr>
@@ -2782,7 +2782,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506986389632-bb">communicator::rank</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp76261552-bb">communicator::rank</a></code>
                 </p>
               </td>
 </tr>
@@ -2833,7 +2833,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507104259696-bb">communicator::split</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp133988496-bb">communicator::split</a></code>
                 </p>
               </td>
 </tr>
@@ -2857,7 +2857,7 @@ Process #6 thought of 650073868
         class.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t9"></a><p class="title"><b>Table&#160;21.10.&#160;Inter-communicator operations</b></p>
+<a name="mpi.tutorial.c_mapping.t9"></a><p class="title"><b>Table&#160;23.10.&#160;Inter-communicator operations</b></p>
 <div class="table-contents"><table class="table" summary="Inter-communicator operations">
 <colgroup>
 <col>
@@ -2884,7 +2884,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506974414976-bb">communicator::as_intercommunicator</a></code>
+                  use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp133617056-bb">communicator::as_intercommunicator</a></code>
                 </p>
               </td>
 </tr>
@@ -2896,7 +2896,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idm45507086797360-bb">boost::mpi::intercommunicator::remote_size</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp184778272-bb">boost::mpi::intercommunicator::remote_size</a></code>
                   <code class="computeroutput"><span class="identifier">intercommunicator</span><span class="special">::</span><span class="identifier">remote_size</span></code>
                 </p>
               </td>
@@ -2909,7 +2909,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idm45507086795856-bb">intercommunicator::remote_group</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp184779888-bb">intercommunicator::remote_group</a></code>
                 </p>
               </td>
 </tr>
@@ -2934,7 +2934,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idm45507086794112-bb">intercommunicator::merge</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/intercommunicator.html#idp204313440-bb">intercommunicator::merge</a></code>
                 </p>
               </td>
 </tr>
@@ -2945,7 +2945,7 @@ Process #6 thought of 650073868
         Boost.MPI currently provides no support for attribute caching.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t10"></a><p class="title"><b>Table&#160;21.11.&#160;Attributes and caching</b></p>
+<a name="mpi.tutorial.c_mapping.t10"></a><p class="title"><b>Table&#160;23.11.&#160;Attributes and caching</b></p>
 <div class="table-contents"><table class="table" summary="Attributes and caching">
 <colgroup>
 <col>
@@ -3096,7 +3096,7 @@ Process #6 thought of 650073868
         can be viewed as a BGL graph for use in existing, generic graph algorithms.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t11"></a><p class="title"><b>Table&#160;21.12.&#160;Process topologies</b></p>
+<a name="mpi.tutorial.c_mapping.t11"></a><p class="title"><b>Table&#160;23.12.&#160;Process topologies</b></p>
 <div class="table-contents"><table class="table" summary="Process topologies">
 <colgroup>
 <col>
@@ -3123,7 +3123,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506974411200-bb">communicator::as_graph_communicator</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp133620832-bb">communicator::as_graph_communicator</a></code>
                 </p>
               </td>
 </tr>
@@ -3135,7 +3135,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507044019824-bb">communicator::has_cartesian_topology</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp82412592-bb">communicator::has_cartesian_topology</a></code>
                 </p>
               </td>
 </tr>
@@ -3184,8 +3184,8 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45506974411200-bb">communicator::as_graph_communicator</a></code>,
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idm45507044019824-bb">communicator::has_cartesian_topology</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp133620832-bb">communicator::as_graph_communicator</a></code>,
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/communicator.html#idp82412592-bb">communicator::has_cartesian_topology</a></code>
                 </p>
               </td>
 </tr>
@@ -3343,7 +3343,7 @@ Process #6 thought of 650073868
         Boost.MPI supports environmental inquires through the <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html" title="Class environment">environment</a></code> class.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t12"></a><p class="title"><b>Table&#160;21.13.&#160;Environmental inquiries</b></p>
+<a name="mpi.tutorial.c_mapping.t12"></a><p class="title"><b>Table&#160;23.13.&#160;Environmental inquiries</b></p>
 <div class="table-contents"><table class="table" summary="Environmental inquiries">
 <colgroup>
 <col>
@@ -3370,7 +3370,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idm45506982980400-bb">environment::max_tag</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp193508416-bb">environment::max_tag</a></code>
                 </p>
               </td>
 </tr>
@@ -3382,7 +3382,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idm45506991918192-bb">environment::host_rank</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp193514544-bb">environment::host_rank</a></code>
                 </p>
               </td>
 </tr>
@@ -3394,7 +3394,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idm45506991914176-bb">environment::io_rank</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp202265744-bb">environment::io_rank</a></code>
                 </p>
               </td>
 </tr>
@@ -3406,7 +3406,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idm45507043917712-bb">environment::processor_name</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp202270560-bb">environment::processor_name</a></code>
                 </p>
               </td>
 </tr>
@@ -3418,7 +3418,7 @@ Process #6 thought of 650073868
         class.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t13"></a><p class="title"><b>Table&#160;21.14.&#160;Error handling</b></p>
+<a name="mpi.tutorial.c_mapping.t13"></a><p class="title"><b>Table&#160;23.14.&#160;Error handling</b></p>
 <div class="table-contents"><table class="table" summary="Error handling">
 <colgroup>
 <col>
@@ -3529,7 +3529,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/exception.html#idm45507105884624-bb">exception::error_class</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/exception.html#idp125508432-bb">exception::error_class</a></code>
                 </p>
               </td>
 </tr>
@@ -3542,7 +3542,7 @@ Process #6 thought of 650073868
         Timer library</a>.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t14"></a><p class="title"><b>Table&#160;21.15.&#160;Timing facilities</b></p>
+<a name="mpi.tutorial.c_mapping.t14"></a><p class="title"><b>Table&#160;23.15.&#160;Timing facilities</b></p>
 <div class="table-contents"><table class="table" summary="Timing facilities">
 <colgroup>
 <col>
@@ -3569,7 +3569,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idm45506997529872-bb">timer::time_is_global</a></code>
+                  unnecessary; use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp87551376-bb">timer::time_is_global</a></code>
                 </p>
               </td>
 </tr>
@@ -3581,7 +3581,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idm45506997459904-bb">timer::elapsed</a></code> to determine
+                  use <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp23367936-bb">timer::elapsed</a></code> to determine
                   the time elapsed from some specific starting point
                 </p>
               </td>
@@ -3594,7 +3594,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idm45506997456640-bb">timer::elapsed_min</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/timer.html#idp23371200-bb">timer::elapsed_min</a></code>
                 </p>
               </td>
 </tr>
@@ -3602,12 +3602,12 @@ Process #6 thought of 650073868
 </table></div>
 </div>
 <br class="table-break"><p>
-        MPI startup and shutdown are managed by the construction and descruction
+        MPI startup and shutdown are managed by the construction and destruction
         of the Boost.MPI <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html" title="Class environment">environment</a></code>
         class.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t15"></a><p class="title"><b>Table&#160;21.16.&#160;Startup/shutdown facilities</b></p>
+<a name="mpi.tutorial.c_mapping.t15"></a><p class="title"><b>Table&#160;23.16.&#160;Startup/shutdown facilities</b></p>
 <div class="table-contents"><table class="table" summary="Startup/shutdown facilities">
 <colgroup>
 <col>
@@ -3660,7 +3660,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idm45506982986832-bb">environment::initialized</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp180973696-bb">environment::initialized</a></code>
                 </p>
               </td>
 </tr>
@@ -3672,7 +3672,7 @@ Process #6 thought of 650073868
               </td>
 <td>
                 <p>
-                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idm45507045185968-bb">environment::abort</a></code>
+                  <code class="computeroutput"><a class="link" href="../boost/mpi/environment.html#idp76089296-bb">environment::abort</a></code>
                 </p>
               </td>
 </tr>
@@ -3684,7 +3684,7 @@ Process #6 thought of 650073868
         1.1.
       </p>
 <div class="table">
-<a name="mpi.tutorial.c_mapping.t16"></a><p class="title"><b>Table&#160;21.17.&#160;Profiling interface</b></p>
+<a name="mpi.tutorial.c_mapping.t16"></a><p class="title"><b>Table&#160;23.17.&#160;Profiling interface</b></p>
 <div class="table-contents"><table class="table" summary="Profiling interface">
 <colgroup>
 <col>

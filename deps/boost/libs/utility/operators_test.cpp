@@ -38,11 +38,9 @@ namespace
     int true_value(int x) { return x; }
     long true_value(long x) { return x; }
     signed char true_value(signed char x) { return x; }
-    short true_value(short x) { return x; }
     unsigned int true_value(unsigned int x) { return x; }
     unsigned long true_value(unsigned long x) { return x; }
     unsigned char true_value(unsigned char x) { return x; }
-    unsigned short true_value(unsigned short x) { return x; }
 
     // verify the minimum requirements for some operators
     class convertible_to_bool

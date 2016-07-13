@@ -18,7 +18,6 @@
 #include "clock.hpp"
 #include "cycle.hpp"
 
-bool preserve = false;
 boost::uint64_t jobs = 1000;
 
 struct X
@@ -45,7 +44,7 @@ void fn_x( boost::coroutines2::coroutine< X >::push_type & c)
 
 duration_type measure_time_void( duration_type overhead)
 {
-    boost::coroutines2::coroutine< void >::pull_type c( fn_void, preserve);
+    boost::coroutines2::coroutine< void >::pull_type c( fn_void);
         
     time_point_type start( clock_type::now() );
     for ( std::size_t i = 0; i < jobs; ++i) {
@@ -61,7 +60,7 @@ duration_type measure_time_void( duration_type overhead)
 
 duration_type measure_time_int( duration_type overhead)
 {
-    boost::coroutines2::coroutine< int >::pull_type c( fn_int, preserve);
+    boost::coroutines2::coroutine< int >::pull_type c( fn_int);
         
     time_point_type start( clock_type::now() );
     for ( std::size_t i = 0; i < jobs; ++i) {
@@ -77,7 +76,7 @@ duration_type measure_time_int( duration_type overhead)
 
 duration_type measure_time_x( duration_type overhead)
 {
-    boost::coroutines2::coroutine< X >::pull_type c( fn_x, preserve);
+    boost::coroutines2::coroutine< X >::pull_type c( fn_x);
         
     time_point_type start( clock_type::now() );
     for ( std::size_t i = 0; i < jobs; ++i) {
@@ -94,7 +93,7 @@ duration_type measure_time_x( duration_type overhead)
 # ifdef BOOST_CONTEXT_CYCLE
 cycle_type measure_cycles_void( cycle_type overhead)
 {
-    boost::coroutines2::coroutine< void >::pull_type c( fn_void, preserve);
+    boost::coroutines2::coroutine< void >::pull_type c( fn_void);
         
     cycle_type start( cycles() );
     for ( std::size_t i = 0; i < jobs; ++i) {
@@ -110,7 +109,7 @@ cycle_type measure_cycles_void( cycle_type overhead)
 
 cycle_type measure_cycles_int( cycle_type overhead)
 {
-    boost::coroutines2::coroutine< int >::pull_type c( fn_int, preserve);
+    boost::coroutines2::coroutine< int >::pull_type c( fn_int);
         
     cycle_type start( cycles() );
     for ( std::size_t i = 0; i < jobs; ++i) {
@@ -126,7 +125,7 @@ cycle_type measure_cycles_int( cycle_type overhead)
 
 cycle_type measure_cycles_x( cycle_type overhead)
 {
-    boost::coroutines2::coroutine< X >::pull_type c( fn_x, preserve);
+    boost::coroutines2::coroutine< X >::pull_type c( fn_x);
         
     cycle_type start( cycles() );
     for ( std::size_t i = 0; i < jobs; ++i) {
@@ -150,7 +149,6 @@ int main( int argc, char * argv[])
         desc.add_options()
             ("help", "help message")
             ("bind,b", boost::program_options::value< bool >( & bind), "bind thread to CPU")
-            ("fpu,f", boost::program_options::value< bool >( & preserve), "preserve FPU registers")
             ("jobs,j", boost::program_options::value< boost::uint64_t >( & jobs), "jobs to run");
 
         boost::program_options::variables_map vm;
@@ -170,7 +168,6 @@ int main( int argc, char * argv[])
         if ( bind) bind_to_processor( 0);
 
         duration_type overhead_c = overhead_clock();
-        std::cout << "overhead " << overhead_c.count() << " nano seconds" << std::endl;
         boost::uint64_t res = measure_time_void( overhead_c).count();
         std::cout << "void: average of " << res << " nano seconds" << std::endl;
         res = measure_time_int( overhead_c).count();
@@ -179,7 +176,6 @@ int main( int argc, char * argv[])
         std::cout << "X: average of " << res << " nano seconds" << std::endl;
 #ifdef BOOST_CONTEXT_CYCLE
         cycle_type overhead_y = overhead_cycle();
-        std::cout << "overhead " << overhead_y << " cpu cycles" << std::endl;
         res = measure_cycles_void( overhead_y);
         std::cout << "void: average of " << res << " cpu cycles" << std::endl;
         res = measure_cycles_int( overhead_y);

@@ -34,20 +34,20 @@ rule run-template ( test-name : sources * : requirements * ) {
         : # input files
         : # requirements
             # toolset warnings
-            # <toolset>gcc:<cxxflags>"-Wno-non-virtual-dtor -Wno-ctor-dtor-privacy"
             <toolset>borland:<cxxflags>"-w-8080 -w-8071 -w-8057 -w-8062 -w-8008 -w-0018 -w-8066"
-            <toolset>gcc:<warnings>all # ?
-            <toolset>gcc:<cxxflags>"-Wno-long-long"
+            #<toolset>gcc:<warnings>all # ?
+            <toolset>gcc:<cxxflags>"-Wno-unused-variable -Wno-long-long"
+            <toolset>darwin:<cxxflags>"-Wno-unused-variable -Wno-long-long"
             <toolset>msvc:<warnings>all # == /W4
             <toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
             <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
             <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
             <toolset>msvc:<define>_CRT_SECURE_NO_DEPRECATE
             <toolset>msvc:<cxxflags>"-wd4996"
+            <toolset>clang:<variant>debug:<cxxflags>"-fsanitize=memory"
             # toolset optimizations
             <toolset>gcc:<cxxflags>"-ftemplate-depth-255"
             <toolset>clang:<cxxflags>"-ftemplate-depth-255"
-            <toolset>clang-darwin:<cxxflags>"-ftemplate-depth-255"
             <toolset>darwin:<cxxflags>"-ftemplate-depth-255"
             <toolset>msvc:<cxxflags>"-Gy"
             $(requirements)

@@ -75,7 +75,7 @@ struct test_sym_difference_of_areal_geometries
                 PolygonOut
             >(case_id, areal1, areal2,
               expected_polygon_count, expected_point_count, expected_area,
-              tolerance, settings);
+              true, settings);
     }
 };
 

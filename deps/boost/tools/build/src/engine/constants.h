@@ -69,5 +69,7 @@ extern OBJECT * constant_python;                    /* "__python__" */
 extern OBJECT * constant_python_interface;          /* "python_interface" */
 extern OBJECT * constant_extra_pythonpath;          /* "EXTRA_PYTHONPATH" */
 extern OBJECT * constant_MAIN_PYTHON;               /* "MAIN_PYTHON" */
+extern OBJECT * constant_FILE_ARCHIVESCAN;          /* "FILE_ARCHIVESCAN" */
+extern OBJECT * constant_BUILTIN_GLOB_ARCHIVE_BACK; /* "BUILTIN_GLOB_ARCHIVE_BACK" */
 
 #endif

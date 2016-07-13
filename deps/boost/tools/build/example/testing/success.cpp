@@ -8,9 +8,10 @@
 // 
 
 #include <iostream>
+#include <cstdlib>
 
 int main()
 {
     std::cout << "Hi!\n";
-    return 0;
+    return EXIT_SUCCESS;
 }

@@ -1,6 +1,8 @@
 ﻿
 [section Optional references]
 
+[section Overview]
+
 This library allows the template parameter `T` to be of reference type:
 `T&`, and to some extent, `T const&`.
 
@@ -21,7 +23,7 @@ will nonetheless refer to the same object.
 * Value-access will actually provide access to the referenced object
 rather than the reference itself.
 
-[warning On compilers that do not conform to Standard C++ rules of reference binding, operations on optional references might give adverse results: rather than binding a reference to a designated object they may create an unexpected temporary and bind to it. For more details see [link boost_optional.dependencies_and_portability.optional_reference_binding Dependencies and Portability section].]
+[caution On compilers that do not conform to Standard C++ rules of reference binding, some operations on optional references are disabled in order to prevent subtle bugs. For more details see [link boost_optional.dependencies_and_portability.optional_reference_binding Dependencies and Portability section].]
 
 [heading Rvalue references]
 
@@ -117,4 +119,5 @@ In such a scenario, you can assign the value itself directly, as in:
     assert(!!opt);
     *opt=value;
 
+[endsect]
 [endsect]

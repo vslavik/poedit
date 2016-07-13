@@ -24,16 +24,12 @@ using boost::timer::cpu_timer;
 using boost::timer::cpu_times;
 using boost::timer::nanosecond_type;
 
-#ifdef NDEBUG
 static const std::size_t NElements = 1000;
-#else
-static const std::size_t NElements = 100;
-#endif
 
 #ifdef NDEBUG
-static const std::size_t NIter = 500;
+static const std::size_t NIter = 250;
 #else
-static const std::size_t NIter = 50;
+static const std::size_t NIter = 25;
 #endif
 
 void compare_times(cpu_times time_numerator, cpu_times time_denominator){

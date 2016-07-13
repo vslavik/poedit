@@ -296,7 +296,7 @@ void test_all()
         ggl_list_20110306_javier[0], ggl_list_20110306_javier[1],
         1, -1, 71495.3331,
         2, -1, 8960.49049,
-        2, -1, 71495.3331 + 8960.49049);
+        1, -1, 71495.3331 + 8960.49049);
 
     test_one<polygon, polygon, polygon>("ggl_list_20110307_javier",
         ggl_list_20110307_javier[0], ggl_list_20110307_javier[1],
@@ -385,6 +385,12 @@ void test_all()
             1, 5, 1342.65795);
 #endif
 
+    test_one<polygon, polygon, polygon>("ticket_11725",
+        ticket_11725[0], ticket_11725[1],
+        1, -1, 3.0,
+        1, -1, 4.5,
+        1, -1, 7.5);
+
     // From assemble-test, with a u/u case
     test_one<polygon, polygon, polygon>("assemble_0210",
             "POLYGON((0 0,0 10,10 10,10 0,0 0),(8.5 1,9.5 1,9.5 2,8.5 2,8.5 1))",
@@ -453,9 +459,6 @@ void test_all()
     ***/
 
 #ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    test_one<polygon, polygon, polygon>("ticket_11725_2",
-        ticket_11725_2[0], ticket_11725_2[1],
-        2, -1, 7.5, 0, -1, 0.0);
     test_one<polygon, polygon, polygon>("mysql_21977775",
         mysql_21977775[0], mysql_21977775[1],
         2, -1, 160.856568913, 2, -1, 92.3565689126);
@@ -508,7 +511,7 @@ void test_specific()
             ticket_11676[0], ticket_11676[1],
             1, 18, 2537992.5,
             2, 11, 294963.5,
-            2, -1, 2537992.5 + 294963.5,
+            1, -1, 2537992.5 + 294963.5,
             settings);
     }
 }

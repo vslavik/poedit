@@ -277,7 +277,7 @@ inline void buffer(GeometryIn const& geometry_in,
     rescale_policy_type rescale_policy
             = boost::geometry::get_rescale_policy<rescale_policy_type>(box);
 
-    detail::buffer::buffer_inserter<polygon_type>(geometry_in, std::back_inserter(geometry_out),
+    detail::buffer::buffer_inserter<polygon_type>(geometry_in, range::back_inserter(geometry_out),
                 distance_strategy,
                 side_strategy,
                 join_strategy,

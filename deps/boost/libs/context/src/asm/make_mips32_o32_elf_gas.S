@@ -12,21 +12,14 @@
  *  -------------------------------------------------  *
  *  |  0  |  4  |  8  |  12 |  16 |  20 |  24 |  28 |  *
  *  -------------------------------------------------  *
- *  |    F20    |    F22    |    F24    |    F26    |  *
+ *  |  S0 |  S1 |  S2 |  S3 |  S4 |  S5 |  S6 |  S7 |  *
  *  -------------------------------------------------  *
  *  -------------------------------------------------  *
  *  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |  15 |  *
  *  -------------------------------------------------  *
  *  |  32 |  36 |  40 |  44 |  48 |  52 |  56 |  60 |  *
  *  -------------------------------------------------  *
- *  |    F28    |    F30    |  S0 |  S1 |  S2 |  S3 |  *
- *  -------------------------------------------------  *
- *  -------------------------------------------------  *
- *  |  16 |  17 |  18 |  19 |  20 |  21 |  22 |     |  *
- *  -------------------------------------------------  *
- *  |  64 |  68 |  72 |  76 |  80 |  84 |  88 |     |  *
- *  -------------------------------------------------  *
- *  |  S4 |  S5 |  S6 |  S7 |  FP |  RA |  PC |     |  *
+ *  |  FP |hiddn|  RA |  PC |  GP | FCTX| DATA|     |  *
  *  -------------------------------------------------  *
  *                                                     *
  * *****************************************************/
@@ -52,30 +45,34 @@ make_fcontext:
 
     # reserve space for context-data on context-stack
     # including 48 byte of shadow space (sp % 16 == 0)
-    addiu $v0, $v0, -140
+    addiu $v0, $v0, -112
 
     # third arg of make_fcontext() == address of context-function
-    sw  $a2, 88($v0)
+    sw  $a2, 44($v0)
     # save global pointer in context-data
-    # S0 will contain address of global pointer
     sw  $gp, 48($v0)
+
+    # compute address of returned transfer_t
+    addiu $t0, $v0, 52
+    sw  $t0, 36($v0)
 
     # compute abs address of label finish
     la  $t9, finish
     # save address of finish as return-address for context-function
     # will be entered after context-function returns
-    sw  $t9, 84($v0)
+    sw  $t9, 40($v0)
 
     jr  $ra # return pointer to context-data
 
 finish:
+    lw $gp, 0($sp)
     # allocate stack space (contains shadow space for subroutines)
     addiu  $sp, $sp, -32
     # save return address
     sw  $ra, 28($sp)
 
     # restore GP (global pointer)
-    move  $gp, $s0
+#    move  $gp, $s1
     # exit code is zero
     move  $a0, $zero
     # address of exit

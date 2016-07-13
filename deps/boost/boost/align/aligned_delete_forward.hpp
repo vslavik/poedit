@@ -1,5 +1,5 @@
 /*
-(c) 2014 Glen Joseph Fernandes
+(c) 2014-2015 Glen Joseph Fernandes
 <glenjofe -at- gmail.com>
 
 Distributed under the Boost Software
@@ -12,7 +12,7 @@ http://boost.org/LICENSE_1_0.txt
 namespace boost {
 namespace alignment {
 
-class aligned_delete;
+struct aligned_delete;
 
 } /* .alignment */
 } /* .boost */

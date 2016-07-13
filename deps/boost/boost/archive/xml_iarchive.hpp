@@ -52,17 +52,9 @@ class BOOST_SYMBOL_VISIBLE xml_iarchive_impl :
 public:
 #else
 protected:
-    #if BOOST_WORKAROUND(BOOST_MSVC, < 1500)
-        // for some inexplicable reason insertion of "class" generates compile erro
-        // on msvc 7.1
-        friend detail::interface_iarchive<Archive>;
-        friend basic_xml_iarchive<Archive>;
-        friend load_access;
-    #else
-        friend class detail::interface_iarchive<Archive>;
-        friend class basic_xml_iarchive<Archive>;
-        friend class load_access;
-    #endif
+    friend class detail::interface_iarchive<Archive>;
+    friend class basic_xml_iarchive<Archive>;
+    friend class load_access;
 #endif
     // use boost:scoped_ptr to implement automatic deletion;
     boost::scoped_ptr<xml_grammar> gimpl;

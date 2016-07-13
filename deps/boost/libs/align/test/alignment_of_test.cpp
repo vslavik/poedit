@@ -6,10 +6,9 @@ Distributed under the Boost Software
 License, Version 1.0.
 http://boost.org/LICENSE_1_0.txt
 */
-#include <boost/config.hpp>
 #include <boost/align/alignment_of.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <cstddef>
+#include <boost/config.hpp>
 
 #define OFFSET(t, m) ((std::size_t)(&((t*)0)->m))
 
@@ -207,11 +206,11 @@ void test_pointer()
 void test_member_pointer()
 {
     test<int X::*>();
-    test<int (X::*)()>();
+    test<int(X::*)()>();
 }
 
 enum E {
-    v = 1
+    V = 1
 };
 
 void test_enum()

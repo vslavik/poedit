@@ -44,9 +44,6 @@
 
 #if defined(BOOST_WINDOWS)
 
-#define WIN32_LEAN_AND_MEAN
-
-#include "windows_version.hpp"
 #include <windows.h>
 
 namespace boost {
@@ -144,7 +141,7 @@ BOOST_LOG_TLS id_storage g_id_storage = {};
 BOOST_LOG_API thread::id const& get_id()
 {
     id_storage& s = g_id_storage;
-    if (!s.m_initialized)
+    if (BOOST_UNLIKELY(!s.m_initialized))
     {
         new (s.m_storage.address()) thread::id(get_id_impl());
         s.m_initialized = true;
@@ -185,7 +182,7 @@ BOOST_LOG_API thread::id const& get_id()
 {
     id_storage& s = id_storage::get();
     thread::id const* p = s.m_id.get();
-    if (!p)
+    if (BOOST_UNLIKELY(!p))
     {
         p = new thread::id(get_id_impl());
         s.m_id.set(p);
@@ -220,7 +217,7 @@ BOOST_LOG_API thread::id const& get_id()
     }
 
     thread::id* p = static_cast< thread::id* >(pthread_getspecific(g_key));
-    if (!p)
+    if (BOOST_UNLIKELY(!p))
     {
         p = new thread::id(get_id_impl());
         pthread_setspecific(g_key, p);

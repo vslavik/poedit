@@ -13,8 +13,7 @@
 
 #include <boost/coroutine2/all.hpp>
 
-struct node
-{
+struct node {
     typedef std::shared_ptr< node >    ptr_t;
 
     // Each tree node has an optional left subtree, an optional right subtree
@@ -25,26 +24,24 @@ struct node
 
     // construct leaf
     node(const std::string& v):
-        left(),right(),value(v)
-    {}
+        left(),right(),value(v) {
+    }
+
     // construct nonleaf
     node(ptr_t l, const std::string& v, ptr_t r):
-        left(l),right(r),value(v)
-    {}
+        left(l),right(r),value(v) {
+    }
 
-    static ptr_t create(const std::string& v)
-    {
+    static ptr_t create(const std::string& v) {
         return ptr_t(new node(v));
     }
 
-    static ptr_t create(ptr_t l, const std::string& v, ptr_t r)
-    {
+    static ptr_t create(ptr_t l, const std::string& v, ptr_t r) {
         return ptr_t(new node(l, v, r));
     }
 };
 
-node::ptr_t create_left_tree_from(const std::string& root)
-{
+node::ptr_t create_left_tree_from(const std::string& root) {
     /* --------
          root
          / \
@@ -62,8 +59,7 @@ node::ptr_t create_left_tree_from(const std::string& root)
             node::create("e"));
 }
 
-node::ptr_t create_right_tree_from(const std::string& root)
-{
+node::ptr_t create_right_tree_from(const std::string& root) {
     /* --------
          root
          / \
@@ -82,8 +78,7 @@ node::ptr_t create_right_tree_from(const std::string& root)
 }
 
 // recursively walk the tree, delivering values in order
-void traverse(node::ptr_t n, boost::coroutines2::coroutine<std::string>::push_type& out)
-{
+void traverse(node::ptr_t n, boost::coroutines2::coroutine<std::string>::push_type& out) {
     if (n->left)
         traverse(n->left,out);
     out(n->value);
@@ -91,86 +86,87 @@ void traverse(node::ptr_t n, boost::coroutines2::coroutine<std::string>::push_ty
         traverse(n->right,out);
 }
 
-int main()
-{
+int main() {
     {
         node::ptr_t left_d(create_left_tree_from("d"));
-        boost::coroutines2::coroutine<std::string>::pull_type left_d_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(left_d,out);
-            });
-        std::cout << "left tree from d:\n";
-        std::copy(begin(left_d_reader),
-                  end(left_d_reader),
-                  std::ostream_iterator<std::string>(std::cout, " "));
-        std::cout << std::endl;
-
         node::ptr_t right_b(create_right_tree_from("b"));
-        boost::coroutines2::coroutine<std::string>::pull_type right_b_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(right_b,out);
-            });
-        std::cout << "right tree from b:\n";
-        std::copy(begin(right_b_reader),
-                  end(right_b_reader),
-                  std::ostream_iterator<std::string>(std::cout, " "));
-        std::cout << std::endl;
-
         node::ptr_t right_x(create_right_tree_from("x"));
-        boost::coroutines2::coroutine<std::string>::pull_type right_x_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(right_x,out);
-            });
-        std::cout << "right tree from x:\n";
-        std::copy(begin(right_x_reader),
-                  end(right_x_reader),
-                  std::ostream_iterator<std::string>(std::cout, " "));
-        std::cout << std::endl;
-    }
+        {
+            boost::coroutines2::coroutine<std::string>::pull_type left_d_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(left_d,out);
+                    });
+            std::cout << "left tree from d:\n";
+            std::copy(begin(left_d_reader),
+                    end(left_d_reader),
+                    std::ostream_iterator<std::string>(std::cout, " "));
+            std::cout << std::endl;
 
+            boost::coroutines2::coroutine<std::string>::pull_type right_b_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(right_b,out);
+                    });
+            std::cout << "right tree from b:\n";
+            std::copy(begin(right_b_reader),
+                    end(right_b_reader),
+                    std::ostream_iterator<std::string>(std::cout, " "));
+            std::cout << std::endl;
+
+            boost::coroutines2::coroutine<std::string>::pull_type right_x_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(right_x,out);
+                    });
+            std::cout << "right tree from x:\n";
+            std::copy(begin(right_x_reader),
+                    end(right_x_reader),
+                    std::ostream_iterator<std::string>(std::cout, " "));
+            std::cout << std::endl;
+        }
+    }
     {
         node::ptr_t left_d(create_left_tree_from("d"));
-        boost::coroutines2::coroutine<std::string>::pull_type left_d_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(left_d,out);
-            });
-
         node::ptr_t right_b(create_right_tree_from("b"));
-        boost::coroutines2::coroutine<std::string>::pull_type right_b_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(right_b,out);
-            });
+        {
+            boost::coroutines2::coroutine<std::string>::pull_type left_d_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(left_d,out);
+                    });
 
-        std::cout << "left tree from d == right tree from b? "
-                  << std::boolalpha
-                  << std::equal(begin(left_d_reader),
-                                end(left_d_reader),
-                                begin(right_b_reader))
-                  << std::endl;
+            boost::coroutines2::coroutine<std::string>::pull_type right_b_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(right_b,out);
+                    });
+
+            std::cout << "left tree from d == right tree from b? "
+                << std::boolalpha
+                << std::equal(begin(left_d_reader),
+                        end(left_d_reader),
+                        begin(right_b_reader))
+                << std::endl;
+        }
     }
-
     {
         node::ptr_t left_d(create_left_tree_from("d"));
-        boost::coroutines2::coroutine<std::string>::pull_type left_d_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(left_d,out);
-            });
-
         node::ptr_t right_x(create_right_tree_from("x"));
-        boost::coroutines2::coroutine<std::string>::pull_type right_x_reader(
-            [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
-                traverse(right_x,out);
-            });
+        {
+            boost::coroutines2::coroutine<std::string>::pull_type left_d_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(left_d,out);
+                    });
 
-        std::cout << "left tree from d == right tree from x? "
-                  << std::boolalpha
-                  << std::equal(begin(left_d_reader),
-                                end(left_d_reader),
-                                begin(right_x_reader))
-                  << std::endl;
+            boost::coroutines2::coroutine<std::string>::pull_type right_x_reader(
+                    [&]( boost::coroutines2::coroutine<std::string>::push_type & out) {
+                    traverse(right_x,out);
+                    });
+
+            std::cout << "left tree from d == right tree from x? "
+                << std::boolalpha
+                << std::equal(begin(left_d_reader),
+                        end(left_d_reader),
+                        begin(right_x_reader))
+                << std::endl;
+        }
     }
-
     std::cout << "Done" << std::endl;
-
     return EXIT_SUCCESS;
 }

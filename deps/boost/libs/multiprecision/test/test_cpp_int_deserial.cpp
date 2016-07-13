@@ -1037,8 +1037,11 @@ void test64()
 
    boost::filesystem::ifstream is(root / "cpp_int64_serial64.txt");
    std::cout << "Testing cpp_int64_serial64.txt with T=" << typeid(T).name() << std::endl;
-   is.peek();
+   //is.peek();
    BOOST_CHECK(is.good());
+   //char c = is.peek();
+   //std::size_t s;
+   //is >> s;
    boost::archive::text_iarchive ia(is);
    for(unsigned i = 0; i < sizeof(text_array) / sizeof(text_array[0]); ++i)
    {
@@ -1049,7 +1052,7 @@ void test64()
 
    boost::filesystem::ifstream is2(root / "cpp_int64_serial32.txt");
    std::cout << "Testing cpp_int64_serial32.txt with T=" << typeid(T).name() << std::endl;
-   is2.peek();
+   //is2.peek();
    BOOST_CHECK(is2.good());
    boost::archive::text_iarchive ia2(is2);
    for(unsigned i = 0; i < sizeof(text_array) / sizeof(text_array[0]); ++i)
@@ -2070,16 +2073,19 @@ void test128()
 
    boost::filesystem::ifstream is(root / "cpp_int128_serial64.txt");
    std::cout << "Testing cpp_int128_serial64.txt with T=" << typeid(T).name() << std::endl;
-   is.peek();
+   //is.peek();
    BOOST_CHECK(is.good());
    boost::archive::text_iarchive ia(is);
    for(unsigned i = 0; i < sizeof(text_array) / sizeof(text_array[0]); ++i)
    {
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          T val;
          ia >> val;
          BOOST_CHECK_EQUAL(val, T(text_array[i]));
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const boost::exception& e)
       {
@@ -2091,20 +2097,24 @@ void test128()
          std::cout << "Caught std::exception with:\n";
          std::cout << e.what() << std::endl;
       }
+#endif
    }
 
    boost::filesystem::ifstream is2(root / "cpp_int128_serial32.txt");
    std::cout << "Testing cpp_int128_serial32.txt with T=" << typeid(T).name() << std::endl;
-   is2.peek();
+   //is2.peek();
    BOOST_CHECK(is2.good());
    boost::archive::text_iarchive ia2(is2);
    for(unsigned i = 0; i < sizeof(text_array) / sizeof(text_array[0]); ++i)
    {
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          T val;
          ia2 >> val;
          BOOST_CHECK_EQUAL(val, T(text_array[i]));
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const boost::exception& e)
       {
@@ -2116,6 +2126,7 @@ void test128()
          std::cout << "Caught std::exception with:\n";
          std::cout << e.what() << std::endl;
       }
+#endif
    }
 }
 
@@ -3129,16 +3140,19 @@ void test1024()
 
    boost::filesystem::ifstream is(root / "cpp_int1024_serial64.txt");
    std::cout << "Testing cpp_int1024_serial64.txt with T=" << typeid(T).name() << std::endl;
-   is.peek();
+   //is.peek();
    BOOST_CHECK(is.good());
    boost::archive::text_iarchive ia(is);
    for(unsigned i = 0; i < sizeof(text_array) / sizeof(text_array[0]); ++i)
    {
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          T val;
          ia >> val;
          BOOST_CHECK_EQUAL(val, T(text_array[i]));
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const boost::exception& e)
       {
@@ -3150,20 +3164,24 @@ void test1024()
          std::cout << "Caught std::exception with:\n";
          std::cout << e.what() << std::endl;
       }
+#endif
    }
 
    boost::filesystem::ifstream is2(root / "cpp_int1024_serial32.txt");
    std::cout << "Testing cpp_int1024_serial32.txt with T=" << typeid(T).name() << std::endl;
-   is2.peek();
+   //is2.peek();
    BOOST_CHECK(is2.good());
    boost::archive::text_iarchive ia2(is2);
    for(unsigned i = 0; i < sizeof(text_array) / sizeof(text_array[0]); ++i)
    {
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          T val;
          ia2 >> val;
          BOOST_CHECK_EQUAL(val, T(text_array[i]));
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const boost::exception& e)
       {
@@ -3175,6 +3193,7 @@ void test1024()
          std::cout << "Caught std::exception with:\n";
          std::cout << e.what() << std::endl;
       }
+#endif
    }
 }
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>copy</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="../functions.html" title="Functions">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.copy.h0"></a>
-            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.copy.description"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.description">Description</a>
+            <span><a name="fusion.algorithm.auxiliary.functions.copy.description"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.description">Description</a>
           </h6>
 <p>
             Copy a sequence <code class="computeroutput"><span class="identifier">src</span></code> to
@@ -37,7 +37,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.copy.h1"></a>
-            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.copy.synopsis"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.synopsis">Synopsis</a>
+            <span><a name="fusion.algorithm.auxiliary.functions.copy.synopsis"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Seq1</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">Seq2</span><span class="special">&gt;</span>
 <span class="keyword">typename</span> <a class="link" href="../metafunctions/copy.html" title="copy"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">copy</span></code></a><span class="special">&lt;</span><span class="identifier">Seq1</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">copy</span><span class="special">(</span><span class="identifier">Seq1</span> <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">src</span><span class="special">,</span> <span class="identifier">Seq2</span><span class="special">&amp;</span> <span class="identifier">dest</span><span class="special">);</span>
@@ -115,7 +115,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.auxiliary.functions.copy.h2"></a>
-            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.copy.expression_semantics"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.expression_semantics">Expression
+            <span><a name="fusion.algorithm.auxiliary.functions.copy.expression_semantics"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="copy.html" title="copy"><code class="computeroutput"><span class="identifier">copy</span></code></a><span class="special">(</span><span class="identifier">src</span><span class="special">,</span> <span class="identifier">dest</span><span class="special">);</span>
@@ -131,21 +131,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.copy.h3"></a>
-            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.copy.complexity"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.complexity">Complexity</a>
+            <span><a name="fusion.algorithm.auxiliary.functions.copy.complexity"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.complexity">Complexity</a>
           </h6>
 <p>
             Linear, exactly <code class="computeroutput"><a class="link" href="../../../sequence/intrinsic/metafunctions/size.html" title="size"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">size</span></code></a><span class="special">&lt;</span><span class="identifier">Sequence</span><span class="special">&gt;::</span><span class="identifier">value</span></code>.
           </p>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.copy.h4"></a>
-            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.copy.header"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.header">Header</a>
+            <span><a name="fusion.algorithm.auxiliary.functions.copy.header"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">auxiliary</span><span class="special">/</span><span class="identifier">copy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">copy</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.auxiliary.functions.copy.h5"></a>
-            <span class="phrase"><a name="fusion.algorithm.auxiliary.functions.copy.example"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.example">Example</a>
+            <span><a name="fusion.algorithm.auxiliary.functions.copy.example"></a></span><a class="link" href="copy.html#fusion.algorithm.auxiliary.functions.copy.example">Example</a>
           </h6>
 <pre class="programlisting"><a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">2</span><span class="special">);</span>
 <a class="link" href="../../../container/list.html" title="list"><code class="computeroutput"><span class="identifier">list</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">&gt;</span> <span class="identifier">ls</span><span class="special">;</span>

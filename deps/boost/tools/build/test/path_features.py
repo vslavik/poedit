@@ -106,7 +106,7 @@ import remote/remote ;
 
 # If we set the <include>folder_to_include property directly, it will work
 obj x1 : x.cpp : <conditional>@attach-include-local ;
-obj x2 : x.cpp : <conditional>@remote/remote.attach-include-remote ;
+obj x2 : x.cpp : <conditional>@remote.attach-include-remote ;
 
 rule attach-include-local ( properties * )
 {

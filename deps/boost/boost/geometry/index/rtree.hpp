@@ -1263,15 +1263,15 @@ public:
     inline bounds_type bounds() const
     {
         bounds_type result;
-        if ( !m_members.root )
-        {
-            geometry::assign_inverse(result);
-            return result;
-        }
+        // in order to suppress the uninitialized variable warnings
+        geometry::assign_inverse(result);
 
-        detail::rtree::visitors::children_box<value_type, options_type, translator_type, box_type, allocators_type>
-            box_v(result, m_members.translator());
-        detail::rtree::apply_visitor(box_v, *m_members.root);
+        if ( m_members.root )
+        {
+            detail::rtree::visitors::children_box<value_type, options_type, translator_type, box_type, allocators_type>
+                box_v(result, m_members.translator());
+            detail::rtree::apply_visitor(box_v, *m_members.root);
+        }
 
         return result;
     }

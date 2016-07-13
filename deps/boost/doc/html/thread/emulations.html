@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Emulations</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../thread.html" title="Chapter&#160;31.&#160;Thread 4.6.0">
+<link rel="up" href="../thread.html" title="Chapter&#160;33.&#160;Thread 4.7.0">
 <link rel="prev" href="time.html" title="Time Requirements">
 <link rel="next" href="acknowledgements.html" title="Acknowledgments">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="thread.emulations"></a><a class="link" href="emulations.html" title="Emulations">Emulations</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="emulations.html#thread.emulations.delete"><code class="computeroutput"><span class="special">=</span><span class="keyword">delete</span></code> emulation</a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move">Move semantics</a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.bool_explicit_conversion">Bool explicit
@@ -62,7 +62,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="thread.emulations.move"></a><a class="link" href="emulations.html#thread.emulations.move" title="Move semantics">Move semantics</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.deprecated">Deprecated Version
         2 interface</a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.portable">Portable interface</a></span></dt>
@@ -83,7 +83,7 @@
 <a name="thread.emulations.move.deprecated"></a><a class="link" href="emulations.html#thread.emulations.move.deprecated" title="Deprecated Version 2 interface">Deprecated Version
         2 interface</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.deprecated.Helper">Helpers
           class and function</a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.deprecated.movable">Movable
@@ -141,7 +141,7 @@
             We can write a MovableOny class as follows. You just need to follow these
             simple steps:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 Add a conversion to the <code class="computeroutput"><span class="identifier">detail</span><span class="special">::</span><span class="identifier">thread_move_t</span><span class="special">&lt;</span><span class="identifier">classname</span><span class="special">&gt;</span></code>
               </li>
@@ -195,7 +195,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="thread.emulations.move.portable"></a><a class="link" href="emulations.html#thread.emulations.move.portable" title="Portable interface">Portable interface</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.portable.NO_COPYABLE"><code class="computeroutput"><span class="identifier">BOOST_THREAD_NO_COPYABLE</span><span class="special">(</span><span class="identifier">CLASS</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.portable.MOVABLE"><code class="computeroutput"><span class="identifier">BOOST_THREAD_MOVABLE</span><span class="special">(</span><span class="identifier">CLASS</span><span class="special">)</span></code></a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.move.portable.MOVABLE_ONLY"><code class="computeroutput"><span class="identifier">BOOST_THREAD_MOVABLE_ONLY</span><span class="special">(</span><span class="identifier">CLASS</span><span class="special">)</span></code></a></span></dt>
@@ -217,7 +217,7 @@
           See the Boost.Move documentation for a complete description on how to declare
           new Movable classes and its limitations.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_RV_REF</span><span class="special">(</span><span class="identifier">TYPE</span><span class="special">)</span></code> is the equivalent of <code class="computeroutput"><span class="identifier">BOOST_RV_REF</span><span class="special">(</span><span class="identifier">TYPE</span><span class="special">)</span></code>
             </li>
@@ -236,7 +236,7 @@
 <p>
           In addition the following macros are needed to make the code portable:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_RV</span><span class="special">(</span><span class="identifier">V</span><span class="special">)</span></code>
               macro to access the rvalue from a BOOST_THREAD_RV_REF(TYPE),
@@ -256,7 +256,7 @@
 <p>
           Other macros are provided and must be included on the public section:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">BOOST_THREAD_NO_COPYABLE</span></code>
               declares a class no-copyable either deleting the copy constructors
@@ -452,7 +452,7 @@
 <a name="thread.emulations.bool_explicit_conversion"></a><a class="link" href="emulations.html#thread.emulations.bool_explicit_conversion" title="Bool explicit conversion">Bool explicit
       conversion</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="emulations.html#thread.emulations.bool_explicit_conversion.bool_conversion"><code class="computeroutput"><span class="keyword">operator</span> </code><span class="emphasis"><em>unspecified-bool-type</em></span><code class="computeroutput"><span class="special">()</span> <span class="keyword">const</span></code></a></span></dt>
 <dt><span class="section"><a href="emulations.html#thread.emulations.bool_explicit_conversion.operator_not"><code class="computeroutput"><span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">!()</span> <span class="keyword">const</span></code></a></span></dt>
 </dl></div>
@@ -474,7 +474,7 @@
 <span class="preprocessor">#endif</span>
 </pre>
 <p>
-        The user should use the lock.owns_lock() when a explicit conversion is required.
+        The user should use the lock.owns_lock() when an explicit conversion is required.
       </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -482,7 +482,7 @@
 </h4></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 If <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock.owns_lock" title="bool owns_lock() const"><code class="computeroutput"><span class="identifier">owns_lock</span><span class="special">()</span></code></a>
@@ -503,7 +503,7 @@
 </h4></div></div></div>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns:</span></dt>
 <dd><p>
                 <code class="computeroutput"><span class="special">!</span></code> <a class="link" href="synchronization.html#thread.synchronization.locks.unique_lock.owns_lock" title="bool owns_lock() const"><code class="computeroutput"><span class="identifier">owns_lock</span><span class="special">()</span></code></a>.
@@ -548,13 +548,13 @@
 <span class="identifier">BOOST_SCOPED_ENUM_DECLARE_END</span><span class="special">(</span><span class="identifier">future_errc</span><span class="special">)</span>
 </pre>
 <p>
-        These macros allows to use 'future_errc' in almost all the cases as an scoped
+        These macros allows to use 'future_errc' in almost all the cases as a scoped
         enum.
       </p>
 <p>
         There are however some limitations:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The type is not a C++ enum, so 'is_enum&lt;future_errc&gt;' will be false_type.
           </li>

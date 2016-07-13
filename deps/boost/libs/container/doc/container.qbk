@@ -1200,7 +1200,7 @@ use [*Boost.Container]? There are several reasons for that:
    then adapted for [*Boost.Interprocess]. Thanks for such a great container.
 
 *  `static_vector` was based on Andrew Hundt's and Adam Wulkiewicz's high-performance `varray` class.
-   Many performance improvements of `vector` were also inspired in their implementation. Thanks!
+   Many performance improvements of `vector` were also inspired by their implementation. Thanks!
 
 *  Howard Hinnant's help and advices were essential when implementing move semantics,
    improving allocator support or implementing small string optimization. Thanks Howard
@@ -1212,6 +1212,21 @@ use [*Boost.Container]? There are several reasons for that:
 [endsect]
 
 [section:release_notes Release Notes]
+
+[section:release_notes_boost_1_61_00 Boost 1.61 Release]
+
+* [classref boost::container::small_vector] supports more constructors and assignments.
+* Fixed bugs:
+   * [@https://svn.boost.org/trac/boost/ticket/11820 Trac #11820 : ['"compiler error when using operator[] of map"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11856 Trac #11856 : ['"pool_resource.cpp error: declaration changes meaning"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11866 Trac #11866 : ['"small_vector does not have range constructor"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11867 Trac #11867 : ['"small_vector should have constructor and assignment operator taking other small_vector"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11912 Trac #11912 : ['"flat_map use of vector::priv_forward_range_insert_expand_backwards may cause move with same source"]].
+   * [@https://svn.boost.org/trac/boost/ticket/11957 Trac #11957 : ['"static_vector::max_size() is higher than the capacity"]].
+   * [@https://svn.boost.org/trac/boost/ticket/12014 Trac #12014 : ['"boost::container::set can not insert const (ref) range"]].
+   * [@https://github.com/boostorg/container/pull/33 GitHub #33: ['Make sure std::string constructor is available]].
+
+[endsect]
 
 [section:release_notes_boost_1_60_00 Boost 1.60 Release]
 

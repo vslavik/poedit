@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_VMD_IS_IDENTIFIER</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="header/boost/vmd/is_identifier_hpp.html" title="Header &lt;boost/vmd/is_identifier.hpp&gt;">
 <link rel="prev" href="header/boost/vmd/is_identifier_hpp.html" title="Header &lt;boost/vmd/is_identifier.hpp&gt;">
@@ -33,19 +33,17 @@
 
 </span>BOOST_VMD_IS_IDENTIFIER(...)</pre></div>
 <div class="refsect1">
-<a name="idm46601772013808"></a><h2>Description</h2>
+<a name="idp11841680"></a><h2>Description</h2>
 <p>... = variadic parameters</p>
 <p>The first variadic parameter is required and it is the input to test.</p>
 <p>Further variadic parameters are optional and are identifiers to match. The data may take one of two forms; it is either one or more single identifiers or a single Boost PP tuple of identifiers.</p>
-<p>returns = 1 if the parameter is an identifier, otherwise 0.         If the parameter is not an identifier, 
-        or if optional identifiers are specified and the identifier
-        does not match any of the optional identifiers, the macro returns 0.
-</p>
-<p>Identifiers are registered in VMD with: #define BOOST_VMD_REG_XXX (XXX) where XXX is a v-identifier.
-</p>
+<p>returns = 1 if the parameter is an identifier, otherwise 0.</p>
+<p>If the parameter is not an identifier, or if optional identifiers are specified and the identifier does not match any of the optional identifiers, the macro returns 0.</p>
+<p>Identifiers are registered in VMD with:</p>
+<p>#define BOOST_VMD_REG_XXX (XXX) where XXX is a v-identifier.</p>
 <p>The identifier must be registered to be found.</p>
-<p>Identifiers are pre-detected in VMD with: #define BOOST_VMD_DETECT_XXX_XXX where XXX is an identifier.
-</p>
+<p>Identifiers are pre-detected in VMD with:</p>
+<p>#define BOOST_VMD_DETECT_XXX_XXX where XXX is an identifier.</p>
 <p>If you specify optional identifiers and have not specified the detection of an optional identifier, that optional identifier will never match the input.</p>
 <p>If the input is not a VMD data type this macro could lead to a preprocessor error. This is because the macro uses preprocessor concatenation to determine if the input is an identifier once it is determined that the input does not start with parenthesis. If the data being concatenated would lead to an invalid preprocessor token the compiler can issue a preprocessor error. </p>
 </div>

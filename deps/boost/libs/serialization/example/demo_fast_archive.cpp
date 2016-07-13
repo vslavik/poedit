@@ -11,7 +11,6 @@
 
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_array.hpp>
-#include <boost/serialization/pfto.hpp>
 
 #define BOOST_ARCHIVE_SOURCE
 #include <boost/archive/binary_oarchive_impl.hpp>
@@ -61,26 +60,26 @@ public:
     // binary_oarchive_impl<derived_t>::load_override;
     // so we use the sure-fire method below.  This failed to work as well
     template<class T>
-    void save_override(T & t, BOOST_PFTO int){
-        base_t::save_override(t, 0);
+    void save_override(T & t){
+        base_t::save_override(t);
         // verify that this program is in fact working by making sure
         // that arrays are getting passed here
         BOOST_STATIC_ASSERT(! (boost::is_array<T>::value) );
     }
     template<int N>
-    void save_override(const int (& t)[N] , int){
+    void save_override(const int (& t)[N]){
         save_binary(t, sizeof(t));
     }
     template<int N>
-    void save_override(const unsigned int (& t)[N], int){
+    void save_override(const unsigned int (& t)[N]){
         save_binary(t, sizeof(t));
     }
     template<int N>
-    void save_override(const long (& t)[N], int){
+    void save_override(const long (& t)[N]){
         save_binary(t, sizeof(t));
     }
     template<int N>
-    void save_override(const unsigned long (& t)[N], int){
+    void save_override(const unsigned long (& t)[N]){
         save_binary(t, sizeof(t));
     }
 public:
@@ -129,24 +128,24 @@ public:
     // binary_oarchive_impl<derived_t>::load_override;
     // so we use the sure-fire method below.  This failed to work as well
     template<class T>
-    void load_override(T & t, BOOST_PFTO int){
-        base_t::load_override(t, 0);
+    void load_override(T & t){
+        base_t::load_override(t);
         BOOST_STATIC_ASSERT(! (boost::is_array<T>::value) );
     }
     template<int N>
-    void load_override(int (& t)[N], int){
+    void load_override(int (& t)[N]){
         load_binary(t, sizeof(t));
     }
     template<int N>
-    void load_override(unsigned int (& t)[N], int){
+    void load_override(unsigned int (& t)[N]){
         load_binary(t, sizeof(t));
     }
     template<int N>
-    void load_override(long (& t)[N], int){
+    void load_override(long (& t)[N]){
         load_binary(t, sizeof(t));
     }
     template<int N>
-    void load_override(unsigned long (& t)[N], int){
+    void load_override(unsigned long (& t)[N]){
         load_binary(t, sizeof(t));
     }
 public:

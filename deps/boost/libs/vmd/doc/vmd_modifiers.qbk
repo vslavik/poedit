@@ -17,14 +17,6 @@ called in general "modifiers", which enhance or change the
 functionality of those macros in various ways. All modifiers
 are VMD identifiers.
 
-Some modifiers are identifiers, both registered and pre-detected,
-starting with BOOST_VMD_. These are termed VMD "specific modifiers"
-and change the expansion of a macro in various ways.
-
-Modifiers may also be user-defined identifiers in some situations 
-which will be subsequently explained. These user-defined identifiers 
-are termed "user-defined modifiers". 
-
 In all situations modifiers are optional parameters which are parsed 
 by VMD to provide enhanced functionality for some of its macros. 
 They are never required as part of the basic functionality of a macro.
@@ -32,6 +24,16 @@ They are never required as part of the basic functionality of a macro.
 When modifiers are used as optional arguments to a macro they
 can be input after the required parameters in any order and 
 VMD will still handle the optional parameters correctly.
+
+There are two general types of modifiers, 'specific modifiers' and
+'user-defined modifiers'. Specific modifers start with BOOST_VMD_
+and are both registered and pre-detected identifiers known to VMD.
+The specific modifiers change the expansion of particular macros
+in various ways which will be subsequently explained. User-defined
+modifiers are user-defined identifiers which the end-user of
+specific macros must register and pre-detect for himself. They also
+change the expansion of particular macros in various ways which 
+will be subsequently explained.
 
 For any particular macro if a specific modifier
 is not appropriate it is just ignored. This means that VMD never
@@ -44,8 +46,9 @@ modifier is not appropriate it is also just ignored.
 The situations where modifiers can be used to enhance the basic
 functionality of VMD macros can be divided by particular types
 of specific modifiers. Each particular type of a specific modifier
-has a particular name given to it in this documentation, 
-functionality, set of identifiers, and may be used as optional
+has a name given to it, functionality, and set of identifiers
+associated with that particular type.
+Each particular type of a specific modifier may be used as optional
 parameters in one or more designated macros depending on the specific
 modifier type. 
 

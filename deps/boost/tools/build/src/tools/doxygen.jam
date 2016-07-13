@@ -619,6 +619,7 @@ rule check-tools ( target )
 rule doxygen ( target : sources + : requirements * : default-build * :
     usage-requirements * )
 {
+    requirements += <format>none ;
     freeze-config ;
     local project = [ project.current ] ;
 
@@ -726,7 +727,7 @@ rule doxygen ( target : sources + : requirements * : default-build * :
                 images-location = $(images-location)/ ;
             }
 
-            requirements +=
+            requirements += 
                 <dependency>$(target).doxygen-xml-images
                 <xsl:param>boost.doxygen.formuladir=$(images-location) ;
         }

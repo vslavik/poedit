@@ -20,7 +20,9 @@ void check_result_type(const boost::multiprecision::checked_int1024_t&, const bo
 
 int main()
 {
+#ifndef BOOST_NO_EXCEPTIONS
    try{
+#endif
       typedef boost::multiprecision::checked_int1024_t big_type;
       typedef boost::multiprecision::checked_int512_t  small_type;
       typedef boost::multiprecision::number<boost::multiprecision::cpp_int_backend<32, 32, boost::multiprecision::signed_magnitude, boost::multiprecision::checked, void>, boost::multiprecision::et_off>  little_type;
@@ -85,12 +87,14 @@ int main()
       BOOST_CHECK_EQUAL(little_val < big_val, true);
       BOOST_CHECK_EQUAL(little_val > big_val, false);
       BOOST_CHECK_EQUAL(little_val != big_val, true);
+#ifndef BOOST_NO_EXCEPTIONS
    }
    catch(const std::exception& e)
    {
       std::cout << "Failed with unexpected exception: " << e.what() << std::endl;
       return 1;
    }
+#endif
    return boost::report_errors();
 }
 

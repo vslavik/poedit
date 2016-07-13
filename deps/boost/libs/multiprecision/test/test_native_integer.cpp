@@ -25,7 +25,9 @@ void test()
 
    I i(0);
 
+#ifndef BOOST_NO_EXCEPTIONS
    BOOST_CHECK_THROW(lsb(i), std::range_error);
+#endif
    BOOST_CHECK(bit_test(bit_set(i, 0), 0));
    BOOST_CHECK_EQUAL(bit_set(i, 0), 1);
    BOOST_CHECK_EQUAL(bit_unset(i, 0), 0);
@@ -43,12 +45,13 @@ void test()
    BOOST_CHECK_EQUAL(lsb(i), max_index / 2);
    BOOST_CHECK_EQUAL(msb(i), max_index);
 
+#ifndef BOOST_NO_EXCEPTIONS
    if(std::numeric_limits<I>::is_signed)
    {
       i = static_cast<I>(-1);
       BOOST_CHECK_THROW(lsb(i), std::range_error);
    }
-
+#endif
    H mx = (std::numeric_limits<H>::max)();
 
    BOOST_CHECK_EQUAL(multiply(i, mx, mx), static_cast<I>(mx) * static_cast<I>(mx));

@@ -417,7 +417,7 @@ rule init ( prefix : version ? : condition * : namespace ? : infix ? : full_bin 
     }
     else
     {
-         alias QtAngle 
+         alias QtAngle
             : # sources
             : # requirements
                 $(target-requirements)
@@ -475,9 +475,51 @@ rule init ( prefix : version ? : condition * : namespace ? : infix ? : full_bin 
     add-shared-library QtQuickParticles : QtQml : : $(target-requirements) ;
     add-shared-library QtQuickTest      : QtQml : : $(target-requirements) ;
 
+    add-shared-library QtSerialPort : QtCore : QT_SERIALPORT_LIB : $(target-requirements) ;
+
     # QtLocation (since 5.4)
     add-shared-library QtLocation : QtQuick QtPositioning : QT_LOCATION_LIB : $(target-requirements) ;
 
+    # Webengine support (since 5.4)
+    add-shared-library QtWebEngine        : QtGui       : QT_WEBENGINE_LIB : $(target-requirements) ;
+    add-shared-library QtWebEngineCore    : QtWebEngine : QT_WEBENGINECORE_LIB : $(target-requirements) ;
+    add-shared-library QtWebEngineWidgets : QtWebEngineCore QtWidgets : QT_WEBENGINEWIDGETS_LIB : $(target-requirements) ;
+
+    add-shared-library QtWebChannel : QtQml     : QT_WEBCHANNEL_LIB : $(target-requirements) ;
+    add-shared-library QtWebSockets : QtNetwork : QT_WEBSOCKETS_LIB : $(target-requirements) ;
+
+    add-shared-library QtWebView    : QtWebEngineCore QtWebChannel : QT_WEBVIEW_LIB : $(target-requirements) ;
+
+    # Qt3d libraries (since 5.6)
+    add-shared-library Qt3DCore   : QtGui                 : QT_3DCORE_LIB   : $(target-requirements) ;
+    add-shared-library Qt3DRender : Qt3DCore QtConcurrent : QT_3DRENDER_LIB : $(target-requirements) ;
+    add-shared-library Qt3DLogic  : Qt3DCore              : QT_3DLOGIC_LIB  : $(target-requirements) ;
+    add-shared-library Qt3DInput  : Qt3DRender            : QT_3DINPUT_LIB  : $(target-requirements) ;
+
+    # QtCharts (since 5.7)
+    add-shared-library QtCharts : QtWidgets : QT_CHARTS_LIB : $(target-requirements) ;
+
+    # 3D data visualization (since 5.7)
+    add-shared-library QtDataVisualization : QtGui : QT_DATAVISUALIZATION_LIB : $(target-requirements) ;
+
+    # In-App purchase API (since 5.7)
+    add-shared-library QtPurchasing : QtCore : QT_PURCHASING_LIB : $(target-requirements) ;
+
+    # Qt Connectivity (since 5.3)
+    add-shared-library QtBluetooth  : QtCore : QT_BLUETOOTH_LIB : $(target-requirements) ;
+    add-shared-library QtNfc        : QtCore : QT_NFC_LIB : $(target-requirements) ;
+
+    # Gamepad (since 5.7)
+    add-shared-library QtGamepad : QtCore : QT_GAMEPAD_LIB : $(target-requirements) ;
+
+    # SCXML state machine (since 5.7)
+    add-shared-library QtScxml : QtCore : QT_SCXML_LIB : $(target-requirements) ;
+
+    # Tech Preview QtQuick
+    # SerialBus (since 5.7)
+    add-shared-library QtSerialBus : QtCore : QT_SERIALBUS_LIB : $(target-requirements) ;
+
+    # Platform dependent libraries
     # Regular expression support
     add-shared-library QtV8 : QtCore : : $(target-requirements) ;
 

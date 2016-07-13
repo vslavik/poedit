@@ -22,11 +22,10 @@ public:
     enum { arity = 1 };
 
     struct iterator {
-        typedef bdata::traits<int>::ref_type ref_type;
-    
+
         iterator() : a(1), b(1) {}
     
-        ref_type operator*() const   { return b; }
+        int operator*() const   { return b; }
         void operator++()
         {
             a = a + b;

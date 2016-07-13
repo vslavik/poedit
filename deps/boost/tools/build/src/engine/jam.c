@@ -165,6 +165,12 @@ static char * othersyms[] = { OSMAJOR, OSMINOR, OSPLAT, JAMVERSYM, 0 };
 # endif
 #endif
 
+
+#ifdef OS_VMS
+# define use_environ arg_environ
+#endif
+
+
 /* on Win32-LCC */
 #if defined( OS_NT ) && defined( __LCC__ )
 # define use_environ _environ
@@ -663,6 +669,24 @@ char * executable_path( char const * argv0 )
     char buf[ 1024 ];
     ssize_t const ret = readlink( "/proc/self/exe", buf, sizeof( buf ) );
     return ( !ret || ret == sizeof( buf ) ) ? NULL : strndup( buf, ret );
+}
+#elif defined(OS_VMS)
+# include <unixlib.h>
+char * executable_path( char const * argv0 )
+{
+    char * vms_path = NULL;
+    char * posix_path = NULL;
+    char * p;
+
+    /* On VMS argv[0] shows absolute path to the image file.
+     * So, just remove VMS file version and translate path to POSIX-style.
+     */
+    vms_path = strdup( argv0 );
+    if ( vms_path && ( p = strchr( vms_path, ';') ) ) *p = '\0';
+    posix_path = decc$translate_vms( vms_path );
+    if ( vms_path ) free( vms_path );
+
+    return posix_path > 0 ? strdup( posix_path ) : NULL;
 }
 #else
 char * executable_path( char const * argv0 )

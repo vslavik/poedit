@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Change log</title>
 <link rel="stylesheet" href="../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Boost.Test">
 <link rel="up" href="../index.html" title="Boost.Test">
 <link rel="prev" href="section_glossary.html" title="Glossary">
@@ -28,18 +28,73 @@
 </h2></div></div></div>
 <h5>
 <a name="boost_test.change_log.h0"></a>
-      <span class="phrase"><a name="boost_test.change_log.boost_test_v3_1_boost_1_60"></a></span><a class="link" href="change_log.html#boost_test.change_log.boost_test_v3_1_boost_1_60">Boost.Test
-      v3.1 / boost 1.60</a>
+      <span><a name="boost_test.change_log.boost_test_v3_2_boost_1_61"></a></span><a class="link" href="change_log.html#boost_test.change_log.boost_test_v3_2_boost_1_61">Boost.Test
+      v3.2 / boost 1.61</a>
     </h5>
 <h6>
 <a name="boost_test.change_log.h1"></a>
-      <span class="phrase"><a name="boost_test.change_log.new_major_features"></a></span><a class="link" href="change_log.html#boost_test.change_log.new_major_features">New
+      <span><a name="boost_test.change_log.new_features"></a></span><a class="link" href="change_log.html#boost_test.change_log.new_features">New
+      features</a>
+    </h6>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          now datasets support any <a class="link" href="tests_organization/test_cases/test_case_generation/datasets.html" title="Datasets">arity</a>,
+          using the variadic template support of the compiler.
+        </li>
+<li class="listitem">
+          now datasets support fixtures through <code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE_F</span></code>,
+          see <a class="link" href="tests_organization/test_cases/test_case_generation/datasets.html" title="Datasets">here</a>
+          for more details
+        </li>
+<li class="listitem">
+          now datasets honors move semantics of the types used for samples
+        </li>
+</ul></div>
+<h6>
+<a name="boost_test.change_log.h2"></a>
+      <span><a name="boost_test.change_log.bugfixes_and_feature_requests"></a></span><a class="link" href="change_log.html#boost_test.change_log.bugfixes_and_feature_requests">Bugfixes
+      and feature requests</a>
+    </h6>
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/6767" target="_top">#6767</a> Use of namespace qualifier with floating point exception functions
+          breaks if they are macros
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/8905" target="_top">#8905</a> <code class="computeroutput"><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">impl</span><span class="special">/</span><span class="identifier">debug</span><span class="special">.</span><span class="identifier">ipp</span></code>: Ignores return value from <code class="computeroutput"><span class="identifier">WaitForSingleObject</span></code>
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/9443" target="_top">#9443</a> Runtime parameter Random seed for random order of test cases not
+          respected correctly
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11854" target="_top">#11854</a> Add fixture support in <code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code>
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11887" target="_top">#11887</a> <code class="computeroutput"><span class="identifier">BOOST_TEST</span><span class="special">(</span><span class="number">3u</span> <span class="special">==</span> <span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">max</span><span class="special">)(</span><span class="number">0u</span><span class="special">,</span> <span class="number">3u</span><span class="special">))</span></code> fails
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11889" target="_top">#11889</a> <code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code>
+          fails to compile for 4D and higher dimensional grids
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11983" target="_top">#11983</a> Boost Test XML Report contains unescaped XML characters
+        </li>
+</ol></div>
+<h5>
+<a name="boost_test.change_log.h3"></a>
+      <span><a name="boost_test.change_log.boost_test_v3_1_boost_1_60"></a></span><a class="link" href="change_log.html#boost_test.change_log.boost_test_v3_1_boost_1_60">Boost.Test
+      v3.1 / boost 1.60</a>
+    </h5>
+<h6>
+<a name="boost_test.change_log.h4"></a>
+      <span><a name="boost_test.change_log.new_major_features"></a></span><a class="link" href="change_log.html#boost_test.change_log.new_major_features">New
       major features</a>
     </h6>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           improved API for datasets
-          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                 it is now possible to use initializer lists
               </li>
@@ -51,7 +106,7 @@
         </li>
 <li class="listitem">
           improved command line interface
-          <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                 clearer help commands
               </li>
@@ -63,7 +118,7 @@
                 reports invalid or ambiguous parameters: this might break existing
                 calls when user defined commands are provided to the test module.
                 The following calling convention should be adopted:
-                <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; ">
+                <div class="itemizedlist"><ul class="itemizedlist" type="square">
 <li class="listitem">
                       if the test module uses user supplied commands, those should
                       be passed after an empty token <code class="computeroutput"><span class="special">--</span></code>
@@ -88,8 +143,8 @@
         </li>
 </ul></div>
 <h6>
-<a name="boost_test.change_log.h2"></a>
-      <span class="phrase"><a name="boost_test.change_log.bugfixes_and_feature_requests"></a></span><a class="link" href="change_log.html#boost_test.change_log.bugfixes_and_feature_requests">Bugfixes
+<a name="boost_test.change_log.h5"></a>
+      <span><a name="boost_test.change_log.bugfixes_and_feature_requests0"></a></span><a class="link" href="change_log.html#boost_test.change_log.bugfixes_and_feature_requests0">Bugfixes
       and feature requests</a>
     </h6>
 <div class="orderedlist"><ol class="orderedlist" type="1">
@@ -145,16 +200,16 @@
         </li>
 </ol></div>
 <h5>
-<a name="boost_test.change_log.h3"></a>
-      <span class="phrase"><a name="boost_test.change_log.boost_test_v3_boost_1_59"></a></span><a class="link" href="change_log.html#boost_test.change_log.boost_test_v3_boost_1_59">Boost.Test
+<a name="boost_test.change_log.h6"></a>
+      <span><a name="boost_test.change_log.boost_test_v3_boost_1_59"></a></span><a class="link" href="change_log.html#boost_test.change_log.boost_test_v3_boost_1_59">Boost.Test
       v3 / boost 1.59</a>
     </h5>
 <h6>
-<a name="boost_test.change_log.h4"></a>
-      <span class="phrase"><a name="boost_test.change_log.new_major_features0"></a></span><a class="link" href="change_log.html#boost_test.change_log.new_major_features0">New
+<a name="boost_test.change_log.h7"></a>
+      <span><a name="boost_test.change_log.new_major_features0"></a></span><a class="link" href="change_log.html#boost_test.change_log.new_major_features0">New
       major features</a>
     </h6>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a class="link" href="utf_reference/testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST</span></code></a> generic assertion
         </li>
@@ -194,8 +249,8 @@
         </li>
 </ul></div>
 <h6>
-<a name="boost_test.change_log.h5"></a>
-      <span class="phrase"><a name="boost_test.change_log.bugfixes_and_feature_requests0"></a></span><a class="link" href="change_log.html#boost_test.change_log.bugfixes_and_feature_requests0">Bugfixes
+<a name="boost_test.change_log.h8"></a>
+      <span><a name="boost_test.change_log.bugfixes_and_feature_requests1"></a></span><a class="link" href="change_log.html#boost_test.change_log.bugfixes_and_feature_requests1">Bugfixes
       and feature requests</a>
     </h6>
 <div class="orderedlist"><ol class="orderedlist" type="1">
@@ -216,46 +271,47 @@
           <a href="https://svn.boost.org/trac/boost/ticket/2759" target="_top">#2759</a> Typos in test new-year-resolution.html
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3182" target="_top">#3182</a> _CrtSetReportFile can be used to redirect memory leaks report
+          <a href="https://svn.boost.org/trac/boost/ticket/3182" target="_top">#3182</a> <code class="computeroutput"><span class="identifier">_CrtSetReportFile</span></code>
+          can be used to redirect memory leaks report
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3316" target="_top">#3316</a> Access violation when trying to log from init_tests_func
+          <a href="https://svn.boost.org/trac/boost/ticket/3316" target="_top">#3316</a> Access violation when trying to log from <code class="computeroutput"><span class="identifier">init_tests_func</span></code>
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3392" target="_top">#3392</a> Boost::Test: Wrong contents for documentation of the <code class="computeroutput"><span class="identifier">BOOST_TEST_PASSPOINT</span></code> macro
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3402" target="_top">#3402</a> Invalid define name in docummentation (duplicates #2717)
+          <a href="https://svn.boost.org/trac/boost/ticket/3402" target="_top">#3402</a> Invalid define name in docummentation (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/2717" target="_top">#2717</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3445" target="_top">#3445</a> incorreect link in the docs
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3463" target="_top">#3463</a> GT is GREAT!
+          <a href="https://svn.boost.org/trac/boost/ticket/3463" target="_top">#3463</a> <code class="computeroutput"><span class="identifier">GT</span></code> is GREAT!
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3542" target="_top">#3542</a> Bug in documentation of detect_memory_leak parameter (duplicates
-          #2018)
+          #<a href="https://svn.boost.org/trac/boost/ticket/2018" target="_top">#2018</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3481" target="_top">#3481</a> Boost Testing doesn't work under Sun Solaris Containers (duplicates
-          #3592)
+          #<a href="https://svn.boost.org/trac/boost/ticket/3592" target="_top">#3592</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3495" target="_top">#3495</a> Boost::Test enters endless loop when running in vserver environment
-          (duplicates #3592)
+          <a href="https://svn.boost.org/trac/boost/ticket/3495" target="_top">#3495</a> Boost::Test enters endless loop when running in <code class="computeroutput"><span class="identifier">vserver</span></code> environment (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/3592" target="_top">#3592</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3592" target="_top">#3592</a> under_debugger() goes into infinite loop
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3595" target="_top">#3595</a> Typo (duplicates #2759)
+          <a href="https://svn.boost.org/trac/boost/ticket/3595" target="_top">#3595</a> Typo (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/2759" target="_top">#2759</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3623" target="_top">#3623</a> Boost Test Typo (duplicates #2759)
+          <a href="https://svn.boost.org/trac/boost/ticket/3623" target="_top">#3623</a> Boost Test Typo (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/2759" target="_top">#2759</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3664" target="_top">#3664</a> SIGCHLD always considered fatal error
+          <a href="https://svn.boost.org/trac/boost/ticket/3664" target="_top">#3664</a> <code class="computeroutput"><span class="identifier">SIGCHLD</span></code> always
+          considered fatal error
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3784" target="_top">#3784</a> Documentation errors in Execution Monitor Compilation
@@ -267,17 +323,17 @@
           <a href="https://svn.boost.org/trac/boost/ticket/3811" target="_top">#3811</a> global namespace polution
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3834" target="_top">#3834</a> doc: probably incorrect HTML rendering (duplicates #2450)
+          <a href="https://svn.boost.org/trac/boost/ticket/3834" target="_top">#3834</a> doc: probably incorrect HTML rendering (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/2450" target="_top">#2450</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3896" target="_top">#3896</a> erroneous documentation in boost test commandline parameter description
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3932" target="_top">#3932</a> Error in <code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GT</span></code>
-          description (duplicates #3463)
+          description (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/3463" target="_top">#3463</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3938" target="_top">#3938</a> doc: incorrect macro name (duplicates #2759)
+          <a href="https://svn.boost.org/trac/boost/ticket/3938" target="_top">#3938</a> doc: incorrect macro name (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/2759" target="_top">#2759</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/3964" target="_top">#3964</a> Documentation for <code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE_FRACTION</span></code>
@@ -287,13 +343,13 @@
           <a href="https://svn.boost.org/trac/boost/ticket/3978" target="_top">#3978</a> Failed to completely redirect TestLog to file, bugfix appended
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/3979" target="_top">#3979</a> &lt;boost/test/exception_safety.hpp&gt; requires additional includes
+          <a href="https://svn.boost.org/trac/boost/ticket/3979" target="_top">#3979</a> <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">test</span><span class="special">/</span><span class="identifier">exception_safety</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code> requires additional includes
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/4161" target="_top">#4161</a> spelling mistakes...
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/4275" target="_top">#4275</a> Documentation error Boost.Test (duplicates #2717)
+          <a href="https://svn.boost.org/trac/boost/ticket/4275" target="_top">#4275</a> Documentation error Boost.Test (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/2717" target="_top">#2717</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/4389" target="_top">#4389</a> Enable boost_test to run specific tests with any required dependent
@@ -325,7 +381,7 @@
           <a href="https://svn.boost.org/trac/boost/ticket/5008" target="_top">#5008</a> Boost.Test does not do checkpointing of entry/exit of test cases
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/5036" target="_top">#5036</a> Boost.Test VC memory leak report should direct to stderr
+          <a href="https://svn.boost.org/trac/boost/ticket/5036" target="_top">#5036</a> Boost.Test VC memory leak report should direct to <code class="computeroutput"><span class="identifier">stderr</span></code>
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/5262" target="_top">#5262</a> Run tests by name utility doesn't support negation
@@ -371,10 +427,10 @@
           <a href="https://svn.boost.org/trac/boost/ticket/6074" target="_top">#6074</a> warnings-as-errors not usable with Boost.test in release mode
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/6161" target="_top">#6161</a> SunOS: bad putenv declaration (duplicates #6766)
+          <a href="https://svn.boost.org/trac/boost/ticket/6161" target="_top">#6161</a> SunOS: bad putenv declaration (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/6766" target="_top">#6766</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/6766" target="_top">#6766</a> incorrect declaration for putenv in config.hpp
+          <a href="https://svn.boost.org/trac/boost/ticket/6766" target="_top">#6766</a> incorrect declaration for putenv in <code class="computeroutput"><span class="identifier">config</span><span class="special">.</span><span class="identifier">hpp</span></code>
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/6712" target="_top">#6712</a> Eliminate warnings with GCC
@@ -386,8 +442,8 @@
           <a href="https://svn.boost.org/trac/boost/ticket/7046" target="_top">#7046</a> Output full error message, not just 512 chars
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/7136" target="_top">#7136</a> Correct documentation for BOOST_&lt;level&gt;_CLOSE_FRACTION is
-          not reflected into released documents
+          <a href="https://svn.boost.org/trac/boost/ticket/7136" target="_top">#7136</a> Correct documentation for <code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_CLOSE_FRACTION</span></code>
+          is not reflected into released documents
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/7410" target="_top">#7410</a> Test Units (Cases and Suites) in Boost.Test do not capture <code class="computeroutput"><span class="identifier">__FILE__</span></code> and <code class="computeroutput"><span class="identifier">__LINE__</span></code>
@@ -401,15 +457,15 @@
           <a href="https://svn.boost.org/trac/boost/ticket/8201" target="_top">#8201</a> Broken link in document
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/8272" target="_top">#8272</a> BOOST_REQUIRE_CLOSE fails to compile with boost::multiprecision::cpp_dec_float_100
-          (duplicates #11054)
+          <a href="https://svn.boost.org/trac/boost/ticket/8272" target="_top">#8272</a> <code class="computeroutput"><span class="identifier">BOOST_REQUIRE_CLOSE</span></code>
+          fails to compile with <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">multiprecision</span><span class="special">::</span><span class="identifier">cpp_dec_float_100</span></code>
+          (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/11054" target="_top">#11054</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/8467" target="_top">#8467</a> Incorrect link in document (duplicates #6748)
+          <a href="https://svn.boost.org/trac/boost/ticket/8467" target="_top">#8467</a> Incorrect link in document (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/6748" target="_top">#6748</a>)
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/8679" target="_top">#8679</a> Boost.Test pollutes boost namespace with it's own enable_if/disable_if
-          templates
+          <a href="https://svn.boost.org/trac/boost/ticket/8679" target="_top">#8679</a> Boost.Test pollutes boost namespace with it's own <code class="computeroutput"><span class="identifier">enable_if</span><span class="special">/</span><span class="identifier">disable_if</span></code> templates
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/8862" target="_top">#8862</a> Boost.Test typo in documentation
@@ -422,7 +478,7 @@
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/9272" target="_top">#9272</a> boost::test <code class="computeroutput"><span class="identifier">BOOST_</span><span class="special">&lt;</span><span class="identifier">level</span><span class="special">&gt;</span><span class="identifier">_GT</span></code>
-          documentation bug (duplicates #3463)
+          documentation bug (duplicates #<a href="https://svn.boost.org/trac/boost/ticket/3463" target="_top">#3463</a>)
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/9390" target="_top">#9390</a> Incomplete <code class="computeroutput"><span class="identifier">BOOST_TEST_DONT_PRINT_LOG_VALUE</span></code>
@@ -443,7 +499,7 @@
           <a href="https://svn.boost.org/trac/boost/ticket/9960" target="_top">#9960</a> Warnings on Clang
         </li>
 <li class="listitem">
-          <a href="https://svn.boost.org/trac/boost/ticket/10256" target="_top">#10256</a> [boost test] - issue: sigaltstack
+          <a href="https://svn.boost.org/trac/boost/ticket/10256" target="_top">#10256</a> [boost test] - issue: <code class="computeroutput"><span class="identifier">sigaltstack</span></code>
         </li>
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/10318" target="_top">#10318</a> Minor documentation fix
@@ -477,7 +533,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

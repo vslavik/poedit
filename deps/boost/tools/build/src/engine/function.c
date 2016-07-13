@@ -26,15 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef OS_CYGWIN
-# include <cygwin/version.h>
-# include <sys/cygwin.h>
-# ifdef CYGWIN_VERSION_CYGWIN_CONV
-#  include <errno.h>
-# endif
-# include <windows.h>
-#endif
-
 int glob( char const * s, char const * c );
 void backtrace( FRAME * );
 void backtrace_line( FRAME * );
@@ -504,7 +495,7 @@ static LIST * function_call_member_rule( JAM_FUNCTION * function, FRAME * frame,
 
     frame->file = file;
     frame->line = line;
-    
+
     if ( list_empty( first ) )
     {
         backtrace_line( frame );
@@ -583,9 +574,9 @@ static LIST * function_call_member_rule( JAM_FUNCTION * function, FRAME * frame,
         }
     }
 
+    list_free( first );
     result = evaluate_rule( rule, real_rulename, inner );
     frame_free( inner );
-    object_free( rulename );
     object_free( real_rulename );
     return result;
 }
@@ -754,74 +745,30 @@ static void var_edit_file( char const * in, string * out, VAR_EDITS * edits )
         string_append( out, in );
 }
 
+
 /*
- * var_edit_cyg2win() - conversion of a cygwin to a Windows path.
- *
- * FIXME: skip grist
+ * var_edit_translate_path() - translate path to os native format.
  */
 
-#ifdef OS_CYGWIN
-static void var_edit_cyg2win( string * out, size_t pos, VAR_EDITS * edits )
+static void var_edit_translate_path( string * out, size_t pos, VAR_EDITS * edits )
 {
     if ( edits->to_windows )
     {
-    #ifdef CYGWIN_VERSION_CYGWIN_CONV
-        /* Use new Cygwin API added with Cygwin 1.7. Old one had no error
-         * handling and has been deprecated.
-         */
-        char * dynamicBuffer = 0;
-        char buffer[ MAX_PATH + 1001 ];
-        char const * result = buffer;
-        cygwin_conv_path_t const conv_type = CCP_POSIX_TO_WIN_A | CCP_RELATIVE;
-        ssize_t const apiResult = cygwin_conv_path( conv_type, out->value + pos,
-            buffer, sizeof( buffer ) / sizeof( *buffer ) );
-        assert( apiResult == 0 || apiResult == -1 );
-        assert( apiResult || strlen( result ) < sizeof( buffer ) / sizeof(
-            *buffer ) );
-        if ( apiResult )
-        {
-            result = 0;
-            if ( errno == ENOSPC )
-            {
-                ssize_t const size = cygwin_conv_path( conv_type, out->value +
-                    pos, NULL, 0 );
-                assert( size >= -1 );
-                if ( size > 0 )
-                {
-                    dynamicBuffer = (char *)BJAM_MALLOC_ATOMIC( size );
-                    if ( dynamicBuffer )
-                    {
-                        ssize_t const apiResult = cygwin_conv_path( conv_type,
-                            out->value + pos, dynamicBuffer, size );
-                        assert( apiResult == 0 || apiResult == -1 );
-                        if ( !apiResult )
-                        {
-                            result = dynamicBuffer;
-                            assert( strlen( result ) < size );
-                        }
-                    }
-                }
-            }
-        }
-    #else  /* CYGWIN_VERSION_CYGWIN_CONV */
-        /* Use old Cygwin API deprecated with Cygwin 1.7. */
-        char result[ MAX_PATH + 1 ];
-        cygwin_conv_to_win32_path( out->value + pos, result );
-        assert( strlen( result ) <= MAX_PATH );
-    #endif  /* CYGWIN_VERSION_CYGWIN_CONV */
-        if ( result )
+        string result[ 1 ];
+        int translated;
+
+        /* Translate path to os native format. */
+        translated = path_translate_to_os( out->value + pos, result );
+        if ( translated )
         {
             string_truncate( out, pos );
-            string_append( out, result );
+            string_append( out, result->value );
             edits->to_slashes = 0;
         }
-    #ifdef CYGWIN_VERSION_CYGWIN_CONV
-        if ( dynamicBuffer )
-            BJAM_FREE( dynamicBuffer );
-    #endif
+
+        string_free( result );
     }
 }
-#endif  /* OS_CYGWIN */
 
 
 /*
@@ -830,8 +777,8 @@ static void var_edit_cyg2win( string * out, size_t pos, VAR_EDITS * edits )
 
 static void var_edit_shift( string * out, size_t pos, VAR_EDITS * edits )
 {
-#ifdef OS_CYGWIN
-    var_edit_cyg2win( out, pos, edits );
+#if defined( OS_CYGWIN ) || defined( OS_VMS )
+    var_edit_translate_path( out, pos, edits );
 #endif
 
     if ( edits->upshift || edits->downshift || edits->to_slashes )
@@ -3078,7 +3025,7 @@ static void argument_error( char const * message, FUNCTION * procedure,
     print_source_line( frame );
     out_printf( "see definition of rule '%s' being called\n", frame->rulename );
     backtrace( frame->prev );
-    exit( 1 );
+    exit( EXITBAD );
 }
 
 static void type_check_range( OBJECT * type_name, LISTITER iter, LISTITER end,
@@ -3371,7 +3318,7 @@ static void argument_compiler_add( struct argument_compiler * c, OBJECT * arg,
         {
             err_printf( "%s:%d: missing argument name before type name: %s\n",
                 object_str( file ), line, object_str( arg ) );
-            exit( 1 );
+            exit( EXITBAD );
         }
 
         c->arg.arg_name = object_copy( arg );
@@ -3419,7 +3366,7 @@ static struct arg_list arg_compile_impl( struct argument_compiler * c,
     case ARGUMENT_COMPILER_FOUND_TYPE:
         err_printf( "%s:%d: missing argument name after type name: %s\n",
             object_str( file ), line, object_str( c->arg.type_name ) );
-        exit( 1 );
+        exit( EXITBAD );
     case ARGUMENT_COMPILER_FOUND_OBJECT:
         dynamic_array_push( c->args, c->arg );
         break;
@@ -4283,6 +4230,7 @@ LIST * function_run( FUNCTION * function_, FRAME * frame, STACK * s )
                     result = var_get( frame->module, varname ) ;
                 }
             }
+            list_free( targets );
             stack_push( s, list_copy( result ) );
             break;
         }
@@ -4677,17 +4625,46 @@ LIST * function_run( FUNCTION * function_, FRAME * frame, STACK * s )
             {
                 int err_redir = strcmp( "STDERR", out ) == 0;
                 string result[ 1 ];
+
                 tmp_filename = path_tmpfile();
-                string_new( result );
+
+                /* Construct os-specific cat command. */
+                {
+                    char * command = "cat";
+                    char * quote = "\"";
+                    char * redirect = "1>&2";
+
                 #ifdef OS_NT
-                string_append( result, "type \"" );
-                #else
-                string_append( result, "cat \"" );
+                    command = "type";
+                    quote = "\"";
+                #elif defined( OS_VMS )
+                    command = "pipe type";
+                    quote = "";
+
+                    /* Get tmp file name is os-format. */
+                    {
+                        string os_filename[ 1 ];
+
+                        string_new( os_filename );
+                        path_translate_to_os( object_str( tmp_filename ), os_filename );
+                        object_free( tmp_filename );
+                        tmp_filename = object_new( os_filename->value );
+                        string_free( os_filename );
+                    }
                 #endif
-                string_append( result, object_str( tmp_filename ) );
-                string_push_back( result, '\"' );
-                if ( err_redir )
-                    string_append( result, " 1>&2" );
+
+                    string_new( result );
+                    string_append( result, command );
+                    string_append( result, " " );
+                    string_append( result, quote );
+                    string_append( result, object_str( tmp_filename ) );
+                    string_append( result, quote );
+                    if ( err_redir )
+                    {
+                        string_append( result, " " );
+                        string_append( result, redirect );
+                    }
+                }
 
                 /* Replace STDXXX with the temporary file. */
                 list_free( stack_pop( s ) );

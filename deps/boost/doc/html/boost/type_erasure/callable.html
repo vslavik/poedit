@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template callable</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.callable_hpp" title="Header &lt;boost/type_erasure/callable.hpp&gt;">
-<link rel="prev" href="call_idm45506884907840.html" title="Function call">
+<link rel="prev" href="call_idp314423328.html" title="Function call">
 <link rel="next" href="check_match.html" title="Function check_match">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="call_idm45506884907840.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.callable_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="check_match.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="call_idp314423328.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.callable_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="check_match.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.type_erasure.callable"></a><div class="titlepage"></div>
@@ -35,18 +35,18 @@
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sig<span class="special">,</span> <span class="keyword">typename</span> F <span class="special">=</span> <a class="link" href="_self.html" title="Struct _self">_self</a><span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="callable.html" title="Struct template callable">callable</a> <span class="special">{</span>
 
-  <span class="comment">// <a class="link" href="callable.html#idm45506885009408-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">R</span> <a class="link" href="callable.html#idm45506885008848-bb"><span class="identifier">apply</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="callable.html#idp314459936-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">R</span> <a class="link" href="callable.html#idp314460496-bb"><span class="identifier">apply</span></a><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">T</span><span class="special">...</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555079292560"></a><h2>Description</h2>
+<a name="idp448535952"></a><h2>Description</h2>
 <p>The <a class="link" href="callable.html" title="Struct template callable">callable</a> concept allows an <a class="link" href="any.html" title="Class template any">any</a> to hold function objects. <code class="computeroutput">Sig</code> is interpreted in the same way as for Boost.Function, except that the arguments and return type are allowed to be placeholders. <code class="computeroutput">F</code> must be a <a class="link" href="placeholder.html" title="Struct placeholder">placeholder</a>.</p>
 <p>Multiple instances of <a class="link" href="callable.html" title="Struct template callable">callable</a> can be used simultaneously. Overload resolution works normally. Note that unlike Boost.Function, <a class="link" href="callable.html" title="Struct template callable">callable</a> does not provide result_type. It does, however, support <code class="computeroutput">boost::result_of</code>. </p>
 <div class="refsect2">
-<a name="idm45555079284976"></a><h3>
-<a name="idm45506885009408-bb"></a><code class="computeroutput">callable</code> public static functions</h3>
+<a name="idp448543536"></a><h3>
+<a name="idp314459936-bb"></a><code class="computeroutput">callable</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">R</span> <a name="idm45506885008848-bb"></a><span class="identifier">apply</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;</span> f<span class="special">,</span> <span class="identifier">T</span><span class="special">...</span> arg<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">static</span> <span class="identifier">R</span> <a name="idp314460496-bb"></a><span class="identifier">apply</span><span class="special">(</span><span class="identifier">F</span> <span class="special">&amp;</span> f<span class="special">,</span> <span class="identifier">T</span><span class="special">...</span> arg<span class="special">)</span><span class="special">;</span></pre>
 <p><code class="computeroutput">R</code> is the result type of <code class="computeroutput">Sig</code> and <code class="computeroutput">T</code> is the argument types of <code class="computeroutput">Sig</code>. </p>
 </li></ol></div>
 </div>
@@ -62,7 +62,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="call_idm45506884907840.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.callable_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="check_match.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="call_idp314423328.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_typeerasure/reference.html#header.boost.type_erasure.callable_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="check_match.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

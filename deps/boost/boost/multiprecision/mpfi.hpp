@@ -907,8 +907,10 @@ inline void eval_pow(mpfi_float_backend<Digits10>& result, const mpfi_float_back
          return;
       }
       typename boost::multiprecision::detail::canonical<boost::uintmax_t, mpfi_float_backend<Digits10> >::type an;
+#ifndef BOOST_NO_EXCEPTIONS
       try
       {
+#endif
          using default_ops::eval_convert_to;
          eval_convert_to(&an, e);
          if(e.compare(an) == 0)
@@ -920,11 +922,13 @@ inline void eval_pow(mpfi_float_backend<Digits10>& result, const mpfi_float_back
                result.negate();
             return;
          }
+#ifndef BOOST_NO_EXCEPTIONS
       }
       catch(const std::exception&)
       {
          // conversion failed, just fall through, value is not an integer.
       }
+#endif
       result = std::numeric_limits<number<mpfi_float_backend<Digits10>, et_on> >::quiet_NaN().backend();
       return;
    }

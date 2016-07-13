@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Reference</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../any.html" title="Chapter&#160;3.&#160;Boost.Any">
 <link rel="prev" href="s02.html" title="Examples">
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="any.reference"></a>Reference</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="reference.html#any.ValueType"><span class="emphasis"><em>ValueType</em></span> requirements</a></span></dt>
 <dt><span class="section"><a href="reference.html#header.boost.any_hpp">Header &lt;boost/any.hpp&gt;</a></span></dt>
 </dl></div>
@@ -51,7 +51,7 @@
 <p>The specific requirements on value types to be used in an
       <code class="computeroutput"><a class="link" href="../boost/any.html" title="Class any">any</a></code>
       are:</p>
-<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc" compact>
 <li class="listitem">A <span class="emphasis"><em>ValueType</em></span> is
           <span class="emphasis"><em>CopyConstructible</em></span> [20.1.3].</li>
 <li class="listitem">The destructor for a
@@ -65,12 +65,12 @@
 <pre class="synopsis"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">class</span> <a class="link" href="../boost/bad_any_cast.html" title="Class bad_any_cast">bad_any_cast</a><span class="special">;</span>
   <span class="keyword">class</span> <a class="link" href="../boost/any.html" title="Class any">any</a><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="../boost/swap_idm45507162621920.html" title="Function swap"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">,</span> <a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="../boost/any_cast_idm45507162615824.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="../boost/any_cast_idm45507162615824.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="../boost/any_cast_idm45507162615824.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ValueType<span class="special">&gt;</span> <span class="keyword">const</span> <span class="identifier">ValueType</span> <span class="special">*</span> <a class="link" href="../boost/any_cast_idm45507162615824.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ValueType<span class="special">&gt;</span> <span class="identifier">ValueType</span> <span class="special">*</span> <a class="link" href="../boost/any_cast_idm45507162615824.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="../boost/swap_idp6051440.html" title="Function swap"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">,</span> <a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="../boost/any_cast_idp6057536.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="../boost/any_cast_idp6057536.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">T</span> <a class="link" href="../boost/any_cast_idp6057536.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ValueType<span class="special">&gt;</span> <span class="keyword">const</span> <span class="identifier">ValueType</span> <span class="special">*</span> <a class="link" href="../boost/any_cast_idp6057536.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> ValueType<span class="special">&gt;</span> <span class="identifier">ValueType</span> <span class="special">*</span> <a class="link" href="../boost/any_cast_idp6057536.html" title="Function any_cast"><span class="identifier">any_cast</span></a><span class="special">(</span><a class="link" href="../boost/any.html" title="Class any">any</a> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span></pre>
 </div>
 </div>

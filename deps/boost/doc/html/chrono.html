@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;6.&#160;Boost.Chrono 2.0.5</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="atomic/porting.html" title="Porting">
@@ -48,7 +48,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt><span class="section"><a href="chrono.html#chrono.overview">Overview</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="chrono.html#chrono.overview.motivation">Motivation</a></span></dt>
@@ -92,7 +92,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="chrono.overview"></a><a class="link" href="chrono.html#chrono.overview" title="Overview">Overview</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="chrono.html#chrono.overview.motivation">Motivation</a></span></dt>
 <dt><span class="section"><a href="chrono.html#chrono.overview.description">Description</a></span></dt>
 </dl></div>
@@ -105,13 +105,13 @@
       </p></blockquote></div>
 <h4>
 <a name="chrono.overview.h0"></a>
-      <span class="phrase"><a name="chrono.overview.how_to_use_this_documentation"></a></span><a class="link" href="chrono.html#chrono.overview.how_to_use_this_documentation">How
+      <span><a name="chrono.overview.how_to_use_this_documentation"></a></span><a class="link" href="chrono.html#chrono.overview.how_to_use_this_documentation">How
       to Use This Documentation</a>
     </h4>
 <p>
       This documentation makes use of the following naming and formatting conventions.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Code is in <code class="computeroutput"><span class="identifier">fixed</span> <span class="identifier">width</span>
           <span class="identifier">font</span></code> and is syntax-highlighted.
@@ -160,7 +160,7 @@
 </h3></div></div></div>
 <h5>
 <a name="chrono.overview.motivation.h0"></a>
-        <span class="phrase"><a name="chrono.overview.motivation.time"></a></span><a class="link" href="chrono.html#chrono.overview.motivation.time">Time</a>
+        <span><a name="chrono.overview.motivation.time"></a></span><a class="link" href="chrono.html#chrono.overview.motivation.time">Time</a>
       </h5>
 <p>
         We all deal with time every day of our lives. We've intuitively known it
@@ -183,7 +183,7 @@
       </p>
 <h5>
 <a name="chrono.overview.motivation.h1"></a>
-        <span class="phrase"><a name="chrono.overview.motivation.wall_clock_versus_system_and_user_time"></a></span><a class="link" href="chrono.html#chrono.overview.motivation.wall_clock_versus_system_and_user_time">Wall
+        <span><a name="chrono.overview.motivation.wall_clock_versus_system_and_user_time"></a></span><a class="link" href="chrono.html#chrono.overview.motivation.wall_clock_versus_system_and_user_time">Wall
         clock versus system and user time</a>
       </h5>
 <p>
@@ -205,9 +205,9 @@
       </p>
 <h5>
 <a name="chrono.overview.description.h0"></a>
-        <span class="phrase"><a name="chrono.overview.description.standard"></a></span><a class="link" href="chrono.html#chrono.overview.description.standard">Standard</a>
+        <span><a name="chrono.overview.description.standard"></a></span><a class="link" href="chrono.html#chrono.overview.description.standard">Standard</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             A means to represent time durations: managed by the generic <a class="link" href="chrono/reference.html#chrono.reference.cpp0x.duration_hpp.duration" title="Class Template duration&lt;&gt;"><code class="computeroutput"><span class="identifier">duration</span></code></a> class . Examples of
             time durations include days, <a class="link" href="chrono/reference.html#chrono.reference.cpp0x.duration_hpp.duration_typedefs" title="duration typedefs"><code class="computeroutput"><span class="identifier">minutes</span></code></a>, <a class="link" href="chrono/reference.html#chrono.reference.cpp0x.duration_hpp.duration_typedefs" title="duration typedefs"><code class="computeroutput"><span class="identifier">seconds</span></code></a> and <a class="link" href="chrono/reference.html#chrono.reference.cpp0x.duration_hpp.duration_typedefs" title="duration typedefs"><code class="computeroutput"><span class="identifier">nanoseconds</span></code></a>, which can be represented
@@ -229,7 +229,7 @@
 </ul></div>
 <h5>
 <a name="chrono.overview.description.h1"></a>
-        <span class="phrase"><a name="chrono.overview.description.other_clocks"></a></span><a class="link" href="chrono.html#chrono.overview.description.other_clocks">Other
+        <span><a name="chrono.overview.description.other_clocks"></a></span><a class="link" href="chrono.html#chrono.overview.description.other_clocks">Other
         clocks</a>
       </h5>
 <p>
@@ -238,7 +238,7 @@
         time APIs, thereby allowing the extraction of wall clock time, user CPU time,
         system CPU time spent by the process,
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <a class="link" href="chrono/reference.html#chrono.reference.other_clocks.process_cpu_clocks_hpp.process_real_cpu_clock" title="Class process_real_cpu_clock"><code class="computeroutput"><span class="identifier">process_real_cpu_clock</span></code></a>, captures
             wall clock CPU time spent by the current process.
@@ -267,7 +267,7 @@
       </p>
 <h5>
 <a name="chrono.overview.description.h2"></a>
-        <span class="phrase"><a name="chrono.overview.description.i_o"></a></span><a class="link" href="chrono.html#chrono.overview.description.i_o">I/O</a>
+        <span><a name="chrono.overview.description.i_o"></a></span><a class="link" href="chrono.html#chrono.overview.description.i_o">I/O</a>
       </h5>
 <p>
         It provides I/O for <a class="link" href="chrono/reference.html#chrono.reference.cpp0x.duration_hpp.duration" title="Class Template duration&lt;&gt;"><code class="computeroutput"><span class="identifier">duration</span></code></a> and <a class="link" href="chrono/reference.html#chrono.reference.cpp0x.time_point_hpp.time_point" title="Class template time_point&lt;&gt;"><code class="computeroutput"><span class="identifier">time_point</span></code></a>. This I/O makes use of
@@ -295,7 +295,7 @@
       </p>
 <h5>
 <a name="chrono.overview.description.h3"></a>
-        <span class="phrase"><a name="chrono.overview.description.rounding_utilities"></a></span><a class="link" href="chrono.html#chrono.overview.description.rounding_utilities">Rounding
+        <span><a name="chrono.overview.description.rounding_utilities"></a></span><a class="link" href="chrono.html#chrono.overview.description.rounding_utilities">Rounding
         utilities</a>
       </h5>
 <p>
@@ -303,7 +303,7 @@
       </p>
 <h5>
 <a name="chrono.overview.description.h4"></a>
-        <span class="phrase"><a name="chrono.overview.description.caveat_emptor"></a></span><a class="link" href="chrono.html#chrono.overview.description.caveat_emptor">Caveat
+        <span><a name="chrono.overview.description.caveat_emptor"></a></span><a class="link" href="chrono.html#chrono.overview.description.caveat_emptor">Caveat
         Emptor</a>
       </h5>
 <p>
@@ -318,7 +318,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: December 14, 2015 at 09:17:07 GMT</small></p></td>
+<td align="left"><p><small>Last revised: May 05, 2016 at 21:18:23 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

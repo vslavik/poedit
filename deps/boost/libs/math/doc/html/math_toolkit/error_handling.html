@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Error Handling</title>
 <link rel="stylesheet" href="../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Math Toolkit 2.3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Math Toolkit 2.4.0">
 <link rel="up" href="../overview.html" title="Chapter&#160;1.&#160;Overview">
 <link rel="prev" href="result_type.html" title="Calculation of the Type of the Result">
 <link rel="next" href="compilers_overview.html" title="Compilers">
@@ -28,13 +28,13 @@
 </h2></div></div></div>
 <h4>
 <a name="math_toolkit.error_handling.h0"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.quick_reference"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.quick_reference">Quick
+      <span><a name="math_toolkit.error_handling.quick_reference"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.quick_reference">Quick
       Reference</a>
     </h4>
 <p>
       Handling of errors by this library is split into two orthogonal parts:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           What kind of error has been raised?
         </li>
@@ -57,7 +57,7 @@
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Domain Error</span></dt>
 <dd><p>
             Occurs when one or more arguments to a function are out of range.
@@ -117,7 +117,7 @@
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">throw_on_error</span></dt>
 <dd><p>
             Throws the exception most appropriate to the error condition.
@@ -754,14 +754,14 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h1"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.rationale"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rationale">Rationale</a>
+      <span><a name="math_toolkit.error_handling.rationale"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rationale">Rationale</a>
     </h4>
 <p>
       The flexibility of the current implementation should be reasonably obvious:
       the default behaviours were chosen based on feedback during the formal review
       of this library. It was felt that:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Genuine errors should be flagged with exceptions rather than following
           C-compatible behaviour and setting <code class="computeroutput"><span class="special">::</span><span class="identifier">errno</span></code>.
@@ -777,7 +777,7 @@
 </ul></div>
 <h4>
 <a name="math_toolkit.error_handling.h2"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.finding_more_information"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.finding_more_information">Finding
+      <span><a name="math_toolkit.error_handling.finding_more_information"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.finding_more_information">Finding
       More Information</a>
     </h4>
 <p>
@@ -798,7 +798,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h3"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.domain_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.domain_error">Domain
+      <span><a name="math_toolkit.error_handling.domain_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.domain_error">Domain
       Errors</a>
     </h4>
 <p>
@@ -871,7 +871,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h4"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.pole_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.pole_error">Evaluation
+      <span><a name="math_toolkit.error_handling.pole_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.pole_error">Evaluation
       at a pole</a>
     </h4>
 <p>
@@ -911,7 +911,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h5"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.overflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.overflow_error">Numeric
+      <span><a name="math_toolkit.error_handling.overflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.overflow_error">Numeric
       Overflow</a>
     </h4>
 <p>
@@ -936,7 +936,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h6"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.underflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.underflow_error">Numeric
+      <span><a name="math_toolkit.error_handling.underflow_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.underflow_error">Numeric
       Underflow</a>
     </h4>
 <p>
@@ -959,7 +959,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h7"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.denorm_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.denorm_error">Denormalisation
+      <span><a name="math_toolkit.error_handling.denorm_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.denorm_error">Denormalisation
       Errors</a>
     </h4>
 <p>
@@ -982,7 +982,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h8"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.evaluation_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.evaluation_error">Evaluation
+      <span><a name="math_toolkit.error_handling.evaluation_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.evaluation_error">Evaluation
       Errors</a>
     </h4>
 <p>
@@ -1019,7 +1019,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h9"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.indeterminate_result_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.indeterminate_result_error">Indeterminate
+      <span><a name="math_toolkit.error_handling.indeterminate_result_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.indeterminate_result_error">Indeterminate
       Result Errors</a>
     </h4>
 <p>
@@ -1048,7 +1048,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h10"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.rounding_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rounding_error">Rounding
+      <span><a name="math_toolkit.error_handling.rounding_error"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.rounding_error">Rounding
       Errors</a>
     </h4>
 <p>
@@ -1088,7 +1088,7 @@
     </p>
 <h4>
 <a name="math_toolkit.error_handling.h11"></a>
-      <span class="phrase"><a name="math_toolkit.error_handling.checked_narrowing_cast"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.checked_narrowing_cast">Errors
+      <span><a name="math_toolkit.error_handling.checked_narrowing_cast"></a></span><a class="link" href="error_handling.html#math_toolkit.error_handling.checked_narrowing_cast">Errors
       from typecasts</a>
     </h4>
 <p>
@@ -1113,8 +1113,8 @@
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
       Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
-      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
+      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

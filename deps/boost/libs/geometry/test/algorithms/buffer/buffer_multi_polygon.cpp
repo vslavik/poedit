@@ -464,14 +464,8 @@ void test_all()
     test_one<multi_polygon_type, polygon_type>("rt_u6", rt_u6, join_round, end_flat, 115.4461, 1.0);
 
     test_one<multi_polygon_type, polygon_type>("rt_u7", rt_u7, join_miter, end_flat, 42.6421, 1.0);
-    if (BOOST_GEOMETRY_CONDITION(Clockwise))
-    {
-        // This configuration is not yet stable. By the changed sorting of turns, they now fail
-        // (the change was irrelevant to this, so they succeeded earlier by luck).
-        // TODO: get_occupation/left_turns in combination with a u/u turn
-        test_one<multi_polygon_type, polygon_type>("rt_u7", rt_u7, join_round, end_flat, 35.6233, 1.0);
-        test_one<multi_polygon_type, polygon_type>("rt_u7_rough", rt_u7, join_round_rough, end_flat, 35.1675, 1.0);
-    }
+    test_one<multi_polygon_type, polygon_type>("rt_u7", rt_u7, join_round, end_flat, 35.6233, 1.0);
+    test_one<multi_polygon_type, polygon_type>("rt_u7_rough", rt_u7, join_round_rough, end_flat, 35.1675, 1.0);
 
     test_one<multi_polygon_type, polygon_type>("rt_u8", rt_u8, join_miter, end_flat, 70.9142, 1.0);
     test_one<multi_polygon_type, polygon_type>("rt_u9", rt_u9, join_miter, end_flat, 59.3063, 1.0);

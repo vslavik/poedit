@@ -57,11 +57,16 @@ inline void load_map_collection(Archive & ar, Container &s)
     while(count-- > 0){
         typedef typename Container::value_type type;
         detail::stack_construct<Archive, type> t(ar, item_version);
-        // borland fails silently w/o full namespace
         ar >> boost::serialization::make_nvp("item", t.reference());
-        typename Container::iterator result = s.insert(hint, t.reference());
+        typename Container::iterator result =
+            #ifdef BOOST_NO_CXX11_HDR_UNORDERED_MAP
+                s.insert(hint, t.reference());
+            #else
+                s.emplace_hint(hint, t.reference());
+            #endif
         ar.reset_object_address(& (result->second), & t.reference().second);
         hint = result;
+        ++hint;
     }
 }
 

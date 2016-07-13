@@ -39,7 +39,7 @@ t.rm('zlib')
 common_stuff = '''
 source_file('test.cpp', 'test.cpp')
 source_file('main.cpp', 'int main() {}')
-source_file('zlib.h.cpp', '#include <zlib.h>')
+source_file('zlib.h.cpp', '#include <zlib.h>\\n')
 action('-c -x c++ $main.cpp -o $main.o')
 '''
 t.write('test.cpp', 'test.cpp')

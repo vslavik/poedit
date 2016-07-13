@@ -18,6 +18,8 @@
 #include <cwchar>
 #include <boost/config.hpp>
 
+#include <boost/archive/detail/utf8_codecvt_facet.hpp>
+
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
     using ::size_t; 
@@ -40,17 +42,6 @@ namespace std{
 #endif
 
 #include "test_tools.hpp"
-
-#include <boost/archive/add_facet.hpp>
-
-#ifndef BOOST_NO_CXX11_HDR_CODECVT
-    #include <codecvt>
-    namespace boost { namespace archive { namespace detail {
-        typedef std::codecvt_utf8<wchar_t> utf8_codecvt_facet;
-    } } }
-#else
-    #include <boost/archive/detail/utf8_codecvt_facet.hpp>
-#endif
 
 template<std::size_t s>
 struct test_data
@@ -125,8 +116,8 @@ wchar_t test_data<4>::wchar_encoding[] = {
 
 int
 test_main(int /* argc */, char * /* argv */[]) {
-    std::locale * utf8_locale
-        = boost::archive::add_facet(
+    std::locale utf8_locale
+        = std::locale(
             std::locale::classic(),
             new boost::archive::detail::utf8_codecvt_facet
         );
@@ -151,7 +142,7 @@ test_main(int /* argc */, char * /* argv */[]) {
     std::vector<wchar_t> from_file;
     {
         std::wifstream ifs;
-        ifs.imbue(*utf8_locale);
+        ifs.imbue(utf8_locale);
         ifs.open("test.dat");
 
         std::wint_t item = 0;
@@ -173,7 +164,7 @@ test_main(int /* argc */, char * /* argv */[]) {
     // Send the UCS4_data back out, converting to UTF-8
     {
         std::wofstream ofs;
-        ofs.imbue(*utf8_locale);
+        ofs.imbue(utf8_locale);
         ofs.open("test2.dat");
         std::copy(
             from_file.begin(),
@@ -234,7 +225,7 @@ test_main(int /* argc */, char * /* argv */[]) {
     std::size_t l = std::wcslen(test3_data);
     {
         std::wofstream ofs;
-        ofs.imbue(*utf8_locale);
+        ofs.imbue(utf8_locale);
         ofs.open("test3.dat");
         std::copy(
             test3_data,
@@ -246,7 +237,7 @@ test_main(int /* argc */, char * /* argv */[]) {
     // Make sure that both files are the same
     {
         std::wifstream ifs;
-        ifs.imbue(*utf8_locale);
+        ifs.imbue(utf8_locale);
         ifs.open("test3.dat");
         ifs >> std::noskipws;
         BOOST_CHECK(
@@ -257,7 +248,5 @@ test_main(int /* argc */, char * /* argv */[]) {
             )
         );
     }
-
-    delete utf8_locale;
     return EXIT_SUCCESS;
 }

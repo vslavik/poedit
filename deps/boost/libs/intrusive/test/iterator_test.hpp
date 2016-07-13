@@ -127,6 +127,7 @@ void test_iterator_compatible(C &c)
       const_iterator ci;
       iterator i(c.begin());
       ci = i;
+      (void)ci;
       BOOST_ASSERT(ci == i);
       BOOST_ASSERT(*ci == *i);
       const_iterator ci2(i);
@@ -204,11 +205,9 @@ void test_iterator_forward_functions(C const &c, I const b, I const e)
       for(I it2 = b; i != c.size(); ++it, ++i){
          BOOST_TEST(it == it2++);
          I ittmp(it);
-         BOOST_TEST(&++ittmp == &ittmp);
+         I *iaddr = &ittmp;
+         BOOST_TEST(&(++ittmp) == iaddr);
          BOOST_TEST(ittmp == it2);
-         if(it2 != e){
-            BOOST_TEST(*ittmp == *it2);
-         }
       }
       BOOST_TEST(i == c.size());
       BOOST_TEST(it == e);
@@ -235,12 +234,10 @@ void test_iterator_bidirectional_functions(C const &c, I const b, I const e)
       for(I it2 = e; i != c.size(); --it, ++i){
          BOOST_TEST(it == it2--);
          I ittmp(it);
-         BOOST_TEST(&--ittmp == &ittmp);
+         I*iaddr = &ittmp;
+         BOOST_TEST(&(--ittmp) == iaddr);
          BOOST_TEST(ittmp == it2);
-         BOOST_TEST(++ittmp == it);
-         if(it != e){
-            BOOST_TEST(*ittmp == *it);
-         }
+         BOOST_TEST((++ittmp) == it);
       }
       BOOST_TEST(i == c.size());
       BOOST_TEST(it == b);

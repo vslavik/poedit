@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_VMD_ASSERT_IS_ARRAY_D</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="header/boost/vmd/assert_is_array_hpp.html" title="Header &lt;boost/vmd/assert_is_array.hpp&gt;">
 <link rel="prev" href="BOOST_VMD_ASSERT_IS_ARRAY.html" title="Macro BOOST_VMD_ASSERT_IS_ARRAY">
@@ -33,21 +33,14 @@
 
 </span>BOOST_VMD_ASSERT_IS_ARRAY_D(d, sequence)</pre></div>
 <div class="refsect1">
-<a name="idm46601772333904"></a><h2>Description</h2>
+<a name="idp11513024"></a><h2>Description</h2>
 <p>The macro checks that the sequence is a Boost PP array. If it is not a Boost PP array, it forces a compiler error.</p>
 <p>The macro normally checks for a Boost PP array only in debug mode. However an end-user can force the macro to check or not check by defining the macro BOOST_VMD_ASSERT_DATA to 1 or 0 respectively.</p>
 <p>d = The next available BOOST_PP_WHILE iteration. sequence = a possible Boost PP sequence.</p>
-<p>returns = Normally the macro returns nothing.        If the sequence is a Boost PP array, nothing is 
-       output.
-
-       For VC++, because there is no sure way of forcing  
-       a compiler error from within a macro without producing
-       output, if the sequence is not a Boost PP array the 
-       macro forces a compiler error by outputting invalid C++.
-
-       For all other compilers a compiler error is forced 
-       without producing output if the sequence is not a 
-       Boost PP array. </p>
+<p>returns = Normally the macro returns nothing.</p>
+<p>If the sequence is a Boost PP array, nothing is output.</p>
+<p>For VC++, because there is no sure way of forcing a compiler error from within a macro without producing output, if the sequence is not a Boost PP array the macro forces a compiler error by outputting invalid C++.</p>
+<p>For all other compilers a compiler error is forced without producing output if the sequence is not a Boost PP array. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

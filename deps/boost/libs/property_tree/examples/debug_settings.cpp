@@ -83,7 +83,7 @@ int main()
     try
     {
         debug_settings ds;
-        ds.load("debug_settings_xml");
+        ds.load("debug_settings.xml");
         ds.save("debug_settings_out.xml");
         std::cout << "Success\n";
     }

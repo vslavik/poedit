@@ -15,7 +15,7 @@
 
 #ifndef BOOST_LOG_WITHOUT_SETTINGS_PARSERS
 
-#include <boost/log/detail/config.hpp>
+#include <boost/log/detail/setup_config.hpp>
 #include <boost/log/utility/setup/from_settings.hpp>
 #include <boost/log/utility/setup/settings_parser.hpp>
 #include <boost/log/detail/header.hpp>

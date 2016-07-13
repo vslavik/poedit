@@ -19,6 +19,9 @@
 #include <memory>
 #include <cstddef>
 
+//test
+#include <boost/core/lightweight_test.hpp>
+
 #include "allocator_argument_tester.hpp"
 
 template<unsigned int Type>
@@ -28,17 +31,19 @@ struct tagged_integer
 struct mark_on_destructor
 {
    mark_on_destructor()
-      : destroyed(false)
-   {}
+   {
+      destroyed = false;
+   }
 
    ~mark_on_destructor()
    {
       destroyed = true;
    }
 
-   bool destroyed;
+   static bool destroyed;
 };
 
+bool mark_on_destructor::destroyed = false;
 
 #include <boost/container/scoped_allocator.hpp>
 #include <boost/static_assert.hpp>
@@ -306,23 +311,17 @@ int main()
       Scoped1Inner s1i_b(s1i);
       Scoped2Inner s2i_b(s2i);
 
-      if(!(s0i == s0i_b) ||
-         !(s1i == s1i_b) ||
-         !(s2i == s2i_b)
-         ){
-         return 1;
-      }
+      BOOST_TEST(s0i == s0i_b);
+      BOOST_TEST(s1i == s1i_b);
+      BOOST_TEST(s2i == s2i_b);
 
       s0i_b = s0i;
       s1i_b = s1i;
       s2i_b = s2i;
 
-      if(!(s0i == s0i_b) ||
-         !(s1i == s1i_b) ||
-         !(s2i == s2i_b)
-         ){
-         return 1;
-      }
+      BOOST_TEST(s0i == s0i_b);
+      BOOST_TEST(s1i == s1i_b);
+      BOOST_TEST(s2i == s2i_b);
    }
 
    //Copy/move constructor/assignment
@@ -335,23 +334,17 @@ int main()
       Scoped1Inner s1i_b(::boost::move(s1i));
       Scoped2Inner s2i_b(::boost::move(s2i));
 
-      if(!(s0i_b.outer_allocator().m_move_contructed) ||
-         !(s1i_b.outer_allocator().m_move_contructed) ||
-         !(s2i_b.outer_allocator().m_move_contructed)
-         ){
-         return 1;
-      }
+      BOOST_TEST(s0i_b.outer_allocator().m_move_contructed);
+      BOOST_TEST(s1i_b.outer_allocator().m_move_contructed);
+      BOOST_TEST(s2i_b.outer_allocator().m_move_contructed);
 
       s0i_b = ::boost::move(s0i);
       s1i_b = ::boost::move(s1i);
       s2i_b = ::boost::move(s2i);
 
-      if(!(s0i_b.outer_allocator().m_move_assigned) ||
-         !(s1i_b.outer_allocator().m_move_assigned) ||
-         !(s2i_b.outer_allocator().m_move_assigned)
-         ){
-         return 1;
-      }
+      BOOST_TEST(s0i_b.outer_allocator().m_move_assigned);
+      BOOST_TEST(s1i_b.outer_allocator().m_move_assigned);
+      BOOST_TEST(s2i_b.outer_allocator().m_move_assigned);
    }
 
    //inner_allocator()
@@ -381,35 +374,29 @@ int main()
    {
       const Scoped0Inner const_s0i;
       const Rebound9Scoped0Inner const_rs0i;
-      if(!(const_s0i == const_s0i) ||
-         !(const_rs0i == const_s0i)){
-         return 1;
-      }
-      if(  const_s0i != const_s0i ||
-           const_s0i != const_rs0i ){
-         return 1;
-      }
+
+      BOOST_TEST(const_s0i == const_s0i);
+      BOOST_TEST(const_rs0i == const_s0i);
+      BOOST_TEST(const_s0i == const_s0i);
+      BOOST_TEST(const_s0i == const_rs0i);
 
       const Scoped1Inner const_s1i;
       const Rebound9Scoped1Inner const_rs1i;
-      if(!(const_s1i == const_s1i) ||
-         !(const_rs1i == const_s1i)){
-         return 1;
-      }
-      if(  const_s1i != const_s1i ||
-           const_s1i != const_rs1i ){
-         return 1;
-      }
+
+      BOOST_TEST(const_s1i == const_s1i);
+      BOOST_TEST(const_rs1i == const_s1i);
+
+      BOOST_TEST(const_s1i == const_s1i);
+      BOOST_TEST(const_s1i == const_rs1i);
+
       const Scoped2Inner const_s2i;
       const Rebound9Scoped2Inner const_rs2i;
-      if(!(const_s2i == const_s2i) ||
-         !(const_s2i == const_rs2i) ){
-         return 1;
-      }
-      if(  const_s2i != const_s2i ||
-           const_s2i != const_rs2i ){
-         return 1;
-      }
+
+      BOOST_TEST(const_s2i == const_s2i);
+      BOOST_TEST(const_s2i == const_rs2i);
+
+      BOOST_TEST(const_s2i == const_s2i);
+      BOOST_TEST(const_s2i == const_rs2i);
    }
 
    //outer_allocator()
@@ -444,25 +431,12 @@ int main()
       const InnerAlloc1 const_ia1;
       const InnerAlloc2 const_ia2;
 
-      if(const_s0i.max_size() != const_oa.max_size()){
-         return 1;
-      }
+      BOOST_TEST(const_s0i.max_size() == const_oa.max_size());
+      BOOST_TEST(const_s1i.max_size() == const_oa.max_size());
 
-      if(const_s1i.max_size() != const_oa.max_size()){
-         return 1;
-      }
-
-      if(const_s2i.max_size() != const_oa.max_size()){
-         return 1;
-      }
-
-      if(const_s1i.inner_allocator().max_size() != const_ia1.max_size()){
-         return 1;
-      }
-
-      if(const_s2i.inner_allocator().inner_allocator().max_size() != const_ia2.max_size()){
-         return 1;
-      }
+      BOOST_TEST(const_s2i.max_size() == const_oa.max_size());
+      BOOST_TEST(const_s1i.inner_allocator().max_size() == const_ia1.max_size());
+      BOOST_TEST(const_s2i.inner_allocator().inner_allocator().max_size() == const_ia2.max_size());
    }
    //Copy and move operations
    {
@@ -542,26 +516,20 @@ int main()
          Scoped0Inner s0i;
          mark_on_destructor mod;
          s0i.destroy(&mod);
-         if(!mod.destroyed){
-            return 1;
-         }
+         BOOST_TEST(mark_on_destructor::destroyed);
       }
 
       {
          Scoped1Inner s1i;
          mark_on_destructor mod;
          s1i.destroy(&mod);
-         if(!mod.destroyed){
-            return 1;
-         }
+         BOOST_TEST(mark_on_destructor::destroyed);
       }
       {
          Scoped2Inner s2i;
          mark_on_destructor mod;
          s2i.destroy(&mod);
-         if(!mod.destroyed){
-            return 1;
-         }
+         BOOST_TEST(mark_on_destructor::destroyed);
       }
    }
 
@@ -580,11 +548,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 0 );
             dummy.~MarkType();
          }
          {
@@ -592,11 +557,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy);
-            if(dummy.construction_type != ConstructibleSuffix ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -604,11 +566,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy);
-            if(dummy.construction_type != ConstructiblePrefix ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
 
@@ -618,11 +577,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy, 1);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 1){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 1);
             dummy.~MarkType();
          }
          {
@@ -630,11 +586,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy, 2);
-            if(dummy.construction_type != ConstructibleSuffix ||
-               dummy.value != 2){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.value == 2);
             dummy.~MarkType();
          }
          {
@@ -642,11 +595,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s0i.construct(&dummy, 3);
-            if(dummy.construction_type != ConstructiblePrefix ||
-               dummy.value != 3){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.value == 3);
             dummy.~MarkType();
          }
       }
@@ -663,11 +613,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -675,11 +622,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy);
-            if(dummy.construction_type != ConstructibleSuffix ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -687,11 +631,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy);
-            if(dummy.construction_type != ConstructiblePrefix ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
 
@@ -701,11 +642,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy, 1);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 1){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 1);
             dummy.~MarkType();
          }
          {
@@ -713,11 +651,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy, 2);
-            if(dummy.construction_type != ConstructibleSuffix ||
-               dummy.value != 2){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.value == 2);
             dummy.~MarkType();
          }
          {
@@ -725,11 +660,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             s1i.construct(&dummy, 3);
-            if(dummy.construction_type != ConstructiblePrefix ||
-               dummy.value != 3){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.value == 3);
             dummy.~MarkType();
          }
       }
@@ -768,11 +700,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -780,11 +709,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy);
-            if(dummy.construction_type != ConstructibleSuffix ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -792,11 +718,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy);
-            if(dummy.construction_type != ConstructiblePrefix ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
 
@@ -806,11 +729,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy, 1);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 1){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 1);
             dummy.~MarkType();
          }
          {
@@ -818,11 +738,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy, 2);
-            if(dummy.construction_type != ConstructibleSuffix ||
-               dummy.value != 2){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.value == 2);
             dummy.~MarkType();
          }
          {
@@ -830,11 +747,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro0i.construct(&dummy, 3);
-            if(dummy.construction_type != ConstructiblePrefix ||
-               dummy.value != 3){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.value == 3);
             dummy.~MarkType();
          }
       }
@@ -875,11 +789,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -887,11 +798,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
          {
@@ -899,11 +807,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 0){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 0);
             dummy.~MarkType();
          }
 
@@ -913,11 +818,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy, 1);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 1){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 1);
             dummy.~MarkType();
          }
          {
@@ -925,11 +827,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy, 2);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 2){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 2);
             dummy.~MarkType();
          }
          {
@@ -937,11 +836,8 @@ int main()
             MarkType dummy;
             dummy.~MarkType();
             ssro1i.construct(&dummy, 3);
-            if(dummy.construction_type != NotUsesAllocator ||
-               dummy.value != 3){
-               dummy.~MarkType();
-               return 1;
-            }
+            BOOST_TEST(dummy.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.value == 3);
             dummy.~MarkType();
          }
       }
@@ -968,13 +864,10 @@ int main()
             MarkTypePair dummy;
             dummy.~MarkTypePair();
             s0i.construct(&dummy);
-            if(dummy.first.construction_type  != NotUsesAllocator ||
-               dummy.second.construction_type != NotUsesAllocator ||
-               dummy.first.value  != 0 ||
-               dummy.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
             dummy.~MarkTypePair();
          }
          {
@@ -983,13 +876,10 @@ int main()
             MarkTypePair dummy;
             dummy.~MarkTypePair();
             s0i.construct(&dummy);
-            if(dummy.first.construction_type  != ConstructibleSuffix ||
-               dummy.second.construction_type != ConstructibleSuffix ||
-               dummy.first.value  != 0 ||
-               dummy.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
             dummy.~MarkTypePair();
          }
          {
@@ -998,13 +888,10 @@ int main()
             MarkTypePair dummy;
             dummy.~MarkTypePair();
             s0i.construct(&dummy);
-            if(dummy.first.construction_type  != ConstructiblePrefix ||
-               dummy.second.construction_type != ConstructiblePrefix ||
-               dummy.first.value  != 0  ||
-               dummy.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
             dummy.~MarkTypePair();
          }
 
@@ -1015,13 +902,10 @@ int main()
             MarkTypePair dummy;
             dummy.~MarkTypePair();
             s0i.construct(&dummy, 1, 1);
-            if(dummy.first.construction_type  != NotUsesAllocator ||
-               dummy.second.construction_type != NotUsesAllocator ||
-               dummy.first.value  != 1 ||
-               dummy.second.value != 1 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
             dummy.~MarkTypePair();
          }
          {
@@ -1030,13 +914,10 @@ int main()
             MarkTypePair dummy;
             dummy.~MarkTypePair();
             s0i.construct(&dummy, 1, 1);
-            if(dummy.first.construction_type  != ConstructibleSuffix ||
-               dummy.second.construction_type != ConstructibleSuffix ||
-               dummy.first.value  != 1 ||
-               dummy.second.value != 1 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
             dummy.~MarkTypePair();
          }
          {
@@ -1045,13 +926,10 @@ int main()
             MarkTypePair dummy;
             dummy.~MarkTypePair();
             s0i.construct(&dummy, 2, 2);
-            if(dummy.first.construction_type  != ConstructiblePrefix ||
-               dummy.second.construction_type != ConstructiblePrefix ||
-               dummy.first.value  != 2 ||
-               dummy.second.value != 2 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
             dummy.~MarkTypePair();
          }
          //Check construction with pair copy construction
@@ -1061,13 +939,10 @@ int main()
             MarkTypePair dummy, dummy2;
             dummy.~MarkTypePair();
             s0i.construct(&dummy, dummy2);
-            if(dummy.first.construction_type  != NotUsesAllocator ||
-               dummy.second.construction_type != NotUsesAllocator ||
-               dummy.first.value  != 0 ||
-               dummy.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
             dummy.~MarkTypePair();
          }
          {
@@ -1076,13 +951,10 @@ int main()
             MarkTypePair dummy, dummy2(1, 1);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, dummy2);
-            if(dummy.first.construction_type  != ConstructibleSuffix ||
-               dummy.second.construction_type != ConstructibleSuffix ||
-               dummy.first.value  != 1 ||
-               dummy.second.value != 1 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
             dummy.~MarkTypePair();
          }
          {
@@ -1091,13 +963,10 @@ int main()
             MarkTypePair dummy, dummy2(2, 2);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, dummy2);
-            if(dummy.first.construction_type  != ConstructiblePrefix ||
-               dummy.second.construction_type != ConstructiblePrefix ||
-               dummy.first.value  != 2 ||
-               dummy.second.value != 2 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
             dummy.~MarkTypePair();
          }
          //Check construction with pair move construction
@@ -1108,17 +977,14 @@ int main()
             dummy2.first.construction_type = dummy2.second.construction_type = ConstructibleSuffix;
             dummy.~MarkTypePair();
             s0i.construct(&dummy, ::boost::move(dummy2));
-            if(dummy.first.construction_type  != NotUsesAllocator ||
-               dummy.second.construction_type != NotUsesAllocator ||
-               dummy.first.value  != 3 ||
-               dummy.second.value != 3 ||
-               dummy2.first.construction_type  != NotUsesAllocator ||
-               dummy2.second.construction_type != NotUsesAllocator ||
-               dummy2.first.value  != 0 ||
-               dummy2.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 3);
+            BOOST_TEST(dummy.second.value == 3);
+            BOOST_TEST(dummy2.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy2.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy2.first.value  == 0);
+            BOOST_TEST(dummy2.second.value == 0);
             dummy.~MarkTypePair();
          }
          {
@@ -1127,17 +993,14 @@ int main()
             MarkTypePair dummy, dummy2(1, 1);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, ::boost::move(dummy2));
-            if(dummy.first.construction_type  != ConstructibleSuffix ||
-               dummy.second.construction_type != ConstructibleSuffix ||
-               dummy.first.value  != 1 ||
-               dummy.second.value != 1 ||
-               dummy2.first.construction_type  != ConstructibleSuffix ||
-               dummy2.second.construction_type != ConstructibleSuffix ||
-               dummy2.first.value  != 0 ||
-               dummy2.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
+            BOOST_TEST(dummy2.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy2.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy2.first.value  == 0);
+            BOOST_TEST(dummy2.second.value == 0);
             dummy.~MarkTypePair();
          }
          {
@@ -1146,17 +1009,14 @@ int main()
             MarkTypePair dummy, dummy2(2, 2);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, ::boost::move(dummy2));
-            if(dummy.first.construction_type  != ConstructiblePrefix ||
-               dummy.second.construction_type != ConstructiblePrefix ||
-               dummy.first.value  != 2 ||
-               dummy.second.value != 2 ||
-               dummy2.first.construction_type  != ConstructiblePrefix ||
-               dummy2.second.construction_type != ConstructiblePrefix ||
-               dummy2.first.value  != 0 ||
-               dummy2.second.value != 0 ){
-               dummy2.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
+            BOOST_TEST(dummy2.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy2.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy2.first.value  == 0);
+            BOOST_TEST(dummy2.second.value == 0);
             dummy.~MarkTypePair();
          }
          //Check construction with related pair copy construction
@@ -1167,13 +1027,10 @@ int main()
             pair<int, int> dummy2;
             dummy.~MarkTypePair();
             s0i.construct(&dummy, dummy2);
-            if(dummy.first.construction_type  != NotUsesAllocator ||
-               dummy.second.construction_type != NotUsesAllocator ||
-               dummy.first.value  != 0 ||
-               dummy.second.value != 0 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 0);
+            BOOST_TEST(dummy.second.value == 0);
             dummy.~MarkTypePair();
          }
          {
@@ -1183,13 +1040,10 @@ int main()
             pair<int, int> dummy2(1, 1);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, dummy2);
-            if(dummy.first.construction_type  != ConstructibleSuffix ||
-               dummy.second.construction_type != ConstructibleSuffix ||
-               dummy.first.value  != 1 ||
-               dummy.second.value != 1 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
             dummy.~MarkTypePair();
          }
          {
@@ -1199,13 +1053,10 @@ int main()
             pair<int, int> dummy2(2, 2);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, dummy2);
-            if(dummy.first.construction_type  != ConstructiblePrefix ||
-               dummy.second.construction_type != ConstructiblePrefix ||
-               dummy.first.value  != 2 ||
-               dummy.second.value != 2 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
             dummy.~MarkTypePair();
          }
          //Check construction with related pair move construction
@@ -1216,13 +1067,10 @@ int main()
             pair<int, int> dummy2(3, 3);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, ::boost::move(dummy2));
-            if(dummy.first.construction_type  != NotUsesAllocator ||
-               dummy.second.construction_type != NotUsesAllocator ||
-               dummy.first.value  != 3 ||
-               dummy.second.value != 3 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == NotUsesAllocator);
+            BOOST_TEST(dummy.second.construction_type == NotUsesAllocator);
+            BOOST_TEST(dummy.first.value  == 3);
+            BOOST_TEST(dummy.second.value == 3);
             dummy.~MarkTypePair();
          }
          {
@@ -1232,13 +1080,10 @@ int main()
             pair<int, int> dummy2(1, 1);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, ::boost::move(dummy2));
-            if(dummy.first.construction_type  != ConstructibleSuffix ||
-               dummy.second.construction_type != ConstructibleSuffix ||
-               dummy.first.value  != 1 ||
-               dummy.second.value != 1 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructibleSuffix);
+            BOOST_TEST(dummy.second.construction_type == ConstructibleSuffix);
+            BOOST_TEST(dummy.first.value  == 1);
+            BOOST_TEST(dummy.second.value == 1);
             dummy.~MarkTypePair();
          }
          {
@@ -1248,18 +1093,15 @@ int main()
             pair<int, int> dummy2(2, 2);
             dummy.~MarkTypePair();
             s0i.construct(&dummy, ::boost::move(dummy2));
-            if(dummy.first.construction_type  != ConstructiblePrefix ||
-               dummy.second.construction_type != ConstructiblePrefix ||
-               dummy.first.value  != 2 ||
-               dummy.second.value != 2 ){
-               dummy.~MarkTypePair();
-               return 1;
-            }
+            BOOST_TEST(dummy.first.construction_type  == ConstructiblePrefix);
+            BOOST_TEST(dummy.second.construction_type == ConstructiblePrefix);
+            BOOST_TEST(dummy.first.value  == 2);
+            BOOST_TEST(dummy.second.value == 2);
             dummy.~MarkTypePair();
          }
       }
    }
 
-   return 0;
+   return ::boost::report_errors();
 }
 #include <boost/container/detail/config_end.hpp>

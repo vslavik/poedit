@@ -16,10 +16,10 @@
 #ifndef BOOST_LOG_STATELESS_ALLOCATOR_HPP_INCLUDED_
 #define BOOST_LOG_STATELESS_ALLOCATOR_HPP_INCLUDED_
 
+#include <boost/log/detail/config.hpp>
 #include <cstddef>
 #include <cstdlib>
 #include <memory>
-#include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE

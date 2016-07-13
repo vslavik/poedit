@@ -48,90 +48,95 @@ main()
     using boost::spirit::x3::char_;
     using boost::spirit::x3::eps;
     namespace fusion = boost::fusion;
+
     { // parsing sequence directly into fusion map
-	auto const key1 = lit("key1") >> attr(key1_attr());
-	auto const kv1 = key1 >> lit("=") >> +char_;
 
-	{
-	    auto attr_ =  fusion::make_map<key1_attr>(std::string());
-	    BOOST_TEST(test_attr("key1=ABC", kv1, attr_));
-	    BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
-	}
-	{
-	    AdaptedStruct attr_;
-	    BOOST_TEST(test_attr("key1=ABC", kv1, attr_));
-	    BOOST_TEST(attr_.key1 == "ABC");
-	    BOOST_TEST(attr_.key2 == "");
-	}
+        auto const key1 = lit("key1") >> attr(key1_attr());
+        auto const kv1 = key1 >> lit("=") >> +char_;
+
+        {
+           auto attr_ =  fusion::make_map<key1_attr>(std::string());
+           BOOST_TEST(test_attr("key1=ABC", kv1, attr_));
+           BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
+        }
+        {
+           AdaptedStruct attr_;
+           BOOST_TEST(test_attr("key1=ABC", kv1, attr_));
+           BOOST_TEST(attr_.key1 == "ABC");
+           BOOST_TEST(attr_.key2 == "");
+        }
+        }
+        {   // case when parser handling fusion assoc sequence
+            // is on one side of another sequence
+            auto const key1 = lit("key1") >> attr(key1_attr());
+            auto const kv1 = key1 >> lit("=") >> +~char_(';');
+
+            AdaptedStruct attr_;
+            BOOST_TEST(test_attr("key1=ABC", eps >>  (kv1 % ';') , attr_));
+            BOOST_TEST(attr_.key1 == "ABC");
+            BOOST_TEST(attr_.key2 == "");
+        }
+        { // parsing repeated sequence directly into fusion map (overwrite)
+          auto const key1 = lit("key1") >> attr(key1_attr());
+          auto const kv1 = key1 >> lit("=") >> +~char_(';');
+
+        {
+           auto attr_ =  fusion::make_map<key1_attr>(std::string());
+           BOOST_TEST(test_attr("key1=ABC;key1=XYZ", kv1 % ';', attr_));
+           BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "XYZ");
+        }
+        {
+           AdaptedStruct attr_;
+           BOOST_TEST(test_attr("key1=ABC;key1=XYZ", kv1 % ';', attr_));
+           BOOST_TEST(attr_.key1 == "XYZ");
+        }
     }
-    { // case when parser handling fusion assoc sequence
-	// is on one side of another sequence
-	auto const key1 = lit("key1") >> attr(key1_attr());
-	auto const kv1 = key1 >> lit("=") >> +~char_(';');
 
-	AdaptedStruct attr_;
-	BOOST_TEST(test_attr("key1=ABC", eps >>  (kv1 % ';') , attr_));
-	BOOST_TEST(attr_.key1 == "ABC");
-	BOOST_TEST(attr_.key2 == "");
-    }
-    { // parsing repeated sequence directly into fusion map (overwrite)
-    	auto const key1 = lit("key1") >> attr(key1_attr());
-    	auto const kv1 = key1 >> lit("=") >> +~char_(';');
+    {   // parsing repeated sequence directly into fusion map (append)
 
-	{
-	    auto attr_ =  fusion::make_map<key1_attr>(std::string());
-	    BOOST_TEST(test_attr("key1=ABC;key1=XYZ", kv1 % ';', attr_));
-	    BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "XYZ");
-	}
-	{
-	    AdaptedStruct attr_;
-	    BOOST_TEST(test_attr("key1=ABC;key1=XYZ", kv1 % ';', attr_));
-	    BOOST_TEST(attr_.key1 == "XYZ");
-	}
-    }
+        /* NOT IMPLEMENTED
+        auto const key1 = lit("key1") >> attr(key1_attr());
+        auto const kv1 = key1 >> lit("=") >> +char_;
+        auto attr_ =  fusion::make_map<key1_attr>(std::vector<std::string>());
 
-    { // parsing repeated sequence directly into fusion map (append)
-	/* NOT IMPLEMENTED
-	auto const key1 = lit("key1") >> attr(key1_attr());
-	auto const kv1 = key1 >> lit("=") >> +char_;
-	auto attr_ =  fusion::make_map<key1_attr>(std::vector<std::string>());
-
-	BOOST_TEST(test_attr("key1=ABC;key1=XYZ", kv1 % ";", attr_));
-	BOOST_TEST(fusion::at_key<key1_attr>(attr_) == {"ABC","XYZ"});
-	*/
+        BOOST_TEST(test_attr("key1=ABC;key1=XYZ", kv1 % ";", attr_));
+        BOOST_TEST(fusion::at_key<key1_attr>(attr_) == {"ABC","XYZ"});
+        */
     }
 
     { // alternative over key-value pairs
-	auto const key1 = lit("key1") >> attr(key1_attr());
-	auto const key2 = lit("key2") >> attr(key2_attr());
-	auto const kv1 = key1 >> lit("=") >> +~char_(';');
-	auto const kv2 = key2 >> lit("=") >> +~char_(';');
 
-	auto attr_ =  fusion::make_map<key1_attr, key2_attr>(std::string(),std::string());
-	BOOST_TEST(test_attr("key2=XYZ;key1=ABC", (kv1|kv2) % ';', attr_));
-	BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
-	BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
+        auto const key1 = lit("key1") >> attr(key1_attr());
+        auto const key2 = lit("key2") >> attr(key2_attr());
+        auto const kv1 = key1 >> lit("=") >> +~char_(';');
+        auto const kv2 = key2 >> lit("=") >> +~char_(';');
+
+        auto attr_ =  fusion::make_map<key1_attr, key2_attr>(std::string(),std::string());
+        BOOST_TEST(test_attr("key2=XYZ;key1=ABC", (kv1|kv2) % ';', attr_));
+        BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
+        BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
     }
 
     { // parsing sequence where key is a variant
-	namespace x3 = boost::spirit::x3;
-	auto  key1 = lit("key1") >> attr(key1_attr());
-	auto  key2 = lit("key2") >> attr(key2_attr());
-	auto  keys = key1 | key2;
-	auto pair = keys >> lit("=") >> +~char_(';');
 
-	{
-	    auto attr_ =  fusion::make_map<key1_attr,key2_attr>(std::string(),std::string());
-	    BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ';', attr_));
-	    BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
-	    BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
-	}
-	{
-	    AdaptedStruct attr_;
-	    BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ';', attr_));
-	    BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
-	    BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
-	}
+        namespace x3 = boost::spirit::x3;
+        auto  key1 = lit("key1") >> attr(key1_attr());
+        auto  key2 = lit("key2") >> attr(key2_attr());
+        auto  keys = key1 | key2;
+        auto pair = keys >> lit("=") >> +~char_(';');
+
+        {
+            auto attr_ =  fusion::make_map<key1_attr,key2_attr>(std::string(),std::string());
+            BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ';', attr_));
+            BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
+            BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
+        }
+        {
+            AdaptedStruct attr_;
+            BOOST_TEST(test_attr("key1=ABC;key2=XYZ", pair % ';', attr_));
+            BOOST_TEST(fusion::at_key<key1_attr>(attr_) == "ABC");
+            BOOST_TEST(fusion::at_key<key2_attr>(attr_) == "XYZ");
+        }
     }
 
     return boost::report_errors();

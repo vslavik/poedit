@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>at</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../metafunctions.html" title="Metafunctions">
 <link rel="prev" href="size.html" title="size">
@@ -28,14 +28,14 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.at.h0"></a>
-            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.at.description"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.description">Description</a>
+            <span><a name="fusion.sequence.intrinsic.metafunctions.at.description"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.description">Description</a>
           </h6>
 <p>
-            Returns the result type of <a class="link" href="../functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><a href="#ftn.fusion.sequence.intrinsic.metafunctions.at.f0" class="footnote" name="fusion.sequence.intrinsic.metafunctions.at.f0"><sup class="footnote">[7]</sup></a>.
+            Returns the result type of <a class="link" href="../functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a><sup>[<a name="fusion.sequence.intrinsic.metafunctions.at.f0" href="#ftn.fusion.sequence.intrinsic.metafunctions.at.f0" class="footnote">7</a>]</sup>.
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.at.h1"></a>
-            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.at.synopsis"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.synopsis">Synopsis</a>
+            <span><a name="fusion.sequence.intrinsic.metafunctions.at.synopsis"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Seq</span><span class="special">,</span>
@@ -112,7 +112,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.sequence.intrinsic.metafunctions.at.h2"></a>
-            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.at.expression_semantics"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.expression_semantics">Expression
+            <span><a name="fusion.sequence.intrinsic.metafunctions.at.expression_semantics"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span><span class="special">&lt;</span><span class="identifier">Seq</span><span class="special">,</span> <span class="identifier">M</span><span class="special">&gt;::</span><span class="identifier">type</span>
@@ -132,21 +132,21 @@
           </p>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.at.h3"></a>
-            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.at.header"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.header">Header</a>
+            <span><a name="fusion.sequence.intrinsic.metafunctions.at.header"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">/</span><span class="identifier">intrinsic</span><span class="special">/</span><span class="identifier">at</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">at</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.sequence.intrinsic.metafunctions.at.h4"></a>
-            <span class="phrase"><a name="fusion.sequence.intrinsic.metafunctions.at.example"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.example">Example</a>
+            <span><a name="fusion.sequence.intrinsic.metafunctions.at.example"></a></span><a class="link" href="at.html#fusion.sequence.intrinsic.metafunctions.at.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">float</span><span class="special">,</span><span class="keyword">char</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">;</span>
 <span class="identifier">BOOST_MPL_ASSERT</span><span class="special">((</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span><a class="link" href="at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a><span class="special">&lt;</span><span class="identifier">vec</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">int_</span><span class="special">&lt;</span><span class="number">1</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">type</span><span class="special">,</span> <span class="keyword">float</span><span class="special">&amp;&gt;));</span>
 </pre>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.fusion.sequence.intrinsic.metafunctions.at.f0" class="footnote"><p><a href="#fusion.sequence.intrinsic.metafunctions.at.f0" class="para"><sup class="para">[7] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.fusion.sequence.intrinsic.metafunctions.at.f0" href="#fusion.sequence.intrinsic.metafunctions.at.f0" class="para">7</a>] </sup>
               <a class="link" href="at.html" title="at"><code class="computeroutput"><span class="identifier">result_of</span><span class="special">::</span><span class="identifier">at</span></code></a> reflects the actual return
               type of the function <a class="link" href="../functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a>. <a class="link" href="../../../sequence.html" title="Sequence">Sequence</a>(s)
               typically return references to its elements via the <a class="link" href="../functions/at.html" title="at"><code class="computeroutput"><span class="identifier">at</span></code></a> function. If you want to

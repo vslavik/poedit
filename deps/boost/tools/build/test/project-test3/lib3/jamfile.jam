@@ -7,6 +7,7 @@ project lib3 ;
 
 use-project /lib2/helper : ../lib2/helper ;
 
+import os ;
 import property ;
 
 rule properties-as-path ( properties * )
@@ -32,6 +33,15 @@ actions mfc-compile
 {
     echo $(PROPERTIES) > $(<)
     echo $(>) >> $(<)
+}
+
+if [ os.name ] = VMS
+{
+    actions mfc-compile
+    {
+        PIPE WRITE SYS$OUTPUT "$(PROPERTIES)" | TYPE SYS$INPUT /OUT=$(<:W)
+        PIPE WRITE SYS$OUTPUT "$(>:J= ",")" | APPEND /NEW SYS$INPUT $(<:W)
+    }
 }
 
 make f.obj : f.cpp /lib2/helper//e.obj : mfc-compile ;

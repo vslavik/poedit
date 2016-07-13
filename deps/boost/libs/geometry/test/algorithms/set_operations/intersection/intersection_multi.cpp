@@ -55,41 +55,24 @@ void test_areal()
         case_multi_simplex[0], case_single_simplex,
         2, 12, 6.42);
 
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    // Fails to generate one ring - would be correct if handle_tangencies is skipped
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_58_multi_a",
         case_58_multi[0], case_58_multi[3],
         3, 12, 0.666666667);
-#endif
-
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    // No output at all
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_58_multi_b",
         case_58_multi[1], case_58_multi[2],
-        1, 10, 11.16666666667);
-#endif
-
+        1, 19, 11.16666666667);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_58_multi_b4",
         case_58_multi[4], case_58_multi[2],
-        1, 10, 12.66666666);
-
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    // No output at all
+        1, 13, 12.66666666);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_58_multi_b5",
         case_58_multi[5], case_58_multi[2],
-        1, 10, 99.99);
-#endif
+        1, 13, 13.25);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_58_multi_b6",
         case_58_multi[6], case_58_multi[2],
-        1, 10, 13.25);
-
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    // No output at all
+        1, 13, 13.25);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_58_multi_b7",
         case_58_multi[7], case_58_multi[2],
-        1, 10, 99.99);
-
-#endif
+        1, 16, 12.5);
 
     // Constructed cases for multi/touch/equal/etc
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_61_multi",
@@ -107,9 +90,18 @@ void test_areal()
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_65_multi",
         case_65_multi[0], case_65_multi[1],
         1, 5, 1.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_65_multi_inv_a",
+        case_65_multi[0], case_65_multi[3],
+        0, 0, 0.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_65_multi_inv_b",
+        case_65_multi[1], case_65_multi[2],
+        2, 10, 3.0);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_72_multi",
         case_72_multi[0], case_72_multi[1],
         3, 14, 2.85);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_72_multi_inv_b",
+        case_72_multi[1], case_72_multi[2],
+        3, 16, 6.15);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_77_multi",
         case_77_multi[0], case_77_multi[1],
         5, 33, 9);
@@ -122,16 +114,21 @@ void test_areal()
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_102_multi",
         case_102_multi[0], case_102_multi[1],
         3, 26, 19.75);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_102_multi_inv_b",
+        case_102_multi[1], case_102_multi[2],
+        6, 25, 3.75);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_107_multi",
         case_107_multi[0], case_107_multi[1],
         2, 10, 1.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_107_multi_inv_b",
+        case_107_multi[1], case_107_multi[2],
+        3, 13, 3.0);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_1",
         case_recursive_boxes_1[0], case_recursive_boxes_1[1],
         10, 97, 47.0);
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_2",
         case_recursive_boxes_2[0], case_recursive_boxes_2[1],
         1, 47, 90.0); // Area from SQL Server
-
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_3",
         case_recursive_boxes_3[0], case_recursive_boxes_3[1],
         19, 87, 12.5); // Area from SQL Server
@@ -140,12 +137,106 @@ void test_areal()
         case_recursive_boxes_4[0], case_recursive_boxes_4[1],
         13, 157, 67.0); // Area from SQL Server
 
-#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
-    // Recent regression, missing one output polygon
+    // Fixed by replacing handle_tangencies in less_by_segment_ratio sort order
     test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_6",
         case_recursive_boxes_6[0], case_recursive_boxes_6[1],
-        99, 99, 99.0);
-#endif
+        6, 47, 19.0);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_7",
+        case_recursive_boxes_7[0], case_recursive_boxes_7[1],
+        2, 9, 1.5);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_8",
+        case_recursive_boxes_8[0], case_recursive_boxes_8[1],
+        3, 19, 3.75);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_9",
+        case_recursive_boxes_9[0], case_recursive_boxes_9[1],
+        5, 27, 4.25);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_10",
+        case_recursive_boxes_10[0], case_recursive_boxes_10[1],
+        2, 8, 0.75);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_11",
+        case_recursive_boxes_11[0], case_recursive_boxes_11[1],
+        2, 8, 1.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_12",
+        case_recursive_boxes_12[0], case_recursive_boxes_12[1],
+        1, 4, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_13",
+        case_recursive_boxes_13[0], case_recursive_boxes_13[1],
+        0, 0, 0.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_14",
+        case_recursive_boxes_14[0], case_recursive_boxes_14[1],
+        0, 0, 0.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_15",
+        case_recursive_boxes_15[0], case_recursive_boxes_15[1],
+        1, 4, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_16",
+        case_recursive_boxes_16[0], case_recursive_boxes_16[1],
+        9, 43, 10.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_17",
+        case_recursive_boxes_17[0], case_recursive_boxes_17[1],
+        6, -1, 7.75);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_18",
+        case_recursive_boxes_18[0], case_recursive_boxes_18[1],
+        0, 0, 0.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_19",
+        case_recursive_boxes_19[0], case_recursive_boxes_19[1],
+        0, 0, 0.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_20",
+        case_recursive_boxes_20[0], case_recursive_boxes_20[1],
+        2, 0, 1.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_21",
+        case_recursive_boxes_21[0], case_recursive_boxes_21[1],
+        1, 0, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_22",
+        case_recursive_boxes_22[0], case_recursive_boxes_22[1],
+        0, 0, 0.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_23",
+        case_recursive_boxes_23[0], case_recursive_boxes_23[1],
+        1, 0, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_24",
+        case_recursive_boxes_24[0], case_recursive_boxes_24[1],
+        1, 0, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_25",
+        case_recursive_boxes_25[0], case_recursive_boxes_25[1],
+        1, 0, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_26",
+        case_recursive_boxes_26[0], case_recursive_boxes_26[1],
+        1, 0, 2.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_27",
+        case_recursive_boxes_27[0], case_recursive_boxes_27[1],
+        1, 0, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_28",
+        case_recursive_boxes_28[0], case_recursive_boxes_28[1],
+        2, 0, 1.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_29",
+        case_recursive_boxes_29[0], case_recursive_boxes_29[1],
+        5, 0, 3.75);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_30",
+        case_recursive_boxes_30[0], case_recursive_boxes_30[1],
+        4, 0, 6.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_31",
+        case_recursive_boxes_31[0], case_recursive_boxes_31[1],
+        2, 0, 2.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_32",
+        case_recursive_boxes_32[0], case_recursive_boxes_32[1],
+        2, 0, 1.75);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_33",
+        case_recursive_boxes_33[0], case_recursive_boxes_33[1],
+        3, 0, 2.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_34",
+        case_recursive_boxes_34[0], case_recursive_boxes_34[1],
+        2, 0, 17.25);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_35",
+        case_recursive_boxes_35[0], case_recursive_boxes_35[1],
+        2, 0, 20.0);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_36",
+        case_recursive_boxes_36[0], case_recursive_boxes_36[1],
+        1, 0, 0.5);
+    test_one<Polygon, MultiPolygon, MultiPolygon>("case_recursive_boxes_37",
+        case_recursive_boxes_37[0], case_recursive_boxes_37[1],
+        2, 0, 1.0);
 
     test_one<Polygon, MultiPolygon, MultiPolygon>("ggl_list_20120915_h2_a",
         ggl_list_20120915_h2[0], ggl_list_20120915_h2[1],
@@ -157,6 +248,14 @@ void test_areal()
     test_one<Polygon, MultiPolygon, MultiPolygon>("ticket_9081",
         ticket_9081[0], ticket_9081[1],
         2, 10, 0.0019812556);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("ticket_11018",
+        ticket_11018[0], ticket_11018[1],
+        1, 4, 1.7791170511070893e-14);
+
+    test_one<Polygon, MultiPolygon, MultiPolygon>("mysql_1",
+        mysql_1[0], mysql_1[1],
+        2, 11, 9.80505786783);
 }
 
 template <typename Polygon, typename MultiPolygon, typename Box>
@@ -225,7 +324,6 @@ void test_areal_linear()
 template <typename P>
 void test_all()
 {
-    //typedef bg::model::box<P> box;
     typedef bg::model::ring<P> ring;
     typedef bg::model::polygon<P> polygon;
     typedef bg::model::multi_polygon<polygon> multi_polygon;
@@ -248,6 +346,7 @@ void test_all()
     typedef bg::model::multi_polygon<polygon_open_ccw> multi_polygon_open_ccw;
     test_areal<ring_open_ccw, polygon_open_ccw, multi_polygon_open_ccw>();
 
+    typedef bg::model::box<P> box;
     test_areal_clip<polygon, multi_polygon, box>();
     test_areal_clip<polygon_ccw, multi_polygon_ccw, box>();
 

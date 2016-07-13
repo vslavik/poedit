@@ -66,7 +66,8 @@ toolset.inherit-flags darwin : gcc
      <architecture>x86/<instruction-set>
      <architecture>power/<address-model>32
      <architecture>power/<address-model>64
-     <architecture>power/<instruction-set>  ;
+     <architecture>power/<instruction-set> 
+     <inlining>full  ;
 
 # Options:
 #
@@ -148,6 +149,12 @@ rule init ( version ? : command * : options * : requirement * )
     }
     # - GCC on Darwin with -pedantic, suppress unsupported long long warning
     flags darwin.compile OPTIONS $(condition)/<warnings>all : -Wno-long-long ;
+
+    # - GCC on El Capitan (10.11) does not suport -finline-functions
+    if "10.11.0" <= $(.host-osx-version)
+    {
+        flags darwin.compile OPTIONS $(condition)/<inlining>full : -Wno-inline ;
+    }
 
     # - Set the link flags common with the GCC toolset.
     gcc.init-link-flags darwin darwin $(condition) ;

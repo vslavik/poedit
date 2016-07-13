@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="prev" href="../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
@@ -58,7 +58,7 @@
 <p>
       The Multiprecision library comes in two distinct parts:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           An expression-template-enabled front-end <code class="computeroutput"><span class="identifier">number</span></code>
           that handles all the operator overloading, expression evaluation optimization,
@@ -159,7 +159,7 @@
 </pre>
 <h5>
 <a name="boost_multiprecision.intro.h0"></a>
-      <span class="phrase"><a name="boost_multiprecision.intro.move_semantics"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.move_semantics">Move
+      <span><a name="boost_multiprecision.intro.move_semantics"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.move_semantics">Move
       Semantics</a>
     </h5>
 <p>
@@ -199,7 +199,7 @@
     </p>
 <h5>
 <a name="boost_multiprecision.intro.h1"></a>
-      <span class="phrase"><a name="boost_multiprecision.intro.expression_templates"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.expression_templates">Expression
+      <span><a name="boost_multiprecision.intro.expression_templates"></a></span><a class="link" href="intro.html#boost_multiprecision.intro.expression_templates">Expression
       Templates</a>
     </h5>
 <p>
@@ -257,7 +257,7 @@
       to pretty much zero). Note that if we compile with expression templates disabled
       and rvalue-reference support on, then actually still have no wasted memory
       allocations as even though temporaries are created, their contents are moved
-      rather than copied. <a href="#ftn.boost_multiprecision.intro.f0" class="footnote"><sup class="footnote"><a name="boost_multiprecision.intro.f0"></a>[1]</sup></a>
+      rather than copied. <sup>[<a name="boost_multiprecision.intro.f0" href="#ftn.boost_multiprecision.intro.f0" class="footnote">1</a>]</sup>
     </p>
 <div class="important"><table border="0" summary="Important">
 <tr>
@@ -455,7 +455,7 @@
       As you can see, the execution time increases a lot more slowly than the number
       of memory allocations. There are a number of reasons for this:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           The cost of extended-precision multiplication and division is so great,
           that the times taken for these tend to swamp everything else.
@@ -686,8 +686,8 @@
       optimizations on (/Ox), with MPFR 3.0 and MPIR 2.3.0.
     </p>
 <div class="footnotes">
-<br><hr style="width:100; align:left;">
-<div id="ftn.boost_multiprecision.intro.f0" class="footnote"><p><a href="#boost_multiprecision.intro.f0" class="para"><sup class="para">[1] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.boost_multiprecision.intro.f0" href="#boost_multiprecision.intro.f0" class="para">1</a>] </sup>
         The actual number generated will depend on the compiler, how well it optimises
         the code, and whether it supports rvalue references. The number of 11 temporaries
         was generated with Visual C++ 10

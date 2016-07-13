@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Datasets generators</title>
 <link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_case_generation.html" title="Data-driven test cases">
 <link rel="prev" href="operations.html" title="Operations on dataset">
@@ -31,7 +31,7 @@
             Several <span class="emphasis"><em>generators</em></span> for datasets are implemented
             in <span class="emphasis"><em>Unit Test Framework</em></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 <a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.singletons">Singletons</a>
               </li>
@@ -55,13 +55,13 @@
           </p>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h0"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.singletons"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.singletons">Singletons</a>
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.singletons"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.singletons">Singletons</a>
           </h5>
 <p>
             A singleton is a dataset containing a unique value. The size and arity
             of such a dataset is 1. This value can be
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 either consumed once
               </li>
@@ -74,11 +74,11 @@
             of infinite size, the resulting dataset will have a size of 1.
           </p>
 <p>
-            The singleton is constructible through the function <code class="computeroutput"><a class="link" href="../../../../boost/unit_test/data/make_idm46165630682880.html" title="Function make">boost::unit_test::data::make</a></code>.
+            The singleton is constructible through the function <code class="computeroutput"><a class="link" href="../../../../boost/unit_test/data/make_idp26476176.html" title="Function make">boost::unit_test::data::make</a></code>.
           </p>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h1"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr">Example:
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr">Example:
             Singleton</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -142,7 +142,7 @@
 </table></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h2"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.c_arrays"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.c_arrays">Datasets
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.c_arrays"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.c_arrays">Datasets
             from C arrays</a>
           </h5>
 <p>
@@ -152,12 +152,12 @@
             The arity is 1 and the size is the size of the array.
           </p>
 <p>
-            Such datasets are simply constructed from an overload of the <code class="computeroutput"><a class="link" href="../../../../boost/unit_test/data/make_idm46165630682880.html" title="Function make">make</a></code>
+            Such datasets are simply constructed from an overload of the <code class="computeroutput"><a class="link" href="../../../../boost/unit_test/data/make_idp26476176.html" title="Function make">make</a></code>
             function.
           </p>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h3"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr0"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr0">Example:
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr0"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr0">Example:
             Array</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -210,7 +210,7 @@
 </table></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h4"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.stl"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.stl">Datasets
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.stl"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.stl">Datasets
             from forward iterable containers</a>
           </h5>
 <p>
@@ -232,7 +232,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h5"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr1"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr1">Example:
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr1"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr1">Example:
             Dataset from <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span></code> and <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">map</span></code></a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -338,7 +338,7 @@
 </table></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h6"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.ranges"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.ranges">Ranges</a>
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.ranges"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.ranges">Ranges</a>
           </h5>
 <p>
             A range is a dataset that implements a sequence of equally spaced values,
@@ -369,7 +369,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h7"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.parameters"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.parameters">Parameters</a>
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.parameters"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.parameters">Parameters</a>
           </h6>
 <p>
             The details of the named value parameters is given in the table below.
@@ -462,7 +462,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h8"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr2"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr2">Example:
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr2"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr2">Example:
             Declaring a test with a range</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -524,7 +524,7 @@
 </table></div>
 <h5>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h9"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.random"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.random">Random
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.random"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.random">Random
             value dataset</a>
           </h5>
 <p>
@@ -571,7 +571,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h10"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.parameters0"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.parameters0">Parameters</a>
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.parameters0"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.parameters0">Parameters</a>
           </h6>
 <p>
             The details of the named value parameters is given in the table below.
@@ -661,7 +661,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="boost_test.tests_organization.test_cases.test_case_generation.generators.h11"></a>
-            <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr3"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr3">Example:
+            <span><a name="boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr3"></a></span><a class="link" href="generators.html#boost_test.tests_organization.test_cases.test_case_generation.generators.example_descr3">Example:
             Declaring a test with a random sequence</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -750,7 +750,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

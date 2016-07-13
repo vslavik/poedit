@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template accumulator_set</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp" title="Header &lt;boost/accumulators/accumulators_fwd.hpp&gt;">
-<link rel="prev" href="tag/value_tag.html" title="Struct template value_tag">
-<link rel="next" href="as_feature.html" title="Struct template as_feature">
+<link rel="up" href="../../accumulators/reference.html#header.boost.accumulators.framework.accumulator_set_hpp" title="Header &lt;boost/accumulators/framework/accumulator_set.hpp&gt;">
+<link rel="prev" href="accumulator_concept.html" title="Struct template accumulator_concept">
+<link rel="next" href="accumulator_set/apply.html" title="Struct template apply">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="tag/value_tag.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="as_feature.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="accumulator_concept.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.framework.accumulator_set_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="accumulator_set/apply.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.accumulators.accumulator_set"></a><div class="titlepage"></div>
@@ -30,49 +30,64 @@
 <p>boost::accumulators::accumulator_set &#8212; A set of accumulators. </p>
 </div>
 <h2 xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv-title">Synopsis</h2>
-<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp" title="Header &lt;boost/accumulators/accumulators_fwd.hpp&gt;">boost/accumulators/accumulators_fwd.hpp</a>&gt;
+<div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../accumulators/reference.html#header.boost.accumulators.framework.accumulator_set_hpp" title="Header &lt;boost/accumulators/framework/accumulator_set.hpp&gt;">boost/accumulators/framework/accumulator_set.hpp</a>&gt;
 
 </span><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Sample<span class="special">,</span> <span class="keyword">typename</span> Features<span class="special">,</span> <span class="keyword">typename</span> Weight<span class="special">&gt;</span> 
 <span class="keyword">struct</span> <a class="link" href="accumulator_set.html" title="Struct template accumulator_set">accumulator_set</a> <span class="special">{</span>
-  <span class="comment">// <a class="link" href="accumulator_set.html#boost.accumulators.accumulator_setconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="accumulator_set.html#idm45507139622224-bb"><span class="identifier">accumulator_set</span></a><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="accumulator_set.html#boost.accumulators.accumulator_settypes">types</a></span>
+  <span class="keyword">typedef</span> <span class="identifier">Sample</span>   <a name="boost.accumulators.accumulator_set.sample_type"></a><span class="identifier">sample_type</span><span class="special">;</span>    <span class="comment">// The type of the samples that will be accumulated. </span>
+  <span class="keyword">typedef</span> <span class="identifier">Features</span> <a name="boost.accumulators.accumulator_set.features_type"></a><span class="identifier">features_type</span><span class="special">;</span>  <span class="comment">// An MPL sequence of the features that should be accumulated. </span>
+  <span class="keyword">typedef</span> <span class="identifier">Weight</span>   <a name="boost.accumulators.accumulator_set.weight_type"></a><span class="identifier">weight_type</span><span class="special">;</span>    <span class="comment">// The type of the weight parameter. Must be a scalar. Defaults to void. </span>
+  <span class="keyword">typedef</span> <span class="keyword">void</span>     <a class="link" href="accumulator_set.html#boost.accumulators.accumulator_set.result_type"><span class="identifier">result_type</span></a><span class="special">;</span>  
 
-  <span class="comment">// <a class="link" href="accumulator_set.html#idm45507139640832-bb">public member functions</a></span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> UnaryFunction<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idm45507139640272-bb"><span class="identifier">visit</span></a><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// member classes/structs/unions</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> 
+  <span class="keyword">struct</span> <a class="link" href="accumulator_set/apply.html" title="Struct template apply">apply</a> <span class="special">{</span>
+  <span class="special">}</span><span class="special">;</span>
+
+  <span class="comment">// <a class="link" href="accumulator_set.html#boost.accumulators.accumulator_setconstruct-copy-destruct">construct/copy/destruct</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">explicit</span> <a class="link" href="accumulator_set.html#idp33756416-bb"><span class="identifier">accumulator_set</span></a><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+
+  <span class="comment">// <a class="link" href="accumulator_set.html#idp33736672-bb">public member functions</a></span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> UnaryFunction<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idp33737232-bb"><span class="identifier">visit</span></a><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FilterPred<span class="special">,</span> <span class="keyword">typename</span> UnaryFunction<span class="special">&gt;</span> 
-    <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idm45507139637008-bb"><span class="identifier">visit_if</span></a><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idm45507139633104-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idm45507139631840-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> apply<span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">&amp;</span> <a class="link" href="accumulator_set.html#idm45507139629456-bb"><span class="identifier">extract</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> apply<span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="accumulator_set.html#idm45507139627184-bb"><span class="identifier">extract</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idm45507139624368-bb"><span class="identifier">drop</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idp33740496-bb"><span class="identifier">visit_if</span></a><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idp33744400-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idp33745664-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <a class="link" href="accumulator_set/apply.html" title="Struct template apply">apply</a><span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span>type <span class="special">&amp;</span> <a class="link" href="accumulator_set.html#idp33748048-bb"><span class="identifier">extract</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <a class="link" href="accumulator_set/apply.html" title="Struct template apply">apply</a><span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span>type <span class="keyword">const</span> <span class="special">&amp;</span> <a class="link" href="accumulator_set.html#idp33750896-bb"><span class="identifier">extract</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="accumulator_set.html#idp33754144-bb"><span class="identifier">drop</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555454154512"></a><h2>Description</h2>
+<a name="idp15713600"></a><h2>Description</h2>
 <p><a class="link" href="accumulator_set.html" title="Struct template accumulator_set">accumulator_set</a> resolves the dependencies between features and ensures that the accumulators in the set are updated in the proper order.</p>
 <p>acccumulator_set provides a general mechanism to visit the accumulators in the set in order, with or without a filter. You can also fetch a reference to an accumulator that corresponds to a feature. </p>
 <div class="refsect2">
-<a name="idm45555454152480"></a><h3>
+<a name="idp15715632"></a><h3>
+<a name="boost.accumulators.accumulator_settypes"></a><code class="computeroutput">accumulator_set</code> 
+        public
+       types</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<p>
+<span class="keyword">typedef</span> <span class="keyword">void</span> <a name="boost.accumulators.accumulator_set.result_type"></a><span class="identifier">result_type</span><span class="special">;</span></p>
+<p>The return type of the operator() overloads is void. </p>
+</li></ol></div>
+</div>
+<div class="refsect2">
+<a name="idp15721504"></a><h3>
 <a name="boost.accumulators.accumulator_setconstruct-copy-destruct"></a><code class="computeroutput">accumulator_set</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idm45507139622224-bb"></a><span class="identifier">accumulator_set</span><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span> a1<span class="special">)</span><span class="special">;</span></pre>
-<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.</p>
-<p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">explicit</span> <a name="idp33756416-bb"></a><span class="identifier">accumulator_set</span><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span> a1<span class="special">)</span><span class="special">;</span></pre>
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">a1</code></span></p></td>
 <td><p>Optional named parameter to be passed to all the accumulators </p></td>
@@ -83,25 +98,19 @@
 </li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555454137616"></a><h3>
-<a name="idm45507139640832-bb"></a><code class="computeroutput">accumulator_set</code> public member functions</h3>
+<a name="idp15736016"></a><h3>
+<a name="idp33736672-bb"></a><code class="computeroutput">accumulator_set</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> UnaryFunction<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idm45507139640272-bb"></a><span class="identifier">visit</span><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span> func<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> UnaryFunction<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp33737232-bb"></a><span class="identifier">visit</span><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span> func<span class="special">)</span><span class="special">;</span></pre>
 <p>Visitation 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">func</code></span></p></td>
 <td><p>UnaryFunction which is invoked with each accumulator in turn. </p></td>
@@ -112,21 +121,15 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> FilterPred<span class="special">,</span> <span class="keyword">typename</span> UnaryFunction<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idm45507139637008-bb"></a><span class="identifier">visit_if</span><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span> func<span class="special">)</span><span class="special">;</span></pre>
+  <span class="keyword">void</span> <a name="idp33740496-bb"></a><span class="identifier">visit_if</span><span class="special">(</span><span class="identifier">UnaryFunction</span> <span class="keyword">const</span> <span class="special">&amp;</span> func<span class="special">)</span><span class="special">;</span></pre>
 <p>Conditional visitation 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">func</code></span></p></td>
 <td><p>UnaryFunction which is invoked with each accumulator in turn, provided the accumulator satisfies the MPL predicate FilterPred. </p></td>
@@ -136,19 +139,23 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507139633104-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp33744400-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Accumulation 
 </p>
 </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idm45507139631840-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span> a1<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> A1<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp33745664-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span> a1<span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> apply<span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="special">&amp;</span> <a name="idm45507139629456-bb"></a><span class="identifier">extract</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Extraction. </li>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <a class="link" href="accumulator_set/apply.html" title="Struct template apply">apply</a><span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span>type <span class="special">&amp;</span> <a name="idp33748048-bb"></a><span class="identifier">extract</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Extraction </p>
+</li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> apply<span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idm45507139627184-bb"></a><span class="identifier">extract</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <a class="link" href="accumulator_set/apply.html" title="Struct template apply">apply</a><span class="special">&lt;</span> <span class="identifier">Feature</span> <span class="special">&gt;</span><span class="special">::</span>type <span class="keyword">const</span> <span class="special">&amp;</span> <a name="idp33750896-bb"></a><span class="identifier">extract</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idm45507139624368-bb"></a><span class="identifier">drop</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Drop. </li>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Feature<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp33754144-bb"></a><span class="identifier">drop</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<p>Drop </p>
+</li>
 </ol></div>
 </div>
 </div>
@@ -163,7 +170,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="tag/value_tag.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.accumulators_fwd_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="as_feature.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="accumulator_concept.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../accumulators/reference.html#header.boost.accumulators.framework.accumulator_set_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="accumulator_set/apply.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

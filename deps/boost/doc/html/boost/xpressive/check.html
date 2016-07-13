@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template check</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../xpressive/reference.html#header.boost.xpressive.regex_actions_hpp" title="Header &lt;boost/xpressive/regex_actions.hpp&gt;">
 <link rel="prev" href="cref.html" title="Function template cref">
@@ -35,44 +35,38 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="emphasis"><em><span class="identifier">unspecified</span></em></span> <span class="identifier">check</span><span class="special">(</span><span class="identifier">T</span> <span class="keyword">const</span> <span class="special">&amp;</span> t<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555020019248"></a><h2>Description</h2>
+<a name="idp506852848"></a><h2>Description</h2>
 <p>
-A <a class="link" href="../../xpressive/user_s_guide.html#boost_xpressive.user_s_guide.semantic_actions_and_user_defined_assertions.user_defined_assertions">user-defined assertion</a> is a kind of semantic action that evaluates a Boolean lambda and, if it evaluates to false, causes the match to fail at that location in the string. This will cause backtracking, so the match may ultimately succeed.</p>
-<p>To use <code class="computeroutput">check()</code> to specify a user-defined assertion in a regex, use the following syntax:</p>
-<pre class="programlisting"><span class="identifier">sregex</span> <span class="identifier">s</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">_d</span> <span class="special">&gt;&gt;</span> <span class="identifier">_d</span><span class="special">)</span><span class="special">[</span><span class="identifier">check</span><span class="special">(</span> <span class="identifier">XXX</span> <span class="special">)</span><span class="special">]</span><span class="special">;</span> <span class="comment">// XXX is a custom assertion</span>
+A  <a class="link" href="../../xpressive/user_s_guide.html#boost_xpressive.user_s_guide.semantic_actions_and_user_defined_assertions.user_defined_assertions">user-defined assertion</a> is a kind of semantic action that evaluates a Boolean lambda and, if it evaluates to false, causes the match to fail at that location in the string. This will cause backtracking, so the match may ultimately succeed.</p>
+<p>To use <code class="computeroutput">check()</code> to specify a user-defined assertion in a regex, use the following syntax: </p>
+<pre class="programlisting">        <span class="identifier">sregex</span> <span class="identifier">s</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">_d</span> <span class="special">&gt;&gt;</span> <span class="identifier">_d</span><span class="special">)</span><span class="special">[</span><span class="identifier">check</span><span class="special">(</span> <span class="identifier">XXX</span> <span class="special">)</span><span class="special">]</span><span class="special">;</span> <span class="comment">// XXX is a custom assertion</span>
 </pre>
 <p> The assertion is evaluated with a <code class="computeroutput"><code class="computeroutput"><a class="link" href="sub_match.html" title="Struct template sub_match">sub_match</a></code>&lt;&gt;</code> object that delineates what part of the string matched the sub-expression to which the assertion was attached.</p>
-<p><code class="computeroutput">check()</code> can be used with an ordinary predicate that takes a <code class="computeroutput"><code class="computeroutput"><a class="link" href="sub_match.html" title="Struct template sub_match">sub_match</a></code>&lt;&gt;</code> object as follows:</p>
-<pre class="programlisting"><span class="comment">// A predicate that is true IFF a sub-match is</span>
-<span class="comment">// either 3 or 6 characters long.</span>
-<span class="keyword">struct</span> <span class="identifier">three_or_six</span>
-<span class="special">{</span>
-    <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">ssub_match</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">sub</span><span class="special">)</span> <span class="keyword">const</span>
-    <span class="special">{</span>
-        <span class="keyword">return</span> <span class="identifier">sub</span><span class="special">.</span><span class="identifier">length</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="number">3</span> <span class="special">||</span> <span class="identifier">sub</span><span class="special">.</span><span class="identifier">length</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="number">6</span><span class="special">;</span>
-    <span class="special">}</span>
-<span class="special">}</span><span class="special">;</span>
+<p><code class="computeroutput">check()</code> can be used with an ordinary predicate that takes a <code class="computeroutput"><code class="computeroutput"><a class="link" href="sub_match.html" title="Struct template sub_match">sub_match</a></code>&lt;&gt;</code> object as follows: </p>
+<pre class="programlisting">        <span class="comment">// A predicate that is true IFF a sub-match is</span>
+        <span class="comment">// either 3 or 6 characters long.</span>
+        <span class="keyword">struct</span> <span class="identifier">three_or_six</span>
+        <span class="special">{</span>
+            <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">ssub_match</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="identifier">sub</span><span class="special">)</span> <span class="keyword">const</span>
+            <span class="special">{</span>
+                <span class="keyword">return</span> <span class="identifier">sub</span><span class="special">.</span><span class="identifier">length</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="number">3</span> <span class="special">||</span> <span class="identifier">sub</span><span class="special">.</span><span class="identifier">length</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="number">6</span><span class="special">;</span>
+            <span class="special">}</span>
+        <span class="special">}</span><span class="special">;</span>
 
-<span class="comment">// match words of 3 characters or 6 characters.</span>
-<span class="identifier">sregex</span> <span class="identifier">rx</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">bow</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">_w</span> <span class="special">&gt;&gt;</span> <span class="identifier">eow</span><span class="special">)</span><span class="special">[</span> <span class="identifier">check</span><span class="special">(</span><span class="identifier">three_or_six</span><span class="special">(</span><span class="special">)</span><span class="special">)</span> <span class="special">]</span> <span class="special">;</span>
+        <span class="comment">// match words of 3 characters or 6 characters.</span>
+        <span class="identifier">sregex</span> <span class="identifier">rx</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">bow</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">_w</span> <span class="special">&gt;&gt;</span> <span class="identifier">eow</span><span class="special">)</span><span class="special">[</span> <span class="identifier">check</span><span class="special">(</span><span class="identifier">three_or_six</span><span class="special">(</span><span class="special">)</span><span class="special">)</span> <span class="special">]</span> <span class="special">;</span>
 </pre>
-<p> Alternately, <code class="computeroutput">check()</code> can be used to define inline custom assertions with the same syntax as is used to define semantic actions. The following code is equivalent to above:</p>
-<pre class="programlisting"><span class="comment">// match words of 3 characters or 6 characters.</span>
-<span class="identifier">sregex</span> <span class="identifier">rx</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">bow</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">_w</span> <span class="special">&gt;&gt;</span> <span class="identifier">eow</span><span class="special">)</span><span class="special">[</span> <span class="identifier">check</span><span class="special">(</span><span class="identifier">length</span><span class="special">(</span><span class="identifier">_</span><span class="special">)</span><span class="special">==</span><span class="number">3</span> <span class="special">||</span> <span class="identifier">length</span><span class="special">(</span><span class="identifier">_</span><span class="special">)</span><span class="special">==</span><span class="number">6</span><span class="special">)</span> <span class="special">]</span> <span class="special">;</span>
+<p> Alternately, <code class="computeroutput">check()</code> can be used to define inline custom assertions with the same syntax as is used to define semantic actions. The following code is equivalent to above: </p>
+<pre class="programlisting">        <span class="comment">// match words of 3 characters or 6 characters.</span>
+        <span class="identifier">sregex</span> <span class="identifier">rx</span> <span class="special">=</span> <span class="special">(</span><span class="identifier">bow</span> <span class="special">&gt;&gt;</span> <span class="special">+</span><span class="identifier">_w</span> <span class="special">&gt;&gt;</span> <span class="identifier">eow</span><span class="special">)</span><span class="special">[</span> <span class="identifier">check</span><span class="special">(</span><span class="identifier">length</span><span class="special">(</span><span class="identifier">_</span><span class="special">)</span><span class="special">==</span><span class="number">3</span> <span class="special">||</span> <span class="identifier">length</span><span class="special">(</span><span class="identifier">_</span><span class="special">)</span><span class="special">==</span><span class="number">6</span><span class="special">)</span> <span class="special">]</span> <span class="special">;</span>
 </pre>
 <p> Within a custom assertion, <code class="computeroutput">_</code> is a placeholder for the <code class="computeroutput"><code class="computeroutput"><a class="link" href="sub_match.html" title="Struct template sub_match">sub_match</a></code>&lt;&gt;</code> That delineates the part of the string matched by the sub-expression to which the custom assertion was attached. </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">t</code></span></p></td>
 <td><p>The UnaryPredicate object or Boolean semantic action.</p></td>

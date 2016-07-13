@@ -13,6 +13,7 @@
 #endif
 
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/detail/archive_serializer_map.hpp>
 

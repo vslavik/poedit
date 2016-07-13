@@ -16,8 +16,8 @@ project variadic_macro_data_tests : requirements <warnings>on
                                                  <toolset>msvc:<warnings>all
                                                  <toolset>msvc:<cxxflags>-wd4003
                                                  <toolset>intel-linux:<cxxflags>-std=c++11
-                                                 <toolset>clang:<cxxflags>-std=c++11
-                                                 <toolset>clang:<cxxflags>-pedantic-errors
+                                                 <toolset>clang-linux:<cxxflags>-std=c++11
+                                                 <toolset>clang-linux:<cxxflags>-pedantic-errors
                                                  <toolset>gcc:<warnings>all
                                                  <toolset>gcc:<cxxflags>-pedantic-errors
                                                  [ predef-check "BOOST_COMP_GNUC >= 4.7.4" : : <cxxflags>-ftrack-macro-expansion=0 ]

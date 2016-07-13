@@ -848,7 +848,7 @@ stored exception, `false` otherwise.]]
 [[Effects:] [If `*this` is associated with a shared state, waits until the result is ready. If the result is not ready on
 entry, and the result has a ['wait callback] set, that callback is invoked prior to waiting.]]
 
-[[Returns:] [a exception_ptr, storring or not an exception.]]
+[[Returns:] [an exception_ptr, storing or not an exception.]]
 
 [[Remarks:] [The result of this function is not stable and the future could lost its exception even if the function returned a valid `exception_ptr` or vice-versa.]]
 
@@ -913,7 +913,7 @@ There are not too much tests yet, so it is possible that you can find out some t
 [variablelist
 
 [[Notes:] [The three functions differ only by input parameters. The first only takes a callable object which accepts a 
-future object as a parameter. The second function takes a executor as the first parameter and a callable object as 
+future object as a parameter. The second function takes an executor as the first parameter and a callable object as 
 the second parameter. The third function takes a launch policy as the first parameter and a callable object as the 
 second parameter.]]
 
@@ -1357,7 +1357,7 @@ stored exception, `false` otherwise.]]
 [[Effects:] [If `*this` is associated with a shared state, waits until the result is ready. If the result is not ready on
 entry, and the result has a ['wait callback] set, that callback is invoked prior to waiting.]]
 
-[[Returns:] [a exception_ptr, storring or not an exception.]]
+[[Returns:] [an exception_ptr, storing or not an exception.]]
 
 [[Throws:] [Whatever `mutex::lock()/mutex::unlock()` can throw.]]
 

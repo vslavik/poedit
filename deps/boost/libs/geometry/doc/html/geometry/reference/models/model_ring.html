@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>model::ring</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../models.html" title="Models">
 <link rel="prev" href="model_box.html" title="model::box">
@@ -27,12 +27,12 @@
 <a name="geometry.reference.models.model_ring"></a><a class="link" href="model_ring.html" title="model::ring">model::ring</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idm44837171904304"></a><a class="indexterm" name="idm44837171903616"></a>
+          <a class="indexterm" name="idp96083408"></a><a class="indexterm" name="idp96084096"></a>
 A ring (aka linear ring) is a closed line which should not be selfintersecting.
         </p>
 <h6>
 <a name="geometry.reference.models.model_ring.h0"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_ring.model_of"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.model_of">Model
+          <span><a name="geometry.reference.models.model_ring.model_of"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.model_of">Model
           of</a>
         </h6>
 <p>
@@ -40,14 +40,13 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
         </p>
 <h6>
 <a name="geometry.reference.models.model_ring.h1"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_ring.synopsis"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.synopsis">Synopsis</a>
+          <span><a name="geometry.reference.models.model_ring.synopsis"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">ClockWise</span><span class="special">,</span> <span class="keyword">bool</span> <span class="identifier">Closed</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">Container</span><span class="special">,</span>
          <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">Allocator</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">model</span><span class="special">::</span><span class="identifier">ring</span>
-      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Container</span><span class="special">&lt;</span> <span class="identifier">Point</span><span class="special">,</span> <span class="identifier">Allocator</span><span class="special">&lt;</span> <span class="identifier">Point</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -56,7 +55,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
         </p>
 <h6>
 <a name="geometry.reference.models.model_ring.h2"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_ring.template_parameter_s_"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.template_parameter_s_">Template
+          <span><a name="geometry.reference.models.model_ring.template_parameter_s_"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -170,7 +169,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
 </table></div>
 <h6>
 <a name="geometry.reference.models.model_ring.h3"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_ring.constructor_s_"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.constructor_s_">Constructor(s)</a>
+          <span><a name="geometry.reference.models.model_ring.constructor_s_"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -206,7 +205,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
                 </td>
 <td>
                   <p>
-                    Default constructor, creating an empty ring.
+                    Default constructor, creating an empty \1.
                   </p>
                 </td>
 <td>
@@ -223,7 +222,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
                 </td>
 <td>
                   <p>
-                    Constructor with begin and end, filling the ring.
+                    Constructor with begin and end, filling the \1.
                   </p>
                 </td>
 <td>
@@ -245,7 +244,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
                 </td>
 <td>
                   <p>
-                    Constructor taking std::initializer_list, filling the ring.
+                    Constructor taking std::initializer_list, filling the \1.
                   </p>
                 </td>
 <td>
@@ -259,7 +258,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
 </table></div>
 <h6>
 <a name="geometry.reference.models.model_ring.h4"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_ring.header"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.header">Header</a>
+          <span><a name="geometry.reference.models.model_ring.header"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.header">Header</a>
         </h6>
 <p>
           Either
@@ -275,7 +274,7 @@ A ring (aka linear ring) is a closed line which should not be selfintersecting.
         </p>
 <h6>
 <a name="geometry.reference.models.model_ring.h5"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_ring.examples"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.examples">Examples</a>
+          <span><a name="geometry.reference.models.model_ring.examples"></a></span><a class="link" href="model_ring.html#geometry.reference.models.model_ring.examples">Examples</a>
         </h6>
 <p>
           Declaration and use of the Boost.Geometry model::ring, modelling the Ring

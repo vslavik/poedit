@@ -145,7 +145,7 @@ namespace aux {
 //! A light read/write mutex
 class light_rw_mutex
 {
-    struct { void* p; } m_Mutex;
+    struct BOOST_LOG_MAY_ALIAS mutex_state { void* p; } m_Mutex;
 
 public:
     BOOST_LOG_API light_rw_mutex();

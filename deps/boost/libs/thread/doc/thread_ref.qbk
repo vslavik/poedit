@@ -21,7 +21,7 @@
     {
       thread::id get_id() noexcept;
       template<typename TimeDuration>
-      void yield() noexcept; // DEPRECATED
+      void yield() noexcept;
       template <class Clock, class Duration>
       void sleep_until(const chrono::time_point<Clock, Duration>& abs_time); 
       template <class Rep, class Period>
@@ -711,7 +711,7 @@ are copied into internal storage for access by the new thread.]]]
 
 [[Throws:] [Nothing.]]
 
-[[Note:] [The reason to moving to std::terminate is that either implicitly detaching or joining a `joinable()` thread in its destructor could result in difficult to debug correctness (for `detach`) or performance (for `join`) bugs encountered only when an exception is raised. Thus the programmer must ensure that the destructor is never executed while the thread is still joinable. Join the thread before destroying or use an scoped thread.]]
+[[Note:] [The reason to moving to std::terminate is that either implicitly detaching or joining a `joinable()` thread in its destructor could result in difficult to debug correctness (for `detach`) or performance (for `join`) bugs encountered only when an exception is raised. Thus the programmer must ensure that the destructor is never executed while the thread is still joinable. Join the thread before destroying or use a scoped thread.]]
 
 ]
 
@@ -1304,7 +1304,7 @@ instances of __thread_id__ `a` and `b` is the same if `a==b`, and different if `
 
 [variablelist
 
-[[Effects:] [Stores the stack size to be used to create a thread. This is an hint that the implementation can choose a better size if to small or too big or not aligned to a page.]]
+[[Effects:] [Stores the stack size to be used to create a thread. This is a hint that the implementation can choose a better size if to small or too big or not aligned to a page.]]
 
 [[Postconditions:] [`this-> get_stack_size()` returns the chosen stack size.]]
 

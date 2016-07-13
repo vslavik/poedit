@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Elliptic Integrals of the Third Kind - Legendre Form</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
 <link rel="up" href="../ellint.html" title="Elliptic Integrals">
 <link rel="prev" href="ellint_2.html" title="Elliptic Integrals of the Second Kind - Legendre Form">
 <link rel="next" href="ellint_d.html" title="Elliptic Integral D - Legendre Form">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.ellint.ellint_3.h0"></a>
-        <span class="phrase"><a name="math_toolkit.ellint.ellint_3.synopsis"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.synopsis">Synopsis</a>
+        <span><a name="math_toolkit.ellint.ellint_3.synopsis"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">special_functions</span><span class="special">/</span><span class="identifier">ellint_3</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -51,7 +51,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.ellint.ellint_3.h1"></a>
-        <span class="phrase"><a name="math_toolkit.ellint.ellint_3.description"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.description">Description</a>
+        <span><a name="math_toolkit.ellint.ellint_3.description"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.description">Description</a>
       </h5>
 <p>
         These two functions evaluate the incomplete elliptic integral of the third
@@ -116,7 +116,7 @@
       </p>
 <h5>
 <a name="math_toolkit.ellint.ellint_3.h2"></a>
-        <span class="phrase"><a name="math_toolkit.ellint.ellint_3.accuracy"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.accuracy">Accuracy</a>
+        <span><a name="math_toolkit.ellint.ellint_3.accuracy"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.accuracy">Accuracy</a>
       </h5>
 <p>
         These functions are computed using only basic arithmetic operations, so there
@@ -259,7 +259,7 @@
 </div>
 <br class="table-break"><h5>
 <a name="math_toolkit.ellint.ellint_3.h3"></a>
-        <span class="phrase"><a name="math_toolkit.ellint.ellint_3.testing"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.testing">Testing</a>
+        <span><a name="math_toolkit.ellint.ellint_3.testing"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.testing">Testing</a>
       </h5>
 <p>
         The tests use a mixture of spot test values calculated using the online calculator
@@ -269,7 +269,7 @@
       </p>
 <h5>
 <a name="math_toolkit.ellint.ellint_3.h4"></a>
-        <span class="phrase"><a name="math_toolkit.ellint.ellint_3.implementation"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.implementation">Implementation</a>
+        <span><a name="math_toolkit.ellint.ellint_3.implementation"></a></span><a class="link" href="ellint_3.html#math_toolkit.ellint.ellint_3.implementation">Implementation</a>
       </h5>
 <p>
         The implementation for &#928;(n, &#966;, k) first siphons off the special cases:
@@ -305,7 +305,7 @@
         <span class="emphasis"><em>&#928;(n, &#966;+m&#960;, k) = &#928;(n, &#966;, k) + 2m&#928;(n, k) ; n &lt;= 1</em></span>
       </p>
 <p>
-        <span class="emphasis"><em>&#928;(n, &#966;+m&#960;, k) = &#928;(n, &#966;, k) ; n &gt; 1</em></span> <a href="#ftn.math_toolkit.ellint.ellint_3.f0" class="footnote"><sup class="footnote"><a name="math_toolkit.ellint.ellint_3.f0"></a>[1]</sup></a>
+        <span class="emphasis"><em>&#928;(n, &#966;+m&#960;, k) = &#928;(n, &#966;, k) ; n &gt; 1</em></span> <sup>[<a name="math_toolkit.ellint.ellint_3.f0" href="#ftn.math_toolkit.ellint.ellint_3.f0" class="footnote">1</a>]</sup>
       </p>
 <p>
         are used to move &#966; &#160; to the range [0, &#960;/2].
@@ -324,8 +324,8 @@
         <span class="inlinemediaobject"><img src="../../../equations/ellint26.svg"></span>
       </p>
 <div class="footnotes">
-<br><hr style="width:100; align:left;">
-<div id="ftn.math_toolkit.ellint.ellint_3.f0" class="footnote"><p><a href="#math_toolkit.ellint.ellint_3.f0" class="para"><sup class="para">[1] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.math_toolkit.ellint.ellint_3.f0" href="#math_toolkit.ellint.ellint_3.f0" class="para">1</a>] </sup>
           I haven't been able to find a literature reference for this relation, but
           it appears to be the convention used by Mathematica. Intuitively the first
           <span class="emphasis"><em>2 * m * &#928;(n, k)</em></span> terms cancel out as the derivative
@@ -337,8 +337,8 @@
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
       Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
-      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
+      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

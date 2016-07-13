@@ -24,7 +24,7 @@ using boost::none;
 //#ifndef BOOST_OPTIONAL_NO_CONVERTING_ASSIGNMENT
 //#ifndef BOOST_OPTIONAL_NO_CONVERTING_COPY_CTOR
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
 
 enum State
 {
@@ -334,7 +334,7 @@ void test_optional_ref_to_movables()
 
 int main()
 {
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
     test_move_ctor_from_U();
     test_move_ctor_form_T();
     test_move_ctor_from_optional_T();

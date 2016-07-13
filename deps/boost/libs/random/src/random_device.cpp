@@ -197,13 +197,17 @@ public:
 
   unsigned int next() {
     unsigned int result;
-    long sz = read(fd, reinterpret_cast<char *>(&result), sizeof(result));
-    if(sz == -1)
-      error("error while reading");
-    else if(sz != sizeof(result)) {
-      errno = 0;
-      error("EOF while reading");
-    }
+    std::size_t offset = 0;
+    do {
+      long sz = read(fd, reinterpret_cast<char *>(&result) + offset, sizeof(result) - offset);
+      if(sz == -1)
+        error("error while reading");
+      else if(sz == 0) {
+        errno = 0;
+        error("EOF while reading");
+      }
+      offset += sz;
+    } while(offset < sizeof(result));
     return result;
   }
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;4.&#160;Boost.Array</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="any/s04.html" title="Acknowledgements">
@@ -32,7 +32,7 @@
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2001-2004 Nicolai M. Josuttis</p></div>
 <div><div class="legalnotice">
-<a name="idm45555445531648"></a><p>Distributed under the Boost Software License, Version 1.0.
+<a name="idp39477760"></a><p>Distributed under the Boost Software License, Version 1.0.
       (See accompanying file <code class="filename">LICENSE_1_0.txt</code> or copy at 
       <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>
@@ -40,7 +40,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt><span class="section"><a href="array.html#array.intro">Introduction</a></span></dt>
 <dt><span class="section"><a href="array/reference.html">Reference</a></span></dt>
 <dd><dl><dt><span class="section"><a href="array/reference.html#header.boost.array_hpp">Header &lt;boost/array.hpp&gt;</a></span></dt></dl></dd>
@@ -89,24 +89,24 @@
     Standard). The reasons array is not an reversible STL container is
     because:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc" compact>
 <li class="listitem">No constructors are provided.</li>
 <li class="listitem">Elements may have an undetermined initial value (see <a class="xref" href="array/rationale.html" title="Design Rationale">the section called &#8220;Design Rationale&#8221;</a>).</li>
 <li class="listitem">
-<code class="computeroutput"><a class="link" href="boost/swap_idm45507162621920.html" title="Function swap">swap</a></code>() has no constant complexity.</li>
+<code class="computeroutput"><a class="link" href="boost/swap_idp6051440.html" title="Function swap">swap</a></code>() has no constant complexity.</li>
 <li class="listitem">
-<code class="computeroutput"><a class="link" href="boost/array.html#idm45507162983296-bb">size</a></code>() is always constant, based on the second template argument of the type.</li>
+<code class="computeroutput"><a class="link" href="boost/array.html#idp9053552-bb">size</a></code>() is always constant, based on the second template argument of the type.</li>
 <li class="listitem">The container provides no allocator support.</li>
 </ul></div>
 <p>
     </p>
 <p>It doesn't fulfill the requirements of a "sequence" (see Section 23.1.1, [lib.sequence.reqmts] of the C++ Standard), except that:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist compact" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc" compact>
 <li class="listitem">
-<code class="computeroutput"><a class="link" href="boost/array.html#idm45507162961280-bb">front</a></code>() and <code class="computeroutput"><a class="link" href="boost/array.html#idm45507162956640-bb">back</a></code>() are provided.</li>
+<code class="computeroutput"><a class="link" href="boost/array.html#idp7291504-bb">front</a></code>() and <code class="computeroutput"><a class="link" href="boost/array.html#idp7296144-bb">back</a></code>() are provided.</li>
 <li class="listitem">
-<code class="computeroutput"><a class="link" href="boost/array.html#idm45507162975808-bb">operator[]</a></code> and <code class="computeroutput"><a class="link" href="boost/array.html#idm45507162968544-bb">at</a></code>() are provided.</li>
+<code class="computeroutput"><a class="link" href="boost/array.html#idp9061040-bb">operator[]</a></code> and <code class="computeroutput"><a class="link" href="boost/array.html#idp7284240-bb">at</a></code>() are provided.</li>
 </ul></div>
 <p>
     </p>

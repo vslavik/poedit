@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Thread-Safety</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../signals2.html" title="Chapter&#160;28.&#160;Boost.Signals2">
+<link rel="up" href="../signals2.html" title="Chapter&#160;30.&#160;Boost.Signals2">
 <link rel="prev" href="../boost/signals2/trackable.html" title="Class trackable">
 <link rel="next" href="faq.html" title="Frequently Asked Questions">
 </head>
@@ -26,14 +26,14 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="signals2.thread-safety"></a>Thread-Safety</h2></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="thread-safety.html#idm45555129342784">Introduction</a></span></dt>
-<dt><span class="section"><a href="thread-safety.html#idm45555129336624">Signals and combiners</a></span></dt>
-<dt><span class="section"><a href="thread-safety.html#idm45555129314000">Connections and other classes</a></span></dt>
+<div class="toc"><dl>
+<dt><span class="section"><a href="thread-safety.html#idp397892816">Introduction</a></span></dt>
+<dt><span class="section"><a href="thread-safety.html#idp397898912">Signals and combiners</a></span></dt>
+<dt><span class="section"><a href="thread-safety.html#idp397921584">Connections and other classes</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555129342784"></a>Introduction</h3></div></div></div>
+<a name="idp397892816"></a>Introduction</h3></div></div></div>
 <p>
       The primary motivation for Boost.Signals2 is to provide a version of
       the original Boost.Signals library which can be used safely in a
@@ -50,7 +50,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555129336624"></a>Signals and combiners</h3></div></div></div>
+<a name="idp397898912"></a>Signals and combiners</h3></div></div></div>
 <p>
       Each signal object default-constructs a <code class="computeroutput">Mutex</code> object to protect
       its internal state.  Furthermore, a <code class="computeroutput">Mutex</code> is created
@@ -62,7 +62,7 @@
       signal's methods are called.  The mutex is usually held until the
       method completes, however there is one major exception to this rule.  When
       a signal is invoked by calling
-      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idm45507110436960-bb">signal::operator()</a></code>,
+      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp78479280-bb">signal::operator()</a></code>,
       the invocation first acquires a lock on the signal's mutex.  Then
       it obtains a handle to the signal's slot list and combiner.  Next
       it releases the signal's mutex, before invoking the combiner to
@@ -82,7 +82,7 @@
       find the next callable slot while iterating through the signal's
       slot list.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>The <code class="computeroutput">Mutex</code> associated with the connection to the
           slot is locked.</p></li>
 <li class="listitem"><p>All the tracked <code class="computeroutput">weak_ptr</code> associated with the
@@ -109,7 +109,7 @@
       Note that since we unlock the connection's mutex before executing
       its associated slot, it is possible a slot will still be executing
       after it has been disconnected by a
-      <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html#idm45506979106640-bb">connection::disconnect</a>()</code>, if
+      <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html#idp38334944-bb">connection::disconnect</a>()</code>, if
       the disconnect was called concurrently with signal invocation.
     </p>
 <p>
@@ -126,7 +126,7 @@
       Future signal invocations will receive a handle to the newly created deep
       copy of the slot list, and the old slot list will be destroyed once it
       is no longer in use.  Similarly, if you change a signal's combiner with
-      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idm45507038472304-bb">signal::set_combiner</a></code>
+      <code class="computeroutput"><a class="link" href="../boost/signals2/signal.html#idp73073984-bb">signal::set_combiner</a></code>
       while a signal invocation is running concurrently, the concurrent
       signal invocation will continue to use the old combiner undisturbed,
       while future signal invocations will receive a handle to the new combiner.
@@ -164,7 +164,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555129314000"></a>Connections and other classes</h3></div></div></div>
+<a name="idp397921584"></a>Connections and other classes</h3></div></div></div>
 <p>
       The methods of the <code class="computeroutput"><a class="link" href="../boost/signals2/connection.html" title="Class connection">signals2::connection</a></code> class are thread-safe,
       with the exception of assignment and swap.  This is achived via locking the mutex

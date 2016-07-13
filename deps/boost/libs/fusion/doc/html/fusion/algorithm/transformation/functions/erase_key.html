@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>erase_key</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="erase.html" title="erase">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase_key.h0"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase_key.description"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.description">Description</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase_key.description"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.description">Description</a>
           </h6>
 <p>
             For an <a class="link" href="../../../sequence/concepts/associative_sequence.html" title="Associative Sequence">associative</a>
@@ -40,7 +40,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase_key.h1"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase_key.synopsis"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.synopsis">Synopsis</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase_key.synopsis"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Key</span><span class="special">,</span>
@@ -115,7 +115,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.transformation.functions.erase_key.h2"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase_key.expression_semantics"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.expression_semantics">Expression
+            <span><a name="fusion.algorithm.transformation.functions.erase_key.expression_semantics"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="erase_key.html" title="erase_key"><code class="computeroutput"><span class="identifier">erase_key</span></code></a><span class="special">&lt;</span><span class="identifier">Key</span><span class="special">&gt;(</span><span class="identifier">seq</span><span class="special">);</span>
@@ -132,21 +132,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase_key.h3"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase_key.complexity"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.complexity">Complexity</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase_key.complexity"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.complexity">Complexity</a>
           </h6>
 <p>
             Constant. Returns a view which is lazily evaluated.
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase_key.h4"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase_key.header"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.header">Header</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase_key.header"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">transformation</span><span class="special">/</span><span class="identifier">erase_key</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">erase_key</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.transformation.functions.erase_key.h5"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.erase_key.example"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.example">Example</a>
+            <span><a name="fusion.algorithm.transformation.functions.erase_key.example"></a></span><a class="link" href="erase_key.html#fusion.algorithm.transformation.functions.erase_key.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="identifier">assert</span><span class="special">(</span><a class="link" href="erase_key.html" title="erase_key"><code class="computeroutput"><span class="identifier">erase_key</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><a class="link" href="../../../container/generation/functions/make_map.html" title="make_map"><code class="computeroutput"><span class="identifier">make_map</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">long</span><span class="special">&gt;(</span><span class="char">'a'</span><span class="special">,</span> <span class="char">'b'</span><span class="special">))</span> <span class="special">==</span> <a class="link" href="../../../container/generation/functions/make_map.html" title="make_map"><code class="computeroutput"><span class="identifier">make_map</span></code></a><span class="special">&lt;</span><span class="keyword">long</span><span class="special">&gt;(</span><span class="char">'b'</span><span class="special">));</span>
 </pre>

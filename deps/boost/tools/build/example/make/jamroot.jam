@@ -1,5 +1,6 @@
 import feature ;
 import toolset ;
+import os ;
 
 path-constant HERE : . ;
 make main.cpp : main_cpp.pro : @do-something ;
@@ -10,4 +11,12 @@ toolset.flags do-something PYTHON : <example.python.interpreter> ;
 actions do-something
 {
     "$(PYTHON:E=python)" "$(HERE)/foo.py" "$(>)" "$(<)"
+}
+
+if [ os.name ] = VMS
+{
+    actions do-something
+    {
+        $(PYTHON:E=python) $(HERE:W)foo.py $(>:W) $(<:W)
+    }
 }

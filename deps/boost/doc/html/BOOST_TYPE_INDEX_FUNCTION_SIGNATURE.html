@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_TYPE_INDEX_FUNCTION_SIGNATURE</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="boost_typeindex_header_reference.html#header.boost.type_index_hpp" title="Header &lt;boost/type_index.hpp&gt;">
 <link rel="prev" href="BOOST_TYPE_INDEX_REGISTER_CLASS.html" title="Macro BOOST_TYPE_INDEX_REGISTER_CLASS">
@@ -34,7 +34,7 @@
 
 </span>BOOST_TYPE_INDEX_FUNCTION_SIGNATURE</pre></div>
 <div class="refsect1">
-<a name="idm45555074212112"></a><h2>Description</h2>
+<a name="idp453042672"></a><h2>Description</h2>
 <p>BOOST_TYPE_INDEX_FUNCTION_SIGNATURE is used by <a class="link" href="boost/typeindex/ctti_type_index.html" title="Class ctti_type_index">boost::typeindex::ctti_type_index</a> class to deduce the name of a type. If your compiler is not recognized by the TypeIndex library and you wish to work with <a class="link" href="boost/typeindex/ctti_type_index.html" title="Class ctti_type_index">boost::typeindex::ctti_type_index</a>, you may define this macro by yourself.</p>
 <p>BOOST_TYPE_INDEX_FUNCTION_SIGNATURE must be defined to a compiler specific macro that outputs the <span class="bold"><strong>whole</strong></span> function signature <span class="bold"><strong>including</strong></span> <span class="bold"><strong>template</strong></span> <span class="bold"><strong>parameters</strong></span>.</p>
 <p>If your compiler is not recognised and BOOST_TYPE_INDEX_FUNCTION_SIGNATURE is not defined, then a compile-time error will arise at any attempt to use <a class="link" href="boost/typeindex/ctti_type_index.html" title="Class ctti_type_index">boost::typeindex::ctti_type_index</a> classes.</p>

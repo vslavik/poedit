@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template small_vector_base</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_container_header_reference.html#header.boost.container.small_vector_hpp" title="Header &lt;boost/container/small_vector.hpp&gt;">
 <link rel="prev" href="small_vector_allocator/rebind.html" title="Struct template rebind">
-<link rel="next" href="pmr/small_vector_of.html" title="Struct template small_vector_of">
+<link rel="next" href="small_vector.html" title="Class template small_vector">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="small_vector_allocator/rebind.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_container_header_reference.html#header.boost.container.small_vector_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="pmr/small_vector_of.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="small_vector_allocator/rebind.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_container_header_reference.html#header.boost.container.small_vector_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="small_vector.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.container.small_vector_base"></a><div class="titlepage"></div>
@@ -37,40 +37,47 @@
 <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="small_vector_base.html#boost.container.small_vector_baseconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a class="link" href="small_vector_base.html#idm46583869739120-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a class="link" href="small_vector_base.html#idm46583869737120-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a class="link" href="small_vector_base.html#idp20307696-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a class="link" href="small_vector_base.html#idp20309696-bb"><span class="keyword">operator</span><span class="special">=</span></a><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="small_vector_base.html#idm46583869741664-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="small_vector_base.html#idm46583869741104-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="small_vector_base.html#idp20305152-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="small_vector_base.html#idp20305712-bb"><span class="identifier">swap</span></a><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555391511008"></a><h2>Description</h2>
-<p>This class consists of common code from all small_vector&lt;T, N&gt; types that don't depend on the "N" template parameter. This class is non-copyable and non-destructible, so this class tipically used as reference argument to functions that read or write small vectors. Since <code class="computeroutput"><a class="link" href="small_vector.html" title="Class template small_vector">small_vector</a>&lt;T, N&gt;</code> derives from <code class="computeroutput"><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a>&lt;T&gt;</code>, the conversion to <code class="computeroutput"><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a></code> is implicit <span style="color: red">&lt;preformatted&gt;&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;//Clients can pass any small_vector&lt;Foo, N&gt;.
-void read_any_small_vector_of_foo(const small_vector_base&lt;Foo&gt; &amp;in_parameter);&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;void modify_any_small_vector_of_foo(small_vector_base&lt;Foo&gt; &amp;out_parameter);&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;void some_function()
-{&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;   small_vector&lt;Foo, 8&gt; myvector;&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;   read_any_small_vector_of_foo(myvector);   // Reads myvector&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;   modify_any_small_vector_of_foo(myvector); // Modifies myvector&lt;/preformatted&gt;</span></p>
-<p><span style="color: red">&lt;preformatted&gt;}
-&lt;/preformatted&gt;</span></p>
-<p>All <code class="computeroutput">boost::container:vector</code> member functions are inherited. See <code class="computeroutput">vector</code> documentation for details. </p>
+<a name="idp92862016"></a><h2>Description</h2>
+<pre class="programlisting">
+
+<span class="identifier">Clients</span> <span class="identifier">can</span> <span class="identifier">pass</span> <span class="identifier">any</span> <span class="identifier">small_vector</span><span class="special">&lt;</span><span class="identifier">Foo</span><span class="special">,</span> <span class="identifier">N</span><span class="special">&gt;</span><span class="special">.</span>
+    <span class="keyword">void</span> <span class="identifier">read_any_small_vector_of_foo</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">small_vector_base</span><span class="special">&lt;</span><span class="identifier">Foo</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="identifier">in_parameter</span><span class="special">)</span><span class="special">;</span>
+
+    <span class="keyword">void</span> <span class="identifier">modify_any_small_vector_of_foo</span><span class="special">(</span><span class="identifier">small_vector_base</span><span class="special">&lt;</span><span class="identifier">Foo</span><span class="special">&gt;</span> <span class="special">&amp;</span><span class="identifier">in_out_parameter</span><span class="special">)</span><span class="special">;</span>
+
+    <span class="keyword">void</span> <span class="identifier">some_function</span><span class="special">(</span><span class="special">)</span>
+    <span class="special">{</span>
+
+       <span class="identifier">small_vector</span><span class="special">&lt;</span><span class="identifier">Foo</span><span class="special">,</span> <span class="number">8</span><span class="special">&gt;</span> <span class="identifier">myvector</span><span class="special">;</span>
+
+       <span class="identifier">read_any_small_vector_of_foo</span><span class="special">(</span><span class="identifier">myvector</span><span class="special">)</span><span class="special">;</span>   <span class="comment">// Reads myvector</span>
+
+       <span class="identifier">modify_any_small_vector_of_foo</span><span class="special">(</span><span class="identifier">myvector</span><span class="special">)</span><span class="special">;</span> <span class="comment">// Modifies myvector</span>
+
+    <span class="special">}</span>
+    </pre>
+<p>All `boost::container:vector` member functions are inherited. See `vector` documentation for details. </p>
 <div class="refsect2">
-<a name="idm45555391500336"></a><h3>
+<a name="idp92899152"></a><h3>
 <a name="boost.container.small_vector_baseconstruct-copy-destruct"></a><code class="computeroutput">small_vector_base</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a name="idm46583869739120-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a name="idm46583869737120-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a name="idp20307696-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> <a name="idp20309696-bb"></a><span class="keyword">operator</span><span class="special">=</span><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555391482784"></a><h3>
-<a name="idm46583869741664-bb"></a><code class="computeroutput">small_vector_base</code> public member functions</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm46583869741104-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<a name="idp92916768"></a><h3>
+<a name="idp20305152-bb"></a><code class="computeroutput">small_vector_base</code> public member functions</h3>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp20305712-bb"></a><span class="identifier">swap</span><span class="special">(</span><a class="link" href="small_vector_base.html" title="Class template small_vector_base">small_vector_base</a> <span class="special">&amp;</span> other<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 </div>
 </div>
@@ -84,7 +91,7 @@ void read_any_small_vector_of_foo(const small_vector_base&lt;Foo&gt; &amp;in_par
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="small_vector_allocator/rebind.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_container_header_reference.html#header.boost.container.small_vector_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="pmr/small_vector_of.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="small_vector_allocator/rebind.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../boost_container_header_reference.html#header.boost.container.small_vector_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="small_vector.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

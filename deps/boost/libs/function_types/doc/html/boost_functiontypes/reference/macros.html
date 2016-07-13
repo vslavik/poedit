@@ -87,10 +87,10 @@
   <span class="special">((</span> <span class="identifier">FASTCALL</span>           <span class="special">,</span> <span class="identifier">fastcall_cc</span> <span class="special">,</span> <span class="identifier">BOOST_PP_IDENTITY</span><span class="special">(</span><span class="identifier">__fastcall</span><span class="special">)</span> <span class="special">))\</span>
   <span class="special">((</span> <span class="identifier">CLRCALL</span>            <span class="special">,</span> <span class="identifier">clrcall_cc</span>  <span class="special">,</span> <span class="identifier">BOOST_PP_IDENTITY</span><span class="special">(</span><span class="identifier">__clrcall</span> <span class="special">)</span> <span class="special">))\</span>
   <span class="special">((</span> <span class="identifier">THISCALL</span>           <span class="special">,</span> <span class="identifier">thiscall_cc</span> <span class="special">,</span> <span class="identifier">BOOST_PP_IDENTITY</span><span class="special">(</span><span class="identifier">__thiscall</span><span class="special">)</span> <span class="special">))\</span>
-  <span class="special">((</span> <span class="identifier">IMPLICIT_THISCALL</span>  <span class="special">,</span> <span class="identifier">thiscall_cc</span> <span class="special">,</span> <span class="identifier">BOOST_PP_EMPTY</span>                <span class="special">))</span> 
-<span class="comment">// Don't get confused by the last line, here (thiscall can't be specified
-</span><span class="comment">// explicitly prior to MSVC 8).
-</span></pre>
+  <span class="special">((</span> <span class="identifier">IMPLICIT_THISCALL</span>  <span class="special">,</span> <span class="identifier">thiscall_cc</span> <span class="special">,</span> <span class="identifier">BOOST_PP_EMPTY</span>                <span class="special">))</span>
+<span class="comment">// Don't get confused by the last line, here (thiscall can't be specified</span>
+<span class="comment">// explicitly prior to MSVC 8).</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -127,9 +127,9 @@
           disabled. Example:
         </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">BOOST_FT_CC_STDCALL</span> <span class="identifier">non_variadic</span><span class="special">|</span><span class="identifier">callable_builtin</span>
-<span class="comment">// enables stdcall calling convention for all non-variadic, 
-</span><span class="comment">// callable, builtin types
-</span></pre>
+<span class="comment">// enables stdcall calling convention for all non-variadic, </span>
+<span class="comment">// callable, builtin types</span>
+</pre>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">

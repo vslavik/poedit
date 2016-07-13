@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Step 2: Configure Boost.Build jamfile to use AutoIndex</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Boost.AutoIndex">
 <link rel="up" href="../tut.html" title="Getting Started and Tutorial">
 <link rel="prev" href="build.html" title="Step 1: Build the AutoIndex tool">
@@ -57,26 +57,26 @@
         mylibrary
     :
         # Build requirements go here:
-        
+
         # &lt;auto-index&gt;on (or off) one turns on (or off) indexing:
         &lt;auto-index&gt;on
-        
+
         # Turns on (or off) auto-index-verbose for diagnostic info.
         # This is highly recommended until you have got all the many details correct!
-        &lt;auto-index-verbose&gt;on 
-        
+        &lt;auto-index-verbose&gt;on
+
         # Choose the indexing method (separately for html and PDF) - see manual.
         # Choose indexing method for PDFs:
         &lt;format&gt;pdf:&lt;auto-index-internal&gt;off
-        
+
         # Choose indexing method for html:
         &lt;format&gt;html:&lt;auto-index-internal&gt;on
-        
+
         # Set the name of the script file to use (index.idx is popular):
         &lt;auto-index-script&gt;index.idx
         # Commands in the script file should all use RELATIVE PATHS
         # otherwise the script will not be portable to other machines.
-        # Relative paths are normally taken as relative to the location 
+        # Relative paths are normally taken as relative to the location
         # of the script file, but we can add a prefix to all
         # those relative paths using the &lt;auto-index-prefix&gt; feature.
         # The path specified by &lt;auto-index-prefix&gt; may be either relative or
@@ -86,7 +86,7 @@
 
         # Tell Quickbook that it should enable indexing.
         &lt;quickbook-define&gt;enable_index ;
-      
+
     ;
 </pre>
 <div class="tip"><table border="0" summary="Tip">

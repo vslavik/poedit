@@ -129,6 +129,9 @@ static std::string const ticket_10398_4
 static std::string const ticket_10412
     = "POLYGON((897747.8 6270564.3,897764.3 6270569.7,897776.5 6270529.5,897768.1 6270527.1,897767.6 6270529.4,897756.3 6270525.8,897745.8 6270522.3,897752 6270502.9,897749.7 6270502,897750.7 6270499.1,897751.8 6270498.6,897752.3 6270499.3,897754.6 6270497.9,897755.8 6270500.2,897766.8 6270494.1,897765.6 6270491.5,897768.3 6270490.5,897770.9 6270491.5,897770.2 6270494.6,897780.1 6270497.5,897781 6270494.6,897786.8 6270496.6,897790.8 6270482.5,897785.3 6270480.7,897785.9 6270478.2,897768.9 6270473.2,897768.1 6270475.8,897766.1 6270475.2,897758.7 6270479.2,897753.2 6270481.8,897751.9 6270479,897746.5 6270481.9,897748 6270484.6,897745.2 6270486.1,897743.9 6270483.3,897741.4 6270484.7,897742.6 6270487.3,897739.4 6270488.9,897738.3 6270486.3,897735.6 6270487.8,897733.1 6270496.8,897731.2 6270502.7,897732.4 6270503.2,897731.5 6270506.1,897730.3 6270505.7,897725.8 6270520.2,897726.8 6270520.7,897726 6270523,897728 6270523.7,897726.3 6270529.6,897742.8 6270534.5,897741.2 6270539.9,897751.4 6270543.4,897750.7 6270546.4,897753.2 6270547.2,897747.8 6270564.3))";
 
+static std::string const ticket_11580
+    = "POLYGON((14.02 474.96,14.02 494.96,14.022 494.96,14.022 486.24,14.02 474.96))";
+
 // CCW Polygons not working in 1.56
 static std::string const mysql_report_2014_10_24
     = "POLYGON((0 0, 0 8, 8 8, 8 10, -10 10, -10 0, 0 0))";
@@ -257,15 +260,10 @@ void test_all()
 
     test_one<polygon_type, polygon_type>("spike_simplex15", spike_simplex, join_round, end_round, 50.3633, 1.5);
     test_one<polygon_type, polygon_type>("spike_simplex15", spike_simplex, join_miter, end_flat, 51.5509, 1.5);
-
     test_one<polygon_type, polygon_type>("spike_simplex30", spike_simplex, join_round, end_round, 100.9199, 3.0);
-#if defined(BOOST_GEOMETRY_BUFFER_INCLUDE_FAILING_TESTS)
     test_one<polygon_type, polygon_type>("spike_simplex30", spike_simplex, join_miter, end_flat, 106.6979, 3.0);
-#endif
     test_one<polygon_type, polygon_type>("spike_simplex150", spike_simplex, join_round, end_round, 998.9821, 15.0);
-#if defined(BOOST_GEOMETRY_BUFFER_INCLUDE_FAILING_TESTS)
     test_one<polygon_type, polygon_type>("spike_simplex150", spike_simplex, join_miter, end_flat, 1428.1560, 15.0);
-#endif
 
     test_one<polygon_type, polygon_type>("join_types", join_types, join_round, end_flat, 88.2060, 1.5);
 
@@ -523,6 +521,11 @@ void test_all()
     test_one<polygon_type, polygon_type>("ticket_10398_4_91", ticket_10398_4, join_miter, end_flat, 819.1406, 9.1, -999, false);
 
     test_one<polygon_type, polygon_type>("ticket_10412", ticket_10412, join_miter, end_flat, 3109.6616, 1.5, -999, false);
+    test_one<polygon_type, polygon_type>("ticket_11580_100", ticket_11580, join_miter, end_flat, 52.0221000, 1.00, -999, false);
+#ifdef BOOST_GEOMETRY_TEST_INCLUDE_FAILING_TESTS
+    // Larger distance, resulting in only one circle
+    test_one<polygon_type, polygon_type>("ticket_11580_237", ticket_11580, join_miter, end_flat, 999.999, 2.37, -999, false);
+#endif
 
     // Tickets - deflated
     test_one<polygon_type, polygon_type>("ticket_10398_1_5", ticket_10398_1, join_miter, end_flat, 404.3936, -0.5);

@@ -415,21 +415,29 @@ inline void eval_left_shift(tommath_int& t, UI i)
 template <class UI>
 inline void eval_right_shift(tommath_int& t, UI i)
 {
+   using default_ops::eval_increment;
+   using default_ops::eval_decrement;
+   bool neg = eval_get_sign(t) < 0;
    tommath_int d;
+   if(neg)
+      eval_increment(t);
    detail::check_tommath_result(mp_div_2d(&t.data(), static_cast<unsigned>(i), &t.data(), &d.data()));
+   if(neg)
+      eval_decrement(t);
 }
 template <class UI>
 inline void eval_left_shift(tommath_int& t, const tommath_int& v, UI i)
 {
    detail::check_tommath_result(mp_mul_2d(const_cast< ::mp_int*>(&v.data()), static_cast<unsigned>(i), &t.data()));
 }
+/*
 template <class UI>
 inline void eval_right_shift(tommath_int& t, const tommath_int& v, UI i)
 {
    tommath_int d;
    detail::check_tommath_result(mp_div_2d(const_cast< ::mp_int*>(&v.data()), static_cast<unsigned long>(i), &t.data(), &d.data()));
 }
-
+*/
 inline void eval_bitwise_and(tommath_int& result, const tommath_int& v)
 {
    BOOST_MP_TOMMATH_BIT_OP_CHECK(result);

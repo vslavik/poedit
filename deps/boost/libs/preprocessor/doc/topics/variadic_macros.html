@@ -1,40 +1,37 @@
 <html>
   <head>
+    <meta  content="text/html; charset=windows-1252"  http-equiv="content-type">
     <title>variadic_macros.html</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <link  rel="stylesheet"  type="text/css"  href="../styles.css">
     <style>
     u { font-weight: normal; text-decoration: none; }
     </style>
   </head>
   <body>
     <h4>Variadic Macros</h4>
-    <div> Variadic macros are supported by a number of compilers.
-      They are
-      macros of the form:
-    </div>
-    <div class="code">
+    <div> Variadic macros are supported by a number of compilers. They are
+      macros of the form: </div>
+    <div  class="code">
       <pre>#define SOME_MACRO(ZeroOrMoreParameters,...) macro expansion possible specifying __VA_ARGS__</pre>
     </div>
-    <div> The '...' in the parameter list represents the variadic
-      data when the macro is invoked and the __VA_ARGS__ in the expansion
-      represents the variadic data in the expansion of the macro. Variadic
-      data is of the form of 1 or more preprocessor tokens separated by
-      commas.<br>
+    <div> The '...' in the parameter list represents the variadic data when the
+      macro is invoked and the __VA_ARGS__ in the expansion represents the
+      variadic data in the expansion of the macro. Variadic data is of the form
+      of 1 or more preprocessor tokens separated by commas.<br>
       <br>
-      The '...' must be the last parameter in the macro definition and there
-      may be 0 or more non-variadic parameters preceding it.<br>
+      The '...' must be the last parameter in the macro definition and there may
+      be 0 or more non-variadic parameters preceding it.<br>
       <br>
-      In the expansion of the macro __VA_ARGS__ may be specified 0 or more
-      times to represent the variadic data. The variadic data in the
-      expansion is a comma separated list of preprocessor tokens representing
-      the variadic data which the invoker of the macro enters as the last
-      arguments to the macro.<br>
+      In the expansion of the macro __VA_ARGS__ may be specified 0 or more times
+      to represent the variadic data. The variadic data in the expansion is a
+      comma separated list of preprocessor tokens representing the variadic data
+      which the invoker of the macro enters as the last arguments to the macro.<br>
     </div>
     <h4>Example<u> - Creating and invoking a variadic macro.</u></h4>
-    <div class="code">
+    <div  class="code">
       <pre>#define INITIALIZE_INT_ARRAY(array_name,...) \ <br> static int array_name[] = { __VA_ARGS__ }; \ <br> /**/<br><br> INITIALIZE_INT_ARRAY(myname,45,789,33510,9346,2)</pre>
     </div>
-    <u> <span style="font-weight: bold;">Preprocessor
+    <u> <span  style="font-weight: bold;">Preprocessor
         Library Support<br>
       </span></u>
     <div>The library offers support for variadic macros for those
@@ -56,7 +53,15 @@
       When BOOST_PP_VARIADICS is 1, the library offers some extended
       functionality
       by using variadic macros, and also offers extended support for working
-      with variadic data.<br>
+      with variadic data.<br><br>
+      <a  name="vmvcquirk"></a>Visual C++ has a 
+      few quirks related to variadic macros which require the end-user to code
+      slightly differently. When BOOST_PP_VARIADICS is 1 and Visual C++ is the
+      compiler BOOST_PP_VARIADICS_MSVC is 1, else when BOOST_PP_VARIADICS is 1
+      and Visual C++ is not the compiler BOOST_PP_VARIADICS_MSVC is 0. When
+      BOOST_PP_VARIADICS is 0 then BOOST_PP_VARIADICS_MSVC is not defined.
+      In this way the end-user, when using variadic macros, can test for the
+      presence of Visual C++ as the compiler and code accordingly.<br>
       <br>
       Support for working with variadic
       data is largely centered on being able to convert variadic data to
@@ -64,7 +69,7 @@
       functionality for working with those Boost preprocessor library data
       types is much greater than that for working with variadic data directly.<br>
     </div>
-    <a name="VNotation"></a>
+    <a  name="VNotation"></a>
     <h4>Notation For Variadic Macros<br>
     </h4>
     <div>In the documentation, headers which have variadic macros,
@@ -131,7 +136,7 @@
       use this variadic data reliably as arguments to other macros, one needs
       variadic macro support.<br>
     </div>
-    <u style="font-weight: bold;"> Using a Tuple Instead of an Array<br>
+    <u  style="font-weight: bold;"> Using a Tuple Instead of an Array<br>
     </u>
     <div>An array as a preprocessor data type is a two-element tuple where the
       first element is the array size and the second element is a tuple which
@@ -144,7 +149,7 @@
       type is essentially obsolete for conforming C++ compilers. Only if your
       compiler does not support variadic macros is the preprocessor array data
       type still useful.</div>
-    <u style="font-weight: bold;">Using Variadic Data</u>
+    <u  style="font-weight: bold;">Using Variadic Data</u>
     <div>Variadic data exists in the
       form of comma-separated preprocessor tokens. This is the case whether
       the variadic data comes from the __VA_ARGS__ of a variadic macro, from
@@ -169,7 +174,7 @@
       variadic data as a whole to variadic macros as the last parameter of
       the macro. However: <br>
       <br>
-      <span style="font-weight: bold;">Attempting to pass
+      <span  style="font-weight: bold;">Attempting to pass
         variadic data as a
         whole directly into a non-variadic macro is not guaranteed to work and
         may fail.<br>
@@ -178,7 +183,7 @@
       of compilers, currently most notably Visual C++. Even passing variadic
       data as arguments to a non-variadic macro, when it is not represented
       in
-      the form of&nbsp; __VA_ARGS__, may fail with certain compilers.<br>
+      the form of  __VA_ARGS__, may fail with certain compilers.<br>
       <br>
       What follows are very simple examples, showing how variadic data can be
       passed to a non-variadic macro.<br>
@@ -188,9 +193,9 @@
     <h4>Example<u> - Passing variadic data as a whole to a
         non-variadic
         macro. DO NOT DO.</u></h4>
-    <div class="code">
+    <div  class="code">
       <pre>#define MACRO_ARG_2(x,y) BOOST_PP_ADD(x,y)<br>#define VAR_MACRO(...) __VA_ARGS__<br><br>/* The following should not be done and is not guaranteed to work with compilers. */<br><br><span
-style="font-weight: bold;"><span style="font-family: monospace;"></span></span>int xx = MACRO_ARG_2(VAR_MACRO(2,3));</pre>
+ style="font-weight: bold;"><span  style="font-family: monospace;"></span></span>int xx = MACRO_ARG_2(VAR_MACRO(2,3));</pre>
     </div>
     <div> There are two ways to pass variadic data to a non-variadic
       macro.
@@ -203,7 +208,7 @@ style="font-weight: bold;"><span style="font-family: monospace;"></span></span>i
         a
         non-variadic macro.<br>
       </u></h4>
-    <div class="code">
+    <div  class="code">
       <pre>#define MACRO_ARG_2(x,y) BOOST_PP_ADD(x,y)<br>#define VAR_MACRO(...) __VA_ARGS__<br><br>/* The following will work correctly */<br><br>int xx = MACRO_ARG_2<br> (<br> BOOST_PP_VARIADIC_ELEM(0,VAR_MACRO(2,3)),<br> BOOST_PP_VARIADIC_ELEM(1,VAR_MACRO(2,3))<br> );</pre>
     </div>
     <div>The second way is to use a macro in the library called
@@ -215,7 +220,7 @@ style="font-weight: bold;"><span style="font-family: monospace;"></span></span>i
         BOOST_PP_OVERLOAD
         and on to a non-variadic macro.<br>
       </u></h4>
-    <div class="code">
+    <div  class="code">
       <pre>#define MACRO_ARG_2(x,y) BOOST_PP_ADD(x,y)<br>#define VAR_MACRO(...) __VA_ARGS__<br><br>/* The following will work correctly */<br><br>int xx = BOOST_PP_OVERLOAD(MACRO_ARG_,VAR_MACRO(2,3))(VAR_MACRO(2,3));<br><br>/* For Visual C++ it is necessary to do this */<br><br>int xx = <br>BOOST_PP_CAT(BOOST_PP_OVERLOAD(MACRO_ARG_,VAR_MACRO(2,3))(VAR_MACRO(2,3)),BOOST_PP_EMPTY());</pre>
     </div>
     <br>
@@ -230,27 +235,28 @@ style="font-weight: bold;"><span style="font-family: monospace;"></span></span>i
     </div>
     <b>See</b> <b>Also</b><br>
     <ul>
-      <li><a href="../ref/variadics.html">BOOST_PP_VARIADICS</a></li>
-      <li><a href="../headers/tuple.html">Tuple Macros</a><br>
+      <li><a  href="../ref/variadics.html">BOOST_PP_VARIADICS</a></li>
+      <li><a  href="../headers/tuple.html">Tuple Macros</a><br>
       </li>
-      <li><a href="../headers/variadic.html">Variadic
+      <li><a  href="../headers/variadic.html">Variadic
           Macros<br>
         </a></li>
-      <li><a href="../ref/array_enum.html">BOOST_PP_ARRAY_ENUM</a></li>
-      <li><a href="../ref/list_enum_r.html">BOOST_PP_LIST_ENUM</a></li>
-      <li><a href="../ref/seq_enum.html">BOOST_PP_SEQ_ENUM</a></li>
-      <li><a href="../ref/tuple_enum.html">BOOST_PP_TUPLE_ENUM</a></li>
-      <li><a href="../ref/overload.html">BOOST_PP_OVERLOAD</a></li>
+      <li><a  href="../ref/array_enum.html">BOOST_PP_ARRAY_ENUM</a></li>
+      <li><a  href="../ref/list_enum_r.html">BOOST_PP_LIST_ENUM</a></li>
+      <li><a  href="../ref/seq_enum.html">BOOST_PP_SEQ_ENUM</a></li>
+      <li><a  href="../ref/tuple_enum.html">BOOST_PP_TUPLE_ENUM</a></li>
+      <li><a  href="../ref/overload.html">BOOST_PP_OVERLOAD</a></li>
     </ul>
-    <hr size="1">
-    <div style="margin-left: 0px;"> <i>© Copyright
+    <hr  size="1">
+    <div  style="margin-left: 0px;"> <i>© Copyright
         Edward Diener
-        2011,2013</i> </div>
-    <div style="margin-left: 0px;">
+        2011,2013,2016</i> </div>
+    <div  style="margin-left: 0px;">
       <p><small>Distributed under the Boost Software License,
           Version 1.0.
-          (See accompanying file <a href="../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a>
-          or copy at <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</a>)</small></p>
+          (See accompanying file <a  href="../../../../LICENSE_1_0.txt">LICENSE_1_0.txt</a>
+          or copy at <a  href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/LICENSE_1_0.txt</a>)</small></p>
     </div>
-  </body>
-</html>
+  
+
+</body></html>

@@ -116,7 +116,7 @@ namespace any_tests // test definitions
 
         check(value0.empty(), "moved away value is empty");
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
         check_equal(
             move_copy_conting_class::copy_count, 0u, 
@@ -136,7 +136,7 @@ namespace any_tests // test definitions
 
         check(value0.empty(), "moved away is empty");
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
         check_equal(
             move_copy_conting_class::copy_count, 0u, 
@@ -155,7 +155,7 @@ namespace any_tests // test definitions
 
         check_false(value0.empty(), "copyed value is not empty");
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
         check_equal(
             move_copy_conting_class::copy_count, 1u, 
@@ -175,7 +175,7 @@ namespace any_tests // test definitions
 
         check_false(value0.empty(), "copyied value is not empty");
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
         check_equal(
             move_copy_conting_class::copy_count, 1u, 
@@ -197,7 +197,7 @@ namespace any_tests // test definitions
 #endif
 
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
         
 #ifndef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
@@ -224,7 +224,7 @@ namespace any_tests // test definitions
 #endif 
 
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
 
 #ifndef BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION
@@ -246,7 +246,7 @@ namespace any_tests // test definitions
         any value(value0); 
 
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
 
         check_equal(
@@ -266,7 +266,7 @@ namespace any_tests // test definitions
         value = value0;
 
         check_false(value.empty(), "empty");
-        check_equal(value.type(), typeid(move_copy_conting_class), "type");
+        check_equal(value.type(), typeindex::type_id<move_copy_conting_class>(), "type");
         check_non_null(any_cast<move_copy_conting_class>(&value), "any_cast<move_copy_conting_class>");
 
         check_equal(

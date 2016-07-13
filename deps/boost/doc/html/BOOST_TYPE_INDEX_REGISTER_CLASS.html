@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_TYPE_INDEX_REGISTER_CLASS</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="boost_typeindex_header_reference.html#header.boost.type_index_hpp" title="Header &lt;boost/type_index.hpp&gt;">
 <link rel="prev" href="boost/typeindex/type_id_runtime.html" title="Function template type_id_runtime">
@@ -34,29 +34,29 @@
 
 </span>BOOST_TYPE_INDEX_REGISTER_CLASS</pre></div>
 <div class="refsect1">
-<a name="idm45555074260336"></a><h2>Description</h2>
+<a name="idp452994960"></a><h2>Description</h2>
 <p>BOOST_TYPE_INDEX_REGISTER_CLASS is used to help to emulate RTTI. Put this macro into the public section of polymorphic class to allow runtime type detection.</p>
-<p>Depending on the typeid() availability this macro will expand to nothing or to virtual helper function <code class="computeroutput">virtual const type_info&amp; boost_type_info_type_id_runtime_() const noexcept</code>.</p>
+<p>Depending on the typeid() availability this macro will expand to nothing or to virtual helper function `virtual const type_info&amp; boost_type_info_type_id_runtime_() const noexcept`.</p>
 <p><span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"><span class="keyword">class</span> <span class="identifier">A</span> <span class="special">{</span>
-<span class="keyword">public</span><span class="special">:</span>
-    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span>
-    <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">A</span><span class="special">(</span><span class="special">)</span><span class="special">{</span><span class="special">}</span>
-<span class="special">}</span><span class="special">;</span>
+<pre class="programlisting"> <span class="keyword">class</span> <span class="identifier">A</span> <span class="special">{</span>
+ <span class="keyword">public</span><span class="special">:</span>
+     <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span>
+     <span class="keyword">virtual</span> <span class="special">~</span><span class="identifier">A</span><span class="special">(</span><span class="special">)</span><span class="special">{</span><span class="special">}</span>
+ <span class="special">}</span><span class="special">;</span>
 
-<span class="keyword">struct</span> <span class="identifier">B</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">A</span> <span class="special">{</span>
-    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span>
-<span class="special">}</span><span class="special">;</span>
+ <span class="keyword">struct</span> <span class="identifier">B</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">A</span> <span class="special">{</span>
+     <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span>
+ <span class="special">}</span><span class="special">;</span>
 
-<span class="keyword">struct</span> <span class="identifier">C</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">B</span> <span class="special">{</span>
-    <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span>
-<span class="special">}</span><span class="special">;</span>
+ <span class="keyword">struct</span> <span class="identifier">C</span><span class="special">:</span> <span class="keyword">public</span> <span class="identifier">B</span> <span class="special">{</span>
+     <span class="identifier">BOOST_TYPE_INDEX_REGISTER_CLASS</span>
+ <span class="special">}</span><span class="special">;</span>
 
-<span class="special">...</span>
+ <span class="special">...</span>
 
-<span class="identifier">C</span> <span class="identifier">c1</span><span class="special">;</span>
-<span class="identifier">A</span><span class="special">*</span> <span class="identifier">pc1</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">c1</span><span class="special">;</span>
-<span class="identifier">assert</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_id</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_id_runtime</span><span class="special">(</span><span class="special">*</span><span class="identifier">pc1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+ <span class="identifier">C</span> <span class="identifier">c1</span><span class="special">;</span>
+ <span class="identifier">A</span><span class="special">*</span> <span class="identifier">pc1</span> <span class="special">=</span> <span class="special">&amp;</span><span class="identifier">c1</span><span class="special">;</span>
+ <span class="identifier">assert</span><span class="special">(</span><span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_id</span><span class="special">&lt;</span><span class="identifier">C</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span> <span class="special">==</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">typeindex</span><span class="special">::</span><span class="identifier">type_id_runtime</span><span class="special">(</span><span class="special">*</span><span class="identifier">pc1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
 </div>

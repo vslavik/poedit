@@ -89,6 +89,8 @@ void do_round_trip(const T& val, std::ios_base::fmtflags f)
    BOOST_CHECK_EQUAL(new_val, val);
    new_val = static_cast<T>(val.str(0, f));
    BOOST_CHECK_EQUAL(new_val, val);
+   ss >> new_val;
+   BOOST_CHECK_EQUAL(new_val, val);
 }
 
 template <class T>
@@ -118,8 +120,10 @@ void negative_spots(const boost::mpl::true_&)
    BOOST_CHECK_EQUAL(T(-1002).str(), "-1002");
    if(!std::numeric_limits<T>::is_modulo)
    {
+#ifndef BOOST_NO_EXCEPTIONS
       BOOST_CHECK_THROW(T(-2).str(0, std::ios_base::oct), std::runtime_error);
       BOOST_CHECK_THROW(T(-2).str(0, std::ios_base::hex), std::runtime_error);
+#endif
    }
 }
 template <class T>

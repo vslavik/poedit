@@ -21,6 +21,7 @@
  * were not included here.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <boost/log/detail/threadsafe_queue.hpp>
 
 #ifndef BOOST_LOG_NO_THREADS

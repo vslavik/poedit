@@ -8,6 +8,34 @@
 
 [section:changes History]
 
+
+[heading Version 4.7.0 - boost 1.61]
+
+[*Know Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
+
+Please define BOOST_THREAD_PATCH to apply the patch that could unfortunately results is a regression as described in [@http://svn.boost.org/trac/boost/ticket/12049 #12049].
+
+* [@http://svn.boost.org/trac/boost/ticket/4833 #4833] MinGW/test_tss_lib: Support of automatic tss cleanup for native threading API not available
+* [@http://svn.boost.org/trac/boost/ticket/8600 #8600] wait_for_any hangs, if called with multiple copies of shared_future referencing same task
+* [@http://svn.boost.org/trac/boost/ticket/9118 #9118] Seg fault on thread join when llvm and libc++ are used
+
+Please take a look at [@https://svn.boost.org/trac/boost/query?status=assigned&status=new&status=reopened&component=thread&type=!Feature+Requests&col=id&col=summary&order=id thread Know Bugs] to see the current state.
+
+Please take a look at [@http://www.boost.org/development/tests/master/developer/thread.html thread trunk regression test] to see the last regression test snapshot.
+
+[*New Experimental Features:]
+
+* [@http://svn.boost.org/trac/boost/ticket/11772 #11772] Add a launch::sync policy
+
+[*Fixed Bugs:]
+
+* [@http://svn.boost.org/trac/boost/ticket/11494 #11494] boost::this_thread::yield() is marked as deprecated in the synopsis
+* [@http://svn.boost.org/trac/boost/ticket/11562 #11562] (condition_variable_any::wait_until + recursive_mutex + steady_clock) timer expires after computer time is set forward on Ubuntu 64-bit
+* [@http://svn.boost.org/trac/boost/ticket/12013 #12013] F_pass and FArgs_pass tests segfault
+* [@http://svn.boost.org/trac/boost/ticket/12036 #12036] boost::physical_concurrency always returns 0 if BOOST_USE_WINAPI_VERSION is not defined
+
 [heading Version 4.6.0 - boost 1.60]
 
 [*Know Bugs:]
@@ -26,14 +54,13 @@ Please take a look at [@http://www.boost.org/development/tests/master/developer/
 
 * [@http://svn.boost.org/trac/boost/ticket/11231 #11231] Allow to set continuation future's destructor behavior to non-blocking
 * [@http://svn.boost.org/trac/boost/ticket/11424 #11424] Provide shared_timed_mutex as an alternative name for shared_mutex and deprecate the use of shared_mutex as a timed mutex
-* [@http://svn.boost.org/trac/boost/ticket/11734 #11734] future::then(Cont) should be able to execute the contination on undetermined thread
+* [@http://svn.boost.org/trac/boost/ticket/11734 #11734] future::then(Cont) should be able to execute the continuation on undetermined thread
 * [@http://svn.boost.org/trac/boost/ticket/11736 #11736] Allow to use launch::executor on future::then(launch::executor, cont)
 * [@http://svn.boost.org/trac/boost/ticket/11737 #11737] Add a launch::inherit policy that can be used on ::then() to use the policy of the parent future
 
 
 [*Fixed Bugs:]
 
-* [@http://svn.boost.org/trac/boost/ticket/3926 #3926] thread_specific_ptr + dlopen library causes a SIGSEGV.
 * [@http://svn.boost.org/trac/boost/ticket/6377 #6377] Condition variable blocks when changing time
 * [@http://svn.boost.org/trac/boost/ticket/6787 #6787] boost::thread::sleep() hangs if system time is rolled back
 * [@http://svn.boost.org/trac/boost/ticket/7665 #7665] this_thread::sleep_for no longer uses steady_clock in thread
@@ -67,6 +94,7 @@ Please take a look at [@http://www.boost.org/development/tests/master/developer/
 * [@http://svn.boost.org/trac/boost/ticket/11817 #11817] 'sync_queue_is_closed' was not declared in boost/thread/executors/thread_executor.hpp
 * [@http://svn.boost.org/trac/boost/ticket/11818 #11818] future.then will be blocked if promise is set after the invocation of then
 
+* [@http://svn.boost.org/trac/boost/ticket/12049 #12049] Assertion failure from detached threads during shutdown
 
 [heading Version 4.5.0 - boost 1.58]
 

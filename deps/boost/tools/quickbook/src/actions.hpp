@@ -46,16 +46,6 @@ namespace quickbook
     int load_snippets(fs::path const& file, std::vector<template_symbol>& storage,
         std::string const& extension, value::tag_type load_type);
 
-    struct xinclude_path {
-        xinclude_path(fs::path const& path, std::string const& uri) :
-            path(path), uri(uri) {}
-
-        fs::path path;
-        std::string uri;
-    };
-
-    xinclude_path calculate_xinclude_path(value const&, quickbook::state&);
-
     struct error_message_action
     {
         // Prints an error message to std::cerr

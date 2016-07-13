@@ -13,6 +13,7 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <string>
 #include <algorithm>
 #include <boost/throw_exception.hpp>

@@ -32,6 +32,8 @@
 #include <boost/type_traits/is_fundamental.hpp>
 #include <boost/type_traits/is_integral.hpp>
 
+#include <boost/geometry/core/cs.hpp>
+
 #include <boost/geometry/util/select_most_precise.hpp>
 
 namespace boost { namespace geometry
@@ -598,6 +600,65 @@ inline T r2d()
 {
     static T const conversion_coefficient = T(180.0) / geometry::math::pi<T>();
     return conversion_coefficient;
+}
+
+
+#ifndef DOXYGEN_NO_DETAIL
+namespace detail {
+
+template <typename DegreeOrRadian>
+struct as_radian
+{
+    template <typename T>
+    static inline T apply(T const& value)
+    {
+        return value;
+    }
+};
+
+template <>
+struct as_radian<degree>
+{
+    template <typename T>
+    static inline T apply(T const& value)
+    {
+        return value * d2r<T>();
+    }
+};
+
+template <typename DegreeOrRadian>
+struct from_radian
+{
+    template <typename T>
+    static inline T apply(T const& value)
+    {
+        return value;
+    }
+};
+
+template <>
+struct from_radian<degree>
+{
+    template <typename T>
+    static inline T apply(T const& value)
+    {
+        return value * r2d<T>();
+    }
+};
+
+} // namespace detail
+#endif
+
+template <typename DegreeOrRadian, typename T>
+inline T as_radian(T const& value)
+{
+    return detail::as_radian<DegreeOrRadian>::apply(value);
+}
+
+template <typename DegreeOrRadian, typename T>
+inline T from_radian(T const& value)
+{
+    return detail::from_radian<DegreeOrRadian>::apply(value);
 }
 
 

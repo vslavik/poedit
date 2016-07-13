@@ -69,6 +69,11 @@ TT_TEST_BEGIN(add_rvalue_reference)
    add_rvalue_reference_test_13a();
 #endif
 
+   BOOST_CHECK_TYPE(tt::add_rvalue_reference<void>::type, void);
+   BOOST_CHECK_TYPE(tt::add_rvalue_reference<const void>::type, const void);
+   BOOST_CHECK_TYPE(tt::add_rvalue_reference<const volatile void>::type, const volatile void);
+   BOOST_CHECK_TYPE(tt::add_rvalue_reference<volatile void>::type, volatile void);
+   
 TT_TEST_END
 
 

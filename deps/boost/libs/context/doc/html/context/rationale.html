@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Rationale</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="prev" href="architectures/crosscompiling.html" title="Cross compiling">
@@ -26,24 +26,24 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="context.rationale"></a><a class="link" href="rationale.html" title="Rationale">Rationale</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="rationale/other_apis_.html">Other APIs </a></span></dt>
 <dt><span class="section"><a href="rationale/x86_and_floating_point_env.html">x86 and
       floating-point env</a></span></dt>
 </dl></div>
 <h4>
 <a name="context.rationale.h0"></a>
-      <span class="phrase"><a name="context.rationale.no_inline_assembler"></a></span><a class="link" href="rationale.html#context.rationale.no_inline_assembler">No
+      <span><a name="context.rationale.no_inline_assembler"></a></span><a class="link" href="rationale.html#context.rationale.no_inline_assembler">No
       inline-assembler</a>
     </h4>
 <p>
       Some newer compiler (for instance MSVC 10 for x86_64 and itanium) do not support
-      inline assembler. <a href="#ftn.context.rationale.f0" class="footnote" name="context.rationale.f0"><sup class="footnote">[1]</sup></a>. Inlined assembler generates code bloating which is not welcome
+      inline assembler. <sup>[<a name="context.rationale.f0" href="#ftn.context.rationale.f0" class="footnote">1</a>]</sup>. Inlined assembler generates code bloating which is not welcome
       on embedded systems.
     </p>
 <h4>
 <a name="context.rationale.h1"></a>
-      <span class="phrase"><a name="context.rationale.fcontext_t"></a></span><a class="link" href="rationale.html#context.rationale.fcontext_t">fcontext_t</a>
+      <span><a name="context.rationale.fcontext_t"></a></span><a class="link" href="rationale.html#context.rationale.fcontext_t">fcontext_t</a>
     </h4>
 <p>
       <span class="bold"><strong>Boost.Context</strong></span> provides the low level API fcontext_t
@@ -63,8 +63,8 @@
       <span class="emphasis"><em>fcontext_t</em></span> is an opaque pointer.
     </p>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.context.rationale.f0" class="footnote"><p><a href="#context.rationale.f0" class="para"><sup class="para">[1] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.f0" href="#context.rationale.f0" class="para">1</a>] </sup>
         <a href="http://msdn.microsoft.com/en-us/library/4ks26t93.aspx" target="_top">MSDN article
         'Inline Assembler'</a>
       </p></div>

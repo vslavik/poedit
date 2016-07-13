@@ -39,7 +39,6 @@ namespace std{
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/greater_equal.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/bool.hpp>
 #include <boost/core/no_exceptions_support.hpp>
 
 #ifndef BOOST_SERIALIZATION_DEFAULT_TYPE_INFO   
@@ -226,15 +225,6 @@ struct heap_allocation {
             static T * invoke_new() {
                 return static_cast<T *>((T::operator new)(sizeof(T)));
             }
-            template<void D(void *, std::size_t)>
-            static void deleter(void * t, std::size_t s){
-                D(t, s);
-            }
-
-            template<void D(void *)>
-            static void deleter(void * t, std::size_t s){
-                D(t);
-            }
             static void invoke_delete(T * t) {
                 // if compilation fails here, the likely cause that the class
                 // T has a class specific new operator but no class specific
@@ -244,7 +234,7 @@ struct heap_allocation {
                 // that the class might have class specific new with NO
                 // class specific delete at all.  Patches (compatible with
                 // C++03) welcome!
-                deleter<T::operator delete>(t, sizeof(T));
+                delete t;
             }
         };
         struct doesnt_have_new_operator {
@@ -253,7 +243,7 @@ struct heap_allocation {
             }
             static void invoke_delete(T * t) {
                 // Note: I'm reliance upon automatic conversion from T * to void * here
-                (operator delete)(t);
+                delete t;
             }
         };
         static T * invoke_new() {

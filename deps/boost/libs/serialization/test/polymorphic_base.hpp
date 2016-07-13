@@ -16,23 +16,23 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <boost/config.hpp>
+
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/assume_abstract.hpp>
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/type_info_implementation.hpp>
 #include <boost/serialization/extended_type_info_no_rtti.hpp>
 
-#include "test_decl.hpp"
-
-#if defined(POLYMORPHIC_DERIVED_IMPORT)
-    #define DLL_DECL IMPORT_DECL
-#elif defined(POLYMORPHIC_DERIVED_EXPORT)
-    #define DLL_DECL EXPORT_DECL
+#if defined(POLYMORPHIC_BASE_IMPORT)
+    #define DLL_DECL BOOST_SYMBOL_IMPORT
+#elif defined(POLYMORPHIC_BASE_EXPORT)
+    #define DLL_DECL BOOST_SYMBOL_EXPORT
 #else
-    #define DLL_DECL(x)
+    #define DLL_DECL
 #endif
 
-class DLL_DECL(BOOST_PP_EMPTY()) polymorphic_base
+class BOOST_SYMBOL_VISIBLE polymorphic_base
 {
     friend class boost::serialization::access;
     template<class Archive>
@@ -47,6 +47,8 @@ public:
     virtual const char * get_key() const = 0;
     virtual ~polymorphic_base(){};
 };
+
+#undef DLL_DECL
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(polymorphic_base)
 

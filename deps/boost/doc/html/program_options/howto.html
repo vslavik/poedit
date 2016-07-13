@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>How To</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../program_options.html" title="Chapter&#160;22.&#160;Boost.Program_options">
+<link rel="up" href="../program_options.html" title="Chapter&#160;24.&#160;Boost.Program_options">
 <link rel="prev" href="overview.html" title="Library Overview">
 <link rel="next" href="design.html" title="Design Discussion">
 </head>
@@ -26,25 +26,25 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="program_options.howto"></a>How To</h2></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="howto.html#idm45555218255664">Non-conventional Syntax</a></span></dt>
-<dt><span class="section"><a href="howto.html#idm45555218249552">Response Files</a></span></dt>
-<dt><span class="section"><a href="howto.html#idm45555218241536">Winmain Command Line</a></span></dt>
-<dt><span class="section"><a href="howto.html#idm45555218236304">Option Groups and Hidden Options</a></span></dt>
-<dt><span class="section"><a href="howto.html#idm45555218221088">Custom Validators</a></span></dt>
-<dt><span class="section"><a href="howto.html#idm45555218212368">Unicode Support</a></span></dt>
-<dt><span class="section"><a href="howto.html#idm45555218193088">Allowing Unknown Options</a></span></dt>
+<div class="toc"><dl>
+<dt><span class="section"><a href="howto.html#idp308950480">Non-conventional Syntax</a></span></dt>
+<dt><span class="section"><a href="howto.html#idp308956592">Response Files</a></span></dt>
+<dt><span class="section"><a href="howto.html#idp308964960">Winmain Command Line</a></span></dt>
+<dt><span class="section"><a href="howto.html#idp308970192">Option Groups and Hidden Options</a></span></dt>
+<dt><span class="section"><a href="howto.html#idp308985408">Custom Validators</a></span></dt>
+<dt><span class="section"><a href="howto.html#idp308994400">Unicode Support</a></span></dt>
+<dt><span class="section"><a href="howto.html#idp309013680">Allowing Unknown Options</a></span></dt>
 </dl></div>
 <p>This section describes how the library can be used in specific
   situations.</p>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218255664"></a>Non-conventional Syntax</h3></div></div></div>
+<a name="idp308950480"></a>Non-conventional Syntax</h3></div></div></div>
 <p>Sometimes, standard command line syntaxes are not enough. For
     example, the gcc compiler has "-frtti" and -fno-rtti" options, and this
     syntax is not directly supported.
     </p>
-<a class="indexterm" name="idm45555218254416"></a><p>For such cases, the library allows the user to provide an
+<a class="indexterm" name="idp308951728"></a><p>For such cases, the library allows the user to provide an
     <em class="firstterm">additional parser</em> -- a function which will be called on each
     command line element, before any processing by the library. If the
     additional parser recognises the syntax, it returns the option name and
@@ -81,8 +81,8 @@ store(command_line_parser(ac, av).options(desc).extra_parser(reg_foo)
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218249552"></a>Response Files</h3></div></div></div>
-<a class="indexterm" name="idm45555218248880"></a><p>Some operating system have very low limits of the command line
+<a name="idp308956592"></a>Response Files</h3></div></div></div>
+<a class="indexterm" name="idp308957264"></a><p>Some operating system have very low limits of the command line
       length. The common way to work around those limitations is using
       <em class="firstterm">response files</em>.  A response file is just a
       configuration file which uses the same syntax as the command line. If
@@ -149,7 +149,7 @@ if (vm.count("response-file")) {
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218241536"></a>Winmain Command Line</h3></div></div></div>
+<a name="idp308964960"></a>Winmain Command Line</h3></div></div></div>
 <p>On the Windows operating system, GUI applications receive the
     command line as a single string, not split into elements. For that reason,
     the command line parser cannot be used directly. At least on some
@@ -171,11 +171,11 @@ store(command_line_parser(args).options(desc).run(), vm);
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218236304"></a>Option Groups and Hidden Options</h3></div></div></div>
+<a name="idp308970192"></a>Option Groups and Hidden Options</h3></div></div></div>
 <p>Having a single instance of the <code class="computeroutput"><a class="link" href="../boost/program_options/options_description.html" title="Class options_description">options_description</a></code> class with all
     the program's options can be problematic:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>Some options make sense only for specific source, for example,
           configuration files.</p></li>
 <li class="listitem"><p>The user would prefer some structure in the generated help message.</p></li>
@@ -270,7 +270,7 @@ if (vm.count("num-threads")) {
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218221088"></a>Custom Validators</h3></div></div></div>
+<a name="idp308985408"></a>Custom Validators</h3></div></div></div>
 <p>By default, the conversion of option's value from string into C++
       type is done using iostreams, which sometimes is not convenient. The
       library allows the user to customize the conversion for specific
@@ -333,10 +333,10 @@ void validate(boost::any&amp; v,
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218212368"></a>Unicode Support</h3></div></div></div>
+<a name="idp308994400"></a>Unicode Support</h3></div></div></div>
 <p>To use the library with Unicode, you'd need to:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>Use Unicode-aware parsers for Unicode input</p></li>
 <li class="listitem"><p>Require Unicode support for options which need it</p></li>
 </ul></div>
@@ -403,14 +403,14 @@ $ export LC_CTYPE=ru_RU.KOI8-R
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555218193088"></a>Allowing Unknown Options</h3></div></div></div>
+<a name="idp309013680"></a>Allowing Unknown Options</h3></div></div></div>
 <p>Usually, the library throws an exception on unknown option names. This
       behaviour can be changed. For example, only some part of your application uses
-      <a class="link" href="../program_options.html" title="Chapter&#160;22.&#160;Boost.Program_options">Program_options</a>, and you wish to pass unrecognized options to another part of
+      <a class="link" href="../program_options.html" title="Chapter&#160;24.&#160;Boost.Program_options">Program_options</a>, and you wish to pass unrecognized options to another part of
       the program, or even to another application.</p>
 <p>To allow unregistered options on the command line, you need to use
       the <code class="computeroutput"><a class="link" href="../boost/program_options/basic_command_line_parser.html" title="Class template basic_command_line_parser">basic_command_line_parser</a></code> class for parsing (not <code class="computeroutput"><a class="link" href="../boost/program_options/parse_command_line.html" title="Function template parse_command_line">parse_command_line</a></code>)
-      and call the <code class="computeroutput"><a class="link" href="../boost/program_options/basic_command_line_parser.html#idm45507159542288-bb">allow_unregistered</a></code>
+      and call the <code class="computeroutput"><a class="link" href="../boost/program_options/basic_command_line_parser.html#idp132963616-bb">allow_unregistered</a></code>
       method of that class:
       </p>
 <pre class="programlisting">

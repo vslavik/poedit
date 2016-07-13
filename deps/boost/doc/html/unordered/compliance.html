@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>C++11 Compliance</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../unordered.html" title="Chapter&#160;38.&#160;Boost.Unordered">
+<link rel="up" href="../unordered.html" title="Chapter&#160;40.&#160;Boost.Unordered">
 <link rel="prev" href="comparison.html" title="Comparison with Associative Containers">
 <link rel="next" href="rationale.html" title="Implementation Rationale">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="unordered.compliance"></a><a class="link" href="compliance.html" title="C++11 Compliance">C++11 Compliance</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="compliance.html#unordered.compliance.move">Move emulation</a></span></dt>
 <dt><span class="section"><a href="compliance.html#unordered.compliance.allocator_compliance">Use of allocators</a></span></dt>
 <dt><span class="section"><a href="compliance.html#unordered.compliance.pairs">Pairs</a></span></dt>
@@ -42,7 +42,7 @@
         are available it will use them, but if not it uses a close, but imperfect
         emulation. On such compilers:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Non-copyable objects can be stored in the containers. They can be constructed
             in place using <code class="computeroutput"><span class="identifier">emplace</span></code>,

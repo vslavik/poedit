@@ -48,12 +48,92 @@ void file_dirscan_( file_info_t * const dir, scanback func, void * closure );
 int file_collect_dir_content_( file_info_t * const dir );
 void file_query_( file_info_t * const );
 
+void file_archivescan_( file_archive_info_t * const archive, archive_scanback func,
+                        void * closure );
+int file_collect_archive_content_( file_archive_info_t * const archive );
+void file_archive_query_( file_archive_info_t * const );
+
+static void file_archivescan_impl( OBJECT * path, archive_scanback func,
+                                   void * closure );
 static void file_dirscan_impl( OBJECT * dir, scanback func, void * closure );
+static void free_file_archive_info( void * xarchive, void * data );
 static void free_file_info( void * xfile, void * data );
+
 static void remove_files_atexit( void );
 
 
 static struct hash * filecache_hash;
+static struct hash * archivecache_hash;
+
+
+/*
+ * file_archive_info() - return cached information about an archive
+ *
+ * Returns a default initialized structure containing only queried file's info
+ * in case this is the first time this file system entity has been
+ * referenced.
+ */
+
+file_archive_info_t * file_archive_info( OBJECT * const path, int * found )
+{
+    OBJECT * const path_key = path_as_key( path );
+    file_archive_info_t * archive;
+
+    if ( !archivecache_hash )
+        archivecache_hash = hashinit( sizeof( file_archive_info_t ),
+            "file_archive_info" );
+
+    archive = (file_archive_info_t *)hash_insert( archivecache_hash, path_key,
+            found );
+
+    if ( !*found )
+    {
+        archive->file = 0;
+        archive->members = FL0;
+    }
+    else
+        object_free( path_key );
+
+    return archive;
+}
+
+
+/*
+ * file_archive_query() - get cached information about a archive file path
+ *
+ * Returns 0 in case querying the OS about the given path fails, e.g. because
+ * the path does not reference an existing file system object.
+ */
+
+file_archive_info_t * file_archive_query( OBJECT * const path )
+{
+    int found;
+    file_archive_info_t * const archive = file_archive_info( path, &found );
+    file_info_t * file = file_query( path );
+
+    if ( !( file && file->is_file ) )
+    {
+        return 0;
+    }
+
+    archive->file = file;
+
+
+    return archive;
+}
+
+
+
+/*
+ * file_archivescan() - scan an archive for members
+ */
+
+void file_archivescan( OBJECT * path, archive_scanback func, void * closure )
+{
+    PROFILE_ENTER( FILE_ARCHIVESCAN );
+    file_archivescan_impl( path, func, closure );
+    PROFILE_EXIT( FILE_ARCHIVESCAN );
+}
 
 
 /*
@@ -112,6 +192,12 @@ void file_done()
     {
         hashenumerate( filecache_hash, free_file_info, (void *)0 );
         hashdone( filecache_hash );
+    }
+
+    if ( archivecache_hash )
+    {
+        hashenumerate( archivecache_hash, free_file_archive_info, (void *)0 );
+        hashdone( archivecache_hash );
     }
 }
 
@@ -261,6 +347,55 @@ void file_remove_atexit( OBJECT * const path )
 
 
 /*
+ * file_archivescan_impl() - no-profiling worker for file_archivescan()
+ */
+
+static void file_archivescan_impl( OBJECT * path, archive_scanback func, void * closure )
+{
+    file_archive_info_t * const archive = file_archive_query( path );
+    if ( !archive || !archive->file->is_file )
+        return;
+
+    /* Lazy collect the archive content information. */
+    if ( filelist_empty( archive->members ) )
+    {
+        if ( DEBUG_BINDSCAN )
+            printf( "scan archive %s\n", object_str( archive->file->name ) );
+        if ( file_collect_archive_content_( archive ) < 0 )
+            return;
+    }
+
+    /* OS specific part of the file_archivescan operation. */
+    file_archivescan_( archive, func, closure );
+
+    /* Report the collected archive content. */
+    {
+        FILELISTITER iter = filelist_begin( archive->members );
+        FILELISTITER const end = filelist_end( archive->members );
+        char buf[ MAXJPATH ];
+
+        for ( ; iter != end ; iter = filelist_next( iter ) )
+        {
+            file_info_t * member_file = filelist_item( iter );
+            LIST * symbols = member_file->files;
+
+            /* Construct member path: 'archive-path(member-name)'
+             */
+            sprintf( buf, "%s(%s)",
+                object_str( archive->file->name ),
+                object_str( member_file->name ) );
+
+            {
+                OBJECT * const member = object_new( buf );
+                (*func)( closure, member, symbols, 1, &member_file->time );
+                object_free( member );
+            }
+        }
+    }
+}
+
+
+/*
  * file_dirscan_impl() - no-profiling worker for file_dirscan()
  */
 
@@ -308,6 +443,14 @@ static void file_dirscan_impl( OBJECT * dir, scanback func, void * closure )
 }
 
 
+static void free_file_archive_info( void * xarchive, void * data )
+{
+    file_archive_info_t * const archive = (file_archive_info_t *)xarchive;
+
+    if ( archive ) filelist_free( archive->members );
+}
+
+
 static void free_file_info( void * xfile, void * data )
 {
     file_info_t * const file = (file_info_t *)xfile;
@@ -324,4 +467,210 @@ static void remove_files_atexit( void )
         remove( object_str( list_item( iter ) ) );
     list_free( files_to_remove );
     files_to_remove = L0;
+}
+
+
+/*
+ * FILELIST linked-list implementation
+ */
+
+FILELIST * filelist_new( OBJECT * path )
+{
+    FILELIST * list = (FILELIST *)BJAM_MALLOC( sizeof( FILELIST ) );
+
+    memset( list, 0, sizeof( *list ) );
+    list->size = 0;
+    list->head = 0;
+    list->tail = 0;
+
+    return filelist_push_back( list, path );
+}
+
+FILELIST * filelist_push_back( FILELIST * list, OBJECT * path )
+{
+    FILEITEM * item;
+    file_info_t * file;
+
+    /* Lazy initialization
+     */
+    if ( filelist_empty( list ) )
+    {
+        list = filelist_new( path );
+        return list;
+    }
+
+
+    item = (FILEITEM *)BJAM_MALLOC( sizeof( FILEITEM ) );
+    memset( item, 0, sizeof( *item ) );
+    item->value = (file_info_t *)BJAM_MALLOC( sizeof( file_info_t ) );
+
+    file = item->value;
+    memset( file, 0, sizeof( *file ) );
+
+    file->name = path;
+    file->files = L0;
+
+    if ( list->tail )
+    {
+        list->tail->next = item;
+    }
+    else
+    {
+        list->head = item;
+    }
+    list->tail = item;
+    list->size++;
+
+    return list;
+}
+
+FILELIST * filelist_push_front( FILELIST * list, OBJECT * path )
+{
+    FILEITEM * item;
+    file_info_t * file;
+
+    /* Lazy initialization
+     */
+    if ( filelist_empty( list ) )
+    {
+        list = filelist_new( path );
+        return list;
+    }
+
+
+    item = (FILEITEM *)BJAM_MALLOC( sizeof( FILEITEM ) );
+    memset( item, 0, sizeof( *item ) );
+    item->value = (file_info_t *)BJAM_MALLOC( sizeof( file_info_t ) );
+
+    file = item->value;
+    memset( file, 0, sizeof( *file ) );
+
+    file->name = path;
+    file->files = L0;
+
+    if ( list->head )
+    {
+        item->next = list->head;
+    }
+    else
+    {
+        list->tail = item;
+    }
+    list->head = item;
+    list->size++;
+
+    return list;
+}
+
+
+FILELIST * filelist_pop_front( FILELIST * list )
+{
+    FILEITEM * item;
+
+    if ( filelist_empty( list ) ) return list;
+
+    item = list->head;
+
+    if ( item )
+    {
+        if ( item->value ) free_file_info( item->value, 0 );
+
+        list->head = item->next;
+        list->size--;
+        if ( !list->size ) list->tail = list->head;
+
+#ifdef BJAM_NO_MEM_CACHE
+        BJAM_FREE( item );
+#endif
+    }
+
+    return list;
+}
+
+int filelist_length( FILELIST * list )
+{
+    int result = 0;
+    if ( !filelist_empty( list ) ) result = list->size;
+
+    return result;
+}
+
+void filelist_free( FILELIST * list )
+{
+    FILELISTITER iter;
+
+    if ( filelist_empty( list ) ) return;
+
+    while ( filelist_length( list ) ) filelist_pop_front( list );
+
+#ifdef BJAM_NO_MEM_CACHE
+    BJAM_FREE( list );
+#endif
+}
+
+int filelist_empty( FILELIST * list )
+{
+    return ( list == FL0 );
+}
+
+
+FILELISTITER filelist_begin( FILELIST * list )
+{
+    if ( filelist_empty( list )
+         || list->head == 0 ) return (FILELISTITER)0;
+
+    return &list->head->value;
+}
+
+
+FILELISTITER filelist_end( FILELIST * list )
+{
+    return (FILELISTITER)0;
+}
+
+
+FILELISTITER filelist_next( FILELISTITER iter )
+{
+    if ( iter )
+    {
+        /*  Given FILEITEM.value is defined as first member of FILEITEM structure
+         *  and FILELISTITER = &FILEITEM.value,
+         *  FILEITEM = *(FILEITEM **)FILELISTITER
+         */
+        FILEITEM * item = (FILEITEM *)iter;
+        iter = ( item->next ? &item->next->value : (FILELISTITER)0 );
+    }
+
+    return iter;
+}
+
+
+file_info_t * filelist_item( FILELISTITER it )
+{
+    file_info_t * result = (file_info_t *)0;
+
+    if ( it )
+    {
+        result = (file_info_t *)*it;
+    }
+
+    return result;
+}
+
+
+file_info_t * filelist_front(  FILELIST * list )
+{
+    if ( filelist_empty( list )
+         || list->head == 0 ) return (file_info_t *)0;
+
+    return list->head->value;
+}
+
+
+file_info_t * filelist_back(  FILELIST * list )
+{
+    if ( filelist_empty( list )
+         || list->tail == 0 ) return (file_info_t *)0;
+
+    return list->tail->value;
 }

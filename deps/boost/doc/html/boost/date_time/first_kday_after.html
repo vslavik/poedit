@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template first_kday_after</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp" title="Header &lt;boost/date_time/date_generators.hpp&gt;">
-<link rel="prev" href="date_generator_parser.html" title="Class template date_generator_parser">
+<link rel="prev" href="last_kday_of_month.html" title="Class template last_kday_of_month">
 <link rel="next" href="first_kday_before.html" title="Class template first_kday_before">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="date_generator_parser.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first_kday_before.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="last_kday_of_month.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first_kday_before.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.date_time.first_kday_after"></a><div class="titlepage"></div>
@@ -41,34 +41,34 @@
   <span class="keyword">typedef</span> <span class="identifier">date_type</span><span class="special">::</span><span class="identifier">duration_type</span>        <a name="boost.date_time.first_kday_after.duration_type"></a><span class="identifier">duration_type</span><span class="special">;</span>   
 
   <span class="comment">// <a class="link" href="first_kday_after.html#boost.date_time.first_kday_afterconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="first_kday_after.html#idm45507089200448-bb"><span class="identifier">first_kday_after</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="first_kday_after.html#idp63513632-bb"><span class="identifier">first_kday_after</span></a><span class="special">(</span><span class="identifier">day_of_week_type</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="first_kday_after.html#idm45507091843536-bb">public member functions</a></span>
-  <span class="identifier">date_type</span> <a class="link" href="first_kday_after.html#idm45507106920912-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_after.html#idm45507099982144-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="first_kday_after.html#idp63572352-bb">public member functions</a></span>
+  <span class="identifier">date_type</span> <a class="link" href="first_kday_after.html#idp63572912-bb"><span class="identifier">get_date</span></a><span class="special">(</span><span class="identifier">date_type</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">day_of_week_type</span> <a class="link" href="first_kday_after.html#idp66267008-bb"><span class="identifier">day_of_week</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555373541568"></a><h2>Description</h2>
+<a name="idp111705088"></a><h2>Description</h2>
 <p>Date generator that takes a date and finds kday after </p>
-<pre class="programlisting"><span class="keyword">typedef</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">date_time</span><span class="special">::</span><span class="identifier">first_kday_after</span><span class="special">&lt;</span><span class="identifier">date</span><span class="special">&gt;</span> <span class="identifier">firstkdayafter</span><span class="special">;</span>
-<span class="identifier">firstkdayafter</span> <span class="identifier">fkaf</span><span class="special">(</span><span class="identifier">Monday</span><span class="special">)</span><span class="special">;</span>
-<span class="identifier">fkaf</span><span class="special">.</span><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date</span><span class="special">(</span><span class="number">2002</span><span class="special">,</span><span class="identifier">Feb</span><span class="special">,</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+<pre class="programlisting">     <span class="keyword">typedef</span> <a class="link" href="first_kday_after.html" title="Class template first_kday_after">boost::date_time::first_kday_after&lt;date&gt;</a> <span class="identifier">firstkdayafter</span><span class="special">;</span>
+     <span class="identifier">firstkdayafter</span> <span class="identifier">fkaf</span><span class="special">(</span><span class="identifier">Monday</span><span class="special">)</span><span class="special">;</span>
+     <span class="identifier">fkaf</span><span class="special">.</span><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date</span><span class="special">(</span><span class="number">2002</span><span class="special">,</span><span class="identifier">Feb</span><span class="special">,</span><span class="number">1</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
 <div class="refsect2">
-<a name="idm45555373522640"></a><h3>
+<a name="idp111720480"></a><h3>
 <a name="boost.date_time.first_kday_afterconstruct-copy-destruct"></a><code class="computeroutput">first_kday_after</code> 
         public
        construct/copy/destruct</h3>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idm45507089200448-bb"></a><span class="identifier">first_kday_after</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
+<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><pre class="literallayout"><a name="idp63513632-bb"></a><span class="identifier">first_kday_after</span><span class="special">(</span><span class="identifier">day_of_week_type</span> dow<span class="special">)</span><span class="special">;</span></pre></li></ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555373516048"></a><h3>
-<a name="idm45507091843536-bb"></a><code class="computeroutput">first_kday_after</code> public member functions</h3>
+<a name="idp111727072"></a><h3>
+<a name="idp63572352-bb"></a><code class="computeroutput">first_kday_after</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">date_type</span> <a name="idm45507106920912-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date_type</span> start_day<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return next kday given. </li>
-<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idm45507099982144-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
+<pre class="literallayout"><span class="identifier">date_type</span> <a name="idp63572912-bb"></a><span class="identifier">get_date</span><span class="special">(</span><span class="identifier">date_type</span> start_day<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Return next kday given. </li>
+<li class="listitem"><pre class="literallayout"><span class="identifier">day_of_week_type</span> <a name="idp66267008-bb"></a><span class="identifier">day_of_week</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>
@@ -81,7 +81,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="date_generator_parser.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first_kday_before.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="last_kday_of_month.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generators_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first_kday_before.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

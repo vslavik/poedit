@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template pointer_has_rebind_other</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../intrusive/reference.html#header.boost.intrusive.pointer_rebind_hpp" title="Header &lt;boost/intrusive/pointer_rebind.hpp&gt;">
 <link rel="prev" href="pointer_has_rebind/any.html" title="Struct template any">
@@ -38,26 +38,26 @@
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> V<span class="special">&gt;</span> 
   <span class="keyword">struct</span> <a class="link" href="pointer_has_rebind_other/any.html" title="Struct template any">any</a> <span class="special">{</span>
     <span class="comment">// <a class="link" href="pointer_has_rebind_other/any.html#boost.intrusive.pointer_has_rebind_other.anyconstruct-copy-destruct">construct/copy/destruct</a></span>
-    <a class="link" href="pointer_has_rebind_other/any.html#idm46322884286608-bb"><span class="identifier">any</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">V</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+    <a class="link" href="pointer_has_rebind_other/any.html#idp38152704-bb"><span class="identifier">any</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">V</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="pointer_has_rebind_other.html#idm46322884284512-bb">public static functions</a></span>
+  <span class="comment">// <a class="link" href="pointer_has_rebind_other.html#idp38154800-bb">public static functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> X<span class="special">&gt;</span> 
-    <span class="keyword">static</span> <span class="keyword">char</span> <a class="link" href="pointer_has_rebind_other.html#idm46322884283952-bb"><span class="identifier">test</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">X</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> X<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">int</span> <a class="link" href="pointer_has_rebind_other.html#idm46322884280576-bb"><span class="identifier">test</span></a><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+    <span class="keyword">static</span> <span class="keyword">char</span> <a class="link" href="pointer_has_rebind_other.html#idp38155360-bb"><span class="identifier">test</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">X</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> X<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">int</span> <a class="link" href="pointer_has_rebind_other.html#idp38158736-bb"><span class="identifier">test</span></a><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">bool</span> <span class="identifier">value</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555275611024"></a><h2>Description</h2>
+<a name="idp213205840"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idm45555275610608"></a><h3>
-<a name="idm46322884284512-bb"></a><code class="computeroutput">pointer_has_rebind_other</code> public static functions</h3>
+<a name="idp213206256"></a><h3>
+<a name="idp38154800-bb"></a><code class="computeroutput">pointer_has_rebind_other</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> X<span class="special">&gt;</span> 
-  <span class="keyword">static</span> <span class="keyword">char</span> <a name="idm46322884283952-bb"></a><span class="identifier">test</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">X</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> X<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">int</span> <a name="idm46322884280576-bb"></a><span class="identifier">test</span><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span></pre></li>
+  <span class="keyword">static</span> <span class="keyword">char</span> <a name="idp38155360-bb"></a><span class="identifier">test</span><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">X</span><span class="special">::</span><span class="keyword">template</span> <span class="identifier">rebind</span><span class="special">&lt;</span> <span class="identifier">U</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">other</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> X<span class="special">&gt;</span> <span class="keyword">static</span> <span class="keyword">int</span> <a name="idp38158736-bb"></a><span class="identifier">test</span><span class="special">(</span><span class="identifier">any</span><span class="special">&lt;</span> <span class="keyword">int</span> <span class="special">&gt;</span><span class="special">,</span> <span class="keyword">void</span> <span class="special">*</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

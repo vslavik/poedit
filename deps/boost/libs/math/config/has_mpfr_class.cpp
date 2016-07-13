@@ -10,5 +10,6 @@
 #  pragma warning (disable : 4512) // assignment operator could not be generated
 #endif
 
+#include <cstddef>
 #include <gmpfrxx.h>
 

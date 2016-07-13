@@ -1,9 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 // Unit Test
 
-// Copyright (c) 2014-2015, Oracle and/or its affiliates.
+// Copyright (c) 2014-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -27,6 +28,7 @@
 #include <boost/iterator/iterator_concepts.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <boost/type_traits/is_const.hpp>
+#include <boost/optional.hpp>
 #include <boost/type_traits/is_reference.hpp>
 
 #include <boost/geometry/core/point_type.hpp>
@@ -93,6 +95,28 @@ inline Geometry from_wkt(std::string const& wkt)
     Geometry geometry;
     boost::geometry::read_wkt(wkt, geometry);
     return geometry;
+}
+
+
+// this function is implemented because std::max_element() requires ForwardIterator
+// but bg::point_iterator<> is InputIterator since it returns non-true reference
+template <typename InputIt, typename Pred>
+inline boost::optional<typename std::iterator_traits<InputIt>::value_type>
+max_value(InputIt first, InputIt last, Pred pred)
+{
+    typedef typename std::iterator_traits<InputIt>::value_type value_type;
+    if (first != last)
+    {
+        value_type found = *first++;
+        for (; first != last; )
+        {
+            value_type current = *first++;
+            if (pred(current, found))
+                found = current;
+        }
+        return found;
+    }
+    return boost::none;
 }
 
 
@@ -460,13 +484,12 @@ struct test_point_iterator_of_geometry
             >::value_type point;
         if (const_begin != const_end)
         {
-            const_point_iterator pit_max = std::max_element(const_begin,
-                                                            const_end,
-                                                            bg::less<point>());
-
-            BOOST_CHECK(pit_max != const_end); // to avoid warnings
+            boost::optional<point>
+                pt_max = max_value(const_begin, const_end, bg::less<point>());
+            
+            BOOST_CHECK(bool(pt_max)); // to avoid warnings
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
-            std::cout << "max point: " << bg::dsv(*pit_max) << std::endl;
+            std::cout << "max point: " << bg::dsv(*pt_max) << std::endl;
 #endif
         }
 #ifdef BOOST_GEOMETRY_TEST_DEBUG

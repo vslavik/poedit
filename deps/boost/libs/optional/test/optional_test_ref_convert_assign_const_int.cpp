@@ -23,8 +23,8 @@
 
 int main()
 {
-  test_converting_assignment<const int>();
-  test_converting_assignment_for_noconst_const<int>();
-  
+#ifndef BOOST_OPTIONAL_CONFIG_NO_PROPER_ASSIGN_FROM_CONST_INT
+  test_converting_assignment<const int, const int>();
+#endif
   return boost::report_errors();
 }

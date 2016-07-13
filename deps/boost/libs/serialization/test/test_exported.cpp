@@ -66,11 +66,11 @@ void polymorphic_derived2::serialize(
 
 BOOST_CLASS_EXPORT_IMPLEMENT(polymorphic_derived2)
 
-template EXPORT_DECL(void) polymorphic_derived2::serialize(
+template BOOST_SYMBOL_EXPORT void polymorphic_derived2::serialize(
     test_oarchive & ar,
     const unsigned int version
 );
-template EXPORT_DECL(void) polymorphic_derived2::serialize(
+template BOOST_SYMBOL_EXPORT void polymorphic_derived2::serialize(
     test_iarchive & ar,
     const unsigned int version
 );

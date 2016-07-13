@@ -23,13 +23,13 @@ private:
     V() :
         m_i(0)
     {}
-    ~V(){}
     template<class Archive>
     void serialize(Archive& ar, unsigned /*version*/)
     {
         ar & m_i;
     }
 public:
+    ~V(){}
     bool operator==(const V & v) const {
         return m_i == v.m_i;
     }

@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2012-2014 Glen Joseph Fernandes 
- * glenfe at live dot com
- *
- * Distributed under the Boost Software License, 
- * Version 1.0. (See accompanying file LICENSE_1_0.txt 
- * or copy at http://boost.org/LICENSE_1_0.txt)
- */
+(c) 2014 Glen Joseph Fernandes
+<glenjofe -at- gmail.com>
+
+Distributed under the Boost Software
+License, Version 1.0.
+http://boost.org/LICENSE_1_0.txt
+*/
 #include <boost/config.hpp>
 #if !defined(BOOST_NO_CXX11_SMART_PTR)
 #include <boost/detail/lightweight_test.hpp>
-#include <boost/smart_ptr/make_unique_array.hpp>
+#include <boost/smart_ptr/make_unique.hpp>
 
 class type {
 public:
@@ -30,7 +30,8 @@ private:
 
 unsigned int type::instances = 0;
 
-int main() {
+int main()
+{
     {
         std::unique_ptr<int[]> a1 = boost::make_unique_noinit<int[]>(3);
         BOOST_TEST(a1.get() != 0);
@@ -81,7 +82,8 @@ int main() {
 }
 #else
 
-int main() {
+int main()
+{
     return 0;
 }
 

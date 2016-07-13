@@ -13,12 +13,12 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <ostream>
 #include <boost/cstdint.hpp>
 #include <boost/log/utility/manipulators/dump.hpp>
-#if defined(_MSC_VER)
-#include "windows_version.hpp"
-#include <windows.h>
+#if defined(_MSC_VER) && (defined(BOOST_LOG_USE_SSSE3) || defined(BOOST_LOG_USE_AVX2))
+#include <boost/detail/winapi/dll.hpp>
 #include <intrin.h> // __cpuid
 #endif
 #include <boost/log/detail/header.hpp>
@@ -159,11 +159,11 @@ struct function_pointer_initializer
                     mmstate = (eax & 6U) == 6U;
 #elif defined(_MSC_VER)
                     // MSVC does not have an intrinsic for xgetbv, we have to query OS
-                    HMODULE hKernel32 = GetModuleHandleA("kernel32.dll");
+                    boost::detail::winapi::HMODULE_ hKernel32 = boost::detail::winapi::GetModuleHandleW(L"kernel32.dll");
                     if (hKernel32)
                     {
-                        typedef uint64_t (__stdcall* get_enabled_extended_features_t)(uint64_t);
-                        get_enabled_extended_features_t get_enabled_extended_features = (get_enabled_extended_features_t)GetProcAddress(hKernel32, "GetEnabledExtendedFeatures");
+                        typedef uint64_t (WINAPI* get_enabled_extended_features_t)(uint64_t);
+                        get_enabled_extended_features_t get_enabled_extended_features = (get_enabled_extended_features_t)boost::detail::winapi::get_proc_address(hKernel32, "GetEnabledExtendedFeatures");
                         if (get_enabled_extended_features)
                         {
                             // XSTATE_MASK_LEGACY_SSE | XSTATE_MASK_GSSE == 6

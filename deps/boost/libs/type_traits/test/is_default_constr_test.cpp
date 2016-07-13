@@ -198,7 +198,9 @@ BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<bug11324_derived>::
 #ifndef BOOST_NO_CXX11_DELETED_FUNCTIONS
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<deleted_default_construct>::value, false);
 #endif
+#if !BOOST_WORKAROUND(BOOST_GCC_VERSION, < 40700)
 BOOST_CHECK_INTEGRAL_CONSTANT(::tt::is_default_constructible<private_default_construct>::value, false);
+#endif
 
 TT_TEST_END
 

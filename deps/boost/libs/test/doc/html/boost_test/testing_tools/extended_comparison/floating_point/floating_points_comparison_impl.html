@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tolerance-based comparisons</title>
 <link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Boost.Test">
 <link rel="up" href="../floating_point.html" title="Floating point comparison">
 <link rel="prev" href="customizing_for_tolerance.html" title="Enabling tolerance for user-defined types">
@@ -49,7 +49,7 @@
             Assertion <a class="link" href="../../../utf_reference/testing_tool_ref/assertion_boost_test_universal_macro.html" title="BOOST_TEST"><code class="computeroutput"><span class="identifier">BOOST_TEST</span></code></a> (when comparing floating-point
             numbers) uses the following algorithm:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 When either value <code class="computeroutput"><span class="identifier">u</span></code>
                 or <code class="computeroutput"><span class="identifier">v</span></code> is zero, evaluates
@@ -93,14 +93,14 @@
           </p>
 <h4>
 <a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.h0"></a>
-            <span class="phrase"><a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.tolerance_in_operator"></a></span><a class="link" href="floating_points_comparison_impl.html#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.tolerance_in_operator">Tolerance
+            <span><a name="boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.tolerance_in_operator"></a></span><a class="link" href="floating_points_comparison_impl.html#boost_test.testing_tools.extended_comparison.floating_point.floating_points_comparison_impl.tolerance_in_operator">Tolerance
             in <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;</span></code></a>
           </h4>
 <p>
             Tolerance-based computations also apply to <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;</span></code> and other relational operators. The
             semantics are defined as follows:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 <span class="emphasis"><em>less-at-tolerance</em></span> &lt;==&gt; <span class="emphasis"><em>strictly-less</em></span>
                 and not <span class="emphasis"><em>close-at-tolerance</em></span>
@@ -146,7 +146,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

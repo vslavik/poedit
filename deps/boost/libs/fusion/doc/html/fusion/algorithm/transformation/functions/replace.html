@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>replace</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="transform.html" title="transform">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.transformation.functions.replace.h0"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.replace.description"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.description">Description</a>
+            <span><a name="fusion.algorithm.transformation.functions.replace.description"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.description">Description</a>
           </h6>
 <p>
             Replaces each value within a sequence of a given type and value with
@@ -36,7 +36,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.replace.h1"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.replace.synopsis"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.synopsis">Synopsis</a>
+            <span><a name="fusion.algorithm.transformation.functions.replace.synopsis"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">,</span>
@@ -133,7 +133,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.transformation.functions.replace.h2"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.replace.expression_semantics"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.expression_semantics">Expression
+            <span><a name="fusion.algorithm.transformation.functions.replace.expression_semantics"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="replace.html" title="replace"><code class="computeroutput"><span class="identifier">replace</span></code></a><span class="special">(</span><span class="identifier">seq</span><span class="special">,</span> <span class="identifier">old_value</span><span class="special">,</span> <span class="identifier">new_value</span><span class="special">);</span>
@@ -150,21 +150,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.replace.h3"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.replace.complexity"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.complexity">Complexity</a>
+            <span><a name="fusion.algorithm.transformation.functions.replace.complexity"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.complexity">Complexity</a>
           </h6>
 <p>
             Constant. Returns a view which is lazily evaluated.
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.replace.h4"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.replace.header"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.header">Header</a>
+            <span><a name="fusion.algorithm.transformation.functions.replace.header"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">transformation</span><span class="special">/</span><span class="identifier">replace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">replace</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.transformation.functions.replace.h5"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.replace.example"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.example">Example</a>
+            <span><a name="fusion.algorithm.transformation.functions.replace.example"></a></span><a class="link" href="replace.html#fusion.algorithm.transformation.functions.replace.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="identifier">assert</span><span class="special">(</span><a class="link" href="replace.html" title="replace"><code class="computeroutput"><span class="identifier">replace</span></code></a><span class="special">(</span><a class="link" href="../../../container/generation/functions/make_vector.html" title="make_vector"><code class="computeroutput"><span class="identifier">make_vector</span></code></a><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">2</span><span class="special">),</span> <span class="number">2</span><span class="special">,</span> <span class="number">3</span><span class="special">)</span> <span class="special">==</span> <a class="link" href="../../../container/generation/functions/make_vector.html" title="make_vector"><code class="computeroutput"><span class="identifier">make_vector</span></code></a><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">3</span><span class="special">));</span>
 </pre>

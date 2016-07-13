@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;19.&#160;Boost.Move</title>
+<title>Chapter&#160;21.&#160;Boost.Move</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
-<link rel="prev" href="lockfree/appendices.html" title="Appendices">
+<link rel="prev" href="metaparse/reference.html" title="Reference">
 <link rel="next" href="move/introduction.html" title="Introduction">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -21,12 +21,12 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="lockfree/appendices.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move/introduction.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="metaparse/reference.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move/introduction.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="move"></a>Chapter&#160;19.&#160;Boost.Move</h2></div>
+<a name="move"></a>Chapter&#160;21.&#160;Boost.Move</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Ion</span> <span class="surname">Gaztanaga</span>
 </h3></div></div>
@@ -40,7 +40,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt><span class="section"><a href="move.html#move.what_is_boost_move">What is Boost.Move?</a></span></dt>
 <dt><span class="section"><a href="move/introduction.html">Introduction</a></span></dt>
 <dt><span class="section"><a href="move/implementing_movable_classes.html">Implementing copyable
@@ -75,6 +75,8 @@
 <dt><span class="section"><a href="move/thanks_to.html">Thanks and credits</a></span></dt>
 <dt><span class="section"><a href="move/release_notes.html">Release Notes</a></span></dt>
 <dd><dl>
+<dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_61">Boost 1.61
+      Release</a></span></dt>
 <dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_60">Boost 1.60
       Release</a></span></dt>
 <dt><span class="section"><a href="move/release_notes.html#move.release_notes.release_notes_boost_1_59">Boost 1.59
@@ -99,12 +101,15 @@
 <dt><span class="section"><a href="move/reference.html">Reference</a></span></dt>
 <dd><dl>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.adl_move_swap_hpp">Header &lt;boost/move/adl_move_swap.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.algo.adaptive_merge_hpp">Header &lt;boost/move/algo/adaptive_merge.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.algo.adaptive_sort_hpp">Header &lt;boost/move/algo/adaptive_sort.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.algorithm_hpp">Header &lt;boost/move/algorithm.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.core_hpp">Header &lt;boost/move/core.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.default_delete_hpp">Header &lt;boost/move/default_delete.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.iterator_hpp">Header &lt;boost/move/iterator.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.make_unique_hpp">Header &lt;boost/move/make_unique.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.move_hpp">Header &lt;boost/move/move.hpp&gt;</a></span></dt>
+<dt><span class="section"><a href="move/reference.html#header.boost.move.algo.move_hpp">Header &lt;boost/move/algo/move.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.traits_hpp">Header &lt;boost/move/traits.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.unique_ptr_hpp">Header &lt;boost/move/unique_ptr.hpp&gt;</a></span></dt>
 <dt><span class="section"><a href="move/reference.html#header.boost.move.utility_hpp">Header &lt;boost/move/utility.hpp&gt;</a></span></dt>
@@ -147,12 +152,12 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: December 14, 2015 at 09:19:04 GMT</small></p></td>
+<td align="left"><p><small>Last revised: May 05, 2016 at 21:19:19 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="lockfree/appendices.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move/introduction.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="metaparse/reference.html"><img src="../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="libraries.html"><img src="../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="index.html"><img src="../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="move/introduction.html"><img src="../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

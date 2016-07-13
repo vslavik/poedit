@@ -918,6 +918,10 @@ inline void buffer_inserter(GeometryInput const& geometry_input, OutputIterator 
     collection.discard_rings();
     collection.block_turns();
     collection.enrich();
+
+    // phase 1: turns (after enrichment/clustering)
+    visit_pieces_policy.apply(const_collection, 1);
+
     collection.traverse();
 
     // Reverse all offsetted rings / traversed rings if:
@@ -943,8 +947,8 @@ inline void buffer_inserter(GeometryInput const& geometry_input, OutputIterator 
     collection.template assign<GeometryOutput>(out);
 
     // Visit collection again
-    // phase 1: rings (after discarding and traversing)
-    visit_pieces_policy.apply(const_collection, 1);
+    // phase 2: rings (after traversing)
+    visit_pieces_policy.apply(const_collection, 2);
 }
 
 template

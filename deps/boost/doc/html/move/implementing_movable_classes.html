@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Implementing copyable and movable classes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../move.html" title="Chapter&#160;19.&#160;Boost.Move">
+<link rel="up" href="../move.html" title="Chapter&#160;21.&#160;Boost.Move">
 <link rel="prev" href="introduction.html" title="Introduction">
 <link rel="next" href="composition_inheritance.html" title="Composition or inheritance">
 </head>
@@ -28,7 +28,7 @@
 <a name="move.implementing_movable_classes"></a><a class="link" href="implementing_movable_classes.html" title="Implementing copyable and movable classes">Implementing copyable
     and movable classes</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="implementing_movable_classes.html#move.implementing_movable_classes.copyable_and_movable_cpp0x">Copyable
       and movable classes in C++0x</a></span></dt>
 <dt><span class="section"><a href="implementing_movable_classes.html#move.implementing_movable_classes.copyable_and_movable_cpp03">Copyable
@@ -112,7 +112,7 @@
         <span class="identifier">references</span></code>. You can find some good
         introduction and tutorials on rvalue references in these papers:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <a href="http://www.artima.com/cppsource/rvalue.html" target="_top"><span class="emphasis"><em>A
             Brief Introduction to Rvalue References</em></span></a>
@@ -159,7 +159,7 @@
         compilers with rvalue references and those who conform to C++03. You just
         need to follow these simple steps:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Put the following macro in the <span class="bold"><strong>private</strong></span>
             section: <code class="computeroutput"><a class="link" href="../BOOST_COPYABLE_AND_MOVABLE.html" title="Macro BOOST_COPYABLE_AND_MOVABLE">BOOST_COPYABLE_AND_MOVABLE(classname)</a></code>
