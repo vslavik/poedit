@@ -377,10 +377,14 @@ private:
 #ifdef _WIN32
     static std::wstring windows_version()
     {
-        OSVERSIONINFOEX info;
-        ZeroMemory(&info, sizeof(info));
+        OSVERSIONINFOEX info = { 0 };
         info.dwOSVersionInfoSize = sizeof(info);
-        GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&info));
+
+        NTSTATUS(WINAPI *fRtlGetVersion)(LPOSVERSIONINFOEXW);
+        fRtlGetVersion = reinterpret_cast<decltype(fRtlGetVersion)>(GetProcAddress(GetModuleHandleA("ntdll"), "RtlGetVersion"));
+        if (fRtlGetVersion)
+            fRtlGetVersion(&info);
+
         return std::to_wstring(info.dwMajorVersion) + L"." + std::to_wstring(info.dwMinorVersion);
     }
 
