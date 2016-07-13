@@ -75,7 +75,7 @@ public:
         return m_i == rhs.m_i;
     }
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version){
+    void serialize(Archive & ar, const unsigned int /*version*/){
         ar & BOOST_SERIALIZATION_NVP(m_i);
     }
 };

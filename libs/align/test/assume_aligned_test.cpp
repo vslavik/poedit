@@ -7,30 +7,56 @@ License, Version 1.0.
 http://boost.org/LICENSE_1_0.txt
 */
 #include <boost/align/assume_aligned.hpp>
-#include <boost/core/lightweight_test.hpp>
-#include <boost/align/is_aligned.hpp>
 
-void test()
+void* test1(void* p)
 {
-    char s[128];
-    char* p = s;
-    while (!boost::alignment::is_aligned(128, p)) {
-        p++;
-    }
-    void* q = p;
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 1);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 2);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 4);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 8);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 16);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 32);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 64);
-    BOOST_ALIGN_ASSUME_ALIGNED(q, 128);
-    BOOST_TEST(q == p);
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 1);
+    return p;
+}
+
+void* test2(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 2);
+    return p;
+}
+
+void* test4(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 4);
+    return p;
+}
+
+void* test8(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 8);
+    return p;
+}
+
+void* test16(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 16);
+    return p;
+}
+
+void* test32(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 32);
+    return p;
+}
+
+void* test64(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 64);
+    return p;
+}
+
+void* test128(void* p)
+{
+    BOOST_ALIGN_ASSUME_ALIGNED(p, 128);
+    return p;
 }
 
 int main()
 {
-    test();
-    return boost::report_errors();
+    return 0;
 }

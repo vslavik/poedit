@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../variant.html" title="Chapter&#160;39.&#160;Boost.Variant">
-<link rel="prev" href="../variant.html" title="Chapter&#160;39.&#160;Boost.Variant">
+<link rel="up" href="../variant.html" title="Chapter&#160;41.&#160;Boost.Variant">
+<link rel="prev" href="../variant.html" title="Chapter&#160;41.&#160;Boost.Variant">
 <link rel="next" href="reference.html" title="Reference">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="variant.tutorial"></a>Tutorial</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.basic">Basic Usage</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.advanced">Advanced Topics</a></span></dt>
 </dl></div>
@@ -78,15 +78,15 @@
   contained value. There are two ways to accomplish this:
   <code class="computeroutput"><a class="link" href="../boost/apply_visitor.html" title="Function apply_visitor">apply_visitor</a></code>, which is safest
   and very powerful, and
-  <code class="computeroutput"><a class="link" href="../boost/get_idm45507165650576.html" title="Function get">get</a>&lt;T&gt;</code>, which is
+  <code class="computeroutput"><a class="link" href="../boost/get_idp74804384.html" title="Function get">get</a>&lt;T&gt;</code>, which is
   sometimes more convenient to use.</p>
 <p>For instance, suppose we wanted to concatenate to the string contained
   in <code class="computeroutput">v</code>. With <span class="bold"><strong>value retrieval</strong></span>
-  by <code class="computeroutput"><a class="link" href="../boost/get_idm45507165650576.html" title="Function get">get</a></code>, this may be accomplished
+  by <code class="computeroutput"><a class="link" href="../boost/get_idp74804384.html" title="Function get">get</a></code>, this may be accomplished
   quite simply, as seen in the following:
 
 </p>
-<pre class="programlisting">std::string&amp; str = <code class="computeroutput"><a class="link" href="../boost/get_idm45507165650576.html" title="Function get">boost::get</a></code>&lt;std::string&gt;(v);
+<pre class="programlisting">std::string&amp; str = <code class="computeroutput"><a class="link" href="../boost/get_idp74804384.html" title="Function get">boost::get</a></code>&lt;std::string&gt;(v);
 str += " world! ";</pre>
 <p>
 
@@ -113,9 +113,9 @@ str += " world! ";</pre>
 </p>
 <pre class="programlisting">void times_two( boost::variant&lt; int, std::string &gt; &amp; operand )
 {
-    if ( int* pi = <code class="computeroutput"><a class="link" href="../boost/get_idm45507165650576.html" title="Function get">boost::get</a></code>&lt;int&gt;( &amp;operand ) )
+    if ( int* pi = <code class="computeroutput"><a class="link" href="../boost/get_idp74804384.html" title="Function get">boost::get</a></code>&lt;int&gt;( &amp;operand ) )
         *pi *= 2;
-    else if ( std::string* pstr = <code class="computeroutput"><a class="link" href="../boost/get_idm45507165650576.html" title="Function get">boost::get</a></code>&lt;std::string&gt;( &amp;operand ) )
+    else if ( std::string* pstr = <code class="computeroutput"><a class="link" href="../boost/get_idp74804384.html" title="Function get">boost::get</a></code>&lt;std::string&gt;( &amp;operand ) )
         *pstr += *pstr;
 }</pre>
 <p>
@@ -242,7 +242,7 @@ std::for_each(
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="variant.tutorial.advanced"></a>Advanced Topics</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.preprocessor">Preprocessor macros</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.over-sequence">Using a type sequence to specify bounded types</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.recursive">Recursive <code class="computeroutput">variant</code> types</a></span></dt>
@@ -334,7 +334,7 @@ typedef <code class="computeroutput">mpl::push_front</code>&lt; types_initial, i
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="variant.tutorial.recursive"></a>Recursive <code class="computeroutput">variant</code> types</h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.recursive.recursive-wrapper">Recursive types with <code class="computeroutput">recursive_wrapper</code></a></span></dt>
 <dt><span class="section"><a href="tutorial.html#variant.tutorial.recursive.recursive-variant">Recursive types with <code class="computeroutput">make_recursive_variant</code></a></span></dt>
 </dl></div>
@@ -510,7 +510,7 @@ int_tree_t var(result);</pre>
     <code class="computeroutput">var</code> as <code class="computeroutput">( 1 ( 3 5 ) 7 )</code>.</p>
 <p>Finally, note that a type sequence can be used to specify the bounded
     types of a recursive <code class="computeroutput">variant</code> via the use of
-    <code class="computeroutput"><a class="link" href="../boost/make_rec_idm45507101497936.html" title="Class template make_recursive_variant_over">boost::make_recursive_variant_over</a></code>,
+    <code class="computeroutput"><a class="link" href="../boost/make_recursiv_idp329497920.html" title="Class template make_recursive_variant_over">boost::make_recursive_variant_over</a></code>,
     whose semantics are the same as <code class="computeroutput">make_variant_over</code> (which is
     described in <a class="xref" href="tutorial.html#variant.tutorial.over-sequence" title="Using a type sequence to specify bounded types">the section called &#8220;Using a type sequence to specify bounded types&#8221;</a>).</p>
 <p><span class="bold"><strong>Portability</strong></span>: Unfortunately, due to

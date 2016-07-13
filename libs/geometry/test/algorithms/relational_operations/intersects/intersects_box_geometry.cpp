@@ -83,9 +83,16 @@ void test_additional()
 
     // http://stackoverflow.com/questions/32457920/boost-rtree-of-box-gives-wrong-intersection-with-segment
     // http://lists.boost.org/geometry/2015/09/3476.php
-    // For now disabled by default even though it works properly on MSVC14
-    // it's probable that the result depends on the compiler
-#ifdef BOOST_GEOMETRY_ENABLE_FAILING_TESTS
+    typedef bg::model::point<typename bg::coordinate_type<P>::type, 3, bg::cs::cartesian> point3d_t;
+    test_geometry<bg::model::segment<point3d_t>, bg::model::box<point3d_t> >(
+        "SEGMENT(2 1 0,2 1 10)",
+        "BOX(0 0 0,10 0 10)",
+        false);
+    test_geometry<bg::model::segment<point3d_t>, bg::model::box<point3d_t> >(
+        "SEGMENT(2 1 0,2 1 10)",
+        "BOX(0 -5 0,10 0 10)",
+        false);
+    // and derived from the cases above
     test_geometry<bg::model::segment<P>, bg::model::box<P> >(
         "SEGMENT(12 0,20 10)",
         "BOX(0 0,10 10)",
@@ -98,12 +105,46 @@ void test_additional()
         "SEGMENT(2 0,18 8)",
         "BOX(0 0,10 10)",
         true);
-    typedef bg::model::point<typename bg::coordinate_type<P>::type, 3, bg::cs::cartesian> point3d_t;
-    test_geometry<bg::model::segment<point3d_t>, bg::model::box<point3d_t> >(
-        "SEGMENT(2 1 0,2 1 10)",
-        "BOX(0 0 0,10 0 10)",
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(1 0,1 10)",
+        "BOX(0 0,0 10)",
         false);
-#endif
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(-1 0,-1 10)",
+        "BOX(0 0,0 10)",
+        false);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(2 1,2 1)",
+        "BOX(0 0,10 0)",
+        false);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(2 3,2 3)",
+        "BOX(0 0,10 0)",
+        false);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(0 0,10 0)",
+        "BOX(0 0,10 0)",
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(10 0,10 0)",
+        "BOX(0 0,10 0)",
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(1 0,1 0)",
+        "BOX(0 0,10 0)",
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(0 0,0 10)",
+        "BOX(0 0,0 10)",
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(0 10,0 10)",
+        "BOX(0 0,0 10)",
+        true);
+    test_geometry<bg::model::segment<P>, bg::model::box<P> >(
+        "SEGMENT(0 1,0 1)",
+        "BOX(0 0,0 10)",
+        true);
 }
 
 

@@ -16,12 +16,12 @@
 #ifndef BOOST_LOG_SPIRIT_ENCODING_HPP_INCLUDED_
 #define BOOST_LOG_SPIRIT_ENCODING_HPP_INCLUDED_
 
+#include <boost/log/detail/config.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/spirit/include/support_standard.hpp>
 #include <boost/spirit/include/support_standard_wide.hpp>
 #include <boost/spirit/home/support/common_terminals.hpp>
-#include <boost/log/detail/config.hpp>
 #include <boost/log/detail/header.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE

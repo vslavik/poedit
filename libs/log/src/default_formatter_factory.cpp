@@ -15,6 +15,7 @@
 
 #if !defined(BOOST_LOG_WITHOUT_SETTINGS_PARSERS) && !defined(BOOST_LOG_WITHOUT_DEFAULT_FACTORIES)
 
+#include <boost/log/detail/setup_config.hpp>
 #include <cstddef>
 #include <ctime>
 #include <boost/mpl/vector.hpp>

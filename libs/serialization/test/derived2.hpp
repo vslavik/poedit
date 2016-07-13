@@ -16,23 +16,23 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <boost/config.hpp>
+
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/access.hpp>
 
 #define BASE_IMPORT
 #include "base.hpp"
 
-#include "test_decl.hpp"
-
 #if defined(DERIVED2_IMPORT)
-    #define DLL_DECL IMPORT_DECL
+    #define DLL_DECL BOOST_SYMBOL_IMPORT
 #elif defined(DERIVED2_EXPORT)
-    #define DLL_DECL EXPORT_DECL
+    #define DLL_DECL BOOST_SYMBOL_EXPORT
 #else
-    #define DLL_DECL(x)
+    #define DLL_DECL
 #endif
 
-class DLL_DECL(BOOST_PP_EMPTY()) derived2 : 
+class DLL_DECL derived2 : 
     public base
 {
     friend class boost::serialization::access;

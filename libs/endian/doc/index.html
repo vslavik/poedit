@@ -88,26 +88,8 @@ formal review</a><br>
 
   </li>
   <li>Secondary use: Minimizing data size via sizes and/or alignments not supported by the 
-  standard C++ arithmetic types.<br>
-  </li>
+  standard C++ integer types.</li>
 </ul>
-
-<div align="center">
-  <center>
-  <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="90%">
-    <tr>
-      <td width="100%">
-      <p align="center"><b><font size="4">Notice</font></b></p>
-      <p align="left">This first release (1.58.0) of the Endian library as an 
-      official Boost library removes for floating point type support that was 
-      present in the mini-review pre-release. Floating point types will be 
-      supported in the Boost 1.59.0 release with a slightly modified floating 
-      point conversion interface and implementation that addresses reliability 
-      concerns.</td>
-    </tr>
-  </table>
-  </center>
-</div>
 
 <h2><a name="Introduction-to-endianness">Introduction to endianness</a></h2>
 
@@ -414,12 +396,12 @@ large array saves a lot of space compared to one of the 64-bit types.</p>
 <p><b>Why bother with binary I/O? Why not just use C++ Standard Library stream 
 inserters and extractors?</b></p>
 <blockquote>
-<p>Data interchange formats often specify binary arithmetic data.</p>
-<p>Binary arithmetic data is smaller and therefore I/O is faster and file sizes 
+<p>Data interchange formats often specify binary integer data.</p>
+<p>Binary integer data is smaller and therefore I/O is faster and file sizes 
 are smaller. Transfer between systems is less expensive.</p>
-<p dir="ltr">Furthermore, binary arithmetic data is of fixed size, and so fixed-size disk 
+<p >Furthermore, binary integer data is of fixed size, and so fixed-size disk 
 records are possible without padding, easing sorting and allowing random access.</p>
-<p dir="ltr">Disadvantages, such as the inability to use text utilities on the 
+<p >Disadvantages, such as the inability to use text utilities on the 
 resulting files, limit usefulness to applications where the binary I/O 
 advantages are paramount.</p>
 </blockquote>
@@ -453,33 +435,17 @@ that would be lost if the inheritance hierarchy were collapsed.</p>
 requested during formal review by those wishing total control over when 
 conversion occurs. They also felt that buffer types would be less likely to be 
 misused by maintenance programmers not familiar with the implications of 
-performing a lot of arithmetic operations on the endian arithmetic types.</p>
+performing a lot of integer operations on the endian arithmetic integer types.</p>
 </blockquote>
 <p><b>What is gained by using the buffer types rather than always just using the 
 arithmetic types?</b></p>
 <blockquote>
-<p>Assurance than hidden conversions are not performed. This is of overriding 
+<p>Assurance that hidden conversions are not performed. This is of overriding 
 importance to users concerned about achieving the ultimate in terms of speed. </p>
 <p>&quot;Always just using the arithmetic types&quot; is fine for other users. When the 
 ultimate in speed needs to be ensured, the arithmetic types can be used in the 
 same design patterns or idioms that would be used for buffer types, resulting in 
 the same code being generated for either types.</p>
-</blockquote>
-
-<p><b>What are the limitations of floating point support?</b></p>
-
-<blockquote>
-
-<p><strike>The only supported types are four-byte <code>float</code> and eight-byte
-<code>double</code>. The only supported format is
-<a href="http://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 754</a> (also 
-know as ISO/IEC/IEEE 60559). Systems on which  integer endianness differs from floating point 
-endianness are not supported.</strike></p>
-
-<p>Support for floating point types was removed from Boost 1.58.0 because there 
-was not enough time to resolve reliability concerns. It is expected that 
-floating point support will be available in Boost 1.59.0.</p>
-
 </blockquote>
 
 <p><b>What are the limitations of integer support?</b></p>
@@ -491,6 +457,26 @@ performed on machines that  use two's complement arithmetic. The Endian
 conversion functions only support 16, 32, and 64-bit aligned integers. The 
 endian types only support 8, 16, 24, 32, 40, 48, 56, and 64-bit unaligned integers, 
 and 8, 16, 32, and 64-bit aligned integers.</p>
+
+</blockquote>
+
+<p><b>Why is there no floating point support?</b></p>
+
+<blockquote>
+
+<p>An attempt was made to support four-byte <code>float</code>s and eight-byte
+<code>double</code>s, limited to
+<a href="http://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 754</a> (also 
+know as ISO/IEC/IEEE 60559) floating point and further limited to systems where 
+floating point endianness does not differ from integer 
+endianness.</p>
+
+<p>Even with those limitations, support for floating point types was not 
+reliable and was removed. For example, simply reversing the endianness of a 
+floating point number can result in a signaling-NAN. For all practical purposes, 
+binary serialization and endianness for integers are one and the same problem. 
+That is not true for floating point numbers, so binary serialization interfaces 
+and formats for floating point does not fit well in an endian-based library.</p>
 
 </blockquote>
 
@@ -610,7 +596,7 @@ Blechmann, Tim Moore, tymofey, Tomas Puverle, Vincente Botet, Yuval Ronen and
 Vitaly Budovsk. Apologies if anyone has been missed.</p>
 <hr>
 <p>Last revised:
-<!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->16 October, 2015<!--webbot bot="Timestamp" endspan i-checksum="38878" --></p>
+<!--webbot bot="Timestamp" s-type="EDITED" s-format="%d %B, %Y" startspan -->05 April, 2016<!--webbot bot="Timestamp" endspan i-checksum="29990" --></p>
 <p>© Copyright Beman Dawes, 2011, 2013</p>
 <p>Distributed under the Boost Software License, Version 1.0. See
 <a href="http://www.boost.org/LICENSE_1_0.txt">www.boost.org/ LICENSE_1_0.txt</a></p>

@@ -25,6 +25,7 @@ project.pop-current ;
 
 # Windows libs
 lib psapi ;
+lib advapi32 ;
 lib ws2_32 ;
 lib mswsock ;
 
@@ -133,6 +134,7 @@ project boost/log
         <conditional>@select-regex-backend
         <conditional>@check-visibility
 
+        <define>__STDC_CONSTANT_MACROS # Use system-defined macros for integer constants, if possible
         <define>BOOST_SPIRIT_USE_PHOENIX_V3=1
         <define>BOOST_THREAD_DONT_USE_CHRONO=1 # Don't introduce false dependency on Boost.Chrono
 
@@ -183,10 +185,16 @@ project boost/log
         <threading>multi:<library>/boost/atomic//boost_atomic
         <threading>multi:<library>/boost/thread//boost_thread
 
+        <target-os>windows:<define>NOMINMAX
+        <target-os>windows:<define>WIN32_LEAN_AND_MEAN
+        <target-os>windows:<define>BOOST_USE_WINDOWS_H
         <target-os>windows:<library>ws2_32
         <target-os>windows:<library>mswsock
 
+        <target-os>cygwin:<define>NOMINMAX
+        <target-os>cygwin:<define>WIN32_LEAN_AND_MEAN
         <target-os>cygwin:<define>__USE_W32_SOCKETS
+        <target-os>cygwin:<define>BOOST_USE_WINDOWS_H
         <target-os>cygwin:<library>ws2_32
         <target-os>cygwin:<library>mswsock
 
@@ -194,7 +202,7 @@ project boost/log
         <target-os>linux:<define>_XOPEN_SOURCE=600
         <target-os>linux:<define>_GNU_SOURCE=1
 
-        <target-os>solaris:<define>_XOPEN_SOURCE=500
+        <target-os>solaris:<define>_XOPEN_SOURCE=500 # Solaris headers are broken and cannot be included in C++ when _XOPEN_SOURCE=600
         <target-os>solaris:<define>__EXTENSIONS__
         <target-os>solaris:<library>socket
         <target-os>solaris:<library>nsl
@@ -394,6 +402,7 @@ rule select-log-api-specific-sources ( properties * )
         result = <source>simple_event_log.mc ;
         result += <source>event_log_backend.cpp ;
         result += <library>psapi ;
+        result += <library>advapi32 ;
 
         DEPENDS event_log_backend.cpp : simple_event_log.mc ;
     }

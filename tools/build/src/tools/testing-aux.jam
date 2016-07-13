@@ -52,6 +52,21 @@ actions (failed-as-expected)
     echo failed as expected > "$(<)"
 }
 
+
+if [ os.name ] = VMS
+{
+    actions **passed**
+    {
+        PIPE WRITE SYS$OUTPUT "passed" > $(<:W)
+    }
+
+    actions (failed-as-expected)
+    {
+        PIPE WRITE SYS$OUTPUT "failed as expected" > $(<:W)
+    }
+}
+
+
 # Runs executable 'sources' and stores stdout in file 'target'. Unless
 # --preserve-test-targets command line option has been specified, removes the
 # executable. The 'target-to-remove' parameter controls what should be removed:
@@ -98,6 +113,12 @@ rule capture-output ( target : source : properties * : targets-to-remove * )
         # fails, but it is not likely to happen.
         RmTemps $(target) : $(targets-to-remove) ;
     }
+
+    if ! [ feature.get-values testing.launcher : $(properties) ]
+    {
+        ## On VMS set default launcher to MCR
+        if [ os.name ] = VMS { LAUNCHER on $(target) = MCR ; }
+    }
 }
 
 
@@ -106,26 +127,53 @@ if [ os.name ] = NT
     .STATUS        = %status% ;
     .SET_STATUS    = "set status=%ERRORLEVEL%" ;
     .RUN_OUTPUT_NL = "echo." ;
-    .STATUS_0      = "%status% EQU 0 (" ;
-    .STATUS_NOT_0  = "%status% NEQ 0 (" ;
-    .VERBOSE       = "%verbose% EQU 1 (" ;
+    .THEN          = "(" ;
+    .EXIT_SUCCESS  = "0" ;
+    .STATUS_0      = "%status% EQU 0 $(.THEN)" ;
+    .STATUS_NOT_0  = "%status% NEQ 0 $(.THEN)" ;
+    .VERBOSE       = "%verbose% EQU 1 $(.THEN)" ;
     .ENDIF         = ")" ;
     .SHELL_SET     = "set " ;
     .CATENATE      = type ;
     .CP            = copy ;
+    .NULLIN        = ;
+}
+else if [ os.name ] = VMS
+{
+    local nl = "
+" ;
+
+    .STATUS        = "''status'" ;
+    .SET_STATUS    = "status=$STATUS" ;
+    .SAY           = "pipe write sys$output" ; ## not really echo
+    .RUN_OUTPUT_NL = "$(.SAY) \"\"" ;
+    .THEN          = "$(nl)then" ;
+    .EXIT_SUCCESS  = "1" ;
+    .SUCCESS       = "status .eq. $(.EXIT_SUCCESS) $(.THEN)" ;
+    .STATUS_0      = "status .eq. 0 $(.THEN)" ;
+    .STATUS_NOT_0  = "status .ne. 0 $(.THEN)" ;
+    .VERBOSE       = "verbose .eq. 1 $(.THEN)" ;
+    .ENDIF         = "endif" ;
+    .SHELL_SET     = "" ;
+    .CATENATE      = type ;
+    .CP            = copy ;
+    .NULLIN        = ;
 }
 else
 {
     .STATUS        = "$status" ;
     .SET_STATUS    = "status=$?" ;
     .RUN_OUTPUT_NL = "echo" ;
-    .STATUS_0      = "test $status -eq 0 ; then" ;
-    .STATUS_NOT_0  = "test $status -ne 0 ; then" ;
-    .VERBOSE       = "test $verbose -eq 1 ; then" ;
+    .THEN          = "; then" ;
+    .EXIT_SUCCESS  = "0" ;
+    .STATUS_0      = "test $status -eq 0 $(.THEN)" ;
+    .STATUS_NOT_0  = "test $status -ne 0 $(.THEN)" ;
+    .VERBOSE       = "test $verbose -eq 1 $(.THEN)" ;
     .ENDIF         = "fi" ;
     .SHELL_SET     = "" ;
     .CATENATE      = cat ;
     .CP            = cp ;
+    .NULLIN        = "<" "/dev/null" ;
 }
 
 
@@ -170,12 +218,74 @@ actions quietly updated ignore piecemeal together RmTemps
 }
 
 
+if [ os.name ] = VMS
+{
+    actions capture-output bind INPUT_FILES output-file
+    {
+        $(PATH_SETUP)
+        !! Execute twice - first for status, second for output
+        set noon
+        pipe $(LAUNCHER) $(>:W) $(ARGS) $(INPUT_FILES:W) 2>NL: >NL:
+        $(.SET_STATUS)
+        pipe $(LAUNCHER) $(>:W) $(ARGS) $(INPUT_FILES:W) | type sys$input /out=$(output-file:W)
+        set on
+        !! Harmonize VMS success status with POSIX
+        if $(.SUCCESS)
+            $(.SHELL_SET)status="0"
+        $(.ENDIF)
+        $(.RUN_OUTPUT_NL) | append /new sys$input $(output-file:W)
+        $(.SAY) "EXIT STATUS: $(.STATUS)" | append /new sys$input $(output-file:W)
+        if $(.STATUS_0)
+            $(.CP) $(output-file:W) $(<:W)
+        $(.ENDIF)
+        $(.SHELL_SET)verbose=$(.VERBOSE_TEST)
+        if $(.STATUS_NOT_0)
+            $(.SHELL_SET)verbose=1
+        $(.ENDIF)
+        if $(.VERBOSE)
+            $(.SAY) "====== BEGIN OUTPUT ======"
+            $(.CATENATE) $(output-file:W)
+            $(.SAY) "====== END OUTPUT ======"
+        $(.ENDIF)
+        !! Harmonize VMS success status with POSIX on exit
+        if $(.STATUS_0)
+            $(.SHELL_SET)status="$(.EXIT_SUCCESS)"
+        $(.ENDIF)
+        exit "$(.STATUS)"
+    }
+
+    actions quietly updated ignore piecemeal together RmTemps
+    {
+        $(.RM) $(>:WJ=;*,);*
+    }
+}
+
+
 .MAKE_FILE = [ common.file-creation-command ] ;
+
+
+rule unit-test ( target : source : properties * )
+{
+    if ! [ feature.get-values testing.launcher : $(properties) ]
+    {
+        ## On VMS set default launcher to MCR
+        if [ os.name ] = VMS { LAUNCHER on $(target) = MCR ; }
+    }
+}
 
 actions unit-test
 {
     $(PATH_SETUP)
     $(LAUNCHER) "$(>)" $(ARGS) && $(.MAKE_FILE) "$(<)"
+}
+
+if [ os.name ] = VMS
+{
+    actions unit-test
+    {
+        $(PATH_SETUP)
+        pipe $(LAUNCHER) $(>:W) $(ARGS) && $(.MAKE_FILE) $(<:W)
+    }
 }
 
 # Note that this rule may be called multiple times for a single target in case
@@ -217,4 +327,16 @@ actions time
 
     echo user: $(USER_TIME_SECONDS) > "$(<)"
     echo system: $(SYSTEM_TIME_SECONDS) >> "$(<)"
+}
+
+if [ os.name ] = VMS
+{
+    actions time
+    {
+        WRITE SYS$OUTPUT "user: ", "$(USER_TIME)"
+        WRITE SYS$OUTPUT "system: ", "(SYSTEM_TIME)"
+
+        PIPE WRITE SYS$OUTPUT "user: ", "$(USER_TIME_SECONDS)" | TYPE SYS$INPUT /OUT=$(<:W)
+        PIPE WRITE SYS$OUTPUT "system: ", "$(SYSTEM_TIME_SECONDS)" | APPEND /NEW SYS$INPUT $(<:W)
+    }
 }

@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;27.&#160;Boost.Signals</title>
+<title>Chapter&#160;29.&#160;Boost.Signals</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="ratio/appendices.html" title="Appendices">
@@ -26,31 +26,31 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="signals"></a>Chapter&#160;27.&#160;Boost.Signals</h2></div>
+<a name="signals"></a>Chapter&#160;29.&#160;Boost.Signals</h2></div>
 <div><div class="author"><h3 class="author">
 <span class="firstname">Douglas</span> <span class="surname">Gregor</span>
 </h3></div></div>
 <div><p class="copyright">Copyright &#169; 2001-2004 Douglas Gregor</p></div>
 <div><div class="legalnotice">
-<a name="idm45555134323824"></a><p>Use, modification and distribution is subject to the Boost
+<a name="idp392911088"></a><p>Use, modification and distribution is subject to the Boost
     Software License, Version 1.0. (See accompanying file
     <code class="filename">LICENSE_1_0.txt</code> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
 </div></div>
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
-<dt><span class="section"><a href="signals.html#idm45555134321056">Introduction</a></span></dt>
+<dl>
+<dt><span class="section"><a href="signals.html#idp392913856">Introduction</a></span></dt>
 <dt><span class="section"><a href="signals/tutorial.html">Tutorial</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134312752">How to Read this Tutorial</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134305968">Compatibility Note</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134291648">Hello, World! (Beginner)</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134274544">Calling multiple slots</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134227728">Passing values to and from slots</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134120848">Connection Management</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134033856">Example: Document-View</a></span></dt>
-<dt><span class="section"><a href="signals/tutorial.html#idm45555134018672">Linking against the Signals library</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp392922160">How to Read this Tutorial</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp392928944">Compatibility Note</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp392942624">Hello, World! (Beginner)</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp392959856">Calling multiple slots</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp393006672">Passing values to and from slots</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp393113552">Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp393200736">Example: Document-View</a></span></dt>
+<dt><span class="section"><a href="signals/tutorial.html#idp393215920">Linking against the Signals library</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals/reference.html">Reference</a></span></dt>
 <dd><dl>
@@ -64,27 +64,27 @@
 <dt><span class="section"><a href="signals/s04.html">Frequently Asked Questions</a></span></dt>
 <dt><span class="section"><a href="signals/s05.html">Design Overview</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals/s05.html#idm45555132909696">Type Erasure</a></span></dt>
-<dt><span class="section"><a href="signals/s05.html#idm45555132902432"><code class="computeroutput">connection</code> class</a></span></dt>
-<dt><span class="section"><a href="signals/s05.html#idm45555132889168">Slot Call Iterator</a></span></dt>
-<dt><span class="section"><a href="signals/s05.html#idm45555132867360"><code class="computeroutput">visit_each</code> function template</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp394325536">Type Erasure</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp394332800"><code class="computeroutput">connection</code> class</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp394346064">Slot Call Iterator</a></span></dt>
+<dt><span class="section"><a href="signals/s05.html#idp394368352"><code class="computeroutput">visit_each</code> function template</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals/s06.html">Design Rationale</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="signals/s06.html#idm45555132850288">Choice of Slot Definitions</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idm45555132840432">User-level Connection Management</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idm45555132822128">Combiner Interface</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idm45555132807040">Connection Interfaces: +=  operator</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idm45555132787664"><code class="computeroutput">trackable</code> rationale</a></span></dt>
-<dt><span class="section"><a href="signals/s06.html#idm45555132767552">Comparison with other Signal/Slot implementations</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp394385424">Choice of Slot Definitions</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp394394816">User-level Connection Management</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp394413120">Combiner Interface</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp394428208">Connection Interfaces: +=  operator</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp394447584"><code class="computeroutput">trackable</code> rationale</a></span></dt>
+<dt><span class="section"><a href="signals/s06.html#idp394467696">Comparison with other Signal/Slot implementations</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="signals/tests.html">Testsuite</a></span></dt>
-<dd><dl><dt><span class="section"><a href="signals/tests.html#idm45555132752752">Acceptance tests</a></span></dt></dl></dd>
+<dd><dl><dt><span class="section"><a href="signals/tests.html#idp394482992">Acceptance tests</a></span></dt></dl></dd>
 </dl>
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
-<a name="idm45555134321056"></a>Introduction</h2></div></div></div>
+<a name="idp392913856"></a>Introduction</h2></div></div></div>
 <div class="note"><table border="0" summary="Note">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../doc/src/images/note.png"></td>
@@ -92,7 +92,7 @@
 </tr>
 <tr><td align="left" valign="top"><p><span class="bold"><strong>Boost.Signals is no longer being actively maintained.</strong></span>
 Do not use Boost.Signals for new development (use 
-<a class="link" href="signals2.html" title="Chapter&#160;28.&#160;Boost.Signals2">Boost.Signals2</a>
+<a class="link" href="signals2.html" title="Chapter&#160;30.&#160;Boost.Signals2">Boost.Signals2</a>
 instead). If you have existing Boost.Signals-based code, it will
 continue to work, but consider moving to Boost.Signals2. There is
 <a class="link" href="signals2/api_changes.html#signals2.porting" title="Porting from Boost.Signals to Boost.Signals2">

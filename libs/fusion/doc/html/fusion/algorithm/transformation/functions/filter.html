@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>filter</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../functions.html" title="Functions">
 <link rel="prev" href="../functions.html" title="Functions">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="fusion.algorithm.transformation.functions.filter.h0"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.filter.description"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.description">Description</a>
+            <span><a name="fusion.algorithm.transformation.functions.filter.description"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.description">Description</a>
           </h6>
 <p>
             For a given sequence, filter returns a new sequences containing only
@@ -36,7 +36,7 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.filter.h1"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.filter.synopsis"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.synopsis">Synopsis</a>
+            <span><a name="fusion.algorithm.transformation.functions.filter.synopsis"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.synopsis">Synopsis</a>
           </h6>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span>
     <span class="keyword">typename</span> <span class="identifier">T</span><span class="special">,</span>
@@ -110,7 +110,7 @@
 </div>
 <br class="table-break"><h6>
 <a name="fusion.algorithm.transformation.functions.filter.h2"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.filter.expression_semantics"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.expression_semantics">Expression
+            <span><a name="fusion.algorithm.transformation.functions.filter.expression_semantics"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.expression_semantics">Expression
             Semantics</a>
           </h6>
 <pre class="programlisting"><a class="link" href="filter.html" title="filter"><code class="computeroutput"><span class="identifier">filter</span></code></a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;(</span><span class="identifier">seq</span><span class="special">);</span>
@@ -118,7 +118,7 @@
 <p>
             <span class="bold"><strong>Return type</strong></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 A model of <a class="link" href="../../../sequence/concepts/forward_sequence.html" title="Forward Sequence">Forward
                 Sequence</a>.
@@ -138,21 +138,21 @@
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.filter.h3"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.filter.complexity"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.complexity">Complexity</a>
+            <span><a name="fusion.algorithm.transformation.functions.filter.complexity"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.complexity">Complexity</a>
           </h6>
 <p>
             Constant. Returns a view which is lazily evaluated.
           </p>
 <h6>
 <a name="fusion.algorithm.transformation.functions.filter.h4"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.filter.header"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.header">Header</a>
+            <span><a name="fusion.algorithm.transformation.functions.filter.header"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.header">Header</a>
           </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">algorithm</span><span class="special">/</span><span class="identifier">transformation</span><span class="special">/</span><span class="identifier">filter</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">filter</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h6>
 <a name="fusion.algorithm.transformation.functions.filter.h5"></a>
-            <span class="phrase"><a name="fusion.algorithm.transformation.functions.filter.example"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.example">Example</a>
+            <span><a name="fusion.algorithm.transformation.functions.filter.example"></a></span><a class="link" href="filter.html#fusion.algorithm.transformation.functions.filter.example">Example</a>
           </h6>
 <pre class="programlisting"><span class="keyword">const</span> <a class="link" href="../../../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">int</span><span class="special">,</span><span class="keyword">long</span><span class="special">,</span><span class="keyword">long</span><span class="special">&gt;</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">2</span><span class="special">,</span><span class="number">3</span><span class="special">,</span><span class="number">4</span><span class="special">);</span>
 <span class="identifier">assert</span><span class="special">(</span><a class="link" href="filter.html" title="filter"><code class="computeroutput"><span class="identifier">filter</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&gt;(</span><span class="identifier">vec</span><span class="special">)</span> <span class="special">==</span> <a class="link" href="../../../container/generation/functions/make_vector.html" title="make_vector"><code class="computeroutput"><span class="identifier">make_vector</span></code></a><span class="special">(</span><span class="number">1</span><span class="special">,</span><span class="number">2</span><span class="special">));</span>

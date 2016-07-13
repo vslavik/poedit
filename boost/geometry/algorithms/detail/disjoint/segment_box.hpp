@@ -128,7 +128,9 @@ struct disjoint_segment_box_impl
                   && t_min.first > ti_max)
                  ||
                  (geometry::math::equals(t_max.second, 0)
-                  && t_max.first < ti_min) )
+                  && t_max.first < ti_min)
+                 ||
+                 (math::sign(ti_min) * math::sign(ti_max) > 0) )
             {
                 return true;
             }
@@ -197,6 +199,11 @@ struct disjoint_segment_box_impl
         {
             if ( geometry::math::equals(t_min.first, 0) ) { t_min.first = -1; }
             if ( geometry::math::equals(t_max.first, 0) ) { t_max.first = 1; }
+
+            if (math::sign(t_min.first) * math::sign(t_max.first) > 0)
+            {
+                return true;
+            }
         }
 
         if ( t_min.first > diff || t_max.first < 0 )

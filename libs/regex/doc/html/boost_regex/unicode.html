@@ -3,9 +3,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Unicode and Boost.Regex</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../index.html" title="Boost.Regex 5.0.1">
-<link rel="up" href="../index.html" title="Boost.Regex 5.0.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../index.html" title="Boost.Regex 5.1.1">
+<link rel="up" href="../index.html" title="Boost.Regex 5.1.1">
 <link rel="prev" href="introduction_and_overview.html" title="Introduction and Overview">
 <link rel="next" href="captures.html" title="Understanding Marked Sub-Expressions and Captures">
 </head>
@@ -31,7 +31,7 @@
     </p>
 <h5>
 <a name="boost_regex.unicode.h0"></a>
-      <span class="phrase"><a name="boost_regex.unicode.rely_on_wchar_t"></a></span><a class="link" href="unicode.html#boost_regex.unicode.rely_on_wchar_t">Rely
+      <span><a name="boost_regex.unicode.rely_on_wchar_t"></a></span><a class="link" href="unicode.html#boost_regex.unicode.rely_on_wchar_t">Rely
       on wchar_t</a>
     </h5>
 <p>
@@ -41,7 +41,7 @@
       <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">iswlower</span></code> etc), then you can use <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">wregex</span></code>
       to process Unicode. However, there are several disadvantages to this approach:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           It's not portable: there's no guarantee on the width of <code class="computeroutput"><span class="keyword">wchar_t</span></code>,
           or even whether the runtime treats wide characters as Unicode at all, most
@@ -58,7 +58,7 @@
 </ul></div>
 <h5>
 <a name="boost_regex.unicode.h1"></a>
-      <span class="phrase"><a name="boost_regex.unicode.use_a_unicode_aware_regular_expr"></a></span><a class="link" href="unicode.html#boost_regex.unicode.use_a_unicode_aware_regular_expr">Use
+      <span><a name="boost_regex.unicode.use_a_unicode_aware_regular_expr"></a></span><a class="link" href="unicode.html#boost_regex.unicode.use_a_unicode_aware_regular_expr">Use
       a Unicode Aware Regular Expression Type.</a>
     </h5>
 <p>

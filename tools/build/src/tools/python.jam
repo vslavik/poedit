@@ -736,7 +736,7 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
     local fallback-version ;
 
     # Anything left to find or check?
-    if ! ( $(interpreter-cmd) && $(includes) && $(libraries) )
+    if ! ( $(interpreter-cmd) && $(version) && $(includes) && $(libraries) )
     {
         # Values to be extracted from python's sys module. These will be set by
         # the probe rule, above, using Jam's dynamic scoping.
@@ -798,17 +798,15 @@ local rule configure ( version ? : cmd-or-prefix ? : includes * : libraries ? :
     }
 
     # Anything left to compute?
-    if $(includes) && $(libraries)
-    {
-        .configured = true ;
-    }
-    else
+    if ! ( $(includes) && $(libraries) )
     {
         version ?= $(fallback-version) ;
         version ?= 2.5 ;
         exec-prefix ?= $(prefix) ;
         compute-default-paths $(target-os) : $(version) : $(prefix:E=) ;
     }
+    
+    .configured = true ;
 
     if ! $(interpreter-cmd)
     {

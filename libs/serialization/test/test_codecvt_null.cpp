@@ -28,7 +28,6 @@ namespace std{
 
 #include "test_tools.hpp"
 
-#include <boost/archive/add_facet.hpp>
 #include <boost/archive/codecvt_null.hpp>
 #include <boost/archive/iterators/ostream_iterator.hpp>
 #include <boost/archive/iterators/istream_iterator.hpp>
@@ -73,13 +72,15 @@ int test_main( int /* argc */, char* /* argv */[] ) {
     BOOST_REQUIRE(NULL != testfile);
 
     std::locale old_loc;
-    std::locale * null_locale = 
-        boost::archive::add_facet(old_loc, new boost::archive::codecvt_null<wchar_t>);
+    std::locale null_locale = std::locale(
+        old_loc,
+        new boost::archive::codecvt_null<wchar_t>
+    );
 
     typedef test_data<sizeof(wchar_t)> td;
     {
         std::wofstream ofs;
-        ofs.imbue(*null_locale);
+        ofs.imbue(null_locale);
         ofs.open(testfile, std::ios::binary);
         std::copy(
             td::wchar_encoding,
@@ -90,7 +91,7 @@ int test_main( int /* argc */, char* /* argv */[] ) {
     bool ok = false;
     {
         std::wifstream ifs;
-        ifs.imbue(*null_locale);
+        ifs.imbue(null_locale);
         ifs.open(testfile, std::ios::binary);
         ok = std::equal(
             td::wchar_encoding,
@@ -102,13 +103,13 @@ int test_main( int /* argc */, char* /* argv */[] ) {
     BOOST_CHECK(ok);
     {
         std::wofstream ofs("testfile2");
-        ofs.imbue(*null_locale);
+        ofs.imbue(null_locale);
         int i = 10;
         ofs << i;
         ofs.close();
         
         std::wifstream ifs("testfile2");
-        ifs.imbue(*null_locale);
+        ifs.imbue(null_locale);
         int i2;
         ifs >> i2;
         std::cout << "i=" << i << std::endl;
@@ -117,7 +118,6 @@ int test_main( int /* argc */, char* /* argv */[] ) {
         ifs.close();
     }
  
-    delete null_locale;
     std::remove(testfile);
     return EXIT_SUCCESS;
 }

@@ -194,7 +194,8 @@ passed is empty. An example of this would be:
 
  #define FMACRO(x) BOOST_PP_CAT(+,x C);
  
-When nothing is passed to FMACRO undefined behavior will occur.
+When nothing is passed to FMACRO undefined behavior will occur since attempting to concatenate
+'+' to ' C' is UB in C++ preprocessor terms.
 
 So for a standard conforming compiler we have essentially a single corner case where
 the BOOST_VMD_IS_EMPTY does not work and, when it does not work it, produces a
@@ -209,7 +210,8 @@ relevant situations to our discussion of emptiness. These situations combine to 
 a single corner case which causes the BOOST_VMD_IS_EMPTY macro to not work properly 
 using VC++ when the input resolves to a function-like macro name.
 
-The first situation is that if a macro taking 'n' number of parameters is invoked 
+The first situation, related to our discussion of emptiness, where the VC++ preprocessor
+is not a standard C++ conforming preprocessor is that if a macro taking 'n' number of parameters is invoked 
 with 0 to 'n-1' parameters, the compiler does not give an error, but only a warning.
 
  #define FMACRO(x,y) x + y
@@ -224,10 +226,11 @@ does not work properly with a standard C++ conforming compiler. But of course it
 potential of producing incorrect output in other macro processing situations unrelated
 to the BOOST_VMD_IS_EMPTY invocation, where a compiler error should occur.
 
-A second general situation with VC++ situation, which affects the use of BOOST_VMD_IS_EMPTY, 
-is that the expansion of a macro works incorrectly when the expanded macro is a function-like 
-macro name followed by a function-like macro invocation, in which case the macro re-expansion 
-is erroneously done more than once. This latter case can be seen by this example:
+A second general situation, related to our discussion of emptiness, where the VC++ preprocessor
+is not a standard C++ conforming preprocessor is that the expansion of a macro works incorrectly 
+when the expanded macro is a function-like macro name followed by a function-like macro invocation, 
+in which case the macro re-expansion is erroneously done more than once. This latter case can be 
+seen by this example:
 
  #define FMACRO1(parameter) FMACRO3 parameter()
  #define FMACRO2() ()
@@ -259,7 +262,7 @@ The failing situation is:
 
 when the input to BOOST_VMD_IS_EMPTY resolves to only a function-like macro 
 name, and the function-like macro, when passed a single empty argument, expands to 
-a tuple, BOOST_VMD_IS_EMPTY will erroneously return 1 when using the Visual C++ 
+a Boost PP tuple, BOOST_VMD_IS_EMPTY will erroneously return 1 when using the Visual C++ 
 compiler rather than either give a preprocessing error or return 0.
 
 Here is an example of the failure:
@@ -291,7 +294,7 @@ and I consider the macro worthwhile to use since it works correctly with the vas
 majority of possible preprocessor input.
 
 The case where it will not work, with both a C++ standard conforming preprocessor or
-with Visual C++, occurs when he name of a function-like macro is part of the input
+with Visual C++, occurs when the name of a function-like macro is part of the input
 to BOOST_VMD_IS_EMPTY. Obviously the macro should be used by the preprocessor 
 metaprogrammer when the possible input to it is constrained to eliminate the erroneous
 case.

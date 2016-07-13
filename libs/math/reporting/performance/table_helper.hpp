@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <boost/version.hpp>
+#include <boost/lexical_cast.hpp>
 
 //
 // Also include headers for whatever else we may be testing:

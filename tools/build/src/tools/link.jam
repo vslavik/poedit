@@ -488,7 +488,7 @@ if [ os.name ] = NT
 
 actions junction
 {
-    if exist "$(<)" del "$(<)"
+    if exist "$(<)" rmdir "$(<)"
     mklink /J "$(<)" "$(>)"
 }
 

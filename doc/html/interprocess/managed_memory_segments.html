@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Managed Memory Segments</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../interprocess.html" title="Chapter&#160;14.&#160;Boost.Interprocess">
+<link rel="up" href="../interprocess.html" title="Chapter&#160;15.&#160;Boost.Interprocess">
 <link rel="prev" href="synchronization_mechanisms.html" title="Synchronization mechanisms">
 <link rel="next" href="allocators_containers.html" title="Allocators, containers and memory allocation algorithms">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="interprocess.managed_memory_segments"></a><a class="link" href="managed_memory_segments.html" title="Managed Memory Segments">Managed Memory Segments</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.making_ipc_easy">Making
       Interprocess Data Communication Easy</a></span></dt>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_shared_memory">Managed
@@ -46,7 +46,7 @@
 <a name="interprocess.managed_memory_segments.making_ipc_easy"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.making_ipc_easy" title="Making Interprocess Data Communication Easy">Making
       Interprocess Data Communication Easy</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.making_ipc_easy.managed_memory_segments_intro">Introduction</a></span></dt>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.making_ipc_easy.managed_memory_segment_int">Declaration
         of managed memory segment classes</a></span></dt>
@@ -73,7 +73,7 @@
           <span class="bold"><strong>Boost.Interprocess</strong></span> offers 4 managed memory
           segment classes:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               To manage a shared memory mapped region (<span class="bold"><strong>basic_managed_shared_memory</strong></span>
               class).
@@ -102,7 +102,7 @@
 <p>
           The most important services of a managed memory segment are:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Dynamic allocation of portions of a memory the segment.
             </li>
@@ -145,7 +145,7 @@
 <p>
           These classes can be customized with the following template parameters:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <span class="bold"><strong>CharType</strong></span> is the type of the character
               that will be used to identify the created named objects (for example,
@@ -155,7 +155,7 @@
               <span class="bold"><strong>MemoryAlgorithm</strong></span> is the memory algorithm
               used to allocate portions of the segment (for example, rbtree_best_fit
               ). The internal typedefs of the memory algorithm also define:
-              <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+              <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                     The synchronization type (<code class="computeroutput"><span class="identifier">MemoryAlgorithm</span><span class="special">::</span><span class="identifier">mutex_family</span></code>)
                     to be used in all allocation operations. This allows the use
@@ -203,7 +203,7 @@
 <a name="interprocess.managed_memory_segments.managed_shared_memory"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_shared_memory" title="Managed Shared Memory">Managed
       Shared Memory</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_shared_memory.managed_memory_common_shm">Common
         Managed Shared Memory Classes</a></span></dt>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_shared_memory.constructing_managed_shared_memories">Constructing
@@ -295,7 +295,7 @@
           means that when we <span class="bold"><strong>create</strong></span> a new managed
           shared memory:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               A new shared memory object is created.
             </li>
@@ -311,7 +311,7 @@
 <p>
           When we <span class="bold"><strong>open</strong></span> a managed shared memory
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               A shared memory object is opened.
             </li>
@@ -380,13 +380,13 @@
 <p>
           Windows users might also want to use native windows shared memory instead
           of the portable <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391340624.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23078304.html" title="Class template basic_managed_windows_shared_memory">basic_managed_windows_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_windows_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391398368.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23020560.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses native windows shared memory. Note that this managed class has
           the same lifetime issues as the windows shared memory: when the last process
           attached to the windows shared memory is detached from the memory (or ends/crashes)
@@ -407,18 +407,18 @@
 <p>
           Unix users might also want to use XSI (system V) instead of the portable
           <code class="computeroutput"><a class="link" href="../boost/interprocess/shared_memory_object.html" title="Class shared_memory_object">shared_memory_object</a></code>
-          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391291904.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+          managed memory. This is achieved through the <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23127024.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
           class. To use it just include:
         </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_xsi_shared_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391398368.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
+          This class has nearly the same interface as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23020560.html" title="Class template basic_managed_shared_memory">basic_managed_shared_memory</a></code>
           but uses XSI shared memory as backend.
         </p>
 </div>
 <p>
-        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391291904.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
+        For more information about managed XSI shared memory capabilities, see <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp23127024.html" title="Class template basic_managed_xsi_shared_memory">basic_managed_xsi_shared_memory</a></code>
         class reference.
       </p>
 </div>
@@ -427,7 +427,7 @@
 <a name="interprocess.managed_memory_segments.managed_mapped_files"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_mapped_files" title="Managed Mapped File">Managed
       Mapped File</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_mapped_files.managed_memory_common_mfile">Common
         Managed Mapped Files</a></span></dt>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_mapped_files.constructing_managed_mapped_files">Constructing
@@ -484,7 +484,7 @@
           region that covers all the file. That means that when we <span class="bold"><strong>create</strong></span>
           a new managed mapped file:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               A new file is created.
             </li>
@@ -500,7 +500,7 @@
 <p>
           When we <span class="bold"><strong>open</strong></span> a managed mapped file
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               A file is opened.
             </li>
@@ -568,7 +568,7 @@
 <a name="interprocess.managed_memory_segments.managed_memory_segment_features"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_features" title="Managed Memory Segment Features">Managed
       Memory Segment Features</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_features.allocate_deallocate">Allocating
         fragments of a managed memory segment</a></span></dt>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_features.segment_offset">Obtaining
@@ -810,7 +810,7 @@
           That is, the mutex type used to synchronize named/unique allocations is
           defined by the <code class="computeroutput"><span class="identifier">MemoryAlgorithm</span><span class="special">::</span><span class="identifier">mutex_family</span><span class="special">::</span><span class="identifier">recursive_mutex_type</span></code>
           type. For shared memory, and memory mapped file based managed segments
-          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interpro_idm45879390093552.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
+          this recursive mutex is defined as <code class="computeroutput"><a class="link" href="../boost/interprocess/interprocess_r_idp24316352.html" title="Class interprocess_recursive_mutex">interprocess_recursive_mutex</a></code>.
         </p>
 <p>
           If two processes can call:
@@ -854,7 +854,7 @@
           deletion time, memory use, and memory allocation patterns. <span class="bold"><strong>Boost.Interprocess</strong></span>
           offers 3 index types right now:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <span class="bold"><strong>boost::interprocess::flat_map_index flat_map_index</strong></span>:
               Based on boost::interprocess::flat_map, an ordered vector similar to
@@ -944,7 +944,7 @@
           can obtain information about the object using a pointer to the object.
           The programmer can obtain the following information:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Name of the object: If it's a named instance, the name used in the
               construction function is returned, otherwise 0 is returned.
@@ -1051,7 +1051,7 @@
 <a name="interprocess.managed_memory_segments.managed_memory_segment_advanced_features"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_advanced_features" title="Managed Memory Segment Advanced Features">Managed
       Memory Segment Advanced Features</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_advanced_features.managed_memory_segment_information">Obtaining
         information about the managed segment</a></span></dt>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_memory_segment_advanced_features.growing_managed_memory">Growing
@@ -1395,7 +1395,7 @@
           Managed memory segments offer an alternative function to pack several allocations
           in a single call obtaining memory buffers that:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               are packed contiguously in memory (which improves locality)
             </li>
@@ -1410,7 +1410,7 @@
           functions. There are 2 types of <code class="computeroutput"><span class="identifier">allocate_many</span></code>
           functions:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Allocation of N buffers of memory with the same size.
             </li>
@@ -1539,7 +1539,7 @@
           becomes an important tool to improve performance. Managed memory segments
           offer an advanced reallocation function that offers:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Forward expansion: An allocated buffer can be expanded so that the
               end of the buffer is moved further. New data can be written between
@@ -1591,7 +1591,7 @@
 <p>
           <span class="bold"><strong>Preconditions for the function</strong></span>:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               If the parameter command contains the value <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">shrink_in_place</span></code>
               it can't contain any of these values: <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">expand_fwd</span></code>,
@@ -1617,7 +1617,7 @@
 <p>
           <span class="bold"><strong>Which are the effects of this function:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               If the parameter command contains the value <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">interprocess</span><span class="special">::</span><span class="identifier">shrink_in_place</span></code>,
               the function will try to reduce the size of the memory block referenced
@@ -1711,7 +1711,7 @@
 <p>
           <span class="bold"><strong>Throws an exception if two conditions are met:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               The allocator is unable to allocate/expand/shrink the memory or there
               is an error in preconditions
@@ -1723,7 +1723,7 @@
 <p>
           <span class="bold"><strong>This function returns:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               The address of the allocated memory or the new address of the expanded
               memory as the first member of the pair. If the parameter command contains
@@ -1740,7 +1740,7 @@
 <p>
           <span class="bold"><strong>Notes:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               If the user chooses <code class="computeroutput"><span class="keyword">char</span></code>
               as template argument the returned buffer will be suitably aligned to
@@ -1880,7 +1880,7 @@
           memory savings if several processes just want to process a managed memory
           segment without modifying it. Read-only mode operations are limited:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Read-only mode must be used only from managed classes. If the programmer
               obtains the segment manager and tries to use it directly it might result
@@ -1978,7 +1978,7 @@
 <a name="interprocess.managed_memory_segments.managed_heap_memory_external_buffer"></a><a class="link" href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_heap_memory_external_buffer" title="Managed Heap Memory And Managed External Buffer">Managed
       Heap Memory And Managed External Buffer</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="managed_memory_segments.html#interprocess.managed_memory_segments.managed_heap_memory_external_buffer.managed_external_buffer">Managed
         External Buffer: Constructing all Boost.Interprocess objects in a user provided
         buffer</a></span></dt>
@@ -2013,14 +2013,14 @@
         Applications for <span class="bold"><strong>Boost.Interprocess</strong></span> services
         using non-shared memory buffers:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Create and use STL compatible containers and allocators, in systems where
             dynamic memory is not recommendable.
           </li>
 <li class="listitem">
             Build complex, easily serializable databases in a single buffer:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   To share data between threads
                 </li>
@@ -2169,7 +2169,7 @@
           can also be used to place STL compatible containers in the user segment.
         </p>
 <p>
-          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391506880.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
+          <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp22912048.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>
           can be also useful to build small databases for embedded systems limiting
           the size of the used memory to a predefined memory chunk, instead of letting
           the database fragment the heap memory.
@@ -2227,7 +2227,7 @@
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">interprocess</span><span class="special">/</span><span class="identifier">managed_heap_memory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <p>
-          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_ma_idm45879391506880.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
+          The use is exactly the same as <code class="computeroutput"><a class="link" href="../boost/interprocess/basic_managed__idp22912048.html" title="Class template basic_managed_external_buffer">basic_managed_external_buffer</a></code>,
           except that memory is created by the managed memory segment itself using
           dynamic (new/delete) memory.
         </p>
@@ -2321,7 +2321,7 @@
           <span class="bold"><strong>managed_mapped_file</strong></span> and <span class="bold"><strong>managed_heap_memory</strong></span>,
           <span class="bold"><strong>managed_external_file</strong></span>.
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Default specializations of managed shared memory and mapped file use
               process-shared mutexes. Heap memory and external buffer have no internal

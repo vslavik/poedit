@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class communicator</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../mpi/reference.html#header.boost.mpi.communicator_hpp" title="Header &lt;boost/mpi/communicator.hpp&gt;">
 <link rel="prev" href="scan.html" title="Function scan">
@@ -36,90 +36,86 @@
 <span class="keyword">class</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="communicator.html#boost.mpi.communicatorconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="communicator.html#idm45507044013280-bb"><span class="identifier">communicator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="communicator.html#idm45507041694400-bb"><span class="identifier">communicator</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">comm_create_kind</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="communicator.html#idm45507101043744-bb"><span class="identifier">communicator</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="communicator.html#idp70310560-bb"><span class="identifier">communicator</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="communicator.html#idp70312656-bb"><span class="identifier">communicator</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">comm_create_kind</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="communicator.html#idp181093328-bb"><span class="identifier">communicator</span></a><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="communicator.html#idm45506986390192-bb">public member functions</a></span>
-  <span class="keyword">int</span> <a class="link" href="communicator.html#idm45506986389632-bb"><span class="identifier">rank</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">int</span> <a class="link" href="communicator.html#idm45506986386624-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a class="link" href="communicator.html#idm45506986509632-bb"><span class="identifier">group</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="communicator.html#idm45506986507456-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="communicator.html#idm45506991824784-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="communicator.html#idm45506993522128-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="communicator.html#idm45506995191456-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45506995186000-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="communicator.html#idp76260992-bb">public member functions</a></span>
+  <span class="keyword">int</span> <a class="link" href="communicator.html#idp76261552-bb"><span class="identifier">rank</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">int</span> <a class="link" href="communicator.html#idp76264560-bb"><span class="identifier">size</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a class="link" href="communicator.html#idp200111456-bb"><span class="identifier">group</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="communicator.html#idp200113664-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="communicator.html#idp67419152-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a class="link" href="communicator.html#idp80846384-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="communicator.html#idp125855504-bb"><span class="identifier">send</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp125860960-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45506997627984-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45506999155056-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45506999187936-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45507043704016-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp191810208-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp128402224-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp133493408-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp131878112-bb"><span class="identifier">recv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45507043823552-bb"><span class="identifier">sendrecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507098455152-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp134478128-bb"><span class="identifier">sendrecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp79047792-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-    <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507098488608-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507100137856-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507109731888-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507109768256-bb"><span class="identifier">irecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507152026288-bb"><span class="identifier">irecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idm45507102537728-bb"><span class="identifier">irecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idm45507091935280-bb"><span class="identifier">probe</span></a><span class="special">(</span><span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a class="link" href="communicator.html#idm45507089907504-bb"><span class="identifier">iprobe</span></a><span class="special">(</span><span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="communicator.html#idm45507089898528-bb"><span class="identifier">barrier</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="communicator.html#idm45507104265248-bb"><span class="keyword">operator</span> <span class="keyword">bool</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="communicator.html#idm45507104262368-bb"><span class="keyword">operator</span> <span class="identifier">MPI_Comm</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="communicator.html" title="Class communicator">communicator</a> <a class="link" href="communicator.html#idm45507104259696-bb"><span class="identifier">split</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <a class="link" href="communicator.html" title="Class communicator">communicator</a> <a class="link" href="communicator.html#idm45507045632432-bb"><span class="identifier">split</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="intercommunicator.html" title="Class intercommunicator">intercommunicator</a> <span class="special">&gt;</span> <a class="link" href="communicator.html#idm45506974414976-bb"><span class="identifier">as_intercommunicator</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="graph_communicator.html" title="Class graph_communicator">graph_communicator</a> <span class="special">&gt;</span> <a class="link" href="communicator.html#idm45506974411200-bb"><span class="identifier">as_graph_communicator</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">bool</span> <a class="link" href="communicator.html#idm45507044019824-bb"><span class="identifier">has_cartesian_topology</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="communicator.html#idm45507044018240-bb"><span class="identifier">abort</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp76632080-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp200343312-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp136354256-bb"><span class="identifier">isend</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp136361168-bb"><span class="identifier">irecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp82085120-bb"><span class="identifier">irecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="request.html" title="Class request">request</a> <a class="link" href="communicator.html#idp78161616-bb"><span class="identifier">irecv</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="status.html" title="Class status">status</a> <a class="link" href="communicator.html#idp67821120-bb"><span class="identifier">probe</span></a><span class="special">(</span><span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a class="link" href="communicator.html#idp42165808-bb"><span class="identifier">iprobe</span></a><span class="special">(</span><span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="communicator.html#idp190055216-bb"><span class="identifier">barrier</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="communicator.html#idp133982944-bb"><span class="keyword">operator</span> <span class="keyword">bool</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="communicator.html#idp133985824-bb"><span class="keyword">operator</span> <span class="identifier">MPI_Comm</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="communicator.html" title="Class communicator">communicator</a> <a class="link" href="communicator.html#idp133988496-bb"><span class="identifier">split</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <a class="link" href="communicator.html" title="Class communicator">communicator</a> <a class="link" href="communicator.html#idp133626608-bb"><span class="identifier">split</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="intercommunicator.html" title="Class intercommunicator">intercommunicator</a> <span class="special">&gt;</span> <a class="link" href="communicator.html#idp133617056-bb"><span class="identifier">as_intercommunicator</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="graph_communicator.html" title="Class graph_communicator">graph_communicator</a> <span class="special">&gt;</span> <a class="link" href="communicator.html#idp133620832-bb"><span class="identifier">as_graph_communicator</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">bool</span> <a class="link" href="communicator.html#idp82412592-bb"><span class="identifier">has_cartesian_topology</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="communicator.html#idp82414176-bb"><span class="identifier">abort</span></a><span class="special">(</span><span class="keyword">int</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555223210512"></a><h2>Description</h2>
+<a name="idp304059872"></a><h2>Description</h2>
 <p>The <code class="computeroutput">communicator</code> class abstracts a set of communicating processes in MPI. All of the processes that belong to a certain communicator can determine the size of the communicator, their rank within the communicator, and communicate with any other processes in the communicator. </p>
 <div class="refsect2">
-<a name="idm45555223208848"></a><h3>
+<a name="idp304061536"></a><h3>
 <a name="boost.mpi.communicatorconstruct-copy-destruct"></a><code class="computeroutput">communicator</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507044013280-bb"></a><span class="identifier">communicator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp70310560-bb"></a><span class="identifier">communicator</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Build a new Boost.MPI communicator for <code class="computeroutput">MPI_COMM_WORLD</code>.</p>
 <p>Constructs a Boost.MPI communicator that attaches to <code class="computeroutput">MPI_COMM_WORLD</code>. This is the equivalent of constructing with <code class="computeroutput"></code>(MPI_COMM_WORLD, comm_attach). </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507041694400-bb"></a><span class="identifier">communicator</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="identifier">comm_create_kind</span> kind<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp70312656-bb"></a><span class="identifier">communicator</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">MPI_Comm</span> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="identifier">comm_create_kind</span> kind<span class="special">)</span><span class="special">;</span></pre>
 <p>Build a new Boost.MPI communicator based on the MPI communicator <code class="computeroutput">comm</code>.</p>
 <p><code class="computeroutput">comm</code> may be any valid MPI communicator. If <code class="computeroutput">comm</code> is MPI_COMM_NULL, an empty communicator (that cannot be used for communication) is created and the <code class="computeroutput">kind</code> parameter is ignored. Otherwise, the <code class="computeroutput">kind</code> parameters determines how the Boost.MPI communicator will be related to <code class="computeroutput">comm:</code> </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_duplicate</code>, duplicate <code class="computeroutput">comm</code> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if <code class="computeroutput">comm</code> is a valid MPI intracommunicator or if the underlying MPI implementation supports MPI 2.0 (which supports duplication of intercommunicators).</p></li>
-<li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_take_ownership</code>, take ownership of <code class="computeroutput">comm</code>. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used when <code class="computeroutput">comm</code> is MPI_COMM_WORLD.</p></li>
-<li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_attach</code>, this Boost.MPI communicator will reference the existing MPI communicator <code class="computeroutput">comm</code> but will not free <code class="computeroutput">comm</code> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </p></li>
-</ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_duplicate</code>, duplicate <code class="computeroutput">comm</code> to create a new communicator. This new communicator will be freed when the Boost.MPI communicator (and all copies of it) is destroyed. This option is only permitted if <code class="computeroutput">comm</code> is a valid MPI intracommunicator or if the underlying MPI implementation supports MPI 2.0 (which supports duplication of intercommunicators).</p></li></ul></div>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_take_ownership</code>, take ownership of <code class="computeroutput">comm</code>. It will be freed automatically when all of the Boost.MPI communicators go out of scope. This option must not be used when <code class="computeroutput">comm</code> is MPI_COMM_WORLD.</p></li></ul></div>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>If <code class="computeroutput">kind</code> is <code class="computeroutput">comm_attach</code>, this Boost.MPI communicator will reference the existing MPI communicator <code class="computeroutput">comm</code> but will not free <code class="computeroutput">comm</code> when the Boost.MPI communicator goes out of scope. This option should only be used when the communicator is managed by the user or MPI library (e.g., MPI_COMM_WORLD). </p></li></ul></div>
 <p>
 </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507101043744-bb"></a><span class="identifier">communicator</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <span class="special">&amp;</span> subgroup<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><a name="idp181093328-bb"></a><span class="identifier">communicator</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="group.html" title="Class group">boost::mpi::group</a> <span class="special">&amp;</span> subgroup<span class="special">)</span><span class="special">;</span></pre>
 <p>Build a new Boost.MPI communicator based on a subgroup of another MPI communicator.</p>
 <p>This routine will construct a new communicator containing all of the processes from communicator <code class="computeroutput">comm</code> that are listed within the group <code class="computeroutput">subgroup</code>. Equivalent to <code class="computeroutput">MPI_Comm_create</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">comm</code></span></p></td>
@@ -137,18 +133,15 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555223160832"></a><h3>
-<a name="idm45506986390192-bb"></a><code class="computeroutput">communicator</code> public member functions</h3>
+<a name="idp304110832"></a><h3>
+<a name="idp76260992-bb"></a><code class="computeroutput">communicator</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idm45506986389632-bb"></a><span class="identifier">rank</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine the rank of the executing process in a communicator. <p>This routine is equivalent to <code class="computeroutput">MPI_Comm_rank</code>.</p>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp76261552-bb"></a><span class="identifier">rank</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine the rank of the executing process in a communicator. <p>This routine is equivalent to <code class="computeroutput">MPI_Comm_rank</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>The rank of the process in the communicator, which will be a value in [0, size()) </p></td>
@@ -156,14 +149,11 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">int</span> <a name="idm45506986386624-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine the number of processes in a communicator. <p>This routine is equivalent to <code class="computeroutput">MPI_Comm_size</code>.</p>
+<pre class="literallayout"><span class="keyword">int</span> <a name="idp76264560-bb"></a><span class="identifier">size</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine the number of processes in a communicator. <p>This routine is equivalent to <code class="computeroutput">MPI_Comm_size</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>The number of processes in the communicator. </p></td>
@@ -171,35 +161,33 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a name="idm45506986509632-bb"></a><span class="identifier">group</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="group.html" title="Class group">boost::mpi::group</a> <a name="idp200111456-bb"></a><span class="identifier">group</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>This routine constructs a new group whose members are the processes within this communicator. Equivalent to calling <code class="computeroutput">MPI_Comm_group</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idm45506986507456-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send data to another process. <p>This routine executes a potentially blocking send with tag <code class="computeroutput">tag</code> to the process with rank <code class="computeroutput">dest</code>. It can be received by the destination process with a matching <code class="computeroutput">recv</code> call.</p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="keyword">void</span> <a name="idp200113664-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send data to another process. <p>This routine executes a potentially blocking send with tag <code class="computeroutput">tag</code> to the process with rank <code class="computeroutput">dest</code>. It can be received by the destination process with a matching <code class="computeroutput">recv</code> call.</p>
 <p>The given <code class="computeroutput">value</code> must be suitable for transmission over MPI. There are several classes of types that meet these requirements:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
-<li class="listitem"><p>Types with mappings to MPI data types: If <code class="computeroutput">is_mpi_datatype&lt;T&gt;</code> is convertible to <code class="computeroutput">mpl::true_</code>, then <code class="computeroutput">value</code> will be transmitted using the MPI data type <code class="computeroutput">get_mpi_datatype&lt;T&gt;()</code>. All primitive C++ data types that have MPI equivalents, e.g., <code class="computeroutput">int</code>, <code class="computeroutput">float</code>, <code class="computeroutput">char</code>, <code class="computeroutput">double</code>, etc., have built-in mappings to MPI data types. You may turn a Serializable type with fixed structure into an MPI data type by specializing <code class="computeroutput"><code class="computeroutput"><a class="link" href="is_mpi_datatype.html" title="Struct template is_mpi_datatype">is_mpi_datatype</a></code></code> for your type.</p></li>
-<li class="listitem"><p>Serializable types: Any type that provides the <code class="computeroutput">serialize()</code> functionality required by the Boost.Serialization library can be transmitted and received.</p></li>
-<li class="listitem"><p>Packed archives and skeletons: Data that has been packed into an <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_oarchive.html" title="Class packed_oarchive">mpi::packed_oarchive</a></code></code> or the skeletons of data that have been backed into an <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">mpi::packed_skeleton_oarchive</a></code></code> can be transmitted, but will be received as <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_iarchive.html" title="Class packed_iarchive">mpi::packed_iarchive</a></code></code> and <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_iarchive.html" title="Class packed_skeleton_iarchive">mpi::packed_skeleton_iarchive</a></code></code>, respectively, to allow the values (or skeletons) to be extracted by the destination process.</p></li>
-<li class="listitem"><p>Content: Content associated with a previously-transmitted skeleton can be transmitted by <code class="computeroutput">send</code> and received by <code class="computeroutput">recv</code>. The receiving process may only receive content into the content of a value that has been constructed with the matching skeleton.</p></li>
-</ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Types with mappings to MPI data types: If <code class="computeroutput">is_mpi_datatype&lt;T&gt;</code> is convertible to <code class="computeroutput">mpl::true_</code>, then <code class="computeroutput">value</code> will be transmitted using the MPI data type <code class="computeroutput">get_mpi_datatype&lt;T&gt;()</code>. All primitive C++ data types that have MPI equivalents, e.g., <code class="computeroutput">int</code>, <code class="computeroutput">float</code>, <code class="computeroutput">char</code>, <code class="computeroutput">double</code>, etc., have built-in mappings to MPI data types. You may turn a Serializable type with fixed structure into an MPI data type by specializing <code class="computeroutput"><code class="computeroutput"><a class="link" href="is_mpi_datatype.html" title="Struct template is_mpi_datatype">is_mpi_datatype</a></code></code> for your type.</p></li></ul></div>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Serializable types: Any type that provides the <code class="computeroutput">serialize()</code> functionality required by the Boost.Serialization library can be transmitted and received.</p></li></ul></div>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Packed archives and skeletons: Data that has been packed into an <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_oarchive.html" title="Class packed_oarchive">mpi::packed_oarchive</a></code></code> or the skeletons of data that have been backed into an <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">mpi::packed_skeleton_oarchive</a></code></code> can be transmitted, but will be received as <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_iarchive.html" title="Class packed_iarchive">mpi::packed_iarchive</a></code></code> and <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_iarchive.html" title="Class packed_skeleton_iarchive">mpi::packed_skeleton_iarchive</a></code></code>, respectively, to allow the values (or skeletons) to be extracted by the destination process.</p></li></ul></div>
+<p>
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>Content: Content associated with a previously-transmitted skeleton can be transmitted by <code class="computeroutput">send</code> and received by <code class="computeroutput">recv</code>. The receiving process may only receive content into the content of a value that has been constructed with the matching skeleton.</p></li></ul></div>
 <p>
 </p>
 <p>For types that have mappings to an MPI data type (including the concent of a type), an invocation of this routine will result in a single MPI_Send call. For variable-length data, e.g., serialized types and packed archives, two messages will be sent via MPI_Send: one containing the length of the data and the second containing the data itself. Note that the transmission mode for variable-length data is an implementation detail that is subject to change.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -220,24 +208,18 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idm45506991824784-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send the skeleton of an object. <p>This routine executes a potentially blocking send with tag <code class="computeroutput">tag</code> to the process with rank <code class="computeroutput">dest</code>. It can be received by the destination process with a matching <code class="computeroutput">recv</code> call. This variation on <code class="computeroutput">send</code> will be used when a send of a skeleton is explicitly requested via code such as:</p>
-<pre class="programlisting"><span class="identifier">comm</span><span class="special">.</span><span class="identifier">send</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">,</span> <span class="identifier">skeleton</span><span class="special">(</span><span class="identifier">object</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a name="idp67419152-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send the skeleton of an object. <p>This routine executes a potentially blocking send with tag <code class="computeroutput">tag</code> to the process with rank <code class="computeroutput">dest</code>. It can be received by the destination process with a matching <code class="computeroutput">recv</code> call. This variation on <code class="computeroutput">send</code> will be used when a send of a skeleton is explicitly requested via code such as:</p>
+<pre class="programlisting">    <span class="identifier">comm</span><span class="special">.</span><span class="identifier">send</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">,</span> <span class="identifier">skeleton</span><span class="special">(</span><span class="identifier">object</span><span class="special">)</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p>The semantics of this routine are equivalent to that of sending a <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code></code> storing the skeleton of the <code class="computeroutput">object</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -258,22 +240,16 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <span class="keyword">void</span> <a name="idm45506993522128-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send an array of values to another process. <p>This routine executes a potentially blocking send of an array of data with tag <code class="computeroutput">tag</code> to the process with rank <code class="computeroutput">dest</code>. It can be received by the destination process with a matching array <code class="computeroutput">recv</code> call.</p>
+  <span class="keyword">void</span> <a name="idp80846384-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send an array of values to another process. <p>This routine executes a potentially blocking send of an array of data with tag <code class="computeroutput">tag</code> to the process with rank <code class="computeroutput">dest</code>. It can be received by the destination process with a matching array <code class="computeroutput">recv</code> call.</p>
 <p>If <code class="computeroutput">T</code> is an MPI datatype, an invocation of this routine will be mapped to a single call to MPI_Send, using the datatype <code class="computeroutput">get_mpi_datatype&lt;T&gt;()</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -297,21 +273,15 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45506995191456-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to another process without any data. <p>This routine executes a potentially blocking send of a message to another process. The message contains no extra data, and can therefore only be received by a matching call to <code class="computeroutput">recv()</code>.</p>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp125855504-bb"></a><span class="identifier">send</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to another process without any data. <p>This routine executes a potentially blocking send of a message to another process. The message contains no extra data, and can therefore only be received by a matching call to <code class="computeroutput">recv()</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -327,23 +297,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a name="idm45506995186000-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive data from a remote process. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>. The type <code class="computeroutput">T</code> of the <code class="computeroutput">value</code> must be suitable for transmission over MPI, which includes serializable types, types that can be mapped to MPI data types (including most built-in C++ types), packed MPI archives, skeletons, and content associated with skeletons; see the documentation of <code class="computeroutput">send</code> for a complete description.</p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a name="idp125860960-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive data from a remote process. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>. The type <code class="computeroutput">T</code> of the <code class="computeroutput">value</code> must be suitable for transmission over MPI, which includes serializable types, types that can be mapped to MPI data types (including most built-in C++ types), packed MPI archives, skeletons, and content associated with skeletons; see the documentation of <code class="computeroutput">send</code> for a complete description.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">source</code></span></p></td>
@@ -369,23 +333,17 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <a class="link" href="status.html" title="Class status">status</a> <a name="idm45506997627984-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive a skeleton from a remote process. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code> containing a skeleton.</p>
+  <a class="link" href="status.html" title="Class status">status</a> <a name="idp191810208-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive a skeleton from a remote process. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code> containing a skeleton.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">proxy</code></span></p></td>
@@ -411,23 +369,17 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <a class="link" href="status.html" title="Class status">status</a> <a name="idm45506999155056-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive a skeleton from a remote process. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code> containing a skeleton.</p>
+  <a class="link" href="status.html" title="Class status">status</a> <a name="idp128402224-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive a skeleton from a remote process. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code> containing a skeleton.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">proxy</code></span></p></td>
@@ -452,24 +404,18 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a name="idm45506999187936-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive an array of values from a remote process. <p>This routine blocks until it receives an array of values from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>. If the type <code class="computeroutput">T</code> is</p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="status.html" title="Class status">status</a> <a name="idp133493408-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive an array of values from a remote process. <p>This routine blocks until it receives an array of values from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>. If the type <code class="computeroutput">T</code> is</p>
 <p>
 
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">n</code></span></p></td>
@@ -502,23 +448,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="status.html" title="Class status">status</a> <a name="idm45507043704016-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive a message from a remote process without any data. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>.</p>
+<pre class="literallayout"><a class="link" href="status.html" title="Class status">status</a> <a name="idp131878112-bb"></a><span class="identifier">recv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Receive a message from a remote process without any data. <p>This routine blocks until it receives a message from the process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">source</code></span></p></td>
@@ -540,26 +480,20 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <a class="link" href="status.html" title="Class status">status</a> <a name="idm45507043823552-bb"></a><span class="identifier">sendrecv</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> stag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> sval<span class="special">,</span> <span class="keyword">int</span> src<span class="special">,</span> <span class="keyword">int</span> rtag<span class="special">,</span> 
+  <a class="link" href="status.html" title="Class status">status</a> <a name="idp134478128-bb"></a><span class="identifier">sendrecv</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> stag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> sval<span class="special">,</span> <span class="keyword">int</span> src<span class="special">,</span> <span class="keyword">int</span> rtag<span class="special">,</span> 
                   <span class="identifier">T</span> <span class="special">&amp;</span> rval<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to remote process nd receive another message from another process. </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a name="idm45507098455152-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to a remote process without blocking. <p>The <code class="computeroutput">isend</code> method is functionality identical to the <code class="computeroutput">send</code> method and transmits data in the same way, except that <code class="computeroutput">isend</code> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a name="idp79047792-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to a remote process without blocking. <p>The <code class="computeroutput">isend</code> method is functionality identical to the <code class="computeroutput">send</code> method and transmits data in the same way, except that <code class="computeroutput">isend</code> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -585,24 +519,18 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <a class="link" href="request.html" title="Class request">request</a> <a name="idm45507098488608-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send the skeleton of an object without blocking. <p>This routine is functionally identical to the <code class="computeroutput">send</code> method for <code class="computeroutput"><code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code></code> objects except that <code class="computeroutput">isend</code> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
+  <a class="link" href="request.html" title="Class request">request</a> <a name="idp76632080-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a><span class="special">&lt;</span> <span class="identifier">T</span> <span class="special">&gt;</span> <span class="special">&amp;</span> proxy<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send the skeleton of an object without blocking. <p>This routine is functionally identical to the <code class="computeroutput">send</code> method for <code class="computeroutput"><code class="computeroutput"><a class="link" href="skeleton_proxy.html" title="Struct template skeleton_proxy">skeleton_proxy</a></code></code> objects except that <code class="computeroutput">isend</code> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
 <p>The semantics of this routine are equivalent to a non-blocking send of a <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code></code> storing the skeleton of the <code class="computeroutput">object</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -628,23 +556,17 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <a class="link" href="request.html" title="Class request">request</a> <a name="idm45507100137856-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send an array of values to another process without blocking. <p>This routine is functionally identical to the <code class="computeroutput">send</code> method for arrays except that <code class="computeroutput">isend</code> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
+  <a class="link" href="request.html" title="Class request">request</a> <a name="idp200343312-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send an array of values to another process without blocking. <p>This routine is functionally identical to the <code class="computeroutput">send</code> method for arrays except that <code class="computeroutput">isend</code> will not block while waiting for the data to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -673,23 +595,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="request.html" title="Class request">request</a> <a name="idm45507109731888-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to another process without any data without blocking. <p>This routine is functionally identical to the <code class="computeroutput">send</code> method for sends with no data, except that <code class="computeroutput">isend</code> will not block while waiting for the message to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
+<pre class="literallayout"><a class="link" href="request.html" title="Class request">request</a> <a name="idp136354256-bb"></a><span class="identifier">isend</span><span class="special">(</span><span class="keyword">int</span> dest<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Send a message to another process without any data without blocking. <p>This routine is functionally identical to the <code class="computeroutput">send</code> method for sends with no data, except that <code class="computeroutput">isend</code> will not block while waiting for the message to be transmitted. Instead, a request object will be immediately returned, allowing one to query the status of the communication or wait until it has completed.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">dest</code></span></p></td>
@@ -710,23 +626,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a name="idm45507109768256-bb"></a><span class="identifier">irecv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Prepare to receive a message from a remote process. <p>The <code class="computeroutput">irecv</code> method is functionally identical to the <code class="computeroutput">recv</code> method and receive data in the same way, except that <code class="computeroutput">irecv</code> will not block while waiting for data to be transmitted. Instead, it immediately returns a request object that allows one to query the status of the receive or wait until it has completed.</p>
+<pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <a class="link" href="request.html" title="Class request">request</a> <a name="idp136361168-bb"></a><span class="identifier">irecv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">&amp;</span> value<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Prepare to receive a message from a remote process. <p>The <code class="computeroutput">irecv</code> method is functionally identical to the <code class="computeroutput">recv</code> method and receive data in the same way, except that <code class="computeroutput">irecv</code> will not block while waiting for data to be transmitted. Instead, it immediately returns a request object that allows one to query the status of the receive or wait until it has completed.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">source</code></span></p></td>
@@ -752,23 +662,17 @@
 </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
-  <a class="link" href="request.html" title="Class request">request</a> <a name="idm45507152026288-bb"></a><span class="identifier">irecv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Initiate receipt of an array of values from a remote process. <p>This routine initiates a receive operation for an array of values transmitted by process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>.</p>
+  <a class="link" href="request.html" title="Class request">request</a> <a name="idp82085120-bb"></a><span class="identifier">irecv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Initiate receipt of an array of values from a remote process. <p>This routine initiates a receive operation for an array of values transmitted by process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">n</code></span></p></td>
@@ -797,23 +701,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="request.html" title="Class request">request</a> <a name="idm45507102537728-bb"></a><span class="identifier">irecv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Initiate receipt of a message from a remote process that carries no data. <p>This routine initiates a receive operation for a message from process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code> that carries no data.</p>
+<pre class="literallayout"><a class="link" href="request.html" title="Class request">request</a> <a name="idp78161616-bb"></a><span class="identifier">irecv</span><span class="special">(</span><span class="keyword">int</span> source<span class="special">,</span> <span class="keyword">int</span> tag<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Initiate receipt of a message from a remote process that carries no data. <p>This routine initiates a receive operation for a message from process <code class="computeroutput">source</code> with the given <code class="computeroutput">tag</code> that carries no data.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">source</code></span></p></td>
@@ -834,23 +732,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="status.html" title="Class status">status</a> <a name="idm45507091935280-bb"></a><span class="identifier">probe</span><span class="special">(</span><span class="keyword">int</span> source <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> tag <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Waits until a message is available to be received. <p>This operation waits until a message matching (<code class="computeroutput">source</code>, <code class="computeroutput">tag</code>) is available to be received. It then returns information about that message. The functionality is equivalent to <code class="computeroutput">MPI_Probe</code>. To check if a message is available without blocking, use <code class="computeroutput">iprobe</code>.</p>
+<pre class="literallayout"><a class="link" href="status.html" title="Class status">status</a> <a name="idp67821120-bb"></a><span class="identifier">probe</span><span class="special">(</span><span class="keyword">int</span> source <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> tag <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Waits until a message is available to be received. <p>This operation waits until a message matching (<code class="computeroutput">source</code>, <code class="computeroutput">tag</code>) is available to be received. It then returns information about that message. The functionality is equivalent to <code class="computeroutput">MPI_Probe</code>. To check if a message is available without blocking, use <code class="computeroutput">iprobe</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">source</code></span></p></td>
@@ -871,23 +763,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a name="idm45507089907504-bb"></a><span class="identifier">iprobe</span><span class="special">(</span><span class="keyword">int</span> source <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> tag <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine if a message is available to be received. <p>This operation determines if a message matching (<code class="computeroutput">source</code>, <code class="computeroutput">tag</code>) is available to be received. If so, it returns information about that message; otherwise, it returns immediately with an empty optional. The functionality is equivalent to <code class="computeroutput">MPI_Iprobe</code>. To wait until a message is available, use <code class="computeroutput">wait</code>.</p>
+<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="status.html" title="Class status">status</a> <span class="special">&gt;</span> <a name="idp42165808-bb"></a><span class="identifier">iprobe</span><span class="special">(</span><span class="keyword">int</span> source <span class="special">=</span> <span class="identifier">any_source</span><span class="special">,</span> <span class="keyword">int</span> tag <span class="special">=</span> <span class="identifier">any_tag</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine if a message is available to be received. <p>This operation determines if a message matching (<code class="computeroutput">source</code>, <code class="computeroutput">tag</code>) is available to be received. If so, it returns information about that message; otherwise, it returns immediately with an empty optional. The functionality is equivalent to <code class="computeroutput">MPI_Iprobe</code>. To wait until a message is available, use <code class="computeroutput">wait</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">source</code></span></p></td>
@@ -908,20 +794,17 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507089898528-bb"></a><span class="identifier">barrier</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Wait for all processes within a communicator to reach the barrier. <p>This routine is a collective operation that blocks each process until all processes have entered it, then releases all of the processes "simultaneously". It is equivalent to <code class="computeroutput">MPI_Barrier</code>. </p>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp190055216-bb"></a><span class="identifier">barrier</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Wait for all processes within a communicator to reach the barrier. <p>This routine is a collective operation that blocks each process until all processes have entered it, then releases all of the processes "simultaneously". It is equivalent to <code class="computeroutput">MPI_Barrier</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507104265248-bb"></a><span class="keyword">operator</span> <span class="keyword">bool</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine if this communicator is valid for communication. <p>Evaluates <code class="computeroutput">true</code> in a boolean context if this communicator is valid for communication, i.e., does not represent MPI_COMM_NULL. Otherwise, evaluates <code class="computeroutput">false</code>. </p>
+<pre class="literallayout"><a name="idp133982944-bb"></a><span class="keyword">operator</span> <span class="keyword">bool</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Determine if this communicator is valid for communication. <p>Evaluates <code class="computeroutput">true</code> in a boolean context if this communicator is valid for communication, i.e., does not represent MPI_COMM_NULL. Otherwise, evaluates <code class="computeroutput">false</code>. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507104262368-bb"></a><span class="keyword">operator</span> <span class="identifier">MPI_Comm</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Access the MPI communicator associated with a Boost.MPI communicator. <p>This routine permits the implicit conversion from a Boost.MPI communicator to an MPI communicator.</p>
+<pre class="literallayout"><a name="idp133985824-bb"></a><span class="keyword">operator</span> <span class="identifier">MPI_Comm</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Access the MPI communicator associated with a Boost.MPI communicator. <p>This routine permits the implicit conversion from a Boost.MPI communicator to an MPI communicator.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>The associated MPI communicator. </p></td>
@@ -929,24 +812,18 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="communicator.html" title="Class communicator">communicator</a> <a name="idm45507104259696-bb"></a><span class="identifier">split</span><span class="special">(</span><span class="keyword">int</span> color<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="communicator.html" title="Class communicator">communicator</a> <a name="idp133988496-bb"></a><span class="identifier">split</span><span class="special">(</span><span class="keyword">int</span> color<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Split the communicator into multiple, disjoint communicators each of which is based on a particular color. This is a collective operation that returns a new communicator that is a subgroup of <code class="computeroutput">this</code>. This routine is functionally equivalent to <code class="computeroutput">MPI_Comm_split</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">color</code></span></p></td>
 <td><p>The color of this process. All processes with the same <code class="computeroutput">color</code> value will be placed into the same group.</p></td>
@@ -961,24 +838,18 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><a class="link" href="communicator.html" title="Class communicator">communicator</a> <a name="idm45507045632432-bb"></a><span class="identifier">split</span><span class="special">(</span><span class="keyword">int</span> color<span class="special">,</span> <span class="keyword">int</span> key<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><a class="link" href="communicator.html" title="Class communicator">communicator</a> <a name="idp133626608-bb"></a><span class="identifier">split</span><span class="special">(</span><span class="keyword">int</span> color<span class="special">,</span> <span class="keyword">int</span> key<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Split the communicator into multiple, disjoint communicators each of which is based on a particular color. This is a collective operation that returns a new communicator that is a subgroup of <code class="computeroutput">this</code>. This routine is functionally equivalent to <code class="computeroutput">MPI_Comm_split</code>.</p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">color</code></span></p></td>
@@ -999,15 +870,12 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="intercommunicator.html" title="Class intercommunicator">intercommunicator</a> <span class="special">&gt;</span> <a name="idm45506974414976-bb"></a><span class="identifier">as_intercommunicator</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="intercommunicator.html" title="Class intercommunicator">intercommunicator</a> <span class="special">&gt;</span> <a name="idp133617056-bb"></a><span class="identifier">as_intercommunicator</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Determine if the communicator is in fact an intercommunicator and, if so, return that intercommunicator.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>an <code class="computeroutput">optional</code> containing the intercommunicator, if this communicator is in fact an intercommunicator. Otherwise, returns an empty <code class="computeroutput">optional</code>. </p></td>
@@ -1015,15 +883,12 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="graph_communicator.html" title="Class graph_communicator">graph_communicator</a> <span class="special">&gt;</span> <a name="idm45506974411200-bb"></a><span class="identifier">as_graph_communicator</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="identifier">optional</span><span class="special">&lt;</span> <a class="link" href="graph_communicator.html" title="Class graph_communicator">graph_communicator</a> <span class="special">&gt;</span> <a name="idp133620832-bb"></a><span class="identifier">as_graph_communicator</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Determine if the communicator has a graph topology and, if so, return that <code class="computeroutput"><code class="computeroutput"><a class="link" href="graph_communicator.html" title="Class graph_communicator">graph_communicator</a></code></code>. Even though the communicators have different types, they refer to the same underlying communication space and can be used interchangeably for communication.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Returns:</span></p></td>
 <td><p>an <code class="computeroutput">optional</code> containing the graph communicator, if this communicator does in fact have a graph topology. Otherwise, returns an empty <code class="computeroutput">optional</code>. </p></td>
@@ -1031,29 +896,23 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">bool</span> <a name="idm45507044019824-bb"></a><span class="identifier">has_cartesian_topology</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">bool</span> <a name="idp82412592-bb"></a><span class="identifier">has_cartesian_topology</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Determines whether this communicator has a Cartesian topology. </p>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507044018240-bb"></a><span class="identifier">abort</span><span class="special">(</span><span class="keyword">int</span> errcode<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp82414176-bb"></a><span class="identifier">abort</span><span class="special">(</span><span class="keyword">int</span> errcode<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Abort all tasks in the group of this communicator.</p>
 <p>Makes a "best attempt" to abort all of the tasks in the group of this communicator. Depending on the underlying MPI implementation, this may either abort the entire program (and possibly return <code class="computeroutput">errcode</code> to the environment) or only abort some processes, allowing the others to continue. Consult the documentation for your MPI implementation. This is equivalent to a call to <code class="computeroutput">MPI_Abort</code> </p>
 <p>
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">errcode</code></span></p></td>
 <td><p>The error code to return from aborted processes. </p></td>

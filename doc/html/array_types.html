@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Array Components</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="multi_array.html" title="Chapter&#160;20.&#160;Boost.MultiArray Reference Manual">
+<link rel="up" href="multi_array.html" title="Chapter&#160;22.&#160;Boost.MultiArray Reference Manual">
 <link rel="prev" href="MultiArray.html" title="MultiArray Concept">
 <link rel="next" href="auxiliary.html" title="Auxiliary Components">
 </head>
@@ -26,7 +26,7 @@
 <div class="sect1">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="array_types"></a>Array Components</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="sect2"><a href="array_types.html#multi_array_class"><code class="literal">multi_array</code></a></span></dt>
 <dt><span class="sect2"><a href="array_types.html#multi_array_ref"><code class="literal">multi_array_ref</code></a></span></dt>
 <dt><span class="sect2"><a href="array_types.html#const_multi_array_ref"><code class="literal">const_multi_array_ref</code></a></span></dt>
@@ -62,7 +62,7 @@ snippets for effects intend to capture the essence of the described
 operation. 
 </p>
 <p><b>Queries.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">element* data();
 const element* data() const;</pre></span></dt>
 <dd><p>This returns a pointer to the beginning of the
@@ -93,7 +93,7 @@ version of this function. (Required by MultiArray)
 </p></dd>
 </dl></div>
 <p><b>Comparators.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">
 bool operator==(const *array-type*&amp; rhs);
 bool operator!=(const *array-type*&amp; rhs);
@@ -113,7 +113,7 @@ comparator corresponding to that called on
 </dd>
 </dl></div>
 <p><b>Modifiers.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term">
 <pre class="programlisting">
 
@@ -321,7 +321,7 @@ public:
 
 </pre>
 <p><b>Constructors.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">template &lt;typename ExtentList&gt;
 explicit multi_array(const ExtentList&amp; sizes,
                      const storage_order_type&amp; store = c_storage_order(),
@@ -398,7 +398,7 @@ and
 are equivalent.
 </p>
 <p><b>Modifiers.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">
 multi_array&amp; operator=(const multi_array&amp; x);
 template &lt;class Array&gt; multi_array&amp; operator=(const Array&amp; x);
@@ -459,7 +459,7 @@ created by resizing the array are initialized with the
 </p></dd>
 </dl></div>
 <p><b>Queries.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">
 storage_order_type&amp; storage_order() const;
 </pre>
@@ -594,7 +594,7 @@ public:
 
 </pre>
 <p><b>Constructors.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">template &lt;typename ExtentList&gt;
 explicit multi_array_ref(element* data, 
                      const ExtentList&amp; sizes,
@@ -641,7 +641,7 @@ the <code class="literal">multi_array</code> class copy constructor.
 </dd>
 </dl></div>
 <p><b>Modifiers.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">
 multi_array_ref&amp; operator=(const multi_array_ref&amp; x);
 template &lt;class Array&gt; multi_array_ref&amp; operator=(const Array&amp; x);
@@ -777,7 +777,7 @@ public:
 
 </pre>
 <p><b>Constructors.&#160;</b></p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><pre class="programlisting">template &lt;typename ExtentList&gt;
 explicit const_multi_array_ref(TPtr data, 
                      const ExtentList&amp; sizes,

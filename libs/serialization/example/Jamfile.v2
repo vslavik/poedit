@@ -11,47 +11,32 @@ project libs/serialization/example
     : requirements <library>../build//boost_serialization
     ;
 
-rule demo_bsl_run ( demo-name : othersources * : requirements * )
-{
-    return [ run
-        # sources
-            $(demo-name).cpp 
-            $(othersources).cpp
-        : # command
-        : # input files
-        : # requirements
-            # toolset suppress-warnings
-            <toolset>gcc:<cxxflags>"-Wno-non-virtual-dtor -Wno-ctor-dtor-privacy"
-            <toolset>msvc-8.0:<cxxflags>"-wd4996"
-            <toolset>borland:<cxxflags>"-w-8080 -w-8071 -w-8057 -w-8062 -w-8008 -w-0018 -w-8066"
-            # toolset optimizations
-            <toolset>gcc:<cxxflags>"-ftemplate-depth-255"
-            <toolset>msvc:<cxxflags>"-Gy"
-            # toolset shared library support
-            <toolset>como,<runtime-link>shared:<build>no
-            <toolset>msvc,<stdlib>stlport,<runtime-link>shared:<build>no
-            <toolset>cw,<runtime-link>static:<build>no
-            $(requirements)
-         : # test name
-            $(demo-name)
-       ]
-    ;
-}
+import ../util/test :
+    run-template
+    run-invoke
+    run-winvoke
+    test-bsl-run-no-lib
+    test-bsl-run
+    test-bsl-run_archive
+    test-bsl-run_files
+    test-bsl-run_polymorphic_archive
+;
 
 test-suite "demo-suite" :
     # demos
-    [ demo_bsl_run demo ]
-    [ demo_bsl_run demo_auto_ptr ]
-    [ demo_bsl_run demo_exception ]
-    [ demo_bsl_run demo_log : log_archive ]
-    [ demo_bsl_run demo_pimpl : demo_pimpl_A ]
-    [ demo_bsl_run demo_polymorphic : demo_polymorphic_A ]
-    [ demo_bsl_run demo_portable_archive : portable_binary_iarchive portable_binary_oarchive ]
-    [ demo_bsl_run demo_shared_ptr ]
-    [ demo_bsl_run demo_simple_log ]
-    [ demo_bsl_run demo_trivial_archive ]
-    [ demo_bsl_run demo_xml ]
-    [ demo_bsl_run demo_xml_save ]
-    [ demo_bsl_run demo_xml_load : : <dependency>demo_xml_save ]
+    [ test-bsl-run demo ]
+    [ test-bsl-run demo_auto_ptr ]
+    [ test-bsl-run demo_exception ]
+    [ test-bsl-run demo_fast_archive ]
+    [ test-bsl-run demo_log : log_archive ]
+    [ test-bsl-run demo_pimpl : demo_pimpl_A ]
+    [ test-bsl-run demo_polymorphic : demo_polymorphic_A ]
+    [ test-bsl-run demo_portable_archive : portable_binary_iarchive portable_binary_oarchive ]
+    [ test-bsl-run demo_shared_ptr ]
+    [ test-bsl-run demo_simple_log ]
+    [ test-bsl-run demo_trivial_archive ]
+    [ test-bsl-run demo_xml ]
+    [ test-bsl-run demo_xml_save ]
+    [ test-bsl-run demo_xml_load : : : <dependency>demo_xml_save ]
 ;
 

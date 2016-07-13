@@ -17,6 +17,7 @@
 //  See http://www.boost.org for updates, documentation, and revision history.
 
 #include <boost/aligned_storage.hpp>
+#include <boost/serialization/serialization.hpp>
 
 namespace boost{
 namespace serialization {

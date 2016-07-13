@@ -22,7 +22,7 @@
 <div>
 <div><h2 class="title">
 <a name="boostdep"></a>Boostdep</h2></div>
-<div><p class="copyright">Copyright &#169; 2014, 2015 Peter Dimov</p></div>
+<div><p class="copyright">Copyright &#169; 2014-2016 Peter Dimov</p></div>
 <div><div class="legalnotice">
 <a name="boostdep.legal"></a><p>
         Distributed under the <a href="http://boost.org/LICENSE_1_0.txt" target="_top">Boost
@@ -57,6 +57,7 @@
 <dt><span class="section"><a href="index.html#boostdep.reference.primary">--primary</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.secondary">--secondary</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.reverse">--reverse</a></span></dt>
+<dt><span class="section"><a href="index.html#boostdep.reference.subset">--subset</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.header">--header</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.track_sources">--track-sources</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.title">--title</a></span></dt>
@@ -319,6 +320,7 @@ nothing added to commit but untracked files present (use "git add" to track)
     boostdep [options] [--primary] &lt;module&gt;
     boostdep [options] --secondary &lt;module&gt;
     boostdep [options] --reverse &lt;module&gt;
+    boostdep [options] --subset &lt;module&gt;
     boostdep [options] [--header] &lt;header&gt;
 
     [options]: [--track-sources] [--title &lt;title&gt;] [--footer &lt;footer&gt;] [--html]
@@ -576,6 +578,7 @@ FOR /f %%i IN (%OUTDIR%\list-modules.txt) DO %BOOSTDEP% --title "Dependency Repo
 <dt><span class="section"><a href="index.html#boostdep.reference.primary">--primary</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.secondary">--secondary</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.reverse">--reverse</a></span></dt>
+<dt><span class="section"><a href="index.html#boostdep.reference.subset">--subset</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.header">--header</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.track_sources">--track-sources</a></span></dt>
 <dt><span class="section"><a href="index.html#boostdep.reference.title">--title</a></span></dt>
@@ -601,10 +604,10 @@ FOR /f %%i IN (%OUTDIR%\list-modules.txt) DO %BOOSTDEP% --title "Dependency Repo
 <a name="boostdep.reference.list_buildable"></a><a class="link" href="index.html#boostdep.reference.list_buildable" title="--list-buildable">--list-buildable</a>
 </h3></div></div></div>
 <p>
-        <code class="literal">boostdep --list-modules</code> prints a list of the modules that
-        require building. <span class="emphasis"><em>Boostdep</em></span> considers a module to require
-        building if it contains subdirectories named <code class="literal">build</code> and
-        <code class="literal">src</code>.
+        <code class="literal">boostdep --list-buildable</code> prints a list of the modules
+        that require building. <span class="emphasis"><em>Boostdep</em></span> considers a module to
+        require building if it contains subdirectories named <code class="literal">build</code>
+        and <code class="literal">src</code>.
       </p>
 <p>
         This command is typically used from scripts.
@@ -687,7 +690,7 @@ align -&gt; assert config core static_assert throw_exception
         <code class="literal">boostdep --module-levels</code> generates a report that groups
         modules by level. Levels are determined in such a way so that a module of
         level <code class="literal">N</code> never depends on modules of levels greater than
-        <code class="literal">N</code>, and in the absence of cyclical dependencies, doesn't
+        <code class="literal">N</code>, and in the absence of cyclic dependencies, doesn't
         depend on other modules of level <code class="literal">N</code>. It takes the same
         options as <code class="literal">--module-overview</code>.
       </p>
@@ -760,6 +763,33 @@ align -&gt; assert config core static_assert throw_exception
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="boostdep.reference.subset"></a><a class="link" href="index.html#boostdep.reference.subset" title="--subset">--subset</a>
+</h3></div></div></div>
+<p>
+        <code class="literal">boostdep --subset <span class="emphasis"><em>module</em></span></code> lists the
+        subset dependencies of <span class="emphasis"><em>module</em></span>, that is, it lists which
+        modules comprise the subset which <span class="emphasis"><em>module</em></span> requires in
+        order to be usable. The dependencies are determined by tracing the <code class="literal">#include</code>
+        directives starting from <span class="emphasis"><em>module</em></span>'s headers.
+      </p>
+<p>
+        The difference between using the modules reported by <code class="literal">--subset</code>
+        and those reported by the sum of <code class="literal">--primary</code> and <code class="literal">--secondary</code>
+        is that the former only guarantees that <span class="emphasis"><em>module</em></span> will
+        be usable, whereas the latter guarantees it for every module in the subset.
+      </p>
+<p>
+        <code class="literal">--subset</code> takes the same options as <code class="literal">--module-overview</code>.
+      </p>
+<pre class="programlisting">dist/bin/boostdep --title "Subset Dependencies of filesystem" --footer "Generated on 21.05.2015 20:53:11" --html --subset filesystem &gt; filesystem-subset.html
+</pre>
+<p>
+        You can combine <code class="literal">--subset</code> with the other module report
+        options.
+      </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="boostdep.reference.header"></a><a class="link" href="index.html#boostdep.reference.header" title="--header">--header</a>
 </h3></div></div></div>
 <p>
@@ -811,7 +841,7 @@ align -&gt; assert config core static_assert throw_exception
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: May 21, 2015 at 22:05:36 GMT</small></p></td>
+<td align="left"><p><small>Last revised: March 04, 2016 at 11:24:14 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

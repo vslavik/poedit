@@ -148,16 +148,16 @@ int allocation_loop()
    #define SINGLE_TEST
    #ifndef SINGLE_TEST
       #ifdef NDEBUG
-      unsigned int numrep [] = { /*10000, */100000, 1000000, 10000000 };
-      #else
       unsigned int numrep [] = { /*10000, */10000, 100000, 1000000 };
+      #else
+      unsigned int numrep [] = { /*10000, */1000, 10000, 100000 };
       #endif
       unsigned int numele [] = { /*10000,  */1000,    100,      10 };
    #else
       #ifdef NDEBUG
-      unsigned int numrep [] = { 500000 };
-      #else
       unsigned int numrep [] = { 50000 };
+      #else
+      unsigned int numrep [] = { 5000 };
       #endif
       unsigned int numele [] = { 100 };
    #endif

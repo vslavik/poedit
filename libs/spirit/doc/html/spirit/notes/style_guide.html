@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Style Guide</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Spirit 2.5.2">
 <link rel="up" href="../notes.html" title="Notes">
 <link rel="prev" href="porting_from_spirit_1_8_x.html" title="Porting from Spirit 1.8.x">
@@ -38,7 +38,7 @@
         Requirements and Guidelines</a> and is the combined work of Joel de Guzman,
         Chris Uzdavinis, and Hartmut Kaiser.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Rule names use std C++ (Boost) convention. The rule name may be very
             long.
@@ -67,7 +67,7 @@
         <span class="special">&gt;&gt;</span> <span class="identifier">etc</span>
     <span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Prefer literals in the grammar instead of identifiers. e.g. <code class="computeroutput"><span class="string">"program"</span></code> instead of <code class="computeroutput"><span class="identifier">PROGRAM</span></code>, <code class="computeroutput"><span class="char">'&gt;='</span></code>
             instead of <code class="computeroutput"><span class="identifier">GTE</span></code> and <code class="computeroutput"><span class="char">'.'</span></code> instead of <code class="computeroutput"><span class="identifier">DOT</span></code>.
@@ -96,7 +96,7 @@
         <span class="special">&gt;&gt;</span> <span class="char">';'</span>
     <span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             Nesting directives: If a rule does not fit on one line (80 characters)
             it should be continued on the next line intended by one level. The brackets
             of directives, semantic expressions (using Phoenix or LL lambda expressions)
@@ -112,7 +112,7 @@
         <span class="special">]</span>
    <span class="special">;</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             Nesting unary operators (e.g.Kleene star): Unary rule operators (Kleene
             star, <code class="computeroutput"><span class="char">'!'</span></code>, <code class="computeroutput"><span class="char">'+'</span></code>
             etc.) should be moved out one space before the corresponding indentation

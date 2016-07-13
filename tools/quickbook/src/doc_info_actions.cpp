@@ -18,9 +18,9 @@
 #include "files.hpp"
 #include "native_text.hpp"
 #include "state.hpp"
-#include "actions.hpp"
 #include "doc_info_tags.hpp"
 #include "document_state.hpp"
+#include "include_paths.hpp"
 
 namespace quickbook
 {
@@ -265,22 +265,27 @@ namespace quickbook
 
         if (!xmlbase.empty())
         {
-            xinclude_path x = calculate_xinclude_path(xmlbase, state);
+            path_parameter x = check_xinclude_path(xmlbase, state);
 
-            if (!fs::is_directory(x.path))
+            if (x.type == path_parameter::path)
             {
-                detail::outerr(xmlbase.get_file(), xmlbase.get_position())
-                    << "xmlbase \""
-                    << xmlbase.get_quickbook()
-                    << "\" isn't a directory."
-                    << std::endl;
+                quickbook_path path = resolve_xinclude_path(x.value, state);
 
-                ++state.error_count;
-            }
-            else
-            {
-                xmlbase_value = x.uri;
-                state.xinclude_base = x.path;
+                if (!fs::is_directory(path.file_path))
+                {
+                    detail::outerr(xmlbase.get_file(), xmlbase.get_position())
+                        << "xmlbase \""
+                        << xmlbase.get_quickbook()
+                        << "\" isn't a directory."
+                        << std::endl;
+
+                    ++state.error_count;
+                }
+                else
+                {
+                    xmlbase_value = dir_path_to_url(path.abstract_file_path);
+                    state.xinclude_base = path.file_path;
+                }
             }
         }
 

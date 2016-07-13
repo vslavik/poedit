@@ -81,8 +81,8 @@ void install_default_scanners()
    {
       add_file_scanner(
          "function_name",  // Index type
-         "\\w+(?:\\s*<[^>]>)?[\\s&*]+?(\\w+)\\s*(?:BOOST_[[:upper:]_]+\\s*)?\\([^\\)]*\\)\\s*[;{]", // scanner regex
-         "\\\\<\\\\w+\\\\>(?:\\\\s+<[^>]*>)?[\\\\s&*]+\\\\<\\1\\\\>\\\\s*\\\\([^;{]*\\\\)",  // Format string to create indexing regex.
+         "\\w++(?:\\s*+<[^>]++>)?[\\s&*]+?(\\w+)\\s*(?:BOOST_[[:upper:]_]+\\s*)?\\([^;{}]*\\)\\s*[;{]", // scanner regex
+         "\\\\<\\\\w+\\\\>(?:\\\\s+<[^>]*>)*[\\\\s&*]+\\\\<\\1\\\\>\\\\s*\\\\([^;{]*\\\\)",  // Format string to create indexing regex.
          "\\1",   // Format string to create index term.
          "",  // Filter regex for section id's.
          ""   // Filter regex for filenames.

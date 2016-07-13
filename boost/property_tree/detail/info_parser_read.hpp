@@ -69,7 +69,7 @@ namespace boost { namespace property_tree { namespace info_parser
         unsigned n = c;
         if (n > 127)
             return false;
-        return isspace(c) != 0;
+        return std::isspace(c) != 0;
     }
 
     // Advance pointer past whitespace

@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Lambda expressions in details</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../lambda.html" title="Chapter&#160;16.&#160;Boost.Lambda">
+<link rel="up" href="../lambda.html" title="Chapter&#160;17.&#160;Boost.Lambda">
 <link rel="prev" href="using_library.html" title="Using the library">
 <link rel="next" href="extending.html" title="Extending return type deduction system">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="lambda.le_in_details"></a>Lambda expressions in details</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="le_in_details.html#lambda.placeholders">Placeholders</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.operator_expressions">Operator expressions</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.bind_expressions">Bind expressions</a></span></dt>
@@ -35,8 +35,8 @@
 <dt><span class="section"><a href="le_in_details.html#lambda.lambda_expressions_for_control_structures">Lambda expressions for control structures</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.exceptions">Exceptions</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.construction_and_destruction">Construction and destruction</a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idm45555241557568">Special lambda expressions</a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idm45555241505984">Casts, sizeof and typeid</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idp247642624">Special lambda expressions</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idp247694096">Casts, sizeof and typeid</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.nested_stl_algorithms">Nesting STL algorithm invocations</a></span></dt>
 </dl></div>
 <p>
@@ -123,8 +123,8 @@ int i = 1;
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lambda.operator_expressions"></a>Operator expressions</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="le_in_details.html#idm45555241840576">Operators that cannot be overloaded</a></span></dt>
+<div class="toc"><dl>
+<dt><span class="section"><a href="le_in_details.html#idp247359376">Operators that cannot be overloaded</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.assignment_and_subscript">Assignment and subscript operators</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.logical_operators">Logical operators</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.comma_operator">Comma operator</a></span></dt>
@@ -145,7 +145,7 @@ However, there are some restrictions that originate from the C++ operator overlo
 </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm45555241840576"></a>Operators that cannot be overloaded</h4></div></div></div>
+<a name="idp247359376"></a>Operators that cannot be overloaded</h4></div></div></div>
 <p>
 Some operators cannot be overloaded at all (<code class="literal">::</code>, <code class="literal">.</code>, <code class="literal">.*</code>).
 For some operators, the requirements on return types prevent them to be overloaded to create lambda functors.
@@ -231,7 +231,7 @@ The built-in member pointer operator is applied if the left argument is a pointe
 We must separate two cases:
 
 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <p>The right hand argument is a pointer to a data member. 
 In this case the lambda functor simply performs the argument substitution and calls the built-in member pointer operator, which returns a reference to the member pointed to. 
@@ -277,7 +277,7 @@ B* b = new B();
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lambda.bind_expressions"></a>Bind expressions</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="le_in_details.html#lambda.function_pointers_as_targets">Function pointers or references as targets</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#member_functions_as_targets">Member functions as targets</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.members_variables_as_targets">Member variables as targets</a></span></dt>
@@ -495,7 +495,7 @@ function object class.
 </p>
 <div class="simplesect">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="idm45555241762032"></a>The result_type typedef</h5></div></div></div>
+<a name="idp247437984"></a>The result_type typedef</h5></div></div></div>
 <p>
 
 The BLL supports the standard library convention of declaring the return type
@@ -522,7 +522,7 @@ and <code class="literal">sig</code>, <code class="literal">result_type</code> t
 </div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="idm45555241755520"></a>The sig template</h5></div></div></div>
+<a name="idp247444496"></a>The sig template</h5></div></div></div>
 <p>
 Another mechanism that make BLL aware of the return type(s) of a function object is defining
 member template struct 
@@ -623,7 +623,7 @@ mechanism first introduced in the FC++ library
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lambda.overriding_deduced_return_type"></a>Overriding the deduced return type</h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="le_in_details.html#lambda.nullary_functors_and_ret">Nullary lambda functors and ret</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="le_in_details.html#lambda.nullary_functors_and_ret">Nullary lambda functors and ret</a></span></dt></dl></div>
 <p>
 The return type deduction system may not be able to deduce the return types of some user defined operators or bind expressions with class objects.
 
@@ -779,7 +779,7 @@ When the lambda functor is invoked, a reference to <code class="literal">x</code
 </p>
 <div class="simplesect">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm45555241684624"></a>Naming delayed constants and variables</h4></div></div></div>
+<a name="idp247515376"></a>Naming delayed constants and variables</h4></div></div></div>
 <p>
 It is possible to predefine and name a delayed variable or constant outside a lambda expression. 
 The templates <code class="literal">var_type</code>, <code class="literal">constant_type</code> 
@@ -822,7 +822,7 @@ for_each(a.begin(),a.end(), cout &lt;&lt; space &lt;&lt; _1);
 </div>
 <div class="simplesect">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm45555241673632"></a>About assignment and subscript operators</h4></div></div></div>
+<a name="idp247526368"></a>About assignment and subscript operators</h4></div></div></div>
 <p>
 As described in <a class="xref" href="le_in_details.html#lambda.assignment_and_subscript" title="Assignment and subscript operators">the section called &#8220;Assignment and subscript operators&#8221;</a>, assignment and subscripting operators are always defined as member functions.
 This means, that for expressions of the form
@@ -849,7 +849,7 @@ For example, <code class="literal">i += _1</code> is equivalent to <code class="
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="lambda.lambda_expressions_for_control_structures"></a>Lambda expressions for control structures</h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="le_in_details.html#lambda.switch_statement">Switch statement</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="le_in_details.html#lambda.switch_statement">Switch statement</a></span></dt></dl></div>
 <p>
 BLL defines several functions to create lambda functors that represent control structures. 
 They all take lambda functors as parameters and return <code class="literal">void</code>.
@@ -1048,7 +1048,7 @@ or to
 </p>
 <p>
 
-The <a class="xref" href="le_in_details.html#ex:exceptions" title="Example&#160;16.1.&#160;Throwing and handling exceptions in lambda expressions.">Example&#160;16.1, &#8220;Throwing and handling exceptions in lambda expressions.&#8221;</a> demonstrates the use of the BLL 
+The <a class="xref" href="le_in_details.html#ex:exceptions" title="Example&#160;17.1.&#160;Throwing and handling exceptions in lambda expressions.">Example&#160;17.1, &#8220;Throwing and handling exceptions in lambda expressions.&#8221;</a> demonstrates the use of the BLL 
 exception handling tools. 
 The first handler catches exceptions of type <code class="literal">foo_exception</code>. 
 Note the use of <code class="literal">_1</code> placeholder in the body of the handler.
@@ -1084,7 +1084,7 @@ Finally, the third handler (<code class="literal">catch_all</code>) demonstrates
 rethrowing exceptions.
 </p>
 <div class="example">
-<a name="ex:exceptions"></a><p class="title"><b>Example&#160;16.1.&#160;Throwing and handling exceptions in lambda expressions.</b></p>
+<a name="ex:exceptions"></a><p class="title"><b>Example&#160;17.1.&#160;Throwing and handling exceptions in lambda expressions.</b></p>
 <div class="example-contents"><pre class="programlisting">
 for_each(
   a.begin(), a.end(),
@@ -1169,14 +1169,14 @@ transform(x.begin(), x.end(), y.begin(), back_inserter(v),
 </pre>
 <p>
 
-<a class="xref" href="le_in_details.html#table:constructor_destructor_fos" title="Table&#160;16.1.&#160;Construction and destruction related function objects.">Table&#160;16.1, &#8220;Construction and destruction related function objects.&#8221;</a> lists all the function 
+<a class="xref" href="le_in_details.html#table:constructor_destructor_fos" title="Table&#160;17.1.&#160;Construction and destruction related function objects.">Table&#160;17.1, &#8220;Construction and destruction related function objects.&#8221;</a> lists all the function 
 objects related to creating and destroying objects,
  showing the expression to create and call the function object, 
 and the effect of evaluating that expression.
 
 </p>
 <div class="table">
-<a name="table:constructor_destructor_fos"></a><p class="title"><b>Table&#160;16.1.&#160;Construction and destruction related function objects.</b></p>
+<a name="table:constructor_destructor_fos"></a><p class="title"><b>Table&#160;17.1.&#160;Construction and destruction related function objects.</b></p>
 <div class="table-contents"><table class="table" summary="Construction and destruction related function objects.">
 <colgroup>
 <col>
@@ -1226,17 +1226,17 @@ and the effect of evaluating that expression.
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555241557568"></a>Special lambda expressions</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="le_in_details.html#idm45555241556880">Preventing argument substitution</a></span></dt>
+<a name="idp247642624"></a>Special lambda expressions</h3></div></div></div>
+<div class="toc"><dl>
+<dt><span class="section"><a href="le_in_details.html#idp247643312">Preventing argument substitution</a></span></dt>
 <dt><span class="section"><a href="le_in_details.html#lambda.rvalues_as_actual_arguments">Rvalues as actual arguments to lambda functors</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm45555241556880"></a>Preventing argument substitution</h4></div></div></div>
-<div class="toc"><dl class="toc">
+<a name="idp247643312"></a>Preventing argument substitution</h4></div></div></div>
+<div class="toc"><dl>
 <dt><span class="section"><a href="le_in_details.html#lambda.unlambda">Unlambda</a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idm45555241533824">Protect</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idp247666320">Protect</a></span></dt>
 </dl></div>
 <p>
 When a lambda functor is called, the default behavior is to substitute 
@@ -1390,7 +1390,7 @@ int nested(const F&amp; f) {
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
-<a name="idm45555241533824"></a>Protect</h5></div></div></div>
+<a name="idp247666320"></a>Protect</h5></div></div></div>
 <p>
 The <code class="literal">protect</code> function is related to unlambda. 
 
@@ -1533,12 +1533,12 @@ and are not affected by the non-const rvalue problem.
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555241505984"></a>Casts, sizeof and typeid</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<a name="idp247694096"></a>Casts, sizeof and typeid</h3></div></div></div>
+<div class="toc"><dl>
 <dt><span class="section"><a href="le_in_details.html#lambda.cast_expressions">
 Cast expressions
 </a></span></dt>
-<dt><span class="section"><a href="le_in_details.html#idm45555241496496">Sizeof and typeid</a></span></dt>
+<dt><span class="section"><a href="le_in_details.html#idp247703520">Sizeof and typeid</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -1578,7 +1578,7 @@ for_each(a.begin(), a.end(),
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="idm45555241496496"></a>Sizeof and typeid</h4></div></div></div>
+<a name="idp247703520"></a>Sizeof and typeid</h4></div></div></div>
 <p>
 The BLL counterparts for these expressions are named 
 <code class="literal">ll_sizeof</code> and <code class="literal">ll_typeid</code>.

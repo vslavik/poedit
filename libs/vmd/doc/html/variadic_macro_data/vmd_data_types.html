@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Data types</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="prev" href="vmd_detail.html" title="Functional groups">
@@ -39,7 +39,7 @@
       as "data types". These are the "identifier" and "pp-number"
       preprocessor tokens. The preprocessor token types which VMD cannot parse are:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           header-name
         </li>
@@ -83,14 +83,14 @@
     </p>
 <p>
       VMD v-types are, like numbers, a subset of VMD identifiers consisting of identifiers
-      beginning with BOOST_VMD_TYPE_ followed by a data type mnemonic. Each type
+      beginning with BOOST_VMD_TYPE_ followed by a data type mnemonic. Each v-type
       can be recognized by VMD functionality and therefore passed or returned by
       macros. Like any identifier a v-type can be parsed both as a separate element
       or in a sequence of preprocessing tokens.
     </p>
 <p>
       VMD can also test for emptiness, or the absence of any preprocessing tokens
-      passed as macro input.
+      when passed as macro input.
     </p>
 <p>
       The Boost PP library supports four individual high-level data types. These

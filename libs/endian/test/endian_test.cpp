@@ -9,7 +9,7 @@
 
 //----------------------------------------------------------------------------//
 
-//  This test probes for correct endianess, size, and value.
+//  This test probes for correct endianness, size, and value.
 
 //  See endian_operations_test for tests of operator correctness and interaction
 //  between operand types.

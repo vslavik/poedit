@@ -16,8 +16,8 @@
 #ifndef BOOST_LOG_ID_FORMATTING_HPP_INCLUDED_
 #define BOOST_LOG_ID_FORMATTING_HPP_INCLUDED_
 
-#include <cstddef>
 #include <boost/log/detail/config.hpp>
+#include <cstddef>
 #include <boost/log/detail/header.hpp>
 
 namespace boost {

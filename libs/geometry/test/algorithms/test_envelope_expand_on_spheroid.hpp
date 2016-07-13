@@ -138,10 +138,22 @@ struct box_equals
     {
         equals_with_tolerance equals(tol);
 
+#ifndef BOOST_GEOMETRY_TEST_ENABLE_FAILING
         return equals(bg::get<0, 0>(box1), bg::get<0, 0>(box2))
             && equals(bg::get<0, 1>(box1), bg::get<0, 1>(box2))
             && equals(bg::get<1, 0>(box1), bg::get<1, 0>(box2))
             && equals(bg::get<1, 1>(box1), bg::get<1, 1>(box2));
+#else
+        // check latitude with tolerance when necessary
+        return bg::get<0, 0>(box1) == bg::get<0, 0>(box2)
+            && (bg::get<0, 1>(box1) < 0
+                ? equals(bg::get<0, 1>(box1), bg::get<0, 1>(box2))
+                : bg::get<0, 1>(box1) == bg::get<0, 1>(box2))
+            && bg::get<1, 0>(box1) == bg::get<1, 0>(box2)
+            && (bg::get<1, 1>(box1) > 0
+                ? equals(bg::get<1, 1>(box1), bg::get<1, 1>(box2))
+                : bg::get<1, 1>(box1) == bg::get<1, 1>(box2));
+#endif
     }
 };
 
@@ -150,11 +162,17 @@ struct box_equals<Box1, Box2, 3>
 {
     static inline bool apply(Box1 const& box1, Box2 const& box2, double tol)
     {
+#ifndef BOOST_GEOMETRY_TEST_ENABLE_FAILING
         equals_with_tolerance equals(tol);
 
         return box_equals<Box1, Box2, 2>::apply(box1, box2, tol)
             && equals(bg::get<0, 2>(box1), bg::get<0, 2>(box2))
             && equals(bg::get<1, 2>(box1), bg::get<1, 2>(box2));
+#else
+        return box_equals<Box1, Box2, 2>::apply(box1, box2, tol)
+            && bg::get<0, 2>(box1) == bg::get<0, 2>(box2)
+            && bg::get<1, 2>(box1) == bg::get<1, 2>(box2);
+#endif
     }
 };
 

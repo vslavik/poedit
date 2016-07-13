@@ -463,21 +463,21 @@ struct less_with_T
 
 class thing {
 public:
-	thing( int a_, int b_, int c_ ) : a(a_), b(b_), c(c_) {}
+    thing( int a_, int b_, int c_ ) : a(a_), b(b_), c(c_) {}
 public:
-	int a;
-	int b;
-	int c;
+    int a;
+    int b;
+    int c;
 };
 
 class cmpthings {
 public:
-	bool operator() ( const thing& lhs, const thing& rhs ) const  {
-		return lhs.a > rhs.a;
-	}
-	bool operator() ( const thing& lhs, const thing& rhs ) {
-		return lhs.a > rhs.a;
-	}
+    bool operator() ( const thing& lhs, const thing& rhs ) const  {
+        return lhs.a > rhs.a;
+    }
+    bool operator() ( const thing& lhs, const thing& rhs ) {
+        return lhs.a > rhs.a;
+    }
 };
 
 #define RUN_EMPLACE_TEST(HEAP_TYPE)                                     \

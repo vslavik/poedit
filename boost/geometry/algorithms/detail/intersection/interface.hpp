@@ -54,7 +54,7 @@ struct intersection
         <
             Geometry1, Geometry2, OneOut,
             overlay_intersection
-        >::apply(geometry1, geometry2, robust_policy, std::back_inserter(geometry_out), strategy);
+        >::apply(geometry1, geometry2, robust_policy, range::back_inserter(geometry_out), strategy);
 
         return true;
     }

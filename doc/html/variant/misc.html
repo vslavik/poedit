@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Miscellaneous Notes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../variant.html" title="Chapter&#160;39.&#160;Boost.Variant">
+<link rel="up" href="../variant.html" title="Chapter&#160;41.&#160;Boost.Variant">
 <link rel="prev" href="design.html" title="Design Overview">
 <link rel="next" href="refs.html" title="References">
 </head>
@@ -26,9 +26,9 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="variant.misc"></a>Miscellaneous Notes</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="misc.html#variant.versus-any">Boost.Variant vs. Boost.Any</a></span></dt>
-<dt><span class="section"><a href="misc.html#idm45555030186032">Portability</a></span></dt>
+<dt><span class="section"><a href="misc.html#idp496920608">Portability</a></span></dt>
 <dt><span class="section"><a href="misc.html#variant.troubleshooting">Troubleshooting</a></span></dt>
 <dt><span class="section"><a href="misc.html#variant.ack">Acknowledgments</a></span></dt>
 </dl></div>
@@ -44,7 +44,7 @@
     such as:
 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">Boost.Variant guarantees the type of its content is one of a
         finite, user-specified set of types.</li>
 <li class="listitem">Boost.Variant provides <span class="emphasis"><em>compile-time</em></span>
@@ -64,7 +64,7 @@
     such as:
 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">Boost.Any, as its name implies, allows virtually any type for
         its content, providing great flexibility.</li>
 <li class="listitem">Boost.Any provides the no-throw guarantee of exception safety
@@ -79,7 +79,7 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555030186032"></a>Portability</h3></div></div></div>
+<a name="idp496920608"></a>Portability</h3></div></div></div>
 <p>The library aims for 100% ANSI/ISO C++ conformance. However, this is
     strictly impossible due to the inherently non-portable nature of the
     Type Traits library's
@@ -189,7 +189,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="variant.troubleshooting"></a>Troubleshooting</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="misc.html#variant.troubleshooting.template-depth">"Template instantiation depth exceeds maximum"</a></span></dt>
 <dt><span class="section"><a href="misc.html#variant.troubleshooting.compiler-memory">"Internal heap limit reached"</a></span></dt>
 </dl></div>
@@ -204,7 +204,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="variant.troubleshooting.template-depth"></a>"Template instantiation depth exceeds maximum"</h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="misc.html#variant.troubleshooting.template-depth.gcc">GNU GCC</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="misc.html#variant.troubleshooting.template-depth.gcc">GNU GCC</a></span></dt></dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="variant.troubleshooting.template-depth.gcc"></a>GNU GCC</h5></div></div></div>
@@ -217,7 +217,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
 <a name="variant.troubleshooting.compiler-memory"></a>"Internal heap limit reached"</h4></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="misc.html#variant.troubleshooting.compiler-memory.msvc">Microsoft Visual C++</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="misc.html#variant.troubleshooting.compiler-memory.msvc">Microsoft Visual C++</a></span></dt></dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h5 class="title">
 <a name="variant.troubleshooting.compiler-memory.msvc"></a>Microsoft Visual C++</h5></div></div></div>

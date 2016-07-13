@@ -159,7 +159,7 @@ inline void difference(Geometry1 const& geometry1,
 
     detail::difference::difference_insert<geometry_out>(
             geometry1, geometry2, robust_policy,
-            std::back_inserter(output_collection));
+            range::back_inserter(output_collection));
 }
 
 

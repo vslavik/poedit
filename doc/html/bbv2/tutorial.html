@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Tutorial</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;44.&#160;Boost.Build User Manual">
-<link rel="prev" href="../bbv2.html" title="Chapter&#160;44.&#160;Boost.Build User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;46.&#160;Boost.Build User Manual">
+<link rel="prev" href="../bbv2.html" title="Chapter&#160;46.&#160;Boost.Build User Manual">
 <link rel="next" href="overview.html" title="Overview">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="bbv2.tutorial"></a>Tutorial</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#bbv2.tutorial.hello">Hello, world</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#bbv2.tutorial.properties">Properties</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#bbv2.tutorial.hierarchy">Project Hierarchies</a></span></dt>
@@ -112,7 +112,7 @@ b2 --clean hello2
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tutorial.properties"></a>Properties</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tutorial.html#bbv2.tutorial.properties.requirements">Build Requests and Target Requirements</a></span></dt>
 <dt><span class="section"><a href="tutorial.html#bbv2.tutorial.properties.project_attributes">Project Attributes</a></span></dt>
 </dl></div>
@@ -204,7 +204,7 @@ exe hello
         requirements, the target requirements usually override (or, in the case
         of &#8220;free&#8221;&#8221; features like
         <code class="varname">&lt;include&gt;</code>,
-        <a href="#ftn.idm45555008262272" class="footnote" name="idm45555008262272"><sup class="footnote">[13]</sup></a>
+        <sup>[<a name="idp518726768" href="#ftn.idp518726768" class="footnote">13</a>]</sup>
         augments) the build request.
       </p>
 <div class="tip"><table border="0" summary="Tip">
@@ -316,7 +316,7 @@ top/
 
       in its requirements, then all of its subprojects will have it
       in their requirements, too.  Of course, any project can add
-      include paths to those specified by its parents. <a href="#ftn.idm45555008234000" class="footnote" name="idm45555008234000"><sup class="footnote">[14]</sup></a>
+      include paths to those specified by its parents. <sup>[<a name="idp518755040" href="#ftn.idp518755040" class="footnote">14</a>]</sup>
     More details can be found in
       <a class="xref" href="overview.html#bbv2.overview.projects" title="Projects">the section called &#8220;Projects&#8221;</a>.
     </p>
@@ -712,11 +712,11 @@ lib pythonlib <span class="special">:</span> <span class="special">:</span> &lt;
     </p>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idm45555008262272" class="footnote"><p><a href="#idm45555008262272" class="para"><sup class="para">[13] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.idp518726768" href="#idp518726768" class="para">13</a>] </sup>
              See <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a>
           </p></div>
-<div id="ftn.idm45555008234000" class="footnote"><p><a href="#idm45555008234000" class="para"><sup class="para">[14] </sup></a>Many
+<div class="footnote"><p><sup>[<a id="ftn.idp518755040" href="#idp518755040" class="para">14</a>] </sup>Many
       features will be overridden,
       rather than added-to, in subprojects.  See <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a> for more
       information</p></div>

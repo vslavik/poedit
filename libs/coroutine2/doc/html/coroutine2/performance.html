@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Performance</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Coroutine2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Coroutine2">
 <link rel="prev" href="stack/stack_context.html" title="Class stack_context">
@@ -34,10 +34,9 @@
       accounted for, and the one running thread was pinned to a single CPU.
     </p>
 <div class="table">
-<a name="coroutine2.performance.performance_of_asymmetric_coroutines"></a><p class="title"><b>Table&#160;1.1.&#160;Performance of asymmetric coroutines</b></p>
-<div class="table-contents"><table class="table" summary="Performance of asymmetric coroutines">
+<a name="coroutine2.performance.performance_of_asymmetric_coroutines__using_captured_context_"></a><p class="title"><b>Table&#160;1.1.&#160;Performance of asymmetric coroutines (using captured_context)</b></p>
+<div class="table-contents"><table class="table" summary="Performance of asymmetric coroutines (using captured_context)">
 <colgroup>
-<col>
 <col>
 <col>
 <col>
@@ -61,44 +60,11 @@
             </th>
 <th>
               <p>
-                construction (preallocated stack-allocator)
-              </p>
-            </th>
-<th>
-              <p>
                 construction (standard stack-allocator)
               </p>
             </th>
 </tr></thead>
-<tbody>
-<tr>
-<td>
-              <p>
-                i386 (AMD Athlon 64 DualCore 4400+, Linux 32bit)
-              </p>
-            </td>
-<td>
-              <p>
-                49 ns / 50 cycles
-              </p>
-            </td>
-<td>
-              <p>
-                51 &#181;s / 51407 cycles
-              </p>
-            </td>
-<td>
-              <p>
-                14 &#181;s / 15231 cycles
-              </p>
-            </td>
-<td>
-              <p>
-                14 &#181;s / 15216 cycles
-              </p>
-            </td>
-</tr>
-<tr>
+<tbody><tr>
 <td>
               <p>
                 x86_64 (Intel Core2 Q6700, Linux 64bit)
@@ -106,26 +72,20 @@
             </td>
 <td>
               <p>
-                12 ns / 39 cycles
+                7 ns / 20 cycles
               </p>
             </td>
 <td>
               <p>
-                16 &#181;s / 41802 cycles
+                19 &#181;s / cw6306445402 cycles
               </p>
             </td>
 <td>
               <p>
-                6 &#181;s / 10350 cycles
+                10 &#181;s / 29896 cycles
               </p>
             </td>
-<td>
-              <p>
-                6 &#181;s / 18817 cycles
-              </p>
-            </td>
-</tr>
-</tbody>
+</tr></tbody>
 </table></div>
 </div>
 <br class="table-break">

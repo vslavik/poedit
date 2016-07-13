@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Rationale</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../circular_buffer.html" title="Chapter&#160;7.&#160;Boost.Circular Buffer">
 <link rel="prev" href="example.html" title="Circular_buffer example">
@@ -36,7 +36,7 @@
       Additionally, the design of the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       was guided by the following principles:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Maximum <span class="emphasis"><em>efficiency</em></span> for envisaged applications.
         </li>
@@ -48,7 +48,7 @@
         </li>
 <li class="listitem">
           Suitable for <span class="emphasis"><em>specialization</em></span> by means of adaptors.
-          (The <code class="computeroutput"><a class="link" href="../boost/circular_idm45713141954256.html" title="Class template circular_buffer_space_optimized">circular_buffer_space_optimized</a></code>
+          (The <code class="computeroutput"><a class="link" href="../boost/circular_buffer_idp9489760.html" title="Class template circular_buffer_space_optimized">circular_buffer_space_optimized</a></code>
           is such an example of the adaptor.)
         </li>
 <li class="listitem">
@@ -57,11 +57,11 @@
 </ul></div>
 <p>
       In order to achieve maximum efficiency, the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
-      and <code class="computeroutput"><a class="link" href="../boost/circular_idm45713141954256.html" title="Class template circular_buffer_space_optimized">circular_buffer_space_optimized</a></code>
+      and <code class="computeroutput"><a class="link" href="../boost/circular_buffer_idp9489760.html" title="Class template circular_buffer_space_optimized">circular_buffer_space_optimized</a></code>
       store their elements in a <span class="bold"><strong>contiguous region of memory</strong></span>,
       which then enables:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Use of fixed memory and no implicit or unexpected memory allocation.
         </li>
@@ -79,7 +79,7 @@
 <p>
       Possible applications of the circular buffer include:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Storage of the <span class="emphasis"><em>most recently received samples</em></span>, overwriting
           the oldest as new samples arrive.

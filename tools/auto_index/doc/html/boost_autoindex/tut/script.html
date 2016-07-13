@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Step 4: Create the .idx script file - to control what to terms to index</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../../index.html" title="Boost.AutoIndex">
 <link rel="up" href="../tut.html" title="Getting Started and Tutorial">
 <link rel="prev" href="add_indexes.html" title="Step 3: Add indexes to your documentation">
@@ -91,7 +91,7 @@
         You could also scan any examples (.cpp) files, typically in folder <code class="computeroutput"><span class="special">/</span><span class="identifier">mylibrary</span><span class="special">/</span><span class="identifier">lib</span><span class="special">/</span><span class="identifier">example</span></code>.
       </p>
 <pre class="programlisting"># All example source files, assuming no sub-folders.
-!scan-path "libs/mylibrary/example" ".*\.cpp" 
+!scan-path "libs/mylibrary/example" ".*.cpp"
 </pre>
 <p>
         Often the <span class="emphasis"><em>scan</em></span> or <span class="emphasis"><em>scan-path</em></span> rules

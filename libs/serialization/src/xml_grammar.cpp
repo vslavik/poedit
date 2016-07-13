@@ -12,12 +12,13 @@
 #  pragma warning (disable : 4786) // too long name, harmless warning
 #endif
 
+#include <boost/config.hpp>
+
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/impl/basic_xml_grammar.hpp>
 
 using namespace boost::spirit::classic;
-
-#include <boost/config.hpp>
 
 // fixup for borland
 // The following code will be put into Boost.Config in a later revision

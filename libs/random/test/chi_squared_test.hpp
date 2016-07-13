@@ -66,7 +66,7 @@ struct chi_squared_collector {
         if(variables <= 1) {
             return 0;
         } else {
-            return boost::math::cdf(boost::math::chi_squared(variables - 1), chi_squared);
+            return boost::math::cdf(boost::math::chi_squared(static_cast<double>(variables - 1)), chi_squared);
         }
     }
 

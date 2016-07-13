@@ -1,7 +1,7 @@
 
 // boostdep - a tool to generate Boost dependency reports
 //
-// Copyright 2014, 2015 Peter Dimov
+// Copyright 2014, 2015, 2016 Peter Dimov
 //
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -23,6 +23,9 @@ namespace fs = boost::filesystem;
 
 // header -> module
 static std::map< std::string, std::string > s_header_map;
+
+// module -> headers
+static std::map< std::string, std::set<std::string> > s_module_headers;
 
 static std::set< std::string > s_modules;
 
@@ -51,6 +54,7 @@ static void scan_module_headers( fs::path const & path )
             // std::cout << module << ": " << p2 << std::endl;
 
             s_header_map[ p2 ] = module;
+            s_module_headers[ module ].insert( p2 );
         }
     }
     catch( fs::filesystem_error const & x )
@@ -186,7 +190,7 @@ static fs::path module_build_path( std::string module )
     return fs::path( "libs" ) / module / "build";
 }
 
-static void scan_module_dependencies( std::string const & module, module_primary_actions & actions, bool track_sources )
+static void scan_module_dependencies( std::string const & module, module_primary_actions & actions, bool track_sources, bool include_self )
 {
     // module -> [ header, header... ]
     std::map< std::string, std::set< std::string > > deps;
@@ -234,7 +238,7 @@ static void scan_module_dependencies( std::string const & module, module_primary
 
     for( std::map< std::string, std::set< std::string > >::iterator i = deps.begin(); i != deps.end(); ++i )
     {
-        if( i->first == module ) continue;
+        if( i->first == module && !include_self ) continue;
 
         actions.module_start( i->first );
 
@@ -265,9 +269,13 @@ static std::map< std::string, std::set< std::string > > s_header_deps;
 // [ module, module... ] depend on module
 static std::map< std::string, std::set< std::string > > s_reverse_deps;
 
+// header includes [header, header...]
+static std::map< std::string, std::set< std::string > > s_header_includes;
+
 struct build_mdmap_actions: public module_primary_actions
 {
     std::string module_;
+    std::string module2_;
     std::string header_;
 
     void heading( std::string const & module )
@@ -277,8 +285,13 @@ struct build_mdmap_actions: public module_primary_actions
 
     void module_start( std::string const & module )
     {
-        s_module_deps[ module_ ].insert( module );
-        s_reverse_deps[ module ].insert( module_ );
+        if( module != module_ )
+        {
+            s_module_deps[ module_ ].insert( module );
+            s_reverse_deps[ module ].insert( module_ );
+        }
+
+        module2_ = module;
     }
 
     void module_end( std::string const & /*module*/ )
@@ -296,7 +309,12 @@ struct build_mdmap_actions: public module_primary_actions
 
     void from_header( std::string const & header )
     {
-        s_header_deps[ header_ ].insert( header );
+        if( module_ != module2_ )
+        {
+            s_header_deps[ header_ ].insert( header );
+        }
+
+        s_header_includes[ header ].insert( header_ );
     }
 };
 
@@ -305,7 +323,7 @@ static void build_module_dependency_map( bool track_sources )
     for( std::set< std::string >::iterator i = s_modules.begin(); i != s_modules.end(); ++i )
     {
         build_mdmap_actions actions;
-        scan_module_dependencies( *i, actions, track_sources );
+        scan_module_dependencies( *i, actions, track_sources, true );
     }
 }
 
@@ -313,7 +331,7 @@ static void output_module_primary_report( std::string const & module, module_pri
 {
     try
     {
-        scan_module_dependencies( module, actions, track_sources );
+        scan_module_dependencies( module, actions, track_sources, false );
     }
     catch( fs::filesystem_error const & x )
     {
@@ -1580,6 +1598,206 @@ static void output_module_weight_report( bool html )
     }
 }
 
+// output_module_subset_report
+
+struct module_subset_actions
+{
+    virtual void heading( std::string const & module ) = 0;
+
+    virtual void module_start( std::string const & module ) = 0;
+    virtual void module_end( std::string const & module ) = 0;
+
+    virtual void from_path( std::vector<std::string> const & path ) = 0;
+};
+
+static void output_module_subset_report( std::string const & module, module_subset_actions & actions )
+{
+    // build header closure
+
+    std::set<std::string> const & headers = s_module_headers[ module ];
+
+    // header -> (header)*
+    std::map< std::string, std::set<std::string> > inc2;
+
+    // (header, header) -> path
+    std::map< std::pair<std::string, std::string>, std::vector<std::string> > paths;
+
+    for( std::set<std::string>::const_iterator i = headers.begin(); i != headers.end(); ++i )
+    {
+        std::set<std::string> & s = inc2[ *i ];
+
+        s = s_header_includes[ *i ];
+
+        for( std::set<std::string>::const_iterator j = s.begin(); j != s.end(); ++j )
+        {
+            std::vector<std::string> & v = paths[ std::make_pair( *i, *j ) ];
+
+            v.resize( 0 );
+            v.push_back( *i );
+            v.push_back( *j );
+        }
+    }
+
+    for( ;; )
+    {
+        bool r = false;
+
+        for( std::map< std::string, std::set<std::string> >::iterator i = inc2.begin(); i != inc2.end(); ++i )
+        {
+            std::set<std::string> & s2 = i->second;
+
+            for( std::set<std::string>::const_iterator j = s2.begin(); j != s2.end(); ++j )
+            {
+                std::set<std::string> const & s = s_header_includes[ *j ];
+
+                for( std::set<std::string>::const_iterator k = s.begin(); k != s.end(); ++k )
+                {
+                    if( s2.count( *k ) == 0 )
+                    {
+                        s2.insert( *k );
+
+                        std::vector<std::string> const & v1 = paths[ std::make_pair( i->first, *j ) ];
+                        std::vector<std::string> & v2 = paths[ std::make_pair( i->first, *k ) ];
+
+                        v2 = v1;
+                        v2.push_back( *k );
+
+                        r = true;
+                    }
+                }
+            }
+        }
+
+        if( !r ) break;
+    }
+
+    // module -> header -> path [header -> header -> header]
+    std::map< std::string, std::map< std::string, std::vector<std::string> > > subset;
+
+    for( std::set<std::string>::const_iterator i = headers.begin(); i != headers.end(); ++i )
+    {
+        std::set<std::string> const & s = inc2[ *i ];
+
+        for( std::set<std::string>::const_iterator j = s.begin(); j != s.end(); ++j )
+        {
+            std::string const & m = s_header_map[ *j ];
+
+            if( m.empty() ) continue;
+
+            std::vector<std::string> const & path = paths[ std::make_pair( *i, *j ) ];
+
+            if( subset.count( m ) == 0 || subset[ m ].count( *i ) == 0 || subset[ m ][ *i ].size() > path.size() )
+            {
+                subset[ m ][ *i ] = path;
+            }
+        }
+    }
+
+    actions.heading( module );
+
+    for( std::map< std::string, std::map< std::string, std::vector<std::string> > >::const_iterator i = subset.begin(); i != subset.end(); ++i )
+    {
+        if( i->first == module ) continue;
+
+        actions.module_start( i->first );
+
+        int k = 0;
+
+        for( std::map< std::string, std::vector<std::string> >::const_iterator j = i->second.begin(); j != i->second.end() && k < 4; ++j, ++k )
+        {
+            actions.from_path( j->second );
+        }
+
+        actions.module_end( i->first );
+    }
+}
+
+struct module_subset_txt_actions: public module_subset_actions
+{
+    void heading( std::string const & module )
+    {
+        std::cout << "Subset dependencies for " << module << ":\n\n";
+    }
+
+    void module_start( std::string const & module )
+    {
+        std::cout << module << ":\n";
+    }
+
+    void module_end( std::string const & /*module*/ )
+    {
+        std::cout << "\n";
+    }
+
+    void from_path( std::vector<std::string> const & path )
+    {
+        for( std::vector<std::string>::const_iterator i = path.begin(); i != path.end(); ++i )
+        {
+            if( i == path.begin() )
+            {
+                std::cout << "  ";
+            }
+            else
+            {
+                std::cout << " -> ";
+            }
+
+            std::cout << *i;
+        }
+
+        std::cout << "\n";
+    }
+};
+
+struct module_subset_html_actions: public module_subset_actions
+{
+    void heading( std::string const & module )
+    {
+        std::cout << "\n\n<h1 id=\"subset-dependencies\">Subset dependencies for <em>" << module << "</em></h1>\n";
+    }
+
+    void module_start( std::string const & module )
+    {
+        std::cout << "  <h2 id=\"subset-" << module << "\"><a href=\"" << module << ".html\"><em>" << module << "</em></a></h2><ul>\n";
+    }
+
+    void module_end( std::string const & /*module*/ )
+    {
+        std::cout << "</ul>\n";
+    }
+
+    void from_path( std::vector<std::string> const & path )
+    {
+        std::cout << "    <li>";
+
+        for( std::vector<std::string>::const_iterator i = path.begin(); i != path.end(); ++i )
+        {
+            if( i != path.begin() )
+            {
+                std::cout << " &#8674; ";
+            }
+
+            std::cout << "<code>" << *i << "</code>";
+        }
+
+        std::cout << "</li>\n";
+    }
+};
+
+static void output_module_subset_report( std::string const & module, bool html )
+{
+    if( html )
+    {
+        module_subset_html_actions actions;
+        output_module_subset_report( module, actions );
+    }
+    else
+    {
+        module_subset_txt_actions actions;
+        output_module_subset_report( module, actions );
+    }
+}
+
 int main( int argc, char const* argv[] )
 {
     if( argc < 2 )
@@ -1599,6 +1817,7 @@ int main( int argc, char const* argv[] )
             "    boostdep [options] [--primary] <module>\n"
             "    boostdep [options] --secondary <module>\n"
             "    boostdep [options] --reverse <module>\n"
+            "    boostdep [options] --subset <module>\n"
             "    boostdep [options] [--header] <header>\n"
             "\n"
             "    [options]: [--track-sources] [--title <title>] [--footer <footer>] [--html]\n";
@@ -1689,6 +1908,14 @@ int main( int argc, char const* argv[] )
             {
                 enable_secondary( secondary, track_sources );
                 output_header_report( argv[ ++i ], html );
+            }
+        }
+        else if( option == "--subset" )
+        {
+            if( i + 1 < argc )
+            {
+                enable_secondary( secondary, track_sources );
+                output_module_subset_report( argv[ ++i ], html );
             }
         }
         else if( option == "--module-levels" )

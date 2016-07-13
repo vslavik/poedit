@@ -131,9 +131,10 @@ In all cases, this operator must return an integer type that compares with the
 `operator<` to provide the intended order
 (integers can be negated to reverse their order).
 
-In other words:
+In other words (aside from negative floats, which are inverted as ints):
 
    rightshift(A, n) < rightshift(B, n) -> A < B
+   A < B -> rightshift(A, 0) < rightshift(B, 0)
 
 [rightshift_1]
 [bracket_1]
@@ -141,9 +142,10 @@ In other words:
 See [@../../example/rightshiftsample.cpp  rightshiftsample.cpp] for a working example of integer sorting with a rightshift functor.
 
 And a version with a comparison functor for maximum flexibility.
-This functor must provide the same sorting order as the integers returned by the rightshift:
+This functor must provide the same sorting order as the integers returned by the rightshift (aside from negative floats):
 
   rightshift(A, n) < rightshift(B, n) -> compare(A, B)
+  compare(A, B) -> rightshift(A, 0) < rightshift(B, 0)
 
 [reverse_int_2]
 

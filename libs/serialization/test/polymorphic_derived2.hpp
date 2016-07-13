@@ -16,6 +16,8 @@
 
 //  See http://www.boost.org for updates, documentation, and revision history.
 
+#include <boost/config.hpp>
+
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/base_object.hpp>
@@ -26,7 +28,15 @@
 
 #include "polymorphic_base.hpp"
 
-class DLL_DECL(BOOST_PP_EMPTY()) polymorphic_derived2 : 
+#if defined(POLYMORPHIC_DERIVED2_IMPORT)
+    #define DLL_DECL BOOST_SYMBOL_IMPORT
+#elif defined(POLYMORPHIC_DERIVED2_EXPORT)
+    #define DLL_DECL BOOST_SYMBOL_EXPORT
+#else
+    #define DLL_DECL
+#endif
+
+class DLL_DECL polymorphic_derived2 : 
     public polymorphic_base
 {
     friend class boost::serialization::access;

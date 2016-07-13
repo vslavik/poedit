@@ -26,10 +26,10 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="boost_functiontypes.rationale"></a><a class="link" href="rationale.html" title="Rationale">Rationale</a>
 </h2></div></div></div>
-<a name="boost_functiontypes.rationale.error_handling_rationale"></a><h4>
-<a name="boost_functiontypes.rationale.error_handling_rationale-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.error_handling_rationale">Error
-      handling rationale</a>
+<h4>
+<a name="boost_functiontypes.rationale.h0"></a>
+      <span><a name="boost_functiontypes.rationale.error_handling_rationale"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.error_handling_rationale">Error handling
+      rationale</a>
     </h4>
 <p>
       The library does not define the required members of class templates in case
@@ -41,9 +41,10 @@
       The library's components have limited error conditions, so problematic input
       can be spotted easily.
     </p>
-<a name="boost_functiontypes.rationale.why_mpl_sequences_"></a><h4>
-<a name="boost_functiontypes.rationale.why_mpl_sequences_-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.why_mpl_sequences_">Why MPL Sequences?</a>
+<h4>
+<a name="boost_functiontypes.rationale.h1"></a>
+      <span><a name="boost_functiontypes.rationale.why_mpl_sequences_"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.why_mpl_sequences_">Why
+      MPL Sequences?</a>
     </h4>
 <p>
       MPL provides algorithms on Sequences, so transformations (such as turning by-value
@@ -54,18 +55,18 @@
       other Boost libraries (most importantly <a href="../../../../fusion/index.html" target="_top">Fusion</a>),
       so another reason is interoperability.
     </p>
-<a name="boost_functiontypes.rationale.pointer_to_member_object_types"></a><h4>
-<a name="boost_functiontypes.rationale.pointer_to_member_object_types-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.pointer_to_member_object_types">Pointer
+<h4>
+<a name="boost_functiontypes.rationale.h2"></a>
+      <span><a name="boost_functiontypes.rationale.pointer_to_member_object_types"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.pointer_to_member_object_types">Pointer
       to member object types</a>
     </h4>
 <p>
       Despite their syntax, pointer to member object types can be seen as dereferencing
       functionals.
     </p>
-<a name="boost_functiontypes.rationale.the_classtransform_template_parameter"></a><h4>
-<a name="boost_functiontypes.rationale.the_classtransform_template_parameter-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.the_classtransform_template_parameter">The
+<h4>
+<a name="boost_functiontypes.rationale.h3"></a>
+      <span><a name="boost_functiontypes.rationale.the_classtransform_template_parameter"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.the_classtransform_template_parameter">The
       ClassTransform template parameter</a>
     </h4>
 <p>
@@ -80,9 +81,10 @@
       client to adjust the class type before the sequence is formed and then treat
       all parameters uniformly.
     </p>
-<a name="boost_functiontypes.rationale.why_tag_types_"></a><h4>
-<a name="boost_functiontypes.rationale.why_tag_types_-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.why_tag_types_">Why tag types?</a>
+<h4>
+<a name="boost_functiontypes.rationale.h4"></a>
+      <span><a name="boost_functiontypes.rationale.why_tag_types_"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.why_tag_types_">Why
+      tag types?</a>
     </h4>
 <p>
       Let's consider the alternatives.
@@ -99,9 +101,9 @@
       parameters do not work within MPL lambda expressions and can cause problems
       with older compilers.
     </p>
-<a name="boost_functiontypes.rationale.is_it_safe_to_have_the_synthesis_templates_take_a_callable__builtin_type_or_an_mpl_sequence_as_the_first_template_argument_"></a><h4>
-<a name="boost_functiontypes.rationale.is_it_safe_to_have_the_synthesis_templates_take_a_callable__builtin_type_or_an_mpl_sequence_as_the_first_template_argument_-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.is_it_safe_to_have_the_synthesis_templates_take_a_callable__builtin_type_or_an_mpl_sequence_as_the_first_template_argument_">Is
+<h4>
+<a name="boost_functiontypes.rationale.h5"></a>
+      <span><a name="boost_functiontypes.rationale.is_it_safe_to_have_the_synthesis_templates_take_a_callable__builtin_type_or_an_mpl_sequence_as_the_first_template_argument_"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.is_it_safe_to_have_the_synthesis_templates_take_a_callable__builtin_type_or_an_mpl_sequence_as_the_first_template_argument_">Is
       it safe to have the synthesis templates take a callable builtin type or an
       MPL sequence as the first template argument?</a>
     </h4>
@@ -114,9 +116,9 @@
       idea, because builtin types are accessible before the headers that make the
       type a sequence have been included, which can easily violate the ODR.
     </p>
-<a name="boost_functiontypes.rationale.why_does_the_hidden__literal_this__literal__parameter_count_for_the__function_arity_of_member_functions_"></a><h4>
-<a name="boost_functiontypes.rationale.why_does_the_hidden__literal_this__literal__parameter_count_for_the__function_arity_of_member_functions_-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.why_does_the_hidden__literal_this__literal__parameter_count_for_the__function_arity_of_member_functions_">Why
+<h4>
+<a name="boost_functiontypes.rationale.h6"></a>
+      <span><a name="boost_functiontypes.rationale.why_does_the_hidden__literal_this__literal__parameter_count_for_the__function_arity_of_member_functions_"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.why_does_the_hidden__literal_this__literal__parameter_count_for_the__function_arity_of_member_functions_">Why
       does the hidden <code class="literal">this</code> parameter count for the function arity
       of member functions?</a>
     </h4>
@@ -125,9 +127,9 @@
     </p>
 <pre class="programlisting"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">size</span><span class="special">&lt;</span> <a class="link" href="reference/decomposition.html#boost_functiontypes.reference.decomposition.parameter_types" title="parameter_types">parameter_types</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">value</span> <span class="special">==</span> <a class="link" href="reference/decomposition.html#boost_functiontypes.reference.decomposition.function_arity" title="function_arity">function_arity</a><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span>
 </pre>
-<a name="boost_functiontypes.rationale.why_ignore_top_level_cv_qualifiers_on_pointers_"></a><h4>
-<a name="boost_functiontypes.rationale.why_ignore_top_level_cv_qualifiers_on_pointers_-heading"></a>
-      <a class="link" href="rationale.html#boost_functiontypes.rationale.why_ignore_top_level_cv_qualifiers_on_pointers_">Why
+<h4>
+<a name="boost_functiontypes.rationale.h7"></a>
+      <span><a name="boost_functiontypes.rationale.why_ignore_top_level_cv_qualifiers_on_pointers_"></a></span><a class="link" href="rationale.html#boost_functiontypes.rationale.why_ignore_top_level_cv_qualifiers_on_pointers_">Why
       ignore top-level cv-qualifiers on pointers?</a>
     </h4>
 <p>

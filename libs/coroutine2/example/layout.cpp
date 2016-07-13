@@ -21,13 +21,11 @@ struct FinalEOL{
 int main(int argc,char* argv[]){
     using std::begin;
     using std::end;
-
     std::vector<std::string> words{
         "peas", "porridge", "hot", "peas",
         "porridge", "cold", "peas", "porridge",
         "in", "the", "pot", "nine",
         "days", "old" };
-
     int num=5,width=15;
     boost::coroutines2::coroutine<std::string>::push_type writer(
         [&](boost::coroutines2::coroutine<std::string>::pull_type& in){
@@ -46,10 +44,7 @@ int main(int argc,char* argv[]){
                 std::cout << std::endl;
             }
         });
-
     std::copy(begin(words),end(words),begin(writer));
-
-    std::cout << "\nDone" << std::endl;
-
-    return 0;
+    std::cout << "\nDone";
+    return EXIT_SUCCESS;
 }

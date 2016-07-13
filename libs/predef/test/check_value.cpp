@@ -19,7 +19,7 @@ http://www.boost.org/LICENSE_1_0.txt)
 #define CHECK_VALUE "undefined"
 #endif
 
-int main(int argc, const char ** argv)
+int main()
 {
 	std::cout << "CHECK_VALUE == " << CHECK_VALUE << "\n" ;
 	return 0;

@@ -30,33 +30,13 @@ namespace boost { namespace fusion
         template <typename ...T>
         struct make_vector
         {
-            // make `make_vector<T..., void_...>' into `make_vector<T...>'
-            template <typename, typename...> struct trim_void;
-
-            template <typename... U>
-            struct trim_void<vector<U...> >
-            {
-                typedef vector<U...> type;
-            };
-
-            template <typename... U, typename... Tail>
-            struct trim_void<vector<U...>, void_, Tail...>
-                : trim_void<vector<U...> > { };
-
-            template <typename... U, typename Head, typename... Tail>
-            struct trim_void<vector<U...>, Head, Tail...>
-                : trim_void<vector<U..., Head>, Tail...> { };
-
-            typedef
-                typename trim_void<
-                    vector<>
-                  , typename detail::as_fusion_element<
-                        typename remove_const<
-                            typename remove_reference<T>::type
-                        >::type
-                    >::type...
-                >::type
-            type;
+            typedef vector<
+                typename detail::as_fusion_element<
+                    typename remove_const<
+                        typename remove_reference<T>::type
+                    >::type
+                >::type...
+            > type;
         };
     }
 

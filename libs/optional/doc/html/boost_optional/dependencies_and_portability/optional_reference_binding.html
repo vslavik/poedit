@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Optional Reference Binding</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Optional">
 <link rel="up" href="../dependencies_and_portability.html" title="Dependencies and Portability">
 <link rel="prev" href="../dependencies_and_portability.html" title="Dependencies and Portability">
@@ -28,24 +28,30 @@
       Reference Binding</a>
 </h3></div></div></div>
 <p>
-        On compilers that do not conform to Standard C++ rules of reference binding,
-        operations on optional references might give adverse results: rather than
-        binding a reference to a designated object they may create an unexpected
-        temporary and bind to it. Compilers known to have these deficiencies include
-        GCC versions 4.2, 4.3, 4.4, 4.5; QCC 4.4.2; MSVC versions 8.0, 9.0, 10.0,
-        11.0, 12.0. On these compilers prefer using direct-initialization and copy
-        assignment of optional references to copy-initialization and assignment from
-        <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span></code>:
+        A number of compilers incorrectly treat const lvalues of integral type as
+        rvalues, and create an illegal temporary when binding to an lvalue reference
+        to const in some expressions. This could result in creating an optional lvalue
+        reference that is in fact bound to an unexpected temporary rather than to
+        the intended object. In order to prevent hard to find run-time bugs, this
+        library performs compile-time checks to prevent expressions that would otherwise
+        bind an optional reference to an unexpected temporary. As a consequence,
+        on certain compilers certain pieces of functionality in optional references
+        are missing. In order to maintain a portability of your code across diferent
+        compilers, it is recommended that you only stick to the minimum portable
+        interface of optional references: prefer direct-initialization and copy assignment
+        of optional references to copy-initialization and assignment from <code class="computeroutput"><span class="identifier">T</span><span class="special">&amp;</span></code>:
       </p>
 <pre class="programlisting"><span class="keyword">const</span> <span class="keyword">int</span> <span class="identifier">i</span> <span class="special">=</span> <span class="number">0</span><span class="special">;</span>
 <span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">int</span><span class="special">&amp;&gt;</span> <span class="identifier">or1</span><span class="special">;</span>
-<span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">int</span><span class="special">&amp;&gt;</span> <span class="identifier">or2</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>  <span class="comment">// not portable</span>
-<span class="identifier">or1</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>                       <span class="comment">// not portable</span>
+<span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">int</span><span class="special">&amp;&gt;</span> <span class="identifier">or2</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>  <span class="comment">// caution: not portable</span>
+<span class="identifier">or1</span> <span class="special">=</span> <span class="identifier">i</span><span class="special">;</span>                       <span class="comment">// caution: not portable</span>
 
 <span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">int</span><span class="special">&amp;&gt;</span> <span class="identifier">or3</span><span class="special">(</span><span class="identifier">i</span><span class="special">);</span>   <span class="comment">// portable</span>
 <span class="identifier">or1</span> <span class="special">=</span> <span class="identifier">optional</span><span class="special">&lt;</span><span class="keyword">const</span> <span class="keyword">int</span><span class="special">&amp;&gt;(</span><span class="identifier">i</span><span class="special">);</span> <span class="comment">// portable</span>
 </pre>
 <p>
+        Compilers known to have these deficiencies include GCC versions 4.2, 4.3,
+        4.4, 4.5, 5.1, 5.2; QCC 4.4.2; MSVC versions 8.0, 9.0, 10.0, 11.0, 12.0.
         In order to check if your compiler correctly implements reference binding
         use this test program.
       </p>
@@ -86,7 +92,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014, 2015 Andrzej Krzemie&#324;ski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014-2016 Andrzej Krzemie&#324;ski<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

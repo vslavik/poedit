@@ -15,7 +15,7 @@
 
 #ifndef BOOST_LOG_WITHOUT_EVENT_LOG
 
-#include "windows_version.hpp"
+#include <boost/log/detail/config.hpp>
 #include <string>
 #include <vector>
 #include <ostream>
@@ -35,12 +35,6 @@
 #include <psapi.h>
 #include "simple_event_log.h"
 #include <boost/log/detail/header.hpp>
-
-#ifdef _MSC_VER
-#pragma comment(lib, "psapi.lib")
-#pragma comment(lib, "advapi32.lib")
-#endif
-
 
 namespace boost {
 

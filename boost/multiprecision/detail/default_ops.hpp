@@ -2191,6 +2191,10 @@ inline multiprecision::number<Backend, ExpressionTemplates> sinhc_pi(const multi
 //
 #include <boost/multiprecision/detail/no_et_ops.hpp>
 #include <boost/multiprecision/detail/et_ops.hpp>
+//
+// min/max overloads:
+//
+#include <boost/multiprecision/detail/min_max.hpp>
 
 #endif
 

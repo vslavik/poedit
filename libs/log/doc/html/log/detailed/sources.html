@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Logging sources</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="../detailed.html" title="Detailed features description">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.sources"></a><a class="link" href="sources.html" title="Logging sources">Logging sources</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="sources.html#log.detailed.sources.basic_logger">Basic loggers</a></span></dt>
 <dt><span class="section"><a href="sources.html#log.detailed.sources.severity_level_logger">Loggers
         with severity level support</a></span></dt>
@@ -454,7 +454,7 @@
           in one logger, then yes, you certainly can. The library provides <code class="computeroutput"><a class="link" href="../../boost/log/sources/severity_channel_logger.html" title="Class template severity_channel_logger">severity_channel_logger</a></code>
           and <code class="computeroutput"><a class="link" href="../../boost/log/sources/severity_channel_logger_mt.html" title="Class template severity_channel_logger_mt">severity_channel_logger_mt</a></code>
           (with their wide-char analogues <code class="computeroutput"><a class="link" href="../../boost/log/sources/wseverity_channel_logger.html" title="Class template wseverity_channel_logger">wseverity_channel_logger</a></code>
-          and <code class="computeroutput"><a class="link" href="../../boost/log/sources/wseverit_idm45635676755040.html" title="Class template wseverity_channel_logger_mt">wseverity_channel_logger_mt</a></code>)
+          and <code class="computeroutput"><a class="link" href="../../boost/log/sources/wseverity_chan_idp21575920.html" title="Class template wseverity_channel_logger_mt">wseverity_channel_logger_mt</a></code>)
           which combine features of the described loggers with <a class="link" href="sources.html#log.detailed.sources.severity_level_logger" title="Loggers with severity level support">severity
           level</a> and <a class="link" href="sources.html#log.detailed.sources.channel_logger" title="Loggers with channel support">channels</a>
           support. The composite loggers are templates, too, which allows you to
@@ -534,7 +534,7 @@
           and use it wherever you need? While technically this is possible, declaring
           and using global logger variables is complicated for the following reasons:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Order of initialization of namespace scope variables is not specified
               by the C++ Standard. This means that generally you cannot use the logger
@@ -641,7 +641,7 @@
           declaration and its initialization routine. The library provides the following
           macros to achieve this:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../../BOOST_LOG_GLOBAL_LOGGER.html" title="Macro BOOST_LOG_GLOBAL_LOGGER">BOOST_LOG_GLOBAL_LOGGER</a></code>
               provides the logger declaration. It can be used in a header, similarly
@@ -705,8 +705,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

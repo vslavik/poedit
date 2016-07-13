@@ -163,26 +163,11 @@ void test_rebinding_assignment_semantics()
   BOOST_TEST_EQ(val(v), 2);
 }
 
-template <typename T>
+template <typename T, typename U>
 void test_converting_assignment()
 {
   typename concrete_type_of<T>::type v1(1), v2(2), v3(3);
-  optional<T&> oA(v1), oB(none);
-  
-  oA = v2;
-  BOOST_TEST(oA);
-  BOOST_TEST(addressof(*oA) == addressof(v2));
-  
-  oB = v3;
-  BOOST_TEST(oB);
-  BOOST_TEST(addressof(*oB) == addressof(v3));
-}
-
-template <typename T>
-void test_converting_assignment_for_noconst_const()
-{
-  typename concrete_type_of<T>::type v1(1), v2(2), v3(3);
-  optional<const T&> oA(v1), oB(none);
+  optional<U&> oA(v1), oB(none);
   
   oA = v2;
   BOOST_TEST(oA);
@@ -194,4 +179,3 @@ void test_converting_assignment_for_noconst_const()
 }
 
 #endif //BOOST_OPTIONAL_TEST_OPTIONAL_REF_ASSIGN_TEST_DEFS_AK_07JAN2015_HPP
-

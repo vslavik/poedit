@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Detailed features description</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="prev" href="tutorial/wide_char.html" title="Wide character logging">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="log.detailed"></a><a class="link" href="detailed.html" title="Detailed features description">Detailed features description</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="detailed.html#log.detailed.core">Core facilities</a></span></dt>
 <dt><span class="section"><a href="detailed/sources.html">Logging sources</a></span></dt>
 <dt><span class="section"><a href="detailed/sink_frontends.html">Sink frontends</a></span></dt>
@@ -32,7 +32,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.core"></a><a class="link" href="detailed.html#log.detailed.core" title="Core facilities">Core facilities</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="detailed.html#log.detailed.core.record">Logging records</a></span></dt>
 <dt><span class="section"><a href="detailed.html#log.detailed.core.core">Logging core</a></span></dt>
 </dl></div>
@@ -50,7 +50,7 @@
           and sinks. Particular attribute values can be accessed in different ways,
           here are a few quick examples:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               Through <a class="link" href="detailed/attributes.html#log.detailed.attributes.related_components.value_processing" title="Attribute value extraction and visitation">value
               visitation and extraction</a>.
             </li></ul></div>
@@ -83,7 +83,7 @@
 </pre>
 <p>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               By searching the <a class="link" href="detailed/attributes.html#log.detailed.attributes.related_components.attribute_value_set" title="Attribute value set">set
               of attribute values</a> accessible with the <code class="computeroutput"><span class="identifier">attribute_values</span></code>
               method of the record.
@@ -106,7 +106,7 @@
 </pre>
 <p>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
               By applying the subscript operator with the attribute keyword. This
               is actually a convenience wrapper around the value extraction API.
             </li></ul></div>
@@ -144,7 +144,7 @@
         </p>
 <h6>
 <a name="log.detailed.core.record.h0"></a>
-          <span class="phrase"><a name="log.detailed.core.record.record_views"></a></span><a class="link" href="detailed.html#log.detailed.core.record.record_views">Record
+          <span><a name="log.detailed.core.record.record_views"></a></span><a class="link" href="detailed.html#log.detailed.core.record.record_views">Record
           views</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><code class="computeroutput"><a class="link" href="../core_components.html#header.boost.log.core.record_view_hpp" title="Header &lt;boost/log/core/record_view.hpp&gt;">boost/log/core/record_view.hpp</a></code><span class="special">&gt;</span>
@@ -154,7 +154,7 @@
           type to actually process it. Record views provide a similar interface to
           records with a few notable distinctions:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Record views are immutable. This prevents formatters and sinks from
               modifying the record while it is being processed.
@@ -179,7 +179,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="log.detailed.core.core"></a><a class="link" href="detailed.html#log.detailed.core.core" title="Logging core">Logging core</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="detailed.html#log.detailed.core.core.attribute_sets">Attribute
           sets</a></span></dt>
 <dt><span class="section"><a href="detailed.html#log.detailed.core.core.filtering">Global filtering</a></span></dt>
@@ -194,7 +194,7 @@
 <p>
           The logging core is a central hub that provides the following facilities:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Maintains global and thread-specific attribute sets.
             </li>
@@ -504,8 +504,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

@@ -16,8 +16,8 @@
 #ifndef BOOST_LOG_ALIGNMENT_GAP_BETWEEN_HPP_INCLUDED_
 #define BOOST_LOG_ALIGNMENT_GAP_BETWEEN_HPP_INCLUDED_
 
-#include <boost/type_traits/alignment_of.hpp>
 #include <boost/log/detail/config.hpp>
+#include <boost/type_traits/alignment_of.hpp>
 #include <boost/log/detail/header.hpp>
 
 namespace boost {

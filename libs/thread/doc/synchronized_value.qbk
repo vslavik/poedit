@@ -63,7 +63,7 @@ Both forms of pointer dereference return a proxy object rather than a real refer
 
 The pointer-like semantics work very well for simple accesses such as assignment and calls to member functions. However, sometimes you need to perform an operation that requires multiple accesses under protection of the same lock, and that's what the synchronize() method provides.
 
-By calling synchronize() you obtain an strict_lock_ptr object that holds a lock on the mutex protecting the data, and which can be used to access the protected data. The lock is held until the strict_lock_ptr object is destroyed, so you can safely perform multi-part operations. The strict_lock_ptr object also acts as a pointer-to-T, just like synchronized_value does, but this time the lock is already held. For example, the following function adds a trailing slash to a path held in a synchronized_value. The use of the strict_lock_ptr object ensures that the string hasn't changed in between the query and the update.
+By calling synchronize() you obtain a strict_lock_ptr object that holds a lock on the mutex protecting the data, and which can be used to access the protected data. The lock is held until the strict_lock_ptr object is destroyed, so you can safely perform multi-part operations. The strict_lock_ptr object also acts as a pointer-to-T, just like synchronized_value does, but this time the lock is already held. For example, the following function adds a trailing slash to a path held in a synchronized_value. The use of the strict_lock_ptr object ensures that the string hasn't changed in between the query and the update.
 
   void addTrailingSlashIfMissing(boost::synchronized_value<std::string> & path)
   {

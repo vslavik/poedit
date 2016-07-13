@@ -47,8 +47,8 @@ insensitive strings: "N", "NO", "FALSE", "0".
 
 [h5 Enumeration][#enum_param_value]
 
-Values of a enumeration type are expected as case sensitive strings representing
-enumeration value names. Each parameter with a enumeration value lists all valid names in a
+Values of an enumeration type are expected as case sensitive strings representing
+enumeration value names. Each parameter with an enumeration value lists all valid names in a
 parameter`s description.
 
 [/ ###############################################################################################]
@@ -198,10 +198,12 @@ framework to setup runtime breakpoint at Nth heap allocation. If value is omitte
 [section:help `help`]
 
 Parameter ['help] displays help on the framework's parameters. The parameter accepts an optional
-argument value. If present, an argument value is interpreted as a parameter name (name guessing
-works as well, so for example --help=rand displays help on the parameter random). If the parameter
-name is unknown or ambiguous error is reported. If argument value is absent, a summary of all framework's
-parameter is displayed.
+argument value:
+
+* if present, the argument value is interpreted as a parameter name. Name guessing
+  works as well (so for example `--help=rand` displays help on the parameter `random`).
+* if the parameter name is unknown or ambiguous, an error is reported,
+* if the argument value is absent, a summary of all framework's parameter is displayed.
 
 [h4 Acceptable values]
 
@@ -222,7 +224,7 @@ This command line parameter accepts an /optional/ string value indicating the fo
 The framework supports the following two formats:
 
 # HRF (default), standing for /Human Readable Format/,
-# DOT, standing for the [@http://www.graphviz.org/doc/info/lang.html GraphViz graph format]. This format may be automatically parsed or rendered.
+# DOT, standing for the [@http://www.graphviz.org/doc/info/lang.html Graphviz graph format]. This format may be automatically parsed or rendered.
 
 [h4 HRF]
 
@@ -247,14 +249,14 @@ DOT output generates a graph representing the module's [link ref_test_tree test 
 [@http://www.graphviz.org/doc/info/lang.html dot format].
 This output includes much more information about the test tree including labels, timeouts, expected failures, and dependencies.
 
-The legen is as follow:
+The legend is as follow:
 
 * the master test suite is represented as an ellipse
 * a test unit (suite, case) is in a rounded rectangle
 * test unit declaration location, [link boost_test.tests_organization.tests_grouping labels],
   [link boost_test.testing_tools.expected_failures expected failures], [link boost_test.testing_tools.timeout timeouts] are appended,
-* a green box indicates that the test unit that is enabled, otherwise its colour is yellow,
-* an plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
+* a green box indicates that the test unit that is enabled, otherwise its color is yellow,
+* a plain black arrow goes from a test unit to each of its children, following the test tree (the arrow pointing to the child),
 * a dashed red arrow indicates a runtime dependence on test units, the arrow pointing to the parent in the dependency graph.
 
 
@@ -386,15 +388,18 @@ Thus each level includes messages on that level as well as all the messages on l
   ]
   [
     [message]
-    [User generated messages (using BOOST_MESSAGE tool)]
+    [User generated messages (using __BOOST_TEST_MESSAGE__ tool)]
   ]
   [
     [warning]
-    [Messages describing failed assertion on WARN level (BOOST_WARN_... tools)]
+    [Messages describing failed assertion on `WARN` level (
+    [link boost_test.utf_reference.testing_tool_ref.assertion_boost_test_universal_macro `BOOST_TEST_WARN`]
+    / `BOOST_WARN_...`
+     tools)]
   ]
   [
     [[*error] (default)]
-    [Messages describing failed assertion on CHECK level (BOOST_WARN_... tools)]
+    [Messages describing failed assertion on `CHECK` level (__BOOST_TEST__ / `BOOST_CHECK_...` tools)]
   ]
   [
     [cpp_exception]
@@ -407,7 +412,7 @@ Thus each level includes messages on that level as well as all the messages on l
   [
     [fatal_error]
     [Messages reporting user or system originated fatal errors. For example, memory access violation. Also
-     all the messages describing failed assertion on REQUIRE level (BOOST_REQUIRE_... tools)]
+     all the messages describing failed assertion on `REQUIRE` level (__BOOST_TEST_REQUIRE__ / `BOOST_REQUIRE_...` tools)]
   ]
   [
     [nothing]
@@ -502,16 +507,23 @@ format and XML - XML formats for automation tools processing.
 [section:random `random`]
 
 Parameter ['random] instructs the __UTF__ to execute the test cases in random order. This parameter
-accepts optional unsigned integer argument. By default test cases are executed in some specific order
-defined by order of test units in test files and dependency between test units. If parameter is
-specified without the argument value testing order is randomized based on current time. Alternatively
-you can specify any positive value greater than 1 and it will be used as random seed for the run.
+accepts an optional `unsigned integer` argument for the seed of the random generator:
+
+* By default (value `0`), the test cases are executed in some specific order
+  defined by the order of test units in the test files, and the dependencies between test units.
+* If the parameter is specified without the argument value, or with value `1`, the testing order is randomized based on current time.
+* Alternatively, any positive value greater than `1` will be used as random seed for the run.
+
+[tip in case `--random` is specified, the value of the seed is logged using __BOOST_TEST_MESSAGE__, so that it is possible to replay
+ exactly the same sequence of unit test in case of failure. For the seed to be visible in the logs,
+ make sure the proper [link boost_test.utf_reference.rt_param_reference.log_level `--log_level`] is set.
+ ]
 
 [h4 Acceptable values]
 
-* [*0] (default)
-* 1
-* [link regular_param_value integer] value > 1
+* [*0] (default): no randomization
+* `1`: random seed based on the current time
+* [link regular_param_value integer] `value > 1` : seed for the random number generator
 
 [h4 Command line syntax]
 
@@ -670,8 +682,8 @@ filter        ::= relative_spec? test_set
 relative_spec ::= '+' | '!'
 test_set      ::= label | path
 label         ::= '@' identifier
-path          ::= (suite '/')? patern_list
-patern_list   ::= (pattern ',')* pattern
+path          ::= (suite '/')? pattern_list
+pattern_list   ::= (pattern ',')* pattern
 suite         ::= (pattern '/')* pattern
 pattern       ::= '*'? identifier '*'?
 ```

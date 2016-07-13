@@ -10,6 +10,8 @@ http://boost.org/LICENSE_1_0.txt
 #define BOOST_ALIGN_HPP
 
 #include <boost/align/align.hpp>
+#include <boost/align/align_down.hpp>
+#include <boost/align/align_up.hpp>
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/align/aligned_allocator.hpp>
 #include <boost/align/aligned_allocator_adaptor.hpp>

@@ -17,6 +17,7 @@
  * https://github.com/panaseleus/stack_unwinding/blob/master/boost/exception/uncaught_exception_count.hpp
  */
 
+#include <boost/log/detail/config.hpp>
 #include <exception>
 #include <boost/log/detail/unhandled_exception_count.hpp>
 #include <boost/log/detail/header.hpp>

@@ -27,10 +27,12 @@ using boost::timer::cpu_timer;
 using boost::timer::cpu_times;
 using boost::timer::nanosecond_type;
 
+static const std::size_t N = 500;
+
 #ifdef NDEBUG
-static const std::size_t N = 300;
+static const std::size_t Iter = 50;
 #else
-static const std::size_t N = 100;
+static const std::size_t Iter = 5;
 #endif
 
 //#define BENCH_SIMPLE_CONSTRUCTION
@@ -79,8 +81,7 @@ cpu_times time_it()
    sortTime.stop();rotateTime.stop();destructionTime.stop();
    cpu_timer totalTime, constructTime;
    std::srand (0);
-   for(std::size_t i = 0; i< N; ++i){
-
+   for(std::size_t i = 0; i< Iter; ++i){
      constructTime.resume();
      {
       T &v = generate<T>();
@@ -97,26 +98,24 @@ cpu_times time_it()
      destructionTime.stop();
    }
    totalTime.stop();
-   std::cout << "  construction took " << boost::timer::format(constructTime.elapsed());
-   std::cout << "  sort took       " << boost::timer::format(sortTime.elapsed());
-   std::cout << "  rotate took      " << boost::timer::format(rotateTime.elapsed());
-   std::cout << "  destruction took  " << boost::timer::format(destructionTime.elapsed());
-   std::cout << "  Total time =     " << boost::timer::format(totalTime.elapsed()) << std::endl;
+   std::cout << "  construction took " << boost::timer::format(constructTime.elapsed(), 6, "%ws wall, %ts CPU (%p%)\n");
+   std::cout << "  sort took         " << boost::timer::format(sortTime.elapsed(), 6, "%ws wall, %ts CPU (%p%)\n");
+   std::cout << "  rotate took       " << boost::timer::format(rotateTime.elapsed(), 6, "%ws wall, %ts CPU (%p%)\n");
+   std::cout << "  destruction took  " << boost::timer::format(destructionTime.elapsed(), 6, "%ws wall, %ts CPU (%p%)\n");
+   std::cout << "  Total time =      " << boost::timer::format(totalTime.elapsed(), 6, "%ws wall, %ts CPU (%p%)\n") << std::endl;
    return totalTime.elapsed();
 }
 
 void compare_times(cpu_times time_numerator, cpu_times time_denominator){
    std::cout
-   << "\n  wall        = " << ((double)time_numerator.wall/(double)time_denominator.wall)
-   << "\n  user        = " << ((double)time_numerator.user/(double)time_denominator.user)
-   << "\n  system      = " << ((double)time_numerator.system/(double)time_denominator.system)
-   << "\n  (user+system) = " << ((double)(time_numerator.system+time_numerator.user)/(double)(time_denominator.system+time_denominator.user)) << "\n\n";
+   << "\n  wall       = " << ((double)time_numerator.wall/(double)time_denominator.wall)
+   << "\n  (user+sys) = " << ((double)(time_numerator.system+time_numerator.user)/(double)(time_denominator.system+time_denominator.user)) << "\n\n";
 }
 
 int main()
 {
    try {
-      std::cout << "N = " << N << "\n\n";
+      std::cout << "N = " << N << " Iter = " << Iter << "\n\n";
 
       std::cout << "varray benchmark:" << std::endl;
       cpu_times time_varray = time_it<boost::container::varray<boost::container::varray<basic_type_t,N>,N > >();

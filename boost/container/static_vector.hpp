@@ -41,29 +41,32 @@ class static_storage_allocator
    public:
    typedef T value_type;
 
-   static_storage_allocator() BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE static_storage_allocator() BOOST_NOEXCEPT_OR_NOTHROW
    {}
 
-   static_storage_allocator(const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE static_storage_allocator(const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
    {}
 
-   static_storage_allocator & operator=(const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE static_storage_allocator & operator=(const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
    {  return *this;  }
 
-   T* internal_storage() const BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE T* internal_storage() const BOOST_NOEXCEPT_OR_NOTHROW
    {  return const_cast<T*>(static_cast<const T*>(static_cast<const void*>(&storage)));  }
 
-   T* internal_storage() BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE T* internal_storage() BOOST_NOEXCEPT_OR_NOTHROW
    {  return static_cast<T*>(static_cast<void*>(&storage));  }
 
    static const std::size_t internal_capacity = N;
 
+   std::size_t max_size() const
+   {  return N;   }
+
    typedef boost::container::container_detail::version_type<static_storage_allocator, 0>   version;
 
-   friend bool operator==(const static_storage_allocator &, const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE friend bool operator==(const static_storage_allocator &, const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
    {  return false;  }
 
-   friend bool operator!=(const static_storage_allocator &, const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
+   BOOST_CONTAINER_FORCEINLINE friend bool operator!=(const static_storage_allocator &, const static_storage_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
    {  return true;  }
 
    private:
@@ -143,7 +146,7 @@ public:
     //!
     //! @par Complexity
     //!   Constant O(1).
-    static_vector() BOOST_NOEXCEPT_OR_NOTHROW
+    BOOST_CONTAINER_FORCEINLINE static_vector() BOOST_NOEXCEPT_OR_NOTHROW
         : base_t()
     {}
 
@@ -158,7 +161,7 @@ public:
     //!
     //! @par Complexity
     //!   Linear O(N).
-    explicit static_vector(size_type count)
+    BOOST_CONTAINER_FORCEINLINE explicit static_vector(size_type count)
         : base_t(count)
     {}
 
@@ -176,7 +179,7 @@ public:
     //!
     //! @par Note
     //!   Non-standard extension
-    static_vector(size_type count, default_init_t)
+    BOOST_CONTAINER_FORCEINLINE static_vector(size_type count, default_init_t)
         : base_t(count, default_init_t())
     {}
 
@@ -192,7 +195,7 @@ public:
     //!
     //! @par Complexity
     //!   Linear O(N).
-    static_vector(size_type count, value_type const& value)
+    BOOST_CONTAINER_FORCEINLINE static_vector(size_type count, value_type const& value)
         : base_t(count, value)
     {}
 
@@ -211,7 +214,7 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     template <typename Iterator>
-    static_vector(Iterator first, Iterator last)
+    BOOST_CONTAINER_FORCEINLINE static_vector(Iterator first, Iterator last)
         : base_t(first, last)
     {}
 
@@ -228,7 +231,7 @@ public:
     //!
     //! @par Complexity
     //!   Linear O(N).
-    static_vector(std::initializer_list<value_type> il)
+    BOOST_CONTAINER_FORCEINLINE static_vector(std::initializer_list<value_type> il)
         : base_t(il)
     {}
 #endif
@@ -242,7 +245,7 @@ public:
     //!
     //! @par Complexity
     //!   Linear O(N).
-    static_vector(static_vector const& other)
+    BOOST_CONTAINER_FORCEINLINE static_vector(static_vector const& other)
         : base_t(other)
     {}
 
@@ -258,7 +261,7 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     template <std::size_t C>
-    static_vector(static_vector<value_type, C> const& other)
+    BOOST_CONTAINER_FORCEINLINE static_vector(static_vector<value_type, C> const& other)
         : base_t(other)
     {}
 
@@ -272,7 +275,7 @@ public:
     //!
     //! @par Complexity
     //!   Linear O(N).
-    static_vector(BOOST_RV_REF(static_vector) other)
+    BOOST_CONTAINER_FORCEINLINE static_vector(BOOST_RV_REF(static_vector) other)
         : base_t(BOOST_MOVE_BASE(base_t, other))
     {}
 
@@ -289,7 +292,7 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     template <std::size_t C>
-    static_vector(BOOST_RV_REF_BEG static_vector<value_type, C> BOOST_RV_REF_END other)
+    BOOST_CONTAINER_FORCEINLINE static_vector(BOOST_RV_REF_BEG static_vector<value_type, C> BOOST_RV_REF_END other)
         : base_t(BOOST_MOVE_BASE(typename static_vector<value_type BOOST_MOVE_I C>::base_t, other))
     {}
 
@@ -302,7 +305,7 @@ public:
     //!
     //! @par Complexity
     //! Linear O(N).
-    static_vector & operator=(BOOST_COPY_ASSIGN_REF(static_vector) other)
+    BOOST_CONTAINER_FORCEINLINE static_vector & operator=(BOOST_COPY_ASSIGN_REF(static_vector) other)
     {
         return static_cast<static_vector&>(base_t::operator=(static_cast<base_t const&>(other)));
     }
@@ -317,7 +320,7 @@ public:
     //!
     //! @par Complexity
     //! Linear O(N).
-    static_vector & operator=(std::initializer_list<value_type> il)
+    BOOST_CONTAINER_FORCEINLINE static_vector & operator=(std::initializer_list<value_type> il)
     { return static_cast<static_vector&>(base_t::operator=(il));  }
 #endif
 
@@ -333,7 +336,7 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     template <std::size_t C>
-    static_vector & operator=(static_vector<value_type, C> const& other)
+    BOOST_CONTAINER_FORCEINLINE static_vector & operator=(static_vector<value_type, C> const& other)
     {
         return static_cast<static_vector&>(base_t::operator=
             (static_cast<typename static_vector<value_type, C>::base_t const&>(other)));
@@ -349,7 +352,7 @@ public:
     //!
     //! @par Complexity
     //!   Linear O(N).
-    static_vector & operator=(BOOST_RV_REF(static_vector) other)
+    BOOST_CONTAINER_FORCEINLINE static_vector & operator=(BOOST_RV_REF(static_vector) other)
     {
         return static_cast<static_vector&>(base_t::operator=(BOOST_MOVE_BASE(base_t, other)));
     }
@@ -367,7 +370,7 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     template <std::size_t C>
-    static_vector & operator=(BOOST_RV_REF_BEG static_vector<value_type, C> BOOST_RV_REF_END other)
+    BOOST_CONTAINER_FORCEINLINE static_vector & operator=(BOOST_RV_REF_BEG static_vector<value_type, C> BOOST_RV_REF_END other)
     {
         return static_cast<static_vector&>(base_t::operator=
          (BOOST_MOVE_BASE(typename static_vector<value_type BOOST_MOVE_I C>::base_t, other)));
@@ -578,7 +581,6 @@ public:
     template <typename Iterator>
     iterator insert(const_iterator p, Iterator first, Iterator last);
 
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
     //! @pre
     //!  @li \c p must be a valid iterator of \c *this in range <tt>[begin(), end()]</tt>.
     //!  @li <tt>distance(il.begin(), il.end()) <= capacity()</tt>
@@ -594,7 +596,6 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     iterator insert(const_iterator p, std::initializer_list<value_type> il);
-#endif
 
     //! @pre \c p must be a valid iterator of \c *this in range <tt>[begin(), end())</tt>
     //!
@@ -640,7 +641,6 @@ public:
     template <typename Iterator>
     void assign(Iterator first, Iterator last);
 
-#if !defined(BOOST_NO_CXX11_HDR_INITIALIZER_LIST)
     //! @pre <tt>distance(il.begin(), il.end()) <= capacity()</tt>
     //!
     //! @brief Assigns a range <tt>[il.begin(), il.end())</tt> of Values to this container.
@@ -653,7 +653,6 @@ public:
     //! @par Complexity
     //!   Linear O(N).
     void assign(std::initializer_list<value_type> il);
-#endif
 
     //! @pre <tt>count <= capacity()</tt>
     //!
@@ -1095,7 +1094,7 @@ public:
     bool empty() const BOOST_NOEXCEPT_OR_NOTHROW;
 #else
 
-   friend void swap(static_vector &x, static_vector &y)
+   BOOST_CONTAINER_FORCEINLINE friend void swap(static_vector &x, static_vector &y)
    {
       x.swap(y);
    }

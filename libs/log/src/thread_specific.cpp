@@ -13,9 +13,9 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <string>
 #include <stdexcept>
-#include <boost/log/detail/config.hpp>
 #include <boost/log/exceptions.hpp>
 #include <boost/log/detail/thread_specific.hpp>
 
@@ -23,7 +23,6 @@
 
 #if defined(BOOST_THREAD_PLATFORM_WIN32)
 
-#include "windows_version.hpp"
 #include <windows.h>
 #include <boost/log/detail/header.hpp>
 

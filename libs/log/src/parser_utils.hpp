@@ -16,10 +16,10 @@
 #ifndef BOOST_LOG_PARSER_UTILS_HPP_INCLUDED_
 #define BOOST_LOG_PARSER_UTILS_HPP_INCLUDED_
 
+#include <boost/log/detail/config.hpp>
 #include <string>
 #include <iostream>
 #include <cctype>
-#include <boost/log/detail/config.hpp>
 #include <boost/log/utility/string_literal.hpp>
 #include <boost/log/detail/header.hpp>
 
@@ -106,6 +106,7 @@ struct char_constants< char >
     static const char_type* target_address_param_name() { return "TargetAddress"; }
     static const char_type* target_param_name() { return "Target"; }
     static const char_type* max_size_param_name() { return "MaxSize"; }
+    static const char_type* max_files_param_name() { return "MaxFiles"; }
     static const char_type* min_free_space_param_name() { return "MinFreeSpace"; }
     static const char_type* scan_for_files_param_name() { return "ScanForFiles"; }
 
@@ -235,6 +236,7 @@ struct char_constants< wchar_t >
     static const char_type* target_address_param_name() { return L"TargetAddress"; }
     static const char_type* target_param_name() { return L"Target"; }
     static const char_type* max_size_param_name() { return L"MaxSize"; }
+    static const char_type* max_files_param_name() { return L"MaxFiles"; }
     static const char_type* min_free_space_param_name() { return L"MinFreeSpace"; }
     static const char_type* scan_for_files_param_name() { return L"ScanForFiles"; }
 

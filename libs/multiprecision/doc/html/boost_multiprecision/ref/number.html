@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>number</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Multiprecision">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="../ref.html" title="Reference">
@@ -28,7 +28,7 @@
 </h3></div></div></div>
 <h5>
 <a name="boost_multiprecision.ref.number.h0"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.synopsis"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.synopsis">Synopsis</a>
+        <span><a name="boost_multiprecision.ref.number.synopsis"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">multiprecision</span><span class="special">{</span>
 
@@ -131,6 +131,10 @@
 <span class="identifier">ResultType</span><span class="special">&amp;</span> <span class="identifier">subtract</span><span class="special">(</span><span class="identifier">ResultType</span><span class="special">&amp;</span> <span class="identifier">result</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Source1</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Source2</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">);</span>
 <span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">ResultType</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Source1</span> <span class="keyword">class</span> <span class="identifier">Source2</span><span class="special">&gt;</span>
 <span class="identifier">ResultType</span><span class="special">&amp;</span> <span class="identifier">multiply</span><span class="special">(</span><span class="identifier">ResultType</span><span class="special">&amp;</span> <span class="identifier">result</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Source1</span><span class="special">&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">Source2</span><span class="special">&amp;</span> <span class="identifier">b</span><span class="special">);</span>
+
+<span class="comment">// min and max overloads:</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">min</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
+<span class="emphasis"><em>number</em></span>                                    <span class="identifier">max</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;,</span> <span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
 
 <span class="comment">// Non-member function standard library support:</span>
 <span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
@@ -235,7 +239,7 @@
 </pre>
 <h5>
 <a name="boost_multiprecision.ref.number.h1"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.description"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.description">Description</a>
+        <span><a name="boost_multiprecision.ref.number.description"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.description">Description</a>
       </h5>
 <pre class="programlisting"><span class="keyword">enum</span> <span class="identifier">expression_template_option</span> <span class="special">{</span> <span class="identifier">et_on</span> <span class="special">=</span> <span class="number">1</span><span class="special">,</span> <span class="identifier">et_off</span> <span class="special">=</span> <span class="number">0</span> <span class="special">};</span>
 </pre>
@@ -259,7 +263,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Backend</span></dt>
 <dd><p>
               The actual arithmetic back-end that does all the work.
@@ -284,7 +288,7 @@
         Type <code class="computeroutput"><span class="identifier">number</span></code> is default constructible,
         and both copy constructible and assignable from:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Itself.
           </li>
@@ -315,7 +319,7 @@
         Type <code class="computeroutput"><span class="identifier">number</span></code> is explicitly
         constructible from:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Any type mentioned above.
           </li>
@@ -381,7 +385,7 @@
 <p>
         The arguments to these operators is either:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Another <code class="computeroutput"><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span>
             <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span></code>.
@@ -470,7 +474,7 @@
 <p>
         Returns:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             A value less that 0 for <code class="computeroutput"><span class="special">*</span><span class="keyword">this</span> <span class="special">&lt;</span> <span class="identifier">other</span></code>
           </li>
@@ -492,7 +496,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h2"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.non_member_operators"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_operators">Non-member
+        <span><a name="boost_multiprecision.ref.number.non_member_operators"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_operators">Non-member
         operators</a>
       </h5>
 <pre class="programlisting"><span class="comment">// Non member operators:</span>
@@ -523,7 +527,7 @@
 <p>
         The arguments to these functions must contain at least one of the following:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             A <code class="computeroutput"><span class="identifier">number</span></code>.
           </li>
@@ -538,7 +542,7 @@
 <p>
         The return type of these operators is either:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             An <span class="emphasis"><em>unmentionable-type</em></span> expression template type when
             <code class="computeroutput"><span class="identifier">ExpressionTemplates</span></code> is
@@ -563,7 +567,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h3"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.swap"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.swap">swap</a>
+        <span><a name="boost_multiprecision.ref.number.swap"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.swap">swap</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="identifier">swap</span><span class="special">(</span><span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">number</span><span class="special">&lt;</span><span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;&amp;</span> <span class="identifier">b</span><span class="special">);</span>
@@ -573,7 +577,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h4"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.iostream_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.iostream_support">Iostream
+        <span><a name="boost_multiprecision.ref.number.iostream_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.iostream_support">Iostream
         Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Backend</span><span class="special">,</span> <span class="identifier">expression_template_option</span> <span class="identifier">ExpressionTemplates</span><span class="special">&gt;</span>
@@ -594,7 +598,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h5"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi">Arithmetic
+        <span><a name="boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.arithmetic_with_a_higher_precisi">Arithmetic
         with a higher precision result</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">ResultType</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">Source1</span> <span class="keyword">class</span> <span class="identifier">Source2</span><span class="special">&gt;</span>
@@ -626,7 +630,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h6"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.non_member_standard_library_func"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_standard_library_func">Non-member
+        <span><a name="boost_multiprecision.ref.number.non_member_standard_library_func"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.non_member_standard_library_func">Non-member
         standard library function support</a>
       </h5>
 <pre class="programlisting"><span class="emphasis"><em>unmentionable-expression-template-type</em></span>    <span class="identifier">abs</span>    <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
@@ -968,7 +972,7 @@
               </td>
 <td>
                 <p>
-                  1045eps<a href="#ftn.boost_multiprecision.ref.number.f0" class="footnote"><sup class="footnote"><a name="boost_multiprecision.ref.number.f0"></a>[1]</sup></a>
+                  1045eps<sup>[<a name="boost_multiprecision.ref.number.f0" href="#ftn.boost_multiprecision.ref.number.f0" class="footnote">1</a>]</sup>
                 </p>
               </td>
 <td>
@@ -1071,14 +1075,14 @@
               </td>
 </tr>
 </tbody>
-<tbody class="footnotes"><tr><td colspan="4"><div id="ftn.boost_multiprecision.ref.number.f0" class="footnote"><p><a href="#boost_multiprecision.ref.number.f0" class="para"><sup class="para">[1] </sup></a>
+<tbody class="footnotes"><tr><td colspan="4"><div class="footnote"><p><sup>[<a id="ftn.boost_multiprecision.ref.number.f0" href="#boost_multiprecision.ref.number.f0" class="para">1</a>] </sup>
                     It's likely that the inherent error in the input values to our
                     test cases are to blame here.
                   </p></div></td></tr></tbody>
 </table></div>
 <h5>
 <a name="boost_multiprecision.ref.number.h7"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.traits_class_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.traits_class_support">Traits Class
+        <span><a name="boost_multiprecision.ref.number.traits_class_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.traits_class_support">Traits Class
         Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
@@ -1119,7 +1123,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h8"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.integer_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.integer_functions">Integer
+        <span><a name="boost_multiprecision.ref.number.integer_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.integer_functions">Integer
         functions</a>
       </h5>
 <p>
@@ -1258,7 +1262,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h9"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.rational_number_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.rational_number_functions">Rational
+        <span><a name="boost_multiprecision.ref.number.rational_number_functions"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.rational_number_functions">Rational
         Number Functions</a>
       </h5>
 <pre class="programlisting"><span class="keyword">typename</span> <span class="identifier">component_type</span><span class="special">&lt;</span><span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="identifier">numerator</span>  <span class="special">(</span><span class="keyword">const</span> <span class="emphasis"><em>number-or-expression-template-type</em></span><span class="special">&amp;);</span>
@@ -1270,7 +1274,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h10"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.boost_math_interoperability_supp"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.boost_math_interoperability_supp">Boost.Math
+        <span><a name="boost_multiprecision.ref.number.boost_math_interoperability_supp"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.boost_math_interoperability_supp">Boost.Math
         Interoperability Support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span><span class="special">{</span> <span class="keyword">namespace</span> <span class="identifier">math</span><span class="special">{</span>
@@ -1293,7 +1297,7 @@
       </p>
 <h5>
 <a name="boost_multiprecision.ref.number.h11"></a>
-        <span class="phrase"><a name="boost_multiprecision.ref.number.std_numeric_limits_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.std_numeric_limits_support">std::numeric_limits
+        <span><a name="boost_multiprecision.ref.number.std_numeric_limits_support"></a></span><a class="link" href="number.html#boost_multiprecision.ref.number.std_numeric_limits_support">std::numeric_limits
         support</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">std</span><span class="special">{</span>

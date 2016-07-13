@@ -174,8 +174,8 @@ void test_simple_repeats()
    TEST_REGEX_SEARCH("^a(?:bc)?", perl, "abcbc", match_any|match_all, make_array(-2, -2));
    TEST_REGEX_SEARCH("a}", perl, "a}", match_default, make_array(0, 2, -2, -2));
    TEST_REGEX_SEARCH("a{12b", perl, "a{12bc", match_default, make_array(0, 5, -2, -2));
-   TEST_INVALID_REGEX("a{b", extended);
-   TEST_INVALID_REGEX("a}b", extended);
+   TEST_INVALID_REGEX("a{b", boost::regex::extended);
+   TEST_INVALID_REGEX("a}b", boost::regex::extended);
    test_simple_repeats2();
 }
 
@@ -233,7 +233,7 @@ void test_simple_repeats2()
 void test_fast_repeats()
 {
    using namespace boost::regex_constants;
-   // extended repeat checking to exercise new algorithms:
+   // boost::regex::extended repeat checking to exercise new algorithms:
    TEST_REGEX_SEARCH("ab.*xy", perl, "abxy_", match_default, make_array(0, 4, -2, -2));
    TEST_REGEX_SEARCH("ab.*xy", perl, "ab_xy_", match_default, make_array(0, 5, -2, -2));
    TEST_REGEX_SEARCH("ab.*xy", perl, "abxy", match_default, make_array(0, 4, -2, -2));

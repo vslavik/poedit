@@ -59,10 +59,12 @@ lib dll_polymorphic_derived2_lib
     ;
 
 test-suite "serialization" :
-     [ test-bsl-run_files test_array : A ]
+     [ test-bsl-run_files test_array : A : :  [ requires cxx11_hdr_array ] ] # BOOST_NO_CXX11_HDR_ARRAY
+     [ test-bsl-run_files test_boost_array : A ]
+     [ test-bsl-run_files test_native_array : A ]
      [ test-bsl-run_files test_binary ]
-     [ test-bsl-run_files test_class_info_load ]
      [ test-bsl-run_files test_class_info_save ]
+     [ test-bsl-run_files test_class_info_load ]
      [ test-bsl-run_files test_bitset ]
      [ test-bsl-run_files test_complex ]
      [ test-bsl-run_files test_contained_class : A ]
@@ -75,6 +77,8 @@ test-suite "serialization" :
      [ test-bsl-run_files test_diamond ]
      [ test-bsl-run_files test_diamond_complex ]
      [ test-bsl-run_files test_exported : polymorphic_base ]
+     [ test-bsl-run_files test_forward_list : A  : :  [ requires cxx11_hdr_forward_list ] ] # BOOST_NO_CXX11_HDR_FORWARD_LIST
+     [ test-bsl-run_files test_forward_list_ptrs : A  : :  [ requires cxx11_hdr_forward_list ] ] # BOOST_NO_CXX11_HDR_FORWARD_LIST
      [ test-bsl-run_files test_helper_support ]
      [ test-bsl-run_files test_interrupts ]
      [ test-bsl-run_files test_list : A ]
@@ -123,6 +127,7 @@ test-suite "serialization" :
 
 if ! $(BOOST_ARCHIVE_LIST) {
     test-suite "serialization2" : 
+        [ test-bsl-run-no-lib test_inclusion ]
         [ test-bsl-run test_dll_exported : : dll_polymorphic_derived2_lib ]
         [ test-bsl-run test_dll_simple : : dll_a_lib ]
         [ compile test_dll_plugin.cpp ]
@@ -133,22 +138,21 @@ if ! $(BOOST_ARCHIVE_LIST) {
         [ test-bsl-run test_reset_object_address : A ]
         [ test-bsl-run test_void_cast ]
         [ test-bsl-run test_mult_archive_types ]
-        
-        [ test-bsl-run-no-lib test_iterators ]
-        [ test-bsl-run-no-lib test_iterators_base64 ]
-        [ test-bsl-run-no-lib test_inclusion ]
-        [ test-bsl-run-no-lib test_smart_cast ]
-        
-        [ test-bsl-run-no-lib test_utf8_codecvt 
-            : ../src/utf8_codecvt_facet
+        [ test-bsl-run test_iterators ]
+        [ test-bsl-run test_iterators_base64 ]
+        [ test-bsl-run test_smart_cast ]
+        [ test-bsl-run test_utf8_codecvt 
+            : 
+            :
             : <dependency>../../config/test/all//BOOST_NO_STD_WSTREAMBUF
         ]
-        [ test-bsl-run-no-lib test_codecvt_null 
-            : ../src/codecvt_null 
+        [ test-bsl-run test_codecvt_null 
+            : ../src/codecvt_null
+            :
             : <dependency>../../config/test/all//BOOST_NO_STD_WSTREAMBUF
         ]
-
-        #[ test-bsl-run-no-lib test_z ]
+        
+        #[ test-bsl-run test_z ]
 
         # should fail compilation
         [ compile-fail test_not_serializable.cpp ]

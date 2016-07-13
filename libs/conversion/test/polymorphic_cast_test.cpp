@@ -154,7 +154,7 @@ static void test_polymorphic_pointer_cast()
 
         if( sp_base2 != 0 )
         {
-            BOOST_TEST_EQ( base2->kind2(), "Base2" );
+            BOOST_TEST_EQ( sp_base2->kind2(), "Base2" );
         }
     }
     catch( std::bad_cast const& )

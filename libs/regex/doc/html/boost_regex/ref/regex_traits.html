@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>regex_traits</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Boost.Regex 5.0.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Boost.Regex 5.1.1">
 <link rel="up" href="../ref.html" title="Reference">
 <link rel="prev" href="error_type.html" title="error_type">
 <link rel="next" href="non_std_strings.html" title="Interfacing With Non-Standard String Types">
@@ -47,14 +47,14 @@
 </pre>
 <h5>
 <a name="boost_regex.ref.regex_traits.h0"></a>
-        <span class="phrase"><a name="boost_regex.ref.regex_traits.description"></a></span><a class="link" href="regex_traits.html#boost_regex.ref.regex_traits.description">Description</a>
+        <span><a name="boost_regex.ref.regex_traits.description"></a></span><a class="link" href="regex_traits.html#boost_regex.ref.regex_traits.description">Description</a>
       </h5>
 <p>
         The class <code class="computeroutput"><span class="identifier">regex_traits</span></code> is
         just a thin wrapper around an actual implementation class, which may be one
         of:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">c_regex_traits</span></code>: this
             class is deprecated, it wraps the C locale, and is used as the default
@@ -76,7 +76,7 @@
         The default behavior can be altered by defining one of the following configuration
         macros in <a href="../../../../../../boost/regex/user.hpp" target="_top">boost/regex/user.hpp</a>
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             BOOST_REGEX_USE_C_LOCALE: makes <code class="computeroutput"><span class="identifier">c_regex_traits</span></code>
             the default.

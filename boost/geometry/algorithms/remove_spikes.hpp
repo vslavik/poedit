@@ -139,7 +139,7 @@ struct range_remove_spikes
 
         // Copy output
         geometry::clear(range);
-        std::copy(cleaned.begin(), cleaned.end(), std::back_inserter(range));
+        std::copy(cleaned.begin(), cleaned.end(), range::back_inserter(range));
     }
 };
 

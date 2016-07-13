@@ -105,6 +105,22 @@ void yyfparse( OBJECT * s )
 
 
 /*
+ * yyfdone() - cleanup after we're done parsing a file.
+ */
+void yyfdone( void )
+{
+    include * const i = incp;
+    incp = i->next;
+
+    /* Close file, free name. */
+    if(i->file && (i->file != stdin))
+        fclose(i->file);
+    object_free(i->fname);
+    BJAM_FREE((char *)i);
+}
+
+
+/*
  * yyline() - read new line and return first character.
  *
  * Fabricates a continuous stream of characters across include files, returning
@@ -157,17 +173,9 @@ int yyline()
         }
     }
 
-    /* This include is done. Free it up and return EOF so yyparse() returns to
+    /* This include is done. Return EOF so yyparse() returns to
      * parse_file().
      */
-
-    incp = i->next;
-
-    /* Close file, free name. */
-    if ( i->file && ( i->file != stdin ) )
-        fclose( i->file );
-    object_free( i->fname );
-    BJAM_FREE( (char *)i );
 
     return EOF;
 }

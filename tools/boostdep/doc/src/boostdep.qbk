@@ -10,7 +10,7 @@
 [article Boostdep
   [quickbook 1.6]
   [id boostdep]
-  [copyright 2014, 2015 Peter Dimov]
+  [copyright 2014, 2015, 2016 Peter Dimov]
   [license Distributed under the
     [@http://boost.org/LICENSE_1_0.txt Boost Software License, Version 1.0].
   ]
@@ -242,6 +242,7 @@ Usage:
     boostdep \[options\] \[--primary\] <module>
     boostdep \[options\] --secondary <module>
     boostdep \[options\] --reverse <module>
+    boostdep \[options\] --subset <module>
     boostdep \[options\] \[--header\] <header>
 
     \[options\]: \[--track-sources\] \[--title <title>\] \[--footer <footer>\] \[--html\]
@@ -489,7 +490,7 @@ a command for each module.
 [endsect]
 
 [section --list-buildable]
-=boostdep --list-modules= prints a list of the modules that require building.
+=boostdep --list-buildable= prints a list of the modules that require building.
 /Boostdep/ considers a module to require building if it contains subdirectories
 named =build= and =src=.
 
@@ -551,7 +552,7 @@ dist/bin/boostdep --title "Module Overview" --footer "Generated on 21.05.2015 20
 
 =boostdep --module-levels= generates a report that groups modules by level. Levels are determined in such
 a way so that a module of level =N= never depends on modules of levels greater than =N=, and in the absence
-of cyclical dependencies, doesn't depend on other modules of level =N=. It takes the same options as
+of cyclic dependencies, doesn't depend on other modules of level =N=. It takes the same options as
 =--module-overview=.
 
 [pre
@@ -612,6 +613,24 @@ You can combine =--reverse= with =--primary= and =--secondary= for a complete mo
 [pre
 dist/bin/boostdep --title "Dependency Report for filesystem" --footer "Generated on 21.05.2015 20:53:11" --html --primary filesystem --secondary filesystem --reverse filesystem > filesystem.html
 ]
+
+[endsect]
+
+[section --subset]
+
+[^boostdep --subset /module/] lists the subset dependencies of /module/, that is, it lists which modules comprise the subset which /module/ requires in order to be usable.
+The dependencies are determined by tracing the =#include= directives starting from /module/'s headers.
+
+The difference between using the modules reported by =--subset= and those reported by the sum of =--primary= and =--secondary= is that the former only guarantees
+that /module/ will be usable, whereas the latter guarantees it for every module in the subset.
+
+=--subset= takes the same options as =--module-overview=.
+
+[pre
+dist/bin/boostdep --title "Subset Dependencies of filesystem" --footer "Generated on 21.05.2015 20:53:11" --html --subset filesystem > filesystem-subset.html
+]
+
+You can combine =--subset= with the other module report options.
 
 [endsect]
 

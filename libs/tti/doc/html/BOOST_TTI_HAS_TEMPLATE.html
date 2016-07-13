@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_TTI_HAS_TEMPLATE</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Type Traits Introspection Library">
 <link rel="up" href="header/boost/tti/has_template_hpp.html" title="Header &lt;boost/tti/has_template.hpp&gt;">
 <link rel="prev" href="BOOST_TTI_TRAIT_HAS_TEMPLATE.html" title="Macro BOOST_TTI_TRAIT_HAS_TEMPLATE">
@@ -33,46 +33,19 @@
 
 </span>BOOST_TTI_HAS_TEMPLATE(...)</pre></div>
 <div class="refsect1">
-<a name="idm45830946963520"></a><h2>Description</h2>
-<p>... = variadic parameters.     The first variadic parameter is the inner class template name.
-
-    Following variadic parameters are optional.
-
-    If no following variadic parameters exist, then the inner class template 
-    being introspected must be all template type parameters ( template parameters 
-    starting with `class` or `typename` ) and any number of template type parameters
-    can occur.
-
-    If the second variadic parameter is BOOST_PP_NIL and no other variadic 
-    parameter is given, then just as in the previous case the inner class template 
-    being introspected must be all template type parameters ( template parameters 
-    starting with `class` or `typename` ) and any number of template type parameters
-    can occur. This form is allowed in order to be consistent with using the 
-    non-variadic form of this macro.
-
-    If the second variadic parameter is a Boost preprocessor library array and no other 
-    variadic parameter is given, then the inner class template must have its template 
-    parameters matching the sequence in the tuple portion of the Boost PP array. This 
-    form is allowed in order to be consistent with using the non-variadic form of this 
-    macro.
-
-    Otherwise the inner class template must have its template parameters matching the 
-    sequence of the optional variadic parameters.
-</p>
-<p>generates a metafunction called "has_template_'name'" where 'name' is the first variadic parameter.       template&lt;class BOOST_TTI_TP_T&gt;
-      struct has_template_'name'
-        {
-        static const value = unspecified;
-        typedef mpl::bool_&lt;true-or-false&gt; type;
-        };
-
-      The metafunction types and return:
-
-        BOOST_TTI_TP_T = the enclosing type in which to look for our 'name'.
-
-        returns = 'value' is true if the 'name' template exists within the enclosing type,
-                  otherwise 'value' is false.
-</p>
+<a name="idp66272448"></a><h2>Description</h2>
+<p>... = variadic parameters.</p>
+<p>The first variadic parameter is the inner class template name.</p>
+<p>Following variadic parameters are optional.</p>
+<p>If no following variadic parameters exist, then the inner class template being introspected must be all template type parameters ( template parameters starting with `class` or `typename` ) and any number of template type parameters can occur.</p>
+<p>If the second variadic parameter is BOOST_PP_NIL and no other variadic parameter is given, then just as in the previous case the inner class template being introspected must be all template type parameters ( template parameters starting with `class` or `typename` ) and any number of template type parameters can occur. This form is allowed in order to be consistent with using the non-variadic form of this macro.</p>
+<p>If the second variadic parameter is a Boost preprocessor library array and no other variadic parameter is given, then the inner class template must have its template parameters matching the sequence in the tuple portion of the Boost PP array. This form is allowed in order to be consistent with using the non-variadic form of this macro.</p>
+<p>Otherwise the inner class template must have its template parameters matching the sequence of the optional variadic parameters.</p>
+<p>generates a metafunction called "has_template_'name'" where 'name' is the first variadic parameter.</p>
+<p>template&lt;class BOOST_TTI_TP_T&gt; struct has_template_'name' { static const value = unspecified; typedef mpl::bool_&lt;true-or-false&gt; type; };</p>
+<p>The metafunction types and return:</p>
+<p>BOOST_TTI_TP_T = the enclosing type in which to look for our 'name'.</p>
+<p>returns = 'value' is true if the 'name' template exists within the enclosing type, otherwise 'value' is false.</p>
 <p>Examples:</p>
 <p>1) Search for an inner class template called 'MyTemplate', with all template type parameters, nested within the class 'MyClass'.</p>
 <p>BOOST_TTI_HAS_TEMPLATE(MyTemplate)</p>

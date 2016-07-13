@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Containers with custom ValueTraits</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="node_algorithms.html" title="Node algorithms with custom NodeTraits">
 <link rel="next" href="thread_safety.html" title="Thread safety guarantees">
 </head>
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="intrusive.value_traits"></a><a class="link" href="value_traits.html" title="Containers with custom ValueTraits">Containers with custom ValueTraits</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="value_traits.html#intrusive.value_traits.value_traits_interface">ValueTraits
       interface</a></span></dt>
 <dt><span class="section"><a href="value_traits.html#intrusive.value_traits.value_traits_example">Custom ValueTraits
@@ -96,13 +96,13 @@
 <p>
         Let's explain each type and function:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="bold"><strong><span class="emphasis"><em>node_traits</em></span></strong></span>: The
             node configuration that is needed by node algorithms. These node traits
             and algorithms are described in the previous chapter: <a class="link" href="node_algorithms.html" title="Node algorithms with custom NodeTraits">Node
             Algorithms</a>.
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   If my_value_traits is meant to be used with <code class="computeroutput"><a class="link" href="../boost/intrusive/slist.html" title="Class template slist">slist</a></code>,
                   <code class="computeroutput"><span class="identifier">node_traits</span></code> should
@@ -171,7 +171,7 @@
             some additional work or checks from the container. The types are enumerations
             defined in the <code class="computeroutput"><span class="identifier">link_mode</span><span class="special">.</span><span class="identifier">hpp</span></code>
             header. These are the possible types:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <span class="bold"><strong><code class="computeroutput"><span class="identifier">normal_link</span></code></strong></span>:
                   If this linking policy is specified in a <code class="computeroutput"><span class="identifier">ValueTraits</span></code>
@@ -522,7 +522,7 @@
         for Visual 7.1, since overloaded static function detection is not possible,
         in this case the implementation checks if the class is empty):
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             If all Node &lt;-&gt; Value transformation functions are static , a
             <span class="bold"><strong>stateless</strong></span> value traits is assumed. transformations
@@ -540,7 +540,7 @@
         using global variables (stateless value traits could use global variables
         to achieve the same goal), so:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="bold"><strong>Thread-safety guarantees</strong></span>: Better thread-safety
             guarantees can be achieved with stateful value traits, since accessing
@@ -561,7 +561,7 @@
 <p>
         Stateful value traits have many advantages but also some downsides:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="bold"><strong>Performance</strong></span>: Value traits operations
             should be very efficient since they are basic operations used by containers.

@@ -148,21 +148,15 @@ protected:
     void load(unsigned char & t){
         this->primitive_base_t::load(t);
     }
-    // intermediate level to support override of operators
-    // fot templates in the absence of partial function 
-    // template ordering
     typedef boost::archive::detail::common_iarchive<portable_binary_iarchive> 
         detail_common_iarchive;
     template<class T>
-    void load_override(T & t, BOOST_PFTO int){
-        this->detail_common_iarchive::load_override(t, 0);
+    void load_override(T & t){
+        this->detail_common_iarchive::load_override(t);
     }
-    void load_override(boost::archive::class_name_type & t, int);
+    void load_override(boost::archive::class_name_type & t);
     // binary files don't include the optional information 
-    void load_override(
-        boost::archive::class_id_optional_type & /* t */, 
-        int
-    ){}
+    void load_override(boost::archive::class_id_optional_type &){}
 
     void init(unsigned int flags);
 public:

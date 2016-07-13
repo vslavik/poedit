@@ -199,11 +199,11 @@ void test_direct_init_for()
   BOOST_TEST_EQ(val(v), 7);
 }
 
-template <typename T>
+template <typename T, typename U>
 void test_clearing_the_value()
 {
   typename concrete_type_of<T>::type v(2);
-  optional<T&> o1(v), o2(v);
+  optional<U&> o1(v), o2(v);
   
   BOOST_TEST(o1);
   BOOST_TEST(o1 != none);
@@ -220,11 +220,11 @@ void test_clearing_the_value()
   BOOST_TEST_EQ(val(v), 2);
 }
 
-template <typename T>
+template <typename T, typename U>
 void test_equality()
 {
   typename concrete_type_of<T>::type v1(1), v2(2), v2_(2), v3(3);
-  optional<T&> o1(v1), o2(v2), o2_(v2_), o3(v3), o3_(v3), oN, oN_;
+  optional<U&> o1(v1), o2(v2), o2_(v2_), o3(v3), o3_(v3), oN, oN_;
   // o2 and o2_ point to different objects; o3 and o3_ point to the same object
   
   BOOST_TEST(oN  == oN);
@@ -256,11 +256,11 @@ void test_equality()
   BOOST_TEST( (o2  != oN));
 }
 
-template <typename T>
+template <typename T, typename U>
 void test_order()
 {
   typename concrete_type_of<T>::type v1(1), v2(2), v2_(2), v3(3);
-  optional<T&> o1(v1), o2(v2), o2_(v2_), o3(v3), o3_(v3), oN, oN_;
+  optional<U&> o1(v1), o2(v2), o2_(v2_), o3(v3), o3_(v3), oN, oN_;
   // o2 and o2_ point to different objects; o3 and o3_ point to the same object
   
   BOOST_TEST(!(oN  < oN));
@@ -399,13 +399,35 @@ void test_order()
   BOOST_TEST(!(o3_ < oN_));
 }
 
-template <typename T>
+template <typename T, typename U>
 void test_swap()
 {
   typename concrete_type_of<T>::type v1(1), v2(2);
-  optional<T&> o1(v1), o1_(v1), o2(v2), o2_(v2), oN, oN_;
+  optional<U&> o1(v1), o1_(v1), o2(v2), o2_(v2), oN, oN_;
   
-  // swap(o1, o1); DOESN'T WORK
+  swap(o1, o1);
+  BOOST_TEST(o1);
+  BOOST_TEST(boost::addressof(*o1) == boost::addressof(v1));
+  
+  swap(oN, oN_);
+  BOOST_TEST(!oN);
+  BOOST_TEST(!oN_);
+  
+  swap(o1, oN);
+  BOOST_TEST(!o1);
+  BOOST_TEST(oN);
+  BOOST_TEST(boost::addressof(*oN) == boost::addressof(v1));
+  
+  swap(oN, o1);
+  BOOST_TEST(!oN);
+  BOOST_TEST(o1);
+  BOOST_TEST(boost::addressof(*o1) == boost::addressof(v1));
+  
+  swap(o1_, o2_);
+  BOOST_TEST(o1_);
+  BOOST_TEST(o2_);
+  BOOST_TEST(boost::addressof(*o1_) == boost::addressof(v2));
+  BOOST_TEST(boost::addressof(*o2_) == boost::addressof(v1));
 }
 
 template <typename T>
@@ -413,11 +435,11 @@ void test_optional_ref()
 {
   test_not_containing_value_for<T>();
   test_direct_init_for<T>();
-  test_clearing_the_value<T>();
+  test_clearing_the_value<T, T>();
   test_arrow<T>();
-  test_equality<T>();
-  test_order<T>();
-  test_swap<T>();
+  test_equality<T, T>();
+  test_order<T, T>();
+  test_swap<T, T>();
 }
 
 template <typename T>
@@ -426,23 +448,27 @@ void test_optional_const_ref()
   test_not_containing_value_for<const T>();
   test_direct_init_for_const<T>();
   test_direct_init_for_noconst_const<T>();
-  test_clearing_the_value<const T>();
+  test_clearing_the_value<const T, const T>();
+  test_clearing_the_value<T, const T>();
   test_arrow_const<T>();
   test_arrow_noconst_const<T>();
-  test_equality<const T>();
-  test_order<const T>();
-  //test_swap<T>();
+  test_equality<const T, const T>();
+  test_equality<T, const T>();
+  test_order<const T, const T>();
+  test_order<T, const T>();
+  test_swap<const T, const T>();
+  test_swap<T, const T>();
 }
 
 int main()
 {
   test_optional_ref<int>();
   test_optional_ref<ScopeGuard>();
-  //test_optional_ref<Abstract>();
+  test_optional_ref<Abstract>();
   
   test_optional_const_ref<int>();
   test_optional_const_ref<ScopeGuard>();
-  //test_optional_const_ref<Abstract>();
+  test_optional_const_ref<Abstract>();
   
   return boost::report_errors();
 }

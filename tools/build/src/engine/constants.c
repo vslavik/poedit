@@ -72,6 +72,8 @@ void constants_init( void )
     constant_python_interface         = object_new( "python_interface" );
     constant_extra_pythonpath         = object_new( "EXTRA_PYTHONPATH" );
     constant_MAIN_PYTHON              = object_new( "MAIN_PYTHON" );
+    constant_BUILTIN_GLOB_ARCHIVE_BACK= object_new( "BUILTIN_GLOB_ARCHIVE_BACK" );
+    constant_FILE_ARCHIVESCAN         = object_new( "FILE_ARCHIVESCAN" );
 }
 
 void constants_done( void )
@@ -129,6 +131,8 @@ void constants_done( void )
     object_free( constant_python_interface );
     object_free( constant_extra_pythonpath );
     object_free( constant_MAIN_PYTHON );
+    object_free( constant_FILE_ARCHIVESCAN );
+    object_free( constant_BUILTIN_GLOB_ARCHIVE_BACK );
 }
 
 OBJECT * constant_empty;
@@ -184,3 +188,5 @@ OBJECT * constant_python;
 OBJECT * constant_python_interface;
 OBJECT * constant_extra_pythonpath;
 OBJECT * constant_MAIN_PYTHON;
+OBJECT * constant_FILE_ARCHIVESCAN;
+OBJECT * constant_BUILTIN_GLOB_ARCHIVE_BACK;

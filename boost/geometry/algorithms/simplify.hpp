@@ -77,7 +77,7 @@ struct simplify_copy
     {
         std::copy
             (
-                boost::begin(range), boost::end(range), std::back_inserter(out)
+                boost::begin(range), boost::end(range), geometry::range::back_inserter(out)
             );
     }
 };
@@ -113,7 +113,7 @@ struct simplify_range
         {
             simplify_range_insert::apply
                 (
-                    range, std::back_inserter(out), max_distance, strategy
+                    range, geometry::range::back_inserter(out), max_distance, strategy
                 );
         }
     }

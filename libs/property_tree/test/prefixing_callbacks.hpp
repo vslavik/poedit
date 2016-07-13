@@ -1,7 +1,7 @@
 #ifndef JSON_PARSER_PREFIXING_CALLBACKS_HPP
 #define JSON_PARSER_PREFIXING_CALLBACKS_HPP
 
-#include <boost/property_tree/detail/json_parser/standard_callbacks.hpp>
+#include <boost/property_tree/json_parser/detail/standard_callbacks.hpp>
 
 namespace constants
 {

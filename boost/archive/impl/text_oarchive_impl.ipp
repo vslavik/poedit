@@ -10,7 +10,6 @@
 
 #include <string>
 #include <boost/config.hpp>
-#include <locale>
 #include <cstddef> // size_t
 
 #include <boost/config.hpp>
@@ -27,7 +26,6 @@ namespace std{ using ::wcslen; }
 #endif
 #endif
 
-#include <boost/archive/add_facet.hpp>
 #include <boost/archive/text_oarchive.hpp>
 
 namespace boost { 

@@ -14,11 +14,9 @@ path-constant boost-images : $(BOOST_ROOT)/doc/src/images ;
 
 import modules ;
 
-if --enable-index in  [ modules.peek : ARGV ]
-{
-   ECHO "Building the variadic_macro_data docs with automatic index generation enabled." ;
-   using auto-index ;
-   project vmd_doc : requirements
+ECHO "Building the variadic_macro_data docs with automatic index generation enabled." ;
+using auto-index ;
+project vmd_doc : requirements
              <auto-index>on
              <auto-index-script>index.idx
              <auto-index-prefix>../../../
@@ -28,12 +26,6 @@ if --enable-index in  [ modules.peek : ARGV ]
              <format>pdf:<auto-index-internal>on
              <format>pdf:<xsl:param>index.on.type=1
              <quickbook-define>enable_index ;
-}
-else
-{
-   project vmd_doc ;
-   ECHO "Building the variadic_macro_data docs with automatic index generation disabled. Try building with --enable-index." ;
-}
 
 doxygen vmd_reference
   :

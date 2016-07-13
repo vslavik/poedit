@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Design Rationale</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="prev" href="compilation.html" title="Compilation">
@@ -52,7 +52,7 @@
       in a Cartesian coordinate system. A generic library should be able to calculate
       the distance:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           for any point class or struct, not on just this <span class="bold"><strong>mypoint</strong></span>
           type
@@ -80,7 +80,7 @@
     </p>
 <h4>
 <a name="geometry.design.h0"></a>
-      <span class="phrase"><a name="geometry.design.using_templates"></a></span><a class="link" href="design.html#geometry.design.using_templates">Using
+      <span><a name="geometry.design.using_templates"></a></span><a class="link" href="design.html#geometry.design.using_templates">Using
       Templates</a>
     </h4>
 <p>
@@ -107,7 +107,7 @@
     </p>
 <h4>
 <a name="geometry.design.h1"></a>
-      <span class="phrase"><a name="geometry.design.using_traits"></a></span><a class="link" href="design.html#geometry.design.using_traits">Using
+      <span><a name="geometry.design.using_traits"></a></span><a class="link" href="design.html#geometry.design.using_traits">Using
       Traits</a>
     </h4>
 <p>
@@ -175,7 +175,7 @@
     </p>
 <h4>
 <a name="geometry.design.h2"></a>
-      <span class="phrase"><a name="geometry.design.dimension_agnosticism"></a></span><a class="link" href="design.html#geometry.design.dimension_agnosticism">Dimension
+      <span><a name="geometry.design.dimension_agnosticism"></a></span><a class="link" href="design.html#geometry.design.dimension_agnosticism">Dimension
       Agnosticism</a>
     </h4>
 <p>
@@ -265,7 +265,7 @@
     </p>
 <h4>
 <a name="geometry.design.h3"></a>
-      <span class="phrase"><a name="geometry.design.coordinate_type"></a></span><a class="link" href="design.html#geometry.design.coordinate_type">Coordinate
+      <span><a name="geometry.design.coordinate_type"></a></span><a class="link" href="design.html#geometry.design.coordinate_type">Coordinate
       Type</a>
     </h4>
 <p>
@@ -333,7 +333,7 @@
 </pre>
 <h4>
 <a name="geometry.design.h4"></a>
-      <span class="phrase"><a name="geometry.design.different_geometries"></a></span><a class="link" href="design.html#geometry.design.different_geometries">Different
+      <span><a name="geometry.design.different_geometries"></a></span><a class="link" href="design.html#geometry.design.different_geometries">Different
       Geometries</a>
     </h4>
 <p>
@@ -353,7 +353,7 @@
       also cannot create an overload because that would be ambiguous, having the
       same template signature. There are two solutions:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           tag dispatching
         </li>
@@ -468,7 +468,7 @@
 </pre>
 <h4>
 <a name="geometry.design.h5"></a>
-      <span class="phrase"><a name="geometry.design.kernel_revisited"></a></span><a class="link" href="design.html#geometry.design.kernel_revisited">Kernel
+      <span><a name="geometry.design.kernel_revisited"></a></span><a class="link" href="design.html#geometry.design.kernel_revisited">Kernel
       Revisited</a>
     </h4>
 <p>
@@ -531,7 +531,7 @@
     </p>
 <h4>
 <a name="geometry.design.h6"></a>
-      <span class="phrase"><a name="geometry.design.coordinate_system"></a></span><a class="link" href="design.html#geometry.design.coordinate_system">Coordinate
+      <span><a name="geometry.design.coordinate_system"></a></span><a class="link" href="design.html#geometry.design.coordinate_system">Coordinate
       System</a>
     </h4>
 <p>
@@ -683,7 +683,7 @@
     </p>
 <h4>
 <a name="geometry.design.h7"></a>
-      <span class="phrase"><a name="geometry.design.point_concept"></a></span><a class="link" href="design.html#geometry.design.point_concept">Point
+      <span><a name="geometry.design.point_concept"></a></span><a class="link" href="design.html#geometry.design.point_concept">Point
       Concept</a>
     </h4>
 <p>
@@ -692,7 +692,7 @@
       the traits namespace should be accepted a as valid type. So the Point Concept
       consists of:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           a specialization for <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">tag</span></code>
         </li>
@@ -726,7 +726,7 @@
     </p>
 <h4>
 <a name="geometry.design.h8"></a>
-      <span class="phrase"><a name="geometry.design.return_type"></a></span><a class="link" href="design.html#geometry.design.return_type">Return
+      <span><a name="geometry.design.return_type"></a></span><a class="link" href="design.html#geometry.design.return_type">Return
       Type</a>
     </h4>
 <p>
@@ -814,7 +814,7 @@
     </p>
 <h4>
 <a name="geometry.design.h9"></a>
-      <span class="phrase"><a name="geometry.design.summary"></a></span><a class="link" href="design.html#geometry.design.summary">Summary</a>
+      <span><a name="geometry.design.summary"></a></span><a class="link" href="design.html#geometry.design.summary">Summary</a>
     </h4>
 <p>
       In this design rationale, Boost.Geometry is step by step designed using tag

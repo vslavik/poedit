@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Testing for equality and inequality</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="../vmd_generic.html" title="Generic macros for working with data types">
 <link rel="prev" href="vmd_convert_sequence.html" title="Getting the type of data">
@@ -51,11 +51,11 @@
       </p>
 <p>
         VMD identifiers used in equality testing must be registered and pre-detected.
-        All numbers and types are already registered/pre-detected for equality testing
-        so it is only user-defined identifiers which must be registered and pre-detected.
-        If an identifier has not been both registered and predetected it will never
-        be equal to the same identifier value, so it will always fail equality testing,
-        although it will not give a preprocessing error doing so.
+        All numbers and v-types are already registered/pre-detected for equality
+        testing so it is only user-defined identifiers which must be registered and
+        pre-detected. If an identifier has not been both registered and predetected
+        it will never be equal to the same identifier value, so it will always fail
+        equality testing, although it will not give a preprocessing error doing so.
       </p>
 <p>
         The BOOST_VMD_EQUAL macro returns 1 if both parameters are equal and 0 if
@@ -110,12 +110,12 @@
 </pre>
 <p>
         When BOOST_VMD_EQUAL tests for equality it always parses data for their most
-        specific types. The reason for this is that a valid tuple, which is an invalid
-        list or array, can never be compared completely because all elements of that
-        tuple are not data types which VMD can parse. Therefore VMD always tests
-        equality based on the most specific type for any value being tested, which
-        speeds up testing for the more specific tuple data types such as lists and
-        arrays.
+        specific types. The reason for this is that a valid tuple, which is also
+        an invalid list or array, can never be compared completely because all elements
+        of that tuple are not data types which VMD can parse. Therefore VMD always
+        tests equality based on the most specific type for any value being tested,
+        which speeds up testing for the more specific tuple data types such as lists
+        and arrays.
       </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">TUPLE_IS_ARRAY1</span> <span class="special">(</span><span class="number">2</span><span class="special">,(</span><span class="number">3</span><span class="special">,</span><span class="number">4</span><span class="special">))</span>
 <span class="preprocessor">#define</span> <span class="identifier">TUPLE_IS_ARRAY2</span> <span class="special">(</span><span class="number">2</span><span class="special">,(</span><span class="number">4</span><span class="special">,</span><span class="number">5</span><span class="special">))</span>
@@ -227,7 +227,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_generic.vmd_assert.h0"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_generic.vmd_assert.usage"></a></span><a class="link" href="vmd_assert.html#variadic_macro_data.vmd_generic.vmd_assert.usage">Usage</a>
+        <span><a name="variadic_macro_data.vmd_generic.vmd_assert.usage"></a></span><a class="link" href="vmd_assert.html#variadic_macro_data.vmd_generic.vmd_assert.usage">Usage</a>
       </h5>
 <p>
         You can use the general header file:

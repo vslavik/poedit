@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_INTRUSIVE_OPTION_TYPE</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="intrusive/reference.html#header.boost.intrusive.pack_options_hpp" title="Header &lt;boost/intrusive/pack_options.hpp&gt;">
 <link rel="prev" href="boost/intrusive/pack_options.html" title="Struct template pack_options">
@@ -34,25 +34,25 @@
 
 </span>BOOST_INTRUSIVE_OPTION_TYPE(OPTION_NAME, TYPE, TYPEDEF_EXPR, TYPEDEF_NAME)</pre></div>
 <div class="refsect1">
-<a name="idm45555276216784"></a><h2>Description</h2>
+<a name="idp212607056"></a><h2>Description</h2>
 <p>Defines an option class of name OPTION_NAME that can be used to specify a type of type TYPE...</p>
-<pre class="programlisting"><span class="keyword">struct</span> <span class="identifier">OPTION_NAME</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">TYPE</span><span class="special">&gt;</span>
-<span class="special">{</span>  <span class="identifier">unspecified_content</span>  <span class="special">}</span><span class="special">;</span>
+<pre class="programlisting"> <span class="keyword">struct</span> <span class="identifier">OPTION_NAME</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">TYPE</span><span class="special">&gt;</span>
+ <span class="special">{</span>  <span class="identifier">unspecified_content</span>  <span class="special">}</span><span class="special">;</span>
 </pre>
 <p>...that after being combined with <code class="computeroutput"><a class="link" href="boost/intrusive/pack_options.html" title="Struct template pack_options">boost::intrusive::pack_options</a></code>, will typedef TYPE as a typedef of name TYPEDEF_NAME. Example:</p>
-<pre class="programlisting"><span class="comment">//[includes and namespaces omitted for brevity]</span>
+<pre class="programlisting">   <span class="comment">//[includes and namespaces omitted for brevity]</span>
 
-<span class="comment">//This macro will create the following class:</span>
-<span class="comment">//    template&lt;class VoidPointer&gt;</span>
-<span class="comment">//    struct my_pointer</span>
-<span class="comment">//    { unspecified_content };</span>
-<span class="identifier">BOOST_INTRUSIVE_OPTION_TYPE</span><span class="special">(</span><span class="identifier">my_pointer</span><span class="special">,</span> <span class="identifier">VoidPointer</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">remove_pointer</span><span class="special">&lt;</span><span class="identifier">VoidPointer</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">my_pointer_type</span><span class="special">)</span>
+   <span class="comment">//This macro will create the following class:</span>
+   <span class="comment">//    template&lt;class VoidPointer&gt;</span>
+   <span class="comment">//    struct my_pointer</span>
+   <span class="comment">//    { unspecified_content };</span>
+   <span class="identifier">BOOST_INTRUSIVE_OPTION_TYPE</span><span class="special">(</span><span class="identifier">my_pointer</span><span class="special">,</span> <span class="identifier">VoidPointer</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">remove_pointer</span><span class="special">&lt;</span><span class="identifier">VoidPointer</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">,</span> <span class="identifier">my_pointer_type</span><span class="special">)</span>
 
-<span class="keyword">struct</span> <span class="identifier">empty_default</span><span class="special">{</span><span class="special">}</span><span class="special">;</span>
+   <span class="keyword">struct</span> <span class="identifier">empty_default</span><span class="special">{</span><span class="special">}</span><span class="special">;</span>
 
-<span class="keyword">typedef</span> <span class="identifier">pack_options</span><span class="special">&lt;</span> <span class="identifier">empty_default</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">my_pointer</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">*</span><span class="special">&gt;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">my_pointer_type</span> <span class="identifier">type</span><span class="special">;</span>
+   <span class="keyword">typedef</span> <span class="identifier">pack_options</span><span class="special">&lt;</span> <span class="identifier">empty_default</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">my_pointer</span><span class="special">&lt;</span><span class="keyword">void</span><span class="special">*</span><span class="special">&gt;</span> <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">::</span><span class="identifier">my_pointer_type</span> <span class="identifier">type</span><span class="special">;</span>
 
-<span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">(</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">type</span><span class="special">,</span> <span class="keyword">void</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">)</span><span class="special">)</span><span class="special">;</span>
+   <span class="identifier">BOOST_STATIC_ASSERT</span><span class="special">(</span><span class="special">(</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">is_same</span><span class="special">&lt;</span><span class="identifier">type</span><span class="special">,</span> <span class="keyword">void</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">value</span> <span class="special">)</span><span class="special">)</span><span class="special">;</span>
 </pre>
 <p> </p>
 </div>

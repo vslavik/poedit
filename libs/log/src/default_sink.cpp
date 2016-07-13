@@ -13,9 +13,9 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <cstdio>
 #include <boost/optional/optional.hpp>
-#include <boost/log/detail/config.hpp>
 #if !defined(BOOST_LOG_NO_THREADS)
 #include <boost/thread/locks.hpp>
 #include <boost/log/detail/thread_id.hpp>

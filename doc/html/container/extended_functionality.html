@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Extended functionality</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
 <link rel="prev" href="non_standard_containers.html" title="Non-standard containers">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="container.extended_functionality"></a><a class="link" href="extended_functionality.html" title="Extended functionality">Extended functionality</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="extended_functionality.html#container.extended_functionality.default_initialialization">Default
       initialization for vector-like containers</a></span></dt>
 <dt><span class="section"><a href="extended_functionality.html#container.extended_functionality.ordered_range_insertion">Ordered
@@ -117,13 +117,13 @@
 <p>
         The following parameters can be configured:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The underlying <span class="bold"><strong>tree implementation</strong></span> type
             (<code class="computeroutput"><a class="link" href="../boost/container/tree_type.html" title="Struct template tree_type">tree_type</a></code>).
             By default these containers use a red-black tree but the user can use
             other tree types:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <a href="http://en.wikipedia.org/wiki/Red%E2%80%93black_tree" target="_top">Red-Black
                   Tree</a>
@@ -308,7 +308,7 @@
         make use of a new general purpose allocator since new and delete don't offer
         expansion and burst capabilities.
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="bold"><strong>Boost.Container</strong></span> containers support an
             extended allocator interface based on an evolution of proposals <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n1953.html" target="_top">N1953:
@@ -443,21 +443,21 @@
         of the proposal under the namespace <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">container</span><span class="special">::</span><span class="identifier">pmr</span></code>.
         There are two groups,
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Header only utilities (these don't require the separately compiled library):
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource</a></code>.
                 </li>
 <li class="listitem">
-                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/resource_adaptor.html" title="Type definition resource_adaptor">resource_adaptor</a></code>.
+                  <code class="computeroutput">resource_adaptor</code>.
                 </li>
 </ul></div>
           </li>
 <li class="listitem">
             Utilities that require the the separately compiled library:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <code class="computeroutput"><a class="link" href="../boost/container/pmr/polymorphic_allocator.html" title="Class template polymorphic_allocator">polymorphic_allocator</a></code>.
                 </li>
@@ -465,7 +465,7 @@
                   <code class="computeroutput"><a class="link" href="../boost/container/pmr/monotonic_buffer_resource.html" title="Class monotonic_buffer_resource">monotonic_buffer_resource</a></code>.
                 </li>
 <li class="listitem">
-                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/unsynchr_idm46583871327984.html" title="Class unsynchronized_pool_resource">unsynchronized_pool_resource</a></code>.
+                  <code class="computeroutput"><a class="link" href="../boost/container/pmr/unsynchronized_idp18772352.html" title="Class unsynchronized_pool_resource">unsynchronized_pool_resource</a></code>.
                 </li>
 <li class="listitem">
                   <code class="computeroutput"><a class="link" href="../boost/container/pmr/synchronized_pool_resource.html" title="Class synchronized_pool_resource">synchronized_pool_resource</a></code>.
@@ -478,7 +478,7 @@
                 </li>
 <li class="listitem">
                   Aliases for boost containers using the polymorphic allocator (like
-                  <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.vector">pmr::vector</a></code>,
+                  <code class="computeroutput">pmr::vector</code>,
                   etc.)
                 </li>
 </ul></div>
@@ -506,7 +506,7 @@
         can be defined to support an polymorphic memory resource that can allocate
         memory from different underlying mechanisms. The most important details are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             It should declare that supports an allocator defining an <code class="computeroutput"><span class="identifier">allocator_type</span></code> typedef. This <code class="computeroutput"><span class="identifier">allocator_type</span></code> will be of type <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource *</a></code>,
             which is a base class for polymorphic resources.
@@ -514,7 +514,7 @@
 <li class="listitem">
             It must define constructors that take the the allocator as argument.
             It can be implemented in two ways:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">ShoppingList</span></code> has
                   constructors taking <code class="computeroutput"><a class="link" href="../boost/container/pmr/memory_resource.html" title="Class memory_resource">memory_resource*</a></code>
@@ -532,8 +532,8 @@
 <p>
         <span class="bold"><strong>Note:</strong></span> <span class="emphasis"><em>In C++03 compilers, it is
         required that the programmer specializes as <code class="computeroutput"><span class="keyword">true</span></code>
-        <code class="computeroutput"><a class="link" href="../boost/container/construc_idm46583867843104.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
-        or <code class="computeroutput"><a class="link" href="../boost/container/construc_idm46583867853472.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>
+        <code class="computeroutput"><a class="link" href="../boost/container/constructible__idp22241136.html" title="Struct template constructible_with_allocator_suffix">constructible_with_allocator_suffix</a></code>
+        or <code class="computeroutput"><a class="link" href="../boost/container/constructible__idp22250512.html" title="Struct template constructible_with_allocator_prefix">constructible_with_allocator_prefix</a></code>
         as in C++03 there is no way to automatically detect the chosen option at
         compile time. If no specialization is done, <span class="bold"><strong>Boost.Container</strong></span>
         assumes the suffix option</em></span>.
@@ -650,8 +650,8 @@
         using different allocators, you can insert <code class="computeroutput"><span class="identifier">temporaryShoppingList</span></code>
         into folder because they have the same <code class="computeroutput"><span class="identifier">ShoppingList</span></code>
         type. Also, while <code class="computeroutput"><span class="identifier">ShoppingList</span></code>
-        uses memory_resource directly, <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.list">pmr::list</a></code>,
-        <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.vector">pmr::vector</a></code> and
+        uses memory_resource directly, <code class="computeroutput">pmr::list</code>,
+        <code class="computeroutput">pmr::vector</code> and
         <code class="computeroutput"><a class="link" href="../boost_container_header_reference.html#boost.container.pmr.string">pmr::string</a></code> all
         use <code class="computeroutput"><a class="link" href="../boost/container/pmr/polymorphic_allocator.html" title="Class template polymorphic_allocator">polymorphic_allocator</a></code>.</em></span>
       </p>

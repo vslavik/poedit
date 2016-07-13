@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Script File (.idx) Reference</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
 <link rel="home" href="../index.html" title="Boost.AutoIndex">
 <link rel="up" href="../index.html" title="Boost.AutoIndex">
 <link rel="prev" href="tut/refine.html" title="Step 8: Iterate - to refine your index">
@@ -29,9 +29,9 @@
 <p>
       The following elements can occur in a script:
     </p>
-<a name="boost_autoindex.script_ref.comments_and_blank_lines"></a><h5>
-<a name="boost_autoindex.script_ref.comments_and_blank_lines-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.comments_and_blank_lines">Comments
+<h5>
+<a name="boost_autoindex.script_ref.h0"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.comments_and_blank_lines"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.comments_and_blank_lines">Comments
       and blank lines</a>
     </h5>
 <p>
@@ -46,16 +46,16 @@
         You can't append # comments onto the end of a line!
       </p></td></tr>
 </table></div>
-<a name="boost_autoindex.script_ref.inclusion_of_index_terms"></a><h5>
-<a name="boost_autoindex.script_ref.inclusion_of_index_terms-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.inclusion_of_index_terms">Inclusion
+<h5>
+<a name="boost_autoindex.script_ref.h1"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.inclusion_of_index_terms"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.inclusion_of_index_terms">Inclusion
       of Index terms</a>
     </h5>
 <pre class="programlisting"><span class="identifier">term</span> <span class="special">[</span><span class="identifier">regular</span><span class="special">-</span><span class="identifier">expression1</span> <span class="special">[</span><span class="identifier">regular</span><span class="special">-</span><span class="identifier">expression2</span> <span class="special">[</span><span class="identifier">category</span><span class="special">]]]</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">term</span></dt>
 <dd>
 <p>
@@ -87,7 +87,6 @@
             For example:
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">foobar</span></pre>
 <p>
@@ -96,7 +95,6 @@
             will index occurrences of "foobar" in any section, but
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">foobar</span> <span class="special">\&lt;\</span><span class="identifier">w</span><span class="special">*(</span><span class="identifier">foo</span><span class="special">|</span><span class="identifier">bar</span><span class="special">)\</span><span class="identifier">w</span><span class="special">*\&gt;</span></pre>
 <p>
@@ -107,7 +105,6 @@
             related words under one entry.
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">reflex</span></pre>
 <p>
@@ -116,7 +113,6 @@
             will only index occurrences of "reflex" as a whole word, but:
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">reflex</span> <span class="special">\&lt;</span><span class="identifier">reflex</span><span class="special">\</span><span class="identifier">w</span><span class="special">*\&gt;</span></pre>
 <p>
@@ -144,7 +140,6 @@
             section</strong></span> (but not sub-sections below):
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">myclass</span> <span class="string">""</span> <span class="string">"mylib\.examples"</span></pre>
 <p>
@@ -154,7 +149,6 @@
             sub-sections below</strong></span>:
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">myclass</span> <span class="string">""</span> <span class="string">"mylib\.examples.*"</span></pre>
 <p>
@@ -165,7 +159,6 @@
             "mylib.examples", while
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">myclass</span> <span class="string">"\&lt;myclass\w*\&gt;"</span> <span class="string">"mylib\.examples.*"</span></pre>
 <p>
@@ -177,7 +170,6 @@
             and:
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">myclass</span> <span class="string">""</span> <span class="string">"(?!mylib\.introduction).*"</span></pre>
 <p>
@@ -190,7 +182,6 @@
             Finally, two (or more) sections can be excluded by OR'ing them together:
           </p>
 <p>
-            
 </p>
 <pre class="programlisting"><span class="identifier">myclass</span> <span class="string">""</span> <span class="string">"(?!mylib\.introduction|mylib\.reference).*"</span></pre>
 <p>
@@ -231,7 +222,7 @@
 <p>
       You can have an index term appear more than once in the script file:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
 <li class="listitem">
           If they have different <span class="emphasis"><em>category</em></span> names then they are
           treated quite separately.
@@ -258,10 +249,10 @@
     </p>
 <pre class="programlisting"><span class="identifier">myterm</span> <span class="special">(?:</span><span class="identifier">search_expression1</span><span class="special">|</span><span class="identifier">search_expression1</span><span class="special">)</span> <span class="special">(?:</span><span class="identifier">constrait_expression2</span><span class="special">|</span><span class="identifier">constrait_expression2</span><span class="special">)</span> <span class="identifier">mycategory</span>
 </pre>
-<a name="boost_autoindex.script_ref.source_file_scanning"></a><h5>
-<a name="boost_autoindex.script_ref.source_file_scanning-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.source_file_scanning">Source File
-      Scanning</a>
+<h5>
+<a name="boost_autoindex.script_ref.h2"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.source_file_scanning"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.source_file_scanning">Source
+      File Scanning</a>
     </h5>
 <pre class="programlisting"><span class="special">!</span><span class="identifier">scan</span> <span class="identifier">source</span><span class="special">-</span><span class="identifier">file</span><span class="special">-</span><span class="identifier">name</span>
 </pre>
@@ -288,16 +279,16 @@
         on how to change this.
       </p></td></tr>
 </table></div>
-<a name="boost_autoindex.script_ref.directory_and_source_file_scanning"></a><h5>
-<a name="boost_autoindex.script_ref.directory_and_source_file_scanning-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.directory_and_source_file_scanning">Directory
+<h5>
+<a name="boost_autoindex.script_ref.h3"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.directory_and_source_file_scanning"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.directory_and_source_file_scanning">Directory
       and Source File Scanning</a>
     </h5>
 <pre class="programlisting"><span class="special">!</span><span class="identifier">scan</span><span class="special">-</span><span class="identifier">path</span> <span class="identifier">directory</span><span class="special">-</span><span class="identifier">name</span> <span class="identifier">file</span><span class="special">-</span><span class="identifier">name</span><span class="special">-</span><span class="identifier">regex</span> <span class="special">[</span><span class="identifier">recurse</span><span class="special">]</span>
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">directory-name</span></dt>
 <dd><p>
             The directory to scan: this should be a path relative to the script file
@@ -317,9 +308,10 @@
           </p></dd>
 </dl>
 </div>
-<a name="boost_autoindex.script_ref.excluding_terms"></a><h5>
-<a name="boost_autoindex.script_ref.excluding_terms-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.excluding_terms">Excluding Terms</a>
+<h5>
+<a name="boost_autoindex.script_ref.h4"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.excluding_terms"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.excluding_terms">Excluding
+      Terms</a>
     </h5>
 <pre class="programlisting"><span class="special">!</span><span class="identifier">exclude</span> <span class="identifier">term</span><span class="special">-</span><span class="identifier">list</span>
 </pre>
@@ -330,15 +322,15 @@
       included. In other words this removes terms from the scanners internal list
       of things to index.
     </p>
-<a name="boost_autoindex.script_ref.rewriting_section_names"></a><h5>
-<a name="boost_autoindex.script_ref.rewriting_section_names-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.rewriting_section_names">Rewriting
+<h5>
+<a name="boost_autoindex.script_ref.h5"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.rewriting_section_names"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.rewriting_section_names">Rewriting
       Section Names</a>
     </h5>
 <pre class="programlisting">!rewrite-id regular-expression new-name</pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">regular-expression</span></dt>
 <dd><p>
             A regular expression: all section ID's that match the expression exactly
@@ -355,7 +347,7 @@
 </pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">regular-expression</span></dt>
 <dd><p>
             A regular expression: all sections whose titles match the regular expression
@@ -377,9 +369,9 @@
       Will remove any leading "A", "An" or "The" from
       all index entries - thus preventing lots of entries under "The" etc!
     </p>
-<a name="boost_autoindex.script_ref.defining_or_changing_the_file_scanners"></a><h5>
-<a name="boost_autoindex.script_ref.defining_or_changing_the_file_scanners-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.defining_or_changing_the_file_scanners">Defining
+<h5>
+<a name="boost_autoindex.script_ref.h6"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.defining_or_changing_the_file_scanners"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.defining_or_changing_the_file_scanners">Defining
       or Changing the File Scanners</a>
     </h5>
 <pre class="programlisting"><span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">type</span> <span class="identifier">file</span><span class="special">-</span><span class="identifier">search</span><span class="special">-</span><span class="identifier">expression</span> <span class="identifier">xml</span><span class="special">-</span><span class="identifier">regex</span><span class="special">-</span><span class="identifier">formatter</span> <span class="identifier">term</span><span class="special">-</span><span class="identifier">formatter</span> <span class="identifier">id</span><span class="special">-</span><span class="identifier">filter</span> <span class="identifier">filename</span><span class="special">-</span><span class="identifier">filter</span>
@@ -394,7 +386,7 @@
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl>
+<dl class="variablelist">
 <dt><span class="term">type</span></dt>
 <dd><p>
             The <span class="emphasis"><em>type</em></span> to which items found using this rule will
@@ -446,10 +438,10 @@
       or "function_name", then the defaults are installed. These are equivalent
       to:
     </p>
-<pre class="programlisting"><span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">class_name</span> <span class="string">"^[[:space:]]*(template[[:space:]]*&lt;[^;:{]+&gt;[[:space:]]*)?(class|struct)[[:space:]]*(\&lt;\w+\&gt;([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\&lt;\w*\&gt;)[[:space:]]*(&lt;[^;:{]+&gt;)?[[:space:]]*(\{|:[^;\{()]*\{)"</span> <span class="string">"(?:class|struct)[^;{]+\\&lt;\5\\&gt;[^;{]+\\{"</span> <span class="special">\</span><span class="number">5</span>
-<span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">typedef_name</span> <span class="string">"typedef[^;{}#]+?(\w+)\s*;"</span>  <span class="string">"typedef[^;]+\\&lt;\1\\&gt;\\s*;"</span> <span class="string">"\1"</span>
-<span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="string">"macro_name"</span> <span class="string">"^\s*#\s*define\s+(\w+)"</span> <span class="string">"\\&lt;\1\\&gt;"</span> <span class="string">"\1"</span>
-<span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="string">"function_name"</span> <span class="string">"\w+(?:\s*&lt;[^&gt;]&gt;)?[\s&amp;*]+?(\w+)\s*(?:BOOST_[[:upper:]_]+\s*)?\([^\)]*\)\s*[;{]"</span> <span class="string">"\\&lt;\\w+\\&gt;(?:\\s+&lt;[^&gt;]*&gt;)?[\\s&amp;*]+\\&lt;\1\\&gt;\\s*\\([^;{]*\\)"</span> <span class="string">"\1"</span>
+<pre class="programlisting"><span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">class_name</span> <span class="string">"^[[:space:]]*(template[[:space:]]*&lt;[^;:{]+&gt;[[:space:]]*)?(class|struct)[[:space:]]*(\&lt;\w+\&gt;([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\&lt;\w*\&gt;)[[:space:]]*(&lt;[^;:{]+&gt;)?[[:space:]]*(\{|:[^;\{()]*\{)"</span> <span class="string">"(?:class|struct)[^;{]+\&lt;\5\&gt;[^;{]+\{"</span> <span class="special">\</span><span class="number">5</span>
+<span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">typedef_name</span> <span class="string">"typedef[^;{}#]+?(\w+)\s*;"</span>  <span class="string">"typedef[^;]+\&lt;\1\&gt;\s*;"</span> <span class="string">"\1"</span>
+<span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="string">"macro_name"</span> <span class="string">"^\s*#\s*define\s+(\w+)"</span> <span class="string">"\&lt;\1\&gt;"</span> <span class="string">"\1"</span>
+<span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="string">"function_name"</span> <span class="string">"\w++(?:\s*+&lt;[^&gt;]++&gt;)?[\s&amp;*]+?(\w+)\s*(?:BOOST_[[:upper:]_]+\s*)?\([^;{}]*\)\s*[;{]"</span> <span class="string">"\\&lt;\\w+\\&gt;(?:\\s+&lt;[^&gt;]*&gt;)*[\\s&amp;*]+\\&lt;\1\\&gt;\\s*\\([^;{]*\\)"</span> <span class="string">"\1"</span>
 </pre>
 <p>
       Note that these defaults are not installed if you have provided your own versions
@@ -474,15 +466,16 @@
       above in your script file, and change the <span class="emphasis"><em>xml-regex-formatter</em></span>
       field to something more permissive, for example:
     </p>
-<pre class="programlisting"><span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">class_name</span> <span class="string">"^[[:space:]]*(template[[:space:]]*&lt;[^;:{]+&gt;[[:space:]]*)?(class|struct)[[:space:]]*(\&lt;\w+\&gt;([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\&lt;\w*\&gt;)[[:space:]]*(&lt;[^;:{]+&gt;)?[[:space:]]*(\{|:[^;\{()]*\{)"</span> <span class="string">"\\&lt;\5\\&gt;"</span> <span class="special">\</span><span class="number">5</span>
+<pre class="programlisting"><span class="special">!</span><span class="identifier">define</span><span class="special">-</span><span class="identifier">scanner</span> <span class="identifier">class_name</span> <span class="string">"^[[:space:]]*(template[[:space:]]*&lt;[^;:{]+&gt;[[:space:]]*)?(class|struct)[[:space:]]*(\&lt;\w+\&gt;([[:blank:]]*\([^)]*\))?[[:space:]]*)*(\&lt;\w*\&gt;)[[:space:]]*(&lt;[^;:{]+&gt;)?[[:space:]]*(\{|:[^;\{()]*\{)"</span> <span class="string">"\&lt;\5\&gt;"</span> <span class="special">\</span><span class="number">5</span>
 </pre>
 <p>
       Will look for <span class="emphasis"><em>any</em></span> occurrence of whatever class names the
       scanner may find in the documentation.
     </p>
-<a name="boost_autoindex.script_ref.debugging_scanning"></a><h5>
-<a name="boost_autoindex.script_ref.debugging_scanning-heading"></a>
-      <a class="link" href="script_ref.html#boost_autoindex.script_ref.debugging_scanning">Debugging scanning</a>
+<h5>
+<a name="boost_autoindex.script_ref.h7"></a>
+      <span class="phrase"><a name="boost_autoindex.script_ref.debugging_scanning"></a></span><a class="link" href="script_ref.html#boost_autoindex.script_ref.debugging_scanning">Debugging
+      scanning</a>
     </h5>
 <p>
       If you see a term in the index, and you don't understand why it's there, add

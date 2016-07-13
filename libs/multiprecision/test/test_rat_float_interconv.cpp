@@ -86,7 +86,7 @@ T generate_random_float()
 template <class Float, class Rat>
 void do_round_trip(const Float& val)
 {
-#ifndef BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
+#ifndef BOOST_MP_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
    BOOST_MATH_STD_USING
    Rat rat(val);
    Float new_f(rat);
@@ -136,7 +136,7 @@ void do_round_trip(const Float& val)
 template <class Float, class Rat>
 void test_round_trip()
 {
-#ifndef BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
+#ifndef BOOST_MP_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
    std::cout << "Testing types " << typeid(Float).name() << " <<==>> " << typeid(Rat).name() << std::endl;
    std::cout << "digits = " << std::numeric_limits<Float>::digits << std::endl;
    std::cout << "digits10 = " << std::numeric_limits<Float>::digits10 << std::endl;
@@ -187,7 +187,7 @@ Int generate_random_int()
 template <class Float, class Rat>
 void test_random_rationals()
 {
-#ifndef BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
+#ifndef BOOST_MP_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS
    std::cout << "Testing types " << typeid(Float).name() << " <<==>> " << typeid(Rat).name() << std::endl;
    std::cout << "digits = " << std::numeric_limits<Float>::digits << std::endl;
    std::cout << "digits10 = " << std::numeric_limits<Float>::digits10 << std::endl;

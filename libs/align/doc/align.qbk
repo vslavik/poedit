@@ -31,6 +31,9 @@ verify pointer value alignment.
   [ [`align`]
     [Pointer alignment function]
   ]
+  [ [`align_up`, `align_down`]
+    [Pointer and integral alignment functions]
+  ]
   [ [`aligned_alloc`, `aligned_free`]
     [Aligned allocation and deallocation functions]
   ]
@@ -50,7 +53,7 @@ verify pointer value alignment.
     [Macro for static pointer alignment hint]
   ]
   [ [`is_aligned`]
-    [Pointer alignment verification function]
+    [Pointer and integral alignment checking]
   ]
 ]
 
@@ -542,6 +545,84 @@ void* align(std::size_t alignment, std::size_t size, void*& ptr,
   [*Note:] The function updates its `ptr` and `space` arguments so that
   it can be called repeatedly with possibly different `alignment` and
   `size` arguments for the same buffer.
+]
+
+[endsect]
+
+[section:align_down align_down]
+
+The directional alignment functions can be used with pointers or
+integral values to align down. This functionality is not yet provided by
+the C++ standard.
+
+[heading:synopsis Header <boost/align/align_down.hpp>]
+
+``
+namespace boost {
+  namespace alignment {
+    constexpr std::size_t align_down(std::size_t value, std::size_t
+      alignment) noexcept;
+
+    void* align_down(void* ptr, std::size_t alignment) noexcept;
+  }
+}
+``
+
+[heading:align_down Function align_down]
+
+``
+void* align_down(void* ptr, std::size_t alignment) noexcept;
+``
+
+[:
+  [*Requires:]
+  [itemized_list
+    [`ptr` shall point to contiguous storage with sufficient space
+      for alignment]
+    [`alignment` shall be a power of two]
+  ]
+
+  [*Returns:] A pointer value at or before `ptr` that is at least
+  `alignment` bytes aligned.
+]
+
+[endsect]
+
+[section:align_up align_up]
+
+The directional alignment functions can be used with pointers or
+integral values to align up. This functionality is not yet provided by
+the C++ standard.
+
+[heading:synopsis Header <boost/align/align_up.hpp>]
+
+``
+namespace boost {
+  namespace alignment {
+    constexpr std::size_t align_up(std::size_t value, std::size_t
+      alignment) noexcept;
+
+    void* align_up(void* ptr, std::size_t alignment) noexcept;
+  }
+}
+``
+
+[heading:align_up Function align_up]
+
+``
+void* align_up(void* ptr, std::size_t alignment) noexcept;
+``
+
+[:
+  [*Requires:]
+  [itemized_list
+    [`ptr` shall point to contiguous storage with sufficient space
+      for alignment]
+    [`alignment` shall be a power of two]
+  ]
+
+  [*Returns:] A pointer value at or after `ptr` that is at least
+  `alignment` bytes aligned.
 ]
 
 [endsect]
@@ -1087,6 +1168,9 @@ namespace boost {
   namespace alignment {
     template<class T>
     struct alignment_of;
+
+    template<class T>
+    constexpr std::size_t alignment_of_v = alignment_of<T>::value;
   }
 }
 ``
@@ -1095,9 +1179,7 @@ namespace boost {
 
 ``
 template<class T>
-struct alignment_of
-    : integral_constant<std::size_t, alignof(T)> {
-};
+struct alignment_of;
 ``
 
 [:
@@ -1155,7 +1237,10 @@ is not yet provided by the C++ standard.
 ``
 namespace boost {
   namespace alignment {
-    bool is_aligned(std::size_t alignment, const void* ptr) noexcept;
+    constexpr bool is_aligned(std::size_t value, std::size_t
+      alignment) noexcept;
+
+    bool is_aligned(const void* ptr, std::size_t alignment) noexcept;
   }
 }
 ``
@@ -1163,7 +1248,7 @@ namespace boost {
 [heading:is_aligned Function is_aligned]
 
 ``
-bool is_aligned(std::size_t alignment, const void* ptr) noexcept;
+bool is_aligned(const void* ptr, std::size_t alignment) noexcept;
 ``
 
 [:
@@ -1321,16 +1406,29 @@ examples, tests, or documentation.
 * Michael Spencer
 * Paul A. Bristow
 
-[heading Review Manager]
-
 Thank you to Ahmed Charles who served as review manager for the formal
 review of the library.
+
+[heading Contributions]
+
+Thank you to Joel Falcou and Charly Chevalier for both your contribution
+and your patience.
 
 [endsect]
 
 [section History]
 
-[heading Version 1.0]
+[heading Boost 1.61]
+
+* Added functions for aligning up and aligning down of pointer and
+  integral values.
+
+[heading Boost 1.59]
+
+* Joel Falcou and Charly Chevalier together contributed the alignment
+  hint macros.
+
+[heading Boost 1.56]
 
 * Glen Fernandes implemented the Boost.Align library.
 

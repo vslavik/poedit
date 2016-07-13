@@ -173,14 +173,14 @@ int main(int argc, const char *argv[])
    #define SINGLE_TEST
    #ifndef SINGLE_TEST
       #ifdef NDEBUG
-      unsigned int numit [] = { 20000, 200000, 2000000, 20000000 };
+      unsigned int numit [] = { 2000, 20000, 200000, 2000000 };
       #else
       unsigned int numit [] = { 100, 1000, 10000, 100000 };
       #endif
       unsigned int numele [] = { 10000, 1000,   100,     10       };
    #else
       #ifdef NDEBUG
-      unsigned int numit [] = { 20000 };
+      unsigned int numit [] = { 2000 };
       #else
       unsigned int numit [] = { 100 };
       #endif

@@ -63,9 +63,9 @@ main()
     }
 
     {
-        vector<int, float> v1(4, 2);
+        vector<int, float> v1(4, 2.f);
         point v2(5, 3);
-        vector<long, double> v3(5, 4);
+        vector<long, double> v3(5, 4.0);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);

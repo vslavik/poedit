@@ -793,7 +793,7 @@ actions write-setup-script
 # Local helper rule to create the vcvars setup command for given architecture
 # and options.
 #
-local rule generate-setup-cmd ( version : command : parent : options * : cpu : global-setup : default-global-setup-options : default-setup )
+local rule generate-setup-cmd ( version : command : parent : options * : cpu : global-setup ? : default-global-setup-options : default-setup )
 {
     local setup-prefix = "call " ;
     local setup-suffix = " >nul"$(.nl) ;
@@ -960,7 +960,7 @@ local rule configure-really ( version ? : options * )
         {
             cpu = i386 ;
         }
-        if $(below-11.0)
+        else if $(below-11.0)
         {
             cpu = i386 amd64 ia64 ;
         }

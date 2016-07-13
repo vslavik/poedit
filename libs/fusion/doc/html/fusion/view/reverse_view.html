@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>reverse_view</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../view.html" title="View">
 <link rel="prev" href="transform_view.html" title="transform_view">
@@ -33,21 +33,21 @@
       </p>
 <h5>
 <a name="fusion.view.reverse_view.h0"></a>
-        <span class="phrase"><a name="fusion.view.reverse_view.header"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.header">Header</a>
+        <span><a name="fusion.view.reverse_view.header"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.header">Header</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">view</span><span class="special">/</span><span class="identifier">reverse_view</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">reverse_view</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <h5>
 <a name="fusion.view.reverse_view.h1"></a>
-        <span class="phrase"><a name="fusion.view.reverse_view.synopsis"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.synopsis">Synopsis</a>
+        <span><a name="fusion.view.reverse_view.synopsis"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Sequence</span><span class="special">&gt;</span>
 <span class="keyword">struct</span> <span class="identifier">reverse_view</span><span class="special">;</span>
 </pre>
 <h5>
 <a name="fusion.view.reverse_view.h2"></a>
-        <span class="phrase"><a name="fusion.view.reverse_view.template_parameters"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.template_parameters">Template
+        <span><a name="fusion.view.reverse_view.template_parameters"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.template_parameters">Template
         parameters</a>
       </h5>
 <div class="informaltable"><table class="table">
@@ -91,10 +91,10 @@
 </table></div>
 <h5>
 <a name="fusion.view.reverse_view.h3"></a>
-        <span class="phrase"><a name="fusion.view.reverse_view.model_of"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.model_of">Model
+        <span><a name="fusion.view.reverse_view.model_of"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.model_of">Model
         of</a>
       </h5>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             A model of <a class="link" href="../sequence/concepts/bidirectional_sequence.html" title="Bidirectional Sequence">Bidirectional
             Sequence</a> if <code class="computeroutput"><span class="identifier">Sequence</span></code>
@@ -113,7 +113,7 @@
 </ul></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">RV</span></code></span></dt>
 <dd><p>
               A <code class="computeroutput"><span class="identifier">reverse_view</span></code> type
@@ -130,7 +130,7 @@
 </div>
 <h5>
 <a name="fusion.view.reverse_view.h4"></a>
-        <span class="phrase"><a name="fusion.view.reverse_view.expression_semantics"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.expression_semantics">Expression
+        <span><a name="fusion.view.reverse_view.expression_semantics"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.expression_semantics">Expression
         Semantics</a>
       </h5>
 <p>
@@ -202,7 +202,7 @@
 </table></div>
 <h5>
 <a name="fusion.view.reverse_view.h5"></a>
-        <span class="phrase"><a name="fusion.view.reverse_view.example"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.example">Example</a>
+        <span><a name="fusion.view.reverse_view.example"></a></span><a class="link" href="reverse_view.html#fusion.view.reverse_view.example">Example</a>
       </h5>
 <pre class="programlisting"><span class="keyword">typedef</span> <a class="link" href="../container/vector.html" title="vector"><code class="computeroutput"><span class="identifier">vector</span></code></a><span class="special">&lt;</span><span class="keyword">int</span><span class="special">,</span> <span class="keyword">short</span><span class="special">,</span> <span class="keyword">double</span><span class="special">&gt;</span> <span class="identifier">vector_type</span><span class="special">;</span>
 <span class="identifier">vector_type</span> <span class="identifier">vec</span><span class="special">(</span><span class="number">2</span><span class="special">,</span> <span class="number">5</span><span class="special">,</span> <span class="number">3.3</span><span class="special">);</span>

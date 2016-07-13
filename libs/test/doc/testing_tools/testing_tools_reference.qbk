@@ -419,7 +419,7 @@ See also:
   BOOST_REQUIRE_NE(left, right);
 ``
 
-Check performed by these tools is the same as the one performed by `__BOOST_<level>__( left != right )`.
+Check performed by these tools is the same as the one performed by `__BOOST_LEVEL__( left != right )`.
 The difference is that the matched values are reported as well.
 
 [bt_example example54..BOOST_<level>_NE usage..run-fail]
@@ -442,7 +442,7 @@ See also:
 
 These are generic tools used to validate an arbitrary supplied predicate functor (there is a compile time limit on
 predicate arity defined by the configurable macro `BOOST_TEST_MAX_PREDICATE_ARITY`). To
-validate zero arity predicate use __BOOST_<level>__ tools. In other cases prefer theses tools. The
+validate zero arity predicate use __BOOST_LEVEL__ tools. In other cases prefer theses tools. The
 advantage of these tools is that they show arguments values in case of predicate failure.
 
 The first parameter is the predicate itself. The second parameter is the list of predicate arguments each wrapped
@@ -450,7 +450,7 @@ in round brackets (`BOOST_PP` sequence format).
 
 [bt_example example40..BOOST_<level>_PREDICATE usage..run]
 
-[note Note difference in error log from __BOOST_<level>__]
+[note Note difference in error log from __BOOST_LEVEL__]
 
 See also:
 
@@ -533,8 +533,8 @@ type specified by `exception_type` or any of its child type, with additional che
   for further validation.
 * It behaves like __BOOST_LEVEL_THROW__ if `expression` does not raise any exception, or an unrelated exception is raised.
 
-`predicate` should be a unary function accepting the an instance of `exception_type` or any of its child, and that should return
-a boolean indicating the success (`true`) or failure (`false`).
+`predicate` should be a unary function accepting an instance of `exception_type` or any of its child, and that should return
+a boolean indicating a success (`true`) or a failure (`false`).
 
 [warning the assertion catches only the expected exceptions.]
 
@@ -642,7 +642,7 @@ See also:
 
 Unlike the rest of the tools in the toolbox this tool does not perform the logging itself. Its only purpose
 is to check at runtime whether or not the supplied preprocessor symbol is defined. Use it in combination with
-__BOOST_<level>__ to perform and log validation. Macros of any arity could be checked. To check the
+__BOOST_LEVEL__ to perform and log validation. Macros of any arity could be checked. To check the
 macro definition with non-zero arity specify dummy arguments for it. See below for example.
 
 The only tool's parameter is a preprocessor symbol that gets validated.

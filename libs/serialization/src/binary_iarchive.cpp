@@ -11,6 +11,7 @@
 #include <istream>
 
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/detail/archive_serializer_map.hpp>
 

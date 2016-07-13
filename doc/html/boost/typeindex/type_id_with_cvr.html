@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template type_id_with_cvr</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../boost_typeindex_header_reference.html#header.boost.type_index_hpp" title="Header &lt;boost/type_index.hpp&gt;">
 <link rel="prev" href="type_id.html" title="Function template type_id">
@@ -35,30 +35,24 @@
 </span>
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> <span class="identifier">type_index</span> <span class="identifier">type_id_with_cvr</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555074334848"></a><h2>Description</h2>
+<a name="idp452920784"></a><h2>Description</h2>
 <p>Function for constructing boost::typeindex::type_index instance for type T. Does not remove const, volatile, &amp; and &amp;&amp; modifiers from T.</p>
-<p>If T has no const, volatile, &amp; and &amp;&amp; modifiers, then returns exactly the same result as in case of calling <code class="computeroutput">type_id&lt;T&gt;()</code>.</p>
+<p>If T has no const, volatile, &amp; and &amp;&amp; modifiers, then returns exactly the same result as in case of calling `type_id&lt;T&gt;()`.</p>
 <p><span class="bold"><strong>Example:</strong></span> </p>
-<pre class="programlisting"><span class="identifier">type_index</span> <span class="identifier">ti</span> <span class="special">=</span> <span class="identifier">type_id_with_cvr</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&amp;</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-<span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ti</span><span class="special">.</span><span class="identifier">pretty_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// Outputs 'int&amp;'</span>
+<pre class="programlisting"> <span class="identifier">type_index</span> <span class="identifier">ti</span> <span class="special">=</span> <span class="identifier">type_id_with_cvr</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">&amp;</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+ <span class="identifier">std</span><span class="special">::</span><span class="identifier">cout</span> <span class="special">&lt;&lt;</span> <span class="identifier">ti</span><span class="special">.</span><span class="identifier">pretty_name</span><span class="special">(</span><span class="special">)</span><span class="special">;</span>  <span class="comment">// Outputs 'int&amp;'</span>
 </pre>
 <p>
 
 
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Template Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">T</code></span></p></td>
 <td><p>Type for which type_index must be created. </p></td>

@@ -13,8 +13,8 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
-#include <boost/cstdint.hpp>
 #include <boost/log/detail/config.hpp>
+#include <boost/cstdint.hpp>
 #include <boost/log/sources/severity_feature.hpp>
 
 #if !defined(BOOST_LOG_NO_THREADS) && !defined(BOOST_LOG_USE_COMPILER_TLS)
@@ -61,7 +61,7 @@ BOOST_LOG_API uintmax_t& get_severity_level()
 {
     boost::log::aux::thread_specific< uintmax_t* >& tss = severity_level_holder::get();
     uintmax_t* p = tss.get();
-    if (!p)
+    if (BOOST_UNLIKELY(!p))
     {
         log::aux::unique_ptr< uintmax_t > ptr(new uintmax_t(0));
         tss.set(ptr.get());

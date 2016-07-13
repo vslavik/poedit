@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Models of CallPolicies</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Boost.Python Reference Manual">
 <link rel="up" href="../function_invocation_and_creation.html" title="Chapter&#160;4.&#160;Function Invocation and Creation">
 <link rel="prev" href="function_documentation.html" title="Function documentation">
@@ -20,7 +20,7 @@
 <a name="function_invocation_and_creation.models_of_callpolicies"></a><a class="link" href="models_of_callpolicies.html" title="Models of CallPolicies">Models
       of CallPolicies</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_default_call_polici">boost/python/default_call_policies.hpp</a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_arg_hpp">boost/python/return_arg.hpp</a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_internal_ref">boost/python/return_internal_reference.hpp</a></span></dt>
@@ -31,7 +31,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_callpolicies.boost_python_default_call_polici"></a><a class="link" href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_default_call_polici" title="boost/python/default_call_policies.hpp">boost/python/default_call_policies.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_default_call_polici.class_default_call_policies">Class
           <code class="computeroutput"><span class="identifier">default_call_policies</span></code></a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_default_call_polici.class_default_call_policies_stat">Class
@@ -80,7 +80,7 @@
 <pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">precall</span><span class="special">(</span><span class="identifier">PyObject</span><span class="special">*);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns</span></dt>
 <dd><p>
                   true
@@ -94,7 +94,7 @@
 <pre class="programlisting"><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">postcall</span><span class="special">(</span><span class="identifier">PyObject</span><span class="special">*,</span> <span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">result</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns</span></dt>
 <dd><p>
                   result
@@ -133,7 +133,7 @@
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">struct</span> <span class="identifier">apply</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   T is not a reference type. If T is a pointer type, T is const char*
@@ -167,7 +167,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_callpolicies.boost_python_return_arg_hpp"></a><a class="link" href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_arg_hpp" title="boost/python/return_arg.hpp">boost/python/return_arg.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_arg_hpp.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_arg_hpp.class_return_arg">Class
           <code class="computeroutput"><span class="identifier">return_arg</span></code></a></span></dt>
@@ -294,7 +294,7 @@
 <pre class="programlisting"><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">postcall</span><span class="special">(</span><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">args</span><span class="special">,</span> <span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">result</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">PyTuple_Check</span><span class="special">(</span><span class="identifier">args</span><span class="special">)</span>
@@ -380,7 +380,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_callpolicies.boost_python_return_internal_ref"></a><a class="link" href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_internal_ref" title="boost/python/return_internal_reference.hpp">boost/python/return_internal_reference.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_internal_ref.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_internal_ref.class_template_return_internal_r">Class
           template <code class="computeroutput"><span class="identifier">return_internal_reference</span></code></a></span></dt>
@@ -511,7 +511,7 @@
 <pre class="programlisting"><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">postcall</span><span class="special">(</span><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">args</span><span class="special">,</span> <span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">result</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">PyTuple_Check</span><span class="special">(</span><span class="identifier">args</span><span class="special">)</span>
@@ -592,7 +592,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_callpolicies.boost_python_return_value_policy"></a><a class="link" href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_value_policy" title="boost/python/return_value_policy.hpp">boost/python/return_value_policy.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_value_policy.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_return_value_policy.class_template_return_value_poli">Class
           template <code class="computeroutput"><span class="identifier">return_value_policy</span></code></a></span></dt>
@@ -727,7 +727,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_callpolicies.boost_python_with_custodian_and_"></a><a class="link" href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_with_custodian_and_" title="boost/python/with_custodian_and_ward.hpp">boost/python/with_custodian_and_ward.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_with_custodian_and_.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="models_of_callpolicies.html#function_invocation_and_creation.models_of_callpolicies.boost_python_with_custodian_and_.class_with_custodian_and_ward">Class
           <code class="computeroutput"><span class="identifier">with_custodian_and_ward</span></code></a></span></dt>
@@ -898,7 +898,7 @@
 <pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">precall</span><span class="special">(</span><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">args</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">PyTuple_Check</span><span class="special">(</span><span class="identifier">args</span><span class="special">)</span>
@@ -1041,7 +1041,7 @@
 <pre class="programlisting"><span class="identifier">PyObject</span> <span class="special">*</span><span class="identifier">postcall</span><span class="special">(</span><span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">args</span><span class="special">,</span> <span class="identifier">PyObject</span><span class="special">*</span> <span class="identifier">result</span><span class="special">);</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">PyTuple_Check</span><span class="special">(</span><span class="identifier">args</span><span class="special">)</span>

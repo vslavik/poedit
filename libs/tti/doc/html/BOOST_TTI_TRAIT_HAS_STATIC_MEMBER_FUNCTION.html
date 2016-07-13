@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_TTI_TRAIT_HAS_STATIC_MEMBER_FUNCTION</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Chapter&#160;1.&#160;The Type Traits Introspection Library">
 <link rel="up" href="header/boost/tti/has_static_member_function_hpp.html" title="Header &lt;boost/tti/has_static_member_function.hpp&gt;">
 <link rel="prev" href="header/boost/tti/has_static_member_function_hpp.html" title="Header &lt;boost/tti/has_static_member_function.hpp&gt;">
@@ -33,33 +33,17 @@
 
 </span>BOOST_TTI_TRAIT_HAS_STATIC_MEMBER_FUNCTION(trait, name)</pre></div>
 <div class="refsect1">
-<a name="idm45830946996784"></a><h2>Description</h2>
+<a name="idp66236336"></a><h2>Description</h2>
 <p>trait = the name of the metafunction within the tti namespace.</p>
 <p>name = the name of the inner member.</p>
-<p>generates a metafunction called "trait" where 'trait' is the macro parameter.       template&lt;class BOOST_TTI_TP_T,class BOOST_TTI_TP_R,class BOOST_TTI_TP_FS,class BOOST_TTI_TP_TAG&gt;
-      struct trait
-        {
-        static const value = unspecified;
-        typedef mpl::bool_&lt;true-or-false&gt; type;
-        };
-
-      The metafunction types and return:
-
-        BOOST_TTI_TP_T   = the enclosing type in which to look for our 'name'.
-
-        BOOST_TTI_TP_R   = the return type of the static member function
-                               OR
-                  the signature of a function in the form of Return_Type ( Parameter_Types )
-
-        BOOST_TTI_TP_FS  = (optional) the parameters of the static member function as a boost::mpl forward sequence
-                  if the second parameter is a return type and the function parameters exist.
-
-        BOOST_TTI_TP_TAG = (optional) a boost::function_types tag to apply to the static member function
-                  if the second parameter is a return type and the need for a tag exists.
-
-        returns = 'value' is true if the 'name' exists, 
-                  with the appropriate static member function type,
-                  otherwise 'value' is false. </p>
+<p>generates a metafunction called "trait" where 'trait' is the macro parameter.</p>
+<p>template&lt;class BOOST_TTI_TP_T,class BOOST_TTI_TP_R,class BOOST_TTI_TP_FS,class BOOST_TTI_TP_TAG&gt; struct trait { static const value = unspecified; typedef mpl::bool_&lt;true-or-false&gt; type; };</p>
+<p>The metafunction types and return:</p>
+<p>BOOST_TTI_TP_T = the enclosing type in which to look for our 'name'.</p>
+<p>BOOST_TTI_TP_R = the return type of the static member function OR the signature of a function in the form of Return_Type ( Parameter_Types )</p>
+<p>BOOST_TTI_TP_FS = (optional) the parameters of the static member function as a boost::mpl forward sequence if the second parameter is a return type and the function parameters exist.</p>
+<p>BOOST_TTI_TP_TAG = (optional) a boost::function_types tag to apply to the static member function if the second parameter is a return type and the need for a tag exists.</p>
+<p>returns = 'value' is true if the 'name' exists, with the appropriate static member function type, otherwise 'value' is false. </p>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

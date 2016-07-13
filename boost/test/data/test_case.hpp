@@ -33,8 +33,15 @@
 
 #include <boost/bind.hpp>
 
+#include <boost/type_traits/is_copy_constructible.hpp>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/tools/detail/print_helper.hpp>
+
+#if defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) \
+   && !defined(BOOST_TEST_DATASET_MAX_ARITY)
+# define BOOST_TEST_DATASET_MAX_ARITY 10
+#endif
 
 //____________________________________________________________________________//
 
@@ -56,6 +63,53 @@ struct seed {
         return data::make( std::forward<DataSet>( ds ) );
     }
 };
+
+
+#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && \
+    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && \
+    !defined(BOOST_NO_CXX11_DECLTYPE) && \
+    !defined(BOOST_NO_CXX11_TRAILING_RESULT_TYPES) && \
+    !defined(BOOST_NO_CXX11_SMART_PTR)
+
+#define BOOST_TEST_DATASET_VARIADIC
+template <class T>
+struct parameter_holder {
+    std::shared_ptr<T> value;
+
+    parameter_holder(T && value_)
+        : value(std::make_shared<T>(std::move(value_)))
+    {}
+
+    operator T const&() const {
+        return *value;
+    }
+};
+
+template <class T>
+parameter_holder<typename std::remove_reference<T>::type>
+boost_bind_rvalue_holder_helper_impl(T&& value, boost::false_type /* is copy constructible */) {
+    return parameter_holder<typename std::remove_reference<T>::type>(std::forward<T>(value));
+}
+
+template <class T>
+T&& boost_bind_rvalue_holder_helper_impl(T&& value, boost::true_type /* is copy constructible */) {
+    return std::forward<T>(value);
+}
+
+template <class T>
+auto boost_bind_rvalue_holder_helper(T&& value)
+  -> decltype(boost_bind_rvalue_holder_helper_impl(
+                  std::forward<T>(value),
+                  typename boost::is_copy_constructible<typename std::remove_reference<T>::type>::type()))
+{
+    // need to use boost::is_copy_constructible because std::is_copy_constructible is broken on MSVC12
+    return boost_bind_rvalue_holder_helper_impl(
+              std::forward<T>(value),
+              typename boost::is_copy_constructible<typename std::remove_reference<T>::type>::type());
+}
+
+#endif
+
 
 // ************************************************************************** //
 // **************                 test_case_gen                ************** //
@@ -94,7 +148,8 @@ public:
         return res;
     }
 
-    // !! ?? variadics based implementation
+#if !defined(BOOST_TEST_DATASET_VARIADIC)
+  /// make this variadic
 #define TC_MAKE(z,arity,_)                                                          \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                             \
     void    operator()( BOOST_PP_ENUM_BINARY_PARAMS(arity, Arg, const& arg) ) const \
@@ -104,7 +159,20 @@ public:
          BOOST_PP_ENUM_PARAMS(arity, arg) ) ) );                                    \
     }                                                                               \
 
-    BOOST_PP_REPEAT_FROM_TO(1, 4, TC_MAKE, _)
+    BOOST_PP_REPEAT_FROM_TO(1, BOOST_TEST_DATASET_MAX_ARITY, TC_MAKE, _)
+#else
+
+    template<typename ...Arg>
+    void    operator()(Arg&& ... arg) const
+    {
+        m_test_cases.push_back(
+            new test_case( m_tc_name,
+                           m_tc_file,
+                           m_tc_line,
+                           boost::bind( &TestCase::template test_method<Arg...>,
+                                        boost_bind_rvalue_holder_helper(std::forward<Arg>(arg))...)));
+    }
+#endif
 
 private:
     // Data members
@@ -148,18 +216,22 @@ make_test_case_gen( const_string tc_name, const_string tc_file, std::size_t tc_l
         BOOST_PP_SEQ_FOR_EACH_I(BOOST_DATA_TEST_CASE_PARAM, _, params)) \
 /**/
 
-#define BOOST_DATA_TEST_CASE_IMPL( arity, test_name, dataset, params )  \
-struct test_name {                                                      \
+#define BOOST_DATA_TEST_CASE_IMPL(arity, F, test_name, dataset, params) \
+struct test_name : public F {                                           \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
     static void test_method( BOOST_DATA_TEST_CASE_PARAMS( params ) )    \
     {                                                                   \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" fixture entry.");\
+        test_name t;                                                    \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" entry.");        \
         BOOST_TEST_CONTEXT( ""                                          \
             BOOST_PP_SEQ_FOR_EACH(BOOST_DATA_TEST_CONTEXT, _, params))  \
-            _impl(BOOST_PP_SEQ_ENUM(params));                           \
+            t._impl(BOOST_PP_SEQ_ENUM(params));                         \
+        BOOST_TEST_CHECKPOINT('"' << #test_name << "\" exit.");         \
     }                                                                   \
 private:                                                                \
     template<BOOST_PP_ENUM_PARAMS(arity, typename Arg)>                 \
-    static void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));           \
+    void _impl(BOOST_DATA_TEST_CASE_PARAMS( params ));                  \
 };                                                                      \
                                                                         \
 BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
@@ -173,13 +245,13 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     void test_name::_impl( BOOST_DATA_TEST_CASE_PARAMS( params ) )      \
 /**/
 
-#define BOOST_DATA_TEST_CASE_WITH_PARAMS( test_name, dataset, ... )     \
+#define BOOST_DATA_TEST_CASE_WITH_PARAMS( F, test_name, dataset, ... )  \
     BOOST_DATA_TEST_CASE_IMPL( BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),     \
-                               test_name, dataset,                      \
+                               F, test_name, dataset,                   \
                                BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__) )  \
 /**/
-#define BOOST_DATA_TEST_CASE_NO_PARAMS( test_name, dataset )            \
-    BOOST_DATA_TEST_CASE_WITH_PARAMS( test_name, dataset, sample )      \
+#define BOOST_DATA_TEST_CASE_NO_PARAMS( F, test_name, dataset )         \
+    BOOST_DATA_TEST_CASE_WITH_PARAMS( F, test_name, dataset, sample )   \
 /**/
 
 #if BOOST_PP_VARIADICS_MSVC
@@ -188,14 +260,32 @@ BOOST_AUTO_TU_REGISTRAR( test_name )(                                   \
     BOOST_PP_CAT(                                                       \
     BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
                      BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
-                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (__VA_ARGS__), ) \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        BOOST_AUTO_TEST_CASE_FIXTURE, __VA_ARGS__), )   \
 /**/
+
+#define BOOST_DATA_TEST_CASE_F( F, ... )                                \
+    BOOST_PP_CAT(                                                       \
+    BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
+                     BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        F, __VA_ARGS__), )                              \
+/**/
+
 #else
 
 #define BOOST_DATA_TEST_CASE( ... )                                     \
     BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
                      BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
-                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (__VA_ARGS__)    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        BOOST_AUTO_TEST_CASE_FIXTURE, __VA_ARGS__)      \
+/**/
+
+#define BOOST_DATA_TEST_CASE_F( F, ... )                                \
+    BOOST_PP_IIF(BOOST_PP_EQUAL(BOOST_PP_VARIADIC_SIZE(__VA_ARGS__),2), \
+                     BOOST_DATA_TEST_CASE_NO_PARAMS,                    \
+                     BOOST_DATA_TEST_CASE_WITH_PARAMS) (                \
+                        F, __VA_ARGS__)                                 \
 /**/
 #endif
 

@@ -47,32 +47,78 @@ static const unsigned char ee_patternbuf[PatternSize] = { 0xEE, 0xEE, 0xEE, 0xEE
 static const unsigned char dd_patternbuf[PatternSize] = { 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD, 0xDD };
 static const unsigned char cc_patternbuf[PatternSize] = { 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC };
 
+void volatile_memset(volatile void *p, int ch, std::size_t len)
+{
+   volatile unsigned char *puch = static_cast<volatile unsigned char *>(p);
+   for(std::size_t i = 0; i != len; ++i){
+      *puch = (unsigned char)ch;
+      ++puch;
+   }
+}
+
+int volatile_memcmp(const volatile void *p1, const volatile void *p2, std::size_t len)
+{
+   const volatile unsigned char *s1 = static_cast<const volatile unsigned char *>(p1);
+   const volatile unsigned char *s2 = static_cast<const volatile unsigned char *>(p2);
+   unsigned char u1, u2;
+
+   for ( ; len-- ; s1++, s2++) {
+	   u1 = *s1;
+	   u2 = *s2;
+	   if (u1 != u2) {
+	      return (u1-u2);
+	   }
+   }
+   return 0;
+}
+
+void volatile_memcmp(volatile void *p, int ch, std::size_t len)
+{
+   volatile unsigned char *puch = static_cast<volatile unsigned char *>(p);
+   for(std::size_t i = 0; i != len; ++i){
+      *puch = (unsigned char)ch;
+      ++puch;
+   }
+}
+
+#include <iostream>
+
 struct default_init
 {
    static void* operator new(std::size_t sz)
    {
       void *const p = ::operator new(sz);
-      return std::memset(p, 0xFF, sz);
+      //Make sure they are not optimized out
+      volatile_memset(p, 0xFF, sz);
+      std::cout << "0xFF" << '\n';
+      return p;
    }
    static void* operator new[](std::size_t sz)
    {
       void *const p = ::operator new[](sz);
-      return std::memset(p, 0xEE, sz);
+      //Make sure they are not optimized out
+      volatile_memset(p, 0xEE, sz);
+      std::cout << "0xEE" << '\n';
+      return p;
    }
    static void* operator new(std::size_t sz, const std::nothrow_t &)
    {
       void *const p = ::operator new(sz);
-      return std::memset(p, 0xDD, sz);
+      //Make sure they are not optimized out
+      volatile_memset(p, 0xDD, sz);
+      std::cout << "0xDD" << '\n';
+      return p;
    }
    static void* operator new[](std::size_t sz, const std::nothrow_t &)
    {
       void *const p = ::operator new[](sz);
-      return std::memset(p, 0xCC, sz);
+      //Make sure they are not optimized out
+      volatile_memset(p, 0xCC, sz);
+      std::cout << "0xCC" << '\n';
+      return p;
    }
    unsigned char buf[PatternSize];
 };
-
-
 
 namespace bml = ::boost::movelib;
 
@@ -88,11 +134,12 @@ void test()
    reset_counters();
    {
    bml::unique_ptr<default_init> p(bml::make_unique_definit<default_init>());
-   BOOST_TEST(0 == std::memcmp(p.get(), ff_patternbuf, sizeof(ff_patternbuf)));
+   BOOST_TEST(0 == volatile_memcmp(p.get(), ff_patternbuf, sizeof(ff_patternbuf)));
    }
    {
    bml::unique_ptr<default_init> p(bml::make_unique_nothrow_definit<default_init>());
-   BOOST_TEST(0 == std::memcmp(p.get(), dd_patternbuf, sizeof(dd_patternbuf)));
+   
+   BOOST_TEST(0 == volatile_memcmp(p.get(), dd_patternbuf, sizeof(dd_patternbuf)));
    }
 
    BOOST_TEST(A::count == 0);
@@ -167,14 +214,14 @@ void test()
    {
       bml::unique_ptr<default_init[]> p(bml::make_unique_definit<default_init[]>(10));
       for(unsigned i = 0; i != 10; ++i){
-         BOOST_TEST(0 == std::memcmp(&p[i], ee_patternbuf, sizeof(ee_patternbuf)));
+         BOOST_TEST(0 == volatile_memcmp(&p[i], ee_patternbuf, sizeof(ee_patternbuf)));
       }
    }
    reset_counters();
    {
       bml::unique_ptr<default_init[]> p(bml::make_unique_nothrow_definit<default_init[]>(10));
       for(unsigned i = 0; i != 10; ++i){
-         BOOST_TEST(0 == std::memcmp(&p[i], cc_patternbuf, sizeof(cc_patternbuf)));
+         BOOST_TEST(0 == volatile_memcmp(&p[i], cc_patternbuf, sizeof(cc_patternbuf)));
       }
    }
 }

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function scatter</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../mpi/reference.html#header.boost.mpi.collectives_hpp" title="Header &lt;boost/mpi/collectives.hpp&gt;">
 <link rel="prev" href="gatherv.html" title="Function gatherv">
@@ -50,23 +50,17 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> T<span class="special">&gt;</span> 
   <span class="keyword">void</span> <span class="identifier">scatter</span><span class="special">(</span><span class="keyword">const</span> <a class="link" href="communicator.html" title="Class communicator">communicator</a> <span class="special">&amp;</span> comm<span class="special">,</span> <span class="identifier">T</span> <span class="special">*</span> out_values<span class="special">,</span> <span class="keyword">int</span> n<span class="special">,</span> <span class="keyword">int</span> root<span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555223868032"></a><h2>Description</h2>
+<a name="idp303402512"></a><h2>Description</h2>
 <p><code class="computeroutput">scatter</code> is a collective algorithm that scatters the values stored in the <code class="computeroutput">root</code> process (inside a vector) to all of the processes in the communicator. The vector <code class="computeroutput">out_values</code> (only significant at the <code class="computeroutput">root</code>) is indexed by the process number to which the corresponding value will be sent. The type <code class="computeroutput">T</code> of the values may be any type that is serializable or has an associated MPI data type.</p>
 <p>When the type <code class="computeroutput">T</code> has an associated MPI data type, this routine invokes <code class="computeroutput">MPI_Scatter</code> to scatter the values.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">comm</code></span></p></td>

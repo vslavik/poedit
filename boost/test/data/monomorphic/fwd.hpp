@@ -24,6 +24,9 @@
 #include <boost/type_traits/is_array.hpp>
 #include <boost/mpl/bool.hpp>
 
+// STL
+#include <tuple>
+
 #include <boost/test/detail/suppress_warnings.hpp>
 
 // STL

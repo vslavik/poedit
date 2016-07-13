@@ -9,8 +9,6 @@
 //////////////////////////////////////////////////////////////////////////////
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/map.hpp>
-#include <boost/container/allocator.hpp>
-#include <boost/container/node_allocator.hpp>
 #include <boost/container/adaptive_pool.hpp>
 
 #include <map>
@@ -35,14 +33,6 @@ template class map
    < test::movable_and_copyable_int
    , test::movable_and_copyable_int
    , std::less<test::movable_and_copyable_int>
-   , test::dummy_test_allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class map
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
    , test::simple_allocator
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    >;
@@ -55,28 +45,11 @@ template class map
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    >;
 
-
-template class map
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
 template class map
    < test::movable_and_copyable_int
    , test::movable_and_copyable_int
    , std::less<test::movable_and_copyable_int>
    , adaptive_pool
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class map
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , node_allocator
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    >;
 
@@ -85,14 +58,6 @@ template class multimap
    < test::movable_and_copyable_int
    , test::movable_and_copyable_int
    , std::less<test::movable_and_copyable_int>
-   , test::dummy_test_allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class multimap
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
    , test::simple_allocator
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    >;
@@ -109,23 +74,7 @@ template class multimap
    < test::movable_and_copyable_int
    , test::movable_and_copyable_int
    , std::less<test::movable_and_copyable_int>
-   , allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class multimap
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
    , adaptive_pool
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   >;
-
-template class multimap
-   < test::movable_and_copyable_int
-   , test::movable_and_copyable_int
-   , std::less<test::movable_and_copyable_int>
-   , node_allocator
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    >;
 
@@ -136,15 +85,6 @@ template class tree
    , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
    , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    , std::less<test::movable_and_copyable_int>
-   , test::dummy_test_allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , tree_assoc_defaults >;
-
-template class tree
-   < const test::movable_and_copyable_int
-   , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
-   , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , std::less<test::movable_and_copyable_int>
    , test::simple_allocator
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    , tree_assoc_defaults >;
@@ -163,25 +103,7 @@ template class tree
    , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
    , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    , std::less<test::movable_and_copyable_int>
-   , allocator
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , tree_assoc_defaults >;
-
-template class tree
-   < const test::movable_and_copyable_int
-   , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
-   , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , std::less<test::movable_and_copyable_int>
    , adaptive_pool
-      < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , tree_assoc_defaults >;
-
-template class tree
-   < const test::movable_and_copyable_int
-   , std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int>
-   , container_detail::select1st< std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
-   , std::less<test::movable_and_copyable_int>
-   , node_allocator
       < std::pair<const test::movable_and_copyable_int, test::movable_and_copyable_int> >
    , tree_assoc_defaults >;
 
@@ -374,16 +296,6 @@ int main ()
    //       std:allocator
    if(test_map_variants< std::allocator<void>, red_black_tree >()){
       std::cerr << "test_map_variants< std::allocator<void> > failed" << std::endl;
-      return 1;
-   }
-   //       boost::container::allocator
-   if(test_map_variants< allocator<void>, red_black_tree >()){
-      std::cerr << "test_map_variants< allocator<void> > failed" << std::endl;
-      return 1;
-   }
-   //       boost::container::node_allocator
-   if(test_map_variants< node_allocator<void>, red_black_tree >()){
-      std::cerr << "test_map_variants< node_allocator<void> > failed" << std::endl;
       return 1;
    }
    //       boost::container::adaptive_pool

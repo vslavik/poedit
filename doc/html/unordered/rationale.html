@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Implementation Rationale</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../unordered.html" title="Chapter&#160;38.&#160;Boost.Unordered">
+<link rel="up" href="../unordered.html" title="Chapter&#160;40.&#160;Boost.Unordered">
 <link rel="prev" href="compliance.html" title="C++11 Compliance">
 <link rel="next" href="changes.html" title="Change Log">
 </head>
@@ -39,7 +39,7 @@
     </p>
 <h3>
 <a name="unordered.rationale.h0"></a>
-      <span class="phrase"><a name="unordered.rationale.data_structure"></a></span><a class="link" href="rationale.html#unordered.rationale.data_structure">Data
+      <span><a name="unordered.rationale.data_structure"></a></span><a class="link" href="rationale.html#unordered.rationale.data_structure">Data
       Structure</a>
     </h3>
 <p>
@@ -51,7 +51,7 @@
       example, it could use open addressing, and use the lookup chain to act as a
       bucket but there are a some serious problems with this:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           The draft standard requires that pointers to elements aren't invalidated,
           so the elements can't be stored in one array, but will need a layer of
@@ -79,7 +79,7 @@
     </p>
 <h3>
 <a name="unordered.rationale.h1"></a>
-      <span class="phrase"><a name="unordered.rationale.number_of_buckets"></a></span><a class="link" href="rationale.html#unordered.rationale.number_of_buckets">Number
+      <span><a name="unordered.rationale.number_of_buckets"></a></span><a class="link" href="rationale.html#unordered.rationale.number_of_buckets">Number
       of Buckets</a>
     </h3>
 <p>

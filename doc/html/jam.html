@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;43.&#160;Boost.Jam : 3.1.19</title>
+<title>Chapter&#160;45.&#160;Boost.Jam : 3.1.19</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="tools.html" title="Part&#160;II.&#160;Boost Tools">
 <link rel="prev" href="quickbook/ref.html" title="Quick Reference">
@@ -26,7 +26,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="jam"></a>Chapter&#160;43.&#160;Boost.Jam : 3.1.19</h2></div>
+<a name="jam"></a>Chapter&#160;45.&#160;Boost.Jam : 3.1.19</h2></div>
 <div><div class="authorgroup">
 <div class="author"><h3 class="author">
 <span class="firstname">Rene</span> <span class="surname">Rivera</span>
@@ -48,7 +48,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt><span class="section"><a href="jam.html#jam.building">Building B2</a></span></dt>
 <dt><span class="section"><a href="jam/language.html">Language</a></span></dt>
 <dd><dl>
@@ -120,7 +120,7 @@ sh ./build.sh
       The supported toolsets, and whether they are auto-detected, are:
     </p>
 <div class="table">
-<a name="jam.building.t0"></a><p class="title"><b>Table&#160;43.1.&#160;Supported Toolsets</b></p>
+<a name="jam.building.t0"></a><p class="title"><b>Table&#160;45.1.&#160;Supported Toolsets</b></p>
 <div class="table-contents"><table class="table" summary="Supported Toolsets">
 <colgroup>
 <col>
@@ -176,7 +176,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">Common install location: "<code class="literal">C:\Borland\BCC55</code>"</li>
 <li class="listitem">
 <code class="literal">BCC32.EXE</code>
@@ -263,7 +263,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">ICL.EXE</code> in <code class="literal">PATH</code>
 </li></ul></div>
 <p>
@@ -289,7 +289,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <code class="literal">CWFolder</code> variable configured</li>
 <li class="listitem">
@@ -321,7 +321,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">Common install location: "<code class="literal">C:\MinGW</code>"</li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">Common install location: "<code class="literal">C:\MinGW</code>"</li></ul></div>
 <p>
               </p>
             </td>
@@ -345,7 +345,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <code class="literal">VCVARS32.BAT</code> already configured</li>
 <li class="listitem">
@@ -381,7 +381,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <code class="literal">VCVARS32.BAT</code> or <code class="literal">VSVARS32.BAT</code>
                 already configured</li>
@@ -422,7 +422,7 @@ sh ./build.sh
 <td>
               <p>
                 Detection: </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <code class="literal">VCVARSALL.BAT</code> already configured</li>
 <li class="listitem">
@@ -443,7 +443,7 @@ sh ./build.sh
               </p>
               <p>
                 Notes: </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">If <code class="literal">VCVARSALL.BAT</code> is called to set up the
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">If <code class="literal">VCVARSALL.BAT</code> is called to set up the
                 toolset, it is passed all the extra arguments, see below for what
                 those arguments are. This can be used to build, for example, a Win64
                 specific version of <code class="literal">b2</code>. Consult the VisualStudio
@@ -478,7 +478,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <code class="literal">aCC</code> in <code class="literal">PATH</code>
 </li>
@@ -509,7 +509,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">como in <code class="literal">PATH</code>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">como in <code class="literal">PATH</code>
 </li></ul></div>
 <p>
               </p>
@@ -534,7 +534,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">gcc in <code class="literal">PATH</code>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">gcc in <code class="literal">PATH</code>
 </li></ul></div>
 <p>
               </p>
@@ -559,7 +559,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
 <code class="literal">icc</code> in <code class="literal">PATH</code>
 </li>
@@ -590,7 +590,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">KCC</code> in <code class="literal">PATH</code>
 </li></ul></div>
 <p>
@@ -616,7 +616,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">bc++ in PATH</li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">bc++ in PATH</li></ul></div>
 <p>
               </p>
             </td>
@@ -640,7 +640,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">uname</code> is "<code class="literal">IRIX</code>" or
                 "<code class="literal">IRIX64</code>"</li></ul></div>
 <p>
@@ -665,7 +665,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">Standard install location: "<code class="literal">/opt/SUNWspro</code>"</li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">Standard install location: "<code class="literal">/opt/SUNWspro</code>"</li></ul></div>
 <p>
               </p>
             </td>
@@ -688,7 +688,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">uname</code> is "<code class="literal">QNX</code>" and
                 <code class="literal">qcc</code> in <code class="literal">PATH</code>
 </li></ul></div>
@@ -715,7 +715,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">uname</code> is "<code class="literal">OSF1</code>"</li></ul></div>
 <p>
               </p>
@@ -740,7 +740,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">xlc</code> in <code class="literal">PATH</code>
 </li></ul></div>
 <p>
@@ -769,7 +769,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <code class="literal">uname</code> is "<code class="literal">Darwin</code>"</li></ul></div>
 <p>
               </p>
@@ -798,7 +798,7 @@ sh ./build.sh
 <td>
               <p>
                 </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">Common install location: "<code class="literal">/mingw</code>"</li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">Common install location: "<code class="literal">/mingw</code>"</li></ul></div>
 <p>
               </p>
             </td>
@@ -817,7 +817,7 @@ sh ./build.sh
       of Boost.Jam and for additional setup of the toolset. The extra arguments come
       after the toolset:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Arguments not in the form of an option, before option arguments, are used
           for extra setup to toolset configuration scripts.
@@ -848,7 +848,7 @@ sh ./build.sh
     </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><div class="literallayout"><p><code class="literal">---</code></p></div></span></dt>
 <dd><p>
             Empty option when one wants to only specify a target.

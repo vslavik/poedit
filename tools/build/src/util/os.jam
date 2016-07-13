@@ -77,6 +77,12 @@ if $(.name) = NT
 
 .shared-library-path-variable-HAIKU = LIBRARY_PATH ;
 
+.shared-library-path-variable-VMS = PATH ;
+.path-separator-VMS = "," ;
+.expand-variable-prefix-VMS = '' ;
+.expand-variable-suffix-VMS = ' ;
+.executable-suffix-VMS = .exe ;
+
 # Default constants
 .shared-library-path-variable = LD_LIBRARY_PATH ;
 .path-separator = ":" ;
@@ -149,7 +155,18 @@ rule on-windows ( )
 }
 
 
-if ! [ on-windows ]
+rule on-vms ( )
+{
+    local result ;
+    if [ modules.peek : VMS ]
+    {
+        result = true ;
+    }
+    return $(result) ;
+}
+
+
+if ! [ on-windows ] && ! [ on-vms ]
 {
     .on-unix = 1 ;
 }

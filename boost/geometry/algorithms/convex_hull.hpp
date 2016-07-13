@@ -83,7 +83,7 @@ struct hull_to_geometry
                 geometry::point_order<OutputGeometry>::value,
                 geometry::closure<OutputGeometry>::value
             >::apply(geometry,
-                std::back_inserter(
+                range::back_inserter(
                     // Handle linestring, ring and polygon the same:
                     detail::as_range
                         <

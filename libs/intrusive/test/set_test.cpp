@@ -42,8 +42,18 @@ struct rebinder
    };
 };
 
+enum HookType
+{
+   Base,
+   Member,
+   NonMember
+};
+
+template<class VoidPointer, bool ConstantTimeSize, bool DefaultHolder, bool Map, HookType Type>
+class test_main_template;
+
 template<class VoidPointer, bool ConstantTimeSize, bool DefaultHolder, bool Map>
-class test_main_template
+class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, Base>
 {
    public:
    static void execute()
@@ -59,6 +69,16 @@ class test_main_template
          < base_hook_t
          , rebinder<base_hook_t, ConstantTimeSize, DefaultHolder, Map>
          >::test_all();
+   }
+};
+
+template<class VoidPointer, bool ConstantTimeSize, bool DefaultHolder, bool Map>
+class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, Member>
+{
+   public:
+   static void execute()
+   {
+      typedef testvalue_traits< rb_hooks<VoidPointer> > testval_traits_t;
       //member
       typedef typename detail::if_c
          < ConstantTimeSize
@@ -69,6 +89,16 @@ class test_main_template
          < member_hook_t
          , rebinder<member_hook_t, ConstantTimeSize, DefaultHolder, Map>
          >::test_all();
+   }
+};
+
+template<class VoidPointer, bool ConstantTimeSize, bool DefaultHolder, bool Map>
+class test_main_template<VoidPointer, ConstantTimeSize, DefaultHolder, Map, NonMember>
+{
+   public:
+   static void execute()
+   {
+      typedef testvalue_traits< rb_hooks<VoidPointer> > testval_traits_t;
       //nonmember
       test::test_generic_set
          < typename testval_traits_t::nonhook_value_traits
@@ -100,24 +130,24 @@ int main()
    //Start with ('false', 'false', 'false') in sets and 'false', 'false', 'true' in multisets
 
    //void pointer
-   test_main_template<void*, false, false, false>::execute();
+   test_main_template<void*, false, false, false, Base>::execute();
    //test_main_template<void*, false, false, true>::execute();
-   test_main_template<void*, false, true, false>::execute();
+   test_main_template<void*, false, true, false, Member>::execute();
    //test_main_template<void*, false, true,  true>::execute();
-   test_main_template<void*,  true, false, false>::execute();
+   test_main_template<void*,  true, false, false, Base>::execute();
    //test_main_template<void*,  true, false, true>::execute();
-   test_main_template<void*,  true, true, false>::execute();
-   //test_main_template<void*,  true, true,  true>::execute();
+   test_main_template<void*,  true, true, false, Member>::execute();
+   test_main_template<void*,  true, true,  true, NonMember>::execute();
 
    //smart_ptr
    //test_main_template<smart_ptr<void>, false, false, false>::execute();
-   test_main_template<smart_ptr<void>, false, false,  true>::execute();
+   test_main_template<smart_ptr<void>, false, false,  true, Base>::execute();
    //test_main_template<smart_ptr<void>, false,  true, false>::execute();
-   test_main_template<smart_ptr<void>, false,  true,  true>::execute();
+   test_main_template<smart_ptr<void>, false,  true,  true, Member>::execute();
    //test_main_template<smart_ptr<void>,  true, false, false>::execute();
-   test_main_template<smart_ptr<void>,  true, false, true>::execute();
+   test_main_template<smart_ptr<void>,  true, false, true, NonMember>::execute();
    //test_main_template<smart_ptr<void>,  true,  true, false>::execute();
-   test_main_template<smart_ptr<void>,  true,  true,  true>::execute();
+   //test_main_template<smart_ptr<void>,  true,  true,  true>::execute();
 
    //bounded_ptr (bool ConstantTimeSize, bool Map)
    test_main_template_bptr< false, false >::execute();

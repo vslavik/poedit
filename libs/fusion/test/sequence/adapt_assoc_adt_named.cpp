@@ -45,12 +45,26 @@ namespace ns
     };
 }
 
-BOOST_FUSION_ADAPT_ASSOC_ADT_NAMED(
-    ns::point,
-    point,
-    (int, int, obj.get_x(), obj.set_x(val), ns::x_member)
-    (int, int, obj.get_y(), obj.set_y(val), ns::y_member)
-)
+#if BOOST_PP_VARIADICS
+
+    BOOST_FUSION_ADAPT_ASSOC_ADT_NAMED(
+        ns::point,
+        point,
+        (obj.get_x(), obj.set_x(val), ns::x_member)
+        (int, int, obj.get_y(), obj.set_y(val), ns::y_member)
+    )
+
+#else // BOOST_PP_VARIADICS
+
+    BOOST_FUSION_ADAPT_ASSOC_ADT_NAMED(
+        ns::point,
+        point,
+        (auto, auto, obj.get_x(), obj.set_x(val), ns::x_member)
+        (int, int, obj.get_y(), obj.set_y(val), ns::y_member)
+    )
+
+#endif
+
 
 class empty_adt{};
 BOOST_FUSION_ADAPT_ASSOC_ADT_NAMED(empty_adt, renamed_empty_adt,)
@@ -86,10 +100,10 @@ main()
     }
 
     {
-        boost::fusion::vector<int, float> v1(4, 2);
+        boost::fusion::vector<int, float> v1(4, 2.f);
         ns::point basev2(5, 3);
         adapted::point v2(basev2);
-        boost::fusion::vector<long, double> v3(5, 4);
+        boost::fusion::vector<long, double> v3(5, 4.);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);

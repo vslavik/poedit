@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Function template visit_each</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../signals/reference.html#header.boost.visit_each_hpp" title="Header &lt;boost/visit_each.hpp&gt;">
 <link rel="prev" href="signals/scoped_connection.html" title="Class scoped_connection">
@@ -36,7 +36,7 @@
 <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> Visitor<span class="special">,</span> <span class="keyword">typename</span> T<span class="special">&gt;</span> 
   <span class="keyword">void</span> <span class="identifier">visit_each</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">Visitor</span><span class="special">&amp;</span> visitor<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">T</span><span class="special">&amp;</span> t<span class="special">,</span> <span class="keyword">int</span><span class="special">)</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555133055232"></a><h2>Description</h2>
+<a name="idp394179728"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="visit_each.html" title="Function template visit_each">visit_each</a></code> mechanism
         allows a visitor to be applied to every subobject in a given
         object. It is used by the Signals library to discover
@@ -46,11 +46,8 @@
         within the <code class="computeroutput"><a class="link" href="visit_each.html" title="Function template visit_each">visit_each</a></code> framework,
         a <code class="computeroutput"><a class="link" href="visit_each.html" title="Function template visit_each">visit_each</a></code> overload must be
         supplied for each object type. </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Effects:</span></p></td>
@@ -59,7 +56,7 @@
       every subobject <code class="computeroutput">x</code> of
       <code class="computeroutput">t</code>: 
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>If <code class="computeroutput">x</code> is a reference, <code class="computeroutput">visit_each(visitor, ref(x), 0)</code></p></li>
 <li class="listitem"><p>Otherwise, <code class="computeroutput">visit_each(visitor, x, 0)</code></p></li>
 </ul></div>

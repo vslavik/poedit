@@ -35,48 +35,48 @@
       These tags can be used to determine whether one property of a type has a particular
       value.
     </p>
-<pre class="programlisting"><span class="identifier">is_function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(...),</span> <span class="identifier">variadic</span><span class="special">&gt;::</span><span class="identifier">value</span> <span class="comment">// == true
-</span><span class="identifier">is_function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">()</span>   <span class="special">,</span> <span class="identifier">variadic</span><span class="special">&gt;::</span><span class="identifier">value</span> <span class="comment">// == false
-</span></pre>
+<pre class="programlisting"><span class="identifier">is_function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">(...),</span> <span class="identifier">variadic</span><span class="special">&gt;::</span><span class="identifier">value</span> <span class="comment">// == true</span>
+<span class="identifier">is_function</span><span class="special">&lt;</span><span class="keyword">int</span><span class="special">()</span>   <span class="special">,</span> <span class="identifier">variadic</span><span class="special">&gt;::</span><span class="identifier">value</span> <span class="comment">// == false</span>
+</pre>
 <p>
       A compound property tag describes a combination of possible values of different
       properties. The type <code class="literal">components&lt;F&gt;</code>, where <code class="literal">F</code>
       is a callable builtin type, is a compound property tag that describes <code class="literal">F</code>.
       The <code class="literal">tag</code> class template can be used to combine property tags.
     </p>
-<pre class="programlisting"><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">non_const</span><span class="special">,</span><span class="identifier">default_cc</span><span class="special">&gt;</span> <span class="comment">// combination of two properties
-</span></pre>
+<pre class="programlisting"><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">non_const</span><span class="special">,</span><span class="identifier">default_cc</span><span class="special">&gt;</span> <span class="comment">// combination of two properties</span>
+</pre>
 <p>
       When several values for the same property are specified in <code class="literal">tag</code>'s
       argument list, only the rightmost one is used; others are ignored.
     </p>
-<pre class="programlisting"><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">components</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;,</span> <span class="identifier">default_cc</span><span class="special">&gt;</span> <span class="comment">// overrides F's calling convention property
-</span></pre>
+<pre class="programlisting"><span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">components</span><span class="special">&lt;</span><span class="identifier">F</span><span class="special">&gt;,</span> <span class="identifier">default_cc</span><span class="special">&gt;</span> <span class="comment">// overrides F's calling convention property</span>
+</pre>
 <p>
       When compound property tag is specified to analyse a type, all of its component
       properties must match.
     </p>
 <pre class="programlisting"><span class="identifier">is_member_function_pointer</span><span class="special">&lt;</span> <span class="identifier">F</span><span class="special">,</span> <span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">const_qualified</span><span class="special">,</span><span class="identifier">default_cc</span><span class="special">&gt;</span> <span class="special">&gt;::</span><span class="identifier">value</span>
-<span class="comment">// true for 
-</span><span class="comment">//   F = void(a_class::*)() const
-</span><span class="comment">// false for
-</span><span class="comment">//   F = void(a_class::*)()
-</span><span class="comment">//   F = void(__fastcall a_class::*)() const
-</span></pre>
+<span class="comment">// true for </span>
+<span class="comment">//   F = void(a_class::*)() const</span>
+<span class="comment">// false for</span>
+<span class="comment">//   F = void(a_class::*)()</span>
+<span class="comment">//   F = void(__fastcall a_class::*)() const</span>
+</pre>
 <p>
       Default values are selected for properties not specified by the tag in the
       context of type synthesis.
     </p>
-<pre class="programlisting"><span class="comment">// given S = mpl::vector&lt;int,a_class const &amp;&gt;
-</span>
-<span class="identifier">member_function_pointer</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="comment">// is int (a_class::*)() const
-</span><span class="comment">// note: the cv-qualification is picked based on the class type,
-</span><span class="comment">// a nonvariadic signature and the default calling convention 
-</span><span class="comment">// are used
-</span>
-<span class="identifier">member_function_pointer</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span><span class="identifier">non_const</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="comment">// is int (a_class::*)()
-</span><span class="comment">// no const qualification, as explicitly specified by the tag type
-</span></pre>
+<pre class="programlisting"><span class="comment">// given S = mpl::vector&lt;int,a_class const &amp;&gt;</span>
+
+<span class="identifier">member_function_pointer</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="comment">// is int (a_class::*)() const</span>
+<span class="comment">// note: the cv-qualification is picked based on the class type,</span>
+<span class="comment">// a nonvariadic signature and the default calling convention </span>
+<span class="comment">// are used</span>
+
+<span class="identifier">member_function_pointer</span><span class="special">&lt;</span><span class="identifier">S</span><span class="special">,</span><span class="identifier">non_const</span><span class="special">&gt;::</span><span class="identifier">type</span> <span class="comment">// is int (a_class::*)()</span>
+<span class="comment">// no const qualification, as explicitly specified by the tag type</span>
+</pre>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>

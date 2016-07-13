@@ -46,7 +46,12 @@ void cwd_init( void )
     do
     {
         char * const buffer = BJAM_MALLOC_RAW( buffer_size );
+#ifdef OS_VMS
+        /* cwd in POSIX-format */
+        cwd_buffer = getcwd( buffer, buffer_size, 0 );
+#else
         cwd_buffer = getcwd( buffer, buffer_size );
+#endif
         error = errno;
         if ( cwd_buffer )
         {

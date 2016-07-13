@@ -11,6 +11,7 @@
 #include <cstddef> // NULL
 
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/detail/basic_iserializer.hpp>
 
 namespace boost {

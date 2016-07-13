@@ -32,6 +32,7 @@
 //  * required only for pointers - optional for objects
 
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/basic_archive.hpp>
 
 namespace boost {

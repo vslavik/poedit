@@ -23,16 +23,19 @@
 #define __MSVCRT_VERSION__ 0x0700
 #endif
 
+#include <boost/predef/os.h>
+
+// Try including WinAPI config as soon as possible so that any other headers don't include Windows SDK headers
+#if defined(BOOST_OS_WINDOWS_AVAILABLE)
+#include <boost/detail/winapi/config.hpp>
+#endif
+
 #include <limits.h> // To bring in libc macros
 #include <boost/config.hpp>
 
 // The library requires dynamic_cast in a few places
 #if defined(BOOST_NO_RTTI)
 #   error Boost.Log: RTTI is required by the library
-#endif
-
-#if defined(BOOST_WINDOWS)
-#include <boost/detail/winapi/config.hpp>
 #endif
 
 #if defined(_MSC_VER) && _MSC_VER >= 1600
@@ -176,6 +179,13 @@
     // The rest compilers might emit bogus warnings about missing return statements
     // in functions with non-void return types when throw_exception is used.
 #   define BOOST_LOG_NORETURN
+#endif
+
+// GCC and compatible compilers may require marking types that may alias other types
+#if defined(__GNUC__)
+#   define BOOST_LOG_MAY_ALIAS __attribute__ ((__may_alias__))
+#else
+#   define BOOST_LOG_MAY_ALIAS
 #endif
 
 #if !defined(BOOST_LOG_BUILDING_THE_LIB)

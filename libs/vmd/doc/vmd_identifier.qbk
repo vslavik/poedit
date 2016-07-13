@@ -41,7 +41,7 @@ as the input to test must be either:
 * the left parenthesis of a tuple 
 
 and if the first character is not the left parenthesis of a tuple
-the remaining characters must be alphanumeric until a space character
+the remaining characters must be alphanumeric or an underscore until a space character
 or end of input occurs.
 
 If this is not the case the behavior is undefined, and most likely
@@ -89,7 +89,7 @@ that registration macros have been included by header files which a particular e
 of VMD has not created. This should also not lead to particular problems since registration
 is a process for adding identifiers for any particular translation unit. As we shall see
 VMD has macros for not only finding any identifier in preprocessor input but for also finding
-particular identifiers in preprocessor input.
+any particular identifier in preprocessor input.
 
 [heading Testing for an identifier macro]
 

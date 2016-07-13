@@ -9,10 +9,8 @@ http://boost.org/LICENSE_1_0.txt
 #ifndef BOOST_ALIGN_DETAIL_ALIGNED_ALLOC_ANDROID_HPP
 #define BOOST_ALIGN_DETAIL_ALIGNED_ALLOC_ANDROID_HPP
 
-#include <boost/assert.hpp>
-#include <boost/config.hpp>
 #include <boost/align/detail/is_alignment.hpp>
-#include <cstddef>
+#include <boost/assert.hpp>
 #include <malloc.h>
 
 namespace boost {

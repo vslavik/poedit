@@ -2,6 +2,7 @@
 
 //  Copyright 2010 Vicente J. Botet Escriba
 //  Copyright 2015 Andrey Semashev
+//  Copyright 2016 Jorge Lodos
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -11,7 +12,9 @@
 #define BOOST_DETAIL_WINAPI_FILE_MANAGEMENT_HPP
 
 #include <boost/detail/winapi/basic_types.hpp>
+#include <boost/detail/winapi/limits.hpp>
 #include <boost/detail/winapi/time.hpp>
+#include <boost/detail/winapi/overlapped.hpp>
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -19,7 +22,6 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
-struct _OVERLAPPED;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -47,6 +49,12 @@ MoveFileExA(
     boost::detail::winapi::LPCSTR_ lpExistingFileName,
     boost::detail::winapi::LPCSTR_ lpNewFileName,
     boost::detail::winapi::DWORD_ dwFlags);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+GetFileAttributesA(boost::detail::winapi::LPCSTR_ lpFileName);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
+AreFileApisANSI(BOOST_DETAIL_WINAPI_VOID);
 #endif
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::HANDLE_ WINAPI
@@ -74,6 +82,9 @@ MoveFileExW(
     boost::detail::winapi::LPCWSTR_ lpExistingFileName,
     boost::detail::winapi::LPCWSTR_ lpNewFileName,
     boost::detail::winapi::DWORD_ dwFlags);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+GetFileAttributesW(boost::detail::winapi::LPCWSTR_ lpFileName);
 
 BOOST_SYMBOL_IMPORT boost::detail::winapi::BOOL_ WINAPI
 FindClose(boost::detail::winapi::HANDLE_ hFindFile);
@@ -131,6 +142,13 @@ WriteFile(
     boost::detail::winapi::DWORD_ nNumberOfBytesToWrite,
     boost::detail::winapi::LPDWORD_ lpNumberOfBytesWritten,
     ::_OVERLAPPED* lpOverlapped);
+
+BOOST_SYMBOL_IMPORT boost::detail::winapi::DWORD_ WINAPI
+SetFilePointer(
+    boost::detail::winapi::HANDLE_ hFile,
+    boost::detail::winapi::LONG_ lpDistanceToMove,
+    boost::detail::winapi::PLONG_ lpDistanceToMoveHigh,
+    boost::detail::winapi::DWORD_ dwMoveMethod);
 }
 #endif
 
@@ -138,13 +156,99 @@ namespace boost {
 namespace detail {
 namespace winapi {
 
+#if defined( BOOST_USE_WINDOWS_H )
+
+const DWORD_ INVALID_FILE_SIZE_ = INVALID_FILE_SIZE;
+const DWORD_ INVALID_SET_FILE_POINTER_ = INVALID_SET_FILE_POINTER;
+const DWORD_ INVALID_FILE_ATTRIBUTES_ = INVALID_FILE_ATTRIBUTES;
+
+const DWORD_ FILE_ATTRIBUTE_READONLY_ = FILE_ATTRIBUTE_READONLY;
+const DWORD_ FILE_ATTRIBUTE_HIDDEN_ = FILE_ATTRIBUTE_HIDDEN;
+const DWORD_ FILE_ATTRIBUTE_SYSTEM_ = FILE_ATTRIBUTE_SYSTEM;
+const DWORD_ FILE_ATTRIBUTE_DIRECTORY_ = FILE_ATTRIBUTE_DIRECTORY;
+const DWORD_ FILE_ATTRIBUTE_ARCHIVE_ = FILE_ATTRIBUTE_ARCHIVE;
+const DWORD_ FILE_ATTRIBUTE_DEVICE_ = FILE_ATTRIBUTE_DEVICE;
+const DWORD_ FILE_ATTRIBUTE_NORMAL_ = FILE_ATTRIBUTE_NORMAL;
+const DWORD_ FILE_ATTRIBUTE_TEMPORARY_ = FILE_ATTRIBUTE_TEMPORARY;
+const DWORD_ FILE_ATTRIBUTE_SPARSE_FILE_ = FILE_ATTRIBUTE_SPARSE_FILE;
+const DWORD_ FILE_ATTRIBUTE_REPARSE_POINT_ = FILE_ATTRIBUTE_REPARSE_POINT;
+const DWORD_ FILE_ATTRIBUTE_COMPRESSED_ = FILE_ATTRIBUTE_COMPRESSED;
+const DWORD_ FILE_ATTRIBUTE_OFFLINE_ = FILE_ATTRIBUTE_OFFLINE;
+const DWORD_ FILE_ATTRIBUTE_NOT_CONTENT_INDEXED_ = FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+const DWORD_ FILE_ATTRIBUTE_ENCRYPTED_ = FILE_ATTRIBUTE_ENCRYPTED;
+
+const DWORD_ CREATE_NEW_ = CREATE_NEW;
+const DWORD_ CREATE_ALWAYS_ = CREATE_ALWAYS;
+const DWORD_ OPEN_EXISTING_ = OPEN_EXISTING;
+const DWORD_ OPEN_ALWAYS_ = OPEN_ALWAYS;
+const DWORD_ TRUNCATE_EXISTING_ = TRUNCATE_EXISTING;
+
+const DWORD_ FILE_SHARE_READ_ = FILE_SHARE_READ;
+const DWORD_ FILE_SHARE_WRITE_ = FILE_SHARE_WRITE;
+const DWORD_ FILE_SHARE_DELETE_ = FILE_SHARE_DELETE;
+
+const DWORD_ FILE_BEGIN_ = FILE_BEGIN;
+const DWORD_ FILE_CURRENT_ = FILE_CURRENT;
+const DWORD_ FILE_END_ = FILE_END;
+
+#else // defined( BOOST_USE_WINDOWS_H )
+
+const DWORD_ INVALID_FILE_SIZE_ = ((DWORD_)0xFFFFFFFF);
+const DWORD_ INVALID_SET_FILE_POINTER_ = ((DWORD_)-1);
+const DWORD_ INVALID_FILE_ATTRIBUTES_ = ((DWORD_)-1);
+
+const DWORD_ FILE_ATTRIBUTE_READONLY_ = 0x00000001;
+const DWORD_ FILE_ATTRIBUTE_HIDDEN_ = 0x00000002;
+const DWORD_ FILE_ATTRIBUTE_SYSTEM_ = 0x00000004;
+const DWORD_ FILE_ATTRIBUTE_DIRECTORY_ = 0x00000010;
+const DWORD_ FILE_ATTRIBUTE_ARCHIVE_ = 0x00000020;
+const DWORD_ FILE_ATTRIBUTE_DEVICE_ = 0x00000040;
+const DWORD_ FILE_ATTRIBUTE_NORMAL_ = 0x00000080;
+const DWORD_ FILE_ATTRIBUTE_TEMPORARY_ = 0x00000100;
+const DWORD_ FILE_ATTRIBUTE_SPARSE_FILE_ = 0x00000200;
+const DWORD_ FILE_ATTRIBUTE_REPARSE_POINT_ = 0x00000400;
+const DWORD_ FILE_ATTRIBUTE_COMPRESSED_ = 0x00000800;
+const DWORD_ FILE_ATTRIBUTE_OFFLINE_ = 0x00001000;
+const DWORD_ FILE_ATTRIBUTE_NOT_CONTENT_INDEXED_ = 0x00002000;
+const DWORD_ FILE_ATTRIBUTE_ENCRYPTED_ = 0x00004000;
+
+const DWORD_ CREATE_NEW_ = 1;
+const DWORD_ CREATE_ALWAYS_ = 2;
+const DWORD_ OPEN_EXISTING_ = 3;
+const DWORD_ OPEN_ALWAYS_ = 4;
+const DWORD_ TRUNCATE_EXISTING_ = 5;
+
+const DWORD_ FILE_SHARE_READ_ = 0x00000001;
+const DWORD_ FILE_SHARE_WRITE_ = 0x00000002;
+const DWORD_ FILE_SHARE_DELETE_ = 0x00000004;
+
+const DWORD_ FILE_BEGIN_ = 0;
+const DWORD_ FILE_CURRENT_ = 1;
+const DWORD_ FILE_END_ = 2;
+
+#endif // defined( BOOST_USE_WINDOWS_H )
+
+// This constant is not defined in Windows SDK up until 6.0A
+const DWORD_ FILE_ATTRIBUTE_VIRTUAL_ = 0x00010000;
+
+// These constants are not defined in Windows SDK up until 8.0 and MinGW/MinGW-w64 (as of 2016-02-14).
+// They are documented to be supported only since Windows 8/Windows Server 2012
+// but defined unconditionally.
+const DWORD_ FILE_ATTRIBUTE_INTEGRITY_STREAM_ = 0x00008000;
+const DWORD_ FILE_ATTRIBUTE_NO_SCRUB_DATA_ = 0x00020000;
+// Undocumented
+const DWORD_ FILE_ATTRIBUTE_EA_ = 0x00040000;
+
 #if !defined( BOOST_NO_ANSI_APIS )
 using ::DeleteFileA;
 using ::MoveFileExA;
+using ::GetFileAttributesA;
+using ::AreFileApisANSI;
 #endif
 
 using ::DeleteFileW;
 using ::MoveFileExW;
+using ::GetFileAttributesW;
 
 using ::FindClose;
 
@@ -157,19 +261,8 @@ using ::SetFileValidData;
 using ::SetEndOfFile;
 using ::LockFile;
 using ::UnlockFile;
+using ::SetFilePointer;
 
-typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _OVERLAPPED {
-    ULONG_PTR_ Internal;
-    ULONG_PTR_ InternalHigh;
-    union {
-        struct {
-            DWORD_ Offset;
-            DWORD_ OffsetHigh;
-        };
-        PVOID_  Pointer;
-    };
-    HANDLE_    hEvent;
-} OVERLAPPED_, *LPOVERLAPPED_;
 
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ CreateFileA(
@@ -200,8 +293,8 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _WIN32_FIND_DATAA {
     DWORD_ nFileSizeLow;
     DWORD_ dwReserved0;
     DWORD_ dwReserved1;
-    CHAR_   cFileName[ 260 ]; // MAX_PATH
-    CHAR_   cAlternateFileName[ 14 ];
+    CHAR_   cFileName[MAX_PATH_];
+    CHAR_   cAlternateFileName[14];
 #ifdef _MAC
     DWORD_ dwFileType;
     DWORD_ dwCreatorType;
@@ -248,8 +341,8 @@ typedef struct BOOST_DETAIL_WINAPI_MAY_ALIAS _WIN32_FIND_DATAW {
     DWORD_ nFileSizeLow;
     DWORD_ dwReserved0;
     DWORD_ dwReserved1;
-    WCHAR_  cFileName[ 260 ]; // MAX_PATH
-    WCHAR_  cAlternateFileName[ 14 ];
+    WCHAR_  cFileName[MAX_PATH_];
+    WCHAR_  cAlternateFileName[14];
 #ifdef _MAC
     DWORD_ dwFileType;
     DWORD_ dwCreatorType;
@@ -303,7 +396,6 @@ BOOST_FORCEINLINE BOOL_ WriteFile(
     return ::WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, reinterpret_cast< ::_OVERLAPPED* >(lpOverlapped));
 };
 
-
 #if !defined( BOOST_NO_ANSI_APIS )
 BOOST_FORCEINLINE HANDLE_ create_file(
     LPCSTR_ lpFileName,
@@ -342,6 +434,11 @@ BOOST_FORCEINLINE BOOL_ find_next_file(HANDLE_ hFindFile, WIN32_FIND_DATAA_* lpF
 BOOST_FORCEINLINE BOOL_ move_file(LPCSTR_ lpExistingFileName, LPCSTR_ lpNewFileName, DWORD_ dwFlags)
 {
     return ::MoveFileExA(lpExistingFileName, lpNewFileName, dwFlags);
+}
+
+BOOST_FORCEINLINE DWORD_ get_file_attributes(LPCSTR_ lpFileName)
+{
+    return ::GetFileAttributesA(lpFileName);
 }
 #endif
 
@@ -382,6 +479,11 @@ BOOST_FORCEINLINE BOOL_ find_next_file(HANDLE_ hFindFile, WIN32_FIND_DATAW_* lpF
 BOOST_FORCEINLINE BOOL_ move_file(LPCWSTR_ lpExistingFileName, LPCWSTR_ lpNewFileName, DWORD_ dwFlags)
 {
     return ::MoveFileExW(lpExistingFileName, lpNewFileName, dwFlags);
+}
+
+BOOST_FORCEINLINE DWORD_ get_file_attributes(LPCWSTR_ lpFileName)
+{
+    return ::GetFileAttributesW(lpFileName);
 }
 
 }

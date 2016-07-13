@@ -4,10 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>MultiArray Concept</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="multi_array.html" title="Chapter&#160;20.&#160;Boost.MultiArray Reference Manual">
-<link rel="prev" href="multi_array.html" title="Chapter&#160;20.&#160;Boost.MultiArray Reference Manual">
+<link rel="up" href="multi_array.html" title="Chapter&#160;22.&#160;Boost.MultiArray Reference Manual">
+<link rel="prev" href="multi_array.html" title="Chapter&#160;22.&#160;Boost.MultiArray Reference Manual">
 <link rel="next" href="array_types.html" title="Array Components">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,14 +26,14 @@
 <div class="sect1">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="MultiArray"></a>MultiArray Concept</h2></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="sect2"><a href="MultiArray.html#idm45555229067296">Notation</a></span></dt>
-<dt><span class="sect2"><a href="MultiArray.html#idm45555229047408">Associated Types</a></span></dt>
-<dt><span class="sect2"><a href="MultiArray.html#idm45555228986720">Valid expressions</a></span></dt>
-<dt><span class="sect2"><a href="MultiArray.html#idm45555228890960">Complexity guarantees</a></span></dt>
-<dt><span class="sect2"><a href="MultiArray.html#idm45555228888064">Invariants</a></span></dt>
+<div class="toc"><dl>
+<dt><span class="sect2"><a href="MultiArray.html#idp298202176">Notation</a></span></dt>
+<dt><span class="sect2"><a href="MultiArray.html#idp298222016">Associated Types</a></span></dt>
+<dt><span class="sect2"><a href="MultiArray.html#idp298282704">Valid expressions</a></span></dt>
+<dt><span class="sect2"><a href="MultiArray.html#idp298378464">Complexity guarantees</a></span></dt>
+<dt><span class="sect2"><a href="MultiArray.html#idp298381360">Invariants</a></span></dt>
 <dt><span class="sect2"><a href="MultiArray.html#view_types">Associated Types for Views</a></span></dt>
-<dt><span class="sect2"><a href="MultiArray.html#idm45555228725232">Models</a></span></dt>
+<dt><span class="sect2"><a href="MultiArray.html#idp298544192">Models</a></span></dt>
 </dl></div>
 <p>The MultiArray
 concept defines an interface to hierarchically nested
@@ -153,11 +153,11 @@ Two concept checking classes for the MultiArray concepts
 </p>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555229067296"></a>Notation</h3></div></div></div>
+<a name="idp298202176"></a>Notation</h3></div></div></div>
 <p>What follows are the descriptions of symbols that will be used
 to describe the MultiArray interface.</p>
 <div class="table">
-<a name="idm45555229066256"></a><p class="title"><b>Table&#160;20.1.&#160;Notation</b></p>
+<a name="idp298203216"></a><p class="title"><b>Table&#160;22.1.&#160;Notation</b></p>
 <div class="table-contents"><table class="table" summary="Notation">
 <colgroup>
 <col>
@@ -213,11 +213,11 @@ to <code class="literal">index_gen::operator[](index_range)</code>.</td>
 </div>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555229047408"></a>Associated Types</h3></div></div></div>
+<a name="idp298222016"></a>Associated Types</h3></div></div></div>
 <p>
 </p>
 <div class="table">
-<a name="idm45555229046480"></a><p class="title"><b>Table&#160;20.2.&#160;Associated Types</b></p>
+<a name="idp298222944"></a><p class="title"><b>Table&#160;22.2.&#160;Associated Types</b></p>
 <div class="table-contents"><table class="table" summary="Associated Types">
 <colgroup>
 <col>
@@ -405,9 +405,9 @@ This is the const view type with <code class="literal">Dims</code> dimensions.
 </div>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555228986720"></a>Valid expressions</h3></div></div></div>
+<a name="idp298282704"></a>Valid expressions</h3></div></div></div>
 <div class="table">
-<a name="idm45555228986128"></a><p class="title"><b>Table&#160;20.3.&#160;Valid Expressions</b></p>
+<a name="idp298283296"></a><p class="title"><b>Table&#160;22.3.&#160;Valid Expressions</b></p>
 <div class="table-contents"><table class="table" summary="Valid Expressions">
 <colgroup>
 <col>
@@ -627,7 +627,7 @@ expression to be valid.</td>
 </div>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555228890960"></a>Complexity guarantees</h3></div></div></div>
+<a name="idp298378464"></a>Complexity guarantees</h3></div></div></div>
 <code class="literal">begin()</code> and <code class="literal">end()</code> execute in amortized
 constant time.
 <code class="literal">size()</code> executes in at most linear time in the 
@@ -635,9 +635,9 @@ MultiArray's size.
 </div>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555228888064"></a>Invariants</h3></div></div></div>
+<a name="idp298381360"></a>Invariants</h3></div></div></div>
 <div class="table">
-<a name="idm45555228887392"></a><p class="title"><b>Table&#160;20.4.&#160;Invariants</b></p>
+<a name="idp298382032"></a><p class="title"><b>Table&#160;22.4.&#160;Invariants</b></p>
 <div class="table-contents"><table class="table" summary="Invariants">
 <colgroup>
 <col>
@@ -681,7 +681,7 @@ is a <a href="../../utility/Collection.html" target="_top">Collection</a> contai
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="view_types"></a>Associated Types for Views</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="sect3"><a href="MultiArray.html#index_range"><code class="literal">index_range</code></a></span></dt>
 <dt><span class="sect3"><a href="MultiArray.html#index_gen"><code class="literal">index_gen</code></a></span></dt>
 </dl></div>
@@ -724,7 +724,7 @@ The following describes the
 <code class="literal">index_range</code> interface.
 </p>
 <div class="table">
-<a name="idm45555228861136"></a><p class="title"><b>Table&#160;20.5.&#160;Notation</b></p>
+<a name="idp298408352"></a><p class="title"><b>Table&#160;22.5.&#160;Notation</b></p>
 <div class="table-contents"><table class="table" summary="Notation">
 <colgroup>
 <col>
@@ -743,7 +743,7 @@ The following describes the
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="idm45555228854752"></a><p class="title"><b>Table&#160;20.6.&#160;Associated Types</b></p>
+<a name="idp298414736"></a><p class="title"><b>Table&#160;22.6.&#160;Associated Types</b></p>
 <div class="table-contents"><table class="table" summary="Associated Types">
 <colgroup>
 <col>
@@ -769,7 +769,7 @@ represents.</td>
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="idm45555228847376"></a><p class="title"><b>Table&#160;20.7.&#160;Valid Expressions</b></p>
+<a name="idp298422112"></a><p class="title"><b>Table&#160;22.7.&#160;Valid Expressions</b></p>
 <div class="table-contents"><table class="table" summary="Valid Expressions">
 <colgroup>
 <col>
@@ -924,7 +924,7 @@ range and dimension information used to
 instantiate a new view into a MultiArray.
 </p>
 <div class="table">
-<a name="idm45555228768320"></a><p class="title"><b>Table&#160;20.8.&#160;Notation</b></p>
+<a name="idp298501104"></a><p class="title"><b>Table&#160;22.8.&#160;Notation</b></p>
 <div class="table-contents"><table class="table" summary="Notation">
 <colgroup>
 <col>
@@ -953,7 +953,7 @@ instantiate a new view into a MultiArray.
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="idm45555228757952"></a><p class="title"><b>Table&#160;20.9.&#160;Associated Types</b></p>
+<a name="idp298511472"></a><p class="title"><b>Table&#160;22.9.&#160;Associated Types</b></p>
 <div class="table-contents"><table class="table" summary="Associated Types">
 <colgroup>
 <col>
@@ -992,7 +992,7 @@ degenerate ranges specified (i.e. calls to
 </table></div>
 </div>
 <br class="table-break"><div class="table">
-<a name="idm45555228744352"></a><p class="title"><b>Table&#160;20.10.&#160;Valid Expressions</b></p>
+<a name="idp298525072"></a><p class="title"><b>Table&#160;22.10.&#160;Valid Expressions</b></p>
 <div class="table-contents"><table class="table" summary="Valid Expressions">
 <colgroup>
 <col>
@@ -1044,8 +1044,8 @@ return an object of type
 </div>
 <div class="sect2">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="idm45555228725232"></a>Models</h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<a name="idp298544192"></a>Models</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><code class="literal">multi_array</code></li>
 <li class="listitem"><code class="literal">multi_array_ref</code></li>
 <li class="listitem"><code class="literal">const_multi_array_ref</code></li>

@@ -112,7 +112,7 @@ A question arises of which of these executors (or others) be included in this li
 [////////////////////////]
 [section:rationale Design Rationale]
 
-The authors of Boost.Thread have taken a different approach respect to N3785. Instead of basing all the design on a abstract executor class we make executor concepts. We believe that this is the good direction as a static polymorphic executor can be seen as a dynamic polymorphic executor using a simple adaptor. We believe also that it would make the library more usable, and more convenient for users.
+The authors of Boost.Thread have taken a different approach respect to N3785. Instead of basing all the design on an abstract executor class we make executor concepts. We believe that this is the good direction as a static polymorphic executor can be seen as a dynamic polymorphic executor using a simple adaptor. We believe also that it would make the library more usable, and more convenient for users.
 
 The major design decisions concern deciding what a unit of work is, how to manage with units of work and time related functions in a polymorphic way.
 
@@ -364,8 +364,8 @@ A type `E` meets the `Executor` requirements if the following expressions are we
 where 
 
 * `e` denotes a value of type `E`, 
-* `lc` denotes a lvalue referece of type `Closure`, 
-* `rc` denotes a rvalue referece of type `Closure`
+* `lc` denotes a lvalue reference of type `Closure`, 
+* `rc` denotes a rvalue reference of type `Closure`
 * `p` denotes a value of type `Predicate`
 
 [/////////////////////////////////////]
@@ -388,7 +388,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [endsect]
 [/////////////////////////////////////]
-[section:submitrc `e.submit(lc);`]
+[section:submitrc `e.submit(rc);`]
 
 [variablelist
 
@@ -417,7 +417,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [[Return type:] [`void`.]]
 
-[[Throws:] [Whatever exception that can be throw while ensuring the thread safety.]]
+[[Throws:] [Whatever exception that can be thrown while ensuring the thread safety.]]
 
 [[Exception safety:] [If an exception is thrown then the executor state is unmodified.]]
 
@@ -462,7 +462,7 @@ If invoked closure throws an exception the executor will call std::terminate, as
 
 [variablelist
 
-[[Requires:] [This must be called from an scheduled work]]
+[[Requires:] [This must be called from a scheduled work]]
 
 [[Effects:] [reschedule works until `p()`.]]
 
@@ -533,7 +533,7 @@ Executor abstract base class.
 
 [variablelist
 
-[[Effects:] [Constructs a executor. ]]
+[[Effects:] [Constructs an executor. ]]
 
 [[Throws:] [Nothing. ]]
 
@@ -600,7 +600,7 @@ Polymorphic adaptor of a model of Executor to an executor.
 
 [variablelist
 
-[[Effects:] [Constructs a executor_adaptor. ]]
+[[Effects:] [Constructs an executor_adaptor. ]]
 
 [[Throws:] [Nothing. ]]
 
@@ -1521,7 +1521,7 @@ A serial executor ensuring that there are no two work units that executes concur
 
 [variablelist
 
-[[Effects:] [Constructs a inline_executor. ]]
+[[Effects:] [Constructs an inline_executor. ]]
 
 [[Throws:] [Nothing. ]]
 
@@ -1709,7 +1709,7 @@ A user scheduled executor.
 
 [variablelist
 
-[[Effects:] [creates a executor that runs closures using one of its closure-executing methods. ]]
+[[Effects:] [creates an executor that runs closures using one of its closure-executing methods. ]]
 
 [[Throws:] [Whatever exception is thrown while initializing the needed resources. ]]
 

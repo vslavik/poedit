@@ -329,6 +329,7 @@ void test()
    //
    // Finish off by testing the error handlers:
    //
+#ifndef BOOST_NO_EXCEPTIONS
    BOOST_CHECK_THROW(static_cast<T>(iround(static_cast<T>(1e20))), boost::math::rounding_error);
    BOOST_CHECK_THROW(static_cast<T>(iround(static_cast<T>(-1e20))), boost::math::rounding_error);
    BOOST_CHECK_THROW(static_cast<T>(lround(static_cast<T>(1e20))), boost::math::rounding_error);
@@ -420,6 +421,7 @@ void test()
       BOOST_CHECK_THROW(static_cast<T>(llround(static_cast<T>((std::numeric_limits<boost::long_long_type>::max)()) + 1)), boost::math::rounding_error);
       BOOST_CHECK_THROW(static_cast<T>(llround(static_cast<T>((std::numeric_limits<boost::long_long_type>::min)()) - 1)), boost::math::rounding_error);
    }
+#endif
 #endif
 }
 

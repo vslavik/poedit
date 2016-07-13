@@ -26,7 +26,7 @@ determine the type of the data. If BOOST_VMD_EQUAL encounters a data type which 
 cannot parse the result will be UB.
 
 VMD identifiers used in equality testing must be registered and pre-detected.
-All numbers and types are already registered/pre-detected for equality testing
+All numbers and v-types are already registered/pre-detected for equality testing
 so it is only user-defined identifiers which must be registered and pre-detected.
 If an identifier has not been both registered and predetected it will never be
 equal to the same identifier value, so it will always fail equality testing,
@@ -80,7 +80,7 @@ The BOOST_VMD_EQUAL and BOOST_VMD_NOT_EQUAL macros are called "equality macros".
  BOOST_VMD_EQUAL(A_SEQ1,A_SEQ3) will return 1
 
 When BOOST_VMD_EQUAL tests for equality it always parses data for their most
-specific types. The reason for this is that a valid tuple, which is an invalid
+specific types. The reason for this is that a valid tuple, which is also an invalid
 list or array, can never be compared completely because all elements of that tuple
 are not data types which VMD can parse. Therefore VMD always tests equality based
 on the most specific type for any value being tested, which speeds up testing for

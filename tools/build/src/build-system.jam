@@ -555,6 +555,10 @@ local rule should-clean-project ( project )
             {
                 default-toolset = msvc ;
             }
+            else if [ os.name ] = VMS
+            {
+                default-toolset = vmsdecc ;
+            }
             else if [ os.name ] = MACOSX
             {
                 default-toolset = darwin ;

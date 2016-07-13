@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Chapter&#160;16.&#160;Boost.Lambda</title>
+<title>Chapter&#160;17.&#160;Boost.Lambda</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="libraries.html" title="Part&#160;I.&#160;The Boost C++ Libraries (BoostBook Subset)">
 <link rel="prev" href="boost/intrusive/unordered_set_member_hook.html" title="Class template unordered_set_member_hook">
@@ -26,7 +26,7 @@
 <div class="chapter">
 <div class="titlepage"><div>
 <div><h2 class="title">
-<a name="lambda"></a>Chapter&#160;16.&#160;Boost.Lambda</h2></div>
+<a name="lambda"></a>Chapter&#160;17.&#160;Boost.Lambda</h2></div>
 <div><div class="author">
 <h3 class="author">
 <span class="firstname">Jaakko</span> <span class="surname">J&#228;rvi</span>
@@ -35,24 +35,24 @@
 </div></div>
 <div><p class="copyright">Copyright &#169; 1999-2004 Jaakko J&#228;rvi, Gary Powell</p></div>
 <div><div class="legalnotice">
-<a name="idm45555242052112"></a><p>Use, modification and distribution is subject to the Boost
+<a name="idp247148560"></a><p>Use, modification and distribution is subject to the Boost
     Software License, Version 1.0. (See accompanying file
     <code class="filename">LICENSE_1_0.txt</code> or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)</p>
 </div></div>
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt><span class="section"><a href="lambda.html#introduction">In a nutshell</a></span></dt>
 <dt><span class="section"><a href="lambda/getting_started.html">Getting Started</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="lambda/getting_started.html#idm45555242039552">Installing the library</a></span></dt>
-<dt><span class="section"><a href="lambda/getting_started.html#idm45555242007264">Conventions used in this document</a></span></dt>
+<dt><span class="section"><a href="lambda/getting_started.html#idp247161120">Installing the library</a></span></dt>
+<dt><span class="section"><a href="lambda/getting_started.html#idp247193600">Conventions used in this document</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="lambda/s03.html">Introduction</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="lambda/s03.html#idm45555242002976">Motivation</a></span></dt>
-<dt><span class="section"><a href="lambda/s03.html#idm45555241973408">Introduction to lambda expressions</a></span></dt>
+<dt><span class="section"><a href="lambda/s03.html#idp247197888">Motivation</a></span></dt>
+<dt><span class="section"><a href="lambda/s03.html#idp247226832">Introduction to lambda expressions</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="lambda/using_library.html">Using the library</a></span></dt>
 <dd><dl>
@@ -71,28 +71,28 @@
 <dt><span class="section"><a href="lambda/le_in_details.html#lambda.lambda_expressions_for_control_structures">Lambda expressions for control structures</a></span></dt>
 <dt><span class="section"><a href="lambda/le_in_details.html#lambda.exceptions">Exceptions</a></span></dt>
 <dt><span class="section"><a href="lambda/le_in_details.html#lambda.construction_and_destruction">Construction and destruction</a></span></dt>
-<dt><span class="section"><a href="lambda/le_in_details.html#idm45555241557568">Special lambda expressions</a></span></dt>
-<dt><span class="section"><a href="lambda/le_in_details.html#idm45555241505984">Casts, sizeof and typeid</a></span></dt>
+<dt><span class="section"><a href="lambda/le_in_details.html#idp247642624">Special lambda expressions</a></span></dt>
+<dt><span class="section"><a href="lambda/le_in_details.html#idp247694096">Casts, sizeof and typeid</a></span></dt>
 <dt><span class="section"><a href="lambda/le_in_details.html#lambda.nested_stl_algorithms">Nesting STL algorithm invocations</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="lambda/extending.html">Extending return type deduction system</a></span></dt>
 <dt><span class="section"><a href="lambda/s07.html">Practical considerations</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="lambda/s07.html#idm45555241367392">Performance</a></span></dt>
-<dt><span class="section"><a href="lambda/s07.html#idm45555241322992">About compiling</a></span></dt>
-<dt><span class="section"><a href="lambda/s07.html#idm45555241318112">Portability</a></span></dt>
+<dt><span class="section"><a href="lambda/s07.html#idp247832624">Performance</a></span></dt>
+<dt><span class="section"><a href="lambda/s07.html#idp247877216">About compiling</a></span></dt>
+<dt><span class="section"><a href="lambda/s07.html#idp247882096">Portability</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="lambda/s08.html">Relation to other Boost libraries</a></span></dt>
 <dd><dl>
-<dt><span class="section"><a href="lambda/s08.html#idm45555241281296">Boost Function</a></span></dt>
-<dt><span class="section"><a href="lambda/s08.html#idm45555241272544">Boost Bind</a></span></dt>
+<dt><span class="section"><a href="lambda/s08.html#idp247918912">Boost Function</a></span></dt>
+<dt><span class="section"><a href="lambda/s08.html#idp247927664">Boost Bind</a></span></dt>
 </dl></dd>
 <dt><span class="section"><a href="lambda/s09.html">Contributors</a></span></dt>
 <dt><span class="section"><a href="lambda/s10.html">Rationale for some of the design decisions</a></span></dt>
 <dd><dl><dt><span class="section"><a href="lambda/s10.html#lambda.why_weak_arity">
 Lambda functor arity
 </a></span></dt></dl></dd>
-<dt><span class="bibliography"><a href="lambda.html#idm45555241242400">Bibliography</a></span></dt>
+<dt><span class="bibliography"><a href="lambda.html#idp247957744">Bibliography</a></span></dt>
 </dl>
 </div>
 <div class="section">
@@ -124,7 +124,7 @@ In explaining what the library is about, a line of code says more than a thousan
 </div>
 <div class="bibliography">
 <div class="titlepage"><div><div><h2 class="title">
-<a name="idm45555241242400"></a>Bibliography</h2></div></div></div>
+<a name="idp247957744"></a>Bibliography</h2></div></div></div>
 <div class="biblioentry">
 <a name="cit:stepanov:94"></a><p>[<abbr class="abbrev">STL94</abbr>] <span class="authorgroup"><span class="firstname">A. A.</span> <span class="surname">Stepanov</span> and <span class="firstname">M.</span> <span class="surname">Lee</span>. </span><span class="title"><i>The Standard Template Library</i>. </span><span class="orgname">Hewlett-Packard Laboratories. </span><span class="pubdate">1994. </span><span class="bibliomisc">
 <a href="http://www.hpl.hp.com/techreports" target="_top">www.hpl.hp.com/techreports</a>

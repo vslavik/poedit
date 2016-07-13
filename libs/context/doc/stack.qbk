@@ -5,6 +5,7 @@
           http://www.boost.org/LICENSE_1_0.txt
 ]
 
+[#stack]
 [section:stack Stack allocation]
 
 The memory used by the stack is allocated/deallocated via a __stack_allocator__
@@ -68,8 +69,7 @@ virtual addresses are used.]
         #include <boost/context/protected_fixedsize.hpp>
 
         template< typename traitsT >
-        struct basic_protected_fixedsize
-        {
+        struct basic_protected_fixedsize {
             typedef traitT  traits_type;
 
             basic_protected_fixesize(std::size_t size = traits_type::default_size());
@@ -101,6 +101,61 @@ the highest/lowest address of the stack.]]
 [endsect]
 
 
+[section:pooled_fixedsize Class ['pooled_fixedsize_stack]]
+
+__boost_context__ provides the class __pooled_fixedsize__ which models
+the __stack_allocator_concept__.
+In contrast to __protected_fixedsize__ it does not append a guard page at the
+end of each stack. The memory is managed internally by
+[@http://www.boost.org/doc/libs/release/libs/pool/doc/html/boost/pool.html `boost::pool<>`].
+
+        #include <boost/context/pooled_fixedsize_stack.hpp>
+
+        template< typename traitsT >
+        struct basic_pooled_fixedsize_stack {
+            typedef traitT  traits_type;
+
+            basic_pooled_fixedsize_stack(std::size_t stack_size = traits_type::default_size(), std::size_t next_size = 32, std::size_t max_size = 0);
+
+            stack_context allocate();
+
+            void deallocate( stack_context &);
+        }
+
+        typedef basic_pooled_fixedsize_stack< stack_traits > pooled_fixedsize_stack;
+
+[heading `basic_pooled_fixedsize_stack(std::size_t stack_size, std::size_t next_size, std::size_t max_size)`]
+[variablelist
+[[Preconditions:] [`! traits_type::is_unbounded() && ( traits_type::maximum:size() >= stack_size)`
+and `0 < nest_size`.]]
+[[Effects:] [Allocates memory of at least `stack_size` Bytes and stores a pointer to
+the stack and its actual size in `sctx`. Depending on the architecture (the
+stack grows downwards/upwards) the stored address is the highest/lowest
+address of the stack. Argument `next_size` determines the number of stacks to
+request from the system the first time that `*this` needs to allocate system
+memory. The third argument `max_size` controls how many memory might be
+allocated for stacks - a value of zero means no uper limit.]]
+]
+
+[heading `stack_context allocate()`]
+[variablelist
+[[Preconditions:] [`! traits_type::is_unbounded() && ( traits_type::maximum:size() >= stack_size)`.]]
+[[Effects:] [Allocates memory of at least `stack_size` Bytes and stores a pointer to
+the stack and its actual size in `sctx`. Depending on the architecture (the
+stack grows downwards/upwards) the stored address is the highest/lowest
+address of the stack.]]
+]
+
+[heading `void deallocate( stack_context & sctx)`]
+[variablelist
+[[Preconditions:] [`sctx.sp` is valid,
+`! traits_type::is_unbounded() && ( traits_type::maximum:size() >= sctx.size)`.]]
+[[Effects:] [Deallocates the stack space.]]
+]
+
+[endsect]
+
+
 [section:fixedsize Class ['fixedsize_stack]]
 
 __boost_context__ provides the class __fixedsize__ which models
@@ -112,8 +167,7 @@ end of each stack. The memory is simply managed by `std::malloc()` and
         #include <boost/context/fixedsize_stack.hpp>
 
         template< typename traitsT >
-        struct basic_fixedsize_stack
-        {
+        struct basic_fixedsize_stack {
             typedef traitT  traits_type;
 
             basic_fixesize_stack(std::size_t size = traits_type::default_size());
@@ -157,15 +211,13 @@ stack which grows on demand.
 [note Segmented stacks are currently only supported by [*gcc] from version
 [*4.7] [*clang] from version [*3.4] onwards. In order to use a
 __segmented_stack__ __boost_context__ must be built with
-[*toolset=gcc segmented-stacks=on] at b2/bjam command-line. Applications
-must be compiled with compiler-flags
-[*-fsplit-stack -DBOOST_USE_SEGMENTED_STACKS].]
+property `segmented-stacks`, e.g. [*toolset=gcc segmented-stacks=on] at b2/bjam
+command line.]
 
         #include <boost/context/segmented_stack.hpp>
 
         template< typename traitsT >
-        struct basic_segmented_stack
-        {
+        struct basic_segmented_stack {
             typedef traitT  traits_type;
 
             basic_segmented_stack(std::size_t size = traits_type::default_size());
@@ -208,8 +260,7 @@ allocate stacks.
 
         #include <boost/context/stack_traits.hpp>
 
-        struct stack_traits
-        {
+        struct stack_traits {
             static bool is_unbounded() noexcept;
 
             static std::size_t page_size() noexcept;
@@ -269,8 +320,7 @@ the stack pointer and the size of the stack.
 In case of a __segmented__, __stack_context__ contains some extra control
 structures.
 
-        struct stack_context
-        {
+        struct stack_context {
             void    *   sp;
             std::size_t size;
 

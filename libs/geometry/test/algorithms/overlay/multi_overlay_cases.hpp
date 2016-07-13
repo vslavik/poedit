@@ -82,10 +82,14 @@ static std::string case_64_multi[3] =
     "MULTIPOLYGON(((1 1,1 2,3 2,3 1,1 1)))"
 };
 
-static std::string case_65_multi[2] =
+static std::string case_65_multi[4] =
 {
     "MULTIPOLYGON(((2 2,2 3,3 3,3 2,2 2)))",
-    "MULTIPOLYGON(((1 1,1 2,2 2,2 1,1 1)),((2 2,2 3,3 3,3 2,2 2)),((3 1,3 2,5 2,5 1,3 1)))"
+    "MULTIPOLYGON(((1 1,1 2,2 2,2 1,1 1)),((2 2,2 3,3 3,3 2,2 2)),((3 1,3 2,5 2,5 1,3 1)))",
+
+    // Inverse versions
+    "MULTIPOLYGON(((0 0,0 4,6 4,6 0,0 0),(2 2,3 2,3 3,2 3,2 2)))",
+    "MULTIPOLYGON(((0 0,0 4,6 4,6 0,0 0),(1 1,2 1,2 2,1 2,1 1),(2 2,3 2,3 3,2 3,2 2),(3 1,5 1,5 2,3 2,3 1)))"
 };
 
 static std::string case_66_multi[2] =
@@ -118,11 +122,14 @@ static std::string case_71_multi[2] =
     "MULTIPOLYGON(((0 2,0 3,3 3,3 2,0 2)))"
 };
 
-static std::string case_72_multi[2] =
+static std::string case_72_multi[3] =
 {
     // cluster with ii, done by both traverse and assemble
     "MULTIPOLYGON(((0 3,4 4,3 0,3 3,0 3)),((3 3,2 1,1 2,3 3)))",
-    "MULTIPOLYGON(((0 0,1 4,3 3,4 1,0 0)))"
+    "MULTIPOLYGON(((0 0,1 4,3 3,4 1,0 0)))",
+
+    // Inverse version of a
+    "MULTIPOLYGON(((-1 -1,-1 5,5 5,5 -1,-1 -1),(0 3,3 3,3 0,4 4,0 3),(3 3,1 2,2 1,3 3)))"
 };
 
 static std::string case_73_multi[2] =
@@ -323,11 +330,15 @@ static std::string case_101_multi[2] =
     "MULTIPOLYGON(((6 1,5 1,5 2,6 3,6 4,7 5,6 5,7 6,8 6,8 5,9 5,8 4,9 4,9 5,10 5,10 1,8 1,8 3,7 3,7 2,6 2,7 1,8 1,7 0,5 0,5 1,5.5 0.5,6 1),(8.5 2.5,9 2,9 3,8.5 2.5)))"
 };
 
-static std::string case_102_multi[2] =
+static std::string case_102_multi[4] =
 {
     // interior ring 'fit' / union
     "MULTIPOLYGON(((0 2,0 7,5 7,5 2,0 2),(4 3,4 6,1 6,2 5,1 5,1 4,3 4,4 3)),((3 4,3 5,4 5,3 4)),((2 5,3 6,3 5,2 4,2 5)))",
-    "MULTIPOLYGON(((0 2,0 7,5 7,5 2,0 2),(2 4,3 5,2 5,2 4),(4 4,3 4,3 3,4 4),(4 5,4 6,3 6,4 5)))"
+    "MULTIPOLYGON(((0 2,0 7,5 7,5 2,0 2),(2 4,3 5,2 5,2 4),(4 4,3 4,3 3,4 4),(4 5,4 6,3 6,4 5)))",
+
+    /* inverse versions (first was already having an interior, so outer ring is just removed */
+    "MULTIPOLYGON(((4 3,3 4,1 4,1 5,2 5,1 6,4 6,4 3),(3 4,4 5,3 5,3 4),(2 5,2 4,3 5,3 6,2 5)))",
+    "MULTIPOLYGON(((-1 1,-1 8,6 8,6 1,-1 1),(0 2,5 2,5 7,0 7,0 2)),((2 4,2 5,3 5,2 4)),((4 4,3 3,3 4,4 4)),((4 5,3 6,4 6,4 5)))"
 };
 
 static std::string case_103_multi[2] =
@@ -358,13 +369,36 @@ static std::string case_106_multi[2] =
     "MULTIPOLYGON(((0 0,0 5,1 5,1 4,2 4,2 5,3 5,3 3,4 4,5 4,5 0,2 0,3 1,2 1,2 3,1 3,2 2,1.5 1.5,2 1,1 1,0 0)),((1 0,2 1,2 0,1 0)))"
 };
 
-static std::string case_107_multi[2] =
+static std::string case_107_multi[4] =
 {
     // For CCW polygon reports a iu/iu problem.
     "MULTIPOLYGON(((6 8,7 9,7 7,8 7,7 6,6 6,6 8)),((6.5 9.5,7 10,7 9,6 9,6 10,6.5 9.5)))",
-    "MULTIPOLYGON(((5 7,6 8,6 10,7 9,8 10,8 8,7 8,6 7,6 6,5 7)))"
+    "MULTIPOLYGON(((5 7,6 8,6 10,7 9,8 10,8 8,7 8,6 7,6 6,5 7)))",
+
+    /* inverse versions */
+    "MULTIPOLYGON(((5 5,5 11,9 11,9 5,5 5),(6 8,6 6,7 6,8 7,7 7,7 9,6 8),(6.5 9.5,6 10,6 9,7 9,7 10,6.5 9.5)))",
+    "MULTIPOLYGON(((4 5,4 11,9 11,9 5,4 5),(5 7,6 6,6 7,7 8,8 8,8 10,7 9,6 10,6 8,5 7)))"
 };
 
+static std::string case_108_multi[3] =
+{
+    // Missing intersection point in [0] / [1], [0] / [2] is OK
+    "MULTIPOLYGON(((3 4,4 4,4 2,4 1,1 1,1 2,2 2,2.5 1.5,3 2,2 2,3 3,1 3,1 2,0 1,0 6,1 6,2 5,2 4,1 4,1.5 3.5,2 4,3 4)))",
+    "MULTIPOLYGON(((0 3,0 4,1 4,0 3)),((3 6,3 5,5 5,5 0,4 0,4 1,1 1,1 2,2 3,2 4,2.5 3.5,3 4,4 3,3 3,3 2,4 2,4 4,2 4,1 3,1 5,2 6,3 6)),((1 3,1 2,0 2,0 3,1 3)))",
+    "MULTIPOLYGON(((0 3,0 4,1 4,0 3)),((3 6,3 5,5 5,5 1,        1 1,1 2,2 3,2 4,2.5 3.5,3 4,4 3,3 3,3 2,4 2,4 4,2 4,1 3,1 5,2 6,3 6)),((1 3,1 2,0 2,0 3,1 3)))"
+};
+
+static std::string case_109_multi[2] =
+    {
+        "MULTIPOLYGON(((0 0,0 40,40 40,40 0,0 0),(10 10,30 10,30 30,10 30,10 10)))",
+        "MULTIPOLYGON(((10 10,10 20,20 10,10 10)),((20 10,30 20,30 10,20 10)),((10 20,10 30,20 20,10 20)),((20 20,30 30,30 20,20 20)))"
+    };
+
+static std::string case_110_multi[2] =
+    {
+        "MULTIPOLYGON(((0 0,0 40,40 40,40 0,0 0),(10 10,30 10,30 30,10 30,10 10)))",
+        "MULTIPOLYGON(((15 10,10 15,10 17,15 10)),((15 10,10 20,10 22,15 10)),((15 10,10 25,10 27,15 10)),((25 10,30 17,30 15,25 10)),((25 10,30 22,30 20,25 10)),((25 10,30 27,30 25,25 10)),((18 10,20 30,19 10,18 10)),((21 10,20 30,22 10,21 10)))"
+    };
 
 static std::string case_recursive_boxes_1[2] =
 {
@@ -395,7 +429,7 @@ static std::string case_recursive_boxes_3[2] =
 
 static std::string case_recursive_boxes_4[2] =
 {
-    // Occurred after refactoring assemble
+    // Occurred after refactoring assemble - not valid!
     "MULTIPOLYGON(((9 3,10 4,10 3,9 3)),((9 9,10 10,10 9,9 9)),((0 1,0 3,1 4,0 4,0 5,1 6,0 6,0 8,1 9,1 8,2 9,2 7,1.5 6.5,2.5 5.5,3 6,3 5,4 6,2 6,2 7,3 8,2 8,3 9,0 9,0 10,6 10,5.5 9.5,6 9,6 10,7 10,7.5 9.5,8 10,8 9,7 9,7 8,6 8,6.5 7.5,7 8,8 8,8 9,9 9,9.5 8.5,10 9,10 8,9.5 7.5,10 7,10 5,8 5,8 4,7 3,7 2,8 3,8 4,9 5,9 3,10 2,10 1,8 1,8.5 0.5,9 1,10 0,4 0,4 1,3 1,3 0,1 0,1 1,0 0,0 1),(4 2,4.5 1.5,5 2,5 4,4.5 3.5,5 3,4 3,4 2),(3 3,4 4,2 4,2.5 3.5,3 4,3 3),(6 4,6.5 3.5,7 4,6 4),(5 7,5 9,4 9,4 8,5 7)))",
     "MULTIPOLYGON(((1 0,2 1,2 0,1 0)),((7 9,7 10,8 10,7 9)),((1 0,0 0,0 3,1 3,2 2,2 3,1 3,1 4,2 4,2 5,1 4,0 4,0 8,1 7,1 6,2 7,1 7,1 9,0 9,0 10,7 10,6 9,6.5 8.5,7 9,8 9,9 8,8 8,9 7,9 6,10 7,10 5,9 5,9 4,10 5,10 0,7 0,8 1,7 1,6 0,3 0,3 1,1 1,1 0),(5 1,5.5 0.5,6 1,6 2,6.5 1.5,7 2,8 2,8 4,7 3,6 3,6 2,5 2,6 1,5 1),(4 4,5 4,5 5,4 4),(4 6,4 7,3 7,2 6,3 6,3 7,4 6),(6 5,6.5 4.5,7 5,6 5,7 6,7 7,6 7,6 5),(3.5 7.5,4 8,4 9,3 8,3.5 7.5)),((9 8,9 9,8 9,9 10,10 10,10 8,9 8)))"
 };
@@ -409,9 +443,235 @@ static std::string case_recursive_boxes_5[2] =
 
 static std::string case_recursive_boxes_6[2] =
 {
-    // Recent regression
+    // Fixed by replacing handle_tangencies
     "MULTIPOLYGON(((2 2,1.5 1.5,2 1,1 1,2 0,0 0,0 3,1 3,1 4,2 4,2 5,5 5,5 0,2 0,2 2,3 1,3 2,3.5 1.5,4 2,2 2)),((1 5,2 5,0 3,0 5,1 5)))",
     "MULTIPOLYGON(((2 1,2 2,1 2,2 3,1 3,1 4,0 4,0 5,5 5,5 2,4 2,4 3,3 3,4 2,3 2,3 1,2 1)),((2 0,0 0,0 3,1 3,1 2,3 0,2 0)),((4 0,3 0,3 1,4 2,4 1,5 1,5 0,4 0)))"
+};
+
+static std::string case_recursive_boxes_7[2] =
+{
+    "MULTIPOLYGON(((3 1,3 2,4 2,4 1,3 1)),((2.5 2.5,3 3,3 2,2 2,2 3,2.5 2.5)),((2 1,3 0,1 0,1 2,2 2,2 1)))",
+    "MULTIPOLYGON(((0 0,1 1,1 0,0 0)),((0 1,0 2,1 2,0 1)),((3.5 2.5,4 3,4 2,3 2,3 3,3.5 2.5)),((3 2,4 1,1 1,1 2,3 2)))"
+};
+
+static std::string case_recursive_boxes_8[2] =
+{
+    // Having colocated IP halfway segment
+    "MULTIPOLYGON(((3 4,3 3,2 3,2 2,0 2,0 3,1 3,1 4,1.5 3.5,2 4,3 4)),((2 5,2 4,1 4,0 3,0 5,2 5)))",
+    "MULTIPOLYGON(((3 4,4 4,4 3,3 3,3 1,0 1,0 2,1 2,1 3,0 2,0 4,3 4)))"
+};
+
+static std::string case_recursive_boxes_9[2] =
+{
+    // Needs ii turn skipping
+    "MULTIPOLYGON(((2 2,3 2,3 0,2 0,2 1,1 1,2 2)),((1 1,1 0,0 0,0 3,0.5 2.5,1 3,2 2,1 2,1 1)))",
+    "MULTIPOLYGON(((2 1,2 2,0 2,0 3,2 3,3 2,3 1,2 1)),((2.5 0.5,3 1,3 0,0 0,0 1,1 1,1 2,2.5 0.5)))"
+};
+
+static std::string case_recursive_boxes_10[4] =
+{
+    // Requires skipping ux for difference (a) and switching a->b
+    "MULTIPOLYGON(((2 2,2 3,3 2,2 2)),((2 2,3 1,1 1,1 2,2 2)))",
+    "MULTIPOLYGON(((3 2,2 1,2 3,3 3,3 2)))",
+
+    // Inverse versions
+    "MULTIPOLYGON(((0 0,0 4,4 4,4 0,0 0),(2 2,3 2,2 3,2 2),(2 2,1 2,1 1,3 1,2 2)))",
+    "MULTIPOLYGON(((1 0,1 4,4 4,4 0,1 0),(3 2,3 3,2 3,2 1,3 2)))"
+};
+
+static std::string case_recursive_boxes_11[4] =
+{
+    // Requires switching a->b
+    "MULTIPOLYGON(((3 2,5 2,5 1,4 1,4 0,3 0,3 1,2 1,3 2)))",
+    "MULTIPOLYGON(((5 2,4 1,4 3,5 2)),((3 1,3 2,4 2,3 1)),((4 1,5 1,5 0,4 0,4 1)),((3 2,2 1,3 1,2 0,1 1,2 2,2 3,3 3,3 2)))",
+
+    // Inverse versions
+    "MULTIPOLYGON(((0 -1,0 4,6 4,6 -1,0 -1),(3 2,2 1,3 1,3 0,4 0,4 1,5 1,5 2,3 2)))",
+    "MULTIPOLYGON(((0 -1,0 4,6 4,6 -1,0 -1),(5 2,4 3,4 1,5 2),(3 1,4 2,3 2,3 1),(4 1,4 0,5 0,5 1,4 1),(3 2,3 3,2 3,2 2,1 1,2 0,3 1,2 1,3 2)))"
+};
+
+static std::string case_recursive_boxes_12[2] =
+{
+    // One of them is invalid requiring discarding turns colocated with uu in these clusters
+    "MULTIPOLYGON(((2 2,2 3,3 3,2 2)),((0 0,0 1,1 0,0 0)),((0 3,1 3,0.5 2.5,1 2,0 2,0 3)),((3 2,3 1,1 1,1 2,2 2,2 1,3 2)))",
+    "MULTIPOLYGON(((0 1,0 2,1 2,0 1)),((0 1,1 1,1.5 0.5,2 1,2 0,0 0,0 1)),((1 3,1 4,2 3,1 2,1 3)))"
+};
+
+static std::string case_recursive_boxes_13[2] =
+{
+    // Strictly invalid, requires checking seg_id while considering skipping to next turn
+    "MULTIPOLYGON(((2 1,2 2,3 2,3 1,2 1)),((3 2,3 3,4 3,4 2,3 2)),((2 4,1.5 3.5,2 3,1 3,2 2,0 2,1 3,1 5,2 5,2 4)))",
+    "MULTIPOLYGON(((1 4,1 3,0 3,0 4,1 5,1 4)),((3 5,4 5,4 4,2 4,2 5,3 5)),((3 1,3 2,5 2,5 1,3 1)))"
+};
+
+static std::string case_recursive_boxes_14[2] =
+{
+    // Strictly invalid, requires skipping assignment of discarded turns for clusters
+    "MULTIPOLYGON(((2 2,2 3,3 2,2 2)),((2 4,2 3,3 4,3 3,1 3,1 4,2 4)))",
+    "MULTIPOLYGON(((3 3,4 4,4 3,3 3)),((1 2,2 3,2 2,1 2)),((2 1,2 2,3 1,2 1)),((1 4,1 5,2 5,2 4,1 4)))"
+};
+
+static std::string case_recursive_boxes_15[2] =
+{
+    // Requires inspecting blocked operations in traversing cluster
+    "MULTIPOLYGON(((3 2,3 3,4 3,3 2)),((4 1,4 2,5 2,5 1,4 1)),((4 2,4 3,5 3,4 2)),((3 5,4 4,2 4,2 5,3 5)))",
+    "MULTIPOLYGON(((3 4,4 3,4 4,5 4,5 3,4 3,3 2,3 3,2 3,2 4,3 4)))"
+};
+
+static std::string case_recursive_boxes_16[2] =
+{
+    // Requires inspecting if traverse is possible in selecting continue operation
+    "MULTIPOLYGON(((2 4,1 3,0 3,0 5,3 5,3 4,4 4,4 5,5 5,5 4,4 3,2 3,3 4,2 4)),((2.5 1.5,3 1,3 2,4 2,4 1,5 2,5 0,3 0,3 1,2.5 0.5,3 0,0 0,0 2,3 2,2.5 1.5)))",
+    "MULTIPOLYGON(((2 1,2 2,3 1,2 1)),((3 5,5 5,5 4,4 4,4 3,5 3,5 2,4 1,4 2,3 2,3 4,2 4,2 5,3 5)),((2 2,1 1,1 2,0 1,1 1,1 0,0 0,0 5,1 5,1 3,2 3,2 2)),((4 1,5 1,5 0,3 0,3 2,4 1)))"
+};
+
+static std::string case_recursive_boxes_17[2] =
+{
+    // Requires including uu turns, at least in clusters
+    "MULTIPOLYGON(((0 4,0 5,1 5,0 4)),((4 0,5 1,5 0,4 0)),((4 5,5 5,5 4,3 4,3 5,4 5)),((3 4,3 3,2 2,1 2,1 1,2 1,2 2,2.5 1.5,4 3,5 3,5 1,4 1,4 0,3 0,3 1,2 1,3 0,0 0,0 2,1 2,1 5,1.5 4.5,2 5,2 4,3 4),(2 3,2 4,1 3,2 3)))",
+    "MULTIPOLYGON(((2 5,3 5,2 4,2 5)),((3 1,4 2,4 0,3 0,3 1)),((2 0,0 0,0 1,1 2,0 2,1 3,2 2,2 3,3 2,3 1,2 0)),((1 4,0.5 3.5,1 3,0 3,0 4,1 4)),((4 3,3 3,3 5,4 5,4 4,5 4,5 2,4 2,4 3)))"
+};
+
+static std::string case_recursive_boxes_18[2] =
+{
+    // Simple case having two colocated uu turns
+    "MULTIPOLYGON(((2 1,3 0,2 0,2 1)),((2 1,1 1,1 2,2 1)))",
+    "MULTIPOLYGON(((2 2,2 3,3 3,3 2,2 1,2 2)))"
+};
+
+static std::string case_recursive_boxes_19[2] =
+{
+    // Simple case having two colocated uu and ux turns
+    "MULTIPOLYGON(((1 4,2 3,1 3,1 4)),((1 4,0 4,0 5,1 4)))",
+    "MULTIPOLYGON(((3 4,1 4,2 5,3 4)),((1 4,1 3,0 3,1 4)))"
+};
+
+static std::string case_recursive_boxes_20[2] =
+{
+    // Simple case having two colocated uu and (discarded) cc turns
+    "MULTIPOLYGON(((4 4,4 5,5 5,5 4,4 4)),((4 4,4 3,3 3,3 4,4 4)))",
+    "MULTIPOLYGON(((4 4,4 3,3 3,4 4)),((4 4,4 5,5 4,4 4)))"
+};
+
+static std::string case_recursive_boxes_21[2] =
+{
+    // Having colocated uu/ux/cc turns requiring traversing through arcs to
+    // find first open outgoing arc for union
+    "MULTIPOLYGON(((3 1,3 2,4 1,3 1)),((3 1,3 0,2 0,2 1,3 1)))",
+    "MULTIPOLYGON(((3 1,3 0,2 0,3 1)),((3 1,2 1,2 2,3 2,3 1)))"
+};
+
+static std::string case_recursive_boxes_22[2] =
+{
+    // Requires including ux turns for intersections to block paths
+    "MULTIPOLYGON(((2.5 1.5,3 1,2 1,2 3,3 3,2 2,3 2,2.5 1.5)))",
+    "MULTIPOLYGON(((1 2,0 2,0 3,1 2)),((1 2,2 3,2 1,1 1,1 2)))"
+};
+
+static std::string case_recursive_boxes_23[2] =
+{
+    // [0] is invalid, [1] is valid
+    // Requires discarding turns with uu for intersection/difference too
+    "MULTIPOLYGON(((4.5 3.5,5 4,5 3,4 3,5 2,4 2,4 4,4.5 3.5)))",
+    "MULTIPOLYGON(((4 3,5 4,5 3,4 3)),((3 3,3 4,4 3,3 3)))"
+};
+
+static std::string case_recursive_boxes_24[2] =
+{
+    // Requires including all combinations in clusters having uu
+    "MULTIPOLYGON(((0 2,0 3,1 2,0 2)),((2 3,1 3,1 4,2 4,2 3)),((2 3,4 3,3 2,2 2,2 3)))",
+    "MULTIPOLYGON(((3 2,4 1,2 1,3 2)),((3 2,2 2,2 3,3 2)),((2 2,2 1,1 1,1 2,2 2)))"
+};
+
+static std::string case_recursive_boxes_25[2] =
+{
+    // Requires startable flag per operation, assigned per cluster
+    "MULTIPOLYGON(((4 1,4 2,5 2,5 1,4 0,4 1)),((3 2,3 3,4 3,4 2,3 2)),((3 2,3 1,2 1,3 2)))",
+    "MULTIPOLYGON(((4 2,4 1,3 1,4 2)),((4 2,4 3,5 2,4 2)),((3 1,1 1,1 2,3 2,3 1)))"
+};
+
+static std::string case_recursive_boxes_26[2] =
+{
+    // Requires not including uu outside clusters (or travel through them)
+    "MULTIPOLYGON(((2 4,3 4,3 3,0 3,1 4,1 5,2 5,2 4)),((1 3,1 2,0 2,1 3)))",
+    "MULTIPOLYGON(((2 3,0 3,0 4,1 4,1 5,3 5,3 4,2 4,2 3)),((2 3,3 2,2 2,2 3)))"
+};
+
+static std::string case_recursive_boxes_27[2] =
+{
+    // Combination of lonely uu-turn (which is discarded) and a cluster containing it
+    "MULTIPOLYGON(((2 2,3 1,3 0,2 0,2 2)),((2 2,1 2,1 3,2 2)))",
+    "MULTIPOLYGON(((1 2,0 1,0 2,1 2)),((2 1,2 0,1 0,1 1,2 2,2 1)),((1 3,2 2,1 2,1 3)),((1 3,0 3,1 4,1 3)))"
+};
+
+static std::string case_recursive_boxes_28[2] =
+{
+    // Requires startable flag per operation, assigned per cluster (as #25 but in a different configuration)
+    "MULTIPOLYGON(((5 1,5 0,4 0,4 2,5 3,5 1)),((4 2,3 2,3 3,4 3,4 2)))",
+    "MULTIPOLYGON(((2 2,2 3,3 3,4 2,3 1,2 1,2 2)),((3 4,4 3,3 3,3 4)),((4 2,5 2,4 1,4 2)))"
+};
+
+static std::string case_recursive_boxes_29[2] =
+{
+    // Requires not discarding colocated cc turns
+    "MULTIPOLYGON(((2 3,2 4,1 4,2 5,4 5,4 4,3 4,3 3,2 3)),((3 3,4 3,4 1,5 1,5 0,3 0,3 2,2 2,3 3)),((1 2,0 2,0 3,1 3,1 2)),((1 1,0 1,1 2,2 2,2 1,1 1)),((2 1,2 0,1 0,2 1)))",
+    "MULTIPOLYGON(((0 4,0 5,1 4,0 4)),((2 3,2 4,4 4,4 3,2 3)),((2 2,1 2,1 3,2 3,2 2)),((1 2,0 2,0 3,1 3,0.5 2.5,1 2)),((1 0,0 0,1 1,4 1,4 0,1 0)),((4 0,5 1,5 0,4 0)))"
+};
+
+static std::string case_recursive_boxes_30[2] =
+{
+    // Requires not discarding turns colocated with uu/invalid polygons (now not necessary anymore because of startable)
+    "MULTIPOLYGON(((2 2,2 3,4 3,4 4,4.5 3.5,5 4,5 0,3 0,3 1,4 1,4 2,2 2)),((1 5,3 5,4 4,0 4,0 5,1 5)))",
+    "MULTIPOLYGON(((2 1,2 3,1 3,1 4,2 5,2 4,3 4,3 5,5 5,5 4,4 4,3.5 3.5,4 3,4 4,5 3,4.5 2.5,5 2,5 0,4 0,4 2,3 2,3 3,2.5 2.5,4 1,3 1,3 0,1 0,2 1)))"
+};
+
+static std::string case_recursive_boxes_31[2] =
+{
+    // Requires allowing traverse through clusters having only uu/cc for intersection
+    "MULTIPOLYGON(((1 4,1 1,0 1,0 4,1 4)),((1 1,2 1,2 0,1 0,1 1)),((2 2,1 2,2 3,2 2)))",
+    "MULTIPOLYGON(((2 3,2 2,1 2,2 3)),((0 1,0 3,1 3,1 1,0 1)),((1 1,1 0,0 0,1 1)))"
+};
+
+static std::string case_recursive_boxes_32[2] =
+{
+    // Similar to #31 but here uu/ux/cc
+    "MULTIPOLYGON(((1 3,2 3,2 2,1 1,1 3)),((2 2,3 1,3 0,2 0,2 2)),((1 1,2 1,1 0,0 0,0 1,1 1)))",
+    "MULTIPOLYGON(((3 1,3 0,2 0,2 2,3 1)),((1 1,0 1,0 2,1 2,2 1,1 1)))"
+};
+
+static std::string case_recursive_boxes_33[2] =
+{
+    // Similar to #31 but here also a ui
+    "MULTIPOLYGON(((4 3,5 3,5 2,3 2,4 3)),((4 2,5 1,3 1,4 2)),((2 1,3 1,3 0,2 0,2 1)),((3 2,1 2,1 3,2 3,3 2)))",
+    "MULTIPOLYGON(((3 1,2 1,2 4,4 4,4 3,5 2,3 2,3 1)),((3 1,4 2,4 1,5 1,5 0,3 0,3 1)))"
+};
+
+static std::string case_recursive_boxes_34[2] =
+{
+    // Requires detecting finished arcs during cluster traversal
+    "MULTIPOLYGON(((2 0,0 0,0 5,2 5,2 4,3 5,5 5,5 0,2 0)))",
+    "MULTIPOLYGON(((3 3,2 3,2 2,3 2,3 1,2 0,1 0,2 1,1 1,1 0,0 0,0 5,1 4,1 5,4 5,3 4,3.5 3.5,4 4,4 5,5 4,5 1,4 1,4 3,3 3)),((3 1,4 1,3 0,3 1)))"
+};
+
+static std::string case_recursive_boxes_35[2] =
+{
+    // Requires detecting finished arcs during cluster traversal
+    "MULTIPOLYGON(((3 1,2 1,3 0,0 0,0 2,1 2,1 3,0 2,0 5,4 5,4 4,5 4,5 1,4 1,5 0,3 0,3 1),(2.5 1.5,3 2,2 2,2.5 1.5),(2 4,1 4,2 3,2 4)))",
+    "MULTIPOLYGON(((2 2,1.5 1.5,2 1,1 1,1 0,0 0,0 5,3 5,2.5 4.5,3 4,3 5,5 5,5 0,1 0,2 1,2 2),(3 2,3 3,2.5 2.5,3 2),(2 3,2 4,1 4,1 3,2 3)))"
+};
+
+static std::string case_recursive_boxes_36[2] =
+{
+    // Requires increasing target rank while skipping finished arcs to avoid duplicate output
+    "MULTIPOLYGON(((5 3,4 3,4 4,5 3)),((5 2,4 2,5 3,5 2)),((5 2,5 1,4 1,5 2)))",
+    "MULTIPOLYGON(((4 2,4 3,5 3,5 2,4 2)),((4 2,4 1,3 1,3 2,4 2)))"
+};
+
+static std::string case_recursive_boxes_37[2] =
+{
+    // Requires skipping arc for union too, to avoid duplicate hole
+    "MULTIPOLYGON(((4 0,5 1,5 0,4 0)),((2 0,3 1,3 0,2 0)),((2 3,2 2,1 2,1 3,2 3)),((2 1,2 2,4 2,3 1,2 1)))",
+    "MULTIPOLYGON(((2 3,1 2,1 3,2 3)),((3 1,3.5 0.5,4 1,3 1,4 2,4 3,5 3,5 0,3 0,3 1)),((3 1,2 0,2 1,3 1)))"
 };
 
 static std::string pie_21_7_21_0_3[2] =
@@ -505,12 +765,27 @@ static std::string ticket_10803[2] =
         "MULTIPOLYGON(((1374 1092,1734 1092,3174 2526,3174 2886,1374 2886,1374 1092)))"
     };
 
+// Intersection was reported as invalid
+static std::string ticket_11018[2] =
+    {
+        "MULTIPOLYGON(((66.32861177 -32.36106001,66.32805654 -32.36294657,66.32805697 -32.36294666,66.2558847 -32.60687137,66.18259719 -32.85172659,66.18259756 -32.85172667,66.10923256 -33.09561483,66.10923294 -33.09561491,66.03574675 -33.34044236,65.96214887 -33.58529255,65.96214918 -33.58529261,65.94391227 -33.64484979,65.839119 -33.032507,66.32861177 -32.36106001)),((67.77272059 -31.62519092,67.77272315 -31.62518165,67.77272398 -31.62517863,67.84057793 -31.37975346,67.90737994 -31.13429944,67.92189506 -31.0817063,68.151987 -31.013051,69.236142 -30.678138,70.320296 -31.013051,71.411955 -31.338781,72.016906 -32.187175,72.633163 -33.032507,72.464921 -34.015608,72.292755 -34.998316,71.385165 -35.656005,70.46265 -36.306671,69.236142 -36.312964,68.009631 -36.306671,67.087119 -35.656005,66.69381557 -35.37099587,66.7156576 -35.29873723,66.78843343 -35.05443368,66.86117133 -34.80910208,66.86117388 -34.80909338,66.86117494 -34.8090898,66.93281945 -34.5647568,67.00441882 -34.31942369,67.00441834 -34.31942359,67.07592335 -34.07510168,67.14737287 -33.83073849,67.21777858 -33.58537517,67.28811831 -33.34001123,67.35838201 -33.09560549,67.42858934 -32.85025274,67.49773049 -32.6058299,67.56682212 -32.36043528,67.63585135 -32.11504002,67.63585413 -32.11503015,67.63585478 -32.1150278,67.70382724 -31.86961401,67.77272059 -31.62519092)))",
+        "MULTIPOLYGON(((67.840578 -31.37975347,67.77272059 -31.62519092,66.61484414 -31.38427789,66.68556685 -31.13932219,67.840578 -31.37975347)))",
+    };
+
 // Integer, ccw, open
 static std::string ticket_11674[2] =
     {
         "MULTIPOLYGON(((529 3217,529 998,5337 998,5337 1834,5070 2000,5337 2072,5337 3475,529 3475,529 3312,1734 2054,2934 1670,3230 1690,2934 1400,1734 1784,529 3217),(4140 2582,5071 2001,4140 1754,3231 1691,4140 2582)))",
         "MULTIPOLYGON(((528 3218,528 2498,1734 1406,2556 1522,1734 1784,528 3218)),((4610 2288,5340 1178,5340 1832,4609 2289,4140 3002,2934 1574,2555 1521,2934 1400,4140 2582,4610 2288)))",
     };
+
+// Union was reported as invalid because of no generated interior rings, fixed
+static std::string ticket_11984[2] =
+    {
+        "MULTIPOLYGON(((-104.025 72.5541,-95 67,-94 64,-95 60,-81.5804 61.9881,-75 52,-73.1862 50.0729,-75 48,-69.2 42.6,-96 56,-102 51,-119 49,-128 41,-126 33,-99 29,-61.9276 35.8291,-46 21,-30 10,-45 8,-104 6,-119 -8,-89 -18,-29 -10,-20 -9,-16 -11,-15 -13,-27 -29,-9 -13,-7 -14,-13.4737 -33.4211,-21 -34,-25 -36,-30 -40,-40 -49,-35 -50,-30 -51,-27 -53,-21 -52,-20.037 -52.642,-31.5314 -70.8413,-37.9815 -75.2274,-52.1689 -78.5148,-55 -78,-55 -79,-55 -79.1707,-112.692 -92.5385,-120 -94,-90.9143 -94.9695,-91 -95,-90 -99.5,-90 -103,-95 -114,-93 -116,-92 -117,-90 -119,-87.28 -119.68,-87 -120,-86.4444 -119.889,-82 -121,-80.821 -119.728,-77.6667 -119,-73 -119,-55 -114,-54 -114,-47 -114,-40 -121,-39.9327 -120.951,-39.3478 -121.609,-39 -123,-35.2182 -118.927,-24.536 -110.248,-22.875 -109.292,-22 -109,-22 -109,-16 -107,-9 -105,-7.83333 -104.833,-1.33333 -104.333,0.962934 -105.481,11.9682 -122.413,13 -129,20.1579 -120.053,22 -119,29.5 -115.25,30.2903 -114.968,39 -114,48 -112,47.156 -108.962,61 -117,54.9172 -103.176,65 -107,51.482 -95.3683,50.2426 -92.5515,53 -92,51.806 -91.0448,52 -91,49.1363 -88.9091,25.1429 -69.7143,22.733 -56.1314,24.9744 -49.3053,26.9174 -45.1157,27 -45,27.1481 -44.6543,33.4226 -34.0476,35.5919 -31.272,39 -29,39.4424 -26.3458,44.296 -20.136,46 -19,53 -14,53.3759 -13.4361,58.9297 -10.7874,115 13,110.286 13,114 14,112.414 14.7207,247.196 184.001,250 189,239.971 201.765,239 216,237.627 218.027,237.317 223.454,243 229)))",
+        "MULTIPOLYGON(((-31 6,-51 220,-84 241,-120 249,-146 224,-67 56,-74 52,-95 60,-38 10,-38 9)))",
+    };
+
 
 static std::string bug_21155501[2] =
     {
@@ -522,6 +797,12 @@ static std::string mysql_21965285_b[2] =
     {
         "MULTIPOLYGON(((3 0, -19 -19, -7 3, -2 10, 15 0, 3 0)))",
         "MULTIPOLYGON(((1 1, 3 0, 19 -8, -4 -3, 1 1)),((3 0, -2 7, -3 16, 1 19, 8 12, 3 0)))"
+    };
+
+static std::string mysql_1[2] =
+    {
+        "MULTIPOLYGON(((4 5,12 11,-12 -3,4 5)))",
+        "MULTIPOLYGON(((5 4,-14 0,1 0,5 4)),((1 6,13 0,10 12,1 6)))"
     };
 
 #endif // BOOST_GEOMETRY_TEST_MULTI_OVERLAY_CASES_HPP

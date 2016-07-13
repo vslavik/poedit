@@ -11,7 +11,6 @@ http://boost.org/LICENSE_1_0.txt
 
 #include <boost/align/detail/max_size.hpp>
 #include <boost/align/alignment_of.hpp>
-#include <cstddef>
 
 namespace boost {
 namespace alignment {

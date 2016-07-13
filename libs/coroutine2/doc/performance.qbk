@@ -13,28 +13,35 @@ following table. Performance measurements were taken using `rdtsc` and
 platforms. In each case, cache warm-up was accounted for, and the one
 running thread was pinned to a single CPU.
 
-[table Performance of asymmetric coroutines
+[table Performance of asymmetric coroutines (using captured_context)
     [
         [Platform]
         [switch]
         [construction (protected stack-allocator)]
-        [construction (preallocated stack-allocator)]
         [construction (standard stack-allocator)]
     ]
     [
-        [i386 (AMD Athlon 64 DualCore 4400+, Linux 32bit)]
-        [49 ns / 50 cycles]
-        [51 \u00b5s / 51407 cycles]
-        [14 \u00b5s / 15231 cycles]
-        [14 \u00b5s / 15216 cycles]
+        [x86_64 (Intel Core2 Q6700, Linux 64bit)]
+        [7 ns / 20 cycles]
+        [19 \u00b5s / cw6306445402 cycles]
+        [10 \u00b5s / 29896 cycles]
+    ]
+]
+[/
+[table Performance of asymmetric coroutines (using execution_context)
+    [
+        [Platform]
+        [switch]
+        [construction (protected stack-allocator)]
+        [construction (standard stack-allocator)]
     ]
     [
         [x86_64 (Intel Core2 Q6700, Linux 64bit)]
-        [12 ns / 39 cycles]
-        [16 \u00b5s / 41802 cycles]
-        [6 \u00b5s / 10350 cycles]
-        [6 \u00b5s / 18817 cycles]
+        [140 ns / 424 cycles]
+        [14 \u00b5s / 32750 cycles]
+        [8 \u00b5s / 15313 cycles]
     ]
+]
 ]
 
 [endsect]

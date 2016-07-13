@@ -17,6 +17,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_POINT_IS_EQUAL_OR_SPIKE_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_POINT_IS_EQUAL_OR_SPIKE_HPP
 
+#include <boost/geometry/algorithms/detail/direction_code.hpp>
 #include <boost/geometry/algorithms/detail/recalculate.hpp>
 #include <boost/geometry/policies/robustness/robust_point_type.hpp>
 #include <boost/geometry/strategies/side.hpp>
@@ -30,17 +31,6 @@ namespace boost { namespace geometry
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail
 {
-
-template <std::size_t Index, typename Point1, typename Point2>
-inline int sign_of_difference(Point1 const& point1, Point2 const& point2)
-{
-    return
-        math::equals(geometry::get<Index>(point1), geometry::get<Index>(point2))
-        ?
-        0
-        :
-        (geometry::get<Index>(point1) > geometry::get<Index>(point2) ? 1 : -1);
-}
 
 // Checks if a point ("last_point") causes a spike w.r.t.
 // the specified two other points (segment_a, segment_b)

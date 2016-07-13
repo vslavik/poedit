@@ -1457,9 +1457,9 @@ if $(NT)
     local sound = "Beep" "ExtendedSounds" ;
     local r1 = [ W32_GETREGNAMES "HKEY_CURRENT_USER\\Control Panel\\Sound" :
         values ] ;
-    check-equal w32_getregnames : $(sound:L) : $(r1:L) ;
+    check-equal w32_getregnames : $(sound:L) : [ SORT $(r1:L) ] ;
     local r2 = [ W32_GETREGNAMES "HKCU\\Control Panel\\Sound" : values ] ;
-    check-equal w32_getregnames : $(sound:L) : $(r2:L) ;
+    check-equal w32_getregnames : $(sound:L) : [ SORT $(r2:L) ] ;
 
     #   Some Windows platforms may have additional keys under
     # 'CurrentControlSet' which we then remove here so they would not be
@@ -1499,6 +1499,7 @@ if $(NT)
 {
 
 local c = "echo value" ;
+if $(OS) = VMS { c = "PIPE WRITE SYS$OUTPUT \"value\"" ; }
 
 check-equal shell : "value\n"   : [ SHELL $(c) ] ;
 check-equal shell : ""          : [ SHELL $(c) : no-output ] ;

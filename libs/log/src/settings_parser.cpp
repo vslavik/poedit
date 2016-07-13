@@ -15,6 +15,7 @@
 
 #ifndef BOOST_LOG_WITHOUT_SETTINGS_PARSERS
 
+#include <boost/log/detail/setup_config.hpp>
 #include <string>
 #include <locale>
 #include <iostream>
@@ -27,7 +28,6 @@
 #include <boost/io/ios_state.hpp>
 #include <boost/move/core.hpp>
 #include <boost/move/utility.hpp>
-#include <boost/log/detail/config.hpp>
 #include <boost/log/detail/code_conversion.hpp>
 #include <boost/log/utility/setup/settings_parser.hpp>
 #include <boost/log/exceptions.hpp>

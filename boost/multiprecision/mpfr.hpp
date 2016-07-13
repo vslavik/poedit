@@ -1228,6 +1228,11 @@ inline void eval_convert_to(boost::long_long_type* result, const mpfr_float_back
 }
 #endif
 template <unsigned digits10, mpfr_allocation_type AllocationType>
+inline void eval_convert_to(float* result, const mpfr_float_backend<digits10, AllocationType>& val) BOOST_NOEXCEPT
+{
+   *result = mpfr_get_flt(val.data(), GMP_RNDN);
+}
+template <unsigned digits10, mpfr_allocation_type AllocationType>
 inline void eval_convert_to(double* result, const mpfr_float_backend<digits10, AllocationType>& val) BOOST_NOEXCEPT
 {
    *result = mpfr_get_d(val.data(), GMP_RNDN);

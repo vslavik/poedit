@@ -149,6 +149,14 @@ struct ring_type
 
 }
 
+
+template <>
+struct single_tag_of<detail::buffer::buffered_ring_collection_tag>
+{
+    typedef ring_tag type;
+};
+
+
 namespace dispatch
 {
 
@@ -211,6 +219,21 @@ struct within
         return detail::within::point_in_geometry(point, multi, strategy) == 1;
     }
 };
+
+
+template <typename Geometry>
+struct is_empty<Geometry, detail::buffer::buffered_ring_collection_tag>
+    : detail::is_empty::multi_is_empty<detail::is_empty::range_is_empty>
+{};
+
+
+template <typename Geometry>
+struct envelope<Geometry, detail::buffer::buffered_ring_collection_tag>
+    : detail::envelope::envelope_multi_range
+        <
+            detail::envelope::envelope_range
+        >
+{};
 
 
 } // namespace dispatch

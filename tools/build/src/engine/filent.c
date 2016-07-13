@@ -24,6 +24,8 @@
  *  file_collect_dir_content_() - collects directory content information
  *  file_dirscan_()             - OS specific file_dirscan() implementation
  *  file_query_()               - query information about a path from the OS
+ *  file_collect_archive_content_() - collects information about archive members
+ *  file_archivescan_()         - OS specific file_archivescan() implementation
  */
 
 #include "jam.h"
@@ -244,7 +246,7 @@ int try_file_query_root( file_info_t * const info )
     {
         return 0;
     }
-        
+
     /* We have a root path */
     if ( !GetFileAttributesExA( buf, GetFileExInfoStandard, &fileData ) )
     {
@@ -349,27 +351,83 @@ struct ar_hdr
 #define SARFMAG  2
 #define SARHDR  sizeof( struct ar_hdr )
 
-void file_archscan( char const * archive, scanback func, void * closure )
+void file_archscan( char const * arch, scanback func, void * closure )
+{
+    OBJECT * path = object_new( arch );
+    file_archive_info_t * archive = file_archive_query( path );
+
+    object_free( path );
+
+    if ( filelist_empty( archive->members ) )
+    {
+        if ( file_collect_archive_content_( archive ) < 0 )
+            return;
+    }
+
+    /* Report the collected archive content. */
+    {
+        FILELISTITER iter = filelist_begin( archive->members );
+        FILELISTITER const end = filelist_end( archive->members );
+        char buf[ MAXJPATH ];
+
+        for ( ; iter != end ; iter = filelist_next( iter ) )
+        {
+            file_info_t * member_file = filelist_item( iter );
+            LIST * symbols = member_file->files;
+
+            /* Construct member path: 'archive-path(member-name)'
+             */
+            sprintf( buf, "%s(%s)",
+                object_str( archive->file->name ),
+                object_str( member_file->name ) );
+            {
+                OBJECT * const member = object_new( buf );
+                (*func)( closure, member, 1 /* time valid */, &member_file->time );
+                object_free( member );
+            }
+        }
+    }
+}
+
+
+/*
+ *  file_archivescan_()         - OS specific file_archivescan() implementation
+ */
+
+void file_archivescan_( file_archive_info_t * const archive, archive_scanback func,
+                        void * closure )
+{
+}
+
+
+/*
+ * file_collect_archive_content_() - collects information about archive members
+ */
+
+int file_collect_archive_content_( file_archive_info_t * const archive )
 {
     struct ar_hdr ar_hdr;
     char * string_table = 0;
     char buf[ MAXJPATH ];
     long offset;
-    int const fd = open( archive, O_RDONLY | O_BINARY, 0 );
+    const char * path = object_str( archive->file->name );
+    int const fd = open( path , O_RDONLY | O_BINARY, 0 );
+
+    if ( ! filelist_empty( archive->members ) ) filelist_free( archive->members );
 
     if ( fd < 0 )
-        return;
+        return -1;
 
     if ( read( fd, buf, SARMAG ) != SARMAG || strncmp( ARMAG, buf, SARMAG ) )
     {
         close( fd );
-        return;
+        return -1;
     }
 
     offset = SARMAG;
 
     if ( DEBUG_BINDSCAN )
-        out_printf( "scan archive %s\n", archive );
+        out_printf( "scan archive %s\n", path );
 
     while ( ( read( fd, &ar_hdr, SARHDR ) == SARHDR ) &&
         !memcmp( ar_hdr.ar_fmag, ARFMAG, SARFMAG ) )
@@ -430,13 +488,23 @@ void file_archscan( char const * archive, scanback func, void * closure )
                 name = c + 1;
         }
 
-        sprintf( buf, "%s(%.*s)", archive, endname - name, name );
+        sprintf( buf, "%.*s", endname - name, name );
+
+        if ( strcmp( buf, "") != 0 )
         {
-            OBJECT * const member = object_new( buf );
-            timestamp time;
-            timestamp_init( &time, (time_t)lar_date, 0 );
-            (*func)( closure, member, 1 /* time valid */, &time );
-            object_free( member );
+            file_info_t * member = 0;
+
+            /* NT static libraries appear to store the objects in a sequence
+             * reverse to the order in which they were inserted.
+             * Here we reverse the stored sequence by pushing members to front of
+             * member file list to get the intended members order.
+             */
+            archive->members = filelist_push_front( archive->members, object_new( buf ) );
+            member = filelist_front( archive->members );
+            member->is_file = 1;
+            member->is_dir = 0;
+            member->exists = 0;
+            timestamp_init( &member->time, (time_t)lar_date, 0 );
         }
 
         offset += SARHDR + lar_size;
@@ -444,6 +512,8 @@ void file_archscan( char const * archive, scanback func, void * closure )
     }
 
     close( fd );
+
+    return 0;
 }
 
 #endif  /* OS_NT */

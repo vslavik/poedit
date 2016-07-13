@@ -13,6 +13,7 @@
  *         at http://www.boost.org/doc/libs/release/libs/log/doc/html/index.html.
  */
 
+#include <boost/log/detail/config.hpp>
 #include <ctime>
 #include <cctype>
 #include <cwctype>
@@ -544,6 +545,9 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         uintmax_t m_MaxSize;
         //! Free space lower limit
         uintmax_t m_MinFreeSpace;
+        //! File count upper limit
+        uintmax_t m_MaxFiles;
+
         //! The current path at the point when the collector is created
         /*
          * The special member is required to calculate absolute paths with no
@@ -564,7 +568,8 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
             shared_ptr< file_collector_repository > const& repo,
             filesystem::path const& target_dir,
             uintmax_t max_size,
-            uintmax_t min_free_space);
+            uintmax_t min_free_space,
+            uintmax_t max_files);
 
         //! Destructor
         ~file_collector();
@@ -577,7 +582,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
             file::scan_method method, filesystem::path const& pattern, unsigned int* counter);
 
         //! The function updates storage restrictions
-        void update(uintmax_t max_size, uintmax_t min_free_space);
+        void update(uintmax_t max_size, uintmax_t min_free_space, uintmax_t max_files);
 
         //! The function checks if the directory is governed by this collector
         bool is_governed(filesystem::path const& dir) const
@@ -630,7 +635,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
     public:
         //! Finds or creates a file collector
         shared_ptr< file::collector > get_collector(
-            filesystem::path const& target_dir, uintmax_t max_size, uintmax_t min_free_space);
+            filesystem::path const& target_dir, uintmax_t max_size, uintmax_t min_free_space, uintmax_t max_files);
 
         //! Removes the file collector from the list
         void remove_collector(file_collector* p);
@@ -648,11 +653,13 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         shared_ptr< file_collector_repository > const& repo,
         filesystem::path const& target_dir,
         uintmax_t max_size,
-        uintmax_t min_free_space
+        uintmax_t min_free_space,
+        uintmax_t max_files
     ) :
         m_pRepository(repo),
         m_MaxSize(max_size),
         m_MinFreeSpace(min_free_space),
+        m_MaxFiles(max_files),
         m_BasePath(filesystem::current_path()),
         m_TotalSize(0)
     {
@@ -714,7 +721,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         uintmax_t free_space = m_MinFreeSpace ? filesystem::space(m_StorageDir).available : static_cast< uintmax_t >(0);
         file_list::iterator it = m_Files.begin(), end = m_Files.end();
         while (it != end &&
-            (m_TotalSize + info.m_Size > m_MaxSize || (m_MinFreeSpace && m_MinFreeSpace > free_space)))
+            (m_TotalSize + info.m_Size > m_MaxSize || (m_MinFreeSpace && m_MinFreeSpace > free_space) || m_MaxFiles <= m_Files.size()))
         {
             file_info& old_info = *it;
             if (filesystem::exists(old_info.m_Path) && filesystem::is_regular_file(old_info.m_Path))
@@ -829,18 +836,19 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
     }
 
     //! The function updates storage restrictions
-    void file_collector::update(uintmax_t max_size, uintmax_t min_free_space)
+    void file_collector::update(uintmax_t max_size, uintmax_t min_free_space, uintmax_t max_files)
     {
         BOOST_LOG_EXPR_IF_MT(lock_guard< mutex > lock(m_Mutex);)
 
         m_MaxSize = (std::min)(m_MaxSize, max_size);
         m_MinFreeSpace = (std::max)(m_MinFreeSpace, min_free_space);
+        m_MaxFiles = (std::min)(m_MaxFiles, max_files);
     }
 
 
     //! Finds or creates a file collector
     shared_ptr< file::collector > file_collector_repository::get_collector(
-        filesystem::path const& target_dir, uintmax_t max_size, uintmax_t min_free_space)
+        filesystem::path const& target_dir, uintmax_t max_size, uintmax_t min_free_space, uintmax_t max_files)
     {
         BOOST_LOG_EXPR_IF_MT(lock_guard< mutex > lock(m_Mutex);)
 
@@ -851,7 +859,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         {
             // This may throw if the collector is being currently destroyed
             p = it->shared_from_this();
-            p->update(max_size, min_free_space);
+            p->update(max_size, min_free_space, max_files);
         }
         catch (bad_weak_ptr&)
         {
@@ -860,7 +868,7 @@ BOOST_LOG_ANONYMOUS_NAMESPACE {
         if (!p)
         {
             p = boost::make_shared< file_collector >(
-                file_collector_repository::get(), target_dir, max_size, min_free_space);
+                file_collector_repository::get(), target_dir, max_size, min_free_space, max_files);
             m_Collectors.push_back(*p);
         }
 
@@ -907,9 +915,10 @@ namespace aux {
     BOOST_LOG_API shared_ptr< collector > make_collector(
         filesystem::path const& target_dir,
         uintmax_t max_size,
-        uintmax_t min_free_space)
+        uintmax_t min_free_space,
+        uintmax_t max_files)
     {
-        return file_collector_repository::get()->get_collector(target_dir, max_size, min_free_space);
+        return file_collector_repository::get()->get_collector(target_dir, max_size, min_free_space, max_files);
     }
 
 } // namespace aux

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Other APIs</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="up" href="../rationale.html" title="Rationale">
 <link rel="prev" href="../rationale.html" title="Rationale">
@@ -28,17 +28,17 @@
 </h3></div></div></div>
 <h5>
 <a name="context.rationale.other_apis_.h0"></a>
-        <span class="phrase"><a name="context.rationale.other_apis_.setjmp___longjmp__"></a></span><a class="link" href="other_apis_.html#context.rationale.other_apis_.setjmp___longjmp__">setjmp()/longjmp()</a>
+        <span><a name="context.rationale.other_apis_.setjmp___longjmp__"></a></span><a class="link" href="other_apis_.html#context.rationale.other_apis_.setjmp___longjmp__">setjmp()/longjmp()</a>
       </h5>
 <p>
         C99 defines <code class="computeroutput"><span class="identifier">setjmp</span><span class="special">()</span></code>/<code class="computeroutput"><span class="identifier">longjmp</span><span class="special">()</span></code>
         to provide non-local jumps but it does not require that <span class="emphasis"><em>longjmp()</em></span>
         preserves the current stack frame. Therefore, jumping into a function which
-        was exited via a call to <span class="emphasis"><em>longjmp()</em></span> is undefined <a href="#ftn.context.rationale.other_apis_.f0" class="footnote" name="context.rationale.other_apis_.f0"><sup class="footnote">[2]</sup></a>.
+        was exited via a call to <span class="emphasis"><em>longjmp()</em></span> is undefined <sup>[<a name="context.rationale.other_apis_.f0" href="#ftn.context.rationale.other_apis_.f0" class="footnote">2</a>]</sup>.
       </p>
 <h5>
 <a name="context.rationale.other_apis_.h1"></a>
-        <span class="phrase"><a name="context.rationale.other_apis_.ucontext_t"></a></span><a class="link" href="other_apis_.html#context.rationale.other_apis_.ucontext_t">ucontext_t</a>
+        <span><a name="context.rationale.other_apis_.ucontext_t"></a></span><a class="link" href="other_apis_.html#context.rationale.other_apis_.ucontext_t">ucontext_t</a>
       </h5>
 <p>
         Since POSIX.1-2003 <code class="computeroutput"><span class="identifier">ucontext_t</span></code>
@@ -51,7 +51,7 @@
 <p>
         The third argument of <code class="computeroutput"><span class="identifier">makecontext</span><span class="special">()</span></code> specifies the number of integer arguments
         that follow which will require function pointer cast if <code class="computeroutput"><span class="identifier">func</span></code>
-        will accept those arguments which is undefined in C99 <a href="#ftn.context.rationale.other_apis_.f1" class="footnote" name="context.rationale.other_apis_.f1"><sup class="footnote">[3]</sup></a>.
+        will accept those arguments which is undefined in C99 <sup>[<a name="context.rationale.other_apis_.f1" href="#ftn.context.rationale.other_apis_.f1" class="footnote">3</a>]</sup>.
       </p>
 <p>
         The arguments in the var-arg list are required to be integers, passing pointers
@@ -66,7 +66,7 @@
       </p>
 <h5>
 <a name="context.rationale.other_apis_.h2"></a>
-        <span class="phrase"><a name="context.rationale.other_apis_.windows_fibers"></a></span><a class="link" href="other_apis_.html#context.rationale.other_apis_.windows_fibers">Windows
+        <span><a name="context.rationale.other_apis_.windows_fibers"></a></span><a class="link" href="other_apis_.html#context.rationale.other_apis_.windows_fibers">Windows
         fibers</a>
       </h5>
 <p>
@@ -92,11 +92,11 @@
         <code class="computeroutput"><span class="identifier">IsThreadAFiber</span><span class="special">()</span></code>.
       </p>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.context.rationale.other_apis_.f0" class="footnote"><p><a href="#context.rationale.other_apis_.f0" class="para"><sup class="para">[2] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.other_apis_.f0" href="#context.rationale.other_apis_.f0" class="para">2</a>] </sup>
           ISO/IEC 9899:1999, 2005, 7.13.2.1:2
         </p></div>
-<div id="ftn.context.rationale.other_apis_.f1" class="footnote"><p><a href="#context.rationale.other_apis_.f1" class="para"><sup class="para">[3] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.other_apis_.f1" href="#context.rationale.other_apis_.f1" class="para">3</a>] </sup>
           ISO/IEC 9899:1999, 2005, J.2
         </p></div>
 </div>

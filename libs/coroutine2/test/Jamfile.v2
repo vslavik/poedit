@@ -28,15 +28,14 @@ project boost/coroutine2/test
 
 run test_coroutine.cpp : 
     : :
-    [ requires cxx11_constexpr
-               cxx11_decltype
-               cxx11_deleted_functions
-               cxx11_explicit_conversion_operators
-               cxx11_hdr_tuple cxx11_lambdas
+    [ requires cxx11_auto_declarations
+               cxx11_constexpr
+               cxx11_defaulted_functions
+               cxx11_final
+               cxx11_hdr_tuple
+               cxx11_lambdas
                cxx11_noexcept
                cxx11_nullptr
-               cxx11_template_aliases
                cxx11_rvalue_references
-               cxx11_variadic_macros
-               cxx11_variadic_templates
-               cxx14_initialized_lambda_captures ] ;
+               cxx11_template_aliases
+               cxx11_variadic_templates ] ;

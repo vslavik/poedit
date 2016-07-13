@@ -15,6 +15,7 @@
 #ifndef BOOST_VARIANT_RECURSIVE_WRAPPER_FWD_HPP
 #define BOOST_VARIANT_RECURSIVE_WRAPPER_FWD_HPP
 
+#include <boost/mpl/bool.hpp>
 #include "boost/mpl/aux_/config/ctps.hpp"
 #include "boost/mpl/aux_/lambda_support.hpp"
 #include <boost/type_traits/integral_constant.hpp>

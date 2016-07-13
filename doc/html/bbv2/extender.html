@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Extender Manual</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;44.&#160;Boost.Build User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;46.&#160;Boost.Build User Manual">
 <link rel="prev" href="reference.html" title="Reference">
 <link rel="next" href="faq.html" title="Frequently Asked Questions">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="bbv2.extender"></a>Extender Manual</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="extender.html#bbv2.extender.intro">Introduction</a></span></dt>
 <dt><span class="section"><a href="extender.html#bbv2.extender.example">Example: 1-to-1 generator</a></span></dt>
 <dt><span class="section"><a href="extender.html#bbv2.extending.targets">Target types</a></span></dt>
@@ -38,7 +38,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.extender.intro"></a>Introduction</h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="extender.html#bbv2.extender.overview.metatargets">Metatargets</a></span></dt>
 <dt><span class="section"><a href="extender.html#bbv2.extender.overview.targets">Concrete targets</a></span></dt>
 <dt><span class="section"><a href="extender.html#bbv2.extender.overview.generators">Generators</a></span></dt>
@@ -54,7 +54,7 @@
         The current version of Boost.Build has three levels of targets, listed
         below.
       </p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term">metatarget</span></dt>
 <dd><p>
               Object that is created from declarations in Jamfiles. May
@@ -95,14 +95,14 @@
         and can be called with specific properties to generate concrete
         targets. At the code level it is represented by an instance of
         class derived from <a class="link" href="reference.html#bbv2.reference.class.abstract-target" title="Class abstract-target">abstract-target</a>. 
-        <a href="#ftn.idm45555005651232" class="footnote" name="idm45555005651232"><sup class="footnote">[16]</sup></a>
+        <sup>[<a name="idp521347472" href="#ftn.idp521347472" class="footnote">16</a>]</sup>
         </p>
 <p>The <a class="link" href="reference.html#bbv2.reference.class.abstract-target.generate">generate</a>
         method takes the build properties
         (as an instance of the <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">
         property-set</a> class) and returns
         a list containing:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>As front element&#8212;Usage-requirements from this invocation
           (an instance of <a class="link" href="reference.html#bbv2.reference.class.property-set" title="Class property-set">
           property-set</a>)</p></li>
@@ -115,7 +115,7 @@
         lookup and generate a metatarget.</p>
 <p>The <a class="link" href="reference.html#bbv2.reference.class.abstract-target" title="Class abstract-target">abstract-target</a>
         class has three immediate derived classes:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p><a class="link" href="reference.html#bbv2.reference.class.project-target" title="Class project-target">project-target</a> that
           corresponds to a project and is not intended for further
           subclassing. The <a class="link" href="reference.html#bbv2.reference.class.project-target.generate">
@@ -187,7 +187,7 @@ local t = [ new file-target $(name) : CPP : $(project) : $(a) ] ;
         returning targets you should pass them via the <code class="computeroutput">virtual-target.register</code>
         function, besides allowing Boost.Build to track which virtual targets
         got created for each metatarget, this will also replace targets with previously created identical
-        ones, as necessary.<a href="#ftn.idm45555005611072" class="footnote" name="idm45555005611072"><sup class="footnote">[17]</sup></a>
+        ones, as necessary.<sup>[<a name="idp521387632" href="#ftn.idp521387632" class="footnote">17</a>]</sup>
         Here are a couple of examples:
 </p>
 <pre class="programlisting">
@@ -209,7 +209,7 @@ return [ sequence.transform virtual-target.register : $(targets) ] ;
 <p>In practice, most files have specific types, and most tools
         consume and produce files of specific type. To take advantage of this
         fact, Boost.Build defines concept of target type and
-        <a class="indexterm" name="idm45555005604800"></a>
+        <a class="indexterm" name="idp521393840"></a>
         <em class="firstterm">generators</em>, and has special metatarget class
         <a class="link" href="reference.html#bbv2.reference.class.typed-target" title="Class typed-target">typed-target</a>.  Target type is merely an
         identifier. It is associated with a set of file extensions that
@@ -314,7 +314,7 @@ exe codegen : codegen.cpp class_template.verbatim usage.verbatim ;
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.extending.targets"></a>Target types</h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="extender.html#bbv2.extending.scanners">Scanners</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="extender.html#bbv2.extending.scanners">Scanners</a></span></dt></dl></div>
 <p>The first thing we did in the <a class="link" href="extender.html#bbv2.extender.intro" title="Introduction">introduction</a> was declaring a
       new target type:
 </p>
@@ -494,7 +494,7 @@ generators.register-composing mex.mex : CPP LIB : MEX ;
       </p>
 <p>(Need a note about UNIX)</p>
 <h4>
-<a name="idm45555005531712"></a>Custom generator classes</h4>
+<a name="idp521466880"></a>Custom generator classes</h4>
 <p>The standard generators allows you to specify source and target
         types, an action, and a set of flags. If you need anything more complex,
         
@@ -685,7 +685,7 @@ actions inline-file
 <p>
       Using portable features is a good idea because:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>When a portable feature is given a fixed set of
           values, you can build your project with two different
           settings of the feature and Boost.Build will automatically
@@ -702,7 +702,7 @@ actions inline-file
 <p>
     </p>
 <h4>
-<a name="idm45555005500080"></a>Steps for adding a feauture</h4>
+<a name="idp521498448"></a>Steps for adding a feauture</h4>
 <p>Adding a feature requires three steps:
 
         </p>
@@ -713,7 +713,7 @@ actions inline-file
               attributes</a>:
 
               </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>if you want a feature value set for one target
                 to automaticaly propagate to its dependant targets then make it
                 &#8220;propagated&#8221;. </p></li>
@@ -743,7 +743,7 @@ actions inline-file
 <p>
       </p>
 <h4>
-<a name="idm45555005489056"></a>Another example</h4>
+<a name="idp521509472"></a>Another example</h4>
 <p>Here's another example.
         Let's see how we can make a feature that refers to a target. For example,
         when linking dynamic libraries on Windows, one sometimes needs to
@@ -824,7 +824,7 @@ rule link
 </li>
 </ol></div>
 <h4>
-<a name="idm45555005476608"></a>Variants and composite features.</h4>
+<a name="idp521521920"></a>Variants and composite features.</h4>
 <p>Sometimes you want to create a shortcut for some set of
         features. For example, <code class="computeroutput">release</code> is a value of
         <code class="computeroutput">&lt;variant&gt;</code> and is a shortcut for a set of features.
@@ -952,7 +952,7 @@ glib codegen ;
 <p>Here are some guidelines that help to make Boost.Build more
       consistent:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>The <code class="computeroutput">init</code> rule should never fail. Even if
           the user provided an incorrect path, you should emit a warning and go
           on. Configuration may be shared between different machines, and
@@ -1021,10 +1021,10 @@ using yfc ;
     </p>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idm45555005651232" class="footnote"><p><a href="#idm45555005651232" class="para"><sup class="para">[16] </sup></a>This name is historic, and will be eventuall changed to 
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.idp521347472" href="#idp521347472" class="para">16</a>] </sup>This name is historic, and will be eventuall changed to 
         <code class="computeroutput">metatarget</code></p></div>
-<div id="ftn.idm45555005611072" class="footnote"><p><a href="#idm45555005611072" class="para"><sup class="para">[17] </sup></a>This create-then-register pattern is caused by limitations 
+<div class="footnote"><p><sup>[<a id="ftn.idp521387632" href="#idp521387632" class="para">17</a>] </sup>This create-then-register pattern is caused by limitations 
         of the Boost.Jam language. Python port is likely to never create duplicate targets.</p></div>
 </div>
 </div>

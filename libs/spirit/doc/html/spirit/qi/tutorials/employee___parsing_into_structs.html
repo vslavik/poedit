@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Employee - Parsing into structs</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Spirit 2.5.2">
 <link rel="up" href="../tutorials.html" title="Tutorials">
 <link rel="prev" href="roman_numerals.html" title="Roman Numerals">
@@ -35,7 +35,7 @@
           attributed, makes it even easier. The next example demonstrates some features
           of Spirit2 that make this easy. In the process, you'll learn about:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               More about attributes
             </li>
@@ -165,7 +165,7 @@
         </p>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h0"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.lexeme"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.lexeme">Lexeme</a>
         </h6>
 <pre class="programlisting"><span class="identifier">lexeme</span><span class="special">[</span><span class="char">'"'</span> <span class="special">&gt;&gt;</span> <span class="special">+(</span><span class="identifier">char_</span> <span class="special">-</span> <span class="char">'"'</span><span class="special">)</span> <span class="special">&gt;&gt;</span> <span class="char">'"'</span><span class="special">];</span>
 </pre>
@@ -182,7 +182,7 @@
         </p>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h1"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.difference"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.difference">Difference</a>
         </h6>
 <p>
           The expression:
@@ -201,7 +201,7 @@
         </p>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h2"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.plus"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.plus">Plus</a>
         </h6>
 <pre class="programlisting"><span class="special">+</span><span class="identifier">a</span>
 </pre>
@@ -222,7 +222,7 @@
 </pre>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h3"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.sequence_attribute">Sequence
           Attribute</a>
         </h6>
 <p>
@@ -263,7 +263,7 @@
 </table></div>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h4"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.attribute_collapsing">Attribute
           Collapsing</a>
         </h6>
 <p>
@@ -295,7 +295,7 @@
 </pre>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h5"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.auto_rules"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.auto_rules">Auto
           Rules</a>
         </h6>
 <p>
@@ -345,7 +345,7 @@
 </table></div>
 <h6>
 <a name="spirit.qi.tutorials.employee___parsing_into_structs.h6"></a>
-          <span class="phrase"><a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
+          <span><a name="spirit.qi.tutorials.employee___parsing_into_structs.finally"></a></span><a class="link" href="employee___parsing_into_structs.html#spirit.qi.tutorials.employee___parsing_into_structs.finally">Finally</a>
         </h6>
 <p>
           We're down to one rule, the start rule:
@@ -368,7 +368,7 @@
 <p>
           These nodes do not have an attribute:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">lit</span><span class="special">(</span><span class="string">"employee"</span><span class="special">)</span></code>
             </li>

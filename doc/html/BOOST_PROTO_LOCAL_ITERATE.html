@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_PROTO_LOCAL_ITERATE</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="proto/reference.html#header.boost.proto.repeat_hpp" title="Header &lt;boost/proto/repeat.hpp&gt;">
 <link rel="prev" href="BOOST_PROTO_REPEAT_FROM_TO_EX.html" title="Macro BOOST_PROTO_REPEAT_FROM_TO_EX">
@@ -34,7 +34,7 @@
 
 </span>BOOST_PROTO_LOCAL_ITERATE()</pre></div>
 <div class="refsect1">
-<a name="idm45555182081296"></a><h2>Description</h2>
+<a name="idp345143632"></a><h2>Description</h2>
 <p>
         <code class="computeroutput">BOOST_PROTO_LOCAL_ITERATE()</code> is used generate the kind of repetitive code that is typical
         of EDSLs built with Proto. This macro causes the user-defined macro <code class="computeroutput">BOOST_PROTO_LOCAL_MACRO()</code> to
@@ -64,7 +64,7 @@
 <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="keyword">const</span>                                                     \
 <span class="identifier">construct</span><span class="special">(</span><span class="identifier">A_const_ref_a</span><span class="special">(</span><span class="identifier">N</span><span class="special">)</span><span class="special">)</span>                                       \
 <span class="special">{</span>                                                                 \
-    <span class="keyword">return</span> <a class="link" href="boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr</a><span class="special">&lt;</span>                                      \
+    <span class="keyword">return</span> <a class="link" href="boost/proto/make_expr_idp306095104.html" title="Function make_expr">proto::make_expr</a><span class="special">&lt;</span>                                      \
         <a class="link" href="boost/proto/tag/function.html" title="Struct function">proto::tag::function</a>                                      \
     <span class="special">&gt;</span><span class="special">(</span>                                                            \
         <span class="identifier">construct_helper</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span>                                     \
@@ -89,7 +89,7 @@
 <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="keyword">const</span>
 <span class="identifier">construct</span><span class="special">(</span><span class="identifier">A0</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">a0</span><span class="special">)</span>
 <span class="special">{</span>
-    <span class="keyword">return</span> <a class="link" href="boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr</a><span class="special">&lt;</span>
+    <span class="keyword">return</span> <a class="link" href="boost/proto/make_expr_idp306095104.html" title="Function make_expr">proto::make_expr</a><span class="special">&lt;</span>
         <a class="link" href="boost/proto/tag/function.html" title="Struct function">proto::tag::function</a>
     <span class="special">&gt;</span><span class="special">(</span>
         <span class="identifier">construct_helper</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span>
@@ -106,7 +106,7 @@
 <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> <span class="keyword">const</span>
 <span class="identifier">construct</span><span class="special">(</span><span class="identifier">A0</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">a0</span><span class="special">,</span> <span class="identifier">A1</span> <span class="keyword">const</span> <span class="special">&amp;</span> <span class="identifier">a1</span><span class="special">)</span>
 <span class="special">{</span>
-    <span class="keyword">return</span> <a class="link" href="boost/proto/make_exp_idm45506975053600.html" title="Function make_expr">proto::make_expr</a><span class="special">&lt;</span>
+    <span class="keyword">return</span> <a class="link" href="boost/proto/make_expr_idp306095104.html" title="Function make_expr">proto::make_expr</a><span class="special">&lt;</span>
         <a class="link" href="boost/proto/tag/function.html" title="Struct function">proto::tag::function</a>
     <span class="special">&gt;</span><span class="special">(</span>
         <span class="identifier">construct_helper</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span><span class="special">(</span><span class="special">)</span>
@@ -126,7 +126,7 @@
         At each iteration, <code class="computeroutput">BOOST_PROTO_LOCAL_MACRO()</code> is invoked with the current
         iteration number and the following 4 macro parameters:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><code class="computeroutput">BOOST_PROTO_LOCAL_typename_A</code></li>
 <li class="listitem"><code class="computeroutput">BOOST_PROTO_LOCAL_A</code></li>
 <li class="listitem"><code class="computeroutput">BOOST_PROTO_LOCAL_A_a</code></li>
@@ -135,7 +135,7 @@
 <p>
         If these macros are not defined by the user, they default respectively to:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><code class="computeroutput"><a class="link" href="BOOST_PROTO_typename_A.html" title="Macro BOOST_PROTO_typename_A">BOOST_PROTO_typename_A</a></code></li>
 <li class="listitem"><code class="computeroutput"><a class="link" href="BOOST_PROTO_A_const_ref.html" title="Macro BOOST_PROTO_A_const_ref">BOOST_PROTO_A_const_ref</a></code></li>
 <li class="listitem"><code class="computeroutput"><a class="link" href="BOOST_PROTO_A_const_ref_a.html" title="Macro BOOST_PROTO_A_const_ref_a">BOOST_PROTO_A_const_ref_a</a></code></li>
@@ -147,7 +147,7 @@
         After including <code class="computeroutput">BOOST_PROTO_LOCAL_ITERATE()</code>, the
         following macros are automatically undefined:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><code class="computeroutput">BOOST_PROTO_LOCAL_MACRO</code></li>
 <li class="listitem"><code class="computeroutput">BOOST_PROTO_LOCAL_LIMITS</code></li>
 <li class="listitem"><code class="computeroutput">BOOST_PROTO_LOCAL_typename_A</code></li>

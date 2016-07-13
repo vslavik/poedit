@@ -20,7 +20,7 @@ extern "C" {
 
 #include <boost/assert.hpp>
 #include <boost/context/detail/config.hpp>
-#if __cplusplus < 201103L
+#if defined(BOOST_NO_CXX11_HDR_MUTEX)
 # include <boost/thread.hpp>
 #else
 # include <mutex>
@@ -48,32 +48,27 @@ extern "C" {
 
 namespace {
 
-#if __cplusplus < 201103L
-void system_info_( SYSTEM_INFO * si)
-{ ::GetSystemInfo( si); }
+void system_info_( SYSTEM_INFO * si) BOOST_NOEXCEPT_OR_NOTHROW {
+    ::GetSystemInfo( si);
+}
 
-SYSTEM_INFO system_info()
-{
+SYSTEM_INFO system_info() BOOST_NOEXCEPT_OR_NOTHROW {
     static SYSTEM_INFO si;
-    static boost::once_flag flag;
+#if defined(BOOST_NO_CXX11_HDR_MUTEX)
+    static boost::once_flag flag = BOOST_ONCE_INIT;
     boost::call_once( flag, static_cast< void(*)( SYSTEM_INFO *) >( system_info_), & si);
-    return si;
-}
 #else
-SYSTEM_INFO system_info()
-{
-    static SYSTEM_INFO si;
     static std::once_flag flag;
-    std::call_once( flag, [](){ ::GetSystemInfo( & si); } );
+    std::call_once( flag, static_cast< void(*)( SYSTEM_INFO *) >( system_info_), & si);
+#endif
     return si;
 }
-#endif
 
-std::size_t pagesize()
-{ return static_cast< std::size_t >( system_info().dwPageSize); }
+std::size_t pagesize() BOOST_NOEXCEPT_OR_NOTHROW {
+    return static_cast< std::size_t >( system_info().dwPageSize);
+}
 
-std::size_t page_count( std::size_t stacksize)
-{
+std::size_t page_count( std::size_t stacksize) BOOST_NOEXCEPT_OR_NOTHROW {
     return static_cast< std::size_t >(
         std::floor(
             static_cast< float >( stacksize) / pagesize() ) );
@@ -88,22 +83,23 @@ namespace context {
 // libcoco uses 32k+4k bytes as minimum
 BOOST_CONTEXT_DECL
 bool
-stack_traits::is_unbounded() BOOST_NOEXCEPT
-{ return true; }
+stack_traits::is_unbounded() BOOST_NOEXCEPT_OR_NOTHROW {
+    return true;
+}
 
 BOOST_CONTEXT_DECL
 std::size_t
-stack_traits::page_size() BOOST_NOEXCEPT
-{ return pagesize(); }
+stack_traits::page_size() BOOST_NOEXCEPT_OR_NOTHROW {
+    return pagesize();
+}
 
 BOOST_CONTEXT_DECL
 std::size_t
-stack_traits::default_size() BOOST_NOEXCEPT
-{
-    std::size_t size = 64 * 1024; // 64 kB
-    if ( is_unbounded() )
+stack_traits::default_size() BOOST_NOEXCEPT_OR_NOTHROW {
+    const std::size_t size = 64 * 1024; // 64 kB
+    if ( is_unbounded() ) {
         return (std::max)( size, minimum_size() );
-
+    }
     BOOST_ASSERT( maximum_size() >= minimum_size() );
     return maximum_size() == minimum_size()
         ? minimum_size()
@@ -113,15 +109,15 @@ stack_traits::default_size() BOOST_NOEXCEPT
 // because Windows seams not to provide a limit for minimum stacksize
 BOOST_CONTEXT_DECL
 std::size_t
-stack_traits::minimum_size() BOOST_NOEXCEPT
-{ return MIN_STACKSIZE; }
+stack_traits::minimum_size() BOOST_NOEXCEPT_OR_NOTHROW {
+    return MIN_STACKSIZE;
+}
 
 // because Windows seams not to provide a limit for maximum stacksize
 // maximum_size() can never be called (pre-condition ! is_unbounded() )
 BOOST_CONTEXT_DECL
 std::size_t
-stack_traits::maximum_size() BOOST_NOEXCEPT
-{
+stack_traits::maximum_size() BOOST_NOEXCEPT_OR_NOTHROW {
     BOOST_ASSERT( ! is_unbounded() );
     return  1 * 1024 * 1024 * 1024; // 1GB
 }

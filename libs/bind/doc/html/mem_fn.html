@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Chapter&#160;1.&#160;Boost.Member Function</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="mem_fn.html" title="Chapter&#160;1.&#160;Boost.Member Function">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -32,7 +32,7 @@
 </div></div>
 <div class="toc">
 <p><b>Table of Contents</b></p>
-<dl class="toc">
+<dl>
 <dt><span class="section"><a href="mem_fn.html#mem_fn.purpose">Purpose</a></span></dt>
 <dt><span class="section"><a href="mem_fn.html#mem_fn.faq">Frequently Asked Questions</a></span></dt>
 <dd><dl>
@@ -110,7 +110,7 @@
     </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">It</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="keyword">void</span> <span class="identifier">for_each</span><span class="special">(</span><span class="identifier">It</span> <span class="identifier">first</span><span class="special">,</span> <span class="identifier">It</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">());</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <span class="emphasis"><em>Effects:</em></span> Equivalent to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">for_each</span><span class="special">(</span><span class="identifier">first</span><span class="special">,</span> <span class="identifier">last</span><span class="special">,</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">pmf</span><span class="special">))</span></code>.
         </li></ul></div>
 <p>
@@ -288,7 +288,7 @@
 </h3></div></div></div>
 <a name="get_pointer_1"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="identifier">T</span> <span class="special">*</span> <span class="identifier">get_pointer</span><span class="special">(</span><span class="identifier">T</span> <span class="special">*</span> <span class="identifier">p</span><span class="special">)</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> <code class="computeroutput"><span class="identifier">p</span></code>.
           </li>
@@ -303,7 +303,7 @@
 </h3></div></div></div>
 <a name="mem_fn_1"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-1</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">())</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pmf</span><span class="special">)()</span></code>
@@ -317,7 +317,7 @@
 </ul></div>
 <a name="mem_fn_2"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-2</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">()</span> <span class="keyword">const</span><span class="special">)</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pmf</span><span class="special">)()</span></code>
@@ -330,7 +330,7 @@
 </ul></div>
 <a name="mem_fn_2_1"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-2-1</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="identifier">T</span><span class="special">::*</span><span class="identifier">pm</span><span class="special">)</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pm</span></code>
@@ -343,7 +343,7 @@
 </ul></div>
 <a name="mem_fn_3"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A1</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-3</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">(</span><span class="identifier">A1</span><span class="special">))</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">,</span> <span class="identifier">a1</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pmf</span><span class="special">)(</span><span class="identifier">a1</span><span class="special">)</span></code>
@@ -357,7 +357,7 @@
 </ul></div>
 <a name="mem_fn_4"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A1</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-4</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">(</span><span class="identifier">A1</span><span class="special">)</span> <span class="keyword">const</span><span class="special">)</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">,</span> <span class="identifier">a1</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pmf</span><span class="special">)(</span><span class="identifier">a1</span><span class="special">)</span></code>
@@ -370,7 +370,7 @@
 </ul></div>
 <a name="mem_fn_5"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A2</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-5</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">(</span><span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">))</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">,</span> <span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pmf</span><span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">)</span></code>
@@ -384,7 +384,7 @@
 </ul></div>
 <a name="mem_fn_6"></a><pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">R</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A2</span><span class="special">&gt;</span> <span class="emphasis"><em>unspecified-6</em></span> <span class="identifier">mem_fn</span><span class="special">(</span><span class="identifier">R</span> <span class="special">(</span><span class="identifier">T</span><span class="special">::*</span><span class="identifier">pmf</span><span class="special">)</span> <span class="special">(</span><span class="identifier">A1</span><span class="special">,</span> <span class="identifier">A2</span><span class="special">)</span> <span class="keyword">const</span><span class="special">)</span>
 </pre>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="emphasis"><em>Returns:</em></span> a function object &#989; such that the
             expression &#989;<code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">,</span> <span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="special">(</span><span class="identifier">t</span><span class="special">.*</span><span class="identifier">pmf</span><span class="special">)(</span><span class="identifier">a1</span><span class="special">,</span> <span class="identifier">a2</span><span class="special">)</span></code>
@@ -405,7 +405,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mem_fn.implementation.files"></a><a class="link" href="mem_fn.html#mem_fn.implementation.files" title="Files">Files</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <a href="../../../../boost/mem_fn.hpp" target="_top">boost/mem_fn.hpp</a> (main
             header)
@@ -448,7 +448,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mem_fn.implementation.dependencies"></a><a class="link" href="mem_fn.html#mem_fn.implementation.dependencies" title="Dependencies">Dependencies</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             <a href="../../../../libs/config/config.htm" target="_top">Boost.Config</a>
           </li></ul></div>
 </div>
@@ -513,7 +513,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="mem_fn.acknowledgements"></a><a class="link" href="mem_fn.html#mem_fn.acknowledgements" title="Acknowledgements">Acknowledgements</a>
 </h2></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Rene Jager's initial suggestion of using traits classes to make <code class="computeroutput"><span class="identifier">mem_fn</span></code> adapt to user-defined smart pointers
           inspired the <code class="computeroutput"><span class="identifier">get_pointer</span></code>-based
@@ -543,7 +543,7 @@
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
-<td align="left"><p><small>Last revised: December 14, 2015 at 09:15:05 GMT</small></p></td>
+<td align="left"><p><small>Last revised: May 05, 2016 at 21:33:28 GMT</small></p></td>
 <td align="right"><div class="copyright-footer"></div></td>
 </tr></table>
 <hr>

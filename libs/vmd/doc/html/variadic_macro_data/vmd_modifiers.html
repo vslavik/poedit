@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macros with modifiers</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="prev" href="vmd_generic/vmd_assert.html" title="Testing for equality and inequality">
@@ -26,16 +26,16 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="variadic_macro_data.vmd_modifiers"></a><a class="link" href="vmd_modifiers.html" title="Macros with modifiers">Macros with modifiers</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type">Return
       type modifiers</a></span></dt>
 <dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_filter.html">Filtering
       modifiers</a></span></dt>
-<dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_filter0.html">Identifier
+<dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_identifier.html">Identifier
       modifiers</a></span></dt>
 <dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_splitting.html">Splitting
       modifiers</a></span></dt>
-<dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_filter1.html">Index
+<dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_index.html">Index
       modifiers</a></span></dt>
 <dt><span class="section"><a href="vmd_modifiers/vmd_modifiers_single.html">Modifiers
       and the single-element sequence</a></span></dt>
@@ -52,16 +52,6 @@
       All modifiers are VMD identifiers.
     </p>
 <p>
-      Some modifiers are identifiers, both registered and pre-detected, starting
-      with BOOST_VMD_. These are termed VMD "specific modifiers" and change
-      the expansion of a macro in various ways.
-    </p>
-<p>
-      Modifiers may also be user-defined identifiers in some situations which will
-      be subsequently explained. These user-defined identifiers are termed "user-defined
-      modifiers".
-    </p>
-<p>
       In all situations modifiers are optional parameters which are parsed by VMD
       to provide enhanced functionality for some of its macros. They are never required
       as part of the basic functionality of a macro.
@@ -70,6 +60,15 @@
       When modifiers are used as optional arguments to a macro they can be input
       after the required parameters in any order and VMD will still handle the optional
       parameters correctly.
+    </p>
+<p>
+      There are two general types of modifiers, 'specific modifiers' and 'user-defined
+      modifiers'. Specific modifers start with BOOST_VMD_ and are both registered
+      and pre-detected identifiers known to VMD. The specific modifiers change the
+      expansion of particular macros in various ways which will be subsequently explained.
+      User-defined modifiers are user-defined identifiers which the end-user of specific
+      macros must register and pre-detect for himself. They also change the expansion
+      of particular macros in various ways which will be subsequently explained.
     </p>
 <p>
       For any particular macro if a specific modifier is not appropriate it is just
@@ -82,10 +81,10 @@
 <p>
       The situations where modifiers can be used to enhance the basic functionality
       of VMD macros can be divided by particular types of specific modifiers. Each
-      particular type of a specific modifier has a particular name given to it in
-      this documentation, functionality, set of identifiers, and may be used as optional
-      parameters in one or more designated macros depending on the specific modifier
-      type.
+      particular type of a specific modifier has a name given to it, functionality,
+      and set of identifiers associated with that particular type. Each particular
+      type of a specific modifier may be used as optional parameters in one or more
+      designated macros depending on the specific modifier type.
     </p>
 <p>
       When more than one mutually exclusive specific modifier from a particular type
@@ -124,7 +123,7 @@
 <p>
         These modifiers are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             BOOST_VMD_RETURN_NO_TYPE, do not return the type of data.
           </li>
@@ -168,11 +167,11 @@
       </p>
 <p>
         If more than one of the return type modifiers are specified as optional parameters
-        last one specified is in effect.
+        the last one specified is in effect.
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.h0"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_get_type"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_get_type">Usage
+        <span><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_get_type"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_get_type">Usage
         with BOOST_VMD_GET_TYPE</a>
       </h5>
 <p>
@@ -232,7 +231,7 @@
 </pre>
 <h5>
 <a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.h1"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_sequence_converting_m"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_sequence_converting_m">Usage
+        <span><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_sequence_converting_m"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_sequence_converting_m">Usage
         with sequence converting macros</a>
       </h5>
 <p>
@@ -240,7 +239,7 @@
         data type or to variadic data, where each element's data in the sequence
         becomes an element in the destination composite type. The macros are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             BOOST_VMD_TO_ARRAY, converts the sequence to an array
           </li>
@@ -430,7 +429,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.h2"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_elem"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_elem">Usage
+        <span><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_elem"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_boost_vmd_elem">Usage
         with BOOST_VMD_ELEM</a>
       </h5>
 <p>
@@ -616,7 +615,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.h3"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_other_modifiers_of_bo"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_other_modifiers_of_bo">Usage
+        <span><a name="variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_other_modifiers_of_bo"></a></span><a class="link" href="vmd_modifiers.html#variadic_macro_data.vmd_modifiers.vmd_modifiers_return_type.usage_with_other_modifiers_of_bo">Usage
         with other modifiers of BOOST_VMD_ELEM</a>
       </h5>
 <p>

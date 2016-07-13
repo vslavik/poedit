@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Writing your own sources</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../extension.html" title="Extending the library">
 <link rel="prev" href="../extension.html" title="Extending the library">
@@ -32,7 +32,7 @@
       </p>
 <h5>
 <a name="log.extension.sources.h0"></a>
-        <span class="phrase"><a name="log.extension.sources.creating_a_new_logger_feature"></a></span><a class="link" href="sources.html#log.extension.sources.creating_a_new_logger_feature">Creating
+        <span><a name="log.extension.sources.creating_a_new_logger_feature"></a></span><a class="link" href="sources.html#log.extension.sources.creating_a_new_logger_feature">Creating
         a new logger feature</a>
       </h5>
 <p>
@@ -47,7 +47,7 @@
 <p>
         A logger feature should follow these basic requirements:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             A logging feature should be a class template. It should have at least
             one template parameter type (let's name it <code class="computeroutput"><span class="identifier">BaseT</span></code>).
@@ -100,7 +100,7 @@
             interface of the <code class="computeroutput"><a class="link" href="../../boost/log/sources/basic_logger.html" title="Class template basic_logger">basic_logger</a></code>
             class template (or the same part of the base feature interface), the
             following should be considered with regard to such methods:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                   The public methods that eventually call these methods are implemented
                   by the <code class="computeroutput"><a class="link" href="../../boost/log/sources/basic_composite_logger.html" title="Class template basic_composite_logger">basic_composite_logger</a></code>
@@ -442,7 +442,7 @@
       </p>
 <h5>
 <a name="log.extension.sources.h1"></a>
-        <span class="phrase"><a name="log.extension.sources.guidelines_for_designers_of_standalone_logging_sources"></a></span><a class="link" href="sources.html#log.extension.sources.guidelines_for_designers_of_standalone_logging_sources">Guidelines
+        <span><a name="log.extension.sources.guidelines_for_designers_of_standalone_logging_sources"></a></span><a class="link" href="sources.html#log.extension.sources.guidelines_for_designers_of_standalone_logging_sources">Guidelines
         for designers of standalone logging sources</a>
       </h5>
 <p>
@@ -481,8 +481,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

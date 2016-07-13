@@ -64,7 +64,7 @@ public:
     /*!
      * Constructor with initialization of the stored value
      */
-    explicit attribute_value_impl(BOOST_RV_REF(value_type) v) : m_value(v) {}
+    explicit attribute_value_impl(BOOST_RV_REF(value_type) v) : m_value(boost::move(v)) {}
 
     /*!
      * Attribute value dispatching method.

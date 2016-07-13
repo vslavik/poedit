@@ -39,12 +39,12 @@ By far the most important thing you can do when using this library
 is turn on your compiler's optimisation options.  As the following
 table shows the penalty for using the library in debug mode can be
 quite large.  In addition switching to 64-bit code has a small but noticeable
-improvement in performance, as does switching to a different compiler 
+improvement in performance, as does switching to a different compiler
 (Intel C++ 15 in this example).
 
 [table_Compiler_Option_Comparison_on_Windows_x64]
 
-[endsect]
+[endsect] [/section:getting_best Getting the Best Performance from this Library: Compiler and Compiler Options]
 
 [section:tradoffs Trading Accuracy for Performance]
 
@@ -53,13 +53,13 @@ There are a number of [link policy Policies] that can be used to trade accuracy 
 * Internal promotion: by default functions with `float` arguments are evaluated at `double` precision
 internally to ensure full precision in the result.  Similarly `double` precision functions are
 evaluated at `long double` precision internally by default.  Changing these defaults can have a significant
-speed advantage at the expense of accuracy, note also that evaluating using `float` internally may result in 
+speed advantage at the expense of accuracy, note also that evaluating using `float` internally may result in
 numerical instability for some of the more complex algorithms, we suggest you use this option with care.
 * Target accuracy: just because you choose to evaluate at `double` precision doesn't mean you necessarily want
 to target full 16-digit accuracy, if you wish you can change the default (full machine precision) to whatever
 is "good enough" for your particular use case.
 
-For example, suppose you want to evaluate `double` precision functions at `double` precision internally, you 
+For example, suppose you want to evaluate `double` precision functions at `double` precision internally, you
 can change the global default by passing `-DBOOST_MATH_PROMOTE_DOUBLE_POLICY=false` on the command line, or
 at the point of call via something like this:
 
@@ -70,7 +70,7 @@ However, an easier option might be:
    #include <boost/math/special_functions.hpp> // Or any individual special function header
 
    namespace math{
-   
+
    namespace precise{
    //
    // Define a Policy for accurate evaluation - this is the same as the default, unless
@@ -99,7 +99,7 @@ However, an easier option might be:
    BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS(fast_policy)
 
    }
-   
+
    }
 
 And now one can call:
@@ -125,7 +125,7 @@ Had we wished to change the target precision (to 9 decimal places) as well as th
    // Invoke BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS:
    //
    BOOST_MATH_DECLARE_SPECIAL_FUNCTIONS(fast_policy)
-   
+
    }
    }
 
@@ -155,7 +155,24 @@ Here's how these options change the relative performance of the distributions on
 
 [table_Distribution_performance_comparison_for_different_performance_options_with_GNU_C_version_5_1_0_on_linux]
 
-[endsect]
+[endsect] [/section:tradoffs Trading Accuracy for Performance]
+
+[section:multiprecision Cost of High-Precision Non-built-in Floating-point]
+
+Using user-defined floating-point like __multiprecision has a very high run-time cost.
+
+To give some flavour of this:
+
+[table:linpack_time Linpack Benchmark
+[[floating-point type]                            [speed Mflops]]
+[[double]                                                [2727]]
+[[__float128]                                          [35]]
+[[multiprecision::float128]                    [35]]
+[[multiprecision::cpp_bin_float_quad] [6]]
+]
+
+[endsect] [/section:multiprecision Cost of High-Precision Non-built-in Floating-point]
+
 
 [section:tuning Performance Tuning Macros]
 
@@ -250,7 +267,7 @@ to try and "second guess" possible optimizations seems not to be such a good ide
 
 [table_Rational_Method_Comparison_with_GNU_C_version_5_1_0_on_linux]
 
-[endsect]
+[endsect] [/section:tuning Performance Tuning Macros]
 
 [section:comp_compilers Comparing Different Compilers]
 
@@ -262,7 +279,7 @@ However, there are still gains to be main, particularly from some of the commerc
 
 [table_Compiler_Comparison_on_linux]
 
-[endsect]
+[endsect] [/section:comp_compilers Comparing Different Compilers]
 
 [section:comparisons Comparisons to Other Open Source Libraries]
 
@@ -295,18 +312,18 @@ And finally we can compare the statistical distributions to GSL, RMath and DCDFL
 
 [table_Distribution_performance_comparison_with_GNU_C_version_5_1_0_on_linux]
 
-[endsect]
+[endsect] [/section:comparisons Comparisons to Other Open Source Libraries]
 
 [section:perf_test_app The Performance Test Applications]
 
-Under ['boost-path]\/libs\/math\/reporting\/performance you will find 
+Under ['boost-path]\/libs\/math\/reporting\/performance you will find
 some reasonable comprehensive performance test applications for this library.
 
 In order to generate the tables you will have seen in this documentation (or others
 for your specific compiler) you need to invoke `bjam` in this directory, using a C++11
 capable compiler.  Note that
 results extend/overwrite whatever is already present in
-['boost-path]\/libs\/math\/reporting\/performance\/doc\/performance_tables.qbk, 
+['boost-path]\/libs\/math\/reporting\/performance\/doc\/performance_tables.qbk,
 you may want to delete this file before you begin so as to make a fresh start for
 your particular system.
 
@@ -331,7 +348,7 @@ source in ['boost-path]\/libs\/math\/reporting\/performance\/third_party\/dcdfli
 If you want to compare multiple compilers, or multiple options for one compiler, then you will
 need to invoke `bjam` multiple times, once for each compiler.  Note that in order to test
 multiple configurations of the same compiler, each has to be given a unique name in the test
-program, otherwise they all edit the same table cells.  Suppose you want to test GCC with 
+program, otherwise they all edit the same table cells.  Suppose you want to test GCC with
 and without the -ffast-math option, in this case bjam would be invoked first as:
 
    bjam toolset=gcc -a cxxflags=-std=gnu++11
@@ -345,7 +362,7 @@ In the command line above, the -a flag forces a full rebuild, and the preprocess
 to a string literal describing the compiler configuration, hence the double quotes - one for the command line, one for the
 compiler.
 
-[endsect]
+[endsect] [/section:perf_test_app The Performance Test Applications]
 
 [endmathpart]
 

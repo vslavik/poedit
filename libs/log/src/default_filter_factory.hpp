@@ -16,6 +16,7 @@
 #ifndef BOOST_DEFAULT_FILTER_FACTORY_HPP_INCLUDED_
 #define BOOST_DEFAULT_FILTER_FACTORY_HPP_INCLUDED_
 
+#include <boost/log/detail/setup_config.hpp>
 #include <cstddef>
 #include <boost/log/attributes/attribute_name.hpp>
 #include <boost/log/attributes/value_visitation.hpp>

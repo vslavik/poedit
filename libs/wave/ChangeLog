@@ -89,6 +89,13 @@ Boost V1.47.0
   later on.
 - Fixed Wave driver to retain all macros defined on the command line in
   interactive mode.
+- Fixed problem #5554: wave slex parser eof without eol skips the last line.
+- Added the compile time configuartion option BOOST_WAVE_WCHAR_T_SIGNEDNESS,
+  which can be set to BOOST_WAVE_WCHAR_T_AUTOSELECT, BOOST_WAVE_WCHAR_T_FORCE_SIGNED,
+  or BOOST_WAVE_WCHAR_T_FORCE_UNSIGNED), it defaults to autoﬂselect.
+- Fixed a problem in teh wave driver tool related to #pragma option(output).
+  If wave was invoked in rapid succession this erroneously appended to an
+  existing file instead of overwriting that file.
 - Fixed #5569: slex CONTLINE token works only for LF line endings
 
 Boost V1.46.0

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>More on Actions</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.2.0">
 <link rel="up" href="../inside.html" title="Inside Phoenix">
 <link rel="prev" href="expression/boilerplate_macros.html" title="Boilerplate Macros">
@@ -45,31 +45,31 @@
 <p>
         In terms of actions this means:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">plus</span></code> is matched
           </li>
 <li class="listitem">
             evaluate left:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                   <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">placeholder</span></code> is matched
                 </li></ul></div>
           </li>
 <li class="listitem">
             evaluate right:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                   <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">multiplies</span></code> is matched
-                  <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; ">
+                  <div class="itemizedlist"><ul class="itemizedlist" type="square">
 <li class="listitem">
                         evaluate left:
-                        <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                               <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">value</span></code>
                               is matched
                             </li></ul></div>
                       </li>
 <li class="listitem">
                         evaluate right:
-                        <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+                        <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                               <code class="computeroutput"><span class="identifier">rule</span><span class="special">::</span><span class="identifier">placeholder</span></code>
                               is matched
                             </li></ul></div>
@@ -84,7 +84,7 @@
       </p>
 <h5>
 <a name="phoenix.inside.actions.h0"></a>
-        <span class="phrase"><a name="phoenix.inside.actions.writing_an_action"></a></span><a class="link" href="actions.html#phoenix.inside.actions.writing_an_action">Writing
+        <span><a name="phoenix.inside.actions.writing_an_action"></a></span><a class="link" href="actions.html#phoenix.inside.actions.writing_an_action">Writing
         an Action</a>
       </h5>
 <p>
@@ -139,7 +139,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">functional</span><span class="special">::</span><span class="identifier">context</span><span class="special">(</span><span class="identifier">Env</span><span class="special">,</span> <span class="identifier">Actions</span><span class="special">)</span></code></span></dt>
 <dd><p>
               A <a href="http://www.boost.org/doc/libs/release/doc/html/Callable.html" target="_top">Proto

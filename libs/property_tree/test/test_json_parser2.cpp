@@ -1,7 +1,7 @@
-#include <boost/property_tree/detail/json_parser/parser.hpp>
-#include <boost/property_tree/detail/json_parser/narrow_encoding.hpp>
-#include <boost/property_tree/detail/json_parser/wide_encoding.hpp>
-#include <boost/property_tree/detail/json_parser/standard_callbacks.hpp>
+#include <boost/property_tree/json_parser/detail/parser.hpp>
+#include <boost/property_tree/json_parser/detail/narrow_encoding.hpp>
+#include <boost/property_tree/json_parser/detail/wide_encoding.hpp>
+#include <boost/property_tree/json_parser/detail/standard_callbacks.hpp>
 #include "prefixing_callbacks.hpp"
 
 #define BOOST_TEST_NO_MAIN
@@ -123,6 +123,9 @@ struct prefixing_parser
         Ch>
 {};
 
+#define BOM_N "\xef\xbb\xbf"
+#define BOM_W L"\xfeff"
+
 namespace boost { namespace test_tools { namespace tt_detail {
     template<>
     struct print_log_value<std::wstring> {
@@ -151,6 +154,13 @@ BOOST_AUTO_TEST_CASE(uses_traits_from_null)
     BOOST_CHECK_EQUAL("_:null", parsed);
 }
 
+BOOST_AUTO_TEST_CASE(null_parse_skips_bom) {
+    std::string parsed;
+    standard_parser<char> p;
+    BOOST_REQUIRE(p.parse_null(BOM_N "null", parsed));
+    BOOST_CHECK_EQUAL("null", parsed);
+}
+
 BOOST_AUTO_TEST_CASE(null_parse_result_is_input_w) {
     std::wstring parsed;
     standard_parser<wchar_t> p;
@@ -164,6 +174,13 @@ BOOST_AUTO_TEST_CASE(uses_traits_from_null_w)
     prefixing_parser<wchar_t> p;
     BOOST_REQUIRE(p.parse_null(L"null", parsed));
     BOOST_CHECK_EQUAL(L"_:null", parsed);
+}
+
+BOOST_AUTO_TEST_CASE(null_parse_skips_bom_w) {
+    std::wstring parsed;
+    standard_parser<wchar_t> p;
+    BOOST_REQUIRE(p.parse_null(BOM_W L"null", parsed));
+    BOOST_CHECK_EQUAL(L"null", parsed);
 }
 
 void boolean_parse_result_is_input_n(const char* param) {
@@ -207,7 +224,16 @@ void number_parse_result_is_input_n(const char* param) {
     BOOST_CHECK_EQUAL(param, parsed);
 }
 
-const char* const numbers_n[] = { "0", "-0", "1824", "-0.1", "123.142", "1e+0", "1E-0", "1.1e134" };
+const char* const numbers_n[] = {
+    "0",
+    "-0",
+    "1824",
+    "-0.1",
+    "123.142",
+    "1e+0",
+    "1E-0",
+    "1.1e134"
+};
 
 BOOST_AUTO_TEST_CASE(uses_traits_from_number_n)
 {
@@ -224,7 +250,16 @@ void number_parse_result_is_input_w(const wchar_t* param) {
     BOOST_CHECK_EQUAL(param, parsed);
 }
 
-const wchar_t* const numbers_w[] = { L"0", L"-0", L"1824", L"-0.1", L"123.142", L"1e+0", L"1E-0", L"1.1e134" };
+const wchar_t* const numbers_w[] = {
+    L"0",
+    L"-0",
+    L"1824",
+    L"-0.1",
+    L"123.142",
+    L"1e+0",
+    L"1E-0",
+    L"1.1e134"
+};
 
 BOOST_AUTO_TEST_CASE(uses_traits_from_number_w)
 {
@@ -258,7 +293,8 @@ const string_input_n strings_n[] = {
     {"\"\\r\"", "\r"},
     {"\"\\t\"", "\t"},
     {"\"\\u0001\\u00f2\\u28Ec\"", "\x01" "\xC3\xB2" "\xE2\xA3\xAC"},
-    {"\"\\ud801\\udc37\"", "\xf0\x90\x90\xb7"} // U+10437
+    {"\"\\ud801\\udc37\"", "\xf0\x90\x90\xb7"}, // U+10437
+    {"\xef\xbb\xbf\"\"", ""} // BOM
 };
 
 BOOST_AUTO_TEST_CASE(uses_string_callbacks)
@@ -292,7 +328,8 @@ const string_input_w strings_w[] = {
     {L"\"\\f\"", L"\f"},
     {L"\"\\r\"", L"\r"},
     {L"\"\\t\"", L"\t"},
-    {L"\"\\u0001\\u00f2\\u28Ec\"", L"\x0001" L"\x00F2" L"\x28EC"}
+    {L"\"\\u0001\\u00f2\\u28Ec\"", L"\x0001" L"\x00F2" L"\x28EC"},
+    {L"\xfeff\"\"", L""} // BOM
 };
 
 BOOST_AUTO_TEST_CASE(empty_array) {

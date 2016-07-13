@@ -78,7 +78,7 @@ supports:
 * MPI Datatypes: Boost.MPI can build MPI data types for
   user-defined types using the _Serialization_ library.
 * Separating structure from content: Boost.MPI can transfer the shape
-  (or "skeleton") of complexc data structures (lists, maps,
+  (or "skeleton") of complex data structures (lists, maps,
   etc.) and then separately transfer their content. This facility
   optimizes for cases where the data within a large, static data
   structure needs to be transmitted many times.
@@ -193,7 +193,7 @@ First, you need to scan the =include/boost/mpi/config.hpp= file and check if som
 settings needs to be modified for your MPI implementation or preferences. 
 
 In particular, the [macroref BOOST_MPI_HOMOGENEOUS] macro, that you will need to comment out 
-if you plan tu run on an heterogeneous set of macines. See the [link mpi.homogeneous_machines optimization] notes below.
+if you plan to run on an heterogeneous set of machines. See the [link mpi.homogeneous_machines optimization] notes below.
 
 Most MPI implementations requires specific compilation and link options. 
 In order to mask theses options to the user, most MPI implementations provides 
@@ -230,10 +230,10 @@ The directive will find the wrapper and deduce the options to use.
 using mpi : /opt/mpi/bullxmpi/1.2.8.3/bin/mpicc ;
 ]
 
-* [*If your wrapper is really excentric]
+* [*If your wrapper is really eccentric]
 
 or does not exist at all (it happens), you need to 
-provide the compilation and build options to the build environement using `jam` directives.
+provide the compilation and build options to the build environment using `jam` directives.
 For example, the following could be used for a specific Intel MPI implementation:
 
 [pre
@@ -248,9 +248,9 @@ using mpi : mpiicc :
       <find-shared-library>rt ;
 ]
 
-To do that, you need to guess the libraries and include directories associated with your environement.
-You can refer to the your specific MPI environement documentation. 
-Most of the time thoug, your wrapper have an option that provide that information, it usually starts with `--show`:
+To do that, you need to guess the libraries and include directories associated with your environment.
+You can refer to the your specific MPI environment documentation. 
+Most of the time though, your wrapper have an option that provide that information, it usually starts with `--show`:
 [pre
 $ mpiicc -show
 icc -I/softs/intel//impi/5.0.3.048/intel64/include -L/softs/intel//impi/5.0.3.048/intel64/lib/release_mt -L/softs/intel//impi/5.0.3.048/intel64/lib -Xlinker --enable-new-dtags -Xlinker -rpath -Xlinker /softs/intel//impi/5.0.3.048/intel64/lib/release_mt -Xlinker -rpath -Xlinker /softs/intel//impi/5.0.3.048/intel64/lib -Xlinker -rpath -Xlinker /opt/intel/mpi-rt/5.0/intel64/lib/release_mt -Xlinker -rpath -Xlinker /opt/intel/mpi-rt/5.0/intel64/lib -lmpifort -lmpi -lmpigi -ldl -lrt -lpthread
@@ -284,7 +284,7 @@ for instance, the test harness will execute, e.g.,
 mpirun -np 4 all_gather_test
 ]
 
-Some implementations provides alternative launcher that can be more convenient. For exemple, Intel's MPI provides the `mpiexec.hydra`:
+Some implementations provides alternative launcher that can be more convenient. For example, Intel's MPI provides the `mpiexec.hydra`:
 
 [pre
 $mpiexec.hydra -np 4 all_gather_test
@@ -301,7 +301,7 @@ using mpi : mpiicc :
 [endsect]
 [section:installation Build and Install]
 
-To build the whole Boost ditribution:
+To build the whole Boost distribution:
 [pre
 $cd <boost distribution>
 $./b2 install
@@ -689,7 +689,7 @@ fixed only when the type of the parameter it stores is fixed:
 The redundant copy elimination optimization can only be applied when
 the shape of the data type is completely fixed. Variable-length types
 (e.g., strings, linked lists) and types that store pointers cannot use
-the optimiation, but Boost.MPI will be unable to detect this error at
+the optimization, but Boost.MPI will be unable to detect this error at
 compile time. Attempting to perform this optimization when it is not
 correct will likely result in segmentation faults and other strange
 program behavior.
@@ -979,8 +979,8 @@ the `random_min.cpp` example:
 In that example we provide both input and output values, requiring
 twice as much space, which can be a problem depending on the size 
 of the transmitted data. 
-If there  is no need to preserve the input value, the ouput value 
-can be omitted. In that case the input value will be overriden with 
+If there  is no need to preserve the input value, the output value 
+can be omitted. In that case the input value will be overridden with 
 the output value and Boost.MPI is able, in some situation, to implement
 the operation with a more space efficient solution (using the `MPI_IN_PLACE`
 flag of the MPI C mapping), as in the following example (`in_place_global_min.cpp`):
@@ -1206,7 +1206,7 @@ To obtain optimal performance for small fixed-length data types not containing
 any pointers it is very important to mark them using the type traits of
 Boost.MPI and Boost.Serialization. 
 
-It was alredy discussed that fixed length types containing no pointers can be 
+It was already discussed that fixed length types containing no pointers can be 
 using as [classref
 boost::mpi::is_mpi_datatype `is_mpi_datatype`], e.g.:
 
@@ -1423,7 +1423,7 @@ supported by compiler]]
 Boost.MPI does not provide direct wrappers to the MPI derived
 datatypes functionality. Instead, Boost.MPI relies on the
 _Serialization_ library to construct MPI datatypes for user-defined
-classe. The section on [link mpi.user_data_types user-defined
+classes. The section on [link mpi.user_data_types user-defined
 data types] describes this mechanism, which is used for types that
 marked as "MPI datatypes" using [classref
 boost::mpi::is_mpi_datatype `is_mpi_datatype`].
@@ -1563,7 +1563,7 @@ other uses supported by [funcref boost::mpi::scatterv `scatterv`]]]
 
   [[[@http://www.mpi-forum.org/docs/mpi-20-html/node145.htm#Node145
 `MPI_IN_PLACE`]] [supported implicitly by [funcref boost::mpi::all_reduce 
-`all_reduce` by omiting the ouput value]]]
+`all_reduce` by omitting the output value]]]
 ]
 
 Boost.MPI uses function objects to specify how reductions should occur
@@ -1841,7 +1841,7 @@ Timer library].
 ]
 
 MPI startup and shutdown are managed by the construction and
-descruction of the Boost.MPI [classref boost::mpi::environment
+destruction of the Boost.MPI [classref boost::mpi::environment
 `environment`] class.
 
 [table Startup/shutdown facilities
@@ -2056,7 +2056,7 @@ The skeleton/content mechanism is a structured way to exploit the
 interaction between custom-built MPI datatypes and `MPI_BOTTOM`, to
 eliminate extra buffer copies.
 
-[section:python_compatbility C++/Python MPI Compatibility]
+[section:python_compatibility C++/Python MPI Compatibility]
 Boost.MPI is a C++ library whose facilities have been exposed to Python
 via the Boost.Python library. Since the Boost.MPI Python bindings are
 build directly on top of the C++ library, and nearly every feature of
@@ -2139,7 +2139,7 @@ and the C MPI library.
 
 [section:threading Threads]
 
-There are an increasing number of hybrid parrallel applications that mix
+There are an increasing number of hybrid parallel applications that mix
 distributed and shared memory parallelism. To know how to support that model,
 one need to know what level of threading support is guaranteed by the MPI 
 implementation. There are 4 ordered level of possible threading support described
@@ -2148,8 +2148,8 @@ At the lowest level, you should not use threads at all, at the highest level, an
 thread can perform MPI call.
 
 If you want to use multi-threading in your MPI application, you should indicate 
-in the environment constructor your preffered threading support. Then probe the
-one the librarie did provide, and decide what you can do with it (it could be 
+in the environment constructor your preferred threading support. Then probe the
+one the library did provide, and decide what you can do with it (it could be 
 nothing, then aborting is a valid option):
 
   #include <boost/mpi/environment.hpp>
@@ -2187,7 +2187,7 @@ raw MPI. We ran five different variants of the NetPIPE benchmark:
   communication.
 
 # MPI (Datatypes): NetPIPE modified to use a derived datatype (which
-  itself contains a single `MPI_BYTE`) rathan than a fundamental
+  itself contains a single `MPI_BYTE`) rather than a fundamental
   datatype.
 
 # Boost.MPI (Datatypes): NetPIPE modified to use a user-defined type

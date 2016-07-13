@@ -433,7 +433,7 @@ inline void check_6_impl(int helper)
     }
 
     // Probably the most significant test:
-    // unsuccessful swap must preserve old values of vaiant
+    // unsuccessful swap must preserve old values of variant
     v1 = throw_not_now;
     boost::get<throwing_class>(v1).trash = helper;
     try {

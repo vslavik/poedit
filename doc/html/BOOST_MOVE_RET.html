@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Macro BOOST_MOVE_RET</title>
 <link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="move/reference.html#header.boost.move.core_hpp" title="Header &lt;boost/move/core.hpp&gt;">
 <link rel="prev" href="BOOST_FWD_REF.html" title="Macro BOOST_FWD_REF">
@@ -34,9 +34,9 @@
 
 </span>BOOST_MOVE_RET(RET_TYPE, REF)</pre></div>
 <div class="refsect1">
-<a name="idm45555231833216"></a><h2>Description</h2>
+<a name="idp295327600"></a><h2>Description</h2>
 <p>This macro is used to achieve portable move return semantics. The C++11 Standard allows implicit move returns when the object to be returned is designated by a lvalue and:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>The criteria for elision of a copy operation are met OR</p></li>
 <li class="listitem"><p>The criteria would be met save for the fact that the source object is a function parameter</p></li>
 </ul></div>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>I/O</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../operator.html" title="Operator">
 <link rel="prev" href="../operator.html" title="Operator">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="fusion.sequence.operator.i_o"></a><a class="link" href="i_o.html" title="I/O">I/O</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="i_o/in.html">in</a></span></dt>
 <dt><span class="section"><a href="i_o/out.html">out</a></span></dt>
 </dl></div>
@@ -34,7 +34,7 @@
           The I/O operators: <code class="computeroutput"><span class="special">&lt;&lt;</span></code>
           and <code class="computeroutput"><span class="special">&gt;&gt;</span></code> work generically
           on all Fusion sequences. The I/O operators are overloaded in namespace
-          <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span></code> <a href="#ftn.fusion.sequence.operator.i_o.f0" class="footnote" name="fusion.sequence.operator.i_o.f0"><sup class="footnote">[10]</sup></a>
+          <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">fusion</span></code> <sup>[<a name="fusion.sequence.operator.i_o.f0" href="#ftn.fusion.sequence.operator.i_o.f0" class="footnote">10</a>]</sup>
         </p>
 <p>
           The <code class="computeroutput"><span class="keyword">operator</span><span class="special">&lt;&lt;</span></code>
@@ -60,7 +60,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b>Manipulators</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">tuple_open</span><span class="special">(</span><span class="identifier">arg</span><span class="special">)</span></code></span></dt>
 <dd><p>
                 Defines the character that is output before the first element.
@@ -118,14 +118,14 @@
         </p>
 <h6>
 <a name="fusion.sequence.operator.i_o.h0"></a>
-          <span class="phrase"><a name="fusion.sequence.operator.i_o.header"></a></span><a class="link" href="i_o.html#fusion.sequence.operator.i_o.header">Header</a>
+          <span><a name="fusion.sequence.operator.i_o.header"></a></span><a class="link" href="i_o.html#fusion.sequence.operator.i_o.header">Header</a>
         </h6>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">sequence</span><span class="special">/</span><span class="identifier">io</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">fusion</span><span class="special">/</span><span class="identifier">include</span><span class="special">/</span><span class="identifier">io</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.fusion.sequence.operator.i_o.f0" class="footnote"><p><a href="#fusion.sequence.operator.i_o.f0" class="para"><sup class="para">[10] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.fusion.sequence.operator.i_o.f0" href="#fusion.sequence.operator.i_o.f0" class="para">10</a>] </sup>
             <a class="link" href="../../sequence.html" title="Sequence">Sequence</a>(s) and <a class="link" href="../../view.html" title="View">Views</a>
             residing in different namespaces will have to either provide their own
             I/O operators (possibly forwarding to fusion's I/O operators) or hoist

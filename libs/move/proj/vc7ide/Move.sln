@@ -111,6 +111,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "type_traits", "type_traits.
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bench_sort", "bench_sort.vcproj", "{CD2617A8-6217-9EB7-24CE-6C9AA035376A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bench_merge", "bench_merge.vcproj", "{CD2617A8-6217-9EB7-24CE-6C9AA035376A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -231,25 +239,45 @@ Global
 		{D7C28A23-8621-FE05-BF87-3C7B6176BD02}.Debug.Build.0 = Debug|Win32
 		{D7C28A23-8621-FE05-BF87-3C7B6176BD02}.Release.ActiveCfg = Release|Win32
 		{D7C28A23-8621-FE05-BF87-3C7B6176BD02}.Release.Build.0 = Release|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Debug.ActiveCfg = Debug|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Debug.Build.0 = Debug|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Release.ActiveCfg = Release|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Release.Build.0 = Release|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Debug.ActiveCfg = Debug|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Debug.Build.0 = Debug|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Release.ActiveCfg = Release|Win32
+		{CD2617A8-6217-9EB7-24CE-6C9AA035376A}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionItems) = postSolution
+		..\..\..\..\boost\move\algo\adaptive_merge.hpp = ..\..\..\..\boost\move\algo\adaptive_merge.hpp
+		..\..\..\..\boost\move\algo\adaptive_sort.hpp = ..\..\..\..\boost\move\algo\adaptive_sort.hpp
+		..\..\..\..\boost\move\algo\detail\adaptive_sort_merge.hpp = ..\..\..\..\boost\move\algo\detail\adaptive_sort_merge.hpp
 		..\..\..\..\boost\move\adl_move_swap.hpp = ..\..\..\..\boost\move\adl_move_swap.hpp
 		..\..\..\..\boost\move\algorithm.hpp = ..\..\..\..\boost\move\algorithm.hpp
+		..\..\..\..\boost\move\algo\basic_op.hpp = ..\..\..\..\boost\move\algo\basic_op.hpp
+		..\..\..\..\boost\move\algo\bufferless_merge_sort.hpp = ..\..\..\..\boost\move\algo\bufferless_merge_sort.hpp
 		..\..\..\..\boost\move\detail\config_begin.hpp = ..\..\..\..\boost\move\detail\config_begin.hpp
 		..\..\..\..\boost\move\detail\config_end.hpp = ..\..\..\..\boost\move\detail\config_end.hpp
 		..\..\..\..\boost\move\core.hpp = ..\..\..\..\boost\move\core.hpp
 		..\..\..\..\boost\move\default_delete.hpp = ..\..\..\..\boost\move\default_delete.hpp
+		..\..\..\..\boost\move\detail\destruct_n.hpp = ..\..\..\..\boost\move\detail\destruct_n.hpp
 		..\..\..\..\boost\move\detail\fwd_macros.hpp = ..\..\..\..\boost\move\detail\fwd_macros.hpp
+		..\..\..\..\boost\move\algo\insertion_sort.hpp = ..\..\..\..\boost\move\algo\insertion_sort.hpp
 		..\..\..\..\boost\move\iterator.hpp = ..\..\..\..\boost\move\iterator.hpp
 		..\..\..\..\boost\move\detail\iterator_traits.hpp = ..\..\..\..\boost\move\detail\iterator_traits.hpp
 		..\..\doc\Jamfile.v2 = ..\..\doc\Jamfile.v2
 		..\..\..\..\boost\move\make_unique.hpp = ..\..\..\..\boost\move\make_unique.hpp
+		..\..\..\..\boost\move\algo\merge.hpp = ..\..\..\..\boost\move\algo\merge.hpp
+		..\..\..\..\boost\move\algo\merge_sort.hpp = ..\..\..\..\boost\move\algo\merge_sort.hpp
 		..\..\..\..\boost\move\detail\meta_utils.hpp = ..\..\..\..\boost\move\detail\meta_utils.hpp
 		..\..\..\..\boost\move\detail\meta_utils_core.hpp = ..\..\..\..\boost\move\detail\meta_utils_core.hpp
 		..\..\..\..\boost\move\move.hpp = ..\..\..\..\boost\move\move.hpp
+		..\..\..\..\boost\move\algo\move.hpp = ..\..\..\..\boost\move\algo\move.hpp
 		..\..\doc\move.qbk = ..\..\doc\move.qbk
 		..\..\..\..\boost\move\detail\move_helpers.hpp = ..\..\..\..\boost\move\detail\move_helpers.hpp
+		..\..\..\..\boost\move\detail\placement_new.hpp = ..\..\..\..\boost\move\detail\placement_new.hpp
 		..\..\..\..\boost\move\detail\std_ns_begin.hpp = ..\..\..\..\boost\move\detail\std_ns_begin.hpp
+		..\..\..\..\boost\move\detail\std_ns_end.hpp = ..\..\..\..\boost\move\detail\std_ns_end.hpp
 		..\..\..\..\boost\move\traits.hpp = ..\..\..\..\boost\move\traits.hpp
 		..\..\..\..\boost\move\detail\type_traits.hpp = ..\..\..\..\boost\move\detail\type_traits.hpp
 		..\..\..\..\boost\move\unique_ptr.hpp = ..\..\..\..\boost\move\unique_ptr.hpp

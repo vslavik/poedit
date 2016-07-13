@@ -43,12 +43,7 @@ namespace aux {
 //! Base class for the thread-safe queue implementation
 struct threadsafe_queue_impl
 {
-    struct
-#if defined(__GNUC__)
-        // Explicitly mark the type so that it may alias other types
-        __attribute__ ((__may_alias__))
-#endif
-        pointer_storage
+    struct BOOST_LOG_MAY_ALIAS pointer_storage
     {
         union
         {

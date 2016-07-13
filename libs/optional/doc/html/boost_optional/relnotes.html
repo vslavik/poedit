@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Release Notes</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Boost.Optional">
 <link rel="up" href="../index.html" title="Boost.Optional">
 <link rel="prev" href="dependencies_and_portability/optional_reference_binding.html" title="Optional Reference Binding">
@@ -28,21 +28,64 @@
 </h2></div></div></div>
 <h4>
 <a name="boost_optional.relnotes.h0"></a>
-      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_60"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_60">Boost
+      <span><a name="boost_optional.relnotes.boost_release_1_61"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_61">Boost
+      Release 1.61</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          Now <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">optional</span></code> is specialized for reference
+          parameters. This addresses a couple of issues:
+          <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<li class="listitem">
+                the <code class="computeroutput"><span class="keyword">sizeof</span></code> of optional
+                reference is that of a pointer,
+              </li>
+<li class="listitem">
+                some bugs connected to copying optional references are gone,
+              </li>
+<li class="listitem">
+                all run-time bugs caused by incorrect reference binding on some compilers
+                are now turned into compile-time errors,
+              </li>
+<li class="listitem">
+                you can swap optional references: it is like swapping pointers: shalow,
+                underlying objects are not affected,
+              </li>
+<li class="listitem">
+                optional references to abstract types work.
+              </li>
+</ul></div>
+        </li>
+<li class="listitem">
+          Documented nested typedefs (<a href="https://svn.boost.org/trac/boost/ticket/5193" target="_top">Trac
+          #5193</a>).
+        </li>
+<li class="listitem">
+          Made the perfect-forwarding constructor SFINAE-friendly, which fixes <a href="https://svn.boost.org/trac/boost/ticket/12002" target="_top">Trac #12002</a>.
+          However, this only works in the newer platforms that correctly implement
+          C++11 <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">type_traits</span><span class="special">&gt;</span></code>.
+        </li>
+<li class="listitem">
+          Fixed <a href="https://svn.boost.org/trac/boost/ticket/10445" target="_top">Trac #10445</a>.
+        </li>
+</ul></div>
+<h4>
+<a name="boost_optional.relnotes.h1"></a>
+      <span><a name="boost_optional.relnotes.boost_release_1_60"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_60">Boost
       Release 1.60</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           Changed the implementation of <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">none</span></code>
           again. Now it is a const object with internal linkage (as any other tag).
           This fixes <a href="https://svn.boost.org/trac/boost/ticket/11203" target="_top">Trac
           #11203</a>.
         </li></ul></div>
 <h4>
-<a name="boost_optional.relnotes.h1"></a>
-      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_59"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_59">Boost
+<a name="boost_optional.relnotes.h2"></a>
+      <span><a name="boost_optional.relnotes.boost_release_1_59"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_59">Boost
       Release 1.59</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           For C++03 compilers, added 0-argument overload for member function <code class="computeroutput"><span class="identifier">emplace</span><span class="special">()</span></code>,
           and therewith removed the dependency on <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">utility</span><span class="special">/</span><span class="identifier">in_place_factory</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>.
@@ -52,11 +95,11 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_optional.relnotes.h2"></a>
-      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_58"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_58">Boost
+<a name="boost_optional.relnotes.h3"></a>
+      <span><a name="boost_optional.relnotes.boost_release_1_58"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_58">Boost
       Release 1.58</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <code class="computeroutput"><span class="identifier">boost</span><span class="special">::</span><span class="identifier">none_t</span></code> is no longer convertible from
           literal <code class="computeroutput"><span class="number">0</span></code>. This avoids a bug
@@ -88,21 +131,21 @@
         </li>
 </ul></div>
 <h4>
-<a name="boost_optional.relnotes.h3"></a>
-      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_57"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_57">Boost
+<a name="boost_optional.relnotes.h4"></a>
+      <span><a name="boost_optional.relnotes.boost_release_1_57"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_57">Boost
       Release 1.57</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <a href="https://github.com/boostorg/optional/pull/9" target="_top">Git pull #9</a>:
           <span class="emphasis"><em>"Supply <code class="computeroutput"><span class="special">&lt;</span><span class="identifier">string</span><span class="special">&gt;</span></code>
           to fix C++03 compile error on <code class="computeroutput"><span class="identifier">logic_error</span><span class="special">(</span><span class="string">"..."</span><span class="special">)</span></code>"</em></span>.
         </li></ul></div>
 <h4>
-<a name="boost_optional.relnotes.h4"></a>
-      <span class="phrase"><a name="boost_optional.relnotes.boost_release_1_56"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_56">Boost
+<a name="boost_optional.relnotes.h5"></a>
+      <span><a name="boost_optional.relnotes.boost_release_1_56"></a></span><a class="link" href="relnotes.html#boost_optional.relnotes.boost_release_1_56">Boost
       Release 1.56</a>
     </h4>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Added support for rvalue references. Now <code class="computeroutput"><span class="identifier">optional</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;</span></code> works with moveable but non-copyable
           <code class="computeroutput"><span class="identifier">T</span></code>'s,
@@ -155,7 +198,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014, 2015 Andrzej Krzemie&#324;ski<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2003-2007 Fernando Luis Cacciola Carballal<br>Copyright &#169; 2014-2016 Andrzej Krzemie&#324;ski<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

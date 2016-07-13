@@ -15,7 +15,6 @@
 
 #ifndef BOOST_LOG_WITHOUT_SYSLOG
 
-#include "windows_version.hpp"
 #include <boost/log/detail/config.hpp>
 #include <ctime>
 #include <algorithm>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Configuring and building the library</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../installation.html" title="Installation and compatibility">
 <link rel="prev" href="../installation.html" title="Installation and compatibility">
@@ -332,7 +332,7 @@
       </p>
 <h5>
 <a name="log.installation.config.h0"></a>
-        <span class="phrase"><a name="log.installation.config.notes_about_compiler_supplied_intrinsics_for_tls"></a></span><a class="link" href="config.html#log.installation.config.notes_about_compiler_supplied_intrinsics_for_tls">Notes
+        <span><a name="log.installation.config.notes_about_compiler_supplied_intrinsics_for_tls"></a></span><a class="link" href="config.html#log.installation.config.notes_about_compiler_supplied_intrinsics_for_tls">Notes
         about compiler-supplied intrinsics for TLS</a>
       </h5>
 <p>
@@ -343,7 +343,7 @@
         that <a href="http://www.boost.org/doc/libs/release/doc/html/thread.html" target="_top">Boost.Thread</a>
         or even native operating system API. However, this feature has several caveats:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Some operating systems don't support the use of these intrinsics in case
             if the TLS is defined in a shared library that is dynamically loaded
@@ -360,7 +360,7 @@
         configuration macro that allows to enable the use of this feature, which
         will improve the library performance at the cost of these limitations:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The application executable must be linked with the Boost.Log library.
             It should not be loaded dynamically during run time.
@@ -381,7 +381,7 @@
       </p>
 <h5>
 <a name="log.installation.config.h1"></a>
-        <span class="phrase"><a name="log.installation.config.notes_about_native__code__phrase_role__keyword__wchar_t__phrase___code__support"></a></span><a class="link" href="config.html#log.installation.config.notes_about_native__code__phrase_role__keyword__wchar_t__phrase___code__support">Notes
+        <span><a name="log.installation.config.notes_about_native__code__phrase_role__keyword__wchar_t__phrase___code__support"></a></span><a class="link" href="config.html#log.installation.config.notes_about_native__code__phrase_role__keyword__wchar_t__phrase___code__support">Notes
         about native <code class="computeroutput"><span class="keyword">wchar_t</span></code> support</a>
       </h5>
 <p>
@@ -398,7 +398,7 @@
         mode. It is possible to build Boost.Log in this mode, but there are several
         caveats that have to be kept in mind:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The compiled Boost.Log binaries will be exporting symbols corresponding
             to the configuration chosen at build time. The user's code will have
@@ -423,8 +423,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

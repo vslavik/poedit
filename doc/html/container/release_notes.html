@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Release Notes</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../container.html" title="Chapter&#160;8.&#160;Boost.Container">
 <link rel="prev" href="acknowledgements_notes.html" title="Acknowledgements, notes and links">
@@ -27,7 +27,9 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="container.release_notes"></a><a class="link" href="release_notes.html" title="Release Notes">Release Notes</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
+<dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_61_00">Boost
+      1.61 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_60_00">Boost
       1.60 Release</a></span></dt>
 <dt><span class="section"><a href="release_notes.html#container.release_notes.release_notes_boost_1_59_00">Boost
@@ -57,10 +59,65 @@
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="container.release_notes.release_notes_boost_1_61_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_61_00" title="Boost 1.61 Release">Boost
+      1.61 Release</a>
+</h3></div></div></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+            <code class="computeroutput"><a class="link" href="../boost/container/small_vector.html" title="Class template small_vector">boost::container::small_vector</a></code>
+            supports more constructors and assignments.
+          </li>
+<li class="listitem">
+            Fixed bugs:
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11820" target="_top">Trac
+                  #11820 : <span class="emphasis"><em>"compiler error when using operator[</em></span>
+                  of map"</a>].
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11856" target="_top">Trac
+                  #11856 : <span class="emphasis"><em>"pool_resource.cpp error: declaration changes
+                  meaning"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11866" target="_top">Trac
+                  #11866 : <span class="emphasis"><em>"small_vector does not have range constructor"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11867" target="_top">Trac
+                  #11867 : <span class="emphasis"><em>"small_vector should have constructor and
+                  assignment operator taking other small_vector"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11912" target="_top">Trac
+                  #11912 : <span class="emphasis"><em>"flat_map use of vector::priv_forward_range_insert_expand_backwards
+                  may cause move with same source"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/11957" target="_top">Trac
+                  #11957 : <span class="emphasis"><em>"static_vector::max_size() is higher than
+                  the capacity"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://svn.boost.org/trac/boost/ticket/12014" target="_top">Trac
+                  #12014 : <span class="emphasis"><em>"boost::container::set can not insert const
+                  (ref) range"</em></span></a>.
+                </li>
+<li class="listitem">
+                  <a href="https://github.com/boostorg/container/pull/33" target="_top">GitHub
+                  #33: <span class="emphasis"><em>Make sure std::string constructor is available</em></span></a>.
+                </li>
+</ul></div>
+          </li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="container.release_notes.release_notes_boost_1_60_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_60_00" title="Boost 1.60 Release">Boost
       1.60 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Implemented <a class="link" href="extended_functionality.html#container.extended_functionality.polymorphic_memory_resources" title="Polymorphic Memory Resources">Polymorphic
             Memory Resources</a>.
@@ -75,7 +132,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/11627" target="_top">Trac
                   #11627: <span class="emphasis"><em>"small_vector&lt;T,n&gt;::swap() appears
@@ -111,7 +168,7 @@
 <a name="container.release_notes.release_notes_boost_1_59_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_59_00" title="Boost 1.59 Release">Boost
       1.59 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <a href="https://github.com/boostorg/container/pull/26" target="_top">GitHub #26:
             <span class="emphasis"><em>Fix bug in stable_vector::capacity()</em></span></a>. Thanks
@@ -143,7 +200,7 @@
 <a name="container.release_notes.release_notes_boost_1_58_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_58_00" title="Boost 1.58 Release">Boost
       1.58 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Experimental <code class="computeroutput"><a class="link" href="../boost/container/small_vector.html" title="Class template small_vector">small_vector</a></code>
             container.
@@ -167,7 +224,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/9931" target="_top">Trac
                   #9931: <span class="emphasis"><em>"flat_map::insert(ordered_unique_range_t...)
@@ -218,7 +275,7 @@
 <a name="container.release_notes.release_notes_boost_1_57_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_57_00" title="Boost 1.57 Release">Boost
       1.57 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Added support for <code class="computeroutput"><span class="identifier">initializer_list</span></code>.
             Contributed by Robert Matusewicz.
@@ -229,7 +286,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/10263" target="_top">Trac
                   #10263 (<span class="emphasis"><em>"AIX 6.1 bug with sched_yield() function
@@ -249,7 +306,7 @@
 <a name="container.release_notes.release_notes_boost_1_56_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_56_00" title="Boost 1.56 Release">Boost
       1.56 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Added DlMalloc-based <a class="link" href="extended_functionality.html#container.extended_functionality.extended_allocators" title="Extended allocators">Extended
             Allocators</a>.
@@ -262,7 +319,7 @@
           </li>
 <li class="listitem">
             Fixed bugs:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   <a href="https://svn.boost.org/trac/boost/ticket/9338" target="_top">#9338:
                   <span class="emphasis"><em>"VS2005 compiler errors in swap() definition after
@@ -310,7 +367,7 @@
 <a name="container.release_notes.release_notes_boost_1_55_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_55_00" title="Boost 1.55 Release">Boost
       1.55 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Implemented <a class="link" href="main_features.html#container.main_features.scary_iterators" title="SCARY iterators">SCARY
             iterators</a>.
@@ -338,7 +395,7 @@
 <a name="container.release_notes.release_notes_boost_1_54_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_54_00" title="Boost 1.54 Release">Boost
       1.54 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Added experimental <code class="computeroutput"><span class="identifier">static_vector</span></code>
             class, based on Andrew Hundt's and Adam Wulkiewicz's high performance
@@ -367,7 +424,7 @@
 <a name="container.release_notes.release_notes_boost_1_53_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_53_00" title="Boost 1.53 Release">Boost
       1.53 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Fixed bug <a href="https://svn.boost.org/trac/boost/ticket/7650" target="_top">#7650</a>.
           </li>
@@ -396,7 +453,7 @@
 <a name="container.release_notes.release_notes_boost_1_52_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_52_00" title="Boost 1.52 Release">Boost
       1.52 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Improved <code class="computeroutput"><span class="identifier">stable_vector</span></code>'s
             template code bloat and type safety.
@@ -427,7 +484,7 @@
 <a name="container.release_notes.release_notes_boost_1_51_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_51_00" title="Boost 1.51 Release">Boost
       1.51 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/6763" target="_top">#6763</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/6803" target="_top">#6803</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/7114" target="_top">#7114</a>,
@@ -440,7 +497,7 @@
 <a name="container.release_notes.release_notes_boost_1_50_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_50_00" title="Boost 1.50 Release">Boost
       1.50 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Added Scoped Allocator Model support.
           </li>
@@ -458,7 +515,7 @@
 <a name="container.release_notes.release_notes_boost_1_49_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_49_00" title="Boost 1.49 Release">Boost
       1.49 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Fixed bugs <a href="https://svn.boost.org/trac/boost/ticket/6540" target="_top">#6540</a>,
             <a href="https://svn.boost.org/trac/boost/ticket/6499" target="_top">#6499</a>,
@@ -479,7 +536,7 @@
 <a name="container.release_notes.release_notes_boost_1_48_00"></a><a class="link" href="release_notes.html#container.release_notes.release_notes_boost_1_48_00" title="Boost 1.48 Release">Boost
       1.48 Release</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
             First release. Container code from <span class="bold"><strong>Boost.Interprocess</strong></span>
             was deleted and redirected to <span class="bold"><strong>Boost.Container
             </strong></span> via using directives.

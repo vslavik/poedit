@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Presenting Boost.Intrusive containers</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="concepts_summary.html" title="Concept summary">
 <link rel="next" href="safe_hook.html" title="Safe hooks">
 </head>
@@ -32,7 +32,7 @@
       <span class="bold"><strong>Boost.Intrusive</strong></span> offers a wide range of intrusive
       containers:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <span class="bold"><strong>slist</strong></span>: An intrusive singly linked list.
           The size overhead is very small for user classes (usually the size of one
@@ -75,7 +75,7 @@
       <span class="bold"><strong>Boost.Intrusive</strong></span> also offers semi-intrusive
       containers:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <span class="bold"><strong>unordered_set/unordered_multiset</strong></span>: <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">tr1</span><span class="special">::</span><span class="identifier">unordered_set</span><span class="special">/</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">tr1</span><span class="special">::</span><span class="identifier">unordered_multiset</span></code> like intrusive unordered
           associative containers. The size overhead is moderate for user classes
           (an average of two pointers per element). Many operations have amortized
@@ -85,7 +85,7 @@
       Most of these intrusive containers can be configured with constant or linear
       time size:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <span class="bold"><strong>Linear time size</strong></span>: The intrusive container
           doesn't hold a size member that is updated with every insertion/erasure.
@@ -108,7 +108,7 @@
       To make user classes compatible with these intrusive containers <span class="bold"><strong>Boost.Intrusive</strong></span>
       offers two types of hooks for each container type:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <span class="bold"><strong>Base hook</strong></span>: The hook is stored as a public
           base class of the user class.
@@ -122,7 +122,7 @@
       Apart from that, <span class="bold"><strong>Boost.Intrusive</strong></span> offers additional
       features:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <span class="bold"><strong>Safe mode hooks</strong></span>: Hook constructor initializes
           the internal <code class="computeroutput"><span class="identifier">node</span></code> to a

@@ -124,9 +124,9 @@ BOOST_AUTO_TEST_CASE(calling)
 
     logging::attribute_value p1(attr1.get_value());
     logging::attribute_value p2(attr2.get_value());
-    BOOST_CHECK_EQUAL(call_count, 1);
+    BOOST_CHECK_EQUAL(call_count, 1u);
     logging::attribute_value p3(attr2.get_value());
-    BOOST_CHECK_EQUAL(call_count, 2);
+    BOOST_CHECK_EQUAL(call_count, 2u);
 
     disp.set_expected(10);
     BOOST_CHECK(p1.dispatch(disp));

@@ -1,5 +1,5 @@
 /*
-(c) 2014 Glen Joseph Fernandes
+(c) 2014-2015 Glen Joseph Fernandes
 <glenjofe -at- gmail.com>
 
 Distributed under the Boost Software
@@ -19,7 +19,9 @@ http://boost.org/LICENSE_1_0.txt
 #include <AvailabilityMacros.h>
 #endif
 
-#if defined(_MSC_VER)
+#if defined(BOOST_ALIGN_USE_ALLOCATE)
+#include <boost/align/detail/aligned_alloc.hpp>
+#elif defined(_MSC_VER) && !defined(UNDER_CE)
 #include <boost/align/detail/aligned_alloc_msvc.hpp>
 #elif defined(__MINGW32__) && (__MSVCRT_VERSION__ >= 0x0700)
 #include <boost/align/detail/aligned_alloc_msvc.hpp>

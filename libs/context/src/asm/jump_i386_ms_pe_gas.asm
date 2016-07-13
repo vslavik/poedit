@@ -6,22 +6,22 @@
             http://www.boost.org/LICENSE_1_0.txt)
 */
 
-/********************************************************************
-  ---------------------------------------------------------------------------------
-  |    0    |    1    |    2    |    3    |    4    |    5    |    6    |    7    |
-  ---------------------------------------------------------------------------------
-  |    0h   |   04h   |   08h   |   0ch   |   010h  |   014h  |   018h  |   01ch  |
-  ---------------------------------------------------------------------------------
-  | fc_mxcsr|fc_x87_cw| fc_strg |fc_deallo|  limit  |   base  |  fc_seh |   EDI   |
-  ---------------------------------------------------------------------------------
-  ---------------------------------------------------------------------------------
-  |    8    |    9    |   10    |    11   |    12   |    13   |    14   |    15   |
-  ---------------------------------------------------------------------------------
-  |   020h  |  024h   |  028h   |   02ch  |   030h  |   034h  |   038h  |   03ch  |
-  ---------------------------------------------------------------------------------
-  |   ESI   |   EBX   |   EBP   |   EIP   |   EXIT  |         | SEH NXT |SEH HNDLR|
-  ---------------------------------------------------------------------------------
-* *****************************************************************/
+/*************************************************************************************
+*  --------------------------------------------------------------------------------- *
+*  |    0    |    1    |    2    |    3    |    4    |    5    |    6    |    7    | *
+*  --------------------------------------------------------------------------------- *
+*  |    0h   |   04h   |   08h   |   0ch   |   010h  |   014h  |   018h  |   01ch  | *
+*  --------------------------------------------------------------------------------- *
+*  | fc_strg |fc_deallo|  limit  |   base  |  fc_seh |   EDI   |   ESI   |   EBX   | *
+*  --------------------------------------------------------------------------------- *
+*  --------------------------------------------------------------------------------- *
+*  |    8    |    9    |   10    |    11   |    12   |    13   |    14   |    15   | *
+*  --------------------------------------------------------------------------------- *
+*  |   020h  |  024h   |  028h   |   02ch  |   030h  |   034h  |   038h  |   03ch  | *
+*  --------------------------------------------------------------------------------- *
+*  |   EBP   |   EIP   |    to   |   data  |         |  EH NXT |SEH HNDLR|         | *
+*  --------------------------------------------------------------------------------- *
+*************************************************************************************/
 
 .file	"jump_i386_ms_pe_gas.asm"
 .text
@@ -29,9 +29,6 @@
 .globl	_jump_fcontext
 .def	_jump_fcontext;	.scl	2;	.type	32;	.endef
 _jump_fcontext:
-    /* fourth arg of jump_fcontext() == flag indicating preserving FPU */
-    movl  0x10(%esp), %ecx
-
     pushl  %ebp  /* save EBP */
     pushl  %ebx  /* save EBX */
     pushl  %esi  /* save ESI */
@@ -60,46 +57,14 @@ _jump_fcontext:
     movl  0x10(%edx), %eax
     push  %eax
 
-    /* prepare stack for FPU */
-    leal  -0x08(%esp), %esp
-
-    /* test for flag preserve_fpu */
-    testl  %ecx, %ecx 
-    je  1f
-
-    /* save MMX control word */
-    stmxcsr  (%esp)
-    /* save x87 control word */
-    fnstcw  0x04(%esp)
-
-1:
-    /* first arg of jump_fcontext() == context jumping from */
-    movl  0x30(%esp), %eax
-
     /* store ESP (pointing to context-data) in EAX */
-    movl  %esp, (%eax)
+    movl  %esp, %eax
 
-    /* second arg of jump_fcontext() == context jumping to */
-    movl  0x34(%esp), %edx
-
-    /* third arg of jump_fcontext() == value to be returned after jump */
-    movl  0x38(%esp), %eax
+    /* first arg of jump_fcontext() == fcontext to jump to */
+    movl  0x28(%esp), %ecx
 
     /* restore ESP (pointing to context-data) from EDX */
-    movl  %edx, %esp
-
-    /* test for flag preserve_fpu */
-    testl  %ecx, %ecx
-    je  2f
-
-    /* restore MMX control- and status-word */
-    ldmxcsr  (%esp)
-    /* restore x87 control-word */
-    fldcw  0x04(%esp)
-
-2:
-    /* prepare stack for FPU */
-    leal  0x08(%esp), %esp
+    movl  %ecx, %esp
 
     /* load NT_TIB into ECX */
     movl  %fs:(0x18), %edx
@@ -129,12 +94,12 @@ _jump_fcontext:
     popl  %ebx  /* save EBX */
     popl  %ebp  /* save EBP */
 
-    /* restore return-address */
-    popl  %edx
+    /* return transfer_t */
+    /* FCTX == EAX, DATA == EDX */
+    movl  0x2c(%eax), %edx
 
-    /* use value in EAX as return-value after jump */
-    /* use value in EAX as first arg in context function */
-    movl  %eax, 0x04(%esp)
+    /* jump to context */
+    ret
 
-    /* indirect jump to context */
-    jmp  *%edx
+.section .drectve
+.ascii " -export:\"jump_fcontext\""

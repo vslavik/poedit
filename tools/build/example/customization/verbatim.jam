@@ -8,6 +8,8 @@
 #  which are relevant to your case, remove everything else, and then change names
 #  and actions to taste.
 
+import os ;
+
 #  Declare a new target type. This allows Boost.Build to do something sensible
 #  when targets with the .verbatim extension are found in sources.
 import type ;
@@ -48,4 +50,12 @@ generators.register-standard verbatim.inline-file : VERBATIM : CPP ;
 actions inline-file 
 {
     "./inline_file.py" $(<) $(>)
+}
+
+if [ os.name ] = VMS
+{
+    actions inline-file
+    {
+        python inline_file.py $(<:W) $(>:W)
+    }
 }

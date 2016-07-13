@@ -79,6 +79,12 @@ int map_test_copyable(boost::container::container_detail::true_type)
    MyBoostMultiMap &boostmultimap = *pboostmultimap;
    MyStdMultiMap   &stdmultimap   = *pstdmultimap;
 
+   //Just to test move aware catch conversions
+   boostmap.insert(boostmap.cbegin(), boostmap.cend());
+   boostmultimap.insert(boostmultimap.cbegin(), boostmultimap.cend());
+   boostmap.insert(boostmap.begin(), boostmap.end());
+   boostmultimap.insert(boostmultimap.begin(), boostmultimap.end());
+
    int i;
    for(i = 0; i < max; ++i){
       {

@@ -120,7 +120,11 @@ inline BOOST_CONSTEXPR typename boost::enable_if_c<number_category<Backend>::val
    return false;
 }
 template <class Backend, expression_template_option ExpressionTemplates>
-inline BOOST_CONSTEXPR typename boost::enable_if_c<number_category<Backend>::value == number_kind_floating_point, bool>::type is_unordered_value(const number<Backend, ExpressionTemplates>& a)
+inline 
+#if !BOOST_WORKAROUND(BOOST_GCC_VERSION, < 40700)
+BOOST_CONSTEXPR
+#endif
+ typename boost::enable_if_c<number_category<Backend>::value == number_kind_floating_point, bool>::type is_unordered_value(const number<Backend, ExpressionTemplates>& a)
 {
    using default_ops::eval_fpclassify;
    return eval_fpclassify(a.backend()) == FP_NAN;

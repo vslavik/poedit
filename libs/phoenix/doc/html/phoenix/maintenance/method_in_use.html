@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Method in use</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Phoenix 3.2.0">
 <link rel="up" href="../maintenance.html" title="Maintenance">
 <link rel="prev" href="my_understanding_of_how_maintenance_works.html" title="My Understanding of how maintenance works">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="phoenix.maintenance.method_in_use"></a><a class="link" href="method_in_use.html" title="Method in use">Method in use</a>
 </h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             I have been using the <a href="http://nvie.com/posts/a-successful-git-branching-model/" target="_top">git
             branching model</a> to maintain the Boost Phoenix.
@@ -34,21 +34,21 @@
 <li class="listitem">
             I have been making most of the changes on branch develop or on branches
             from it.
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                   I test the changes on the develop branch.
                 </li></ul></div>
           </li>
 <li class="listitem">
             When I want to move things from develop to master I first branch from
             develop a new branch which I give a version number of my own within Phoenix.
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                   I can then test that before merging it into master.
                 </li></ul></div>
           </li>
 <li class="listitem">
             I now also have a separate branch for developing and testing documentation
             changes.
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                   I move selected changes from documentation onto the develop branch
                   and then onto master branch.
                 </li></ul></div>

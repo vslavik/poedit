@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Reference</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../align.html" title="Chapter&#160;2.&#160;Boost.Align">
 <link rel="prev" href="examples.html" title="Examples">
@@ -27,8 +27,10 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="align.reference"></a><a class="link" href="reference.html" title="Reference">Reference</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="reference.html#align.reference.align">align</a></span></dt>
+<dt><span class="section"><a href="reference.html#align.reference.align_down">align_down</a></span></dt>
+<dt><span class="section"><a href="reference.html#align.reference.align_up">align_up</a></span></dt>
 <dt><span class="section"><a href="reference.html#align.reference.aligned_alloc">aligned_alloc and aligned_free</a></span></dt>
 <dt><span class="section"><a href="reference.html#align.reference.aligned_allocator">aligned_allocator</a></span></dt>
 <dt><span class="section"><a href="reference.html#align.reference.aligned_allocator_adaptor">aligned_allocator_adaptor</a></span></dt>
@@ -50,7 +52,7 @@
       </p>
 <h5>
 <a name="align.reference.align.h0"></a>
-        <span class="phrase"><a name="align.reference.align.synopsis"></a></span><a class="link" href="reference.html#align.reference.align.synopsis">Header
+        <span><a name="align.reference.align.synopsis"></a></span><a class="link" href="reference.html#align.reference.align.synopsis">Header
         &lt;boost/align/align.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
@@ -62,7 +64,7 @@
 </pre>
 <h5>
 <a name="align.reference.align.h1"></a>
-        <span class="phrase"><a name="align.reference.align.align"></a></span><a class="link" href="reference.html#align.reference.align.align">Function
+        <span><a name="align.reference.align.align"></a></span><a class="link" href="reference.html#align.reference.align.align">Function
         align</a>
       </h5>
 <pre class="programlisting"><span class="keyword">void</span><span class="special">*</span> <span class="identifier">align</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">,</span> <span class="keyword">void</span><span class="special">*&amp;</span> <span class="identifier">ptr</span><span class="special">,</span>
@@ -79,7 +81,7 @@
 <p>
           <span class="bold"><strong>Requires:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">alignment</span></code> shall be
               a fundamental alignment value or an extended alignment value, and shall
@@ -105,6 +107,104 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
+<a name="align.reference.align_down"></a><a class="link" href="reference.html#align.reference.align_down" title="align_down">align_down</a>
+</h3></div></div></div>
+<p>
+        The directional alignment functions can be used with pointers or integral
+        values to align down. This functionality is not yet provided by the C++ standard.
+      </p>
+<h5>
+<a name="align.reference.align_down.h0"></a>
+        <span><a name="align.reference.align_down.synopsis"></a></span><a class="link" href="reference.html#align.reference.align_down.synopsis">Header
+        &lt;boost/align/align_down.hpp&gt;</a>
+      </h5>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">alignment</span> <span class="special">{</span>
+    <span class="keyword">constexpr</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">align_down</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">value</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
+      <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">void</span><span class="special">*</span> <span class="identifier">align_down</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+  <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+<h5>
+<a name="align.reference.align_down.h1"></a>
+        <span><a name="align.reference.align_down.align_down"></a></span><a class="link" href="reference.html#align.reference.align_down.align_down">Function
+        align_down</a>
+      </h5>
+<pre class="programlisting"><span class="keyword">void</span><span class="special">*</span> <span class="identifier">align_down</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+          <span class="bold"><strong>Requires:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">ptr</span></code> shall point to
+              contiguous storage with sufficient space for alignment
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">alignment</span></code> shall be
+              a power of two
+            </li>
+</ul></div>
+<p>
+          <span class="bold"><strong>Returns:</strong></span> A pointer value at or before
+          <code class="computeroutput"><span class="identifier">ptr</span></code> that is at least <code class="computeroutput"><span class="identifier">alignment</span></code> bytes aligned.
+        </p>
+</blockquote></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="align.reference.align_up"></a><a class="link" href="reference.html#align.reference.align_up" title="align_up">align_up</a>
+</h3></div></div></div>
+<p>
+        The directional alignment functions can be used with pointers or integral
+        values to align up. This functionality is not yet provided by the C++ standard.
+      </p>
+<h5>
+<a name="align.reference.align_up.h0"></a>
+        <span><a name="align.reference.align_up.synopsis"></a></span><a class="link" href="reference.html#align.reference.align_up.synopsis">Header
+        &lt;boost/align/align_up.hpp&gt;</a>
+      </h5>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
+  <span class="keyword">namespace</span> <span class="identifier">alignment</span> <span class="special">{</span>
+    <span class="keyword">constexpr</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">align_up</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">value</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
+      <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">void</span><span class="special">*</span> <span class="identifier">align_up</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+  <span class="special">}</span>
+<span class="special">}</span>
+</pre>
+<h5>
+<a name="align.reference.align_up.h1"></a>
+        <span><a name="align.reference.align_up.align_up"></a></span><a class="link" href="reference.html#align.reference.align_up.align_up">Function
+        align_up</a>
+      </h5>
+<pre class="programlisting"><span class="keyword">void</span><span class="special">*</span> <span class="identifier">align_up</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+</pre>
+<div class="blockquote"><blockquote class="blockquote">
+<p>
+          <span class="bold"><strong>Requires:</strong></span>
+        </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">ptr</span></code> shall point to
+              contiguous storage with sufficient space for alignment
+            </li>
+<li class="listitem">
+              <code class="computeroutput"><span class="identifier">alignment</span></code> shall be
+              a power of two
+            </li>
+</ul></div>
+<p>
+          <span class="bold"><strong>Returns:</strong></span> A pointer value at or after
+          <code class="computeroutput"><span class="identifier">ptr</span></code> that is at least <code class="computeroutput"><span class="identifier">alignment</span></code> bytes aligned.
+        </p>
+</blockquote></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
 <a name="align.reference.aligned_alloc"></a><a class="link" href="reference.html#align.reference.aligned_alloc" title="aligned_alloc and aligned_free">aligned_alloc and aligned_free</a>
 </h3></div></div></div>
 <p>
@@ -114,7 +214,7 @@
       </p>
 <h5>
 <a name="align.reference.aligned_alloc.h0"></a>
-        <span class="phrase"><a name="align.reference.aligned_alloc.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_alloc.synopsis">Header
+        <span><a name="align.reference.aligned_alloc.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_alloc.synopsis">Header
         &lt;boost/align/aligned_alloc.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
@@ -127,7 +227,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_alloc.h1"></a>
-        <span class="phrase"><a name="align.reference.aligned_alloc.aligned_alloc"></a></span><a class="link" href="reference.html#align.reference.aligned_alloc.aligned_alloc">Function
+        <span><a name="align.reference.aligned_alloc.aligned_alloc"></a></span><a class="link" href="reference.html#align.reference.aligned_alloc.aligned_alloc">Function
         aligned_alloc</a>
       </h5>
 <pre class="programlisting"><span class="keyword">void</span><span class="special">*</span> <span class="identifier">aligned_alloc</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">size</span><span class="special">);</span>
@@ -159,7 +259,7 @@
 </blockquote></div>
 <h5>
 <a name="align.reference.aligned_alloc.h2"></a>
-        <span class="phrase"><a name="align.reference.aligned_alloc.aligned_free"></a></span><a class="link" href="reference.html#align.reference.aligned_alloc.aligned_free">Function
+        <span><a name="align.reference.aligned_alloc.aligned_free"></a></span><a class="link" href="reference.html#align.reference.aligned_alloc.aligned_free">Function
         aligned_free</a>
       </h5>
 <pre class="programlisting"><span class="keyword">void</span> <span class="identifier">aligned_free</span><span class="special">(</span><span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">);</span>
@@ -208,7 +308,7 @@
 </table></div>
 <h5>
 <a name="align.reference.aligned_allocator.h0"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.synopsis">Header
+        <span><a name="align.reference.aligned_allocator.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.synopsis">Header
         &lt;boost/align/aligned_allocator.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
@@ -233,7 +333,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_allocator.h1"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator.aligned_allocator"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.aligned_allocator">Class
+        <span><a name="align.reference.aligned_allocator.aligned_allocator"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.aligned_allocator">Class
         template aligned_allocator</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Alignment</span> <span class="special">=</span> <span class="number">1</span><span class="special">&gt;</span>
@@ -291,7 +391,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_allocator.h2"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator.members"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.members">Members</a>
+        <span><a name="align.reference.aligned_allocator.members"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.members">Members</a>
       </h5>
 <p>
         Except for the destructor, member functions of the aligned allocator shall
@@ -369,7 +469,7 @@
         </p></blockquote></div>
 <h5>
 <a name="align.reference.aligned_allocator.h3"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator.globals"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.globals">Globals</a>
+        <span><a name="align.reference.aligned_allocator.globals"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator.globals">Globals</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">T2</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Alignment</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">==(</span><span class="keyword">const</span> <span class="identifier">aligned_allocator</span><span class="special">&lt;</span><span class="identifier">T1</span><span class="special">,</span>
@@ -411,7 +511,7 @@
 </table></div>
 <h5>
 <a name="align.reference.aligned_allocator_adaptor.h0"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator_adaptor.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.synopsis">Header
+        <span><a name="align.reference.aligned_allocator_adaptor.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.synopsis">Header
         &lt;boost/align/aligned_allocator_adaptor.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
@@ -433,7 +533,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_allocator_adaptor.h1"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator_adaptor.aligned_allocator_adaptor"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.aligned_allocator_adaptor">Class
+        <span><a name="align.reference.aligned_allocator_adaptor.aligned_allocator_adaptor"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.aligned_allocator_adaptor">Class
         template aligned_allocator_adaptor</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">Allocator</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Alignment</span> <span class="special">=</span> <span class="number">1</span><span class="special">&gt;</span>
@@ -478,7 +578,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_allocator_adaptor.h2"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator_adaptor.constructors"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.constructors">Constructors</a>
+        <span><a name="align.reference.aligned_allocator_adaptor.constructors"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.constructors">Constructors</a>
       </h5>
 <pre class="programlisting"><span class="identifier">aligned_allocator_adaptor</span><span class="special">()</span> <span class="special">=</span> <span class="keyword">default</span><span class="special">;</span>
 </pre>
@@ -512,7 +612,7 @@
 </blockquote></div>
 <h5>
 <a name="align.reference.aligned_allocator_adaptor.h3"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator_adaptor.members"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.members">Members</a>
+        <span><a name="align.reference.aligned_allocator_adaptor.members"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.members">Members</a>
       </h5>
 <pre class="programlisting"><span class="identifier">Allocator</span><span class="special">&amp;</span> <span class="identifier">base</span><span class="special">()</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
@@ -577,7 +677,7 @@
 <p>
           <span class="bold"><strong>Requires:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">ptr</span></code> shall be a pointer
               value obtained from <code class="computeroutput"><span class="identifier">allocate</span><span class="special">()</span></code>
@@ -601,7 +701,7 @@
       </p>
 <h5>
 <a name="align.reference.aligned_allocator_adaptor.h4"></a>
-        <span class="phrase"><a name="align.reference.aligned_allocator_adaptor.globals"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.globals">Globals</a>
+        <span><a name="align.reference.aligned_allocator_adaptor.globals"></a></span><a class="link" href="reference.html#align.reference.aligned_allocator_adaptor.globals">Globals</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">A1</span><span class="special">,</span> <span class="keyword">class</span> <span class="identifier">A2</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Alignment</span><span class="special">&gt;</span>
 <span class="keyword">bool</span> <span class="keyword">operator</span><span class="special">==(</span><span class="keyword">const</span> <span class="identifier">aligned_allocator_adaptor</span><span class="special">&lt;</span><span class="identifier">A1</span><span class="special">,</span>
@@ -632,7 +732,7 @@
       </p>
 <h5>
 <a name="align.reference.aligned_delete.h0"></a>
-        <span class="phrase"><a name="align.reference.aligned_delete.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_delete.synopsis">Header
+        <span><a name="align.reference.aligned_delete.synopsis"></a></span><a class="link" href="reference.html#align.reference.aligned_delete.synopsis">Header
         &lt;boost/align/aligned_delete.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
@@ -643,7 +743,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_delete.h1"></a>
-        <span class="phrase"><a name="align.reference.aligned_delete.aligned_delete"></a></span><a class="link" href="reference.html#align.reference.aligned_delete.aligned_delete">Class
+        <span><a name="align.reference.aligned_delete.aligned_delete"></a></span><a class="link" href="reference.html#align.reference.aligned_delete.aligned_delete">Class
         aligned_delete</a>
       </h5>
 <pre class="programlisting"><span class="keyword">class</span> <span class="identifier">aligned_delete</span> <span class="special">{</span>
@@ -654,7 +754,7 @@
 </pre>
 <h5>
 <a name="align.reference.aligned_delete.h2"></a>
-        <span class="phrase"><a name="align.reference.aligned_delete.members"></a></span><a class="link" href="reference.html#align.reference.aligned_delete.members">Members</a>
+        <span><a name="align.reference.aligned_delete.members"></a></span><a class="link" href="reference.html#align.reference.aligned_delete.members">Members</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="keyword">void</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">T</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">)</span> <span class="keyword">const</span> <span class="keyword">noexcept</span><span class="special">(</span><span class="keyword">noexcept</span><span class="special">(</span><span class="identifier">ptr</span><span class="special">-&gt;~</span><span class="identifier">T</span><span class="special">()));</span>
@@ -685,25 +785,26 @@
       </p>
 <h5>
 <a name="align.reference.alignment_of.h0"></a>
-        <span class="phrase"><a name="align.reference.alignment_of.synopsis"></a></span><a class="link" href="reference.html#align.reference.alignment_of.synopsis">Header
+        <span><a name="align.reference.alignment_of.synopsis"></a></span><a class="link" href="reference.html#align.reference.alignment_of.synopsis">Header
         &lt;boost/align/alignment_of.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">alignment</span> <span class="special">{</span>
     <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
     <span class="keyword">struct</span> <span class="identifier">alignment_of</span><span class="special">;</span>
+
+    <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
+    <span class="keyword">constexpr</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment_of_v</span> <span class="special">=</span> <span class="identifier">alignment_of</span><span class="special">&lt;</span><span class="identifier">T</span><span class="special">&gt;::</span><span class="identifier">value</span><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span>
 </pre>
 <h5>
 <a name="align.reference.alignment_of.h1"></a>
-        <span class="phrase"><a name="align.reference.alignment_of.alignment_of"></a></span><a class="link" href="reference.html#align.reference.alignment_of.alignment_of">Type
+        <span><a name="align.reference.alignment_of.alignment_of"></a></span><a class="link" href="reference.html#align.reference.alignment_of.alignment_of">Type
         trait alignment_of</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
-<span class="keyword">struct</span> <span class="identifier">alignment_of</span>
-    <span class="special">:</span> <span class="identifier">integral_constant</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">,</span> <span class="keyword">alignof</span><span class="special">(</span><span class="identifier">T</span><span class="special">)&gt;</span> <span class="special">{</span>
-<span class="special">};</span>
+<span class="keyword">struct</span> <span class="identifier">alignment_of</span><span class="special">;</span>
 </pre>
 <div class="blockquote"><blockquote class="blockquote">
 <p>
@@ -732,14 +833,14 @@
       </p>
 <h5>
 <a name="align.reference.assume_aligned.h0"></a>
-        <span class="phrase"><a name="align.reference.assume_aligned.synopsis"></a></span><a class="link" href="reference.html#align.reference.assume_aligned.synopsis">Header
+        <span><a name="align.reference.assume_aligned.synopsis"></a></span><a class="link" href="reference.html#align.reference.assume_aligned.synopsis">Header
         &lt;boost/align/assume_aligned.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="identifier">BOOST_ALIGN_ASSUME_ALIGNED</span><span class="special">(</span><span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">alignment</span><span class="special">)</span>
 </pre>
 <h5>
 <a name="align.reference.assume_aligned.h1"></a>
-        <span class="phrase"><a name="align.reference.assume_aligned.assume_aligned"></a></span><a class="link" href="reference.html#align.reference.assume_aligned.assume_aligned">Macro
+        <span><a name="align.reference.assume_aligned.assume_aligned"></a></span><a class="link" href="reference.html#align.reference.assume_aligned.assume_aligned">Macro
         BOOST_ALIGN_ASSUME_ALIGNED</a>
       </h5>
 <pre class="programlisting"><span class="identifier">BOOST_ALIGN_ASSUME_ALIGNED</span><span class="special">(</span><span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">alignment</span><span class="special">)</span>
@@ -748,7 +849,7 @@
 <p>
           <span class="bold"><strong>Requires:</strong></span>
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><span class="identifier">alignment</span></code> shall be
               a power of two
@@ -776,21 +877,24 @@
       </p>
 <h5>
 <a name="align.reference.is_aligned.h0"></a>
-        <span class="phrase"><a name="align.reference.is_aligned.synopsis"></a></span><a class="link" href="reference.html#align.reference.is_aligned.synopsis">Header
+        <span><a name="align.reference.is_aligned.synopsis"></a></span><a class="link" href="reference.html#align.reference.is_aligned.synopsis">Header
         &lt;boost/align/is_aligned.hpp&gt;</a>
       </h5>
 <pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">boost</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">alignment</span> <span class="special">{</span>
-    <span class="keyword">bool</span> <span class="identifier">is_aligned</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+    <span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="identifier">is_aligned</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">value</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span>
+      <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+
+    <span class="keyword">bool</span> <span class="identifier">is_aligned</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
   <span class="special">}</span>
 <span class="special">}</span>
 </pre>
 <h5>
 <a name="align.reference.is_aligned.h1"></a>
-        <span class="phrase"><a name="align.reference.is_aligned.is_aligned"></a></span><a class="link" href="reference.html#align.reference.is_aligned.is_aligned">Function
+        <span><a name="align.reference.is_aligned.is_aligned"></a></span><a class="link" href="reference.html#align.reference.is_aligned.is_aligned">Function
         is_aligned</a>
       </h5>
-<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">is_aligned</span><span class="special">(</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">,</span> <span class="keyword">const</span> <span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
+<pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">is_aligned</span><span class="special">(</span><span class="keyword">const</span> <span class="keyword">void</span><span class="special">*</span> <span class="identifier">ptr</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">alignment</span><span class="special">)</span> <span class="keyword">noexcept</span><span class="special">;</span>
 </pre>
 <div class="blockquote"><blockquote class="blockquote">
 <p>

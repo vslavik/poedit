@@ -15,8 +15,6 @@
 #include "../../intrusive/test/iterator_test.hpp"
 
 #include <boost/container/allocator.hpp>
-#include <boost/container/node_allocator.hpp>
-#include <boost/container/adaptive_pool.hpp>
 
 #include <iostream>
 
@@ -42,27 +40,7 @@ template class boost::container::small_vector
 template class boost::container::small_vector
    < test::movable_and_copyable_int
    , 10
-   , test::dummy_test_allocator<test::movable_and_copyable_int> >;
-
-template class boost::container::small_vector
-   < test::movable_and_copyable_int
-   , 10
-   , std::allocator<test::movable_and_copyable_int> >;
-
-template class boost::container::small_vector
-   < test::movable_and_copyable_int
-   , 10
    , allocator<test::movable_and_copyable_int> >;
-
-template class boost::container::small_vector
-   < test::movable_and_copyable_int
-   , 10
-   , adaptive_pool<test::movable_and_copyable_int> >;
-
-template class boost::container::small_vector
-   < test::movable_and_copyable_int
-   , 10
-   , node_allocator<test::movable_and_copyable_int> >;
 
 }}
 
@@ -96,7 +74,7 @@ bool test_small_vector_base_test()
          return false;
    }
    {
-      typedef boost::container::small_vector<int, 5> sm7_t;
+      typedef boost::container::small_vector<int, 7> sm7_t;
       sm7_t sm7;
       smb_t &smb = sm7;
       smb.push_back(2);
@@ -105,6 +83,32 @@ bool test_small_vector_base_test()
       if (!boost::container::test::CheckEqualContainers(sm7, smb))
          return false;
    }
+   {
+      typedef boost::container::small_vector<int, 5> sm5_t;
+      sm5_t sm5;
+      smb_t &smb = sm5;
+      smb.push_back(1);
+      sm5_t sm5_copy(smb);
+      if (!boost::container::test::CheckEqualContainers(sm5, sm5_copy))
+         return false;
+      smb.push_back(2);
+      if(smb.size() != 2){
+         return false;
+      }
+      sm5_copy = smb;
+      if (!boost::container::test::CheckEqualContainers(sm5, sm5_copy))
+         return false;
+      sm5_t sm5_move(boost::move(smb));
+      smb.clear();
+      if (!boost::container::test::CheckEqualContainers(sm5_move, sm5_copy))
+         return false;
+      smb = sm5_copy;
+      sm5_move = boost::move(smb);
+      smb.clear();
+      if (!boost::container::test::CheckEqualContainers(sm5_move, sm5_copy))
+         return false;
+   }
+
    return true;
 }
 
@@ -185,7 +189,7 @@ int main()
    ////////////////////////////////////
    //    Default init test
    ////////////////////////////////////
-   if(!test::default_init_test< vector<int, test::default_init_allocator<int> > >()){
+   if(!test::default_init_test< small_vector<int, 5, test::default_init_allocator<int> > >()){
       std::cerr << "Default init test failed" << std::endl;
       return 1;
    }
@@ -194,7 +198,7 @@ int main()
    //    Emplace testing
    ////////////////////////////////////
    const test::EmplaceOptions Options = (test::EmplaceOptions)(test::EMPLACE_BACK | test::EMPLACE_BEFORE);
-   if(!boost::container::test::test_emplace< vector<test::EmplaceInt>, Options>()){
+   if(!boost::container::test::test_emplace< small_vector<test::EmplaceInt, 5>, Options>()){
       return 1;
    }
 

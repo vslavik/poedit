@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Relative Error and Testing</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
 <link rel="up" href="../internals.html" title="Internal tools">
 <link rel="prev" href="minimax.html" title="Minimax Approximations and the Remez Algorithm">
 <link rel="next" href="test_data.html" title="Graphing, Profiling, and Generating Test Data for Special Functions">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h5>
 <a name="math_toolkit.internals.error_test.h0"></a>
-        <span class="phrase"><a name="math_toolkit.internals.error_test.synopsis"></a></span><a class="link" href="error_test.html#math_toolkit.internals.error_test.synopsis">Synopsis</a>
+        <span><a name="math_toolkit.internals.error_test.synopsis"></a></span><a class="link" href="error_test.html#math_toolkit.internals.error_test.synopsis">Synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">test</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -53,7 +53,7 @@
 </pre>
 <h5>
 <a name="math_toolkit.internals.error_test.h1"></a>
-        <span class="phrase"><a name="math_toolkit.internals.error_test.description"></a></span><a class="link" href="error_test.html#math_toolkit.internals.error_test.description">Description</a>
+        <span><a name="math_toolkit.internals.error_test.description"></a></span><a class="link" href="error_test.html#math_toolkit.internals.error_test.description">Description</a>
       </h5>
 <pre class="programlisting"><span class="keyword">template</span> <span class="special">&lt;</span><span class="keyword">class</span> <span class="identifier">T</span><span class="special">&gt;</span>
 <span class="identifier">T</span> <span class="identifier">relative_error</span><span class="special">(</span><span class="identifier">T</span> <span class="identifier">a</span><span class="special">,</span> <span class="identifier">T</span> <span class="identifier">v</span><span class="special">);</span>
@@ -68,7 +68,7 @@
 <p>
         In addition the value returned is zero if:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             Both <span class="emphasis"><em>a</em></span> and <span class="emphasis"><em>v</em></span> are infinite.
           </li>
@@ -95,7 +95,7 @@
       </p>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="computeroutput"><span class="keyword">unsigned</span> <span class="identifier">worst</span><span class="special">()</span><span class="keyword">const</span><span class="special">;</span></code></span></dt>
 <dd><p>
               Returns the row at which the worst error occurred.
@@ -166,7 +166,7 @@
       </p>
 <h5>
 <a name="math_toolkit.internals.error_test.h2"></a>
-        <span class="phrase"><a name="math_toolkit.internals.error_test.example"></a></span><a class="link" href="error_test.html#math_toolkit.internals.error_test.example">Example</a>
+        <span><a name="math_toolkit.internals.error_test.example"></a></span><a class="link" href="error_test.html#math_toolkit.internals.error_test.example">Example</a>
       </h5>
 <p>
         Suppose we want to test the tgamma and lgamma functions, we can create a
@@ -222,8 +222,8 @@
 <td align="left"></td>
 <td align="right"><div class="copyright-footer">Copyright &#169; 2006-2010, 2012-2014 Nikhar Agrawal,
       Anton Bikineev, Paul A. Bristow, Marco Guazzone, Christopher Kormanyos, Hubert
-      Holin, Bruno Lalande, John Maddock, Johan R&#229;de, Gautam Sewani, Benjamin Sobotta,
-      Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
+      Holin, Bruno Lalande, John Maddock, Jeremy Murphy, Johan R&#229;de, Gautam Sewani,
+      Benjamin Sobotta, Thijs van den Berg, Daryle Walker and Xiaogang Zhang<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

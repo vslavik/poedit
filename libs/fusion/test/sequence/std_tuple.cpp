@@ -27,7 +27,7 @@ main()
 
     {
         // conversion vector to std tuple
-        std::tuple<int, std::string> t = convert<std_tuple_tag>(make_vector(123, "Hola!!!"));
+        std::tuple<int, std::string> t = convert<std_tuple_tag>(make_vector(123, std::string("Hola!!!")));
         BOOST_TEST(std::get<0>(t) == 123);
         BOOST_TEST(std::get<1>(t) == "Hola!!!");
     }

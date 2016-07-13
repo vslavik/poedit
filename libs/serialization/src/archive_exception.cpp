@@ -17,6 +17,7 @@
 #include <cstring>
 
 #define BOOST_ARCHIVE_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/archive/archive_exception.hpp>
 
 namespace boost {

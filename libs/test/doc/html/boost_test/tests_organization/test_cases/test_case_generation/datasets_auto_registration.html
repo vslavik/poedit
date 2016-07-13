@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Declaring and registering test cases with datasets</title>
 <link rel="stylesheet" href="../../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_case_generation.html" title="Data-driven test cases">
 <link rel="prev" href="datasets.html" title="Datasets">
@@ -28,13 +28,20 @@
           and registering test cases with datasets</a>
 </h5></div></div></div>
 <p>
-            In order to declare and register a data-driven test-case, the macro
-            <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset.html" title="BOOST_DATA_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code></a> should
-            be used. This macro is variadic and can be used in the following forms:
+            In order to declare and register a data-driven test-case, the macros
+            <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset.html" title="BOOST_DATA_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code></a> or <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset_fixture.html" title="BOOST_DATA_TEST_CASE_F"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE_F</span></code></a> should
+            be used. Those two forms are equivalent, with the difference that <code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE_F</span></code> supports fixtures.
+          </p>
+<p>
+            Those macros are variadic and can be used in the following forms:
           </p>
 <pre class="programlisting"><a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset.html" title="BOOST_DATA_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code></a><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* dataset1 of arity 1 */</span> <span class="special">}</span>
 <span class="identifier">BOOST_DATA_TEST_CASE</span><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">,</span> <span class="identifier">var1</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* datasets of arity 1 */</span> <span class="special">}</span>
-<span class="identifier">BOOST_DATA_TEST_CASE</span><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">,</span> <span class="identifier">var1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">varN</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* datasets of arity N */</span> <span class="special">}</span>
+<span class="identifier">BOOST_DATA_TEST_CASE</span><span class="special">(</span><span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">,</span> <span class="identifier">var1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">varN</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* datasets of arity N  */</span> <span class="special">}</span>
+
+<a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset_fixture.html" title="BOOST_DATA_TEST_CASE_F"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE_F</span></code></a><span class="special">(</span><span class="identifier">fixture</span><span class="special">,</span> <span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* dataset1 of arity 1 with fixture */</span> <span class="special">}</span>
+<span class="identifier">BOOST_DATA_TEST_CASE_F</span><span class="special">(</span><span class="identifier">fixture</span><span class="special">,</span> <span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">,</span> <span class="identifier">var1</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* dataset1 of arity 1 with fixture */</span> <span class="special">}</span>
+<span class="identifier">BOOST_DATA_TEST_CASE_F</span><span class="special">(</span><span class="identifier">fixture</span><span class="special">,</span> <span class="identifier">test_case_name</span><span class="special">,</span> <span class="identifier">dataset</span><span class="special">,</span> <span class="identifier">var1</span><span class="special">,</span> <span class="special">...,</span> <span class="identifier">varN</span><span class="special">)</span> <span class="special">{</span> <span class="comment">/* dataset1 of arity N with fixture */</span> <span class="special">}</span>
 </pre>
 <p>
             The first form of the macro is for datasets of arity 1. The value of
@@ -72,6 +79,12 @@
 <span class="special">}</span>
 </pre>
 <p>
+            The next three forms of declaration, with <code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE_F</span></code>,
+            are equivalent to the previous ones, with the difference being in the
+            support of a fixture that is execute before the test body for each sample.
+            The fixture should follow the expected interface as detailed <a class="link" href="../../fixtures/models.html" title="Fixture models">here</a>.
+          </p>
+<p>
             The arity of the dataset and the number of variables should be exactly
             the same, the first form being a short-cut for the case of arity 1.
           </p>
@@ -83,21 +96,25 @@
 <tr><td align="left" valign="top"><p>
               A compilation-time check is performed on the coherence of the arity
               of the dataset and the number of variables <code class="computeroutput"><span class="identifier">var1</span></code>...
-              <code class="computeroutput"><span class="identifier">varN</span></code>.
+              <code class="computeroutput"><span class="identifier">varN</span></code>. For compilers
+              <span class="bold"><strong>without C++11</strong></span> support, the maximal
+              supported arity is controlled by the macro <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset.html" title="BOOST_DATA_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_TEST_DATASET_MAX_ARITY</span></code></a>,
+              that can be overridden <span class="emphasis"><em>prior</em></span> to including the
+              <span class="emphasis"><em>Unit Test Framework</em></span> headers.
             </p></td></tr>
 </table></div>
 <p>
-            It should be emphasized that this macro does not declares a test case,
-            such as <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_auto_test_case.html" title="BOOST_AUTO_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a>, but declares
-            and registers as many test cases as there are samples in the dataset
-            given as argument. Each test case runs on exactly <span class="bold"><strong>one</strong></span>
+            It should be emphasized that those macros do not declare a unique test
+            case (as <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_auto_test_case.html" title="BOOST_AUTO_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_AUTO_TEST_CASE</span></code></a> would do)
+            but declare and register as many test cases as there are samples in the
+            dataset given in argument. Each test case runs on exactly <span class="bold"><strong>one</strong></span>
             sample of the dataset.
           </p>
 <p>
             Exactly as regular test cases, each test - or each sample - is executed
             within the test body in a <span class="emphasis"><em>guarded manner</em></span>:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                 the test execution are independent: if an error occurs for one sample,
                 the remaining samples execution is not affected
@@ -115,14 +132,16 @@
 <th align="left">Caution</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-              The macro <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset.html" title="BOOST_DATA_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code></a> is available
-              only for compilers with support for variadic macros.
+              The macros <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset.html" title="BOOST_DATA_TEST_CASE"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE</span></code></a> and
+              <a class="link" href="../../../utf_reference/test_org_reference/test_org_boost_test_dataset_fixture.html" title="BOOST_DATA_TEST_CASE_F"><code class="computeroutput"><span class="identifier">BOOST_DATA_TEST_CASE_F</span></code></a> are
+              available only for compilers with support for <span class="bold"><strong>variadic
+              macros</strong></span>.
             </p></td></tr>
 </table></div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -156,7 +156,7 @@ void swap_nodes(testvalue<Hooks>& lhs, testvalue<Hooks>& rhs)
 template<class Hooks>
 std::ostream& operator<<
    (std::ostream& s, const testvalue<Hooks>& t)
-{  return s << t.value_;   }
+{  return s << t.value_.int_value();   }
 
 struct even_odd
 {

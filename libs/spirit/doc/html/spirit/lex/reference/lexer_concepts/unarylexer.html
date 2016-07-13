@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>UnaryLexer</title>
 <link rel="stylesheet" href="../../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../../index.html" title="Spirit 2.5.2">
 <link rel="up" href="../lexer_concepts.html" title="Lexer Concepts">
 <link rel="prev" href="primitivelexer.html" title="PrimitiveLexer">
@@ -28,7 +28,7 @@
 </h5></div></div></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.h0"></a>
-            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.unarylexer.description"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.description">Description</a>
+            <span><a name="spirit.lex.reference.lexer_concepts.unarylexer.description"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.description">Description</a>
           </h6>
 <p>
             <span class="emphasis"><em>UnaryLexer</em></span> is a composite lexer component that has
@@ -37,7 +37,7 @@
           </p>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.h1"></a>
-            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.unarylexer.refinement_of"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.refinement_of">Refinement
+            <span><a name="spirit.lex.reference.lexer_concepts.unarylexer.refinement_of"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.refinement_of">Refinement
             of</a>
           </h6>
 <div class="blockquote"><blockquote class="blockquote"><p>
@@ -45,7 +45,7 @@
             </p></blockquote></div>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">l</span></code></span></dt>
 <dd><p>
                   A UnaryLexer.
@@ -58,7 +58,7 @@
 </div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.h2"></a>
-            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.unarylexer.valid_expressions"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.valid_expressions">Valid
+            <span><a name="spirit.lex.reference.lexer_concepts.unarylexer.valid_expressions"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.valid_expressions">Valid
             Expressions</a>
           </h6>
 <p>
@@ -108,7 +108,7 @@
 </table></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.h3"></a>
-            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.unarylexer.type_expressions"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.type_expressions">Type
+            <span><a name="spirit.lex.reference.lexer_concepts.unarylexer.type_expressions"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.type_expressions">Type
             Expressions</a>
           </h6>
 <div class="informaltable"><table class="table">
@@ -161,23 +161,23 @@
 </table></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.h4"></a>
-            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.unarylexer.invariants"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.invariants">Invariants</a>
+            <span><a name="spirit.lex.reference.lexer_concepts.unarylexer.invariants"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.invariants">Invariants</a>
           </h6>
 <p>
             For any UnaryLexer, <code class="computeroutput"><span class="identifier">L</span></code>,
             the following invariant always holds:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                 <code class="computeroutput"><span class="identifier">traits</span><span class="special">::</span><span class="identifier">is_lexer</span><span class="special">&lt;</span><span class="identifier">L</span><span class="special">::</span><span class="identifier">subject_type</span><span class="special">&gt;::</span><span class="identifier">type</span></code> evaluates to <code class="computeroutput"><span class="identifier">mpl</span><span class="special">::</span><span class="identifier">true_</span></code>
               </li></ul></div>
 <h6>
 <a name="spirit.lex.reference.lexer_concepts.unarylexer.h5"></a>
-            <span class="phrase"><a name="spirit.lex.reference.lexer_concepts.unarylexer.models"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.models">Models</a>
+            <span><a name="spirit.lex.reference.lexer_concepts.unarylexer.models"></a></span><a class="link" href="unarylexer.html#spirit.lex.reference.lexer_concepts.unarylexer.models">Models</a>
           </h6>
 <p>
             The following lexer components conform to this model:
           </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
                 action lexer component (allowing to attach semantic actions)
               </li></ul></div>
 <p>

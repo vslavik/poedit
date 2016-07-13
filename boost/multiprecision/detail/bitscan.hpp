@@ -8,8 +8,8 @@
 #ifndef BOOST_MP_DETAIL_BITSCAN_HPP
 #define BOOST_MP_DETAIL_BITSCAN_HPP
 
-#if defined(BOOST_MSVC) && (defined(_M_IX86) || defined(_M_X64))
-#include <Intrin.h>
+#if (defined(BOOST_MSVC) || (defined(__clang__) && defined(__c2__)) || (defined(BOOST_INTEL) && defined(_MSC_VER))) && (defined(_M_IX86) || defined(_M_X64))
+#include <intrin.h>
 #endif
 
 namespace boost{ namespace multiprecision{ namespace detail{
@@ -38,7 +38,7 @@ inline unsigned find_msb(Unsigned mask, const mpl::int_<0>&)
    return --index;
 }
 
-#if defined(BOOST_MSVC) && (defined(_M_IX86) || defined(_M_X64))
+#if (defined(BOOST_MSVC) || (defined(__clang__) && defined(__c2__)) || (defined(BOOST_INTEL) && defined(_MSC_VER))) && (defined(_M_IX86) || defined(_M_X64))
 
 #pragma intrinsic(_BitScanForward,_BitScanReverse)
 

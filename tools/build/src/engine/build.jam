@@ -21,7 +21,8 @@ for local v in ARGV CC CFLAGS LIBS
 if $(OS) = NT { rule .path { return "$(<:J=\\)" ; } ./ = "/" ; }
 else { rule .path { return "$(<:J=/)" ; } }
 
-. = "." ;
+if $(OS) = VMS { . = "_" ; }
+else { . = "." ; }
 ./ ?= "" ;
 
 # Info about what we are building.
@@ -279,13 +280,6 @@ toolset kylix bc++ : -o : -D
         [ opt --debug : -runtime ssd ]
         : $(--python-lib[1]) ;
 }
-## MINGW GCC
-toolset mingw gcc : "-o " : -D
-    :
-    [ opt --release : -s -O3 -finline-functions ]
-    [ opt --debug : -g -O0 -fno-inline -pg ]
-    -I$(--python-include) -I$(--extra-include)
-    : $(--python-lib[2]) ;
 ## MIPS Pro
 toolset mipspro cc : "-o " : -D
     :
@@ -310,7 +304,7 @@ toolset qcc qcc : "-o " : -D
 ## Qlogic Pathscale 2.4
 toolset pathscale pathcc : "-o " : -D
     :
-    [ opt --release : -s -Ofast -O3 ]
+    [ opt --release : -s -O3 ]
     [ opt --debug : -g ]
     -I$(--python-include) -I$(--extra-include)
     : -L$(--python-lib[1]) -l$(--python-lib[2]) ;
@@ -406,6 +400,15 @@ toolset vc14 cl : /Fe /Fe /Fd /Fo : -D
     [ opt --debug : /MTd /DEBUG /Z7 /Od /Ob0 /wd4996 ]
     -I$(--python-include) -I$(--extra-include)
     : kernel32.lib advapi32.lib user32.lib $(--python-lib[1]) ;
+## VMS/OpenVMS DEC C
+toolset vmsdecc cc : /OBJECT= : "/DEFINES=(" "," ")"
+    : /STANDARD=VAXC /PREFIX_LIBRARY_ENTRIES=(ALL_ENTRIES)
+    [ opt --release : /OPTIMIZE /NODEBUG /WARN=DISABLE=(LONGEXTERN) ]
+    [ opt --debug : /NOOPTIMIZE /DEBUG ] ;
+toolset vmsdecc LINK .link : /EXECUTABLE= :
+    : /NOMAP
+    [ opt --release : /NODEBUG ]
+    [ opt --debug : /DEBUG ] ;
 
 # First set the build commands and options according to the
 # preset toolset.
@@ -505,7 +508,7 @@ if --show-locate-target in $(ARGV)
     ECHO $(locate-target) ;
 }
 
-# We have some different files for UNIX, and NT.
+# We have some different files for UNIX, VMS, and NT.
 jam.source =
     command.c compile.c constants.c debug.c execcmd.c frames.c function.c glob.c
     hash.c hcache.c headers.c hdrmacro.c jam.c jambase.c jamgram.c lists.c
@@ -517,6 +520,11 @@ jam.source =
 if $(OS) = NT
 {
     jam.source += execnt.c filent.c pathnt.c ;
+}
+else if $(OS) = VMS
+{
+    jam.source += execvms.c filevms.c pathvms.c ;
+    --flags += /INCLUDE=(\""./modules"\") ;
 }
 else
 {
@@ -562,6 +570,10 @@ if ( $(OS) = NT ) && ! NT in $(--defs)
 {
     --defs += NT ;
 }
+if $(OS) = VMS
+{
+    --defs += VMS ;
+}
 --defs += YYSTACKSIZE=5000 ;
 
 if $(with-python)
@@ -590,11 +602,17 @@ if $(OS) = NT { actions piecemeal together existing [DELETE] {
 if $(UNIX) = true { actions piecemeal together existing [DELETE] {
     rm -f "$(>)"
 } }
+if $(OS) = VMS { actions piecemeal together existing [DELETE] {
+    DELETE /NOCONF $(>:WJ=;*, );*
+} }
 if $(OS) = NT {
     --chmod+w = "attrib -r " ;
 }
 if $(UNIX) = true {
     --chmod+w = "chmod +w " ;
+}
+if $(OS) = VMS {
+    --chmod+w = "SET FILE/PROT=(W:RWED) " ;
 }
 
 rule .mkdir
@@ -609,11 +627,14 @@ if $(OS) = NT { actions [MKDIR] {
 if $(UNIX) = true { actions [MKDIR] {
     mkdir "$(<)"
 } }
+if $(OS) = VMS { actions [MKDIR] {
+    CREATE/DIR $(<:WJ=, )
+} }
 
 rule .exe
 {
     local exe = $(<) ;
-    if $(OS) = NT || ( $(UNIX) = true && $(OS) = CYGWIN ) { exe = $(exe:S=.exe) ; }
+    if $(OS) = NT || ( $(UNIX) = true && $(OS) = CYGWIN ) || $(OS) = VMS { exe = $(exe:S=.exe) ; }
     LOCATE on $(exe) = $(locate-target) ;
     DEPENDS all : $(exe) ;
     .mkdir $(locate-target) ;
@@ -624,8 +645,10 @@ rule .exe
         {
             # Translate any subdir elements into a simple file name.
             local o = [ MATCH "([^/]+)[/]?(.+)" : $(s) ] ;
+
             o = $(o:J=_) ;
             o = $(o:S=.o) ;
+            if $(OS) = VMS { o = $(o:S=.obj) ; }
             objs += $(o) ;
             LOCATE on $(o) = $(locate-target) ;
             DEPENDS $(exe) : $(o) ;
@@ -648,16 +671,23 @@ rule .exe
     }
     return $(exe) ;
 }
-if ! $(--def[2]) { actions [COMPILE] {
+
+if $(OS) = VMS { actions [COMPILE] {
+    $(--cc) $(--bin)$(<:WD=) $(--dir)$(<:D)$(./) $(--out)$(<:W) $(--def[1])$(--defs:J=$(--def[2]))$(--def[3]) $(--flags)  $(>:W) $(--libs)
+} }
+else if ! $(--def[2]) { actions [COMPILE] {
     "$(--cc)" "$(--bin)$(<:D=)" "$(--dir)$(<:D)$(./)" $(--out)$(<) "$(--def)$(--defs)" "$(--flags)" "$(>)" "$(--libs)"
 } }
 else { actions [COMPILE] {
     "$(--cc)" "$(--bin)$(<:D=)" "$(--dir)$(<:D)$(./)" $(--out)$(<) "$(--def[1])$(--defs:J=$(--def[2]))$(--def[3])" "$(--flags)"  "$(>)" "$(--libs)"
 } }
 
-actions [COMPILE.LINK] {
+if $(OS) = VMS { actions [COMPILE.LINK] {
+    $(--link) $(--link-bin)$(<:WD=) $(--link-dir)$(<:WD)$(./) $(--link-out)$(<:W) $(--link-def)$(--link-defs) $(--link-flags) $(--link-libs) $(>:WJ=, )
+} }
+else { actions [COMPILE.LINK] {
     "$(--link)" "$(--link-bin)$(<:D=)" "$(--link-dir)$(<:D)$(./)" "$(--link-out)$(<)" "$(--link-def)$(--link-defs)" "$(--link-flags)"  "$(>)" "$(--link-libs)"
-}
+} }
 
 rule .link
 {
@@ -672,6 +702,9 @@ if $(OS) = NT { actions [LINK] {
 if $(UNIX) = true { actions [LINK] {
     ln -fs "$(>)" "$(<)"
 } }
+if $(OS) = VMS { actions [LINK] {
+    COPY/REPLACE $(>:W) $(<:W)
+} }
 
 rule .copy
 {
@@ -682,9 +715,11 @@ rule .copy
 }
 
 # Will be redefined later.
-actions [COPY]
-{
-}
+if $(OS) = VMS { actions [COPY] {
+    COPY/REPLACE $(>:W) $(<:W)
+} }
+else { actions [COPY] {
+} }
 
 
 rule .move
@@ -698,6 +733,9 @@ if $(OS) = NT { actions [MOVE] {
 } }
 if $(UNIX) = true { actions [MOVE] {
     mv -f "$(>)" "$(<)"
+} }
+if $(OS) = VMS { actions [MOVE] {
+    RENAME /NOCONF $(>:W) $(<:W)
 } }
 
 # Generate the grammar tokens table, and the real yacc grammar.
@@ -772,6 +810,13 @@ if $(UNIX) = true { actions [YACC] {
     else
         exit 1
     fi
+} }
+if $(OS) = VMS { actions [YACC] {
+    IF $(yacc) $(>)
+    THEN
+        RENAME /NOCONF y_tab$(<[1]:S) $(<[1]:W)
+        RENAME /NOCONF y_tab$(<[2]:S) $(<[2]:W)
+    ENDIF
 } }
 if $(grammar) && ! $(yacc)
 {
@@ -863,7 +908,7 @@ dist.source =
 dist.source = $(dist.source:D=)
     $(dist.license[1])
     $(dist.docs)
-    build.jam build.bat build.sh
+    build.jam build.bat build.sh build_vms.com
     Jambase
     jamgram.y jamgram.yy
     [ .path modules set.c ]

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Introduction</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Coroutine">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Coroutine">
 <link rel="prev" href="overview.html" title="Overview">
@@ -28,19 +28,19 @@
 </h2></div></div></div>
 <h4>
 <a name="coroutine.intro.h0"></a>
-      <span class="phrase"><a name="coroutine.intro.definition"></a></span><a class="link" href="intro.html#coroutine.intro.definition">Definition</a>
+      <span><a name="coroutine.intro.definition"></a></span><a class="link" href="intro.html#coroutine.intro.definition">Definition</a>
     </h4>
 <p>
       In computer science routines are defined as a sequence of operations. The execution
       of routines forms a parent-child relationship and the child terminates always
-      before the parent. Coroutines (the term was introduced by Melvin Conway <a href="#ftn.coroutine.intro.f0" class="footnote" name="coroutine.intro.f0"><sup class="footnote">[1]</sup></a>), are a generalization of routines (Donald Knuth <a href="#ftn.coroutine.intro.f1" class="footnote" name="coroutine.intro.f1"><sup class="footnote">[2]</sup></a>. The principal difference between coroutines and routines is that
+      before the parent. Coroutines (the term was introduced by Melvin Conway <sup>[<a name="coroutine.intro.f0" href="#ftn.coroutine.intro.f0" class="footnote">1</a>]</sup>), are a generalization of routines (Donald Knuth <sup>[<a name="coroutine.intro.f1" href="#ftn.coroutine.intro.f1" class="footnote">2</a>]</sup>. The principal difference between coroutines and routines is that
       a coroutine enables explicit suspend and resume of its progress via additional
       operations by preserving execution state and thus provides an <span class="bold"><strong>enhanced
       control flow</strong></span> (maintaining the execution context).
     </p>
 <h4>
 <a name="coroutine.intro.h1"></a>
-      <span class="phrase"><a name="coroutine.intro.how_it_works"></a></span><a class="link" href="intro.html#coroutine.intro.how_it_works">How
+      <span><a name="coroutine.intro.how_it_works"></a></span><a class="link" href="intro.html#coroutine.intro.how_it_works">How
       it works</a>
     </h4>
 <p>
@@ -74,12 +74,12 @@
     </p>
 <h4>
 <a name="coroutine.intro.h2"></a>
-      <span class="phrase"><a name="coroutine.intro.characteristics"></a></span><a class="link" href="intro.html#coroutine.intro.characteristics">characteristics</a>
+      <span><a name="coroutine.intro.characteristics"></a></span><a class="link" href="intro.html#coroutine.intro.characteristics">characteristics</a>
     </h4>
 <p>
-      Characteristics <a href="#ftn.coroutine.intro.f2" class="footnote" name="coroutine.intro.f2"><sup class="footnote">[3]</sup></a> of a coroutine are:
+      Characteristics <sup>[<a name="coroutine.intro.f2" href="#ftn.coroutine.intro.f2" class="footnote">3</a>]</sup> of a coroutine are:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           values of local data persist between successive calls (context switches)
         </li>
@@ -107,7 +107,7 @@
     </p>
 <h4>
 <a name="coroutine.intro.h3"></a>
-      <span class="phrase"><a name="coroutine.intro.execution_transfer_mechanism"></a></span><a class="link" href="intro.html#coroutine.intro.execution_transfer_mechanism">execution-transfer
+      <span><a name="coroutine.intro.execution_transfer_mechanism"></a></span><a class="link" href="intro.html#coroutine.intro.execution_transfer_mechanism">execution-transfer
       mechanism</a>
     </h4>
 <p>
@@ -130,7 +130,7 @@
     </p>
 <h4>
 <a name="coroutine.intro.h4"></a>
-      <span class="phrase"><a name="coroutine.intro.stackfulness"></a></span><a class="link" href="intro.html#coroutine.intro.stackfulness">stackfulness</a>
+      <span><a name="coroutine.intro.stackfulness"></a></span><a class="link" href="intro.html#coroutine.intro.stackfulness">stackfulness</a>
     </h4>
 <p>
       In contrast to a stackless coroutine a stackful coroutine can be suspended
@@ -142,7 +142,7 @@
     </p>
 <h4>
 <a name="coroutine.intro.h5"></a>
-      <span class="phrase"><a name="coroutine.intro.first_class_continuation"></a></span><a class="link" href="intro.html#coroutine.intro.first_class_continuation">first-class
+      <span><a name="coroutine.intro.first_class_continuation"></a></span><a class="link" href="intro.html#coroutine.intro.first_class_continuation">first-class
       continuation</a>
     </h4>
 <p>
@@ -156,16 +156,16 @@
       flows cannot be supported (for instance cooperative multitasking or checkpointing).
     </p>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.coroutine.intro.f0" class="footnote"><p><a href="#coroutine.intro.f0" class="para"><sup class="para">[1] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.coroutine.intro.f0" href="#coroutine.intro.f0" class="para">1</a>] </sup>
         Conway, Melvin E.. "Design of a Separable Transition-Diagram Compiler".
         Commun. ACM, Volume 6 Issue 7, July 1963, Article No. 7
       </p></div>
-<div id="ftn.coroutine.intro.f1" class="footnote"><p><a href="#coroutine.intro.f1" class="para"><sup class="para">[2] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.coroutine.intro.f1" href="#coroutine.intro.f1" class="para">2</a>] </sup>
         Knuth, Donald Ervin (1997). "Fundamental Algorithms. The Art of Computer
         Programming 1", (3rd ed.)
       </p></div>
-<div id="ftn.coroutine.intro.f2" class="footnote"><p><a href="#coroutine.intro.f2" class="para"><sup class="para">[3] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.coroutine.intro.f2" href="#coroutine.intro.f2" class="para">3</a>] </sup>
         Moura, Ana Lucia De and Ierusalimschy, Roberto. "Revisiting coroutines".
         ACM Trans. Program. Lang. Syst., Volume 31 Issue 2, February 2009, Article
         No. 6

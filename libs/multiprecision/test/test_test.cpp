@@ -79,8 +79,10 @@ int main()
    BOOST_CHECK(boost::detail::test_errors() == 1);
    --boost::detail::test_errors();
 
+#ifndef BOOST_NO_EXCEPTIONS
    BOOST_CHECK_THROW(proc_that_throws(), std::runtime_error);
    BOOST_CHECK_THROW(a1+b+c, std::runtime_error);
+#endif
    BOOST_CHECK(boost::detail::test_errors() == 1);
    --boost::detail::test_errors();
 

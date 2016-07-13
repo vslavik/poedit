@@ -171,6 +171,16 @@ BOOST_AUTO_TEST_CASE( test_mono_grid_number_of_copies_auto )
   BOOST_TEST( copy_count::value() == std_vector_constructor_count *2 *3);
 }
 
+BOOST_AUTO_TEST_CASE( test_mono_grid_variadic_dimension )
+{
+  // tests that the grid dimension can be > 3
+
+  BOOST_TEST( (data::make( 1 ) * data::make( 5 ) * data::make( 1 )).size() == 1 );
+  BOOST_TEST( (data::make( 1 ) * data::make( 5 ) * data::make( 1 ) * data::make( 1 )).size() == 1 );
+
+  BOOST_TEST( (data::xrange(2) * data::xrange(2) * data::xrange(2) * data::xrange(2)).size() == (1 << 4));
+}
+
 //____________________________________________________________________________//
 
 // EOF

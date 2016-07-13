@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Thread safety guarantees</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../intrusive.html" title="Chapter&#160;15.&#160;Boost.Intrusive">
+<link rel="up" href="../intrusive.html" title="Chapter&#160;16.&#160;Boost.Intrusive">
 <link rel="prev" href="value_traits.html" title="Containers with custom ValueTraits">
 <link rel="next" href="scary_iterators.html" title="Scary Iterators">
 </head>
@@ -30,7 +30,7 @@
 <p>
       Intrusive containers have thread safety guarantees similar to STL containers.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Several threads having read or write access to different instances is safe
           as long as inserted objects are different.
@@ -62,7 +62,7 @@
 <p>
       To analyze the thread safety, consider the following points:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           The auto-unlink hook's destructor and <code class="computeroutput"><span class="identifier">unlink</span><span class="special">()</span></code> functions modify the container indirectly.
         </li>

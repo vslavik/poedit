@@ -13,6 +13,7 @@
 #pragma once
 #endif
 
+#include <boost/config.hpp>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/proto/proto.hpp>
@@ -261,6 +262,12 @@ namespace boost { namespace spirit
           : base_type(proto::terminal<Terminal>::type::make(t)) 
         {}
 
+#if defined(BOOST_MSVC)
+#pragma warning(push)
+// warning C4348: 'boost::spirit::terminal<...>::result_helper': redefinition of default parameter: parameter 3, 4
+#pragma warning(disable: 4348)
+#endif
+
         template <
             bool Lazy
           , typename A0
@@ -268,6 +275,10 @@ namespace boost { namespace spirit
           , typename A2 = unused_type
         >
         struct result_helper;
+
+#if defined(BOOST_MSVC)
+#pragma warning(pop)
+#endif
 
         template <
             typename A0

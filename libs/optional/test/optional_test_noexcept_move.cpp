@@ -20,7 +20,7 @@
 using boost::optional;
 
 
-#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+#ifndef BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
 #ifndef BOOST_NO_CXX11_NOEXCEPT
 
 // these 4 classes have different noexcept signatures in move operations
@@ -106,7 +106,7 @@ void test_noexcept_optional_with_operator() // compile-time test
 }
 
 #endif // !defned BOOST_NO_CXX11_NOEXCEPT
-#endif // !defined BOOST_NO_CXX11_RVALUE_REFERENCES
+#endif // !defined BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
 
 int main()
 {

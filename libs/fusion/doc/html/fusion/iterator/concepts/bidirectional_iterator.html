@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Bidirectional Iterator</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Fusion 2.2">
 <link rel="up" href="../concepts.html" title="Concepts">
 <link rel="prev" href="forward_iterator.html" title="Forward Iterator">
@@ -29,7 +29,7 @@
 </h4></div></div></div>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h0"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.description"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.description">Description</a>
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.description"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.description">Description</a>
         </h6>
 <p>
           A Bidirectional Iterator traverses a <a class="link" href="../../sequence.html" title="Sequence">Sequence</a>
@@ -37,7 +37,7 @@
         </p>
 <div class="variablelist">
 <p class="title"><b>Notation</b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term"><code class="computeroutput"><span class="identifier">i</span></code></span></dt>
 <dd><p>
                 A Bidirectional Iterator
@@ -59,7 +59,7 @@
 </div>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h1"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.refinement_of"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.refinement_of">Refinement
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.refinement_of"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.refinement_of">Refinement
           of</a>
         </h6>
 <p>
@@ -67,7 +67,7 @@
         </p>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h2"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.expression_requirements"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.expression_requirements">Expression
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.expression_requirements"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.expression_requirements">Expression
           requirements</a>
         </h6>
 <p>
@@ -174,7 +174,7 @@
 </table></div>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h3"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.meta_expressions"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.meta_expressions">Meta
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.meta_expressions"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.meta_expressions">Meta
           Expressions</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -209,7 +209,7 @@
 </table></div>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h4"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.expression_semantics"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.expression_semantics">Expression
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.expression_semantics"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.expression_semantics">Expression
           Semantics</a>
         </h6>
 <p>
@@ -249,13 +249,13 @@
 </table></div>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h5"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.invariants"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.invariants">Invariants</a>
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.invariants"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.invariants">Invariants</a>
         </h6>
 <p>
           In addition to the invariants of <a class="link" href="forward_iterator.html" title="Forward Iterator">Forward
           Iterator</a>, the following invariants always hold:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../functions/prior.html" title="prior"><code class="computeroutput"><span class="identifier">prior</span></code></a><span class="special">(</span><a class="link" href="../functions/next.html" title="next"><code class="computeroutput"><span class="identifier">next</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">))</span> <span class="special">==</span> <span class="identifier">i</span> <span class="special">&amp;&amp;</span>
               <a class="link" href="../functions/prior.html" title="prior"><code class="computeroutput"><span class="identifier">prior</span></code></a><span class="special">(</span><a class="link" href="../functions/next.html" title="next"><code class="computeroutput"><span class="identifier">next</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">))</span> <span class="special">==</span> <a class="link" href="../functions/next.html" title="next"><code class="computeroutput"><span class="identifier">next</span></code></a><span class="special">(</span><a class="link" href="../functions/prior.html" title="prior"><code class="computeroutput"><span class="identifier">prior</span></code></a><span class="special">(</span><span class="identifier">i</span><span class="special">))</span></code>
@@ -270,9 +270,9 @@
 </ul></div>
 <h6>
 <a name="fusion.iterator.concepts.bidirectional_iterator.h6"></a>
-          <span class="phrase"><a name="fusion.iterator.concepts.bidirectional_iterator.models"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.models">Models</a>
+          <span><a name="fusion.iterator.concepts.bidirectional_iterator.models"></a></span><a class="link" href="bidirectional_iterator.html#fusion.iterator.concepts.bidirectional_iterator.models">Models</a>
         </h6>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <a class="link" href="../../adapted/std__pair.html" title="std::pair"><code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span></code></a>
               iterator

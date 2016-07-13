@@ -9,15 +9,18 @@
 
 #include <boost/coroutine2/all.hpp>
 
-int main()
+using namespace boost::coroutines2;
+
+asymmetric_coroutine<int>::pull_type make_dummy_range()
 {
-    boost::coroutines2::coroutine< void >::push_type sink(
-        [&]( boost::coroutines2::coroutine< void >::pull_type & source) {
-            std::cout << "inside coroutine-fn" << std::endl;
-        });
-    sink();
+    return asymmetric_coroutine<int>::pull_type([](asymmetric_coroutine<int>::push_type& yield)
+    {
+        yield(1);
+    });
+}
 
+int main() {
+    std::distance(make_dummy_range()); // error
     std::cout << "Done" << std::endl;
-
     return EXIT_SUCCESS;
 }

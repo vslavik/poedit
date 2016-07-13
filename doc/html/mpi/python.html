@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Python Bindings</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../mpi.html" title="Chapter&#160;21.&#160;Boost.MPI">
+<link rel="up" href="../mpi.html" title="Chapter&#160;23.&#160;Boost.MPI">
 <link rel="prev" href="../boost/mpi/timer.html" title="Class timer">
-<link rel="next" href="../program_options.html" title="Chapter&#160;22.&#160;Boost.Program_options">
+<link rel="next" href="../program_options.html" title="Chapter&#160;24.&#160;Boost.Program_options">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="mpi.python"></a>Python Bindings</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="python.html#mpi.python_quickstart">Quickstart</a></span></dt>
 <dt><span class="section"><a href="python.html#mpi.python_user_data">Transmitting User-Defined Data</a></span></dt>
 <dt><span class="section"><a href="python.html#mpi.python_collectives">Collectives</a></span></dt>
@@ -173,8 +173,8 @@ I am process 0 of 5.
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.python_skeleton_content"></a>Skeleton/Content Mechanism</h3></div></div></div>
-<div class="toc"><dl class="toc">
-<dt><span class="section"><a href="python.html#mpi.python_compatbility">C++/Python MPI Compatibility</a></span></dt>
+<div class="toc"><dl>
+<dt><span class="section"><a href="python.html#mpi.python_compatibility">C++/Python MPI Compatibility</a></span></dt>
 <dt><span class="section"><a href="python.html#mpi.pythonref">Reference</a></span></dt>
 </dl></div>
 <p>
@@ -190,7 +190,7 @@ I am process 0 of 5.
       </p>
 <p>
         To use the skeleton/content mechanism from Python, you must first register
-        the type of your data structure with the skeleton/content mechanism <span class="bold"><strong>from C++</strong></span>. The registration function is <code class="computeroutput"><a class="link" href="../boost/mpi/python/register_idm45507048514256.html" title="Function template register_skeleton_and_content">register_skeleton_and_content</a></code>
+        the type of your data structure with the skeleton/content mechanism <span class="bold"><strong>from C++</strong></span>. The registration function is <code class="computeroutput"><a class="link" href="../boost/mpi/python/register_skel_idp123223808.html" title="Function template register_skeleton_and_content">register_skeleton_and_content</a></code>
         and resides in the <code class="computeroutput"><a class="link" href="reference.html#header.boost.mpi.python_hpp" title="Header &lt;boost/mpi/python.hpp&gt;">&lt;boost/mpi/python.hpp&gt;</a></code>
         header.
       </p>
@@ -231,7 +231,7 @@ I am process 0 of 5.
       </p>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="mpi.python_compatbility"></a>C++/Python MPI Compatibility</h4></div></div></div>
+<a name="mpi.python_compatibility"></a>C++/Python MPI Compatibility</h4></div></div></div>
 <p>
           Boost.MPI is a C++ library whose facilities have been exposed to Python
           via the Boost.Python library. Since the Boost.MPI Python bindings are build
@@ -319,19 +319,18 @@ I am process 0 of 5.
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.threading"></a>Threads</h3></div></div></div>
 <p>
-        There are an increasing number of hybrid parrallel applications that mix
-        distributed and shared memory parallelism. To know how to support that model,
-        one need to know what level of threading support is guaranteed by the MPI
-        implementation. There are 4 ordered level of possible threading support described
-        by <code class="computeroutput"><a class="link" href="../boost/mpi/threading/level.html" title="Type level">mpi::threading::level</a></code>.
-        At the lowest level, you should not use threads at all, at the highest level,
-        any thread can perform MPI call.
+        There are an increasing number of hybrid parallel applications that mix distributed
+        and shared memory parallelism. To know how to support that model, one need
+        to know what level of threading support is guaranteed by the MPI implementation.
+        There are 4 ordered level of possible threading support described by <code class="computeroutput"><a class="link" href="../boost/mpi/threading/level.html" title="Type level">mpi::threading::level</a></code>. At the
+        lowest level, you should not use threads at all, at the highest level, any
+        thread can perform MPI call.
       </p>
 <p>
         If you want to use multi-threading in your MPI application, you should indicate
-        in the environment constructor your preffered threading support. Then probe
-        the one the librarie did provide, and decide what you can do with it (it
-        could be nothing, then aborting is a valid option):
+        in the environment constructor your preferred threading support. Then probe
+        the one the library did provide, and decide what you can do with it (it could
+        be nothing, then aborting is a valid option):
       </p>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">/</span><span class="identifier">environment</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 <span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">mpi</span><span class="special">/</span><span class="identifier">communicator</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
@@ -371,7 +370,7 @@ I am process 0 of 5.
 <li class="listitem">
             MPI (Datatypes): NetPIPE modified to use a derived datatype (which itself
             contains a single <code class="computeroutput"><span class="identifier">MPI_BYTE</span></code>)
-            rathan than a fundamental datatype.
+            rather than a fundamental datatype.
           </li>
 <li class="listitem">
             Boost.MPI (Datatypes): NetPIPE modified to use a user-defined type <code class="computeroutput"><span class="identifier">Char</span></code> in place of the fundamental <code class="computeroutput"><span class="keyword">char</span></code> type. The <code class="computeroutput"><span class="identifier">Char</span></code>
@@ -420,17 +419,17 @@ I am process 0 of 5.
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="mpi.history"></a>Revision History</h3></div></div></div>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <span class="bold"><strong>Boost 1.36.0</strong></span>:
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
                   Support for non-blocking operations in Python, from Andreas Kl&#246;ckner
                 </li></ul></div>
           </li>
 <li class="listitem">
             <span class="bold"><strong>Boost 1.35.0</strong></span>: Initial release, containing
             the following post-review changes
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem">
                   Support for arrays in all collective operations
                 </li>

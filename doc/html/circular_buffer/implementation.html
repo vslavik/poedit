@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Implementation</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../circular_buffer.html" title="Chapter&#160;7.&#160;Boost.Circular Buffer">
 <link rel="prev" href="rationale.html" title="Rationale">
@@ -33,7 +33,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h0"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.thread_safety"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.thread_safety">Thread-Safety</a>
+      <span><a name="circular_buffer.implementation.thread_safety"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.thread_safety">Thread-Safety</a>
     </h4>
 <p>
       The thread-safety of the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
@@ -55,7 +55,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h1"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.overwrite_operation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.overwrite_operation">Overwrite
+      <span><a name="circular_buffer.implementation.overwrite_operation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.overwrite_operation">Overwrite
       Operation</a>
     </h4>
 <p>
@@ -79,14 +79,14 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h2"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.writing_to_a_full_buffer"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.writing_to_a_full_buffer">Writing to
+      <span><a name="circular_buffer.implementation.writing_to_a_full_buffer"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.writing_to_a_full_buffer">Writing to
       a Full Buffer</a>
     </h4>
 <p>
       There are several options how to cope if a data source produces more data than
       can fit in the fixed-sized buffer:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Inform the data source to wait until there is room in the buffer (e.g.
           by throwing an overflow exception).
@@ -128,7 +128,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h3"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.reading_removing_from_an_empty_b"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.reading_removing_from_an_empty_b">Reading/Removing
+      <span><a name="circular_buffer.implementation.reading_removing_from_an_empty_b"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.reading_removing_from_an_empty_b">Reading/Removing
       from an Empty Buffer</a>
     </h4>
 <p>
@@ -137,7 +137,7 @@
       that there are no elements stored in it. The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       does not implement such a behaviour for two reasons:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           It would introduce a performance overhead.
         </li>
@@ -147,18 +147,18 @@
 </ul></div>
 <p>
       It is considered to be a bug to read or remove an element (e.g. by calling
-      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713143282528-bb">front()</a></code> or
-      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713142808096-bb">pop_back()</a></code>)
+      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8161488-bb">front()</a></code> or
+      <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8635920-bb">pop_back()</a></code>)
       from an empty std container and from an empty <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>
       as well. The data consumer has to test if the container is not empty before
-      reading/removing from it by testing <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713143110320-bb">empty()</a></code>.
+      reading/removing from it by testing <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8333696-bb">empty()</a></code>.
       However, when reading from the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code>,
-      there is an option to rely on the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idm45713143303840-bb">at()</a></code>
+      there is an option to rely on the <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html#idp8140176-bb">at()</a></code>
       method which throws an exception when the index is out of range.
     </p>
 <h4>
 <a name="circular_buffer.implementation.h4"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.iterator_invalidation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.iterator_invalidation">Iterator
+      <span><a name="circular_buffer.implementation.iterator_invalidation"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.iterator_invalidation">Iterator
       Invalidation</a>
     </h4>
 <p>
@@ -209,7 +209,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h5"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.move_emulation_and_rvalues"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.move_emulation_and_rvalues">Move emulation
+      <span><a name="circular_buffer.implementation.move_emulation_and_rvalues"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.move_emulation_and_rvalues">Move emulation
       and rvalues</a>
     </h4>
 <p>
@@ -218,7 +218,7 @@
       will use them, but if not it uses a close, but imperfect emulation. On such
       compilers:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Non-copyable objects can be stored in the containers. They can be constructed
           in place using <code class="computeroutput"><span class="identifier">emplace</span></code>,
@@ -255,7 +255,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h6"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.exceptions_of_move_if_noexcept_t"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.exceptions_of_move_if_noexcept_t">Exceptions
+      <span><a name="circular_buffer.implementation.exceptions_of_move_if_noexcept_t"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.exceptions_of_move_if_noexcept_t">Exceptions
       of move_if_noexcept(T&amp;)</a>
     </h4>
 <p>
@@ -273,7 +273,7 @@
 <p>
       This leads us to the following situation:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           If <code class="computeroutput"><span class="identifier">value</span></code> has a noexcept
           move constructor and noexcept move assignment operator, then no exceptions
@@ -296,7 +296,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h7"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.caveats"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.caveats">Caveats</a>
+      <span><a name="circular_buffer.implementation.caveats"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.caveats">Caveats</a>
     </h4>
 <p>
       The <code class="computeroutput"><a class="link" href="../boost/circular_buffer.html" title="Class template circular_buffer">circular_buffer</a></code> should
@@ -341,7 +341,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h8"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.debug_support"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.debug_support">Debug
+      <span><a name="circular_buffer.implementation.debug_support"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.debug_support">Debug
       Support</a>
     </h4>
 <p>
@@ -374,7 +374,7 @@
     </p>
 <h4>
 <a name="circular_buffer.implementation.h9"></a>
-      <span class="phrase"><a name="circular_buffer.implementation.compatibility_with_interprocess_"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.compatibility_with_interprocess_">Compatibility
+      <span><a name="circular_buffer.implementation.compatibility_with_interprocess_"></a></span><a class="link" href="implementation.html#circular_buffer.implementation.compatibility_with_interprocess_">Compatibility
       with Interprocess library</a>
     </h4>
 <p>

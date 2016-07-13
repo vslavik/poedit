@@ -7,6 +7,7 @@ import errors ;
 import regex ;
 import path ;
 import project ;
+import os ;
 
 rule get ( name )
 {
@@ -47,6 +48,14 @@ rule save ( )
 actions write
 {
     @($(STDOUT):E=$(FILE_CONTENTS:J=)) > "$(<)"
+}
+
+if [ os.name ] = VMS
+{
+    actions write
+    {
+        @($(STDOUT):E=$(FILE_CONTENTS:J=)) | TYPE SYS$INPUT /OUT=$(<:W)
+    }
 }
 
 rule load ( cache-file )

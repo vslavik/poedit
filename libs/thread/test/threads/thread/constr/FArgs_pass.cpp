@@ -33,7 +33,7 @@ inline void* operator new(std::size_t s)
 void* operator new(std::size_t s) throw (std::bad_alloc)
 #endif
 {
-  std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  //std::cout << __FILE__ << ":" << __LINE__ << std::endl;
   if (throw_one == 0) throw std::bad_alloc();
   --throw_one;
   return std::malloc(s);
@@ -45,7 +45,7 @@ inline void operator delete(void* p)
 inline void operator delete(void* p) throw ()
 #endif
 {
-  std::cout << __FILE__ << ":" << __LINE__ << std::endl;
+  //std::cout << __FILE__ << ":" << __LINE__ << std::endl;
   std::free(p);
 }
 

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>The obsolete initialization function</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../adv_scenarios.html" title="Advanced Usage Scenarios">
 <link rel="prev" href="external_test_runner.html" title="The external test runner usage variant">
@@ -50,7 +50,7 @@
       </p>
 <h6>
 <a name="boost_test.adv_scenarios.obsolete_init_func.h0"></a>
-        <span class="phrase"><a name="boost_test.adv_scenarios.obsolete_init_func.example_descr"></a></span><a class="link" href="obsolete_init_func.html#boost_test.adv_scenarios.obsolete_init_func.example_descr">Example:
+        <span><a name="boost_test.adv_scenarios.obsolete_init_func.example_descr"></a></span><a class="link" href="obsolete_init_func.html#boost_test.adv_scenarios.obsolete_init_func.example_descr">Example:
         using obsolete initialization function</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -109,15 +109,21 @@
         Even if you decide to us the obsolete initialization function, it is recommended
         that:
       </p>
-<div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<div class="orderedlist"><ol class="orderedlist" type="1">
+<li class="listitem">
             You always return a null-pointer value and install the master test suite
-            via <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idm46165629420768-bb">test_suite::add</a></code> as illustrated <a class="link" href="../tests_organization/test_cases/test_organization_nullary.html#ref_BOOST_TEST_CASE">here</a>. The current framework does
-            no longer treat the null-pointer value as failure. # You signal the failure
-            by throwing <code class="computeroutput"><a class="link" href="../../boost/unit_test/framework/setup_error.html" title="Struct setup_error">boost::unit_test::framework::setup_error</a></code>
-            exception. # You access the command-line arguments through the interface
-            of the <a class="link" href="../tests_organization/test_suite/master_test_suite.html" title="Master Test Suite">master
+            via <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idp27673664-bb">test_suite::add</a></code> as illustrated <a class="link" href="../tests_organization/test_cases/test_organization_nullary.html#ref_BOOST_TEST_CASE">here</a>. The current framework does
+            no longer treat the null-pointer value as failure.
+          </li>
+<li class="listitem">
+            You signal the failure by throwing <code class="computeroutput"><a class="link" href="../../boost/unit_test/framework/setup_error.html" title="Struct setup_error">boost::unit_test::framework::setup_error</a></code>
+            exception.
+          </li>
+<li class="listitem">
+            You access the command-line arguments through the interface of the <a class="link" href="../tests_organization/test_suite/master_test_suite.html" title="Master Test Suite">master
             test suite</a>, and ignore the function's arguments <code class="computeroutput"><span class="identifier">argc</span></code> and <code class="computeroutput"><span class="identifier">argv</span></code>.
-          </li></ol></div>
+          </li>
+</ol></div>
 <div class="caution"><table border="0" summary="Caution">
 <tr>
 <td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="../../../../../../doc/src/images/caution.png"></td>
@@ -134,7 +140,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -1,5 +1,21 @@
+#==============================================================================
+#   Copyright (c) 2015 Rene Rivera
+#
+#   Use, modification and distribution is subject to the Boost Software
+#   License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+#   http://www.boost.org/LICENSE_1_0.txt)
+#==============================================================================
+
 import quickbook ;
 import modules ;
+import boostcpp ;
+import path ;
+import option ;
+
+local DIST_DIR = [ option.get distdir ] ;
+DIST_DIR ?= [ path.join $(BOOST_ROOT) dist ] ;
+DIST_DIR = [ path.root [ path.make $(DIST_DIR) ] [ path.pwd ] ] ;
+local DIST_BIN = [ path.join $(DIST_DIR) bin ] ;
 
 exe auto_index : 
    ../src/auto_index.cpp 
@@ -13,21 +29,6 @@ exe auto_index :
 : <define>BOOST_ALL_NO_LIB=1 <link>static release ;
 
 install aii : auto_index : <location>. ;
-install i : auto_index : <location>../../../dist/bin ;
+explicit aii ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+install i : auto_index : <location>$(DIST_BIN) ;

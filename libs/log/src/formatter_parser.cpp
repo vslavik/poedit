@@ -15,6 +15,7 @@
 
 #ifndef BOOST_LOG_WITHOUT_SETTINGS_PARSERS
 
+#include <boost/log/detail/setup_config.hpp>
 #include <map>
 #include <string>
 #include <sstream>

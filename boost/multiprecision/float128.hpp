@@ -152,6 +152,21 @@ public:
       m_value = i;
       return *this;
    }
+   float128_backend(long double const& f)
+   {
+      if(boost::math::isinf(f))
+         m_value = (f < 0) ? -1.0Q / 0.0Q : 1.0Q / 0.0Q;
+      else
+         m_value = f;
+   }
+   float128_backend& operator=(long double const& f)
+   {
+      if(boost::math::isinf(f))
+         m_value = (f < 0) ? -1.0Q / 0.0Q : 1.0Q / 0.0Q;
+      else
+         m_value = f;
+      return *this;
+   }
    float128_backend& operator = (const char* s)
    {
 #ifndef BOOST_MP_USE_QUAD
@@ -336,7 +351,19 @@ inline void eval_sqrt(float128_backend& result, const float128_backend& arg)
 }
 inline int eval_fpclassify(const float128_backend& arg)
 {
-   return isnanq(arg.value()) ? FP_NAN : isinfq(arg.value()) ? FP_INFINITE : arg.value() == 0 ? FP_ZERO : FP_NORMAL;
+   if(isnanq(arg.value()))
+      return FP_NAN;
+   else if(isinfq(arg.value()))
+      return FP_INFINITE;
+   else if(arg.value() == 0)
+      return FP_ZERO;
+
+   float128_backend t(arg);
+   if(t.value() < 0)
+      t.negate();
+   if(t.value() < 3.36210314311209350626267781732175260e-4932Q)
+      return FP_SUBNORMAL;
+   return FP_NORMAL;
 }
 
 inline void eval_increment(float128_backend& arg)
@@ -549,12 +576,12 @@ public:
    BOOST_STATIC_CONSTEXPR bool has_infinity = true;
    BOOST_STATIC_CONSTEXPR bool has_quiet_NaN = true;
    BOOST_STATIC_CONSTEXPR bool has_signaling_NaN = false;
-   BOOST_STATIC_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
-   BOOST_STATIC_CONSTEXPR bool has_denorm_loss = false;
+   BOOST_STATIC_CONSTEXPR float_denorm_style has_denorm = denorm_present;
+   BOOST_STATIC_CONSTEXPR bool has_denorm_loss = true;
    static number_type infinity() { return 1.0q / 0.0q; }
    static number_type quiet_NaN() { return number_type("nan"); }
    static number_type signaling_NaN() { return 0; }
-   static number_type denorm_min() { return 0; }
+   static number_type denorm_min() { return 6.475175119438025110924438958227646552e-4966Q; }
    BOOST_STATIC_CONSTEXPR bool is_iec559 = true;
    BOOST_STATIC_CONSTEXPR bool is_bounded = false;
    BOOST_STATIC_CONSTEXPR bool is_modulo = false;

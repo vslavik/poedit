@@ -3,8 +3,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Perl Regular Expression Syntax</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Boost.Regex 5.0.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<link rel="home" href="../../index.html" title="Boost.Regex 5.1.1">
 <link rel="up" href="../syntax.html" title="Regular Expression Syntax">
 <link rel="prev" href="../syntax.html" title="Regular Expression Syntax">
 <link rel="next" href="basic_extended.html" title="POSIX Extended Regular Expression Syntax">
@@ -29,7 +29,7 @@
 </h3></div></div></div>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h0"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.synopsis"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.synopsis">Synopsis</a>
+        <span><a name="boost_regex.syntax.perl_syntax.synopsis"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.synopsis">Synopsis</a>
       </h4>
 <p>
         The Perl regular expression syntax is based on that used by the programming
@@ -44,7 +44,7 @@
 </pre>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h1"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.perl_regular_expression_syntax"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.perl_regular_expression_syntax">Perl
+        <span><a name="boost_regex.syntax.perl_syntax.perl_regular_expression_syntax"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.perl_regular_expression_syntax">Perl
         Regular Expression Syntax</a>
       </h4>
 <p>
@@ -54,13 +54,13 @@
 <pre class="programlisting">.[{}()\*+?|^$</pre>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h2"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.wildcard"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.wildcard">Wildcard</a>
+        <span><a name="boost_regex.syntax.perl_syntax.wildcard"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.wildcard">Wildcard</a>
       </h5>
 <p>
         The single character '.' when used outside of a character set will match
         any single character except:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The NULL character when the <a class="link" href="../ref/match_flag_type.html" title="match_flag_type">flag
             <code class="literal">match_not_dot_null</code></a> is passed to the matching
@@ -74,7 +74,7 @@
 </ul></div>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h3"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.anchors"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.anchors">Anchors</a>
+        <span><a name="boost_regex.syntax.perl_syntax.anchors"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.anchors">Anchors</a>
       </h5>
 <p>
         A '^' character shall match the start of a line.
@@ -84,7 +84,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h4"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.marked_sub_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.marked_sub_expressions">Marked sub-expressions</a>
+        <span><a name="boost_regex.syntax.perl_syntax.marked_sub_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.marked_sub_expressions">Marked sub-expressions</a>
       </h5>
 <p>
         A section beginning <code class="literal">(</code> and ending <code class="literal">)</code>
@@ -94,7 +94,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h5"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.non_marking_grouping"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.non_marking_grouping">Non-marking
+        <span><a name="boost_regex.syntax.perl_syntax.non_marking_grouping"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.non_marking_grouping">Non-marking
         grouping</a>
       </h5>
 <p>
@@ -107,7 +107,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h6"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.repeats"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.repeats">Repeats</a>
+        <span><a name="boost_regex.syntax.perl_syntax.repeats"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.repeats">Repeats</a>
       </h5>
 <p>
         Any atom (a single character, a marked sub-expression, or a character class)
@@ -195,7 +195,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h7"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.non_greedy_repeats"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.non_greedy_repeats">Non
+        <span><a name="boost_regex.syntax.perl_syntax.non_greedy_repeats"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.non_greedy_repeats">Non
         greedy repeats</a>
       </h5>
 <p>
@@ -225,7 +225,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h8"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.possessive_repeats"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.possessive_repeats">Possessive
+        <span><a name="boost_regex.syntax.perl_syntax.possessive_repeats"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.possessive_repeats">Possessive
         repeats</a>
       </h5>
 <p>
@@ -257,7 +257,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h9"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.back_references"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.back_references">Back
+        <span><a name="boost_regex.syntax.perl_syntax.back_references"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.back_references">Back
         references</a>
       </h5>
 <p>
@@ -368,7 +368,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h10"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.alternation"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.alternation">Alternation</a>
+        <span><a name="boost_regex.syntax.perl_syntax.alternation"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.alternation">Alternation</a>
       </h5>
 <p>
         The <code class="literal">|</code> operator will match either of its arguments, so
@@ -395,7 +395,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h11"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.character_sets"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_sets">Character
+        <span><a name="boost_regex.syntax.perl_syntax.character_sets"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_sets">Character
         sets</a>
       </h5>
 <p>
@@ -408,7 +408,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h12"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.single_characters"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.single_characters">Single
+        <span><a name="boost_regex.syntax.perl_syntax.single_characters"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.single_characters">Single
         characters</a>
       </h6>
 <p>
@@ -417,7 +417,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h13"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.character_ranges"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_ranges">Character
+        <span><a name="boost_regex.syntax.perl_syntax.character_ranges"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_ranges">Character
         ranges</a>
       </h6>
 <p>
@@ -431,7 +431,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h14"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.negation"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.negation">Negation</a>
+        <span><a name="boost_regex.syntax.perl_syntax.negation"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.negation">Negation</a>
       </h6>
 <p>
         If the bracket-expression begins with the ^ character, then it matches the
@@ -440,7 +440,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h15"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.character_classes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_classes">Character
+        <span><a name="boost_regex.syntax.perl_syntax.character_classes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_classes">Character
         classes</a>
       </h6>
 <p>
@@ -451,7 +451,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h16"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.collating_elements"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.collating_elements">Collating
+        <span><a name="boost_regex.syntax.perl_syntax.collating_elements"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.collating_elements">Collating
         Elements</a>
       </h6>
 <p>
@@ -473,7 +473,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h17"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.equivalence_classes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.equivalence_classes">Equivalence
+        <span><a name="boost_regex.syntax.perl_syntax.equivalence_classes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.equivalence_classes">Equivalence
         classes</a>
       </h6>
 <p>
@@ -490,7 +490,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h18"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.escaped_characters"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.escaped_characters">Escaped
+        <span><a name="boost_regex.syntax.perl_syntax.escaped_characters"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.escaped_characters">Escaped
         Characters</a>
       </h6>
 <p>
@@ -502,7 +502,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h19"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.combinations"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.combinations">Combinations</a>
+        <span><a name="boost_regex.syntax.perl_syntax.combinations"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.combinations">Combinations</a>
       </h6>
 <p>
         All of the above can be combined in one character set declaration, for example:
@@ -510,7 +510,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h20"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.escapes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.escapes">Escapes</a>
+        <span><a name="boost_regex.syntax.perl_syntax.escapes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.escapes">Escapes</a>
       </h5>
 <p>
         Any special character preceded by an escape shall match itself.
@@ -702,7 +702,7 @@
 </table></div>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h21"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.single_character_character_class"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.single_character_character_class">"Single
+        <span><a name="boost_regex.syntax.perl_syntax.single_character_character_class"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.single_character_character_class">"Single
         character" character classes:</a>
       </h6>
 <p>
@@ -904,7 +904,7 @@
 </table></div>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h22"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.character_properties"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_properties">Character
+        <span><a name="boost_regex.syntax.perl_syntax.character_properties"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.character_properties">Character
         Properties</a>
       </h6>
 <p>
@@ -1012,7 +1012,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h23"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.word_boundaries"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.word_boundaries">Word
+        <span><a name="boost_regex.syntax.perl_syntax.word_boundaries"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.word_boundaries">Word
         Boundaries</a>
       </h6>
 <p>
@@ -1032,7 +1032,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h24"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.buffer_boundaries"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.buffer_boundaries">Buffer
+        <span><a name="boost_regex.syntax.perl_syntax.buffer_boundaries"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.buffer_boundaries">Buffer
         boundaries</a>
       </h6>
 <p>
@@ -1060,7 +1060,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h25"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.continuation_escape"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.continuation_escape">Continuation
+        <span><a name="boost_regex.syntax.perl_syntax.continuation_escape"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.continuation_escape">Continuation
         Escape</a>
       </h6>
 <p>
@@ -1072,7 +1072,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h26"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.quoting_escape"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.quoting_escape">Quoting
+        <span><a name="boost_regex.syntax.perl_syntax.quoting_escape"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.quoting_escape">Quoting
         escape</a>
       </h6>
 <p>
@@ -1086,7 +1086,7 @@
 </pre>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h27"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.unicode_escapes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.unicode_escapes">Unicode
+        <span><a name="boost_regex.syntax.perl_syntax.unicode_escapes"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.unicode_escapes">Unicode
         escapes</a>
       </h6>
 <p>
@@ -1097,7 +1097,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h28"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.matching_line_endings"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.matching_line_endings">Matching Line
+        <span><a name="boost_regex.syntax.perl_syntax.matching_line_endings"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.matching_line_endings">Matching Line
         Endings</a>
       </h6>
 <p>
@@ -1106,7 +1106,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h29"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.keeping_back_some_text"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.keeping_back_some_text">Keeping back
+        <span><a name="boost_regex.syntax.perl_syntax.keeping_back_some_text"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.keeping_back_some_text">Keeping back
         some text</a>
       </h6>
 <p>
@@ -1121,7 +1121,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h30"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.any_other_escape"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.any_other_escape">Any
+        <span><a name="boost_regex.syntax.perl_syntax.any_other_escape"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.any_other_escape">Any
         other escape</a>
       </h6>
 <p>
@@ -1130,7 +1130,7 @@
       </p>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h31"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.perl_extended_patterns"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.perl_extended_patterns">Perl Extended
+        <span><a name="boost_regex.syntax.perl_syntax.perl_extended_patterns"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.perl_extended_patterns">Perl Extended
         Patterns</a>
       </h5>
 <p>
@@ -1139,7 +1139,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h32"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.named_subexpressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.named_subexpressions">Named
+        <span><a name="boost_regex.syntax.perl_syntax.named_subexpressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.named_subexpressions">Named
         Subexpressions</a>
       </h6>
 <p>
@@ -1161,14 +1161,14 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h33"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.comments"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.comments">Comments</a>
+        <span><a name="boost_regex.syntax.perl_syntax.comments"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.comments">Comments</a>
       </h6>
 <p>
         <code class="literal">(?# ... )</code> is treated as a comment, it's contents are ignored.
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h34"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.modifiers"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.modifiers">Modifiers</a>
+        <span><a name="boost_regex.syntax.perl_syntax.modifiers"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.modifiers">Modifiers</a>
       </h6>
 <p>
         <code class="literal">(?imsx-imsx ... )</code> alters which of the perl modifiers are
@@ -1182,7 +1182,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h35"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.non_marking_groups"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.non_marking_groups">Non-marking
+        <span><a name="boost_regex.syntax.perl_syntax.non_marking_groups"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.non_marking_groups">Non-marking
         groups</a>
       </h6>
 <p>
@@ -1191,7 +1191,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h36"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.branch_reset"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.branch_reset">Branch
+        <span><a name="boost_regex.syntax.perl_syntax.branch_reset"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.branch_reset">Branch
         reset</a>
       </h6>
 <p>
@@ -1214,7 +1214,7 @@
 </pre>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h37"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.lookahead"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.lookahead">Lookahead</a>
+        <span><a name="boost_regex.syntax.perl_syntax.lookahead"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.lookahead">Lookahead</a>
       </h6>
 <p>
         <code class="literal">(?=pattern)</code> consumes zero characters, only if pattern
@@ -1237,7 +1237,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h38"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.lookbehind"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.lookbehind">Lookbehind</a>
+        <span><a name="boost_regex.syntax.perl_syntax.lookbehind"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.lookbehind">Lookbehind</a>
       </h6>
 <p>
         <code class="literal">(?&lt;=pattern)</code> consumes zero characters, only if pattern
@@ -1251,7 +1251,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h39"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.independent_sub_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.independent_sub_expressions">Independent
+        <span><a name="boost_regex.syntax.perl_syntax.independent_sub_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.independent_sub_expressions">Independent
         sub-expressions</a>
       </h6>
 <p>
@@ -1264,7 +1264,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h40"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.recursive_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.recursive_expressions">Recursive
+        <span><a name="boost_regex.syntax.perl_syntax.recursive_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.recursive_expressions">Recursive
         Expressions</a>
       </h6>
 <p>
@@ -1291,7 +1291,7 @@
       </p>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h41"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.conditional_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.conditional_expressions">Conditional
+        <span><a name="boost_regex.syntax.perl_syntax.conditional_expressions"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.conditional_expressions">Conditional
         Expressions</a>
       </h6>
 <p>
@@ -1313,7 +1313,7 @@
 <p>
         Here is a summary of the possible predicates:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="literal">(?(?=assert)yes-pattern|no-pattern)</code> Executes <span class="emphasis"><em>yes-pattern</em></span>
             if the forward look-ahead assert matches, otherwise executes <span class="emphasis"><em>no-pattern</em></span>.
@@ -1363,7 +1363,7 @@
 </ul></div>
 <h6>
 <a name="boost_regex.syntax.perl_syntax.h42"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.backtracking_control_verbs"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.backtracking_control_verbs">Backtracking
+        <span><a name="boost_regex.syntax.perl_syntax.backtracking_control_verbs"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.backtracking_control_verbs">Backtracking
         Control Verbs</a>
       </h6>
 <p>
@@ -1373,7 +1373,7 @@
         is rather under-documented and often somewhat random in how it behaves in
         practice. The verbs supported are:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             <code class="literal">(*PRUNE)</code> Has no effect unless backtracked onto, in
             which case all the backtracking information prior to this point is discarded.
@@ -1406,7 +1406,7 @@
 </ul></div>
 <h5>
 <a name="boost_regex.syntax.perl_syntax.h43"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.operator_precedence"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.operator_precedence">Operator
+        <span><a name="boost_regex.syntax.perl_syntax.operator_precedence"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.operator_precedence">Operator
         precedence</a>
       </h5>
 <p>
@@ -1441,7 +1441,7 @@
 </ol></div>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h44"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.what_gets_matched"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.what_gets_matched">What
+        <span><a name="boost_regex.syntax.perl_syntax.what_gets_matched"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.what_gets_matched">What
         gets matched</a>
       </h4>
 <p>
@@ -1617,7 +1617,7 @@
 </table></div>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h45"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.variations"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.variations">Variations</a>
+        <span><a name="boost_regex.syntax.perl_syntax.variations"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.variations">Variations</a>
       </h4>
 <p>
         The <a class="link" href="../ref/syntax_option_type/syntax_option_type_perl.html" title="Options for Perl Regular Expressions">options
@@ -1626,7 +1626,7 @@
       </p>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h46"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.options"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.options">Options</a>
+        <span><a name="boost_regex.syntax.perl_syntax.options"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.options">Options</a>
       </h4>
 <p>
         There are a <a class="link" href="../ref/syntax_option_type/syntax_option_type_perl.html" title="Options for Perl Regular Expressions">variety
@@ -1638,7 +1638,7 @@
       </p>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h47"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.pattern_modifiers"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.pattern_modifiers">Pattern
+        <span><a name="boost_regex.syntax.perl_syntax.pattern_modifiers"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.pattern_modifiers">Pattern
         Modifiers</a>
       </h4>
 <p>
@@ -1650,7 +1650,7 @@
       </p>
 <h4>
 <a name="boost_regex.syntax.perl_syntax.h48"></a>
-        <span class="phrase"><a name="boost_regex.syntax.perl_syntax.references"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.references">References</a>
+        <span><a name="boost_regex.syntax.perl_syntax.references"></a></span><a class="link" href="perl_syntax.html#boost_regex.syntax.perl_syntax.references">References</a>
       </h4>
 <p>
         <a href="http://perldoc.perl.org/perlre.html" target="_top">Perl 5.8</a>.

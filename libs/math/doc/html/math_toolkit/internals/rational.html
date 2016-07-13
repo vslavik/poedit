@@ -4,7 +4,7 @@
 <title>Polynomial and Rational Function Evaluation</title>
 <link rel="stylesheet" href="../../math.css" type="text/css">
 <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
-<link rel="home" href="../../index.html" title="Math Toolkit 2.3.0">
+<link rel="home" href="../../index.html" title="Math Toolkit 2.4.0">
 <link rel="up" href="../internals.html" title="Internal tools">
 <link rel="prev" href="cf.html" title="Continued Fraction Evaluation">
 <link rel="next" href="tuples.html" title="Tuples">
@@ -24,12 +24,12 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
-<a name="math_toolkit.internals.rational"></a><a class="link" href="rational.html" title="Polynomial and Rational Function Evaluation">Polynomial and Rational
+<a name="math_toolkit.roots.rational"></a><a class="link" href="rational.html" title="Polynomial and Rational Function Evaluation">Polynomial and Rational
       Function Evaluation</a>
 </h3></div></div></div>
 <h5>
-<a name="math_toolkit.internals.rational.h0"></a>
-        <span class="phrase"><a name="math_toolkit.internals.rational.synopsis"></a></span><a class="link" href="rational.html#math_toolkit.internals.rational.synopsis">synopsis</a>
+<a name="math_toolkit.roots.rational.h0"></a>
+        <span class="phrase"><a name="math_toolkit.roots.rational.synopsis"></a></span><a class="link" href="rational.html#math_toolkit.roots.rational.synopsis">synopsis</a>
       </h5>
 <pre class="programlisting"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">math</span><span class="special">/</span><span class="identifier">tools</span><span class="special">/</span><span class="identifier">rational</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span>
 </pre>
@@ -74,8 +74,8 @@
 <span class="identifier">V</span> <span class="identifier">evaluate_rational</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">T</span><span class="special">*</span> <span class="identifier">num</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">U</span><span class="special">*</span> <span class="identifier">denom</span><span class="special">,</span> <span class="identifier">V</span> <span class="identifier">z</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="identifier">count</span><span class="special">);</span>
 </pre>
 <h5>
-<a name="math_toolkit.internals.rational.h1"></a>
-        <span class="phrase"><a name="math_toolkit.internals.rational.description"></a></span><a class="link" href="rational.html#math_toolkit.internals.rational.description">Description</a>
+<a name="math_toolkit.roots.rational.h1"></a>
+        <span class="phrase"><a name="math_toolkit.roots.rational.description"></a></span><a class="link" href="rational.html#math_toolkit.roots.rational.description">Description</a>
       </h5>
 <p>
         Each of the functions come in three variants: a pair of overloaded functions
@@ -187,8 +187,8 @@
         with compile-time array sizes may offer slightly better performance.
       </p>
 <h5>
-<a name="math_toolkit.internals.rational.h2"></a>
-        <span class="phrase"><a name="math_toolkit.internals.rational.implementation"></a></span><a class="link" href="rational.html#math_toolkit.internals.rational.implementation">Implementation</a>
+<a name="math_toolkit.roots.rational.h2"></a>
+        <span class="phrase"><a name="math_toolkit.roots.rational.implementation"></a></span><a class="link" href="rational.html#math_toolkit.roots.rational.implementation">Implementation</a>
       </h5>
 <p>
         Polynomials are evaluated by <a href="http://en.wikipedia.org/wiki/Horner_algorithm" target="_top">Horners

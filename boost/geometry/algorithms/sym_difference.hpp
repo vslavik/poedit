@@ -332,7 +332,7 @@ inline void sym_difference(Geometry1 const& geometry1,
 
     detail::sym_difference::sym_difference_insert<geometry_out>(
             geometry1, geometry2, robust_policy,
-            std::back_inserter(output_collection));
+            range::back_inserter(output_collection));
 }
 
 

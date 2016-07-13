@@ -339,6 +339,10 @@ rule get-absolute-tool-path ( command )
 #
 rule find-tool ( name : additional-paths * : path-last ? )
 {
+    if $(name:D)
+    {
+        return [ check-tool-aux $(name) ] ;
+    }
     local path = [ path.programs-path ] ;
     local match = [ path.glob $(path) : $(name) $(name).exe ] ;
     local additional-match = [ path.glob $(additional-paths) : $(name)
@@ -469,9 +473,10 @@ rule get-program-files-dir ( )
 
 if [ os.name ] = NT
 {
+    NULL_DEVICE = "NUL" ;
+    IGNORE = "2>$(NULL_DEVICE) >$(NULL_DEVICE) & setlocal" ;
     RM = del /f /q ;
     CP = copy /b ;
-    IGNORE = "2>nul >nul & setlocal" ;
     LN ?= $(CP) ;
     # Ugly hack to convince copy to set the timestamp of the destination to the
     # current time by concatenating the source with a nonexistent file. Note
@@ -479,11 +484,29 @@ if [ os.name ] = NT
     # /a (ascii).
     WINDOWS-CP-HACK = "+ this-file-does-not-exist-A698EE7806899E69" ;
 }
+else if [ os.name ] = VMS
+{
+    NULL_DEVICE = "NL:" ;
+    PIPE = PIPE ;
+    IGNORE = "2>$(NULL_DEVICE) >$(NULL_DEVICE)" ;
+    RM = DELETE /NOCONF ;
+    CP = COPY /OVERWRITE ;
+    LN = $(CP) ;
+}
 else
 {
+    NULL_DEVICE = "/dev/null" ;
+    IGNORE = "2>$(NULL_DEVICE) >$(NULL_DEVICE)" ;
     RM = rm -f ;
     CP = cp ;
     LN = ln ;
+}
+
+NULL_OUT = ">$(NULL_DEVICE)" ;
+
+rule null-device ( )
+{
+    return $(NULL_DEVICE) ;
 }
 
 
@@ -513,6 +536,13 @@ else
     q = "\"" ;
 }
 
+
+rule newline-char ( )
+{
+    return $(nl) ;
+}
+
+
 # Returns the command needed to set an environment variable on the current
 # platform. The variable setting persists through all following commands and is
 # visible in the environment seen by subsequently executed commands. In other
@@ -524,6 +554,10 @@ rule variable-setting-command ( variable : value )
     if [ os.name ] = NT
     {
         return "set $(variable)=$(value)$(nl)" ;
+    }
+    else if [ os.name ] = VMS
+    {
+        return "$(variable) == $(q)$(value)$(q)$(nl)" ;
     }
     else
     {
@@ -584,6 +618,10 @@ rule file-creation-command ( )
         #                                            (22.02.2009.) (Jurko)
         return "echo. > " ;
     }
+    else if [ os.name ] = VMS
+    {
+        return "APPEND /NEW NL: " ;
+    }
     else
     {
         return "touch " ;
@@ -600,6 +638,10 @@ rule file-touch-command ( )
     if [ os.name ] = NT
     {
         return "echo. >> " ;
+    }
+    else if [ os.name ] = VMS
+    {
+        return "APPEND /NEW NL: " ;
     }
     else
     {
@@ -679,6 +721,7 @@ else
     }
 }
 
+
 actions piecemeal together existing Clean
 {
     $(RM) "$(>)"
@@ -713,6 +756,35 @@ actions hard-link
     $(LN) "$(>)" "$(<)" $(NULL_OUT)
 }
 
+
+if [ os.name ] = VMS
+{
+    actions mkdir
+    {
+        IF F$PARSE("$(<:W)") .EQS. "" THEN CREATE /DIR $(<:W)
+    }
+
+    actions piecemeal together existing Clean
+    {
+        $(RM) $(>:WJ=;*,);*
+    }
+
+    actions copy
+    {
+        $(CP) $(>:WJ=,) $(<:W)
+    }
+
+    actions quietly updated piecemeal together RmTemps
+    {
+        $(PIPE) $(RM) $(>:WJ=;*,);* $(IGNORE)
+    }
+
+    actions hard-link
+    {
+        $(PIPE) $(RM) $(>[1]:W);* $(IGNORE)
+        $(PIPE) $(LN) $(>[1]:W) $(<:W) $(NULL_OUT)
+    }
+}
 
 # Given a target, as given to a custom tag rule, returns a string formatted
 # according to the passed format. Format is a list of properties that is

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Exposing Classes</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Boost.Python Tutorial">
 <link rel="up" href="../index.html" title="Boost.Python Tutorial">
 <link rel="prev" href="hello.html" title="Building Hello World">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="tutorial.exposing"></a><a class="link" href="exposing.html" title="Exposing Classes">Exposing Classes</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="exposing.html#tutorial.exposing.constructors">Constructors</a></span></dt>
 <dt><span class="section"><a href="exposing.html#tutorial.exposing.class_data_members">Class Data Members</a></span></dt>
 <dt><span class="section"><a href="exposing.html#tutorial.exposing.class_properties">Class Properties</a></span></dt>
@@ -296,7 +296,7 @@
         <code class="literal">return_value_policy&lt;manage_new_object&gt;</code> to instruct
         Python to adopt the pointer to <code class="literal">Base</code> and hold the instance
         in a new Python <code class="literal">Base</code> object until the the Python object
-        is destroyed. We will see more of Boost.Python <a class="link" href="../">call
+        is destroyed. We will see more of Boost.Python <a class="link" href="functions.html#tutorial.functions.call_policies" title="Call Policies">call
         policies</a> later.
       </p>
 <pre class="programlisting"><span class="comment">// Tell Python to take ownership of factory's result</span>
@@ -342,7 +342,7 @@
 </pre>
 <p>
         Notice too that in addition to inheriting from <code class="computeroutput"><span class="identifier">Base</span></code>,
-        we also multiply- inherited <code class="computeroutput"><span class="identifier">wrapper</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">&gt;</span></code> (See <a href="../../../../v2/wrapper.html" target="_top">Wrapper</a>).
+        we also multiply- inherited <code class="computeroutput"><span class="identifier">wrapper</span><span class="special">&lt;</span><span class="identifier">Base</span><span class="special">&gt;</span></code> (See <a href="../../reference/high_level_components/boost_python_wrapper_hpp.html#high_level_components.boost_python_wrapper_hpp.class_template_wrapper" target="_top">Wrapper</a>).
         The <code class="computeroutput"><span class="identifier">wrapper</span></code> template makes
         the job of wrapping classes that are meant to overridden in Python, easier.
       </p>
@@ -398,12 +398,12 @@
 </h3></div></div></div>
 <p>
         We've seen in the previous section how classes with pure virtual functions
-        are wrapped using Boost.Python's <a href="../../../../v2/wrapper.html" target="_top">class
+        are wrapped using Boost.Python's <a href="../../reference/high_level_components/boost_python_wrapper_hpp.html#high_level_components.boost_python_wrapper_hpp.class_template_wrapper" target="_top">class
         wrapper</a> facilities. If we wish to wrap <span class="bold"><strong>non</strong></span>-pure-virtual
         functions instead, the mechanism is a bit different.
       </p>
 <p>
-        Recall that in the <a class="link" href="../">previous
+        Recall that in the <a class="link" href="exposing.html#tutorial.exposing.class_virtual_functions" title="Class Virtual Functions">previous
         section</a>, we wrapped a class with a pure virtual function that we then
         implemented in C++, or Python classes derived from it. Our base class:
       </p>
@@ -499,7 +499,7 @@
 </h3></div></div></div>
 <h3>
 <a name="tutorial.exposing.class_operators_special_function.h0"></a>
-        <span class="phrase"><a name="tutorial.exposing.class_operators_special_function.python_operators"></a></span><a class="link" href="exposing.html#tutorial.exposing.class_operators_special_function.python_operators">Python
+        <span><a name="tutorial.exposing.class_operators_special_function.python_operators"></a></span><a class="link" href="exposing.html#tutorial.exposing.class_operators_special_function.python_operators">Python
         Operators</a>
       </h3>
 <p>
@@ -545,7 +545,7 @@
       </p>
 <h3>
 <a name="tutorial.exposing.class_operators_special_function.h1"></a>
-        <span class="phrase"><a name="tutorial.exposing.class_operators_special_function.special_methods"></a></span><a class="link" href="exposing.html#tutorial.exposing.class_operators_special_function.special_methods">Special
+        <span><a name="tutorial.exposing.class_operators_special_function.special_methods"></a></span><a class="link" href="exposing.html#tutorial.exposing.class_operators_special_function.special_methods">Special
         Methods</a>
       </h3>
 <p>

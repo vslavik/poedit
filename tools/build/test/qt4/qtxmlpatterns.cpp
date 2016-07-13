@@ -33,7 +33,7 @@ struct Fixture
     QCoreApplication application;
 };
 
-BOOST_GLOBAL_FIXTURE( Fixture )
+BOOST_GLOBAL_FIXTURE( Fixture );
 
 QByteArray doc("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                "<html xmlns=\"http://www.w3.org/1999/xhtml/\" xml:lang=\"en\" lang=\"en\">"

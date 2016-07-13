@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Common tasks</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../bbv2.html" title="Chapter&#160;44.&#160;Boost.Build User Manual">
+<link rel="up" href="../bbv2.html" title="Chapter&#160;46.&#160;Boost.Build User Manual">
 <link rel="prev" href="overview.html" title="Overview">
 <link rel="next" href="reference.html" title="Reference">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="bbv2.tasks"></a>Common tasks</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="tasks.html#bbv2.tasks.programs">Programs</a></span></dt>
 <dt><span class="section"><a href="tasks.html#bbv2.tasks.libraries">Libraries</a></span></dt>
 <dt><span class="section"><a href="tasks.html#bbv2.tasks.alias">Alias</a></span></dt>
@@ -45,7 +45,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tasks.programs"></a>Programs</h3></div></div></div>
-<a class="indexterm" name="idm45555007674032"></a><p>
+<a class="indexterm" name="idp519316080"></a><p>
       Programs are created using the <code class="computeroutput">exe</code> rule, which follows the
       <a class="link" href="overview.html#bbv2.main-target-rule-syntax">common syntax</a>. For
       example:
@@ -81,7 +81,7 @@ exe hello : hello.cpp some_library.lib /some_project//library
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tasks.libraries"></a>Libraries</h3></div></div></div>
-<a class="indexterm" name="idm45555007665504"></a><p>
+<a class="indexterm" name="idp519324544"></a><p>
       Library targets are created using the <code class="computeroutput">lib</code> rule, which
       follows the <a class="link" href="overview.html#bbv2.main-target-rule-syntax">common syntax
       </a>. For example:
@@ -98,7 +98,7 @@ lib helpers : helpers.cpp ;
 <p>
       Library targets can represent:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>
             Libraries that should be built from source,
             as in the example above.
@@ -308,7 +308,7 @@ exe main : main.cpp static_libraries ;
       files.
     </p>
 <h4>
-<a name="idm45555007606768"></a>Basic install</h4>
+<a name="idp519383680"></a>Basic install</h4>
 <p>
       For installing a built target you should use the <code class="computeroutput">install</code>
       rule, which follows the <a class="link" href="overview.html#bbv2.main-target-rule-syntax">
@@ -347,7 +347,7 @@ install dist2 : hello helpers : &lt;location&gt;$(DIST) ;
       variables</a>
     </p>
 <h4>
-<a name="idm45555007594000"></a>Installing with all dependencies</h4>
+<a name="idp519396448"></a>Installing with all dependencies</h4>
 <p>
       Specifying the names of all libraries to install can be boring. The
       <code class="computeroutput">install</code> allows you to specify only the top-level executable
@@ -371,8 +371,8 @@ install dist : hello
       otherwise, all found target will be installed.
     </p>
 <h4>
-<a name="idm45555007588672"></a>Preserving Directory Hierarchy</h4>
-<a class="indexterm" name="idm45555007588288"></a><p>
+<a name="idp519401776"></a>Preserving Directory Hierarchy</h4>
+<a class="indexterm" name="idp519402160"></a><p>
       By default, the <code class="computeroutput">install</code> rule will strip paths from its
       sources. So, if sources include <code class="filename">a/b/c.hpp</code>, the
       <code class="filename">a/b</code> part will be ignored. To make the
@@ -396,7 +396,7 @@ install headers
       an entire directory tree.
     </p>
 <h4>
-<a name="idm45555007579968"></a>Installing into Several Directories</h4>
+<a name="idp519410480"></a>Installing into Several Directories</h4>
 <p>
       The <a class="link" href="tasks.html#bbv2.tasks.alias" title="Alias"><code class="computeroutput">alias</code></a> rule can be
       used when targets need to be installed into several directories:
@@ -410,7 +410,7 @@ install install-lib : helper : /usr/lib ;
     </p>
 <p>
       Because the <code class="computeroutput">install</code> rule just copies targets, most free
-      features <a href="#ftn.idm45555007576032" class="footnote" name="idm45555007576032"><sup class="footnote">[15]</sup></a> have no
+      features <sup>[<a name="idp519414416" href="#ftn.idp519414416" class="footnote">15</a>]</sup> have no
       effect when used in requirements of the <code class="computeroutput">install</code> rule. The
       only two that matter are <a class="link" href="reference.html#bbv2.builtin.features.dependency">
       <code class="varname">dependency</code></a> and, on Unix, <a class="link" href="reference.html#bbv2.reference.features.dll-path"><code class="varname">dll-path</code>
@@ -499,7 +499,7 @@ rule run ( sources + : args * : input-files * : requirements * : target-name ?
       target-name</code></em>.output</code>.
     </p>
 <p>
-      <a class="indexterm" name="idm45555007544960"></a>
+      <a class="indexterm" name="idp519445680"></a>
       If the <code class="literal">preserve-test-targets</code> feature has the value
       <code class="literal">off</code>, then <code class="computeroutput">run</code> and the <code class="computeroutput">run-fail</code>
       rules will remove the executable after running it.  This somewhat decreases
@@ -524,7 +524,7 @@ boost-test(<em class="replaceable"><code>test-type</code></em>) <em class="repla
       Such processing utilities are not included in Boost.Build.
     </p>
 <p>The following features adjust behaviour of the testing metatargets.</p>
-<div class="variablelist"><dl class="variablelist">
+<div class="variablelist"><dl>
 <dt><span class="term"><code class="literal">testing.arg</code></span></dt>
 <dd>
 <p>
@@ -715,7 +715,7 @@ exe main : main.cpp pch ;
 <p>
       Please note the following:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>
           The inclusion of the precompiled header must be the first thing in a
           source file, before any code or preprocessor directives.
@@ -783,7 +783,7 @@ exe app : app.cpp : &lt;implicit-dependency&gt;parser ;
 <div class="section">
 <div class="titlepage"><div><div><h3 class="title">
 <a name="bbv2.tasks.crosscompile"></a>Cross-compilation</h3></div></div></div>
-<a class="indexterm" name="idm45555007462736"></a><p>Boost.Build supports cross compilation with the gcc and msvc
+<a class="indexterm" name="idp519527840"></a><p>Boost.Build supports cross compilation with the gcc and msvc
     toolsets.</p>
 <p>
       When using gcc, you first need to specify your cross compiler
@@ -821,8 +821,8 @@ b2 toolset=gcc-mingw <span class="bold"><strong>target-os=windows</strong></span
     </p>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.idm45555007576032" class="footnote"><p><a href="#idm45555007576032" class="para"><sup class="para">[15] </sup></a>see the definition of "free" in <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a>.</p></div>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.idp519414416" href="#idp519414416" class="para">15</a>] </sup>see the definition of "free" in <a class="xref" href="reference.html#bbv2.reference.features.attributes" title="Feature Attributes">the section called &#8220;Feature Attributes&#8221;</a>.</p></div>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>

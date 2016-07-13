@@ -18,7 +18,11 @@
 namespace std{ using ::strcmp; }
 #endif
 
+// it marks our code with proper attributes as being exported when
+// we're compiling it while marking it import when just the headers
+// is being included.
 #define BOOST_SERIALIZATION_SOURCE
+#include <boost/serialization/config.hpp>
 #include <boost/serialization/extended_type_info_no_rtti.hpp>
 
 #define EXTENDED_TYPE_INFO_NO_RTTI_KEY 2

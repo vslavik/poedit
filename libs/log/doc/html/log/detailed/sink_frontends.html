@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Sink frontends</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Boost.Log v2">
 <link rel="up" href="../detailed.html" title="Detailed features description">
 <link rel="prev" href="sources.html" title="Logging sources">
@@ -19,7 +19,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="log.detailed.sink_frontends"></a><a class="link" href="sink_frontends.html" title="Sink frontends">Sink frontends</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="sink_frontends.html#log.detailed.sink_frontends.basic_services">Basic sink
         frontend services</a></span></dt>
 <dt><span class="section"><a href="sink_frontends.html#log.detailed.sink_frontends.unlocked">Unlocked sink
@@ -63,7 +63,7 @@
 <a name="log.detailed.sink_frontends.basic_services"></a><a class="link" href="sink_frontends.html#log.detailed.sink_frontends.basic_services" title="Basic sink frontend services">Basic sink
         frontend services</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="sink_frontends.html#log.detailed.sink_frontends.basic_services.filtering">Filtering</a></span></dt>
 <dt><span class="section"><a href="sink_frontends.html#log.detailed.sink_frontends.basic_services.formatting">Formatting</a></span></dt>
 <dt><span class="section"><a href="sink_frontends.html#log.detailed.sink_frontends.basic_services.exception_handling">Exception
@@ -468,7 +468,7 @@
           named parameter of the frontend. In this case the user can select either
           way of processing records:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Call the <code class="computeroutput"><span class="identifier">run</span></code> method
               of the frontend. This call will block in the feeding loop. This loop
@@ -494,7 +494,7 @@
 </table></div>
 <h6>
 <a name="log.detailed.sink_frontends.async.h0"></a>
-          <span class="phrase"><a name="log.detailed.sink_frontends.async.customizing_record_queueing_strategy"></a></span><a class="link" href="sink_frontends.html#log.detailed.sink_frontends.async.customizing_record_queueing_strategy">Customizing
+          <span><a name="log.detailed.sink_frontends.async.customizing_record_queueing_strategy"></a></span><a class="link" href="sink_frontends.html#log.detailed.sink_frontends.async.customizing_record_queueing_strategy">Customizing
           record queueing strategy</a>
         </h6>
 <p>
@@ -502,7 +502,7 @@
           class template can be customized with the record queueing strategy. Several
           strategies are provided by the library:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../../boost/log/sinks/unbounded_fifo_queue.html" title="Class unbounded_fifo_queue">unbounded_fifo_queue</a></code>.
               This strategy is the default. As the name implies, the queue is not
@@ -540,7 +540,7 @@
 <p>
           Bounded queues support the following overflow strategies:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               <code class="computeroutput"><a class="link" href="../../boost/log/sinks/drop_on_overflow.html" title="Class drop_on_overflow">drop_on_overflow</a></code>.
               When the queue is full, silently drop excessive log records.
@@ -617,7 +617,7 @@
         </p>
 <h6>
 <a name="log.detailed.sink_frontends.async.h1"></a>
-          <span class="phrase"><a name="log.detailed.sink_frontends.async.ordering_log_records"></a></span><a class="link" href="sink_frontends.html#log.detailed.sink_frontends.async.ordering_log_records">Ordering
+          <span><a name="log.detailed.sink_frontends.async.ordering_log_records"></a></span><a class="link" href="sink_frontends.html#log.detailed.sink_frontends.async.ordering_log_records">Ordering
           log records</a>
         </h6>
 <p>
@@ -770,8 +770,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2015 Andrey
-      Semashev<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2007-2016 Andrey Semashev<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>).
       </p>

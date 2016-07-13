@@ -12,8 +12,8 @@
 
 #include <boost/detail/winapi/basic_types.hpp>
 #include <boost/detail/winapi/detail/cast_ptr.hpp>
-#if defined( BOOST_USE_WINDOWS_H ) && defined( BOOST_WINAPI_IS_MINGW )
-// MinGW does not include this header as part of windows.h
+#if defined( BOOST_USE_WINDOWS_H )
+// This header is not always included as part of windows.h
 #include <wincrypt.h>
 #endif
 

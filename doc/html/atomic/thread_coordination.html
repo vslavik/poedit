@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Thread coordination using Boost.Atomic</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../atomic.html" title="Chapter&#160;5.&#160;Boost.Atomic">
 <link rel="prev" href="../atomic.html" title="Chapter&#160;5.&#160;Boost.Atomic">
@@ -27,7 +27,7 @@
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="atomic.thread_coordination"></a><a class="link" href="thread_coordination.html" title="Thread coordination using Boost.Atomic">Thread coordination using Boost.Atomic</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="thread_coordination.html#atomic.thread_coordination.mutex">Enforcing <span class="emphasis"><em>happens-before</em></span>
       through mutual exclusion</a></span></dt>
 <dt><span class="section"><a href="thread_coordination.html#atomic.thread_coordination.release_acquire"><span class="emphasis"><em>happens-before</em></span>
@@ -128,7 +128,7 @@
         uses <code class="literal">release</code> and <code class="literal">acquire</code> on an atomic
         variable for coordination: If ...
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             ... thread1 performs an operation A,
           </li>
@@ -168,7 +168,7 @@
 <p>
         In this example, two avenues for execution are possible:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The <code class="literal">store</code> operation by thread1 precedes the <code class="literal">load</code>
             by thread2: In this case thread2 will execute B and "A <span class="emphasis"><em>happens-before</em></span>
@@ -233,7 +233,7 @@
         uses <code class="literal">release</code> and <code class="literal">consume</code> on an atomic
         variable for coordination: If ...
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             ... thread1 performs an operation A,
           </li>
@@ -271,7 +271,7 @@
 <p>
         In this example, two avenues for execution are possible:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             The <code class="literal">store</code> operation by thread1 precedes the <code class="literal">load</code>
             by thread2: In this case thread2 will read <code class="literal">data[1]</code>
@@ -325,7 +325,7 @@
         The third pattern for coordinating threads via <span class="bold"><strong>Boost.Atomic</strong></span>
         uses <code class="literal">seq_cst</code> for coordination: If ...
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
             ... thread1 performs an operation A,
           </li>

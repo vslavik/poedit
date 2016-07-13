@@ -619,8 +619,18 @@ class deque : protected deque_base<Allocator>
    //!   throws or T's copy constructor throws.
    //!
    //! <b>Complexity</b>: Linear to n.
-   deque(size_type n, const value_type& value,
-         const allocator_type& a = allocator_type())
+   deque(size_type n, const value_type& value)
+      : Base(n, allocator_type())
+   { this->priv_fill_initialize(value); }
+
+   //! <b>Effects</b>: Constructs a deque that will use a copy of allocator a
+   //!   and inserts n copies of value.
+   //!
+   //! <b>Throws</b>: If allocator_type's default constructor
+   //!   throws or T's copy constructor throws.
+   //!
+   //! <b>Complexity</b>: Linear to n.
+   deque(size_type n, const value_type& value, const allocator_type& a)
       : Base(n, a)
    { this->priv_fill_initialize(value); }
 
@@ -632,11 +642,29 @@ class deque : protected deque_base<Allocator>
    //!
    //! <b>Complexity</b>: Linear to the range [first, last).
    template <class InIt>
-   deque(InIt first, InIt last, const allocator_type& a = allocator_type()
+   deque(InIt first, InIt last
       #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
-      , typename container_detail::enable_if_c
-         < !container_detail::is_convertible<InIt, size_type>::value
-         >::type * = 0
+      , typename container_detail::disable_if_convertible
+         <InIt, size_type>::type * = 0
+      #endif
+      )
+      : Base(allocator_type())
+   {
+      this->priv_range_initialize(first, last);
+   }
+
+   //! <b>Effects</b>: Constructs a deque that will use a copy of allocator a
+   //!   and inserts a copy of the range [first, last) in the deque.
+   //!
+   //! <b>Throws</b>: If allocator_type's default constructor
+   //!   throws or T's constructor taking a dereferenced InIt throws.
+   //!
+   //! <b>Complexity</b>: Linear to the range [first, last).
+   template <class InIt>
+   deque(InIt first, InIt last, const allocator_type& a
+      #if !defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
+      , typename container_detail::disable_if_convertible
+         <InIt, size_type>::type * = 0
       #endif
       )
       : Base(a)

@@ -14,6 +14,11 @@
 # include <boost/python/type_id.hpp>
 # include <boost/type.hpp>
 
+#if defined(BOOST_PYTHON_TRACE_REGISTRY) \
+ || defined(BOOST_PYTHON_CONVERTER_REGISTRY_APPLE_MACH_WORKAROUND)
+# include <iostream>
+#endif
+
 namespace boost {
 
 // You'll see shared_ptr mentioned in this header because we need to

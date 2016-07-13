@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>x86 and floating-point env</title>
 <link rel="stylesheet" href="../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Chapter&#160;1.&#160;Context">
 <link rel="up" href="../rationale.html" title="Rationale">
 <link rel="prev" href="other_apis_.html" title="Other APIs">
@@ -29,80 +29,80 @@
 </h3></div></div></div>
 <h5>
 <a name="context.rationale.x86_and_floating_point_env.h0"></a>
-        <span class="phrase"><a name="context.rationale.x86_and_floating_point_env.i386"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.i386">i386</a>
+        <span><a name="context.rationale.x86_and_floating_point_env.i386"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.i386">i386</a>
       </h5>
 <p>
         "The FpCsr and the MxCsr register must be saved and restored before
         any call or return by any procedure that needs to modify them ..."
-        <a href="#ftn.context.rationale.x86_and_floating_point_env.f0" class="footnote" name="context.rationale.x86_and_floating_point_env.f0"><sup class="footnote">[4]</sup></a>.
+        <sup>[<a name="context.rationale.x86_and_floating_point_env.f0" href="#ftn.context.rationale.x86_and_floating_point_env.f0" class="footnote">4</a>]</sup>.
       </p>
 <h5>
 <a name="context.rationale.x86_and_floating_point_env.h1"></a>
-        <span class="phrase"><a name="context.rationale.x86_and_floating_point_env.x86_64"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.x86_64">x86_64</a>
+        <span><a name="context.rationale.x86_and_floating_point_env.x86_64"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.x86_64">x86_64</a>
       </h5>
 <h5>
 <a name="context.rationale.x86_and_floating_point_env.h2"></a>
-        <span class="phrase"><a name="context.rationale.x86_and_floating_point_env.windows"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.windows">Windows</a>
+        <span><a name="context.rationale.x86_and_floating_point_env.windows"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.windows">Windows</a>
       </h5>
 <p>
         MxCsr - "A callee that modifies any of the non-volatile fields within
         MxCsr must restore them before returning to its caller. Furthermore, a caller
         that has modified any of these fields must restore them to their standard
-        values before invoking a callee ..." <a href="#ftn.context.rationale.x86_and_floating_point_env.f1" class="footnote" name="context.rationale.x86_and_floating_point_env.f1"><sup class="footnote">[5]</sup></a>.
+        values before invoking a callee ..." <sup>[<a name="context.rationale.x86_and_floating_point_env.f1" href="#ftn.context.rationale.x86_and_floating_point_env.f1" class="footnote">5</a>]</sup>.
       </p>
 <p>
         FpCsr - "A callee that modifies any of the fields within FpCsr must
         restore them before returning to its caller. Furthermore, a caller that has
         modified any of these fields must restore them to their standard values before
-        invoking a callee ..." <a href="#ftn.context.rationale.x86_and_floating_point_env.f2" class="footnote" name="context.rationale.x86_and_floating_point_env.f2"><sup class="footnote">[6]</sup></a>.
+        invoking a callee ..." <sup>[<a name="context.rationale.x86_and_floating_point_env.f2" href="#ftn.context.rationale.x86_and_floating_point_env.f2" class="footnote">6</a>]</sup>.
       </p>
 <p>
         "The MMX and floating-point stack registers (MM0-MM7/ST0-ST7) are preserved
         across context switches. There is no explicit calling convention for these
-        registers." <a href="#ftn.context.rationale.x86_and_floating_point_env.f3" class="footnote" name="context.rationale.x86_and_floating_point_env.f3"><sup class="footnote">[7]</sup></a>.
+        registers." <sup>[<a name="context.rationale.x86_and_floating_point_env.f3" href="#ftn.context.rationale.x86_and_floating_point_env.f3" class="footnote">7</a>]</sup>.
       </p>
 <p>
         "The 64-bit Microsoft compiler does not use ST(0)-ST(7)/MM0-MM7".
-        <a href="#ftn.context.rationale.x86_and_floating_point_env.f4" class="footnote" name="context.rationale.x86_and_floating_point_env.f4"><sup class="footnote">[8]</sup></a>.
+        <sup>[<a name="context.rationale.x86_and_floating_point_env.f4" href="#ftn.context.rationale.x86_and_floating_point_env.f4" class="footnote">8</a>]</sup>.
       </p>
 <p>
-        "XMM6-XMM15 must be preserved" <a href="#ftn.context.rationale.x86_and_floating_point_env.f5" class="footnote" name="context.rationale.x86_and_floating_point_env.f5"><sup class="footnote">[9]</sup></a>
+        "XMM6-XMM15 must be preserved" <sup>[<a name="context.rationale.x86_and_floating_point_env.f5" href="#ftn.context.rationale.x86_and_floating_point_env.f5" class="footnote">9</a>]</sup>
       </p>
 <h5>
 <a name="context.rationale.x86_and_floating_point_env.h3"></a>
-        <span class="phrase"><a name="context.rationale.x86_and_floating_point_env.sysv"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.sysv">SysV</a>
+        <span><a name="context.rationale.x86_and_floating_point_env.sysv"></a></span><a class="link" href="x86_and_floating_point_env.html#context.rationale.x86_and_floating_point_env.sysv">SysV</a>
       </h5>
 <p>
         "The control bits of the MxCsr register are callee-saved (preserved
         across calls), while the status bits are caller-saved (not preserved). The
         x87 status word register is caller-saved, whereas the x87 control word (FpCsr)
-        is callee-saved." <a href="#ftn.context.rationale.x86_and_floating_point_env.f6" class="footnote" name="context.rationale.x86_and_floating_point_env.f6"><sup class="footnote">[10]</sup></a>.
+        is callee-saved." <sup>[<a name="context.rationale.x86_and_floating_point_env.f6" href="#ftn.context.rationale.x86_and_floating_point_env.f6" class="footnote">10</a>]</sup>.
       </p>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.context.rationale.x86_and_floating_point_env.f0" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f0" class="para"><sup class="para">[4] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f0" href="#context.rationale.x86_and_floating_point_env.f0" class="para">4</a>] </sup>
           'Calling Conventions', Agner Fog
         </p></div>
-<div id="ftn.context.rationale.x86_and_floating_point_env.f1" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f1" class="para"><sup class="para">[5] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f1" href="#context.rationale.x86_and_floating_point_env.f1" class="para">5</a>] </sup>
           <a href="http://http://msdn.microsoft.com/en-us/library/yxty7t75.aspx" target="_top">MSDN
           article 'MxCsr'</a>
         </p></div>
-<div id="ftn.context.rationale.x86_and_floating_point_env.f2" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f2" class="para"><sup class="para">[6] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f2" href="#context.rationale.x86_and_floating_point_env.f2" class="para">6</a>] </sup>
           <a href="http://http://msdn.microsoft.com/en-us/library/ms235300.aspx" target="_top">MSDN
           article 'FpCsr'</a>
         </p></div>
-<div id="ftn.context.rationale.x86_and_floating_point_env.f3" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f3" class="para"><sup class="para">[7] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f3" href="#context.rationale.x86_and_floating_point_env.f3" class="para">7</a>] </sup>
           <a href="http://msdn.microsoft.com/en-us/library/a32tsf7t%28VS.80%29.aspx" target="_top">MSDN
           article 'Legacy Floating-Point Support'</a>
         </p></div>
-<div id="ftn.context.rationale.x86_and_floating_point_env.f4" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f4" class="para"><sup class="para">[8] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f4" href="#context.rationale.x86_and_floating_point_env.f4" class="para">8</a>] </sup>
           'Calling Conventions', Agner Fog
         </p></div>
-<div id="ftn.context.rationale.x86_and_floating_point_env.f5" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f5" class="para"><sup class="para">[9] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f5" href="#context.rationale.x86_and_floating_point_env.f5" class="para">9</a>] </sup>
           <a href="http://msdn.microsoft.com/en-us/library/9z1stfyw%28v=vs.100%29.aspx" target="_top">MSDN
           article 'Register Usage'</a>
         </p></div>
-<div id="ftn.context.rationale.x86_and_floating_point_env.f6" class="footnote"><p><a href="#context.rationale.x86_and_floating_point_env.f6" class="para"><sup class="para">[10] </sup></a>
+<div class="footnote"><p><sup>[<a id="ftn.context.rationale.x86_and_floating_point_env.f6" href="#context.rationale.x86_and_floating_point_env.f6" class="para">10</a>] </sup>
           SysV ABI AMD64 Architecture Processor Supplement Draft Version 0.99.4,
           3.2.1
         </p></div>

@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Struct template compose_generators</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../proto/reference.html#header.boost.proto.generate_hpp" title="Header &lt;boost/proto/generate.hpp&gt;">
-<link rel="prev" href="by_value_generator/result_T_idm45506975265200.html" title="Struct template result&lt;This(Expr)&gt;">
-<link rel="next" href="compose_generators/result_T_idm45506975247184.html" title="Struct template result&lt;This(Expr)&gt;">
+<link rel="prev" href="by_value_generator/result_This_E_idp305880176.html" title="Struct template result&lt;This(Expr)&gt;">
+<link rel="next" href="compose_generators/result_This_E_idp305898288.html" title="Struct template result&lt;This(Expr)&gt;">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="by_value_generator/result_T_idm45506975265200.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.generate_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compose_generators/result_T_idm45506975247184.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="by_value_generator/result_This_E_idp305880176.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.generate_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compose_generators/result_This_E_idp305898288.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.proto.compose_generators"></a><div class="titlepage"></div>
@@ -37,22 +37,22 @@
 <span class="keyword">struct</span> <a class="link" href="compose_generators.html" title="Struct template compose_generators">compose_generators</a> <span class="special">:</span> <span class="keyword"></span> <a class="link" href="callable.html" title="Struct callable">proto::callable</a> <span class="special">{</span>
   <span class="comment">// member classes/structs/unions</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> This<span class="special">,</span> <span class="keyword">typename</span> <a class="link" href="../../Expr.html" title="Concept Expr">Expr</a><span class="special">&gt;</span> 
-  <span class="keyword">struct</span> <a class="link" href="compose_generators/result_T_idm45506975247184.html" title="Struct template result&lt;This(Expr)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Expr</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">:</span> <span class="keyword"></span> 
+  <span class="keyword">struct</span> <a class="link" href="compose_generators/result_This_E_idp305898288.html" title="Struct template result&lt;This(Expr)&gt;">result</a><span class="special">&lt;</span><span class="identifier">This</span><span class="special">(</span><span class="identifier">Expr</span><span class="special">)</span><span class="special">&gt;</span> <span class="special">:</span> <span class="keyword"></span> 
     <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span>
       <span class="identifier">Second</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">First</span><span class="special">(</span><span class="identifier">Expr</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span>
     <span class="special">&gt;</span>
   <span class="special">{</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="compose_generators.html#idm45506975243040-bb">public member functions</a></span>
+  <span class="comment">// <a class="link" href="compose_generators.html#idp305902432-bb">public member functions</a></span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../Expr.html" title="Concept Expr">Expr</a><span class="special">&gt;</span> 
     <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span>
       <span class="identifier">Second</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">First</span><span class="special">(</span><span class="identifier">Expr</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span>
     <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-    <a class="link" href="compose_generators.html#idm45506975242480-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Expr</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <a class="link" href="compose_generators.html#idp305902992-bb"><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span></a><span class="special">(</span><span class="identifier">Expr</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555187060624"></a><h2>Description</h2>
+<a name="idp340162704"></a><h2>Description</h2>
 <p>
             Generators are intended for use as the first template parameter to the
             <code class="computeroutput"><a class="link" href="domain.html" title="Struct template domain">proto::domain&lt;&gt;</a></code>
@@ -62,27 +62,21 @@
             generator for further transformation.
           </p>
 <div class="refsect2">
-<a name="idm45555187057312"></a><h3>
-<a name="idm45506975243040-bb"></a><code class="computeroutput">compose_generators</code> public member functions</h3>
+<a name="idp340166016"></a><h3>
+<a name="idp305902432-bb"></a><code class="computeroutput">compose_generators</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <a class="link" href="../../Expr.html" title="Concept Expr">Expr</a><span class="special">&gt;</span> 
   <span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span>
       <span class="identifier">Second</span><span class="special">(</span><span class="keyword">typename</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">result_of</span><span class="special">&lt;</span><span class="identifier">First</span><span class="special">(</span><span class="identifier">Expr</span><span class="special">)</span><span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span><span class="special">)</span>
     <span class="special">&gt;</span><span class="special">::</span><span class="identifier">type</span> 
-  <a name="idm45506975242480-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Expr</span> <span class="keyword">const</span> <span class="special">&amp;</span> expr<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+  <a name="idp305902992-bb"></a><span class="keyword">operator</span><span class="special">(</span><span class="special">)</span><span class="special">(</span><span class="identifier">Expr</span> <span class="keyword">const</span> <span class="special">&amp;</span> expr<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">expr</code></span></p></td>
 <td><p>A Proto expression.</p></td>
@@ -109,7 +103,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="by_value_generator/result_T_idm45506975265200.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.generate_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compose_generators/result_T_idm45506975247184.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="by_value_generator/result_This_E_idp305880176.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../proto/reference.html#header.boost.proto.generate_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="compose_generators/result_This_E_idp305898288.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

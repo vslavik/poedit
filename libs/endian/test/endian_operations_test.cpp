@@ -12,7 +12,7 @@
 //  This test probes operator overloading, including interaction between
 //  operand types.
 
-//  See endian_test for tests of endianess correctness, size, and value.
+//  See endian_test for tests of endianness correctness, size, and value.
 
 #define BOOST_ENDIAN_LOG
 

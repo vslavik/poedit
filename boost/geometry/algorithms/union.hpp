@@ -271,7 +271,7 @@ inline void union_(Geometry1 const& geometry1,
     concept::check<geometry_out>();
 
     detail::union_::union_insert<geometry_out>(geometry1, geometry2,
-                std::back_inserter(output_collection));
+                range::back_inserter(output_collection));
 }
 
 

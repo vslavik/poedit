@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class packed_skeleton_oarchive</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp" title="Header &lt;boost/mpi/skeleton_and_content.hpp&gt;">
 <link rel="prev" href="packed_skeleton_iarchive.html" title="Class packed_skeleton_iarchive">
-<link rel="next" href="skeleton_proxy.html" title="Struct template skeleton_proxy">
+<link rel="next" href="skeleton.html" title="Function template skeleton">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="packed_skeleton_iarchive.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton_proxy.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="packed_skeleton_iarchive.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.mpi.packed_skeleton_oarchive"></a><div class="titlepage"></div>
@@ -33,44 +33,38 @@
 <div xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" class="refsynopsisdiv"><pre class="synopsis"><span class="comment">// In header: &lt;<a class="link" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp" title="Header &lt;boost/mpi/skeleton_and_content.hpp&gt;">boost/mpi/skeleton_and_content.hpp</a>&gt;
 
 </span>
-<span class="keyword">class</span> <a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">ignore_oprimitive</span> <span class="special">{</span>
+<span class="keyword">class</span> <a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a> <span class="special">{</span>
 <span class="keyword">public</span><span class="special">:</span>
   <span class="comment">// <a class="link" href="packed_skeleton_oarchive.html#boost.mpi.packed_skeleton_oarchiveconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="packed_skeleton_oarchive.html#idm45506984728320-bb"><span class="identifier">packed_skeleton_oarchive</span></a><span class="special">(</span><span class="identifier">MPI_Comm</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <a class="link" href="packed_skeleton_oarchive.html#idp129362544-bb"><span class="identifier">packed_skeleton_oarchive</span></a><span class="special">(</span><span class="identifier">MPI_Comm</span> <span class="keyword">const</span> <span class="special">&amp;</span><span class="special">,</span> 
                            <span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">archive</span><span class="special">::</span><span class="identifier">no_header</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">explicit</span> <a class="link" href="packed_skeleton_oarchive.html#idm45506984723760-bb"><span class="identifier">packed_skeleton_oarchive</span></a><span class="special">(</span><a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">explicit</span> <a class="link" href="packed_skeleton_oarchive.html#idp129367104-bb"><span class="identifier">packed_skeleton_oarchive</span></a><span class="special">(</span><a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="packed_skeleton_oarchive.html#idm45506984703344-bb">public member functions</a></span>
-  <span class="keyword">const</span> <a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span> <a class="link" href="packed_skeleton_oarchive.html#idm45506984702784-bb"><span class="identifier">get_skeleton</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="packed_skeleton_oarchive.html#idp13546016-bb">public member functions</a></span>
+  <span class="keyword">const</span> <a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span> <a class="link" href="packed_skeleton_oarchive.html#idp13546576-bb"><span class="identifier">get_skeleton</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555219207568"></a><h2>Description</h2>
+<a name="idp308036464"></a><h2>Description</h2>
 <p>The <code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code> class is an Archiver (as in the Boost.Serialization library) that can record the shape of a data structure (called the "skeleton") into a binary representation stored in a buffer. The <code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code> is typically used by the send of a skeleton, to pack the skeleton of a data structure for transmission separately from the content.</p>
 <p>Users will not generally need to use <code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code> directly. Instead, use <code class="computeroutput">skeleton</code> or <code class="computeroutput">get_skeleton</code>. </p>
 <div class="refsect2">
-<a name="idm45555219201008"></a><h3>
+<a name="idp308043024"></a><h3>
 <a name="boost.mpi.packed_skeleton_oarchiveconstruct-copy-destruct"></a><code class="computeroutput">packed_skeleton_oarchive</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idm45506984728320-bb"></a><span class="identifier">packed_skeleton_oarchive</span><span class="special">(</span><span class="identifier">MPI_Comm</span> <span class="keyword">const</span> <span class="special">&amp;</span> comm<span class="special">,</span> 
+<pre class="literallayout"><a name="idp129362544-bb"></a><span class="identifier">packed_skeleton_oarchive</span><span class="special">(</span><span class="identifier">MPI_Comm</span> <span class="keyword">const</span> <span class="special">&amp;</span> comm<span class="special">,</span> 
                          <span class="keyword">unsigned</span> <span class="keyword">int</span> flags <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">archive</span><span class="special">::</span><span class="identifier">no_header</span><span class="special">)</span><span class="special">;</span></pre>
 <p>Construct a <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code></code> for the given communicator.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><code class="computeroutput">comm</code></span></p></td>
@@ -86,22 +80,16 @@
 </table></div>
 </li>
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">explicit</span> <a name="idm45506984723760-bb"></a><span class="identifier">packed_skeleton_oarchive</span><span class="special">(</span><a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span> archive<span class="special">)</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">explicit</span> <a name="idp129367104-bb"></a><span class="identifier">packed_skeleton_oarchive</span><span class="special">(</span><a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span> archive<span class="special">)</span><span class="special">;</span></pre>
 <p>Construct a <code class="computeroutput"><code class="computeroutput"><a class="link" href="packed_skeleton_oarchive.html" title="Class packed_skeleton_oarchive">packed_skeleton_oarchive</a></code></code> that packs a skeleton into the given <code class="computeroutput">archive</code>.</p>
 <p>
 </p>
-<div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term">Parameters:</span></p></td>
-<td><div class="variablelist"><table border="0" class="variablelist compact">
-<colgroup>
+<td><div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<col>
-</colgroup>
 <tbody><tr>
 <td><p><span class="term"><code class="computeroutput">archive</code></span></p></td>
 <td><p>the archive to which the skeleton will be packed. </p></td>
@@ -113,10 +101,10 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555219169264"></a><h3>
-<a name="idm45506984703344-bb"></a><code class="computeroutput">packed_skeleton_oarchive</code> public member functions</h3>
+<a name="idp308074704"></a><h3>
+<a name="idp13546016-bb"></a><code class="computeroutput">packed_skeleton_oarchive</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">const</span> <a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span> <a name="idm45506984702784-bb"></a><span class="identifier">get_skeleton</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
+<pre class="literallayout"><span class="keyword">const</span> <a class="link" href="packed_oarchive.html" title="Class packed_oarchive">packed_oarchive</a> <span class="special">&amp;</span> <a name="idp13546576-bb"></a><span class="identifier">get_skeleton</span><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <p>Retrieve the archive corresponding to this skeleton. </p>
 </li></ol></div>
 </div>
@@ -134,7 +122,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="packed_skeleton_iarchive.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton_proxy.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="packed_skeleton_iarchive.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../mpi/reference.html#header.boost.mpi.skeleton_and_content_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="skeleton.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

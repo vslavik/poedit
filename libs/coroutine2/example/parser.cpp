@@ -108,14 +108,11 @@ int main() {
                     });
                 p.run();
                 });
-
         // user-code pulls parsed data from parser
         for(char c:seq){
             printf("Parsed: %c\n",c);
         }
-
         std::cout << "\nDone" << std::endl;
-
         return EXIT_SUCCESS;
     } catch ( std::exception const& ex) {
         std::cerr << "exception: " << ex.what() << std::endl;

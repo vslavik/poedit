@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>strategy::transform::rotate_transformer</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../strategies.html" title="Strategies">
 <link rel="prev" href="strategy_transform_map_transformer.html" title="strategy::transform::map_transformer">
@@ -27,12 +27,12 @@
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer"></a><a class="link" href="strategy_transform_rotate_transformer.html" title="strategy::transform::rotate_transformer">strategy::transform::rotate_transformer</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idm44837162735760"></a><a class="indexterm" name="idm44837162735072"></a><a class="indexterm" name="idm44837162734384"></a>
+          <a class="indexterm" name="idp105243680"></a><a class="indexterm" name="idp105244368"></a><a class="indexterm" name="idp105245056"></a>
 Strategy for rotate transformation in Cartesian coordinate system.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer.h0"></a>
-          <span class="phrase"><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.description"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.description">Description</a>
+          <span><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.description"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.description">Description</a>
         </h6>
 <p>
           Rotate rotates a geometry of specified angle about a fixed point (e.g.
@@ -40,13 +40,12 @@ Strategy for rotate transformation in Cartesian coordinate system.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer.h1"></a>
-          <span class="phrase"><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.synopsis"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.synopsis">Synopsis</a>
+          <span><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.synopsis"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">DegreeOrRadian</span><span class="special">,</span> <span class="keyword">typename</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span> <span class="identifier">Dimension2</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">strategy</span><span class="special">::</span><span class="identifier">transform</span><span class="special">::</span><span class="identifier">rotate_transformer</span>
-      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">detail</span><span class="special">::</span><span class="identifier">rad_rotate_transformer</span><span class="special">&lt;</span> <span class="identifier">CalculationType</span><span class="special">,</span> <span class="identifier">Dimension1</span><span class="special">,</span> <span class="identifier">Dimension2</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -55,7 +54,7 @@ Strategy for rotate transformation in Cartesian coordinate system.
         </p>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer.h2"></a>
-          <span class="phrase"><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.template_parameter_s_"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.template_parameter_s_">Template
+          <span><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.template_parameter_s_"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -119,7 +118,7 @@ Strategy for rotate transformation in Cartesian coordinate system.
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer.h3"></a>
-          <span class="phrase"><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.constructor_s_"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.constructor_s_">Constructor(s)</a>
+          <span><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.constructor_s_"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -164,7 +163,7 @@ Strategy for rotate transformation in Cartesian coordinate system.
 </table></div>
 <h6>
 <a name="geometry.reference.strategies.strategy_transform_rotate_transformer.h4"></a>
-          <span class="phrase"><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.header"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.header">Header</a>
+          <span><a name="geometry.reference.strategies.strategy_transform_rotate_transformer.header"></a></span><a class="link" href="strategy_transform_rotate_transformer.html#geometry.reference.strategies.strategy_transform_rotate_transformer.header">Header</a>
         </h6>
 <p>
           <code class="computeroutput"><span class="preprocessor">#include</span> <span class="special">&lt;</span><span class="identifier">boost</span><span class="special">/</span><span class="identifier">geometry</span><span class="special">/</span><span class="identifier">strategies</span><span class="special">/</span><span class="identifier">transform</span><span class="special">/</span><span class="identifier">matrix_transformers</span><span class="special">.</span><span class="identifier">hpp</span><span class="special">&gt;</span></code>

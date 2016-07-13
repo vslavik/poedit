@@ -2,6 +2,11 @@
 
 // Copyright (c) 2009-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2016.
+// Modifications copyright (c) 2016, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -53,6 +58,32 @@ struct svg_multi
 namespace dispatch
 {
 
+template <typename MultiPoint>
+struct svg<multi_point_tag, MultiPoint>
+    : detail::svg::svg_multi
+        <
+            MultiPoint,
+            detail::svg::svg_point
+                <
+                    typename boost::range_value<MultiPoint>::type
+                >
+
+        >
+{};
+
+template <typename MultiLinestring>
+struct svg<multi_linestring_tag, MultiLinestring>
+    : detail::svg::svg_multi
+        <
+            MultiLinestring,
+            detail::svg::svg_range
+                <
+                    typename boost::range_value<MultiLinestring>::type,
+                    detail::svg::prefix_linestring
+                >
+
+        >
+{};
 
 template <typename MultiPolygon>
 struct svg<multi_polygon_tag, MultiPolygon>

@@ -133,15 +133,6 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
         << std::endl;
 #endif
 
-#if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
-    BOOST_CHECK_MESSAGE(expected_point_count < 0 || std::abs(int(n) - expected_point_count) < 3,
-            "union: " << caseid
-            << " #points expected: " << expected_point_count
-            << " detected: " << n
-            << " type: " << (type_for_assert_message<G1, G2>())
-            );
-#endif
-
     BOOST_CHECK_MESSAGE(expected_count < 0 || int(clip.size()) == expected_count,
             "union: " << caseid
             << " #clips expected: " << expected_count
@@ -155,6 +146,15 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
             << " detected: " << holes
             << " type: " << (type_for_assert_message<G1, G2>())
             );
+
+#if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
+    BOOST_CHECK_MESSAGE(expected_point_count < 0 || std::abs(int(n) - expected_point_count) < 3,
+            "union: " << caseid
+            << " #points expected: " << expected_point_count
+            << " detected: " << n
+            << " type: " << (type_for_assert_message<G1, G2>())
+            );
+#endif
 
     BOOST_CHECK_CLOSE(area, expected_area, settings.percentage);
 

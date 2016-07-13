@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Design Discussion</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../program_options.html" title="Chapter&#160;22.&#160;Boost.Program_options">
+<link rel="up" href="../program_options.html" title="Chapter&#160;24.&#160;Boost.Program_options">
 <link rel="prev" href="howto.html" title="How To">
 <link rel="next" href="s06.html" title="Acknowledgements">
 </head>
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="program_options.design"></a>Design Discussion</h2></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="design.html#program_options.design.unicode">Unicode Support</a></span></dt></dl></div>
+<div class="toc"><dl><dt><span class="section"><a href="design.html#program_options.design.unicode">Unicode Support</a></span></dt></dl></div>
 <p>This section focuses on some of the design questions.
   </p>
 <div class="section">
@@ -44,7 +44,7 @@
       many things, but for the program_options library it means that:
 
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>Each parser should accept either <code class="computeroutput">char*</code>
           or <code class="computeroutput">wchar_t*</code>, correctly split the input into option
           names and option values and return the data.
@@ -55,7 +55,7 @@
 <li class="listitem">
 <p>The library guarantees that:
             </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="circle">
 <li class="listitem"><p>ascii input is passed to an ascii value without change
                 </p></li>
 <li class="listitem"><p>Unicode input is passed to a Unicode value without change</p></li>
@@ -114,7 +114,7 @@
     </p>
 <p>For the parsers component, we have three choices:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>Use a fully templated implementation: given a string of a
             certain type, a parser will return a <code class="computeroutput"><a class="link" href="reference.html#boost.program_options.parsed_options">parsed_options</a></code> instance
             with strings of the same type (i.e. the <code class="computeroutput"><a class="link" href="reference.html#boost.program_options.parsed_options">parsed_options</a></code> class
@@ -143,8 +143,8 @@
       The instance of <code class="computeroutput"><a class="link" href="../boost/program_options/value_semantic.html" title="Class value_semantic">value_semantic</a></code> can then convert into some
       other encoding if needed.
     </p>
-<p>For the storage component, the only affected function is <code class="computeroutput"><a class="link" href="../boost/program_options/store_idm45507045051456.html" title="Function store">store</a></code>.
-      For Unicode input, the <code class="computeroutput"><a class="link" href="../boost/program_options/store_idm45507045051456.html" title="Function store">store</a></code> function should convert the value to the
+<p>For the storage component, the only affected function is <code class="computeroutput"><a class="link" href="../boost/program_options/store_idp17375936.html" title="Function store">store</a></code>.
+      For Unicode input, the <code class="computeroutput"><a class="link" href="../boost/program_options/store_idp17375936.html" title="Function store">store</a></code> function should convert the value to the
       internal encoding.  It should also inform the <code class="computeroutput"><a class="link" href="../boost/program_options/value_semantic.html" title="Class value_semantic">value_semantic</a></code> class
       about the used encoding.
     </p>
@@ -154,7 +154,7 @@
     <code class="computeroutput">std::string</code> (using UTF-8 encoding). The difference between
     alternatives is:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>Speed: UTF-8 is a bit slower</p></li>
 <li class="listitem"><p>Space: UTF-8 takes less space when input is ascii</p></li>
 <li class="listitem"><p>Code size: UTF-8 requires additional conversion code. However,
@@ -172,7 +172,7 @@
       so searching for 7-bit strings is simple. However, there are
       two subtle issues:
       </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p>We need to assume the character literals use ascii encoding
           and that inputs use Unicode encoding.</p></li>
 <li class="listitem"><p>A Unicode character (say '=') can be followed by 'composing

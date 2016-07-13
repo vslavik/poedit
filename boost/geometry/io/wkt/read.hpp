@@ -27,9 +27,12 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/range.hpp>
-
-#include <boost/type_traits.hpp>
+#include <boost/range/begin.hpp>
+#include <boost/range/end.hpp>
+#include <boost/range/size.hpp>
+#include <boost/range/value_type.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/remove_reference.hpp>
 
 #include <boost/geometry/algorithms/assign.hpp>
 #include <boost/geometry/algorithms/append.hpp>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Template test cases</title>
 <link rel="stylesheet" href="../../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Boost.Test">
 <link rel="up" href="../test_cases.html" title="Test cases">
 <link rel="prev" href="test_case_generation/generators.html" title="Datasets generators">
@@ -35,7 +35,7 @@
           similar to nullary function template. This facility is called test case
           template. Here are the two construction interfaces:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Test case template with automated registration
             </li>
@@ -45,7 +45,7 @@
 </ul></div>
 <a name="ref_BOOST_AUTO_TEST_CASE_TEMPLATE"></a><h5>
 <a name="boost_test.tests_organization.test_cases.test_organization_templates.h0"></a>
-          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_automate"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_automate">Test
+          <span><a name="boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_automate"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_automate">Test
           case template with automated registration</a>
         </h5>
 <p>
@@ -76,7 +76,7 @@
 </ol></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_organization_templates.h1"></a>
-          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_organization_templates.example_descr"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.example_descr">Example:
+          <span><a name="boost_test.tests_organization.test_cases.test_organization_templates.example_descr"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.example_descr">Example:
           Test case template with automated registration</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -118,7 +118,7 @@
 </table></div>
 <a name="ref_BOOST_TEST_CASE_TEMPLATE"></a><h5>
 <a name="boost_test.tests_organization.test_cases.test_organization_templates.h2"></a>
-          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_manual_r"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_manual_r">Test
+          <span><a name="boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_manual_r"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.test_case_template_with_manual_r">Test
           case template with manual registration</a>
         </h5>
 <p>
@@ -141,7 +141,7 @@
 <p>
           There several problems/inconveniences with above approach, including:
         </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
               Fatal error in one of the invocation will stop whole test case and
               will skip invocations with different types
@@ -216,7 +216,7 @@
 </pre>
 <p>
           <a class="link" href="../../utf_reference/test_org_reference/test_org_boost_test_case_template.html" title="BOOST_TEST_CASE_TEMPLATE"><code class="computeroutput"><span class="identifier">BOOST_TEST_CASE_TEMPLATE</span></code></a> creates
-          an instance of the test case generator. When passed to the method <code class="computeroutput"><a class="link" href="../../../boost/unit_test/test_suite.html#idm46165629420768-bb">test_suite::add</a></code>,
+          an instance of the test case generator. When passed to the method <code class="computeroutput"><a class="link" href="../../../boost/unit_test/test_suite.html#idp27673664-bb">test_suite::add</a></code>,
           the generator produces a separate sub test case for each type in the supplied
           collection of types and registers it immediately in the test suite. Each
           test case is based on the test case template body instantiated with a particular
@@ -245,7 +245,7 @@
 </table></div>
 <h6>
 <a name="boost_test.tests_organization.test_cases.test_organization_templates.h3"></a>
-          <span class="phrase"><a name="boost_test.tests_organization.test_cases.test_organization_templates.example_descr0"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.example_descr0">Example:
+          <span><a name="boost_test.tests_organization.test_cases.test_organization_templates.example_descr0"></a></span><a class="link" href="test_organization_templates.html#boost_test.tests_organization.test_cases.test_organization_templates.example_descr0">Example:
           Manually registered test case template</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -296,7 +296,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

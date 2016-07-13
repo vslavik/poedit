@@ -57,15 +57,15 @@ namespace ns
   BOOST_FUSION_ADAPT_ASSOC_STRUCT(
       ns::point,
       (x, ns::x_member)
-      (y, ns::y_member)
+      (auto, y, ns::y_member)
       (int, z, ns::z_member)
   )
 
 #else // BOOST_PP_VARIADICS
   BOOST_FUSION_ADAPT_ASSOC_STRUCT(
       ns::point,
-      (BOOST_FUSION_ADAPT_AUTO, x, ns::x_member)
-      (BOOST_FUSION_ADAPT_AUTO, y, ns::y_member)
+      (auto, x, ns::x_member)
+      (auto, y, ns::y_member)
       (int, z, ns::z_member)
   )
 
@@ -107,9 +107,9 @@ main()
     }
 
     {
-        fusion::vector<int, float, int> v1(4, 2, 2);
+        fusion::vector<int, float, int> v1(4, 2.f, 2);
         ns::point v2 = {5, 3, 3};
-        fusion::vector<long, double, int> v3(5, 4, 4);
+        fusion::vector<long, double, int> v3(5, 4., 4);
         BOOST_TEST(v1 < v2);
         BOOST_TEST(v1 <= v2);
         BOOST_TEST(v2 > v1);

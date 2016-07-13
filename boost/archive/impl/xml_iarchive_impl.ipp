@@ -11,6 +11,8 @@
 #include <boost/config.hpp>
 #include <cstring> // memcpy
 #include <cstddef> // NULL
+#include <exception>
+
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
     using ::memcpy;
@@ -64,22 +66,22 @@ xml_iarchive_impl<Archive>::load(std::wstring &ws){
     #if BOOST_WORKAROUND(_RWSTD_VER, BOOST_TESTED_AT(20101))
     if(NULL != ws.data())
     #endif
-        ws.resize(0);
-    std::mbstate_t mbs;
+    ws.resize(0);
+    std::mbstate_t mbs = std::mbstate_t();
     const char * start = s.data();
     const char * end = start + s.size();
     while(start < end){
         wchar_t wc;
-        std::size_t result = std::mbrtowc(&wc, start, end - start, &mbs);
-        if(result == static_cast<std::size_t>(-1))
+        std::size_t count = std::mbrtowc(&wc, start, end - start, &mbs);
+        if(count == static_cast<std::size_t>(-1))
             boost::serialization::throw_exception(
                 iterators::dataflow_exception(
                     iterators::dataflow_exception::invalid_conversion
                 )
             );
-        if(result == static_cast<std::size_t>(-2))
+        if(count == static_cast<std::size_t>(-2))
             continue;
-        start += result;
+        start += count;
         ws += wc;
     }
 }
@@ -98,7 +100,7 @@ xml_iarchive_impl<Archive>::load(wchar_t * ws){
             )
         );
         
-    std::mbstate_t mbs;
+    std::mbstate_t mbs = std::mbstate_t();
     const char * start = s.data();
     const char * end = start + s.size();
     while(start < end){
@@ -187,12 +189,10 @@ xml_iarchive_impl<Archive>::xml_iarchive_impl(
 template<class Archive>
 BOOST_ARCHIVE_DECL
 xml_iarchive_impl<Archive>::~xml_iarchive_impl(){
+    if(std::uncaught_exception())
+        return;
     if(0 == (this->get_flags() & no_header)){
-        BOOST_TRY{
-            gimpl->windup(is);
-        }
-        BOOST_CATCH(...){}
-        BOOST_CATCH_END
+        gimpl->windup(is);
     }
 }
 } // namespace archive

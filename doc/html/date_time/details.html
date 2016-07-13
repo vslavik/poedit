@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Details</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../date_time.html" title="Chapter&#160;9.&#160;Boost.Date_Time">
 <link rel="prev" href="serialization.html" title="Serialization">
@@ -26,7 +26,7 @@
 <div class="section">
 <div class="titlepage"><div><div><h2 class="title" style="clear: both">
 <a name="date_time.details"></a>Details</h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="details.html#date_time.calculations">Calculations</a></span></dt>
 <dt><span class="section"><a href="details.html#date_time.design_goals">Design Goals</a></span></dt>
 <dt><span class="section"><a href="details.html#date_time.tradeoffs">Tradeoffs: Stability, Predictability, and Approximations</a></span></dt>
@@ -47,7 +47,7 @@
     <a class="link" href="details.html#special_value_handling">Special Value Handling</a>
   </p>
 <a name="timepoints"></a><h4>
-<a name="idm45555379730816"></a>Timepoints</h4>
+<a name="idp104910576"></a>Timepoints</h4>
 <p>
     This section describes some of basic arithmetic rules that can be performed with timepoints. In general, Timepoints support basic arithmetic in conjunction with Durations as follows:
     </p>
@@ -67,7 +67,7 @@
 <p>
   </p>
 <a name="durations"></a><h4>
-<a name="idm45555379726992"></a>Durations</h4>
+<a name="idp104914400"></a>Durations</h4>
 <p>
     Durations represent a length of time and can have positive and negative values. It is frequently useful to be able to perform calculations with other durations and with simple integral values. The following describes these calculations:
     </p>
@@ -82,7 +82,7 @@
 <p>
   </p>
 <a name="intervals"></a><h4>
-<a name="idm45555379723808"></a>Intervals (Periods)</h4>
+<a name="idp104917584"></a>Intervals (Periods)</h4>
 <p>
     Interval logic is extremely useful for simplifying many 'calculations' for dates and times. The following describes the operations provided by periods which are based on half-open range. The following operations calculate new time periods based on two input time periods: 
     </p>
@@ -115,7 +115,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="special_value_handling"></a><h4>
-<a name="idm45555379718352"></a>Special Value Handling</h4>
+<a name="idp104923040"></a>Special Value Handling</h4>
 <p>
     For many temporal problems it is useful for Duration and Timepoint types to support special values such as Not A Date Time (NADT) and infinity. In general special values such as Not A Date Time (NADT) and infinity should follow rules like floating point values. Note that it should be possible to configure NADT based systems to throw an exception instead of result in NADT. 
     </p>
@@ -161,7 +161,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide concrete classes for manipulation of dates and times</td>
 </tr>
 <tr><td> 
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">date, time, date_duration, time_duration, date_period, time_period, etc</li>
 <li class="listitem" style="list-style-type: disc">support for infinity - positive infinity, negative infinity</li>
 <li class="listitem" style="list-style-type: disc">iterators over time and date ranges</li>
@@ -173,7 +173,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide a basis for performing efficient time calculations </td>
 </tr>
 <tr><td> 
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">days between dates </li>
 <li class="listitem" style="list-style-type: disc">durations of times </li>
 <li class="listitem" style="list-style-type: disc">durations of dates and times together </li>
@@ -184,7 +184,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide the maximum possible reusability and flexibility</td>
 </tr>
 <tr><td>
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">traits based customization of internal representations for size versus resolution control</li>
 <li class="listitem" style="list-style-type: disc">Allowing the use of different epochs and resolution (eg: seconds versus microseconds, dates starting at the year 2000 versus dates starting in 1700)</li>
 <li class="listitem" style="list-style-type: disc">Options for configuring unique calendar representations (Gregorian + others)</li>
@@ -197,7 +197,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide tools for date calculations</td>
 </tr>
 <tr><td> 
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">provide basis for calculation of complex event specs like holidays</li>
 <li class="listitem" style="list-style-type: disc">calendar to calendar conversions</li>
 <li class="listitem" style="list-style-type: disc">provide for ability to extend to new calendar systems</li>
@@ -208,7 +208,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide concrete classes for manipulation of time</td>
 </tr>
 <tr><td> 
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">provide the ability to handle cross time-zone issues</li>
 <li class="listitem" style="list-style-type: disc">provide adjustments for daylight savings time (summer time)</li>
 </ul></div> 
@@ -218,7 +218,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide classes for retrieving time current time</td>
 </tr>
 <tr><td> 
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">access to a network / high resolution time sources </li>
 <li class="listitem" style="list-style-type: disc">retrieving the current date time information to populate classes </li>
 </ul></div> 
@@ -228,7 +228,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <td>Provide input and output for time including</td>
 </tr>
 <tr><td> 
-	    <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+	    <div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">multi-lingual support </li>
 <li class="listitem" style="list-style-type: disc">provide ISO8601 compliant time facet </li>
 <li class="listitem" style="list-style-type: disc">use I/O facets for different local behavior </li>
@@ -241,13 +241,13 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <div class="titlepage"><div><div><h3 class="title">
 <a name="date_time.tradeoffs"></a>Tradeoffs: Stability, Predictability, and Approximations</h3></div></div></div>
 <h3>
-<a name="idm45555379675104"></a>
+<a name="idp104966336"></a>
     Unavoidable Trade-offs
   </h3>
 <p>
     The library does its best to provide everything a user could want, but there are certain inherent constraints that limit what <span class="emphasis"><em>any</em></span> temporal library can do. Specifically, a user must choose which two of the following three capabilities are desired in any particular application:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">exact agreement with wall-clock time</li>
 <li class="listitem" style="list-style-type: disc">accurate math, e.g. duration calculations</li>
 <li class="listitem" style="list-style-type: disc">ability to handle timepoints in the future</li>
@@ -265,14 +265,14 @@ Timeperiod shift Duration          --&gt; Timeperiod
     If you want accurate calculations with future times, you will have to use TAI or an equivalent, but the mapping from TAI to UTC or local time depends on leap seconds, so you will not have exact agreement with wall-clock time. 
   </p>
 <h3>
-<a name="idm45555379668880"></a>
+<a name="idp104972560"></a>
     Stability, Predictability, and Approximations
   </h3>
 <p>
     Here is some underlying theory that helps to explain what's going on. Remember that a temporal type, like any abstract data type (ADT), is a set of values together with operations on those values. 
   </p>
 <h4>
-<a name="idm45555379667552"></a>
+<a name="idp104973888"></a>
     Stability
   </h4>
 <p>
@@ -282,7 +282,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     An operation on a type is stable if the result of applying the operation to a particular operand(s) does not change over time. 
   </p>
 <h4>
-<a name="idm45555379665232"></a>
+<a name="idp104976208"></a>
     Predictability
   </h4>
 <p>
@@ -300,7 +300,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     For any temporal type T, there must be a predicate <span class="emphasis"><em>is_member( x, t )</em></span> which determines whether a value x is a member of T. The parameter t represents the time when the predicate is evaluated. For each x<sub>i</sub>, there must be a time t<sub>i</sub> and a value v such that: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">v = true or v = false, and</li>
 <li class="listitem" style="list-style-type: disc">for all t &lt; t<sub>i</sub>, is_member( x<sub>i</sub>, t ) returns dont_know, and</li>
 <li class="listitem" style="list-style-type: disc">for all t &gt;= t<sub>i</sub>, is_member( x<sub>i</sub>, t ) returns v.</li>
@@ -321,13 +321,13 @@ Timeperiod shift Duration          --&gt; Timeperiod
     Ill-formed sets are not of much practical use, so we will not discuss them further. In plain english the above simply says that all the values of a predictable type are known ahead of time, but some values of an unpredictable type are not known until some particular time. 
   </p>
 <h4>
-<a name="idm45555379647808"></a>
+<a name="idp104993632"></a>
     Stability of Operations
   </h4>
 <p>
     Predictable types have a couple of important properties: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">there is an order-preserving mapping from their elements onto a set of consecutive integers, and</li>
 <li class="listitem" style="list-style-type: disc">duration operations on their values are stable</li>
 </ul></div>
@@ -339,7 +339,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     Unpredictable types have exactly the opposite properties: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">there is no order-preserving mapping from their elements onto a set of consecutive integers, and</li>
 <li class="listitem" style="list-style-type: disc">duration operations on their values are not stable. </li>
 </ul></div>
@@ -352,7 +352,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     We can refine this a little by saying that a range within an unpredicatable type can be predictable, and operations performed entirely on values within that range will be stable. For example, the range of UTC timepoints from 1970-01-01 through the present is predictable, so calculations of durations within that range will be stable. 
   </p>
 <h4>
-<a name="idm45555379641168"></a>
+<a name="idp105000272"></a>
     Approximations
   </h4>
 <p>
@@ -374,7 +374,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     A taxonomy of temporal types:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Timepoint -- Specifier for a location in the time continuum. Similar to a number on a ruler.</li>
 <li class="listitem" style="list-style-type: disc">Timelength -- A duration of time unattached to any point on the time continuum.</li>
 <li class="listitem" style="list-style-type: disc">Timeinterval -- A duration of time attached to a specific point in the time continuum.</li>
@@ -384,7 +384,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     And some other terms: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Accuracy -- A measure of error, the difference between the reading of a clock and the true time.</li>
 <li class="listitem" style="list-style-type: disc">Calendar System -- A system for labeling time points with day level resolution.</li>
 <li class="listitem" style="list-style-type: disc">Clock Device -- A software component (tied to some hardware) that provides the current date or time with respect to a calendar or clock system.</li>
@@ -398,7 +398,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     Some standard date-time terminology: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Epoch -- Starting time point of a calendar or clock system.</li>
 <li class="listitem" style="list-style-type: disc">DST -- Daylight savings time - a local time adjustment made in some regions during the summer to shift the clock time of the daylight hours</li>
 <li class="listitem" style="list-style-type: disc">Time zone -- A region of the earth that provides for a 'local time' defined by DST rules and UT offset.</li>
@@ -412,7 +412,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     Some more experimental ones: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Local Time -- A time measured in a specific location of the universe.</li>
 <li class="listitem" style="list-style-type: disc">Time Label -- A tuple that either completely or partially specifies a specific date-time with respect to a calendar or clock system. This is the year-month-day representation.</li>
 <li class="listitem" style="list-style-type: disc">Adjusting Time Length -- A duration that represents varying physical durations depending on the moment in time. For example, a 1 month duration is typically not a fixed number of days and it depends on the date it is measured from to determine the actual length. </li>
@@ -422,7 +422,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     These are design sorts of terms: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc">Generation function -- A function that generates a specific set of time points, lengths, or intervals based on one or more parameters. </li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet"><li class="listitem" style="list-style-type: disc">Generation function -- A function that generates a specific set of time points, lengths, or intervals based on one or more parameters. </li></ul></div>
 <p>
   </p>
 </div>
@@ -433,7 +433,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
   </p>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc"><a class="link" href="details.html#date_ref">Date References</a></li>
 <li class="listitem" style="list-style-type: disc"><a class="link" href="details.html#time_ref">Time References</a></li>
 <li class="listitem" style="list-style-type: disc"><a class="link" href="details.html#other_c_libs">Other C/C++ Libraries</a></li>
@@ -445,10 +445,10 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="date_ref"></a><h4>
-<a name="idm45555379608160"></a>Date Calendar References</h4>
+<a name="idp105033392"></a>Date Calendar References</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">ISO 8601 date time standard -- <a href="http://www.cl.cam.ac.uk/~mgk25/iso-time.html" target="_top">Summary by Markus Kuhn</a>
 </li>
 <li class="listitem" style="list-style-type: disc">
@@ -464,12 +464,12 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="time_ref"></a><h4>
-<a name="idm45555379598576"></a>Time</h4>
+<a name="idp105042976"></a>Time</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Martin Folwer on time patterns
-	<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: opencircle; ">
+	<div class="itemizedlist"><ul class="itemizedlist" type="opencircle">
 <li class="listitem"><a href="http://www.aw.com/cseng/titles/0-201-89542-0/apsupp/events2-1.html" target="_top">Recurring Events for Calendars</a></li>
 <li class="listitem">Patterns for things that <a href="http://martinfowler.com/ap2/timeNarrative.html" target="_top">Change with time</a>
 </li>
@@ -488,10 +488,10 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="other_c_libs"></a><h4>
-<a name="idm45555379587488"></a>Other C/C++ Libraries</h4>
+<a name="idp105054064"></a>Other C/C++ Libraries</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">
 <a href="http://www.cplusplus.com/ref/ctime/index.html" target="_top">ctime C</a> Standard library reference at cplusplus.com</li>
 <li class="listitem" style="list-style-type: disc">
@@ -503,7 +503,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <li class="listitem" style="list-style-type: disc">
 <a href="http://www.twinsun.com/tz/tz-link.htm" target="_top">Time Zone Database</a> C library for managing timezones/places</li>
 <li class="listitem" style="list-style-type: disc">International Components for Unicode by IBM (open source)
-	<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: opencircle; ">
+	<div class="itemizedlist"><ul class="itemizedlist" type="opencircle">
 <li class="listitem"><a href="http://icu.sourceforge.net/userguide/dateCalendar.html" target="_top">Calendar Class</a></li>
 <li class="listitem"><a href="http://icu.sourceforge.net/userguide/dateTime.html" target="_top">Date Time Services</a></li>
 <li class="listitem"><a href="http://oss.software.ibm.com/userguide/dateTimezone.html" target="_top">Time Zone Class</a></li>
@@ -515,10 +515,10 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="java_libs"></a><h4>
-<a name="idm45555379574544"></a>JAVA Date &amp; Time Library Quick Reference</h4>
+<a name="idp105067008"></a>JAVA Date &amp; Time Library Quick Reference</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc"><a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/Calendar.html" target="_top">Calendar class</a></li>
 <li class="listitem" style="list-style-type: disc"><a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/GregorianCalendar.html" target="_top">Gregorian calendar</a></li>
 <li class="listitem" style="list-style-type: disc"><a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/Date.html" target="_top">Date class</a></li>
@@ -531,14 +531,14 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="script_libs"></a><h4>
-<a name="idm45555379565088"></a>Scripting Language Libraries</h4>
+<a name="idp105076464"></a>Scripting Language Libraries</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">A python date library <a href="http://www.lemburg.com/files/python/mxDateTime.html" target="_top">MX Date Time</a>
 </li>
 <li class="listitem" style="list-style-type: disc">Perl date-time
-	<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: opencircle; ">
+	<div class="itemizedlist"><ul class="itemizedlist" type="opencircle">
 <li class="listitem"><a href="http://search-dev.develooper.com/search?m=module&amp;q=date&amp;s=11" target="_top">Date-Time packages at CPAN</a></li>
 <li class="listitem">
 <a href="http://search-dev.develooper.com/~stbey/Date-Calc-5.4/Calc.pod" target="_top">Date::Calc</a> at CPAN</li>
@@ -550,10 +550,10 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="related"></a><h4>
-<a name="idm45555379557696"></a>Related Commercial and Fanciful Pages</h4>
+<a name="idp105083920"></a>Related Commercial and Fanciful Pages</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">
 <a href="http://www.craphound.com/est/" target="_top">Eastern Standard Tribe</a> -- Cory Doctorow science fiction novel with time themes.</li>
 <li class="listitem" style="list-style-type: disc">
@@ -566,10 +566,10 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="resolution"></a><h4>
-<a name="idm45555379550528"></a>Resolution, Precision, and Accuracy</h4>
+<a name="idp105091088"></a>Resolution, Precision, and Accuracy</h4>
 <p>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Definitions with pictures from <a href="http://metrologyforum.tm.agilent.com/specs.shtml" target="_top">Agilent Technologies</a>
 </li>
 <li class="listitem" style="list-style-type: disc">Definitions from <a href="http://www.solent.ac.uk/hydrography/notes/errorthe/accuracy.htm" target="_top">Southampton Institute</a>
@@ -589,12 +589,12 @@ Timeperiod shift Duration          --&gt; Timeperiod
     <a class="link" href="details.html#other_boost_libs">Required Boost Libraries</a>
   </p>
 <a name="overview"></a><h4>
-<a name="idm45555379539552"></a>Overview</h4>
+<a name="idp105102000"></a>Overview</h4>
 <p>
     The library has a few functions that require the creation of a library file (mostly to_string, from_string functions).  Most library users can make effective use of the library WITHOUT building the library, but simply including the required headers. If the library is needed, the Jamfile in the build directory will produce a "static" library (libboost_date_time) and a "dynamic/shared" library (boost_date_time) that contains these functions. Note that to use the library without the library (particularly on windows) may require using the BOOST_DATE_TIME_NO_LIB flag to the compilation options.
   </p>
 <a name="compile_options"></a><h4>
-<a name="idm45555379537168"></a>Compilation Options</h4>
+<a name="idp105104384"></a>Compilation Options</h4>
 <p>
     By default the posix_time system uses a single 64 bit integer internally to provide a microsecond level resolution. As an alternative, a combination of a 64 bit integer and a 32 bit integer (96 bit resolution) can be used to provide nano-second level resolutions. The default implementation may provide better performance and more compact memory usage for many applications that do not require nano-second resolutions. 
   </p>
@@ -605,11 +605,11 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>As a convenience, <code class="computeroutput">date_time</code> has provided some <a class="link" href="gregorian.html#additional_duration_types">additional duration types</a>. Use of these types may have unexpected results due to the snap-to-end-of-month behavior (see <a class="link" href="gregorian.html#snap_to_details">Reversibility of Operations Pitfall</a> for complete details and examples). These types are enabled by default. To disable these types, simply undefine <code class="computeroutput">BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES</code> in your project file.</p>
 <p>Another convenience is the default constructors for <code class="computeroutput"><a class="link" href="gregorian.html#date_time.gregorian.date_class" title="Date">date</a></code>, and <code class="computeroutput"><a class="link" href="posix_time.html#date_time.posix_time.ptime_class" title="Ptime">ptime</a></code>. These constructors are enabled by default. To disable them, simply define <code class="computeroutput">DATE_TIME_NO_DEFAULT_CONSTRUCTOR</code> in your project file.</p>
 <a name="portability"></a><h4>
-<a name="idm45555379524560"></a>Compiler/Portability Notes</h4>
+<a name="idp105116992"></a>Compiler/Portability Notes</h4>
 <p>
     The Boost Date-Time library has been built and tested with many compilers and platforms. However, some compilers and standard libraries have issues. While some of these issues can be worked around, others are difficult to work around. The following compilers are known to fully support all aspects of the library:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">Codewarrior 9.4 Windows</li>
 <li class="listitem" style="list-style-type: disc">GCC 3.2 - 3.4, 4.x on Linux</li>
 <li class="listitem" style="list-style-type: disc">GCC 3.3, 4.x on Darwin</li>
@@ -643,7 +643,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     These compilers support all aspects of the library except <code class="computeroutput">wstring/wstream</code> 
     output.
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">MinGW 3.2, 3.4, 3.5 *</li>
 <li class="listitem" style="list-style-type: disc">GCC 3.2 (cygwin) *</li>
 </ul></div>
@@ -652,13 +652,13 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
     In particular, a lack of support for standard locales limits the ability of the library to support iostream based input output. For these compilers a set of more limited string based input-output is provided. Some compilers/standard libraries with this limitation include: 
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; "><li class="listitem" style="list-style-type: disc">Borland 5.6</li></ul></div>
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet"><li class="listitem" style="list-style-type: disc">Borland 5.6</li></ul></div>
 <p>
   </p>
 <p>
     Official support for some older compilers has now been dropped.  This includes:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc">GCC 2.9x</li>
 <li class="listitem" style="list-style-type: disc">Borland 5.1.1</li>
 <li class="listitem" style="list-style-type: disc">MSVC 7.0 and 6 SP5 </li>
@@ -666,7 +666,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <h6>
-<a name="idm45555379509168"></a>Visual Studio &amp; STLPort</h6>
+<a name="idp105132384"></a>Visual Studio &amp; STLPort</h6>
 <p>There is a known issue with Visual Studio (7.0 &amp; 7.1) and STLPort. The build errors typically make reference to a type issue or 'no acceptable conversion' and are attempting to instantiate a template with <code class="computeroutput">wchar_t</code>. The default build of STLPort does not support <code class="computeroutput">wchar_t</code>. There are two possible workarounds for this issue. The simplest is the user can build date_time with no wide stream/string etc. The other is to rebuild STLPort with wchar_t support.
   </p>
 <p>To build date_time with no wide stream/string etc, execute the following command from <code class="computeroutput">$BOOST_ROOT</code>:
@@ -686,7 +686,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
     (replace the ellipsis with the correct paths for the build system and adjust the <code class="computeroutput">TOOLS</code> to the proper toolset if necessary)
   </p>
 <a name="dir_structure"></a><h4>
-<a name="idm45555379497440"></a>Directory Structure</h4>
+<a name="idp105144112"></a>Directory Structure</h4>
 <p>
     The directory tree has the following structure:
     </p>
@@ -707,11 +707,11 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <p>
   </p>
 <a name="other_boost_libs"></a><h4>
-<a name="idm45555379493936"></a>Required Boost Libraries</h4>
+<a name="idp105147616"></a>Required Boost Libraries</h4>
 <p>
     Various parts of date-time depend on other boost libraries.  These include:
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: bullet; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="bullet">
 <li class="listitem" style="list-style-type: disc"><a href="../../../libs/tokenizer/index.html" target="_top">boost.tokenizer</a></li>
 <li class="listitem" style="list-style-type: disc"><a href="../../../libs/integer/doc/html/boost_integer/cstdint.html" target="_top">boost.integer(cstdint)</a></li>
 <li class="listitem" style="list-style-type: disc"><a href="../../../libs/utility/operators.htm" target="_top">boost.operators</a></li>
@@ -744,7 +744,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 <div class="titlepage"><div><div><h3 class="title">
 <a name="date_time.changes"></a>Change History</h3></div></div></div>
 <h4>
-<a name="idm45555379481152"></a>Changes from Boost 1.41 to 1.44 (date_time 1.08 to 1.09)</h4>
+<a name="idp105160512"></a>Changes from Boost 1.41 to 1.44 (date_time 1.08 to 1.09)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -764,7 +764,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tr></tbody>
 </table></div>
 <h4>
-<a name="idm45555379475008"></a>Changes from Boost 1.40 to 1.41 (date_time 1.07 to 1.08)</h4>
+<a name="idp105166656"></a>Changes from Boost 1.40 to 1.41 (date_time 1.07 to 1.08)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -796,7 +796,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tbody>
 </table></div>
 <h4>
-<a name="idm45555379464736"></a>Changes from Boost 1.38 to 1.40 (date_time 1.06 to 1.07)</h4>
+<a name="idp105176928"></a>Changes from Boost 1.38 to 1.40 (date_time 1.06 to 1.07)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -817,7 +817,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tr></tbody>
 </table></div>
 <h4>
-<a name="idm45555379456512"></a>Changes from Boost 1.34 to 1.38 (date_time 1.05 to 1.06)</h4>
+<a name="idp105185152"></a>Changes from Boost 1.34 to 1.38 (date_time 1.05 to 1.06)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -931,7 +931,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tbody>
 </table></div>
 <h4>
-<a name="idm45555379421120"></a>Changes from Boost 1.33 to 1.34 (date_time 1.04 to 1.05)</h4>
+<a name="idp105220544"></a>Changes from Boost 1.33 to 1.34 (date_time 1.04 to 1.05)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1019,7 +1019,7 @@ Timeperiod shift Duration          --&gt; Timeperiod
 </tbody>
 </table></div>
 <h4>
-<a name="idm45555379399888"></a>Changes from Boost 1.32 to 1.33 (date_time 1.03 to 1.04)</h4>
+<a name="idp105240848"></a>Changes from Boost 1.32 to 1.33 (date_time 1.03 to 1.04)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1159,7 +1159,7 @@ void save_to(archive_type&amp; ar,
 </tbody>
 </table></div>
 <h4>
-<a name="idm45555379340048"></a>Changes from Boost 1.31 to 1.32 (date_time 1.02 to 1.03)</h4>
+<a name="idp105300688"></a>Changes from Boost 1.31 to 1.32 (date_time 1.02 to 1.03)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1354,7 +1354,7 @@ ws &gt;&gt; d; //Feb 29th, 2000</pre>
 </tbody>
 </table></div>
 <h4>
-<a name="idm45555379297840"></a>Changes from Boost 1.30 to 1.31 (date_time 1.01 to 1.02)</h4>
+<a name="idp105342896"></a>Changes from Boost 1.30 to 1.31 (date_time 1.01 to 1.02)</h4>
 <div class="informaltable"><table class="table">
 <colgroup>
 <col>
@@ -1443,7 +1443,7 @@ td = -td; //-5 hours</pre>
 </tbody>
 </table></div>
 <h4>
-<a name="idm45555379263808"></a>Changes from Boost 1.29 to 1.30 (date_time 1.00 to 1.01)</h4>
+<a name="idp105376928"></a>Changes from Boost 1.29 to 1.30 (date_time 1.00 to 1.01)</h4>
 <p>
     Notice: The interface to the partial_date class (see <a class="link" href="gregorian.html#date_time.gregorian.date_algorithms" title="Date Generators/Algorithms">date_algorithms</a>) was changed. The order of construction parameters was changed which will cause some code to fail execution. This change was made to facilitate more generic local time adjustment code. Thus instead of specifying partial_date pd(Dec,25) the code needs to be changed to partial_date pd(25, Dec);
   </p>

@@ -10,6 +10,7 @@
 #define BOOST_GEOMETRY_TEST_OVERLAY_P_Q_HPP
 
 #include <fstream>
+#include <sstream>
 #include <iomanip>
 
 //#define BOOST_GEOMETRY_ROBUSTNESS_USE_DIFFERENCE

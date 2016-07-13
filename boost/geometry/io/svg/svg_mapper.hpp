@@ -2,10 +2,11 @@
 
 // Copyright (c) 2009-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2016.
+// Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -90,25 +91,35 @@ struct svg_map<point_tag, Point>
     }
 };
 
-template <typename Box>
-struct svg_map<box_tag, Box>
+template <typename BoxSeg1, typename BoxSeg2>
+struct svg_map_box_seg
 {
     template <typename TransformStrategy>
     static inline void apply(std::ostream& stream,
                     std::string const& style, int size,
-                    Box const& box, TransformStrategy const& strategy)
+                    BoxSeg1 const& box_seg, TransformStrategy const& strategy)
     {
-        model::box<detail::svg::svg_point_type> ibox;
+        BoxSeg2 ibox_seg;
 
-        // Fix bug in gcc compiler warning for possible uninitialation
+        // Fix bug in gcc compiler warning for possible uninitialization
 #if defined(BOOST_GCC)
-        geometry::assign_zero(ibox);
+        geometry::assign_zero(ibox_seg);
 #endif
-        geometry::transform(box, ibox, strategy);
+        geometry::transform(box_seg, ibox_seg, strategy);
 
-        stream << geometry::svg(ibox, style, size) << std::endl;
+        stream << geometry::svg(ibox_seg, style, size) << std::endl;
     }
 };
+
+template <typename Box>
+struct svg_map<box_tag, Box>
+    : svg_map_box_seg<Box, model::box<detail::svg::svg_point_type> >
+{};
+
+template <typename Segment>
+struct svg_map<segment_tag, Segment>
+    : svg_map_box_seg<Segment, model::segment<detail::svg::svg_point_type> >
+{};
 
 
 template <typename Range1, typename Range2>
@@ -124,25 +135,6 @@ struct svg_map_range
         stream << geometry::svg(irange, style, size) << std::endl;
     }
 };
-
-template <typename Segment>
-struct svg_map<segment_tag, Segment>
-{
-    template <typename TransformStrategy>
-    static inline void apply(std::ostream& stream,
-                    std::string const& style, int size,
-                    Segment const& segment, TransformStrategy const& strategy)
-    {
-        typedef segment_view<Segment> view_type;
-        view_type range(segment);
-        svg_map_range
-            <
-                view_type,
-                model::linestring<detail::svg::svg_point_type>
-            >::apply(stream, style, size, range, strategy);
-    }
-};
-
 
 template <typename Ring>
 struct svg_map<ring_tag, Ring>

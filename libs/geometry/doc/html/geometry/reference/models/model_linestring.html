@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>model::linestring</title>
 <link rel="stylesheet" href="../../../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../models.html" title="Models">
 <link rel="prev" href="model_d2_point_xy.html" title="model::d2::point_xy">
@@ -27,12 +27,12 @@
 <a name="geometry.reference.models.model_linestring"></a><a class="link" href="model_linestring.html" title="model::linestring">model::linestring</a>
 </h4></div></div></div>
 <p>
-          <a class="indexterm" name="idm44837173603104"></a><a class="indexterm" name="idm44837173602416"></a>
+          <a class="indexterm" name="idp94413216"></a><a class="indexterm" name="idp94413904"></a>
 A linestring (named so by OGC) is a collection (default a vector) of points.
         </p>
 <h6>
 <a name="geometry.reference.models.model_linestring.h0"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_linestring.model_of"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.model_of">Model of</a>
+          <span><a name="geometry.reference.models.model_linestring.model_of"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.model_of">Model of</a>
         </h6>
 <p>
           <a class="link" href="../concepts/concept_linestring.html" title="Linestring Concept">Linestring
@@ -40,13 +40,12 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
         </p>
 <h6>
 <a name="geometry.reference.models.model_linestring.h1"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_linestring.synopsis"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.synopsis">Synopsis</a>
+          <span><a name="geometry.reference.models.model_linestring.synopsis"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.synopsis">Synopsis</a>
         </h6>
 <p>
 </p>
 <pre class="programlisting"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> <span class="identifier">Point</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span><span class="special">,</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">Container</span><span class="special">,</span> <span class="keyword">template</span><span class="special">&lt;</span> <span class="keyword">typename</span> <span class="special">&gt;</span> <span class="keyword">class</span> <span class="identifier">Allocator</span><span class="special">&gt;</span>
 <span class="keyword">class</span> <span class="identifier">model</span><span class="special">::</span><span class="identifier">linestring</span>
-      <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">Container</span><span class="special">&lt;</span> <span class="identifier">Point</span><span class="special">,</span> <span class="identifier">Allocator</span><span class="special">&lt;</span> <span class="identifier">Point</span> <span class="special">&gt;</span> <span class="special">&gt;</span>
 <span class="special">{</span>
   <span class="comment">// ...</span>
 <span class="special">};</span>
@@ -55,7 +54,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
         </p>
 <h6>
 <a name="geometry.reference.models.model_linestring.h2"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_linestring.template_parameter_s_"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.template_parameter_s_">Template
+          <span><a name="geometry.reference.models.model_linestring.template_parameter_s_"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.template_parameter_s_">Template
           parameter(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
@@ -134,7 +133,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
 </table></div>
 <h6>
 <a name="geometry.reference.models.model_linestring.h3"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_linestring.constructor_s_"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.constructor_s_">Constructor(s)</a>
+          <span><a name="geometry.reference.models.model_linestring.constructor_s_"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.constructor_s_">Constructor(s)</a>
         </h6>
 <div class="informaltable"><table class="table">
 <colgroup>
@@ -170,7 +169,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
                 </td>
 <td>
                   <p>
-                    Default constructor, creating an empty linestring.
+                    Default constructor, creating an empty \1.
                   </p>
                 </td>
 <td>
@@ -187,7 +186,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
                 </td>
 <td>
                   <p>
-                    Constructor with begin and end, filling the linestring.
+                    Constructor with begin and end, filling the \1.
                   </p>
                 </td>
 <td>
@@ -209,7 +208,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
                 </td>
 <td>
                   <p>
-                    Constructor taking std::initializer_list, filling the linestring.
+                    Constructor taking std::initializer_list, filling the \1.
                   </p>
                 </td>
 <td>
@@ -223,7 +222,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
 </table></div>
 <h6>
 <a name="geometry.reference.models.model_linestring.h4"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_linestring.header"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.header">Header</a>
+          <span><a name="geometry.reference.models.model_linestring.header"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.header">Header</a>
         </h6>
 <p>
           Either
@@ -239,7 +238,7 @@ A linestring (named so by OGC) is a collection (default a vector) of points.
         </p>
 <h6>
 <a name="geometry.reference.models.model_linestring.h5"></a>
-          <span class="phrase"><a name="geometry.reference.models.model_linestring.examples"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.examples">Examples</a>
+          <span><a name="geometry.reference.models.model_linestring.examples"></a></span><a class="link" href="model_linestring.html#geometry.reference.models.model_linestring.examples">Examples</a>
         </h6>
 <p>
           Declaration and use of the Boost.Geometry model::linestring, modelling

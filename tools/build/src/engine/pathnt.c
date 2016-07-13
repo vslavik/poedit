@@ -16,12 +16,21 @@
  * pathnt.c - NT specific path manipulation support
  */
 
+#include "jam.h"
 #include "pathsys.h"
-
 #include "hash.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+
+#ifdef OS_CYGWIN
+# include <cygwin/version.h>
+# include <sys/cygwin.h>
+# ifdef CYGWIN_VERSION_CYGWIN_CONV
+#  include <errno.h>
+# endif
+# include <windows.h>
+#endif
 
 #include <assert.h>
 #include <stdlib.h>
@@ -275,6 +284,98 @@ static path_key_entry * path_key( OBJECT * const path,
     }
 
     return result;
+}
+
+
+/*
+ * translate_path_cyg2win() - conversion of a cygwin to a Windows path.
+ *
+ * FIXME: skip grist
+ */
+
+#ifdef OS_CYGWIN
+static int translate_path_cyg2win( string * path )
+{
+    int translated = 0;
+
+#ifdef CYGWIN_VERSION_CYGWIN_CONV
+    /* Use new Cygwin API added with Cygwin 1.7. Old one had no error
+     * handling and has been deprecated.
+     */
+    char * dynamicBuffer = 0;
+    char buffer[ MAX_PATH + 1001 ];
+    char const * result = buffer;
+    cygwin_conv_path_t const conv_type = CCP_POSIX_TO_WIN_A | CCP_RELATIVE;
+    ssize_t const apiResult = cygwin_conv_path( conv_type, path->value,
+        buffer, sizeof( buffer ) / sizeof( *buffer ) );
+    assert( apiResult == 0 || apiResult == -1 );
+    assert( apiResult || strlen( result ) < sizeof( buffer ) / sizeof(
+        *buffer ) );
+    if ( apiResult )
+    {
+        result = 0;
+        if ( errno == ENOSPC )
+        {
+            ssize_t const size = cygwin_conv_path( conv_type, path->value,
+                NULL, 0 );
+            assert( size >= -1 );
+            if ( size > 0 )
+            {
+                dynamicBuffer = (char *)BJAM_MALLOC_ATOMIC( size );
+                if ( dynamicBuffer )
+                {
+                    ssize_t const apiResult = cygwin_conv_path( conv_type,
+                        path->value, dynamicBuffer, size );
+                    assert( apiResult == 0 || apiResult == -1 );
+                    if ( !apiResult )
+                    {
+                        result = dynamicBuffer;
+                        assert( strlen( result ) < size );
+                    }
+                }
+            }
+        }
+    }
+#else  /* CYGWIN_VERSION_CYGWIN_CONV */
+    /* Use old Cygwin API deprecated with Cygwin 1.7. */
+    char result[ MAX_PATH + 1 ];
+    cygwin_conv_to_win32_path( path->value, result );
+    assert( strlen( result ) <= MAX_PATH );
+#endif  /* CYGWIN_VERSION_CYGWIN_CONV */
+
+    if ( result )
+    {
+        string_truncate( path, 0 );
+        string_append( path, result );
+        translated = 1;
+    }
+
+#ifdef CYGWIN_VERSION_CYGWIN_CONV
+    if ( dynamicBuffer )
+        BJAM_FREE( dynamicBuffer );
+#endif
+
+    return translated;
+}
+#endif  /* OS_CYGWIN */
+
+
+/*
+ * path_translate_to_os_()
+ */
+
+int path_translate_to_os_( char const * f, string * file )
+{
+    int translated = 0;
+
+    /* by default, pass on the original path */
+    string_copy( file, f );
+
+#ifdef OS_CYGWIN
+    translated = translate_path_cyg2win( file );
+#endif
+
+    return translated;
 }
 
 

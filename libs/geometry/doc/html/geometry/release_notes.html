@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Release Notes</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Geometry">
 <link rel="prev" href="examples/example_source_code__adapting_a_legacy_geometry_object_model.html" title="Example source code: Adapting a legacy geometry object model">
@@ -28,13 +28,112 @@
 </h2></div></div></div>
 <h4>
 <a name="geometry.release_notes.h0"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_60"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_60">Boost
+      <span><a name="geometry.release_notes.boost_1_61"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_61">Boost
+      1.61</a>
+    </h4>
+<p>
+      <span class="bold"><strong>Additional functionality</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          Support within and covered_by for Box/Box in spherical and geographic coordinate
+          systems.
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>Improvements</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+          Overlay: handle_tangencies replaced by clusters, fixing many cases with
+          colocated turns
+        </li></ul></div>
+<p>
+      <span class="bold"><strong>Solved tickets</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/10866" target="_top">10866</a>
+          union_ doesn't work in 1.56 and 1.57.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11018" target="_top">11018</a>
+          Invalid geometry intersection
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11576" target="_top">11576</a>
+          Intersection gives wrong results.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11637" target="_top">11637</a>
+          Unused parameter warning.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11725" target="_top">11725</a>
+          union_ fails to create holes
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11789" target="_top">11789</a>
+          Assertion failure or invalid result of set operations for spherical_equatorial
+          coordinate system.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11917" target="_top">11917</a>
+          Andoyer distance strategy returns 0 for antipodal points (default geographic
+          distance).
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11928" target="_top">11928</a>
+          Improvement of the accuracy of surveyor area strategy.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11966" target="_top">11966</a>
+          Compilation error in svg() for box and non-int coordinate type.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11984" target="_top">11984</a>
+          union_() generates self-intersecting polygon
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/11987" target="_top">11987</a>
+          rtree::remove() not compiling for geographic CS.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/12000" target="_top">12000</a>
+          Uninitialized reference in (unused) constructor of relate's mask_handler.
+        </li>
+<li class="listitem">
+          <a href="https://svn.boost.org/trac/boost/ticket/12106" target="_top">12106</a>
+          Invalid assertion failure in envelope() for non-cartesian very short segments.
+        </li>
+</ul></div>
+<p>
+      <span class="bold"><strong>Bugfixes</strong></span>
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
+<li class="listitem">
+          Fix intersects and disjoints for Segment/Box in cartesian coordinate system
+          when Segment is parallel to Box's face.
+        </li>
+<li class="listitem">
+          Fix relation operations for Point/Areal in spherical and geographic coordinate
+          systems for edge cases.
+        </li>
+<li class="listitem">
+          Fix intersect and disjoint for Point/Box and Box/Box in spherical and geographic
+          coordinate systems for some cases.
+        </li>
+<li class="listitem">
+          Fix within and covered_by for Point/Box in spherical and geographic coordinate
+          systems for some cases.
+        </li>
+</ul></div>
+<h4>
+<a name="geometry.release_notes.h1"></a>
+      <span><a name="geometry.release_notes.boost_1_60"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_60">Boost
       1.60</a>
     </h4>
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/10803" target="_top">10803</a>
           Union algorithm returning invalid geometry
@@ -68,25 +167,32 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Fix colocations of touching interior ring / exterior ring, where it also
           touches another polygon
         </li>
 <li class="listitem">
           Fix removing values from an empty rtree - no effect and 0 returned instead
-          of assertion failure.
+          of assertion failure
+        </li>
+<li class="listitem">
+          Fix segfault in centroid for multi geometries containing empty single geometries
+          (thanks to Jiri Drbalek)
+        </li>
+<li class="listitem">
+          Fix liang_barsky strategy for integral coordinates (thanks to Dane Springmeyer)
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h1"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_59"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_59">Boost
+<a name="geometry.release_notes.h2"></a>
+      <span><a name="geometry.release_notes.boost_1_59"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_59">Boost
       1.59</a>
     </h4>
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Added rtree const_iterator, begin(), end() and the support for Boost.Range.
         </li>
@@ -124,7 +230,7 @@
 <p>
       <span class="bold"><strong>Improvements</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Upgraded rtree const_query_iterator category to ForwardIterator.
         </li>
@@ -135,14 +241,14 @@
 <p>
       <span class="bold"><strong>Breaking changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           buffer side strategy now returns error_code instead of bool. If you have
           your own custom side strategy, it should be adapted
         </li></ul></div>
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/11113" target="_top">11113</a>
           Support easy enumeration of all elements with BOOST_FOREACH
@@ -177,7 +283,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Buffer: use a more robust way to calculate the side of an intersection,
           this fixes several errors in buffer generation
@@ -198,14 +304,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h2"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_58"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_58">Boost
+<a name="geometry.release_notes.h3"></a>
+      <span><a name="geometry.release_notes.boost_1_58"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_58">Boost
       1.58</a>
     </h4>
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           New algorithm num_segments, returning the number of segments of a geometry
         </li>
@@ -227,7 +333,7 @@
 <p>
       <span class="bold"><strong>Improvements</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Buffer now supports flat-ends for linestrings with a bend close to the
           start (such that buffered segment crosses flat-end).
@@ -243,7 +349,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/8379" target="_top">8379</a>
           Invalid comparison of the result of determinant
@@ -350,7 +456,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Bug in multipoint/polygon multipoint/multipolygon distance computation
           (wrong detection of points inside the areal geometry)
@@ -412,14 +518,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h3"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_57"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_57">Boost
+<a name="geometry.release_notes.h4"></a>
+      <span><a name="geometry.release_notes.boost_1_57"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_57">Boost
       1.57</a>
     </h4>
 <p>
       <span class="bold"><strong>Improvements</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           The support of parameters convertible to value_type in rtree insert(),
           remove() and count() functions
@@ -439,7 +545,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/6443" target="_top">6443</a>
           Wrong degenerated hulls returned by convex_hull().
@@ -494,7 +600,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Several fixes of bugs in algorithm buffer
         </li>
@@ -519,14 +625,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h4"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_56"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_56">Boost
+<a name="geometry.release_notes.h5"></a>
+      <span><a name="geometry.release_notes.boost_1_56"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_56">Boost
       1.56</a>
     </h4>
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           New algorithm buffer for inflating/deflating geometries (buffer itself
           already existed but that was only to enlarge a box)
@@ -576,13 +682,13 @@
 <p>
       <span class="bold"><strong>Improvements</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           The rtree pack-creation algorithm optimization (thanks to Lu Wang)
         </li></ul></div>
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/8310" target="_top">8310</a>
           Wrong results with overlapping polygons (fixed using point_on_surface for
@@ -649,7 +755,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           intersects(polygon) could return a self-intersection-point for its closing
           point, fixed
@@ -670,14 +776,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h5"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_55"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_55">Boost
+<a name="geometry.release_notes.h6"></a>
+      <span><a name="geometry.release_notes.boost_1_55"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_55">Boost
       1.55</a>
     </h4>
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Added centroid for segment type
         </li>
@@ -700,7 +806,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           In some cases .back() or .clear() was called, violating the usage of Concepts.
           Fixed for the reported cases
@@ -715,7 +821,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/6958" target="_top">6958</a>
           Intersection generates self-intersection. Caused by spike, fixed
@@ -749,7 +855,7 @@
 <p>
       <span class="bold"><strong>Internal changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Adapted projected_point&lt;&gt; distance strategy, point-type in template
           is replaced by calculation-type
@@ -771,14 +877,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h6"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_54"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_54">Boost
+<a name="geometry.release_notes.h7"></a>
+      <span><a name="geometry.release_notes.boost_1_54"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_54">Boost
       1.54</a>
     </h4>
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           added Spatial Index, developed for Boost.Geometry by Adam Wulkiewicz. The
           spatial index was originally started by Federico J. Fernandez during the
@@ -791,7 +897,7 @@
 <p>
       <span class="bold"><strong>Documentation</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           small fixes of missing words
         </li>
@@ -802,7 +908,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           collinear opposite segments did sometimes (in circles) have a robustness
           issue, fixed
@@ -817,7 +923,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/7462" target="_top">7462</a>
           degenerate union result for float, fixed
@@ -851,19 +957,19 @@
 <p>
       <span class="bold"><strong>Internal changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           Made several algorithms variant-aware (append, area, clear, convert, equals,
           length, num_points)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h7"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_53"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_53">Boost
+<a name="geometry.release_notes.h8"></a>
+      <span><a name="geometry.release_notes.boost_1_53"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_53">Boost
       1.53</a>
     </h4>
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           avoid generating output polygons with interior rings below minimum size
           (e.g. one or two points)
@@ -887,7 +993,7 @@
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           combinations for <code class="computeroutput"><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">disjoint</span></code>:
           point/ring, point/polygon, point/multi_polygon
@@ -900,7 +1006,7 @@
 <p>
       <span class="bold"><strong>Internal changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           updates in specializations/not_implemented for various algorithms (as in
           an earlier version, these changes are still going on; they take care for
@@ -911,14 +1017,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h8"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_51"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_51">Boost
+<a name="geometry.release_notes.h9"></a>
+      <span><a name="geometry.release_notes.boost_1_51"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_51">Boost
       1.51</a>
     </h4>
 <p>
       <span class="bold"><strong>Breaking changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           points accessed through a pointer (e.g. in a linestring) should now be
           specialized without the pointer. In previous versions a type <code class="computeroutput"><span class="identifier">my_point</span></code> used like <code class="computeroutput"><span class="identifier">linestring</span><span class="special">&lt;</span><span class="identifier">my_point</span><span class="special">*&gt;</span></code> had to be specalized like: <code class="computeroutput"><span class="keyword">template</span><span class="special">&lt;&gt;</span>
           <span class="keyword">struct</span> <span class="identifier">tag</span><span class="special">&lt;</span><span class="identifier">my_point</span><span class="special">*&gt;</span></code>. Now the library itself removes the
@@ -928,7 +1034,7 @@
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           intersection was sometimes wrong for integer points, fixed
         </li>
@@ -939,19 +1045,19 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/7030" target="_top">7030</a>
           spherical distance, fixed (by patch of Karsten Ahnert)
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h9"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_50"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_50">Boost
+<a name="geometry.release_notes.h10"></a>
+      <span><a name="geometry.release_notes.boost_1_50"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_50">Boost
       1.50</a>
     </h4>
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           the return type of comparable projected point strategy for integer points
           was wrong (integer), fixed
@@ -969,7 +1075,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/6585" target="_top">6585</a>
           patch for alternative syntax multipoint, applied
@@ -995,25 +1101,25 @@
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           added algorithm "touches" (OGC SF compliant) for *polygon/*polygon
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h10"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_49"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_49">Boost
+<a name="geometry.release_notes.h11"></a>
+      <span><a name="geometry.release_notes.boost_1_49"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_49">Boost
       1.49</a>
     </h4>
 <p>
       <span class="bold"><strong>Breaking changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           point_xy was accidentally included in one of the headerfiles. If the point_xy
           class is used, it should be included explicitly now.
         </li></ul></div>
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           bugfix: distance for multi-geometries ignored specified distance strategy.
           Fixed
@@ -1049,7 +1155,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/6019" target="_top">6019</a>
           convex_hull / area, fixed.
@@ -1070,7 +1176,7 @@
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           support for line/polygon intersections and differences
         </li>
@@ -1088,7 +1194,7 @@
 <p>
       <span class="bold"><strong>Documentation</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           updated support status in several algorithms
         </li>
@@ -1102,7 +1208,7 @@
 <p>
       <span class="bold"><strong>Internal changes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           updates in specializations/not_implemented for distance/convert/assign/area/with/covered_by
         </li>
@@ -1119,14 +1225,14 @@
         </li>
 </ul></div>
 <h4>
-<a name="geometry.release_notes.h11"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_48"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_48">Boost
+<a name="geometry.release_notes.h12"></a>
+      <span><a name="geometry.release_notes.boost_1_48"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_48">Boost
       1.48</a>
     </h4>
 <p>
       <span class="bold"><strong>Bugfixes</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Robustness issue, in some circumstances the union failed to output. Fixed.
         </li>
@@ -1148,7 +1254,7 @@
 <p>
       <span class="bold"><strong>Solved tickets</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           <a href="https://svn.boost.org/trac/boost/ticket/5726" target="_top">5726</a>
           Segment intersection algorithm still assumes 'first', 'second' members
@@ -1169,7 +1275,7 @@
 <p>
       <span class="bold"><strong>Improvements on algorithms</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           Checking self-intersections is now not done automatically, this can blast
           performance.
@@ -1185,14 +1291,14 @@
 <p>
       <span class="bold"><strong>Additional algorithms</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           covered_by: within is defined as "within, not on boundary". covered_by
           is "within or on boundary"
         </li></ul></div>
 <p>
       <span class="bold"><strong>Additional functionality</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
           within: strategies can now be specified for within&lt;point, box&gt; and
           within&lt;box, box&gt;
@@ -1207,12 +1313,12 @@
 <p>
       <span class="bold"><strong>Additional coordinate types</strong></span>
     </p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
           Basic (limited) support for Boost.Rational
         </li></ul></div>
 <h4>
-<a name="geometry.release_notes.h12"></a>
-      <span class="phrase"><a name="geometry.release_notes.boost_1_47"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_47">Boost
+<a name="geometry.release_notes.h13"></a>
+      <span><a name="geometry.release_notes.boost_1_47"></a></span><a class="link" href="release_notes.html#geometry.release_notes.boost_1_47">Boost
       1.47</a>
     </h4>
 <p>

@@ -4,9 +4,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>RTTI emulation limitations</title>
 <link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
-<link rel="up" href="../boost_typeindex.html" title="Chapter&#160;35.&#160;Boost.TypeIndex 4.0">
+<link rel="up" href="../boost_typeindex.html" title="Chapter&#160;37.&#160;Boost.TypeIndex 4.0">
 <link rel="prev" href="code_bloat.html" title="Code bloat">
 <link rel="next" href="mixing_sources_with_rtti_on_and_.html" title="Mixing sources with RTTI on and RTTI off">
 </head>
@@ -28,7 +28,7 @@
 <a name="boost_typeindex.rtti_emulation_limitations"></a><a class="link" href="rtti_emulation_limitations.html" title="RTTI emulation limitations">RTTI emulation
     limitations</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="rtti_emulation_limitations.html#boost_typeindex.rtti_emulation_limitations.define_the_boost_type_index_func">Define
       the BOOST_TYPE_INDEX_FUNCTION_SIGNATURE macro</a></span></dt>
 <dt><span class="section"><a href="rtti_emulation_limitations.html#boost_typeindex.rtti_emulation_limitations.fixing_pretty_name_output">Fixing
@@ -114,7 +114,7 @@
 <li class="listitem">
             define <code class="computeroutput"><a class="link" href="../BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING.html" title="Macro BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING">BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING</a></code>
             to <code class="computeroutput"><span class="special">(</span><span class="identifier">skip_at_begin</span><span class="special">,</span> <span class="identifier">skip_at_end</span><span class="special">,</span> <span class="keyword">false</span><span class="special">,</span> <span class="string">""</span><span class="special">)</span></code>, where
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">skip_at_begin</span></code> is
                   equal to characters count before the first occurrence of <code class="computeroutput"><span class="keyword">int</span></code> in output
@@ -132,7 +132,7 @@
 <li class="listitem">
             if it does not return <code class="computeroutput"><span class="keyword">int</span></code>,
             then define BOOST_TYPE_INDEX_CTTI_USER_DEFINED_PARSING to <code class="computeroutput"><span class="special">(</span><span class="identifier">skip_at_begin</span><span class="special">,</span> <span class="identifier">skip_at_end</span><span class="special">,</span> <span class="keyword">true</span><span class="special">,</span> <span class="string">"T = "</span><span class="special">)</span></code>, where
-            <div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+            <div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem">
                   <code class="computeroutput"><span class="identifier">skip_at_begin</span></code> is
                   equal to <code class="computeroutput"><span class="identifier">skip_at_begin</span></code>

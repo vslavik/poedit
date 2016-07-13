@@ -47,6 +47,7 @@ typedef struct _pathname
 void path_build( PATHNAME *, string * file );
 void path_parse( char const * file, PATHNAME * );
 void path_parent( PATHNAME * );
+int path_translate_to_os( char const *, string * file );
 
 /* Given a path, returns an object containing an equivalent path in canonical
  * format that can be used as a unique key for that path. Equivalent paths such

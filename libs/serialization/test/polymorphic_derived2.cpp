@@ -27,11 +27,11 @@ void polymorphic_derived2::serialize(
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 
-template EXPORT_DECL(void) polymorphic_derived2::serialize(
+template BOOST_SYMBOL_EXPORT void polymorphic_derived2::serialize(
     boost::archive::text_oarchive & ar,
     const unsigned int version
 );
-template EXPORT_DECL(void) polymorphic_derived2::serialize(
+template BOOST_SYMBOL_EXPORT void polymorphic_derived2::serialize(
     boost::archive::text_iarchive & ar,
     const unsigned int version
 );
@@ -40,11 +40,11 @@ template EXPORT_DECL(void) polymorphic_derived2::serialize(
 #include <boost/archive/polymorphic_iarchive.hpp>
 #include <boost/archive/polymorphic_oarchive.hpp>
 
-template EXPORT_DECL(void) polymorphic_derived2::serialize(
+template BOOST_SYMBOL_EXPORT void polymorphic_derived2::serialize(
     boost::archive::polymorphic_oarchive & ar,
     const unsigned int version
 );
-template EXPORT_DECL(void) polymorphic_derived2::serialize(
+template BOOST_SYMBOL_EXPORT void polymorphic_derived2::serialize(
     boost::archive::polymorphic_iarchive & ar,
     const unsigned int version
 );
@@ -60,6 +60,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT(polymorphic_derived2)
 BOOST_SERIALIZATION_FACTORY_0(polymorphic_derived2)
 
 template
-EXPORT_DECL(polymorphic_derived2 *)
+BOOST_SYMBOL_EXPORT void polymorphic_derived2 *
 boost::serialization::factory<polymorphic_derived2, 0>(std::va_list ap);
 #endif

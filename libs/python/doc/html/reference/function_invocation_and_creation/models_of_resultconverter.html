@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Models of ResultConverter</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Boost.Python Reference Manual">
 <link rel="up" href="../function_invocation_and_creation.html" title="Chapter&#160;4.&#160;Function Invocation and Creation">
 <link rel="prev" href="models_of_callpolicies.html" title="Models of CallPolicies">
@@ -20,7 +20,7 @@
 <a name="function_invocation_and_creation.models_of_resultconverter"></a><a class="link" href="models_of_resultconverter.html" title="Models of ResultConverter">Models
       of ResultConverter</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_">boost/python/to_python_indirect.hpp</a></span></dt>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_value_hpp">boost/python/to_python_value.hpp</a></span></dt>
 </dl></div>
@@ -28,7 +28,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_"></a><a class="link" href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_" title="boost/python/to_python_indirect.hpp">boost/python/to_python_indirect.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_.example">Example</a></span></dt>
 </dl></div>
@@ -36,7 +36,7 @@
 <div class="titlepage"><div><div><h4 class="title">
 <a name="function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_.introduction"></a><a class="link" href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_.introduction" title="Introduction">Introduction</a>
 </h4></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_.introduction.class_to_python_indirect">Class
             <code class="computeroutput"><span class="identifier">to_python_indirect</span></code></a></span></dt>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_indirect_.introduction.class_to_python_indirect_observe">Class
@@ -145,7 +145,7 @@
 <pre class="programlisting"><span class="identifier">PyObject</span><span class="special">*</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">T</span> <span class="identifier">x</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                     <code class="computeroutput"><span class="identifier">x</span></code> refers to an
@@ -170,7 +170,7 @@
 <pre class="programlisting"><span class="keyword">bool</span> <span class="identifier">convertible</span><span class="special">()</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Effects</span></dt>
 <dd><p>
                     Returns true iff any module has registered a Python type corresponding
@@ -214,7 +214,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_value_hpp"></a><a class="link" href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_value_hpp" title="boost/python/to_python_value.hpp">boost/python/to_python_value.hpp</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_value_hpp.introduction">Introduction</a></span></dt>
 <dt><span class="section"><a href="models_of_resultconverter.html#function_invocation_and_creation.models_of_resultconverter.boost_python_to_python_value_hpp.class_template_to_python_value">Class
           template <code class="computeroutput"><span class="identifier">to_python_value</span></code></a></span></dt>
@@ -259,7 +259,7 @@
 <pre class="programlisting"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="identifier">convertible</span><span class="special">();</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Returns</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="keyword">true</span></code> iff a converter
@@ -271,7 +271,7 @@
 <pre class="programlisting"><span class="identifier">PyObject</span><span class="special">*</span> <span class="keyword">operator</span><span class="special">()(</span><span class="identifier">argument_type</span> <span class="identifier">x</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>
 <div class="variablelist">
 <p class="title"><b></b></p>
-<dl class="variablelist">
+<dl>
 <dt><span class="term">Requires</span></dt>
 <dd><p>
                   <code class="computeroutput"><span class="identifier">convertible</span><span class="special">()</span>

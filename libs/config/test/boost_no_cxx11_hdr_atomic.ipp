@@ -29,7 +29,7 @@ int test()
 
    std::atomic<int> a1;
    std::atomic<unsigned> a2;
-   std::atomic<void*>    a3;
+   std::atomic<int*>    a3;
    a1.is_lock_free();
    a1.store(1);
    a1.load();

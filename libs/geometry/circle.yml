@@ -3,7 +3,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 # Copyright Antony Polukhin 2014.
-# Copyright Adam Wulkiewicz 2015.
+# Copyright Adam Wulkiewicz 2015-2016.
 
 general:
   branches:
@@ -38,16 +38,16 @@ dependencies:
     - sudo apt-get update
 
     # gcc, g++, gcov
-    - sudo apt-get install gcc-4.8 g++-4.8 build-essential
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 10
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 10
-    - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.8 10
-    - sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 20
-    - sudo update-alternatives --set cc /usr/bin/gcc
-    - sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 20
-    - sudo update-alternatives --set c++ /usr/bin/g++
-    - sudo update-alternatives --config gcc
-    - sudo update-alternatives --config g++
+    - sudo apt-get install gcc-4.9 g++-4.9 build-essential
+    #- sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 10
+    #- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 10
+    - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-4.9 10
+    #- sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc 20
+    #- sudo update-alternatives --set cc /usr/bin/gcc
+    #- sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++ 20
+    #- sudo update-alternatives --set c++ /usr/bin/g++
+    #- sudo update-alternatives --config gcc
+    #- sudo update-alternatives --config g++
     - sudo update-alternatives --config gcov
 
     # coveralls-lcov for lcov *.info to JSON conversion
@@ -86,9 +86,9 @@ dependencies:
 
     # download and install the latest lcov
     # do not use the old one from sources
-    - wget http://downloads.sourceforge.net/ltp/lcov-1.11.tar.gz
-    - tar xvzf lcov-1.11.tar.gz
-    - cd lcov-1.11 && sudo make install
+    - wget http://downloads.sourceforge.net/ltp/lcov-1.12.tar.gz
+    - tar xvzf lcov-1.12.tar.gz
+    - cd lcov-1.12 && sudo make install
 
     # create a direcotry for temporary coverage data
     - if [ ! -d $COVERAGE_ROOT ]; then mkdir $COVERAGE_ROOT; fi

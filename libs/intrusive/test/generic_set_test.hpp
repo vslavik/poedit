@@ -191,14 +191,6 @@ struct prio_comp
    {  return this->priority_compare<int>::operator()(k.int_value(), v.int_value());  }
 };
 
-template<class ValueType>
-struct prio_comp<ValueType, ValueType>
-   : priority_compare<ValueType>
-{
-   bool operator()(const ValueType &v1, const ValueType &v2) const
-   {  return this->priority_compare<ValueType>::operator()(v1, v2);  }
-};
-
 template<class ValueTraits, class ContainerDefiner>
 void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
 (value_cont_type& values, detail::true_type)
@@ -208,14 +200,16 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
    typedef typename set_type::key_of_value key_of_value;
    typedef typename set_type::key_type    key_type;
    typedef typename set_type::value_type  value_type;
-   typedef prio_comp<value_type, key_type> prio_comp_t;
+   typedef priority_compare<key_type> prio_comp_t;
    {
       set_type testset;
       testset.insert(values.begin(), values.begin() + values.size());
       value_type v(1);
       typename set_type::insert_commit_data data;
-      BOOST_TEST (!testset.insert_check(key_of_value()(v), testset.key_comp(), prio_comp_t(), data).second);
-      BOOST_TEST (!testset.insert_check(testset.begin(), key_of_value()(v), testset.key_comp(), prio_comp_t(), data).second);
+      BOOST_TEST ((!testset.insert_check(key_of_value()(v), testset.key_comp(), prio_comp_t(), data).second));
+      BOOST_TEST ((!testset.insert_check(testset.begin(), key_of_value()(v), testset.key_comp(), prio_comp_t(), data).second));
+      BOOST_TEST ((!testset.insert_check(key_of_value()(v), data).second));
+      BOOST_TEST ((!testset.insert_check(testset.begin(), key_of_value()(v), data).second));
    }
 }
 
@@ -232,8 +226,10 @@ void test_generic_set<ValueTraits, ContainerDefiner>::test_insert_advanced
       testset.insert(values.begin(), values.begin() + values.size());
       value_type v(1);
       typename set_type::insert_commit_data data;
-      BOOST_TEST (!testset.insert_check(key_of_value()(v), testset.key_comp(), data).second);
-      BOOST_TEST (!testset.insert_check(testset.begin(), key_of_value()(v), testset.key_comp(), data).second);
+      BOOST_TEST ((!testset.insert_check(key_of_value()(v), testset.key_comp(), data).second));
+      BOOST_TEST ((!testset.insert_check(testset.begin(), key_of_value()(v), testset.key_comp(), data).second));
+      BOOST_TEST ((!testset.insert_check(key_of_value()(v), data).second));
+      BOOST_TEST ((!testset.insert_check(testset.begin(), key_of_value()(v), data).second));
    }
 }
 

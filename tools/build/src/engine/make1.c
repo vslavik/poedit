@@ -258,7 +258,7 @@ int make1( LIST * targets )
     /* If we were interrupted, exit now that all child processes
        have finished. */
     if ( intr )
-        exit( 1 );
+        exit( EXITBAD );
 
     {
         LISTITER iter, end;

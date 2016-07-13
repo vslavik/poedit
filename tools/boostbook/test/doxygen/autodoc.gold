@@ -63,8 +63,22 @@ Embedded docbook list:</para><para>
 <listitem><para>Second list item</para></listitem>
 </itemizedlist>
 Line 1<sbr/>
- Line 2</para><para><programlisting language="c++">void foo() {}
-</programlisting></para><para>
+Line 2</para><para><programlisting language="c++">void foo() {}
+void foo2() {}
+</programlisting></para><para><programlisting language="c++">void bar() {}
+
+void bar2() {}
+</programlisting></para><para>Alternative way of writing code, has a complicated workaround because doxygen treats the empty line as a paragraph separator:</para><programlisting>
+int bar();
+
+int bar2();
+</programlisting><para>Unfortunately the workaround will merge consecutive blocks, like this:</para><programlisting>
+int foo();
+
+
+
+int foo2();
+</programlisting><para>
 </para></description></struct><struct name="specialization_test"><template>
       <template-type-parameter name="T"/>
     </template></struct><struct-specialization name="specialization_test"><template>

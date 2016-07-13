@@ -34,6 +34,26 @@ struct my_error_handler
     }
 };
 
+struct my_attribute
+{
+    bool alive = true;
+
+    void access() const
+    {
+        BOOST_TEST(alive);
+    }
+    ~my_attribute()
+    {
+        alive = false;
+    }
+
+    friend std::ostream & operator << (std::ostream & os, my_attribute const & attr)
+    {
+        attr.access();
+        return os << "my_attribute";
+    }
+};
+
 int
 main()
 {
@@ -42,6 +62,7 @@ main()
 
     using namespace boost::spirit::x3::ascii;
     using boost::spirit::x3::rule;
+    using boost::spirit::x3::symbols;
     using boost::spirit::x3::int_;
     using boost::spirit::x3::alpha;
 
@@ -109,6 +130,16 @@ main()
         BOOST_TEST(!test("(123,456]", r));
         BOOST_TEST(!test("(123;456)", r));
         BOOST_TEST(!test("[123,456]", r));
+    }
+
+    {
+        symbols<my_attribute> a{{{ "a", my_attribute{} }}};
+
+        auto b = rule<struct b, my_attribute>("b") = a;
+
+        my_attribute attr;
+
+        BOOST_TEST(test_attr("a", b, attr));
     }
 
     return boost::report_errors();

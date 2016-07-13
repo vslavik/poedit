@@ -74,24 +74,15 @@ public:
 
    template <unsigned D, digit_base_type B, class A, class E, E MinE, E MaxE>
    cpp_bin_float(const cpp_bin_float<D, B, A, E, MinE, MaxE> &o, typename boost::enable_if_c<(bit_count >= cpp_bin_float<D, B, A, E, MinE, MaxE>::bit_count)>::type const* = 0)
-      : m_exponent(o.exponent()), m_sign(o.sign()) 
    {
-      typename cpp_bin_float<D, B, A, E, MinE, MaxE>::rep_type b(o.bits());
-      this->sign() = o.sign();
-      this->exponent() = o.exponent() + (int)bit_count - (int)cpp_bin_float<D, B, A, E, MinE, MaxE>::bit_count;
-      copy_and_round(*this, b);
+      *this = o;
    }
-
    template <unsigned D, digit_base_type B, class A, class E, E MinE, E MaxE>
    explicit cpp_bin_float(const cpp_bin_float<D, B, A, E, MinE, MaxE> &o, typename boost::disable_if_c<(bit_count >= cpp_bin_float<D, B, A, E, MinE, MaxE>::bit_count)>::type const* = 0)
       : m_exponent(o.exponent()), m_sign(o.sign()) 
    {
-      typename cpp_bin_float<D, B, A, E, MinE, MaxE>::rep_type b(o.bits());
-      this->sign() = o.sign();
-      this->exponent() = o.exponent() - (int)(cpp_bin_float<D, B, A, E, MinE, MaxE>::bit_count - bit_count);
-      copy_and_round(*this, b);
+      *this = o;
    }
-
    template <class Float>
    cpp_bin_float(const Float& f, 
       typename boost::enable_if_c<
@@ -125,12 +116,31 @@ public:
    }
 
    template <unsigned D, digit_base_type B, class A, class E, E MinE, E MaxE>
-   cpp_bin_float& operator=(const cpp_bin_float<D, B, A, E, MinE, MaxE> &o)
+   cpp_bin_float& operator=(const cpp_bin_float<D, B, A, E, MinE, MaxE> &f)
    {
-      typename cpp_bin_float<D, B, A, E, MinE, MaxE>::rep_type b(o.bits());
-      this->exponent() = o.exponent() + (int)bit_count - (int)cpp_bin_float<D, B, A, E, MinE, MaxE>::bit_count;
-      this->sign() = o.sign();
-      copy_and_round(*this, b);
+      switch(eval_fpclassify(f))
+      {
+      case FP_ZERO:
+         m_data = limb_type(0);
+         m_sign = false;
+         m_exponent = exponent_zero;
+         break;
+      case FP_NAN:
+         m_data = limb_type(0);
+         m_sign = false;
+         m_exponent = exponent_nan;
+         break;;
+      case FP_INFINITE:
+         m_data = limb_type(0);
+         m_sign = f.sign();
+         m_exponent = exponent_infinity;
+         break;
+      default:
+         typename cpp_bin_float<D, B, A, E, MinE, MaxE>::rep_type b(f.bits());
+         this->exponent() = f.exponent() + (int)bit_count - (int)cpp_bin_float<D, B, A, E, MinE, MaxE>::bit_count;
+         this->sign() = f.sign();
+         copy_and_round(*this, b);
+      }
       return *this;
    }
 
@@ -164,7 +174,7 @@ public:
          return *this;
       case FP_INFINITE:
          m_data = limb_type(0);
-         m_sign = false;
+         m_sign = (f < 0);
          m_exponent = exponent_infinity;
          return *this;
       }
@@ -232,7 +242,7 @@ public:
          return *this;
       case FP_INFINITE:
          m_data = limb_type(0);
-         m_sign = false;
+         m_sign = (f < 0);
          m_exponent = exponent_infinity;
          return *this;
       }
@@ -581,8 +591,8 @@ inline void do_eval_subtract(cpp_bin_float<Digits, DigitBase, Allocator, Exponen
       res = a;
       return;
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_infinity:
-      res.exponent() = cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_nan;
-      res.sign() = false;
+      res.exponent() = cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_infinity;
+      res.sign() = true;
       res.bits() = static_cast<limb_type>(0u);
       return; // result is a NaN.
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_nan:
@@ -595,7 +605,7 @@ inline void do_eval_subtract(cpp_bin_float<Digits, DigitBase, Allocator, Exponen
    if((e_diff > 0) || ((e_diff == 0) && a.bits().compare(b.bits()) >= 0))
    {
       dt = a.bits();
-      if(e_diff < (int)cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count)
+      if(e_diff <= (int)cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count)
       {
          eval_left_shift(dt, e_diff);
          res.exponent() = a.exponent() - e_diff;
@@ -607,7 +617,7 @@ inline void do_eval_subtract(cpp_bin_float<Digits, DigitBase, Allocator, Exponen
    else
    {
       dt = b.bits();
-      if(-e_diff < (int)cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count)
+      if(-e_diff <= (int)cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count)
       {
          eval_left_shift(dt, -e_diff);
          res.exponent() = b.exponent() + e_diff;
@@ -1144,30 +1154,34 @@ inline void eval_convert_to(boost::ulong_long_type *res, const cpp_bin_float<Dig
    eval_convert_to(res, man);
 }
 
-template <unsigned Digits, digit_base_type DigitBase, class Allocator, class Exponent, Exponent MinE, Exponent MaxE>
-inline void eval_convert_to(long double *res, const cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE> &arg)
+template <class Float, unsigned Digits, digit_base_type DigitBase, class Allocator, class Exponent, Exponent MinE, Exponent MaxE>
+inline typename boost::enable_if_c<boost::is_float<Float>::value>::type eval_convert_to(Float *res, const cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE> &original_arg)
 {
+   //
+   // Perform rounding first, then afterwards extract the digits:
+   //
+   cpp_bin_float<std::numeric_limits<Float>::digits, digit_base_2, void, Exponent, MinE, MaxE> arg(original_arg);
    switch(arg.exponent())
    {
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_zero:
       *res = 0;
       return;
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_nan:
-      *res = std::numeric_limits<long double>::quiet_NaN();
+      *res = std::numeric_limits<Float>::quiet_NaN();
       return;
    case cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_infinity:
-      *res = (std::numeric_limits<long double>::infinity)();
+      *res = (std::numeric_limits<Float>::infinity)();
       if(arg.sign())
          *res = -*res;
       return;
    }
    typename cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::exponent_type e = arg.exponent();
-   e -= cpp_bin_float<Digits, DigitBase, Allocator, Exponent, MinE, MaxE>::bit_count - 1;
-   *res = std::ldexp(static_cast<long double>(*arg.bits().limbs()), e);
+   e -= cpp_bin_float<std::numeric_limits<Float>::digits, digit_base_2, void, Exponent, MinE, MaxE>::bit_count - 1;
+   *res = std::ldexp(static_cast<Float>(*arg.bits().limbs()), e);
    for(unsigned i = 1; i < arg.bits().size(); ++i)
    {
       e += sizeof(*arg.bits().limbs()) * CHAR_BIT;
-      *res += std::ldexp(static_cast<long double>(arg.bits().limbs()[i]), e);
+      *res += std::ldexp(static_cast<Float>(arg.bits().limbs()[i]), e);
    }
    if(arg.sign())
       *res = -*res;

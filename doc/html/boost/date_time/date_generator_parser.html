@@ -4,11 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template date_generator_parser</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.date_generator_parser_hpp" title="Header &lt;boost/date_time/date_generator_parser.hpp&gt;">
 <link rel="prev" href="date_generator_formatter.html" title="Class template date_generator_formatter">
-<link rel="next" href="first_kday_after.html" title="Class template first_kday_after">
+<link rel="next" href="year_based_generator.html" title="Class template year_based_generator">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table cellpadding="2" width="100%"><tr>
@@ -21,7 +21,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="date_generator_formatter.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generator_parser_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first_kday_after.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="date_generator_formatter.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generator_parser_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="year_based_generator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 <div class="refentry">
 <a name="boost.date_time.date_generator_parser"></a><div class="titlepage"></div>
@@ -52,51 +52,51 @@
   <span class="keyword">typedef</span> <a class="link" href="first_kday_before.html" title="Class template first_kday_before">first_kday_before</a><span class="special">&lt;</span> <span class="identifier">date_type</span> <span class="special">&gt;</span>            <a name="boost.date_time.date_generator_parser.kday_before_type"></a><span class="identifier">kday_before_type</span><span class="special">;</span> 
   <span class="keyword">typedef</span> <span class="identifier">charT</span>                                     <a name="boost.date_time.date_generator_parser.char_type"></a><span class="identifier">char_type</span><span class="special">;</span>        
 
-  <span class="keyword">enum</span> <a name="boost.date_time.date_generator_parser.phrase_elements"></a>phrase_elements <span class="special">{</span> first = =0, second, third, fourth, fifth, last, 
+  <span class="keyword">enum</span> <a name="boost.date_time.date_generator_parser.phrase_elements"></a>phrase_elements <span class="special">{</span> first = 0, second, third, fourth, fifth, last, 
                          before, after, of, number_of_phrase_elements <span class="special">}</span><span class="special">;</span>
 
   <span class="comment">// <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parserconstruct-copy-destruct">construct/copy/destruct</a></span>
-  <a class="link" href="date_generator_parser.html#idm45507086902528-bb"><span class="identifier">date_generator_parser</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <a class="link" href="date_generator_parser.html#idm45507160500528-bb"><span class="identifier">date_generator_parser</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <a class="link" href="date_generator_parser.html#idp75800944-bb"><span class="identifier">date_generator_parser</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <a class="link" href="date_generator_parser.html#idp67724496-bb"><span class="identifier">date_generator_parser</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="date_generator_parser.html#idm45507155898368-bb">public member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="date_generator_parser.html#idm45507111707232-bb"><span class="identifier">element_strings</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="date_generator_parser.html#idp83821392-bb">public member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="date_generator_parser.html#idp83821952-bb"><span class="identifier">element_strings</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                        <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                        <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                        <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                        <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">void</span> <a class="link" href="date_generator_parser.html#idm45507088881824-bb"><span class="identifier">element_strings</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">collection_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">void</span> <a class="link" href="date_generator_parser.html#idp63077968-bb"><span class="identifier">element_strings</span></a><span class="special">(</span><span class="keyword">const</span> <span class="identifier">collection_type</span> <span class="special">&amp;</span><span class="special">)</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
     <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.partial_date_type">partial_date_type</a> 
-    <a class="link" href="date_generator_parser.html#idm45507164944080-bb"><span class="identifier">get_partial_date_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="date_generator_parser.html#idp66210256-bb"><span class="identifier">get_partial_date_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                           <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
     <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.nth_kday_type">nth_kday_type</a> 
-    <a class="link" href="date_generator_parser.html#idm45507134072928-bb"><span class="identifier">get_nth_kday_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="date_generator_parser.html#idp80137712-bb"><span class="identifier">get_nth_kday_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
                       <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
     <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.first_kday_type">first_kday_type</a> 
-    <a class="link" href="date_generator_parser.html#idm45507153545200-bb"><span class="identifier">get_first_kday_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="date_generator_parser.html#idp74329392-bb"><span class="identifier">get_first_kday_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
     <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.last_kday_type">last_kday_type</a> 
-    <a class="link" href="date_generator_parser.html#idm45507097665328-bb"><span class="identifier">get_last_kday_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="date_generator_parser.html#idp81652944-bb"><span class="identifier">get_last_kday_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
                        <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
     <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.kday_before_type">kday_before_type</a> 
-    <a class="link" href="date_generator_parser.html#idm45507105401360-bb"><span class="identifier">get_kday_before_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="date_generator_parser.html#idp72092832-bb"><span class="identifier">get_kday_before_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                          <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
     <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.kday_after_type">kday_after_type</a> 
-    <a class="link" href="date_generator_parser.html#idm45507136543648-bb"><span class="identifier">get_kday_after_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
+    <a class="link" href="date_generator_parser.html#idp76956480-bb"><span class="identifier">get_kday_after_type</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span><span class="special">,</span> 
                         <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="date_generator_parser.html#idm45507154798560-bb">private member functions</a></span>
-  <span class="keyword">void</span> <a class="link" href="date_generator_parser.html#idm45507093269248-bb"><span class="identifier">extract_element</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> 
+  <span class="comment">// <a class="link" href="date_generator_parser.html#idp6316960-bb">private member functions</a></span>
+  <span class="keyword">void</span> <a class="link" href="date_generator_parser.html#idp84362976-bb"><span class="identifier">extract_element</span></a><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span><span class="special">,</span> 
                        <span class="keyword">typename</span> <span class="identifier">date_generator_parser</span><span class="special">::</span><span class="identifier">phrase_elements</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
 
   <span class="comment">// public data members</span>
@@ -111,9 +111,9 @@
   <span class="keyword">static</span> <span class="keyword">const</span> <span class="identifier">char_type</span> <span class="identifier">of_string</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555373878624"></a><h2>Description</h2>
+<a name="idp110750944"></a><h2>Description</h2>
 <p>The elements of a date_generator "phrase" are parsed from the input stream in a particular order. All elements are required and the order in which they appear cannot change, however, the elements themselves can be changed. The default elements and their order are as follows:</p>
-<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<div class="itemizedlist"><ul class="itemizedlist" type="disc">
 <li class="listitem"><p><a class="link" href="partial_date.html" title="Class template partial_date">partial_date</a> =&gt; "dd Month"</p></li>
 <li class="listitem"><p>nth_day_of_the_week_in_month =&gt; "nth weekday of month"</p></li>
 <li class="listitem"><p>first_day_of_the_week_in_month =&gt; "first weekday of month"</p></li>
@@ -125,15 +125,15 @@
 </p>
 <p>Weekday and Month names and formats are handled via the <a class="link" href="date_input_facet.html" title="Class template date_input_facet">date_input_facet</a>. </p>
 <div class="refsect2">
-<a name="idm45555373872480"></a><h3>
+<a name="idp110757088"></a><h3>
 <a name="boost.date_time.date_generator_parserconstruct-copy-destruct"></a><code class="computeroutput">date_generator_parser</code> 
         public
        construct/copy/destruct</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507086902528-bb"></a><span class="identifier">date_generator_parser</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Creates a <code class="computeroutput"><a class="link" href="date_generator_parser.html" title="Class template date_generator_parser">date_generator_parser</a></code> with the default set of "element_strings". </li>
+<pre class="literallayout"><a name="idp75800944-bb"></a><span class="identifier">date_generator_parser</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre>Creates a <code class="computeroutput"><a class="link" href="date_generator_parser.html" title="Class template date_generator_parser">date_generator_parser</a></code> with the default set of "element_strings". </li>
 <li class="listitem">
-<pre class="literallayout"><a name="idm45507160500528-bb"></a><span class="identifier">date_generator_parser</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> first_str<span class="special">,</span> 
+<pre class="literallayout"><a name="idp67724496-bb"></a><span class="identifier">date_generator_parser</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> first_str<span class="special">,</span> 
                       <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> second_str<span class="special">,</span> 
                       <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> third_str<span class="special">,</span> 
                       <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> fourth_str<span class="special">,</span> 
@@ -145,11 +145,11 @@
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555373835776"></a><h3>
-<a name="idm45507155898368-bb"></a><code class="computeroutput">date_generator_parser</code> public member functions</h3>
+<a name="idp110793792"></a><h3>
+<a name="idp83821392-bb"></a><code class="computeroutput">date_generator_parser</code> public member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
 <li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507111707232-bb"></a><span class="identifier">element_strings</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> first_str<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp83821952-bb"></a><span class="identifier">element_strings</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> first_str<span class="special">,</span> 
                      <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> second_str<span class="special">,</span> 
                      <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> third_str<span class="special">,</span> 
                      <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> fourth_str<span class="special">,</span> 
@@ -158,44 +158,44 @@
                      <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> before_str<span class="special">,</span> 
                      <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> after_str<span class="special">,</span> 
                      <span class="keyword">const</span> <span class="identifier">string_type</span> <span class="special">&amp;</span> of_str<span class="special">)</span><span class="special">;</span></pre>Replace strings that determine nth week for generator. </li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idm45507088881824-bb"></a><span class="identifier">element_strings</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">collection_type</span> <span class="special">&amp;</span> col<span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">void</span> <a name="idp63077968-bb"></a><span class="identifier">element_strings</span><span class="special">(</span><span class="keyword">const</span> <span class="identifier">collection_type</span> <span class="special">&amp;</span> col<span class="special">)</span><span class="special">;</span></pre></li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
   <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.partial_date_type">partial_date_type</a> 
-  <a name="idm45507164944080-bb"></a><span class="identifier">get_partial_date_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+  <a name="idp66210256-bb"></a><span class="identifier">get_partial_date_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                         <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> a_ios<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span> facet<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>returns <code class="computeroutput"><a class="link" href="partial_date.html" title="Class template partial_date">partial_date</a></code> parsed from stream </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
   <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.nth_kday_type">nth_kday_type</a> 
-  <a name="idm45507134072928-bb"></a><span class="identifier">get_nth_kday_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+  <a name="idp80137712-bb"></a><span class="identifier">get_nth_kday_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                     <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> a_ios<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span> facet<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>returns nth_kday_of_week parsed from stream </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
   <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.first_kday_type">first_kday_type</a> 
-  <a name="idm45507153545200-bb"></a><span class="identifier">get_first_kday_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+  <a name="idp74329392-bb"></a><span class="identifier">get_first_kday_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                       <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> a_ios<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span> facet<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>returns first_kday_of_week parsed from stream </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
   <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.last_kday_type">last_kday_type</a> 
-  <a name="idm45507097665328-bb"></a><span class="identifier">get_last_kday_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+  <a name="idp81652944-bb"></a><span class="identifier">get_last_kday_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                      <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> a_ios<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span> facet<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>returns last_kday_of_week parsed from stream </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
   <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.kday_before_type">kday_before_type</a> 
-  <a name="idm45507105401360-bb"></a><span class="identifier">get_kday_before_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+  <a name="idp72092832-bb"></a><span class="identifier">get_kday_before_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                        <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> a_ios<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span> facet<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>returns first_kday_of_week parsed from stream </li>
 <li class="listitem">
 <pre class="literallayout"><span class="keyword">template</span><span class="special">&lt;</span><span class="keyword">typename</span> facet_type<span class="special">&gt;</span> 
   <a class="link" href="date_generator_parser.html#boost.date_time.date_generator_parser.kday_after_type">kday_after_type</a> 
-  <a name="idm45507136543648-bb"></a><span class="identifier">get_kday_after_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+  <a name="idp76956480-bb"></a><span class="identifier">get_kday_after_type</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                       <span class="identifier">std</span><span class="special">::</span><span class="identifier">ios_base</span> <span class="special">&amp;</span> a_ios<span class="special">,</span> <span class="keyword">const</span> <span class="identifier">facet_type</span> <span class="special">&amp;</span> facet<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>returns first_kday_of_week parsed from stream </li>
 </ol></div>
 </div>
 <div class="refsect2">
-<a name="idm45555373694032"></a><h3>
-<a name="idm45507154798560-bb"></a><code class="computeroutput">date_generator_parser</code> private member functions</h3>
+<a name="idp110935664"></a><h3>
+<a name="idp6316960-bb"></a><code class="computeroutput">date_generator_parser</code> private member functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<pre class="literallayout"><span class="keyword">void</span> <a name="idm45507093269248-bb"></a><span class="identifier">extract_element</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
+<pre class="literallayout"><span class="keyword">void</span> <a name="idp84362976-bb"></a><span class="identifier">extract_element</span><span class="special">(</span><span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> sitr<span class="special">,</span> <span class="identifier">stream_itr_type</span> <span class="special">&amp;</span> stream_end<span class="special">,</span> 
                      <span class="keyword">typename</span> <span class="identifier">date_generator_parser</span><span class="special">::</span><span class="identifier">phrase_elements</span> ele<span class="special">)</span> <span class="keyword">const</span><span class="special">;</span></pre>Extracts phrase element from input. Throws ios_base::failure on error. </li></ol></div>
 </div>
 </div>
@@ -208,7 +208,7 @@
 </tr></table>
 <hr>
 <div class="spirit-nav">
-<a accesskey="p" href="date_generator_formatter.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generator_parser_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="first_kday_after.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
+<a accesskey="p" href="date_generator_formatter.html"><img src="../../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../../date_time/doxy.html#header.boost.date_time.date_generator_parser_hpp"><img src="../../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../../index.html"><img src="../../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="year_based_generator.html"><img src="../../../../doc/src/images/next.png" alt="Next"></a>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Test suite</title>
 <link rel="stylesheet" href="../../boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="Boost.Test">
 <link rel="up" href="../tests_organization.html" title="Declaring and organizing tests">
 <link rel="prev" href="test_cases/param_test.html" title="Parametrized test cases">
@@ -26,7 +26,7 @@
 <div class="titlepage"><div><div><h3 class="title">
 <a name="boost_test.tests_organization.test_suite"></a><a class="link" href="test_suite.html" title="Test suite">Test suite</a>
 </h3></div></div></div>
-<div class="toc"><dl class="toc"><dt><span class="section"><a href="test_suite/master_test_suite.html">Master
+<div class="toc"><dl><dt><span class="section"><a href="test_suite/master_test_suite.html">Master
         Test Suite</a></span></dt></dl></div>
 <p>
         If you consider test cases as leaves on the test tree, the test suite can
@@ -54,7 +54,7 @@
       </p>
 <a name="ref_BOOST_AUTO_TEST_SUITE"></a><h4>
 <a name="boost_test.tests_organization.test_suite.h0"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.automated_registration"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.automated_registration">Automated
+        <span><a name="boost_test.tests_organization.test_suite.automated_registration"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.automated_registration">Automated
         registration</a>
       </h4>
 <p>
@@ -90,7 +90,7 @@
       </p>
 <h6>
 <a name="boost_test.tests_organization.test_suite.h1"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.example_descr"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.example_descr">Example:
+        <span><a name="boost_test.tests_organization.test_suite.example_descr"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.example_descr">Example:
         Test suites with automated registration</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -165,7 +165,7 @@
       </p>
 <h6>
 <a name="boost_test.tests_organization.test_suite.h2"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.example_descr0"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.example_descr0">Example:
+        <span><a name="boost_test.tests_organization.test_suite.example_descr0"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.example_descr0">Example:
         Test suite extension using automated registration facility</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -241,7 +241,7 @@
 </table></div>
 <h4>
 <a name="boost_test.tests_organization.test_suite.h3"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.test_suites_with_manual_registra"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.test_suites_with_manual_registra">Test
+        <span><a name="boost_test.tests_organization.test_suite.test_suites_with_manual_registra"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.test_suites_with_manual_registra">Test
         suites with manual registration</a>
       </h4>
 <p>
@@ -261,7 +261,7 @@
 </ol></div>
 <a name="ref_test_case_registration"></a><h5>
 <a name="boost_test.tests_organization.test_suite.h4"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.test_unit_registration_interface"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.test_unit_registration_interface">Test
+        <span><a name="boost_test.tests_organization.test_suite.test_unit_registration_interface"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.test_unit_registration_interface">Test
         unit registration interface</a>
       </h5>
 <p>
@@ -296,7 +296,7 @@
         - defines the timeout value for the test unit. As of now the <span class="emphasis"><em>Unit
         Test Framework</em></span> isn't able to set a timeout for the test suite
         execution, so this parameter makes sense only for test case registration.
-        By default no timeout is set. See the method <code class="computeroutput"><a class="link" href="../../boost/execution_monitor.html#idm46165630180816-bb">boost::execution_monitor::execute</a></code>
+        By default no timeout is set. See the method <code class="computeroutput"><a class="link" href="../../boost/execution_monitor.html#idp26930704-bb">boost::execution_monitor::execute</a></code>
         for more details about the timeout value.
       </p>
 <div class="warning"><table border="0" summary="Warning">
@@ -305,18 +305,18 @@
 <th align="left">Warning</th>
 </tr>
 <tr><td align="left" valign="top"><p>
-          is the reference good? It looks to me that <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idm46165629420768-bb">boost::unit_test::test_suite::add</a></code>
+          is the reference good? It looks to me that <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idp27673664-bb">boost::unit_test::test_suite::add</a></code>
           is better
         </p></td></tr>
 </table></div>
 <p>
         To register group of test units in one function call, the <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html" title="Class test_suite">test_suite</a></code> class provides another
-        <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idm46165629420768-bb">add</a></code>
+        <code class="computeroutput"><a class="link" href="../../boost/unit_test/test_suite.html#idp27673664-bb">add</a></code>
         interface covered in the advanced section of this documentation.
       </p>
 <a name="ref_BOOST_TEST_SUITE"></a><h5>
 <a name="boost_test.tests_organization.test_suite.h5"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.test_suite_instance_construction"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.test_suite_instance_construction">Test
+        <span><a name="boost_test.tests_organization.test_suite.test_suite_instance_construction"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.test_suite_instance_construction">Test
         suite instance construction</a>
       </h5>
 <p>
@@ -355,7 +355,7 @@
       </p>
 <h6>
 <a name="boost_test.tests_organization.test_suite.h6"></a>
-        <span class="phrase"><a name="boost_test.tests_organization.test_suite.example_descr1"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.example_descr1">Example:
+        <span><a name="boost_test.tests_organization.test_suite.example_descr1"></a></span><a class="link" href="test_suite.html#boost_test.tests_organization.test_suite.example_descr1">Example:
         Manually registered test suites</a>
       </h6>
 <div class="informaltable"><table class="table">
@@ -424,7 +424,7 @@
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
 <td align="left"></td>
-<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2015 Boost.Test contributors<p>
+<td align="right"><div class="copyright-footer">Copyright &#169; 2001-2016 Boost.Test contributors<p>
         Distributed under the Boost Software License, Version 1.0. (See accompanying
         file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
       </p>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Class template simple_exception_policy</title>
 <link rel="stylesheet" href="../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../../index.html" title="The Boost C++ Libraries BoostBook Documentation Subset">
 <link rel="up" href="../../date_time/doxy.html#header.boost.date_time.constrained_value_hpp" title="Header &lt;boost/date_time/constrained_value.hpp&gt;">
 <link rel="prev" href="constrained_value.html" title="Class template constrained_value">
@@ -41,26 +41,26 @@
 
   <span class="comment">// member classes/structs/unions</span>
 
-  <span class="keyword">struct</span> <a class="link" href="simple_exception_policy/exception_wrapper.html" title="Struct exception_wrapper">exception_wrapper</a> <span class="special">:</span> <span class="keyword">public</span> <span class="identifier">exception_type</span> <span class="special">{</span>
+  <span class="keyword">struct</span> <a class="link" href="simple_exception_policy/exception_wrapper.html" title="Struct exception_wrapper">exception_wrapper</a> <span class="special">{</span>
 
-    <span class="comment">// <a class="link" href="simple_exception_policy/exception_wrapper.html#idm45507129991120-bb">public member functions</a></span>
-    <a class="link" href="simple_exception_policy/exception_wrapper.html#idm45507091435808-bb"><span class="keyword">operator</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">out_of_range</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
+    <span class="comment">// <a class="link" href="simple_exception_policy/exception_wrapper.html#idp64715280-bb">public member functions</a></span>
+    <a class="link" href="simple_exception_policy/exception_wrapper.html#idp6893776-bb"><span class="keyword">operator</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">out_of_range</span></a><span class="special">(</span><span class="special">)</span> <span class="keyword">const</span><span class="special">;</span>
   <span class="special">}</span><span class="special">;</span>
 
-  <span class="comment">// <a class="link" href="simple_exception_policy.html#idm45507093972768-bb">public static functions</a></span>
-  <span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">min</span> <a class="link" href="simple_exception_policy.html#idm45507092977008-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">max</span> <a class="link" href="simple_exception_policy.html#idm45507088485056-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
-  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="simple_exception_policy.html#idm45507134792464-bb"><span class="identifier">on_error</span></a><span class="special">(</span><span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">violation_enum</span><span class="special">)</span><span class="special">;</span>
+  <span class="comment">// <a class="link" href="simple_exception_policy.html#idp64599888-bb">public static functions</a></span>
+  <span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">min</span> <a class="link" href="simple_exception_policy.html#idp70774048-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">max</span> <a class="link" href="simple_exception_policy.html#idp63285040-bb"><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span></a><span class="special">(</span><span class="special">)</span><span class="special">;</span>
+  <span class="keyword">static</span> <span class="keyword">void</span> <a class="link" href="simple_exception_policy.html#idp40775152-bb"><span class="identifier">on_error</span></a><span class="special">(</span><span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">violation_enum</span><span class="special">)</span><span class="special">;</span>
 <span class="special">}</span><span class="special">;</span></pre></div>
 <div class="refsect1">
-<a name="idm45555378352496"></a><h2>Description</h2>
+<a name="idp106286144"></a><h2>Description</h2>
 <div class="refsect2">
-<a name="idm45555378352080"></a><h3>
-<a name="idm45507093972768-bb"></a><code class="computeroutput">simple_exception_policy</code> public static functions</h3>
+<a name="idp106286560"></a><h3>
+<a name="idp64599888-bb"></a><code class="computeroutput">simple_exception_policy</code> public static functions</h3>
 <div class="orderedlist"><ol class="orderedlist" type="1">
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">min</span> <a name="idm45507092977008-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">max</span> <a name="idm45507088485056-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
-<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idm45507134792464-bb"></a><span class="identifier">on_error</span><span class="special">(</span><span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">violation_enum</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">min</span> <a name="idp70774048-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="identifier">rep_type</span> <span class="identifier">max</span> <a name="idp63285040-bb"></a><span class="identifier">BOOST_PREVENT_MACRO_SUBSTITUTION</span><span class="special">(</span><span class="special">)</span><span class="special">;</span></pre></li>
+<li class="listitem"><pre class="literallayout"><span class="keyword">static</span> <span class="keyword">void</span> <a name="idp40775152-bb"></a><span class="identifier">on_error</span><span class="special">(</span><span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">rep_type</span><span class="special">,</span> <span class="identifier">violation_enum</span><span class="special">)</span><span class="special">;</span></pre></li>
 </ol></div>
 </div>
 </div>

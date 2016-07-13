@@ -227,7 +227,7 @@ __random_access_sequence__.
         struct_name,
         (member_type0, member_name0)
         (member_type1, member_name1)
-        (BOOST_FUSION_ADAPT_AUTO, member_name2)
+        (auto, member_name2)
         ...
         )
 
@@ -240,7 +240,7 @@ The sequence of `member_nameN,` arguments or  `(member_typeN, member_nameN)`
 pairs declares the type and names of each of the struct members that are part of
 the sequence. 
 
-When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+When member_typeN is omitted or set to auto, the type is
 infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
@@ -270,8 +270,8 @@ namespace qualified name of the struct to be adapted.
     // Without BOOST_PP_VARIADICS support :
     BOOST_FUSION_ADAPT_STRUCT(
         demo::employee,
-        (BOOST_FUSION_ADAPT_AUTO, name)
-        (BOOST_FUSION_ADAPT_AUTO, age)
+        (auto, name)
+        (auto, age)
     )
 
 [endsect]
@@ -298,7 +298,7 @@ __random_access_sequence__.
         (struct_name) (specialization_param0)(specialization_param1)...,
         (member_type0, member_name0)
         (member_type1, member_name1)
-        (BOOST_FUSION_ADAPT_AUTO, member_name2),
+        (auto, member_name2),
         ...
         )
 
@@ -316,7 +316,7 @@ The sequence of `member_nameN,` arguments or  `(member_typeN, member_nameN)`
 pairs declares the type and names of each of the struct members that are part of
 the sequence. 
 
-When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+When member_typeN is omitted or set to auto, the type is
 infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
@@ -345,7 +345,7 @@ namespace qualified name of the struct to be adapted.
         (demo::employee) (Name)(Age),
         (Name, name)
         (Age, age)
-        (BOOST_FUSION_ADAPT_AUTO, employment_timestamp))
+        (auto, employment_timestamp))
 
     // Or by infering type completely
     BOOST_FUSION_ADAPT_TPL_STRUCT(
@@ -390,7 +390,7 @@ adapted using the given name.
         struct_name, adapted_name,
         (member_type0, member_name0)
         (member_type1, member_name1)
-        (BOOST_FUSION_ADAPT_AUTO, member_name2),
+        (auto, member_name2),
         ...
         )
 
@@ -400,7 +400,7 @@ adapted using the given name.
         adapted_name,
         (member_type0, member_name0)
         (member_type1, member_name1)
-        (BOOST_FUSION_ADAPT_AUTO, member_name2),
+        (auto, member_name2),
         ...
         )
 
@@ -422,7 +422,7 @@ The sequence of `member_nameN,` arguments or  `(member_typeN, member_nameN)`
 pairs declares the type and names of each of the struct members that are part of
 the sequence. 
 
-When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+When member_typeN is omitted or set to auto, the type is
 infered with Boost.TypeOf.
 
 The macros should be used at global scope, and `struct_name` should be the fully
@@ -453,8 +453,8 @@ namespace qualified name of the struct to be converted.
     // Without BOOST_PP_VARIADICS support :
     BOOST_FUSION_ADAPT_STRUCT_NAMED(
         demo::employee, adapted_employee,
-        (BOOST_FUSION_ADAPT_AUTO, name),
-        (BOOST_FUSION_ADAPT_AUTO, age))
+        (auto, name),
+        (auto, age))
 
 [endsect]
 
@@ -481,7 +481,7 @@ The sequence of `([member_typeN,] member_nameN, key_typeN)` tuples
 declares the type, name and key type of each of the struct members 
 that are part of the sequence.
 
-When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+When member_typeN is omitted or set to auto, the type is
 infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
@@ -519,8 +519,8 @@ namespace qualified name of the struct to be adapted.
     // Without BOOST_PP_VARIADICS support :
     BOOST_FUSION_ADAPT_ASSOC_STRUCT(
         demo::employee,
-        (BOOST_FUSION_ADAPT_AUTO, name, keys::name),
-        (BOOST_FUSION_ADAPT_AUTO, age, keys::name))
+        (auto, name, keys::name),
+        (auto, age, keys::name))
 
 [endsect]
 
@@ -554,7 +554,7 @@ The sequence of `([member_typeN,] member_nameN, key_typeN)`
 tuples declares the type, name and key type of each of the struct members
 that are part of the sequence.
 
-When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+When member_typeN is omitted or set to auto, the type is
 infered with Boost.TypeOf.
 
 The macro should be used at global scope, and `struct_name` should be the fully
@@ -641,7 +641,7 @@ The sequence of `(member_typeN, member_nameN, key_typeN)`
 triples declares the type, name and key type of each of the struct members
 that are part of the sequence.
 
-When member_typeN is omitted or set to BOOST_FUSION_ADAPT_AUTO, the type is
+When member_typeN is omitted or set to auto, the type is
 infered with Boost.TypeOf.
 
 The macros should be used at global scope, and `struct_name` should be the fully
@@ -678,8 +678,8 @@ namespace qualified name of the struct to be converted.
     // Without BOOST_PP_VARIADICS support :
     BOOST_FUSION_ADAPT_ASSOC_STRUCT_NAMED(
         demo::employee, adapted_employee,
-        (BOOST_FUSION_ADAPT_AUTO, name, keys::name)
-        (BOOST_FUSION_ADAPT_AUTO, age, keys::age))
+        (auto, name, keys::name)
+        (auto, age, keys::age))
 
 [endsect]
 
@@ -713,7 +713,7 @@ instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
 that [^get_expr['N]] denotes to, when omitted the type is deduced from
 [get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
-variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
+variadic macros auto can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -823,7 +823,7 @@ instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
 that [^get_expr['N]] denotes to, when omitted the type is deduced from
 [get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
-variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
+variadic macros auto can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -928,7 +928,7 @@ instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
 that [^get_expr['N]] denotes to, when omitted the type is deduced from
 [get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
-variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
+variadic macros auto can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of
@@ -1044,7 +1044,7 @@ instance of `type_name`.
 [^attribute_type['N]] and [^attribute_const_type['N]] may specify the types
 that [^get_expr['N]] denotes to, when omitted the type is deduced from
 [get_expr['N]] return type via BOOST_TYPEOF. On compiler missing support for 
-variadic macros BOOST_FUSION_ADAPT_AUTO can be used to avoid repeating the type.
+variadic macros auto can be used to avoid repeating the type.
 [^set_expr['N]] is the expression that is invoked to set the ['N]th element
 of an instance of `type_name`. This expression may access variables named
 `obj` of type `type_name&`, which represent the corresponding instance of

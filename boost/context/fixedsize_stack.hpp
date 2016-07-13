@@ -32,16 +32,12 @@ namespace context {
 template< typename traitsT >
 class basic_fixedsize_stack {
 private:
-#if defined(BOOST_USE_WINFIBERS)
-    friend class execution_context;
-#endif
-
     std::size_t     size_;
 
 public:
     typedef traitsT traits_type;
 
-    basic_fixedsize_stack( std::size_t size = traits_type::default_size() ) :
+    basic_fixedsize_stack( std::size_t size = traits_type::default_size() ) BOOST_NOEXCEPT_OR_NOTHROW :
         size_( size) {
         BOOST_ASSERT( traits_type::minimum_size() <= size_);
         BOOST_ASSERT( traits_type::is_unbounded() || ( traits_type::maximum_size() >= size_) );
@@ -60,17 +56,14 @@ public:
         return sctx;
     }
 
-    void deallocate( stack_context & sctx) {
+    void deallocate( stack_context & sctx) BOOST_NOEXCEPT_OR_NOTHROW {
         BOOST_ASSERT( sctx.sp);
-#if ! defined(BOOST_USE_WINFIBERS)
         BOOST_ASSERT( traits_type::minimum_size() <= sctx.size);
         BOOST_ASSERT( traits_type::is_unbounded() || ( traits_type::maximum_size() >= sctx.size) );
-#endif
 
 #if defined(BOOST_USE_VALGRIND)
         VALGRIND_STACK_DEREGISTER( sctx.valgrind_stack_id);
 #endif
-
         void * vp = static_cast< char * >( sctx.sp) - sctx.size;
         std::free( vp);
     }

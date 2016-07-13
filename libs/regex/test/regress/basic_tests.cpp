@@ -135,16 +135,16 @@ void test_partial_match()
    TEST_REGEX_SEARCH("\\w*?<tag>", perl, "aaa", match_default|match_partial, make_array(0, 3, -2, -2));
    TEST_REGEX_SEARCH("(\\w)*?<tag>", perl, "aaa", match_default|match_partial, make_array(0, 3, -2, -2));
 
-   TEST_REGEX_SEARCH("(xyz)(.*)abc", extended, "xyzaaab", match_default|match_partial, make_array(0, 7, -2, -2));
-   TEST_REGEX_SEARCH("(xyz)(.*)abc", extended, "xyz", match_default|match_partial, make_array(0, 3, -2, -2));
-   TEST_REGEX_SEARCH("(xyz)(.*)abc", extended, "xy", match_default|match_partial, make_array(0, 2, -2, -2));
-   TEST_REGEX_SEARCH("(xyz)(.*)abc", extended, "x", match_default|match_partial, make_array(0, 1, -2, -2));
-   TEST_REGEX_SEARCH("(xyz)(.*)abc", extended, "", match_default|match_partial, make_array(-2, -2));
-   TEST_REGEX_SEARCH("(xyz)(.*)abc", extended, "aaaa", match_default|match_partial, make_array(-2, -2));
-   TEST_REGEX_SEARCH(".abc", extended, "aaab", match_default|match_partial, make_array(1, 4, -2, -2));
-   TEST_REGEX_SEARCH("a[_]", extended, "xxa", match_default|match_partial, make_array(2, 3, -2, -2));
-   TEST_REGEX_SEARCH(".{4,}", extended, "xxa", match_default|match_partial, make_array(0, 3, -2, -2));
-   TEST_REGEX_SEARCH(".{4,}", extended, "xxa", match_default|match_partial|match_not_dot_null, make_array(0, 3, -2, -2));
+   TEST_REGEX_SEARCH("(xyz)(.*)abc", boost::regex::extended, "xyzaaab", match_default|match_partial, make_array(0, 7, -2, -2));
+   TEST_REGEX_SEARCH("(xyz)(.*)abc", boost::regex::extended, "xyz", match_default|match_partial, make_array(0, 3, -2, -2));
+   TEST_REGEX_SEARCH("(xyz)(.*)abc", boost::regex::extended, "xy", match_default|match_partial, make_array(0, 2, -2, -2));
+   TEST_REGEX_SEARCH("(xyz)(.*)abc", boost::regex::extended, "x", match_default|match_partial, make_array(0, 1, -2, -2));
+   TEST_REGEX_SEARCH("(xyz)(.*)abc", boost::regex::extended, "", match_default|match_partial, make_array(-2, -2));
+   TEST_REGEX_SEARCH("(xyz)(.*)abc", boost::regex::extended, "aaaa", match_default|match_partial, make_array(-2, -2));
+   TEST_REGEX_SEARCH(".abc", boost::regex::extended, "aaab", match_default|match_partial, make_array(1, 4, -2, -2));
+   TEST_REGEX_SEARCH("a[_]", boost::regex::extended, "xxa", match_default|match_partial, make_array(2, 3, -2, -2));
+   TEST_REGEX_SEARCH(".{4,}", boost::regex::extended, "xxa", match_default|match_partial, make_array(0, 3, -2, -2));
+   TEST_REGEX_SEARCH(".{4,}", boost::regex::extended, "xxa", match_default|match_partial|match_not_dot_null, make_array(0, 3, -2, -2));
 }
 
 void test_nosubs()

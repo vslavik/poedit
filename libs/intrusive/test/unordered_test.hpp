@@ -78,14 +78,14 @@ void test_unordered<ValueTraits, ContainerDefiner>::
       test::test_maybe_unique_container(testset, values, select_t());
    }
    {
-      value_cont_type values(BucketSize);
+      value_cont_type vals(BucketSize);
       for (int i = 0; i < (int)BucketSize; ++i)
-         (&values[i])->value_ = i;
+         (&vals[i])->value_ = i;
       typename unordered_type::bucket_type buckets [BucketSize];
       unordered_type testset(bucket_traits(
          pointer_traits<typename unordered_type::bucket_ptr>::
             pointer_to(buckets[0]), BucketSize));
-      testset.insert(values.begin(), values.end());
+      testset.insert(vals.begin(), vals.end());
       test::test_iterator_forward(testset);
    }
    test_sort(values);
@@ -162,12 +162,17 @@ void test_unordered<ValueTraits, ContainerDefiner>
    typedef typename ContainerDefiner::template container
       <>::type unordered_set_type;
    typedef typename unordered_set_type::bucket_traits bucket_traits;
+   typedef typename unordered_set_type::key_of_value  key_of_value;
 
    typename unordered_set_type::bucket_type buckets [BucketSize];
    unordered_set_type testset(bucket_traits(
       pointer_traits<typename unordered_set_type::bucket_ptr>::
          pointer_to(buckets[0]), BucketSize));
    testset.insert(&values[0] + 2, &values[0] + 5);
+
+   typename unordered_set_type::insert_commit_data commit_data;
+   BOOST_TEST ((!testset.insert_check(key_of_value()(values[2]), commit_data).second));
+   BOOST_TEST (( testset.insert_check(key_of_value()(values[0]), commit_data).second));
 
    const unordered_set_type& const_testset = testset;
    if(unordered_set_type::incremental)

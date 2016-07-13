@@ -84,8 +84,10 @@ if(c_a.size() == c_b.size())
 {
   for(int i=0; i < c_a.size(); i++)
   {
-    __BOOST_TEST_CONTEXT__("index" << i);
-    BOOST_TEST(a_i op b_i);
+    __BOOST_TEST_CONTEXT__("index " << i)
+    {
+      BOOST_TEST(a_i op b_i);
+    }
   }
 }
 else
@@ -108,13 +110,14 @@ In case of failure, the indices of the elements failing `op` are returned.
 [h4 Requirements]
 For the sequences to be comparable element-wise, the following conditions should be met:
 
+* the containers should meet the [link what_is_a_collection sequence] definition,
 * the containers should yield the same number of elements,
 * `op` should be one of the comparison operator `==`, `!=`, `<`, `<=`, `>`, `>=`
 * the `a_i op b_i` should be defined, where the type of `a_i` and `b_i` are the type returned by the dereference operator
   of the respective collections.
 
 [caution the resulting type of "`c_a == c_b`" is an [classref boost::test_tools::assertion_result assertion_result]: it is not
- possible to compose more that one comparison on the BOOST_TEST statement:
+ possible to compose more that one comparison on the `BOOST_TEST` statement:
 
  ``
    BOOST_TEST(c_a == c_b == 42, boost::test_tools::per_element() ); // does not compile
@@ -150,6 +153,7 @@ the macro `BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE` might be used as follow:
 
 [h4 Requirements]
 
+* the containers should meet the [link what_is_a_collection sequence] definition,
 * the containers should be of the exact same type
 * `op` should be one of the ordered comparison operator `<`, `<=`, `>`, `>=`
 

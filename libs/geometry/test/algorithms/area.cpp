@@ -5,8 +5,8 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
-// This file was modified by Oracle on 2015.
-// Modifications copyright (c) 2015, Oracle and/or its affiliates.
+// This file was modified by Oracle on 2015, 2016.
+// Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -61,7 +61,24 @@ void test_all()
 
     // ccw
     test_geometry<bg::model::polygon<P, false> >
-            ("POLYGON((0 0,0 7,4 2,2 0,0 0), (1 1,2 1,2 2,1 2,1 1))", -15.0);
+        ("POLYGON((0 0,0 7,4 2,2 0,0 0), (1 1,2 1,2 2,1 2,1 1))", -15.0);
+
+    test_geometry<bg::model::polygon<P, false> >
+        ("POLYGON((1 0,0 1,-1 0,0 -1,1 0))", 2);
+
+    typedef typename bg::coordinate_type<P>::type coord_type;
+    if (BOOST_GEOMETRY_CONDITION((boost::is_same<coord_type, double>::value)))
+    {
+        test_geometry<bg::model::polygon<P, false, false> >
+            ("POLYGON((100000001 100000000, 100000000 100000001, \
+                       99999999 100000000, 100000000  99999999))", 2);
+    }
+    else if (BOOST_GEOMETRY_CONDITION((boost::is_same<coord_type, float>::value)))
+    {
+        test_geometry<bg::model::polygon<P, false, false> >
+            ("POLYGON((100001 100000, 100000 100001, \
+                       99999 100000, 100000  99999))", 2);
+    }
 }
 
 template <typename Point>

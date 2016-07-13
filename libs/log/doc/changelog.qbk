@@ -1,5 +1,5 @@
 [/
-              Copyright Andrey Semashev 2007 - 2015.
+              Copyright Andrey Semashev 2007 - 2016.
      Distributed under the Boost Software License, Version 1.0.
         (See accompanying file LICENSE_1_0.txt or copy at
               http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +8,19 @@
 /]
 
 [section:changelog Changelog]
+
+[heading 2.8, Boost 1.61]
+
+[*General changes:]
+
+* The support for `boost::basic_string_ref` and its specializations is deprecated; users are encouraged to switch to `boost::basic_string_view`, which is now supported for output to the formatting streams. The support for `boost::basic_string_ref` will be removed in future releases.
+* Added support for limiting the number of stored log files in the target directory of the file collector. The limit can be specified in the `max_files` named parameter to the `make_collector` or `add_file_log` calls or as the "MaxFiles" parameter for the sink in the settings file. Thanks to Erich Keane for the patch. ([ticket 8746])
+
+[*Bug fixes:]
+
+* Fixed various compilation problems for Windows CE.
+* Fixed compilation problems on Solaris.
+* Added a workaround for MSVC-10 and 11 generating broken code for formatters in some cases. ([ticket 12025])
 
 [heading 2.7, Boost 1.60]
 

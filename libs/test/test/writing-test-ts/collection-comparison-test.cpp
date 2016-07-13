@@ -21,8 +21,7 @@ BOOST_TEST_SPECIALIZED_COLLECTION_COMPARE(std::vector<int>)
 {                                                   \
     BOOST_TEST_INFO( "validating operator " #op );  \
     bool expected = (c1 op c2);                     \
-    auto const& E_under_test = tt::assertion::seed()->* c1 op c2 ;  \
-    auto const& res = E_under_test.evaluate();      \
+    auto const& res = (tt::assertion::seed()->* c1 op c2).evaluate();      \
     BOOST_TEST( expected == !!res );                \
 }                                                   \
 /**/

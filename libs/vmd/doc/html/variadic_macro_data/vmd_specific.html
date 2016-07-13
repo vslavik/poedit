@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Specific macros for working with data types</title>
 <link rel="stylesheet" href="../../../../../doc/src/boostbook.css" type="text/css">
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="up" href="../index.html" title="Chapter&#160;1.&#160;The Variadic Macro Data Library 1.9">
 <link rel="prev" href="vmd_data_types.html" title="Data types">
@@ -27,7 +27,7 @@
 <a name="variadic_macro_data.vmd_specific"></a><a class="link" href="vmd_specific.html" title="Specific macros for working with data types">Specific macros for working
     with data types</a>
 </h2></div></div></div>
-<div class="toc"><dl class="toc">
+<div class="toc"><dl>
 <dt><span class="section"><a href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty">Emptiness</a></span></dt>
 <dt><span class="section"><a href="vmd_specific/vmd_constraints.html">Macro
       constraints</a></span></dt>
@@ -49,7 +49,7 @@
 </h3></div></div></div>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h0"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.passing_empty_arguments"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.passing_empty_arguments">Passing
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.passing_empty_arguments"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.passing_empty_arguments">Passing
         empty arguments</a>
       </h5>
 <p>
@@ -163,7 +163,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h1"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.returning_emptiness"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.returning_emptiness">Returning
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.returning_emptiness"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.returning_emptiness">Returning
         emptiness</a>
       </h5>
 <p>
@@ -195,7 +195,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h2"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.emptiness_in_preprocessor_metapr"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.emptiness_in_preprocessor_metapr">Emptiness
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.emptiness_in_preprocessor_metapr"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.emptiness_in_preprocessor_metapr">Emptiness
         in preprocessor metaprogramming</a>
       </h5>
 <p>
@@ -209,7 +209,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h3"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.testing_for_empty_data"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.testing_for_empty_data">Testing
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.testing_for_empty_data"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.testing_for_empty_data">Testing
         for empty data</a>
       </h5>
 <p>
@@ -232,11 +232,11 @@
 <p>
         The macro is called <code class="computeroutput"><a class="link" href="../BOOST_VMD_IS_EMPTY.html" title="Macro BOOST_VMD_IS_EMPTY">BOOST_VMD_IS_EMPTY</a></code>
         and will return 1 if its input is empty or 0 if its input is not empty. The
-        macro is a variadic macro which make take any input <a href="#ftn.variadic_macro_data.vmd_specific.vmd_test_empty.f0" class="footnote" name="variadic_macro_data.vmd_specific.vmd_test_empty.f0"><sup class="footnote">[1]</sup></a>.
+        macro is a variadic macro which make take any input <sup>[<a name="variadic_macro_data.vmd_specific.vmd_test_empty.f0" href="#ftn.variadic_macro_data.vmd_specific.vmd_test_empty.f0" class="footnote">1</a>]</sup>.
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h4"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_a_standard_c_com"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_a_standard_c_com">Macro
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_a_standard_c_com"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_a_standard_c_com">Macro
         Flaw with a standard C++ compiler</a>
       </h5>
 <p>
@@ -283,7 +283,8 @@
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">FMACRO</span><span class="special">(</span><span class="identifier">x</span><span class="special">)</span> <span class="identifier">BOOST_PP_CAT</span><span class="special">(+,</span><span class="identifier">x</span> <span class="identifier">C</span><span class="special">);</span>
 </pre>
 <p>
-        When nothing is passed to FMACRO undefined behavior will occur.
+        When nothing is passed to FMACRO undefined behavior will occur since attempting
+        to concatenate '+' to ' C' is UB in C++ preprocessor terms.
       </p>
 <p>
         So for a standard conforming compiler we have essentially a single corner
@@ -294,7 +295,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h5"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_visual_c"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_visual_c">Macro
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_visual_c"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_with_visual_c">Macro
         Flaw with Visual C++</a>
       </h5>
 <p>
@@ -305,9 +306,10 @@
         macro name.
       </p>
 <p>
-        The first situation is that if a macro taking 'n' number of parameters is
-        invoked with 0 to 'n-1' parameters, the compiler does not give an error,
-        but only a warning.
+        The first situation, related to our discussion of emptiness, where the VC++
+        preprocessor is not a standard C++ conforming preprocessor is that if a macro
+        taking 'n' number of parameters is invoked with 0 to 'n-1' parameters, the
+        compiler does not give an error, but only a warning.
       </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">FMACRO</span><span class="special">(</span><span class="identifier">x</span><span class="special">,</span><span class="identifier">y</span><span class="special">)</span> <span class="identifier">x</span> <span class="special">+</span> <span class="identifier">y</span>
 
@@ -324,11 +326,12 @@
         error should occur.
       </p>
 <p>
-        A second general situation with VC++ situation, which affects the use of
-        BOOST_VMD_IS_EMPTY, is that the expansion of a macro works incorrectly when
-        the expanded macro is a function-like macro name followed by a function-like
-        macro invocation, in which case the macro re-expansion is erroneously done
-        more than once. This latter case can be seen by this example:
+        A second general situation, related to our discussion of emptiness, where
+        the VC++ preprocessor is not a standard C++ conforming preprocessor is that
+        the expansion of a macro works incorrectly when the expanded macro is a function-like
+        macro name followed by a function-like macro invocation, in which case the
+        macro re-expansion is erroneously done more than once. This latter case can
+        be seen by this example:
       </p>
 <pre class="programlisting"><span class="preprocessor">#define</span> <span class="identifier">FMACRO1</span><span class="special">(</span><span class="identifier">parameter</span><span class="special">)</span> <span class="identifier">FMACRO3</span> <span class="identifier">parameter</span><span class="special">()</span>
 <span class="preprocessor">#define</span> <span class="identifier">FMACRO2</span><span class="special">()</span> <span class="special">()</span>
@@ -365,8 +368,9 @@
 <p>
         when the input to BOOST_VMD_IS_EMPTY resolves to only a function-like macro
         name, and the function-like macro, when passed a single empty argument, expands
-        to a tuple, BOOST_VMD_IS_EMPTY will erroneously return 1 when using the Visual
-        C++ compiler rather than either give a preprocessing error or return 0.
+        to a Boost PP tuple, BOOST_VMD_IS_EMPTY will erroneously return 1 when using
+        the Visual C++ compiler rather than either give a preprocessing error or
+        return 0.
       </p>
 <p>
         Here is an example of the failure:
@@ -394,7 +398,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h6"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_conclusion"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_conclusion">Macro
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_conclusion"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.macro_flaw_conclusion">Macro
         Flaw conclusion</a>
       </h5>
 <p>
@@ -405,7 +409,7 @@
       </p>
 <p>
         The case where it will not work, with both a C++ standard conforming preprocessor
-        or with Visual C++, occurs when he name of a function-like macro is part
+        or with Visual C++, occurs when the name of a function-like macro is part
         of the input to BOOST_VMD_IS_EMPTY. Obviously the macro should be used by
         the preprocessor metaprogrammer when the possible input to it is constrained
         to eliminate the erroneous case.
@@ -424,7 +428,7 @@
       </p>
 <h5>
 <a name="variadic_macro_data.vmd_specific.vmd_test_empty.h7"></a>
-        <span class="phrase"><a name="variadic_macro_data.vmd_specific.vmd_test_empty.using_the_macro"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.using_the_macro">Using
+        <span><a name="variadic_macro_data.vmd_specific.vmd_test_empty.using_the_macro"></a></span><a class="link" href="vmd_specific.html#variadic_macro_data.vmd_specific.vmd_test_empty.using_the_macro">Using
         the macro</a>
       </h5>
 <p>
@@ -447,8 +451,8 @@
       </p>
 </div>
 <div class="footnotes">
-<br><hr style="width:100; text-align:left;margin-left: 0">
-<div id="ftn.variadic_macro_data.vmd_specific.vmd_test_empty.f0" class="footnote"><p><a href="#variadic_macro_data.vmd_specific.vmd_test_empty.f0" class="para"><sup class="para">[1] </sup></a>
+<br><hr width="100" align="left">
+<div class="footnote"><p><sup>[<a id="ftn.variadic_macro_data.vmd_specific.vmd_test_empty.f0" href="#variadic_macro_data.vmd_specific.vmd_test_empty.f0" class="para">1</a>] </sup>
           For VC++ 8 the input is not variadic data but a single parameter
         </p></div>
 </div>

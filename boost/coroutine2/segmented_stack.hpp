@@ -24,8 +24,8 @@ namespace coroutines2 {
 
 #if defined(BOOST_USE_SEGMENTED_STACKS)
 # if ! defined(BOOST_WINDOWS)
-typedef boost::context::segmented_stack segmented_stack;
-typedef boost::context::default_stack   default_stack;
+using segmented_stack = boost::context::segmented_stack;
+using default_stack = boost::context::default_stack;
 # endif
 #endif
 

@@ -41,7 +41,7 @@ import generate ;
 
 
 .os-names = aix android bsd cygwin darwin freebsd haiku hpux iphone linux netbsd
-    openbsd osf qnx qnxnto sgi solaris unix unixware windows
+    openbsd osf qnx qnxnto sgi solaris unix unixware windows vms
     elf  # Not actually an OS -- used for targeting bare metal where object
          # format is ELF.  This catches both -elf and -eabi gcc targets and well
          # as other compilers targeting ELF. It is not clear how often we need
@@ -80,6 +80,7 @@ local rule default-host-os ( )
             case MACOSX       : host-os = darwin  ;
             case KFREEBSD     : host-os = freebsd ;
             case LINUX        : host-os = linux   ;
+            case VMS          : host-os = vms     ;
             case SUNOS        :
               ECHO "SunOS is not a supported operating system." ;
               ECHO "We believe last version of SunOS was released in 1992, " ;

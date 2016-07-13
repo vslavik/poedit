@@ -28,27 +28,25 @@
 
 using namespace boost::container;
 
-typedef test::dummy_test_allocator<char>           DummyCharAllocator;
-typedef basic_string<char, std::char_traits<char>, DummyCharAllocator> DummyString;
-typedef test::dummy_test_allocator<DummyString>    DummyStringAllocator;
-typedef test::dummy_test_allocator<wchar_t>              DummyWCharAllocator;
-typedef basic_string<wchar_t, std::char_traits<wchar_t>, DummyWCharAllocator> DummyWString;
-typedef test::dummy_test_allocator<DummyWString>         DummyWStringAllocator;
+typedef test::simple_allocator<char>           SimpleCharAllocator;
+typedef basic_string<char, std::char_traits<char>, SimpleCharAllocator> SimpleString;
+typedef test::simple_allocator<SimpleString>    SimpleStringAllocator;
+typedef test::simple_allocator<wchar_t>              SimpleWCharAllocator;
+typedef basic_string<wchar_t, std::char_traits<wchar_t>, SimpleWCharAllocator> SimpleWString;
+typedef test::simple_allocator<SimpleWString>         SimpleWStringAllocator;
 
 namespace boost {
 namespace container {
 
 //Explicit instantiations of container::basic_string
-template class basic_string<char,    std::char_traits<char>, DummyCharAllocator>;
-template class basic_string<wchar_t, std::char_traits<wchar_t>, DummyWCharAllocator>;
-template class basic_string<char,    std::char_traits<char>, test::simple_allocator<char> >;
-template class basic_string<wchar_t, std::char_traits<wchar_t>, test::simple_allocator<wchar_t> >;
+template class basic_string<char,    std::char_traits<char>, SimpleCharAllocator>;
+template class basic_string<wchar_t, std::char_traits<wchar_t>, SimpleWCharAllocator>;
 template class basic_string<char,    std::char_traits<char>, std::allocator<char> >;
 template class basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> >;
 
 //Explicit instantiation of container::vectors of container::strings
-template class vector<DummyString, DummyStringAllocator>;
-template class vector<DummyWString, DummyWStringAllocator>;
+template class vector<SimpleString, SimpleStringAllocator>;
+template class vector<SimpleWString, SimpleWStringAllocator>;
 
 }}
 

@@ -153,7 +153,35 @@ namespace example
      *
      * \code
      *     void foo() {}
+     *     void foo2() {}
      * \endcode
+     *
+     * \code
+     *     void bar() {}
+     *
+     *     void bar2() {}
+     * \endcode
+     *
+     * Alternative way of writing code, has a complicated workaround
+     * because doxygen treats the empty line as a paragraph
+     * separator:
+     *
+     * <pre>
+     * int bar();
+     *
+     * int bar2();
+     * </pre>
+     *
+     * Unfortunately the workaround will merge consecutive blocks,
+     * like this:
+     *
+     * <pre>
+     * int foo();
+     * </pre>
+     *
+     * <pre>
+     * int foo2();
+     * </pre>
      *
      * \tparam TypeParameter A template parameter
      * \tparam NonTypeParameter This is a non-type template parameter
