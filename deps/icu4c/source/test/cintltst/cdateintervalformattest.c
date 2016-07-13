@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (c) 2011-2014, International Business Machines Corporation
+ * Copyright (c) 2011-2016, International Business Machines Corporation
  * and others. All Rights Reserved.
  ********************************************************************/
 /* C API TEST FOR DATE INTERVAL FORMAT */
@@ -16,8 +16,7 @@
 #include "cmemory.h"
 
 static void TestDateIntervalFormat(void);
-
-#define LEN(a) (sizeof(a)/sizeof(a[0]))
+static void TestFPos_SkelWithSeconds(void);
 
 void addDateIntervalFormatTest(TestNode** root);
 
@@ -26,6 +25,7 @@ void addDateIntervalFormatTest(TestNode** root);
 void addDateIntervalFormatTest(TestNode** root)
 {
     TESTCASE(TestDateIntervalFormat);
+    TESTCASE(TestFPos_SkelWithSeconds);
 }
 
 static const char tzUSPacific[] = "US/Pacific";
@@ -52,7 +52,7 @@ static const DateIntervalFormatTestItem testItems[] = {
     { "en", "yMMMEd",   tzUSPacific, Date201009270800, Date201009270800 + 12.0*_HOUR, "Mon, Sep 27, 2010" },
     { "en", "yMMMEd",   tzUSPacific, Date201009270800, Date201009270800 + 31.0*_DAY,  "Mon, Sep 27 \\u2013 Thu, Oct 28, 2010" },
     { "en", "yMMMEd",   tzUSPacific, Date201009270800, Date201009270800 + 410.0*_DAY, "Mon, Sep 27, 2010 \\u2013 Fri, Nov 11, 2011" },
-    { "de", "Hm",       tzUSPacific, Date201009270800, Date201009270800 + 12.0*_HOUR, "08:00\\u201320:00" },
+    { "de", "Hm",       tzUSPacific, Date201009270800, Date201009270800 + 12.0*_HOUR, "08:00\\u201320:00 Uhr" },
     { "de", "Hm",       tzUSPacific, Date201009270800, Date201009270800 + 31.0*_DAY,  "27.9.2010, 08:00 \\u2013 28.10.2010, 08:00" },
     { "ja", "MMMd",     tzUSPacific, Date201009270800, Date201009270800 + 1.0*_DAY,   "9\\u670827\\u65E5\\uFF5E28\\u65E5" },
     { NULL, NULL,       NULL,        0,                0,                             NULL }
@@ -112,6 +112,207 @@ static void TestDateIntervalFormat()
         }
     }
     ctest_resetTimeZone();
+}
+
+/********************************************************************
+ * TestFPos_SkelWithSeconds and related data
+ ********************************************************************
+ */
+
+static UChar zoneGMT[] = { 0x47,0x4D,0x54,0 }; // GMT
+static const UDate startTime = 1416474000000.0; // 2014 Nov 20 09:00 GMT
+
+static const double deltas[] = {
+	0.0, // none
+	200.0, // 200 millisec
+	20000.0, // 20 sec
+	1200000.0, // 20 min
+	7200000.0, // 2 hrs
+	43200000.0, // 12 hrs
+	691200000.0, // 8 days
+	1382400000.0, // 16 days,
+	8640000000.0, // 100 days
+	-1.0
+};
+enum { kNumDeltas = UPRV_LENGTHOF(deltas) - 1 };
+
+typedef struct {
+    int32_t posBegin;
+    int32_t posEnd;
+    const char * format;
+} ExpectPosAndFormat;
+
+static const ExpectPosAndFormat exp_en_HHmm[kNumDeltas] = {
+    {  3,  5, "09:00" },
+    {  3,  5, "09:00" },
+    {  3,  5, "09:00" },
+    {  3,  5, "09:00 \\u2013 09:20" },
+    {  3,  5, "09:00 \\u2013 11:00" },
+    {  3,  5, "09:00 \\u2013 21:00" },
+    { 15, 17, "11/20/2014, 09:00 \\u2013 11/28/2014, 09:00" },
+    { 15, 17, "11/20/2014, 09:00 \\u2013 12/6/2014, 09:00" },
+    { 15, 17, "11/20/2014, 09:00 \\u2013 2/28/2015, 09:00" }
+};
+
+static const ExpectPosAndFormat exp_en_HHmmss[kNumDeltas] = {
+    {  3,  5, "09:00:00" },
+    {  3,  5, "09:00:00" },
+    {  3,  5, "09:00:00 \\u2013 09:00:20" },
+    {  3,  5, "09:00:00 \\u2013 09:20:00" },
+    {  3,  5, "09:00:00 \\u2013 11:00:00" },
+    {  3,  5, "09:00:00 \\u2013 21:00:00" },
+    { 15, 17, "11/20/2014, 09:00:00 \\u2013 11/28/2014, 09:00:00" },
+    { 15, 17, "11/20/2014, 09:00:00 \\u2013 12/6/2014, 09:00:00" },
+    { 15, 17, "11/20/2014, 09:00:00 \\u2013 2/28/2015, 09:00:00" }
+};
+
+static const ExpectPosAndFormat exp_en_yyMMdd[kNumDeltas] = {
+    {  0,  0, "11/20/14" },
+    {  0,  0, "11/20/14" },
+    {  0,  0, "11/20/14" },
+    {  0,  0, "11/20/14" },
+    {  0,  0, "11/20/14" },
+    {  0,  0, "11/20/14" },
+    {  0,  0, "11/20/14 \\u2013 11/28/14" },
+    {  0,  0, "11/20/14 \\u2013 12/6/14" },
+    {  0,  0, "11/20/14 \\u2013 2/28/15" }
+};
+
+static const ExpectPosAndFormat exp_en_yyMMddHHmm[kNumDeltas] = {
+    { 13, 15, "11/20/14, 09:00" },
+    { 13, 15, "11/20/14, 09:00" },
+    { 13, 15, "11/20/14, 09:00" },
+    { 13, 15, "11/20/14, 09:00 \\u2013 09:20" },
+    { 13, 15, "11/20/14, 09:00 \\u2013 11:00" },
+    { 13, 15, "11/20/14, 09:00 \\u2013 21:00" },
+    { 13, 15, "11/20/14, 09:00 \\u2013 11/28/14, 09:00" },
+    { 13, 15, "11/20/14, 09:00 \\u2013 12/06/14, 09:00" },
+    { 13, 15, "11/20/14, 09:00 \\u2013 02/28/15, 09:00" }
+};
+
+static const ExpectPosAndFormat exp_en_yyMMddHHmmss[kNumDeltas] = {
+    { 13, 15, "11/20/14, 09:00:00" },
+    { 13, 15, "11/20/14, 09:00:00" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 09:00:20" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 09:20:00" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 11:00:00" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 21:00:00" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 11/28/14, 09:00:00" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 12/06/14, 09:00:00" },
+    { 13, 15, "11/20/14, 09:00:00 \\u2013 02/28/15, 09:00:00" }
+};
+
+static const ExpectPosAndFormat exp_en_yMMMdhmmssz[kNumDeltas] = {
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 9:00:20 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 9:20:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 11:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 9:00:00 PM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 Nov 28, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 Dec 6, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT \\u2013 Feb 28, 2015, 9:00:00 AM GMT" }
+};
+
+static const ExpectPosAndFormat exp_ja_yyMMddHHmm[kNumDeltas] = {
+    { 11, 13, "14/11/20 9:00" },
+    { 11, 13, "14/11/20 9:00" },
+    { 11, 13, "14/11/20 9:00" },
+    { 11, 13, "14/11/20 9\\u664200\\u5206\\uFF5E9\\u664220\\u5206" },
+    { 11, 13, "14/11/20 9\\u664200\\u5206\\uFF5E11\\u664200\\u5206" },
+    { 11, 13, "14/11/20 9\\u664200\\u5206\\uFF5E21\\u664200\\u5206" },
+    { 11, 13, "14/11/20 9:00\\uFF5E14/11/28 9:00" },
+    { 11, 13, "14/11/20 9:00\\uFF5E14/12/06 9:00" },
+    { 11, 13, "14/11/20 9:00\\uFF5E15/02/28 9:00" }
+};
+
+static const ExpectPosAndFormat exp_ja_yyMMddHHmmss[kNumDeltas] = {
+    { 11, 13, "14/11/20 9:00:00" },
+    { 11, 13, "14/11/20 9:00:00" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E9:00:20" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E9:20:00" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E11:00:00" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E21:00:00" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E14/11/28 9:00:00" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E14/12/06 9:00:00" },
+    { 11, 13, "14/11/20 9:00:00\\uFF5E15/02/28 9:00:00" }
+};
+
+static const ExpectPosAndFormat exp_ja_yMMMdHHmmss[kNumDeltas] = {
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E9:00:20" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E9:20:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E11:00:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E21:00:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E2014\\u5E7411\\u670828\\u65E5 9:00:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E2014\\u5E7412\\u67086\\u65E5 9:00:00" },
+    { 14, 16, "2014\\u5E7411\\u670820\\u65E5 9:00:00\\uFF5E2015\\u5E742\\u670828\\u65E5 9:00:00" }
+};
+
+typedef struct {
+	const char * locale;
+	const char * skeleton;
+	UDateFormatField fieldToCheck;
+	const ExpectPosAndFormat * expected;
+} LocaleAndSkeletonItem;
+
+static const LocaleAndSkeletonItem locSkelItems[] = {
+	{ "en",		"HHmm",         UDAT_MINUTE_FIELD, exp_en_HHmm },
+	{ "en",		"HHmmss",       UDAT_MINUTE_FIELD, exp_en_HHmmss },
+	{ "en",		"yyMMdd",       UDAT_MINUTE_FIELD, exp_en_yyMMdd },
+	{ "en",		"yyMMddHHmm",   UDAT_MINUTE_FIELD, exp_en_yyMMddHHmm },
+	{ "en",		"yyMMddHHmmss", UDAT_MINUTE_FIELD, exp_en_yyMMddHHmmss },
+	{ "en",		"yMMMdhmmssz",  UDAT_MINUTE_FIELD, exp_en_yMMMdhmmssz },
+	{ "ja",		"yyMMddHHmm",   UDAT_MINUTE_FIELD, exp_ja_yyMMddHHmm },
+	{ "ja",		"yyMMddHHmmss", UDAT_MINUTE_FIELD, exp_ja_yyMMddHHmmss },
+	{ "ja",		"yMMMdHHmmss",  UDAT_MINUTE_FIELD, exp_ja_yMMMdHHmmss },
+	{ NULL, NULL, (UDateFormatField)0, NULL }
+};
+
+enum { kSizeUBuf = 96, kSizeBBuf = 192 };
+
+static void TestFPos_SkelWithSeconds()
+{
+	const LocaleAndSkeletonItem * locSkelItemPtr;
+	for (locSkelItemPtr = locSkelItems; locSkelItemPtr->locale != NULL; locSkelItemPtr++) {
+	    UDateIntervalFormat* udifmt;
+	    UChar   ubuf[kSizeUBuf];
+	    int32_t ulen, uelen;
+	    UErrorCode status = U_ZERO_ERROR;
+	    
+	    u_strFromUTF8(ubuf, kSizeUBuf, &ulen, locSkelItemPtr->skeleton, -1, &status);
+	    udifmt = udtitvfmt_open(locSkelItemPtr->locale, ubuf, ulen, zoneGMT, -1, &status);
+	    if ( U_FAILURE(status) ) {
+           log_data_err("FAIL: udtitvfmt_open for locale %s, skeleton %s: %s\n",
+                    locSkelItemPtr->locale, locSkelItemPtr->skeleton, u_errorName(status));
+	    } else {
+			const double * deltasPtr = deltas;
+			const ExpectPosAndFormat * expectedPtr = locSkelItemPtr->expected;
+			for (; *deltasPtr >= 0.0; deltasPtr++, expectedPtr++) {
+			    UFieldPosition fpos = { locSkelItemPtr->fieldToCheck, 0, 0 };
+			    UChar uebuf[kSizeUBuf];
+			    char bbuf[kSizeBBuf];
+			    char bebuf[kSizeBBuf];
+			    status = U_ZERO_ERROR;
+			    uelen = u_unescape(expectedPtr->format, uebuf, kSizeUBuf);
+			    ulen = udtitvfmt_format(udifmt, startTime, startTime + *deltasPtr, ubuf, kSizeUBuf, &fpos, &status);
+			    if ( U_FAILURE(status) ) {
+			        log_err("FAIL: udtitvfmt_format for locale %s, skeleton %s, delta %.1f: %s\n",
+			             locSkelItemPtr->locale, locSkelItemPtr->skeleton, *deltasPtr, u_errorName(status));
+			    } else if ( ulen != uelen || u_strncmp(ubuf,uebuf,uelen) != 0 ||
+			                fpos.beginIndex != expectedPtr->posBegin || fpos.endIndex != expectedPtr->posEnd ) {
+			        u_strToUTF8(bbuf, kSizeBBuf, NULL, ubuf, ulen, &status);
+			        u_strToUTF8(bebuf, kSizeBBuf, NULL, uebuf, uelen, &status); // convert back to get unescaped string
+			        log_err("FAIL: udtitvfmt_format for locale %s, skeleton %s, delta %12.1f, expect %d-%d \"%s\", get %d-%d \"%s\"\n",
+			             locSkelItemPtr->locale, locSkelItemPtr->skeleton, *deltasPtr,
+			             expectedPtr->posBegin, expectedPtr->posEnd, bebuf,
+			             fpos.beginIndex, fpos.endIndex, bbuf);
+			    }
+			}
+	        udtitvfmt_close(udifmt);
+	    }
+    }
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

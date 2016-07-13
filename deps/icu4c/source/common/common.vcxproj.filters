@@ -103,6 +103,9 @@
     <ClCompile Include="ucol_swp.cpp">
       <Filter>collation</Filter>
     </ClCompile>
+    <ClCompile Include="pluralmap.cpp">
+      <Filter>collections</Filter>
+    </ClCompile>
     <ClCompile Include="propsvec.c">
       <Filter>collections</Filter>
     </ClCompile>
@@ -274,10 +277,16 @@
     <ClCompile Include="dtintrv.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
+    <ClCompile Include="locdspnm.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
     <ClCompile Include="parsepos.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
-    <ClCompile Include="simplepatternformatter.cpp">
+    <ClCompile Include="simpleformatter.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="ucurr.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="ustrfmt.c">
@@ -340,7 +349,10 @@
     <ClCompile Include="uresbund.cpp">
       <Filter>locales &amp; resources</Filter>
     </ClCompile>
-    <ClCompile Include="uresdata.c">
+    <ClCompile Include="uresdata.cpp">
+      <Filter>locales &amp; resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resource.cpp">
       <Filter>locales &amp; resources</Filter>
     </ClCompile>
     <ClCompile Include="caniter.cpp">
@@ -460,6 +472,9 @@
     <ClCompile Include="cstring.c">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="cstr.cpp">
+      <Filter>strings</Filter>
+    </ClCompile>
     <ClCompile Include="cwchar.c">
       <Filter>strings</Filter>
     </ClCompile>
@@ -575,6 +590,9 @@
     <ClCompile Include="uloc_keytype.cpp">
       <Filter>locales &amp; resources</Filter>
     </ClCompile>
+    <ClCompile Include="filteredbrk.cpp">
+      <Filter>break iteration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ubidi_props.h">
@@ -620,6 +638,9 @@
       <Filter>collation</Filter>
     </ClInclude>
     <ClInclude Include="hash.h">
+      <Filter>collections</Filter>
+    </ClInclude>
+    <ClInclude Include="pluralmap.h">
       <Filter>collections</Filter>
     </ClInclude>
     <ClInclude Include="propsvec.h">
@@ -736,15 +757,30 @@
     <ClInclude Include="umapfile.h">
       <Filter>data &amp; memory</Filter>
     </ClInclude>
-    <ClInclude Include="simplepatternformatter.h">
+    <CustomBuild Include="unicode\locdspnm.h">
       <Filter>formatting</Filter>
-    </ClInclude>
+    </CustomBuild>
+    <CustomBuild Include="unicode\simpleformatter.h">
+      <Filter>formatting</Filter>
+    </CustomBuild>
     <ClInclude Include="ustrfmt.h">
       <Filter>formatting</Filter>
     </ClInclude>
     <ClInclude Include="util.h">
       <Filter>formatting</Filter>
     </ClInclude>
+    <CustomBuild Include="unicode\ucurr.h">
+      <Filter>formatting</Filter>
+    </CustomBuild>
+    <ClInclude Include="ucurrimp.h">
+      <Filter>formatting</Filter>
+    </ClInclude>
+    <CustomBuild Include="unicode\udisplaycontext.h">
+      <Filter>formatting</Filter>
+    </CustomBuild>
+    <CustomBuild Include="unicode\uldnames.h">
+      <Filter>formatting</Filter>
+    </CustomBuild>
     <ClInclude Include="punycode.h">
       <Filter>idna</Filter>
     </ClInclude>
@@ -758,6 +794,9 @@
       <Filter>locales &amp; resources</Filter>
     </ClInclude>
     <ClInclude Include="uresdata.h">
+      <Filter>locales &amp; resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
       <Filter>locales &amp; resources</Filter>
     </ClInclude>
     <ClInclude Include="uresimp.h">
@@ -820,10 +859,16 @@
     <ClInclude Include="cstring.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="cstr.h">
+      <Filter>strings</Filter>
+    </ClInclude>
     <ClInclude Include="cwchar.h">
       <Filter>strings</Filter>
     </ClInclude>
     <ClInclude Include="uinvchar.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="unistrappender.h">
       <Filter>strings</Filter>
     </ClInclude>
     <ClInclude Include="ustr_cnv.h">
@@ -861,6 +906,9 @@
     </ClInclude>
     <ClInclude Include="patternprops.h">
       <Filter>properties &amp; sets</Filter>
+    </ClInclude>
+    <ClInclude Include="unicode\filteredbrk.h">
+      <Filter>break iteration</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

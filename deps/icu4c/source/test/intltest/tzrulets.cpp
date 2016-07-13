@@ -1,7 +1,7 @@
 /*
 *******************************************************************************
-* Copyright (C) 2007-2014, International Business Machines Corporation and    *
-* others. All Rights Reserved.                                                *
+* Copyright (C) 2007-2016, International Business Machines Corporation and
+* others. All Rights Reserved.
 *******************************************************************************
 */
 
@@ -84,7 +84,7 @@ TestZIDEnumeration::TestZIDEnumeration(UBool all)
         len = tzenum->count(status);
     } else {
         tzenum = NULL;
-        len = (int32_t)sizeof(TESTZIDS)/sizeof(TESTZIDS[0]);
+        len = UPRV_LENGTHOF(TESTZIDS);
     }
 }
 
@@ -1111,7 +1111,7 @@ TimeZoneRuleTest::TestGetSimpleRules(void) {
         getUTCMillis(2005, UCAL_JULY, 1),
         getUTCMillis(2010, UCAL_NOVEMBER, 1),        
     };
-    int32_t numTimes = sizeof(testTimes)/sizeof(UDate);
+    int32_t numTimes = UPRV_LENGTHOF(testTimes);
     UErrorCode status = U_ZERO_ERROR;
     TestZIDEnumeration tzenum(!quick);
     InitialTimeZoneRule *initial;
@@ -2104,7 +2104,7 @@ TimeZoneRuleTest::TestT6216(void) {
     int32_t i, j;
 
     // Get test times
-    UDate times[sizeof(TestDates) / (3 * sizeof(int32_t))];
+    UDate times[UPRV_LENGTHOF(TestDates)];
     int32_t numTimes;
 
     UErrorCode status = U_ZERO_ERROR;

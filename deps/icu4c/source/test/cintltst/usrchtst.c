@@ -1,5 +1,5 @@
 /********************************************************************
- * Copyright (c) 2001-2011 International Business Machines 
+ * Copyright (c) 2001-2016 International Business Machines
  * Corporation and others. All Rights Reserved.
  ********************************************************************
  * File usrchtst.c
@@ -2604,8 +2604,8 @@ static void TestStrengthIdentical(void)
     
     UChar pattern[] = {0x05E9, 0x0591, 0x05E9};
     UChar text[]    = {0x05E9, 0x0592, 0x05E9};
-    int32_t pLen = sizeof (pattern) / sizeof(pattern[0]);
-    int32_t tLen = sizeof(text) / sizeof (text[0]);
+    int32_t pLen = UPRV_LENGTHOF(pattern);
+    int32_t tLen = UPRV_LENGTHOF(text);
     int32_t expectedPos = 0;
     int32_t expectedLen = 3;
 
@@ -2656,8 +2656,6 @@ static void TestStrengthIdentical(void)
 * TestUsingSearchCollator
 */
 
-#define ARRAY_LENGTH(array) (sizeof(array)/sizeof(array[0]))
-
 typedef struct {
     const UChar *   pattern;
     const int32_t * offsets;
@@ -2693,12 +2691,12 @@ static const int32_t scKoSrchOff23[] = { 5, 21, 25 };
 static const int32_t scKoSrchOff45[] = { 7, 30     };
 
 static const PatternAndOffsets scKoSrchPatternsOffsets[] = {
-    { scKoPat0, scKoSrchOff01, ARRAY_LENGTH(scKoSrchOff01) },
-    { scKoPat1, scKoSrchOff01, ARRAY_LENGTH(scKoSrchOff01) },
-    { scKoPat2, scKoSrchOff23, ARRAY_LENGTH(scKoSrchOff23) },
-    { scKoPat3, scKoSrchOff23, ARRAY_LENGTH(scKoSrchOff23) },
-    { scKoPat4, scKoSrchOff45, ARRAY_LENGTH(scKoSrchOff45) },
-    { scKoPat5, scKoSrchOff45, ARRAY_LENGTH(scKoSrchOff45) },
+    { scKoPat0, scKoSrchOff01, UPRV_LENGTHOF(scKoSrchOff01) },
+    { scKoPat1, scKoSrchOff01, UPRV_LENGTHOF(scKoSrchOff01) },
+    { scKoPat2, scKoSrchOff23, UPRV_LENGTHOF(scKoSrchOff23) },
+    { scKoPat3, scKoSrchOff23, UPRV_LENGTHOF(scKoSrchOff23) },
+    { scKoPat4, scKoSrchOff45, UPRV_LENGTHOF(scKoSrchOff45) },
+    { scKoPat5, scKoSrchOff45, UPRV_LENGTHOF(scKoSrchOff45) },
     { NULL,     NULL,          0                           }
 };
 
@@ -2708,12 +2706,12 @@ static const int32_t scKoStndOff3[]  = { 25    };
 static const int32_t scKoStndOff45[] = { 7, 30 };
 
 static const PatternAndOffsets scKoStndPatternsOffsets[] = {
-    { scKoPat0, scKoStndOff01, ARRAY_LENGTH(scKoStndOff01) },
-    { scKoPat1, scKoStndOff01, ARRAY_LENGTH(scKoStndOff01) },
-    { scKoPat2, scKoStndOff2,  ARRAY_LENGTH(scKoStndOff2)  },
-    { scKoPat3, scKoStndOff3,  ARRAY_LENGTH(scKoStndOff3)  },
-    { scKoPat4, scKoStndOff45, ARRAY_LENGTH(scKoStndOff45) },
-    { scKoPat5, scKoStndOff45, ARRAY_LENGTH(scKoStndOff45) },
+    { scKoPat0, scKoStndOff01, UPRV_LENGTHOF(scKoStndOff01) },
+    { scKoPat1, scKoStndOff01, UPRV_LENGTHOF(scKoStndOff01) },
+    { scKoPat2, scKoStndOff2,  UPRV_LENGTHOF(scKoStndOff2)  },
+    { scKoPat3, scKoStndOff3,  UPRV_LENGTHOF(scKoStndOff3)  },
+    { scKoPat4, scKoStndOff45, UPRV_LENGTHOF(scKoStndOff45) },
+    { scKoPat5, scKoStndOff45, UPRV_LENGTHOF(scKoStndOff45) },
     { NULL,     NULL,          0                           }
 };
 
@@ -2898,8 +2896,8 @@ static void TestPCEBuffer_100df(void) {
     { 0x0020, 0x0020, 0x00df, 0x0020, 0x0041, 0x00df, 0x0020, 0x0061, 0x00df, 0x0020, 0x00c5, 0x00df, 0x0020, 0x212b, 0x00df, 0x0020, 0x0041, 0x030a, 0x00df, 0x0020, 0x00e5, 0x00df, 0x0020, 0x0061, 0x02da, 0x00df, 0x0020, 0x0061, 0x030a, 0x00df, 0x0020, 0xd8fa, 0xdeae, 0x00df, 0x0020, 0x2027, 0x00df }; /* 38 cp, 9 of them unpaired surrogates */
   UChar source[] = 
     { 0x0020, 0x0020, 0x00df, 0x0020, 0x0041, 0x00df, 0x0020, 0x0061, 0x00df, 0x0020, 0x00c5, 0x00df, 0x0020, 0x212b, 0x00df, 0x0020, 0x0041, 0x030a, 0x00df, 0x0020, 0x00e5, 0x00df, 0x0020, 0x0061, 0x02da, 0x00df, 0x0020, 0x0061, 0x030a, 0x00df, 0x0020, 0xd8fa, 0xdeae, 0x00df, 0x0020, 0x2027, 0x00df };
-  uint32_t searchLen = sizeof(search)/sizeof(UChar);
-  uint32_t sourceLen = sizeof(source)/sizeof(UChar);
+  uint32_t searchLen = UPRV_LENGTHOF(search);
+  uint32_t sourceLen = UPRV_LENGTHOF(source);
   TestPCEBuffer_with(search,searchLen,source,sourceLen);
  }
 
@@ -2909,8 +2907,8 @@ static void TestPCEBuffer_2surr(void) {
     { 0x0020, 0x0020, 0xdfff, 0x0020, 0x0041, 0xdfff, 0x0020, 0x0061, 0xdfff, 0x0020, 0x00c5, 0xdfff, 0x0020, 0x212b, 0xdfff, 0x0020, 0x0041, 0x030a, 0xdfff, 0x0020, 0x00e5, 0xdfff, 0x0020, 0x0061, 0x02da, 0xdfff, 0x0020, 0x0061, 0x030a, 0xdfff, 0x0020, 0xd8fa, 0xdeae, 0xdfff, 0x0020, 0x2027, 0xdfff }; /* 38 cp, 9 of them unpaired surrogates */
   UChar source[] = 
     { 0x0020, 0x0020, 0xdfff, 0x0020, 0x0041, 0xdfff, 0x0020, 0x0061, 0xdfff, 0x0020, 0x00c5, 0xdfff, 0x0020, 0x212b, 0xdfff, 0x0020, 0x0041, 0x030a, 0xdfff, 0x0020, 0x00e5, 0xdfff, 0x0020, 0x0061, 0x02da, 0xdfff, 0x0020, 0x0061, 0x030a, 0xdfff, 0x0020, 0xd8fa, 0xdeae, 0xdfff, 0x0020, 0x2027, 0xdfff };
-  uint32_t searchLen = sizeof(search)/sizeof(UChar);
-  uint32_t sourceLen = sizeof(source)/sizeof(UChar);
+  uint32_t searchLen = UPRV_LENGTHOF(search);
+  uint32_t sourceLen = UPRV_LENGTHOF(source);
   TestPCEBuffer_with(search,searchLen,source,sourceLen);
 }
 
@@ -2929,8 +2927,8 @@ static void TestMatchFollowedByIgnorables(void) {
     int32_t matchLength = 0;
     const int32_t expectedMatchLength = 1;
 
-    searchLen = sizeof(search)/sizeof(UChar);
-    sourceLen = sizeof(source)/sizeof(UChar);
+    searchLen = UPRV_LENGTHOF(search);
+    sourceLen = UPRV_LENGTHOF(source);
 
     coll = ucol_openFromShortString("LHR_AN_CX_EX_FX_HX_NX_S3",
                                     FALSE,
@@ -2985,6 +2983,24 @@ static void TestMatchFollowedByIgnorables(void) {
     usearch_close(usearch);
     ubrk_close(ubrk);
     ucol_close(coll);
+}
+
+static void TestIndicPrefixMatch(void)
+{
+    int count = 0;
+    UErrorCode status = U_ZERO_ERROR;
+    open(&status);
+    if (U_FAILURE(status)) {
+        log_err_status(status, "Unable to open static collators %s\n", u_errorName(status));
+        return;
+    }
+    while (INDICPREFIXMATCH[count].text != NULL) {
+        if (!assertEqual(INDICPREFIXMATCH[count])) {
+            log_err("Error at test number %d\n", count);
+        }
+        count ++;
+    }
+    close();
 }
 
 /**
@@ -3049,6 +3065,7 @@ void addSearchTest(TestNode** root)
     addTest(root, &TestPCEBuffer_100df, "tscoll/usrchtst/TestPCEBuffer/1_00df");
     addTest(root, &TestPCEBuffer_2surr, "tscoll/usrchtst/TestPCEBuffer/2_dfff");
     addTest(root, &TestMatchFollowedByIgnorables, "tscoll/usrchtst/TestMatchFollowedByIgnorables");
+    addTest(root, &TestIndicPrefixMatch, "tscoll/usrchtst/TestIndicPrefixMatch");
 }
 
 #endif /* #if !UCONFIG_NO_COLLATION */

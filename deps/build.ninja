@@ -2298,11 +2298,11 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/os2/Makefile gettext/os2/README.OS2 gettext/PACKAGING $
     gettext/README gettext/README.woe32 gettext/THANKS $
     gettext/windows/gettext.rc gettext/windows/windres-options
-  srcdir = $top_srcdir/gettext
   name = gettext
   configure = ./configure
-  destdir = $builddir/gettext
   workdir = $intdir/gettext
+  destdir = $builddir/gettext
+  srcdir = $top_srcdir/gettext
   configure_flags = --prefix=/ CC=$cc CXX=$cxx CFLAGS="$cflags $
       -Dalarm=alarm_disabled" CXXFLAGS="$cxxflags" LDFLAGS="$ldflags" $
       GSED=$sed --with-libiconv-prefix=$SDKROOT/usr --disable-static $
@@ -2319,8 +2319,97 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/as_is/os390/unpax-icu.sh icu4c/as_is/os400/bldiculd.sh $
     icu4c/as_is/os400/convertConfigure.sed icu4c/as_is/os400/cxxfilt.cpp $
     icu4c/as_is/os400/fixup-icu.sh icu4c/as_is/os400/iculd.c $
-    icu4c/as_is/os400/unpax-icu.sh icu4c/icu4c.css icu4c/license.html $
-    icu4c/packaging/PACKAGES icu4c/packaging/README $
+    icu4c/as_is/os400/unpax-icu.sh icu4c/icu4c.css $
+    icu4c/include/unicode/alphaindex.h icu4c/include/unicode/appendable.h $
+    icu4c/include/unicode/basictz.h icu4c/include/unicode/brkiter.h $
+    icu4c/include/unicode/bytestream.h icu4c/include/unicode/bytestrie.h $
+    icu4c/include/unicode/bytestriebuilder.h $
+    icu4c/include/unicode/calendar.h icu4c/include/unicode/caniter.h $
+    icu4c/include/unicode/chariter.h icu4c/include/unicode/choicfmt.h $
+    icu4c/include/unicode/coleitr.h icu4c/include/unicode/coll.h $
+    icu4c/include/unicode/compactdecimalformat.h $
+    icu4c/include/unicode/curramt.h icu4c/include/unicode/currpinf.h $
+    icu4c/include/unicode/currunit.h icu4c/include/unicode/datefmt.h $
+    icu4c/include/unicode/dbbi.h icu4c/include/unicode/dcfmtsym.h $
+    icu4c/include/unicode/decimfmt.h icu4c/include/unicode/docmain.h $
+    icu4c/include/unicode/dtfmtsym.h icu4c/include/unicode/dtintrv.h $
+    icu4c/include/unicode/dtitvfmt.h icu4c/include/unicode/dtitvinf.h $
+    icu4c/include/unicode/dtptngen.h icu4c/include/unicode/dtrule.h $
+    icu4c/include/unicode/enumset.h icu4c/include/unicode/errorcode.h $
+    icu4c/include/unicode/fieldpos.h icu4c/include/unicode/fmtable.h $
+    icu4c/include/unicode/format.h icu4c/include/unicode/fpositer.h $
+    icu4c/include/unicode/gender.h icu4c/include/unicode/gregocal.h $
+    icu4c/include/unicode/icudataver.h icu4c/include/unicode/icuplug.h $
+    icu4c/include/unicode/idna.h icu4c/include/unicode/listformatter.h $
+    icu4c/include/unicode/localpointer.h icu4c/include/unicode/locid.h $
+    icu4c/include/unicode/measfmt.h icu4c/include/unicode/measunit.h $
+    icu4c/include/unicode/measure.h icu4c/include/unicode/messagepattern.h $
+    icu4c/include/unicode/msgfmt.h icu4c/include/unicode/normalizer2.h $
+    icu4c/include/unicode/normlzr.h icu4c/include/unicode/numfmt.h $
+    icu4c/include/unicode/numsys.h icu4c/include/unicode/parseerr.h $
+    icu4c/include/unicode/parsepos.h icu4c/include/unicode/platform.h $
+    icu4c/include/unicode/plurfmt.h icu4c/include/unicode/plurrule.h $
+    icu4c/include/unicode/ptypes.h icu4c/include/unicode/putil.h $
+    icu4c/include/unicode/rbbi.h icu4c/include/unicode/rbnf.h $
+    icu4c/include/unicode/rbtz.h icu4c/include/unicode/regex.h $
+    icu4c/include/unicode/region.h icu4c/include/unicode/reldatefmt.h $
+    icu4c/include/unicode/rep.h icu4c/include/unicode/resbund.h $
+    icu4c/include/unicode/schriter.h $
+    icu4c/include/unicode/scientificnumberformatter.h $
+    icu4c/include/unicode/search.h icu4c/include/unicode/selfmt.h $
+    icu4c/include/unicode/simpleformatter.h $
+    icu4c/include/unicode/simpletz.h icu4c/include/unicode/smpdtfmt.h $
+    icu4c/include/unicode/sortkey.h icu4c/include/unicode/std_string.h $
+    icu4c/include/unicode/strenum.h icu4c/include/unicode/stringpiece.h $
+    icu4c/include/unicode/stringtriebuilder.h $
+    icu4c/include/unicode/stsearch.h icu4c/include/unicode/symtable.h $
+    icu4c/include/unicode/tblcoll.h icu4c/include/unicode/timezone.h $
+    icu4c/include/unicode/tmunit.h icu4c/include/unicode/tmutamt.h $
+    icu4c/include/unicode/tmutfmt.h icu4c/include/unicode/translit.h $
+    icu4c/include/unicode/tzfmt.h icu4c/include/unicode/tznames.h $
+    icu4c/include/unicode/tzrule.h icu4c/include/unicode/tztrans.h $
+    icu4c/include/unicode/ubidi.h icu4c/include/unicode/ubrk.h $
+    icu4c/include/unicode/ucal.h icu4c/include/unicode/ucasemap.h $
+    icu4c/include/unicode/ucat.h icu4c/include/unicode/uchar.h $
+    icu4c/include/unicode/ucharstrie.h $
+    icu4c/include/unicode/ucharstriebuilder.h $
+    icu4c/include/unicode/uchriter.h icu4c/include/unicode/uclean.h $
+    icu4c/include/unicode/ucnv.h icu4c/include/unicode/ucnv_cb.h $
+    icu4c/include/unicode/ucnv_err.h icu4c/include/unicode/ucnvsel.h $
+    icu4c/include/unicode/ucol.h icu4c/include/unicode/ucoleitr.h $
+    icu4c/include/unicode/uconfig.h icu4c/include/unicode/ucsdet.h $
+    icu4c/include/unicode/udat.h icu4c/include/unicode/udata.h $
+    icu4c/include/unicode/udateintervalformat.h $
+    icu4c/include/unicode/udatpg.h icu4c/include/unicode/udisplaycontext.h $
+    icu4c/include/unicode/uenum.h icu4c/include/unicode/ufieldpositer.h $
+    icu4c/include/unicode/uformattable.h icu4c/include/unicode/ugender.h $
+    icu4c/include/unicode/uidna.h icu4c/include/unicode/uiter.h $
+    icu4c/include/unicode/ulistformatter.h icu4c/include/unicode/uloc.h $
+    icu4c/include/unicode/ulocdata.h icu4c/include/unicode/umachine.h $
+    icu4c/include/unicode/umisc.h icu4c/include/unicode/umsg.h $
+    icu4c/include/unicode/unifilt.h icu4c/include/unicode/unifunct.h $
+    icu4c/include/unicode/unimatch.h icu4c/include/unicode/unirepl.h $
+    icu4c/include/unicode/uniset.h icu4c/include/unicode/unistr.h $
+    icu4c/include/unicode/unorm.h icu4c/include/unicode/unorm2.h $
+    icu4c/include/unicode/unum.h icu4c/include/unicode/unumsys.h $
+    icu4c/include/unicode/uobject.h icu4c/include/unicode/upluralrules.h $
+    icu4c/include/unicode/uregex.h icu4c/include/unicode/uregion.h $
+    icu4c/include/unicode/ureldatefmt.h icu4c/include/unicode/urename.h $
+    icu4c/include/unicode/urep.h icu4c/include/unicode/ures.h $
+    icu4c/include/unicode/uscript.h icu4c/include/unicode/usearch.h $
+    icu4c/include/unicode/uset.h icu4c/include/unicode/usetiter.h $
+    icu4c/include/unicode/ushape.h icu4c/include/unicode/uspoof.h $
+    icu4c/include/unicode/usprep.h icu4c/include/unicode/ustring.h $
+    icu4c/include/unicode/ustringtrie.h icu4c/include/unicode/utext.h $
+    icu4c/include/unicode/utf.h icu4c/include/unicode/utf16.h $
+    icu4c/include/unicode/utf32.h icu4c/include/unicode/utf8.h $
+    icu4c/include/unicode/utf_old.h icu4c/include/unicode/utmscale.h $
+    icu4c/include/unicode/utrace.h icu4c/include/unicode/utrans.h $
+    icu4c/include/unicode/utypes.h icu4c/include/unicode/uvernum.h $
+    icu4c/include/unicode/uversion.h icu4c/include/unicode/vtzone.h $
+    icu4c/lib/icudt.exp icu4c/lib/icudt.lib icu4c/lib/icuucd.exp $
+    icu4c/lib/icuucd.lib icu4c/lib/icuucd.pdb icu4c/LICENSE $
+    icu4c/license.html icu4c/packaging/PACKAGES icu4c/packaging/README $
     icu4c/packaging/rpm/icu.spec icu4c/readme.html $
     icu4c/source/acinclude.m4 icu4c/source/aclocal.m4 $
     icu4c/source/allinone/allinone.sln icu4c/source/allinone/icucheck.bat $
@@ -2335,30 +2424,33 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/cmemory.c icu4c/source/common/cmemory.h $
     icu4c/source/common/common.rc icu4c/source/common/common.vcxproj $
     icu4c/source/common/common.vcxproj.filters $
-    icu4c/source/common/cpputils.h icu4c/source/common/cstring.c $
+    icu4c/source/common/cpputils.h icu4c/source/common/cstr.cpp $
+    icu4c/source/common/cstr.h icu4c/source/common/cstring.c $
     icu4c/source/common/cstring.h icu4c/source/common/cwchar.c $
     icu4c/source/common/cwchar.h icu4c/source/common/dictbe.cpp $
     icu4c/source/common/dictbe.h icu4c/source/common/dictionarydata.cpp $
     icu4c/source/common/dictionarydata.h icu4c/source/common/dtintrv.cpp $
-    icu4c/source/common/errorcode.cpp $
+    icu4c/source/common/errorcode.cpp icu4c/source/common/filteredbrk.cpp $
     icu4c/source/common/filterednormalizer2.cpp icu4c/source/common/hash.h $
     icu4c/source/common/icudataver.c icu4c/source/common/icuplug.cpp $
     icu4c/source/common/icuplugimp.h icu4c/source/common/listformatter.cpp $
     icu4c/source/common/loadednormalizer2impl.cpp $
     icu4c/source/common/localsvc.h icu4c/source/common/locavailable.cpp $
     icu4c/source/common/locbased.cpp icu4c/source/common/locbased.h $
-    icu4c/source/common/locdispnames.cpp icu4c/source/common/locid.cpp $
-    icu4c/source/common/loclikely.cpp icu4c/source/common/locmap.c $
-    icu4c/source/common/locmap.h icu4c/source/common/locresdata.cpp $
-    icu4c/source/common/locutil.cpp icu4c/source/common/locutil.h $
-    icu4c/source/common/Makefile.in icu4c/source/common/messageimpl.h $
+    icu4c/source/common/locdispnames.cpp icu4c/source/common/locdspnm.cpp $
+    icu4c/source/common/locid.cpp icu4c/source/common/loclikely.cpp $
+    icu4c/source/common/locmap.c icu4c/source/common/locmap.h $
+    icu4c/source/common/locresdata.cpp icu4c/source/common/locutil.cpp $
+    icu4c/source/common/locutil.h icu4c/source/common/Makefile.in $
+    icu4c/source/common/messageimpl.h $
     icu4c/source/common/messagepattern.cpp icu4c/source/common/msvcres.h $
     icu4c/source/common/mutex.h icu4c/source/common/norm2_nfc_data.h $
     icu4c/source/common/norm2allmodes.h icu4c/source/common/normalizer2.cpp $
     icu4c/source/common/normalizer2impl.cpp $
     icu4c/source/common/normalizer2impl.h icu4c/source/common/normlzr.cpp $
     icu4c/source/common/parsepos.cpp icu4c/source/common/patternprops.cpp $
-    icu4c/source/common/patternprops.h icu4c/source/common/propname.cpp $
+    icu4c/source/common/patternprops.h icu4c/source/common/pluralmap.cpp $
+    icu4c/source/common/pluralmap.h icu4c/source/common/propname.cpp $
     icu4c/source/common/propname.h icu4c/source/common/propname_data.h $
     icu4c/source/common/propsvec.c icu4c/source/common/propsvec.h $
     icu4c/source/common/punycode.cpp icu4c/source/common/punycode.h $
@@ -2372,7 +2464,8 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/rbbisetb.cpp icu4c/source/common/rbbisetb.h $
     icu4c/source/common/rbbistbl.cpp icu4c/source/common/rbbitblb.cpp $
     icu4c/source/common/rbbitblb.h icu4c/source/common/resbund.cpp $
-    icu4c/source/common/resbund_cnv.cpp icu4c/source/common/ruleiter.cpp $
+    icu4c/source/common/resbund_cnv.cpp icu4c/source/common/resource.cpp $
+    icu4c/source/common/resource.h icu4c/source/common/ruleiter.cpp $
     icu4c/source/common/ruleiter.h icu4c/source/common/schriter.cpp $
     icu4c/source/common/serv.cpp icu4c/source/common/serv.h $
     icu4c/source/common/servlk.cpp icu4c/source/common/servlkf.cpp $
@@ -2380,9 +2473,8 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/servnotf.cpp icu4c/source/common/servnotf.h $
     icu4c/source/common/servrbf.cpp icu4c/source/common/servslkf.cpp $
     icu4c/source/common/sharedobject.cpp icu4c/source/common/sharedobject.h $
-    icu4c/source/common/simplepatternformatter.cpp $
-    icu4c/source/common/simplepatternformatter.h $
-    icu4c/source/common/sprpimpl.h icu4c/source/common/stringpiece.cpp $
+    icu4c/source/common/simpleformatter.cpp icu4c/source/common/sprpimpl.h $
+    icu4c/source/common/stringpiece.cpp $
     icu4c/source/common/stringtriebuilder.cpp $
     icu4c/source/common/uarrsort.c icu4c/source/common/uarrsort.h $
     icu4c/source/common/uassert.h icu4c/source/common/ubidi.c $
@@ -2417,7 +2509,8 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/ucnvmbcs.cpp icu4c/source/common/ucnvmbcs.h $
     icu4c/source/common/ucnvscsu.c icu4c/source/common/ucnvsel.cpp $
     icu4c/source/common/ucol_data.h icu4c/source/common/ucol_swp.cpp $
-    icu4c/source/common/ucol_swp.h icu4c/source/common/udata.cpp $
+    icu4c/source/common/ucol_swp.h icu4c/source/common/ucurr.cpp $
+    icu4c/source/common/ucurrimp.h icu4c/source/common/udata.cpp $
     icu4c/source/common/udatamem.c icu4c/source/common/udatamem.h $
     icu4c/source/common/udataswp.c icu4c/source/common/udataswp.h $
     icu4c/source/common/uelement.h icu4c/source/common/uenum.c $
@@ -2444,11 +2537,13 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/unicode/dtintrv.h $
     icu4c/source/common/unicode/enumset.h $
     icu4c/source/common/unicode/errorcode.h $
+    icu4c/source/common/unicode/filteredbrk.h $
     icu4c/source/common/unicode/icudataver.h $
     icu4c/source/common/unicode/icuplug.h $
     icu4c/source/common/unicode/idna.h $
     icu4c/source/common/unicode/listformatter.h $
     icu4c/source/common/unicode/localpointer.h $
+    icu4c/source/common/unicode/locdspnm.h $
     icu4c/source/common/unicode/locid.h $
     icu4c/source/common/unicode/messagepattern.h $
     icu4c/source/common/unicode/normalizer2.h $
@@ -2460,6 +2555,7 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/unicode/putil.h icu4c/source/common/unicode/rbbi.h $
     icu4c/source/common/unicode/rep.h icu4c/source/common/unicode/resbund.h $
     icu4c/source/common/unicode/schriter.h $
+    icu4c/source/common/unicode/simpleformatter.h $
     icu4c/source/common/unicode/std_string.h $
     icu4c/source/common/unicode/strenum.h $
     icu4c/source/common/unicode/stringpiece.h $
@@ -2476,8 +2572,11 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/unicode/ucnv_err.h $
     icu4c/source/common/unicode/ucnvsel.h $
     icu4c/source/common/unicode/uconfig.h $
-    icu4c/source/common/unicode/udata.h icu4c/source/common/unicode/uenum.h $
-    icu4c/source/common/unicode/uidna.h icu4c/source/common/unicode/uiter.h $
+    icu4c/source/common/unicode/ucurr.h icu4c/source/common/unicode/udata.h $
+    icu4c/source/common/unicode/udisplaycontext.h $
+    icu4c/source/common/unicode/uenum.h icu4c/source/common/unicode/uidna.h $
+    icu4c/source/common/unicode/uiter.h $
+    icu4c/source/common/unicode/uldnames.h $
     icu4c/source/common/unicode/ulistformatter.h $
     icu4c/source/common/unicode/uloc.h $
     icu4c/source/common/unicode/umachine.h $
@@ -2516,20 +2615,20 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/common/unistr_case_locale.cpp $
     icu4c/source/common/unistr_cnv.cpp icu4c/source/common/unistr_props.cpp $
     icu4c/source/common/unistr_titlecase_brkiter.cpp $
-    icu4c/source/common/unorm.cpp icu4c/source/common/unormcmp.cpp $
-    icu4c/source/common/unormimp.h icu4c/source/common/uobject.cpp $
-    icu4c/source/common/uposixdefs.h icu4c/source/common/uprops.cpp $
-    icu4c/source/common/uprops.h icu4c/source/common/ures_cnv.c $
-    icu4c/source/common/uresbund.cpp icu4c/source/common/uresdata.c $
-    icu4c/source/common/uresdata.h icu4c/source/common/uresimp.h $
-    icu4c/source/common/ureslocs.h icu4c/source/common/usc_impl.c $
-    icu4c/source/common/usc_impl.h icu4c/source/common/uscript.c $
-    icu4c/source/common/uscript_props.cpp icu4c/source/common/uset.cpp $
-    icu4c/source/common/uset_imp.h icu4c/source/common/uset_props.cpp $
-    icu4c/source/common/usetiter.cpp icu4c/source/common/ushape.cpp $
-    icu4c/source/common/usprep.cpp icu4c/source/common/ustack.cpp $
-    icu4c/source/common/ustr_cnv.cpp icu4c/source/common/ustr_cnv.h $
-    icu4c/source/common/ustr_imp.h $
+    icu4c/source/common/unistrappender.h icu4c/source/common/unorm.cpp $
+    icu4c/source/common/unormcmp.cpp icu4c/source/common/unormimp.h $
+    icu4c/source/common/uobject.cpp icu4c/source/common/uposixdefs.h $
+    icu4c/source/common/uprops.cpp icu4c/source/common/uprops.h $
+    icu4c/source/common/ures_cnv.c icu4c/source/common/uresbund.cpp $
+    icu4c/source/common/uresdata.cpp icu4c/source/common/uresdata.h $
+    icu4c/source/common/uresimp.h icu4c/source/common/ureslocs.h $
+    icu4c/source/common/usc_impl.c icu4c/source/common/usc_impl.h $
+    icu4c/source/common/uscript.c icu4c/source/common/uscript_props.cpp $
+    icu4c/source/common/uset.cpp icu4c/source/common/uset_imp.h $
+    icu4c/source/common/uset_props.cpp icu4c/source/common/usetiter.cpp $
+    icu4c/source/common/ushape.cpp icu4c/source/common/usprep.cpp $
+    icu4c/source/common/ustack.cpp icu4c/source/common/ustr_cnv.cpp $
+    icu4c/source/common/ustr_cnv.h icu4c/source/common/ustr_imp.h $
     icu4c/source/common/ustr_titlecase_brkiter.cpp $
     icu4c/source/common/ustr_wcs.cpp icu4c/source/common/ustrcase.cpp $
     icu4c/source/common/ustrcase_locale.cpp $
@@ -2551,9 +2650,10 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/config/dist.mk icu4c/source/config/gmakever.mk $
     icu4c/source/config/icu-config-bottom $
     icu4c/source/config/icu-config-top icu4c/source/config/icu-config.1.in $
-    icu4c/source/config/icu.pc.in icu4c/source/config/make2sh.sed $
-    icu4c/source/config/Makefile.inc.in icu4c/source/config/mh-aix-gcc $
-    icu4c/source/config/mh-aix-va icu4c/source/config/mh-alpha-linux-cc $
+    icu4c/source/config/icu.pc.in icu4c/source/config/m4/icu-conditional.m4 $
+    icu4c/source/config/make2sh.sed icu4c/source/config/Makefile.inc.in $
+    icu4c/source/config/mh-aix-gcc icu4c/source/config/mh-aix-va $
+    icu4c/source/config/mh-alpha-linux-cc $
     icu4c/source/config/mh-alpha-linux-gcc icu4c/source/config/mh-alpha-osf $
     icu4c/source/config/mh-beos icu4c/source/config/mh-bsd-gcc $
     icu4c/source/config/mh-cygwin icu4c/source/config/mh-cygwin-msvc $
@@ -2571,775 +2671,24 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/config/windows-update.sed.in icu4c/source/config.guess $
     icu4c/source/config.sub icu4c/source/configure $
     icu4c/source/configure.ac icu4c/source/data/build.xml $
-    icu4c/source/data/cldr-icu-readme.txt icu4c/source/data/curr/af.txt $
-    icu4c/source/data/curr/af_NA.txt icu4c/source/data/curr/agq.txt $
-    icu4c/source/data/curr/ak.txt icu4c/source/data/curr/am.txt $
-    icu4c/source/data/curr/ar.txt icu4c/source/data/curr/ar_AE.txt $
-    icu4c/source/data/curr/ar_DJ.txt icu4c/source/data/curr/ar_ER.txt $
-    icu4c/source/data/curr/ar_LB.txt icu4c/source/data/curr/ar_SO.txt $
-    icu4c/source/data/curr/ar_SS.txt icu4c/source/data/curr/as.txt $
-    icu4c/source/data/curr/asa.txt icu4c/source/data/curr/az.txt $
-    icu4c/source/data/curr/az_AZ.txt icu4c/source/data/curr/az_Cyrl.txt $
-    icu4c/source/data/curr/az_Latn.txt $
-    icu4c/source/data/curr/az_Latn_AZ.txt icu4c/source/data/curr/bas.txt $
-    icu4c/source/data/curr/be.txt icu4c/source/data/curr/bem.txt $
-    icu4c/source/data/curr/bez.txt icu4c/source/data/curr/bg.txt $
-    icu4c/source/data/curr/bm.txt icu4c/source/data/curr/bm_Latn.txt $
-    icu4c/source/data/curr/bn.txt icu4c/source/data/curr/bo.txt $
-    icu4c/source/data/curr/bo_IN.txt icu4c/source/data/curr/br.txt $
-    icu4c/source/data/curr/brx.txt icu4c/source/data/curr/bs.txt $
-    icu4c/source/data/curr/bs_BA.txt icu4c/source/data/curr/bs_Cyrl.txt $
-    icu4c/source/data/curr/bs_Latn.txt $
-    icu4c/source/data/curr/bs_Latn_BA.txt icu4c/source/data/curr/ca.txt $
-    icu4c/source/data/curr/ca_FR.txt icu4c/source/data/curr/cgg.txt $
-    icu4c/source/data/curr/chr.txt icu4c/source/data/curr/cs.txt $
-    icu4c/source/data/curr/cy.txt icu4c/source/data/curr/da.txt $
-    icu4c/source/data/curr/dav.txt icu4c/source/data/curr/de.txt $
-    icu4c/source/data/curr/de_CH.txt icu4c/source/data/curr/de_LU.txt $
-    icu4c/source/data/curr/dje.txt icu4c/source/data/curr/dsb.txt $
-    icu4c/source/data/curr/dua.txt icu4c/source/data/curr/dyo.txt $
-    icu4c/source/data/curr/dz.txt icu4c/source/data/curr/ebu.txt $
-    icu4c/source/data/curr/ee.txt icu4c/source/data/curr/el.txt $
-    icu4c/source/data/curr/en.txt icu4c/source/data/curr/en_001.txt $
-    icu4c/source/data/curr/en_150.txt icu4c/source/data/curr/en_AG.txt $
-    icu4c/source/data/curr/en_AI.txt icu4c/source/data/curr/en_AU.txt $
-    icu4c/source/data/curr/en_BB.txt icu4c/source/data/curr/en_BE.txt $
-    icu4c/source/data/curr/en_BM.txt icu4c/source/data/curr/en_BS.txt $
-    icu4c/source/data/curr/en_BW.txt icu4c/source/data/curr/en_BZ.txt $
-    icu4c/source/data/curr/en_CA.txt icu4c/source/data/curr/en_CC.txt $
-    icu4c/source/data/curr/en_CK.txt icu4c/source/data/curr/en_CM.txt $
-    icu4c/source/data/curr/en_CX.txt icu4c/source/data/curr/en_DG.txt $
-    icu4c/source/data/curr/en_DM.txt icu4c/source/data/curr/en_ER.txt $
-    icu4c/source/data/curr/en_FJ.txt icu4c/source/data/curr/en_FK.txt $
-    icu4c/source/data/curr/en_FM.txt icu4c/source/data/curr/en_GB.txt $
-    icu4c/source/data/curr/en_GD.txt icu4c/source/data/curr/en_GG.txt $
-    icu4c/source/data/curr/en_GH.txt icu4c/source/data/curr/en_GI.txt $
-    icu4c/source/data/curr/en_GM.txt icu4c/source/data/curr/en_GY.txt $
-    icu4c/source/data/curr/en_HK.txt icu4c/source/data/curr/en_IE.txt $
-    icu4c/source/data/curr/en_IM.txt icu4c/source/data/curr/en_IN.txt $
-    icu4c/source/data/curr/en_IO.txt icu4c/source/data/curr/en_JE.txt $
-    icu4c/source/data/curr/en_JM.txt icu4c/source/data/curr/en_KE.txt $
-    icu4c/source/data/curr/en_KI.txt icu4c/source/data/curr/en_KN.txt $
-    icu4c/source/data/curr/en_KY.txt icu4c/source/data/curr/en_LC.txt $
-    icu4c/source/data/curr/en_LR.txt icu4c/source/data/curr/en_LS.txt $
-    icu4c/source/data/curr/en_MG.txt icu4c/source/data/curr/en_MO.txt $
-    icu4c/source/data/curr/en_MS.txt icu4c/source/data/curr/en_MT.txt $
-    icu4c/source/data/curr/en_MU.txt icu4c/source/data/curr/en_MW.txt $
-    icu4c/source/data/curr/en_MY.txt icu4c/source/data/curr/en_NA.txt $
-    icu4c/source/data/curr/en_NF.txt icu4c/source/data/curr/en_NG.txt $
-    icu4c/source/data/curr/en_NH.txt icu4c/source/data/curr/en_NR.txt $
-    icu4c/source/data/curr/en_NU.txt icu4c/source/data/curr/en_NZ.txt $
-    icu4c/source/data/curr/en_PG.txt icu4c/source/data/curr/en_PH.txt $
-    icu4c/source/data/curr/en_PK.txt icu4c/source/data/curr/en_PN.txt $
-    icu4c/source/data/curr/en_PW.txt icu4c/source/data/curr/en_RH.txt $
-    icu4c/source/data/curr/en_RW.txt icu4c/source/data/curr/en_SB.txt $
-    icu4c/source/data/curr/en_SC.txt icu4c/source/data/curr/en_SD.txt $
-    icu4c/source/data/curr/en_SG.txt icu4c/source/data/curr/en_SH.txt $
-    icu4c/source/data/curr/en_SL.txt icu4c/source/data/curr/en_SS.txt $
-    icu4c/source/data/curr/en_SX.txt icu4c/source/data/curr/en_SZ.txt $
-    icu4c/source/data/curr/en_TC.txt icu4c/source/data/curr/en_TK.txt $
-    icu4c/source/data/curr/en_TO.txt icu4c/source/data/curr/en_TT.txt $
-    icu4c/source/data/curr/en_TV.txt icu4c/source/data/curr/en_TZ.txt $
-    icu4c/source/data/curr/en_UG.txt icu4c/source/data/curr/en_VC.txt $
-    icu4c/source/data/curr/en_VG.txt icu4c/source/data/curr/en_VU.txt $
-    icu4c/source/data/curr/en_WS.txt icu4c/source/data/curr/en_ZA.txt $
-    icu4c/source/data/curr/en_ZM.txt icu4c/source/data/curr/en_ZW.txt $
-    icu4c/source/data/curr/eo.txt icu4c/source/data/curr/es.txt $
-    icu4c/source/data/curr/es_419.txt icu4c/source/data/curr/es_AR.txt $
-    icu4c/source/data/curr/es_BO.txt icu4c/source/data/curr/es_CL.txt $
-    icu4c/source/data/curr/es_CO.txt icu4c/source/data/curr/es_CR.txt $
-    icu4c/source/data/curr/es_CU.txt icu4c/source/data/curr/es_DO.txt $
-    icu4c/source/data/curr/es_EC.txt icu4c/source/data/curr/es_GQ.txt $
-    icu4c/source/data/curr/es_GT.txt icu4c/source/data/curr/es_HN.txt $
-    icu4c/source/data/curr/es_MX.txt icu4c/source/data/curr/es_NI.txt $
-    icu4c/source/data/curr/es_PA.txt icu4c/source/data/curr/es_PE.txt $
-    icu4c/source/data/curr/es_PH.txt icu4c/source/data/curr/es_PR.txt $
-    icu4c/source/data/curr/es_PY.txt icu4c/source/data/curr/es_SV.txt $
-    icu4c/source/data/curr/es_US.txt icu4c/source/data/curr/es_UY.txt $
-    icu4c/source/data/curr/es_VE.txt icu4c/source/data/curr/et.txt $
-    icu4c/source/data/curr/eu.txt icu4c/source/data/curr/ewo.txt $
-    icu4c/source/data/curr/fa.txt icu4c/source/data/curr/fa_AF.txt $
-    icu4c/source/data/curr/ff.txt icu4c/source/data/curr/ff_GN.txt $
-    icu4c/source/data/curr/ff_MR.txt icu4c/source/data/curr/fi.txt $
-    icu4c/source/data/curr/fil.txt icu4c/source/data/curr/fil_PH.txt $
-    icu4c/source/data/curr/fo.txt icu4c/source/data/curr/fr.txt $
-    icu4c/source/data/curr/fr_BI.txt icu4c/source/data/curr/fr_CA.txt $
-    icu4c/source/data/curr/fr_CD.txt icu4c/source/data/curr/fr_DJ.txt $
-    icu4c/source/data/curr/fr_DZ.txt icu4c/source/data/curr/fr_GN.txt $
-    icu4c/source/data/curr/fr_HT.txt icu4c/source/data/curr/fr_KM.txt $
-    icu4c/source/data/curr/fr_LU.txt icu4c/source/data/curr/fr_MG.txt $
-    icu4c/source/data/curr/fr_MR.txt icu4c/source/data/curr/fr_MU.txt $
-    icu4c/source/data/curr/fr_RW.txt icu4c/source/data/curr/fr_SC.txt $
-    icu4c/source/data/curr/fr_SY.txt icu4c/source/data/curr/fr_TN.txt $
-    icu4c/source/data/curr/fr_VU.txt icu4c/source/data/curr/fur.txt $
-    icu4c/source/data/curr/fy.txt icu4c/source/data/curr/ga.txt $
-    icu4c/source/data/curr/gd.txt icu4c/source/data/curr/gl.txt $
-    icu4c/source/data/curr/gsw.txt icu4c/source/data/curr/gu.txt $
-    icu4c/source/data/curr/guz.txt icu4c/source/data/curr/gv.txt $
-    icu4c/source/data/curr/ha.txt icu4c/source/data/curr/ha_GH.txt $
-    icu4c/source/data/curr/ha_Latn.txt $
-    icu4c/source/data/curr/ha_Latn_GH.txt $
-    icu4c/source/data/curr/ha_Latn_NE.txt $
-    icu4c/source/data/curr/ha_Latn_NG.txt icu4c/source/data/curr/ha_NE.txt $
-    icu4c/source/data/curr/ha_NG.txt icu4c/source/data/curr/haw.txt $
-    icu4c/source/data/curr/he.txt icu4c/source/data/curr/he_IL.txt $
-    icu4c/source/data/curr/hi.txt icu4c/source/data/curr/hr.txt $
-    icu4c/source/data/curr/hr_BA.txt icu4c/source/data/curr/hsb.txt $
-    icu4c/source/data/curr/hu.txt icu4c/source/data/curr/hy.txt $
-    icu4c/source/data/curr/id.txt icu4c/source/data/curr/id_ID.txt $
-    icu4c/source/data/curr/ig.txt icu4c/source/data/curr/ii.txt $
-    icu4c/source/data/curr/in.txt icu4c/source/data/curr/in_ID.txt $
-    icu4c/source/data/curr/is.txt icu4c/source/data/curr/it.txt $
-    icu4c/source/data/curr/iw.txt icu4c/source/data/curr/iw_IL.txt $
-    icu4c/source/data/curr/ja.txt icu4c/source/data/curr/ja_JP.txt $
-    icu4c/source/data/curr/ja_JP_TRADITIONAL.txt $
-    icu4c/source/data/curr/jgo.txt icu4c/source/data/curr/jmc.txt $
-    icu4c/source/data/curr/ka.txt icu4c/source/data/curr/kab.txt $
-    icu4c/source/data/curr/kam.txt icu4c/source/data/curr/kde.txt $
-    icu4c/source/data/curr/kea.txt icu4c/source/data/curr/khq.txt $
-    icu4c/source/data/curr/ki.txt icu4c/source/data/curr/kk.txt $
-    icu4c/source/data/curr/kk_Cyrl.txt $
-    icu4c/source/data/curr/kk_Cyrl_KZ.txt icu4c/source/data/curr/kk_KZ.txt $
-    icu4c/source/data/curr/kkj.txt icu4c/source/data/curr/kl.txt $
-    icu4c/source/data/curr/kln.txt icu4c/source/data/curr/km.txt $
-    icu4c/source/data/curr/kn.txt icu4c/source/data/curr/ko.txt $
-    icu4c/source/data/curr/kok.txt icu4c/source/data/curr/ks.txt $
-    icu4c/source/data/curr/ks_Arab.txt $
-    icu4c/source/data/curr/ks_Arab_IN.txt icu4c/source/data/curr/ks_IN.txt $
-    icu4c/source/data/curr/ksb.txt icu4c/source/data/curr/ksf.txt $
-    icu4c/source/data/curr/ksh.txt icu4c/source/data/curr/kw.txt $
-    icu4c/source/data/curr/ky.txt icu4c/source/data/curr/ky_Cyrl.txt $
-    icu4c/source/data/curr/ky_Cyrl_KG.txt icu4c/source/data/curr/ky_KG.txt $
-    icu4c/source/data/curr/lag.txt icu4c/source/data/curr/lb.txt $
-    icu4c/source/data/curr/lg.txt icu4c/source/data/curr/lkt.txt $
-    icu4c/source/data/curr/ln.txt icu4c/source/data/curr/ln_AO.txt $
-    icu4c/source/data/curr/lo.txt icu4c/source/data/curr/lt.txt $
-    icu4c/source/data/curr/lu.txt icu4c/source/data/curr/luo.txt $
-    icu4c/source/data/curr/luy.txt icu4c/source/data/curr/lv.txt $
-    icu4c/source/data/curr/mas.txt icu4c/source/data/curr/mas_TZ.txt $
-    icu4c/source/data/curr/mer.txt icu4c/source/data/curr/mfe.txt $
-    icu4c/source/data/curr/mg.txt icu4c/source/data/curr/mgh.txt $
-    icu4c/source/data/curr/mgo.txt icu4c/source/data/curr/mk.txt $
-    icu4c/source/data/curr/ml.txt icu4c/source/data/curr/mn.txt $
-    icu4c/source/data/curr/mn_Cyrl.txt $
-    icu4c/source/data/curr/mn_Cyrl_MN.txt icu4c/source/data/curr/mn_MN.txt $
-    icu4c/source/data/curr/mo.txt icu4c/source/data/curr/mr.txt $
-    icu4c/source/data/curr/ms.txt icu4c/source/data/curr/ms_BN.txt $
-    icu4c/source/data/curr/ms_Latn.txt $
-    icu4c/source/data/curr/ms_Latn_BN.txt $
-    icu4c/source/data/curr/ms_Latn_MY.txt $
-    icu4c/source/data/curr/ms_Latn_SG.txt icu4c/source/data/curr/ms_MY.txt $
-    icu4c/source/data/curr/ms_SG.txt icu4c/source/data/curr/mt.txt $
-    icu4c/source/data/curr/mua.txt icu4c/source/data/curr/my.txt $
-    icu4c/source/data/curr/naq.txt icu4c/source/data/curr/nb.txt $
-    icu4c/source/data/curr/nb_NO.txt icu4c/source/data/curr/nd.txt $
-    icu4c/source/data/curr/ne.txt icu4c/source/data/curr/nl.txt $
-    icu4c/source/data/curr/nl_AW.txt icu4c/source/data/curr/nl_BQ.txt $
-    icu4c/source/data/curr/nl_CW.txt icu4c/source/data/curr/nl_SR.txt $
-    icu4c/source/data/curr/nl_SX.txt icu4c/source/data/curr/nmg.txt $
-    icu4c/source/data/curr/nn.txt icu4c/source/data/curr/nn_NO.txt $
-    icu4c/source/data/curr/nnh.txt icu4c/source/data/curr/no.txt $
-    icu4c/source/data/curr/no_NO.txt icu4c/source/data/curr/no_NO_NY.txt $
-    icu4c/source/data/curr/nus.txt icu4c/source/data/curr/nyn.txt $
-    icu4c/source/data/curr/om.txt icu4c/source/data/curr/om_KE.txt $
-    icu4c/source/data/curr/or.txt icu4c/source/data/curr/os.txt $
-    icu4c/source/data/curr/os_RU.txt icu4c/source/data/curr/pa.txt $
-    icu4c/source/data/curr/pa_Arab.txt $
-    icu4c/source/data/curr/pa_Arab_PK.txt $
-    icu4c/source/data/curr/pa_Guru.txt $
-    icu4c/source/data/curr/pa_Guru_IN.txt icu4c/source/data/curr/pa_IN.txt $
-    icu4c/source/data/curr/pa_PK.txt icu4c/source/data/curr/pl.txt $
-    icu4c/source/data/curr/pool.res icu4c/source/data/curr/ps.txt $
-    icu4c/source/data/curr/pt.txt icu4c/source/data/curr/pt_AO.txt $
-    icu4c/source/data/curr/pt_CV.txt icu4c/source/data/curr/pt_GW.txt $
-    icu4c/source/data/curr/pt_MO.txt icu4c/source/data/curr/pt_MZ.txt $
-    icu4c/source/data/curr/pt_PT.txt icu4c/source/data/curr/pt_ST.txt $
-    icu4c/source/data/curr/pt_TL.txt icu4c/source/data/curr/qu.txt $
-    icu4c/source/data/curr/qu_BO.txt icu4c/source/data/curr/qu_EC.txt $
-    icu4c/source/data/curr/resfiles.mk icu4c/source/data/curr/rm.txt $
-    icu4c/source/data/curr/rn.txt icu4c/source/data/curr/ro.txt $
-    icu4c/source/data/curr/ro_MD.txt icu4c/source/data/curr/rof.txt $
-    icu4c/source/data/curr/root.txt icu4c/source/data/curr/ru.txt $
-    icu4c/source/data/curr/ru_BY.txt icu4c/source/data/curr/ru_KG.txt $
-    icu4c/source/data/curr/ru_KZ.txt icu4c/source/data/curr/ru_MD.txt $
-    icu4c/source/data/curr/rw.txt icu4c/source/data/curr/rwk.txt $
-    icu4c/source/data/curr/sah.txt icu4c/source/data/curr/saq.txt $
-    icu4c/source/data/curr/sbp.txt icu4c/source/data/curr/se.txt $
-    icu4c/source/data/curr/se_SE.txt icu4c/source/data/curr/seh.txt $
-    icu4c/source/data/curr/ses.txt icu4c/source/data/curr/sg.txt $
-    icu4c/source/data/curr/sh.txt icu4c/source/data/curr/sh_BA.txt $
-    icu4c/source/data/curr/sh_CS.txt icu4c/source/data/curr/sh_YU.txt $
-    icu4c/source/data/curr/shi.txt icu4c/source/data/curr/shi_Latn.txt $
-    icu4c/source/data/curr/shi_MA.txt icu4c/source/data/curr/shi_Tfng.txt $
-    icu4c/source/data/curr/shi_Tfng_MA.txt icu4c/source/data/curr/si.txt $
-    icu4c/source/data/curr/sk.txt icu4c/source/data/curr/sl.txt $
-    icu4c/source/data/curr/smn.txt icu4c/source/data/curr/sn.txt $
-    icu4c/source/data/curr/so.txt icu4c/source/data/curr/so_DJ.txt $
-    icu4c/source/data/curr/so_ET.txt icu4c/source/data/curr/so_KE.txt $
-    icu4c/source/data/curr/sq.txt icu4c/source/data/curr/sq_MK.txt $
-    icu4c/source/data/curr/sr.txt icu4c/source/data/curr/sr_BA.txt $
-    icu4c/source/data/curr/sr_CS.txt icu4c/source/data/curr/sr_Cyrl.txt $
-    icu4c/source/data/curr/sr_Cyrl_BA.txt $
-    icu4c/source/data/curr/sr_Cyrl_CS.txt $
-    icu4c/source/data/curr/sr_Cyrl_RS.txt $
-    icu4c/source/data/curr/sr_Cyrl_XK.txt $
-    icu4c/source/data/curr/sr_Cyrl_YU.txt $
-    icu4c/source/data/curr/sr_Latn.txt $
-    icu4c/source/data/curr/sr_Latn_BA.txt $
-    icu4c/source/data/curr/sr_Latn_CS.txt $
-    icu4c/source/data/curr/sr_Latn_ME.txt $
-    icu4c/source/data/curr/sr_Latn_RS.txt $
-    icu4c/source/data/curr/sr_Latn_YU.txt icu4c/source/data/curr/sr_ME.txt $
-    icu4c/source/data/curr/sr_RS.txt icu4c/source/data/curr/sr_XK.txt $
-    icu4c/source/data/curr/sr_YU.txt $
-    icu4c/source/data/curr/supplementalData.txt $
-    icu4c/source/data/curr/sv.txt icu4c/source/data/curr/sw.txt $
-    icu4c/source/data/curr/sw_CD.txt icu4c/source/data/curr/sw_UG.txt $
-    icu4c/source/data/curr/ta.txt icu4c/source/data/curr/ta_LK.txt $
-    icu4c/source/data/curr/ta_MY.txt icu4c/source/data/curr/ta_SG.txt $
-    icu4c/source/data/curr/te.txt icu4c/source/data/curr/teo.txt $
-    icu4c/source/data/curr/teo_KE.txt icu4c/source/data/curr/th.txt $
-    icu4c/source/data/curr/th_TH.txt $
-    icu4c/source/data/curr/th_TH_TRADITIONAL.txt $
-    icu4c/source/data/curr/ti.txt icu4c/source/data/curr/ti_ER.txt $
-    icu4c/source/data/curr/tl.txt icu4c/source/data/curr/tl_PH.txt $
-    icu4c/source/data/curr/to.txt icu4c/source/data/curr/tr.txt $
-    icu4c/source/data/curr/twq.txt icu4c/source/data/curr/tzm.txt $
-    icu4c/source/data/curr/tzm_Latn.txt $
-    icu4c/source/data/curr/tzm_Latn_MA.txt $
-    icu4c/source/data/curr/tzm_MA.txt icu4c/source/data/curr/ug.txt $
-    icu4c/source/data/curr/ug_Arab.txt $
-    icu4c/source/data/curr/ug_Arab_CN.txt icu4c/source/data/curr/ug_CN.txt $
-    icu4c/source/data/curr/uk.txt icu4c/source/data/curr/ur.txt $
-    icu4c/source/data/curr/ur_IN.txt icu4c/source/data/curr/uz.txt $
-    icu4c/source/data/curr/uz_AF.txt icu4c/source/data/curr/uz_Arab.txt $
-    icu4c/source/data/curr/uz_Arab_AF.txt $
-    icu4c/source/data/curr/uz_Cyrl.txt icu4c/source/data/curr/uz_Latn.txt $
-    icu4c/source/data/curr/uz_Latn_UZ.txt icu4c/source/data/curr/uz_UZ.txt $
-    icu4c/source/data/curr/vai.txt icu4c/source/data/curr/vai_Latn.txt $
-    icu4c/source/data/curr/vai_LR.txt icu4c/source/data/curr/vai_Vaii.txt $
-    icu4c/source/data/curr/vai_Vaii_LR.txt icu4c/source/data/curr/vi.txt $
-    icu4c/source/data/curr/vun.txt icu4c/source/data/curr/wae.txt $
-    icu4c/source/data/curr/xog.txt icu4c/source/data/curr/yav.txt $
-    icu4c/source/data/curr/yi.txt icu4c/source/data/curr/yo.txt $
-    icu4c/source/data/curr/yo_BJ.txt icu4c/source/data/curr/zgh.txt $
-    icu4c/source/data/curr/zh.txt icu4c/source/data/curr/zh_CN.txt $
-    icu4c/source/data/curr/zh_Hans.txt $
-    icu4c/source/data/curr/zh_Hans_CN.txt $
-    icu4c/source/data/curr/zh_Hans_HK.txt $
-    icu4c/source/data/curr/zh_Hans_MO.txt $
-    icu4c/source/data/curr/zh_Hans_SG.txt $
-    icu4c/source/data/curr/zh_Hant.txt $
-    icu4c/source/data/curr/zh_Hant_HK.txt $
-    icu4c/source/data/curr/zh_Hant_MO.txt $
-    icu4c/source/data/curr/zh_Hant_TW.txt icu4c/source/data/curr/zh_HK.txt $
-    icu4c/source/data/curr/zh_MO.txt icu4c/source/data/curr/zh_SG.txt $
-    icu4c/source/data/curr/zh_TW.txt icu4c/source/data/curr/zu.txt $
+    icu4c/source/data/cldr-icu-readme.txt $
     icu4c/source/data/icu-coll-deprecates.xml $
     icu4c/source/data/icu-config.xml $
     icu4c/source/data/icu-locale-deprecates.xml $
+    icu4c/source/data/icu-rbnf-deprecates.xml $
     icu4c/source/data/icu4j-readme.txt icu4c/source/data/icupkg.inc.in $
     icu4c/source/data/in/coll/ucadata-implicithan.icu $
     icu4c/source/data/in/coll/ucadata-unihan.icu $
-    icu4c/source/data/in/icudt55l.dat icu4c/source/data/in/nfc.nrm $
+    icu4c/source/data/in/icudt57l.dat icu4c/source/data/in/nfc.nrm $
     icu4c/source/data/in/nfkc.nrm icu4c/source/data/in/nfkc_cf.nrm $
     icu4c/source/data/in/pnames.icu icu4c/source/data/in/ubidi.icu $
     icu4c/source/data/in/ucase.icu icu4c/source/data/in/unames.icu $
     icu4c/source/data/in/uprops.icu icu4c/source/data/in/uts46.nrm $
-    icu4c/source/data/lang/af.txt icu4c/source/data/lang/agq.txt $
-    icu4c/source/data/lang/ak.txt icu4c/source/data/lang/am.txt $
-    icu4c/source/data/lang/ar.txt icu4c/source/data/lang/ar_EG.txt $
-    icu4c/source/data/lang/as.txt icu4c/source/data/lang/asa.txt $
-    icu4c/source/data/lang/az.txt icu4c/source/data/lang/az_AZ.txt $
-    icu4c/source/data/lang/az_Cyrl.txt icu4c/source/data/lang/az_Latn.txt $
-    icu4c/source/data/lang/az_Latn_AZ.txt icu4c/source/data/lang/bas.txt $
-    icu4c/source/data/lang/be.txt icu4c/source/data/lang/bem.txt $
-    icu4c/source/data/lang/bez.txt icu4c/source/data/lang/bg.txt $
-    icu4c/source/data/lang/bm.txt icu4c/source/data/lang/bm_Latn.txt $
-    icu4c/source/data/lang/bn.txt icu4c/source/data/lang/bo.txt $
-    icu4c/source/data/lang/br.txt icu4c/source/data/lang/brx.txt $
-    icu4c/source/data/lang/bs.txt icu4c/source/data/lang/bs_BA.txt $
-    icu4c/source/data/lang/bs_Cyrl.txt icu4c/source/data/lang/bs_Latn.txt $
-    icu4c/source/data/lang/bs_Latn_BA.txt icu4c/source/data/lang/ca.txt $
-    icu4c/source/data/lang/cgg.txt icu4c/source/data/lang/chr.txt $
-    icu4c/source/data/lang/cs.txt icu4c/source/data/lang/cy.txt $
-    icu4c/source/data/lang/da.txt icu4c/source/data/lang/dav.txt $
-    icu4c/source/data/lang/de.txt icu4c/source/data/lang/de_CH.txt $
-    icu4c/source/data/lang/dje.txt icu4c/source/data/lang/dsb.txt $
-    icu4c/source/data/lang/dua.txt icu4c/source/data/lang/dyo.txt $
-    icu4c/source/data/lang/dz.txt icu4c/source/data/lang/ebu.txt $
-    icu4c/source/data/lang/ee.txt icu4c/source/data/lang/el.txt $
-    icu4c/source/data/lang/en.txt icu4c/source/data/lang/en_150.txt $
-    icu4c/source/data/lang/en_AG.txt icu4c/source/data/lang/en_AI.txt $
-    icu4c/source/data/lang/en_AU.txt icu4c/source/data/lang/en_BB.txt $
-    icu4c/source/data/lang/en_BE.txt icu4c/source/data/lang/en_BM.txt $
-    icu4c/source/data/lang/en_BS.txt icu4c/source/data/lang/en_BW.txt $
-    icu4c/source/data/lang/en_BZ.txt icu4c/source/data/lang/en_CA.txt $
-    icu4c/source/data/lang/en_CC.txt icu4c/source/data/lang/en_CK.txt $
-    icu4c/source/data/lang/en_CM.txt icu4c/source/data/lang/en_CX.txt $
-    icu4c/source/data/lang/en_DG.txt icu4c/source/data/lang/en_DM.txt $
-    icu4c/source/data/lang/en_ER.txt icu4c/source/data/lang/en_FJ.txt $
-    icu4c/source/data/lang/en_FK.txt icu4c/source/data/lang/en_FM.txt $
-    icu4c/source/data/lang/en_GB.txt icu4c/source/data/lang/en_GD.txt $
-    icu4c/source/data/lang/en_GG.txt icu4c/source/data/lang/en_GH.txt $
-    icu4c/source/data/lang/en_GI.txt icu4c/source/data/lang/en_GM.txt $
-    icu4c/source/data/lang/en_GY.txt icu4c/source/data/lang/en_HK.txt $
-    icu4c/source/data/lang/en_IE.txt icu4c/source/data/lang/en_IM.txt $
-    icu4c/source/data/lang/en_IN.txt icu4c/source/data/lang/en_IO.txt $
-    icu4c/source/data/lang/en_JE.txt icu4c/source/data/lang/en_JM.txt $
-    icu4c/source/data/lang/en_KE.txt icu4c/source/data/lang/en_KI.txt $
-    icu4c/source/data/lang/en_KN.txt icu4c/source/data/lang/en_KY.txt $
-    icu4c/source/data/lang/en_LC.txt icu4c/source/data/lang/en_LR.txt $
-    icu4c/source/data/lang/en_LS.txt icu4c/source/data/lang/en_MG.txt $
-    icu4c/source/data/lang/en_MO.txt icu4c/source/data/lang/en_MS.txt $
-    icu4c/source/data/lang/en_MT.txt icu4c/source/data/lang/en_MU.txt $
-    icu4c/source/data/lang/en_MW.txt icu4c/source/data/lang/en_MY.txt $
-    icu4c/source/data/lang/en_NA.txt icu4c/source/data/lang/en_NF.txt $
-    icu4c/source/data/lang/en_NG.txt icu4c/source/data/lang/en_NH.txt $
-    icu4c/source/data/lang/en_NR.txt icu4c/source/data/lang/en_NU.txt $
-    icu4c/source/data/lang/en_NZ.txt icu4c/source/data/lang/en_PG.txt $
-    icu4c/source/data/lang/en_PH.txt icu4c/source/data/lang/en_PK.txt $
-    icu4c/source/data/lang/en_PN.txt icu4c/source/data/lang/en_PW.txt $
-    icu4c/source/data/lang/en_RH.txt icu4c/source/data/lang/en_RW.txt $
-    icu4c/source/data/lang/en_SB.txt icu4c/source/data/lang/en_SC.txt $
-    icu4c/source/data/lang/en_SD.txt icu4c/source/data/lang/en_SG.txt $
-    icu4c/source/data/lang/en_SH.txt icu4c/source/data/lang/en_SL.txt $
-    icu4c/source/data/lang/en_SS.txt icu4c/source/data/lang/en_SX.txt $
-    icu4c/source/data/lang/en_SZ.txt icu4c/source/data/lang/en_TC.txt $
-    icu4c/source/data/lang/en_TK.txt icu4c/source/data/lang/en_TO.txt $
-    icu4c/source/data/lang/en_TT.txt icu4c/source/data/lang/en_TV.txt $
-    icu4c/source/data/lang/en_TZ.txt icu4c/source/data/lang/en_UG.txt $
-    icu4c/source/data/lang/en_VC.txt icu4c/source/data/lang/en_VG.txt $
-    icu4c/source/data/lang/en_VU.txt icu4c/source/data/lang/en_WS.txt $
-    icu4c/source/data/lang/en_ZA.txt icu4c/source/data/lang/en_ZM.txt $
-    icu4c/source/data/lang/en_ZW.txt icu4c/source/data/lang/eo.txt $
-    icu4c/source/data/lang/es.txt icu4c/source/data/lang/es_419.txt $
-    icu4c/source/data/lang/es_AR.txt icu4c/source/data/lang/es_BO.txt $
-    icu4c/source/data/lang/es_CL.txt icu4c/source/data/lang/es_CO.txt $
-    icu4c/source/data/lang/es_CR.txt icu4c/source/data/lang/es_CU.txt $
-    icu4c/source/data/lang/es_DO.txt icu4c/source/data/lang/es_EC.txt $
-    icu4c/source/data/lang/es_GT.txt icu4c/source/data/lang/es_HN.txt $
-    icu4c/source/data/lang/es_MX.txt icu4c/source/data/lang/es_NI.txt $
-    icu4c/source/data/lang/es_PA.txt icu4c/source/data/lang/es_PE.txt $
-    icu4c/source/data/lang/es_PR.txt icu4c/source/data/lang/es_PY.txt $
-    icu4c/source/data/lang/es_SV.txt icu4c/source/data/lang/es_US.txt $
-    icu4c/source/data/lang/es_UY.txt icu4c/source/data/lang/es_VE.txt $
-    icu4c/source/data/lang/et.txt icu4c/source/data/lang/eu.txt $
-    icu4c/source/data/lang/ewo.txt icu4c/source/data/lang/fa.txt $
-    icu4c/source/data/lang/fa_AF.txt icu4c/source/data/lang/ff.txt $
-    icu4c/source/data/lang/fi.txt icu4c/source/data/lang/fil.txt $
-    icu4c/source/data/lang/fil_PH.txt icu4c/source/data/lang/fo.txt $
-    icu4c/source/data/lang/fr.txt icu4c/source/data/lang/fr_CA.txt $
-    icu4c/source/data/lang/fur.txt icu4c/source/data/lang/fy.txt $
-    icu4c/source/data/lang/ga.txt icu4c/source/data/lang/gd.txt $
-    icu4c/source/data/lang/gl.txt icu4c/source/data/lang/gsw.txt $
-    icu4c/source/data/lang/gu.txt icu4c/source/data/lang/guz.txt $
-    icu4c/source/data/lang/gv.txt icu4c/source/data/lang/ha.txt $
-    icu4c/source/data/lang/ha_GH.txt icu4c/source/data/lang/ha_Latn.txt $
-    icu4c/source/data/lang/ha_Latn_GH.txt $
-    icu4c/source/data/lang/ha_Latn_NE.txt $
-    icu4c/source/data/lang/ha_Latn_NG.txt icu4c/source/data/lang/ha_NE.txt $
-    icu4c/source/data/lang/ha_NG.txt icu4c/source/data/lang/haw.txt $
-    icu4c/source/data/lang/he.txt icu4c/source/data/lang/he_IL.txt $
-    icu4c/source/data/lang/hi.txt icu4c/source/data/lang/hr.txt $
-    icu4c/source/data/lang/hsb.txt icu4c/source/data/lang/hu.txt $
-    icu4c/source/data/lang/hy.txt icu4c/source/data/lang/id.txt $
-    icu4c/source/data/lang/id_ID.txt icu4c/source/data/lang/ig.txt $
-    icu4c/source/data/lang/ii.txt icu4c/source/data/lang/in.txt $
-    icu4c/source/data/lang/in_ID.txt icu4c/source/data/lang/is.txt $
-    icu4c/source/data/lang/it.txt icu4c/source/data/lang/iw.txt $
-    icu4c/source/data/lang/iw_IL.txt icu4c/source/data/lang/ja.txt $
-    icu4c/source/data/lang/ja_JP.txt $
-    icu4c/source/data/lang/ja_JP_TRADITIONAL.txt $
-    icu4c/source/data/lang/jgo.txt icu4c/source/data/lang/jmc.txt $
-    icu4c/source/data/lang/ka.txt icu4c/source/data/lang/kab.txt $
-    icu4c/source/data/lang/kam.txt icu4c/source/data/lang/kde.txt $
-    icu4c/source/data/lang/kea.txt icu4c/source/data/lang/khq.txt $
-    icu4c/source/data/lang/ki.txt icu4c/source/data/lang/kk.txt $
-    icu4c/source/data/lang/kk_Cyrl.txt $
-    icu4c/source/data/lang/kk_Cyrl_KZ.txt icu4c/source/data/lang/kk_KZ.txt $
-    icu4c/source/data/lang/kkj.txt icu4c/source/data/lang/kl.txt $
-    icu4c/source/data/lang/kln.txt icu4c/source/data/lang/km.txt $
-    icu4c/source/data/lang/kn.txt icu4c/source/data/lang/ko.txt $
-    icu4c/source/data/lang/kok.txt icu4c/source/data/lang/ks.txt $
-    icu4c/source/data/lang/ks_Arab.txt $
-    icu4c/source/data/lang/ks_Arab_IN.txt icu4c/source/data/lang/ks_IN.txt $
-    icu4c/source/data/lang/ksb.txt icu4c/source/data/lang/ksf.txt $
-    icu4c/source/data/lang/ksh.txt icu4c/source/data/lang/kw.txt $
-    icu4c/source/data/lang/ky.txt icu4c/source/data/lang/ky_Cyrl.txt $
-    icu4c/source/data/lang/ky_Cyrl_KG.txt icu4c/source/data/lang/ky_KG.txt $
-    icu4c/source/data/lang/lag.txt icu4c/source/data/lang/lb.txt $
-    icu4c/source/data/lang/lg.txt icu4c/source/data/lang/lkt.txt $
-    icu4c/source/data/lang/ln.txt icu4c/source/data/lang/lo.txt $
-    icu4c/source/data/lang/lt.txt icu4c/source/data/lang/lu.txt $
-    icu4c/source/data/lang/luo.txt icu4c/source/data/lang/luy.txt $
-    icu4c/source/data/lang/lv.txt icu4c/source/data/lang/mas.txt $
-    icu4c/source/data/lang/mer.txt icu4c/source/data/lang/mfe.txt $
-    icu4c/source/data/lang/mg.txt icu4c/source/data/lang/mgh.txt $
-    icu4c/source/data/lang/mgo.txt icu4c/source/data/lang/mk.txt $
-    icu4c/source/data/lang/ml.txt icu4c/source/data/lang/mn.txt $
-    icu4c/source/data/lang/mn_Cyrl.txt $
-    icu4c/source/data/lang/mn_Cyrl_MN.txt icu4c/source/data/lang/mn_MN.txt $
-    icu4c/source/data/lang/mo.txt icu4c/source/data/lang/mr.txt $
-    icu4c/source/data/lang/ms.txt icu4c/source/data/lang/ms_BN.txt $
-    icu4c/source/data/lang/ms_Latn.txt $
-    icu4c/source/data/lang/ms_Latn_BN.txt $
-    icu4c/source/data/lang/ms_Latn_MY.txt $
-    icu4c/source/data/lang/ms_Latn_SG.txt icu4c/source/data/lang/ms_MY.txt $
-    icu4c/source/data/lang/ms_SG.txt icu4c/source/data/lang/mt.txt $
-    icu4c/source/data/lang/mua.txt icu4c/source/data/lang/my.txt $
-    icu4c/source/data/lang/naq.txt icu4c/source/data/lang/nb.txt $
-    icu4c/source/data/lang/nb_NO.txt icu4c/source/data/lang/nd.txt $
-    icu4c/source/data/lang/ne.txt icu4c/source/data/lang/nl.txt $
-    icu4c/source/data/lang/nmg.txt icu4c/source/data/lang/nn.txt $
-    icu4c/source/data/lang/nn_NO.txt icu4c/source/data/lang/nnh.txt $
-    icu4c/source/data/lang/no.txt icu4c/source/data/lang/no_NO.txt $
-    icu4c/source/data/lang/no_NO_NY.txt icu4c/source/data/lang/nus.txt $
-    icu4c/source/data/lang/nyn.txt icu4c/source/data/lang/om.txt $
-    icu4c/source/data/lang/or.txt icu4c/source/data/lang/os.txt $
-    icu4c/source/data/lang/pa.txt icu4c/source/data/lang/pa_Arab.txt $
-    icu4c/source/data/lang/pa_Arab_PK.txt $
-    icu4c/source/data/lang/pa_Guru.txt $
-    icu4c/source/data/lang/pa_Guru_IN.txt icu4c/source/data/lang/pa_IN.txt $
-    icu4c/source/data/lang/pa_PK.txt icu4c/source/data/lang/pl.txt $
-    icu4c/source/data/lang/pool.res icu4c/source/data/lang/ps.txt $
-    icu4c/source/data/lang/pt.txt icu4c/source/data/lang/pt_AO.txt $
-    icu4c/source/data/lang/pt_CV.txt icu4c/source/data/lang/pt_GW.txt $
-    icu4c/source/data/lang/pt_MO.txt icu4c/source/data/lang/pt_MZ.txt $
-    icu4c/source/data/lang/pt_PT.txt icu4c/source/data/lang/pt_ST.txt $
-    icu4c/source/data/lang/pt_TL.txt icu4c/source/data/lang/qu.txt $
-    icu4c/source/data/lang/resfiles.mk icu4c/source/data/lang/rm.txt $
-    icu4c/source/data/lang/rn.txt icu4c/source/data/lang/ro.txt $
-    icu4c/source/data/lang/ro_MD.txt icu4c/source/data/lang/rof.txt $
-    icu4c/source/data/lang/root.txt icu4c/source/data/lang/ru.txt $
-    icu4c/source/data/lang/rw.txt icu4c/source/data/lang/rwk.txt $
-    icu4c/source/data/lang/sah.txt icu4c/source/data/lang/saq.txt $
-    icu4c/source/data/lang/sbp.txt icu4c/source/data/lang/se.txt $
-    icu4c/source/data/lang/se_FI.txt icu4c/source/data/lang/seh.txt $
-    icu4c/source/data/lang/ses.txt icu4c/source/data/lang/sg.txt $
-    icu4c/source/data/lang/sh.txt icu4c/source/data/lang/sh_BA.txt $
-    icu4c/source/data/lang/sh_CS.txt icu4c/source/data/lang/sh_YU.txt $
-    icu4c/source/data/lang/shi.txt icu4c/source/data/lang/shi_Latn.txt $
-    icu4c/source/data/lang/shi_MA.txt icu4c/source/data/lang/shi_Tfng.txt $
-    icu4c/source/data/lang/shi_Tfng_MA.txt icu4c/source/data/lang/si.txt $
-    icu4c/source/data/lang/sk.txt icu4c/source/data/lang/sl.txt $
-    icu4c/source/data/lang/smn.txt icu4c/source/data/lang/sn.txt $
-    icu4c/source/data/lang/so.txt icu4c/source/data/lang/sq.txt $
-    icu4c/source/data/lang/sr.txt icu4c/source/data/lang/sr_BA.txt $
-    icu4c/source/data/lang/sr_CS.txt icu4c/source/data/lang/sr_Cyrl.txt $
-    icu4c/source/data/lang/sr_Cyrl_BA.txt $
-    icu4c/source/data/lang/sr_Cyrl_CS.txt $
-    icu4c/source/data/lang/sr_Cyrl_RS.txt $
-    icu4c/source/data/lang/sr_Cyrl_XK.txt $
-    icu4c/source/data/lang/sr_Cyrl_YU.txt $
-    icu4c/source/data/lang/sr_Latn.txt $
-    icu4c/source/data/lang/sr_Latn_BA.txt $
-    icu4c/source/data/lang/sr_Latn_CS.txt $
-    icu4c/source/data/lang/sr_Latn_ME.txt $
-    icu4c/source/data/lang/sr_Latn_RS.txt $
-    icu4c/source/data/lang/sr_Latn_YU.txt icu4c/source/data/lang/sr_ME.txt $
-    icu4c/source/data/lang/sr_RS.txt icu4c/source/data/lang/sr_XK.txt $
-    icu4c/source/data/lang/sr_YU.txt icu4c/source/data/lang/sv.txt $
-    icu4c/source/data/lang/sv_FI.txt icu4c/source/data/lang/sw.txt $
-    icu4c/source/data/lang/sw_CD.txt icu4c/source/data/lang/ta.txt $
-    icu4c/source/data/lang/te.txt icu4c/source/data/lang/teo.txt $
-    icu4c/source/data/lang/th.txt icu4c/source/data/lang/th_TH.txt $
-    icu4c/source/data/lang/th_TH_TRADITIONAL.txt $
-    icu4c/source/data/lang/ti.txt icu4c/source/data/lang/tl.txt $
-    icu4c/source/data/lang/tl_PH.txt icu4c/source/data/lang/to.txt $
-    icu4c/source/data/lang/tr.txt icu4c/source/data/lang/twq.txt $
-    icu4c/source/data/lang/tzm.txt icu4c/source/data/lang/tzm_Latn.txt $
-    icu4c/source/data/lang/tzm_Latn_MA.txt $
-    icu4c/source/data/lang/tzm_MA.txt icu4c/source/data/lang/ug.txt $
-    icu4c/source/data/lang/ug_Arab.txt $
-    icu4c/source/data/lang/ug_Arab_CN.txt icu4c/source/data/lang/ug_CN.txt $
-    icu4c/source/data/lang/uk.txt icu4c/source/data/lang/ur.txt $
-    icu4c/source/data/lang/ur_IN.txt icu4c/source/data/lang/uz.txt $
-    icu4c/source/data/lang/uz_AF.txt icu4c/source/data/lang/uz_Arab.txt $
-    icu4c/source/data/lang/uz_Arab_AF.txt $
-    icu4c/source/data/lang/uz_Cyrl.txt icu4c/source/data/lang/uz_Latn.txt $
-    icu4c/source/data/lang/uz_Latn_UZ.txt icu4c/source/data/lang/uz_UZ.txt $
-    icu4c/source/data/lang/vai.txt icu4c/source/data/lang/vai_Latn.txt $
-    icu4c/source/data/lang/vai_LR.txt icu4c/source/data/lang/vai_Vaii.txt $
-    icu4c/source/data/lang/vai_Vaii_LR.txt icu4c/source/data/lang/vi.txt $
-    icu4c/source/data/lang/vun.txt icu4c/source/data/lang/wae.txt $
-    icu4c/source/data/lang/xog.txt icu4c/source/data/lang/yav.txt $
-    icu4c/source/data/lang/yi.txt icu4c/source/data/lang/yo.txt $
-    icu4c/source/data/lang/yo_BJ.txt icu4c/source/data/lang/zgh.txt $
-    icu4c/source/data/lang/zh.txt icu4c/source/data/lang/zh_CN.txt $
-    icu4c/source/data/lang/zh_Hans.txt $
-    icu4c/source/data/lang/zh_Hans_CN.txt $
-    icu4c/source/data/lang/zh_Hans_HK.txt $
-    icu4c/source/data/lang/zh_Hans_MO.txt $
-    icu4c/source/data/lang/zh_Hans_SG.txt $
-    icu4c/source/data/lang/zh_Hant.txt $
-    icu4c/source/data/lang/zh_Hant_HK.txt $
-    icu4c/source/data/lang/zh_Hant_MO.txt $
-    icu4c/source/data/lang/zh_Hant_TW.txt icu4c/source/data/lang/zh_HK.txt $
-    icu4c/source/data/lang/zh_MO.txt icu4c/source/data/lang/zh_SG.txt $
-    icu4c/source/data/lang/zh_TW.txt icu4c/source/data/lang/zu.txt $
     icu4c/source/data/makedata.mak icu4c/source/data/makedata.vcxproj $
     icu4c/source/data/makedata.vcxproj.filters $
-    icu4c/source/data/Makefile.in $
-    icu4c/source/data/misc/currencyNumericCodes.txt $
-    icu4c/source/data/misc/dayPeriods.txt $
-    icu4c/source/data/misc/genderList.txt icu4c/source/data/misc/icudata.rc $
-    icu4c/source/data/misc/icustd.txt icu4c/source/data/misc/icuver.txt $
-    icu4c/source/data/misc/keyTypeData.txt $
-    icu4c/source/data/misc/likelySubtags.txt $
-    icu4c/source/data/misc/metadata.txt $
-    icu4c/source/data/misc/metaZones.txt $
-    icu4c/source/data/misc/miscfiles.mk $
-    icu4c/source/data/misc/numberingSystems.txt $
-    icu4c/source/data/misc/plurals.txt $
-    icu4c/source/data/misc/postalCodeData.txt $
-    icu4c/source/data/misc/supplementalData.txt $
-    icu4c/source/data/misc/timezoneTypes.txt $
-    icu4c/source/data/misc/windowsZones.txt $
-    icu4c/source/data/misc/zoneinfo64.txt $
-    icu4c/source/data/pkgdataMakefile.in icu4c/source/data/region/af.txt $
-    icu4c/source/data/region/agq.txt icu4c/source/data/region/ak.txt $
-    icu4c/source/data/region/am.txt icu4c/source/data/region/ar.txt $
-    icu4c/source/data/region/ar_AE.txt icu4c/source/data/region/as.txt $
-    icu4c/source/data/region/asa.txt icu4c/source/data/region/az.txt $
-    icu4c/source/data/region/az_AZ.txt icu4c/source/data/region/az_Cyrl.txt $
-    icu4c/source/data/region/az_Latn.txt $
-    icu4c/source/data/region/az_Latn_AZ.txt $
-    icu4c/source/data/region/bas.txt icu4c/source/data/region/be.txt $
-    icu4c/source/data/region/bem.txt icu4c/source/data/region/bez.txt $
-    icu4c/source/data/region/bg.txt icu4c/source/data/region/bm.txt $
-    icu4c/source/data/region/bm_Latn.txt icu4c/source/data/region/bn.txt $
-    icu4c/source/data/region/bo.txt icu4c/source/data/region/bo_IN.txt $
-    icu4c/source/data/region/br.txt icu4c/source/data/region/brx.txt $
-    icu4c/source/data/region/bs.txt icu4c/source/data/region/bs_BA.txt $
-    icu4c/source/data/region/bs_Cyrl.txt $
-    icu4c/source/data/region/bs_Latn.txt $
-    icu4c/source/data/region/bs_Latn_BA.txt icu4c/source/data/region/ca.txt $
-    icu4c/source/data/region/cgg.txt icu4c/source/data/region/chr.txt $
-    icu4c/source/data/region/cs.txt icu4c/source/data/region/cy.txt $
-    icu4c/source/data/region/da.txt icu4c/source/data/region/dav.txt $
-    icu4c/source/data/region/de.txt icu4c/source/data/region/de_CH.txt $
-    icu4c/source/data/region/dje.txt icu4c/source/data/region/dsb.txt $
-    icu4c/source/data/region/dua.txt icu4c/source/data/region/dyo.txt $
-    icu4c/source/data/region/dz.txt icu4c/source/data/region/ebu.txt $
-    icu4c/source/data/region/ee.txt icu4c/source/data/region/el.txt $
-    icu4c/source/data/region/en.txt icu4c/source/data/region/en_150.txt $
-    icu4c/source/data/region/en_AG.txt icu4c/source/data/region/en_AI.txt $
-    icu4c/source/data/region/en_AU.txt icu4c/source/data/region/en_BB.txt $
-    icu4c/source/data/region/en_BE.txt icu4c/source/data/region/en_BM.txt $
-    icu4c/source/data/region/en_BS.txt icu4c/source/data/region/en_BW.txt $
-    icu4c/source/data/region/en_BZ.txt icu4c/source/data/region/en_CA.txt $
-    icu4c/source/data/region/en_CC.txt icu4c/source/data/region/en_CK.txt $
-    icu4c/source/data/region/en_CM.txt icu4c/source/data/region/en_CX.txt $
-    icu4c/source/data/region/en_DG.txt icu4c/source/data/region/en_DM.txt $
-    icu4c/source/data/region/en_ER.txt icu4c/source/data/region/en_FJ.txt $
-    icu4c/source/data/region/en_FK.txt icu4c/source/data/region/en_FM.txt $
-    icu4c/source/data/region/en_GB.txt icu4c/source/data/region/en_GD.txt $
-    icu4c/source/data/region/en_GG.txt icu4c/source/data/region/en_GH.txt $
-    icu4c/source/data/region/en_GI.txt icu4c/source/data/region/en_GM.txt $
-    icu4c/source/data/region/en_GY.txt icu4c/source/data/region/en_HK.txt $
-    icu4c/source/data/region/en_IE.txt icu4c/source/data/region/en_IM.txt $
-    icu4c/source/data/region/en_IN.txt icu4c/source/data/region/en_IO.txt $
-    icu4c/source/data/region/en_JE.txt icu4c/source/data/region/en_JM.txt $
-    icu4c/source/data/region/en_KE.txt icu4c/source/data/region/en_KI.txt $
-    icu4c/source/data/region/en_KN.txt icu4c/source/data/region/en_KY.txt $
-    icu4c/source/data/region/en_LC.txt icu4c/source/data/region/en_LR.txt $
-    icu4c/source/data/region/en_LS.txt icu4c/source/data/region/en_MG.txt $
-    icu4c/source/data/region/en_MO.txt icu4c/source/data/region/en_MS.txt $
-    icu4c/source/data/region/en_MT.txt icu4c/source/data/region/en_MU.txt $
-    icu4c/source/data/region/en_MW.txt icu4c/source/data/region/en_MY.txt $
-    icu4c/source/data/region/en_NA.txt icu4c/source/data/region/en_NF.txt $
-    icu4c/source/data/region/en_NG.txt icu4c/source/data/region/en_NH.txt $
-    icu4c/source/data/region/en_NR.txt icu4c/source/data/region/en_NU.txt $
-    icu4c/source/data/region/en_NZ.txt icu4c/source/data/region/en_PG.txt $
-    icu4c/source/data/region/en_PH.txt icu4c/source/data/region/en_PK.txt $
-    icu4c/source/data/region/en_PN.txt icu4c/source/data/region/en_PW.txt $
-    icu4c/source/data/region/en_RH.txt icu4c/source/data/region/en_RW.txt $
-    icu4c/source/data/region/en_SB.txt icu4c/source/data/region/en_SC.txt $
-    icu4c/source/data/region/en_SD.txt icu4c/source/data/region/en_SG.txt $
-    icu4c/source/data/region/en_SH.txt icu4c/source/data/region/en_SL.txt $
-    icu4c/source/data/region/en_SS.txt icu4c/source/data/region/en_SX.txt $
-    icu4c/source/data/region/en_SZ.txt icu4c/source/data/region/en_TC.txt $
-    icu4c/source/data/region/en_TK.txt icu4c/source/data/region/en_TO.txt $
-    icu4c/source/data/region/en_TT.txt icu4c/source/data/region/en_TV.txt $
-    icu4c/source/data/region/en_TZ.txt icu4c/source/data/region/en_UG.txt $
-    icu4c/source/data/region/en_VC.txt icu4c/source/data/region/en_VG.txt $
-    icu4c/source/data/region/en_VU.txt icu4c/source/data/region/en_WS.txt $
-    icu4c/source/data/region/en_ZA.txt icu4c/source/data/region/en_ZM.txt $
-    icu4c/source/data/region/en_ZW.txt icu4c/source/data/region/eo.txt $
-    icu4c/source/data/region/es.txt icu4c/source/data/region/es_419.txt $
-    icu4c/source/data/region/es_AR.txt icu4c/source/data/region/es_BO.txt $
-    icu4c/source/data/region/es_CL.txt icu4c/source/data/region/es_CO.txt $
-    icu4c/source/data/region/es_CR.txt icu4c/source/data/region/es_CU.txt $
-    icu4c/source/data/region/es_DO.txt icu4c/source/data/region/es_EC.txt $
-    icu4c/source/data/region/es_GT.txt icu4c/source/data/region/es_HN.txt $
-    icu4c/source/data/region/es_MX.txt icu4c/source/data/region/es_NI.txt $
-    icu4c/source/data/region/es_PA.txt icu4c/source/data/region/es_PE.txt $
-    icu4c/source/data/region/es_PR.txt icu4c/source/data/region/es_PY.txt $
-    icu4c/source/data/region/es_SV.txt icu4c/source/data/region/es_US.txt $
-    icu4c/source/data/region/es_UY.txt icu4c/source/data/region/es_VE.txt $
-    icu4c/source/data/region/et.txt icu4c/source/data/region/eu.txt $
-    icu4c/source/data/region/ewo.txt icu4c/source/data/region/fa.txt $
-    icu4c/source/data/region/fa_AF.txt icu4c/source/data/region/ff.txt $
-    icu4c/source/data/region/fi.txt icu4c/source/data/region/fil.txt $
-    icu4c/source/data/region/fil_PH.txt icu4c/source/data/region/fo.txt $
-    icu4c/source/data/region/fr.txt icu4c/source/data/region/fr_CA.txt $
-    icu4c/source/data/region/fur.txt icu4c/source/data/region/fy.txt $
-    icu4c/source/data/region/ga.txt icu4c/source/data/region/gd.txt $
-    icu4c/source/data/region/gl.txt icu4c/source/data/region/gsw.txt $
-    icu4c/source/data/region/gu.txt icu4c/source/data/region/guz.txt $
-    icu4c/source/data/region/gv.txt icu4c/source/data/region/ha.txt $
-    icu4c/source/data/region/ha_GH.txt icu4c/source/data/region/ha_Latn.txt $
-    icu4c/source/data/region/ha_Latn_GH.txt $
-    icu4c/source/data/region/ha_Latn_NE.txt $
-    icu4c/source/data/region/ha_Latn_NG.txt $
-    icu4c/source/data/region/ha_NE.txt icu4c/source/data/region/ha_NG.txt $
-    icu4c/source/data/region/haw.txt icu4c/source/data/region/he.txt $
-    icu4c/source/data/region/he_IL.txt icu4c/source/data/region/hi.txt $
-    icu4c/source/data/region/hr.txt icu4c/source/data/region/hsb.txt $
-    icu4c/source/data/region/hu.txt icu4c/source/data/region/hy.txt $
-    icu4c/source/data/region/id.txt icu4c/source/data/region/id_ID.txt $
-    icu4c/source/data/region/ig.txt icu4c/source/data/region/ii.txt $
-    icu4c/source/data/region/in.txt icu4c/source/data/region/in_ID.txt $
-    icu4c/source/data/region/is.txt icu4c/source/data/region/it.txt $
-    icu4c/source/data/region/iw.txt icu4c/source/data/region/iw_IL.txt $
-    icu4c/source/data/region/ja.txt icu4c/source/data/region/ja_JP.txt $
-    icu4c/source/data/region/ja_JP_TRADITIONAL.txt $
-    icu4c/source/data/region/jgo.txt icu4c/source/data/region/jmc.txt $
-    icu4c/source/data/region/ka.txt icu4c/source/data/region/kab.txt $
-    icu4c/source/data/region/kam.txt icu4c/source/data/region/kde.txt $
-    icu4c/source/data/region/kea.txt icu4c/source/data/region/khq.txt $
-    icu4c/source/data/region/ki.txt icu4c/source/data/region/kk.txt $
-    icu4c/source/data/region/kk_Cyrl.txt $
-    icu4c/source/data/region/kk_Cyrl_KZ.txt $
-    icu4c/source/data/region/kk_KZ.txt icu4c/source/data/region/kkj.txt $
-    icu4c/source/data/region/kl.txt icu4c/source/data/region/kln.txt $
-    icu4c/source/data/region/km.txt icu4c/source/data/region/kn.txt $
-    icu4c/source/data/region/ko.txt icu4c/source/data/region/kok.txt $
-    icu4c/source/data/region/ks.txt icu4c/source/data/region/ks_Arab.txt $
-    icu4c/source/data/region/ks_Arab_IN.txt $
-    icu4c/source/data/region/ks_IN.txt icu4c/source/data/region/ksb.txt $
-    icu4c/source/data/region/ksf.txt icu4c/source/data/region/ksh.txt $
-    icu4c/source/data/region/kw.txt icu4c/source/data/region/ky.txt $
-    icu4c/source/data/region/ky_Cyrl.txt $
-    icu4c/source/data/region/ky_Cyrl_KG.txt $
-    icu4c/source/data/region/ky_KG.txt icu4c/source/data/region/lag.txt $
-    icu4c/source/data/region/lb.txt icu4c/source/data/region/lg.txt $
-    icu4c/source/data/region/lkt.txt icu4c/source/data/region/ln.txt $
-    icu4c/source/data/region/lo.txt icu4c/source/data/region/lt.txt $
-    icu4c/source/data/region/lu.txt icu4c/source/data/region/luo.txt $
-    icu4c/source/data/region/luy.txt icu4c/source/data/region/lv.txt $
-    icu4c/source/data/region/mas.txt icu4c/source/data/region/mer.txt $
-    icu4c/source/data/region/mfe.txt icu4c/source/data/region/mg.txt $
-    icu4c/source/data/region/mgh.txt icu4c/source/data/region/mgo.txt $
-    icu4c/source/data/region/mk.txt icu4c/source/data/region/ml.txt $
-    icu4c/source/data/region/mn.txt icu4c/source/data/region/mn_Cyrl.txt $
-    icu4c/source/data/region/mn_Cyrl_MN.txt $
-    icu4c/source/data/region/mn_MN.txt icu4c/source/data/region/mo.txt $
-    icu4c/source/data/region/mr.txt icu4c/source/data/region/ms.txt $
-    icu4c/source/data/region/ms_BN.txt icu4c/source/data/region/ms_Latn.txt $
-    icu4c/source/data/region/ms_Latn_BN.txt $
-    icu4c/source/data/region/ms_Latn_MY.txt $
-    icu4c/source/data/region/ms_Latn_SG.txt $
-    icu4c/source/data/region/ms_MY.txt icu4c/source/data/region/ms_SG.txt $
-    icu4c/source/data/region/mt.txt icu4c/source/data/region/mua.txt $
-    icu4c/source/data/region/my.txt icu4c/source/data/region/naq.txt $
-    icu4c/source/data/region/nb.txt icu4c/source/data/region/nb_NO.txt $
-    icu4c/source/data/region/nd.txt icu4c/source/data/region/ne.txt $
-    icu4c/source/data/region/nl.txt icu4c/source/data/region/nmg.txt $
-    icu4c/source/data/region/nn.txt icu4c/source/data/region/nn_NO.txt $
-    icu4c/source/data/region/nnh.txt icu4c/source/data/region/no.txt $
-    icu4c/source/data/region/no_NO.txt $
-    icu4c/source/data/region/no_NO_NY.txt icu4c/source/data/region/nus.txt $
-    icu4c/source/data/region/nyn.txt icu4c/source/data/region/om.txt $
-    icu4c/source/data/region/or.txt icu4c/source/data/region/os.txt $
-    icu4c/source/data/region/pa.txt icu4c/source/data/region/pa_Arab.txt $
-    icu4c/source/data/region/pa_Arab_PK.txt $
-    icu4c/source/data/region/pa_Guru.txt $
-    icu4c/source/data/region/pa_Guru_IN.txt $
-    icu4c/source/data/region/pa_IN.txt icu4c/source/data/region/pa_PK.txt $
-    icu4c/source/data/region/pl.txt icu4c/source/data/region/pool.res $
-    icu4c/source/data/region/ps.txt icu4c/source/data/region/pt.txt $
-    icu4c/source/data/region/pt_AO.txt icu4c/source/data/region/pt_CV.txt $
-    icu4c/source/data/region/pt_GW.txt icu4c/source/data/region/pt_MO.txt $
-    icu4c/source/data/region/pt_MZ.txt icu4c/source/data/region/pt_PT.txt $
-    icu4c/source/data/region/pt_ST.txt icu4c/source/data/region/pt_TL.txt $
-    icu4c/source/data/region/qu.txt icu4c/source/data/region/resfiles.mk $
-    icu4c/source/data/region/rm.txt icu4c/source/data/region/rn.txt $
-    icu4c/source/data/region/ro.txt icu4c/source/data/region/ro_MD.txt $
-    icu4c/source/data/region/rof.txt icu4c/source/data/region/root.txt $
-    icu4c/source/data/region/ru.txt icu4c/source/data/region/rw.txt $
-    icu4c/source/data/region/rwk.txt icu4c/source/data/region/sah.txt $
-    icu4c/source/data/region/saq.txt icu4c/source/data/region/sbp.txt $
-    icu4c/source/data/region/se.txt icu4c/source/data/region/se_FI.txt $
-    icu4c/source/data/region/seh.txt icu4c/source/data/region/ses.txt $
-    icu4c/source/data/region/sg.txt icu4c/source/data/region/sh.txt $
-    icu4c/source/data/region/sh_BA.txt icu4c/source/data/region/sh_CS.txt $
-    icu4c/source/data/region/sh_YU.txt icu4c/source/data/region/shi.txt $
-    icu4c/source/data/region/shi_Latn.txt $
-    icu4c/source/data/region/shi_MA.txt $
-    icu4c/source/data/region/shi_Tfng.txt $
-    icu4c/source/data/region/shi_Tfng_MA.txt $
-    icu4c/source/data/region/si.txt icu4c/source/data/region/sk.txt $
-    icu4c/source/data/region/sl.txt icu4c/source/data/region/smn.txt $
-    icu4c/source/data/region/sn.txt icu4c/source/data/region/so.txt $
-    icu4c/source/data/region/sq.txt icu4c/source/data/region/sr.txt $
-    icu4c/source/data/region/sr_BA.txt icu4c/source/data/region/sr_CS.txt $
-    icu4c/source/data/region/sr_Cyrl.txt $
-    icu4c/source/data/region/sr_Cyrl_BA.txt $
-    icu4c/source/data/region/sr_Cyrl_CS.txt $
-    icu4c/source/data/region/sr_Cyrl_RS.txt $
-    icu4c/source/data/region/sr_Cyrl_XK.txt $
-    icu4c/source/data/region/sr_Cyrl_YU.txt $
-    icu4c/source/data/region/sr_Latn.txt $
-    icu4c/source/data/region/sr_Latn_BA.txt $
-    icu4c/source/data/region/sr_Latn_CS.txt $
-    icu4c/source/data/region/sr_Latn_ME.txt $
-    icu4c/source/data/region/sr_Latn_RS.txt $
-    icu4c/source/data/region/sr_Latn_YU.txt $
-    icu4c/source/data/region/sr_ME.txt icu4c/source/data/region/sr_RS.txt $
-    icu4c/source/data/region/sr_XK.txt icu4c/source/data/region/sr_YU.txt $
-    icu4c/source/data/region/sv.txt icu4c/source/data/region/sw.txt $
-    icu4c/source/data/region/sw_CD.txt icu4c/source/data/region/ta.txt $
-    icu4c/source/data/region/te.txt icu4c/source/data/region/teo.txt $
-    icu4c/source/data/region/th.txt icu4c/source/data/region/th_TH.txt $
-    icu4c/source/data/region/th_TH_TRADITIONAL.txt $
-    icu4c/source/data/region/ti.txt icu4c/source/data/region/tl.txt $
-    icu4c/source/data/region/tl_PH.txt icu4c/source/data/region/to.txt $
-    icu4c/source/data/region/tr.txt icu4c/source/data/region/twq.txt $
-    icu4c/source/data/region/tzm.txt icu4c/source/data/region/tzm_Latn.txt $
-    icu4c/source/data/region/tzm_Latn_MA.txt $
-    icu4c/source/data/region/tzm_MA.txt icu4c/source/data/region/ug.txt $
-    icu4c/source/data/region/ug_Arab.txt $
-    icu4c/source/data/region/ug_Arab_CN.txt $
-    icu4c/source/data/region/ug_CN.txt icu4c/source/data/region/uk.txt $
-    icu4c/source/data/region/ur.txt icu4c/source/data/region/ur_IN.txt $
-    icu4c/source/data/region/uz.txt icu4c/source/data/region/uz_AF.txt $
-    icu4c/source/data/region/uz_Arab.txt $
-    icu4c/source/data/region/uz_Arab_AF.txt $
-    icu4c/source/data/region/uz_Cyrl.txt $
-    icu4c/source/data/region/uz_Latn.txt $
-    icu4c/source/data/region/uz_Latn_UZ.txt $
-    icu4c/source/data/region/uz_UZ.txt icu4c/source/data/region/vai.txt $
-    icu4c/source/data/region/vai_Latn.txt $
-    icu4c/source/data/region/vai_LR.txt $
-    icu4c/source/data/region/vai_Vaii.txt $
-    icu4c/source/data/region/vai_Vaii_LR.txt $
-    icu4c/source/data/region/vi.txt icu4c/source/data/region/vun.txt $
-    icu4c/source/data/region/wae.txt icu4c/source/data/region/xog.txt $
-    icu4c/source/data/region/yav.txt icu4c/source/data/region/yi.txt $
-    icu4c/source/data/region/yo.txt icu4c/source/data/region/yo_BJ.txt $
-    icu4c/source/data/region/zgh.txt icu4c/source/data/region/zh.txt $
-    icu4c/source/data/region/zh_CN.txt icu4c/source/data/region/zh_Hans.txt $
-    icu4c/source/data/region/zh_Hans_CN.txt $
-    icu4c/source/data/region/zh_Hans_SG.txt $
-    icu4c/source/data/region/zh_Hant.txt $
-    icu4c/source/data/region/zh_Hant_HK.txt $
-    icu4c/source/data/region/zh_Hant_MO.txt $
-    icu4c/source/data/region/zh_Hant_TW.txt $
-    icu4c/source/data/region/zh_HK.txt icu4c/source/data/region/zh_MO.txt $
-    icu4c/source/data/region/zh_SG.txt icu4c/source/data/region/zh_TW.txt $
-    icu4c/source/data/region/zu.txt icu4c/source/data/sprep/rfc3491.txt $
+    icu4c/source/data/Makefile.in icu4c/source/data/misc/icudata.rc $
+    icu4c/source/data/pkgdataMakefile.in $
+    icu4c/source/data/sprep/rfc3491.txt $
     icu4c/source/data/sprep/rfc3530cs.txt $
     icu4c/source/data/sprep/rfc3530csci.txt $
     icu4c/source/data/sprep/rfc3530mixp.txt $
@@ -3367,471 +2716,8 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/data/unidata/SpecialCasing.txt $
     icu4c/source/data/unidata/UCARules.txt $
     icu4c/source/data/unidata/ucdterms.txt $
-    icu4c/source/data/unidata/UnicodeData.txt icu4c/source/data/unit/af.txt $
-    icu4c/source/data/unit/agq.txt icu4c/source/data/unit/ak.txt $
-    icu4c/source/data/unit/am.txt icu4c/source/data/unit/ar.txt $
-    icu4c/source/data/unit/as.txt icu4c/source/data/unit/asa.txt $
-    icu4c/source/data/unit/az.txt icu4c/source/data/unit/az_AZ.txt $
-    icu4c/source/data/unit/az_Cyrl.txt icu4c/source/data/unit/az_Latn.txt $
-    icu4c/source/data/unit/az_Latn_AZ.txt icu4c/source/data/unit/bas.txt $
-    icu4c/source/data/unit/be.txt icu4c/source/data/unit/bem.txt $
-    icu4c/source/data/unit/bez.txt icu4c/source/data/unit/bg.txt $
-    icu4c/source/data/unit/bm.txt icu4c/source/data/unit/bm_Latn.txt $
-    icu4c/source/data/unit/bn.txt icu4c/source/data/unit/bo.txt $
-    icu4c/source/data/unit/br.txt icu4c/source/data/unit/brx.txt $
-    icu4c/source/data/unit/bs.txt icu4c/source/data/unit/bs_BA.txt $
-    icu4c/source/data/unit/bs_Cyrl.txt icu4c/source/data/unit/bs_Latn.txt $
-    icu4c/source/data/unit/bs_Latn_BA.txt icu4c/source/data/unit/ca.txt $
-    icu4c/source/data/unit/cgg.txt icu4c/source/data/unit/chr.txt $
-    icu4c/source/data/unit/cs.txt icu4c/source/data/unit/cy.txt $
-    icu4c/source/data/unit/da.txt icu4c/source/data/unit/dav.txt $
-    icu4c/source/data/unit/de.txt icu4c/source/data/unit/de_CH.txt $
-    icu4c/source/data/unit/dje.txt icu4c/source/data/unit/dsb.txt $
-    icu4c/source/data/unit/dua.txt icu4c/source/data/unit/dyo.txt $
-    icu4c/source/data/unit/dz.txt icu4c/source/data/unit/ebu.txt $
-    icu4c/source/data/unit/ee.txt icu4c/source/data/unit/el.txt $
-    icu4c/source/data/unit/en.txt icu4c/source/data/unit/en_001.txt $
-    icu4c/source/data/unit/en_150.txt icu4c/source/data/unit/en_AG.txt $
-    icu4c/source/data/unit/en_AI.txt icu4c/source/data/unit/en_AU.txt $
-    icu4c/source/data/unit/en_BB.txt icu4c/source/data/unit/en_BE.txt $
-    icu4c/source/data/unit/en_BM.txt icu4c/source/data/unit/en_BS.txt $
-    icu4c/source/data/unit/en_BW.txt icu4c/source/data/unit/en_BZ.txt $
-    icu4c/source/data/unit/en_CA.txt icu4c/source/data/unit/en_CC.txt $
-    icu4c/source/data/unit/en_CK.txt icu4c/source/data/unit/en_CM.txt $
-    icu4c/source/data/unit/en_CX.txt icu4c/source/data/unit/en_DG.txt $
-    icu4c/source/data/unit/en_DM.txt icu4c/source/data/unit/en_ER.txt $
-    icu4c/source/data/unit/en_FJ.txt icu4c/source/data/unit/en_FK.txt $
-    icu4c/source/data/unit/en_FM.txt icu4c/source/data/unit/en_GB.txt $
-    icu4c/source/data/unit/en_GD.txt icu4c/source/data/unit/en_GG.txt $
-    icu4c/source/data/unit/en_GH.txt icu4c/source/data/unit/en_GI.txt $
-    icu4c/source/data/unit/en_GM.txt icu4c/source/data/unit/en_GY.txt $
-    icu4c/source/data/unit/en_HK.txt icu4c/source/data/unit/en_IE.txt $
-    icu4c/source/data/unit/en_IM.txt icu4c/source/data/unit/en_IN.txt $
-    icu4c/source/data/unit/en_IO.txt icu4c/source/data/unit/en_JE.txt $
-    icu4c/source/data/unit/en_JM.txt icu4c/source/data/unit/en_KE.txt $
-    icu4c/source/data/unit/en_KI.txt icu4c/source/data/unit/en_KN.txt $
-    icu4c/source/data/unit/en_KY.txt icu4c/source/data/unit/en_LC.txt $
-    icu4c/source/data/unit/en_LR.txt icu4c/source/data/unit/en_LS.txt $
-    icu4c/source/data/unit/en_MG.txt icu4c/source/data/unit/en_MO.txt $
-    icu4c/source/data/unit/en_MS.txt icu4c/source/data/unit/en_MT.txt $
-    icu4c/source/data/unit/en_MU.txt icu4c/source/data/unit/en_MW.txt $
-    icu4c/source/data/unit/en_MY.txt icu4c/source/data/unit/en_NA.txt $
-    icu4c/source/data/unit/en_NF.txt icu4c/source/data/unit/en_NG.txt $
-    icu4c/source/data/unit/en_NH.txt icu4c/source/data/unit/en_NR.txt $
-    icu4c/source/data/unit/en_NU.txt icu4c/source/data/unit/en_NZ.txt $
-    icu4c/source/data/unit/en_PG.txt icu4c/source/data/unit/en_PH.txt $
-    icu4c/source/data/unit/en_PK.txt icu4c/source/data/unit/en_PN.txt $
-    icu4c/source/data/unit/en_PW.txt icu4c/source/data/unit/en_RH.txt $
-    icu4c/source/data/unit/en_RW.txt icu4c/source/data/unit/en_SB.txt $
-    icu4c/source/data/unit/en_SC.txt icu4c/source/data/unit/en_SD.txt $
-    icu4c/source/data/unit/en_SG.txt icu4c/source/data/unit/en_SH.txt $
-    icu4c/source/data/unit/en_SL.txt icu4c/source/data/unit/en_SS.txt $
-    icu4c/source/data/unit/en_SX.txt icu4c/source/data/unit/en_SZ.txt $
-    icu4c/source/data/unit/en_TC.txt icu4c/source/data/unit/en_TK.txt $
-    icu4c/source/data/unit/en_TO.txt icu4c/source/data/unit/en_TT.txt $
-    icu4c/source/data/unit/en_TV.txt icu4c/source/data/unit/en_TZ.txt $
-    icu4c/source/data/unit/en_UG.txt icu4c/source/data/unit/en_VC.txt $
-    icu4c/source/data/unit/en_VG.txt icu4c/source/data/unit/en_VU.txt $
-    icu4c/source/data/unit/en_WS.txt icu4c/source/data/unit/en_ZA.txt $
-    icu4c/source/data/unit/en_ZM.txt icu4c/source/data/unit/en_ZW.txt $
-    icu4c/source/data/unit/eo.txt icu4c/source/data/unit/es.txt $
-    icu4c/source/data/unit/es_419.txt icu4c/source/data/unit/es_AR.txt $
-    icu4c/source/data/unit/es_BO.txt icu4c/source/data/unit/es_CL.txt $
-    icu4c/source/data/unit/es_CO.txt icu4c/source/data/unit/es_CR.txt $
-    icu4c/source/data/unit/es_CU.txt icu4c/source/data/unit/es_DO.txt $
-    icu4c/source/data/unit/es_EC.txt icu4c/source/data/unit/es_GT.txt $
-    icu4c/source/data/unit/es_HN.txt icu4c/source/data/unit/es_MX.txt $
-    icu4c/source/data/unit/es_NI.txt icu4c/source/data/unit/es_PA.txt $
-    icu4c/source/data/unit/es_PE.txt icu4c/source/data/unit/es_PR.txt $
-    icu4c/source/data/unit/es_PY.txt icu4c/source/data/unit/es_SV.txt $
-    icu4c/source/data/unit/es_US.txt icu4c/source/data/unit/es_UY.txt $
-    icu4c/source/data/unit/es_VE.txt icu4c/source/data/unit/et.txt $
-    icu4c/source/data/unit/eu.txt icu4c/source/data/unit/ewo.txt $
-    icu4c/source/data/unit/fa.txt icu4c/source/data/unit/ff.txt $
-    icu4c/source/data/unit/fi.txt icu4c/source/data/unit/fil.txt $
-    icu4c/source/data/unit/fil_PH.txt icu4c/source/data/unit/fo.txt $
-    icu4c/source/data/unit/fr.txt icu4c/source/data/unit/fr_CA.txt $
-    icu4c/source/data/unit/fur.txt icu4c/source/data/unit/fy.txt $
-    icu4c/source/data/unit/ga.txt icu4c/source/data/unit/gd.txt $
-    icu4c/source/data/unit/gl.txt icu4c/source/data/unit/gsw.txt $
-    icu4c/source/data/unit/gu.txt icu4c/source/data/unit/guz.txt $
-    icu4c/source/data/unit/gv.txt icu4c/source/data/unit/ha.txt $
-    icu4c/source/data/unit/ha_GH.txt icu4c/source/data/unit/ha_Latn.txt $
-    icu4c/source/data/unit/ha_Latn_GH.txt $
-    icu4c/source/data/unit/ha_Latn_NE.txt $
-    icu4c/source/data/unit/ha_Latn_NG.txt icu4c/source/data/unit/ha_NE.txt $
-    icu4c/source/data/unit/ha_NG.txt icu4c/source/data/unit/haw.txt $
-    icu4c/source/data/unit/he.txt icu4c/source/data/unit/he_IL.txt $
-    icu4c/source/data/unit/hi.txt icu4c/source/data/unit/hr.txt $
-    icu4c/source/data/unit/hsb.txt icu4c/source/data/unit/hu.txt $
-    icu4c/source/data/unit/hy.txt icu4c/source/data/unit/id.txt $
-    icu4c/source/data/unit/id_ID.txt icu4c/source/data/unit/ig.txt $
-    icu4c/source/data/unit/ii.txt icu4c/source/data/unit/in.txt $
-    icu4c/source/data/unit/in_ID.txt icu4c/source/data/unit/is.txt $
-    icu4c/source/data/unit/it.txt icu4c/source/data/unit/iw.txt $
-    icu4c/source/data/unit/iw_IL.txt icu4c/source/data/unit/ja.txt $
-    icu4c/source/data/unit/ja_JP.txt $
-    icu4c/source/data/unit/ja_JP_TRADITIONAL.txt $
-    icu4c/source/data/unit/jgo.txt icu4c/source/data/unit/jmc.txt $
-    icu4c/source/data/unit/ka.txt icu4c/source/data/unit/kab.txt $
-    icu4c/source/data/unit/kam.txt icu4c/source/data/unit/kde.txt $
-    icu4c/source/data/unit/kea.txt icu4c/source/data/unit/khq.txt $
-    icu4c/source/data/unit/ki.txt icu4c/source/data/unit/kk.txt $
-    icu4c/source/data/unit/kk_Cyrl.txt $
-    icu4c/source/data/unit/kk_Cyrl_KZ.txt icu4c/source/data/unit/kk_KZ.txt $
-    icu4c/source/data/unit/kkj.txt icu4c/source/data/unit/kl.txt $
-    icu4c/source/data/unit/kln.txt icu4c/source/data/unit/km.txt $
-    icu4c/source/data/unit/kn.txt icu4c/source/data/unit/ko.txt $
-    icu4c/source/data/unit/kok.txt icu4c/source/data/unit/ks.txt $
-    icu4c/source/data/unit/ks_Arab.txt $
-    icu4c/source/data/unit/ks_Arab_IN.txt icu4c/source/data/unit/ks_IN.txt $
-    icu4c/source/data/unit/ksb.txt icu4c/source/data/unit/ksf.txt $
-    icu4c/source/data/unit/ksh.txt icu4c/source/data/unit/kw.txt $
-    icu4c/source/data/unit/ky.txt icu4c/source/data/unit/ky_Cyrl.txt $
-    icu4c/source/data/unit/ky_Cyrl_KG.txt icu4c/source/data/unit/ky_KG.txt $
-    icu4c/source/data/unit/lag.txt icu4c/source/data/unit/lb.txt $
-    icu4c/source/data/unit/lg.txt icu4c/source/data/unit/lkt.txt $
-    icu4c/source/data/unit/ln.txt icu4c/source/data/unit/lo.txt $
-    icu4c/source/data/unit/lt.txt icu4c/source/data/unit/lu.txt $
-    icu4c/source/data/unit/luo.txt icu4c/source/data/unit/luy.txt $
-    icu4c/source/data/unit/lv.txt icu4c/source/data/unit/mas.txt $
-    icu4c/source/data/unit/mer.txt icu4c/source/data/unit/mfe.txt $
-    icu4c/source/data/unit/mg.txt icu4c/source/data/unit/mgh.txt $
-    icu4c/source/data/unit/mgo.txt icu4c/source/data/unit/mk.txt $
-    icu4c/source/data/unit/ml.txt icu4c/source/data/unit/mn.txt $
-    icu4c/source/data/unit/mn_Cyrl.txt $
-    icu4c/source/data/unit/mn_Cyrl_MN.txt icu4c/source/data/unit/mn_MN.txt $
-    icu4c/source/data/unit/mo.txt icu4c/source/data/unit/mr.txt $
-    icu4c/source/data/unit/ms.txt icu4c/source/data/unit/ms_BN.txt $
-    icu4c/source/data/unit/ms_Latn.txt $
-    icu4c/source/data/unit/ms_Latn_BN.txt $
-    icu4c/source/data/unit/ms_Latn_MY.txt $
-    icu4c/source/data/unit/ms_Latn_SG.txt icu4c/source/data/unit/ms_MY.txt $
-    icu4c/source/data/unit/ms_SG.txt icu4c/source/data/unit/mt.txt $
-    icu4c/source/data/unit/mua.txt icu4c/source/data/unit/my.txt $
-    icu4c/source/data/unit/naq.txt icu4c/source/data/unit/nb.txt $
-    icu4c/source/data/unit/nb_NO.txt icu4c/source/data/unit/nd.txt $
-    icu4c/source/data/unit/ne.txt icu4c/source/data/unit/nl.txt $
-    icu4c/source/data/unit/nmg.txt icu4c/source/data/unit/nn.txt $
-    icu4c/source/data/unit/nn_NO.txt icu4c/source/data/unit/nnh.txt $
-    icu4c/source/data/unit/no.txt icu4c/source/data/unit/no_NO.txt $
-    icu4c/source/data/unit/no_NO_NY.txt icu4c/source/data/unit/nus.txt $
-    icu4c/source/data/unit/nyn.txt icu4c/source/data/unit/om.txt $
-    icu4c/source/data/unit/or.txt icu4c/source/data/unit/os.txt $
-    icu4c/source/data/unit/pa.txt icu4c/source/data/unit/pa_Arab.txt $
-    icu4c/source/data/unit/pa_Arab_PK.txt $
-    icu4c/source/data/unit/pa_Guru.txt $
-    icu4c/source/data/unit/pa_Guru_IN.txt icu4c/source/data/unit/pa_IN.txt $
-    icu4c/source/data/unit/pa_PK.txt icu4c/source/data/unit/pl.txt $
-    icu4c/source/data/unit/pool.res icu4c/source/data/unit/ps.txt $
-    icu4c/source/data/unit/pt.txt icu4c/source/data/unit/pt_AO.txt $
-    icu4c/source/data/unit/pt_CV.txt icu4c/source/data/unit/pt_GW.txt $
-    icu4c/source/data/unit/pt_MO.txt icu4c/source/data/unit/pt_MZ.txt $
-    icu4c/source/data/unit/pt_PT.txt icu4c/source/data/unit/pt_ST.txt $
-    icu4c/source/data/unit/pt_TL.txt icu4c/source/data/unit/qu.txt $
-    icu4c/source/data/unit/resfiles.mk icu4c/source/data/unit/rm.txt $
-    icu4c/source/data/unit/rn.txt icu4c/source/data/unit/ro.txt $
-    icu4c/source/data/unit/ro_MD.txt icu4c/source/data/unit/rof.txt $
-    icu4c/source/data/unit/root.txt icu4c/source/data/unit/ru.txt $
-    icu4c/source/data/unit/rw.txt icu4c/source/data/unit/rwk.txt $
-    icu4c/source/data/unit/sah.txt icu4c/source/data/unit/saq.txt $
-    icu4c/source/data/unit/sbp.txt icu4c/source/data/unit/se.txt $
-    icu4c/source/data/unit/seh.txt icu4c/source/data/unit/ses.txt $
-    icu4c/source/data/unit/sg.txt icu4c/source/data/unit/sh.txt $
-    icu4c/source/data/unit/sh_BA.txt icu4c/source/data/unit/sh_CS.txt $
-    icu4c/source/data/unit/sh_YU.txt icu4c/source/data/unit/shi.txt $
-    icu4c/source/data/unit/shi_Latn.txt icu4c/source/data/unit/shi_MA.txt $
-    icu4c/source/data/unit/shi_Tfng.txt $
-    icu4c/source/data/unit/shi_Tfng_MA.txt icu4c/source/data/unit/si.txt $
-    icu4c/source/data/unit/sk.txt icu4c/source/data/unit/sl.txt $
-    icu4c/source/data/unit/smn.txt icu4c/source/data/unit/sn.txt $
-    icu4c/source/data/unit/so.txt icu4c/source/data/unit/sq.txt $
-    icu4c/source/data/unit/sr.txt icu4c/source/data/unit/sr_BA.txt $
-    icu4c/source/data/unit/sr_CS.txt icu4c/source/data/unit/sr_Cyrl.txt $
-    icu4c/source/data/unit/sr_Cyrl_BA.txt $
-    icu4c/source/data/unit/sr_Cyrl_CS.txt $
-    icu4c/source/data/unit/sr_Cyrl_RS.txt $
-    icu4c/source/data/unit/sr_Cyrl_XK.txt $
-    icu4c/source/data/unit/sr_Cyrl_YU.txt $
-    icu4c/source/data/unit/sr_Latn.txt $
-    icu4c/source/data/unit/sr_Latn_BA.txt $
-    icu4c/source/data/unit/sr_Latn_CS.txt $
-    icu4c/source/data/unit/sr_Latn_ME.txt $
-    icu4c/source/data/unit/sr_Latn_RS.txt $
-    icu4c/source/data/unit/sr_Latn_YU.txt icu4c/source/data/unit/sr_ME.txt $
-    icu4c/source/data/unit/sr_RS.txt icu4c/source/data/unit/sr_XK.txt $
-    icu4c/source/data/unit/sr_YU.txt icu4c/source/data/unit/sv.txt $
-    icu4c/source/data/unit/sv_FI.txt icu4c/source/data/unit/sw.txt $
-    icu4c/source/data/unit/ta.txt icu4c/source/data/unit/te.txt $
-    icu4c/source/data/unit/teo.txt icu4c/source/data/unit/th.txt $
-    icu4c/source/data/unit/th_TH.txt $
-    icu4c/source/data/unit/th_TH_TRADITIONAL.txt $
-    icu4c/source/data/unit/ti.txt icu4c/source/data/unit/tl.txt $
-    icu4c/source/data/unit/tl_PH.txt icu4c/source/data/unit/to.txt $
-    icu4c/source/data/unit/tr.txt icu4c/source/data/unit/twq.txt $
-    icu4c/source/data/unit/tzm.txt icu4c/source/data/unit/tzm_Latn.txt $
-    icu4c/source/data/unit/tzm_Latn_MA.txt $
-    icu4c/source/data/unit/tzm_MA.txt icu4c/source/data/unit/ug.txt $
-    icu4c/source/data/unit/ug_Arab.txt $
-    icu4c/source/data/unit/ug_Arab_CN.txt icu4c/source/data/unit/ug_CN.txt $
-    icu4c/source/data/unit/uk.txt icu4c/source/data/unit/ur.txt $
-    icu4c/source/data/unit/ur_IN.txt icu4c/source/data/unit/uz.txt $
-    icu4c/source/data/unit/uz_AF.txt icu4c/source/data/unit/uz_Arab.txt $
-    icu4c/source/data/unit/uz_Arab_AF.txt $
-    icu4c/source/data/unit/uz_Cyrl.txt icu4c/source/data/unit/uz_Latn.txt $
-    icu4c/source/data/unit/uz_Latn_UZ.txt icu4c/source/data/unit/uz_UZ.txt $
-    icu4c/source/data/unit/vai.txt icu4c/source/data/unit/vai_Latn.txt $
-    icu4c/source/data/unit/vai_LR.txt icu4c/source/data/unit/vai_Vaii.txt $
-    icu4c/source/data/unit/vai_Vaii_LR.txt icu4c/source/data/unit/vi.txt $
-    icu4c/source/data/unit/vun.txt icu4c/source/data/unit/wae.txt $
-    icu4c/source/data/unit/xog.txt icu4c/source/data/unit/yav.txt $
-    icu4c/source/data/unit/yi.txt icu4c/source/data/unit/yo.txt $
-    icu4c/source/data/unit/zgh.txt icu4c/source/data/unit/zh.txt $
-    icu4c/source/data/unit/zh_CN.txt icu4c/source/data/unit/zh_Hans.txt $
-    icu4c/source/data/unit/zh_Hans_CN.txt $
-    icu4c/source/data/unit/zh_Hans_HK.txt $
-    icu4c/source/data/unit/zh_Hans_MO.txt $
-    icu4c/source/data/unit/zh_Hans_SG.txt $
-    icu4c/source/data/unit/zh_Hant.txt $
-    icu4c/source/data/unit/zh_Hant_HK.txt $
-    icu4c/source/data/unit/zh_Hant_MO.txt $
-    icu4c/source/data/unit/zh_Hant_TW.txt icu4c/source/data/unit/zh_HK.txt $
-    icu4c/source/data/unit/zh_MO.txt icu4c/source/data/unit/zh_SG.txt $
-    icu4c/source/data/unit/zh_TW.txt icu4c/source/data/unit/zu.txt $
-    icu4c/source/data/zone/af.txt icu4c/source/data/zone/agq.txt $
-    icu4c/source/data/zone/ak.txt icu4c/source/data/zone/am.txt $
-    icu4c/source/data/zone/ar.txt icu4c/source/data/zone/as.txt $
-    icu4c/source/data/zone/asa.txt icu4c/source/data/zone/az.txt $
-    icu4c/source/data/zone/az_AZ.txt icu4c/source/data/zone/az_Cyrl.txt $
-    icu4c/source/data/zone/az_Latn.txt $
-    icu4c/source/data/zone/az_Latn_AZ.txt icu4c/source/data/zone/bas.txt $
-    icu4c/source/data/zone/be.txt icu4c/source/data/zone/bem.txt $
-    icu4c/source/data/zone/bez.txt icu4c/source/data/zone/bg.txt $
-    icu4c/source/data/zone/bm.txt icu4c/source/data/zone/bm_Latn.txt $
-    icu4c/source/data/zone/bn.txt icu4c/source/data/zone/bo.txt $
-    icu4c/source/data/zone/br.txt icu4c/source/data/zone/brx.txt $
-    icu4c/source/data/zone/bs.txt icu4c/source/data/zone/bs_BA.txt $
-    icu4c/source/data/zone/bs_Cyrl.txt icu4c/source/data/zone/bs_Latn.txt $
-    icu4c/source/data/zone/bs_Latn_BA.txt icu4c/source/data/zone/ca.txt $
-    icu4c/source/data/zone/cgg.txt icu4c/source/data/zone/chr.txt $
-    icu4c/source/data/zone/cs.txt icu4c/source/data/zone/cy.txt $
-    icu4c/source/data/zone/da.txt icu4c/source/data/zone/dav.txt $
-    icu4c/source/data/zone/de.txt icu4c/source/data/zone/dje.txt $
-    icu4c/source/data/zone/dsb.txt icu4c/source/data/zone/dua.txt $
-    icu4c/source/data/zone/dyo.txt icu4c/source/data/zone/dz.txt $
-    icu4c/source/data/zone/ebu.txt icu4c/source/data/zone/ee.txt $
-    icu4c/source/data/zone/el.txt icu4c/source/data/zone/en.txt $
-    icu4c/source/data/zone/en_001.txt icu4c/source/data/zone/en_150.txt $
-    icu4c/source/data/zone/en_AG.txt icu4c/source/data/zone/en_AI.txt $
-    icu4c/source/data/zone/en_AU.txt icu4c/source/data/zone/en_BB.txt $
-    icu4c/source/data/zone/en_BE.txt icu4c/source/data/zone/en_BM.txt $
-    icu4c/source/data/zone/en_BS.txt icu4c/source/data/zone/en_BW.txt $
-    icu4c/source/data/zone/en_BZ.txt icu4c/source/data/zone/en_CA.txt $
-    icu4c/source/data/zone/en_CC.txt icu4c/source/data/zone/en_CK.txt $
-    icu4c/source/data/zone/en_CM.txt icu4c/source/data/zone/en_CX.txt $
-    icu4c/source/data/zone/en_DG.txt icu4c/source/data/zone/en_DM.txt $
-    icu4c/source/data/zone/en_ER.txt icu4c/source/data/zone/en_FJ.txt $
-    icu4c/source/data/zone/en_FK.txt icu4c/source/data/zone/en_FM.txt $
-    icu4c/source/data/zone/en_GB.txt icu4c/source/data/zone/en_GD.txt $
-    icu4c/source/data/zone/en_GG.txt icu4c/source/data/zone/en_GH.txt $
-    icu4c/source/data/zone/en_GI.txt icu4c/source/data/zone/en_GM.txt $
-    icu4c/source/data/zone/en_GU.txt icu4c/source/data/zone/en_GY.txt $
-    icu4c/source/data/zone/en_HK.txt icu4c/source/data/zone/en_IE.txt $
-    icu4c/source/data/zone/en_IM.txt icu4c/source/data/zone/en_IN.txt $
-    icu4c/source/data/zone/en_IO.txt icu4c/source/data/zone/en_JE.txt $
-    icu4c/source/data/zone/en_JM.txt icu4c/source/data/zone/en_KE.txt $
-    icu4c/source/data/zone/en_KI.txt icu4c/source/data/zone/en_KN.txt $
-    icu4c/source/data/zone/en_KY.txt icu4c/source/data/zone/en_LC.txt $
-    icu4c/source/data/zone/en_LR.txt icu4c/source/data/zone/en_LS.txt $
-    icu4c/source/data/zone/en_MG.txt icu4c/source/data/zone/en_MH.txt $
-    icu4c/source/data/zone/en_MO.txt icu4c/source/data/zone/en_MP.txt $
-    icu4c/source/data/zone/en_MS.txt icu4c/source/data/zone/en_MT.txt $
-    icu4c/source/data/zone/en_MU.txt icu4c/source/data/zone/en_MW.txt $
-    icu4c/source/data/zone/en_MY.txt icu4c/source/data/zone/en_NA.txt $
-    icu4c/source/data/zone/en_NF.txt icu4c/source/data/zone/en_NG.txt $
-    icu4c/source/data/zone/en_NH.txt icu4c/source/data/zone/en_NR.txt $
-    icu4c/source/data/zone/en_NU.txt icu4c/source/data/zone/en_NZ.txt $
-    icu4c/source/data/zone/en_PG.txt icu4c/source/data/zone/en_PH.txt $
-    icu4c/source/data/zone/en_PK.txt icu4c/source/data/zone/en_PN.txt $
-    icu4c/source/data/zone/en_PW.txt icu4c/source/data/zone/en_RH.txt $
-    icu4c/source/data/zone/en_RW.txt icu4c/source/data/zone/en_SB.txt $
-    icu4c/source/data/zone/en_SC.txt icu4c/source/data/zone/en_SD.txt $
-    icu4c/source/data/zone/en_SG.txt icu4c/source/data/zone/en_SH.txt $
-    icu4c/source/data/zone/en_SL.txt icu4c/source/data/zone/en_SS.txt $
-    icu4c/source/data/zone/en_SX.txt icu4c/source/data/zone/en_SZ.txt $
-    icu4c/source/data/zone/en_TC.txt icu4c/source/data/zone/en_TK.txt $
-    icu4c/source/data/zone/en_TO.txt icu4c/source/data/zone/en_TT.txt $
-    icu4c/source/data/zone/en_TV.txt icu4c/source/data/zone/en_TZ.txt $
-    icu4c/source/data/zone/en_UG.txt icu4c/source/data/zone/en_VC.txt $
-    icu4c/source/data/zone/en_VG.txt icu4c/source/data/zone/en_VU.txt $
-    icu4c/source/data/zone/en_WS.txt icu4c/source/data/zone/en_ZA.txt $
-    icu4c/source/data/zone/en_ZM.txt icu4c/source/data/zone/en_ZW.txt $
-    icu4c/source/data/zone/eo.txt icu4c/source/data/zone/es.txt $
-    icu4c/source/data/zone/es_419.txt icu4c/source/data/zone/es_AR.txt $
-    icu4c/source/data/zone/es_BO.txt icu4c/source/data/zone/es_CL.txt $
-    icu4c/source/data/zone/es_CO.txt icu4c/source/data/zone/es_CR.txt $
-    icu4c/source/data/zone/es_CU.txt icu4c/source/data/zone/es_DO.txt $
-    icu4c/source/data/zone/es_EC.txt icu4c/source/data/zone/es_GT.txt $
-    icu4c/source/data/zone/es_HN.txt icu4c/source/data/zone/es_MX.txt $
-    icu4c/source/data/zone/es_NI.txt icu4c/source/data/zone/es_PA.txt $
-    icu4c/source/data/zone/es_PE.txt icu4c/source/data/zone/es_PR.txt $
-    icu4c/source/data/zone/es_PY.txt icu4c/source/data/zone/es_SV.txt $
-    icu4c/source/data/zone/es_US.txt icu4c/source/data/zone/es_UY.txt $
-    icu4c/source/data/zone/es_VE.txt icu4c/source/data/zone/et.txt $
-    icu4c/source/data/zone/eu.txt icu4c/source/data/zone/ewo.txt $
-    icu4c/source/data/zone/fa.txt icu4c/source/data/zone/ff.txt $
-    icu4c/source/data/zone/fi.txt icu4c/source/data/zone/fil.txt $
-    icu4c/source/data/zone/fil_PH.txt icu4c/source/data/zone/fo.txt $
-    icu4c/source/data/zone/fr.txt icu4c/source/data/zone/fr_CA.txt $
-    icu4c/source/data/zone/fur.txt icu4c/source/data/zone/fy.txt $
-    icu4c/source/data/zone/ga.txt icu4c/source/data/zone/gd.txt $
-    icu4c/source/data/zone/gl.txt icu4c/source/data/zone/gsw.txt $
-    icu4c/source/data/zone/gu.txt icu4c/source/data/zone/guz.txt $
-    icu4c/source/data/zone/gv.txt icu4c/source/data/zone/ha.txt $
-    icu4c/source/data/zone/ha_GH.txt icu4c/source/data/zone/ha_Latn.txt $
-    icu4c/source/data/zone/ha_Latn_GH.txt $
-    icu4c/source/data/zone/ha_Latn_NE.txt $
-    icu4c/source/data/zone/ha_Latn_NG.txt icu4c/source/data/zone/ha_NE.txt $
-    icu4c/source/data/zone/ha_NG.txt icu4c/source/data/zone/haw.txt $
-    icu4c/source/data/zone/he.txt icu4c/source/data/zone/he_IL.txt $
-    icu4c/source/data/zone/hi.txt icu4c/source/data/zone/hr.txt $
-    icu4c/source/data/zone/hsb.txt icu4c/source/data/zone/hu.txt $
-    icu4c/source/data/zone/hy.txt icu4c/source/data/zone/id.txt $
-    icu4c/source/data/zone/id_ID.txt icu4c/source/data/zone/ig.txt $
-    icu4c/source/data/zone/ii.txt icu4c/source/data/zone/in.txt $
-    icu4c/source/data/zone/in_ID.txt icu4c/source/data/zone/is.txt $
-    icu4c/source/data/zone/it.txt icu4c/source/data/zone/iw.txt $
-    icu4c/source/data/zone/iw_IL.txt icu4c/source/data/zone/ja.txt $
-    icu4c/source/data/zone/ja_JP.txt $
-    icu4c/source/data/zone/ja_JP_TRADITIONAL.txt $
-    icu4c/source/data/zone/jgo.txt icu4c/source/data/zone/jmc.txt $
-    icu4c/source/data/zone/ka.txt icu4c/source/data/zone/kab.txt $
-    icu4c/source/data/zone/kam.txt icu4c/source/data/zone/kde.txt $
-    icu4c/source/data/zone/kea.txt icu4c/source/data/zone/khq.txt $
-    icu4c/source/data/zone/ki.txt icu4c/source/data/zone/kk.txt $
-    icu4c/source/data/zone/kk_Cyrl.txt $
-    icu4c/source/data/zone/kk_Cyrl_KZ.txt icu4c/source/data/zone/kk_KZ.txt $
-    icu4c/source/data/zone/kkj.txt icu4c/source/data/zone/kl.txt $
-    icu4c/source/data/zone/kln.txt icu4c/source/data/zone/km.txt $
-    icu4c/source/data/zone/kn.txt icu4c/source/data/zone/ko.txt $
-    icu4c/source/data/zone/ko_KP.txt icu4c/source/data/zone/kok.txt $
-    icu4c/source/data/zone/ks.txt icu4c/source/data/zone/ks_Arab.txt $
-    icu4c/source/data/zone/ks_Arab_IN.txt icu4c/source/data/zone/ks_IN.txt $
-    icu4c/source/data/zone/ksb.txt icu4c/source/data/zone/ksf.txt $
-    icu4c/source/data/zone/ksh.txt icu4c/source/data/zone/kw.txt $
-    icu4c/source/data/zone/ky.txt icu4c/source/data/zone/ky_Cyrl.txt $
-    icu4c/source/data/zone/ky_Cyrl_KG.txt icu4c/source/data/zone/ky_KG.txt $
-    icu4c/source/data/zone/lag.txt icu4c/source/data/zone/lb.txt $
-    icu4c/source/data/zone/lg.txt icu4c/source/data/zone/lkt.txt $
-    icu4c/source/data/zone/ln.txt icu4c/source/data/zone/lo.txt $
-    icu4c/source/data/zone/lt.txt icu4c/source/data/zone/lu.txt $
-    icu4c/source/data/zone/luo.txt icu4c/source/data/zone/luy.txt $
-    icu4c/source/data/zone/lv.txt icu4c/source/data/zone/mas.txt $
-    icu4c/source/data/zone/mer.txt icu4c/source/data/zone/mfe.txt $
-    icu4c/source/data/zone/mg.txt icu4c/source/data/zone/mgh.txt $
-    icu4c/source/data/zone/mgo.txt icu4c/source/data/zone/mk.txt $
-    icu4c/source/data/zone/ml.txt icu4c/source/data/zone/mn.txt $
-    icu4c/source/data/zone/mn_Cyrl.txt $
-    icu4c/source/data/zone/mn_Cyrl_MN.txt icu4c/source/data/zone/mn_MN.txt $
-    icu4c/source/data/zone/mo.txt icu4c/source/data/zone/mr.txt $
-    icu4c/source/data/zone/ms.txt icu4c/source/data/zone/ms_BN.txt $
-    icu4c/source/data/zone/ms_Latn.txt $
-    icu4c/source/data/zone/ms_Latn_BN.txt $
-    icu4c/source/data/zone/ms_Latn_MY.txt $
-    icu4c/source/data/zone/ms_Latn_SG.txt icu4c/source/data/zone/ms_MY.txt $
-    icu4c/source/data/zone/ms_SG.txt icu4c/source/data/zone/mt.txt $
-    icu4c/source/data/zone/mua.txt icu4c/source/data/zone/my.txt $
-    icu4c/source/data/zone/naq.txt icu4c/source/data/zone/nb.txt $
-    icu4c/source/data/zone/nb_NO.txt icu4c/source/data/zone/nd.txt $
-    icu4c/source/data/zone/ne.txt icu4c/source/data/zone/ne_IN.txt $
-    icu4c/source/data/zone/nl.txt icu4c/source/data/zone/nmg.txt $
-    icu4c/source/data/zone/nn.txt icu4c/source/data/zone/nn_NO.txt $
-    icu4c/source/data/zone/nnh.txt icu4c/source/data/zone/no.txt $
-    icu4c/source/data/zone/no_NO.txt icu4c/source/data/zone/no_NO_NY.txt $
-    icu4c/source/data/zone/nus.txt icu4c/source/data/zone/nyn.txt $
-    icu4c/source/data/zone/om.txt icu4c/source/data/zone/or.txt $
-    icu4c/source/data/zone/os.txt icu4c/source/data/zone/pa.txt $
-    icu4c/source/data/zone/pa_Arab.txt $
-    icu4c/source/data/zone/pa_Arab_PK.txt $
-    icu4c/source/data/zone/pa_Guru.txt $
-    icu4c/source/data/zone/pa_Guru_IN.txt icu4c/source/data/zone/pa_IN.txt $
-    icu4c/source/data/zone/pa_PK.txt icu4c/source/data/zone/pl.txt $
-    icu4c/source/data/zone/pool.res icu4c/source/data/zone/ps.txt $
-    icu4c/source/data/zone/pt.txt icu4c/source/data/zone/pt_AO.txt $
-    icu4c/source/data/zone/pt_CV.txt icu4c/source/data/zone/pt_GW.txt $
-    icu4c/source/data/zone/pt_MO.txt icu4c/source/data/zone/pt_MZ.txt $
-    icu4c/source/data/zone/pt_PT.txt icu4c/source/data/zone/pt_ST.txt $
-    icu4c/source/data/zone/pt_TL.txt icu4c/source/data/zone/qu.txt $
-    icu4c/source/data/zone/resfiles.mk icu4c/source/data/zone/rm.txt $
-    icu4c/source/data/zone/rn.txt icu4c/source/data/zone/ro.txt $
-    icu4c/source/data/zone/ro_MD.txt icu4c/source/data/zone/rof.txt $
-    icu4c/source/data/zone/root.txt icu4c/source/data/zone/ru.txt $
-    icu4c/source/data/zone/rw.txt icu4c/source/data/zone/rwk.txt $
-    icu4c/source/data/zone/sah.txt icu4c/source/data/zone/saq.txt $
-    icu4c/source/data/zone/sbp.txt icu4c/source/data/zone/se.txt $
-    icu4c/source/data/zone/seh.txt icu4c/source/data/zone/ses.txt $
-    icu4c/source/data/zone/sg.txt icu4c/source/data/zone/sh.txt $
-    icu4c/source/data/zone/sh_BA.txt icu4c/source/data/zone/sh_CS.txt $
-    icu4c/source/data/zone/sh_YU.txt icu4c/source/data/zone/shi.txt $
-    icu4c/source/data/zone/shi_Latn.txt icu4c/source/data/zone/shi_MA.txt $
-    icu4c/source/data/zone/shi_Tfng.txt $
-    icu4c/source/data/zone/shi_Tfng_MA.txt icu4c/source/data/zone/si.txt $
-    icu4c/source/data/zone/sk.txt icu4c/source/data/zone/sl.txt $
-    icu4c/source/data/zone/smn.txt icu4c/source/data/zone/sn.txt $
-    icu4c/source/data/zone/so.txt icu4c/source/data/zone/sq.txt $
-    icu4c/source/data/zone/sr.txt icu4c/source/data/zone/sr_BA.txt $
-    icu4c/source/data/zone/sr_CS.txt icu4c/source/data/zone/sr_Cyrl.txt $
-    icu4c/source/data/zone/sr_Cyrl_BA.txt $
-    icu4c/source/data/zone/sr_Cyrl_CS.txt $
-    icu4c/source/data/zone/sr_Cyrl_RS.txt $
-    icu4c/source/data/zone/sr_Cyrl_XK.txt $
-    icu4c/source/data/zone/sr_Cyrl_YU.txt $
-    icu4c/source/data/zone/sr_Latn.txt $
-    icu4c/source/data/zone/sr_Latn_BA.txt $
-    icu4c/source/data/zone/sr_Latn_CS.txt $
-    icu4c/source/data/zone/sr_Latn_ME.txt $
-    icu4c/source/data/zone/sr_Latn_RS.txt $
-    icu4c/source/data/zone/sr_Latn_YU.txt icu4c/source/data/zone/sr_ME.txt $
-    icu4c/source/data/zone/sr_RS.txt icu4c/source/data/zone/sr_XK.txt $
-    icu4c/source/data/zone/sr_YU.txt icu4c/source/data/zone/sv.txt $
-    icu4c/source/data/zone/sw.txt icu4c/source/data/zone/ta.txt $
-    icu4c/source/data/zone/ta_MY.txt icu4c/source/data/zone/ta_SG.txt $
-    icu4c/source/data/zone/te.txt icu4c/source/data/zone/teo.txt $
-    icu4c/source/data/zone/th.txt icu4c/source/data/zone/th_TH.txt $
-    icu4c/source/data/zone/th_TH_TRADITIONAL.txt $
-    icu4c/source/data/zone/ti.txt icu4c/source/data/zone/tl.txt $
-    icu4c/source/data/zone/tl_PH.txt icu4c/source/data/zone/to.txt $
-    icu4c/source/data/zone/tr.txt icu4c/source/data/zone/twq.txt $
-    icu4c/source/data/zone/tzdbNames.txt icu4c/source/data/zone/tzm.txt $
-    icu4c/source/data/zone/tzm_Latn.txt $
-    icu4c/source/data/zone/tzm_Latn_MA.txt $
-    icu4c/source/data/zone/tzm_MA.txt icu4c/source/data/zone/ug.txt $
-    icu4c/source/data/zone/ug_Arab.txt $
-    icu4c/source/data/zone/ug_Arab_CN.txt icu4c/source/data/zone/ug_CN.txt $
-    icu4c/source/data/zone/uk.txt icu4c/source/data/zone/ur.txt $
-    icu4c/source/data/zone/ur_IN.txt icu4c/source/data/zone/uz.txt $
-    icu4c/source/data/zone/uz_AF.txt icu4c/source/data/zone/uz_Arab.txt $
-    icu4c/source/data/zone/uz_Arab_AF.txt $
-    icu4c/source/data/zone/uz_Cyrl.txt icu4c/source/data/zone/uz_Latn.txt $
-    icu4c/source/data/zone/uz_Latn_UZ.txt icu4c/source/data/zone/uz_UZ.txt $
-    icu4c/source/data/zone/vai.txt icu4c/source/data/zone/vai_Latn.txt $
-    icu4c/source/data/zone/vai_LR.txt icu4c/source/data/zone/vai_Vaii.txt $
-    icu4c/source/data/zone/vai_Vaii_LR.txt icu4c/source/data/zone/vi.txt $
-    icu4c/source/data/zone/vun.txt icu4c/source/data/zone/wae.txt $
-    icu4c/source/data/zone/xog.txt icu4c/source/data/zone/yav.txt $
-    icu4c/source/data/zone/yi.txt icu4c/source/data/zone/yo.txt $
-    icu4c/source/data/zone/zgh.txt icu4c/source/data/zone/zh.txt $
-    icu4c/source/data/zone/zh_CN.txt icu4c/source/data/zone/zh_Hans.txt $
-    icu4c/source/data/zone/zh_Hans_CN.txt $
-    icu4c/source/data/zone/zh_Hans_SG.txt $
-    icu4c/source/data/zone/zh_Hant.txt $
-    icu4c/source/data/zone/zh_Hant_HK.txt $
-    icu4c/source/data/zone/zh_Hant_MO.txt $
-    icu4c/source/data/zone/zh_Hant_TW.txt icu4c/source/data/zone/zh_HK.txt $
-    icu4c/source/data/zone/zh_MO.txt icu4c/source/data/zone/zh_SG.txt $
-    icu4c/source/data/zone/zh_TW.txt icu4c/source/data/zone/zu.txt $
-    icu4c/source/Doxyfile.in icu4c/source/extra/Makefile.in $
-    icu4c/source/extra/scrptrun/Makefile.in $
+    icu4c/source/data/unidata/UnicodeData.txt icu4c/source/Doxyfile.in $
+    icu4c/source/extra/Makefile.in icu4c/source/extra/scrptrun/Makefile.in $
     icu4c/source/extra/scrptrun/readme.html $
     icu4c/source/extra/scrptrun/scrptrun.cpp $
     icu4c/source/extra/scrptrun/scrptrun.h $
@@ -3875,7 +2761,9 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/extra/uconv/uconv.vcxproj $
     icu4c/source/extra/uconv/uconv.vcxproj.filters $
     icu4c/source/extra/uconv/unicode/uwmsg.h $
-    icu4c/source/extra/uconv/uwmsg.c icu4c/source/i18n/alphaindex.cpp $
+    icu4c/source/extra/uconv/uwmsg.c $
+    icu4c/source/i18n/affixpatternparser.cpp $
+    icu4c/source/i18n/affixpatternparser.h icu4c/source/i18n/alphaindex.cpp $
     icu4c/source/i18n/anytrans.cpp icu4c/source/i18n/anytrans.h $
     icu4c/source/i18n/astro.cpp icu4c/source/i18n/astro.h $
     icu4c/source/i18n/basictz.cpp icu4c/source/i18n/bocsu.cpp $
@@ -3917,7 +2805,7 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/collationtailoring.cpp $
     icu4c/source/i18n/collationtailoring.h $
     icu4c/source/i18n/collationweights.cpp $
-    icu4c/source/i18n/collationweights.h $
+    icu4c/source/i18n/collationweights.h icu4c/source/i18n/collunsafe.h $
     icu4c/source/i18n/compactdecimalformat.cpp $
     icu4c/source/i18n/coptccal.cpp icu4c/source/i18n/coptccal.h $
     icu4c/source/i18n/cpdtrans.cpp icu4c/source/i18n/cpdtrans.h $
@@ -3933,20 +2821,29 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/currfmt.h icu4c/source/i18n/currpinf.cpp $
     icu4c/source/i18n/currunit.cpp icu4c/source/i18n/dangical.cpp $
     icu4c/source/i18n/dangical.h icu4c/source/i18n/datefmt.cpp $
+    icu4c/source/i18n/dayperiodrules.cpp icu4c/source/i18n/dayperiodrules.h $
     icu4c/source/i18n/dcfmtimp.h icu4c/source/i18n/dcfmtsym.cpp $
     icu4c/source/i18n/decContext.c icu4c/source/i18n/decContext.h $
     icu4c/source/i18n/decfmtst.cpp icu4c/source/i18n/decfmtst.h $
     icu4c/source/i18n/decimalformatpattern.cpp $
-    icu4c/source/i18n/decimalformatpattern.h icu4c/source/i18n/decimfmt.cpp $
-    icu4c/source/i18n/decNumber.c icu4c/source/i18n/decNumber.h $
-    icu4c/source/i18n/decNumberLocal.h icu4c/source/i18n/digitlst.cpp $
-    icu4c/source/i18n/digitlst.h icu4c/source/i18n/dtfmtsym.cpp $
-    icu4c/source/i18n/dtitv_impl.h icu4c/source/i18n/dtitvfmt.cpp $
-    icu4c/source/i18n/dtitvinf.cpp icu4c/source/i18n/dtptngen.cpp $
-    icu4c/source/i18n/dtptngen_impl.h icu4c/source/i18n/dtrule.cpp $
-    icu4c/source/i18n/esctrn.cpp icu4c/source/i18n/esctrn.h $
-    icu4c/source/i18n/ethpccal.cpp icu4c/source/i18n/ethpccal.h $
-    icu4c/source/i18n/filteredbrk.cpp icu4c/source/i18n/fmtable.cpp $
+    icu4c/source/i18n/decimalformatpattern.h $
+    icu4c/source/i18n/decimalformatpatternimpl.h $
+    icu4c/source/i18n/decimfmt.cpp icu4c/source/i18n/decimfmtimpl.cpp $
+    icu4c/source/i18n/decimfmtimpl.h icu4c/source/i18n/decNumber.c $
+    icu4c/source/i18n/decNumber.h icu4c/source/i18n/decNumberLocal.h $
+    icu4c/source/i18n/digitaffix.cpp icu4c/source/i18n/digitaffix.h $
+    icu4c/source/i18n/digitaffixesandpadding.cpp $
+    icu4c/source/i18n/digitaffixesandpadding.h $
+    icu4c/source/i18n/digitformatter.cpp icu4c/source/i18n/digitformatter.h $
+    icu4c/source/i18n/digitgrouping.cpp icu4c/source/i18n/digitgrouping.h $
+    icu4c/source/i18n/digitinterval.cpp icu4c/source/i18n/digitinterval.h $
+    icu4c/source/i18n/digitlst.cpp icu4c/source/i18n/digitlst.h $
+    icu4c/source/i18n/dtfmtsym.cpp icu4c/source/i18n/dtitv_impl.h $
+    icu4c/source/i18n/dtitvfmt.cpp icu4c/source/i18n/dtitvinf.cpp $
+    icu4c/source/i18n/dtptngen.cpp icu4c/source/i18n/dtptngen_impl.h $
+    icu4c/source/i18n/dtrule.cpp icu4c/source/i18n/esctrn.cpp $
+    icu4c/source/i18n/esctrn.h icu4c/source/i18n/ethpccal.cpp $
+    icu4c/source/i18n/ethpccal.h icu4c/source/i18n/fmtable.cpp $
     icu4c/source/i18n/fmtable_cnv.cpp icu4c/source/i18n/fmtableimp.h $
     icu4c/source/i18n/format.cpp icu4c/source/i18n/fphdlimp.cpp $
     icu4c/source/i18n/fphdlimp.h icu4c/source/i18n/fpositer.cpp $
@@ -3961,23 +2858,25 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/indiancal.h icu4c/source/i18n/inputext.cpp $
     icu4c/source/i18n/inputext.h icu4c/source/i18n/islamcal.cpp $
     icu4c/source/i18n/islamcal.h icu4c/source/i18n/japancal.cpp $
-    icu4c/source/i18n/japancal.h icu4c/source/i18n/locdspnm.cpp $
-    icu4c/source/i18n/Makefile.in icu4c/source/i18n/measfmt.cpp $
-    icu4c/source/i18n/measunit.cpp icu4c/source/i18n/measure.cpp $
-    icu4c/source/i18n/msgfmt.cpp icu4c/source/i18n/msgfmt_impl.h $
-    icu4c/source/i18n/name2uni.cpp icu4c/source/i18n/name2uni.h $
-    icu4c/source/i18n/nfrlist.h icu4c/source/i18n/nfrs.cpp $
-    icu4c/source/i18n/nfrs.h icu4c/source/i18n/nfrule.cpp $
-    icu4c/source/i18n/nfrule.h icu4c/source/i18n/nfsubs.cpp $
-    icu4c/source/i18n/nfsubs.h icu4c/source/i18n/nortrans.cpp $
-    icu4c/source/i18n/nortrans.h icu4c/source/i18n/nultrans.cpp $
-    icu4c/source/i18n/nultrans.h icu4c/source/i18n/numfmt.cpp $
-    icu4c/source/i18n/numsys.cpp icu4c/source/i18n/numsys_impl.h $
-    icu4c/source/i18n/olsontz.cpp icu4c/source/i18n/olsontz.h $
-    icu4c/source/i18n/persncal.cpp icu4c/source/i18n/persncal.h $
-    icu4c/source/i18n/plurfmt.cpp icu4c/source/i18n/plurrule.cpp $
-    icu4c/source/i18n/plurrule_impl.h icu4c/source/i18n/quant.cpp $
-    icu4c/source/i18n/quant.h icu4c/source/i18n/quantityformatter.cpp $
+    icu4c/source/i18n/japancal.h icu4c/source/i18n/Makefile.in $
+    icu4c/source/i18n/measfmt.cpp icu4c/source/i18n/measunit.cpp $
+    icu4c/source/i18n/measure.cpp icu4c/source/i18n/msgfmt.cpp $
+    icu4c/source/i18n/msgfmt_impl.h icu4c/source/i18n/name2uni.cpp $
+    icu4c/source/i18n/name2uni.h icu4c/source/i18n/nfrlist.h $
+    icu4c/source/i18n/nfrs.cpp icu4c/source/i18n/nfrs.h $
+    icu4c/source/i18n/nfrule.cpp icu4c/source/i18n/nfrule.h $
+    icu4c/source/i18n/nfsubs.cpp icu4c/source/i18n/nfsubs.h $
+    icu4c/source/i18n/nortrans.cpp icu4c/source/i18n/nortrans.h $
+    icu4c/source/i18n/nultrans.cpp icu4c/source/i18n/nultrans.h $
+    icu4c/source/i18n/numfmt.cpp icu4c/source/i18n/numsys.cpp $
+    icu4c/source/i18n/numsys_impl.h icu4c/source/i18n/olsontz.cpp $
+    icu4c/source/i18n/olsontz.h icu4c/source/i18n/persncal.cpp $
+    icu4c/source/i18n/persncal.h icu4c/source/i18n/pluralaffix.cpp $
+    icu4c/source/i18n/pluralaffix.h icu4c/source/i18n/plurfmt.cpp $
+    icu4c/source/i18n/plurrule.cpp icu4c/source/i18n/plurrule_impl.h $
+    icu4c/source/i18n/precision.cpp icu4c/source/i18n/precision.h $
+    icu4c/source/i18n/quant.cpp icu4c/source/i18n/quant.h $
+    icu4c/source/i18n/quantityformatter.cpp $
     icu4c/source/i18n/quantityformatter.h icu4c/source/i18n/rbnf.cpp $
     icu4c/source/i18n/rbt.cpp icu4c/source/i18n/rbt.h $
     icu4c/source/i18n/rbt_data.cpp icu4c/source/i18n/rbt_data.h $
@@ -4003,34 +2902,35 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/sharedbreakiterator.h $
     icu4c/source/i18n/sharedcalendar.h $
     icu4c/source/i18n/shareddateformatsymbols.h $
-    icu4c/source/i18n/shareddatetimepatterngenerator.h $
     icu4c/source/i18n/sharednumberformat.h $
-    icu4c/source/i18n/sharedpluralrules.h icu4c/source/i18n/simpletz.cpp $
-    icu4c/source/i18n/smpdtfmt.cpp icu4c/source/i18n/smpdtfst.cpp $
-    icu4c/source/i18n/smpdtfst.h icu4c/source/i18n/sortkey.cpp $
-    icu4c/source/i18n/strmatch.cpp icu4c/source/i18n/strmatch.h $
-    icu4c/source/i18n/strrepl.cpp icu4c/source/i18n/strrepl.h $
-    icu4c/source/i18n/stsearch.cpp icu4c/source/i18n/taiwncal.cpp $
-    icu4c/source/i18n/taiwncal.h icu4c/source/i18n/timezone.cpp $
-    icu4c/source/i18n/titletrn.cpp icu4c/source/i18n/titletrn.h $
-    icu4c/source/i18n/tmunit.cpp icu4c/source/i18n/tmutamt.cpp $
-    icu4c/source/i18n/tmutfmt.cpp icu4c/source/i18n/tolowtrn.cpp $
-    icu4c/source/i18n/tolowtrn.h icu4c/source/i18n/toupptrn.cpp $
-    icu4c/source/i18n/toupptrn.h icu4c/source/i18n/translit.cpp $
-    icu4c/source/i18n/transreg.cpp icu4c/source/i18n/transreg.h $
-    icu4c/source/i18n/tridpars.cpp icu4c/source/i18n/tridpars.h $
-    icu4c/source/i18n/tzfmt.cpp icu4c/source/i18n/tzgnames.cpp $
-    icu4c/source/i18n/tzgnames.h icu4c/source/i18n/tznames.cpp $
-    icu4c/source/i18n/tznames_impl.cpp icu4c/source/i18n/tznames_impl.h $
-    icu4c/source/i18n/tzrule.cpp icu4c/source/i18n/tztrans.cpp $
-    icu4c/source/i18n/ucal.cpp icu4c/source/i18n/ucln_in.cpp $
-    icu4c/source/i18n/ucln_in.h icu4c/source/i18n/ucol.cpp $
-    icu4c/source/i18n/ucol_imp.h icu4c/source/i18n/ucol_res.cpp $
-    icu4c/source/i18n/ucol_sit.cpp icu4c/source/i18n/ucoleitr.cpp $
-    icu4c/source/i18n/ucsdet.cpp icu4c/source/i18n/ucurr.cpp $
-    icu4c/source/i18n/ucurrimp.h icu4c/source/i18n/udat.cpp $
-    icu4c/source/i18n/udateintervalformat.cpp icu4c/source/i18n/udatpg.cpp $
-    icu4c/source/i18n/ufieldpositer.cpp $
+    icu4c/source/i18n/sharedpluralrules.h $
+    icu4c/source/i18n/significantdigitinterval.h $
+    icu4c/source/i18n/simpletz.cpp icu4c/source/i18n/smallintformatter.cpp $
+    icu4c/source/i18n/smallintformatter.h icu4c/source/i18n/smpdtfmt.cpp $
+    icu4c/source/i18n/smpdtfst.cpp icu4c/source/i18n/smpdtfst.h $
+    icu4c/source/i18n/sortkey.cpp icu4c/source/i18n/standardplural.cpp $
+    icu4c/source/i18n/standardplural.h icu4c/source/i18n/strmatch.cpp $
+    icu4c/source/i18n/strmatch.h icu4c/source/i18n/strrepl.cpp $
+    icu4c/source/i18n/strrepl.h icu4c/source/i18n/stsearch.cpp $
+    icu4c/source/i18n/taiwncal.cpp icu4c/source/i18n/taiwncal.h $
+    icu4c/source/i18n/timezone.cpp icu4c/source/i18n/titletrn.cpp $
+    icu4c/source/i18n/titletrn.h icu4c/source/i18n/tmunit.cpp $
+    icu4c/source/i18n/tmutamt.cpp icu4c/source/i18n/tmutfmt.cpp $
+    icu4c/source/i18n/tolowtrn.cpp icu4c/source/i18n/tolowtrn.h $
+    icu4c/source/i18n/toupptrn.cpp icu4c/source/i18n/toupptrn.h $
+    icu4c/source/i18n/translit.cpp icu4c/source/i18n/transreg.cpp $
+    icu4c/source/i18n/transreg.h icu4c/source/i18n/tridpars.cpp $
+    icu4c/source/i18n/tridpars.h icu4c/source/i18n/tzfmt.cpp $
+    icu4c/source/i18n/tzgnames.cpp icu4c/source/i18n/tzgnames.h $
+    icu4c/source/i18n/tznames.cpp icu4c/source/i18n/tznames_impl.cpp $
+    icu4c/source/i18n/tznames_impl.h icu4c/source/i18n/tzrule.cpp $
+    icu4c/source/i18n/tztrans.cpp icu4c/source/i18n/ucal.cpp $
+    icu4c/source/i18n/ucln_in.cpp icu4c/source/i18n/ucln_in.h $
+    icu4c/source/i18n/ucol.cpp icu4c/source/i18n/ucol_imp.h $
+    icu4c/source/i18n/ucol_res.cpp icu4c/source/i18n/ucol_sit.cpp $
+    icu4c/source/i18n/ucoleitr.cpp icu4c/source/i18n/ucsdet.cpp $
+    icu4c/source/i18n/udat.cpp icu4c/source/i18n/udateintervalformat.cpp $
+    icu4c/source/i18n/udatpg.cpp icu4c/source/i18n/ufieldpositer.cpp $
     icu4c/source/i18n/uitercollationiterator.cpp $
     icu4c/source/i18n/uitercollationiterator.h icu4c/source/i18n/ulocdata.c $
     icu4c/source/i18n/umsg.cpp icu4c/source/i18n/umsg_imp.h $
@@ -4053,11 +2953,9 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/unicode/dtitvinf.h $
     icu4c/source/i18n/unicode/dtptngen.h icu4c/source/i18n/unicode/dtrule.h $
     icu4c/source/i18n/unicode/fieldpos.h $
-    icu4c/source/i18n/unicode/filteredbrk.h $
     icu4c/source/i18n/unicode/fmtable.h icu4c/source/i18n/unicode/format.h $
     icu4c/source/i18n/unicode/fpositer.h icu4c/source/i18n/unicode/gender.h $
     icu4c/source/i18n/unicode/gregocal.h $
-    icu4c/source/i18n/unicode/locdspnm.h $
     icu4c/source/i18n/unicode/measfmt.h $
     icu4c/source/i18n/unicode/measunit.h $
     icu4c/source/i18n/unicode/measure.h icu4c/source/i18n/unicode/msgfmt.h $
@@ -4080,20 +2978,18 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/unicode/tznames.h icu4c/source/i18n/unicode/tzrule.h $
     icu4c/source/i18n/unicode/tztrans.h icu4c/source/i18n/unicode/ucal.h $
     icu4c/source/i18n/unicode/ucol.h icu4c/source/i18n/unicode/ucoleitr.h $
-    icu4c/source/i18n/unicode/ucsdet.h icu4c/source/i18n/unicode/ucurr.h $
-    icu4c/source/i18n/unicode/udat.h $
+    icu4c/source/i18n/unicode/ucsdet.h icu4c/source/i18n/unicode/udat.h $
     icu4c/source/i18n/unicode/udateintervalformat.h $
     icu4c/source/i18n/unicode/udatpg.h $
-    icu4c/source/i18n/unicode/udisplaycontext.h $
     icu4c/source/i18n/unicode/ufieldpositer.h $
     icu4c/source/i18n/unicode/uformattable.h $
     icu4c/source/i18n/unicode/ugender.h $
-    icu4c/source/i18n/unicode/uldnames.h $
     icu4c/source/i18n/unicode/ulocdata.h icu4c/source/i18n/unicode/umsg.h $
     icu4c/source/i18n/unicode/unirepl.h icu4c/source/i18n/unicode/unum.h $
     icu4c/source/i18n/unicode/unumsys.h $
     icu4c/source/i18n/unicode/upluralrules.h $
     icu4c/source/i18n/unicode/uregex.h icu4c/source/i18n/unicode/uregion.h $
+    icu4c/source/i18n/unicode/ureldatefmt.h $
     icu4c/source/i18n/unicode/usearch.h icu4c/source/i18n/unicode/uspoof.h $
     icu4c/source/i18n/unicode/utmscale.h icu4c/source/i18n/unicode/utrans.h $
     icu4c/source/i18n/unicode/vtzone.h icu4c/source/i18n/unum.cpp $
@@ -4109,7 +3005,9 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/i18n/utf16collationiterator.h $
     icu4c/source/i18n/utf8collationiterator.cpp $
     icu4c/source/i18n/utf8collationiterator.h icu4c/source/i18n/utmscale.c $
-    icu4c/source/i18n/utrans.cpp icu4c/source/i18n/vtzone.cpp $
+    icu4c/source/i18n/utrans.cpp icu4c/source/i18n/valueformatter.cpp $
+    icu4c/source/i18n/valueformatter.h icu4c/source/i18n/visibledigits.cpp $
+    icu4c/source/i18n/visibledigits.h icu4c/source/i18n/vtzone.cpp $
     icu4c/source/i18n/vzone.cpp icu4c/source/i18n/vzone.h $
     icu4c/source/i18n/windtfmt.cpp icu4c/source/i18n/windtfmt.h $
     icu4c/source/i18n/winnmfmt.cpp icu4c/source/i18n/winnmfmt.h $
@@ -4542,6 +3440,7 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/stubdata/Makefile.in icu4c/source/stubdata/stubdata.c $
     icu4c/source/stubdata/stubdata.vcxproj $
     icu4c/source/stubdata/stubdata.vcxproj.filters $
+    icu4c/source/stubdata/stubdatabuilt.txt $
     icu4c/source/tools/ctestfw/ctest.c $
     icu4c/source/tools/ctestfw/ctestfw.vcxproj $
     icu4c/source/tools/ctestfw/ctestfw.vcxproj.filters $
@@ -4584,6 +3483,10 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/tools/gencnval/gencnval.vcxproj $
     icu4c/source/tools/gencnval/gencnval.vcxproj.filters $
     icu4c/source/tools/gencnval/Makefile.in $
+    icu4c/source/tools/gencolusb/extract_unsafe_backwards.cpp $
+    icu4c/source/tools/gencolusb/Makefile $
+    icu4c/source/tools/gencolusb/README.md $
+    icu4c/source/tools/gencolusb/verify_uset.cpp $
     icu4c/source/tools/gendict/gendict.1.in $
     icu4c/source/tools/gendict/gendict.cpp $
     icu4c/source/tools/gendict/gendict.vcxproj $
@@ -4594,21 +3497,21 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/tools/gennorm2/Makefile.in $
     icu4c/source/tools/gennorm2/n2builder.cpp $
     icu4c/source/tools/gennorm2/n2builder.h $
-    icu4c/source/tools/genrb/derb.1.in icu4c/source/tools/genrb/derb.c $
+    icu4c/source/tools/genrb/derb.1.in icu4c/source/tools/genrb/derb.cpp $
     icu4c/source/tools/genrb/derb.vcxproj $
     icu4c/source/tools/genrb/derb.vcxproj.filters $
     icu4c/source/tools/genrb/errmsg.c icu4c/source/tools/genrb/errmsg.h $
-    icu4c/source/tools/genrb/genrb.1.in icu4c/source/tools/genrb/genrb.c $
+    icu4c/source/tools/genrb/genrb.1.in icu4c/source/tools/genrb/genrb.cpp $
     icu4c/source/tools/genrb/genrb.h icu4c/source/tools/genrb/genrb.vcxproj $
     icu4c/source/tools/genrb/genrb.vcxproj.filters $
     icu4c/source/tools/genrb/Makefile.in icu4c/source/tools/genrb/parse.cpp $
     icu4c/source/tools/genrb/parse.h icu4c/source/tools/genrb/prscmnts.cpp $
     icu4c/source/tools/genrb/prscmnts.h icu4c/source/tools/genrb/rbutil.c $
     icu4c/source/tools/genrb/rbutil.h icu4c/source/tools/genrb/read.c $
-    icu4c/source/tools/genrb/read.h icu4c/source/tools/genrb/reslist.c $
+    icu4c/source/tools/genrb/read.h icu4c/source/tools/genrb/reslist.cpp $
     icu4c/source/tools/genrb/reslist.h icu4c/source/tools/genrb/rle.c $
     icu4c/source/tools/genrb/rle.h icu4c/source/tools/genrb/ustr.c $
-    icu4c/source/tools/genrb/ustr.h icu4c/source/tools/genrb/wrtjava.c $
+    icu4c/source/tools/genrb/ustr.h icu4c/source/tools/genrb/wrtjava.cpp $
     icu4c/source/tools/genrb/wrtxml.cpp icu4c/source/tools/genren/genren.pl $
     icu4c/source/tools/genren/Makefile icu4c/source/tools/genren/README $
     icu4c/source/tools/gensprep/filterRFC3454.pl $
@@ -4644,7 +3547,7 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/tools/makeconv/genmbcs.cpp $
     icu4c/source/tools/makeconv/genmbcs.h $
     icu4c/source/tools/makeconv/makeconv.1.in $
-    icu4c/source/tools/makeconv/makeconv.c $
+    icu4c/source/tools/makeconv/makeconv.cpp $
     icu4c/source/tools/makeconv/makeconv.h $
     icu4c/source/tools/makeconv/makeconv.vcxproj $
     icu4c/source/tools/makeconv/makeconv.vcxproj.filters $
@@ -4688,7 +3591,8 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/tools/toolutil/toolutil.cpp $
     icu4c/source/tools/toolutil/toolutil.h $
     icu4c/source/tools/toolutil/toolutil.vcxproj $
-    icu4c/source/tools/toolutil/ucbuf.c icu4c/source/tools/toolutil/ucbuf.h $
+    icu4c/source/tools/toolutil/ucbuf.cpp $
+    icu4c/source/tools/toolutil/ucbuf.h $
     icu4c/source/tools/toolutil/ucln_tu.cpp $
     icu4c/source/tools/toolutil/ucm.c icu4c/source/tools/toolutil/ucm.h $
     icu4c/source/tools/toolutil/ucmstate.c $
@@ -4718,11 +3622,11 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/source/tools/tzcode/tzfile.h $
     icu4c/source/tools/tzcode/tzselect.ksh $
     icu4c/source/tools/tzcode/zdump.c icu4c/source/tools/tzcode/zic.c
-  srcdir = $top_srcdir/icu4c
   name = icu
   configure = ./source/configure
-  destdir = $builddir/icu
   workdir = $intdir/icu
+  destdir = $builddir/icu
+  srcdir = $top_srcdir/icu4c
   configure_flags = --prefix=/ CC=$cc CXX=$cxx CFLAGS="$cflags $
       -DU_STATIC_IMPLEMENTATION" CXXFLAGS="$cxxflags $
       -DU_STATIC_IMPLEMENTATION" LDFLAGS="$ldflags" --disable-shared $
