@@ -40,6 +40,8 @@ void InitHiDPIHandling()
     g_pxScalingFactor = dpi.y / 96.0;
 }
 
+#endif // NEEDS_MANUAL_HIDPI
+
 namespace
 {
 
@@ -92,13 +94,11 @@ bool LoadAndScale(wxImage& img, const wxString& name)
     // else: load normally
 #endif
 
-    img = wxImage(filename, wxBITMAP_TYPE_PNG);
+    LoadPNGImage(img, filename);
     return true;
 }
 
 } // anonymous namespace
-
-#endif // NEEDS_MANUAL_HIDPI
 
 
 wxBitmap LoadScaledBitmap(const wxString& name, bool mirror, int padding)
