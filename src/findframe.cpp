@@ -248,6 +248,11 @@ void FindFrame::Reset(const CatalogPtr& c)
     m_position = -1;
     m_lastItem.reset();
 
+    UpdateButtons();
+}
+
+void FindFrame::UpdateButtons()
+{
     m_btnPrev->Enable(!ms_text.empty());
     m_btnNext->Enable(!ms_text.empty());
 }
@@ -265,6 +270,8 @@ void FindFrame::ShowForReplace()
 
 void FindFrame::DoShowFor(int mode)
 {
+    m_position = (int)m_listCtrl->GetFirstSelected();
+
     m_mode->SetSelection(mode);
     OnModeChanged();
 
@@ -305,7 +312,7 @@ void FindFrame::OnModeChanged()
 void FindFrame::OnTextChange(wxCommandEvent& e)
 {
     ms_text = m_searchField->GetValue();
-    Reset(m_catalog);
+    UpdateButtons();
     e.Skip();
 }
 
