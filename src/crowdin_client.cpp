@@ -62,11 +62,12 @@ namespace
 #define OAUTH_URI_PREFIX    "poedit://auth/crowdin/"
 
 // Recursive extract files from /api/project/*/info response
-void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, const std::wstring& prefix)
+void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json& r, const std::wstring& prefix)
 {
-    r.iterate_array("files",[&out,prefix](const json_dict& i){
-        auto name = prefix + i.wstring("name");
-        auto node_type = i.utf8_string("node_type");
+    for (auto i : r["files"])
+    {
+        std::wstring name = prefix + str::to_wstring(i["name"]);
+        std::string node_type = i["node_type"];
         if (node_type == "file")
         {
             out.push_back(name);
@@ -75,7 +76,7 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json_dict& r, co
         {
             ExtractFilesFromInfo(out, i, name + L"/");
         }
-    });
+    }
 }
 
 } // anonymous namespace
@@ -98,9 +99,9 @@ public:
     {}
 
 protected:
-    std::string parse_json_error(const json_dict& response) const override
+    std::string parse_json_error(const json& response) const override
     {
-        auto msg = response.subdict("error").utf8_string("message");
+        std::string msg = response["error"]["message"];
 
         // Translate commonly encountered messages:
         if (msg == "Translations download is forbidden by project owner")
@@ -166,11 +167,11 @@ void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
 {
     m_api->get("/api/account/profile?json=",
             // OK:
-            [callback](const json_dict& r){
-                auto profile = r.subdict("profile");
+            [callback](const json& r){
+                json profile = r["profile"];
                 UserInfo u;
-                u.name = profile.wstring("name");
-                u.login = profile.wstring("login");
+                u.name = str::to_wstring(profile["name"]);
+                u.login = str::to_wstring(profile["login"]);
                 callback(u);
             },
             // error:
@@ -184,13 +185,16 @@ void CrowdinClient::GetUserProjects(std::function<void(std::vector<ProjectListin
 {
     m_api->get("/api/account/get-projects?json=&role=all",
             // OK:
-            [onResult](const json_dict& r){
+            [onResult](const json& r){
                 std::vector<ProjectListing> all;
-                r.iterate_array("projects",[&all](const json_dict& i){
-                    all.push_back({i.wstring("name"),
-                                   i.utf8_string("identifier"),
-                                   (bool)i.number("downloadable")});
-                });
+                for (auto i : r["projects"])
+                {
+                    all.push_back({
+                        str::to_wstring(i["name"]),
+                        i["identifier"],
+                        (bool)i["downloadable"].get<int>()
+                    });
+                }
                 onResult(all);
             },
             onError
@@ -205,15 +209,16 @@ void CrowdinClient::GetProjectInfo(const std::string& project_id,
     auto url = "/api/project/" + project_id + "/info?json=&project-identifier=" + project_id;
     m_api->get(url,
             // OK:
-            [onResult](const json_dict& r){
+            [onResult](const json& r){
                 ProjectInfo prj;
-                auto details = r.subdict("details");
-                prj.name = details.wstring("name");
-                prj.identifier = details.utf8_string("identifier");
-                r.iterate_array("languages",[&prj](const json_dict& i){
-                    if (i.number("can_translate") != 0)
-                        prj.languages.push_back(Language::TryParse(i.wstring("code")));
-                });
+                auto details = r["details"];
+                prj.name = str::to_wstring(details["name"]);
+                prj.identifier = details["identifier"];
+                for (auto i : r["languages"])
+                {
+                    if (i["can_translate"].get<int>() != 0)
+                        prj.languages.push_back(Language::TryParse(str::to_wstring(i["code"])));
+                }
                 ExtractFilesFromInfo(prj.files, r, L"/");
                 onResult(prj);
             },

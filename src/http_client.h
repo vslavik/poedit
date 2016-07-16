@@ -38,34 +38,6 @@
 
 class http_client;
 
-class json_dict
-{
-public:
-    struct native;
-    json_dict() {}
-    json_dict(std::shared_ptr<native> value) : m_native(value) {}
-
-    bool is_null(const char *name) const;
-
-    json_dict subdict(const char *name) const;
-
-    std::string utf8_string(const char *name) const;
-    std::wstring wstring(const char *name) const;
-#ifdef __APPLE__
-    std::string native_string(const char *name) const { return utf8_string(name); }
-#else
-    std::wstring native_string(const char *name) const { return wstring(name); }
-#endif
-
-    int number(const char *name) const;
-    double double_number(const char *name) const;
-    void iterate_array(const char *name, std::function<void(const json_dict&)> on_item) const;
-
-private:
-    std::shared_ptr<native> m_native;
-};
-
-
 /// Abstract base class for encoded body data
 class http_body_data
 {
@@ -132,14 +104,14 @@ private:
 class http_response
 {
 public:
-    http_response(const json_dict& data) : m_ok(true), m_data(data) {}
+    http_response(const json& data) : m_ok(true), m_data(data) {}
     http_response(std::exception_ptr e) : m_ok(false), m_error(e) {}
 
     /// Is the response acceptable?
     bool ok() const { return m_ok; }
 
     /// Returns json data from the response. May throw if there was error.
-    const json_dict& json() const
+    const json& json() const
     {
         if (m_error)
             std::rethrow_exception(m_error);
@@ -152,7 +124,7 @@ public:
 private:
     bool m_ok;
     std::exception_ptr m_error;
-    json_dict m_data;
+    ::json m_data;
 
     friend class http_client;
 };
@@ -267,7 +239,7 @@ protected:
         
         Does nothing by default, but can be overridden in derived class.
      */
-    virtual std::string parse_json_error(const json_dict& /*response*/) const
+    virtual std::string parse_json_error(const json& /*response*/) const
         { return std::string(); }
 
     /**

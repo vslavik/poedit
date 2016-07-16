@@ -29,7 +29,7 @@
 #include "version.h"
 
 #import "AFHTTPClient.h"
-#import "AFJSONRequestOperation.h"
+#import "AFHTTPRequestOperation.h"
 
 
 class http_exception : public std::runtime_error
@@ -37,79 +37,6 @@ class http_exception : public std::runtime_error
 public:
     http_exception(const std::string& what) : std::runtime_error(what) {}
 };
-
-
-struct json_dict::native
-{
-    native(NSDictionary *d) : dict(d) {}
-    NSDictionary *dict;
-
-    bool is_null(const char *key) const
-    {
-        id obj = dict[[NSString stringWithUTF8String:key]];
-        return obj == nil || obj == [NSNull null];
-    }
-
-    id get(const char *key, Class klass)
-    {
-        id obj = dict[[NSString stringWithUTF8String:key]];
-        if (obj == nil)
-            throw http_exception(std::string("JSON key error: ") + key);
-        if (![obj isKindOfClass:klass])
-            throw http_exception(std::string("JSON type error: ") + key);
-        return obj;
-    }
-};
-
-static inline json_dict make_json_dict(NSDictionary *d)
-{
-    return std::make_shared<json_dict::native>(d);
-}
-
-bool json_dict::is_null(const char *name) const
-{
-    return m_native->is_null(name);
-}
-
-json_dict json_dict::subdict(const char *name) const
-{
-    NSDictionary *d = m_native->get(name, [NSDictionary class]);
-    return make_json_dict(d);
-}
-
-std::string json_dict::utf8_string(const char *name) const
-{
-    NSString *s = m_native->get(name, [NSString class]);
-    return str::to_utf8(s);
-}
-
-std::wstring json_dict::wstring(const char *name) const
-{
-    NSString *s = m_native->get(name, [NSString class]);
-    return str::to_wstring(s);
-}
-
-int json_dict::number(const char *name) const
-{
-    NSNumber *n = m_native->get(name, [NSNumber class]);
-    return [n intValue];
-}
-
-double json_dict::double_number(const char *name) const
-{
-    NSNumber *n = m_native->get(name, [NSNumber class]);
-    return [n doubleValue];
-}
-
-void json_dict::iterate_array(const char *name, std::function<void(const json_dict&)> on_item) const
-{
-    NSArray *array = m_native->get(name, [NSArray class]);
-    for (NSDictionary *item in array)
-    {
-        on_item(make_json_dict(item));
-    }
-}
-
 
 
 class http_client::impl
@@ -122,7 +49,6 @@ public:
         NSString *str = str::to_NS(url_prefix);
         m_native = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:str]];
 
-        [m_native registerHTTPOperationClass:[AFJSONRequestOperation class]];
         [m_native setDefaultHeader:@"Accept" value:@"application/json"];
 
         // AFNetworking operations aren't CPU-bound, so shouldn't use the default queue
@@ -163,10 +89,17 @@ public:
     {
         [m_native getPath:str::to_NS(url)
                parameters:nil
-                  success:^(AFHTTPRequestOperation *op, NSDictionary *responseObject)
+                  success:^(AFHTTPRequestOperation *op, NSData *responseData)
         {
             #pragma unused(op)
-            handler(make_json_dict(responseObject));
+            try
+            {
+                handler(extract_json(responseData));
+            }
+            catch (...)
+            {
+                handler(std::current_exception());
+            }
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
@@ -190,7 +123,7 @@ public:
         {
             #pragma unused(op)
             [data writeToFile:outfile atomically:YES];
-            handler(json_dict());
+            handler(json());
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
@@ -211,10 +144,17 @@ public:
         [request setValue:[NSString stringWithFormat:@"%lu", body.size()] forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:[NSData dataWithBytes:body.data() length:body.size()]];
 
-        AFHTTPRequestOperation *operation = [m_native HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *op, id responseObject)
+        AFHTTPRequestOperation *operation = [m_native HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *op, NSData *responseData)
         {
             #pragma unused(op)
-            handler(make_json_dict(responseObject));
+            try
+            {
+                handler(extract_json(responseData));
+            }
+            catch (...)
+            {
+                handler(std::current_exception());
+            }
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
@@ -231,12 +171,12 @@ private:
         std::string desc;
         if (op.responseData && [op.response.MIMEType isEqualToString:@"application/json"])
         {
-            NSDictionary *reply = [NSJSONSerialization JSONObjectWithData:op.responseData options:0 error:nil];
-            if (reply)
+            NSData *reply = op.responseData;
+            if (reply && reply.length > 0)
             {
                 try
                 {
-                    desc = m_owner.parse_json_error(make_json_dict(reply));
+                    desc = m_owner.parse_json_error(extract_json(reply));
                 }
                 catch (...) {} // report original error if parsing broken
             }
@@ -251,6 +191,11 @@ private:
 
         m_owner.on_error_response(status_code, desc);
         error_handler(std::make_exception_ptr(http_exception(desc)));
+    }
+
+    json extract_json(NSData *data)
+    {
+        return json::parse(std::string((char*)data.bytes, data.length));
     }
 
     http_client& m_owner;

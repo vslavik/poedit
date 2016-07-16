@@ -52,11 +52,10 @@
     EXTERN_C DECLSPEC_IMPORT BOOL STDAPICALLTYPE InternetGetConnectedState(__out LPDWORD lpdwFlags, __reserved DWORD dwReserved);
 #endif
 
-using namespace web;
-
 namespace
 {
 
+using namespace web;
 using utility::string_t;
 using utility::conversions::to_string_t;
 
@@ -102,66 +101,6 @@ public:
 };
 
 } // anonymous namespace
-
-struct json_dict::native
-{
-    native(const web::json::value& x) : val(x) {}
-
-    web::json::value val;
-
-    const web::json::value& get(const std::string& key)
-    {
-        return val.at(to_string_t(key));
-    }
-};
-
-static inline json_dict make_json_dict(const web::json::value& x)
-{
-    return std::make_shared<json_dict::native>(x);
-}
-
-bool json_dict::is_null(const char *name) const
-{
-    return m_native->get(name).is_null();
-}
-
-json_dict json_dict::subdict(const char *name) const
-{
-    return make_json_dict(m_native->get(name));
-}
-
-std::string json_dict::utf8_string(const char *name) const
-{
-    return str::to_utf8(m_native->get(name).as_string());
-}
-
-std::wstring json_dict::wstring(const char *name) const
-{
-    return str::to_wstring(m_native->get(name).as_string());
-}
-
-int json_dict::number(const char *name) const
-{
-    return m_native->get(name).as_integer();
-}
-
-double json_dict::double_number(const char *name) const
-{
-    return m_native->get(name).as_double();
-}
-
-void json_dict::iterate_array(const char *name, std::function<void(const json_dict&)> on_item) const
-{
-    auto& val = m_native->get(name);
-    if (!val.is_array())
-        return;
-    auto size = val.size();
-    for (size_t i = 0; i < size; ++i)
-    {
-        on_item(make_json_dict(val.at(i)));
-    }
-}
-
 
 
 class http_client::impl
@@ -236,7 +175,7 @@ public:
         .then([=](http::http_response response)
         {
             handle_error(response);
-            handler(make_json_dict(response.extract_json().get()));
+            handler(::json::parse(response.extract_utf8string().get()));
         })
         .then([=](pplx::task<void> t)
         {
@@ -277,7 +216,7 @@ public:
             try
             {
                 t.get();
-                handler(json_dict());
+                handler(::json());
             }
             catch (...)
             {
@@ -303,7 +242,7 @@ public:
         .then([=](http::http_response response)
         {
             handle_error(response);
-            handler(make_json_dict(response.extract_json().get()));
+            handler(::json::parse(response.extract_utf8string().get()));
         })
         .then([=](pplx::task<void> t)
         {
@@ -328,7 +267,7 @@ private:
         {
             try
             {
-                auto json = make_json_dict(r.extract_json().get());
+                auto json = ::json::parse(r.extract_utf8string().get());
                 msg = m_owner.parse_json_error(json);
             }
             catch (...) {} // report original error if parsing broken

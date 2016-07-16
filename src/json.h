@@ -26,7 +26,24 @@
 #ifndef Poedit_json_h
 #define Poedit_json_h
 
+#include "str_helpers.h"
+
 #include "json/src/json.hpp"
 using json = nlohmann::json;
 
+
+namespace str
+{
+
+inline std::wstring to_wstring(const json& x)
+{
+    return to_wstring(x.get<std::string>());
+}
+
+inline std::wstring to_wstring(json&& x)
+{
+    return to_wstring(x.get<std::string>());
+}
+
+}
 #endif // Poedit_json_h
