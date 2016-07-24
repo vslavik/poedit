@@ -2284,7 +2284,7 @@ void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
     {
         auto srclang = m_catalog->GetSourceLanguage();
         auto lang = m_catalog->GetLanguage();
-        concurrency_queue::add([=](){
+        dispatch::async([=](){
             try
             {
                 auto tm = TranslationMemory::Get().GetWriter();
@@ -2852,11 +2852,11 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 {
     wxBusyCursor bcur;
 
-    concurrency_queue::future<void> tmUpdateThread;
+    dispatch::future<void> tmUpdateThread;
     if (wxConfig::Get()->ReadBool("use_tm", true) &&
         m_catalog->HasCapability(Catalog::Cap::Translations))
     {
-        tmUpdateThread = concurrency_queue::add([=]{
+        tmUpdateThread = dispatch::async([=]{
             try
             {
                 auto tm = TranslationMemory::Get().GetWriter();
@@ -2885,7 +2885,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     Catalog::CompilationStatus mo_compilation_status = Catalog::CompilationStatus::NotDone;
     if ( !m_catalog->Save(catalog, true, validation_errors, mo_compilation_status) )
     {
-        if (is_future_valid(tmUpdateThread))
+        if (tmUpdateThread.valid())
             tmUpdateThread.wait();
         completionHandler(false);
         return;
@@ -2907,7 +2907,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
-    if (is_future_valid(tmUpdateThread))
+    if (tmUpdateThread.valid())
         tmUpdateThread.wait();
 
     if (validation_errors)
@@ -3153,7 +3153,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
             return true;
         };
 
-    std::vector<concurrency_queue::future<bool>> operations;
+    std::vector<dispatch::future<bool>> operations;
     for (int i: range)
     {
         auto dt = (*m_catalog)[i];
@@ -3162,7 +3162,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
         if (dt->IsTranslated() && !dt->IsFuzzy())
             continue;
 
-        operations.push_back(concurrency_queue::add([=,&tm]{
+        operations.push_back(dispatch::async([=,&tm]{
             auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
             bool ok = process_results(dt, results);
             return ok;

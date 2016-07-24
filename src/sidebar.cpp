@@ -690,7 +690,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
         // when receiving data
         [=](const SuggestionsList& hits){
-            call_on_main_thread([weakSelf,queryId,hits]{
+            dispatch::on_main([weakSelf,queryId,hits]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
                 if (!self || self->m_latestQueryId != queryId)
@@ -703,7 +703,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
         // on error:
         [=](std::exception_ptr e){
-            call_on_main_thread([weakSelf,queryId,backendPtr,e]{
+            dispatch::on_main([weakSelf,queryId,backendPtr,e]{
                 auto self = weakSelf.lock();
                 // maybe this call is already out of date:
                 if (!self || self->m_latestQueryId != queryId)

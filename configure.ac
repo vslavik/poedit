@@ -57,7 +57,7 @@ yes)	DEBUG_FLAGS="-g -Wall -O0"
 esac
 
 
-AX_BOOST_BASE([1.54], [], [AC_MSG_ERROR([Boost libraries are required])])
+AX_BOOST_BASE([1.60], [], [AC_MSG_ERROR([Boost libraries are required])])
 AX_BOOST_SYSTEM
 AX_BOOST_REGEX
 CXXFLAGS="$CXXFLAGS $BOOST_CPPFLAGS"

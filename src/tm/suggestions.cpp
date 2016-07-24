@@ -41,7 +41,7 @@ public:
                             SuggestionsProvider::error_func_type onError)
     {
         auto bck = &backend;
-        concurrency_queue::add([=](){
+        dispatch::async([=](){
             // don't bother asking the backend if the language or query is invalid:
             if (!srclang.IsValid() || !lang.IsValid() || srclang == lang || source.empty())
             {

@@ -26,213 +26,393 @@
 #ifndef Poedit_concurrency_h
 #define Poedit_concurrency_h
 
-#include <functional>
-#include <future>
-#include <memory>
-
-#include <wx/app.h>
-#include <wx/weakref.h>
-
 #if defined(__WXOSX__) && defined(__clang__)
     #define HAVE_DISPATCH
-    extern void call_on_main_thread_impl(std::function<void()>&& f);
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1800)
     #define HAVE_PPL
-    #include <concrt.h>
 #endif
 
-// ----------------------------------------------------------------------
-// Background operations
-// ----------------------------------------------------------------------
+
+#define BOOST_THREAD_VERSION 4
+#define BOOST_THREAD_PROVIDES_EXECUTORS
+
+#include <boost/thread/executor.hpp>
+#include <boost/thread/future.hpp>
+
+#if !defined(HAVE_DISPATCH) && !defined(HAVE_PPL)
+    #include <boost/thread/executors/basic_thread_pool.hpp>
+#endif
 
 #if defined(HAVE_PPL)
+    #include <concrt.h>
+    #include <ppltasks.h>
+#endif
 
-class concurrency_queue
+#include <memory>
+#include <mutex>
+
+#include <wx/app.h>
+#include <wx/weakref.h>
+
+
+namespace dispatch
+{
+
+namespace detail
+{
+
+class custom_executor : public boost::executors::executor
 {
 public:
-    /// Future type used by the queue.
-    template<typename T> using future = Concurrency::task<T>;
+    custom_executor() : m_closed(false) {}
 
-    /**
-        Enqueue an operation for background processing.
-
-        Return future for it.
-     */
-    template<class F>
-    static auto add(F&& f) -> future<typename std::result_of<F()>::type>
+    void close() override
     {
-        return Concurrency::create_task(f);
+      std::lock_guard<std::mutex> lock(m_mutex);
+      m_closed = true;
     }
 
-    /// @internal Call on shutdown to terminate the queue
-    static void cleanup() {}
-};
-
-template<typename T>
-inline bool is_future_valid(const concurrency_queue::future<T>& f)
-{
-    try
+    bool closed() override
     {
-        f.is_done();
-        return true;
-    }
-    catch (Concurrency::invalid_operation)
-    {
-        return false;
-    }
-}
-
-#else // generic version
-
-class concurrency_queue
-{
-public:
-    /// Future type used by the queue.
-    template<typename T> using future = std::future<T>;
-
-    /**
-        Enqueue an operation for background processing.
-
-        Return future for it.
-     */
-    template<class F>
-    static auto add(F&& f) -> future<typename std::result_of<F()>::type>
-    {
-        using return_type = typename std::result_of<F()>::type;
-        auto task = std::make_shared< std::packaged_task<return_type()> >(std::forward<F>(f));
-        future<return_type> res = task->get_future();
-        enqueue([task](){ (*task)(); });
-        return res;
+      std::lock_guard<std::mutex> lock(m_mutex);
+      return m_closed;
     }
 
-    /// @internal Call on shutdown to terminate the queue
-    static void cleanup();
+    bool try_executing_one() override { return false; }
 
 private:
-    static void enqueue(std::function<void()>&& f);
+    std::mutex m_mutex;
+    bool m_closed;
 };
 
-template<typename T>
-inline bool is_future_valid(const concurrency_queue::future<T>& f)
+
+#if defined(HAVE_DISPATCH)
+
+enum class queue
 {
-    return f.valid();
-}
+    main,
+    priority_default
+};
 
-#endif // !HAVE_PPL
+extern void dispatch_async_cxx(boost::executors::work&& f, queue q = queue::priority_default);
 
-
-// ----------------------------------------------------------------------
-// Helpers for running code on the main thread
-// ----------------------------------------------------------------------
-
-/**
-    Simply calls the callable @a func on the main thread, asynchronously.
- */
-template<typename F>
-void call_on_main_thread(F&& func)
+class background_queue_executor : public custom_executor
 {
+public:
+    static background_queue_executor& get();
+
+    void submit(work&& closure) override
+    {
+        dispatch_async_cxx(std::forward<work>(closure));
+    }
+};
+
+#elif defined(HAVE_PPL)
+
+class background_queue_executor : public custom_executor
+{
+public:
+    static background_queue_executor& get();
+
+    void submit(work&& closure)
+    {
+        Concurrency::create_task([f{std::move(closure)}]() mutable { f(); });
+    }
+};
+
+#else // !HAVE_DISPATCH && !HAVE_PPL
+
+class background_queue_executor : public boost::basic_thread_pool
+{
+public:
+    static background_queue_executor& get();
+};
+
+#endif // HAVE_DISPATCH etc.
+
+
+class main_thread_executor : public custom_executor
+{
+public:
+    static main_thread_executor& get();
+
+    void submit(work&& closure)
+    {
 #ifdef HAVE_DISPATCH
-    call_on_main_thread_impl(func);
+        dispatch_async_cxx(std::forward<work>(closure), queue::main);
 #else
-    wxTheApp->CallAfter(func);
+        wxTheApp->CallAfter(std::forward<work>(closure));
 #endif
+    }
+};
+
+
+// Helper exception for when then_on_window() isn't called because the wxWindow
+// was already dismissed by the user
+class window_dismissed : public std::exception
+{
+};
+
+} // namespace detail
+
+
+// ----------------------------------------------------------------------
+// Tasks (aka futures)
+// ----------------------------------------------------------------------
+
+template<typename T>
+using promise = boost::promise<T>;
+
+// Can't use std::current_exception with boost::promise, must use boost
+// version instead. This helper takes care of it.
+template<typename T>
+void set_current_exception(boost::promise<T>& pr)
+{
+    pr.set_exception(boost::current_exception());
 }
 
-#if defined(__clang__)
+template<typename T>
+void set_current_exception(std::shared_ptr<boost::promise<T>> pr) { set_current_exception(*pr); }
 
-template<typename... Args>
-auto on_main_thread_impl(std::function<void(Args...)> func) -> std::function<void(Args...)>
+
+template<typename T>
+class future;
+
+template<typename T, typename FutureType>
+class future_base
 {
-    return [func](Args... args){
-        call_on_main_thread([func,args...]{
-            func(args...);
+public:
+    future_base() {}
+    future_base(FutureType&& future) : f_(std::move(future.m_future)) {}
+
+    future_base(boost::future<T>&& future) : f_(std::move(future)) {}
+
+    FutureType& operator=(FutureType&& other) { f_ = std::move(other.f_); }
+    FutureType& operator=(const FutureType& other) = delete;
+
+    void wait() const { f_.wait(); }
+    bool valid() const { return f_.valid(); }
+
+    // Convenient async exception catching:
+
+    template<typename Ex, typename F>
+    auto catch_ex(F&& continuation) -> future<void>;
+
+    template<typename F>
+    auto catch_all(F&& continuation) -> future<void>;
+
+protected:
+    boost::future<T> f_;
+};
+
+/// More advanced wrapper around boost::future
+template<typename T>
+class future : public future_base<T, future<T>>
+{
+public:
+    future() {}
+    using future_base<T, future<T>>::future_base;
+
+#ifdef HAVE_PPL
+    future(Concurrency::task<T>&& task)
+    {
+        auto pr = std::make_shared<promise<T>>();
+        f_ = pr->get_future();
+        task.then([pr](Concurrency::task<T> x) {
+            try
+            {
+                pr->set_value(x.get());
+            }
+            catch (...)
+            {
+                set_current_exception(pr);
+            }
         });
-    };
-}
-
-#else // sigh... neither VS2013 nor GCC 4.8 can deal with the above
-
-// Visual Studio 2013 is broken and won't parse the above; 2015 fixes it.
-inline auto on_main_thread_impl(std::function<void()> func) -> std::function<void()>
-{
-    return [func](){ call_on_main_thread([=]{ func(); }); };
-}
-template<typename A1>
-auto on_main_thread_impl(std::function<void(A1)> func) -> std::function<void(A1)>
-{
-    return [func](A1 a1){ call_on_main_thread([=]{ func(a1); }); };
-}
-template<typename A1, typename A2>
-auto on_main_thread_impl(std::function<void(A1,A2)> func) -> std::function<void(A1,A2)>
-{
-    return [func](A1 a1, A2 a2){ call_on_main_thread([=]{ func(a1,a2); }); };
-}
-template<typename A1, typename A2, typename A3>
-auto on_main_thread_impl(std::function<void(A1, A2, A3)> func) -> std::function<void(A1, A2, A3)>
-{
-    return [func](A1 a1, A2 a2, A3 a3){ call_on_main_thread([=]{ func(a1, a2, a3); }); };
-}
-
+    }
 #endif
 
-/**
-    Wraps a callable into std::function called on the main thread.
-    
-    Returned function takes the same arguments as @a func and is called on the
-    main thread. I.e. the returned object may be called from any thread, but
-    @a func is guaranteed to execute on the main one.
-    
-    Notice that it is necessary to specify template parameters because they
-    cannot be deduced.
-    
-    Example usage:
-    
-        on_main_thread<int,std::string>(this, [=](int i, std::string s){
-            ...
-        })
- */
-template<typename... Args, typename F>
-auto on_main_thread(F&& func) -> std::function<void(Args...)>
+    T get() { return this->f_.get(); }
+
+    template<typename F>
+    auto then(F&& continuation) -> future<typename std::result_of<F(T)>::type>
+    {
+        return this->f_.then(detail::background_queue_executor::get(),
+                             [f{std::move(continuation)}](boost::future<T> x){
+                                 return f(x.get());
+                             });
+    }
+
+    template<typename F>
+    auto then_on_main(F&& continuation) -> future<typename std::result_of<F(T)>::type>
+    {
+        return this->f_.then(detail::main_thread_executor::get(),
+                             [f{std::move(continuation)}](boost::future<T> x){
+                                 return f(x.get());
+                             });
+    }
+
+    template<typename Window, typename F>
+    auto then_on_window(Window *self, F&& continuation) -> future<typename std::result_of<F(T)>::type>
+    {
+        wxWeakRef<Window> weak(self);
+        return this->f_.then(detail::main_thread_executor::get(),
+                             [weak, f{std::move(continuation)}](boost::future<T> x){
+                                 if (weak)
+                                     return f(x.get());
+                                 else
+                                     throw detail::window_dismissed();
+                             });
+    };
+
+    template<typename Window>
+    auto then_on_window(Window *self, void (Window::*method)(T))
+    {
+        return then_on_window(self, [self,method](T x) {
+            ((*self).*method)(x);
+        });
+    }
+};
+
+
+template<>
+class future<void> : public future_base<void, future<void>>
 {
-    return on_main_thread_impl(std::function<void(Args...)>(func));
+public:
+    future() {}
+    using future_base<void, future<void>>::future_base;
+
+#ifdef HAVE_PPL
+    future(Concurrency::task<void>&& task)
+    {
+        auto pr = std::make_shared<promise<void>>();
+        f_ = pr->get_future();
+        task.then([pr](Concurrency::task<void> x) {
+            try
+            {
+                x.get();
+                pr->set_value();
+            }
+            catch (...)
+            {
+                set_current_exception(pr);
+            }
+        });
+
+    }
+#endif
+
+    void get() { this->f_.get(); }
+
+    template<typename F>
+    auto then(F&& continuation) -> future<typename std::result_of<F()>::type>
+    {
+        return this->f_.then(detail::background_queue_executor::get(),
+                             [f{std::move(continuation)}](boost::future<void> x){
+                                 x.get();
+                                 return f();
+                             });
+    }
+
+    template<typename F>
+    auto then_on_main(F&& continuation) -> future<typename std::result_of<F()>::type>
+    {
+        return this->f_.then(detail::main_thread_executor::get(),
+                             [f{std::move(continuation)}](boost::future<void> x){
+                                 x.get();
+                                 return f();
+                             });
+
+    }
+    template<typename Window, typename F>
+    auto then_on_window(Window *self, F&& continuation) -> future<typename std::result_of<F()>::type>
+    {
+        wxWeakRef<Window> weak(self);
+        return this->f_.then(detail::main_thread_executor::get(),
+                             [weak, f{std::move(continuation)}](boost::future<void> x){
+                                 if (weak)
+                                 {
+                                     x.get();
+                                     f();
+                                 }
+                                 else
+                                     throw detail::window_dismissed();
+
+                             });
+    };
+
+    template<typename Window>
+    auto then_on_window(Window *self, void (Window::*method)())
+    {
+        return then_on_window(self, [self,method]() {
+            ((*self).*method)();
+        });
+    }
+
+private:
+    boost::future<void> m_future;
+};
+
+
+
+template<typename T, typename FutureType>
+template<typename Ex, typename F>
+auto future_base<T, FutureType>::catch_ex(F&& continuation) -> future<void>
+{
+    return f_.then([f{std::forward<F>(continuation)}](boost::future<T> x) {
+        try
+        {
+            x.get();
+        }
+        catch (Ex& ex)
+        {
+            f(ex);
+        }
+    });
 }
 
-/**
-    Like on_main_thread<> but is only called if @a window is still valid
-    (using a wxWeakRef<> to check).
- */
-template<typename... Args, typename F, typename Class>
-auto on_main_thread_for_window(Class *self, F&& func) -> std::function<void(Args...)>
+template<typename T, typename FutureType>
+template<typename F>
+auto future_base<T, FutureType>::catch_all(F&& continuation) -> future<void>
 {
-    wxWeakRef<Class> weak(self);
-    return on_main_thread<Args...>([=](Args... args){
-        if (weak)
-            func(args...);
+    return f_.then([f{std::forward<F>(continuation)}](boost::future<T> x) {
+        try
+        {
+            x.get();
+        }
+        catch (detail::window_dismissed&)
+        {
+            // ignore this one, it's not an error
+        }
+        catch (...)
+        {
+            f(std::current_exception());
+        }
     });
 }
 
 
-/**
-    Wraps a method into function called on the main thread.
-    
-    Returned function takes the same arguments as the provided method @a func
-    and is called on the main thread. I.e. the returned object may be called
-    from any thread, but @a func is guaranteed to execute on the main one.
-    
-    Example usage:
-    
-        on_main_thread(this, &CrowdinOpenDialog::OnFetchedProjects)
- */
-template<typename Class, typename... Args>
-auto on_main_thread(Class *self, void (Class::*func)(Args...)) -> std::function<void(Args...)>
+/// Enqueue an operation for background processing.
+template<class F>
+inline auto async(F&& f) -> future<typename std::result_of<F()>::type>
 {
-    wxWeakRef<Class> weak(self);
-    return on_main_thread<Args...>([=](Args... args){
-        if (weak)
-            ((*weak.get()).*func)(args...);
-    });
+    return {boost::async(detail::background_queue_executor::get(), std::forward<F>(f))};
 }
+
+
+/// Run an operation on the main thread.
+template<class F>
+inline auto on_main(F&& f) -> future<typename std::result_of<F()>::type>
+{
+    return {boost::async(detail::main_thread_executor::get(), std::forward<F>(f))};
+}
+
+
+/// @internal Call on shutdown to terminate queues and close executors
+extern void cleanup();
+
+} // namespace dispatch
+
 
 #endif // Poedit_concurrency_h
