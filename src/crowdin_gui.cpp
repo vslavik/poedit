@@ -185,19 +185,19 @@ void CrowdinLoginPanel::UpdateUserInfo()
 {
     ChangeState(State::UpdatingInfo);
 
-    CrowdinClient::Get().GetUserInfo(on_main_thread_for_window<CrowdinClient::UserInfo>(
-        this,
-        [=](CrowdinClient::UserInfo u) {
+    CrowdinClient::Get().GetUserInfo()
+        .then_on_window(this, [=](CrowdinClient::UserInfo u) {
             m_userName = u.name;
             m_userLogin = u.login;
             ChangeState(State::SignedIn);
-    }));
+    });
 }
 
 void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
 {
     ChangeState(State::Authenticating);
-    CrowdinClient::Get().Authenticate(on_main_thread(this, &CrowdinLoginPanel::OnUserSignedIn));
+    CrowdinClient::Get().Authenticate()
+        .then_on_window(this, &CrowdinLoginPanel::OnUserSignedIn);
 }
 
 void CrowdinLoginPanel::OnUserSignedIn()
@@ -333,13 +333,12 @@ private:
     void FetchProjects()
     {
         m_activity->Start();
-        CrowdinClient::Get().GetUserProjects(
-            on_main_thread(this, &CrowdinOpenDialog::OnFetchedProjects),
-            m_activity->HandleError
-        );
+        CrowdinClient::Get().GetUserProjects()
+            .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjects)
+            .catch_all(m_activity->HandleError);
     }
 
-    void OnFetchedProjects(const std::vector<CrowdinClient::ProjectListing>& prjs)
+    void OnFetchedProjects(std::vector<CrowdinClient::ProjectListing> prjs)
     {
         m_projects = prjs;
         m_project->Append("");
@@ -366,15 +365,13 @@ private:
         {
             m_activity->Start();
             EnableAllChoices(false);
-            CrowdinClient::Get().GetProjectInfo(
-                m_projects[sel-1].identifier,
-                on_main_thread(this, &CrowdinOpenDialog::OnFetchedProjectInfo),
-                m_activity->HandleError
-            );
+            CrowdinClient::Get().GetProjectInfo(m_projects[sel-1].identifier)
+                .then_on_window(this, &CrowdinOpenDialog::OnFetchedProjectInfo)
+                .catch_all(m_activity->HandleError);
         }
     }
 
-    void OnFetchedProjectInfo(const CrowdinClient::ProjectInfo& prj)
+    void OnFetchedProjectInfo(CrowdinClient::ProjectInfo prj)
     {
         m_info = prj;
         // Put supported files first in the list:
@@ -479,14 +476,14 @@ private:
 
         auto outfile = std::make_shared<TempOutputFileFor>(OutLocalFilename);
         CrowdinClient::Get().DownloadFile(
-            crowdin_prj, crowdin_file, crowdin_lang,
-            outfile->FileName().ToStdWstring(),
-            on_main_thread_for_window<>(this, [=]{
+                crowdin_prj, crowdin_file, crowdin_lang,
+                outfile->FileName().ToStdWstring()
+            )
+            .then_on_window(this, [=]{
                 outfile->Commit();
                 AcceptAndClose();
-            }),
-            m_activity->HandleError
-        );
+            })
+            .catch_all(m_activity->HandleError);
     }
 
     bool IsFileSupported(const wxString& name) const
@@ -596,18 +593,20 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     wxWindowPtr<SyncProgressDialog> dlg(new SyncProgressDialog(parent));
 
-    auto handle_error = on_main_thread<std::exception_ptr>([=](std::exception_ptr e){
-        dlg->EndModal(wxID_CANCEL);
-        wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
-            (
-                parent,
-                _("Syncing with Crowdin failed."),
-                _("Crowdin error"),
-                wxOK | wxICON_ERROR
-            ));
-        err->SetExtendedMessage(DescribeException(e));
-        err->ShowWindowModalThenDo([err](int){});
-    });
+    auto handle_error = [=](std::exception_ptr e){
+        dispatch::on_main([=]{
+            dlg->EndModal(wxID_CANCEL);
+            wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
+                (
+                    parent,
+                    _("Syncing with Crowdin failed."),
+                    _("Crowdin error"),
+                    wxOK | wxICON_ERROR
+                ));
+            err->SetExtendedMessage(DescribeException(e));
+            err->ShowWindowModalThenDo([err](int){});
+        });
+    };
 
     dlg->Activity->Start(_(L"Uploading translations…"));
 
@@ -615,20 +614,30 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
     // This must be done right after entering the modal loop (on non-OSX)
     dlg->CallAfter([=]{
         CrowdinClient::Get().UploadFile(
-            str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
-            catalog->SaveToBuffer(),
-            [=]{
+                str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                catalog->SaveToBuffer()
+            )
+            .then([=]{
                 auto tmpdir = std::make_shared<TempDirectory>();
                 auto outfile = tmpdir->CreateFileName("crowdin.po");
 
-                call_on_main_thread([=]{
+                dispatch::on_main([=]{
                     dlg->Activity->Start(_(L"Downloading latest translations…"));
                 });
 
-                CrowdinClient::Get().DownloadFile(
-                    str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
-                    outfile.ToStdWstring(),
-                    on_main_thread([=]{
+                return CrowdinClient::Get().DownloadFile(
+                        str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
+                        outfile.ToStdWstring()
+                    )
+                    // TODO: This nesting and the repeated catch_all() below shouldn't
+                    // be necessary. pplx implicitly unwraps returned tasks, which
+                    // boost::future cannot do.
+                    // Also possible at the cost of running an extra task:
+                    // http://stackoverflow.com/questions/9335420/flatten-nested-futures?rq=1
+                    // Or maybe there IS:
+                    // http://stackoverflow.com/questions/28103104/mutliple-continuation-chaining-boost-future-unwrapping-how-to-do-it
+                    .then_on_main([=]
+                    {
                         CatalogPtr newcat = std::make_shared<Catalog>(outfile);
                         newcat->SetFileName(catalog->GetFileName());
 
@@ -636,10 +645,10 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                         dlg->EndModal(wxID_OK);
 
                         onDone(newcat);
-                    }),
-                    handle_error);
-            },
-            handle_error);
+                    })
+                    .catch_all(handle_error);
+            })
+            .catch_all(handle_error);
     });
 
     dlg->ShowWindowModal();
