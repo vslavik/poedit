@@ -629,13 +629,6 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                         str::to_utf8(crowdin_prj), str::to_wstring(crowdin_file), crowdin_lang,
                         outfile.ToStdWstring()
                     )
-                    // TODO: This nesting and the repeated catch_all() below shouldn't
-                    // be necessary. pplx implicitly unwraps returned tasks, which
-                    // boost::future cannot do.
-                    // Also possible at the cost of running an extra task:
-                    // http://stackoverflow.com/questions/9335420/flatten-nested-futures?rq=1
-                    // Or maybe there IS:
-                    // http://stackoverflow.com/questions/28103104/mutliple-continuation-chaining-boost-future-unwrapping-how-to-do-it
                     .then_on_main([=]
                     {
                         CatalogPtr newcat = std::make_shared<Catalog>(outfile);

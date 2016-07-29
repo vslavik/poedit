@@ -60,6 +60,14 @@
 namespace dispatch
 {
 
+// forward declarations
+
+template<typename T>
+class future;
+
+
+// implementation details
+
 namespace detail
 {
 
@@ -155,6 +163,54 @@ class window_dismissed : public std::exception
 {
 };
 
+
+// Helper to unwrap dispatch::futures into boost::futures so that implicit
+// unwrapping of boost::future<boost::future<T>> into boost::future<T> works
+template<typename T>
+struct future_unwrapper
+{
+    typedef T type;
+    typedef T return_type;
+
+    template<typename F, typename... Args>
+    static return_type call_and_unwrap(F&& f, Args&&... args)
+    {
+        return f(std::forward<Args>(args)...);
+    }
+};
+
+template<>
+struct future_unwrapper<void>
+{
+    typedef void type;
+    typedef void return_type;
+
+    template<typename F, typename... Args>
+    static void call_and_unwrap(F&& f, Args&&... args)
+    {
+        f(std::forward<Args>(args)...);
+    }
+};
+
+template<typename T>
+struct future_unwrapper<dispatch::future<T>>
+{
+    typedef T type;
+    typedef boost::future<T> return_type;
+
+    template<typename F, typename... Args>
+    static return_type call_and_unwrap(F&& f, Args&&... args)
+    {
+        return f(std::forward<Args>(args)...).move_to_boost();
+    }
+};
+
+template<typename F, typename... Args>
+inline auto call_and_unwrap_if_future(F&& f, Args&&... args) -> typename future_unwrapper<typename std::result_of<F(Args...)>::type>::return_type
+{
+    return future_unwrapper<typename std::result_of<F(Args...)>::type>::call_and_unwrap(std::forward<F>(f), std::forward<Args>(args)...);
+}
+
 } // namespace detail
 
 
@@ -164,6 +220,7 @@ class window_dismissed : public std::exception
 
 template<typename T>
 using promise = boost::promise<T>;
+
 
 // Can't use std::current_exception with boost::promise, must use boost
 // version instead. This helper takes care of it.
@@ -177,9 +234,6 @@ template<typename T>
 void set_current_exception(std::shared_ptr<boost::promise<T>> pr) { set_current_exception(*pr); }
 
 
-template<typename T>
-class future;
-
 template<typename T, typename FutureType>
 class future_base
 {
@@ -188,6 +242,7 @@ public:
     future_base(FutureType&& future) : f_(std::move(future.m_future)) {}
 
     future_base(boost::future<T>&& future) : f_(std::move(future)) {}
+    future_base(boost::future<boost::future<T>>&& future) : f_(future.unwrap()) {}
 
     FutureType& operator=(FutureType&& other) { f_ = std::move(other.f_); }
     FutureType& operator=(const FutureType& other) = delete;
@@ -202,6 +257,8 @@ public:
 
     template<typename F>
     auto catch_all(F&& continuation) -> future<void>;
+
+    boost::future<T> move_to_boost() { return std::move(f_); }
 
 protected:
     boost::future<T> f_;
@@ -236,31 +293,31 @@ public:
     T get() { return this->f_.get(); }
 
     template<typename F>
-    auto then(F&& continuation) -> future<typename std::result_of<F(T)>::type>
+    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
     {
         return this->f_.then(detail::background_queue_executor::get(),
                              [f{std::move(continuation)}](boost::future<T> x){
-                                 return f(x.get());
+                                 return detail::call_and_unwrap_if_future(f, x.get());
                              });
     }
 
     template<typename F>
-    auto then_on_main(F&& continuation) -> future<typename std::result_of<F(T)>::type>
+    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
     {
         return this->f_.then(detail::main_thread_executor::get(),
-                             [f{std::move(continuation)}](boost::future<T> x){
-                                 return f(x.get());
+                             [f{std::move(continuation)}](boost::future<T> x) {
+                                 return detail::call_and_unwrap_if_future(f, x.get());
                              });
     }
 
     template<typename Window, typename F>
-    auto then_on_window(Window *self, F&& continuation) -> future<typename std::result_of<F(T)>::type>
+    auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
     {
         wxWeakRef<Window> weak(self);
         return this->f_.then(detail::main_thread_executor::get(),
                              [weak, f{std::move(continuation)}](boost::future<T> x){
                                  if (weak)
-                                     return f(x.get());
+                                     return detail::call_and_unwrap_if_future(f, x.get());
                                  else
                                      throw detail::window_dismissed();
                              });
@@ -306,27 +363,27 @@ public:
     void get() { this->f_.get(); }
 
     template<typename F>
-    auto then(F&& continuation) -> future<typename std::result_of<F()>::type>
+    auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
     {
         return this->f_.then(detail::background_queue_executor::get(),
                              [f{std::move(continuation)}](boost::future<void> x){
                                  x.get();
-                                 return f();
+                                 return detail::call_and_unwrap_if_future(f);
                              });
     }
 
     template<typename F>
-    auto then_on_main(F&& continuation) -> future<typename std::result_of<F()>::type>
+    auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
     {
         return this->f_.then(detail::main_thread_executor::get(),
                              [f{std::move(continuation)}](boost::future<void> x){
                                  x.get();
-                                 return f();
+                                 detail::call_and_unwrap_if_future(f);
                              });
 
     }
     template<typename Window, typename F>
-    auto then_on_window(Window *self, F&& continuation) -> future<typename std::result_of<F()>::type>
+    auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
     {
         wxWeakRef<Window> weak(self);
         return this->f_.then(detail::main_thread_executor::get(),
@@ -334,7 +391,7 @@ public:
                                  if (weak)
                                  {
                                      x.get();
-                                     f();
+                                     detail::call_and_unwrap_if_future(f);
                                  }
                                  else
                                      throw detail::window_dismissed();
@@ -393,19 +450,40 @@ auto future_base<T, FutureType>::catch_all(F&& continuation) -> future<void>
 }
 
 
+
+/// Create ready future, i.e. with directly set value
+template<typename T>
+auto make_ready_future(T&& value) -> future<T>
+{
+  return boost::make_ready_future(std::forward<T>(value));
+}
+
+template <typename T>
+auto make_exceptional_future_from_current() -> future<T>
+{
+    promise<T> p;
+    set_current_exception(p);
+    return p.get_future();
+}
+
+
 /// Enqueue an operation for background processing.
 template<class F>
-inline auto async(F&& f) -> future<typename std::result_of<F()>::type>
+inline auto async(F&& f) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
 {
-    return {boost::async(detail::background_queue_executor::get(), std::forward<F>(f))};
+    return {boost::async(detail::background_queue_executor::get(), [f{std::forward<F>(f)}]() {
+        return detail::call_and_unwrap_if_future(f);
+    })};
 }
 
 
 /// Run an operation on the main thread.
 template<class F>
-inline auto on_main(F&& f) -> future<typename std::result_of<F()>::type>
+inline auto on_main(F&& f) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
 {
-    return {boost::async(detail::main_thread_executor::get(), std::forward<F>(f))};
+    return {boost::async(detail::main_thread_executor::get(), [f{std::forward<F>(f)}]() {
+        return detail::call_and_unwrap_if_future(f);
+    })};
 }
 
 
