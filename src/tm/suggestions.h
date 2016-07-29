@@ -27,13 +27,12 @@
 #define Poedit_suggestions_h
 
 #include <cmath>
-#include <functional>
-#include <future>
 #include <limits>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include "concurrency.h"
 #include "language.h"
 
 class SuggestionsBackend;
@@ -100,9 +99,6 @@ public:
     SuggestionsProvider();
     ~SuggestionsProvider();
 
-    typedef std::function<void(const SuggestionsList&)> success_func_type;
-    typedef std::function<void(std::exception_ptr)> error_func_type;
-
     /**
         Query for suggested translations.
         
@@ -117,22 +113,11 @@ public:
         @param srclang    Language of the source text.
         @param lang       Language of the desired translation.
         @param source     Source text.
-        @param onSuccess  Called with suggestions.
-        @param onError    Called in case of error.
      */
-    void SuggestTranslation(SuggestionsBackend& backend,
-                            const Language& srclang,
-                            const Language& lang,
-                            const std::wstring& source,
-                            success_func_type onSuccess,
-                            error_func_type onError);
-
-    /// Same as the other version but returns a future
-    std::future<SuggestionsList>
-    SuggestTranslation(SuggestionsBackend& backend,
-                       const Language& srclang,
-                       const Language& lang,
-                       const std::wstring& source);
+    dispatch::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend,
+                                                         const Language& srclang,
+                                                         const Language& lang,
+                                                         const std::wstring& source);
 
 private:
     std::unique_ptr<SuggestionsProviderImpl> m_impl;
@@ -153,9 +138,6 @@ class SuggestionsBackend
 public:
     virtual ~SuggestionsBackend() {}
 
-    typedef SuggestionsProvider::success_func_type success_func_type;
-    typedef SuggestionsProvider::error_func_type error_func_type;
-
     /**
         Query for suggested translations.
         
@@ -174,14 +156,10 @@ public:
         @param srclang    Language of the source text.
         @param lang       Language of the desired translation.
         @param source     Source text.
-        @param onSuccess  Called with suggestions.
-        @param onError    Called in case of error.
      */
-    virtual void SuggestTranslation(const Language& srclang,
-                                    const Language& lang,
-                                    const std::wstring& source,
-                                    success_func_type onSuccess,
-                                    error_func_type onError) = 0;
+    virtual dispatch::future<SuggestionsList> SuggestTranslation(const Language& srclang,
+                                                                 const Language& lang,
+                                                                 const std::wstring& source) = 0;
 };
 
 #endif // Poedit_suggestions_h

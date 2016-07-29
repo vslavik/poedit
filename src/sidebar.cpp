@@ -686,34 +686,28 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
         backend,
         m_parent->GetCurrentSourceLanguage(),
         m_parent->GetCurrentLanguage(),
-        item->GetString().ToStdWstring(),
-
-        // when receiving data
-        [=](const SuggestionsList& hits){
-            dispatch::on_main([weakSelf,queryId,hits]{
-                auto self = weakSelf.lock();
-                // maybe this call is already out of date:
-                if (!self || self->m_latestQueryId != queryId)
-                    return;
-                self->UpdateSuggestions(hits);
-                if (--self->m_pendingQueries == 0)
-                    self->OnQueriesFinished();
-            });
-        },
-
-        // on error:
-        [=](std::exception_ptr e){
-            dispatch::on_main([weakSelf,queryId,backendPtr,e]{
-                auto self = weakSelf.lock();
-                // maybe this call is already out of date:
-                if (!self || self->m_latestQueryId != queryId)
-                    return;
-                self->ReportError(backendPtr, e);
-                if (--self->m_pendingQueries == 0)
-                    self->OnQueriesFinished();
-            });
-        }
-    );
+        item->GetString().ToStdWstring()
+    )
+    .then_on_main([weakSelf,queryId](SuggestionsList hits)
+    {
+        auto self = weakSelf.lock();
+        // maybe this call is already out of date:
+        if (!self || self->m_latestQueryId != queryId)
+            return;
+        self->UpdateSuggestions(hits);
+        if (--self->m_pendingQueries == 0)
+            self->OnQueriesFinished();
+    })
+    .catch_all([weakSelf,queryId,backendPtr](std::exception_ptr e)
+    {
+        auto self = weakSelf.lock();
+        // maybe this call is already out of date:
+        if (!self || self->m_latestQueryId != queryId)
+            return;
+        self->ReportError(backendPtr, e);
+        if (--self->m_pendingQueries == 0)
+            self->OnQueriesFinished();
+    });
 }
 
 
