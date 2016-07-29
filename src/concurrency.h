@@ -360,7 +360,7 @@ template<typename T, typename FutureType>
 template<typename Ex, typename F>
 auto future_base<T, FutureType>::catch_ex(F&& continuation) -> future<void>
 {
-    return f_.then([f{std::forward<F>(continuation)}](boost::future<T> x) {
+    return f_.then(detail::main_thread_executor::get(), [f{std::forward<F>(continuation)}](boost::future<T> x) {
         try
         {
             x.get();
@@ -376,7 +376,7 @@ template<typename T, typename FutureType>
 template<typename F>
 auto future_base<T, FutureType>::catch_all(F&& continuation) -> future<void>
 {
-    return f_.then([f{std::forward<F>(continuation)}](boost::future<T> x) {
+    return f_.then(detail::main_thread_executor::get(), [f{std::forward<F>(continuation)}](boost::future<T> x) {
         try
         {
             x.get();
