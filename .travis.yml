@@ -6,6 +6,8 @@ language: cpp
 compiler: gcc
 
 before_install:
+    # git submodules needed for Linux:
+    - git submodule update --init src/json
     # dependencies for building Poedit on old Ubuntu:
     - sudo add-apt-repository -y ppa:vslavik/poedit
     - sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc

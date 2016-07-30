@@ -85,11 +85,15 @@ Get the sources from github (https://github.com/vslavik/poedit):
 
     git clone https://github.com/vslavik/poedit.git
 
-If you are on Windows or OSX, you probably want the dependencies too. After
-closing, run the following commands:
+If you are on Windows or OSX, you'll need all the dependencies too. After
+closing, run the following command:
 
-    git submodule init
-    git submodule update --recursive
+    git submodule update --init --recursive
+
+On Linux and other Unices, only a subset of submodules is necessary, so you can
+save some time and disk space by checking out only them:
+
+    git submodule update --init src/json
 
 If you get the sources directly from the Git repository, some generated files
 are not present. You have to run the ./bootstrap script to create them. After
