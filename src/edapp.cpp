@@ -674,32 +674,33 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
     // user didn't already add language with this name himself):
     static struct
     {
+        char enableByDefault;
         const char *name;
         const char *exts;
     } s_gettextLangs[] = {
-        { "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
-        { "C#",         "*.cs" },
-        { "EmacsLisp",  "*.el" },
-        { "GSettings",  "*.gschema.xml" },
-        { "Glade",      "*.glade;*.glade2;*.ui" },
-        { "AppData",    "*.appdata.xml" },
-        { "Java",       "*.java" },
-        { "JavaScript", "*.js" },
-        { "Lisp",       "*.lisp" },
-        { "Lua",        "*.lua" },
-        { "ObjectiveC", "*.m" },
-        { "PHP",        "*.php;*.php3;*.php4;*.phtml" },
-        { "Perl",       "*.pl;*.PL;*.pm;*.perl" },
-        { "Python",     "*.py" },
-        { "RST",        "*.rst" },
-        { "Scheme",     "*.scm" },
-        { "Shell",      "*.sh;*.bash" },
-        { "Smalltalk",  "*.st" },
-        { "TCL",        "*.tcl" },
-        { "Vala",       "*.vala" },
-        { "YCP",        "*.ycp" },
-        { "awk",        "*.awk" },
-        { "librep",     "*.jl" },
+        { 1, "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
+        { 1, "C#",         "*.cs" },
+        { 1, "EmacsLisp",  "*.el" },
+        { 1, "GSettings",  "*.gschema.xml" },
+        { 1, "Glade",      "*.glade;*.glade2;*.ui" },
+        { 1, "AppData",    "*.appdata.xml" },
+        { 1, "Java",       "*.java" },
+        { 1, "JavaScript", "*.js" },
+        { 1, "Lisp",       "*.lisp" },
+        { 1, "Lua",        "*.lua" },
+        { 1, "ObjectiveC", "*.m" },
+        { 1, "PHP",        "*.php;*.php3;*.php4;*.phtml" },
+        { 1, "Perl",       "*.pl;*.PL;*.pm;*.perl" },
+        { 1, "Python",     "*.py" },
+        { 0, "RST",        "*.rst" },
+        { 1, "Scheme",     "*.scm" },
+        { 0, "Shell",      "*.sh;*.bash" },
+        { 1, "Smalltalk",  "*.st" },
+        { 1, "TCL",        "*.tcl" },
+        { 1, "Vala",       "*.vala" },
+        { 1, "YCP",        "*.ycp" },
+        { 1, "awk",        "*.awk" },
+        { 1, "librep",     "*.jl" },
         { NULL, NULL }
     };
 
@@ -718,6 +719,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         // otherwise add new extractor:
         Extractor ex;
         ex.Name = s_gettextLangs[i].name;
+        ex.Enabled = (bool)s_gettextLangs[i].enableByDefault;
         ex.Extensions = s_gettextLangs[i].exts;
         ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --force-po -o %o %C %K %F";
         ex.KeywordItem = "-k%k";
