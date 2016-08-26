@@ -59,6 +59,14 @@ wxString strip_pointless_control_chars(const wxString& text, TextDirection dir)
         return text;
 
     const wchar_t first = *text.begin();
+    const wchar_t last = *text.rbegin();
+
+    // POP DIRECTIONAL FORMATTING at the end is pointless (can happen on OS X
+    // when editing RTL text under LTR locale:
+    if (last == PDF)
+    {
+        return strip_pointless_control_chars(text.substr(0, text.size() - 1), dir);
+    }
 
     if (dir == TextDirection::LTR)
     {
