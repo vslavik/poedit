@@ -701,7 +701,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         { 1, "YCP",        "*.ycp" },
         { 1, "awk",        "*.awk" },
         { 1, "librep",     "*.jl" },
-        { NULL, NULL }
+        { 0, NULL, NULL }
     };
 
     for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
