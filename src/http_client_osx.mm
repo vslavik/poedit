@@ -42,8 +42,6 @@ public:
 class http_client::impl
 {
 public:
-    typedef http_client::response_func_t response_funct_t;
-
     impl(http_client& owner, const std::string& url_prefix, int /*flags*/) : m_owner(owner)
     {
         NSString *str = str::to_NS(url_prefix);
@@ -85,8 +83,10 @@ public:
             [m_native clearAuthorizationHeader];
     }
 
-    void get(const std::string& url, response_func_t handler)
+    dispatch::future<json> get(const std::string& url)
     {
+        auto promise = std::make_shared<dispatch::promise<json>>();
+
         [m_native getPath:str::to_NS(url)
                parameters:nil
                   success:^(AFHTTPRequestOperation *op, NSData *responseData)
@@ -94,21 +94,25 @@ public:
             #pragma unused(op)
             try
             {
-                handler(extract_json(responseData));
+                promise->set_value(extract_json(responseData));
             }
             catch (...)
             {
-                handler(std::current_exception());
+                dispatch::set_current_exception(promise);
             }
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            handle_error(op, e, handler);
+            handle_error(op, e, *promise);
         }];
+
+        return promise->get_future();
     }
 
-    void download(const std::string& url, const std::wstring& output_file, response_func_t handler)
+    dispatch::future<void> download(const std::string& url, const std::wstring& output_file)
     {
+        auto promise = std::make_shared<dispatch::promise<void>>();
+
         NSString *outfile = str::to_NS(output_file);
         NSURLRequest *request = [m_native requestWithMethod:@"GET"
                                                        path:str::to_NS(url)
@@ -123,18 +127,22 @@ public:
         {
             #pragma unused(op)
             [data writeToFile:outfile atomically:YES];
-            handler(json());
+            promise->set_value();
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            handle_error(op, e, handler);
+            handle_error(op, e, *promise);
         }];
 
         [m_native enqueueHTTPRequestOperation:operation];
+
+        return promise->get_future();
     }
 
-    void post(const std::string& url, const http_body_data& data, response_func_t handler)
+    dispatch::future<json> post(const std::string& url, const http_body_data& data)
     {
+        auto promise = std::make_shared<dispatch::promise<json>>();
+
         NSMutableURLRequest *request = [m_native requestWithMethod:@"POST"
                                                               path:str::to_NS(url)
                                                         parameters:nil];
@@ -149,23 +157,26 @@ public:
             #pragma unused(op)
             try
             {
-                handler(extract_json(responseData));
+                promise->set_value(extract_json(responseData));
             }
             catch (...)
             {
-                handler(std::current_exception());
+                dispatch::set_current_exception(promise);
             }
         }
         failure:^(AFHTTPRequestOperation *op, NSError *e)
         {
-            handle_error(op, e, handler);
+            handle_error(op, e, *promise);
         }];
 
         [m_native enqueueHTTPRequestOperation:operation];
+
+        return promise->get_future();
     }
 
 private:
-    void handle_error(AFHTTPRequestOperation *op, NSError *e, response_func_t error_handler)
+    template<typename T>
+    void handle_error(AFHTTPRequestOperation *op, NSError *e, dispatch::promise<T>& promise)
     {
         int status_code = (int)op.response.statusCode;
         std::string desc;
@@ -190,7 +201,7 @@ private:
         }
 
         m_owner.on_error_response(status_code, desc);
-        error_handler(std::make_exception_ptr(http_exception(desc)));
+        promise.set_exception(http_exception(desc));
     }
 
     json extract_json(NSData *data)
@@ -222,17 +233,17 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-void http_client::get(const std::string& url, response_func_t handler)
+dispatch::future<json> http_client::get(const std::string& url)
 {
-    m_impl->get(url, handler);
+    return m_impl->get(url);
 }
 
-void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)
+dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file)
 {
-    m_impl->download(url, output_file, handler);
+    return m_impl->download(url, output_file);
 }
 
-void http_client::post(const std::string& url, const http_body_data& data, response_func_t handler)
+dispatch::future<json> http_client::post(const std::string& url, const http_body_data& data)
 {
-    m_impl->post(url, data, handler);
+    return m_impl->post(url, data);
 }

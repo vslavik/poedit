@@ -494,7 +494,7 @@ int PoeditApp::OnExit()
     CrowdinClient::CleanUp();
 #endif
 
-    concurrency_queue::cleanup();
+    dispatch::cleanup();
 
 #ifdef USE_SPARKLE
     Sparkle_Cleanup();

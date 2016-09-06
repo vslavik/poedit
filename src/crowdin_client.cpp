@@ -132,11 +132,12 @@ CrowdinClient::CrowdinClient() : m_api(new crowdin_http_client(*this))
 CrowdinClient::~CrowdinClient() {}
 
 
-void CrowdinClient::Authenticate(std::function<void()> callback)
+dispatch::future<void> CrowdinClient::Authenticate()
 {
     auto url = WrapLink(OAUTH_AUTHORIZE_URL);
-    m_authCallback = callback;
+    m_authCallback.reset(new dispatch::promise<void>);
     wxLaunchDefaultBrowser(url);
+    return m_authCallback->get_future();
 }
 
 
@@ -152,8 +153,8 @@ void CrowdinClient::HandleOAuthCallback(const std::string& uri)
 
     SaveAndSetToken(m.str(1));
 
-    m_authCallback();
-    m_authCallback = nullptr;
+    m_authCallback->set_value();
+    m_authCallback.reset();
 }
 
 
@@ -163,74 +164,63 @@ bool CrowdinClient::IsOAuthCallback(const std::string& uri)
 }
 
 
-void CrowdinClient::GetUserInfo(std::function<void(UserInfo)> callback)
+dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
 {
-    m_api->get("/api/account/profile?json=",
-            // OK:
-            [callback](const json& r){
-                json profile = r["profile"];
-                UserInfo u;
-                u.name = str::to_wstring(profile["name"]);
-                u.login = str::to_wstring(profile["login"]);
-                callback(u);
-            },
-            // error:
-            [](std::exception_ptr) {}
-    );
+    return m_api->get("/api/account/profile?json=")
+        .then([](json r)
+        {
+            json profile = r["profile"];
+            UserInfo u;
+            u.name = str::to_wstring(profile["name"]);
+            u.login = str::to_wstring(profile["login"]);
+            return u;
+        });
 }
 
 
-void CrowdinClient::GetUserProjects(std::function<void(std::vector<ProjectListing>)> onResult,
-                                    error_func_t onError)
+dispatch::future<std::vector<CrowdinClient::ProjectListing>> CrowdinClient::GetUserProjects()
 {
-    m_api->get("/api/account/get-projects?json=&role=all",
-            // OK:
-            [onResult](const json& r){
-                std::vector<ProjectListing> all;
-                for (auto i : r["projects"])
-                {
-                    all.push_back({
-                        str::to_wstring(i["name"]),
-                        i["identifier"],
-                        (bool)i["downloadable"].get<int>()
-                    });
-                }
-                onResult(all);
-            },
-            onError
-    );
+    return m_api->get("/api/account/get-projects?json=&role=all")
+        .then([](json r)
+        {
+            std::vector<ProjectListing> all;
+            for (auto i : r["projects"])
+            {
+                all.push_back({
+                    str::to_wstring(i["name"]),
+                    i["identifier"],
+                    (bool)i["downloadable"].get<int>()
+                });
+            }
+            return all;
+        });
 }
 
 
-void CrowdinClient::GetProjectInfo(const std::string& project_id,
-                                   std::function<void(ProjectInfo)> onResult,
-                                   error_func_t onError)
+dispatch::future<CrowdinClient::ProjectInfo> CrowdinClient::GetProjectInfo(const std::string& project_id)
 {
     auto url = "/api/project/" + project_id + "/info?json=&project-identifier=" + project_id;
-    m_api->get(url,
-            // OK:
-            [onResult](const json& r){
-                ProjectInfo prj;
-                auto details = r["details"];
-                prj.name = str::to_wstring(details["name"]);
-                prj.identifier = details["identifier"];
-                for (auto i : r["languages"])
-                {
-                    if (i["can_translate"].get<int>() != 0)
-                        prj.languages.push_back(Language::TryParse(str::to_wstring(i["code"])));
-                }
-                ExtractFilesFromInfo(prj.files, r, L"/");
-                onResult(prj);
-            },
-            onError
-    );
+    return m_api->get(url)
+        .then([](json r){
+            ProjectInfo prj;
+            auto details = r["details"];
+            prj.name = str::to_wstring(details["name"]);
+            prj.identifier = details["identifier"];
+            for (auto i : r["languages"])
+            {
+                if (i["can_translate"].get<int>() != 0)
+                    prj.languages.push_back(Language::TryParse(str::to_wstring(i["code"])));
+            }
+            ExtractFilesFromInfo(prj.files, r, L"/");
+            return prj;
+        });
 }
 
 
-void CrowdinClient::DownloadFile(const std::string& project_id, const std::wstring& file, const Language& lang,
-                                 const std::wstring& output_file,
-                                 std::function<void()> onSuccess,
-                                 error_func_t onError)
+dispatch::future<void> CrowdinClient::DownloadFile(const std::string& project_id,
+                                                   const std::wstring& file,
+                                                   const Language& lang,
+                                                   const std::wstring& output_file)
 {
     // NB: "export_translated_only" means the translation is not filled with the source string
     //     if there's no translation, i.e. what Poedit wants.
@@ -239,14 +229,14 @@ void CrowdinClient::DownloadFile(const std::string& project_id, const std::wstri
                    "&export_translated_only=1"
                    "&language=" + lang.LanguageTag() +
                    "&file=" + http_client::url_encode(file);
-    m_api->download(url, output_file, onSuccess, onError);
+    return m_api->download(url, output_file);
 }
 
 
-void CrowdinClient::UploadFile(const std::string& project_id, const std::wstring& file, const Language& lang,
-                                 const std::string& file_content,
-                                 std::function<void()> onSuccess,
-                                 error_func_t onError)
+dispatch::future<void> CrowdinClient::UploadFile(const std::string& project_id,
+                                                 const std::wstring& file,
+                                                 const Language& lang,
+                                                 const std::string& file_content)
 {
     auto url = "/api/project/" + project_id + "/upload-translation";
 
@@ -257,7 +247,7 @@ void CrowdinClient::UploadFile(const std::string& project_id, const std::wstring
     data.add_value("import_eq_suggestions", "0");
     data.add_file("files[" + str::to_utf8(file) + "]", "upload.po", file_content);
 
-    m_api->post(url, data, onSuccess, onError);
+    return m_api->post(url, data).then([](json){});
 }
 
 

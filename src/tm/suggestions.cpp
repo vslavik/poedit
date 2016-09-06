@@ -33,43 +33,22 @@ class SuggestionsProviderImpl
 public:
     SuggestionsProviderImpl() {}
 
-    void SuggestTranslation(SuggestionsBackend& backend,
-                            const Language& srclang,
-                            const Language& lang,
-                            const std::wstring& source,
-                            SuggestionsProvider::success_func_type onSuccess,
-                            SuggestionsProvider::error_func_type onError)
+    dispatch::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend,
+                                                         const Language& srclang,
+                                                          const Language& lang,
+                                                          const std::wstring& source)
     {
         auto bck = &backend;
-        concurrency_queue::add([=](){
+        return dispatch::async([=]{
             // don't bother asking the backend if the language or query is invalid:
             if (!srclang.IsValid() || !lang.IsValid() || srclang == lang || source.empty())
             {
-                onSuccess(SuggestionsList());
-                return;
+                return dispatch::make_ready_future(SuggestionsList());
             }
+
             // query the backend:
-            bck->SuggestTranslation(srclang, lang, source, onSuccess, onError);
+            return bck->SuggestTranslation(srclang, lang, source);
         });
-    }
-
-    std::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend,
-                                                   const Language& srclang,
-                                                   const Language& lang,
-                                                   const std::wstring& source)
-    {
-        auto promise = std::make_shared<std::promise<SuggestionsList>>();
-
-        SuggestTranslation(backend, srclang, lang, source,
-            [=](const SuggestionsList& results) {
-                promise->set_value(results);
-            },
-            [=](std::exception_ptr e) {
-                promise->set_exception(e);
-            }
-        );
-
-        return promise->get_future();
     }
 };
 
@@ -83,21 +62,10 @@ SuggestionsProvider::~SuggestionsProvider()
 {
 }
 
-void SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
-                                             const Language& srclang,
-                                             const Language& lang,
-                                             const std::wstring& source,
-                                             success_func_type onSuccess,
-                                             error_func_type onError)
-{
-    m_impl->SuggestTranslation(backend, srclang, lang, source, onSuccess, onError);
-}
-
-std::future<SuggestionsList>
-SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
-                                        const Language& srclang,
-                                        const Language& lang,
-                                        const std::wstring& source)
+dispatch::future<SuggestionsList> SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
+                                                                          const Language& srclang,
+                                                                          const Language& lang,
+                                                                          const std::wstring& source)
 {
     return m_impl->SuggestTranslation(backend, srclang, lang, source);
 }

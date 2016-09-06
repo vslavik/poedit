@@ -669,19 +669,17 @@ SuggestionsList TranslationMemory::Search(const Language& srclang,
     return m_impl->Search(srclang, lang, source);
 }
 
-void TranslationMemory::SuggestTranslation(const Language& srclang,
-                                           const Language& lang,
-                                           const std::wstring& source,
-                                           success_func_type onSuccess,
-                                           error_func_type onError)
+dispatch::future<SuggestionsList> TranslationMemory::SuggestTranslation(const Language& srclang,
+                                                                        const Language& lang,
+                                                                        const std::wstring& source)
 {
     try
     {
-        onSuccess(Search(srclang, lang, source));
+        return dispatch::make_ready_future(Search(srclang, lang, source));
     }
     catch (...)
     {
-        onError(std::current_exception());
+        return dispatch::make_exceptional_future_from_current<SuggestionsList>();
     }
 }
 

@@ -161,8 +161,7 @@ public:
         m_auth = std::wstring(auth.begin(), auth.end());
     }
 
-    void get(const std::string& url,
-             std::function<void(const http_response&)> handler)
+    dispatch::future<::json> get(const std::string& url)
     {
         http::http_request req(http::methods::GET);
         req.headers().add(http::header_names::accept,     L"application/json");
@@ -171,27 +170,21 @@ public:
             req.headers().add(http::header_names::authorization, m_auth);
         req.set_request_uri(to_string_t(url));
 
+        return
         m_native.request(req)
         .then([=](http::http_response response)
         {
             handle_error(response);
-            handler(::json::parse(response.extract_utf8string().get()));
-        })
-        .then([=](pplx::task<void> t)
-        {
-            try { t.get(); }
-            catch (...)
-            {
-                handler(std::current_exception());
-            }
+            return ::json::parse(response.extract_utf8string().get());
         });
     }
 
-    void download(const std::string& url, const std::wstring& output_file, response_func_t handler)
+    dispatch::future<void> download(const std::string& url, const std::wstring& output_file)
     {
         using namespace concurrency::streams;
         auto fileStream = std::make_shared<ostream>();
 
+        return
         fstream::open_ostream(to_string_t(output_file)).then([=](ostream outFile)
         {
             *fileStream = outFile;
@@ -210,22 +203,10 @@ public:
         .then([=](size_t)
         {
             return fileStream->close();
-        })
-        .then([=](pplx::task<void> t)
-        {
-            try
-            {
-                t.get();
-                handler(::json());
-            }
-            catch (...)
-            {
-                handler(std::current_exception());
-            }
         });
     }
 
-    void post(const std::string& url, const http_body_data& data, response_func_t handler)
+    dispatch::future<::json> post(const std::string& url, const http_body_data& data)
     {
         http::http_request req(http::methods::POST);
         req.headers().add(http::header_names::accept,     L"application/json");
@@ -238,19 +219,12 @@ public:
         req.set_body(body, data.content_type());
         req.headers().set_content_length(body.size());
 
+        return
         m_native.request(req)
         .then([=](http::http_response response)
         {
             handle_error(response);
-            handler(::json::parse(response.extract_utf8string().get()));
-        })
-        .then([=](pplx::task<void> t)
-        {
-            try { t.get(); }
-            catch (...)
-            {
-                handler(std::current_exception());
-            }
+            return ::json::parse(response.extract_utf8string().get());
         });
     }
 
@@ -357,18 +331,17 @@ void http_client::set_authorization(const std::string& auth)
     m_impl->set_authorization(auth);
 }
 
-void http_client::get(const std::string& url,
-                      std::function<void(const http_response&)> handler)
+dispatch::future<::json> http_client::get(const std::string& url)
 {
-    m_impl->get(url, handler);
+    return m_impl->get(url);
 }
 
-void http_client::download(const std::string& url, const std::wstring& output_file, response_func_t handler)
+dispatch::future<void> http_client::download(const std::string& url, const std::wstring& output_file)
 {
-    m_impl->download(url, output_file, handler);
+    return m_impl->download(url, output_file);
 }
 
-void http_client::post(const std::string& url, const http_body_data& data, response_func_t handler)
+dispatch::future<::json> http_client::post(const std::string& url, const http_body_data& data)
 {
-    m_impl->post(url, data, handler);
+    return m_impl->post(url, data);
 }

@@ -28,10 +28,10 @@
 
 #ifdef HAVE_HTTP_CLIENT
 
+#include "concurrency.h"
 #include "json.h"
 
 #include <exception>
-#include <functional>
 #include <map>
 #include <memory>
 #include <string>
@@ -100,36 +100,6 @@ private:
 };
 
 
-/// Response to a HTTP request
-class http_response
-{
-public:
-    http_response(const json& data) : m_ok(true), m_data(data) {}
-    http_response(std::exception_ptr e) : m_ok(false), m_error(e) {}
-
-    /// Is the response acceptable?
-    bool ok() const { return m_ok; }
-
-    /// Returns json data from the response. May throw if there was error.
-    const json& json() const
-    {
-        if (m_error)
-            std::rethrow_exception(m_error);
-        return m_data;
-    }
-
-    /// Returns the stored exception, if any
-    std::exception_ptr exception() const { return m_error; }
-
-private:
-    bool m_ok;
-    std::exception_ptr m_error;
-    ::json m_data;
-
-    friend class http_client;
-};
-
-
 /**
     Client for accessing HTTP REST APIs.
  */
@@ -160,73 +130,21 @@ public:
     /// Sets Authorization header to be used in all requests
     void set_authorization(const std::string& auth);
 
-    typedef std::function<void(const http_response&)> response_func_t;
-
-    /// Perform a GET request at the given URL and call function to handle the result
-    void get(const std::string& url, response_func_t handler);
-
-    /// Perform a GET request at the given URL and ignore the response.
-    void get(const std::string& url)
-    {
-        get(url, [](const http_response&){});
-    }
+    /// Perform a GET request at the given URL
+    dispatch::future<json> get(const std::string& url);
 
     /**
         Perform a GET request and store the body in a file.
         
         Returned response's body won't be accessible in any way from @a handler.
      */
-    void download(const std::string& url, const std::wstring& output_file, response_func_t handler);
+    dispatch::future<void> download(const std::string& url, const std::wstring& output_file);
 
     /**
         Perform a POST request with multipart/form-data formatted @a params.
      */
-    void post(const std::string& url, const http_body_data& data, response_func_t handler);
+    dispatch::future<json> post(const std::string& url, const http_body_data& data);
 
-    /// Perform a POST request at the given URL and ignore the response.
-    void post(const std::string& url, const http_body_data& data)
-    {
-        post(url, data, [](const http_response&){});
-    }
-
-
-    // Variants that have separate error and success handlers:
-    template <typename T1, typename T2>
-    void get(const std::string& url, const T1& onResult, const T2& onError)
-    {
-        get(url, [onResult,onError](const http_response& r){
-            try
-            {
-                onResult(r.json());
-            }
-            catch (...)
-            {
-                onError(std::current_exception());
-            }
-        });
-    }
-
-    template <typename T1, typename T2>
-    void download(const std::string& url, const std::wstring& output_file, const T1& onSuccess, const T2& onError)
-    {
-        download(url, output_file, [onSuccess,onError](const http_response& r){
-            if (r.ok())
-                onSuccess();
-            else
-                onError(r.exception());
-        });
-    }
-
-    template <typename T1, typename T2>
-    void post(const std::string& url, const multipart_form_data& data, const T1& onSuccess, const T2& onError)
-    {
-        post(url, data, [onSuccess,onError](const http_response& r){
-            if (r.ok())
-                onSuccess();
-            else
-                onError(r.exception());
-        });
-    }
 
     // Helper for encoding text as URL-encoded UTF-8
     static std::string url_encode(const std::string& s);
@@ -252,8 +170,6 @@ protected:
 
 private:
     class impl;
-    friend class http_response;
-
     std::unique_ptr<impl> m_impl;
 };
 

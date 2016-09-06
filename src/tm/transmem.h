@@ -64,11 +64,9 @@ public:
                            const std::wstring& source);
 
     /// SuggestionsBackend API implementation:
-    void SuggestTranslation(const Language& srclang,
-                            const Language& lang,
-                            const std::wstring& source,
-                            success_func_type onSuccess,
-                            error_func_type onError) override;
+    dispatch::future<SuggestionsList> SuggestTranslation(const Language& srclang,
+                                                         const Language& lang,
+                                                         const std::wstring& source) override;
 
     /**
         Performs updates to the translation memory.

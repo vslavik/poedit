@@ -338,9 +338,13 @@ ActivityIndicator::ActivityIndicator(wxWindow *parent)
     sizer->Add(m_spinner, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sizer->Add(m_label, wxSizerFlags(1).Center());
 
-    HandleError = on_main_thread_for_window<std::exception_ptr>(this, [=](std::exception_ptr e){
-        StopWithError(DescribeException(e));
-    });
+    wxWeakRef<ActivityIndicator> self(this);
+    HandleError = [self](std::exception_ptr e){
+        dispatch::on_main([self,e]{
+            if (self)
+                self->StopWithError(DescribeException(e));
+        });
+    };
 }
 
 void ActivityIndicator::Start(const wxString& msg)
