@@ -164,6 +164,48 @@ class window_dismissed : public std::exception
 };
 
 
+// Determines continuation's argument type
+// (with thanks to http://stackoverflow.com/a/21486468/237188)
+template<typename T>
+struct argument_type : public argument_type<decltype(&T::operator())>
+{
+};
+
+template<typename C, typename Ret>
+struct argument_type<Ret(C::*)() const>
+{
+    using arg0_type = void;
+};
+
+template<typename C, typename Ret, typename... Args>
+struct argument_type<Ret(C::*)(Args...) const>
+{
+    using arg0_type = typename std::tuple_element<0, std::tuple<Args...>>::type;
+};
+
+
+// Helper for calling a continuation. Unpacks futures for continuations that
+// take the value as its argument and leaves it unmodified for those that take
+// a future argument.
+template<typename T>
+struct continuation_calling_helper
+{
+    static T unpack_arg(boost::future<T>&& arg) { return arg.get(); }
+};
+
+template<typename T>
+struct continuation_calling_helper<dispatch::future<T>>
+{
+    static boost::future<T> unpack_arg(boost::future<T>&& arg) { return std::move(arg); }
+};
+
+template<>
+struct continuation_calling_helper<void>
+{
+    static void touch_arg(boost::future<void>& arg) { arg.get(); }
+};
+
+
 // Helper to unwrap dispatch::futures into boost::futures so that implicit
 // unwrapping of boost::future<boost::future<T>> into boost::future<T> works
 template<typename T>
@@ -295,29 +337,32 @@ public:
     template<typename F>
     auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
     {
+        typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
                              [f{std::move(continuation)}](boost::future<T> x){
-                                 return detail::call_and_unwrap_if_future(f, x.get());
+                                 return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
                              });
     }
 
     template<typename F>
     auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
     {
+        typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
                              [f{std::move(continuation)}](boost::future<T> x) {
-                                 return detail::call_and_unwrap_if_future(f, x.get());
+                                 return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
                              });
     }
 
     template<typename Window, typename F>
     auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F(T)>::type>::type>
     {
+        typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         wxWeakRef<Window> weak(self);
         return this->f_.then(detail::main_thread_executor::get(),
                              [weak, f{std::move(continuation)}](boost::future<T> x){
                                  if (weak)
-                                     return detail::call_and_unwrap_if_future(f, x.get());
+                                     return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
                                  else
                                      throw detail::window_dismissed();
                              });
@@ -365,9 +410,10 @@ public:
     template<typename F>
     auto then(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
     {
+        typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::background_queue_executor::get(),
                              [f{std::move(continuation)}](boost::future<void> x){
-                                 x.get();
+                                 cch::touch_arg(x);
                                  return detail::call_and_unwrap_if_future(f);
                              });
     }
@@ -375,9 +421,10 @@ public:
     template<typename F>
     auto then_on_main(F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
     {
+        typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         return this->f_.then(detail::main_thread_executor::get(),
                              [f{std::move(continuation)}](boost::future<void> x){
-                                 x.get();
+                                 cch::touch_arg(x);
                                  detail::call_and_unwrap_if_future(f);
                              });
 
@@ -385,12 +432,13 @@ public:
     template<typename Window, typename F>
     auto then_on_window(Window *self, F&& continuation) -> future<typename detail::future_unwrapper<typename std::result_of<F()>::type>::type>
     {
+        typedef detail::continuation_calling_helper<typename detail::argument_type<typename std::decay<F>::type>::arg0_type> cch;
         wxWeakRef<Window> weak(self);
         return this->f_.then(detail::main_thread_executor::get(),
                              [weak, f{std::move(continuation)}](boost::future<void> x){
                                  if (weak)
                                  {
-                                     x.get();
+                                     cch::touch_arg(x);
                                      detail::call_and_unwrap_if_future(f);
                                  }
                                  else
