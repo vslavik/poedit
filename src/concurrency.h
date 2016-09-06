@@ -530,6 +530,23 @@ auto make_exceptional_future(exception_ptr ex) -> future<T>
 }
 
 
+/// Chaining of promises
+template<typename T>
+void fulfill_promise_from_future(std::shared_ptr<promise<T>> p, future<T>&& f)
+{
+    f.then([p](future<T> val)
+    {
+        try
+        {
+            p->set_value(val.get());
+        }
+        catch (...)
+        {
+            set_current_exception(p);
+        }
+    });
+}
+
 
 /// Enqueue an operation for background processing.
 template<class F>
