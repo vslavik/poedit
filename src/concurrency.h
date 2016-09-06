@@ -34,10 +34,11 @@
     #define HAVE_PPL
 #endif
 
-
+#define BOOST_CHRONO_HEADER_ONLY
 #define BOOST_THREAD_VERSION 4
 #define BOOST_THREAD_PROVIDES_EXECUTORS
 
+#include <boost/chrono/duration.hpp>
 #include <boost/thread/executor.hpp>
 #include <boost/thread/future.hpp>
 
@@ -260,8 +261,10 @@ inline auto call_and_unwrap_if_future(F&& f, Args&&... args) -> typename future_
 // Tasks (aka futures)
 // ----------------------------------------------------------------------
 
-template<typename T>
-using promise = boost::promise<T>;
+using boost::current_exception;
+using boost::exception_ptr;
+using boost::future_status;
+template<typename T> using promise = boost::promise<T>;
 
 
 // Can't use std::current_exception with boost::promise, must use boost
@@ -269,7 +272,7 @@ using promise = boost::promise<T>;
 template<typename T>
 void set_current_exception(boost::promise<T>& pr)
 {
-    pr.set_exception(boost::current_exception());
+    pr.set_exception(current_exception());
 }
 
 template<typename T>
@@ -290,6 +293,10 @@ public:
     FutureType& operator=(const FutureType& other) = delete;
 
     void wait() const { f_.wait(); }
+
+    template<class Rep, class Period>
+    future_status wait_for(const boost::chrono::duration<Rep,Period>& timeout_duration) const { return f_.wait_for(timeout_duration); }
+
     bool valid() const { return f_.valid(); }
 
     // Convenient async exception catching:
@@ -506,13 +513,22 @@ auto make_ready_future(T&& value) -> future<T>
   return boost::make_ready_future(std::forward<T>(value));
 }
 
-template <typename T>
+template<typename T>
 auto make_exceptional_future_from_current() -> future<T>
 {
     promise<T> p;
     set_current_exception(p);
     return p.get_future();
 }
+
+template<typename T>
+auto make_exceptional_future(exception_ptr ex) -> future<T>
+{
+    promise<T> p;
+    p.set_exception(ex);
+    return p.get_future();
+}
+
 
 
 /// Enqueue an operation for background processing.
