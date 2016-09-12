@@ -109,15 +109,11 @@
       <object class="wxMenu" name="menu_suggestions">
         <label>Suggestions</label>
       </object>
-      <object class="wxMenuItem" name="menu_references">
-        <label platform="win">_Show references</label>
-        <label platform="unix|mac">_Show References</label>
-      </object>
-      <object class="separator"/>
       <object class="wxMenuItem" name="wxID_FIND" platform="unix|win">
         <label>_Find...</label>
         <accel>Ctrl+F</accel>
       </object>
+      <object class="separator"/>
       <object class="wxMenuItem" name="wxID_REPLACE" platform="unix|win">
         <label>Replace...</label>
         <accel>Ctrl+H</accel>
@@ -193,6 +189,11 @@
         <label platform="win">_Untranslated entries first</label>
         <label platform="unix|mac">_Untranslated Entries First</label>
         <checkable>1</checkable>
+      </object>
+      <object class="separator"/>
+      <object class="wxMenuItem" name="menu_references">
+        <label platform="win">_Show references</label>
+        <label platform="unix|mac">_Show References</label>
       </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="show_sidebar">
