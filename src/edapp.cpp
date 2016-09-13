@@ -308,7 +308,9 @@ bool PoeditApp::CheckForBetaUpdates() const
 }
 
 
+#ifndef __WXOSX__
 static wxArrayString gs_filesToOpen;
+#endif
 
 extern void InitXmlResource();
 
@@ -464,6 +466,7 @@ bool PoeditApp::OnInit()
     AssociateFileTypeIfNeeded();
 #endif
 
+#ifndef __WXOSX__
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
     //     window if no files are given on command line; but still support
@@ -473,7 +476,6 @@ bool PoeditApp::OnInit()
         OpenFiles(gs_filesToOpen);
         gs_filesToOpen.clear();
     }
-#ifndef __WXOSX__
     else
     {
         OpenNewFile();
@@ -867,8 +869,15 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         CallAfter([=]{ HandleCustomURI(poeditURI); });
     }
 
+#ifdef __WXOSX__
+    wxArrayString filesToOpen;
+    for (size_t i = 0; i < parser.GetParamCount(); i++)
+        filesToOpen.Add(parser.GetParam(i));
+    OSXStoreOpenFiles(filesToOpen);
+#else
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
+#endif
 
     return true;
 }
