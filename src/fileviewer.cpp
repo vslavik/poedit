@@ -300,7 +300,7 @@ wxFileName FileViewer::GetFilename(wxString ref) const
             filename.MakeAbsolute(basePath);
             if ( filename.FileExists() )
             {
-                break; // good, found the file
+                return filename; // good, found the file
             }
             else
             {
@@ -314,7 +314,7 @@ wxFileName FileViewer::GetFilename(wxString ref) const
         }
     }
 
-    return filename;
+    return wxFileName(); // invalid
 }
 
 
@@ -345,6 +345,13 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
 void FileViewer::SelectReference(const wxString& ref)
 {
     const wxFileName filename = GetFilename(ref);
+    if (!filename.IsOk())
+    {
+        ShowError(wxString::Format(_("Error opening file %s!"), filename.GetFullPath()));
+        m_openInEditor->Disable();
+        return;
+    }
+
     wxFFile file;
     wxString data;
 
@@ -400,5 +407,7 @@ void FileViewer::OnChoice(wxCommandEvent &event)
 
 void FileViewer::OnEditFile(wxCommandEvent&)
 {
-    wxLaunchDefaultApplication(GetFilename(m_file->GetStringSelection()).GetFullPath());
+    wxFileName filename = GetFilename(bidi::strip_control_chars(m_file->GetStringSelection()));
+    if (filename.IsOk())
+        wxLaunchDefaultApplication(filename.GetFullPath());
 }
