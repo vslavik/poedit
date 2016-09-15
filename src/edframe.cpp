@@ -2262,6 +2262,9 @@ void PoeditFrame::UpdateFromTextCtrl()
 
 void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
 {
+    if (item->IsFuzzy() || !item->IsTranslated())
+        return;
+
     if (wxConfig::Get()->ReadBool("use_tm", true))
     {
         auto srclang = m_catalog->GetSourceLanguage();
