@@ -76,6 +76,7 @@ class PropertiesDialog : public wxDialog
         std::shared_ptr<PathsData> m_pathsData;
         PathsList *m_paths, *m_excludedPaths;
         wxEditableListBox *m_keywords;
+        bool m_defaultKeywords;
         wxString m_rememberedPluralForm;
 
         bool m_hasLang;

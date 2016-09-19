@@ -615,12 +615,15 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
     return c;
 }
 
-void GetKeywordsFromControl(wxEditableListBox *box, wxArrayString& output)
+void GetKeywordsFromControl(wxEditableListBox *box, bool defaultKeywords, wxArrayString& output)
 {
     wxArrayString arr;
     box->GetStrings(arr);
 
     output.clear();
+    if (!defaultKeywords)
+        output.push_back("");
+
     for (auto x: arr)
     {
         if (x.empty())
@@ -663,7 +666,12 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
             m_pluralFormsCustom->SetValue(true);
     }
 
-    m_keywords->SetStrings(cat->Header().Keywords);
+    auto kw = cat->Header().Keywords;
+    auto empty_kw = kw.Index("");
+    m_defaultKeywords = (empty_kw == wxNOT_FOUND);
+    if (empty_kw != wxNOT_FOUND)
+        kw.RemoveAt(empty_kw);
+    m_keywords->SetStrings(kw);
 
     m_pathsData->GetFromCatalog(cat);
     m_pathsData->RefreshView();
@@ -702,7 +710,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
         cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
     }
 
-    GetKeywordsFromControl(m_keywords, cat->Header().Keywords);
+    GetKeywordsFromControl(m_keywords, m_defaultKeywords, cat->Header().Keywords);
 
     if (m_pathsData->Changed)
         m_pathsData->SetToCatalog(cat);
