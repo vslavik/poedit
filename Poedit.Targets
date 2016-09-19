@@ -2,14 +2,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
          ToolsVersion="4.0">
 
-  <PropertyGroup>
-    <MSBuildCommunityTasksPath>$(SolutionDir)\packages\MSBuildTasks.1.4.0.128\tools</MSBuildCommunityTasksPath>
-  </PropertyGroup>
-  <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets"
-          Condition="Exists('$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets')" />
-  <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.Git.GitCommits"
-             Condition="Exists('$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.targets')" />
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <DebugSuffix>d</DebugSuffix>
   </PropertyGroup>
