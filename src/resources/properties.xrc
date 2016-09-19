@@ -230,12 +230,23 @@
                     <size>0,4</size>
                 </object>
                 <object class="sizeritem">
+                  <object class="wxCheckBox" name="default_keywords">
+                    <label>Also use default keywords for supported languages</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxEXPAND</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
                   <object class="LearnMoreLink" name="keywords_help">
-                    <label>Learn about gettext keywords</label>
+                    <label platform="mac">Learn About Gettext Keywords</label>
+                    <label platform="unix">Learn About Gettext Keywords</label>
+                    <label platform="win">Learn about gettext keywords</label>
                     <url>https://poedit.net/trac/wiki/Doc/Keywords</url>
                   </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT</flag>
-                  <border>5d</border>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_LEFT</flag>
+                  <border platform="mac">6d</border>
+                  <border platform="unix">5d</border>
+                  <border platform="win">5d</border>
                 </object>
               </object>
             </object>

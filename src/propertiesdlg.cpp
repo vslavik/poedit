@@ -26,6 +26,7 @@
 #include <wx/sizer.h>
 #include <wx/statline.h>
 #include <wx/bmpbuttn.h>
+#include <wx/checkbox.h>
 #include <wx/combobox.h>
 #include <wx/filedlg.h>
 #include <wx/dirdlg.h>
@@ -493,6 +494,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     auto page_keywords = XRCCTRL(*this, "page_keywords", wxWindow);
 
     m_keywords = new wxEditableListBox(page_keywords, -1, _("Additional keywords"));
+    m_defaultKeywords = XRCCTRL(*this, "default_keywords", wxCheckBox);
 
     m_pathsData.reset(new PathsData);
     m_basePath = new BasePathCtrl(page_paths);
@@ -615,12 +617,15 @@ wxString GetCharsetFromCombobox(wxComboBox *ctrl)
     return c;
 }
 
-void GetKeywordsFromControl(wxEditableListBox *box, wxArrayString& output)
+void GetKeywordsFromControl(wxEditableListBox *box, wxCheckBox *defaultKeywords, wxArrayString& output)
 {
     wxArrayString arr;
     box->GetStrings(arr);
 
     output.clear();
+    if (!defaultKeywords->GetValue())
+        output.push_back("");
+
     for (auto x: arr)
     {
         if (x.empty())
@@ -663,7 +668,12 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
             m_pluralFormsCustom->SetValue(true);
     }
 
-    m_keywords->SetStrings(cat->Header().Keywords);
+    auto kw = cat->Header().Keywords;
+    auto empty_kw = kw.Index("");
+    m_defaultKeywords->SetValue(empty_kw == wxNOT_FOUND);
+    if (empty_kw != wxNOT_FOUND)
+        kw.RemoveAt(empty_kw);
+    m_keywords->SetStrings(kw);
 
     m_pathsData->GetFromCatalog(cat);
     m_pathsData->RefreshView();
@@ -702,7 +712,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
         cat->Header().SetHeaderNotEmpty("Plural-Forms", pluralForms);
     }
 
-    GetKeywordsFromControl(m_keywords, cat->Header().Keywords);
+    GetKeywordsFromControl(m_keywords, m_defaultKeywords, cat->Header().Keywords);
 
     if (m_pathsData->Changed)
         m_pathsData->SetToCatalog(cat);

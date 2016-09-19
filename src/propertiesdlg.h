@@ -37,6 +37,7 @@
 class WXDLLIMPEXP_FWD_ADV wxEditableListBox;
 class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxRadioButton;
+class WXDLLIMPEXP_FWD_CORE wxCheckBox;
 class WXDLLIMPEXP_FWD_CORE wxComboBox;
 
 /// Dialog setting various catalog parameters.
@@ -76,6 +77,7 @@ class PropertiesDialog : public wxDialog
         std::shared_ptr<PathsData> m_pathsData;
         PathsList *m_paths, *m_excludedPaths;
         wxEditableListBox *m_keywords;
+        wxCheckBox *m_defaultKeywords;
         wxString m_rememberedPluralForm;
 
         bool m_hasLang;
