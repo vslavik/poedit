@@ -125,10 +125,13 @@ wxString strip_control_chars(const wxString& text)
 
 wxString mark_direction(const wxString& text, TextDirection dir)
 {
-    auto mark = (dir == TextDirection::LTR) ? LRE : RLE;
+    wchar_t mark = (dir == TextDirection::LTR) ? LRE : RLE;
     auto out = mark + text;
 #ifdef BIDI_NEEDS_DIRECTION_ON_EACH_LINE
-    out.Replace("\n", "\n" + mark);
+    wchar_t replacement[3] = {0};
+    replacement[0] = L'\n';
+    replacement[1] = mark;
+    out.Replace("\n", replacement);
 #endif
     return out;
 }
