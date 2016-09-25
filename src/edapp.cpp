@@ -408,6 +408,12 @@ bool PoeditApp::OnInit()
     {
         wxRenameFile(oldcfgfile, CFG_FILE);
     }
+
+    // Remove legacy Sparkle updates folder that used to accumulate broken download
+    // files for some users and eat up disk space:
+    auto oldsparkle = wxStandardPaths::Get().GetUserDataDir() + "/.Sparkle";
+    if (wxFileName::DirExists(oldsparkle))
+        wxFileName::Rmdir(oldsparkle, wxPATH_RMDIR_RECURSIVE);
 #endif
 
     wxConfigBase::Set(
