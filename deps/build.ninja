@@ -2318,7 +2318,8 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
       -Dalarm=alarm_disabled" CXXFLAGS="$cxxflags" LDFLAGS="$ldflags" $
       GSED=$sed YACC=$yacc --with-libiconv-prefix=$SDKROOT/usr $
       --disable-static --disable-java --disable-csharp --disable-rpath $
-      --disable-dependency-tracking --enable-silent-rules
+      --disable-dependency-tracking --enable-silent-rules $
+      --with-included-libxml
   srcdir = $top_srcdir/gettext
   destdir = $builddir/gettext
   workdir = $intdir/gettext
