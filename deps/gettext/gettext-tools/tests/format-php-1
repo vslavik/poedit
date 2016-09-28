@@ -82,8 +82,8 @@ while read comment; do
   read string
   n=`expr $n + 1`
   echo "<?= gettext(${string}) ?>" | sed -e 's/\$/\\\$/g' > f-ph-1-$n.in
-  ${XGETTEXT} -L PHP -o f-ph-1-$n.po f-ph-1-$n.in || exit 1
-  test -f f-ph-1-$n.po || exit 1
+  ${XGETTEXT} -L PHP -o f-ph-1-$n.po f-ph-1-$n.in || Exit 1
+  test -f f-ph-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep php-format f-ph-1-$n.po > /dev/null; then
@@ -103,9 +103,9 @@ while read comment; do
     cat f-ph-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-ph-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-ph-1-$n.in f-ph-1-$n.po
 done < f-ph-1.data
 
-exit 0
+Exit 0

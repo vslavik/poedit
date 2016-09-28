@@ -11,33 +11,33 @@ This is an invalid line
 Name =Foo
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err1.desktop 2>&1; exit) | grep "missing '=' after" || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err1.desktop 2>&1; exit) | grep "missing '=' after" || Exit 1
 
 cat <<\EOF >err2.desktop
 [Desktop Entry
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err2.desktop 2>&1; exit) | grep "unterminated group name" || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err2.desktop 2>&1; exit) | grep "unterminated group name" || Exit 1
 
 cat <<\EOF >err3.desktop
 [Desktop Entry]
   Not a blank line!
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err3.desktop 2>&1; exit) | grep "invalid non-blank line" || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err3.desktop 2>&1; exit) | grep "invalid non-blank line" || Exit 1
 
 cat <<\EOF >err4.desktop
 [Desktop Entry]a
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err4.desktop 2>&1; exit) | grep "invalid non-blank character" || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - err4.desktop 2>&1; exit) | grep "invalid non-blank character" || Exit 1
 
 # gettext 0.19.4 issued an baseless warning of this.
 cat <<\EOF >ok4.desktop
 [Desktop Entry]
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - ok4.desktop 2>&1; exit) | grep "invalid non-blank character" && exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --add-comments -o - ok4.desktop 2>&1; exit) | grep "invalid non-blank character" && Exit 1
 
 cat <<\EOF > xg.desktop
 [Desktop Entry]
@@ -53,7 +53,7 @@ X-Foo = bar
 Keywords=Keyword1;Keyword2;Key\;word3;
 EOF
 
-${XGETTEXT} --add-comments -o - xg.desktop | grep -v 'POT-Creation-Date' > xg-desktop.pot || exit 1
+${XGETTEXT} --add-comments -o - xg.desktop | grep -v 'POT-Creation-Date' > xg-desktop.pot || Exit 1
 
 cat <<\EOF > xg-desktop.ok
 # SOME DESCRIPTIVE TITLE.

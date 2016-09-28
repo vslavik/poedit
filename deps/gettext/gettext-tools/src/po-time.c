@@ -1,5 +1,5 @@
 /* PO/POT file timestamps.
-   Copyright (C) 1995-1998, 2000-2003, 2006, 2015 Free Software
+   Copyright (C) 1995-1998, 2000-2003, 2006, 2015-2016 Free Software
    Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 

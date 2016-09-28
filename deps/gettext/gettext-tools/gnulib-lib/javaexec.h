@@ -1,5 +1,5 @@
 /* Execute a Java program.
-   Copyright (C) 2001-2002, 2009-2015 Free Software Foundation, Inc.
+   Copyright (C) 2001-2002, 2009-2016 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 
    This program is free software: you can redistribute it and/or modify

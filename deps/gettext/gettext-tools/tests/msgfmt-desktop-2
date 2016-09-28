@@ -131,13 +131,13 @@ unset LINGUAS
 
 ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.out \
           >/dev/null 2>/dev/null \
-  exit 1
+  Exit 1
 
 test -d po/LINGUAS || mkdir po/LINGUAS
 
 ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.out \
           >/dev/null 2>/dev/null \
-  exit 1
+  Exit 1
 
 rm -fr po/LINGUAS
 
@@ -148,28 +148,28 @@ EOF
 
 ${MSGFMT} --desktop --template=mf.desktop -d po \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 ${MSGFMG} --desktop --template=mf.desktop -d po -o mf.desktop.out -l fr \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 ${MSGFMG} --desktop --template=mf.desktop -d po -o mf.desktop.out po/fr.po \
           >/dev/null 2>/dev/null \
-  && exit 1
+  && Exit 1
 
 # Proceed to the .desktop file generation.
 
-${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.out || exit 1
+${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.out || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mf.desktop.ok mf.desktop.out
-test $? = 0 || exit 1
+test $? = 0 || Exit 1
 
 # Restrict the desired languages with the LINGUAS envvar.
 
-LINGUAS="fr ja" ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.desired.out || exit 1
+LINGUAS="fr ja" ${MSGFMT} --desktop --template=mf.desktop -d po -o mf.desktop.desired.out || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mf.desktop.desired.ok mf.desktop.desired.out
-test $? = 0 || exit 1
+test $? = 0 || Exit 1

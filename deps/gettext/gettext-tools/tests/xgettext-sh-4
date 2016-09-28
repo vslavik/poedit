@@ -115,8 +115,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location -d xg-sh-4.tmp xg-sh-4.sh 2>xg-sh-4.err
-test $? = 0 || { cat xg-sh-4.err; exit 1; }
-LC_ALL=C tr -d '\r' < xg-sh-4.tmp.po > xg-sh-4.po || exit 1
+test $? = 0 || { cat xg-sh-4.err; Exit 1; }
+LC_ALL=C tr -d '\r' < xg-sh-4.tmp.po > xg-sh-4.po || Exit 1
 
 cat <<\EOF > xg-sh-4.ok
 msgid "depth_0_bashquote_0_x"

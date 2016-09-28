@@ -12,7 +12,7 @@ EOF
 ${XGETTEXT} -o xg-gl-3.pot xg-gl-3-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  exit 77
+  Exit 77
 }
 
 cat <<EOF > xg-gl-3-asciitable.glade2
@@ -162,7 +162,7 @@ button or double click the character in the table.</property>
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o xg-gl-3.tmp xg-gl-3-asciitable.glade2  || exit 1
+${XGETTEXT} -o xg-gl-3.tmp xg-gl-3-asciitable.glade2  || Exit 1
 # Don't simplify this to "grep ... < xg-gl-3.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-gl-3.tmp | grep -v 'POT-Creation-Date' > xg-gl-3.pot

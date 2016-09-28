@@ -30,6 +30,8 @@ cat <<\EOF > f-pyb-1.data
 "abc{value[0}"
 # Invalid: unknown character in getitem operator
 "abc{value[!]}"
+# Valid: use of both getattr and getitem operators
+"abc{value.v[name]}"
 # Valid: format specifier
 "abc{value:0}"
 # Valid: standard format specifier
@@ -52,8 +54,8 @@ while read comment; do
   cat <<EOF > f-pyb-1-$n.in
 gettext(${string});
 EOF
-  ${XGETTEXT} -L Python -o f-pyb-1-$n.po f-pyb-1-$n.in || exit 1
-  test -f f-pyb-1-$n.po || exit 1
+  ${XGETTEXT} -L Python -o f-pyb-1-$n.po f-pyb-1-$n.in || Exit 1
+  test -f f-pyb-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep python-brace-format f-pyb-1-$n.po > /dev/null; then
@@ -73,9 +75,9 @@ EOF
     cat f-pyb-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-pyb-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-pyb-1-$n.in f-pyb-1-$n.po
 done < f-pyb-1.data
 
-exit 0
+Exit 0

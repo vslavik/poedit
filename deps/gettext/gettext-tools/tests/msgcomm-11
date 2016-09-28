@@ -43,8 +43,8 @@ EOF
 
 : ${MSGCOMM=msgcomm}
 ${MSGCOMM} --more-than=1 --no-location --omit-header -o mcomm-test11.tmp \
-    mcomm-test11.in1 mcomm-test11.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test11.tmp > mcomm-test11.out || exit 1
+    mcomm-test11.in1 mcomm-test11.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test11.tmp > mcomm-test11.out || Exit 1
 
 cat << EOF > mcomm-test11.ok
 msgid "1"

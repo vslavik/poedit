@@ -31,8 +31,8 @@ Main new run!
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --no-location prog.st || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --no-location prog.st || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<EOF > prog.ok
 msgid "'Your command, please?', asked the waiter."
@@ -50,7 +50,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -75,11 +75,11 @@ msgstr "%2 remplace %1."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po prog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d fr || mkdir fr
 test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
@@ -89,10 +89,10 @@ ${MSGFMT} -o fr/LC_MESSAGES/prog.mo fr.po
 
 # Test for presence of gst version 2.0.6 or newer.
 (gst --version) >/dev/null 2>/dev/null \
-  || { echo "Skipping test: gst not found"; exit 77; }
+  || { echo "Skipping test: gst not found"; Exit 77; }
 case `gst --version | sed -n -e 1p | sed -e 's/^[^0-9]*//'` in
   0.* | 1.* | 2.0 | 2.0.[0-5] | 2.1 | 2.1.[0-1])
-    echo "Skipping test: gst version too old"; exit 77;;
+    echo "Skipping test: gst version too old"; Exit 77;;
 esac
 
 : ${DIFF=diff}
@@ -118,19 +118,19 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LC_ALL=$LOCALE_FR gst -Q prog.st > prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR gst -Q prog.st > prog.out || Exit 1
   ${DIFF} prog.ok prog.out > /dev/null ||
     ${DIFF} prog.ok2 prog.out > /dev/null ||
       ${DIFF} prog.ok3 prog.out > /dev/null ||
-        { ${DIFF} prog.ok prog.out; exit 1; }
+        { ${DIFF} prog.ok prog.out; Exit 1; }
 fi
 if test $LOCALE_FR_UTF8 != none; then
   prepare_locale_ fr $LOCALE_FR_UTF8
-  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gst -Q prog.st > prog.out || exit 1
+  LANGUAGE= LC_ALL=$LOCALE_FR_UTF8 gst -Q prog.st > prog.out || Exit 1
   ${DIFF} prog.oku prog.out > /dev/null ||
     ${DIFF} prog.oku2 prog.out > /dev/null ||
       ${DIFF} prog.oku3 prog.out > /dev/null ||
-        { ${DIFF} prog.oku prog.out; exit 1; }
+        { ${DIFF} prog.oku prog.out; Exit 1; }
 fi
 if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   if test -f /usr/bin/localedef; then
@@ -138,7 +138,7 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
   else
     echo "Skipping test: no french locale is supported"
   fi
-  exit 77
+  Exit 77
 fi
 
-exit 0
+Exit 0

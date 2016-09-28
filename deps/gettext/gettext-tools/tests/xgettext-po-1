@@ -44,8 +44,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header -n \
-  -d xg-po-1.tmp xg-po-1.in.po xg-po-1.c xg-po-1.cc || exit 1
-LC_ALL=C tr -d '\r' < xg-po-1.tmp.po > xg-po-1.po || exit 1
+  -d xg-po-1.tmp xg-po-1.in.po xg-po-1.c xg-po-1.cc || Exit 1
+LC_ALL=C tr -d '\r' < xg-po-1.tmp.po > xg-po-1.po || Exit 1
 
 cat <<EOF > xg-po-1.ok
 #: file1.c:199

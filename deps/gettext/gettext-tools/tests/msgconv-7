@@ -19,7 +19,7 @@ EOF
 
 : ${MSGCONV=msgconv}
 ${MSGCONV} --add-location=file --to-code=UTF-8 \
-           -o mco-test7.out mco-test7.po || exit 1
+           -o mco-test7.out mco-test7.po || Exit 1
 
 cat <<\EOF > mco-test7.ok
 # Chinese translation for GNU gettext messages.

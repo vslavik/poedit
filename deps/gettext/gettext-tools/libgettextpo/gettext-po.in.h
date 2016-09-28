@@ -1,5 +1,5 @@
 /* Public API for GNU gettext PO files - contained in libgettextpo.
-   Copyright (C) 2003-2008, 2010, 2015 Free Software Foundation, Inc.
+   Copyright (C) 2003-2008, 2010, 2015-2016 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 
    This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ extern "C" {
 /* =========================== Meta Information ============================ */
 
 /* Version number: (major<<16) + (minor<<8) + subminor */
-#define LIBGETTEXTPO_VERSION 0x001307
+#define LIBGETTEXTPO_VERSION 0x001308
 extern int libgettextpo_version;
 
 /* ================================= Types ================================= */

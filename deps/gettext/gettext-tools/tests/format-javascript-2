@@ -14,11 +14,11 @@ msgstr "xyz%"
 msgid  "abc%2sdef"
 msgstr "xyz%3s"
 # Invalid: too few arguments
-msgid  "abc%sdef%u"
+msgid  "abc%sdef%d"
 msgstr "xyz%s"
 # Invalid: too many arguments
-msgid  "abc%udef"
-msgstr "xyz%uvw%c"
+msgid  "abc%ddef"
+msgstr "xyz%dvw%c"
 # Valid: type compatibility
 msgid  "abc%o"
 msgstr "xyz%d"
@@ -52,7 +52,7 @@ while read comment; do
   read msgstr_line
   n=`expr $n + 1`
   cat <<EOF > f-js-2-$n.po
-#, python-format
+#, javascript-format
 ${msgid_line}
 ${msgstr_line}
 EOF
@@ -74,9 +74,9 @@ EOF
   if test -n "$fail"; then
     echo "Format string checking error:" 1>&2
     cat f-js-2-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-js-2-$n.po f-js-2-$n.mo
 done < f-js-2.data
 
-exit 0
+Exit 0

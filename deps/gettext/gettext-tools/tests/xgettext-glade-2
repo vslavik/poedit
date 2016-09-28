@@ -13,7 +13,7 @@ EOF
 ${XGETTEXT} -o xg-gl-2.pot xg-gl-2-empty.glade 2>/dev/null
 test $? = 0 || {
   echo "Skipping test: xgettext was built without Glade support"
-  exit 77
+  Exit 77
 }
 
 cat <<\EOF > xg-gl-2-simple.glade
@@ -55,7 +55,7 @@ cat <<\EOF > xg-gl-2-simple.glade
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --add-comments -o xg-gl-2.tmp xg-gl-2-simple.glade  || exit 1
+${XGETTEXT} --add-comments -o xg-gl-2.tmp xg-gl-2-simple.glade  || Exit 1
 # Don't simplify this to "grep ... < xg-gl-2.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-gl-2.tmp | grep -v 'POT-Creation-Date' > xg-gl-2.pot

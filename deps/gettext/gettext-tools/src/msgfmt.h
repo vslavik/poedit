@@ -1,5 +1,5 @@
 /* msgfmt specifics
-   Copyright (C) 1995-1998, 2000-2001, 2009, 2015 Free Software
+   Copyright (C) 1995-1998, 2000-2001, 2009, 2015-2016 Free Software
    Foundation, Inc.
    Written by Ulrich Drepper <drepper@gnu.ai.mit.edu>, April 1995.
 

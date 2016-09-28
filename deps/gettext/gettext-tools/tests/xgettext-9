@@ -23,8 +23,8 @@ EOF
 ${XGETTEXT} --omit-header \
   --keyword=label:1,\"xhtml-format\",\"xml-format\" \
   --keyword=title:1,\"xhtml-format\",\"xml-format\" \
-  -d xg-test9.tmp xg-test9.c || exit 1
-LC_ALL=C tr -d '\r' < xg-test9.tmp.po > xg-test9.po || exit 1
+  -d xg-test9.tmp xg-test9.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-test9.tmp.po > xg-test9.po || Exit 1
 
 cat <<\EOF > xg-test9.ok
 #. xhtml-format

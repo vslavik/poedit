@@ -63,8 +63,8 @@ EOF
 
 : ${MSGINIT=msginit}
 ${MSGINIT} -i mi-test2.pot -l ga_IE --no-translator -o mi-test2.tmp 2>mi-test2.err
-test $? = 0 || { cat mi-test2.err 1>&2; exit 1; }
-sed -e '1,10d' < mi-test2.tmp | LC_ALL=C tr -d '\r' > mi-test2.out || exit 1
+test $? = 0 || { cat mi-test2.err 1>&2; Exit 1; }
+sed -e '1,10d' < mi-test2.tmp | LC_ALL=C tr -d '\r' > mi-test2.out || Exit 1
 
 cat <<\EOF > mi-test2.ok
 "Last-Translator: Automatically generated\n"

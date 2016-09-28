@@ -19,8 +19,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location --add-comments=XXX \
-  -d xg-c-6.tmp xg-c-6.in.C || exit 1
-LC_ALL=C tr -d '\r' < xg-c-6.tmp.po > xg-c-6.po || exit 1
+  -d xg-c-6.tmp xg-c-6.in.C || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-6.tmp.po > xg-c-6.po || Exit 1
 
 cat <<EOF > xg-c-6.ok
 msgid "help"

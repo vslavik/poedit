@@ -36,8 +36,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --add-location --width=30 -d xg-test13.tmp \
-            xg-test13.c || exit 1
-LC_ALL=C tr -d '\r' < xg-test13.tmp.po > xg-test13.po || exit 1
+            xg-test13.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-test13.tmp.po > xg-test13.po || Exit 1
 
 cat <<\EOF > xg-test13.ok
 #: x:1 x:2 x:3 x:4 x:5 x:6 x:7

@@ -60,8 +60,8 @@ rm -f mcat-test10.tmp
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --more-than=0 -o mcat-test10.tmp \
-    mcat-test10.in1 mcat-test10.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcat-test10.tmp > mcat-test10.out || exit 1
+    mcat-test10.in1 mcat-test10.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test10.tmp > mcat-test10.out || Exit 1
 
 cat <<\EOF > mcat-test10.ok
 # #-#-#-#-#  mcat-test10.in1 (xyz)  #-#-#-#-#

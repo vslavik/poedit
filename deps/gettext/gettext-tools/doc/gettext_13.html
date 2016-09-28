@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
 <!-- This HTML file has been created by texi2html 1.52b
-     from gettext.texi on 28 December 2015 -->
+     from gettext.texi on 11 June 2016 -->
 
 <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=UTF-8">
 <TITLE>GNU gettext utilities - 13  The Maintainer's View</TITLE>
@@ -454,7 +454,7 @@ changes needed in each.
 <P>
 So, here comes a list of files, each one followed by a description of
 all alterations it needs.  Many examples are taken out from the GNU
-<CODE>gettext</CODE> 0.19.7 distribution itself, or from the GNU
+<CODE>gettext</CODE> 0.19.8.1 distribution itself, or from the GNU
 <CODE>hello</CODE> distribution (<A HREF="http://www.gnu.org/software/hello">http://www.gnu.org/software/hello</A>).
 You may indeed refer to the source code of the GNU <CODE>gettext</CODE> and
 GNU <CODE>hello</CODE> packages, as they are intended to be good examples for
@@ -645,7 +645,7 @@ This is done by a set of lines like these:
 
 <PRE>
 PACKAGE=gettext
-VERSION=0.19.7
+VERSION=0.19.8.1
 AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 AC_SUBST(PACKAGE)
@@ -656,13 +656,13 @@ or, if you are using GNU <CODE>automake</CODE>, by a line like this:
 
 
 <PRE>
-AM_INIT_AUTOMAKE(gettext, 0.19.7)
+AM_INIT_AUTOMAKE(gettext, 0.19.8.1)
 </PRE>
 
 Of course, you replace <SAMP>&lsquo;gettext&rsquo;</SAMP> with the name of your package,
-and <SAMP>&lsquo;0.19.7&rsquo;</SAMP> by its version numbers, exactly as they
+and <SAMP>&lsquo;0.19.8.1&rsquo;</SAMP> by its version numbers, exactly as they
 should appear in the packaged <CODE>tar</CODE> file name of your distribution
-(<TT>&lsquo;gettext-0.19.7.tar.gz&rsquo;</TT>, here).
+(<TT>&lsquo;gettext-0.19.8.1.tar.gz&rsquo;</TT>, here).
 
 <LI>Check for internationalization support.
 
@@ -1751,7 +1751,7 @@ form
 </P>
 
 <PRE>
-AM_GNU_GETTEXT_VERSION(0.19.7)
+AM_GNU_GETTEXT_VERSION(0.19.8)
 </PRE>
 
 <P>
@@ -1861,9 +1861,9 @@ this version into the package.
 To extract the latest available infrastructure which satisfies a version
 requirement, then you can use the form
 <CODE>AM_GNU_GETTEXT_REQUIRE_VERSION(<VAR>version</VAR>)</CODE> instead.  For
-example, if gettext 0.19.7 is installed on your system
+example, if gettext 0.19.8 is installed on your system
 and <CODE>0.19.1</CODE> is requested, then the infrastructure files of version
-0.19.7 will be copied into a source package.
+0.19.8 will be copied into a source package.
 
 </P>
 
@@ -1912,9 +1912,9 @@ Output version information and exit.
 
 <P>
 <CODE>autopoint</CODE> supports the GNU <CODE>gettext</CODE> versions from 0.10.35
-to the current one, 0.19.7.  In order to apply
+to the current one, 0.19.8.  In order to apply
 <CODE>autopoint</CODE> to a package using a <CODE>gettext</CODE> version newer than
-0.19.7, you need to install this same version of GNU
+0.19.8, you need to install this same version of GNU
 <CODE>gettext</CODE> at least.
 
 </P>

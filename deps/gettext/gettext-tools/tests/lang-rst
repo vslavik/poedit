@@ -20,8 +20,8 @@ rstconv.InvalidOutputFormat='Invalid output format -'
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o prog.tmp --omit-header --add-location prog.rst || exit 1
-LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || exit 1
+${XGETTEXT} -o prog.tmp --omit-header --add-location prog.rst || Exit 1
+LC_ALL=C tr -d '\r' < prog.tmp > prog.pot || Exit 1
 
 cat <<EOF > prog.ok
 #: rstconv.help
@@ -54,7 +54,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok prog.pot || exit 1
+${DIFF} prog.ok prog.pot || Exit 1
 
 # The output of rstconv is slightly different:
 # - ModuleName:ConstName instead of ModuleName.ConstName
@@ -119,8 +119,8 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} prog.ok1 prog.pot >/dev/null || ${DIFF} prog.ok2 prog.pot || exit 1
+${DIFF} prog.ok1 prog.pot >/dev/null || ${DIFF} prog.ok2 prog.pot || Exit 1
 
 fi
 
-exit 0
+Exit 0

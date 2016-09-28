@@ -35,8 +35,8 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} --multi-domain -q -o mm-test8.tmp mm-test8.po mm-test8.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test8.tmp > mm-test8.out || exit 1
+${MSGMERGE} --multi-domain -q -o mm-test8.tmp mm-test8.po mm-test8.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test8.tmp > mm-test8.out || Exit 1
 
 cat <<\EOF > mm-test8.ok
 domain "foo-de"

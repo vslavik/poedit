@@ -515,8 +515,21 @@ void AnyTranslatableTextCtrl::SetLanguage(const Language& lang)
 
 #ifdef __WXOSX__
     NSTextView *text = TextView(this);
-    [text setBaseWritingDirection:lang.IsRTL() ? NSWritingDirectionRightToLeft : NSWritingDirectionLeftToRight];
+    if (lang.IsRTL())
+    {
+        [text setBaseWritingDirection:NSWritingDirectionRightToLeft];
+        if ([NSApp userInterfaceLayoutDirection] == NSUserInterfaceLayoutDirectionLeftToRight)
+        {
+            // extra nudge to make typing behave as expected:
+            [text makeTextWritingDirectionRightToLeft:nil];
+        }
+    }
+    else
+    {
+        [text setBaseWritingDirection:NSWritingDirectionLeftToRight];
+    }
 #endif
+
 #ifdef __WXMSW__
     BIDIOPTIONS bidi;
     ::ZeroMemory(&bidi, sizeof(bidi));

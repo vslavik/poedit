@@ -16,8 +16,8 @@ EOF
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location \
   --keyword=i18n:1 --keyword=i18n:1c,2,2t --keyword=i18n:1,2,3t \
-  -d xg-c-11.tmp xg-c-11.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-11.tmp.po > xg-c-11.po || exit 1
+  -d xg-c-11.tmp xg-c-11.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-11.tmp.po > xg-c-11.po || Exit 1
 
 cat <<EOF > xg-c-11.ok
 msgid "help"

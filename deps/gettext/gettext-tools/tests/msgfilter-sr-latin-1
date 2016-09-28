@@ -309,12 +309,12 @@ EOF
 # of here documents in /bin/sh is too buggy. Skip the test in this case.
 head -n 1 mfi-srl-1.po | grep Serbian > /dev/null || {
   echo "Skipping test: /bin/sh is too buggy"
-  exit 77
+  Exit 77
 }
 
 : ${MSGFILTER=msgfilter}
-${MSGFILTER} -i mfi-srl-1.po -o mfi-srl-1.tmp recode-sr-latin || exit 1
-LC_ALL=C tr -d '\r' < mfi-srl-1.tmp > mfi-srl-1.out || exit 1
+${MSGFILTER} -i mfi-srl-1.po -o mfi-srl-1.tmp recode-sr-latin || Exit 1
+LC_ALL=C tr -d '\r' < mfi-srl-1.tmp > mfi-srl-1.out || Exit 1
 
 cat <<\EOF > mfi-srl-1.ok
 # Serbian translation of gettext-runtime

@@ -102,11 +102,11 @@ msgstr[1] ""
 EOF
 
 : ${MSGCMP=msgcmp}
-${MSGCMP} --use-fuzzy --use-untranslated mm-test24.po mm-test24.pot 2>/dev/null || exit 1
+${MSGCMP} --use-fuzzy --use-untranslated mm-test24.po mm-test24.pot 2>/dev/null || Exit 1
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test24.tmp.po mm-test24.po mm-test24.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test24.tmp.po > mm-test24.new.po || exit 1
+${MSGMERGE} -q -o mm-test24.tmp.po mm-test24.po mm-test24.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test24.tmp.po > mm-test24.new.po || Exit 1
 
 cat <<\EOF > mm-test24.ok
 msgid ""
@@ -153,9 +153,9 @@ msgstr[1] "cinq semaines et %d jours"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mm-test24.ok mm-test24.new.po || exit 1
+${DIFF} mm-test24.ok mm-test24.new.po || Exit 1
 
 : ${MSGCMP=msgcmp}
-${MSGCMP} --use-fuzzy --use-untranslated mm-test24.new.po mm-test24.pot || exit 1
+${MSGCMP} --use-fuzzy --use-untranslated mm-test24.new.po mm-test24.pot || Exit 1
 
-exit 0
+Exit 0

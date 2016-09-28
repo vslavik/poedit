@@ -67,8 +67,8 @@ msgstr "%s: Option erwartet ein Argument -- %c\n"
 EOF
 
 : ${MSGUNIQ=msguniq}
-${MSGUNIQ} -o msguniq-6.tmp msguniq-6.in || exit 1
-LC_ALL=C tr -d '\r' < msguniq-6.tmp > msguniq-6.out || exit 1
+${MSGUNIQ} -o msguniq-6.tmp msguniq-6.in || Exit 1
+LC_ALL=C tr -d '\r' < msguniq-6.tmp > msguniq-6.out || Exit 1
 
 cat <<\EOF > msguniq-6.ok
 msgid ""

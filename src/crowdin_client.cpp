@@ -171,8 +171,8 @@ dispatch::future<CrowdinClient::UserInfo> CrowdinClient::GetUserInfo()
         {
             json profile = r["profile"];
             UserInfo u;
-            u.name = str::to_wstring(profile["name"]);
             u.login = str::to_wstring(profile["login"]);
+            u.name = !profile["name"].is_null() ? str::to_wstring(profile["name"]) : u.login;
             return u;
         });
 }

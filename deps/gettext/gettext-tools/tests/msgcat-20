@@ -30,8 +30,8 @@ msgstr "4"
 EOF
 
 : ${MSGCAT=msgcat}
-${MSGCAT} --sort-by-file -o mcat-test20.tmp mcat-test20.in || exit 1
-LC_ALL=C tr -d '\r' < mcat-test20.tmp > mcat-test20.out || exit 1
+${MSGCAT} --sort-by-file -o mcat-test20.tmp mcat-test20.in || Exit 1
+LC_ALL=C tr -d '\r' < mcat-test20.tmp > mcat-test20.out || Exit 1
 
 cat << EOF > mcat-test20.ok
 #: clients/inst_language.ycp:103

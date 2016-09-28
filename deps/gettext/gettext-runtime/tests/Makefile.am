@@ -1,6 +1,5 @@
 ## Makefile for the gettext-runtime/tests subdirectory of GNU gettext
-## Copyright (C) 2005-2006, 2008-2009, 2015 Free Software Foundation,
-## Inc.
+## Copyright (C) 2005-2006, 2008-2009, 2015-2016 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by

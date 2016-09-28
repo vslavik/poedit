@@ -16,8 +16,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location -d xg-c-17.tmp --language=C++ --kde \
-  xg-c-17.cc || exit 1
-LC_ALL=C tr -d '\r' < xg-c-17.tmp.po > xg-c-17.po || exit 1
+  xg-c-17.cc || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-17.tmp.po > xg-c-17.po || Exit 1
 
 cat <<EOF > xg-c-17.ok
 #, c-format, kde-format

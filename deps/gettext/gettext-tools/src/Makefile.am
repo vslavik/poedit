@@ -1,6 +1,5 @@
 ## Makefile for the gettext-tools/src subdirectory of GNU gettext
-## Copyright (C) 1995-1998, 2000-2011, 2015 Free Software Foundation,
-## Inc.
+## Copyright (C) 1995-1998, 2000-2011, 2015-2016 Free Software Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -40,7 +39,7 @@ read-po.h read-properties.h read-stringtable.h \
 str-list.h \
 color.h write-catalog.h write-po.h write-properties.h write-stringtable.h \
 dir-list.h file-list.h po-gram-gen.h po-gram-gen2.h cldr-plural.h \
-cldr-plural-exp.h locating-rule.h its.h \
+cldr-plural-exp.h locating-rule.h its.h search-path.h \
 msgl-charset.h msgl-equal.h msgl-iconv.h msgl-ascii.h msgl-cat.h msgl-header.h \
 msgl-english.h msgl-check.h msgl-fsearch.h msgfmt.h msgunfmt.h \
 plural-count.h plural-eval.h plural-distrib.h \
@@ -154,7 +153,7 @@ msgl-ascii.c msgl-iconv.c msgl-equal.c msgl-cat.c msgl-header.c msgl-english.c \
 msgl-check.c file-list.c msgl-charset.c po-time.c plural-exp.c plural-eval.c \
 plural-table.c quote.h sentence.h sentence.c \
 $(FORMAT_SOURCE) \
-read-desktop.c locating-rule.c its.c
+read-desktop.c locating-rule.c its.c search-path.c
 
 # msggrep needs pattern matching.
 LIBGREP = ../libgrep/libgrep.a
@@ -255,6 +254,11 @@ cldr_plurals_LDADD = libgettextsrc.la $(LDADD)
 libgettextsrc_la_LDFLAGS = \
   -release @VERSION@ \
   ../gnulib-lib/libgettextlib.la $(LTLIBUNISTRING) @LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined
+
+# OS/2 does not support a DLL name longer than 8 characters.
+if OS2
+libgettextsrc_la_LDFLAGS += -os2dllname gtsrc
+endif
 
 libgettextsrc_la_CPPFLAGS = $(AM_CPPFLAGS) $(INCXML)
 

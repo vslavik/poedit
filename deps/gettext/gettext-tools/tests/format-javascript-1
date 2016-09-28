@@ -42,6 +42,20 @@ cat <<\EOF > f-js-1.data
 "abc%.4.2f"
 # Valid: three arguments
 "abc%d%j%j"
+# Valid: a numbered argument
+"abc%1$d"
+# Invalid: zero
+"abc%0$d"
+# Valid: two-digit numbered arguments
+"abc%11$def%10$dgh%9$dij%8$dkl%7$dmn%6$dop%5$dqr%4$dst%3$duv%2$dwx%1$dyz"
+# Invalid: unterminated number
+"abc%1"
+# Invalid: flags before number
+"abc%+1$d"
+# Invalid: mixing of numbered and unnumbered arguments
+"abc%d%2$x"
+# Valid: multiple uses of same argument
+"abc%2$xdef%1$sghi%2$x"
 EOF
 
 : ${XGETTEXT=xgettext}
@@ -54,8 +68,8 @@ gettext(${string});
 EOF
   # Hide xgettext's "The translator cannot reorder the arguments." warnings.
   ${XGETTEXT} -L JavaScript -o f-js-1-$n.po f-js-1-$n.in 2> f-js-1.err \
-    || { cat f-js-1.err 1>&2; exit 1; }
-  test -f f-js-1-$n.po || exit 1
+    || { cat f-js-1.err 1>&2; Exit 1; }
+  test -f f-js-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep javascript-format f-js-1-$n.po > /dev/null; then
@@ -75,9 +89,9 @@ EOF
     cat f-js-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-js-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-js-1-$n.in f-js-1-$n.po
 done < f-js-1.data
 
-exit 0
+Exit 0

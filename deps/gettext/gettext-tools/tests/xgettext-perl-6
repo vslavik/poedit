@@ -65,8 +65,8 @@ EOPERL
 
 : ${XGETTEXT=xgettext}
 LC_MESSAGES=C LC_ALL= \
-${XGETTEXT} --omit-header --no-location -o xg-pl-6.tmp xg-pl-6.pl || exit 1
-LC_ALL=C tr -d '\r' < xg-pl-6.tmp > xg-pl-6.pot || exit 1
+${XGETTEXT} --omit-header --no-location -o xg-pl-6.tmp xg-pl-6.pl || Exit 1
+LC_ALL=C tr -d '\r' < xg-pl-6.tmp > xg-pl-6.pot || Exit 1
 
 cat <<\EOF > xg-pl-6.ok
 msgid "extracted1"

@@ -18,7 +18,7 @@ msgstr "此功能需要恰好指定兩個輸入檔"
 EOF
 
 : ${MSGCONV=msgconv}
-${MSGCONV} --to-code=UTF-8 -o mco-test1.out mco-test1.po || exit 1
+${MSGCONV} --to-code=UTF-8 -o mco-test1.out mco-test1.po || Exit 1
 
 cat <<\EOF > mco-test1.ok
 # Chinese translation for GNU gettext messages.

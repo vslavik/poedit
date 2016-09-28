@@ -1,5 +1,5 @@
 /* Expression evaluation for plural form selection.
-   Copyright (C) 2005-2006, 2015 Free Software Foundation, Inc.
+   Copyright (C) 2005-2006, 2015-2016 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 
    This program is free software: you can redistribute it and/or modify

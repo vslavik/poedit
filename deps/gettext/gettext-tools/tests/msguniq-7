@@ -14,8 +14,8 @@ msgstr ""
 EOF
 
 : ${MSGUNIQ-msguniq}
-${MSGUNIQ} --add-location=file -o msguniq-7.tmp msguniq-7.in || exit 1
-LC_ALL=C tr -d '\r' < msguniq-7.tmp > msguniq-7.out || exit 1
+${MSGUNIQ} --add-location=file -o msguniq-7.tmp msguniq-7.in || Exit 1
+LC_ALL=C tr -d '\r' < msguniq-7.tmp > msguniq-7.out || Exit 1
 
 cat <<\EOF > msguniq-7.ok
 #: foo bar

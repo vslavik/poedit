@@ -304,7 +304,9 @@ bool PoeditApp::CheckForBetaUpdates() const
 }
 
 
+#ifndef __WXOSX__
 static wxArrayString gs_filesToOpen;
+#endif
 
 extern void InitXmlResource();
 
@@ -375,6 +377,14 @@ bool PoeditApp::OnInit()
     #define CFG_FILE wxEmptyString
 #endif
 
+#ifdef __WXOSX__
+    // Remove legacy Sparkle updates folder that used to accumulate broken download
+    // files for some users and eat up disk space:
+    auto oldsparkle = wxStandardPaths::Get().GetUserDataDir() + "/.Sparkle";
+    if (wxFileName::DirExists(oldsparkle))
+        wxFileName::Rmdir(oldsparkle, wxPATH_RMDIR_RECURSIVE);
+#endif
+
     wxConfigBase::Set(
         new wxConfig(wxEmptyString, wxEmptyString, CFG_FILE, wxEmptyString, 
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
@@ -425,6 +435,7 @@ bool PoeditApp::OnInit()
     AssociateFileTypeIfNeeded();
 #endif
 
+#ifndef __WXOSX__
     // NB: opening files or creating empty window is handled differently on
     //     Macs, using MacOpenFiles() and MacNewFile(), so don't create empty
     //     window if no files are given on command line; but still support
@@ -434,7 +445,6 @@ bool PoeditApp::OnInit()
         OpenFiles(gs_filesToOpen);
         gs_filesToOpen.clear();
     }
-#ifndef __WXOSX__
     else
     {
         OpenNewFile();
@@ -633,33 +643,34 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
     // user didn't already add language with this name himself):
     static struct
     {
+        char enableByDefault;
         const char *name;
         const char *exts;
     } s_gettextLangs[] = {
-        { "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
-        { "C#",         "*.cs" },
-        { "EmacsLisp",  "*.el" },
-        { "GSettings",  "*.gschema.xml" },
-        { "Glade",      "*.glade;*.glade2;*.ui" },
-        { "AppData",    "*.appdata.xml" },
-        { "Java",       "*.java" },
-        { "JavaScript", "*.js" },
-        { "Lisp",       "*.lisp" },
-        { "Lua",        "*.lua" },
-        { "ObjectiveC", "*.m" },
-        { "PHP",        "*.php;*.php3;*.php4;*.phtml" },
-        { "Perl",       "*.pl;*.PL;*.pm;*.perl" },
-        { "Python",     "*.py" },
-        { "RST",        "*.rst" },
-        { "Scheme",     "*.scm" },
-        { "Shell",      "*.sh;*.bash" },
-        { "Smalltalk",  "*.st" },
-        { "TCL",        "*.tcl" },
-        { "Vala",       "*.vala" },
-        { "YCP",        "*.ycp" },
-        { "awk",        "*.awk" },
-        { "librep",     "*.jl" },
-        { NULL, NULL }
+        { 1, "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
+        { 1, "C#",         "*.cs" },
+        { 1, "EmacsLisp",  "*.el" },
+        { 1, "GSettings",  "*.gschema.xml" },
+        { 1, "Glade",      "*.glade;*.glade2;*.ui" },
+        { 1, "AppData",    "*.appdata.xml" },
+        { 1, "Java",       "*.java" },
+        { 1, "JavaScript", "*.js" },
+        { 1, "Lisp",       "*.lisp" },
+        { 1, "Lua",        "*.lua" },
+        { 1, "ObjectiveC", "*.m" },
+        { 1, "PHP",        "*.php;*.php3;*.php4;*.phtml" },
+        { 1, "Perl",       "*.pl;*.PL;*.pm;*.perl" },
+        { 1, "Python",     "*.py" },
+        { 0, "RST",        "*.rst" },
+        { 1, "Scheme",     "*.scm" },
+        { 0, "Shell",      "*.sh;*.bash" },
+        { 1, "Smalltalk",  "*.st" },
+        { 1, "TCL",        "*.tcl" },
+        { 1, "Vala",       "*.vala" },
+        { 1, "YCP",        "*.ycp" },
+        { 1, "awk",        "*.awk" },
+        { 1, "librep",     "*.jl" },
+        { 0, NULL, NULL }
     };
 
     for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
@@ -677,6 +688,7 @@ void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
         // otherwise add new extractor:
         Extractor ex;
         ex.Name = s_gettextLangs[i].name;
+        ex.Enabled = (bool)s_gettextLangs[i].enableByDefault;
         ex.Extensions = s_gettextLangs[i].exts;
         ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --force-po -o %o %C %K %F";
         ex.KeywordItem = "-k%k";
@@ -824,8 +836,15 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         CallAfter([=]{ HandleCustomURI(poeditURI); });
     }
 
+#ifdef __WXOSX__
+    wxArrayString filesToOpen;
+    for (size_t i = 0; i < parser.GetParamCount(); i++)
+        filesToOpen.Add(parser.GetParam(i));
+    OSXStoreOpenFiles(filesToOpen);
+#else
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));
+#endif
 
     return true;
 }

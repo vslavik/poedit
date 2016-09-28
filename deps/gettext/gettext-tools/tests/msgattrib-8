@@ -55,8 +55,8 @@ msgstr ""
 EOF
 
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --set-fuzzy -o ma-test8.tmp ma-test8.po || exit 1
-LC_ALL=C tr -d '\r' < ma-test8.tmp > ma-test8.out || exit 1
+${MSGATTRIB} --set-fuzzy -o ma-test8.tmp ma-test8.po || Exit 1
+LC_ALL=C tr -d '\r' < ma-test8.tmp > ma-test8.out || Exit 1
 
 cat <<\EOF > ma-test8.ok
 # HEADER.

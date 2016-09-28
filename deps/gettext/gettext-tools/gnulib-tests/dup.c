@@ -1,6 +1,6 @@
 /* Duplicate an open file descriptor.
 
-   Copyright (C) 2011-2015 Free Software Foundation, Inc.
+   Copyright (C) 2011-2016 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -44,6 +44,31 @@ dup_nothrow (int fd)
   DONE_MSVC_INVAL;
 
   return result;
+}
+#elif defined __KLIBC__
+# include <fcntl.h>
+# include <sys/stat.h>
+
+# include <InnoTekLIBC/backend.h>
+
+static int
+dup_nothrow (int fd)
+{
+  int dupfd;
+  struct stat sbuf;
+
+  dupfd = dup (fd);
+  if (dupfd == -1 && errno == ENOTSUP \
+      && !fstat (fd, &sbuf) && S_ISDIR (sbuf.st_mode))
+    {
+      char path[_MAX_PATH];
+
+      /* Get a path from fd */
+      if (!__libc_Back_ioFHToPath (fd, path, sizeof (path)))
+        dupfd = open (path, O_RDONLY);
+    }
+
+  return dupfd;
 }
 #else
 # define dup_nothrow dup

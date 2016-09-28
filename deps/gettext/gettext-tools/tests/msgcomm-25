@@ -66,8 +66,8 @@ msgstr "photocopieur"
 EOF
 
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} --more-than=0 -o mcomm-test25.tmp mcomm-test25.in1 mcomm-test25.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test25.tmp > mcomm-test25.out || exit 1
+${MSGCOMM} --more-than=0 -o mcomm-test25.tmp mcomm-test25.in1 mcomm-test25.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test25.tmp > mcomm-test25.out || Exit 1
 
 cat <<\EOF > mcomm-test25.ok
 msgid ""

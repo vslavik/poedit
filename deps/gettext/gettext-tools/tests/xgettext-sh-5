@@ -15,8 +15,8 @@ echo "$(gettext "Simple decorated dstring: \"x\" \\\"y\\\" inside double-quotes"
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -d xg-sh-5.tmp xg-sh-5.sh || exit 1
-LC_ALL=C tr -d '\r' < xg-sh-5.tmp.po > xg-sh-5.po || exit 1
+${XGETTEXT} --omit-header --no-location -d xg-sh-5.tmp xg-sh-5.sh || Exit 1
+LC_ALL=C tr -d '\r' < xg-sh-5.tmp.po > xg-sh-5.po || Exit 1
 
 cat <<\EOF > xg-sh-5.ok
 msgid "Simple string"

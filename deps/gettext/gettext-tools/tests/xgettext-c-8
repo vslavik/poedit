@@ -14,8 +14,8 @@ void foo ()
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location -k_ -o xg-c-8.tmp xg-c-8.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-8.tmp > xg-c-8.po || exit 1
+${XGETTEXT} --omit-header --no-location -k_ -o xg-c-8.tmp xg-c-8.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-8.tmp > xg-c-8.po || Exit 1
 
 cat <<EOF > xg-c-8.ok
 #, c-format

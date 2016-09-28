@@ -37,7 +37,7 @@ msgstr[2] "%d der unnützen Nichtterminale"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-15.po1 || exit 1
+${MSGFMT} --check -o /dev/null mf-15.po1 || Exit 1
 
 cat <<\EOF > mf-15.po2
 # SOME DESCRIPTIVE TITLE.
@@ -67,7 +67,7 @@ EOF
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o /dev/null mf-15.po2 2>/dev/null
-test $? = 1 || { exit 1; }
+test $? = 1 || { Exit 1; }
 
 cat <<\EOF > mf-15.po3
 # SOME DESCRIPTIVE TITLE.
@@ -96,7 +96,7 @@ msgstr[2] "%d der unnützen Nichtterminale"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} --check -o /dev/null mf-15.po3 || exit 1
+${MSGFMT} --check -o /dev/null mf-15.po3 || Exit 1
 
 cat <<\EOF > mf-15.po4
 # SOME DESCRIPTIVE TITLE.
@@ -126,6 +126,6 @@ EOF
 
 : ${MSGFMT=msgfmt}
 ${MSGFMT} --check -o /dev/null mf-15.po4 2>/dev/null
-test $? = 1 || { exit 1; }
+test $? = 1 || { Exit 1; }
 
 exit $result

@@ -75,6 +75,7 @@ class FindFrame : public wxFrame
         bool HasText() const { return !ms_text.empty(); }
 
     private:
+        void UpdateButtons();
         void DoShowFor(int mode);
         void OnClose(wxCommandEvent &event);
         void OnModeChanged();

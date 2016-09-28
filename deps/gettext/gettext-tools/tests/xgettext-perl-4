@@ -56,8 +56,8 @@ EOPERL
 
 : ${XGETTEXT=xgettext}
 LC_MESSAGES=C LC_ALL= \
-${XGETTEXT} -a --omit-header --no-location -o xg-pl-4.tmp.pot xg-pl-4.pl || exit 1
-LC_ALL=C tr -d '\r' < xg-pl-4.tmp.pot > xg-pl-4.pot || exit 1
+${XGETTEXT} -a --omit-header --no-location -o xg-pl-4.tmp.pot xg-pl-4.pl || Exit 1
+LC_ALL=C tr -d '\r' < xg-pl-4.tmp.pot > xg-pl-4.pot || Exit 1
 
 cat <<\EOF > xg-pl-4.ok
 msgid "'Your command, please?', asked the waiter.\n"

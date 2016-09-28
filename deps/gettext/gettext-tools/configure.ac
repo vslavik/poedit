@@ -1,5 +1,5 @@
 dnl Configuration for the gettext-tools directory of GNU gettext
-dnl Copyright (C) 1995-2011, 2015 Free Software Foundation, Inc.
+dnl Copyright (C) 1995-2011, 2015-2016 Free Software Foundation, Inc.
 dnl
 dnl This program is free software: you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -100,10 +100,12 @@ LT_LANG([Windows Resource])
 dnl On mingw and Cygwin, we can activate special Makefile rules which add
 dnl version information to the shared libraries and executables.
 case "$host_os" in
-  mingw* | cygwin*) is_woe32=yes ;;
-  *) is_woe32=no ;;
+  mingw* | cygwin*) special_makefile_rules=woe32 ;;
+  os2*) special_makefile_rules=os2 ;;
+  *) special_makefile_rules=none ;;
 esac
-AM_CONDITIONAL([WOE32], [test $is_woe32 = yes])
+AM_CONDITIONAL([WOE32], [test $special_makefile_rules = woe32])
+AM_CONDITIONAL([OS2], [test $special_makefile_rules = os2])
 
 dnl On Cygwin 1.7.10-1 or later, error_* variables are defined in the
 dnl Cygwin DLL.  To avoid any conflict with gettext DLLs, always link
@@ -439,7 +441,7 @@ changequote([,])dnl
 fi
 AC_SUBST([ARCHIVE_FORMAT])
 
-ARCHIVE_VERSION=0.19.7
+ARCHIVE_VERSION=0.19.8
 AC_SUBST([ARCHIVE_VERSION])
 
 PACKAGE_SUFFIX="-$ARCHIVE_VERSION"

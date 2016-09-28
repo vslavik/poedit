@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -140,6 +140,7 @@ am__aclocal_m4_deps = $(top_srcdir)/gnulib-m4/00gnulib.m4 \
 	$(top_srcdir)/gnulib-m4/gettimeofday.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-comp.m4 \
+	$(top_srcdir)/gnulib-m4/hard-locale.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_h.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_open.m4 \
 	$(top_srcdir)/gnulib-m4/include_next.m4 \
@@ -247,15 +248,15 @@ am__DEPENDENCIES_1 =
 am__libgrt_a_SOURCES_DIST = allocator.c areadlink.c basename.h \
 	basename.c c-ctype.h c-ctype.c c-strcase.h c-strcasecmp.c \
 	c-strncasecmp.c careadlinkat.c closeout.h closeout.c \
-	fwriteerror.h fwriteerror.c gettext.h localcharset.h \
-	localcharset.c localename.c glthread/lock.h glthread/lock.c \
-	malloca.c mbchar.c mbiter.h mbiter.c mbslen.c mbsstr.c \
-	mbuiter.h mbuiter.c progname.h progname.c propername.h \
-	propername.c striconv.h striconv.c strnlen1.h strnlen1.c \
-	glthread/threadlib.c trim.c unistd.c unistr/u8-mbtoucr.c \
-	unistr/u8-uctomb.c unistr/u8-uctomb-aux.c uniwidth/width.c \
-	wctype-h.c xalloc.h xmalloc.c xstrdup.c xreadlink.c \
-	xstriconv.h xstriconv.c
+	fwriteerror.h fwriteerror.c gettext.h hard-locale.c \
+	localcharset.h localcharset.c localename.c glthread/lock.h \
+	glthread/lock.c malloca.c mbchar.c mbiter.h mbiter.c mbslen.c \
+	mbsstr.c mbuiter.h mbuiter.c progname.h progname.c \
+	propername.h propername.c striconv.h striconv.c strnlen1.h \
+	strnlen1.c glthread/threadlib.c trim.c unistd.c \
+	unistr/u8-mbtoucr.c unistr/u8-uctomb.c unistr/u8-uctomb-aux.c \
+	uniwidth/width.c wctype-h.c xalloc.h xmalloc.c xstrdup.c \
+	xreadlink.c xstriconv.h xstriconv.c
 am__dirstamp = $(am__leading_dot)dirstamp
 @LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUCR_TRUE@am__objects_1 = unistr/u8-mbtoucr.$(OBJEXT)
 @LIBUNISTRING_COMPILE_UNISTR_U8_UCTOMB_TRUE@am__objects_2 = unistr/u8-uctomb.$(OBJEXT) \
@@ -264,7 +265,7 @@ am__dirstamp = $(am__leading_dot)dirstamp
 am_libgrt_a_OBJECTS = allocator.$(OBJEXT) areadlink.$(OBJEXT) \
 	basename.$(OBJEXT) c-ctype.$(OBJEXT) c-strcasecmp.$(OBJEXT) \
 	c-strncasecmp.$(OBJEXT) careadlinkat.$(OBJEXT) \
-	closeout.$(OBJEXT) fwriteerror.$(OBJEXT) \
+	closeout.$(OBJEXT) fwriteerror.$(OBJEXT) hard-locale.$(OBJEXT) \
 	localcharset.$(OBJEXT) localename.$(OBJEXT) \
 	glthread/lock.$(OBJEXT) malloca.$(OBJEXT) mbchar.$(OBJEXT) \
 	mbiter.$(OBJEXT) mbslen.$(OBJEXT) mbsstr.$(OBJEXT) \
@@ -1286,7 +1287,7 @@ EXTRA_DIST = alloca.in.h allocator.h areadlink.h atexit.c \
 	canonicalize-lgpl.c careadlinkat.h \
 	$(top_srcdir)/../build-aux/csharpcomp.sh.in dosname.h \
 	errno.in.h error.c error.h getopt.c getopt.in.h getopt1.c \
-	getopt_int.h gettimeofday.c \
+	getopt_int.h gettimeofday.c hard-locale.h \
 	$(top_srcdir)/../build-aux/config.rpath iconv.in.h \
 	iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h \
 	iconv_open-osf.h iconv_open-solaris.h iconv.c iconv_close.c \
@@ -1376,11 +1377,11 @@ AM_CFLAGS =
 libgrt_a_SOURCES = allocator.c areadlink.c basename.h basename.c \
 	c-ctype.h c-ctype.c c-strcase.h c-strcasecmp.c c-strncasecmp.c \
 	careadlinkat.c closeout.h closeout.c fwriteerror.h \
-	fwriteerror.c gettext.h localcharset.h localcharset.c \
-	localename.c glthread/lock.h glthread/lock.c malloca.c \
-	mbchar.c mbiter.h mbiter.c mbslen.c mbsstr.c mbuiter.h \
-	mbuiter.c progname.h progname.c propername.h propername.c \
-	striconv.h striconv.c strnlen1.h strnlen1.c \
+	fwriteerror.c gettext.h hard-locale.c localcharset.h \
+	localcharset.c localename.c glthread/lock.h glthread/lock.c \
+	malloca.c mbchar.c mbiter.h mbiter.c mbslen.c mbsstr.c \
+	mbuiter.h mbuiter.c progname.h progname.c propername.h \
+	propername.c striconv.h striconv.c strnlen1.h strnlen1.c \
 	glthread/threadlib.c trim.c unistd.c $(am__append_2) \
 	$(am__append_3) $(am__append_4) wctype-h.c xalloc.h xmalloc.c \
 	xstrdup.c xreadlink.c xstriconv.h xstriconv.c

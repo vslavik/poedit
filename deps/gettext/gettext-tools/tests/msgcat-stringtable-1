@@ -30,8 +30,8 @@ LC_MESSAGES=C LC_ALL= \
 ${MSGCAT} --stringtable-input -o mcat-s-1.tmp mcat-s-1.in >mcat-s-1.err 2>&1
 result=$?
 cat mcat-s-1.err | grep -v ': internationalized messages'
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < mcat-s-1.tmp > mcat-s-1.out || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < mcat-s-1.tmp > mcat-s-1.out || Exit 1
 
 cat << \EOF > mcat-s-1.ok
 # This is an example of a string table file. Everything inside a comment

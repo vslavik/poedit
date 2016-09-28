@@ -10,7 +10,7 @@ int main (string[] args) {
   var r1 = /a
 EOF
 
-(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location -o - xg-vala-1.err.vala 2>&1; exit) | grep 'regular expression literal terminated too early' || exit 1
+(LANGUAGE= LC_ALL=C ${XGETTEXT} --no-location -o - xg-vala-1.err.vala 2>&1; exit) | grep 'regular expression literal terminated too early' || Exit 1
 
 cat <<\EOF > xg-vala-1.vala
 int main (string[] args) {
@@ -92,7 +92,7 @@ class Foo : Object {
 EOF
 
 ${XGETTEXT} --add-comments --no-location -o xg-vala-1.tmp xg-vala-1.vala 2>xg-vala-1.err
-test $? = 0 || { cat xg-vala-1.err; exit 1; }
+test $? = 0 || { cat xg-vala-1.err; Exit 1; }
 # Don't simplify this to "grep ... < xg-vala-1.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-vala-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-vala-1.pot
@@ -148,7 +148,7 @@ test $result = 0 || exit $result
 
 # Test --extract-all option.
 ${XGETTEXT} --extract-all --add-comments --no-location -o xg-vala-1.tmp xg-vala-1.vala 2>xg-vala-1.err
-test $? = 0 || { cat xg-vala-1.err; exit 1; }
+test $? = 0 || { cat xg-vala-1.err; Exit 1; }
 # Don't simplify this to "grep ... < xg-vala-1.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-vala-1.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-vala-1.pot

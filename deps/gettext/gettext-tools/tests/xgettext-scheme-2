@@ -8,7 +8,7 @@ cat <<EOF > xg-sc-2.scm
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -k_ --omit-header --no-location --force-po -d xg-sc-2 xg-sc-2.scm || exit 1
+${XGETTEXT} -k_ --omit-header --no-location --force-po -d xg-sc-2 xg-sc-2.scm || Exit 1
 
 cat <<EOF > xg-sc-2.ok
 EOF

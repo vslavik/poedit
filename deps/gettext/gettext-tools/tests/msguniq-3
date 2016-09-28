@@ -4,8 +4,8 @@
 # Test --repeated option.
 
 : ${MSGUNIQ-msguniq}
-${MSGUNIQ} -w 1000 -d -o msguniq-3.tmp "$abs_srcdir"/msguniq-a.in || exit 1
-LC_ALL=C tr -d '\r' < msguniq-3.tmp > msguniq-3.out || exit 1
+${MSGUNIQ} -w 1000 -d -o msguniq-3.tmp "$abs_srcdir"/msguniq-a.in || Exit 1
+LC_ALL=C tr -d '\r' < msguniq-3.tmp > msguniq-3.out || Exit 1
 
 cat <<\EOF > msguniq-3.ok
 # Template messages for CLISP

@@ -49,9 +49,9 @@ msgstr ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q --update mm-u-2.po mm-u-2.pot || exit 1
-mv mm-u-2.po mm-u-2.tmp || { exit 1; }
-LC_ALL=C tr -d '\r' < mm-u-2.tmp > mm-u-2.po || exit 1
+${MSGMERGE} -q --update mm-u-2.po mm-u-2.pot || Exit 1
+mv mm-u-2.po mm-u-2.tmp || { Exit 1; }
+LC_ALL=C tr -d '\r' < mm-u-2.tmp > mm-u-2.po || Exit 1
 
 cat <<\EOF > mm-u-2.ok
 # SOME DESCRIPTIVE TITLE.

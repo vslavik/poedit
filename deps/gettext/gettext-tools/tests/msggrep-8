@@ -37,8 +37,8 @@ LC_MESSAGES=C LC_ALL= \
 ${MSGGREP} -X -e c-form -o mg-test8.tmp mg-test8.po >mg-test8.err 2>&1
 result=$?
 cat mg-test8.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
-LC_ALL=C tr -d '\r' < mg-test8.tmp > mg-test8.out || exit 1
+test $result = 0 || { Exit 1; }
+LC_ALL=C tr -d '\r' < mg-test8.tmp > mg-test8.out || Exit 1
 
 cat <<\EOF > mg-test8.ok
 msgid ""

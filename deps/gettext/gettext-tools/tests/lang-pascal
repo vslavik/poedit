@@ -30,12 +30,12 @@ EOF
 (ppcx64 pascalprog.pp) >/dev/null 2>&1 ||
 {
   echo "Skipping test: Pascal compiler ppc386 or ppcx64 not found"
-  exit 77
+  Exit 77
 }
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -o pascalprog.tmp --omit-header --add-location pascalprog.rst || exit 1
-LC_ALL=C tr -d '\r' < pascalprog.tmp > pascalprog.pot || exit 1
+${XGETTEXT} -o pascalprog.tmp --omit-header --add-location pascalprog.rst || Exit 1
+LC_ALL=C tr -d '\r' < pascalprog.tmp > pascalprog.pot || Exit 1
 
 cat <<EOF > pascalprog.ok
 #: pascalprog.question
@@ -49,7 +49,7 @@ msgstr ""
 EOF
 
 : ${DIFF=diff}
-${DIFF} pascalprog.ok pascalprog.pot || exit 1
+${DIFF} pascalprog.ok pascalprog.pot || Exit 1
 
 cat <<\EOF > fr.po
 msgid ""
@@ -67,11 +67,11 @@ msgstr "%1:s remplace %0:s."
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o fr.po.tmp fr.po pascalprog.pot || exit 1
-LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || exit 1
+${MSGMERGE} -q -o fr.po.tmp fr.po pascalprog.pot || Exit 1
+LC_ALL=C tr -d '\r' < fr.po.tmp > fr.po.new || Exit 1
 
 : ${DIFF=diff}
-${DIFF} fr.po fr.po.new || exit 1
+${DIFF} fr.po fr.po.new || Exit 1
 
 test -d fr || mkdir fr
 test -d fr/LC_MESSAGES || mkdir fr/LC_MESSAGES
@@ -93,16 +93,16 @@ EOF
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR != none; then
   prepare_locale_ fr $LOCALE_FR
-  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./pascalprog > pascalprog.out || exit 1
+  LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR ./pascalprog > pascalprog.out || Exit 1
   : ${DIFF=diff}
-  ${DIFF} pascalprog.ok pascalprog.out || exit 1
+  ${DIFF} pascalprog.ok pascalprog.out || Exit 1
 fi
 if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
   if test $LOCALE_FR_UTF8 != none; then
     prepare_locale_ fr $LOCALE_FR_UTF8
-    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./pascalprog > pascalprog.out || exit 1
+    LANGUAGE= LC_ALL= LC_MESSAGES= LC_CTYPE= LANG=$LOCALE_FR_UTF8 ./pascalprog > pascalprog.out || Exit 1
     : ${DIFF=diff}
-    ${DIFF} pascalprog.oku pascalprog.out || exit 1
+    ${DIFF} pascalprog.oku pascalprog.out || Exit 1
   fi
   if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
     if test -f /usr/bin/localedef; then
@@ -110,7 +110,7 @@ if test -z "$UTF8_LOCALE_UNSUPPORTED"; then
     else
       echo "Skipping test: no french locale is supported"
     fi
-    exit 77
+    Exit 77
   fi
 else
   if test $LOCALE_FR = none; then
@@ -119,8 +119,8 @@ else
     else
       echo "Skipping test: no traditional french locale is supported"
     fi
-    exit 77
+    Exit 77
   fi
 fi
 
-exit 0
+Exit 0

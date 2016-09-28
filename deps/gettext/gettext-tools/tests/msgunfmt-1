@@ -30,11 +30,11 @@ msgstr "second"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} -o mu-test1.mo mu-test1.in || exit 1
+${MSGFMT} -o mu-test1.mo mu-test1.in || Exit 1
 
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o mu-test1.tmp mu-test1.mo || exit 1
-LC_ALL=C tr -d '\r' < mu-test1.tmp > mu-test1.out || exit 1
+${MSGUNFMT} -o mu-test1.tmp mu-test1.mo || Exit 1
+LC_ALL=C tr -d '\r' < mu-test1.tmp > mu-test1.out || Exit 1
 
 : ${DIFF=diff}
 ${DIFF} mu-test1.in mu-test1.out

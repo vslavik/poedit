@@ -16,7 +16,7 @@
   else
     echo "Skipping test: no traditional french locale is supported"
   fi
-  exit 77
+  Exit 77
 }
 
 test -d gt-4 || mkdir gt-4
@@ -26,6 +26,6 @@ test -d gt-4/fr/LC_MESSAGES || mkdir gt-4/fr/LC_MESSAGES
 : ${MSGFMT=msgfmt}
 ${MSGFMT} -o gt-4/fr/LC_MESSAGES/codeset.mo "$abs_srcdir"/gettext-4.po
 
-../gettext-4-prg $LOCALE_FR || exit 1
+../gettext-4-prg $LOCALE_FR || Exit 1
 
-exit 0
+Exit 0

@@ -20,7 +20,7 @@ fi
 sedoutput=`echo $ac_n "abc$ac_c" | sed -e s/x/x/`
 test -n "$sedoutput" || {
   echo "Skipping test: sed program is broken"
-  exit 77
+  Exit 77
 }
 
 # Some sed programs (IRIX, OSF/1 etc.) add a newline to the last line if it
@@ -29,7 +29,7 @@ sedoutputcount=`echo $ac_n "abc$ac_c" | sed -e s/x/x/ | wc -c`
 sedoutputcount=`echo "$sedoutputcount" | sed -e 's/[ 	]//g'`
 test "$sedoutputcount" = 3 || {
   echo "Skipping test: sed program inserts extra newline"
-  exit 77
+  Exit 77
 }
 
 cat <<\EOF > mfi-test2.po
@@ -93,7 +93,7 @@ LC_ALL=C \
 ${MSGFILTER} -i mfi-test2.po -o mfi-test2.out sed -e "$sedexpr1" -e "$sedexpr2" >mfi-test2.err 2>&1
 result=$?
 cat mfi-test2.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 cat <<\EOF > mfi-test2.ok
 # HEADER.

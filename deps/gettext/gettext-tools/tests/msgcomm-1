@@ -16,8 +16,8 @@ msgstr "2x"
 EOF
 
 : ${MSGCOMM=msgcomm}
-${MSGCOMM} --more-than=0 -o mcomm-test1.tmp mcomm-test1.in1 mcomm-test1.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcomm-test1.tmp > mcomm-test1.out || exit 1
+${MSGCOMM} --more-than=0 -o mcomm-test1.tmp mcomm-test1.in1 mcomm-test1.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcomm-test1.tmp > mcomm-test1.out || Exit 1
 
 cat << EOF > mcomm-test1.ok
 #: first.c:123

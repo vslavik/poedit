@@ -30,13 +30,13 @@ msgstr "A bientôt"
 EOF
 
 : ${MSGFMT=msgfmt}
-${MSGFMT} foo.po || exit 1
+${MSGFMT} foo.po || Exit 1
 
 : ${MSGUNFMT=msgunfmt}
-${MSGUNFMT} -o foo-de.tmp foo-de.mo || exit 1
-LC_ALL=C tr -d '\r' < foo-de.tmp > foo-de.out || exit 1
-${MSGUNFMT} -o foo-fr.tmp foo-fr.mo || exit 1
-LC_ALL=C tr -d '\r' < foo-fr.tmp > foo-fr.out || exit 1
+${MSGUNFMT} -o foo-de.tmp foo-de.mo || Exit 1
+LC_ALL=C tr -d '\r' < foo-de.tmp > foo-de.out || Exit 1
+${MSGUNFMT} -o foo-fr.tmp foo-fr.mo || Exit 1
+LC_ALL=C tr -d '\r' < foo-fr.tmp > foo-fr.out || Exit 1
 
 cat <<\EOF > foo-de.ok
 msgid ""

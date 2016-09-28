@@ -21,7 +21,7 @@ EOF
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --output - --add-location xg-cs-8.cs -a 2>/dev/null | \
   sed '/\"POT-Creation-Date:.*/d' | LC_ALL=C tr -d '\r' > xg-cs-8.po || \
-  exit 1
+  Exit 1
 
 cat <<\EOF > xg-cs-8.ok
 # SOME DESCRIPTIVE TITLE.

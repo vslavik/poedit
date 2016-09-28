@@ -19,8 +19,8 @@ rm -f mcat-p-1.tmp
 
 : ${MSGCAT=msgcat}
 ${MSGCAT} --use-first --more-than=0 --properties-input --properties-output \
-    -o mcat-p-1.tmp mcat-p-1.in1 mcat-p-1.in2 || exit 1
-LC_ALL=C tr -d '\r' < mcat-p-1.tmp > mcat-p-1.out || exit 1
+    -o mcat-p-1.tmp mcat-p-1.in1 mcat-p-1.in2 || Exit 1
+LC_ALL=C tr -d '\r' < mcat-p-1.tmp > mcat-p-1.out || Exit 1
 
 cat << \EOF > mcat-p-1.ok
 #. Help text (HTML-like) START

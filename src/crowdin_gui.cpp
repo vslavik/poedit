@@ -190,7 +190,8 @@ void CrowdinLoginPanel::UpdateUserInfo()
             m_userName = u.name;
             m_userLogin = u.login;
             ChangeState(State::SignedIn);
-    });
+        })
+        .catch_all([](std::exception_ptr){});
 }
 
 void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)

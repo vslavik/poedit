@@ -32,7 +32,7 @@ _("extract me")
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} -a -j -o xg-test8.po xg-test8.in.c || exit 1
+${XGETTEXT} -a -j -o xg-test8.po xg-test8.in.c || Exit 1
 
 sed -e '/POT-Creation-Date/d' < xg-test8.po | LC_ALL=C tr -d '\r' > xg-test8.pot
 

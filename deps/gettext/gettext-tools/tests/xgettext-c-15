@@ -13,8 +13,8 @@ EOF
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --omit-header --no-location \
   --keyword=Q_:1g --keyword=Q_:1g,2g \
-  -d xg-c-15.tmp xg-c-15.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-15.tmp.po > xg-c-15.po || exit 1
+  -d xg-c-15.tmp xg-c-15.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-15.tmp.po > xg-c-15.po || Exit 1
 
 cat <<EOF > xg-c-15.ok
 msgctxt "Printer"

@@ -59,6 +59,14 @@ wxString strip_pointless_control_chars(const wxString& text, TextDirection dir)
         return text;
 
     const wchar_t first = *text.begin();
+    const wchar_t last = *text.rbegin();
+
+    // POP DIRECTIONAL FORMATTING at the end is pointless (can happen on OS X
+    // when editing RTL text under LTR locale:
+    if (last == PDF)
+    {
+        return strip_pointless_control_chars(text.substr(0, text.size() - 1), dir);
+    }
 
     if (dir == TextDirection::LTR)
     {
@@ -117,10 +125,13 @@ wxString strip_control_chars(const wxString& text)
 
 wxString mark_direction(const wxString& text, TextDirection dir)
 {
-    auto mark = (dir == TextDirection::LTR) ? LRE : RLE;
+    wchar_t mark = (dir == TextDirection::LTR) ? LRE : RLE;
     auto out = mark + text;
 #ifdef BIDI_NEEDS_DIRECTION_ON_EACH_LINE
-    out.Replace("\n", "\n" + mark);
+    wchar_t replacement[3] = {0};
+    replacement[0] = L'\n';
+    replacement[1] = mark;
+    out.Replace("\n", replacement);
 #endif
     return out;
 }

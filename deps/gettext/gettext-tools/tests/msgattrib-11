@@ -54,8 +54,8 @@ msgstr ""
 EOF
 
 : ${MSGATTRIB=msgattrib}
-${MSGATTRIB} --clear-obsolete -o ma-test11.tmp ma-test11.po || exit 1
-LC_ALL=C tr -d '\r' < ma-test11.tmp > ma-test11.out || exit 1
+${MSGATTRIB} --clear-obsolete -o ma-test11.tmp ma-test11.po || Exit 1
+LC_ALL=C tr -d '\r' < ma-test11.tmp > ma-test11.out || Exit 1
 
 cat <<\EOF > ma-test11.ok
 # HEADER.

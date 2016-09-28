@@ -1,7 +1,7 @@
 #!/bin/sh
 # Minimal Object-Oriented style PreProcessor.
 
-# Copyright (C) 2006-2008, 2015 Free Software Foundation, Inc.
+# Copyright (C) 2006-2008, 2015-2016 Free Software Foundation, Inc.
 # Written by Bruno Haible <bruno@clisp.org>, 2006.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -306,12 +306,12 @@ func_check_header_syntax ()
   }
   class_end_lineno=`expr $methods_lineno + $class_end_lineno`
   sed_extract_methods="$class_end_lineno"',$d;1,'"$methods_lineno"'d'
-  methods=`sed -e "$sed_remove_comments" < "$file" | sed -e "$sed_extract_methods" | tr '\n' ' ' | tr ';' '\n' | sed -e 's,[ 	]*$,,'`
+  methods=`sed -e "$sed_remove_comments" < "$file" | sed -e "$sed_extract_methods" | tr '\015\n' '  ' | tr ';' '\n' | sed -e 's,[ 	]*$,,'`
   sed_remove_valid_arg1_lines='/([ 	]*'"$classname"'_t[ 	]*[A-Za-z_0-9]*[ 	]*[,)]/d'
   sed_extract_method_name='s,^.*[^A-Za-z_0-9]\([A-Za-z_0-9][A-Za-z_0-9]*\)[ 	]*(.*$,\1,'
   methods_with_bad_arg1=`echo "$methods" | sed -e "$sed_remove_empty_lines" -e "$sed_remove_valid_arg1_lines" -e "$sed_extract_method_name"`
   if test -n "$methods_with_bad_arg1"; then
-    methods_with_bad_arg1=`{ echo "$methods_with_bad_arg1" | sed -e 's/$/, /' | tr -d '\n'; echo; } | sed -e 's/\(, \)*$//'`
+    methods_with_bad_arg1=`{ echo "$methods_with_bad_arg1" | sed -e 's/$/, /' | tr -d '\015\n'; echo; } | sed -e 's/\(, \)*$//'`
     func_fatal_error "$file: some methods don't have a first argument of type ${classname}_t: $methods_with_bad_arg1"
   fi
 }

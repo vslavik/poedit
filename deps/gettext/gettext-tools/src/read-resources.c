@@ -1,5 +1,5 @@
 /* Reading C# .resources files.
-   Copyright (C) 2003, 2006-2008, 2011, 2015 Free Software Foundation,
+   Copyright (C) 2003, 2006-2008, 2011, 2015-2016 Free Software Foundation,
    Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 

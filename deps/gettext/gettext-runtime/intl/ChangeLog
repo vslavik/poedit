@@ -1,3 +1,39 @@
+2016-06-11  Daiki Ueno  <ueno@gnu.org>
+
+	build: Fix unintentional soname bump
+	* gettext-runtime/intl/Makefile.in: Revert LTV_CURRENT and increment
+	LTV_REVISION.
+	* gettext-tools/libgettextpo/Makefile.am: Likewise.
+
+2016-06-09  Daiki Ueno  <ueno@gnu.org>
+
+	Prepare for 0.19.8
+
+2016-05-25  Daiki Ueno  <ueno@gnu.org>
+
+	intl: Pacify pre-C99 compilers
+	* gettext-runtime/intl/plural-exp.h (HAVE_STRUCT_INITIALIZER): New
+	macro, based on the check previously in plural-exp.c.  Also add check
+	for __SUNPRO_C for Solaris Studio C compiler.
+	(GERMANIC_PLURAL): Define as 'struct expression' not 'const struct
+	expression' if struct/union initializers are not supported by the
+	compiler.
+	* gettext-runtime/intl/plural-exp.c: Use HAVE_STRUCT_INITIALIZER.
+	Reported by Dagobert Michelsen and investigated by pan7 in:
+	https://savannah.gnu.org/support/?108743
+
+2016-01-20  KO Myung-Hun  <komh78@gmail.com>
+
+	intl: Support UNIXROOT in BINDTEXTDOMAIN () on EMX
+	$UNIXROOT is a drive on which a root of FHS is.
+
+	* gettext-runtime/intl/bindtextdom.c (BINDTEXTDOMAIN): Prepend
+	$UNIXROOT to dirname if it is started '/' or it is an empty string.
+
+2016-01-02  Daiki Ueno  <ueno@gnu.org>
+
+	maint: Update copyright year
+
 2015-12-28  Daiki Ueno  <ueno@gnu.org>
 
 	Prepare for 0.19.7

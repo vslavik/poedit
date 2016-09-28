@@ -14,7 +14,7 @@
 
 @SET_MAKE@
 
-# Copyright (C) 2002-2015 Free Software Foundation, Inc.
+# Copyright (C) 2002-2016 Free Software Foundation, Inc.
 #
 # This file is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -115,25 +115,28 @@ host_triplet = @host@
 # Tell the mingw or Cygwin linker which symbols to export.
 @WOE32DLL_TRUE@am__append_1 = ../woe32dll/gettextpo-exports.c
 @WOE32DLL_TRUE@am__append_2 = -Wl,--export-all-symbols
-@WOE32_TRUE@am__append_3 = libgettextpo.res.lo
-@GL_COND_LIBTOOL_TRUE@am__append_4 = $(LTLIBICONV) $(LTLIBICONV)
-@LIBUNISTRING_COMPILE_UNICONV_U8_CONV_FROM_ENC_TRUE@am__append_5 = uniconv/u8-conv-from-enc.c
-@LIBUNISTRING_COMPILE_UNICTYPE_CTYPE_ALPHA_TRUE@am__append_6 = unictype/ctype_alpha.c
-@LIBUNISTRING_COMPILE_UNICTYPE_CTYPE_SPACE_TRUE@am__append_7 = unictype/ctype_space.c
-@LIBUNISTRING_COMPILE_UNILBRK_U8_POSSIBLE_LINEBREAKS_TRUE@am__append_8 = unilbrk/u8-possible-linebreaks.c
-@LIBUNISTRING_COMPILE_UNILBRK_U8_WIDTH_LINEBREAKS_TRUE@am__append_9 = unilbrk/u8-width-linebreaks.c
-@LIBUNISTRING_COMPILE_UNILBRK_ULC_WIDTH_LINEBREAKS_TRUE@am__append_10 = unilbrk/ulc-width-linebreaks.c
-@LIBUNISTRING_COMPILE_UNISTR_U16_MBTOUC_TRUE@am__append_11 = unistr/u16-mbtouc.c unistr/u16-mbtouc-aux.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_CHECK_TRUE@am__append_12 = unistr/u8-check.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_MBLEN_TRUE@am__append_13 = unistr/u8-mblen.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUC_TRUE@am__append_14 = unistr/u8-mbtouc.c unistr/u8-mbtouc-aux.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUC_UNSAFE_TRUE@am__append_15 = unistr/u8-mbtouc-unsafe.c unistr/u8-mbtouc-unsafe-aux.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUCR_TRUE@am__append_16 = unistr/u8-mbtoucr.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_NEXT_TRUE@am__append_17 = unistr/u8-next.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_PREV_TRUE@am__append_18 = unistr/u8-prev.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_STRMBTOUC_TRUE@am__append_19 = unistr/u8-strmbtouc.c
-@LIBUNISTRING_COMPILE_UNISTR_U8_UCTOMB_TRUE@am__append_20 = unistr/u8-uctomb.c unistr/u8-uctomb-aux.c
-@LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH_TRUE@am__append_21 = uniwidth/width.c
+
+# OS/2 does not support a DLL name longer than 8 characters.
+@OS2_TRUE@am__append_3 = -os2dllname gtpo
+@WOE32_TRUE@am__append_4 = libgettextpo.res.lo
+@GL_COND_LIBTOOL_TRUE@am__append_5 = $(LTLIBICONV) $(LTLIBICONV)
+@LIBUNISTRING_COMPILE_UNICONV_U8_CONV_FROM_ENC_TRUE@am__append_6 = uniconv/u8-conv-from-enc.c
+@LIBUNISTRING_COMPILE_UNICTYPE_CTYPE_ALPHA_TRUE@am__append_7 = unictype/ctype_alpha.c
+@LIBUNISTRING_COMPILE_UNICTYPE_CTYPE_SPACE_TRUE@am__append_8 = unictype/ctype_space.c
+@LIBUNISTRING_COMPILE_UNILBRK_U8_POSSIBLE_LINEBREAKS_TRUE@am__append_9 = unilbrk/u8-possible-linebreaks.c
+@LIBUNISTRING_COMPILE_UNILBRK_U8_WIDTH_LINEBREAKS_TRUE@am__append_10 = unilbrk/u8-width-linebreaks.c
+@LIBUNISTRING_COMPILE_UNILBRK_ULC_WIDTH_LINEBREAKS_TRUE@am__append_11 = unilbrk/ulc-width-linebreaks.c
+@LIBUNISTRING_COMPILE_UNISTR_U16_MBTOUC_TRUE@am__append_12 = unistr/u16-mbtouc.c unistr/u16-mbtouc-aux.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_CHECK_TRUE@am__append_13 = unistr/u8-check.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_MBLEN_TRUE@am__append_14 = unistr/u8-mblen.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUC_TRUE@am__append_15 = unistr/u8-mbtouc.c unistr/u8-mbtouc-aux.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUC_UNSAFE_TRUE@am__append_16 = unistr/u8-mbtouc-unsafe.c unistr/u8-mbtouc-unsafe-aux.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_MBTOUCR_TRUE@am__append_17 = unistr/u8-mbtoucr.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_NEXT_TRUE@am__append_18 = unistr/u8-next.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_PREV_TRUE@am__append_19 = unistr/u8-prev.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_STRMBTOUC_TRUE@am__append_20 = unistr/u8-strmbtouc.c
+@LIBUNISTRING_COMPILE_UNISTR_U8_UCTOMB_TRUE@am__append_21 = unistr/u8-uctomb.c unistr/u8-uctomb-aux.c
+@LIBUNISTRING_COMPILE_UNIWIDTH_WIDTH_TRUE@am__append_22 = uniwidth/width.c
 subdir = libgettextpo
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps =  \
@@ -166,6 +169,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/ctype.m4 \
 	$(top_srcdir)/gnulib-m4/curses.m4 \
 	$(top_srcdir)/gnulib-m4/dirent_h.m4 \
+	$(top_srcdir)/gnulib-m4/dirfd.m4 \
 	$(top_srcdir)/gnulib-m4/double-slash-root.m4 \
 	$(top_srcdir)/gnulib-m4/dup.m4 $(top_srcdir)/gnulib-m4/dup2.m4 \
 	$(top_srcdir)/gnulib-m4/eaccess.m4 \
@@ -202,6 +206,7 @@ am__aclocal_m4_deps =  \
 	$(top_srcdir)/gnulib-m4/gettimeofday.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-common.m4 \
 	$(top_srcdir)/gnulib-m4/gnulib-comp.m4 \
+	$(top_srcdir)/gnulib-m4/hard-locale.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_h.m4 \
 	$(top_srcdir)/gnulib-m4/iconv_open.m4 \
 	$(top_srcdir)/gnulib-m4/include_next.m4 \
@@ -494,7 +499,7 @@ am__libgnu_la_SOURCES_DIST = basename.h basename.c c-ctype.h c-ctype.c \
 	c-strstr.c concat-filename.c diffseq.h error-progname.h \
 	error-progname.c exitfail.c fd-hook.c file-ostream.c fstrcmp.h \
 	fstrcmp.c fwriteerror.h fwriteerror.c gcd.h gcd.c gettext.h \
-	hash.h hash.c gl_linked_list.h gl_linked_list.c \
+	hard-locale.c hash.h hash.c gl_linked_list.h gl_linked_list.c \
 	gl_anylinked_list1.h gl_anylinked_list2.h gl_list.h gl_list.c \
 	localcharset.h localcharset.c glthread/lock.h glthread/lock.c \
 	malloca.c markup.h markup.c mbswidth.h mbswidth.c minmax.h \
@@ -544,10 +549,10 @@ am__libgnu_la_SOURCES_DIST = basename.h basename.c c-ctype.h c-ctype.c \
 am_libgnu_la_OBJECTS = basename.lo c-ctype.lo c-strcasecmp.lo \
 	c-strncasecmp.lo c-strstr.lo concat-filename.lo \
 	error-progname.lo exitfail.lo fd-hook.lo file-ostream.lo \
-	fstrcmp.lo fwriteerror.lo gcd.lo hash.lo gl_linked_list.lo \
-	gl_list.lo localcharset.lo glthread/lock.lo malloca.lo \
-	markup.lo mbswidth.lo ostream.lo progname.lo striconv.lo \
-	striconveh.lo striconveha.lo glthread/threadlib.lo \
+	fstrcmp.lo fwriteerror.lo gcd.lo hard-locale.lo hash.lo \
+	gl_linked_list.lo gl_list.lo localcharset.lo glthread/lock.lo \
+	malloca.lo markup.lo mbswidth.lo ostream.lo progname.lo \
+	striconv.lo striconveh.lo striconveha.lo glthread/threadlib.lo \
 	glthread/tls.lo $(am__objects_3) $(am__objects_4) \
 	$(am__objects_5) unilbrk/lbrktables.lo $(am__objects_6) \
 	$(am__objects_7) unilbrk/ulc-common.lo $(am__objects_8) \
@@ -1991,7 +1996,7 @@ EXTRA_DIST = libgettextpo.rc gettext-po.in.h gnulib-m4/gnulib-cache.m4 \
 	fd-hook.h file-ostream.h file-ostream.c file_ostream.priv.h \
 	file_ostream.vt.h file-ostream.oo.c file-ostream.oo.h \
 	filename.h float.c float.in.h itold.c fopen.c fstat.c \
-	getdelim.c getline.c gettimeofday.c \
+	getdelim.c getline.c gettimeofday.c hard-locale.h \
 	$(top_srcdir)/../build-aux/config.rpath iconv.in.h \
 	iconv_open-aix.h iconv_open-hpux.h iconv_open-irix.h \
 	iconv_open-osf.h iconv_open-solaris.h iconv.c iconv_close.c \
@@ -2055,7 +2060,7 @@ BUILT_SOURCES = gettext-po.h $(ALLOCA_H) configmake.h $(ERRNO_H) \
 	$(LIBUNISTRING_UNICTYPE_H) $(LIBUNISTRING_UNILBRK_H) unistd.h \
 	$(LIBUNISTRING_UNISTR_H) $(LIBUNISTRING_UNITYPES_H) \
 	$(LIBUNISTRING_UNIWIDTH_H) wchar.h wctype.h
-MOSTLYCLEANFILES = core *.stackdump $(am__append_3) config.h \
+MOSTLYCLEANFILES = core *.stackdump $(am__append_4) config.h \
 	config.h-t core *.stackdump alloca.h alloca.h-t errno.h \
 	errno.h-t fcntl.h fcntl.h-t float.h float.h-t iconv.h \
 	iconv.h-t iconv_open-aix.h-t iconv_open-hpux.h-t \
@@ -2148,7 +2153,7 @@ libgettextpo_la_AUXSOURCES = \
 # Libtool's library version information for libgettextpo.
 # See the libtool documentation, section "Library interface versions".
 LTV_CURRENT = 5
-LTV_REVISION = 3
+LTV_REVISION = 4
 LTV_AGE = 5
 
 # How to build libgettextpo.la.
@@ -2157,7 +2162,8 @@ LTV_AGE = 5
 libgettextpo_la_LIBADD = libgnu.la $(WOE32_LIBADD) $(LTLIBUNISTRING)
 libgettextpo_la_LDFLAGS = -version-info \
 	$(LTV_CURRENT):$(LTV_REVISION):$(LTV_AGE) -rpath $(libdir) \
-	@LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined $(am__append_2)
+	@LTLIBINTL@ @LTLIBICONV@ -lc -no-undefined $(am__append_2) \
+	$(am__append_3)
 @WOE32_FALSE@WOE32_LIBADD = 
 @WOE32_TRUE@WOE32_LIBADD = libgettextpo.res.lo
 libgnu_la_SOURCES = basename.h basename.c c-ctype.h c-ctype.c \
@@ -2165,20 +2171,20 @@ libgnu_la_SOURCES = basename.h basename.c c-ctype.h c-ctype.c \
 	c-strstr.c concat-filename.c diffseq.h error-progname.h \
 	error-progname.c exitfail.c fd-hook.c file-ostream.c fstrcmp.h \
 	fstrcmp.c fwriteerror.h fwriteerror.c gcd.h gcd.c gettext.h \
-	hash.h hash.c gl_linked_list.h gl_linked_list.c \
+	hard-locale.c hash.h hash.c gl_linked_list.h gl_linked_list.c \
 	gl_anylinked_list1.h gl_anylinked_list2.h gl_list.h gl_list.c \
 	localcharset.h localcharset.c glthread/lock.h glthread/lock.c \
 	malloca.c markup.h markup.c mbswidth.h mbswidth.c minmax.h \
 	ostream.c progname.h progname.c size_max.h striconv.h \
 	striconv.c striconveh.h striconveh.c striconveha.h \
 	striconveha.c glthread/threadlib.c glthread/tls.h \
-	glthread/tls.c $(am__append_5) $(am__append_6) $(am__append_7) \
-	unilbrk/lbrktables.c $(am__append_8) $(am__append_9) \
-	unilbrk/ulc-common.c $(am__append_10) unistd.c \
-	$(am__append_11) $(am__append_12) $(am__append_13) \
-	$(am__append_14) $(am__append_15) $(am__append_16) \
-	$(am__append_17) $(am__append_18) $(am__append_19) \
-	$(am__append_20) $(am__append_21) wctype-h.c xalloc.h \
+	glthread/tls.c $(am__append_6) $(am__append_7) $(am__append_8) \
+	unilbrk/lbrktables.c $(am__append_9) $(am__append_10) \
+	unilbrk/ulc-common.c $(am__append_11) unistd.c \
+	$(am__append_12) $(am__append_13) $(am__append_14) \
+	$(am__append_15) $(am__append_16) $(am__append_17) \
+	$(am__append_18) $(am__append_19) $(am__append_20) \
+	$(am__append_21) $(am__append_22) wctype-h.c xalloc.h \
 	xmalloc.c xstrdup.c xconcat-filename.c xerror.h xerror.c \
 	gl_xlist.h gl_xlist.c xmalloca.c xsize.h xsize.c xstriconv.h \
 	xstriconv.c xvasprintf.h xvasprintf.c xasprintf.c
@@ -2194,7 +2200,7 @@ EXTRA_libgnu_la_SOURCES = close.c error.c file-ostream.oo.c float.c \
 	asnprintf.c printf-args.c printf-parse.c vasnprintf.c \
 	asprintf.c vasprintf.c wcwidth.c
 libgnu_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(LTLIBICONV) \
-	$(LTLIBINTL) $(LTLIBTHREAD) $(LTLIBUNISTRING) $(am__append_4)
+	$(LTLIBINTL) $(LTLIBTHREAD) $(LTLIBUNISTRING) $(am__append_5)
 
 # Use this preprocessor expression to decide whether #include_next works.
 # Do not rely on a 'configure'-time test for this, since the expression

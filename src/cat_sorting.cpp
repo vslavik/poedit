@@ -86,7 +86,6 @@ CatalogItemsComparator::CatalogItemsComparator(const Catalog& catalog, const Sor
     switch (m_order.by)
     {
         case SortOrder::By_Source:
-            // TODO: allow non-English source languages too
             m_collator.reset(icu::Collator::createInstance(catalog.GetSourceLanguage().ToIcu(), err));
             break;
 

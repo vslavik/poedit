@@ -382,14 +382,13 @@ Align strings to @var{number} bytes (default: 1).
 @item --endianness=@var{byteorder}
 @opindex --endianness@r{, @code{msgfmt} option}
 Write out 32-bit numbers in the given byte order.  The possible values are
-@code{big} and @code{little}.  The default depends on the platform, namely
-on the endianness of the CPU.
+@code{big} and @code{little}.  The default is @code{little}.
 
 MO files of any endianness can be used on any platform.  When a MO file has
 an endianness other than the platform's one, the 32-bit numbers from the MO
 file are swapped at runtime.  The performance impact is negligible.
 
-This option can be useful to produce MO files that are independent of the
+This option can be useful to produce MO files that are optimized for one
 platform.
 
 @item --no-hash

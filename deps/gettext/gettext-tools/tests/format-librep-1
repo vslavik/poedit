@@ -76,8 +76,8 @@ while read comment; do
   cat <<EOF > f-lr-1-$n.in
 (_ ${string});
 EOF
-  ${XGETTEXT} -L librep -o f-lr-1-$n.po f-lr-1-$n.in || exit 1
-  test -f f-lr-1-$n.po || exit 1
+  ${XGETTEXT} -L librep -o f-lr-1-$n.po f-lr-1-$n.in || Exit 1
+  test -f f-lr-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep librep-format f-lr-1-$n.po > /dev/null; then
@@ -97,9 +97,9 @@ EOF
     cat f-lr-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-lr-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-lr-1-$n.in f-lr-1-$n.po
 done < f-lr-1.data
 
-exit 0
+Exit 0

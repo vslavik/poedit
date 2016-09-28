@@ -51,8 +51,8 @@ msgstr[1] ""
 EOF
 
 : ${MSGMERGE=msgmerge}
-${MSGMERGE} -q -o mm-test10.tmp mm-test10.po mm-test10.pot || exit 1
-LC_ALL=C tr -d '\r' < mm-test10.tmp > mm-test10.out || exit 1
+${MSGMERGE} -q -o mm-test10.tmp mm-test10.po mm-test10.pot || Exit 1
+LC_ALL=C tr -d '\r' < mm-test10.tmp > mm-test10.out || Exit 1
 
 cat <<EOF > mm-test10.ok
 # SOME DESCRIPTIVE TITLE.

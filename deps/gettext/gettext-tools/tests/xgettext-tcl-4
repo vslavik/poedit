@@ -11,7 +11,7 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --no-location -k_ -o xg-t-4.tmp xg-t-4.tcl 2>xg-t-4.err
-test $? = 0 || { cat xg-t-4.err; exit 1; }
+test $? = 0 || { cat xg-t-4.err; Exit 1; }
 # Don't simplify this to "grep ... < xg-t-4.tmp", otherwise OpenBSD 4.0 grep
 # only outputs "Binary file (standard input) matches".
 cat xg-t-4.tmp | grep -v 'POT-Creation-Date' | LC_ALL=C tr -d '\r' > xg-t-4.pot

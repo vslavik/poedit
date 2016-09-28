@@ -12,8 +12,8 @@ width\ must\ be\ positive=
 EOF
 
 : ${MSGEN=msgen}
-${MSGEN} --properties-input --properties-output -o men-test2.tmp men-test2.properties || exit 1
-LC_ALL=C tr -d '\r' < men-test2.tmp > men-test2.out || exit 1
+${MSGEN} --properties-input --properties-output -o men-test2.tmp men-test2.properties || Exit 1
+LC_ALL=C tr -d '\r' < men-test2.tmp > men-test2.out || Exit 1
 
 cat <<\EOF > men-test2.ok
 height\ must\ be\ positive=height must be positive

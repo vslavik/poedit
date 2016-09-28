@@ -13,7 +13,7 @@ cat <<\EOF > empty.xml
 <empty></empty>
 EOF
 
-${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; exit 1; }
+${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; Exit 1; }
 
 test -d its || mkdir its
 
@@ -22,7 +22,7 @@ cat <<\EOF > its/empty-1.loc
 <locatingRules/>
 EOF
 
-${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; exit 1; }
+${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; Exit 1; }
 
 cat <<\EOF > its/empty-2.loc
 <?xml version="1.0"?>
@@ -33,7 +33,7 @@ cat <<\EOF > its/empty-2.loc
 </locatingRules>
 EOF
 
-${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; exit 1; }
+${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; Exit 1; }
 
 cat <<\EOF > its/empty.its
 <?xml version="1.0"?>
@@ -41,7 +41,7 @@ cat <<\EOF > its/empty.its
 </its:rules>
 EOF
 
-${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; exit 1; }
+${XGETTEXT} --itstool -o empty.pot empty.xml 2>empty.err || { cat empty.err; Exit 1; }
 
 cat <<\EOF > its/messages.loc
 <?xml version="1.0"?>
@@ -251,7 +251,7 @@ EOF
 
 : ${DIFF=diff}
 
-${XGETTEXT} --itstool --no-wrap --omit-header -o messages.pot messages.xml 2>messages.err || { cat messages.err; exit 1; }
+${XGETTEXT} --itstool --no-wrap --omit-header -o messages.pot messages.xml 2>messages.err || { cat messages.err; Exit 1; }
 ${DIFF} messages.ok messages.pot
 result=$?
 test $result = 0 || exit $result
@@ -267,7 +267,7 @@ cd po
 GETTEXTDATADIR=..
 export GETTEXTDATADIR
 
-${XGETTEXT} --itstool --no-wrap --omit-header --directory=.. -o messages.pot.in data/messages.msg.in 2>messages.err || { cat messages.err; exit 1; }
+${XGETTEXT} --itstool --no-wrap --omit-header --directory=.. -o messages.pot.in data/messages.msg.in 2>messages.err || { cat messages.err; Exit 1; }
 sed -e 's!^#: data/messages.msg.in!#: messages.xml!' \
   < messages.pot.in > messages.pot
 

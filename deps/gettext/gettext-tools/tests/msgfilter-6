@@ -53,7 +53,7 @@ ${MSGFILTER} -i mf-test6.po ./mf-test6.sh >/dev/null 2> mf-test6.err
 result=$?
 
 cat mf-test6.err | grep -v 'warning: Locale charset' | grep -v '^ '
-test $result = 0 || { exit 1; }
+test $result = 0 || { Exit 1; }
 
 LC_ALL=C tr -d '\r' < mf-test6.tmp > mf-test6.out
 

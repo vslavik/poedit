@@ -1,5 +1,5 @@
 /* Message list charset and locale charset handling.
-   Copyright (C) 2001-2003, 2005-2007, 2009, 2015 Free Software
+   Copyright (C) 2001-2003, 2005-2007, 2009, 2015-2016 Free Software
    Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2001.
 

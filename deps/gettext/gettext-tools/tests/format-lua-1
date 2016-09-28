@@ -61,8 +61,8 @@ while read comment; do
   read string
   n=`expr $n + 1`
   echo "gettext.gettext(${string});" > f-lu-1-$n.in
-  ${XGETTEXT} -L Lua -o f-lu-1-$n.po f-lu-1-$n.in || exit 1
-  test -f f-lu-1-$n.po || exit 1
+  ${XGETTEXT} -L Lua -o f-lu-1-$n.po f-lu-1-$n.in || Exit 1
+  test -f f-lu-1-$n.po || Exit 1
   fail=
   if echo "$comment" | grep 'Valid:' > /dev/null; then
     if grep lua-format f-lu-1-$n.po > /dev/null; then
@@ -82,10 +82,10 @@ while read comment; do
     cat f-lu-1-$n.in 1>&2
     echo "Got:" 1>&2
     cat f-lu-1-$n.po 1>&2
-    exit 1
+    Exit 1
   fi
   rm -f f-lu-1-$n.in f-lu-1-$n.po
 done < f-lu-1.data
 
-exit 0
+Exit 0
 

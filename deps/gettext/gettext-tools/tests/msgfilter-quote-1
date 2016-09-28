@@ -76,7 +76,7 @@ msgstr "``double grave'"
 EOF
 
 : ${MSGFILTER=msgfilter}
-LC_ALL=C ${MSGFILTER} -i mfi.po -o mfi-quot.out quot 2>&1 2>/dev/null || exit 1
+LC_ALL=C ${MSGFILTER} -i mfi.po -o mfi-quot.out quot 2>&1 2>/dev/null || Exit 1
 
 cat <<\EOF > mfi-quot.ok
 msgid ""
@@ -151,9 +151,9 @@ msgstr "`‘double grave’"
 EOF
 
 : ${DIFF=diff}
-${DIFF} mfi-quot.ok mfi-quot.out || exit 1
+${DIFF} mfi-quot.ok mfi-quot.out || Exit 1
 
-LC_ALL=C ${MSGFILTER} -i mfi.po -o mfi-boldquot.out boldquot 2>&1 2>/dev/null || exit 1
+LC_ALL=C ${MSGFILTER} -i mfi.po -o mfi-boldquot.out boldquot 2>&1 2>/dev/null || Exit 1
 
 cat <<\EOF > mfi-boldquot.ok
 msgid ""
@@ -227,4 +227,4 @@ msgid "``double grave'"
 msgstr "`‘[1mdouble grave[0m’"
 EOF
 
-${DIFF} mfi-boldquot.ok mfi-boldquot.out || exit 1
+${DIFF} mfi-boldquot.ok mfi-boldquot.out || Exit 1

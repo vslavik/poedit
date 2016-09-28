@@ -8,8 +8,8 @@ main()??<printf(gettext("Hello, " "World!" "??/n"));return 0 ? a??(0??'1??) : 1?
 EOF
 
 : ${XGETTEXT=xgettext}
-${XGETTEXT} --omit-header --no-location --trigraphs -d xg-c-4.tmp xg-c-4.in.c || exit 1
-LC_ALL=C tr -d '\r' < xg-c-4.tmp.po > xg-c-4.po || exit 1
+${XGETTEXT} --omit-header --no-location --trigraphs -d xg-c-4.tmp xg-c-4.in.c || Exit 1
+LC_ALL=C tr -d '\r' < xg-c-4.tmp.po > xg-c-4.po || Exit 1
 
 cat <<EOF > xg-c-4.ok
 #, c-format

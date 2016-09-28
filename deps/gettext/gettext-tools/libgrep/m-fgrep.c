@@ -1,5 +1,5 @@
 /* Pattern Matcher for Fixed String search.
-   Copyright (C) 1992, 1998, 2000, 2005-2006, 2010, 2015 Free Software
+   Copyright (C) 1992, 1998, 2000, 2005-2006, 2010, 2015-2016 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

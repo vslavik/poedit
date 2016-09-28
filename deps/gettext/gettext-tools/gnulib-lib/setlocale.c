@@ -1,5 +1,5 @@
 /* Set the current locale.  -*- coding: utf-8 -*-
-   Copyright (C) 2009, 2011-2015 Free Software Foundation, Inc.
+   Copyright (C) 2009, 2011-2016 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -381,6 +381,7 @@ static const struct table_entry language_table[] =
     { "sq", "Albanian" },
     { "sr", "Serbian (Latin)" },
     { "sr@cyrillic", "SRB" }, /* Serbian (Cyrillic) */
+    { "sv", "Swedish" },
     { "sw", "Swahili" },
     { "syr", "Syriac" },
     { "ta", "Tamil" },

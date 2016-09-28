@@ -12,8 +12,8 @@ EOF
 
 : ${XGETTEXT=xgettext}
 ${XGETTEXT} --add-comments --omit-header --no-location --keyword=_ \
-  -d xg-ls-2.tmp xg-ls-2.lisp || exit 1
-LC_ALL=C tr -d '\r' < xg-ls-2.tmp.po > xg-ls-2.po || exit 1
+  -d xg-ls-2.tmp xg-ls-2.lisp || Exit 1
+LC_ALL=C tr -d '\r' < xg-ls-2.tmp.po > xg-ls-2.po || Exit 1
 
 cat <<EOF > xg-ls-2.ok
 #. a
