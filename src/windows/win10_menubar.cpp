@@ -224,6 +224,21 @@ bool wxFrameWithWindows10Menubar::MSWTranslateMessage(WXMSG *msg)
     return false;
 }
 
+WXLRESULT wxFrameWithWindows10Menubar::MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam)
+{
+    if (IsUsed())
+    {
+        // mCtrl doesn't play nice with the wxMSW's menus interaction where accelerators are updated
+        // when a menu is opened (which works because TranslateAccelerators() normally sends a fake
+        // event for that... if there's a normal menu). We need to refresh menus before accelerators
+        // are used so that e.g. disabled state is accurately updated.
+        if (message == WM_COMMAND && HIWORD(wParam) == 1/*accel*/)
+            GetMenuBar()->UpdateMenus();
+    }
+
+    return wxFrame::MSWWindowProc(message, wParam, lParam);
+}
+
 void wxFrameWithWindows10Menubar::InternalSetMenuBar()
 {
     if (IsUsed())

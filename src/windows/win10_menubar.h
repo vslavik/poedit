@@ -42,7 +42,9 @@ public:
                                 const wxString& name = wxFrameNameStr);
 
     wxPoint GetClientAreaOrigin() const override;
+
     bool MSWTranslateMessage(WXMSG *msg) override;
+    WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override;
 
 protected:
     void PositionToolBar() override;

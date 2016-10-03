@@ -520,7 +520,6 @@ PoeditFrame::PoeditFrame() :
         FileHistory().UseMenu(m_menuForHistory);
         FileHistory().AddFilesToMenu(m_menuForHistory);
 #endif
-        SetMenuBar(MenuBar);
         AddBookmarksMenu(MenuBar->GetMenu(MenuBar->FindMenu(_("&Go"))));
 #ifdef __WXOSX__
         wxGetApp().TweakOSXMenuBar(MenuBar);
@@ -533,6 +532,7 @@ PoeditFrame::PoeditFrame() :
         item = MenuBar->FindItem(XRCID("menu_open_crowdin"), &menu);
         menu->Destroy(item);
 #endif
+        SetMenuBar(MenuBar);
     }
     else
     {
