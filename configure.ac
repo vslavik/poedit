@@ -47,7 +47,7 @@ AC_PROG_CXX
 AC_PROG_CXXCPP
 
 AC_LANG([C++])
-AX_CXX_COMPILE_STDCXX_11([], [mandatory])
+AX_CXX_COMPILE_STDCXX([14], [], [mandatory])
 
 WXLIBS_USED="xrc,stc,html,xml,adv,core,net"
 

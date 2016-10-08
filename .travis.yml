@@ -9,27 +9,35 @@ compiler: gcc
 addons:
     apt:
         sources:
-        - sourceline: 'ppa:vslavik/poedit'
-        - sourceline: 'deb http://repos.codelite.org/wx3.0.2/ubuntu/ trusty universe'
-          key_url: 'http://repos.codelite.org/CodeLite.asc'
+            - ubuntu-toolchain-r-test
+            - sourceline: 'ppa:vslavik/poedit'
+            - sourceline: 'deb http://repos.codelite.org/wx3.0.2/ubuntu/ trusty universe'
+              key_url: 'http://repos.codelite.org/CodeLite.asc'
         packages:
-        - asciidoc
-        - xsltproc
-        - xmlto
-        - libexpat1-dev
-        - libdb++-dev
-        - libboost-dev
-        - libboost-system-dev
-        - libboost-regex-dev
-        - libboost-thread-dev
-        - libboost-iostreams-dev
-        - liblucene++-dev
-        - libicu-dev
-        - libwxgtk3.0-dev
-        - libgtk2.0-dev
-        - libgtkspell-dev
+            - gcc-6
+            - g++-6
+            - asciidoc
+            - xsltproc
+            - xmlto
+            - libexpat1-dev
+            - libdb++-dev
+            - libboost-dev
+            - libboost-system-dev
+            - libboost-regex-dev
+            - libboost-thread-dev
+            - libboost-iostreams-dev
+            - liblucene++-dev
+            - libicu-dev
+            - libwxgtk3.0-dev
+            - libgtk2.0-dev
+            - libgtkspell-dev
+
+env:
+    - REAL_CC=gcc-6 REAL_CXX=g++-6
 
 before_install:
+    # work around Travis being difficult, see https://github.com/travis-ci/travis-ci/issues/6633
+    - export CC=$REAL_CC CXX=$REAL_CXX
     # git submodules needed for Linux:
     - git submodule update --init src/json
 
