@@ -60,6 +60,7 @@ esac
 AX_BOOST_BASE([1.60], [], [AC_MSG_ERROR([Boost libraries are required])])
 AX_BOOST_SYSTEM
 AX_BOOST_REGEX
+AX_BOOST_THREAD
 CXXFLAGS="$CXXFLAGS $BOOST_CPPFLAGS"
 
 
@@ -70,7 +71,6 @@ AC_ARG_WITH([cpprest],
 AS_IF([test "x$with_cpprest" != "xno"],
       [
       AX_BOOST_IOSTREAMS
-      AX_BOOST_THREAD
 
       have_cpprest=no
       dnl C++11 check above modified CXXFLAGS, but AC_CHECK_HEADERS needs
