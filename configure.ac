@@ -105,6 +105,7 @@ AS_IF([test "x$with_cpprest" != "xno"],
 AS_IF([test "x$have_cpprest" = "xyes"],
       [
           AC_DEFINE([HAVE_HTTP_CLIENT])
+          AC_DEFINE([HAVE_PPL])
           CPPREST_LIBS="-lcpprest $BOOST_IOSTREAMS_LIB $BOOST_THREAD_LIB $BOOST_SYSTEM_LIB -lssl -lcrypto"
           AC_SUBST(CPPREST_LIBS)
           PKG_CHECK_MODULES([LIBSECRET], [libsecret-1], [

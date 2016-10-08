@@ -32,6 +32,7 @@
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1800)
     #define HAVE_PPL
+    #define USE_PPL_DISPATCH
 #endif
 
 #define BOOST_CHRONO_HEADER_ONLY
@@ -42,13 +43,18 @@
 #include <boost/thread/executor.hpp>
 #include <boost/thread/future.hpp>
 
-#if !defined(HAVE_DISPATCH) && !defined(HAVE_PPL)
+#if !defined(HAVE_DISPATCH) && !defined(USE_PPL_DISPATCH)
     #include <boost/thread/executors/basic_thread_pool.hpp>
 #endif
 
 #if defined(HAVE_PPL)
-    #include <concrt.h>
-    #include <ppltasks.h>
+    #if defined(_MSC_VER)
+        #include <concrt.h>
+        #include <ppltasks.h>
+        namespace pplx = Concurrency;
+    #else
+        #include <pplx/pplxtasks.h>
+    #endif
 #endif
 
 #include <memory>
@@ -118,7 +124,7 @@ public:
     }
 };
 
-#elif defined(HAVE_PPL)
+#elif defined(USE_PPL_DISPATCH)
 
 class background_queue_executor : public custom_executor
 {
@@ -127,11 +133,11 @@ public:
 
     void submit(work&& closure)
     {
-        Concurrency::create_task([f{std::move(closure)}]() mutable { f(); });
+        pplx::create_task([f{std::move(closure)}]() mutable { f(); });
     }
 };
 
-#else // !HAVE_DISPATCH && !HAVE_PPL
+#else // !HAVE_DISPATCH && !USE_PPL_DISPATCH
 
 class background_queue_executor : public boost::basic_thread_pool
 {
@@ -322,11 +328,11 @@ public:
     using future_base<T, future<T>>::future_base;
 
 #ifdef HAVE_PPL
-    future(Concurrency::task<T>&& task)
+    future(pplx::task<T>&& task)
     {
         auto pr = std::make_shared<promise<T>>();
-        f_ = pr->get_future();
-        task.then([pr](Concurrency::task<T> x) {
+        this->f_ = pr->get_future();
+        task.then([pr](pplx::task<T> x) {
             try
             {
                 pr->set_value(x.get());
@@ -393,11 +399,11 @@ public:
     using future_base<void, future<void>>::future_base;
 
 #ifdef HAVE_PPL
-    future(Concurrency::task<void>&& task)
+    future(pplx::task<void>&& task)
     {
         auto pr = std::make_shared<promise<void>>();
-        f_ = pr->get_future();
-        task.then([pr](Concurrency::task<void> x) {
+        this->f_ = pr->get_future();
+        task.then([pr](pplx::task<void> x) {
             try
             {
                 x.get();
