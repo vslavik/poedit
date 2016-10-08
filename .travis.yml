@@ -5,18 +5,33 @@ language: cpp
 
 compiler: gcc
 
+# dependencies for building Poedit on old Ubuntu:
+addons:
+    apt:
+        sources:
+        - sourceline: 'ppa:vslavik/poedit'
+        - sourceline: 'deb http://repos.codelite.org/wx3.0.2/ubuntu/ trusty universe'
+          key_url: 'http://repos.codelite.org/CodeLite.asc'
+        packages:
+        - asciidoc
+        - xsltproc
+        - xmlto
+        - libexpat1-dev
+        - libdb++-dev
+        - libboost-dev
+        - libboost-system-dev
+        - libboost-regex-dev
+        - libboost-thread-dev
+        - libboost-iostreams-dev
+        - liblucene++-dev
+        - libicu-dev
+        - libwxgtk3.0-dev
+        - libgtk2.0-dev
+        - libgtkspell-dev
+
 before_install:
     # git submodules needed for Linux:
     - git submodule update --init src/json
-    # dependencies for building Poedit on old Ubuntu:
-    - sudo add-apt-repository -y ppa:vslavik/poedit
-    - sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
-    - sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.2/ubuntu/ trusty universe'
-    - sudo apt-get update -qq
-
-install:
-    - sudo apt-get install -qq --no-install-recommends asciidoc xsltproc xmlto
-    - sudo apt-get install -qq libexpat1-dev libdb++-dev libboost-dev libboost-{system,regex,thread,iostreams}-dev liblucene++-dev libicu-dev libwxgtk3.0-dev libgtk2.0-dev libgtkspell-dev
 
 script:
     - scripts/travis-check-translations.sh
