@@ -54,22 +54,14 @@ namespace
 // is what GTK+ uses in its tree view control)
 #define DARKEN_FACTOR      0.95
 
-// max difference in color to consider it "amost" same if it differs by most
-// this amount (in 0..255 range) from the tested color:
-#define COLOR_SIMILARITY_FACTOR  20
-
 inline bool IsAlmostBlack(const wxColour& clr)
 {
-    return (clr.Red() <= COLOR_SIMILARITY_FACTOR &&
-            clr.Green() <= COLOR_SIMILARITY_FACTOR &&
-            clr.Blue() <= COLOR_SIMILARITY_FACTOR);
+    return clr.Red() < 0x60 && clr.Green() < 0x60 && clr.Blue() < 0x60;
 }
 
 inline bool IsAlmostWhite(const wxColour& clr)
 {
-    return (clr.Red() >= 255-COLOR_SIMILARITY_FACTOR &&
-            clr.Green() >= 255-COLOR_SIMILARITY_FACTOR &&
-            clr.Blue() >= 255-COLOR_SIMILARITY_FACTOR);
+    return clr.Red() > 0xE0 && clr.Green() > 0xE0 && clr.Blue() > 0xE0;
 }
 
 
