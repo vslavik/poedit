@@ -546,12 +546,17 @@ void SuggestionsSidebarBlock::UpdateSuggestionsMenu()
         if (index >= SUGGESTIONS_MENU_ENTRIES)
             break;
 
-        auto text = wxString::Format(formatMask, s.text, index+1);
+        wxString text = s.text;
+        text.Replace("\t", " ");
+        text.Replace("\n", " ");
+        if (text.length() > 100)
+            text = text.substr(0, 100) + L"…";
 
         auto item = m_suggestionMenuItems[index];
         m_suggestionsMenu->Append(item);
 
-        item->SetItemLabel(text);
+        auto label = wxControl::EscapeMnemonics(wxString::Format(formatMask, text, index+1));
+        item->SetItemLabel(label);
         item->SetBitmap(GetIconForSuggestion(s));
 
         index++;
