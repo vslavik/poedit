@@ -270,7 +270,7 @@ void FindFrame::ShowForReplace()
 
 void FindFrame::DoShowFor(int mode)
 {
-    m_position = (int)m_listCtrl->GetFirstSelected();
+    m_position = m_listCtrl->GetCurrentItemListIndex();
 
     m_mode->SetSelection(mode);
     OnModeChanged();
@@ -533,7 +533,7 @@ bool FindFrame::DoFind(int dir)
     {
         m_lastItem = lastItem;
 
-        m_listCtrl->EnsureVisible(m_position);
+        m_listCtrl->EnsureVisible(m_listCtrl->ListIndexToListItem(m_position));
         m_listCtrl->SelectAndFocus(m_position);
 
         // find the text on the control and select it:

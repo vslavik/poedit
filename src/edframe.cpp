@@ -55,7 +55,6 @@
 #include <algorithm>
 #include <map>
 #include <fstream>
-#include <boost/range/counting_range.hpp>
 
 #include "catalog.h"
 #include "concurrency.h"
@@ -233,29 +232,6 @@ BEGIN_EVENT_TABLE(TransTextctrlHandler, wxEvtHandler)
     EVT_TEXT(-1, TransTextctrlHandler::OnText)
 END_EVENT_TABLE()
 
-
-// special handling of events in listctrl
-class ListHandler : public wxEvtHandler
-{
-    public:
-        ListHandler(PoeditFrame *frame) :
-                 wxEvtHandler(), m_frame(frame) {}
-
-    private:
-        void OnSel(wxListEvent& event) { m_frame->OnListSel(event); }
-        void OnRightClick(wxMouseEvent& event) { m_frame->OnListRightClick(event); }
-        void OnFocus(wxFocusEvent& event) { m_frame->OnListFocus(event); }
-
-        DECLARE_EVENT_TABLE()
-
-        PoeditFrame *m_frame;
-};
-
-BEGIN_EVENT_TABLE(ListHandler, wxEvtHandler)
-   EVT_LIST_ITEM_SELECTED  (ID_LIST, ListHandler::OnSel)
-   EVT_RIGHT_DOWN          (          ListHandler::OnRightClick)
-   EVT_SET_FOCUS           (          ListHandler::OnFocus)
-END_EVENT_TABLE()
 
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
@@ -664,11 +640,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
 
-    m_list = new PoeditListCtrl(m_splitter,
-                                ID_LIST,
-                                wxDefaultPosition, wxDefaultSize,
-                                wxLC_REPORT,
-                                m_displayIDs);
+    m_list = new PoeditListCtrl(m_splitter, ID_LIST, m_displayIDs);
 
     m_bottomPanel = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);
 #ifdef __WXMSW__
@@ -720,8 +692,9 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     m_splitter->SetMinimumPaneSize(PX(200));
     m_sidebarSplitter->SetMinimumPaneSize(PX(200));
 
-    m_list->PushEventHandler(new ListHandler(this));
-
+    m_list->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PoeditFrame::OnListSel, this);
+    m_list->Bind(wxEVT_DATAVIEW_ITEM_CONTEXT_MENU, &PoeditFrame::OnListRightClick, this);
+    m_list->Bind(wxEVT_SET_FOCUS, &PoeditFrame::OnListFocus, this);
 
     auto suggestionsMenu = GetMenuBar()->FindItem(XRCID("menu_suggestions"))->GetSubMenu();
     m_sidebar = new Sidebar(m_sidebarSplitter, suggestionsMenu);
@@ -730,7 +703,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     ShowPluralFormUI(false);
     UpdateMenu();
 
-    switch ( m_list->sortOrder.by )
+    switch ( m_list->sortOrder().by )
     {
         case SortOrder::By_FileOrder:
             GetMenuBar()->Check(XRCID("sort_by_order"), true);
@@ -742,9 +715,9 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
             GetMenuBar()->Check(XRCID("sort_by_translation"), true);
             break;
     }
-    GetMenuBar()->Check(XRCID("sort_group_by_context"), m_list->sortOrder.groupByContext);
-    GetMenuBar()->Check(XRCID("sort_untrans_first"), m_list->sortOrder.untransFirst);
-    GetMenuBar()->Check(XRCID("sort_errors_first"), m_list->sortOrder.errorsFirst);
+    GetMenuBar()->Check(XRCID("sort_group_by_context"), m_list->sortOrder().groupByContext);
+    GetMenuBar()->Check(XRCID("sort_untrans_first"), m_list->sortOrder().untransFirst);
+    GetMenuBar()->Check(XRCID("sort_errors_first"), m_list->sortOrder().errorsFirst);
 
     // Call splitter splitting later, when the window is laid out, otherwise
     // the sizes would get truncated immediately:
@@ -849,8 +822,6 @@ void PoeditFrame::DestroyContentView()
     if (!m_contentView)
         return;
 
-    if (m_list)
-        m_list->PopEventHandler(true/*delete*/);
     if (m_textTrans)
         m_textTrans->PopEventHandler(true/*delete*/);
     for (auto tp : m_textTransPlural)
@@ -1834,7 +1805,7 @@ void PoeditFrame::ReportValidationErrors(int errors,
     if ( errors )
     {
         if (m_list && m_catalog->GetCount())
-            m_list->RefreshItems(0, m_catalog->GetCount()-1);
+            m_list->RefreshAllItems();
         RefreshControls();
 
         dlg.reset(new wxMessageDialog
@@ -1918,7 +1889,7 @@ void PoeditFrame::ReportValidationErrors(int errors,
 }
 
 
-void PoeditFrame::OnListSel(wxListEvent& event)
+void PoeditFrame::OnListSel(wxDataViewEvent& event)
 {
     wxWindow *focus = wxWindow::FindFocus();
     bool hasFocus = (focus == m_textTrans) ||
@@ -2135,14 +2106,7 @@ CatalogItemPtr PoeditFrame::GetCurrentItem() const
 {
     if ( !m_catalog || !m_list )
         return nullptr;
-
-    int item = m_list->GetFirstSelectedCatalogItem();
-    if ( item == -1 )
-        return nullptr;
-
-    wxASSERT( item >= 0 && item < (int)m_catalog->GetCount() );
-
-    return (*m_catalog)[item];
+    return m_list->GetCurrentCatalogItem();
 }
 
 
@@ -3094,7 +3058,7 @@ void PoeditFrame::OnAutoTranslateAll(wxCommandEvent&)
 
 bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, int flags)
 {
-    return AutoTranslateCatalog(matchesCount, boost::counting_range(0, (int)m_catalog->GetCount()), flags);
+    return AutoTranslateCatalog(matchesCount, m_catalog->items(), flags);
 }
 
 template<typename T>
@@ -3138,9 +3102,8 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
         };
 
     std::vector<dispatch::future<bool>> operations;
-    for (int i: range)
+    for (auto dt: range)
     {
-        auto dt = (*m_catalog)[i];
         if (dt->HasPlural())
             continue; // can't handle yet (TODO?)
         if (dt->IsTranslated() && !dt->IsFuzzy())
@@ -3460,25 +3423,27 @@ void PoeditFrame::RecreatePluralTextCtrls()
     UpdateToTextCtrl(ItemChanged);
 }
 
-void PoeditFrame::OnListRightClick(wxMouseEvent& event)
+void PoeditFrame::OnListRightClick(wxDataViewEvent& event)
 {
-    long item;
-    int flags = wxLIST_HITTEST_ONITEM;
-    auto list = static_cast<PoeditListCtrl*>(event.GetEventObject());
-
-    item = list->HitTest(event.GetPosition(), flags);
-    if (item != -1 && (flags & wxLIST_HITTEST_ONITEM))
+    auto item = event.GetItem();
+    if (!item.IsOk())
     {
-        list->SelectAndFocus(item);
+        event.Skip();
+        return;
     }
 
-    wxMenu *menu = GetPopupMenu(m_list->ListIndexToCatalog(int(item)));
+    m_list->SelectAndFocus(item);
+
+    wxMenu *menu = GetPopupMenu(m_list->ListItemToCatalogIndex(item));
     if (menu)
     {
-        list->PopupMenu(menu, event.GetPosition());
+        m_list->PopupMenu(menu, event.GetPosition());
         delete menu;
     }
-    else event.Skip();
+    else
+    {
+        event.Skip();
+    }
 }
 
 void PoeditFrame::OnListFocus(wxFocusEvent& event)
@@ -3558,8 +3523,7 @@ void PoeditFrame::OnGoToBookmark(wxCommandEvent& event)
         int listIndex = m_list->CatalogIndexToList(bkIndex);
         if (listIndex >= 0 && listIndex < m_list->GetItemCount())
         {
-            m_list->EnsureVisible(listIndex);
-            m_list->SelectOnly(listIndex);
+            m_list->SelectAndFocus(listIndex);
         }
     }
 }
@@ -3569,7 +3533,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Set bookmark if different from the current value for the item,
     // else unset it
     int bkIndex = -1;
-    int selItemIndex = m_list->GetFirstSelectedCatalogItem();
+    int selItemIndex = m_list->ListItemToCatalogIndex(m_list->GetCurrentItem());
     if (selItemIndex == -1)
         return;
 
@@ -3586,7 +3550,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Refresh items
     m_list->RefreshSelectedItems();
     if (bkIndex != -1)
-        m_list->RefreshItem(m_list->CatalogIndexToList(bkIndex));
+        m_list->RefreshItem(m_list->CatalogIndexToListItem(bkIndex));
 
     // Catalog has been modified
     m_modified = true;
@@ -3597,41 +3561,41 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
 
 void PoeditFrame::OnSortByFileOrder(wxCommandEvent&)
 {
-    m_list->sortOrder.by = SortOrder::By_FileOrder;
+    m_list->sortOrder().by = SortOrder::By_FileOrder;
     m_list->Sort();
 }
 
 
 void PoeditFrame::OnSortBySource(wxCommandEvent&)
 {
-    m_list->sortOrder.by = SortOrder::By_Source;
+    m_list->sortOrder().by = SortOrder::By_Source;
     m_list->Sort();
 }
 
 
 void PoeditFrame::OnSortByTranslation(wxCommandEvent&)
 {
-    m_list->sortOrder.by = SortOrder::By_Translation;
+    m_list->sortOrder().by = SortOrder::By_Translation;
     m_list->Sort();
 }
 
 
 void PoeditFrame::OnSortGroupByContext(wxCommandEvent& event)
 {
-    m_list->sortOrder.groupByContext = event.IsChecked();
+    m_list->sortOrder().groupByContext = event.IsChecked();
     m_list->Sort();
 }
 
 
 void PoeditFrame::OnSortUntranslatedFirst(wxCommandEvent& event)
 {
-    m_list->sortOrder.untransFirst = event.IsChecked();
+    m_list->sortOrder().untransFirst = event.IsChecked();
     m_list->Sort();
 }
 
 void PoeditFrame::OnSortErrorsFirst(wxCommandEvent& event)
 {
-    m_list->sortOrder.errorsFirst = event.IsChecked();
+    m_list->sortOrder().errorsFirst = event.IsChecked();
     m_list->Sort();
 }
 
@@ -3793,7 +3757,7 @@ bool Pred_UnfinishedItem(const CatalogItemPtr& item)
 
 } // anonymous namespace
 
-long PoeditFrame::NavigateGetNextItem(const long start,
+int PoeditFrame::NavigateGetNextItem(const int start,
                                       int step, PoeditFrame::NavigatePredicate predicate, bool wrap,
                                       CatalogItemPtr *out_item)
 {
@@ -3801,7 +3765,7 @@ long PoeditFrame::NavigateGetNextItem(const long start,
     if ( !count )
         return -1;
 
-    long i = start;
+    int i = start;
 
     for ( ;; )
     {
@@ -3839,11 +3803,11 @@ void PoeditFrame::Navigate(int step, NavigatePredicate predicate, bool wrap)
 {
     if (!m_list)
         return;
-    auto i = NavigateGetNextItem(m_list->GetFirstSelected(), step, predicate, wrap, nullptr);
+    auto i = NavigateGetNextItem(m_list->GetCurrentItemListIndex(), step, predicate, wrap, nullptr);
     if (i == -1)
         return;
 
-    m_list->SelectOnly(i);
+    m_list->SelectAndFocus(i);
 }
 
 void PoeditFrame::OnPrev(wxCommandEvent&)
@@ -3897,16 +3861,16 @@ void PoeditFrame::OnPrevPage(wxCommandEvent&)
 {
     if (!m_list)
         return;
-    auto pos = std::max(m_list->GetFirstSelected()-10, 0L);
-    m_list->SelectOnly(pos);
+    auto pos = std::max(m_list->GetCurrentItemListIndex()-10, 0);
+    m_list->SelectAndFocus(pos);
 }
 
 void PoeditFrame::OnNextPage(wxCommandEvent&)
 {
     if (!m_list)
         return;
-    auto pos = std::min(m_list->GetFirstSelected()+10, long(m_list->GetItemCount())-1);
-    m_list->SelectOnly(pos);
+    auto pos = std::min(m_list->GetCurrentItemListIndex()+10, (int)m_list->GetItemCount()-1);
+    m_list->SelectAndFocus(pos);
 }
 
 void PoeditFrame::OnPrevPluralForm(wxCommandEvent&)

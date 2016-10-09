@@ -24,10 +24,10 @@
  *
  */
 
-#ifndef _ED_LIST_CTRL_H_
-#define _ED_LIST_CTRL_H_
+#ifndef Poedit_edlistctrl_h
+#define Poedit_edlistctrl_h
 
-#include <wx/listctrl.h>
+#include <wx/dataview.h>
 #include <wx/frame.h>
 
 #include <vector>
@@ -40,17 +40,10 @@ class WXDLLIMPEXP_FWD_CORE wxListEvent;
 #include "language.h"
 
 // list control with both columns equally wide:
-class PoeditListCtrl : public wxListView
+class PoeditListCtrl : public wxDataViewCtrl
 {
     public:
-        PoeditListCtrl(wxWindow *parent,
-                       wxWindowID id = -1,
-                       const wxPoint &pos = wxDefaultPosition,
-                       const wxSize &size = wxDefaultSize,
-                       long style = wxLC_ICON,
-                       bool dispIDs = false,
-                       const wxValidator& validator = wxDefaultValidator,
-                       const wxString &name = "listctrl");
+        PoeditListCtrl(wxWindow *parent, wxWindowID id = -1, bool dispIDs = false);
 
         virtual ~PoeditListCtrl();
 
@@ -63,64 +56,82 @@ class PoeditListCtrl : public wxListView
 
         void CatalogChanged(const CatalogPtr& catalog);
 
-        virtual wxString OnGetItemText(long item, long column) const;
-        virtual wxListItemAttr *OnGetItemAttr(long item) const;
-        virtual wxListItemAttr *OnGetItemColumnAttr(long item, long column) const;
-        virtual int OnGetItemImage(long item) const;
+        int ListItemToListIndex(const wxDataViewItem& item) const
+        {
+            return item.IsOk() ? m_model->GetRow(item) : -1;
+        }
+
+        wxDataViewItem ListIndexToListItem(int index) const
+        {
+            return index != -1 ? m_model->GetItem(index) : wxDataViewItem();
+        }
 
         /// Returns the list item index for the given catalog index
         int CatalogIndexToList(int index) const
         {
-            if ( index < 0 || index >= (int)m_mapCatalogToList.size() )
-                return -1;
-            else
-                return m_mapCatalogToList[index];
+            return m_model->RowFromCatalogIndex(index);
+        }
+
+        wxDataViewItem CatalogIndexToListItem(int index) const
+        {
+            return m_model->GetItem(m_model->RowFromCatalogIndex(index));
         }
 
         /// Returns item's index in the catalog
-        int ListIndexToCatalog(long index) const
+        int ListIndexToCatalog(int index) const
         {
-            if ( index < 0 || index >= (int)m_mapListToCatalog.size() )
-                return -1;
-            else
-                return m_mapListToCatalog[index];
+            return index != -1 ? m_model->CatalogIndex(index) : -1;
+        }
+
+        int ListItemToCatalogIndex(const wxDataViewItem& item) const
+        {
+            return item.IsOk() ? m_model->CatalogIndex(m_model->GetRow(item)) : -1;
+        }
+
+        CatalogItemPtr ListItemToCatalogItem(const wxDataViewItem& item) const
+        {
+            return item.IsOk() ? m_model->Item(m_model->GetRow(item)) : nullptr;
         }
 
         /// Returns item from the catalog based on list index
-        CatalogItemPtr ListIndexToCatalogItem(long index) const
+        CatalogItemPtr ListIndexToCatalogItem(int index) const
         {
-            auto idx = ListIndexToCatalog(index);
-            return idx != -1 ? (*m_catalog)[idx] : nullptr;
-        }
-        CatalogItemPtr ListIndexToCatalogItem(long index)
-        {
-            auto idx = ListIndexToCatalog(index);
-            return idx != -1 ? (*m_catalog)[idx] : nullptr;
+            return index != -1 ? m_model->Item(index) : nullptr;
         }
 
-        /// Returns index of selected catalog item
-        int GetFirstSelectedCatalogItem() const
+        CatalogItemPtr GetCurrentCatalogItem()
         {
-            return ListIndexToCatalog(GetFirstSelected());
+            return ListItemToCatalogItem(GetCurrentItem());
         }
 
-        std::vector<int> GetSelectedCatalogItems() const
+        std::vector<CatalogItemPtr> GetSelectedCatalogItems() const
         {
-            std::vector<int> s;
-            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
-                s.push_back(ListIndexToCatalog(i));
+            auto catalog = m_model->m_catalog;
+            std::vector<CatalogItemPtr> s;
+            for (auto i: GetSelectedCatalogItemIndexes())
+                s.push_back((*catalog)[i]);
             return s;
         }
 
-        void SetSelectedCatalogItems(const std::vector<int>& selection)
+        std::vector<int> GetSelectedCatalogItemIndexes() const
         {
-            ClearSelection();
+            wxDataViewItemArray sel;
+            int count = GetSelections(sel);
+
+            std::vector<int> s;
+            s.reserve(count);
+            for (auto i: sel)
+                s.push_back(m_model->CatalogIndex(m_model->GetRow(i)));
+
+            return s;
+        }
+
+        void SetSelectedCatalogItemIndexes(const std::vector<int>& selection)
+        {
+            wxDataViewItemArray sel;
             for (auto i: selection)
-            {
-                auto idx = CatalogIndexToList(i);
-                if (idx != -1)
-                    Select(idx);
-            }
+                sel.push_back(CatalogIndexToListItem(i));
+            SetSelections(sel);
         }
 
         // Perform given function for all selected items. The function takes
@@ -129,81 +140,160 @@ class PoeditListCtrl : public wxListView
         template<typename T>
         void ForSelectedCatalogItemsDo(T func)
         {
-            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
-            {
-                func(*ListIndexToCatalogItem(i));
-                RefreshItem(i);
-            }
+            wxDataViewItemArray sel;
+            GetSelections(sel);
+            for (auto item: sel)
+                func(*ListItemToCatalogItem(item));
+            m_model->ItemsChanged(sel);
         }
 
-        void SelectOnly(long n)
+        void SelectOnly(const wxDataViewItem& item)
         {
-            ClearSelection();
-            wxListView::Select(n);
-            EnsureVisible(n);
+            wxDataViewItemArray sel;
+            sel.push_back(item);
+            SetSelections(sel);
+            EnsureVisible(item);
         }
 
-        void SelectAndFocus(long n)
+        void SelectAndFocus(const wxDataViewItem& item)
         {
+            SelectOnly(item);
+            SetCurrentItem(item);
+        }
+
+        void SelectOnly(int n)
+        {
+            // TODO: Remove this API
+
+            SelectOnly(m_model->GetItem(n));
+        }
+
+        void SelectAndFocus(int n)
+        {
+            // TODO: Remove this API
+
             SelectOnly(n);
-            Focus(n);
+            SetCurrentItem(m_model->GetItem(n));
         }
-
-        void ClearSelection()
-        {
-            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
-                wxListView::Select(i, false);
-        }
-
-        /// Returns true if at least one item is selected.
-        bool HasSelection() const { return GetSelectedItemCount() >= 1; }
 
         /// Returns true if exactly one item is selected.
-        bool HasSingleSelection() const { return GetSelectedItemCount() == 1; }
+        bool HasSingleSelection() const { return GetSelectedItemsCount() == 1; }
 
         /// Returns true if more than one item are selected.
-        bool HasMultipleSelection() const { return GetSelectedItemCount() > 1; }
+        bool HasMultipleSelection() const { return GetSelectedItemsCount() > 1; }
 
         void RefreshSelectedItems()
         {
-            for (auto i = GetFirstSelected(); i != -1; i = GetNextSelected(i))
-                RefreshItem(i);
+            // TODO: Remove this API
+
+            wxDataViewItemArray sel;
+            GetSelections(sel);
+            m_model->ItemsChanged(sel);
+        }
+
+        void RefreshAllItems()
+        {
+            m_model->Reset(m_model->GetCount());
+        }
+
+        void RefreshItem(const wxDataViewItem& item)
+        {
+            m_model->ItemChanged(item);
+        }
+
+        int GetCurrentItemListIndex()
+        {
+            return m_model->GetRow(GetCurrentItem());
+        }
+
+        int GetItemCount() const
+        {
+            return m_model->GetCount();
         }
 
         void SetCustomFont(wxFont font);
 
         // Order used for sorting
-        SortOrder sortOrder;
+        SortOrder& sortOrder() {  return m_model->sortOrder; }
 
     private:
-        // Returns average width of one column in number of characters:
-        size_t GetMaxColChars() const
+        /// Model for the translation data
+        class Model : public wxDataViewVirtualListModel
         {
-            return m_colWidth * 2/*safety coefficient*/;
-        }
+        public:
+            enum Column
+            {
+                Col_ID,
+                Col_Icon,
+                Col_Source,
+                Col_Translation,
+                Col_Max // invalid
+            };
 
-        void CreateSortMap();
+            Model(TextDirection appTextDir, wxVisualAttributes visual);
+            virtual ~Model() {}
+
+            void SetCatalog(CatalogPtr catalog);
+            void UpdateSort();
+
+            unsigned int GetColumnCount() const override { return Col_Max; }
+            wxString GetColumnType( unsigned int col ) const override;
+
+            void GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const override;
+            bool SetValueByRow(const wxVariant&, unsigned, unsigned) override;
+            bool GetAttrByRow(unsigned row, unsigned col, wxDataViewItemAttr& attr) const override;
+
+            CatalogItemPtr Item(int row) const
+            {
+                int index = CatalogIndex(row);
+                return index != -1 ? (*m_catalog)[index] : nullptr;
+            }
+
+            /// Returns item's index in the catalog
+            int CatalogIndex(int row) const
+            {
+                if ( row < 0 || row >= (int)m_mapListToCatalog.size() )
+                    return -1;
+                else
+                    return m_mapListToCatalog[row];
+            }
+
+            int RowFromCatalogIndex(int index) const
+            {
+                if ( index < 0 || index >= (int)m_mapCatalogToList.size() )
+                    return -1;
+                else
+                    return m_mapCatalogToList[index];
+            }
+
+            void CreateSortMap();
+
+        public:
+            CatalogPtr m_catalog;
+            SortOrder sortOrder;
+
+        private:
+            std::vector<int> m_mapListToCatalog;
+            std::vector<int> m_mapCatalogToList;
+
+            TextDirection m_sourceTextDir, m_transTextDir, m_appTextDir;
+
+            wxColour m_clrID, m_clrInvalid, m_clrUntranslated, m_clrFuzzy;
+            wxBitmap m_iconAutomatic, m_iconComment, m_iconBookmark;
+        };
+
+
+        void UpdateHeaderAttrs();
         void CreateColumns();
-        void ReadCatalog(bool resetSizeAndSelection);
         void OnSize(wxSizeEvent& event);
 
         bool m_displayIDs;
-        int m_colSource, m_colTrans, m_colId;
-        unsigned m_colWidth;
-        TextDirection m_sourceTextDir, m_transTextDir, m_appTextDir;
+        TextDirection m_appTextDir;
+
+        wxDataViewColumn *m_colID, *m_colIcon, *m_colSource, *m_colTrans;
 
         CatalogPtr m_catalog;
-
-        std::vector<int> m_mapListToCatalog;
-        std::vector<int> m_mapCatalogToList;
-
-        wxListItemAttr m_attrId;
-        wxListItemAttr m_attrNormal[2];
-        wxListItemAttr m_attrUntranslated[2];
-        wxListItemAttr m_attrFuzzy[2];
-        wxListItemAttr m_attrInvalid[2];
-
-        DECLARE_EVENT_TABLE()
+        wxObjectDataPtr<Model> m_model;
 };
 
-#endif // _ED_LIST_CTRL_H_
+#endif // Poedit_edlistctrl_h
