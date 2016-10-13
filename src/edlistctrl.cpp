@@ -37,10 +37,10 @@
 #include <wx/artprov.h>
 #include <wx/dcmemory.h>
 #include <wx/image.h>
-#include <wx/itemattr.h>
 #include <wx/wupdlock.h>
 
 #ifdef __WXMSW__
+#include <wx/itemattr.h>
 #include <wx/msw/uxtheme.h>
 #include <vssym32.h>
 #endif
