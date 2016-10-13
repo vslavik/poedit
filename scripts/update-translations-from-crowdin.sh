@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+if [ -f /usr/local/bin/gsed ] ; then
+    SED=/usr/local/bin/gsed
+else
+    SED=sed
+fi
+
+
 # Fetch translations updates:
 
 crowdin-cli download
@@ -65,7 +72,7 @@ fixup_windows_rc_files()
         else
             code="LANG_${lang}, SUBLANG_NEUTRAL"
         fi
-        sed --in-place -e "s/LANGUAGE.*/LANGUAGE $code/" "$i"
+        $SED --in-place -e "s/LANGUAGE.*/LANGUAGE $code/" "$i"
     done
 
     # Finally, include all files in a master file:
