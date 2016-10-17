@@ -694,7 +694,11 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
 
     m_list->Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PoeditFrame::OnListSel, this);
     m_list->Bind(wxEVT_DATAVIEW_ITEM_CONTEXT_MENU, &PoeditFrame::OnListRightClick, this);
+#ifdef wxHAS_GENERIC_DATAVIEWCTRL
+    m_list->GetChildren()[0]->Bind(wxEVT_SET_FOCUS, &PoeditFrame::OnListFocus, this);
+#else
     m_list->Bind(wxEVT_SET_FOCUS, &PoeditFrame::OnListFocus, this);
+#endif
 
     auto suggestionsMenu = GetMenuBar()->FindItem(XRCID("menu_suggestions"))->GetSubMenu();
     m_sidebar = new Sidebar(m_sidebarSplitter, suggestionsMenu);
