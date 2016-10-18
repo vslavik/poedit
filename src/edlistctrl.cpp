@@ -546,6 +546,9 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
         return;
 
     CreateColumns();
+
+    if (sizeOrCatalogChanged && GetItemCount() > 0)
+        CallAfter([=]{ SelectAndFocus(0); });
 }
 
 
