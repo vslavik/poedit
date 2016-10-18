@@ -47,9 +47,15 @@ inline double HiDPIScalingFactor() { return g_pxScalingFactor; }
     current DPI setting.
  */
 #define PX(x) (int(((x) * g_pxScalingFactor) + 0.5))
-#define PXDefaultBorder PX(wxSizerFlags::GetDefaultBorder())
-#define PXBorder(dir) Border(dir, PX(wxSizerFlags::GetDefaultBorder()))
-#define PXDoubleBorder(dir) Border(dir, PX(2 * wxSizerFlags::GetDefaultBorder()))
+
+#if wxCHECK_VERSION(3,1,0)
+    #define PXDefaultBorder wxSizerFlags::GetDefaultBorder()
+#else
+    #define PXDefaultBorder PX(wxSizerFlags::GetDefaultBorder())
+#endif
+
+#define PXBorder(dir) Border(dir, PXDefaultBorder)
+#define PXDoubleBorder(dir) Border(dir, 2 * PXDefaultBorder)
 
 /// Tweak notebook tab label to look good
 inline wxString PXNotebookTab(const wxString& label) { return HiDPIScalingFactor() < 1.5 ? label : " " + label + " "; }
