@@ -238,11 +238,28 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         case Col_Source:
         {
             wxString orig;
+#if wxCHECK_VERSION(3,1,1)
             if (d->HasContext())
-                orig.Printf("%s  [ %s ]",
-                            d->GetString().c_str(), d->GetContext().c_str());
+            {
+                // Work around a problem with GTK+'s coloring of markup that begins with colorizing <span>:
+                #ifdef __WXGTK__
+                    #define MARKUP(x) L"\u200B" L##x
+                #else
+                    #define MARKUP(x) x
+                #endif
+                orig.Printf(MARKUP("<span style=\"italic\" color=\"#2B6F16\">[%s]</span> %s"),
+                            EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+            }
+            else
+            {
+                orig = EscapeMarkup(d->GetString());
+            }
+#else // wx 3.0
+            if (d->HasContext())
+                orig.Printf("[%s] %s", d->GetContext(), d->GetString());
             else
                 orig = d->GetString();
+#endif
 
             // FIXME: use syntax highlighting or typographic marks
             orig.Replace("\n", " ");
@@ -317,7 +334,9 @@ bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewI
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         default:
@@ -463,6 +482,9 @@ void PoeditListCtrl::CreateColumns()
                              : _("Source text");
     auto sourceRenderer = new wxDataViewTextRenderer();
     sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
+#if wxCHECK_VERSION(3,1,1)
+    sourceRenderer->EnableMarkup();
+#endif
     m_colSource = new wxDataViewColumn(sourceTitle, sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
     AppendColumn(m_colSource);
 
