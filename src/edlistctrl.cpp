@@ -437,7 +437,9 @@ void PoeditListCtrl::SetDisplayLines(bool dl)
 
 void PoeditListCtrl::CreateColumns()
 {
-    ClearColumns();
+    if (GetColumnCount() > 0)
+        ClearColumns();
+
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
 
     Language srclang, lang;
