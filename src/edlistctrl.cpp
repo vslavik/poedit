@@ -324,13 +324,11 @@ bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewI
             else if (!d->IsTranslated())
             {
                 attr.SetColour(m_clrUntranslated);
-                attr.SetBold(true);
                 return true;
             }
             else if (d->IsFuzzy())
             {
                 attr.SetColour(m_clrFuzzy);
-                attr.SetBold(true);
                 return true;
             }
             else
