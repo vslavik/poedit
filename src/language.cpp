@@ -175,9 +175,15 @@ const DisplayNamesData& GetDisplayNamesData()
             if (*script != '\0')
             {
                 if (strcmp(script, "Latn") == 0)
+                {
                     code += "@latin";
+                }
                 else if (strcmp(script, "Cyrl") == 0)
-                    code += "@cyrillic";
+                {
+                    // add @cyrillic only if it's not the default already
+                    if (strcmp(language, "sr") != 0)
+                        code += "@cyrillic";
+                }
             }
             
             s.foldCase();
