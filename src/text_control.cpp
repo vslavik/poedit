@@ -513,6 +513,8 @@ void AnyTranslatableTextCtrl::SetLanguage(const Language& lang)
 {
     m_language = lang;
 
+    wxEventBlocker block(this, wxEVT_TEXT);
+
 #ifdef __WXOSX__
     NSTextView *text = TextView(this);
     if (lang.IsRTL())
