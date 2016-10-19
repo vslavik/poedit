@@ -153,12 +153,24 @@ class PoeditListCtrl : public wxDataViewCtrl
             sel.push_back(item);
             SetSelections(sel);
             EnsureVisible(item);
+
+        #ifndef __WXOSX__
+          #if wxCHECK_VERSION(3,1,1)
+            wxDataViewEvent event(wxEVT_DATAVIEW_SELECTION_CHANGED, this, item);
+          #else
+            wxDataViewEvent event(wxEVT_DATAVIEW_SELECTION_CHANGED, GetId());
+            event.SetEventObject(this);
+            event.SetModel(GetModel());
+            event.SetItem(item);
+          #endif
+            ProcessWindowEvent(event);
+        #endif
         }
 
         void SelectAndFocus(const wxDataViewItem& item)
         {
-            SelectOnly(item);
             SetCurrentItem(item);
+            SelectOnly(item);
         }
 
         void SelectOnly(int n)
@@ -172,8 +184,8 @@ class PoeditListCtrl : public wxDataViewCtrl
         {
             // TODO: Remove this API
 
-            SelectOnly(n);
             SetCurrentItem(m_model->GetItem(n));
+            SelectOnly(n);
         }
 
         /// Returns true if exactly one item is selected.
