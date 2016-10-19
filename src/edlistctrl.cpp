@@ -231,7 +231,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
             else if (d->IsAutomatic())
                 variant << m_iconAutomatic;
             else
-                variant << wxNullBitmap;
+                variant = wxNullVariant;
             break;
         }
 
