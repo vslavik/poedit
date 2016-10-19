@@ -22,7 +22,7 @@ fi
 replace_ver()
 {
     echo "replacing in $1..."
-    $SED -e "s@$2@$3@g" -in-place $1
+    $SED -e "s@$2@$3@g" --in-place $1
 }
 
 VER_FULL=$1
