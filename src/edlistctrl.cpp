@@ -40,6 +40,7 @@
 #include <wx/wupdlock.h>
 
 #ifdef __WXMSW__
+#include <wx/headerctrl.h>
 #include <wx/itemattr.h>
 #include <wx/msw/uxtheme.h>
 #include <vssym32.h>
@@ -403,8 +404,6 @@ void PoeditListCtrl::UpdateHeaderAttrs()
     // Setup custom header font & color on Windows 10, where the default look is a bit odd
     if (IsWindows10OrGreater())
     {
-        wxItemAttr headerAttr;
-
         // Use the same text color as Explorer's headers use
         const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
         if (theme)
@@ -413,22 +412,18 @@ void PoeditListCtrl::UpdateHeaderAttrs()
             COLORREF clr;
             HRESULT hr = theme->GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
             if (SUCCEEDED(hr))
+            {
+                wxItemAttr headerAttr;
                 headerAttr.SetTextColour(wxRGBToColour(clr));
+                SetHeaderAttr(headerAttr);
+            }
         }
 
-        // In HiDPI modes, standard header has smaller height than Explorer's and it isn't
-        // separated from the content well. wxListCtrl doesn't allow for customized header
-        // height (unlike wxDVC), so as a temporary workaround, at least make the text
-        // slightly larger to compensate. 
-        if (HiDPIScalingFactor() > 1.0)
-        {
-            // FIXME: Use normal sized font, but add more spacing
-            auto headerFont = GetDefaultAttributes().font;
-            headerFont.SetPointSize(headerFont.GetPointSize() + 1);
-            headerAttr.SetFont(headerFont);
-        }
-
-        SetHeaderAttr(headerAttr);
+        // Standard header has smaller height than Explorer's and it isn't
+        // separated from the content well -- especially in HiDPI modes.
+        // Match Explorer's header size too:
+        int headerHeight = HiDPIScalingFactor() > 1.0 ? PX(26) : PX(25);
+        GenericGetHeader()->SetMinSize(wxSize(-1, headerHeight));
     }
 #endif // __WXMSW__
 }
