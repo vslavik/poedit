@@ -840,7 +840,8 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
     wxArrayString filesToOpen;
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         filesToOpen.Add(parser.GetParam(i));
-    OSXStoreOpenFiles(filesToOpen);
+    if (!filesToOpen.empty())
+        OSXStoreOpenFiles(filesToOpen);
 #else
     for (size_t i = 0; i < parser.GetParamCount(); i++)
         gs_filesToOpen.Add(parser.GetParam(i));

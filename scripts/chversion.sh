@@ -1,5 +1,14 @@
 #!/bin/sh
 
+set -e
+
+if [ -f /usr/local/bin/gsed ] ; then
+    SED=/usr/local/bin/gsed
+else
+    SED=sed
+fi
+
+
 if [ -z "$1" ] ; then
     echo "Usage: $0 \"version\"" >&2
     exit 1
@@ -13,11 +22,11 @@ fi
 replace_ver()
 {
     echo "replacing in $1..."
-    sed -e "s@$2@$3@g" -i $1
+    $SED -e "s@$2@$3@g" --in-place $1
 }
 
 VER_FULL=$1
-VER_SHORT="`echo $VER_FULL | sed -e 's/\(pre\|beta\|rc\)[0-9]//g'`"
+VER_SHORT="`echo $VER_FULL | $SED -e 's/\(pre\|beta\|rc\)[0-9]//g'`"
 VER_WIN="`echo $VER_SHORT | tr '.' ','`"
 if [ `echo $VER_WIN | awk 'BEGIN{FS=","} {print NF}'` = 2 ] ; then
     VER_WIN="$VER_WIN,0"
