@@ -682,6 +682,9 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
 
     m_labelContext = new wxStaticText(m_bottomPanel, -1, wxEmptyString);
     m_labelContext->SetFont(m_normalGuiFont);
+#ifdef __WXOSX__
+    m_labelContext->SetMinSize(wxSize(-1, m_labelContext->GetBestSize().y + 3));
+#endif
     m_labelContext->Hide();
 
     m_labelSingular = new wxStaticText(m_bottomPanel, -1, _("Singular:"));
