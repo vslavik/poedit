@@ -211,29 +211,6 @@ bool g_focusToText = false;
 }
 
 
-
-class TransTextctrlHandler : public wxEvtHandler
-{
-    public:
-        TransTextctrlHandler(PoeditFrame* frame) : m_frame(frame) {}
-
-    private:
-        void OnText(wxCommandEvent& event)
-        {
-            m_frame->UpdateFromTextCtrl();
-            event.Skip();
-        }
-
-        PoeditFrame *m_frame;
-
-        DECLARE_EVENT_TABLE()
-};
-
-BEGIN_EVENT_TABLE(TransTextctrlHandler, wxEvtHandler)
-    EVT_TEXT(-1, TransTextctrlHandler::OnText)
-END_EVENT_TABLE()
-
-
 // special handling of events in listctrl
 class ListHandler : public wxEvtHandler
 {
@@ -787,7 +764,7 @@ void PoeditFrame::CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSi
     labelTrans->SetFont(m_boldGuiFont);
 
     m_textTrans = new TranslationTextCtrl(p, ID_TEXTTRANS);
-    m_textTrans->PushEventHandler(new TransTextctrlHandler(this));
+    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent&){ UpdateFromTextCtrl(); });
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = nullptr;
@@ -854,12 +831,6 @@ void PoeditFrame::DestroyContentView()
 
     if (m_list)
         m_list->PopEventHandler(true/*delete*/);
-    if (m_textTrans)
-        m_textTrans->PopEventHandler(true/*delete*/);
-    for (auto tp : m_textTransPlural)
-    {
-        tp->PopEventHandler(true/*delete*/);
-    }
     m_textTransPlural.clear();
 
     NotifyCatalogChanged(nullptr);
@@ -3365,8 +3336,6 @@ void PoeditFrame::RecreatePluralTextCtrls()
     if (!m_catalog || !m_list || !m_pluralNotebook)
         return;
 
-    for (size_t i = 0; i < m_textTransPlural.size(); i++)
-       m_textTransPlural[i]->PopEventHandler(true/*delete*/);
     m_textTransPlural.clear();
     m_pluralNotebook->DeleteAllPages();
     m_textTransSingularForm = NULL;
@@ -3443,7 +3412,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
 
         // create text control and notebook page for it:
         auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
-        txt->PushEventHandler(new TransTextctrlHandler(this));
+        txt->Bind(wxEVT_TEXT, [=](wxCommandEvent&){ UpdateFromTextCtrl(); });
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
 
