@@ -133,7 +133,7 @@ public:
         : SidebarBlock(parent, _("Previous source text:"))
     {
         m_innerSizer->AddSpacer(PX(2));
-        m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the fuzzy translation corresponds to.")),
+        m_innerSizer->Add(new ExplanationLabel(parent, _("The old source text (before it changed during an update) that the now-inaccurate translation corresponds to.")),
                      wxSizerFlags().Expand());
         m_innerSizer->AddSpacer(PX(5));
         m_text = new SelectableAutoWrappingText(parent, "");
