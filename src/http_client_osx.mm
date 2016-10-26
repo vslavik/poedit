@@ -141,9 +141,12 @@ public:
         }
         else
         {
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             Gestalt(gestaltSystemVersionMajor, &majorVersion);
             Gestalt(gestaltSystemVersionMinor, &minorVersion);
             Gestalt(gestaltSystemVersionBugFix, &patchVersion);
+            #pragma clang diagnostic pop
         }
         NSString *osx_str = (patchVersion == 0)
                             ? [NSString stringWithFormat:@"%d.%d", majorVersion, minorVersion]
