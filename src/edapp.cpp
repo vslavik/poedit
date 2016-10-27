@@ -1181,8 +1181,11 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 
     NSMenu *editNS = edit->GetHMenu();
 
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wundeclared-selector"
     AddNativeItem(editNS, 0, _("Undo"), @selector(undo:), @"z");
     AddNativeItem(editNS, 1, _("Redo"), @selector(redo:), @"Z");
+    #pragma clang diagnostic pop
     [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
     if (pasteItem != -1) pasteItem += 3;
     if (findItem != -1)  findItem += 3;
@@ -1270,7 +1273,10 @@ void PoeditApp::CreateFakeOpenRecentMenu()
 						   action:NULL
 					keyEquivalent:@""];
 	NSMenu *openRecentMenu = [[NSMenu alloc] initWithTitle:@"Open Recent"];
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wundeclared-selector"
 	[openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
+    #pragma clang diagnostic pop
 	[menu setSubmenu:openRecentMenu forItem:item];
     m_recentMenuData->menuItem = item;
     m_recentMenuData->menu = openRecentMenu;
