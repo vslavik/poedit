@@ -107,7 +107,14 @@ class http_client::impl
 {
 public:
     impl(http_client& owner, const std::string& url_prefix, int flags)
-        : m_owner(owner), m_native(sanitize_url(url_prefix, flags), get_client_config())
+        : m_owner(owner),
+          m_native
+          (
+              sanitize_url(url_prefix, flags)
+            #ifdef _WIN32
+              , get_client_config()
+            #endif
+          )
     {
         #define make_wide_str(x) make_wide_str_(x)
         #define make_wide_str_(x) L ## x
@@ -258,11 +265,12 @@ private:
         return to_string_t(url);
     }
 
+#ifdef _WIN32
     // prepare WinHttp configuration
     static http::client::http_client_config get_client_config()
     {
         http::client::http_client_config c;
-    #ifdef _WIN32
+
         // WinHttp doesn't share WinInet/MSIE's proxy settings and has its own,
         // but many users don't have properly configured both. Adopting proxy
         // settings like this in desktop software is recommended behavior, see
@@ -282,12 +290,9 @@ private:
                 c.set_proxy(uri(L"//" + std::wstring(ieConfig.lpszProxy)));
             }
         }
-    #endif
         return c;
     }
 
-private:
-#ifdef _WIN32
     static std::wstring windows_version()
     {
         OSVERSIONINFOEX info = { 0 };
