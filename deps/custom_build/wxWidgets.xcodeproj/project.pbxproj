@@ -1443,6 +1443,7 @@
 		B22D2AE81789D46000729535 /* wxvers.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = wxvers.xcconfig; sourceTree = "<group>"; };
 		B22D2AE91789D4CB00729535 /* setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = setup.h; path = config/wx/setup.h; sourceTree = "<group>"; };
 		B22D2AEB1789D64B00729535 /* wakeuppipe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = wakeuppipe.cpp; path = ../wx/src/unix/wakeuppipe.cpp; sourceTree = "<group>"; };
+		B24E8C2C1DC788FA00B893C7 /* wx */ = {isa = PBXFileReference; lastKnownFileType = folder; name = wx; path = ../wx/include/wx; sourceTree = "<group>"; };
 		B25C32D61D32913F0094466D /* LexJSON.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexJSON.cxx; path = ../wx/src/stc/scintilla/lexers/LexJSON.cxx; sourceTree = "<group>"; };
 		B25F3A961CAAEC520062F008 /* LexBatch.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexBatch.cxx; path = ../wx/src/stc/scintilla/lexers/LexBatch.cxx; sourceTree = "<group>"; };
 		B25F3A971CAAEC520062F008 /* LexBibTeX.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LexBibTeX.cxx; path = ../wx/src/stc/scintilla/lexers/LexBibTeX.cxx; sourceTree = "<group>"; };
@@ -1797,32 +1798,15 @@
 		1D56230B75893DBA8A923441 /* wxcocoa */ = {
 			isa = PBXGroup;
 			children = (
+				B24E780C1DC783D000B893C7 /* Headers */,
+				B24E780D1DC783EF00B893C7 /* Sources */,
+				C2FC1A9BBB8C3046994369BF /* Products */,
 				B22D2AE71789D46000729535 /* wx.xcconfig */,
 				B22D2AE81789D46000729535 /* wxvers.xcconfig */,
 				7DEBE1EB2B94305E8E8D6EA5 /* wxcocoa.xcconfig */,
 				8707324525DB344EA0E7D5CE /* wxdebug.xcconfig */,
 				D5B7B7C10A3E3C689AE1E418 /* wxrelease.xcconfig */,
 				B22D2AE91789D4CB00729535 /* setup.h */,
-				C2FC1A9BBB8C3046994369BF /* Products */,
-				83F62FA47C9636169F1E18E8 /* base */,
-				2E7B4F88F81E37B4A9FF6C0F /* core */,
-				374BD863E6AD33189B7E4040 /* net */,
-				2FF0B5E0505D3AEA9A4ACF11 /* adv */,
-				5C5CD199E7573C73AE6F392D /* media */,
-				60E51BFF5CD2327483201F14 /* html */,
-				60328E6EA3793DA990E18FC1 /* xrc */,
-				4D98B791E17232D39944F04F /* xml */,
-				816DD323A67F3B299C8F3481 /* opengl */,
-				04311EAB76193D5593D43DBB /* aui */,
-				FE1C78F1707A30878CBB2B4B /* ribbon */,
-				B8F95052522B37AB86DA8917 /* propgrid */,
-				64B126D857113F24BA8C4758 /* richtext */,
-				E96566B813153B4295AD767B /* stc */,
-				EB288BE7E74B3328B762A461 /* libtiff */,
-				7650A73F7FC9305EA62DAE86 /* libjpeg */,
-				6E2C8858F68E3FB0BEFFFCE5 /* libpng */,
-				B1EF68113C6338CFBBED0FBE /* libregex */,
-				2BE6C101F29D318895158F98 /* libscintilla */,
 			);
 			name = wxcocoa;
 			sourceTree = "<group>";
@@ -2480,6 +2464,40 @@
 				4B7A97D6D29E3627B312E104 /* src/regex */,
 			);
 			name = libregex;
+			sourceTree = "<group>";
+		};
+		B24E780C1DC783D000B893C7 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				B24E8C2C1DC788FA00B893C7 /* wx */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		B24E780D1DC783EF00B893C7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				83F62FA47C9636169F1E18E8 /* base */,
+				2E7B4F88F81E37B4A9FF6C0F /* core */,
+				374BD863E6AD33189B7E4040 /* net */,
+				2FF0B5E0505D3AEA9A4ACF11 /* adv */,
+				5C5CD199E7573C73AE6F392D /* media */,
+				60E51BFF5CD2327483201F14 /* html */,
+				60328E6EA3793DA990E18FC1 /* xrc */,
+				4D98B791E17232D39944F04F /* xml */,
+				816DD323A67F3B299C8F3481 /* opengl */,
+				04311EAB76193D5593D43DBB /* aui */,
+				FE1C78F1707A30878CBB2B4B /* ribbon */,
+				B8F95052522B37AB86DA8917 /* propgrid */,
+				64B126D857113F24BA8C4758 /* richtext */,
+				E96566B813153B4295AD767B /* stc */,
+				EB288BE7E74B3328B762A461 /* libtiff */,
+				7650A73F7FC9305EA62DAE86 /* libjpeg */,
+				6E2C8858F68E3FB0BEFFFCE5 /* libpng */,
+				B1EF68113C6338CFBBED0FBE /* libregex */,
+				2BE6C101F29D318895158F98 /* libscintilla */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		B402B38DB4CF3883AF4743C0 /* src/ribbon */ = {
@@ -3211,7 +3229,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = 6976B5F5F3A63A21A92029E3 /* Build configuration list for PBXProject "wxWidgets_static" */;
+			buildConfigurationList = 6976B5F5F3A63A21A92029E3 /* Build configuration list for PBXProject "wxWidgets" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -4205,7 +4223,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6976B5F5F3A63A21A92029E3 /* Build configuration list for PBXProject "wxWidgets_static" */ = {
+		6976B5F5F3A63A21A92029E3 /* Build configuration list for PBXProject "wxWidgets" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55C93151F6053EBCBDD70DF9 /* Debug */,
