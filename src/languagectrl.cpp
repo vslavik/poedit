@@ -25,6 +25,7 @@
 
 #include "languagectrl.h"
 
+#include "str_helpers.h"
 #include "hidpi.h"
 
 #include <wx/config.h>
@@ -32,12 +33,98 @@
 #include <wx/stattext.h>
 
 #ifdef __WXOSX__
-extern "C" {
-#import "NSObject+REResponder.h"
+
+@interface LanguagesDataSource : NSObject<NSComboBoxDataSource>
+@property const wxArrayString *data;
+@property NSArray<NSString*>* items;
+@end
+
+@implementation LanguagesDataSource
+
+- (id)initWithItems:(const wxArrayString*)items
+{
+    self = [super init];
+    if (self)
+    {
+        self.data = items;
+        NSMutableArray<NSString*> *a = [NSMutableArray arrayWithCapacity:items->size()];
+        for (auto i: *items)
+            [a addObject:str::to_NS(i)];
+        self.items = a;
+    }
+    return self;
 }
-#endif
+
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox;
+{
+    #pragma unused(aComboBox)
+    return [self.items count];
+}
+
+- (id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index;
+{
+    #pragma unused(aComboBox)
+    if (index >=0 && index < self.data->size())
+        return [self.items objectAtIndex:index];
+    else
+        return @"";
+}
+
+- (NSUInteger)comboBox:(NSComboBox *)aComboBox indexOfItemWithStringValue:(NSString *)string;
+{
+    #pragma unused(aComboBox)
+    auto found = self.data->Index(str::to_wx(string), false/*case sensitive*/);
+    return (found != wxNOT_FOUND) ? found : NSNotFound;
+}
+
+- (NSString *)comboBox:(NSComboBox *)aComboBox completedString:(NSString *)string;
+{
+    #pragma unused(aComboBox)
+    for (NSString *item in self.items) {
+        if ([item compare:string
+                  options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch
+                    range:NSMakeRange(0, std::min([item length], [string length]))
+                   locale:[NSLocale currentLocale]] == NSOrderedSame)
+        {
+            return item;
+        }
+    }
+    return nil;
+}
+
+@end
+
+
+struct LanguageCtrl::impl
+{
+    impl(const wxArrayString& items_)
+    {
+        items = &items_;
+        dataSource = [[LanguagesDataSource alloc] initWithItems:items];
+    }
+
+    const wxArrayString *items;
+    LanguagesDataSource *dataSource;
+};
+
+int LanguageCtrl::FindString(const wxString& s, bool bCase) const
+{
+    return m_impl->items->Index(s, bCase);
+}
+
+wxString LanguageCtrl::GetString(unsigned int n) const
+{
+    return m_impl->items->Item(n);
+}
+
+#endif // __WXOSX__
+
 
 IMPLEMENT_DYNAMIC_CLASS(LanguageCtrl, wxComboBox)
+
+LanguageCtrl::LanguageCtrl() : m_inited(false)
+{
+}
 
 LanguageCtrl::LanguageCtrl(wxWindow *parent, wxWindowID winid, Language lang)
     : wxComboBox(parent, winid)
@@ -56,12 +143,21 @@ void LanguageCtrl::Init(Language lang)
         SetValue(lang.FormatForRoundtrip());
 #endif
 
-#ifdef __WXOSX__
-    for (auto x: Language::AllFormattedNames())
-        Append(x);
-    NSComboBox *cb = (NSComboBox*) GetHandle();
-    [cb setCompletes:YES];
+    static wxArrayString choices;
+    if (choices.empty())
+    {
+        for (auto x: Language::AllFormattedNames())
+            choices.push_back(x);
+    }
 
+#ifdef __WXOSX__
+    m_impl.reset(new impl(choices));
+    NSComboBox *cb = (NSComboBox*) GetHandle();
+    cb.completes = YES;
+    cb.usesDataSource = YES;
+    cb.dataSource = m_impl->dataSource;
+
+#if 0
     // default completion is case-sensitive, we'd rather be case-insensitive, so plug in
     // customized completedString: implementation
     RESetBlock(cb.cell, @selector(completedString:), NO, nil, ^(NSComboBox *receiver, NSString *string) {
@@ -74,13 +170,9 @@ void LanguageCtrl::Init(Language lang)
         }
         return (NSString*)nil;
     });
+#endif
+
 #else
-    static wxArrayString choices;
-    if (choices.empty())
-    {
-        for (auto x: Language::AllFormattedNames())
-            choices.push_back(x);
-    }
     Set(choices);
     AutoComplete(choices);
 #endif
