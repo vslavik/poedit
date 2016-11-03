@@ -25,6 +25,7 @@
 
 #include "main_toolbar.h"
 
+#include "hidpi.h"
 #include "utility.h"
 #include "unicode_helpers.h"
 
@@ -57,6 +58,9 @@ public:
                 wxUxThemeHandle hTheme(m_tb, L"ExplorerMenu::Toolbar");
                 m_tb->SetBackgroundColour(wxRGBToColour(theme->GetThemeSysColor(hTheme, COLOR_WINDOW)));
             }
+
+            unsigned padding = PX(4);
+            ::SendMessage((HWND) m_tb->GetHWND(), TB_SETPADDING, 0, MAKELPARAM(padding, padding));
         }
         m_tb->SetDoubleBuffered(true);
 #endif
