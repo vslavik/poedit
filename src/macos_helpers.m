@@ -23,7 +23,7 @@
  *
  */
 
-#include "osx_helpers.h"
+#include "macos_helpers.h"
 
 #import <Foundation/NSString.h>
 #import <Foundation/NSUserDefaults.h>

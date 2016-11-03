@@ -52,4 +52,4 @@ replace_ver .travis.yml \
             '\(file: poedit-\).*\(.tar.gz\)' "\1$VER_FULL\2"
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VER_FULL\2"
-touch macosx/Poedit-Info.plist
+touch macos/Poedit-Info.plist

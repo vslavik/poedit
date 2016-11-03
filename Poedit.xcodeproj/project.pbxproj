@@ -51,7 +51,7 @@
 		B26D0655182697200069C378 /* welcomescreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D0653182697200069C378 /* welcomescreen.cpp */; };
 		B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06561826A22C0069C378 /* PoeditWelcome.png */; };
 		B26D06591826A22C0069C378 /* PoeditWelcome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */; };
-		B280E84D1A92776D009F4A98 /* http_client_osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = B280E84B1A92776D009F4A98 /* http_client_osx.mm */; };
+		B280E84D1A92776D009F4A98 /* http_client_macos.mm in Sources */ = {isa = PBXBuildFile; fileRef = B280E84B1A92776D009F4A98 /* http_client_macos.mm */; };
 		B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAE16F629D30018AF7E /* edapp.cpp */; };
 		B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB016F629D30018AF7E /* edframe.cpp */; };
@@ -66,7 +66,7 @@
 		B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC216F629D30018AF7E /* findframe.cpp */; };
 		B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC416F629D30018AF7E /* gexecute.cpp */; };
 		B28F1CF516F629D30018AF7E /* manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCA16F629D30018AF7E /* manager.cpp */; };
-		B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCD16F629D30018AF7E /* osx_helpers.m */; };
+		B28F1CF616F629D30018AF7E /* macos_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCD16F629D30018AF7E /* macos_helpers.m */; };
 		B28F1CF716F629D30018AF7E /* extractor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CCE16F629D30018AF7E /* extractor.cpp */; };
 		B28F1CF816F629D30018AF7E /* prefsdlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD016F629D30018AF7E /* prefsdlg.cpp */; };
 		B28F1CF916F629D30018AF7E /* progressinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CD216F629D30018AF7E /* progressinfo.cpp */; };
@@ -228,7 +228,7 @@
 		B2083D121A87D17D00150BBF /* libcld2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcld2.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209005D19CAD64400D6382E /* SuggestionTM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionTM.png; sourceTree = "<group>"; };
 		B209005F19CAD64A00D6382E /* SuggestionError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionError.png; sourceTree = "<group>"; };
-		B20960F219928C8500A2EB13 /* GettextToolsDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GettextToolsDummy.c; path = macosx/GettextToolsDummy.c; sourceTree = SOURCE_ROOT; };
+		B20960F219928C8500A2EB13 /* GettextToolsDummy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GettextToolsDummy.c; path = macos/GettextToolsDummy.c; sourceTree = SOURCE_ROOT; };
 		B210AE781CF4969600B6A5A9 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B210AE841CF49AAF00B6A5A9 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B210AE851CF49AB200B6A5A9 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/MoveApplication.strings; sourceTree = "<group>"; };
@@ -285,16 +285,16 @@
 		B240FFC619C6F1A600777AFE /* suggestions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = suggestions.cpp; path = tm/suggestions.cpp; sourceTree = "<group>"; };
 		B248B2DE170D765100EBA58E /* GettextTools.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GettextTools.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B248B2DF170D765100EBA58E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GettextTools-Info.plist"; path = "macosx/GettextTools-Info.plist"; sourceTree = "<group>"; };
+		B248B2E3170D765100EBA58E /* GettextTools-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GettextTools-Info.plist"; path = "macos/GettextTools-Info.plist"; sourceTree = "<group>"; };
 		B24ACD5B16F6201F00399242 /* Poedit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Poedit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24ACD5E16F6201F00399242 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B24ACD6116F6201F00399242 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		B24ACD6216F6201F00399242 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		B24ACD6316F6201F00399242 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		B24ACD6616F6201F00399242 /* Poedit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Poedit-Info.plist"; path = "macosx/Poedit-Info.plist"; sourceTree = "<group>"; };
+		B24ACD6616F6201F00399242 /* Poedit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Poedit-Info.plist"; path = "macos/Poedit-Info.plist"; sourceTree = "<group>"; };
 		B24ACD6816F6201F00399242 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B24ACD6C16F6201F00399242 /* Poedit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Poedit-Prefix.pch"; path = "src/Poedit-Prefix.pch"; sourceTree = "<group>"; };
-		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = osx/Poedit.iconset; sourceTree = "<group>"; };
+		B24ACD8316F6263900399242 /* Poedit.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = Poedit.iconset; path = macos/Poedit.iconset; sourceTree = "<group>"; };
 		B24C81551B3C1260006CD3D4 /* tg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tg; path = tg.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B24C81561B3C1262006CD3D4 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B24C81571B3C1267006CD3D4 /* tg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tg; path = tg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 		B27EF64E1986D0DB00C502D2 /* bs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B27EF6521986D15400C502D2 /* pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B27EF6531986D15A00C502D2 /* sk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/MoveApplication.strings; sourceTree = "<group>"; };
-		B280E84B1A92776D009F4A98 /* http_client_osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = http_client_osx.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		B280E84B1A92776D009F4A98 /* http_client_macos.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = http_client_macos.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		B280E84C1A92776D009F4A98 /* http_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = http_client.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B282DC3A1B3C12250050FB48 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B282DC3B1B3C124C0050FB48 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/MoveApplication.strings; sourceTree = "<group>"; };
@@ -377,8 +377,8 @@
 		B28F1CC516F629D30018AF7E /* gexecute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gexecute.h; sourceTree = "<group>"; };
 		B28F1CCA16F629D30018AF7E /* manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = manager.cpp; sourceTree = "<group>"; };
 		B28F1CCB16F629D30018AF7E /* manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = manager.h; sourceTree = "<group>"; };
-		B28F1CCC16F629D30018AF7E /* osx_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osx_helpers.h; sourceTree = "<group>"; };
-		B28F1CCD16F629D30018AF7E /* osx_helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = osx_helpers.m; sourceTree = "<group>"; };
+		B28F1CCC16F629D30018AF7E /* macos_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macos_helpers.h; sourceTree = "<group>"; };
+		B28F1CCD16F629D30018AF7E /* macos_helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = macos_helpers.m; sourceTree = "<group>"; };
 		B28F1CCE16F629D30018AF7E /* extractor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = extractor.cpp; sourceTree = "<group>"; };
 		B28F1CCF16F629D30018AF7E /* extractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = extractor.h; sourceTree = "<group>"; };
 		B28F1CD016F629D30018AF7E /* prefsdlg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prefsdlg.cpp; sourceTree = "<group>"; };
@@ -432,9 +432,9 @@
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		B2BF84C0170847E60030AA22 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B2BF84C21708498B0030AA22 /* HIToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HIToolbox.framework; path = System/Library/Frameworks/Carbon.framework/Frameworks/HIToolbox.framework; sourceTree = SDKROOT; };
-		B2C62E181AA8A29000901D63 /* http_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = http_client.cpp; sourceTree = "<group>"; };
 		B2C67BBF19B0DE7200691FA4 /* eu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = eu; path = eu.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2C67BC019B0DE7C00691FA4 /* gl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = gl; path = gl.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2C62E181AA8A29000901D63 /* http_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = http_client.cpp; sourceTree = "<group>"; };
 		B2CDAA1B1A61866300261248 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2CDAA1C1A61866300261248 /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2CDAA1D1A61867600261248 /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -457,15 +457,15 @@
 		B2D76A49181D028B0083C9D9 /* libboost_regex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_regex.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A4A181D028B0083C9D9 /* libboost_system.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_system.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A4B181D028B0083C9D9 /* libboost_thread.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_thread.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sidebar.cpp; sourceTree = "<group>"; };
 		B2DFCCFA19B5FD15003DFAD0 /* sidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sidebar.h; sourceTree = "<group>"; };
+		B2DFCCF919B5FD15003DFAD0 /* sidebar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sidebar.cpp; sourceTree = "<group>"; };
 		B2E02A341CB812C500D18F5C /* unicode_helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unicode_helpers.cpp; sourceTree = "<group>"; };
 		B2E02A351CB812C500D18F5C /* unicode_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unicode_helpers.h; sourceTree = "<group>"; };
 		B2E11F101A2C66FB00E4E42C /* text_control.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = text_control.cpp; sourceTree = "<group>"; };
 		B2E11F111A2C66FB00E4E42C /* text_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = text_control.h; sourceTree = "<group>"; };
 		B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = syntaxhighlighter.cpp; sourceTree = "<group>"; };
 		B2E2184B199A76B100EA2784 /* syntaxhighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syntaxhighlighter.h; sourceTree = "<group>"; };
-		B2E836DD1709ECD600F31559 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = macosx/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
+		B2E836DD1709ECD600F31559 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = macos/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		B2E836E01709ED2A00F31559 /* window-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "window-close.png"; sourceTree = "<group>"; };
 		B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-automatic.png"; sourceTree = "<group>"; };
 		B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-mid.png"; sourceTree = "<group>"; };
@@ -478,7 +478,7 @@
 		B2E836F81709ED6300F31559 /* poedit-fuzzy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-fuzzy.png"; sourceTree = "<group>"; };
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-validate.png"; sourceTree = "<group>"; };
-		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macosx/copy-translations.sh"; sourceTree = "<group>"; };
+		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macos/copy-translations.sh"; sourceTree = "<group>"; };
 		B2EC60A31812D9D40059756A /* icudt57l.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = icudt57l.dat; path = deps/icu4c/source/data/in/icudt57l.dat; sourceTree = "<group>"; };
 		B2F25F0B199E23B300127FF9 /* spellchecking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spellchecking.h; sourceTree = "<group>"; };
 		B2F25F0C199E327C00127FF9 /* spellchecking.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = spellchecking.cpp; sourceTree = "<group>"; };
@@ -553,7 +553,7 @@
 				B26897B2197A830200B42764 /* MoveApplication.strings */,
 			);
 			name = Translations;
-			path = locales/osx;
+			path = locales/macos;
 			sourceTree = "<group>";
 		};
 		B2166F4019AE4024000A6AA0 /* Preferences */ = {
@@ -571,7 +571,7 @@
 				B2166F4819AE4045000A6AA0 /* Prefs-Updates@2x.png */,
 			);
 			name = Preferences;
-			path = osx;
+			path = macos;
 			sourceTree = "<group>";
 		};
 		B22083AA197A82CD009355BB /* LetsMove */ = {
@@ -644,8 +644,8 @@
 				B230E2271A73F81400FB1E57 /* hidpi.h */,
 				B28F1CCA16F629D30018AF7E /* manager.cpp */,
 				B28F1CCB16F629D30018AF7E /* manager.h */,
-				B28F1CCC16F629D30018AF7E /* osx_helpers.h */,
-				B28F1CCD16F629D30018AF7E /* osx_helpers.m */,
+				B28F1CCC16F629D30018AF7E /* macos_helpers.h */,
+				B28F1CCD16F629D30018AF7E /* macos_helpers.m */,
 				B28F1CCE16F629D30018AF7E /* extractor.cpp */,
 				B28F1CCF16F629D30018AF7E /* extractor.h */,
 				B28F1CD016F629D30018AF7E /* prefsdlg.cpp */,
@@ -685,7 +685,7 @@
 				B25D94921AE3D7E3003BC368 /* concurrency.cpp */,
 				B280E84C1A92776D009F4A98 /* http_client.h */,
 				B2C62E181AA8A29000901D63 /* http_client.cpp */,
-				B280E84B1A92776D009F4A98 /* http_client_osx.mm */,
+				B280E84B1A92776D009F4A98 /* http_client_macos.mm */,
 				B2B133431CF7522B009BBA1A /* json.h */,
 				B2FE29691AC85FFF005588E4 /* keytar_mac.cc */,
 				B2FE296A1AC85FFF005588E4 /* keytar.h */,
@@ -857,7 +857,7 @@
 				B29B281F19D2E87600D27DC8 /* sidebar@2x.png */,
 			);
 			name = Toolbar;
-			path = osx;
+			path = macos;
 			sourceTree = "<group>";
 		};
 		B2CE6D1B1ACFCD95007E6863 /* Quicklook */ = {
@@ -1220,7 +1220,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacosx/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
+			shellScript = "export MSGFMT=\"${DEPS_BUILD_DIR}/gettext/bin/msgfmt\"\nmacos/copy-translations.sh \"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\"";
 		};
 		B2F287C6170DCF06004C1F41 /* Copy Gettext binaries, data files & translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1271,7 +1271,7 @@
 				B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */,
 				B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */,
 				B28F1CF516F629D30018AF7E /* manager.cpp in Sources */,
-				B28F1CF616F629D30018AF7E /* osx_helpers.m in Sources */,
+				B28F1CF616F629D30018AF7E /* macos_helpers.m in Sources */,
 				B240FFC719C6F1A600777AFE /* suggestions.cpp in Sources */,
 				B28F1CF716F629D30018AF7E /* extractor.cpp in Sources */,
 				B2380F9A1A9B821200B7D8C9 /* crowdin_gui.cpp in Sources */,
@@ -1286,7 +1286,7 @@
 				B28F1CFF16F629D30018AF7E /* utility.cpp in Sources */,
 				B28F1D0016F629D30018AF7E /* export_html.cpp in Sources */,
 				B230E2281A73F81400FB1E57 /* hidpi.cpp in Sources */,
-				B280E84D1A92776D009F4A98 /* http_client_osx.mm in Sources */,
+				B280E84D1A92776D009F4A98 /* http_client_macos.mm in Sources */,
 				B28F1D0116F629D30018AF7E /* pl_evaluate.cpp in Sources */,
 				B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */,
 				B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */,
@@ -1392,7 +1392,7 @@
 				B210AE781CF4969600B6A5A9 /* sl */,
 			);
 			name = InfoPlist.strings;
-			path = locales/osx;
+			path = locales/macos;
 			sourceTree = "<group>";
 		};
 		B26897B2197A830200B42764 /* MoveApplication.strings */ = {
@@ -1466,7 +1466,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
+				INFOPLIST_FILE = "macos/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.Poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1484,7 +1484,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
-				INFOPLIST_FILE = "macosx/GettextTools-Info.plist";
+				INFOPLIST_FILE = "macos/GettextTools-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.poedit.Poedit.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1627,7 +1627,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -1649,7 +1649,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/Poedit-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/macosx/Poedit-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/macos/Poedit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (

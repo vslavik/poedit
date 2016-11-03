@@ -37,7 +37,7 @@
 /**
     Text control with some Poedit-specific customizations:
     
-    - Allow setting text programatically, without user-input processing (OS X)
+    - Allow setting text programatically, without user-input processing (macOS)
     - Disable user-usable rich text support
     - Stylistic tweaks (padding and such)
     - Generic undo/redo implementation for GTK

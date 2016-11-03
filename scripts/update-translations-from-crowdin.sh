@@ -20,24 +20,24 @@ crowdin-cli download
 remove_unsupported_languages()
 {
     rm -f locales/win/windows_strings-Aragonese.rc
-    rm -rf */osx/an.lproj
+    rm -rf */macos/an.lproj
 
-    rm -rf */osx/fy_NL.lproj
-    rm -rf */osx/oc.lproj
+    rm -rf */macos/fy_NL.lproj
+    rm -rf */macos/oc.lproj
 
     rm -f locales/win/windows_strings-Esperanto.rc
     rm -f locales/win/windows_strings-Kabyle.rc  # Win10 supports, but no LCID
 
-    # No LTR support on OS X yet:
-    rm -rf */osx/ar.lproj
-    rm -rf */osx/he.lproj
+    # No LTR support on macOS yet:
+    rm -rf */macos/ar.lproj
+    rm -rf */macos/he.lproj
 }
 
 # Crowdin tools create empty .strings files for all translations, even the ones
 # that don't exist:
 remove_empty_lproj_string_files()
 {
-    for dir in locales/osx src ; do
+    for dir in locales/macos src ; do
         find $dir -type f -name '*.strings' -empty -delete
         find $dir -type d -name '*.lproj' -empty -delete
     done

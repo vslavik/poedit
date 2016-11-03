@@ -19,7 +19,7 @@ class reference.
  Installing
 ============
 
-Binary easily-installable packages are provided for Windows and OS X and are
+Binary easily-installable packages are provided for Windows and macOS and are
 part of many Linux distributions.
 
 
@@ -53,18 +53,18 @@ You must have the dependencies installed in a location configure will find,
 e.g. by setting CPPFLAGS and LDFLAGS appropriately.
 
 
- OS X
-------
+ macOS
+-------
 
-You need a full git checkout to build on OS X; see below for details.
+You need a full git checkout to build on macOS; see below for details.
 
 After checkout, use the Poedit.xcworkspace workspace and Xcode 6 to build
 Poedit.
 
-There are some additional dependencies on tools not included with OS X.
-They can be installed with Homebrew and macosx/Brewfile:
+There are some additional dependencies on tools not included with macOS.
+They can be installed with Homebrew and macos/Brewfile:
 
-    brew bundle macosx/
+    brew bundle macos/
 
 
  Windows using Visual Studio 2015
@@ -104,7 +104,7 @@ The ./bootstrap script requires some additional tools to be installed:
  * AsciiDoc, xsltproc and xmlto to generate the manual page
  * Bakefile, to generate Windows makefiles/projects
  * ImageMagick and png2icns from libicns to generate icons in Windows and
-   OS X native formats
+   macOS native formats
 
 If you don't have any of the dependencies, ./bootstrap will print errors, but
 will continue to run. In other words, if you don't need e.g. Windows stuff, you
@@ -121,7 +121,7 @@ license text).
 See the COPYING file for details on program's licensing and the
 icons/README file for details on the icons.
 
-Win32 and Mac OS X versions contain GNU gettext binaries. They are distributed
+Windows and macOS versions contain GNU gettext binaries. They are distributed
 under the GNU General Public License and their source code is available from
 http://www.gnu.org/software/gettext or, if you have difficulties getting them
 from there, email me for a copy of the sources.

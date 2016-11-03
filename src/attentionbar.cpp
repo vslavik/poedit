@@ -41,7 +41,7 @@
 #include "hidpi.h"
 
 #ifdef __WXOSX__
-#include "osx_helpers.h"
+#include "macos_helpers.h"
 #endif
 
 #ifdef __WXOSX__

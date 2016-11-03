@@ -36,7 +36,7 @@ class WXDLLIMPEXP_FWD_CORE wxBitmap;
 
 #ifdef NEEDS_MANUAL_HIDPI
 
-// Scaling factor against "normal" DPI (2.0 would be OS X's "Retina" scaling)
+// Scaling factor against "normal" DPI (2.0 would be macOS's "Retina" scaling)
 extern double g_pxScalingFactor;
 
 /// Returns current scaling factor.

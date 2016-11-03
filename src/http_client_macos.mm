@@ -55,14 +55,14 @@ public:
         [m_native.operationQueue setMaxConcurrentOperationCount:NSIntegerMax];
 
         int majorVersion, minorVersion, patchVersion;
-        NSOperatingSystemVersion osx = [[NSProcessInfo processInfo] operatingSystemVersion];
-        majorVersion = (int)osx.majorVersion;
-        minorVersion = (int)osx.minorVersion;
-        patchVersion = (int)osx.patchVersion;
-        NSString *osx_str = (patchVersion == 0)
+        NSOperatingSystemVersion macos = [[NSProcessInfo processInfo] operatingSystemVersion];
+        majorVersion = (int)macos.majorVersion;
+        minorVersion = (int)macos.minorVersion;
+        patchVersion = (int)macos.patchVersion;
+        NSString *macos_str = (patchVersion == 0)
                             ? [NSString stringWithFormat:@"%d.%d", majorVersion, minorVersion]
                             : [NSString stringWithFormat:@"%d.%d.%d", majorVersion, minorVersion, patchVersion];
-        [m_native setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"Poedit/%s (Mac OS X %@)", POEDIT_VERSION, osx_str]];
+        [m_native setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"Poedit/%s (Mac OS X %@)", POEDIT_VERSION, macos_str]];
     }
 
     ~impl()

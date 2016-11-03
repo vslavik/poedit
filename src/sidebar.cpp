@@ -318,7 +318,7 @@ public:
         m_text->SetAndWrapLabel(text);
 
 #ifndef __WXOSX__
-        // FIXME: Causes weird issues on OS X: tooltips appearing on the main list control,
+        // FIXME: Causes weird issues on macOS: tooltips appearing on the main list control,
         //        over toolbar, where the mouse just was etc.
         m_icon->SetToolTip(tooltip);
         m_text->SetToolTip(tooltip);
@@ -351,7 +351,7 @@ private:
     void OnMouseMove(wxMouseEvent& e)
     {
         auto rectWin = GetClientRect();
-        rectWin.Deflate(1); // work around off-by-one issue on OS X
+        rectWin.Deflate(1); // work around off-by-one issue on macOS
         auto evtWin = static_cast<wxWindow*>(e.GetEventObject());
         auto mpos = e.GetPosition();
         if (evtWin != this)
@@ -406,7 +406,7 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
                                      // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
                                      _("No matches found")
                                 #else
-                                     // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (OS X, Linux).
+                                     // TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
                                      _("No Matches Found")
                                 #endif
                                      );

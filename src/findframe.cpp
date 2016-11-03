@@ -214,8 +214,8 @@ FindFrame::FindFrame(PoeditFrame *owner,
     // wouldn't work. Emulate it in custom code instead, by handling the
     // event originating from the button and from the accelerator table above
     // differently. More than a bit of a hack, but it works.
-    NSButton *osxPrev = (NSButton*)m_btnPrev->GetHandle();
-    Bind(wxEVT_MENU, [=](wxCommandEvent&){ [osxPrev performClick:nil]; }, m_btnPrev->GetId());
+    NSButton *macPrev = (NSButton*)m_btnPrev->GetHandle();
+    Bind(wxEVT_MENU, [=](wxCommandEvent&){ [macPrev performClick:nil]; }, m_btnPrev->GetId());
 #endif
 
     OnModeChanged();

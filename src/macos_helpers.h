@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _OSX_HELPERS_H_
-#define _OSX_HELPERS_H_
+#ifndef Poedit_macos_helpers_h
+#define Poedit_macos_helpers_h
 
 // FIXME: This is a hack to work around Automake's lack of support for ObjC++.
 //        Remove it after switching build system to Bakefile.
@@ -54,4 +54,4 @@ void MoveToApplicationsFolderIfNecessary();
 }
 #endif
 
-#endif // _OSX_HELPERS_H_
+#endif // Poedit_macos_helpers_h

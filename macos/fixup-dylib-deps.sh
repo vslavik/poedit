@@ -10,8 +10,8 @@
 #
 # For example, Gettext binaries are build with //lib prefix by build/deps.xml,
 # see:
-#   $ otool -L deps/bin-osx/Debug/gettext/bin/xgettext
-#   deps/bin-osx/Debug/gettext/bin/xgettext:
+#   $ otool -L deps/bin-macos/Debug/gettext/bin/xgettext
+#   deps/bin-macos/Debug/gettext/bin/xgettext:
 #   	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 744.18.0)
 #   	//lib/libgettextsrc-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
 #   	//lib/libgettextlib-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
@@ -25,13 +25,13 @@
 # To fix this, run this script as follow:
 #
 #   fixup-dylib-deps.sh "//lib" "@executable_path/../lib" \
-#                       deps/bin-osx/Debug/gettext/lib \
-#                       deps/bin-osx/Debug/gettext/bin/*
+#                       deps/bin-macos/Debug/gettext/lib \
+#                       deps/bin-macos/Debug/gettext/bin/*
 #
 # Resulting in:
 #
-#   $ otool -L deps/bin-osx/Debug/gettext/bin/xgettext
-#   deps/bin-osx/Debug/gettext/bin/xgettext:
+#   $ otool -L deps/bin-macos/Debug/gettext/bin/xgettext
+#   deps/bin-macos/Debug/gettext/bin/xgettext:
 #   	/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 744.18.0)
 #   	@executable_path/../lib/libgettextsrc-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)
 #   	@executable_path/../libgettextlib-0.18.3.dylib (compatibility version 0.0.0, current version 0.0.0)

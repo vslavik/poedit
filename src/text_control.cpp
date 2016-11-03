@@ -202,7 +202,7 @@ private:
 
 #ifdef __WXOSX__
 
-// wxTextCtrl implementation on OS X uses insertText:, which is intended for
+// wxTextCtrl implementation on macOS uses insertText:, which is intended for
 // user input and performs some user input processing, such as autocorrections.
 // We need to avoid this, because Poedit's text control is filled with data
 // when moving in the list control: https://github.com/vslavik/poedit/issues/81
@@ -216,7 +216,7 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
     [text setTextContainerInset:NSMakeSize(1,3)];
     [text setRichText:NO];
 
-    // TODO: This isn't implemented and doesn't work in OS X
+    // TODO: This isn't implemented and doesn't work in macOS
     //Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
     //Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
     //Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);

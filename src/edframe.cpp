@@ -49,7 +49,7 @@
 
 #ifdef __WXOSX__
 #import <AppKit/NSDocumentController.h>
-#include "osx_helpers.h"
+#include "macos_helpers.h"
 #endif
 
 #include <algorithm>
@@ -211,7 +211,7 @@ bool g_focusToText = false;
 
 
 BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
-// OS X and GNOME apps should open new documents in a new window. On Windows,
+// macOS and GNOME apps should open new documents in a new window. On Windows,
 // however, the usual thing to do is to open the new document in the already
 // open window and replace the current document.
 #ifdef __WXMSW__
@@ -459,7 +459,7 @@ PoeditFrame::PoeditFrame() :
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
 
-    // This is different from the default, because it's a bit smaller on OS X
+    // This is different from the default, because it's a bit smaller on macOS
     m_normalGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     m_boldGuiFont = m_normalGuiFont;
     m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
@@ -1031,7 +1031,7 @@ void PoeditFrame::DoIfCanDiscardCurrentDoc(TFunctor completionHandler)
         // hide the dialog asap, WriteCatalog() may show another modal sheet
         dlg->Hide();
 #ifdef __WXOSX__
-        // Hide() alone is not sufficient on OS X, we need to destroy dlg
+        // Hide() alone is not sufficient on macOS, we need to destroy dlg
         // shared_ptr and only then continue. Because this code is called
         // from event loop (and not this functions' caller) at an unspecified
         // time anyway, we can just as well defer it into the next idle time
@@ -3688,7 +3688,7 @@ void PoeditFrame::OnEditCommentUpdate(wxUpdateUIEvent& event)
 }
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
-// Emulate something like OS X's first responder: pass text editing commands to
+// Emulate something like macOS's first responder: pass text editing commands to
 // the focused text control.
 void PoeditFrame::OnTextEditingCommand(wxCommandEvent& event)
 {

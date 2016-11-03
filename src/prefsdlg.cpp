@@ -73,7 +73,7 @@
 #endif
 
 #ifdef USE_SPARKLE
-#include "osx_helpers.h"
+#include "macos_helpers.h"
 #endif // USE_SPARKLE
 
 #if defined(USE_SPARKLE) || defined(__WXMSW__)
@@ -359,7 +359,7 @@ public:
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 #ifdef __WXOSX__
-        topsizer->SetMinSize(PX(430), -1); // for OS X look
+        topsizer->SetMinSize(PX(430), -1); // for macOS look
 #endif
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -541,7 +541,7 @@ public:
     wxString GetName() const override
     {
 #if defined(__WXOSX__) || defined(__WXGTK__)
-        // TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on OS X.
+        // TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
         // Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
         // length there.
         return _("TM");
@@ -825,7 +825,7 @@ public:
     UpdatesPageWindow(wxWindow *parent) : PrefsPanel(parent)
     {
         wxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-        topsizer->SetMinSize(PX(400), -1); // for OS X look, wouldn't fit the toolbar otherwise
+        topsizer->SetMinSize(PX(400), -1); // for macOS look, wouldn't fit the toolbar otherwise
 
         wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
         topsizer->Add(sizer, wxSizerFlags().Expand().PXDoubleBorderAll());

@@ -46,7 +46,7 @@
 #include <wx/translation.h>
 
 #ifdef __WXOSX__
-#include "osx_helpers.h"
+#include "macos_helpers.h"
 #endif
 
 #ifdef __WXMSW__
@@ -96,7 +96,7 @@ struct PoeditApp::RecentMenuData
 #ifndef __WXOSX__
 
 // IPC for ensuring that only one instance of Poedit runs at a time. This is
-// handled native on OS X and GtkApplication could do it under GTK+3, but wx
+// handled native on macOS and GtkApplication could do it under GTK+3, but wx
 // doesn't support that and we have to implement everything manually for both
 // Windows and GTK+ ports.
 
@@ -474,7 +474,7 @@ bool PoeditApp::OnInit()
 
 #ifndef __WXOSX__
     // If we failed to open any window during startup (e.g. because the user
-    // attempted to open MO files), shut the app down. Don't do this on OS X
+    // attempted to open MO files), shut the app down. Don't do this on macOS
     // where a) the initialization is finished after OnInit() and b) apps
     // without windows are OK.
     if (!PoeditFrame::HasAnyWindow())
@@ -929,7 +929,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
 END_EVENT_TABLE()
 
 
-// OS X and GNOME apps should open new documents in a new window. On Windows,
+// macOS and GNOME apps should open new documents in a new window. On Windows,
 // however, the usual thing to do is to open the new document in the already
 // open window and replace the current document.
 #ifndef __WXMSW__
@@ -1027,15 +1027,15 @@ void PoeditApp::OnAbout(wxCommandEvent&)
     //              version number when used
     _("Version %s");
 
-    // TRANSLATORS: OS X item in app menu
+    // TRANSLATORS: macOS item in app menu
     _("Services");
-    // TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+    // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
     _("Hide %s");
-    // TRANSLATORS: OS X item in app menu
+    // TRANSLATORS: macOS item in app menu
     _("Hide Others");
-    // TRANSLATORS: OS X item in app menu
+    // TRANSLATORS: macOS item in app menu
     _("Show All");
-    // TRANSLATORS: OS X item in app menu, %s is replaced with "Poedit"
+    // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
     _("Quit %s");
     _("Preferences...");
 #endif
@@ -1075,7 +1075,7 @@ void PoeditApp::OnQuit(wxCommandEvent&)
     }
 
     // The Close() calls below may not terminate immediately, they may ask for
-    // confirmation window-modally on OS X. So change the behavior to terminate
+    // confirmation window-modally on macOS. So change the behavior to terminate
     // the app when the last window is closed now, instead of calling
     // ExitMainLoop(). This will terminate the app automagically when all the
     // windows are closed.
@@ -1323,7 +1323,7 @@ void PoeditApp::OSXOnWillFinishLaunching()
     wxApp::OSXOnWillFinishLaunching();
     CreateFakeOpenRecentMenu();
     // We already create the menu item, this would cause duplicates "thanks" to the weird
-    // way wx's menubar works on OS X:
+    // way wx's menubar works on macOS:
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"NSFullScreenMenuItemEverywhere"];
 }
 

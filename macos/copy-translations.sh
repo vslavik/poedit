@@ -13,7 +13,7 @@ get_all_langs()
     done
 }
 
-lang_to_osx()
+lang_to_macos()
 {
     x="$1"
     x="${x/zh_TW/zh_Hant}"
@@ -43,7 +43,7 @@ try_compile_po()
 }
 
 for lang in `get_all_langs`; do
-    lproj="$DESTDIR/`lang_to_osx $lang`.lproj"
+    lproj="$DESTDIR/`lang_to_macos $lang`.lproj"
 
     mkdir -p "$lproj"
 
@@ -51,7 +51,7 @@ for lang in `get_all_langs`; do
     try_compile_po $lang "$lproj/wxstd.mo"            deps/wx/locale
 done
 
-# OS X uses pt.lproj for pt_BR localization; bizarre as it is, we must do the
+# macOS uses pt.lproj for pt_BR localization; bizarre as it is, we must do the
 # same otherwise the localization wouldn't be used. Use a symlink, though, to
 # keep things non-confusing:
 ln -sfh "pt_BR.lproj" "$DESTDIR/pt.lproj"
