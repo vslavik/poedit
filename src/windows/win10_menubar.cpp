@@ -29,9 +29,6 @@
 
 #include <wx/msw/uxtheme.h>
 #include <wx/nativewin.h>
-#if !wxCHECK_VERSION(3,1,0)
-  #include "wx_backports/nativewin.h"
-#endif
 
 #include <mCtrl/menubar.h>
 
@@ -59,7 +56,7 @@ public:
             MC_WC_MENUBAR,
             _T(""),
             WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | CCS_NORESIZE | CCS_NOPARENTALIGN,
-            0, 0, 400, 23*2,
+            0, 0, 1000, 23*2,
             (HWND)this->GetHWND(),
             (HMENU) -1,
             wxGetInstance(),
@@ -111,6 +108,7 @@ public:
         SIZE size;
         if (::SendMessage(m_mctrlHandle, TB_GETMAXSIZE, 0, (LPARAM) &size))
         {
+            sizeBest.x = size.cx;
             sizeBest.y = size.cy + 1;
             CacheBestSize(sizeBest);
         }
