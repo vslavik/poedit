@@ -44,7 +44,6 @@ dist_uiicons_DATA = \
 		poedit-status-automatic.png \
 		poedit-status-bookmark.png \
 		poedit-status-comment.png \
-		poedit-status-nothing.png \
 		poedit-status-cat-mid.png \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \

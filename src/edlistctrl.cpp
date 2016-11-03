@@ -40,6 +40,8 @@
 #include <wx/wupdlock.h>
 
 #ifdef __WXMSW__
+#include <wx/headerctrl.h>
+#include <wx/itemattr.h>
 #include <wx/msw/uxtheme.h>
 #include <vssym32.h>
 #endif
@@ -77,25 +79,6 @@ const wxColour gs_FuzzyForWhite("#a9861b");
 const wxColour gs_UntranslatedForBlack("#1962a0");
 const wxColour gs_FuzzyForBlack("#a9861b");
 
-
-const wxColour gs_TranspColor(254, 0, 253); // FIXME: get rid of this
-
-// wxMSW doesn't need a dummy image to align columns properly, unlike wxOSX
-#ifdef __WXMSW__
-#define IMG_NOTHING -1
-#endif
-
-enum
-{
-#ifndef __WXMSW__
-    IMG_NOTHING,
-#endif
-    IMG_AUTOMATIC,
-    IMG_COMMENT,
-    IMG_BOOKMARK
-};
-
-
 class SelectionPreserver
 {
 public:
@@ -103,8 +86,8 @@ public:
     {
         if (!list)
             return;
-        selection = list->GetSelectedCatalogItems();
-        focus = list->ListIndexToCatalog(list->GetFocusedItem());
+        selection = list->GetSelectedCatalogItemIndexes();
+        focus = list->ListItemToCatalogIndex(list->GetCurrentItem());
     }
 
     ~SelectionPreserver()
@@ -112,12 +95,12 @@ public:
         if (!list)
             return;
         if (!selection.empty())
-            list->SetSelectedCatalogItems(selection);
+            list->SetSelectedCatalogItemIndexes(selection);
         if (focus != -1)
         {
-            int idx = list->CatalogIndexToList(focus);
-            list->EnsureVisible(idx);
-            list->Focus(idx);
+            auto item = list->CatalogIndexToListItem(focus);
+            list->EnsureVisible(item);
+            list->SetCurrentItem(item);
         }
     }
 
@@ -127,342 +110,236 @@ private:
     int focus;
 };
 
-
 } // anonymous namespace
 
 
-BEGIN_EVENT_TABLE(PoeditListCtrl, wxListCtrl)
-   EVT_SIZE(PoeditListCtrl::OnSize)
-END_EVENT_TABLE()
 
-PoeditListCtrl::PoeditListCtrl(wxWindow *parent,
-               wxWindowID id,
-               const wxPoint &pos,
-               const wxSize &size,
-               long style,
-               bool dispIDs,
-               const wxValidator& validator,
-               const wxString &name)
-     : wxListView(parent, id, pos, size, style | wxLC_VIRTUAL, validator, name)
+PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual)
+    : m_sourceTextDir(TextDirection::LTR),
+      m_transTextDir(TextDirection::LTR),
+      m_appTextDir(appTextDir)
 {
-#ifdef __WXMSW__
-    if (wxApp::GetComCtl32Version() >= 600)
-    {
-        ::SendMessage(GetHwnd(), LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_DOUBLEBUFFER, LVS_EX_DOUBLEBUFFER);
-    }
-#endif
-
-    m_displayIDs = dispIDs;
-
-    m_sourceTextDir = m_transTextDir = TextDirection::LTR;
-    m_appTextDir = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft) ? TextDirection::RTL : TextDirection::LTR;
-
     sortOrder = SortOrder::Default();
 
-    CreateColumns();
-
-    wxImageList *list = new wxImageList(PX(16), PX(16));
-
-    // IMG_XXX:
-#ifndef __WXMSW__
-    list->Add(wxArtProvider::GetBitmap("poedit-status-nothing"));
-#endif
-    list->Add(wxArtProvider::GetBitmap("poedit-status-automatic"));
-    list->Add(wxArtProvider::GetBitmap("poedit-status-comment"));
-    list->Add(wxArtProvider::GetBitmap("poedit-status-bookmark"));
-
-    AssignImageList(list, wxIMAGE_LIST_SMALL);
-
     // configure items colors & fonts:
-
-    wxVisualAttributes visual = GetDefaultAttributes();
-    wxColour shaded = visual.colBg;
-
-#if defined(__WXMSW__)
-    // On Windows 7, shaded list items make it impossible to see the selection,
-    // so use different color for it (see bug #336).
-    {
-        shaded.Set(int(0.99 * shaded.Red()),
-                   int(0.99 * shaded.Green()),
-                   shaded.Blue());
-    }
-#else // !__WXMSW__
-  #ifdef __WXOSX__
-    if ( shaded == *wxWHITE )
-    {
-        // use standard shaded color from finder/databrowser:
-        shaded.Set("#f0f5fd");
-    }
-    else
-  #endif // __WXOSX__
-    {
-        shaded.Set(int(DARKEN_FACTOR * shaded.Red()),
-                   int(DARKEN_FACTOR * shaded.Green()),
-                   int(DARKEN_FACTOR * shaded.Blue()));
-    }
-#endif // !__WXMSW__
-
-    m_attrNormal[1].SetBackgroundColour(shaded);
-    m_attrUntranslated[1].SetBackgroundColour(shaded);
-    m_attrFuzzy[1].SetBackgroundColour(shaded);
-    m_attrInvalid[1].SetBackgroundColour(shaded);
 
     // FIXME: make this user-configurable
     if ( IsAlmostWhite(visual.colBg) )
     {
-        m_attrUntranslated[0].SetTextColour(gs_UntranslatedForWhite);
-        m_attrUntranslated[1].SetTextColour(gs_UntranslatedForWhite);
-        m_attrFuzzy[0].SetTextColour(gs_FuzzyForWhite);
-        m_attrFuzzy[1].SetTextColour(gs_FuzzyForWhite);
+        m_clrUntranslated = gs_UntranslatedForWhite;
+        m_clrFuzzy = gs_FuzzyForWhite;
     }
     else if ( IsAlmostBlack(visual.colBg) )
     {
-        m_attrUntranslated[0].SetTextColour(gs_UntranslatedForBlack);
-        m_attrUntranslated[1].SetTextColour(gs_UntranslatedForBlack);
-        m_attrFuzzy[0].SetTextColour(gs_FuzzyForBlack);
-        m_attrFuzzy[1].SetTextColour(gs_FuzzyForBlack);
+        m_clrUntranslated = gs_UntranslatedForBlack;
+        m_clrFuzzy = gs_FuzzyForBlack;
     }
     // else: we don't know if the default colors would be well-visible on
     //       user's background color, so play it safe and don't highlight
     //       anything
 
-    // FIXME: todo; use appropriate font for fuzzy/trans/untrans
-    m_attrInvalid[0].SetBackgroundColour(gs_ErrorColor);
-    m_attrInvalid[1].SetBackgroundColour(gs_ErrorColor);
+    m_clrInvalid = gs_ErrorColor;
 
     // Use gray for IDs
     if ( IsAlmostBlack(visual.colFg) )
-        m_attrId.SetTextColour(wxColour("#A1A1A1"));
+        m_clrID = wxColour("#A1A1A1");
 
-    SetCustomFont(wxNullFont);
+    m_iconAutomatic = wxArtProvider::GetBitmap("poedit-status-automatic");
+    m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
+    m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
 
-#ifdef __WXMSW__
-    // Setup custom header font & color on Windows 10, where the default look is a bit odd
-    if (IsWindows10OrGreater())
-    {
-        wxItemAttr headerAttr;
-
-        // Use the same text color as Explorer's headers use
-        const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
-        if (theme)
-        {
-            wxUxThemeHandle hTheme(this->GetParent(), L"ItemsView::Header");
-            COLORREF clr;
-            HRESULT hr = theme->GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
-            if (SUCCEEDED(hr))
-                headerAttr.SetTextColour(wxRGBToColour(clr));
-        }
-
-        // In HiDPI modes, standard header has smaller height than Explorer's and it isn't
-        // separated from the content well. wxListCtrl doesn't allow for customized header
-        // height (unlike wxDVC), so as a temporary workaround, at least make the text
-        // slightly larger to compensate. 
-        if (HiDPIScalingFactor() > 1.0)
-        {
-            auto headerFont = visual.font;
-            headerFont.SetPointSize(headerFont.GetPointSize() + 1);
-            headerAttr.SetFont(headerFont);
-        }
-
-        SetHeaderAttr(headerAttr);
-    }
-#endif // __WXMSW__
-}
-
-PoeditListCtrl::~PoeditListCtrl()
-{
-    sortOrder.Save();
-}
-
-void PoeditListCtrl::SetCustomFont(wxFont font_)
-{
-    wxFont font(font_);
-
-    if ( !font.IsOk() )
-        font = GetDefaultAttributes().font;
-
-    m_attrNormal[0].SetFont(font);
-    m_attrNormal[1].SetFont(font);
-
-    wxFont fontb = font;
-    fontb.SetWeight(wxFONTWEIGHT_BOLD);
-
-    m_attrUntranslated[0].SetFont(fontb);
-    m_attrUntranslated[1].SetFont(fontb);
-
-    m_attrFuzzy[0].SetFont(fontb);
-    m_attrFuzzy[1].SetFont(fontb);
-
-    m_attrInvalid[0].SetFont(fontb);
-    m_attrInvalid[1].SetFont(fontb);
-}
-
-void PoeditListCtrl::SetDisplayLines(bool dl)
-{
-    m_displayIDs = dl;
-    CreateColumns();
-}
-
-void PoeditListCtrl::CreateColumns()
-{
-    DeleteAllColumns();
-
-    int curr = 0;
-    m_colSource = (int)InsertColumn(curr++, _("Source text"));
-    if (m_catalog && m_catalog->HasCapability(Catalog::Cap::Translations))
-        m_colTrans = (int)InsertColumn(curr++, _("Translation"));
-    else
-        m_colTrans = -1;
-    if (m_displayIDs)
-        m_colId = (int)InsertColumn(curr++, _("ID"), wxLIST_FORMAT_RIGHT);
-    else
-        m_colId = -1;
-
-#ifdef __WXMSW__
-    if (m_appTextDir == TextDirection::RTL)
-    {
-        // another wx quirk: if we truly need left alignment, we must lie under RTL locales
-        wxListItem colInfoOrig;
-        colInfoOrig.SetAlign(wxLIST_FORMAT_RIGHT);
-        SetColumn(m_colSource, colInfoOrig);
-    }
-#endif
-
-    SizeColumns();
-}
-
-void PoeditListCtrl::SizeColumns()
-{
-    const int LINE_COL_SIZE = m_displayIDs ? PX(50) : 0;
-
-    int w = GetSize().x
-            - wxSystemSettings::GetMetric(wxSYS_VSCROLL_X) - 10
-            - LINE_COL_SIZE;
-
-    if (m_colTrans != -1)
-    {
-        SetColumnWidth(m_colSource, w / 2);
-        SetColumnWidth(m_colTrans, w - w / 2);
-        m_colWidth = (w/2) / GetCharWidth();
-    }
-    else
-    {
-        SetColumnWidth(m_colSource, w);
-        m_colWidth = w / GetCharWidth();
-    }
-
-    if (m_displayIDs)
-        SetColumnWidth(m_colId, LINE_COL_SIZE);
 }
 
 
-void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
+void PoeditListCtrl::Model::SetCatalog(CatalogPtr catalog)
 {
-    wxWindowUpdateLocker no_updates(this);
-
-    const bool isSameCatalog = (catalog == m_catalog);
-    const bool sizeChanged = (catalog && (int)catalog->GetCount() != GetItemCount());
-
-    SelectionPreserver preserve(isSameCatalog ? this : nullptr);
-
-    // this is to prevent crashes (wxMac at least) when shortening virtual
-    // listctrl when its scrolled to the bottom:
-    if (sizeChanged)
-    {
-        m_catalog.reset();
-        SetItemCount(0);
-    }
-
-    // now read the new catalog:
     m_catalog = catalog;
-    CreateColumns();
-    ReadCatalog(/*resetSizeAndSelection=*/sizeChanged);
-}
 
-void PoeditListCtrl::ReadCatalog(bool resetSizeAndSelection)
-{
-    wxWindowUpdateLocker no_updates(this);
-
-    // clear the list and its sort order too:
-    if (resetSizeAndSelection)
-        SetItemCount(0);
-    m_mapListToCatalog.clear();
-    m_mapCatalogToList.clear();
-
-    if (!m_catalog)
+    if (!catalog)
     {
-        Refresh();
+        Reset(0);
         return;
     }
 
-    auto srclang = m_catalog->GetSourceLanguage();
-    auto lang = m_catalog->GetLanguage();
+    auto srclang = catalog->GetSourceLanguage();
+    auto lang = catalog->GetLanguage();
     m_sourceTextDir = srclang.Direction();
     m_transTextDir = lang.Direction();
-
-    auto isRTL = lang.IsRTL();
-#ifdef __WXMSW__
-    // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
-    if (m_appTextDir == TextDirection::RTL)
-        isRTL = !isRTL;
-#endif
-
-    wxListItem colInfo;
-    colInfo.SetMask(wxLIST_MASK_TEXT);
-
-    if (srclang.IsValid())
-        colInfo.SetText(wxString::Format(_(L"Source text — %s"), srclang.DisplayName()));
-    else
-        colInfo.SetText(_("Source text"));
-    SetColumn(m_colSource, colInfo);
-
-    if (m_colTrans != -1)
-    {
-        wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");
-        colInfo.SetText(wxString::Format(_(L"Translation — %s"), langname));
-        colInfo.SetAlign(isRTL ? wxLIST_FORMAT_RIGHT : wxLIST_FORMAT_LEFT);
-        SetColumn(m_colTrans, colInfo);
-    }
 
     // sort catalog items, create indexes mapping
     CreateSortMap();
 
-    // now that everything is prepared, we may set the item count
-    if (resetSizeAndSelection)
-        SetItemCount(m_catalog->GetCount());
+    Reset(catalog->GetCount());
+}
 
-    // scroll to the top and refresh everything:
-    if ( m_catalog->GetCount() )
+
+void PoeditListCtrl::Model::UpdateSort()
+{
+    if (!m_catalog)
+        return;
+    CreateSortMap();
+    Reset(m_catalog->GetCount());
+}
+
+
+wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
+{
+    switch (col)
     {
-        if (resetSizeAndSelection)
-            SelectOnly(0);
-        RefreshItems(0, m_catalog->GetCount()-1);
-    }
-    else
-    {
-        Refresh();
+        case Col_ID:
+            return "string";
+
+        case Col_Icon:
+            return "wxBitmap";
+
+        case Col_Source:
+        case Col_Translation:
+            return "string";
+
+        default:
+            return "null";
     }
 }
 
 
-void PoeditListCtrl::Sort()
+void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const
 {
-    if ( m_catalog && m_catalog->GetCount() )
-    {
-        SelectionPreserver preserve(this);
+    auto d = Item(row);
+    wxCHECK_RET(d, "invalid row");
 
-        CreateSortMap();
-        RefreshItems(0, m_catalog->GetCount()-1);
-    }
-    else
+    switch (col)
     {
-        Refresh();
+        case Col_ID:
+        {
+            variant = wxString::Format("%d", d->GetId());
+            break;
+        }
+
+        case Col_Icon:
+        {
+            if (d->GetBookmark() != NO_BOOKMARK)
+                variant << m_iconBookmark;
+            else if (d->HasComment() || d->HasExtractedComments())
+                variant << m_iconComment;
+            else if (d->IsAutomatic())
+                variant << m_iconAutomatic;
+            else
+                variant = wxNullVariant;
+            break;
+        }
+
+        case Col_Source:
+        {
+            wxString orig;
+#if wxCHECK_VERSION(3,1,1)
+            if (d->HasContext())
+            {
+                // Work around a problem with GTK+'s coloring of markup that begins with colorizing <span>:
+                #ifdef __WXGTK__
+                    #define MARKUP(x) L"\u200B" L##x
+                #else
+                    #define MARKUP(x) x
+                #endif
+                orig.Printf(MARKUP("<span style=\"italic\" color=\"#2B6F16\">[%s]</span> %s"),
+                            EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+            }
+            else
+            {
+                orig = EscapeMarkup(d->GetString());
+            }
+#else // wx 3.0
+            if (d->HasContext())
+                orig.Printf("[%s] %s", d->GetContext(), d->GetString());
+            else
+                orig = d->GetString();
+#endif
+
+            // FIXME: use syntax highlighting or typographic marks
+            orig.Replace("\n", " ");
+
+            // Add RTL Unicode mark to render bidi texts correctly
+            if (m_appTextDir != m_sourceTextDir)
+                variant = bidi::mark_direction(orig, m_sourceTextDir);
+            else
+                variant = orig;
+            break;
+        }
+
+        case Col_Translation:
+        {
+            auto trans = d->GetTranslation();
+
+            // FIXME: use syntax highlighting or typographic marks
+            trans.Replace("\n", " ");
+
+            // Add RTL Unicode mark to render bidi texts correctly
+            if (m_appTextDir != m_transTextDir)
+                variant = bidi::mark_direction(trans, m_transTextDir);
+            else
+                variant = trans;
+            break;
+        }
+
+        default:
+            variant.Clear();
+            break;
+    };
+}
+
+bool PoeditListCtrl::Model::SetValueByRow(const wxVariant&, unsigned, unsigned)
+{
+    wxFAIL_MSG("setting values in dataview not implemented");
+    return false;
+}
+
+bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewItemAttr& attr) const
+{
+    if (!m_catalog)
+        return false;
+
+    switch (col)
+    {
+        case Col_ID:
+        {
+            attr.SetColour(m_clrID);
+            return true;
+        }
+
+        case Col_Source:
+        case Col_Translation:
+        {
+            auto d = Item(row);
+            if (d->GetValidity() == CatalogItem::Val_Invalid)
+            {
+                attr.SetColour(m_clrInvalid);
+                return true;
+            }
+            else if (!d->IsTranslated())
+            {
+                attr.SetColour(m_clrUntranslated);
+                return true;
+            }
+            else if (d->IsFuzzy())
+            {
+                attr.SetColour(m_clrFuzzy);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        default:
+            return false;
     }
 }
 
 
-void PoeditListCtrl::CreateSortMap()
+void PoeditListCtrl::Model::CreateSortMap()
 {
+    // FIXME: Use native wxDataViewCtrl sorting instead
+
     int count = (int)m_catalog->GetCount();
 
     m_mapListToCatalog.resize(count);
@@ -489,103 +366,208 @@ void PoeditListCtrl::CreateSortMap()
 }
 
 
-wxString PoeditListCtrl::OnGetItemText(long item, long column) const
+
+
+PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
+     : wxDataViewCtrl(parent, id, wxDefaultPosition, wxDefaultSize, wxDV_MULTIPLE | wxDV_ROW_LINES, wxDefaultValidator, "translations list")
 {
-    if (!m_catalog)
-        return wxEmptyString;
+    m_displayIDs = dispIDs;
 
-    auto d = ListIndexToCatalogItem((int)item);
+    m_appTextDir = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft) ? TextDirection::RTL : TextDirection::LTR;
 
-    if (column == m_colSource)
-    {
-        wxString orig;
-        if ( d->HasContext() )
-            orig.Printf("%s  [ %s ]",
-                        d->GetString().c_str(), d->GetContext().c_str());
-        else
-            orig = d->GetString();
+    m_model.reset(new Model(m_appTextDir, GetDefaultAttributes()));
+    AssociateModel(m_model.get());
 
-        orig = orig.substr(0, GetMaxColChars());
+    CreateColumns();
+
+    UpdateHeaderAttrs();
+
+    Bind(wxEVT_SIZE, &PoeditListCtrl::OnSize, this);
+}
+
+PoeditListCtrl::~PoeditListCtrl()
+{
+    sortOrder().Save();
+}
+
+void PoeditListCtrl::UpdateHeaderAttrs()
+{
 #ifdef __WXMSW__
-        orig.Replace("\n", " ");
+    // Setup custom header font & color on Windows 10, where the default look is a bit odd
+    if (IsWindows10OrGreater())
+    {
+        // Use the same text color as Explorer's headers use
+        const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
+        if (theme)
+        {
+            wxUxThemeHandle hTheme(this->GetParent(), L"ItemsView::Header");
+            COLORREF clr;
+            HRESULT hr = theme->GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
+            if (SUCCEEDED(hr))
+            {
+                wxItemAttr headerAttr;
+                headerAttr.SetTextColour(wxRGBToColour(clr));
+                SetHeaderAttr(headerAttr);
+            }
+        }
+
+        // Standard header has smaller height than Explorer's and it isn't
+        // separated from the content well -- especially in HiDPI modes.
+        // Match Explorer's header size too:
+        int headerHeight = HiDPIScalingFactor() > 1.0 ? PX(26) : PX(25);
+        GenericGetHeader()->SetMinSize(wxSize(-1, headerHeight));
+    }
+#endif // __WXMSW__
+}
+
+void PoeditListCtrl::SetCustomFont(wxFont font_)
+{
+    wxFont font(font_);
+
+    if ( !font.IsOk() )
+        font = GetDefaultAttributes().font;
+
+    SetFont(font);
+
+    UpdateHeaderAttrs();
+    CreateColumns();
+}
+
+void PoeditListCtrl::SetDisplayLines(bool dl)
+{
+    m_displayIDs = dl;
+    CreateColumns();
+}
+
+void PoeditListCtrl::CreateColumns()
+{
+    if (GetColumnCount() > 0)
+        ClearColumns();
+
+    m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
+
+    Language srclang, lang;
+    if (m_catalog)
+    {
+        srclang = m_catalog->GetSourceLanguage();
+        lang = m_catalog->GetLanguage();
+    }
+
+    auto isRTL = lang.IsRTL();
+#ifdef __WXMSW__
+    // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
+    if (m_appTextDir == TextDirection::RTL)
+        isRTL = !isRTL;
 #endif
 
-        // Add RTL Unicode mark to render bidi texts correctly
-        if (m_appTextDir != m_sourceTextDir)
-            return bidi::mark_direction(orig, m_sourceTextDir);
-        else
-            return orig;
-    }
-    else if (column == m_colTrans)
+    m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_CENTER, 0);
+
+    wxString sourceTitle = srclang.IsValid()
+                             ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
+                             : _("Source text");
+    auto sourceRenderer = new wxDataViewTextRenderer();
+    sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
+#if wxCHECK_VERSION(3,1,1)
+    sourceRenderer->EnableMarkup();
+#endif
+    m_colSource = new wxDataViewColumn(sourceTitle, sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
+    AppendColumn(m_colSource);
+
+    if (m_model->m_catalog && m_model->m_catalog->HasCapability(Catalog::Cap::Translations))
     {
-        auto trans = d->GetTranslation().substr(0, GetMaxColChars());
+        wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");;
+        wxString transTitle = wxString::Format(_(L"Translation — %s"), langname);
+        auto transRenderer = new wxDataViewTextRenderer();
+        transRenderer->EnableEllipsize(wxELLIPSIZE_END);
+        m_colTrans = new wxDataViewColumn(transTitle, transRenderer, Model::Col_Translation, wxCOL_WIDTH_DEFAULT, isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT, 0);
+        AppendColumn(m_colTrans);
+    }
+
+    if (m_displayIDs)
+    {
+        m_colID = AppendTextColumn(_("ID"), Model::Col_ID, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_RIGHT, 0);
+    }
+
+    // wxDVC insists on having an expander column, but we really don't want one:
+    auto fake = AppendTextColumn("", Model::Col_ID);
+    fake->SetHidden(true);
+    SetExpanderColumn(fake);
+
 #ifdef __WXMSW__
-        trans.Replace("\n", " ");
+    if (m_appTextDir == TextDirection::RTL)
+        m_colSource->SetAlignment(wxALIGN_RIGHT);
 #endif
 
-        // Add RTL Unicode mark to render bidi texts correctly
-        if (m_appTextDir != m_transTextDir)
-            return bidi::mark_direction(trans, m_transTextDir);
-        else
-            return trans;
-    }
-    else if (column == m_colId)
+    SizeColumns();
+
+#ifdef __WXGTK__
+    // wxGTK has delayed sizing computation, apparently
+    CallAfter([=]{ SizeColumns(); });
+#endif
+}
+
+void PoeditListCtrl::SizeColumns()
+{
+    int w = GetClientSize().x;
+
+#if defined(__WXOSX__)
+    w -= (GetColumnCount() - 1) * 3;
+#elif defined(__WXGTK__)
+    w -= 2;
+#endif
+
+    if (m_colIcon)
+        w -= m_colIcon->GetWidth();
+
+    if (m_colID)
+        w -= m_colID->GetWidth();
+
+    if (m_colTrans)
     {
-        return wxString() << d->GetId();
+        m_colSource->SetWidth(w / 2);
+        m_colTrans->SetWidth(w - w / 2);
     }
     else
     {
-        return wxEmptyString;
+        m_colSource->SetWidth(w);
     }
 }
 
-wxListItemAttr *PoeditListCtrl::OnGetItemAttr(long item) const
+
+void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 {
-    long idx = item % 2;
+    wxWindowUpdateLocker no_updates(this);
+
+    const int oldCount = m_catalog ? m_catalog->GetCount() : 0;
+    const int newCount = catalog ? catalog->GetCount() : 0;
+    const bool isSameCatalog = (catalog == m_catalog);
+    const bool sizeOrCatalogChanged = !isSameCatalog || (oldCount != newCount);
+
+    SelectionPreserver preserve(!sizeOrCatalogChanged ? this : nullptr);
+
+    // now read the new catalog:
+    m_catalog = catalog;
+    m_model->SetCatalog(catalog);
 
     if (!m_catalog)
-        return (wxListItemAttr*)&m_attrNormal[idx];
+        return;
 
-    auto d = ListIndexToCatalogItem((int)item);
+    CreateColumns();
 
-    if (d->GetValidity() == CatalogItem::Val_Invalid)
-        return (wxListItemAttr*)&m_attrInvalid[idx];
-    else if (!d->IsTranslated())
-        return (wxListItemAttr*)&m_attrUntranslated[idx];
-    else if (d->IsFuzzy())
-        return (wxListItemAttr*)&m_attrFuzzy[idx];
-    else
-        return (wxListItemAttr*)&m_attrNormal[idx];
+    if (sizeOrCatalogChanged && GetItemCount() > 0)
+        CallAfter([=]{ SelectAndFocus(0); });
 }
 
-wxListItemAttr *PoeditListCtrl::OnGetItemColumnAttr(long item, long column) const
-{
-    if (column == m_colId)
-    {
-        return (wxListItemAttr*)&m_attrId;
-    }
-    else
-    {
-        return OnGetItemAttr(item);
-    }
-}
 
-int PoeditListCtrl::OnGetItemImage(long item) const
+void PoeditListCtrl::Sort()
 {
     if (!m_catalog)
-        return IMG_NOTHING;
+        return;
 
-    auto d = ListIndexToCatalogItem((int)item);
-
-    if (d->GetBookmark() != NO_BOOKMARK)
-        return IMG_BOOKMARK;
-    else if (d->HasComment() || d->HasExtractedComments())
-        return IMG_COMMENT;
-    else if (d->IsAutomatic())
-        return IMG_AUTOMATIC;
-    else
-        return IMG_NOTHING;
+    SelectionPreserver preserve(this);
+    m_model->UpdateSort();
 }
+
 
 void PoeditListCtrl::OnSize(wxSizeEvent& event)
 {

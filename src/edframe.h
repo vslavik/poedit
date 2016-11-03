@@ -234,7 +234,7 @@ class PoeditFrame : public PoeditFrameBase
 
         // navigation to another item in the list
         typedef bool (*NavigatePredicate)(const CatalogItemPtr& item);
-        long NavigateGetNextItem(const long start, int step, NavigatePredicate predicate, bool wrap, CatalogItemPtr *out_item);
+        int NavigateGetNextItem(const int start, int step, NavigatePredicate predicate, bool wrap, CatalogItemPtr *out_item);
         void Navigate(int step, NavigatePredicate predicate, bool wrap);
         void OnDoneAndNext(wxCommandEvent&);
         void OnPrev(wxCommandEvent&);
@@ -277,8 +277,8 @@ private:
         void OnUpdateSmartUpdate(wxUpdateUIEvent& event);
 
         void OnValidate(wxCommandEvent& event);
-        void OnListSel(wxListEvent& event);
-        void OnListRightClick(wxMouseEvent& event);
+        void OnListSel(wxDataViewEvent& event);
+        void OnListRightClick(wxDataViewEvent& event);
         void OnListFocus(wxFocusEvent& event);
         void OnSplitterSashMoving(wxSplitterEvent& event);
         void OnSidebarSplitterSashMoving(wxSplitterEvent& event);
