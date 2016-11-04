@@ -39,7 +39,7 @@ XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F -j \
 
 # a PO file must be updated from  poedit.pot include new translations
 %.po: $(srcdir)/poedit.pot
-	if [ -f $@ ]; then $(MSGMERGE) $@ $(srcdir)/poedit.pot > $@.new && mv $@.new $@; else cp $(srcdir)/poedit.pot $@; fi
+	if [ -f $@ ]; then $(MSGMERGE) --previous $@ $(srcdir)/poedit.pot > $@.new && mv $@.new $@; else cp $(srcdir)/poedit.pot $@; fi
 
 $(srcdir)/sr_RS@latin.po: $(srcdir)/sr.po
 	recode-sr-latin <$< >$@
