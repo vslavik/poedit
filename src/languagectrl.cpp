@@ -156,22 +156,6 @@ void LanguageCtrl::Init(Language lang)
     cb.completes = YES;
     cb.usesDataSource = YES;
     cb.dataSource = m_impl->dataSource;
-
-#if 0
-    // default completion is case-sensitive, we'd rather be case-insensitive, so plug in
-    // customized completedString: implementation
-    RESetBlock(cb.cell, @selector(completedString:), NO, nil, ^(NSComboBox *receiver, NSString *string) {
-        for (NSString *item in receiver.objectValues) {
-            if ([item compare:string
-                      options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch
-                        range:NSMakeRange(0, std::min([item length], [string length]))
-                       locale:[NSLocale currentLocale]] == NSOrderedSame)
-                return item;
-        }
-        return (NSString*)nil;
-    });
-#endif
-
 #else
     Set(choices);
     AutoComplete(choices);
