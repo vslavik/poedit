@@ -2301,7 +2301,7 @@ bool Catalog::Merge(const CatalogPtr& refcat)
     refcat->DoSaveOnly(tmp1, wxTextFileType_Unix);
     DoSaveOnly(tmp2, wxTextFileType_Unix);
 
-    wxString flags("-q --force-po");
+    wxString flags("-q --force-po --previous");
     if (wxConfig::Get()->ReadBool("use_tm_when_updating", false) == false)
     {
         flags += " --no-fuzzy-matching";
