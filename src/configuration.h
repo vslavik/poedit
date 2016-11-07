@@ -28,6 +28,15 @@
 
 #include <string>
 
+// What to do during msgmerge
+enum MergeBehavior
+{
+    Merge_None,
+    Merge_FuzzyMatch,
+    Merge_UseTM
+};
+
+
 /**
     High-level interface to configuration storage.
 
@@ -38,6 +47,10 @@ class Config
 public:
     static bool UseTM() { return Read("/use_tm", true); }
     static void UseTM(bool use) { Write("/use_tm", use); }
+
+    // What to do during merge
+    static MergeBehavior MergeBehavior();
+    static void MergeBehavior(enum MergeBehavior b);
 
 private:
     template<typename T>

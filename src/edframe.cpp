@@ -1637,8 +1637,7 @@ void PoeditFrame::OnUpdateFromSources(wxCommandEvent&)
         {
             if (UpdateCatalog())
             {
-                if (wxConfig::Get()->ReadBool("use_tm", true) &&
-                    wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+                if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
                 {
                     PreTranslateCatalog(nullptr, PreTranslate_OnlyGoodQuality);
                 }
@@ -1684,8 +1683,7 @@ void PoeditFrame::OnUpdateFromPOT(wxCommandEvent&)
             {
                 if (UpdateCatalog(pot_file))
                 {
-                    if (wxConfig::Get()->ReadBool("use_tm", true) &&
-                        wxConfig::Get()->ReadBool("use_tm_when_updating", false))
+                    if (Config::UseTM() && Config::MergeBehavior() == Merge_UseTM)
                     {
                         PreTranslateCatalog(nullptr, PreTranslate_OnlyGoodQuality);
                     }

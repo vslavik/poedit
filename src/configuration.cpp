@@ -71,3 +71,46 @@ void Config::Write(const std::string& key, bool value)
     wxConfig::Get()->Write(key, value);
 }
 
+
+MergeBehavior Config::MergeBehavior()
+{
+    enum MergeBehavior value = Merge_FuzzyMatch;
+
+    std::string stored;
+    if (Read("/merge_behavior", &stored))
+    {
+        if (stored == "fuzzy_match")
+            value = Merge_FuzzyMatch;
+        else if (stored == "use_tm")
+            value = Merge_UseTM;
+        else
+            value = Merge_None;
+    }
+    else
+    {
+        bool use_tm;
+        if (Read("/use_tm_when_updating", &use_tm))
+            value = use_tm ? Merge_UseTM : Merge_None;
+    }
+
+    return value;
+}
+
+void Config::MergeBehavior(enum MergeBehavior b)
+{
+    std::string value;
+    switch (b)
+    {
+        case Merge_None:
+            value = "none";
+            break;
+        case Merge_FuzzyMatch:
+            value = "fuzzy_match";
+            break;
+        case Merge_UseTM:
+            value = "use_tm";
+            break;
+    }
+
+    Write("/merge_behavior", value);
+}

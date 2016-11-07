@@ -388,18 +388,30 @@ public:
         sizer->Add(buttonsSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(30)));
         sizer->AddSpacer(PX(10));
 
-        m_useTMWhenUpdating = new wxCheckBox(this, wxID_ANY, _("Consult TM when updating from sources"));
-        sizer->Add(m_useTMWhenUpdating, wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
+        // TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+        m_mergeUse = new wxCheckBox(this, wxID_ANY, _("When updating from sources"));
+        wxString mergeValues[] = {
+            // TRANSLATORS: Preceded by "When updating from sources"
+            _("fuzzy match within the file"),
+            // TRANSLATORS: Preceded by "When updating from sources"
+            _("pre-translate from TM")
+        };
+        m_mergeBehavior = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, WXSIZEOF(mergeValues), mergeValues);
 
-        auto explainTxt = _("If enabled, Poedit will try to fill in new entries using your previous\n"
-                            "translations stored in the translation memory. If the TM is\n"
-                            "near-empty, it will not be very effective. The more translations\n"
-                            "you edit and the larger the TM grows, the better it gets.");
+        auto mergeSizer = new wxBoxSizer(wxHORIZONTAL);
+        mergeSizer->Add(m_mergeUse, wxSizerFlags().Center());
+        mergeSizer->AddSpacer(PX(5));
+        mergeSizer->Add(m_mergeBehavior, wxSizerFlags().Center().BORDER_OSX(wxTOP, PX(1)).BORDER_WIN(wxBOTTOM, 1));
+        sizer->Add(mergeSizer, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM));
+
+        auto explainTxt = _(L"Poedit can attempt to fill in new entries from only previous translations in "
+                            L"the file or from your entire translation memory. Using the TM won’t be very effective if "
+                            L"it’s near-empty, but it will get better as you add more translations to it.");
         auto explain = new ExplanationLabel(this, explainTxt);
         sizer->Add(explain, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
 
         auto learnMore = new LearnMoreLink(this, "https://poedit.net/trac/wiki/Doc/TranslationMemory");
-        sizer->AddSpacer(PX(5));
+        sizer->AddSpacer(PX(3));
         sizer->Add(learnMore, wxSizerFlags().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT + LearnMoreLink::EXTRA_INDENT)));
         sizer->AddSpacer(PX(10));
 
@@ -409,7 +421,8 @@ public:
         clear->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
-        m_useTMWhenUpdating->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
+        m_mergeBehavior->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_mergeUse->GetValue() == true); });
+
         m_stats->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         import->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
         clear->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
@@ -421,22 +434,32 @@ public:
 
         if (wxPreferencesEditor::ShouldApplyChangesImmediately())
         {
-            m_useTMWhenUpdating->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            m_mergeUse->Bind(wxEVT_CHECKBOX, [=](wxCommandEvent&){ TransferDataFromWindow(); });
+            m_mergeBehavior->Bind(wxEVT_CHOICE, [=](wxCommandEvent&){ TransferDataFromWindow(); });
             // Some settings directly affect the UI, so need a more expensive handler:
             m_useTM->Bind(wxEVT_CHECKBOX, &TMPageWindow::TransferDataFromWindowAndUpdateUI, this);
         }
     }
 
-    void InitValues(const wxConfigBase& cfg) override
+    void InitValues(const wxConfigBase&) override
     {
-        m_useTMWhenUpdating->SetValue(cfg.ReadBool("use_tm_when_updating", false));
         m_useTM->SetValue(Config::UseTM());
+        auto merge = Config::MergeBehavior();
+        m_mergeUse->SetValue(merge != Merge_None);
+        m_mergeBehavior->SetSelection(merge == Merge_UseTM ? 1 : 0);
     }
 
-    void SaveValues(wxConfigBase& cfg) override
+    void SaveValues(wxConfigBase&) override
     {
-        cfg.Write("use_tm_when_updating", m_useTMWhenUpdating->GetValue());
         Config::UseTM(m_useTM->GetValue());
+        if (m_mergeUse->GetValue() == true)
+        {
+            Config::MergeBehavior(m_mergeBehavior->GetSelection() == 1 ? Merge_UseTM : Merge_FuzzyMatch);
+        }
+        else
+        {
+            Config::MergeBehavior(Merge_None);
+        }
     }
 
 private:
@@ -532,7 +555,9 @@ private:
         e.Enable(m_useTM->GetValue());
     }
 
-    wxCheckBox *m_useTM, *m_useTMWhenUpdating;
+    wxCheckBox *m_useTM;
+    wxCheckBox *m_mergeUse;
+    wxChoice *m_mergeBehavior;
     wxStaticText *m_stats;
 };
 

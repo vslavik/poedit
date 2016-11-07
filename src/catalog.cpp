@@ -40,6 +40,8 @@
 #include <algorithm>
 
 #include "catalog.h"
+
+#include "configuration.h"
 #include "digger.h"
 #include "gexecute.h"
 #include "progressinfo.h"
@@ -2302,7 +2304,7 @@ bool Catalog::Merge(const CatalogPtr& refcat)
     DoSaveOnly(tmp2, wxTextFileType_Unix);
 
     wxString flags("-q --force-po");
-    if (wxConfig::Get()->ReadBool("use_tm_when_updating", false) == false)
+    if (Config::MergeBehavior() == Merge_None)
     {
         flags += " --no-fuzzy-matching";
     }
