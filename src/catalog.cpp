@@ -2608,7 +2608,7 @@ void CatalogItem::SetTranslationFromSource()
 {
     m_validity = Val_Unknown;
     m_isFuzzy = false;
-    m_isAutomatic = false;
+    m_isPreTranslated = false;
     m_isTranslated = true;
 
     auto iter = m_translations.begin();
@@ -2635,7 +2635,7 @@ void CatalogItem::SetTranslationFromSource()
 void CatalogItem::ClearTranslation()
 {
     m_isFuzzy = false;
-    m_isAutomatic = false;
+    m_isPreTranslated = false;
     m_isTranslated = false;
     for (auto& t: m_translations)
     {

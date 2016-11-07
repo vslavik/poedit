@@ -144,7 +144,7 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
     if ( IsAlmostBlack(visual.colFg) )
         m_clrID = wxColour("#A1A1A1");
 
-    m_iconAutomatic = wxArtProvider::GetBitmap("poedit-status-automatic");
+    m_iconPreTranslated = wxArtProvider::GetBitmap("poedit-status-automatic");
     m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
     m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
 
@@ -221,8 +221,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 variant << m_iconBookmark;
             else if (d->HasComment() || d->HasExtractedComments())
                 variant << m_iconComment;
-            else if (d->IsAutomatic())
-                variant << m_iconAutomatic;
+            else if (d->IsPreTranslated())
+                variant << m_iconPreTranslated;
             else
                 variant = wxNullVariant;
             break;

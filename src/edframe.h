@@ -325,17 +325,17 @@ private:
 #endif
 
         void OnSuggestion(wxCommandEvent& event);
-        void OnAutoTranslateAll(wxCommandEvent& event);
+        void OnPreTranslateAll(wxCommandEvent& event);
 
-        enum AutoTranslateFlags
+        enum PreTranslateFlags
         {
-            AutoTranslate_OnlyExact       = 0x01,
-            AutoTranslate_ExactNotFuzzy   = 0x02,
-            AutoTranslate_OnlyGoodQuality = 0x04
+            PreTranslate_OnlyExact       = 0x01,
+            PreTranslate_ExactNotFuzzy   = 0x02,
+            PreTranslate_OnlyGoodQuality = 0x04
         };
-        bool AutoTranslateCatalog(int *matchesCount, int flags);
+        bool PreTranslateCatalog(int *matchesCount, int flags);
         template<typename T>
-        bool AutoTranslateCatalog(int *matchesCount, const T& range, int flags);
+        bool PreTranslateCatalog(int *matchesCount, const T& range, int flags);
 
         void OnPurgeDeleted(wxCommandEvent& event);
 

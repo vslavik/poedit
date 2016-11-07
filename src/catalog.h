@@ -90,7 +90,7 @@ class CatalogItem
                   m_isFuzzy(false),
                   m_isTranslated(false),
                   m_isModified(false),
-                  m_isAutomatic(false),
+                  m_isPreTranslated(false),
                   m_validity(Val_Unknown),
                   m_lineNum(0),
                   m_bookmark(NO_BOOKMARK) {}
@@ -109,7 +109,7 @@ class CatalogItem
                   m_isFuzzy(dt.m_isFuzzy),
                   m_isTranslated(dt.m_isTranslated),
                   m_isModified(dt.m_isModified),
-                  m_isAutomatic(dt.m_isAutomatic),
+                  m_isPreTranslated(dt.m_isPreTranslated),
                   m_hasBadTokens(dt.m_hasBadTokens),
                   m_moreFlags(dt.m_moreFlags),
                   m_comment(dt.m_comment),
@@ -243,10 +243,10 @@ class CatalogItem
         void SetModified(bool modified) { m_isModified = modified; }
         /// Gets value of modified flag.
         bool IsModified() const { return m_isModified; }
-        /// Sets automatic translation flag.
-        void SetAutomatic(bool automatic) { m_isAutomatic = automatic; }
-        /// Gets value of automatic translation flag.
-        bool IsAutomatic() const { return m_isAutomatic; }
+        /// Sets pre-translated translation flag.
+        void SetPreTranslated(bool pre) { m_isPreTranslated = pre; }
+        /// Gets value of pre-translated translation flag.
+        bool IsPreTranslated() const { return m_isPreTranslated; }
         /// Sets the number of the line this entry occurs on.
         void SetLineNumber(int line) { m_lineNum = line; }
         /// Get line number of this entry.
@@ -309,7 +309,7 @@ class CatalogItem
 
         wxArrayString m_references, m_extractedComments;
         wxArrayString m_oldMsgid;
-        bool m_isFuzzy, m_isTranslated, m_isModified, m_isAutomatic;
+        bool m_isFuzzy, m_isTranslated, m_isModified, m_isPreTranslated;
         bool m_hasBadTokens;
         wxString m_moreFlags;
         wxString m_comment;
