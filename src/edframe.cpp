@@ -83,7 +83,6 @@
 #include "sidebar.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
-#include "syntaxhighlighter.h"
 #include "text_control.h"
 
 
