@@ -1131,7 +1131,7 @@ void PoeditFrame::OnOpen(wxCommandEvent&)
         if (path.empty())
             path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
-        wxString name = wxFileSelector(OSX_OR_OTHER("", _("Open catalog")),
+        wxString name = wxFileSelector(MACOS_OR_OTHER("", _("Open catalog")),
                         path, wxEmptyString, wxEmptyString,
                         Catalog::GetAllTypesFileMask(),
                         wxFD_OPEN | wxFD_FILE_MUST_EXIST, this);
@@ -1216,7 +1216,7 @@ void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         OSX_OR_OTHER("", _("Save as...")),
+                         MACOS_OR_OTHER("", _("Save as...")),
                          path,
                          name,
                          m_catalog->GetFileMask(),
@@ -1261,7 +1261,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         OSX_OR_OTHER("", _("Compile to...")),
+                         MACOS_OR_OTHER("", _("Compile to...")),
                          wxPathOnly(fileName),
                          name,
                          wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
@@ -1305,7 +1305,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         OSX_OR_OTHER("", _("Export as...")),
+                         MACOS_OR_OTHER("", _("Export as...")),
                          wxPathOnly(fileName),
                          name,
                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
@@ -2961,7 +2961,7 @@ void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
     sizer->AddSpacer(PX(1));
     sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
 
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, OSX_OR_OTHER(PX(20), PX(10))));
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, MACOS_OR_OTHER(PX(20), PX(10))));
 
     auto buttons = dlg->CreateButtonSizer(wxOK | wxCANCEL);
     auto ok = static_cast<wxButton*>(dlg->FindWindow(wxID_OK));

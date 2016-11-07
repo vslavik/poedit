@@ -275,12 +275,12 @@ public:
         topsizer->Add(pickers, wxSizerFlags().Expand().PXDoubleBorderAll());
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("Project:")),
-                     wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
+                     wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
         m_project = new wxChoice(this, wxID_ANY);
         pickers->Add(m_project, wxSizerFlags().Expand().CenterVertical());
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("Language:")),
-                     wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
+                     wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
         m_language = new wxChoice(this, wxID_ANY);
         pickers->Add(m_language, wxSizerFlags().Expand().CenterVertical());
 
@@ -288,7 +288,7 @@ public:
         pickers->AddSpacer(PX(5));
 
         pickers->Add(new wxStaticText(this, wxID_ANY, _("File:")),
-                     wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
+                     wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
         m_file = new wxChoice(this, wxID_ANY);
         pickers->Add(m_file, wxSizerFlags().Expand().CenterVertical());
 

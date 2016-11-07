@@ -52,17 +52,17 @@
 #endif
 
 #ifdef __WXOSX__
-    #define OSX_OR_OTHER(msw, other) msw
+    #define MACOS_OR_OTHER(mac, other) mac
 #else
-    #define OSX_OR_OTHER(msw, other) other
+    #define MACOS_OR_OTHER(mac, other) other
 #endif
 
 #ifdef __WXOSX__
     #define BORDER_WIN(dir, n) Border(dir, 0)
-    #define BORDER_OSX(dir, n) Border(dir, n)
+    #define BORDER_MACOS(dir, n) Border(dir, n)
 #else
     #define BORDER_WIN(dir, n) Border(dir, n)
-    #define BORDER_OSX(dir, n) Border(dir, 0)
+    #define BORDER_MACOS(dir, n) Border(dir, 0)
 #endif
 
 

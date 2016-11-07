@@ -386,7 +386,7 @@ protected:
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             wxDirDialog dlg(this,
-                            OSX_OR_OTHER("", _("Select directory")),
+                            MACOS_OR_OTHER("", _("Select directory")),
                             m_data->basepath,
                             wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
             if (dlg.ShowModal() == wxID_OK)

@@ -960,7 +960,7 @@ void PoeditApp::OnOpen(wxCommandEvent&)
     wxString path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
 
     wxFileDialog dlg(nullptr,
-                     OSX_OR_OTHER("", _("Open catalog")),
+                     MACOS_OR_OTHER("", _("Open catalog")),
                      path,
                      wxEmptyString,
                      Catalog::GetAllTypesFileMask(),

@@ -170,12 +170,12 @@ public:
         sizer->Add(translator, wxSizerFlags().Expand());
 
         auto nameLabel = new wxStaticText(this, wxID_ANY, _("Name:"));
-        translator->Add(nameLabel, wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
+        translator->Add(nameLabel, wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
         m_userName = new wxTextCtrl(this, wxID_ANY);
         m_userName->SetHint(_("Your Name"));
         translator->Add(m_userName, wxSizerFlags(1).Expand().CenterVertical());
         auto emailLabel = new wxStaticText(this, wxID_ANY, _("Email:"));
-        translator->Add(emailLabel, wxSizerFlags().CenterVertical().Right().BORDER_OSX(wxTOP, 1));
+        translator->Add(emailLabel, wxSizerFlags().CenterVertical().Right().BORDER_MACOS(wxTOP, 1));
         m_userEmail = new wxTextCtrl(this, wxID_ANY);
         m_userEmail->SetHint(_("your_email@example.com"));
         translator->Add(m_userEmail, wxSizerFlags(1).Expand().CenterVertical());
@@ -401,7 +401,7 @@ public:
         auto mergeSizer = new wxBoxSizer(wxHORIZONTAL);
         mergeSizer->Add(m_mergeUse, wxSizerFlags().Center());
         mergeSizer->AddSpacer(PX(5));
-        mergeSizer->Add(m_mergeBehavior, wxSizerFlags().Center().BORDER_OSX(wxTOP, PX(1)).BORDER_WIN(wxBOTTOM, 1));
+        mergeSizer->Add(m_mergeBehavior, wxSizerFlags().Center().BORDER_MACOS(wxTOP, PX(1)).BORDER_WIN(wxBOTTOM, 1));
         sizer->Add(mergeSizer, wxSizerFlags().PXBorder(wxTOP|wxBOTTOM));
 
         auto explainTxt = _(L"Poedit can attempt to fill in new entries from only previous translations in "
@@ -932,7 +932,7 @@ public:
         m_crlf = new wxChoice(this, wxID_ANY);
         m_crlf->Append(_("Unix (recommended)"));
         m_crlf->Append(_("Windows"));
-        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_OSX(wxLEFT, PX(3)).BORDER_WIN(wxLEFT, PX(5)));
+        crlfbox->Add(m_crlf, wxSizerFlags(1).Center().BORDER_MACOS(wxLEFT, PX(3)).BORDER_WIN(wxLEFT, PX(5)));
 
         /// TRANSLATORS: Followed by text control for entering number; wraps text at given width
         m_wrap = new wxCheckBox(this, wxID_ANY, _("Wrap at:"));
@@ -944,7 +944,7 @@ public:
         m_wrapWidth = new wxSpinCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(50),-1));
     #endif
         m_wrapWidth->SetRange(10, 1000);
-        crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_OSX(wxLEFT, PX(3)));
+        crlfbox->Add(m_wrapWidth, wxSizerFlags().Center().BORDER_MACOS(wxLEFT, PX(3)));
 
         m_keepFmt = new wxCheckBox(this, wxID_ANY, _("Preserve formatting of existing files"));
         sizer->Add(m_keepFmt, wxSizerFlags().PXBorder(wxTOP));
