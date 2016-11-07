@@ -57,6 +57,7 @@
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
+#include "configuration.h"
 #include "crowdin_gui.h"
 #include "hidpi.h"
 #include "tm/transmem.h"
@@ -428,14 +429,14 @@ public:
 
     void InitValues(const wxConfigBase& cfg) override
     {
-        m_useTM->SetValue(cfg.ReadBool("use_tm", true));
         m_useTMWhenUpdating->SetValue(cfg.ReadBool("use_tm_when_updating", false));
+        m_useTM->SetValue(Config::UseTM());
     }
 
     void SaveValues(wxConfigBase& cfg) override
     {
-        cfg.Write("use_tm", m_useTM->GetValue());
         cfg.Write("use_tm_when_updating", m_useTMWhenUpdating->GetValue());
+        Config::UseTM(m_useTM->GetValue());
     }
 
 private:
@@ -443,7 +444,7 @@ private:
     {
         wxString sDocs("--");
         wxString sFileSize("--");
-        if (wxConfig::Get()->ReadBool("use_tm", true))
+        if (Config::UseTM())
         {
             try
             {

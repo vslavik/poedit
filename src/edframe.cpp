@@ -58,6 +58,7 @@
 
 #include "catalog.h"
 #include "concurrency.h"
+#include "configuration.h"
 #include "crowdin_gui.h"
 #include "customcontrols.h"
 #include "edapp.h"
@@ -2205,7 +2206,7 @@ void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
     if (item->IsFuzzy() || !item->IsTranslated())
         return;
 
-    if (wxConfig::Get()->ReadBool("use_tm", true))
+    if (Config::UseTM())
     {
         auto srclang = m_catalog->GetSourceLanguage();
         auto lang = m_catalog->GetLanguage();
@@ -2778,8 +2779,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     wxBusyCursor bcur;
 
     dispatch::future<void> tmUpdateThread;
-    if (wxConfig::Get()->ReadBool("use_tm", true) &&
-        m_catalog->HasCapability(Catalog::Cap::Translations))
+    if (Config::UseTM() && m_catalog->HasCapability(Catalog::Cap::Translations))
     {
         tmUpdateThread = dispatch::async([=]{
             try
@@ -3047,7 +3047,7 @@ bool PoeditFrame::AutoTranslateCatalog(int *matchesCount, const T& range, int fl
     if (range.empty())
         return false;
 
-    if (!wxConfig::Get()->ReadBool("use_tm", true))
+    if (!Config::UseTM())
         return false;
 
     wxBusyCursor bcur;

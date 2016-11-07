@@ -36,7 +36,7 @@ poedit_SOURCES = attentionbar.cpp attentionbar.h \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  edlistctrl.cpp edlistctrl.h \
                  cat_sorting.cpp cat_sorting.h \
-                 utility.cpp utility.h concurrency.cpp concurrency.h \
+                 utility.cpp utility.h concurrency.cpp concurrency.h configuration.cpp configuration.h \
                  version.h errors.h \
                  str_helpers.h logcapture.h \
                  unicode_helpers.h unicode_helpers.cpp \

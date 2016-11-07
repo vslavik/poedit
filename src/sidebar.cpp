@@ -29,6 +29,7 @@
 #include "customcontrols.h"
 #include "commentdlg.h"
 #include "concurrency.h"
+#include "configuration.h"
 #include "errors.h"
 #include "hidpi.h"
 #include "utility.h"
@@ -39,7 +40,6 @@
 
 #include <wx/app.h>
 #include <wx/button.h>
-#include <wx/config.h>
 #include <wx/dcclient.h>
 #include <wx/menu.h>
 #include <wx/sizer.h>
@@ -621,7 +621,7 @@ void SuggestionsSidebarBlock::Show(bool show)
 bool SuggestionsSidebarBlock::ShouldShowForItem(const CatalogItemPtr&) const
 {
     return m_parent->FileHasCapability(Catalog::Cap::Translations) &&
-           wxConfig::Get()->ReadBool("use_tm", true);
+           Config::UseTM();
 }
 
 void SuggestionsSidebarBlock::Update(const CatalogItemPtr& item)
