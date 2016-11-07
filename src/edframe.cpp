@@ -2952,32 +2952,35 @@ void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
     auto noFuzzyE = new ExplanationLabel(dlg.get(), _("Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing review and should be reviewed before use."));
 
 #ifdef __WXOSX__
-    sizer->AddSpacer(PX(5));
     sizer->Add(new HeadingLabel(dlg.get(), _("Pre-translate")), wxSizerFlags().Expand().PXBorder(wxBOTTOM));
 #endif
+    auto pretransE = new ExplanationLabel(dlg.get(), _("Pre-translation automatically finds exact or fuzzy matches for untranslated strings in the translation memory and fills in their translations."));
+    sizer->Add(pretransE, wxSizerFlags().Expand().Border(wxBOTTOM, PX(15)));
+
     sizer->Add(onlyExact, wxSizerFlags().PXBorder(wxTOP));
     sizer->AddSpacer(PX(1));
-    sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
+    sizer->Add(onlyExactE, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
     sizer->Add(noFuzzy, wxSizerFlags().PXDoubleBorder(wxTOP));
     sizer->AddSpacer(PX(1));
-    sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, ExplanationLabel::CHECKBOX_INDENT));
-    topsizer->Add(sizer, wxSizerFlags(1).Expand().PXDoubleBorderAll());
+    sizer->Add(noFuzzyE, wxSizerFlags().Expand().Border(wxLEFT, PX(ExplanationLabel::CHECKBOX_INDENT)));
+
+    topsizer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, OSX_OR_OTHER(PX(20), PX(10))));
 
     auto buttons = dlg->CreateButtonSizer(wxOK | wxCANCEL);
     auto ok = static_cast<wxButton*>(dlg->FindWindow(wxID_OK));
     ok->SetLabel(_("Pre-translate"));
     ok->SetDefault();
 #ifdef __WXOSX__
-    topsizer->Add(buttons, wxSizerFlags().Expand());
+    topsizer->Add(buttons, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(10)));
 #else
-    topsizer->Add(buttons, wxSizerFlags().Expand().PXBorderAll());
     topsizer->AddSpacer(PX(5));
+    topsizer->Add(buttons, wxSizerFlags().Expand().Border(wxRIGHT, PX(12)));
+    topsizer->AddSpacer(PX(12));
 #endif
 
     dlg->SetSizer(topsizer);
-    dlg->SetMinSize(wxSize(PX(400), -1));
     dlg->Layout();
-    dlg->Fit();
+    topsizer->SetSizeHints(dlg.get());
     dlg->CenterOnParent();
 
     dlg->ShowWindowModalThenDo([this,onlyExact,noFuzzy,dlg](int retcode)
