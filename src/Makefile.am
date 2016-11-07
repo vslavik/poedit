@@ -20,35 +20,50 @@ CROWDIN_SUPPORT_SRC = \
 CROWDIN_SUPPORT_LIBS = $(CPPREST_LIBS) $(LIBSECRET_LIBS)
 endif
 
-poedit_SOURCES = attentionbar.cpp attentionbar.h \
-                 errorbar.cpp errorbar.h \
-                 catalog.cpp catalog.h edapp.cpp edapp.h edframe.cpp \
-                 edframe.h fileviewer.cpp fileviewer.h extractor.cpp extractor.h \
-                 prefsdlg.cpp prefsdlg.h \
-                 propertiesdlg.cpp propertiesdlg.h progressinfo.h \
-                 progressinfo.cpp digger.h digger.cpp gexecute.h \
-                 gexecute.cpp summarydlg.h summarydlg.cpp \
-                 spellchecking.h spellchecking.cpp \
-                 findframe.cpp findframe.h commentdlg.h commentdlg.cpp \
-                 tm/suggestions.cpp tm/suggestions.h tm/transmem.cpp tm/transmem.h \
-                 manager.h manager.cpp chooselang.cpp chooselang.h \
-                 export_html.cpp icons.h icons.cpp \
-                 pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
-                 edlistctrl.cpp edlistctrl.h \
+poedit_SOURCES = \
+                 attentionbar.cpp attentionbar.h \
                  cat_sorting.cpp cat_sorting.h \
-                 utility.cpp utility.h concurrency.cpp concurrency.h configuration.cpp configuration.h \
-                 version.h errors.h \
-                 str_helpers.h logcapture.h \
-                 unicode_helpers.h unicode_helpers.cpp \
-                 language.cpp language.h language_impl_legacy.h language_impl_plurals.h \
-                 languagectrl.cpp languagectrl.h \
-                 welcomescreen.cpp welcomescreen.h \
-                 syntaxhighlighter.cpp syntaxhighlighter.h \
-                 sidebar.cpp sidebar.h \
-                 text_control.h text_control.cpp \
+                 catalog.cpp catalog.h \
+                 chooselang.cpp chooselang.h \
+                 commentdlg.h commentdlg.cpp \
+                 concurrency.cpp concurrency.h \
+                 configuration.cpp configuration.h \
                  customcontrols.cpp customcontrols.h \
+                 digger.h digger.cpp \
+                 edapp.cpp edapp.h \
+                 edframe.cpp edframe.h \
+                 edlistctrl.cpp edlistctrl.h \
+                 errorbar.cpp errorbar.h \
+                 errors.h \
+                 export_html.cpp \
+                 extractor.cpp extractor.h \
+                 fileviewer.cpp fileviewer.h \
+                 findframe.cpp findframe.h \
+                 gexecute.h gexecute.cpp \
                  hidpi.cpp hidpi.h \
+                 icons.h icons.cpp \
+                 language.cpp language.h \
+                 language_impl_legacy.h language_impl_plurals.h \
+                 languagectrl.cpp languagectrl.h \
+                 logcapture.h \
                  main_toolbar.h wx/main_toolbar.cpp \
+                 manager.h manager.cpp \
+                 pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
+                 prefsdlg.cpp prefsdlg.h \
+                 progressinfo.h progressinfo.cpp \
+                 propertiesdlg.cpp propertiesdlg.h \
+                 sidebar.cpp sidebar.h \
+                 spellchecking.h spellchecking.cpp \
+                 str_helpers.h \
+                 summarydlg.h summarydlg.cpp \
+                 syntaxhighlighter.cpp syntaxhighlighter.h \
+                 text_control.h text_control.cpp \
+                 tm/suggestions.cpp tm/suggestions.h \
+                 tm/transmem.cpp tm/transmem.h \
+                 unicode_helpers.h unicode_helpers.cpp \
+                 utility.cpp utility.h \
+                 version.h \
+                 welcomescreen.cpp welcomescreen.h \
                  $(CROWDIN_SUPPORT_SRC) \
                  $(WX_BACKPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
@@ -57,14 +72,14 @@ poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(CROWDIN_SUPPORT_LIBS) \
                $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \
-		$(srcdir)/resources/menus.xrc \
-		$(srcdir)/resources/prefs.xrc \
-		$(srcdir)/resources/progress.xrc \
-		$(srcdir)/resources/properties.xrc \
+        $(srcdir)/resources/comment.xrc \
+        $(srcdir)/resources/manager.xrc \
+        $(srcdir)/resources/menus.xrc \
+        $(srcdir)/resources/prefs.xrc \
+        $(srcdir)/resources/progress.xrc \
+        $(srcdir)/resources/properties.xrc \
         $(srcdir)/resources/summary.xrc \
-		$(srcdir)/resources/toolbar.xrc \
-		$(srcdir)/resources/comment.xrc \
-        $(srcdir)/resources/manager.xrc
+        $(srcdir)/resources/toolbar.xrc
 
 compiled_xrc.cpp: $(XRC_RESOURCES)
 	$(WXRC) -v -c -o $@ $(XRC_RESOURCES)
