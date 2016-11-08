@@ -74,7 +74,7 @@ void Config::Write(const std::string& key, bool value)
 
 MergeBehavior Config::MergeBehavior()
 {
-    enum MergeBehavior value = Merge_FuzzyMatch;
+    ::MergeBehavior value = Merge_FuzzyMatch;
 
     std::string stored;
     if (Read("/merge_behavior", &stored))
@@ -96,7 +96,7 @@ MergeBehavior Config::MergeBehavior()
     return value;
 }
 
-void Config::MergeBehavior(enum MergeBehavior b)
+void Config::MergeBehavior(::MergeBehavior b)
 {
     std::string value;
     switch (b)

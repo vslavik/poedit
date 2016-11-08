@@ -49,8 +49,8 @@ public:
     static void UseTM(bool use) { Write("/use_tm", use); }
 
     // What to do during merge
-    static MergeBehavior MergeBehavior();
-    static void MergeBehavior(enum MergeBehavior b);
+    static ::MergeBehavior MergeBehavior();
+    static void MergeBehavior(::MergeBehavior b);
 
 private:
     template<typename T>
