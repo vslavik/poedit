@@ -740,7 +740,7 @@ void PoeditFrame::CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSi
     labelTrans->SetFont(m_boldGuiFont);
 
     m_textTrans = new TranslationTextCtrl(p, ID_TEXTTRANS);
-    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent&){ UpdateFromTextCtrl(); });
+    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = nullptr;
@@ -3378,7 +3378,7 @@ void PoeditFrame::RecreatePluralTextCtrls()
 
         // create text control and notebook page for it:
         auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
-        txt->Bind(wxEVT_TEXT, [=](wxCommandEvent&){ UpdateFromTextCtrl(); });
+        txt->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
 
