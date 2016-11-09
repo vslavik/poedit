@@ -27,55 +27,70 @@
 
 #include <unicode/uchar.h>
 
-void SyntaxHighlighter::Highlight(const std::wstring& s, SyntaxHighlighter::CallbackType highlight)
+namespace
 {
-    if (s.empty())
-        return;
 
-    const int length = int(s.length());
-
-    for (auto i = s.begin(); i != s.end(); ++i)
+class BasicSyntaxHighlighter : public SyntaxHighlighter
+{
+public:
+    void Highlight(const std::wstring& s, const CallbackType& highlight) override
     {
-        if (!u_isblank(*i))
-        {
-            int wlen = int(i - s.begin());
-            if (wlen)
-                highlight(0, wlen, LeadingWhitespace);
-            break;
-        }
-    }
+        if (s.empty())
+            return;
 
-    for (auto i = s.rbegin(); i != s.rend(); ++i)
-    {
-        if (!u_isblank(*i))
-        {
-            int wlen = int(i - s.rbegin());
-            if (wlen)
-                highlight(length - wlen, length, LeadingWhitespace);
-            break;
-        }
-    }
+        const int length = int(s.length());
 
-    for (auto i = s.begin(); i != s.end(); ++i)
-    {
-        if (*i == '\\')
+        for (auto i = s.begin(); i != s.end(); ++i)
         {
-            int pos = int(i - s.begin());
-            if (++i == s.end())
-                break;
-            // Note: this must match AnyTranslatableTextCtrl::EscapePlainText()
-            switch (*i)
+            if (!u_isblank(*i))
             {
-                case '0':
-                case 'n':
-                case 'r':
-                case 't':
-                case '\\':
-                    highlight(pos, pos + 2, Escape);
+                int wlen = int(i - s.begin());
+                if (wlen)
+                    highlight(0, wlen, LeadingWhitespace);
+                break;
+            }
+        }
+
+        for (auto i = s.rbegin(); i != s.rend(); ++i)
+        {
+            if (!u_isblank(*i))
+            {
+                int wlen = int(i - s.rbegin());
+                if (wlen)
+                    highlight(length - wlen, length, LeadingWhitespace);
+                break;
+            }
+        }
+
+        for (auto i = s.begin(); i != s.end(); ++i)
+        {
+            if (*i == '\\')
+            {
+                int pos = int(i - s.begin());
+                if (++i == s.end())
                     break;
-                default:
-                    break;
+                // Note: this must match AnyTranslatableTextCtrl::EscapePlainText()
+                switch (*i)
+                {
+                    case '0':
+                    case 'n':
+                    case 'r':
+                    case 't':
+                    case '\\':
+                        highlight(pos, pos + 2, Escape);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
+};
+
+} // anonymous namespace
+
+
+SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem&)
+{
+    return std::make_shared<BasicSyntaxHighlighter>();
 }

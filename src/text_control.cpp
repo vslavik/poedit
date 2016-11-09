@@ -561,7 +561,7 @@ wxString AnyTranslatableTextCtrl::GetPlainText() const
 wxString AnyTranslatableTextCtrl::EscapePlainText(const wxString& s)
 {
     // Note: the escapes used here should match with
-    //       SyntaxHighlighter::Highlight() ones
+    //       BasicSyntaxHighlighter::Highlight() ones
     wxString s2;
     s2.reserve(s.length());
     for (auto i = s.begin(); i != s.end(); ++i)
@@ -724,9 +724,12 @@ void AnyTranslatableTextCtrl::HighlightText()
     [layout removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:fullRange];
     [layout removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:fullRange];
 
-    m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
-        [layout addTemporaryAttributes:m_attrs->For(kind) forCharacterRange:NSMakeRange(a, b-a)];
-    });
+    if (m_syntax)
+    {
+        m_syntax->Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
+            [layout addTemporaryAttributes:m_attrs->For(kind) forCharacterRange:NSMakeRange(a, b-a)];
+        });
+    }
 
 #else // !__WXOSX__
 
@@ -746,10 +749,12 @@ void AnyTranslatableTextCtrl::HighlightText()
     deflt.SetFont(GetFont());
     SetStyle(0, text.length(), deflt);
 
-    m_syntax.Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
-        SetStyle(a, b, m_attrs->For(kind));
-    });
-
+    if (m_syntax)
+    {
+        m_syntax->Highlight(text, [=](int a, int b, SyntaxHighlighter::TextKind kind){
+            SetStyle(a, b, m_attrs->For(kind));
+        });
+    }
 #endif // __WXOSX__/!__WXOSX__
 }
 
