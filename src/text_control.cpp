@@ -680,14 +680,19 @@ void AnyTranslatableTextCtrl::DoPasteText(long from, long to, const wxString& s)
 }
 #endif
 
-#ifdef __WXMSW__
 void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
 {
+#ifdef __WXMSW__
     wxWindowUpdateLocker dis(this);
+#endif
     CustomizedTextCtrl::DoSetValue(value, flags);
+#ifdef __WXMSW__
     UpdateRTLStyle();
+#endif
+    HighlightText();
 }
 
+#ifdef __WXMSW__
 void AnyTranslatableTextCtrl::UpdateRTLStyle()
 {
     wxEventBlocker block(this, wxEVT_TEXT);
@@ -706,15 +711,7 @@ void AnyTranslatableTextCtrl::UpdateRTLStyle()
     ::SendMessage((HWND) GetHWND(), EM_SETPARAFORMAT, 0, (LPARAM) &pf);
     SetSelection(start, end);
 }
-#endif // __WXMSW__
-
-#ifdef __WXGTK__
-void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
-{
-    CustomizedTextCtrl::DoSetValue(value, flags);
-    HighlightText();
-}
-#endif
+#endif // !__WXMSW__
 
 void AnyTranslatableTextCtrl::HighlightText()
 {

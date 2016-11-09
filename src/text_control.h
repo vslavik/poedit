@@ -122,14 +122,11 @@ protected:
     void DoPasteText(long from, long to, const wxString& s) override;
 #endif
 
-#ifdef __WXMSW__
     void DoSetValue(const wxString& value, int flags) override;
+
+#ifdef __WXMSW__
     void UpdateRTLStyle();
 #endif // __WXMSW__
-
-#ifdef __WXGTK__
-    void DoSetValue(const wxString& value, int flags) override;
-#endif
 
 protected:
     void HighlightText();
