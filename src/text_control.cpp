@@ -830,4 +830,6 @@ void TranslationTextCtrl::SetPlainTextUserWritten(const wxString& value)
     SelectAll();
     WriteText(EscapePlainText(value));
     SetInsertionPointEnd();
+
+    HighlightText();
 }
