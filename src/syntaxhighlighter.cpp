@@ -25,7 +25,11 @@
 
 #include "syntaxhighlighter.h"
 
+#include "catalog.h"
+
 #include <unicode/uchar.h>
+
+#include <regex>
 
 namespace
 {
@@ -87,10 +91,76 @@ public:
     }
 };
 
+
+
+/// Highlighter that runs multiple sub-highlighters
+class CompositeSyntaxHighlighter : public SyntaxHighlighter
+{
+public:
+    void Add(std::shared_ptr<SyntaxHighlighter> h) { m_sub.push_back(h); }
+
+    void Highlight(const std::wstring& s, const CallbackType& highlight) override
+    {
+        for (auto h : m_sub)
+            h->Highlight(s, highlight);
+    }
+
+private:
+    std::vector<std::shared_ptr<SyntaxHighlighter>> m_sub;
+};
+
+
+
+/// Match regular expressions for highlighting
+class RegexSyntaxHighlighter : public SyntaxHighlighter
+{
+public:
+    /// Ctor. Notice that @a re is a reference and must outlive the highlighter!
+    RegexSyntaxHighlighter(std::wregex& re) : m_re(re) {}
+
+    void Highlight(const std::wstring& s, const CallbackType& highlight) override
+    {
+        std::wsregex_iterator next(s.begin(), s.end(), m_re);
+        std::wsregex_iterator end;
+        while (next != end)
+        {
+            auto match = *next++;
+            if (match.empty())
+                continue;
+            int pos = static_cast<int>(match.position());
+            highlight(pos, pos + static_cast<int>(match.length()), TextKind::Markup);
+        }
+    }
+
+private:
+    std::wregex& m_re;
+};
+
+
+std::wregex RE_HTML_MARKUP(L"<\\/?[a-zA-Z]+(\\s+\\w+(=(\\w+|(\"|').*(\"|')))?)*\\s*\\/?>",
+                           std::regex_constants::ECMAScript | std::regex_constants::optimize);
+
 } // anonymous namespace
 
 
-SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem&)
+SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
 {
-    return std::make_shared<BasicSyntaxHighlighter>();
+    bool needsHTML = item.GetString().Contains('<');
+
+    static auto basic = std::make_shared<BasicSyntaxHighlighter>();
+    if (!needsHTML)
+        return basic;
+
+    auto all = std::make_shared<CompositeSyntaxHighlighter>();
+
+    if (needsHTML)
+    {
+        static auto html = std::make_shared<RegexSyntaxHighlighter>(RE_HTML_MARKUP);
+        all->Add(html);
+    }
+
+    // basic higlighting has highest priority, so should come last in the order:
+    all->Add(basic);
+
+    return all;
 }

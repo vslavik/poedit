@@ -454,7 +454,7 @@ class AnyTranslatableTextCtrl::Attributes
 {
 public:
 #ifdef __WXOSX__
-    NSDictionary *m_attrSpace, *m_attrEscape;
+    NSDictionary *m_attrSpace, *m_attrEscape, *m_attrMarkup;
     typedef NSDictionary* AttrType;
 
     Attributes()
@@ -462,9 +462,10 @@ public:
         m_attrSpace  = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:0.89 green:0.96 blue:0.68 alpha:1]};
         m_attrEscape = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:1 green:0.95 blue:1 alpha:1],
                          NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.46 green:0 blue:0.01 alpha:1]};
+        m_attrMarkup = @{NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0 green:0.36 blue:0.80 alpha:1]};
     }
 #else // !__WXOSX__
-    wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape;
+    wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape, m_attrMarkup;
     typedef wxTextAttr AttrType;
 
     Attributes()
@@ -476,6 +477,8 @@ public:
 
         m_attrEscape.SetBackgroundColour("#FFF1FF");
         m_attrEscape.SetTextColour("#760003");
+
+        m_attrMarkup.SetTextColour("#005DCD");
     }
 
     const AttrType& Default() const {  return m_attrDefault; }
@@ -487,6 +490,7 @@ public:
         {
             case SyntaxHighlighter::LeadingWhitespace:  return m_attrSpace;
             case SyntaxHighlighter::Escape:             return m_attrEscape;
+            case SyntaxHighlighter::Markup:             return m_attrMarkup;
         }
         return m_attrSpace; // silence bogus warning
     }

@@ -50,7 +50,8 @@ public:
     enum TextKind
     {
         LeadingWhitespace,
-        Escape
+        Escape,
+        Markup
     };
 
     typedef std::function<void(int,int,TextKind)> CallbackType;
