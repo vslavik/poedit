@@ -53,9 +53,6 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
   typedef wxFrame PoeditFrameBase;
 #endif
 
-class ListHandler;
-class TextctrlHandler;
-class TransTextctrlHandler;
 class SourceTextCtrl;
 class TranslationTextCtrl;
 
@@ -406,10 +403,6 @@ private:
         bool m_displayIDs;
         bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
-
-        friend class ListHandler;
-        friend class TextctrlHandler;
-        friend class TransTextctrlHandler;
 };
 
 
