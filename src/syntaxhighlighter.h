@@ -51,7 +51,8 @@ public:
     {
         LeadingWhitespace,
         Escape,
-        Markup
+        Markup,
+        Format
     };
 
     typedef std::function<void(int,int,TextKind)> CallbackType;

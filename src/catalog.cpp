@@ -2542,6 +2542,18 @@ wxString CatalogItem::GetFlags() const
         return wxEmptyString;
 }
 
+wxString CatalogItem::GetFormatFlag() const
+{
+    auto pos = m_moreFlags.find("-format");
+    if (pos == wxString::npos)
+        return wxString();
+    auto space = m_moreFlags.find_last_of(" \t", pos);
+    if (space == wxString::npos)
+        return m_moreFlags.substr(0, pos);
+    else
+        return m_moreFlags.substr(space+1, pos-space-1);
+}
+
 void CatalogItem::SetFuzzy(bool fuzzy)
 {
     if (!fuzzy && m_isFuzzy)
