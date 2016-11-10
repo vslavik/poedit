@@ -231,6 +231,10 @@ class CatalogItem
         /// Gets gettext flags. \see SetFlags
         wxString GetFlags() const;
 
+        /// Returns format flag ("php" for "php-format" etc.) if there's any,
+        // empty string otherwise
+        wxString GetFormatFlag() const;
+
         /// Sets fuzzy flag.
         void SetFuzzy(bool fuzzy);
         /// Gets value of fuzzy flag.

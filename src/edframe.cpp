@@ -2262,6 +2262,17 @@ void PoeditFrame::UpdateToTextCtrl(int flags)
     if ( !entry )
         return;
 
+    auto syntax = SyntaxHighlighter::ForItem(*entry);
+    m_textOrig->SetSyntaxHighlighter(syntax);
+    if (m_textTrans)
+        m_textTrans->SetSyntaxHighlighter(syntax);
+    if (entry->HasPlural())
+    {
+        m_textOrigPlural->SetSyntaxHighlighter(syntax);
+        for (auto p : m_textTransPlural)
+            p->SetSyntaxHighlighter(syntax);
+    }
+
     m_textOrig->SetPlainText(entry->GetString());
 
     if (entry->HasPlural())

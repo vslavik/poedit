@@ -104,6 +104,7 @@ public:
     ~AnyTranslatableTextCtrl();
 
     void SetLanguage(const Language& lang);
+    void SetSyntaxHighlighter(SyntaxHighlighterPtr syntax) { m_syntax = syntax; }
 
     // Set and get control's text as plain/raw text, with no escaping or formatting.
     // This is the "true" representation, with e.g newlines included. The version
@@ -122,20 +123,17 @@ protected:
     void DoPasteText(long from, long to, const wxString& s) override;
 #endif
 
-#ifdef __WXMSW__
     void DoSetValue(const wxString& value, int flags) override;
+
+#ifdef __WXMSW__
     void UpdateRTLStyle();
 #endif // __WXMSW__
-
-#ifdef __WXGTK__
-    void DoSetValue(const wxString& value, int flags) override;
-#endif
 
 protected:
     void HighlightText();
 
     class Attributes;
-    SyntaxHighlighter m_syntax;
+    SyntaxHighlighterPtr m_syntax;
     std::unique_ptr<Attributes> m_attrs;
     Language m_language;
 };

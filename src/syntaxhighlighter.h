@@ -26,8 +26,14 @@
 #ifndef Poedit_syntaxhighlighter_h
 #define Poedit_syntaxhighlighter_h
 
-#include <string>
 #include <functional>
+#include <memory>
+#include <string>
+
+class CatalogItem;
+
+class SyntaxHighlighter;
+typedef std::shared_ptr<SyntaxHighlighter> SyntaxHighlighterPtr;
 
 /**
     Highlights parts of translation (or source) text that have special meaning.
@@ -38,11 +44,15 @@
 class SyntaxHighlighter
 {
 public:
+    virtual ~SyntaxHighlighter() {}
+
     // Kind of the element to highlight
     enum TextKind
     {
         LeadingWhitespace,
-        Escape
+        Escape,
+        Markup,
+        Format
     };
 
     typedef std::function<void(int,int,TextKind)> CallbackType;
@@ -54,8 +64,10 @@ public:
         be highlighted, with the range boundaries and highlight kind as its
         arguments.
      */
-    void Highlight(const std::wstring& s, CallbackType highlight);
-};
+    virtual void Highlight(const std::wstring& s, const CallbackType& highlight) = 0;
 
+    /// Return highlighter suitable for given translation item
+    static SyntaxHighlighterPtr ForItem(const CatalogItem& item);
+};
 
 #endif // Poedit_syntaxhighlighter_h
