@@ -2200,8 +2200,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
         // FIXME: make this part of global error checking
         wxString plForms = m_catalog->Header().GetHeader("Plural-Forms");
-        PluralFormsCalculator *plCalc =
-                PluralFormsCalculator::make(plForms.ToAscii());
+        auto plCalc = PluralFormsCalculator::make(plForms.ToAscii());
         if ( !plCalc )
         {
             if ( plForms.empty() )
@@ -2215,7 +2214,6 @@ void PoeditFrame::WarnAboutLanguageIssues()
                             plForms.c_str());
             }
         }
-        delete plCalc;
 
         if ( !err.empty() )
         {
