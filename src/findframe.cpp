@@ -46,6 +46,7 @@
 #include "catalog.h"
 #include "text_control.h"
 #include "edframe.h"
+#include "editing_area.h"
 #include "edlistctrl.h"
 #include "findframe.h"
 #include "hidpi.h"
@@ -74,18 +75,14 @@ wxString FindFrame::ms_text;
 
 FindFrame::FindFrame(PoeditFrame *owner,
                      PoeditListCtrl *list,
-                     const CatalogPtr& c,
-                     CustomizedTextCtrl *textCtrlOrig,
-                     CustomizedTextCtrl *textCtrlTrans,
-                     wxNotebook *pluralNotebook)
+                     EditingArea *editingArea,
+                     const CatalogPtr& c)
         : wxFrame(owner, wxID_ANY, _("Find"), wxDefaultPosition, wxDefaultSize, FRAME_STYLE),
           m_owner(owner),
           m_listCtrl(list),
+          m_editingArea(editingArea),
           m_catalog(c),
-          m_position(-1),
-          m_textCtrlOrig(textCtrlOrig),
-          m_textCtrlTrans(textCtrlTrans),
-          m_pluralNotebook(pluralNotebook)
+          m_position(-1)
 {
     auto panel = new wxPanel(this, wxID_ANY);
     wxBoxSizer *panelsizer = new wxBoxSizer(wxVERTICAL);
@@ -542,17 +539,17 @@ bool FindFrame::DoFind(int dir)
         switch (found)
         {
             case Found_InOrig:
-              txt = m_textCtrlOrig;
+              txt = m_editingArea->Ctrl_Original();
               break;
             case Found_InTrans:
               if (lastItem->GetNumberOfTranslations() == 1)
               {
-                  txt = m_textCtrlTrans;
+                  txt = m_editingArea->Ctrl_Translation();
               }
               else
               {
-                  m_pluralNotebook->SetSelection(trans);
-                  txt = (CustomizedTextCtrl*)m_pluralNotebook->GetCurrentPage();
+                  m_editingArea->Ctrl_PluralNotebook()->SetSelection(trans);
+                  txt = m_editingArea->Ctrl_PluralTranslation(trans);
               }
               break;
             case Found_InComments:
@@ -592,7 +589,7 @@ bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
     }
 
     if (replaced && item == m_owner->GetCurrentItem())
-        m_owner->UpdateToTextCtrl(PoeditFrame::UndoableEdit);
+        m_owner->UpdateToTextCtrl(EditingArea::UndoableEdit);
 
     return replaced;
 }

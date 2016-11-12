@@ -32,6 +32,7 @@ poedit_SOURCES = \
                  digger.h digger.cpp \
                  edapp.cpp edapp.h \
                  edframe.cpp edframe.h \
+                 editing_area.cpp editing_area.h \
                  edlistctrl.cpp edlistctrl.h \
                  errorbar.cpp errorbar.h \
                  errors.h \

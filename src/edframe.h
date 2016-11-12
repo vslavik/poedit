@@ -36,10 +36,6 @@
 
 class WXDLLIMPEXP_FWD_CORE wxSplitterWindow;
 class WXDLLIMPEXP_FWD_CORE wxSplitterEvent;
-class WXDLLIMPEXP_FWD_CORE wxTextCtrl;
-class WXDLLIMPEXP_FWD_CORE wxGauge;
-class WXDLLIMPEXP_FWD_CORE wxNotebook;
-class WXDLLIMPEXP_FWD_CORE wxStaticText;
 
 #include "catalog.h"
 #include "gexecute.h"
@@ -56,15 +52,13 @@ class WXDLLIMPEXP_FWD_CORE wxStaticText;
 class ListHandler;
 class TextctrlHandler;
 class TransTextctrlHandler;
-class SourceTextCtrl;
-class TranslationTextCtrl;
 
 class PoeditFrame;
 class AttentionBar;
-class ErrorBar;
 class FindFrame;
 class MainToolbar;
 class Sidebar;
+class EditingArea;
 
 /** This class provides main editing frame. It handles user's input
     and provides frontend to catalog editing engine. Nothing fancy.
@@ -146,20 +140,11 @@ class PoeditFrame : public PoeditFrameBase
         /// Returns currently selected (edited) item
         CatalogItemPtr GetCurrentItem() const;
 
-        /// Flags for UpdateToTextCtrl()
-        enum UpdateToTextCtrlFlags
-        {
-            /// Change to textctrl should be undoable by the user
-            UndoableEdit = 0x01,
-            /// Change is due to item change, discard undo buffer
-            ItemChanged = 0x02
-        };
-
         /// Puts text from catalog & listctrl to textctrls.
         void UpdateToTextCtrl(int flags);
 
         /// Puts text from textctrls to catalog & listctrl.
-        void UpdateFromTextCtrl();
+        void OnUpdatedFromTextCtrl(CatalogItemPtr item, bool statsChanged);
 
     private:
         /** Ctor.
@@ -187,8 +172,6 @@ class PoeditFrame : public PoeditFrameBase
         void EnsureContentView(Content type);
         void EnsureAppropriateContentView();
         wxWindow* CreateContentViewPO(Content type);
-        void CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSizer);
-        void CreateContentViewTemplateControls(wxWindow *p, wxBoxSizer *panelSizer);
         wxWindow* CreateContentViewWelcome();
         wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
@@ -350,8 +333,6 @@ private:
 
         void OnSize(wxSizeEvent& event);
 
-        void ShowPluralFormUI(bool show = true);
-
         void RecreatePluralTextCtrls();
 
         template<typename TFunctor>
@@ -379,23 +360,13 @@ private:
 
         CatalogItemPtr m_pendingHumanEditedItem;
 
-        wxPanel *m_bottomPanel;
+        EditingArea *m_editingArea;
         wxSplitterWindow *m_splitter;
         wxSplitterWindow *m_sidebarSplitter;
         PoeditListCtrl *m_list;
-        wxStaticText *m_labelContext;
-        ErrorBar *m_errorBar;
-        SourceTextCtrl *m_textOrig, *m_textOrigPlural;
-        TranslationTextCtrl *m_textTrans;
-        std::vector<TranslationTextCtrl*> m_textTransPlural;
-        TranslationTextCtrl *m_textTransSingularForm;
-        wxNotebook *m_pluralNotebook;
-        wxStaticText *m_labelSingular, *m_labelPlural;
 #ifndef __WXOSX__
         wxMenu *m_menuForHistory;
 #endif
-
-        wxFont m_normalGuiFont, m_boldGuiFont;
 
         AttentionBar *m_attentionBar;
         Sidebar *m_sidebar;
@@ -404,7 +375,6 @@ private:
         bool m_modified;
         bool m_hasObsoleteItems;
         bool m_displayIDs;
-        bool m_dontAutoclearFuzzyStatus;
         bool m_setSashPositionsWhenMaximized;
 
         friend class ListHandler;
