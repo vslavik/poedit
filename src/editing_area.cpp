@@ -174,7 +174,8 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = nullptr;
 
-    m_pluralNotebook = new wxNotebook(this, -1);
+    m_pluralNotebook = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, wxNB_NOPAGETHEME);
+    m_pluralNotebook->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 
     m_errorBar = new ErrorBar(this);
 
@@ -335,6 +336,10 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
 
         // create text control and notebook page for it:
         auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
+        txt->SetWindowVariant(wxWINDOW_VARIANT_NORMAL);
+#ifndef __WXOSX__
+        txt->SetFont(m_textTrans->GetFont());
+#endif
         txt->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
         m_textTransPlural.push_back(txt);
         m_pluralNotebook->AddPage(txt, desc);
