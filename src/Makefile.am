@@ -25,6 +25,7 @@ poedit_SOURCES = \
                  cat_sorting.cpp cat_sorting.h \
                  catalog.cpp catalog.h \
                  chooselang.cpp chooselang.h \
+                 colorscheme.h colorscheme.cpp \
                  commentdlg.h commentdlg.cpp \
                  concurrency.cpp concurrency.h \
                  configuration.cpp configuration.h \

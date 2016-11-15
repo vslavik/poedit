@@ -29,6 +29,7 @@
 #include "hidpi.h"
 #include "language.h"
 #include "cat_sorting.h"
+#include "colorscheme.h"
 #include "unicode_helpers.h"
 #include "utility.h"
 
@@ -51,33 +52,6 @@
 
 namespace
 {
-
-// how much to darken the other color in shaded list (this value
-// is what GTK+ uses in its tree view control)
-#define DARKEN_FACTOR      0.95
-
-inline bool IsAlmostBlack(const wxColour& clr)
-{
-    return clr.Red() < 0x60 && clr.Green() < 0x60 && clr.Blue() < 0x60;
-}
-
-inline bool IsAlmostWhite(const wxColour& clr)
-{
-    return clr.Red() > 0xE0 && clr.Green() > 0xE0 && clr.Blue() > 0xE0;
-}
-
-
-// colours used in the list:
-
-const wxColour gs_ErrorColor("#ff5050");
-
-// colors for white list control background
-const wxColour gs_UntranslatedForWhite("#103f67");
-const wxColour gs_FuzzyForWhite("#a9861b");
-
-// ditto for black background
-const wxColour gs_UntranslatedForBlack("#1962a0");
-const wxColour gs_FuzzyForBlack("#a9861b");
 
 class SelectionPreserver
 {
@@ -123,31 +97,14 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
 
     // configure items colors & fonts:
 
-    // FIXME: make this user-configurable
-    if ( IsAlmostWhite(visual.colBg) )
-    {
-        m_clrUntranslated = gs_UntranslatedForWhite;
-        m_clrFuzzy = gs_FuzzyForWhite;
-    }
-    else if ( IsAlmostBlack(visual.colBg) )
-    {
-        m_clrUntranslated = gs_UntranslatedForBlack;
-        m_clrFuzzy = gs_FuzzyForBlack;
-    }
-    // else: we don't know if the default colors would be well-visible on
-    //       user's background color, so play it safe and don't highlight
-    //       anything
-
-    m_clrInvalid = gs_ErrorColor;
-
-    // Use gray for IDs
-    if ( IsAlmostBlack(visual.colFg) )
-        m_clrID = wxColour("#A1A1A1");
+    m_clrID = ColorScheme::Get(Color::ItemID, visual);
+    m_clrUntranslated = ColorScheme::Get(Color::ItemUntranslated, visual);
+    m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visual);
+    m_clrInvalid = ColorScheme::Get(Color::ItemError, visual);
 
     m_iconPreTranslated = wxArtProvider::GetBitmap("poedit-status-automatic");
     m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
     m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
-
 }
 
 

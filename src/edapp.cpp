@@ -65,6 +65,7 @@
 
 #include "edapp.h"
 #include "edframe.h"
+#include "colorscheme.h"
 #include "concurrency.h"
 #include "manager.h"
 #include "prefsdlg.h"
@@ -497,6 +498,8 @@ int PoeditApp::OnExit()
     // Make sure PoeditFrame instances schedules for deletion are deleted
     // early -- e.g. before wxConfig is destroyed, so they can save changes
     DeletePendingObjects();
+
+    ColorScheme::CleanUp();
 
     TranslationMemory::CleanUp();
 
