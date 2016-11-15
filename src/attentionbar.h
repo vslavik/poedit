@@ -45,7 +45,6 @@ public:
     /// Kind of the message
     enum Kind
     {
-        Info,
         Warning,
         Question,
         Error

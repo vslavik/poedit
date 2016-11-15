@@ -146,9 +146,6 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 #ifdef __WXGTK__
     switch ( msg.m_kind )
     {
-        case AttentionMessage::Info:
-            SetBackgroundColour(wxColour(252,252,189));
-            break;
         case AttentionMessage::Warning:
             SetBackgroundColour(wxColour(250,173,61));
             break;
@@ -184,9 +181,6 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     wxString iconName;
     switch ( msg.m_kind )
     {
-        case AttentionMessage::Info:
-            iconName = wxART_INFORMATION;
-            break;
         case AttentionMessage::Warning:
             iconName = wxART_WARNING;
             break;
