@@ -259,8 +259,9 @@ wxString CustomizedTextCtrl::DoGetValue() const
 #else // !__WXOSX__
 
 CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long style)
-   : wxTextCtrl(parent, winid, "", wxDefaultPosition, wxDefaultSize, style | ALWAYS_USED_STYLE)
 {
+    wxTextCtrl::Create(parent, winid, "", wxDefaultPosition, wxDefaultSize, style | ALWAYS_USED_STYLE);
+
     wxTextAttr padding;
     padding.SetLeftIndent(5);
     padding.SetRightIndent(5);
@@ -280,6 +281,21 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 }
 
 #endif // !__WXOSX__
+
+
+#ifdef __WXMSW__
+
+WXDWORD CustomizedTextCtrl::MSWGetStyle(long style, WXDWORD *exstyle) const
+{
+    auto msStyle = wxTextCtrl::MSWGetStyle(style, exstyle);
+    // Disable always-shown scrollbars. The reason wx does this doesn't seem to
+    // affect Poedit, so it should be safe:
+    msStyle &= ~ES_DISABLENOSCROLL;
+    return msStyle;
+}
+
+#endif // __WXMSW__
+
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
 // We use wxTE_RICH2 style, which allows for pasting rich-formatted
