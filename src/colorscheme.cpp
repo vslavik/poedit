@@ -25,12 +25,25 @@
 
 #include "colorscheme.h"
 
+#include <wx/settings.h>
 std::unique_ptr<ColorScheme::Data> ColorScheme::s_data;
 
 wxColour ColorScheme::DoGet(Color color, Type type)
 {
     switch (color)
     {
+        // Labels:
+
+        case Color::SecondaryLabel:
+            #ifdef __WXOSX__
+            return wxColour([NSColor secondaryLabelColor]);
+            #elif defined(__WXGTK__)
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+            #else
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
+            #endif
+
+
         // List items:
 
         case Color::ItemID:
@@ -45,6 +58,26 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         case Color::ItemError:
             return "#ff5050";
 
+
+        // Separators:
+
+        case Color::ToolbarSeparator:
+            return "#cdcdcd";
+
+        case Color::SidebarSeparator:
+            return "#cbcbcb";
+
+        case Color::EditingSeparator:
+            return "#c1c1c1";
+
+
+        // Backgrounds:
+
+        case Color::SidebarBackground:
+            return "#edf0f4";
+
+        case Color::EditingBackground:
+            return *wxWHITE;
         case Color::Max:
             return wxColour();
     }

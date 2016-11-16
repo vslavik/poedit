@@ -35,10 +35,19 @@
 /// Symbolic color names
 enum class Color : size_t
 {
+    SecondaryLabel,
+
     ItemID,
     ItemUntranslated,
     ItemFuzzy,
     ItemError,
+
+    ToolbarSeparator,
+    SidebarSeparator,
+    EditingSeparator,
+
+    SidebarBackground,
+    EditingBackground,
 
     Max
 };

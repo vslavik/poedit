@@ -68,6 +68,7 @@ public:
 
     /// Constructor
     EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainToolbar *associatedToolbar, Mode mode);
+    ~EditingArea();
 
     // Hooked-up signals:
 
@@ -112,6 +113,8 @@ private:
 
     void ShowPluralFormUI(bool show);
 
+    void OnPaint(wxPaintEvent&);
+
 private:
     PoeditListCtrl *m_associatedList;
     MainToolbar *m_associatedToolbar;
@@ -125,6 +128,7 @@ private:
     wxNotebook *m_pluralNotebook;
     wxStaticText *m_labelSingular, *m_labelPlural;
     wxStaticText *m_labelContext;
+    wxStaticText *m_labelSource, *m_labelTrans;
 
     ErrorBar *m_errorBar;
 };

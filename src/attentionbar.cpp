@@ -126,15 +126,13 @@ AttentionBar::AttentionBar(wxWindow *parent)
 void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-    wxRect rect(dc.GetSize());
 
-    auto bg = GetBackgroundColour();
-    dc.SetBrush(*wxTRANSPARENT_BRUSH);
-    dc.SetPen(bg.ChangeLightness(90));
-#ifndef __WXOSX__
-    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
-#endif
-    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
+    auto bg = GetBackgroundColour().ChangeLightness(80);
+    dc.SetBrush(bg);
+    dc.SetPen(bg);
+
+    wxRect rect(GetSize());
+    dc.DrawRectangle(0, rect.height - MACOS_OR_OTHER(0, PX(1)), rect.width, PX(1));
 }
 
 

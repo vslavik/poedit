@@ -25,6 +25,7 @@
 
 #include "editing_area.h"
 
+#include "colorscheme.h"
 #include "customcontrols.h"
 #include "edlistctrl.h"
 #include "errorbar.h"
@@ -36,6 +37,7 @@
 #include "utility.h"
 
 #include <wx/button.h>
+#include <wx/dcclient.h>
 #include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -115,6 +117,8 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
       m_labelSingular(nullptr),
       m_labelPlural(nullptr),
       m_labelContext(nullptr),
+      m_labelSource(nullptr),
+      m_labelTrans(nullptr),
       m_errorBar(nullptr)
 {
     wxPanel::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
@@ -123,38 +127,50 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
     SetDoubleBuffered(true);
 #endif
 
-    wxStaticText *labelSource =
-        new wxStaticText(this, -1, _("Source text:"));
-    labelSource->SetFont(labelSource->GetFont().Bold());
+    SetBackgroundColour(ColorScheme::Get(Color::EditingBackground));
+    Bind(wxEVT_PAINT, &EditingArea::OnPaint, this);
+
+    m_labelSource = new wxStaticText(this, -1, _("Source text:"));
+#ifdef __WXOSX__
+    m_labelSource->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+    m_labelSource->SetFont(m_labelSource->GetFont().Bold());
 
     m_labelContext = new wxStaticText(this, -1, wxEmptyString);
 #ifdef __WXOSX__
     m_labelContext->SetMinSize(wxSize(-1, m_labelContext->GetBestSize().y + 3));
+    m_labelContext->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
     m_labelContext->Hide();
 
     m_labelSingular = new wxStaticText(this, -1, _("Singular:"));
+    m_labelSingular->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    m_labelSingular->SetFont(m_labelSingular->GetFont().Bold());
+    m_labelSingular->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
     m_textOrig = new SourceTextCtrl(this, wxID_ANY);
+
     m_labelPlural = new wxStaticText(this, -1, _("Plural:"));
+    m_labelPlural->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    m_labelPlural->SetFont(m_labelPlural->GetFont().Bold());
+    m_labelPlural->SetForegroundColour(ColorScheme::Get(Color::SecondaryLabel));
     m_textOrigPlural = new SourceTextCtrl(this, wxID_ANY);
 
     auto *sizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(sizer);
 
-    wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
-    gridSizer->AddGrowableCol(1);
-    gridSizer->AddGrowableRow(0);
-    gridSizer->AddGrowableRow(1);
-    gridSizer->Add(m_labelSingular, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
-    gridSizer->Add(m_textOrig, 1, wxEXPAND);
-    gridSizer->Add(m_labelPlural, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
-    gridSizer->Add(m_textOrigPlural, 1, wxEXPAND);
-    gridSizer->SetItemMinSize(m_textOrig, 1, 1);
-    gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
+    sizer->Add(m_labelContext, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
+#if defined(__WXMSW__)
+    sizer->AddSpacer(PX(4) - 4); // account for fixed 4px sash above
+#elif defined(__WXOSX__)
+    sizer->AddSpacer(PX(2));
+#endif
+    sizer->Add(m_labelSource, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
+    sizer->AddSpacer(PX(6));
 
-    sizer->Add(m_labelContext, 0, wxEXPAND | wxALL, 3);
-    sizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
-    sizer->Add(gridSizer, 1, wxEXPAND);
+    sizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT|wxTOP, PX(6)));
+    sizer->Add(m_textOrig, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
+    sizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(6)));
+    sizer->Add(m_textOrigPlural, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
 
     if (mode == POT)
         CreateTemplateControls(sizer);
@@ -165,8 +181,11 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
 
 void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 {
-    wxStaticText *labelTrans = new wxStaticText(this, -1, _("Translation:"));
-    labelTrans->SetFont(labelTrans->GetFont().Bold());
+    m_labelTrans = new wxStaticText(this, -1, _("Translation:"));
+#ifdef __WXOSX__
+    m_labelTrans->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+    m_labelTrans->SetFont(m_labelTrans->GetFont().Bold());
 
     m_textTrans = new TranslationTextCtrl(this, wxID_ANY);
     m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
@@ -179,10 +198,11 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     m_errorBar = new ErrorBar(this);
 
-    sizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
-    sizer->Add(m_textTrans, 1, wxEXPAND);
-    sizer->Add(m_pluralNotebook, 1, wxEXPAND);
-    sizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
+    sizer->Add(m_labelTrans, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
+    sizer->AddSpacer(PX(6));
+    sizer->Add(m_textTrans, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(4)));
+    sizer->Add(m_pluralNotebook, wxSizerFlags(3).Expand().Border(wxTOP, PX(4)));
+    sizer->Add(m_errorBar, wxSizerFlags().Border(wxALL, PX(4)));
 
     ShowPluralFormUI(false);
 }
@@ -211,6 +231,39 @@ void EditingArea::CreateTemplateControls(wxBoxSizer *panelSizer)
 
     panelSizer->Add(win, 1, wxEXPAND);
 }
+
+
+EditingArea::~EditingArea()
+{
+    // OnPaint may still be called as child windows are destroyed
+    m_labelSource = m_labelTrans = nullptr;
+}
+
+
+void EditingArea::OnPaint(wxPaintEvent&)
+{
+    wxPaintDC dc(this);
+    auto width = GetClientSize().x;
+
+    auto clr = ColorScheme::Get(Color::EditingSeparator);
+    dc.SetPen(clr);
+    dc.SetBrush(clr);
+
+    const int paddingTop = MACOS_OR_OTHER(PX(2), PX(4));
+    const int paddingBottom = PX(5);
+
+    if (m_labelSource)
+    {
+        dc.DrawRectangle(0, m_labelSource->GetPosition().y + m_labelSource->GetSize().y + paddingBottom, width, PX(1));
+    }
+
+    if (m_labelTrans)
+    {
+        dc.DrawRectangle(0, m_labelTrans->GetPosition().y - paddingTop, width, PX(1));
+        dc.DrawRectangle(0, m_labelTrans->GetPosition().y + m_labelTrans->GetSize().y + paddingBottom, width, PX(1));
+    }
+}
+
 
 
 void EditingArea::SetCustomFont(const wxFont& font)
@@ -478,6 +531,7 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
     }
 
     ShowPluralFormUI(item->HasPlural());
+    Refresh();
 
     // by default, editing fuzzy item unfuzzies it
     m_dontAutoclearFuzzyStatus = false;

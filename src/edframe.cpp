@@ -57,6 +57,7 @@
 #include <fstream>
 
 #include "catalog.h"
+#include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
 #include "crowdin_gui.h"
@@ -83,6 +84,70 @@
 #include "sidebar.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
+
+
+namespace
+{
+
+// Splitters with customized apperance to blend with EditingArea:
+
+class ThinSplitter : public wxSplitterWindow
+{
+public:
+    ThinSplitter(wxWindow *parent, const wxColour& color)
+        : wxSplitterWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER | wxSP_LIVE_UPDATE)
+    {
+#ifdef __WXOSX__
+        SetBackgroundColour(color);
+#else
+        m_color = color;
+#endif
+    }
+
+#ifndef __WXOSX__
+    void DrawSash(wxDC& dc) override
+    {
+        if (m_sashPosition == 0 || !m_windowTwo || IsSashInvisible())
+            return;
+
+        auto mode = GetSplitMode();
+        auto rect = (mode == wxSPLIT_HORIZONTAL)
+                    ? wxRect(0, m_sashPosition, GetClientSize().x, GetSashSize())
+                    : wxRect(m_sashPosition, 0, GetSashSize(), GetClientSize().y);
+
+        dc.SetPen(m_color);
+        dc.SetBrush(m_color);
+        if (mode == wxSPLIT_HORIZONTAL)
+            dc.DrawRectangle(rect.x, rect.y, rect.width, PX(1));
+        else
+            dc.DrawRectangle(rect.x, rect.y, PX(1), rect.height);
+
+        if (GetSashSize() > PX(1))
+        {
+            if (mode == wxSPLIT_HORIZONTAL)
+            {
+                rect.y += PX(1);
+                rect.height -= PX(1);
+            }
+            else
+            {
+                rect.x += PX(1);
+                rect.width -= PX(1);
+            }
+
+            auto bg = GetWindow2()->GetBackgroundColour();
+            dc.SetPen(bg);
+            dc.SetBrush(bg);
+            dc.DrawRectangle(rect);
+        }
+    }
+
+private:
+    wxColour m_color;
+#endif // !__WXOSX__
+};
+
+} // anonymous namespace
 
 
 // this should be high enough to not conflict with any wxNewId-allocated value,
@@ -486,6 +551,12 @@ PoeditFrame::PoeditFrame() :
     m_contentWrappingSizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(m_contentWrappingSizer);
 
+#ifndef __WXOSX__
+    // render a separator between the toolbar and content
+    SetBackgroundColour(ColorScheme::Get(Color::ToolbarSeparator));
+    m_contentWrappingSizer->AddSpacer(PX(1));
+#endif // !__WXOSX__
+
     m_attentionBar = new AttentionBar(this);
     m_contentWrappingSizer->Add(m_attentionBar, wxSizerFlags().Expand());
 
@@ -584,16 +655,12 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     main->Hide();
 #endif
 
-    m_sidebarSplitter = new wxSplitterWindow(main, -1,
-                                      wxDefaultPosition, wxDefaultSize,
-                                      wxSP_NOBORDER | wxSP_LIVE_UPDATE);
+    m_sidebarSplitter = new ThinSplitter(main, ColorScheme::Get(Color::SidebarSeparator));
     m_sidebarSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSidebarSplitterSashMoving, this);
 
     mainSizer->Add(m_sidebarSplitter, wxSizerFlags(1).Expand());
 
-    m_splitter = new wxSplitterWindow(m_sidebarSplitter, -1,
-                                      wxDefaultPosition, wxDefaultSize,
-                                      wxSP_NOBORDER | wxSP_LIVE_UPDATE);
+    m_splitter = new ThinSplitter(m_sidebarSplitter, ColorScheme::Get(Color::EditingSeparator));
     m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
 
     // make only the upper part grow when resizing

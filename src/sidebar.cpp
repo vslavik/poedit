@@ -27,6 +27,7 @@
 
 #include "catalog.h"
 #include "customcontrols.h"
+#include "colorscheme.h"
 #include "commentdlg.h"
 #include "concurrency.h"
 #include "configuration.h"
@@ -50,7 +51,6 @@
 
 #include <algorithm>
 
-#define SIDEBAR_BACKGROUND      wxColour("#EDF0F4")
 #define GRAY_LINES_COLOR        wxColour(220,220,220)
 #define GRAY_LINES_COLOR_DARK   wxColour(180,180,180)
 
@@ -60,7 +60,7 @@ class SidebarSeparator : public wxWindow
 public:
     SidebarSeparator(wxWindow *parent)
         : wxWindow(parent, wxID_ANY),
-          m_sides(SIDEBAR_BACKGROUND),
+          m_sides(ColorScheme::Get(Color::SidebarBackground)),
           m_center(GRAY_LINES_COLOR_DARK)
     {
         Bind(wxEVT_PAINT, &SidebarSeparator::OnPaint, this);
@@ -722,7 +722,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
       m_catalog(nullptr),
       m_selectedItem(nullptr)
 {
-    SetBackgroundColour(SIDEBAR_BACKGROUND);
+    SetBackgroundColour(ColorScheme::Get(Color::SidebarBackground));
 #ifdef __WXMSW__
     SetDoubleBuffered(true);
 #endif
@@ -840,11 +840,8 @@ void Sidebar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
 
-    dc.SetPen(wxPen(GRAY_LINES_COLOR));
-#ifndef __WXMSW__
-    dc.DrawLine(0, 0, 0, dc.GetSize().y-1);
-#endif
-#ifndef __WXOSX__
+#ifdef __WXOSX__
+    dc.SetPen(ColorScheme::Get(Color::ToolbarSeparator));
     dc.DrawLine(0, 0, dc.GetSize().x - 1, 0);
 #endif
 }

@@ -213,7 +213,7 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 {
     auto text = TextView(this);
 
-    [text setTextContainerInset:NSMakeSize(1,3)];
+    [text setTextContainerInset:NSMakeSize(0,3)];
     [text setRichText:NO];
 
     // TODO: This isn't implemented and doesn't work in macOS
@@ -785,14 +785,14 @@ void AnyTranslatableTextCtrl::HighlightText()
 
 
 SourceTextCtrl::SourceTextCtrl(wxWindow *parent, wxWindowID winid)
-    : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
+    : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY | wxNO_BORDER)
 {
     SetLanguage(Language::English());
 }
 
 
 TranslationTextCtrl::TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
-    : AnyTranslatableTextCtrl(parent, winid),
+    : AnyTranslatableTextCtrl(parent, winid, wxNO_BORDER),
       m_lastKeyWasReturn(false)
 {
 #ifdef __WXMSW__
