@@ -38,7 +38,6 @@ enum class Color : size_t
     SecondaryLabel,
 
     ItemID,
-    ItemUntranslated,
     ItemFuzzy,
     ItemError,
 
@@ -48,6 +47,16 @@ enum class Color : size_t
 
     SidebarBackground,
     EditingBackground,
+
+    SyntaxLeadingWhitespaceBg,
+    SyntaxEscapeFg,
+    SyntaxEscapeBg,
+    SyntaxMarkup,
+    SyntaxFormat,
+
+    AttentionWarningBackground,
+    AttentionQuestionBackground,
+    AttentionErrorBackground,
 
     Max
 };

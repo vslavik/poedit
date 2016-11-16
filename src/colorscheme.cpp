@@ -26,6 +26,29 @@
 #include "colorscheme.h"
 
 #include <wx/settings.h>
+
+
+namespace
+{
+
+#ifdef __WXOSX__
+
+inline wxColour sRGB(int r, int g, int b, float a = 1.0)
+{
+    return wxColour([NSColor colorWithSRGBRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]);
+}
+
+#else
+
+inline wxColour sRGB(int r, int g, int b, float a = 1.0)
+{
+    return wxColour(r, g, b, int(a * wxALPHA_OPAQUE));
+}
+
+#endif
+
+} // anonymous namespace
+
 std::unique_ptr<ColorScheme::Data> ColorScheme::s_data;
 
 wxColour ColorScheme::DoGet(Color color, Type type)
@@ -43,41 +66,62 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return wxSystemSettings::GetColour(wxSYS_COLOUR_GRAYTEXT);
             #endif
 
-
         // List items:
 
         case Color::ItemID:
             return type == Light ? "#a1a1a1" : wxNullColour;
-
-        case Color::ItemUntranslated:
-            return type == Light ? "#103f67" : "#1962a0";
-
         case Color::ItemFuzzy:
-            return type == Light ? "#a9861b" : "#a9861b";
-
+            return type == Light ? sRGB(218, 123, 0) : "#a9861b";
         case Color::ItemError:
-            return "#ff5050";
-
+            return sRGB(242, 84, 77);
 
         // Separators:
 
         case Color::ToolbarSeparator:
             return "#cdcdcd";
-
         case Color::SidebarSeparator:
             return "#cbcbcb";
-
         case Color::EditingSeparator:
             return "#c1c1c1";
-
 
         // Backgrounds:
 
         case Color::SidebarBackground:
             return "#edf0f4";
-
         case Color::EditingBackground:
             return *wxWHITE;
+
+        // Syntax highlighting:
+
+        case Color::SyntaxLeadingWhitespaceBg:
+            return sRGB(255, 233, 204);
+        case Color::SyntaxEscapeFg:
+            return sRGB(162, 0, 20);
+        case Color::SyntaxEscapeBg:
+            return sRGB(254, 234, 236);
+        case Color::SyntaxMarkup:
+            return sRGB(0, 121, 215);
+        case Color::SyntaxFormat:
+            return sRGB(178, 52, 197);
+
+        // Attention bar:
+
+#ifdef __WXGTK__
+        case Color::AttentionWarningBackground:
+            return sRGB(250, 173, 61);
+        case Color::AttentionQuestionBackground:
+            return sRGB(138, 173, 212);
+        case Color::AttentionErrorBackground:
+            return sRGB(237, 54, 54);
+#else
+        case Color::AttentionWarningBackground:
+            return sRGB(255, 222, 91);
+        case Color::AttentionQuestionBackground:
+            return sRGB(150, 233, 109);
+        case Color::AttentionErrorBackground:
+            return sRGB(255, 125, 125);
+#endif
+
         case Color::Max:
             return wxColour();
     }

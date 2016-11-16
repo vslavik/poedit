@@ -25,6 +25,9 @@
 
 #include "attentionbar.h"
 
+#include "colorscheme.h"
+#include "customcontrols.h"
+#include "hidpi.h"
 #include "utility.h"
 
 #include <wx/checkbox.h>
@@ -36,9 +39,6 @@
 #include <wx/statbmp.h>
 #include <wx/config.h>
 #include <wx/dcclient.h>
-
-#include "customcontrols.h"
-#include "hidpi.h"
 
 #ifdef __WXOSX__
 #include "macos_helpers.h"
@@ -141,32 +141,16 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     if ( msg.IsBlacklisted() )
         return;
 
-#ifdef __WXGTK__
     switch ( msg.m_kind )
     {
         case AttentionMessage::Warning:
-            SetBackgroundColour(wxColour(250,173,61));
+            SetBackgroundColour(ColorScheme::Get(Color::AttentionWarningBackground));
             break;
         case AttentionMessage::Question:
-            SetBackgroundColour(wxColour(138,173,212));
+            SetBackgroundColour(ColorScheme::Get(Color::AttentionQuestionBackground));
             break;
         case AttentionMessage::Error:
-            SetBackgroundColour(wxColour(237,54,54));
-            break;
-    }
-#else
-
-    switch ( msg.m_kind )
-    {
-        case AttentionMessage::Question:
-            SetBackgroundColour("#ABE887");
-            break;
-        default:
-    #ifdef __WXMSW__
-            SetBackgroundColour("#FFF499"); // match Visual Studio 2012+'s aesthetics
-    #else
-            SetBackgroundColour("#FCDE59");
-    #endif
+            SetBackgroundColour(ColorScheme::Get(Color::AttentionErrorBackground));
             break;
     }
 
@@ -189,6 +173,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             iconName = wxART_ERROR;
             break;
     }
+#ifndef __WXGTK__
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
 #endif
 

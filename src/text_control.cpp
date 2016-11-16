@@ -48,6 +48,7 @@
   _COM_SMARTPTR_TYPEDEF(ITextDocument, __uuidof(ITextDocument));
 #endif
 
+#include "colorscheme.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
@@ -475,11 +476,11 @@ public:
 
     Attributes()
     {
-        m_attrSpace  = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:0.89 green:0.96 blue:0.68 alpha:1]};
-        m_attrEscape = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:1 green:0.95 blue:1 alpha:1],
-                         NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.46 green:0 blue:0.01 alpha:1]};
-        m_attrMarkup = @{NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0 green:0.36 blue:0.80 alpha:1]};
-        m_attrFormat = @{NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.62 green:0 blue:0.75 alpha:1]};
+        m_attrSpace  = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxLeadingWhitespaceBg).OSXGetNSColor()};
+        m_attrEscape = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeBg).OSXGetNSColor(),
+                         NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeFg).OSXGetNSColor()};
+        m_attrMarkup = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxMarkup).OSXGetNSColor()};
+        m_attrFormat = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxFormat).OSXGetNSColor()};
     }
 #else // !__WXOSX__
     wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape, m_attrMarkup, m_attrFormat;
@@ -490,14 +491,14 @@ public:
         m_attrDefault.SetBackgroundColour(*wxWHITE);
         m_attrDefault.SetTextColour(*wxBLACK);
 
-        m_attrSpace.SetBackgroundColour("#E4F6AE");
+        m_attrSpace.SetBackgroundColour(ColorScheme::Get(Color::SyntaxLeadingWhitespaceBg));
 
-        m_attrEscape.SetBackgroundColour("#FFF1FF");
-        m_attrEscape.SetTextColour("#760003");
+        m_attrEscape.SetBackgroundColour(ColorScheme::Get(Color::SyntaxEscapeBg));
+        m_attrEscape.SetTextColour(ColorScheme::Get(Color::SyntaxEscapeFg));
 
-        m_attrMarkup.SetTextColour("#005DCD");
+        m_attrMarkup.SetTextColour(ColorScheme::Get(Color::SyntaxMarkup));
 
-        m_attrFormat.SetTextColour("#9E00B7");
+        m_attrFormat.SetTextColour(ColorScheme::Get(Color::SyntaxFormat));
     }
 
     const AttrType& Default() const {  return m_attrDefault; }

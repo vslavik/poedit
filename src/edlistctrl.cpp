@@ -98,7 +98,6 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
     // configure items colors & fonts:
 
     m_clrID = ColorScheme::Get(Color::ItemID, visual);
-    m_clrUntranslated = ColorScheme::Get(Color::ItemUntranslated, visual);
     m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visual);
     m_clrInvalid = ColorScheme::Get(Color::ItemError, visual);
 
@@ -269,11 +268,6 @@ bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewI
             if (d->GetValidity() == CatalogItem::Val_Invalid)
             {
                 attr.SetColour(m_clrInvalid);
-                return true;
-            }
-            else if (!d->IsTranslated())
-            {
-                attr.SetColour(m_clrUntranslated);
                 return true;
             }
             else if (d->IsFuzzy())
