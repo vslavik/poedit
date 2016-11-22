@@ -1383,7 +1383,11 @@
 // Default is 0.
 //
 // Recommended setting (at present): 0
-#define wxUSE_ACCESSIBILITY 0
+#ifdef __WXMSW__
+    #define wxUSE_ACCESSIBILITY 1
+#else
+    #define wxUSE_ACCESSIBILITY 0
+#endif
 
 // ----------------------------------------------------------------------------
 // miscellaneous settings
