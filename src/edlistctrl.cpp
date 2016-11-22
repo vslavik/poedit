@@ -471,7 +471,12 @@ void PoeditListCtrl::SizeColumns()
         w -= m_colIcon->GetWidth();
 
     if (m_colID)
+    {
         w -= m_colID->GetWidth();
+#ifdef __WXGTK__
+        w += 2;
+#endif
+    }
 
     if (m_colTrans)
     {
