@@ -291,6 +291,7 @@ class PoeditListCtrl : public wxDataViewCtrl
             TextDirection m_sourceTextDir, m_transTextDir, m_appTextDir;
 
             wxColour m_clrID, m_clrInvalid, m_clrFuzzy;
+            wxString m_clrContextFg, m_clrContextBg;
             wxBitmap m_iconPreTranslated, m_iconComment, m_iconBookmark;
         };
 

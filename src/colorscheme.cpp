@@ -27,20 +27,29 @@
 
 #include <wx/settings.h>
 
+#ifdef __WXGTK__
+    #include <pango/pango-utils.h>
+    #if PANGO_VERSION_CHECK(1,38,0)
+        #define SUPPORTS_BGALPHA
+    #endif
+#else
+    #define SUPPORTS_BGALPHA
+#endif
+
 
 namespace
 {
 
 #ifdef __WXOSX__
 
-inline wxColour sRGB(int r, int g, int b, float a = 1.0)
+inline wxColour sRGB(int r, int g, int b, double a = 1.0)
 {
     return wxColour([NSColor colorWithSRGBRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]);
 }
 
 #else
 
-inline wxColour sRGB(int r, int g, int b, float a = 1.0)
+inline wxColour sRGB(int r, int g, int b, double a = 1.0)
 {
     return wxColour(r, g, b, int(a * wxALPHA_OPAQUE));
 }
@@ -74,6 +83,14 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return type == Light ? sRGB(218, 123, 0) : "#a9861b";
         case Color::ItemError:
             return sRGB(242, 84, 77);
+        case Color::ItemContextFg:
+            return sRGB(0, 103, 37);
+        case Color::ItemContextBg:
+            #ifdef SUPPORTS_BGALPHA
+            return sRGB(207, 243, 220, 0.75);
+            #else
+            return sRGB(219, 246, 229);
+            #endif
 
         // Separators:
 

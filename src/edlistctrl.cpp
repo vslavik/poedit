@@ -100,6 +100,8 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
     m_clrID = ColorScheme::Get(Color::ItemID, visual);
     m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visual);
     m_clrInvalid = ColorScheme::Get(Color::ItemError, visual);
+    m_clrContextFg = ColorScheme::Get(Color::ItemContextFg, visual).GetAsString(wxC2S_HTML_SYNTAX);
+    m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visual).GetAsString(wxC2S_HTML_SYNTAX);
 
     m_iconPreTranslated = wxArtProvider::GetBitmap("poedit-status-automatic");
     m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
@@ -196,7 +198,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 #else
                     #define MARKUP(x) x
                 #endif
-                orig.Printf(MARKUP("<span style=\"italic\" color=\"#2B6F16\">[%s]</span> %s"),
+                orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
+                            m_clrContextBg, m_clrContextFg,
                             EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
             }
             else
@@ -379,6 +382,9 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
         font = GetDefaultAttributes().font;
 
     SetFont(font);
+#ifdef __WXOSX__
+    SetRowHeight(20);
+#endif
 
     UpdateHeaderAttrs();
     CreateColumns();
@@ -394,6 +400,11 @@ void PoeditListCtrl::CreateColumns()
 {
     if (GetColumnCount() > 0)
         ClearColumns();
+
+#ifdef __WXOSX__
+    NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
+    [tableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
+#endif
 
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
 

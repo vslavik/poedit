@@ -40,6 +40,8 @@ enum class Color : size_t
     ItemID,
     ItemFuzzy,
     ItemError,
+    ItemContextFg,
+    ItemContextBg,
 
     ToolbarSeparator,
     SidebarSeparator,
