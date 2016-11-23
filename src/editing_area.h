@@ -33,7 +33,6 @@
 #include <functional>
 #include <vector>
 
-class ErrorBar;
 class MainToolbar;
 class PoeditListCtrl;
 class SourceTextCtrl;
@@ -136,7 +135,7 @@ private:
     TagLabel *m_tagContext;
     TagLabel *m_tagFormat;
 
-    ErrorBar *m_errorBar;
+    TagLabel *m_errorLine;
 };
 
 #endif // Poedit_editing_area_h

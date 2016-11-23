@@ -35,7 +35,6 @@ poedit_SOURCES = \
                  edframe.cpp edframe.h \
                  editing_area.cpp editing_area.h \
                  edlistctrl.cpp edlistctrl.h \
-                 errorbar.cpp errorbar.h \
                  errors.h \
                  export_html.cpp \
                  extractor.cpp extractor.h \

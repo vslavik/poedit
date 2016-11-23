@@ -47,6 +47,8 @@ enum class Color : size_t
     TagContextBg,
     TagFormatFg,
     TagFormatBg,
+    TagErrorLineFg,
+    TagErrorLineBg,
 
     ToolbarSeparator,
     SidebarSeparator,

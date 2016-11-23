@@ -28,7 +28,6 @@
 #include "colorscheme.h"
 #include "customcontrols.h"
 #include "edlistctrl.h"
-#include "errorbar.h"
 #include "hidpi.h"
 #include "main_toolbar.h"
 #include "pluralforms/pl_evaluate.h"
@@ -219,7 +218,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
       m_labelTrans(nullptr),
       m_tagContext(nullptr),
       m_tagFormat(nullptr),
-      m_errorBar(nullptr)
+      m_errorLine(nullptr)
 {
     wxPanel::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
                     wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);
@@ -242,8 +241,8 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     sourceLineSizer->AddSpacer(PX(4));
-    sourceLineSizer->Add(m_tagContext, wxSizerFlags(1).Center().Border(wxRIGHT, PX(6)));
-    sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(6)));
+    sourceLineSizer->Add(m_tagContext, wxSizerFlags(1).Center().Border(wxRIGHT, PX(4)));
+    sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->SetShrinkableWindow(m_tagContext);
     sourceLineSizer->SetMinSize(-1, m_tagContext->GetSize().y);
 
@@ -290,6 +289,14 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 #endif
     m_labelTrans->SetFont(m_labelTrans->GetFont().Bold());
 
+    m_errorLine = new TagLabel(this, Color::TagErrorLineFg, Color::TagErrorLineBg);
+
+    auto transLineSizer = new wxBoxSizer(wxHORIZONTAL);
+    transLineSizer->Add(m_labelTrans, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
+    transLineSizer->AddSpacer(PX(4));
+    transLineSizer->Add(m_errorLine, wxSizerFlags(1).Center().Border(wxRIGHT, PX(4)));
+    transLineSizer->SetMinSize(-1, m_errorLine->GetSize().y);
+
     m_textTrans = new TranslationTextCtrl(this, wxID_ANY);
     m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
 
@@ -299,13 +306,10 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     m_pluralNotebook = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, wxNB_NOPAGETHEME);
     m_pluralNotebook->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 
-    m_errorBar = new ErrorBar(this);
-
-    sizer->Add(m_labelTrans, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
+    sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
     sizer->AddSpacer(PX(6));
     sizer->Add(m_textTrans, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(4)));
     sizer->Add(m_pluralNotebook, wxSizerFlags(3).Expand().Border(wxTOP, PX(4)));
-    sizer->Add(m_errorBar, wxSizerFlags().Border(wxALL, PX(4)));
 
     ShowPluralFormUI(false);
 }
@@ -352,7 +356,7 @@ void EditingArea::OnPaint(wxPaintEvent&)
     dc.SetPen(clr);
     dc.SetBrush(clr);
 
-    const int paddingTop = MACOS_OR_OTHER(PX(2), PX(4));
+    const int paddingTop = MACOS_OR_OTHER(PX(2), PX(6));
     const int paddingBottom = PX(5);
 
     if (m_labelSource)
@@ -637,12 +641,18 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
         m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), format.Upper()));
     }
 
-    if (m_errorBar)
+    if (m_errorLine)
     {
         if (item->GetValidity() == CatalogItem::Val_Invalid)
-            m_errorBar->ShowError(item->GetErrorString());
+        {
+            m_errorLine->SetLabel(item->GetErrorString());
+            m_errorLine->SetToolTip(item->GetErrorString());
+            ShowPart(m_errorLine, true);
+        }
         else
-            m_errorBar->HideError();
+        {
+            ShowPart(m_errorLine, false);
+        }
     }
 
     ShowPluralFormUI(item->HasPlural());
