@@ -84,7 +84,7 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         case Color::ItemError:
             return sRGB(242, 84, 77);
         case Color::ItemContextFg:
-            return sRGB(0, 103, 37);
+            return sRGB(22, 150, 67);
         case Color::ItemContextBg:
             #ifdef SUPPORTS_BGALPHA
             return sRGB(207, 243, 220, 0.75);
