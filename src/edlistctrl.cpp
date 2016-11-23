@@ -177,7 +177,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         {
             if (d->GetBookmark() != NO_BOOKMARK)
                 variant << m_iconBookmark;
-            else if (d->HasComment() || d->HasExtractedComments())
+            else if (d->HasComment())
                 variant << m_iconComment;
             else if (d->IsPreTranslated())
                 variant << m_iconPreTranslated;
