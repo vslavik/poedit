@@ -98,6 +98,11 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return DoGet(Color::ItemContextFg, type);
         case Color::TagContextBg:
             return DoGet(Color::ItemContextBg, type);
+        case Color::TagFormatFg:
+            return sRGB(87, 87, 87);
+        case Color::TagFormatBg:
+            return sRGB(236, 236, 236);
+
 
         // Separators:
 

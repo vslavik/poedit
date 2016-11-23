@@ -134,6 +134,7 @@ private:
     wxStaticText *m_labelSource, *m_labelTrans;
 
     TagLabel *m_tagContext;
+    TagLabel *m_tagFormat;
 
     ErrorBar *m_errorBar;
 };

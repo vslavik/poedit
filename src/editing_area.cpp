@@ -218,6 +218,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
       m_labelSource(nullptr),
       m_labelTrans(nullptr),
       m_tagContext(nullptr),
+      m_tagFormat(nullptr),
       m_errorBar(nullptr)
 {
     wxPanel::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
@@ -236,11 +237,13 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
     m_labelSource->SetFont(m_labelSource->GetFont().Bold());
 
     m_tagContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
+    m_tagFormat = new TagLabel(this, Color::TagFormatFg, Color::TagFormatBg);
 
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     sourceLineSizer->AddSpacer(PX(4));
     sourceLineSizer->Add(m_tagContext, wxSizerFlags(1).Center().Border(wxRIGHT, PX(6)));
+    sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(6)));
     sourceLineSizer->SetShrinkableWindow(m_tagContext);
     sourceLineSizer->SetMinSize(-1, m_tagContext->GetSize().y);
 
@@ -624,6 +627,14 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
     {
         m_tagContext->SetLabel(item->GetContext());
         m_tagContext->SetToolTip(item->GetContext());
+    }
+
+    auto format = item->GetFormatFlag();
+    ShowPart(m_tagFormat, !format.empty());
+    if (!format.empty())
+    {
+        // TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+        m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), format.Upper()));
     }
 
     if (m_errorBar)
