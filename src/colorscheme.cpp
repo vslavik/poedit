@@ -92,6 +92,13 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return sRGB(219, 246, 229);
             #endif
 
+        // Tags:
+
+        case Color::TagContextFg:
+            return DoGet(Color::ItemContextFg, type);
+        case Color::TagContextBg:
+            return DoGet(Color::ItemContextBg, type);
+
         // Separators:
 
         case Color::ToolbarSeparator:
@@ -162,6 +169,18 @@ ColorScheme::Type ColorScheme::GetSchemeTypeFromWindow(const wxVisualAttributes&
     }
 }
 
+
+wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win)
+{
+    auto bg = win->GetBackgroundColour();
+    auto fg = Get(color, win);
+    if (fg.Alpha() == wxALPHA_OPAQUE)
+        return fg;
+    double alpha = fg.Alpha() / 255.0;
+    return wxColour(wxColour::AlphaBlend(fg.Red(), bg.Red(), alpha),
+                    wxColour::AlphaBlend(fg.Green(), bg.Green(), alpha),
+                    wxColour::AlphaBlend(fg.Blue(), bg.Blue(), alpha));
+}
 
 void ColorScheme::CleanUp()
 {

@@ -43,6 +43,9 @@ enum class Color : size_t
     ItemContextFg,
     ItemContextBg,
 
+    TagContextFg,
+    TagContextBg,
+
     ToolbarSeparator,
     SidebarSeparator,
     EditingSeparator,
@@ -99,6 +102,8 @@ public:
     {
         return Get(color, GetSchemeTypeFromWindow(win));
     }
+
+    static wxColour GetBlendedOn(Color color, wxWindow *win);
 
     static void CleanUp();
 

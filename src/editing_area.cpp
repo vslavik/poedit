@@ -38,6 +38,7 @@
 
 #include <wx/button.h>
 #include <wx/dcclient.h>
+#include <wx/graphics.h>
 #include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -103,7 +104,105 @@ wxString PreprocessEnteredTextForItem(CatalogItemPtr item, wxString t)
     return t;
 }
 
+
+/// Box sizer that allows one element to shrink below min size,
+class ShrinkableBoxSizer : public wxBoxSizer
+{
+public:
+    ShrinkableBoxSizer(int orient) : wxBoxSizer(orient) {}
+
+    void SetShrinkableWindow(wxWindow *win)
+    {
+        m_shrinkable = win ? GetItem(win) : nullptr;
+    }
+
+    void RecalcSizes() override
+    {
+        if (m_shrinkable)
+        {
+            const wxCoord totalSize = GetSizeInMajorDir(m_size);
+            const wxCoord minSize = GetSizeInMajorDir(m_calculatedMinSize);
+            // If there's not enough space, make shrinkable item proportional,
+            // it will be resized under its minimal size then.
+            m_shrinkable->SetProportion(totalSize < minSize ? 1 : 0);
+        }
+
+        wxBoxSizer::RecalcSizes();
+    }
+
+private:
+    wxSizerItem *m_shrinkable;
+};
+
+
 } // anonymous namespace
+
+
+/// Tag-like label, with background rounded rect
+class EditingArea::TagLabel : public wxWindow
+{
+public:
+    enum Mode
+    {
+        Fixed,
+        Ellipsize
+    };
+
+    TagLabel(wxWindow *parent, Color fg, Color bg) : wxWindow(parent, wxID_ANY)
+    {
+        m_fg = ColorScheme::Get(fg);
+        m_bg = ColorScheme::Get(bg);
+
+        m_label = new wxStaticText(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxST_ELLIPSIZE_END);
+        m_label->SetForegroundColour(m_fg);
+#ifdef __WXOSX__
+        m_label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+#ifdef __WXMSW__
+        SetBackgroundColour(parent->GetBackgroundColour());
+        m_label->SetBackgroundColour(ColorScheme::GetBlendedOn(bg, this));
+#endif
+
+        auto sizer = new wxBoxSizer(wxHORIZONTAL);
+        sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, PX(2)));
+#ifdef __WXMSW__
+        sizer->InsertSpacer(0, PX(2));
+        sizer->AddSpacer(PX(2));
+#endif
+        SetSizer(sizer);
+
+        Bind(wxEVT_PAINT, &TagLabel::OnPaint, this);
+    }
+
+    void SetLabel(const wxString& text) override
+    {
+        m_label->SetLabel(text);
+        InvalidateBestSize();
+    }
+
+protected:
+    void DoSetToolTipText(const wxString &tip) override
+    {
+        wxWindow::DoSetToolTipText(tip);
+        m_label->SetToolTip(tip);
+    }
+
+private:
+    void OnPaint(wxPaintEvent&)
+    {
+        wxPaintDC dc(this);
+        std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+        gc->SetBrush(m_bg);
+        gc->SetPen(*wxTRANSPARENT_PEN);
+
+        auto rect = GetClientRect();
+        gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+    }
+
+    wxColour m_fg;
+    wxBrush m_bg;
+    wxStaticText *m_label;
+};
 
 
 EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainToolbar *associatedToolbar, Mode mode)
@@ -116,9 +215,9 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
       m_pluralNotebook(nullptr),
       m_labelSingular(nullptr),
       m_labelPlural(nullptr),
-      m_labelContext(nullptr),
       m_labelSource(nullptr),
       m_labelTrans(nullptr),
+      m_tagContext(nullptr),
       m_errorBar(nullptr)
 {
     wxPanel::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
@@ -136,12 +235,14 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
 #endif
     m_labelSource->SetFont(m_labelSource->GetFont().Bold());
 
-    m_labelContext = new wxStaticText(this, -1, wxEmptyString);
-#ifdef __WXOSX__
-    m_labelContext->SetMinSize(wxSize(-1, m_labelContext->GetBestSize().y + 3));
-    m_labelContext->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
-    m_labelContext->Hide();
+    m_tagContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
+
+    auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
+    sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
+    sourceLineSizer->AddSpacer(PX(4));
+    sourceLineSizer->Add(m_tagContext, wxSizerFlags(1).Center().Border(wxRIGHT, PX(6)));
+    sourceLineSizer->SetShrinkableWindow(m_tagContext);
+    sourceLineSizer->SetMinSize(-1, m_tagContext->GetSize().y);
 
     m_labelSingular = new wxStaticText(this, -1, _("Singular:"));
     m_labelSingular->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -158,13 +259,12 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainT
     auto *sizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(sizer);
 
-    sizer->Add(m_labelContext, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
 #if defined(__WXMSW__)
     sizer->AddSpacer(PX(4) - 4); // account for fixed 4px sash above
 #elif defined(__WXOSX__)
     sizer->AddSpacer(PX(2));
 #endif
-    sizer->Add(m_labelSource, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
+    sizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
     sizer->AddSpacer(PX(6));
 
     sizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT|wxTOP, PX(6)));
@@ -426,6 +526,12 @@ void EditingArea::ShowPluralFormUI(bool show)
 }
 
 
+void EditingArea::ShowPart(wxWindow *part, bool show)
+{
+    part->GetContainingSizer()->Show(part, show);
+}
+
+
 void EditingArea::SetSingleSelectionMode()
 {
     if (!IsThisEnabled())
@@ -513,14 +619,12 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
             SetTranslationValue(m_textTrans, item->GetTranslation(), flags);
     }
 
+    ShowPart(m_tagContext, item->HasContext());
     if (item->HasContext())
     {
-        const wxString prefix = _("Context:");
-        const wxString ctxt = item->GetContext();
-        m_labelContext->SetLabelMarkup(
-            wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
+        m_tagContext->SetLabel(item->GetContext());
+        m_tagContext->SetToolTip(item->GetContext());
     }
-    m_labelContext->GetContainingSizer()->Show(m_labelContext, item->HasContext());
 
     if (m_errorBar)
     {
@@ -531,6 +635,9 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
     }
 
     ShowPluralFormUI(item->HasPlural());
+
+    Layout();
+
     Refresh();
 
     // by default, editing fuzzy item unfuzzies it

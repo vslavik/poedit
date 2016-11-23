@@ -113,9 +113,13 @@ private:
 
     void ShowPluralFormUI(bool show);
 
+    void ShowPart(wxWindow *part, bool show);
+
     void OnPaint(wxPaintEvent&);
 
 private:
+    class TagLabel;
+
     PoeditListCtrl *m_associatedList;
     MainToolbar *m_associatedToolbar;
 
@@ -127,8 +131,9 @@ private:
     TranslationTextCtrl *m_textTransSingularForm;
     wxNotebook *m_pluralNotebook;
     wxStaticText *m_labelSingular, *m_labelPlural;
-    wxStaticText *m_labelContext;
     wxStaticText *m_labelSource, *m_labelTrans;
+
+    TagLabel *m_tagContext;
 
     ErrorBar *m_errorBar;
 };
