@@ -30,6 +30,7 @@
 #include "edframe.h"
 #include "hidpi.h"
 #include "str_helpers.h"
+#include "utility.h"
 
 #include <wx/dcbuffer.h>
 #include <wx/statbmp.h>
@@ -217,20 +218,20 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 
     sizer->Add(new ActionButton(
                        this, wxID_OPEN,
-                       _("Edit a translation"),
+                       MSW_OR_OTHER(_("Edit a translation"), _("Edit a Translation")),
                        _("Open an existing PO file and edit the translation.")),
                wxSizerFlags().PXBorderAll().Expand());
 
     sizer->Add(new ActionButton(
                        this, XRCID("menu_new_from_pot"),
-                       _("Create new translation"),
+                       MSW_OR_OTHER(_("Create new translation"), _("Create New Translation")),
                        _("Take an existing PO file or POT template and create a new translation from it.")),
                wxSizerFlags().PXBorderAll().Expand());
 
 #ifdef HAVE_HTTP_CLIENT
     sizer->Add(new ActionButton(
                        this, XRCID("menu_open_crowdin"),
-                       _("Collaborate on a translation with Crowdin"),
+                       MSW_OR_OTHER(_("Collaborate on a translation with others"), _("Collaborate on a Translation with Others")),
                        _("Download a file from Crowdin project, translate and sync your changes back.")),
                wxSizerFlags().PXBorderAll().Expand());
     sizer->Add(new LearnAboutCrowdinLink(this, _("What is Crowdin?")), wxSizerFlags().Right().Border(wxRIGHT, PX(8)));
