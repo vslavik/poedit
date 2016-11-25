@@ -260,11 +260,15 @@ wxDEFINE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
 class SuggestionWidget : public wxPanel
 {
 public:
-    SuggestionWidget(wxWindow *parent) : wxPanel(parent, wxID_ANY)
+    SuggestionWidget(wxWindow *parent, bool isFirst) : wxPanel(parent, wxID_ANY)
     {
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
+
+        m_isPerfect = isFirst
+                      ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
+                      : nullptr;
 
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
@@ -272,7 +276,11 @@ public:
         top->Add(m_icon, wxSizerFlags().Top().PXBorder(wxTOP|wxBOTTOM));
         top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
         right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
-        right->Add(m_info, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
+        auto infoSizer = new wxBoxSizer(wxHORIZONTAL);
+        infoSizer->Add(m_info);
+        if (m_isPerfect)
+            infoSizer->Add(m_isPerfect, wxSizerFlags().Center().Border(wxLEFT, PX(2)));
+        right->Add(infoSizer, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
         SetSizerAndFit(top);
 
         // setup mouse hover highlighting:
@@ -292,7 +300,8 @@ public:
     {
         m_value = s;
 
-        auto percent = wxString::Format("%d%%", int(100 * s.score));
+        int percent = int(100 * s.score);
+        auto percentStr = wxString::Format("%d%%", percent);
 
         index++;
         if (index < 10)
@@ -303,14 +312,17 @@ public:
             // TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
             auto shortcut = wxString::Format("%s%d", _("Ctrl+"), index);
         #endif
-            m_info->SetLabel(wxString::Format(L"%s • %s", shortcut, percent));
+            m_info->SetLabel(wxString::Format(L"%s • %s", shortcut, percentStr));
         }
         else
         {
-            m_info->SetLabel(percent);
+            m_info->SetLabel(percentStr);
         }
 
         m_icon->SetBitmap(icon);
+
+        if (m_isPerfect)
+            m_isPerfect->GetContainingSizer()->Show(m_isPerfect, percent == 100);
 
         auto text = wxControl::EscapeMnemonics(bidi::mark_direction(s.text, lang));
 
@@ -373,6 +385,7 @@ private:
     wxStaticBitmap *m_icon;
     AutoWrappingText *m_text;
     wxStaticText *m_info;
+    wxStaticBitmap *m_isPerfect;
     wxColour m_bg, m_bgHighlight;
 };
 
@@ -484,7 +497,7 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     // create any necessary controls:
     while (m_suggestions.size() > m_suggestionsWidgets.size())
     {
-        auto w = new SuggestionWidget(m_parent);
+        auto w = new SuggestionWidget(m_parent, /*isFirst=*/m_suggestionsWidgets.empty());
         m_suggestionsSizer->Add(w, wxSizerFlags().Expand());
         m_suggestionsWidgets.push_back(w);
     }

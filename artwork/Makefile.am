@@ -36,6 +36,8 @@ dist_uiicons_DATA = \
 		poedit-status-cat-ok.png \
 		window-close.png \
 		SuggestionError.png \
+		SuggestionPerfectMatch.png \
+		SuggestionPerfectMatch@2x.png \
 		SuggestionTM.png \
 		PoeditWelcome.png \
 		CrowdinLogo.png
