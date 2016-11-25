@@ -98,9 +98,9 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return DoGet(Color::ItemContextFg, type);
         case Color::TagContextBg:
             return DoGet(Color::ItemContextBg, type);
-        case Color::TagFormatFg:
+        case Color::TagSecondaryFg:
             return sRGB(87, 87, 87);
-        case Color::TagFormatBg:
+        case Color::TagSecondaryBg:
             return sRGB(236, 236, 236);
         case Color::TagErrorLineFg:
             return sRGB(162, 0, 20);

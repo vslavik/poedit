@@ -29,7 +29,6 @@ dist_uiicons_DATA = \
 		linux/poedit-sync.png \
 		linux/poedit-validate.png \
 		linux/sidebar.png \
-		poedit-status-automatic.png \
 		poedit-status-bookmark.png \
 		poedit-status-comment.png \
 		poedit-status-cat-mid.png \

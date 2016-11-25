@@ -136,6 +136,7 @@ private:
 
     TagLabel *m_tagContext;
     TagLabel *m_tagFormat;
+    TagLabel *m_tagPretranslated;
 
     TagLabel *m_errorLine;
 };

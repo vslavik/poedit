@@ -45,8 +45,8 @@ enum class Color : size_t
 
     TagContextFg,
     TagContextBg,
-    TagFormatFg,
-    TagFormatBg,
+    TagSecondaryFg,
+    TagSecondaryBg,
     TagErrorLineFg,
     TagErrorLineBg,
 

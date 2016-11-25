@@ -217,6 +217,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
       m_labelTrans(nullptr),
       m_tagContext(nullptr),
       m_tagFormat(nullptr),
+      m_tagPretranslated(nullptr),
       m_errorLine(nullptr)
 {
     wxPanel::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
@@ -235,7 +236,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     m_labelSource->SetFont(m_labelSource->GetFont().Bold());
 
     m_tagContext = new TagLabel(this, Color::TagContextFg, Color::TagContextBg);
-    m_tagFormat = new TagLabel(this, Color::TagFormatFg, Color::TagFormatBg);
+    m_tagFormat = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
 
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
@@ -289,13 +290,17 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     m_labelTrans->SetFont(m_labelTrans->GetFont().Bold());
 
     m_errorLine = new TagLabel(this, Color::TagErrorLineFg, Color::TagErrorLineBg);
+    m_tagPretranslated = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
+    m_tagPretranslated->SetLabel(_("Pre-translated"));
 
     auto transLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     transLineSizer->Add(m_labelTrans, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     transLineSizer->AddSpacer(PX(4));
     transLineSizer->Add(m_errorLine, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
-    transLineSizer->AddStretchSpacer(1);
     transLineSizer->SetShrinkableWindow(m_errorLine);
+
+    transLineSizer->AddStretchSpacer(1);
+    transLineSizer->Add(m_tagPretranslated, wxSizerFlags().Center().Border(wxRIGHT, 2*PX(4)));
 
     auto rowHeight = m_errorLine->GetSize().y;
     transLineSizer->SetMinSize(-1, rowHeight);
@@ -649,6 +654,9 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
         // TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
         m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), format.Upper()));
     }
+
+    if (m_tagPretranslated)
+        ShowPart(m_tagPretranslated, item->IsPreTranslated());
 
     if (m_fuzzy)
         m_fuzzy->SetValue(item->IsFuzzy());
