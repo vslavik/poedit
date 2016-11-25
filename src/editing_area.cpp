@@ -123,7 +123,7 @@ public:
             const wxCoord minSize = GetSizeInMajorDir(m_calculatedMinSize);
             // If there's not enough space, make shrinkable item proportional,
             // it will be resized under its minimal size then.
-            m_shrinkable->SetProportion(totalSize < minSize ? 1 : 0);
+            m_shrinkable->SetProportion(totalSize < minSize ? 10000 : 0);
         }
 
         wxBoxSizer::RecalcSizes();
@@ -240,7 +240,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     sourceLineSizer->AddSpacer(PX(4));
-    sourceLineSizer->Add(m_tagContext, wxSizerFlags(1).Center().Border(wxRIGHT, PX(4)));
+    sourceLineSizer->Add(m_tagContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->SetShrinkableWindow(m_tagContext);
     sourceLineSizer->SetMinSize(-1, m_tagContext->GetSize().y);
@@ -290,11 +290,12 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     m_errorLine = new TagLabel(this, Color::TagErrorLineFg, Color::TagErrorLineBg);
 
-    auto transLineSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto transLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     transLineSizer->Add(m_labelTrans, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     transLineSizer->AddSpacer(PX(4));
-    transLineSizer->Add(m_errorLine, wxSizerFlags(10000).Center().Border(wxRIGHT, PX(4)));
+    transLineSizer->Add(m_errorLine, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     transLineSizer->AddStretchSpacer(1);
+    transLineSizer->SetShrinkableWindow(m_errorLine);
 
     auto rowHeight = m_errorLine->GetSize().y;
     transLineSizer->SetMinSize(-1, rowHeight);
