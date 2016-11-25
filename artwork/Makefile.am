@@ -25,7 +25,6 @@ dist_uiicons_DATA = \
 		linux/document-properties.png \
 		linux/document-new.png \
 		linux/edit-delete.png \
-		linux/poedit-fuzzy.png \
 		linux/poedit-update.png \
 		linux/poedit-sync.png \
 		linux/poedit-validate.png \

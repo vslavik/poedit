@@ -33,7 +33,6 @@
 #include <functional>
 #include <vector>
 
-class MainToolbar;
 class PoeditListCtrl;
 class SourceTextCtrl;
 class TranslationTextCtrl;
@@ -41,6 +40,7 @@ class TranslationTextCtrl;
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
 class WXDLLIMPEXP_FWD_CORE wxNotebook;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
+class WXDLLIMPEXP_FWD_CORE wxToggleButton;
 
 
 /**
@@ -66,7 +66,7 @@ public:
     };
 
     /// Constructor
-    EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainToolbar *associatedToolbar, Mode mode);
+    EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode mode);
     ~EditingArea();
 
     // Hooked-up signals:
@@ -120,14 +120,16 @@ private:
     class TagLabel;
 
     PoeditListCtrl *m_associatedList;
-    MainToolbar *m_associatedToolbar;
 
     bool m_dontAutoclearFuzzyStatus;
 
     SourceTextCtrl *m_textOrig, *m_textOrigPlural;
+
+    wxToggleButton *m_fuzzy;
     TranslationTextCtrl *m_textTrans;
     std::vector<TranslationTextCtrl*> m_textTransPlural;
     TranslationTextCtrl *m_textTransSingularForm;
+
     wxNotebook *m_pluralNotebook;
     wxStaticText *m_labelSingular, *m_labelPlural;
     wxStaticText *m_labelSource, *m_labelTrans;

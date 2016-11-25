@@ -29,7 +29,6 @@
 #include "customcontrols.h"
 #include "edlistctrl.h"
 #include "hidpi.h"
-#include "main_toolbar.h"
 #include "pluralforms/pl_evaluate.h"
 #include "spellchecking.h"
 #include "text_control.h"
@@ -41,6 +40,7 @@
 #include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
+#include <wx/tglbtn.h>
 
 #include <algorithm>
 
@@ -204,9 +204,8 @@ private:
 };
 
 
-EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, MainToolbar *associatedToolbar, Mode mode)
+EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode mode)
     : m_associatedList(associatedList),
-      m_associatedToolbar(associatedToolbar),
       m_dontAutoclearFuzzyStatus(false),
       m_textOrig(nullptr),
       m_textOrigPlural(nullptr),
@@ -294,11 +293,17 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     auto transLineSizer = new wxBoxSizer(wxHORIZONTAL);
     transLineSizer->Add(m_labelTrans, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     transLineSizer->AddSpacer(PX(4));
-    transLineSizer->Add(m_errorLine, wxSizerFlags(1).Center().Border(wxRIGHT, PX(4)));
-    transLineSizer->SetMinSize(-1, m_errorLine->GetSize().y);
+    transLineSizer->Add(m_errorLine, wxSizerFlags(10000).Center().Border(wxRIGHT, PX(4)));
+    transLineSizer->AddStretchSpacer(1);
+
+    auto rowHeight = m_errorLine->GetSize().y;
+    transLineSizer->SetMinSize(-1, rowHeight);
+
+    m_fuzzy = new wxToggleButton(this, wxID_ANY, MSW_OR_OTHER(_("Needs review"), _("Needs Review")), wxDefaultPosition, wxSize(-1, rowHeight), wxBU_EXACTFIT);
+    m_fuzzy->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    transLineSizer->Add(m_fuzzy, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
 
     m_textTrans = new TranslationTextCtrl(this, wxID_ANY);
-    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
 
     // in case of plurals form, this is the control for n=1:
     m_textTransSingularForm = nullptr;
@@ -312,6 +317,9 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     sizer->Add(m_pluralNotebook, wxSizerFlags(3).Expand().Border(wxTOP, PX(4)));
 
     ShowPluralFormUI(false);
+
+    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
+    m_fuzzy->Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
 }
 
 
@@ -641,6 +649,9 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
         m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), format.Upper()));
     }
 
+    if (m_fuzzy)
+        m_fuzzy->SetValue(item->IsFuzzy());
+
     if (m_errorLine)
     {
         if (item->GetValidity() == CatalogItem::Val_Invalid)
@@ -673,7 +684,7 @@ void EditingArea::UpdateFromTextCtrl()
         return;
 
     wxString key = item->GetString();
-    bool newfuzzy = m_associatedToolbar->IsFuzzy();
+    bool newfuzzy = m_fuzzy->GetValue();
 
     const bool oldIsTranslated = item->IsTranslated();
     bool allTranslated = true; // will be updated later
@@ -720,8 +731,6 @@ void EditingArea::UpdateFromTextCtrl()
 
     if (newfuzzy == item->IsFuzzy() && !m_dontAutoclearFuzzyStatus)
         newfuzzy = false;
-
-    m_associatedToolbar->SetFuzzy(newfuzzy);
 
     if ( item->IsFuzzy() != newfuzzy )
     {

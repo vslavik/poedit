@@ -671,7 +671,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     m_editingArea = new EditingArea
                         (
                             m_splitter,
-                            m_list, m_toolbar.get(),
+                            m_list,
                             type == Content::POT ? EditingArea::POT : EditingArea::Editing
                         );
 
@@ -1894,21 +1894,9 @@ void PoeditFrame::ShowReference(int num)
 
 
 
-void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
+void PoeditFrame::OnFuzzyFlag(wxCommandEvent&)
 {
-    bool setFuzzy = false;
-
-    auto source = event.GetEventObject();
-    if (source && dynamic_cast<wxMenu*>(source))
-    {
-        setFuzzy = GetMenuBar()->IsChecked(XRCID("menu_fuzzy"));
-        m_toolbar->SetFuzzy(setFuzzy);
-    }
-    else
-    {
-        setFuzzy = m_toolbar->IsFuzzy();
-        GetMenuBar()->Check(XRCID("menu_fuzzy"), setFuzzy);
-    }
+    bool setFuzzy = GetMenuBar()->IsChecked(XRCID("menu_fuzzy"));
 
     bool modified = false;
 
@@ -2096,7 +2084,6 @@ void PoeditFrame::UpdateToTextCtrl(int flags)
 
     m_editingArea->UpdateToTextCtrl(item, flags);
 
-    m_toolbar->SetFuzzy(item->IsFuzzy());
     GetMenuBar()->Check(XRCID("menu_fuzzy"), item->IsFuzzy());
 }
 

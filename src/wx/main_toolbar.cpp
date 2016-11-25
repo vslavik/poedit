@@ -45,7 +45,6 @@ public:
     WXMainToolbar(wxFrame *parent)
     {
         m_tb = wxXmlResource::Get()->LoadToolBar(parent, "toolbar");
-        m_idFuzzy = XRCID("menu_fuzzy");
         m_idUpdate = XRCID("toolbar_update");
 
 #ifdef __WXMSW__
@@ -64,16 +63,6 @@ public:
         }
         m_tb->SetDoubleBuffered(true);
 #endif
-    }
-
-    bool IsFuzzy() const override
-    {
-        return m_tb->GetToolState(m_idFuzzy);
-    }
-
-    void SetFuzzy(bool on) override
-    {
-        m_tb->ToggleTool(m_idFuzzy, on);
     }
 
     void EnableSyncWithCrowdin(bool on) override
@@ -96,7 +85,7 @@ public:
 
 private:
     wxToolBar *m_tb;
-    int m_idFuzzy, m_idUpdate;
+    int m_idUpdate;
 };
 
 
