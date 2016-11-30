@@ -84,13 +84,9 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         case Color::ItemError:
             return sRGB(242, 84, 77);
         case Color::ItemContextFg:
-            return sRGB(22, 150, 67);
+            return sRGB(70, 109, 137);
         case Color::ItemContextBg:
-            #ifdef SUPPORTS_BGALPHA
-            return sRGB(207, 243, 220, 0.75);
-            #else
-            return sRGB(219, 246, 229);
-            #endif
+            return sRGB(217, 232, 242);
 
         // Tags:
 
@@ -115,7 +111,9 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         case Color::SidebarSeparator:
             return "#cbcbcb";
         case Color::EditingSeparator:
-            return "#c1c1c1";
+            return sRGB(204, 204, 204);
+        case Color::EditingSubtleSeparator:
+            return sRGB(229, 229, 229);
 
         // Backgrounds:
 

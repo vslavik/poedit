@@ -366,12 +366,21 @@ void EditingArea::OnPaint(wxPaintEvent&)
     wxPaintDC dc(this);
     auto width = GetClientSize().x;
 
+    const int paddingTop = MACOS_OR_OTHER(PX(2), PX(6));
+    const int paddingBottom = PX(5);
+
     auto clr = ColorScheme::Get(Color::EditingSeparator);
     dc.SetPen(clr);
     dc.SetBrush(clr);
 
-    const int paddingTop = MACOS_OR_OTHER(PX(2), PX(6));
-    const int paddingBottom = PX(5);
+    if (m_labelTrans)
+    {
+        dc.DrawRectangle(0, m_labelTrans->GetPosition().y - paddingTop, width, PX(1));
+    }
+
+    auto clrs = ColorScheme::Get(Color::EditingSubtleSeparator);
+    dc.SetPen(clrs);
+    dc.SetBrush(clrs);
 
     if (m_labelSource)
     {
@@ -380,7 +389,6 @@ void EditingArea::OnPaint(wxPaintEvent&)
 
     if (m_labelTrans)
     {
-        dc.DrawRectangle(0, m_labelTrans->GetPosition().y - paddingTop, width, PX(1));
         dc.DrawRectangle(0, m_labelTrans->GetPosition().y + m_labelTrans->GetSize().y + paddingBottom, width, PX(1));
     }
 }
