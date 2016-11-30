@@ -379,8 +379,11 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
         font = GetDefaultAttributes().font;
 
     SetFont(font);
-#ifdef __WXOSX__
+
+#if defined(__WXOSX__)
     SetRowHeight(20);
+#elif defined(__WXMSW__)
+    SetRowHeight(GetCharHeight() + PX(4));
 #endif
 
     UpdateHeaderAttrs();
