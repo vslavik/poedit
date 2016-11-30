@@ -122,6 +122,12 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         case Color::EditingBackground:
             return *wxWHITE;
 
+        // Fuzzy toggle:
+        case Color::FuzzySwitch:
+            return DoGet(Color::ItemFuzzy, type);
+        case Color::FuzzySwitchInactive:
+            return sRGB(87, 87, 87);
+
         // Syntax highlighting:
 
         case Color::SyntaxLeadingWhitespaceBg:

@@ -36,11 +36,11 @@
 class PoeditListCtrl;
 class SourceTextCtrl;
 class TranslationTextCtrl;
+class SwitchButton;
 
 class WXDLLIMPEXP_FWD_CORE wxBoxSizer;
 class WXDLLIMPEXP_FWD_CORE wxNotebook;
 class WXDLLIMPEXP_FWD_CORE wxStaticText;
-class WXDLLIMPEXP_FWD_CORE wxToggleButton;
 
 
 /**
@@ -125,7 +125,7 @@ private:
 
     SourceTextCtrl *m_textOrig, *m_textOrigPlural;
 
-    wxToggleButton *m_fuzzy;
+    SwitchButton *m_fuzzy;
     TranslationTextCtrl *m_textTrans;
     std::vector<TranslationTextCtrl*> m_textTransPlural;
     TranslationTextCtrl *m_textTransSingularForm;

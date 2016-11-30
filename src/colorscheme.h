@@ -58,6 +58,9 @@ enum class Color : size_t
     SidebarBackground,
     EditingBackground,
 
+    FuzzySwitch,
+    FuzzySwitchInactive,
+
     SyntaxLeadingWhitespaceBg,
     SyntaxEscapeFg,
     SyntaxEscapeBg,

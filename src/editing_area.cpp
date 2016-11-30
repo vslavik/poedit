@@ -26,6 +26,7 @@
 #include "editing_area.h"
 
 #include "colorscheme.h"
+#include "custom_buttons.h"
 #include "customcontrols.h"
 #include "edlistctrl.h"
 #include "hidpi.h"
@@ -40,7 +41,6 @@
 #include <wx/notebook.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
-#include <wx/tglbtn.h>
 
 #include <algorithm>
 
@@ -209,6 +209,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
       m_dontAutoclearFuzzyStatus(false),
       m_textOrig(nullptr),
       m_textOrigPlural(nullptr),
+      m_fuzzy(nullptr),
       m_textTrans(nullptr),
       m_pluralNotebook(nullptr),
       m_labelSingular(nullptr),
@@ -302,12 +303,15 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     transLineSizer->AddStretchSpacer(1);
     transLineSizer->Add(m_tagPretranslated, wxSizerFlags().Center().Border(wxRIGHT, 2*PX(4)));
 
-    auto rowHeight = m_errorLine->GetSize().y;
-    transLineSizer->SetMinSize(-1, rowHeight);
+    transLineSizer->SetMinSize(-1, m_errorLine->GetSize().y);
 
-    m_fuzzy = new wxToggleButton(this, wxID_ANY, MSW_OR_OTHER(_("Needs review"), _("Needs Review")), wxDefaultPosition, wxSize(-1, rowHeight), wxBU_EXACTFIT);
+    m_fuzzy = new SwitchButton(this, wxID_ANY, MSW_OR_OTHER(_("Needs review"), _("Needs Review")));
+#ifdef __WXOSX__
     m_fuzzy->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-    transLineSizer->Add(m_fuzzy, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
+#endif
+    m_fuzzy->SetColors(ColorScheme::Get(Color::FuzzySwitch), ColorScheme::Get(Color::FuzzySwitchInactive));
+    transLineSizer->Add(m_fuzzy, wxSizerFlags().Expand().Border(wxTOP, MSW_OR_OTHER(IsHiDPI() ? PX(1) : 0, 0)));
+    transLineSizer->AddSpacer(PX(4));
 
     m_textTrans = new TranslationTextCtrl(this, wxID_ANY);
 

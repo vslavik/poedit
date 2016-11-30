@@ -42,6 +42,9 @@ extern double g_pxScalingFactor;
 /// Returns current scaling factor.
 inline double HiDPIScalingFactor() { return g_pxScalingFactor; }
 
+/// Is the current mode HiDPI?
+inline bool IsHiDPI() { return g_pxScalingFactor > 1.0; }
+
 /**
     Use this macro to wrap pixel dimensions to scale them accordingly to the
     current DPI setting.

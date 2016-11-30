@@ -108,6 +108,8 @@
 		B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */ = {isa = PBXBuildFile; fileRef = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B2D52B861DE88A3D00E27B35 /* SuggestionPerfectMatch.png in Resources */ = {isa = PBXBuildFile; fileRef = B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */; };
 		B2D52B871DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */; };
+		B2D52B8C1DEC76B000E27B35 /* StyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D52B8A1DEC76B000E27B35 /* StyleKit.m */; };
+		B2D52B8F1DEC785700E27B35 /* custom_buttons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2D52B8D1DEC785700E27B35 /* custom_buttons.cpp */; };
 		B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */; };
 		B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A46181D028B0083C9D9 /* libboost_date_time.a */; };
 		B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */; };
@@ -457,6 +459,11 @@
 		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionPerfectMatch.png; sourceTree = "<group>"; };
 		B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SuggestionPerfectMatch@2x.png"; sourceTree = "<group>"; };
+		B2D52B881DEC76B000E27B35 /* PoeditStyleKit.pcvd */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = PoeditStyleKit.pcvd; path = artwork/macos/PoeditStyleKit.pcvd; sourceTree = SOURCE_ROOT; };
+		B2D52B891DEC76B000E27B35 /* StyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StyleKit.h; path = artwork/macos/StyleKit.h; sourceTree = SOURCE_ROOT; };
+		B2D52B8A1DEC76B000E27B35 /* StyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StyleKit.m; path = artwork/macos/StyleKit.m; sourceTree = SOURCE_ROOT; };
+		B2D52B8D1DEC785700E27B35 /* custom_buttons.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = custom_buttons.cpp; sourceTree = "<group>"; };
+		B2D52B8E1DEC785700E27B35 /* custom_buttons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = custom_buttons.h; sourceTree = "<group>"; };
 		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A46181D028B0083C9D9 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_date_time.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_filesystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -627,6 +634,8 @@
 				B2CE2FEE1A94EBF50020A620 /* crowdin_client.h */,
 				B2380F981A9B821200B7D8C9 /* crowdin_gui.cpp */,
 				B2380F991A9B821200B7D8C9 /* crowdin_gui.h */,
+				B2D52B8D1DEC785700E27B35 /* custom_buttons.cpp */,
+				B2D52B8E1DEC785700E27B35 /* custom_buttons.h */,
 				B2132FD819B3672000326B16 /* customcontrols.cpp */,
 				B2132FD919B3672000326B16 /* customcontrols.h */,
 				B28F1CB916F629D30018AF7E /* digger.cpp */,
@@ -825,6 +834,9 @@
 			children = (
 				B25504A71A2201E800EE2CEE /* main_toolbar.cpp */,
 				B25504A61A2201DC00EE2CEE /* main_toolbar.h */,
+				B2D52B881DEC76B000E27B35 /* PoeditStyleKit.pcvd */,
+				B2D52B891DEC76B000E27B35 /* StyleKit.h */,
+				B2D52B8A1DEC76B000E27B35 /* StyleKit.m */,
 			);
 			name = Native;
 			sourceTree = "<group>";
@@ -1258,7 +1270,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2D52B8C1DEC76B000E27B35 /* StyleKit.m in Sources */,
 				B25504A81A2201E800EE2CEE /* main_toolbar.cpp in Sources */,
+				B2D52B8F1DEC785700E27B35 /* custom_buttons.cpp in Sources */,
 				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
 				B28602441DDB279400FCA617 /* colorscheme.cpp in Sources */,
 				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,

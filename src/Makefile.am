@@ -29,6 +29,7 @@ poedit_SOURCES = \
                  commentdlg.h commentdlg.cpp \
                  concurrency.cpp concurrency.h \
                  configuration.cpp configuration.h \
+                 custom_buttons.cpp custom_buttons.h \
                  customcontrols.cpp customcontrols.h \
                  digger.h digger.cpp \
                  edapp.cpp edapp.h \
