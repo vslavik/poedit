@@ -366,8 +366,7 @@ void EditingArea::CreateTemplateControls(wxBoxSizer *panelSizer)
 #ifdef __WXOSX__
     explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-    explain->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(160));
-    win->SetBackgroundColour(GetBackgroundColour().ChangeLightness(50));
+    explain->SetForegroundColour(ExplanationLabel::GetTextColor());
 
     auto button = new wxButton(win, XRCID("button_new_from_this_pot"), MSW_OR_OTHER(_("Create new translation"), _("Create New Translation")));
 
@@ -379,6 +378,14 @@ void EditingArea::CreateTemplateControls(wxBoxSizer *panelSizer)
     win->SetSizerAndFit(sizer);
 
     panelSizer->Add(win, 1, wxEXPAND);
+
+    win->Bind(wxEVT_PAINT, [win](wxPaintEvent&){
+        wxPaintDC dc(win);
+        auto clr = ColorScheme::Get(Color::EditingSeparator);
+        dc.SetPen(clr);
+        dc.SetBrush(clr);
+        dc.DrawRectangle(0, 1, win->GetClientSize().x, PX(1));
+    });
 }
 
 
