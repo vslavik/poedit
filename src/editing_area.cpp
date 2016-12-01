@@ -186,6 +186,15 @@ protected:
         m_label->SetToolTip(tip);
     }
 
+#ifdef __WXOSX__
+    wxSize DoGetBestSize() const override
+    {
+        auto size = wxWindow::DoGetBestSize();
+        size.y = std::max(20, size.y);
+        return size;
+    }
+#endif
+
 private:
     void OnPaint(wxPaintEvent&)
     {
@@ -245,7 +254,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     sourceLineSizer->Add(m_tagContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->SetShrinkableWindow(m_tagContext);
-    sourceLineSizer->SetMinSize(-1, m_tagContext->GetSize().y);
+    sourceLineSizer->SetMinSize(-1, m_tagContext->GetBestSize().y);
 
     m_labelSingular = new wxStaticText(this, -1, _("Singular:"));
     m_labelSingular->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
@@ -301,9 +310,11 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     transLineSizer->SetShrinkableWindow(m_errorLine);
 
     transLineSizer->AddStretchSpacer(1);
-    transLineSizer->Add(m_tagPretranslated, wxSizerFlags().Center().Border(wxRIGHT, 2*PX(4)));
+    transLineSizer->Add(m_tagPretranslated, wxSizerFlags().Center().Border(wxRIGHT, 3*PX(4)));
 
-    transLineSizer->SetMinSize(-1, m_errorLine->GetSize().y);
+#ifndef __WXOSX__
+    transLineSizer->SetMinSize(-1, m_errorLine->GetBestSize().y);
+#endif
 
     m_fuzzy = new SwitchButton(this, wxID_ANY, MSW_OR_OTHER(_("Needs review"), _("Needs Review")));
 #ifdef __WXOSX__
