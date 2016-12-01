@@ -162,6 +162,8 @@ void Catalog::ExportToHTML(std::ostream& f)
 
         // Source string:
         f << "<td class='src' " << lang_src << ">\n";
+        if (item->HasContext())
+            f << " <span class='msgctxt'>" << fmt_trans(item->GetContext()) << "</span>";
         if (item->HasPlural())
         {
             f << "<ol class='plurals'>\n"
@@ -173,8 +175,6 @@ void Catalog::ExportToHTML(std::ostream& f)
         {
             f << fmt_trans(item->GetString());
         }
-        if (item->HasContext())
-            f << " <span class='msgctxt'>[" << fmt_trans(item->GetContext()) << "]</span>";
         f << "</td>\n";
 
         // Translation:
@@ -327,8 +327,8 @@ table.metadata td {
 .graph div { float: left; }
 .graph div:first-child { border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
 .graph div:last-child { border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
-.percent-done    { background-color: #71DD46; height: 10px; }
-.percent-fuzzy   { background-color: #FFD300; height: 10px; }
+.percent-done    { background-color: rgb(90, 228, 140); height: 10px; }
+.percent-fuzzy   { background-color: rgb(255, 167, 52); height: 10px; }
 .percent-untrans { background-color: #F1F1F1; height: 10px; }
 .legend {
   font-size: smaller;
@@ -365,12 +365,15 @@ tr.comments div {
 tr.comments div p:last-child { margin-bottom: 0; }
 
 .fuzzy .tra {
-  color: #a9861b;
+  color: rgb(218, 123, 0);
 }
 
 .msgctxt {
+  color: rgb(70, 109, 137);
   font-size: smaller;
-  color: #6d8e13;
+  background-color: rgb(217, 232, 242);
+  padding: 1px 2px;
+  margin-right: 4px;
 }
 
 )";
