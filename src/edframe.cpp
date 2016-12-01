@@ -562,9 +562,13 @@ PoeditFrame::PoeditFrame() :
 
     SetAccelerators();
 
-    wxSize defaultSize(PX(1100), PX(750));
-    if (!wxRect(wxGetDisplaySize()).Contains(wxSize(PX(1400),PX(850))))
-        defaultSize = wxSize(PX(980), PX(700));
+    auto defaultSize = wxGetDisplaySize();
+    defaultSize.x -= PX(400);
+    defaultSize.y -= PX(400);
+    if (defaultSize.x > PX(1400))
+        defaultSize.x = PX(1400);
+    if (double(defaultSize.x) / double(defaultSize.y) > 1.6)
+        defaultSize.x = defaultSize.y * 1.6;
     RestoreWindowState(this, defaultSize, WinState_Size | WinState_Pos);
 
     UpdateMenu();
@@ -735,7 +739,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
             Layout();
         }
 
-        m_splitter->SplitHorizontally(m_list, m_editingArea, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(250)));
+        m_splitter->SplitHorizontally(m_list, m_editingArea, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(320)));
 
         if (m_sidebar)
             m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
