@@ -110,6 +110,7 @@ class ShrinkableBoxSizer : public wxBoxSizer
 public:
     ShrinkableBoxSizer(int orient) : wxBoxSizer(orient) {}
 
+#if wxCHECK_VERSION(3,1,1)
     void SetShrinkableWindow(wxWindow *win)
     {
         m_shrinkable = win ? GetItem(win) : nullptr;
@@ -131,6 +132,14 @@ public:
 
 private:
     wxSizerItem *m_shrinkable;
+#else
+    void SetShrinkableWindow(wxWindow *win)
+    {
+        auto item = win ? GetItem(win) : nullptr;
+        if (item)
+            item->SetProportion(10000);
+    }
+#endif
 };
 
 
@@ -180,11 +189,13 @@ public:
     }
 
 protected:
+#if wxCHECK_VERSION(3,1,1)
     void DoSetToolTipText(const wxString &tip) override
     {
         wxWindow::DoSetToolTipText(tip);
         m_label->SetToolTip(tip);
     }
+#endif
 
 #ifdef __WXOSX__
     wxSize DoGetBestSize() const override

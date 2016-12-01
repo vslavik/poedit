@@ -28,7 +28,7 @@
 #include <wx/settings.h>
 
 #ifdef __WXGTK__
-    #include <pango/pango-utils.h>
+    #include <pango/pango.h>
     #if PANGO_VERSION_CHECK(1,38,0)
         #define SUPPORTS_BGALPHA
     #endif
