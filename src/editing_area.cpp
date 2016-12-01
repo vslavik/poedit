@@ -290,10 +290,12 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     sizer->Add(sourceLineSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(6)));
     sizer->AddSpacer(PX(6));
 
-    sizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT|wxTOP, PX(6)));
-    sizer->Add(m_textOrig, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
-    sizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(6)));
-    sizer->Add(m_textOrigPlural, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
+    auto origTextSizer = new wxBoxSizer(wxVERTICAL);
+    origTextSizer->Add(m_labelSingular, wxSizerFlags().Border(wxLEFT|wxTOP, PX(6)));
+    origTextSizer->Add(m_textOrig, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
+    origTextSizer->Add(m_labelPlural, wxSizerFlags().Border(wxLEFT, PX(6)));
+    origTextSizer->Add(m_textOrigPlural, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(4)));
+    sizer->Add(origTextSizer, wxSizerFlags(1).Expand());
 
     if (mode == POT)
         CreateTemplateControls(sizer);
@@ -346,7 +348,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
     sizer->AddSpacer(PX(6));
     sizer->Add(m_textTrans, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT|wxBOTTOM, PX(4)));
-    sizer->Add(m_pluralNotebook, wxSizerFlags(3).Expand().Border(wxTOP, PX(4)));
+    sizer->Add(m_pluralNotebook, wxSizerFlags(1).Expand().Border(wxTOP, PX(4)));
 
     ShowPluralFormUI(false);
 
