@@ -224,6 +224,10 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
 
     wxRect rect(lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right - lpDIS->rcItem.left, lpDIS->rcItem.bottom - lpDIS->rcItem.top);
 
+    // FIXME: This is a mess, but cleaner solution needs support in wx
+    static wxScopedPtr<wxGraphicsContext> gcdummy(wxGraphicsContext::Create(this));
+    gcdummy.reset();
+
     wxScopedPtr<wxGraphicsContext> gc(wxGraphicsContext::CreateFromNative(new Graphics(hdc)));
     gc->EnableOffset();
 
