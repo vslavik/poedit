@@ -28,6 +28,7 @@
 #include "colorscheme.h"
 #include "hidpi.h"
 #include "str_helpers.h"
+#include "utility.h"
 
 #ifdef __WXMSW__
 #include <wx/dc.h>
@@ -42,6 +43,10 @@
 
 #import <AppKit/AppKit.h>
 #include "StyleKit.h"
+
+// ---------------------------------------------------------------------
+// SwitchButton
+// ---------------------------------------------------------------------
 
 @interface POSwitchButton : NSButton
 
@@ -170,10 +175,9 @@ void SwitchButton::SendToggleEvent()
     ProcessWindowEvent(event);
 }
 
-#endif // __WXOSX__
 
+#else // !__WXOSX__
 
-#ifndef __WXOSX__
 
 SwitchButton::SwitchButton(wxWindow *parent, wxWindowID winid, const wxString& label)
 {
@@ -285,5 +289,78 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
 }
 
 #endif // __WXMSW__
+
+#endif // !__WXOSX__
+
+// ---------------------------------------------------------------------
+// TranslucentButton
+// ---------------------------------------------------------------------
+
+#ifdef __WXOSX__
+
+@interface POTranslucentButton : NSButton
+
+@property TranslucentButton *parent;
+
+@end
+
+@implementation POTranslucentButton
+
+- (id)initWithLabel:(NSString*)label
+{
+    self = [super init];
+    if (self)
+    {
+        self.title = label;
+        self.bezelStyle = NSSmallSquareBezelStyle;
+        self.buttonType = NSMomentaryPushInButton;
+        self.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
+    }
+    return self;
+}
+
+- (void)sizeToFit
+{
+    NSSize size = self.attributedTitle.size;
+    size.width += 28;
+    size.height = 22;
+    [self setFrameSize:size];
+}
+
+- (void)drawRect:(NSRect)dirtyRect
+{
+    #pragma unused(dirtyRect)
+    [StyleKit drawTranslucentButtonWithFrame:self.bounds label:[self title] pressed:[self isHighlighted]];
+}
+
+- (void)controlAction:(id)sender
+{
+    #pragma unused(sender)
+    wxCommandEvent event(wxEVT_BUTTON, _parent->GetId());
+    event.SetEventObject(_parent);
+    _parent->ProcessWindowEvent(event);
+}
+
+@end
+
+TranslucentButton::TranslucentButton(wxWindow *parent, wxWindowID winid, const wxString& label)
+{
+    POTranslucentButton *view = [[POTranslucentButton alloc] initWithLabel:str::to_NS(label)];
+    view.parent = this;
+    wxNativeWindow::Create(parent, winid, view);
+}
+
+
+#else // !__WXOSX__
+
+
+TranslucentButton::TranslucentButton(wxWindow *parent, wxWindowID winid, const wxString& label)
+{
+    wxButton::Create(parent, winid, label);
+#ifdef __WXMSW__
+    if (IsWindows10OrGreater())
+        SetBackgroundColour(ColorScheme::GetBlendedOn(::Color::TranslucentButton, parent));
+#endif
+}
 
 #endif // !__WXOSX__

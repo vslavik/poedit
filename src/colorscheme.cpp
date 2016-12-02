@@ -159,6 +159,11 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return sRGB(255, 125, 125);
 #endif
 
+        // Buttons:
+
+        case Color::TranslucentButton:
+            return sRGB(255, 255, 255, 0.5);
+
         case Color::Max:
             return wxColour();
     }

@@ -26,6 +26,7 @@
 #include "attentionbar.h"
 
 #include "colorscheme.h"
+#include "custom_buttons.h"
 #include "customcontrols.h"
 #include "hidpi.h"
 #include "utility.h"
@@ -77,14 +78,13 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     m_checkbox = new wxCheckBox(this, wxID_ANY, "");
 
-    wxButton *btnClose =
-            new wxBitmapButton
-                (
-                    this, wxID_CLOSE,
-                    wxArtProvider::GetBitmap("window-close", wxART_MENU),
-                    wxDefaultPosition, wxDefaultSize,
-                    wxNO_BORDER
-                );
+    auto btnClose = new wxBitmapButton
+                    (
+                        this, wxID_CLOSE,
+                        wxArtProvider::GetBitmap("window-close", wxART_MENU),
+                        wxDefaultPosition, wxDefaultSize,
+                        wxNO_BORDER
+                    );
     btnClose->SetToolTip(_("Hide this notification message"));
 #ifdef __WXMSW__
     btnClose->SetBackgroundColour(GetBackgroundColour());
@@ -189,7 +189,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     for ( AttentionMessage::Actions::const_iterator i = msg.m_actions.begin();
           i != msg.m_actions.end(); ++i )
     {
-        wxButton *b = new wxButton(this, wxID_ANY, i->first);
+        auto b = new TranslucentButton(this, wxID_ANY, i->first);
 #ifdef __WXOSX__
         MakeButtonRounded(b->GetHandle());
 #endif

@@ -64,7 +64,19 @@ private:
     std::unique_ptr<impl> m_impl;
 };
 
+
+/**
+    A partially transparent button.
+ */
+class TranslucentButton : public wxNativeWindow
+{
+public:
+    TranslucentButton(wxWindow *parent, wxWindowID winid, const wxString& label);
+};
+
+
 #else // !__WXOSX__
+
 
 class SwitchButton : public wxToggleButton
 {
@@ -83,6 +95,14 @@ private:
 #endif // __WXMSW__
 };
 
-#endif
+
+class TranslucentButton : public wxButton
+{
+public:
+    TranslucentButton(wxWindow *parent, wxWindowID winid, const wxString& label);
+};
+
+#endif // !__WXOSX__
+
 
 #endif // Poedit_custom_buttons_h

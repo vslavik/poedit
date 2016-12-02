@@ -71,6 +71,8 @@ enum class Color : size_t
     AttentionQuestionBackground,
     AttentionErrorBackground,
 
+    TranslucentButton,
+
     Max
 };
 

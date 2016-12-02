@@ -136,4 +136,73 @@
     [NSGraphicsContext restoreGraphicsState];
 }
 
++ (void)drawTranslucentButtonWithFrame: (NSRect)frame label: (NSString*)label pressed: (BOOL)pressed
+{
+    //// General Declarations
+    CGContextRef context = NSGraphicsContext.currentContext.CGContext;
+
+    //// Color Declarations
+    NSColor* white = [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 1];
+    NSColor* pressedTranslucent = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.157];
+    NSColor* strokeColor = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.2];
+    NSColor* strokeColor2 = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.12];
+
+    //// Variable Declarations
+    NSColor* translucentButtonColor = pressed ? pressedTranslucent : white;
+
+
+    //// Subframes
+    NSRect group2 = NSMakeRect(NSMinX(frame) + 0.75, NSMinY(frame) + 0.75, NSWidth(frame) - 1.5, NSHeight(frame) - 1.5);
+
+
+    //// Group 2
+    {
+        //// Group 3
+        {
+            [NSGraphicsContext saveGraphicsState];
+            CGContextSetAlpha(context, 0.6);
+            CGContextBeginTransparencyLayer(context, NULL);
+
+
+            //// Rectangle Drawing
+            NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+            [translucentButtonColor setFill];
+            [rectanglePath fill];
+
+
+            //// Rectangle 2 Drawing
+            NSBezierPath* rectangle2Path = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+            [strokeColor setStroke];
+            [rectangle2Path setLineWidth: 0.5];
+            [rectangle2Path stroke];
+
+
+            CGContextEndTransparencyLayer(context);
+            [NSGraphicsContext restoreGraphicsState];
+        }
+
+
+        //// Rectangle 3 Drawing
+        NSBezierPath* rectangle3Path = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+        [strokeColor2 setStroke];
+        [rectangle3Path setLineWidth: 0.5];
+        [rectangle3Path stroke];
+    }
+
+
+    //// Text Drawing
+    NSRect textRect = NSMakeRect(NSMinX(frame) + 14, NSMinY(frame) + floor((NSHeight(frame) - 12) * 0.50000 + 0.5), NSWidth(frame) - 27, 12);
+    NSMutableParagraphStyle* textStyle = [NSMutableParagraphStyle new];
+    textStyle.alignment = NSLeftTextAlignment;
+
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [NSFont systemFontOfSize: NSFont.smallSystemFontSize], NSForegroundColorAttributeName: NSColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+
+    CGFloat textTextHeight = NSHeight([label boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes]);
+    NSRect textTextRect = NSMakeRect(NSMinX(textRect), NSMinY(textRect) + (NSHeight(textRect) - textTextHeight) / 2, NSWidth(textRect), textTextHeight);
+    [NSGraphicsContext saveGraphicsState];
+    NSRectClip(textRect);
+    [label drawInRect: NSOffsetRect(textTextRect, 0, 0) withAttributes: textFontAttributes];
+    [NSGraphicsContext restoreGraphicsState];
+}
+
 @end
