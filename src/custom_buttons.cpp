@@ -233,7 +233,7 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
     gcdummy.reset();
 
     wxScopedPtr<wxGraphicsContext> gc(wxGraphicsContext::CreateFromNative(new Graphics(hdc)));
-    gc->EnableOffset();
+    gc->EnableOffset(false);
 
     if (toggled)
     {
