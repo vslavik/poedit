@@ -169,7 +169,9 @@ class PoeditListCtrl : public wxDataViewCtrl
 
         void SelectAndFocus(const wxDataViewItem& item)
         {
+        #ifndef __WXOSX__ // implicit in selection on macOS
             SetCurrentItem(item);
+        #endif
             SelectOnly(item);
         }
 
@@ -184,7 +186,9 @@ class PoeditListCtrl : public wxDataViewCtrl
         {
             // TODO: Remove this API
 
+        #ifndef __WXOSX__ // implicit in selection on macOS
             SetCurrentItem(m_model->GetItem(n));
+        #endif
             SelectOnly(n);
         }
 
