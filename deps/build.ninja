@@ -10,7 +10,7 @@ rule gettext_build
       $configure $configure_flags && make $makeflags && make install -j1 $
       DESTDIR="$destdir" && rm -f $
       $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin} $
-      && $top_srcdir/../macosx/fixup-dylib-deps.sh //lib $
+      && $top_srcdir/../macos/fixup-dylib-deps.sh //lib $
       @executable_path/../lib $destdir/lib $destdir/bin/* && strip -u -r $
       $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext} && strip -x $
       $destdir/lib/lib*.*.dylib && rm -rf "$workdir" && touch $
