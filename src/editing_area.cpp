@@ -353,7 +353,17 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     ShowPluralFormUI(false);
 
     m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
-    m_fuzzy->Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
+
+    m_fuzzy->Bind(wxEVT_TOGGLEBUTTON, [=](wxCommandEvent& e){
+        // The user explicitly changed fuzzy status (e.g. to on). Normally, if the
+        // user edits an entry, it's fuzzy flag is cleared, but if the user sets
+        // fuzzy on to indicate the translation is problematic and then continues
+        // editing the entry, we do not want to annoy him by changing fuzzy back on
+        // every keystroke.
+        DontAutoclearFuzzyStatus();
+        UpdateFromTextCtrl();
+        e.Skip();
+    });
 }
 
 
@@ -787,6 +797,7 @@ void EditingArea::UpdateFromTextCtrl()
     if ( item->IsFuzzy() != newfuzzy )
     {
         item->SetFuzzy(newfuzzy);
+        m_fuzzy->SetValue(newfuzzy);
         statisticsChanged = true;
     }
     if ( oldIsTranslated != allTranslated )

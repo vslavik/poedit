@@ -3438,8 +3438,9 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
     if (!item)
         return;
 
-    // If the user is "done" with an item, it should be in its final approved state:
-    if (item->IsFuzzy())
+    // If the user is "done" with an item, it should be in its final approved state
+    // (unless they _just_ marked it as fuzzy now):
+    if (item->IsFuzzy() && !m_editingArea->ShouldNotAutoclearFuzzyStatus())
     {
         item->SetFuzzy(false);
         item->SetPreTranslated(false);

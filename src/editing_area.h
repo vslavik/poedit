@@ -96,6 +96,7 @@ public:
     void UpdateFromTextCtrl();
 
     void DontAutoclearFuzzyStatus() { m_dontAutoclearFuzzyStatus = true; }
+    bool ShouldNotAutoclearFuzzyStatus() { return m_dontAutoclearFuzzyStatus; }
 
     /// Move focused tab to prev(-1) or next(+1)
     void ChangeFocusedPluralTab(int offset);
