@@ -2694,6 +2694,8 @@ wxString CatalogItem::GetOldMsgid() const
             line.Remove(0, 1);
         if (line.StartsWith("msgid \""))
             line.Remove(0, 7);
+        else if (line.StartsWith("msgid_plural \""))
+            line.replace(0, 14, "\n");
         s += UnescapeCString(line);
     }
     return s;
