@@ -431,6 +431,9 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
 
 SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
 {
+    ClearSuggestionsMenu();
+    for (auto i : m_suggestionMenuItems)
+        delete i;
 }
 
 wxBitmap SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const
