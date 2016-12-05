@@ -76,7 +76,9 @@
       <object class="wxMenuItem" name="wxID_COPY"/>
       <object class="wxMenuItem" name="wxID_PASTE"/>
       <object class="wxMenuItem" name="wxID_DELETE" platform="unix|win"/>
-      <object class="wxMenuItem" name="wxID_SELECTALL"/>
+      <object class="wxMenuItem" name="wxID_SELECTALL">
+          <accel>Ctrl+A</accel>
+      </object>
       <object class="separator"/>
       <object class="wxMenuItem" name="menu_clear" >
           <label platform="win">Clear translation</label>
@@ -355,7 +357,9 @@
       <object class="wxMenuItem" name="wxID_COPY" platform="mac"/>
       <object class="wxMenuItem" name="wxID_PASTE" platform="mac"/>
       <object class="wxMenuItem" name="wxID_CLEAR" platform="mac"/>
-      <object class="wxMenuItem" name="wxID_SELECTALL" platform="mac"/>
+      <object class="wxMenuItem" name="wxID_SELECTALL" platform="mac">
+          <accel>Ctrl+A</accel>
+      </object>
     </object>
     <object class="wxMenu" name="menu_help">
       <object class="wxMenuItem" name="wxID_HELP">
