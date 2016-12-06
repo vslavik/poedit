@@ -71,6 +71,8 @@ public:
         return wxSize(-1, 1);
     }
 
+    bool AcceptsFocus() const override { return false; }
+
 private:
     void OnPaint(wxPaintEvent&)
     {
@@ -257,10 +259,10 @@ private:
 
 wxDEFINE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
 
-class SuggestionWidget : public wxPanel
+class SuggestionWidget : public wxWindow
 {
 public:
-    SuggestionWidget(wxWindow *parent) : wxPanel(parent, wxID_ANY)
+    SuggestionWidget(wxWindow *parent) : wxWindow(parent, wxID_ANY)
     {
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
@@ -330,6 +332,8 @@ public:
         SetMinSize(wxDefaultSize);
         SetMinSize(GetBestSize());
     }
+    
+    bool AcceptsFocus() const override { return false; }
 
 private:
     class InfoStaticText : public wxStaticText
@@ -427,6 +431,9 @@ SuggestionsSidebarBlock::SuggestionsSidebarBlock(Sidebar *parent, wxMenu *menu)
 
 SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
 {
+    ClearSuggestionsMenu();
+    for (auto i : m_suggestionMenuItems)
+        delete i;
 }
 
 wxBitmap SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const

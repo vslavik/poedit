@@ -43,7 +43,7 @@ enum class TextDirection
 class Language
 {
 public:
-    Language() {}
+    Language() : m_direction(TextDirection::LTR) {}
 
     bool IsValid() const { return !m_code.empty(); }
     const std::string& Code() const { return m_code; }

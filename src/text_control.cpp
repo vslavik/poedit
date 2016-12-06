@@ -840,7 +840,7 @@ void TranslationTextCtrl::SetPlainTextUserWritten(const wxString& value)
     DisableAutomaticSubstitutions disableAuto(this);
 #endif
 
-    SelectAll();
+    Clear();
     WriteText(EscapePlainText(value));
     SetInsertionPointEnd();
 

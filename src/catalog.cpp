@@ -2303,7 +2303,7 @@ bool Catalog::Merge(const CatalogPtr& refcat)
     refcat->DoSaveOnly(tmp1, wxTextFileType_Unix);
     DoSaveOnly(tmp2, wxTextFileType_Unix);
 
-    wxString flags("-q --force-po");
+    wxString flags("-q --force-po --previous");
     if (Config::MergeBehavior() == Merge_None)
     {
         flags += " --no-fuzzy-matching";
@@ -2708,6 +2708,8 @@ wxString CatalogItem::GetOldMsgid() const
             line.Remove(0, 1);
         if (line.StartsWith("msgid \""))
             line.Remove(0, 7);
+        else if (line.StartsWith("msgid_plural \""))
+            line.replace(0, 14, "\n");
         s += UnescapeCString(line);
     }
     return s;

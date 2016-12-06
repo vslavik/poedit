@@ -566,9 +566,15 @@ bool FindFrame::DoFind(int dir)
             textc = txt->GetValue();
             if (ignoreCase)
                 textc.MakeLower();
-            int pos = textc.Find(text);
-            if (pos != wxNOT_FOUND)
-                txt->ShowFindIndicator(pos, (int)text.length());
+            FindTextInStringAndDo
+            (
+                textc, text, wholeWords,
+                [=](const wxString&,size_t pos, size_t len)
+                {
+                    txt->ShowFindIndicator((int)pos, (int)len);
+                    return wxString::npos;
+                }
+            );
         }
 
         return true;
