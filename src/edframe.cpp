@@ -2195,7 +2195,7 @@ void PoeditFrame::FixDuplicatesIfPresent()
                 wxOK | wxICON_INFORMATION
             )
     );
-    dlg->SetExtendedMessage(_("The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing review and correct them if necessary."));
+    dlg->SetExtendedMessage(_("The file contained duplicate items, which is not allowed in PO files and would prevent the file from being used. Poedit fixed the issue, but you should review translations of any items marked as needing work and correct them if necessary."));
     dlg->ShowWindowModalThenDo([dlg](int){});
 
 }
@@ -2709,9 +2709,9 @@ void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
     auto topsizer = new wxBoxSizer(wxVERTICAL);
     auto sizer = new wxBoxSizer(wxVERTICAL);
     auto onlyExact = new wxCheckBox(dlg.get(), wxID_ANY, _("Only fill in exact matches"));
-    auto onlyExactE = new ExplanationLabel(dlg.get(), _("By default, inaccurate results are filled in as well and marked as needing review. Check this option to only include accurate matches."));
-    auto noFuzzy = new wxCheckBox(dlg.get(), wxID_ANY, _(L"Don’t mark exact matches as needing review"));
-    auto noFuzzyE = new ExplanationLabel(dlg.get(), _("Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing review and should be reviewed before use."));
+    auto onlyExactE = new ExplanationLabel(dlg.get(), _("By default, inaccurate results are filled in as well and marked as needing work. Check this option to only include accurate matches."));
+    auto noFuzzy = new wxCheckBox(dlg.get(), wxID_ANY, _(L"Don’t mark exact matches as needing work"));
+    auto noFuzzyE = new ExplanationLabel(dlg.get(), _("Only enable if you trust the quality of your TM. By default, all matches from the TM are marked as needing work and should be reviewed before use."));
 
 #ifdef __WXOSX__
     sizer->Add(new HeadingLabel(dlg.get(), _("Pre-translate")), wxSizerFlags().Expand().PXBorder(wxBOTTOM));
@@ -2776,7 +2776,7 @@ void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
             msg = wxString::Format(wxPLURAL("%d entry was pre-translated.",
                                             "%d entries were pre-translated.",
                                             matches), matches);
-            details = _("The translations were marked as needing review, because they may be inaccurate. You should review them for correctness.");
+            details = _("The translations were marked as needing work, because they may be inaccurate. You should review them for correctness.");
         }
         else
         {
