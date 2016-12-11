@@ -25,12 +25,10 @@ dist_uiicons_DATA = \
 		linux/document-properties.png \
 		linux/document-new.png \
 		linux/edit-delete.png \
-		linux/poedit-fuzzy.png \
 		linux/poedit-update.png \
 		linux/poedit-sync.png \
 		linux/poedit-validate.png \
 		linux/sidebar.png \
-		poedit-status-automatic.png \
 		poedit-status-bookmark.png \
 		poedit-status-comment.png \
 		poedit-status-cat-mid.png \
@@ -38,6 +36,8 @@ dist_uiicons_DATA = \
 		poedit-status-cat-ok.png \
 		window-close.png \
 		SuggestionError.png \
+		SuggestionPerfectMatch.png \
+		SuggestionPerfectMatch@2x.png \
 		SuggestionTM.png \
 		PoeditWelcome.png \
 		CrowdinLogo.png

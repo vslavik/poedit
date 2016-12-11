@@ -48,6 +48,7 @@
   _COM_SMARTPTR_TYPEDEF(ITextDocument, __uuidof(ITextDocument));
 #endif
 
+#include "colorscheme.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
 #include "unicode_helpers.h"
@@ -213,7 +214,7 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 {
     auto text = TextView(this);
 
-    [text setTextContainerInset:NSMakeSize(1,3)];
+    [text setTextContainerInset:NSMakeSize(0,3)];
     [text setRichText:NO];
 
     // TODO: This isn't implemented and doesn't work in macOS
@@ -259,8 +260,9 @@ wxString CustomizedTextCtrl::DoGetValue() const
 #else // !__WXOSX__
 
 CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long style)
-   : wxTextCtrl(parent, winid, "", wxDefaultPosition, wxDefaultSize, style | ALWAYS_USED_STYLE)
 {
+    wxTextCtrl::Create(parent, winid, "", wxDefaultPosition, wxDefaultSize, style | ALWAYS_USED_STYLE);
+
     wxTextAttr padding;
     padding.SetLeftIndent(5);
     padding.SetRightIndent(5);
@@ -280,6 +282,21 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
 }
 
 #endif // !__WXOSX__
+
+
+#ifdef __WXMSW__
+
+WXDWORD CustomizedTextCtrl::MSWGetStyle(long style, WXDWORD *exstyle) const
+{
+    auto msStyle = wxTextCtrl::MSWGetStyle(style, exstyle);
+    // Disable always-shown scrollbars. The reason wx does this doesn't seem to
+    // affect Poedit, so it should be safe:
+    msStyle &= ~ES_DISABLENOSCROLL;
+    return msStyle;
+}
+
+#endif // __WXMSW__
+
 
 #if defined(__WXMSW__) || defined(__WXGTK__)
 // We use wxTE_RICH2 style, which allows for pasting rich-formatted
@@ -459,11 +476,11 @@ public:
 
     Attributes()
     {
-        m_attrSpace  = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:0.89 green:0.96 blue:0.68 alpha:1]};
-        m_attrEscape = @{NSBackgroundColorAttributeName: [NSColor colorWithSRGBRed:1 green:0.95 blue:1 alpha:1],
-                         NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.46 green:0 blue:0.01 alpha:1]};
-        m_attrMarkup = @{NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0 green:0.36 blue:0.80 alpha:1]};
-        m_attrFormat = @{NSForegroundColorAttributeName: [NSColor colorWithSRGBRed:0.62 green:0 blue:0.75 alpha:1]};
+        m_attrSpace  = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxLeadingWhitespaceBg).OSXGetNSColor()};
+        m_attrEscape = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeBg).OSXGetNSColor(),
+                         NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeFg).OSXGetNSColor()};
+        m_attrMarkup = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxMarkup).OSXGetNSColor()};
+        m_attrFormat = @{NSForegroundColorAttributeName: ColorScheme::Get(Color::SyntaxFormat).OSXGetNSColor()};
     }
 #else // !__WXOSX__
     wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape, m_attrMarkup, m_attrFormat;
@@ -474,14 +491,14 @@ public:
         m_attrDefault.SetBackgroundColour(*wxWHITE);
         m_attrDefault.SetTextColour(*wxBLACK);
 
-        m_attrSpace.SetBackgroundColour("#E4F6AE");
+        m_attrSpace.SetBackgroundColour(ColorScheme::Get(Color::SyntaxLeadingWhitespaceBg));
 
-        m_attrEscape.SetBackgroundColour("#FFF1FF");
-        m_attrEscape.SetTextColour("#760003");
+        m_attrEscape.SetBackgroundColour(ColorScheme::Get(Color::SyntaxEscapeBg));
+        m_attrEscape.SetTextColour(ColorScheme::Get(Color::SyntaxEscapeFg));
 
-        m_attrMarkup.SetTextColour("#005DCD");
+        m_attrMarkup.SetTextColour(ColorScheme::Get(Color::SyntaxMarkup));
 
-        m_attrFormat.SetTextColour("#9E00B7");
+        m_attrFormat.SetTextColour(ColorScheme::Get(Color::SyntaxFormat));
     }
 
     const AttrType& Default() const {  return m_attrDefault; }
@@ -769,14 +786,14 @@ void AnyTranslatableTextCtrl::HighlightText()
 
 
 SourceTextCtrl::SourceTextCtrl(wxWindow *parent, wxWindowID winid)
-    : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY)
+    : AnyTranslatableTextCtrl(parent, winid, wxTE_READONLY | wxNO_BORDER)
 {
     SetLanguage(Language::English());
 }
 
 
 TranslationTextCtrl::TranslationTextCtrl(wxWindow *parent, wxWindowID winid)
-    : AnyTranslatableTextCtrl(parent, winid),
+    : AnyTranslatableTextCtrl(parent, winid, wxNO_BORDER),
       m_lastKeyWasReturn(false)
 {
 #ifdef __WXMSW__

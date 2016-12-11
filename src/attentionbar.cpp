@@ -25,6 +25,10 @@
 
 #include "attentionbar.h"
 
+#include "colorscheme.h"
+#include "custom_buttons.h"
+#include "customcontrols.h"
+#include "hidpi.h"
 #include "utility.h"
 
 #include <wx/checkbox.h>
@@ -36,9 +40,6 @@
 #include <wx/statbmp.h>
 #include <wx/config.h>
 #include <wx/dcclient.h>
-
-#include "customcontrols.h"
-#include "hidpi.h"
 
 #ifdef __WXOSX__
 #include "macos_helpers.h"
@@ -77,14 +78,13 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     m_checkbox = new wxCheckBox(this, wxID_ANY, "");
 
-    wxButton *btnClose =
-            new wxBitmapButton
-                (
-                    this, wxID_CLOSE,
-                    wxArtProvider::GetBitmap("window-close", wxART_MENU),
-                    wxDefaultPosition, wxDefaultSize,
-                    wxNO_BORDER
-                );
+    auto btnClose = new wxBitmapButton
+                    (
+                        this, wxID_CLOSE,
+                        wxArtProvider::GetBitmap("window-close", wxART_MENU),
+                        wxDefaultPosition, wxDefaultSize,
+                        wxNO_BORDER
+                    );
     btnClose->SetToolTip(_("Hide this notification message"));
 #ifdef __WXMSW__
     btnClose->SetBackgroundColour(GetBackgroundColour());
@@ -126,15 +126,13 @@ AttentionBar::AttentionBar(wxWindow *parent)
 void AttentionBar::OnPaint(wxPaintEvent&)
 {
     wxPaintDC dc(this);
-    wxRect rect(dc.GetSize());
 
-    auto bg = GetBackgroundColour();
-    dc.SetBrush(*wxTRANSPARENT_BRUSH);
-    dc.SetPen(bg.ChangeLightness(90));
-#ifndef __WXOSX__
-    dc.DrawLine(rect.GetTopLeft(), rect.GetTopRight());
-#endif
-    dc.DrawLine(rect.GetBottomLeft(), rect.GetBottomRight());
+    auto bg = GetBackgroundColour().ChangeLightness(80);
+    dc.SetBrush(bg);
+    dc.SetPen(bg);
+
+    wxRect rect(GetSize());
+    dc.DrawRectangle(0, rect.height - MACOS_OR_OTHER(0, PX(1)), rect.width, PX(1));
 }
 
 
@@ -143,35 +141,16 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     if ( msg.IsBlacklisted() )
         return;
 
-#ifdef __WXGTK__
     switch ( msg.m_kind )
     {
-        case AttentionMessage::Info:
-            SetBackgroundColour(wxColour(252,252,189));
-            break;
         case AttentionMessage::Warning:
-            SetBackgroundColour(wxColour(250,173,61));
+            SetBackgroundColour(ColorScheme::Get(Color::AttentionWarningBackground));
             break;
         case AttentionMessage::Question:
-            SetBackgroundColour(wxColour(138,173,212));
+            SetBackgroundColour(ColorScheme::Get(Color::AttentionQuestionBackground));
             break;
         case AttentionMessage::Error:
-            SetBackgroundColour(wxColour(237,54,54));
-            break;
-    }
-#else
-
-    switch ( msg.m_kind )
-    {
-        case AttentionMessage::Question:
-            SetBackgroundColour("#ABE887");
-            break;
-        default:
-    #ifdef __WXMSW__
-            SetBackgroundColour("#FFF499"); // match Visual Studio 2012+'s aesthetics
-    #else
-            SetBackgroundColour("#FCDE59");
-    #endif
+            SetBackgroundColour(ColorScheme::Get(Color::AttentionErrorBackground));
             break;
     }
 
@@ -184,9 +163,6 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     wxString iconName;
     switch ( msg.m_kind )
     {
-        case AttentionMessage::Info:
-            iconName = wxART_INFORMATION;
-            break;
         case AttentionMessage::Warning:
             iconName = wxART_WARNING;
             break;
@@ -197,6 +173,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             iconName = wxART_ERROR;
             break;
     }
+#ifndef __WXGTK__
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
 #endif
 
@@ -212,7 +189,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
     for ( AttentionMessage::Actions::const_iterator i = msg.m_actions.begin();
           i != msg.m_actions.end(); ++i )
     {
-        wxButton *b = new wxButton(this, wxID_ANY, i->first);
+        auto b = new TranslucentButton(this, wxID_ANY, i->first);
 #ifdef __WXOSX__
         MakeButtonRounded(b->GetHandle());
 #endif

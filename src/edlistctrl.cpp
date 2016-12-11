@@ -29,6 +29,7 @@
 #include "hidpi.h"
 #include "language.h"
 #include "cat_sorting.h"
+#include "colorscheme.h"
 #include "unicode_helpers.h"
 #include "utility.h"
 
@@ -51,33 +52,6 @@
 
 namespace
 {
-
-// how much to darken the other color in shaded list (this value
-// is what GTK+ uses in its tree view control)
-#define DARKEN_FACTOR      0.95
-
-inline bool IsAlmostBlack(const wxColour& clr)
-{
-    return clr.Red() < 0x60 && clr.Green() < 0x60 && clr.Blue() < 0x60;
-}
-
-inline bool IsAlmostWhite(const wxColour& clr)
-{
-    return clr.Red() > 0xE0 && clr.Green() > 0xE0 && clr.Blue() > 0xE0;
-}
-
-
-// colours used in the list:
-
-const wxColour gs_ErrorColor("#ff5050");
-
-// colors for white list control background
-const wxColour gs_UntranslatedForWhite("#103f67");
-const wxColour gs_FuzzyForWhite("#a9861b");
-
-// ditto for black background
-const wxColour gs_UntranslatedForBlack("#1962a0");
-const wxColour gs_FuzzyForBlack("#a9861b");
 
 class SelectionPreserver
 {
@@ -110,6 +84,66 @@ private:
     int focus;
 };
 
+
+#if wxCHECK_VERSION(3,1,1)
+
+class DataViewMarkupRenderer : public wxDataViewTextRenderer
+{
+public:
+    DataViewMarkupRenderer(const wxColour& bgHighlight)
+    {
+        EnableMarkup();
+        SetValueAdjuster(new Adjuster(bgHighlight));
+    }
+
+private:
+    class Adjuster : public wxDataViewValueAdjuster
+    {
+    public:
+        Adjuster(const wxColour& bgHighlight)
+        {
+            m_bgHighlight = bgHighlight.GetAsString(wxC2S_HTML_SYNTAX);
+        }
+
+        wxVariant MakeHighlighted(const wxVariant& value) const override
+        {
+            auto s = value.GetString();
+            bool changed = false;
+            auto pos = s.find(" bgcolor=\"");
+            if (pos != wxString::npos)
+            {
+                pos += 10;
+                auto pos2 = s.find('"', pos);
+                s.replace(pos, pos2 - pos, m_bgHighlight);
+                changed = true;
+            }
+#ifdef __WXGTK__
+            pos = s.find(" color=\"");
+            if (pos != wxString::npos)
+            {
+                auto pos2 = s.find('"', pos + 8);
+                s.erase(pos, pos2 - pos + 1);
+                changed = true;
+            }
+#endif
+            return changed ? wxVariant(s) : value;
+        }
+
+    private:
+        wxString m_bgHighlight;
+    };
+};
+
+#else
+
+class DataViewMarkupRenderer : public wxDataViewTextRenderer
+{
+public:
+    DataViewMarkupRenderer(const wxColour&) {}
+};
+
+#endif
+
 } // anonymous namespace
 
 
@@ -123,31 +157,14 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
 
     // configure items colors & fonts:
 
-    // FIXME: make this user-configurable
-    if ( IsAlmostWhite(visual.colBg) )
-    {
-        m_clrUntranslated = gs_UntranslatedForWhite;
-        m_clrFuzzy = gs_FuzzyForWhite;
-    }
-    else if ( IsAlmostBlack(visual.colBg) )
-    {
-        m_clrUntranslated = gs_UntranslatedForBlack;
-        m_clrFuzzy = gs_FuzzyForBlack;
-    }
-    // else: we don't know if the default colors would be well-visible on
-    //       user's background color, so play it safe and don't highlight
-    //       anything
+    m_clrID = ColorScheme::Get(Color::ItemID, visual);
+    m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visual);
+    m_clrInvalid = ColorScheme::Get(Color::ItemError, visual);
+    m_clrContextFg = ColorScheme::Get(Color::ItemContextFg, visual).GetAsString(wxC2S_HTML_SYNTAX);
+    m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visual).GetAsString(wxC2S_HTML_SYNTAX);
 
-    m_clrInvalid = gs_ErrorColor;
-
-    // Use gray for IDs
-    if ( IsAlmostBlack(visual.colFg) )
-        m_clrID = wxColour("#A1A1A1");
-
-    m_iconPreTranslated = wxArtProvider::GetBitmap("poedit-status-automatic");
     m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
     m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
-
 }
 
 
@@ -219,10 +236,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         {
             if (d->GetBookmark() != NO_BOOKMARK)
                 variant << m_iconBookmark;
-            else if (d->HasComment() || d->HasExtractedComments())
+            else if (d->HasComment())
                 variant << m_iconComment;
-            else if (d->IsPreTranslated())
-                variant << m_iconPreTranslated;
             else
                 variant = wxNullVariant;
             break;
@@ -240,7 +255,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 #else
                     #define MARKUP(x) x
                 #endif
-                orig.Printf(MARKUP("<span style=\"italic\" color=\"#2B6F16\">[%s]</span> %s"),
+                orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
+                            m_clrContextBg, m_clrContextFg,
                             EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
             }
             else
@@ -314,11 +330,6 @@ bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewI
                 attr.SetColour(m_clrInvalid);
                 return true;
             }
-            else if (!d->IsTranslated())
-            {
-                attr.SetColour(m_clrUntranslated);
-                return true;
-            }
             else if (d->IsFuzzy())
             {
                 attr.SetColour(m_clrFuzzy);
@@ -369,7 +380,7 @@ void PoeditListCtrl::Model::CreateSortMap()
 
 
 PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
-     : wxDataViewCtrl(parent, id, wxDefaultPosition, wxDefaultSize, wxDV_MULTIPLE | wxDV_ROW_LINES, wxDefaultValidator, "translations list")
+     : wxDataViewCtrl(parent, id, wxDefaultPosition, wxDefaultSize, wxDV_MULTIPLE | wxDV_ROW_LINES | wxNO_BORDER, wxDefaultValidator, "translations list")
 {
     m_displayIDs = dispIDs;
 
@@ -429,6 +440,12 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 
     SetFont(font);
 
+#if defined(__WXOSX__)
+    SetRowHeight(20);
+#elif defined(__WXMSW__)
+    SetRowHeight(GetCharHeight() + PX(4));
+#endif
+
     UpdateHeaderAttrs();
     CreateColumns();
 }
@@ -443,6 +460,11 @@ void PoeditListCtrl::CreateColumns()
 {
     if (GetColumnCount() > 0)
         ClearColumns();
+
+#ifdef __WXOSX__
+    NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
+    [tableView setIntercellSpacing:NSMakeSize(3.0, 0.0)];
+#endif
 
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
 
@@ -465,11 +487,8 @@ void PoeditListCtrl::CreateColumns()
     wxString sourceTitle = srclang.IsValid()
                              ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
                              : _("Source text");
-    auto sourceRenderer = new wxDataViewTextRenderer();
+    auto sourceRenderer = new DataViewMarkupRenderer(ColorScheme::Get(Color::ItemContextBgHighlighted, this));
     sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
-#if wxCHECK_VERSION(3,1,1)
-    sourceRenderer->EnableMarkup();
-#endif
     m_colSource = new wxDataViewColumn(sourceTitle, sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
     AppendColumn(m_colSource);
 
@@ -520,7 +539,12 @@ void PoeditListCtrl::SizeColumns()
         w -= m_colIcon->GetWidth();
 
     if (m_colID)
+    {
         w -= m_colID->GetWidth();
+#ifdef __WXGTK__
+        w += 2;
+#endif
+    }
 
     if (m_colTrans)
     {

@@ -57,11 +57,13 @@
 #include <fstream>
 
 #include "catalog.h"
+#include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
 #include "crowdin_gui.h"
 #include "customcontrols.h"
 #include "edapp.h"
+#include "editing_area.h"
 #include "hidpi.h"
 #include "propertiesdlg.h"
 #include "prefsdlg.h"
@@ -75,7 +77,6 @@
 #include "manager.h"
 #include "pluralforms/pl_evaluate.h"
 #include "attentionbar.h"
-#include "errorbar.h"
 #include "utility.h"
 #include "languagectrl.h"
 #include "welcomescreen.h"
@@ -83,7 +84,70 @@
 #include "sidebar.h"
 #include "spellchecking.h"
 #include "str_helpers.h"
-#include "text_control.h"
+
+
+namespace
+{
+
+// Splitters with customized apperance to blend with EditingArea:
+
+class ThinSplitter : public wxSplitterWindow
+{
+public:
+    ThinSplitter(wxWindow *parent, const wxColour& color)
+        : wxSplitterWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_NOBORDER | wxSP_LIVE_UPDATE)
+    {
+#ifdef __WXOSX__
+        SetBackgroundColour(color);
+#else
+        m_color = color;
+#endif
+    }
+
+#ifndef __WXOSX__
+    void DrawSash(wxDC& dc) override
+    {
+        if (m_sashPosition == 0 || !m_windowTwo || IsSashInvisible())
+            return;
+
+        auto mode = GetSplitMode();
+        auto rect = (mode == wxSPLIT_HORIZONTAL)
+                    ? wxRect(0, m_sashPosition, GetClientSize().x, GetSashSize())
+                    : wxRect(m_sashPosition, 0, GetSashSize(), GetClientSize().y);
+
+        dc.SetPen(m_color);
+        dc.SetBrush(m_color);
+        if (mode == wxSPLIT_HORIZONTAL)
+            dc.DrawRectangle(rect.x, rect.y, rect.width, PX(1));
+        else
+            dc.DrawRectangle(rect.x, rect.y, PX(1), rect.height);
+
+        if (GetSashSize() > PX(1))
+        {
+            if (mode == wxSPLIT_HORIZONTAL)
+            {
+                rect.y += PX(1);
+                rect.height -= PX(1);
+            }
+            else
+            {
+                rect.x += PX(1);
+                rect.width -= PX(1);
+            }
+
+            auto bg = GetWindow2()->GetBackgroundColour();
+            dc.SetPen(bg);
+            dc.SetBrush(bg);
+            dc.DrawRectangle(rect);
+        }
+    }
+
+private:
+    wxColour m_color;
+#endif // !__WXOSX__
+};
+
+} // anonymous namespace
 
 
 // this should be high enough to not conflict with any wxNewId-allocated value,
@@ -99,11 +163,6 @@ const wxWindowID ID_BOOKMARK_GO  = ID_POEDIT_FIRST + 4*ID_POEDIT_STEP;
 const wxWindowID ID_BOOKMARK_SET = ID_POEDIT_FIRST + 5*ID_POEDIT_STEP;
 
 const wxWindowID ID_POEDIT_LAST  = ID_POEDIT_FIRST + 6*ID_POEDIT_STEP;
-
-const wxWindowID ID_LIST = wxNewId();
-const wxWindowID ID_TEXTORIG = wxNewId();
-const wxWindowID ID_TEXTORIGPLURAL = wxNewId();
-const wxWindowID ID_TEXTTRANS = wxNewId();
 
 
 #ifdef __VISUALC__
@@ -184,8 +243,8 @@ bool g_focusToText = false;
 
     f->Show(true);
 
-    if (g_focusToText && f->m_textTrans)
-        ((wxTextCtrl*)f->m_textTrans)->SetFocus();
+    if (g_focusToText && f->m_editingArea)
+        f->m_editingArea->SetTextFocus();
     else if (f->m_list)
         f->m_list->SetFocus();
 
@@ -214,6 +273,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
 // macOS and GNOME apps should open new documents in a new window. On Windows,
 // however, the usual thing to do is to open the new document in the already
 // open window and replace the current document.
+   EVT_BUTTON         (XRCID("button_new_from_this_pot"),PoeditFrame::OnNew)
 #ifdef __WXMSW__
    EVT_MENU           (wxID_NEW,                  PoeditFrame::OnNew)
    EVT_MENU           (XRCID("menu_new_from_pot"),PoeditFrame::OnNew)
@@ -423,19 +483,12 @@ PoeditFrame::PoeditFrame() :
     m_list(nullptr),
     m_modified(false),
     m_hasObsoleteItems(false),
-    m_dontAutoclearFuzzyStatus(false),
     m_setSashPositionsWhenMaximized(false)
 {
     m_list = nullptr;
-    m_textTrans = nullptr;
-    m_textOrig = nullptr;
-    m_textOrigPlural = nullptr;
     m_splitter = nullptr;
     m_sidebarSplitter = nullptr;
     m_sidebar = nullptr;
-    m_errorBar = nullptr;
-    m_labelContext = m_labelPlural = m_labelSingular = nullptr;
-    m_pluralNotebook = nullptr;
 
     // make sure that the [ID_POEDIT_FIRST,ID_POEDIT_LAST] range of IDs is not
     // used for anything else:
@@ -458,11 +511,6 @@ PoeditFrame::PoeditFrame() :
 #elif defined(__WXMSW__)
     SetIcons(wxIconBundle(wxStandardPaths::Get().GetResourcesDir() + "\\Resources\\Poedit.ico"));
 #endif
-
-    // This is different from the default, because it's a bit smaller on macOS
-    m_normalGuiFont = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
-    m_boldGuiFont = m_normalGuiFont;
-    m_boldGuiFont.SetWeight(wxFONTWEIGHT_BOLD);
 
     wxMenuBar *MenuBar = wxXmlResource::Get()->LoadMenuBar("mainmenu");
     if (MenuBar)
@@ -503,14 +551,24 @@ PoeditFrame::PoeditFrame() :
     m_contentWrappingSizer = new wxBoxSizer(wxVERTICAL);
     SetSizer(m_contentWrappingSizer);
 
+#ifndef __WXOSX__
+    // render a separator between the toolbar and content
+    SetBackgroundColour(ColorScheme::Get(Color::ToolbarSeparator));
+    m_contentWrappingSizer->AddSpacer(PX(1));
+#endif // !__WXOSX__
+
     m_attentionBar = new AttentionBar(this);
     m_contentWrappingSizer->Add(m_attentionBar, wxSizerFlags().Expand());
 
     SetAccelerators();
 
-    wxSize defaultSize(PX(1100), PX(750));
-    if (!wxRect(wxGetDisplaySize()).Contains(wxSize(PX(1400),PX(850))))
-        defaultSize = wxSize(PX(980), PX(700));
+    auto defaultSize = wxGetDisplaySize();
+    defaultSize.x -= PX(400);
+    defaultSize.y -= PX(400);
+    if (defaultSize.x > PX(1400))
+        defaultSize.x = PX(1400);
+    if (double(defaultSize.x) / double(defaultSize.y) > 1.6)
+        defaultSize.x = defaultSize.y * 1.6;
     RestoreWindowState(this, defaultSize, WinState_Size | WinState_Pos);
 
     UpdateMenu();
@@ -601,72 +659,31 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     main->Hide();
 #endif
 
-    m_sidebarSplitter = new wxSplitterWindow(main, -1,
-                                      wxDefaultPosition, wxDefaultSize,
-                                      wxSP_NOBORDER | wxSP_LIVE_UPDATE);
+    m_sidebarSplitter = new ThinSplitter(main, ColorScheme::Get(Color::SidebarSeparator));
     m_sidebarSplitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSidebarSplitterSashMoving, this);
 
     mainSizer->Add(m_sidebarSplitter, wxSizerFlags(1).Expand());
 
-    m_splitter = new wxSplitterWindow(m_sidebarSplitter, -1,
-                                      wxDefaultPosition, wxDefaultSize,
-                                      wxSP_NOBORDER | wxSP_LIVE_UPDATE);
+    m_splitter = new ThinSplitter(m_sidebarSplitter, ColorScheme::Get(Color::EditingSeparator));
     m_splitter->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING, &PoeditFrame::OnSplitterSashMoving, this);
 
     // make only the upper part grow when resizing
     m_splitter->SetSashGravity(1.0);
 
-    m_list = new PoeditListCtrl(m_splitter, ID_LIST, m_displayIDs);
+    m_list = new PoeditListCtrl(m_splitter, wxID_ANY, m_displayIDs);
 
-    m_bottomPanel = new wxPanel(m_splitter, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);
-#ifdef __WXMSW__
-    m_bottomPanel->SetDoubleBuffered(true);
-#endif
+    m_editingArea = new EditingArea
+                        (
+                            m_splitter,
+                            m_list,
+                            type == Content::POT ? EditingArea::POT : EditingArea::Editing
+                        );
 
-    wxStaticText *labelSource =
-        new wxStaticText(m_bottomPanel, -1, _("Source text:"));
-    labelSource->SetFont(m_boldGuiFont);
-
-    m_labelContext = new wxStaticText(m_bottomPanel, -1, wxEmptyString);
-    m_labelContext->SetFont(m_normalGuiFont);
-#ifdef __WXOSX__
-    m_labelContext->SetMinSize(wxSize(-1, m_labelContext->GetBestSize().y + 3));
-#endif
-    m_labelContext->Hide();
-
-    m_labelSingular = new wxStaticText(m_bottomPanel, -1, _("Singular:"));
-    m_labelSingular->SetFont(m_normalGuiFont);
-    m_textOrig = new SourceTextCtrl(m_bottomPanel, ID_TEXTORIG);
-    m_labelPlural = new wxStaticText(m_bottomPanel, -1, _("Plural:"));
-    m_labelPlural->SetFont(m_normalGuiFont);
-    m_textOrigPlural = new SourceTextCtrl(m_bottomPanel, ID_TEXTORIGPLURAL);
-
-    auto *panelSizer = new wxBoxSizer(wxVERTICAL);
-
-    wxFlexGridSizer *gridSizer = new wxFlexGridSizer(2);
-    gridSizer->AddGrowableCol(1);
-    gridSizer->AddGrowableRow(0);
-    gridSizer->AddGrowableRow(1);
-    gridSizer->Add(m_labelSingular, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
-    gridSizer->Add(m_textOrig, 1, wxEXPAND);
-    gridSizer->Add(m_labelPlural, 0, wxALIGN_CENTER_VERTICAL | wxALL, 3);
-    gridSizer->Add(m_textOrigPlural, 1, wxEXPAND);
-    gridSizer->SetItemMinSize(m_textOrig, 1, 1);
-    gridSizer->SetItemMinSize(m_textOrigPlural, 1, 1);
-
-    panelSizer->Add(m_labelContext, 0, wxEXPAND | wxALL, 3);
-    panelSizer->Add(labelSource, 0, wxEXPAND | wxALL, 3);
-    panelSizer->Add(gridSizer, 1, wxEXPAND);
-
-    if (type == Content::POT)
-        CreateContentViewTemplateControls(m_bottomPanel, panelSizer);
-    else
-        CreateContentViewEditControls(m_bottomPanel, panelSizer);
+    m_editingArea->OnUpdatedFromTextCtrl = [=](CatalogItemPtr item, bool statsChanged){
+        OnUpdatedFromTextCtrl(item, statsChanged);
+    };
 
     SetCustomFonts();
-
-    m_bottomPanel->SetAutoLayout(true);
-    m_bottomPanel->SetSizer(panelSizer);
 
     m_splitter->SetMinimumPaneSize(PX(200));
     m_sidebarSplitter->SetMinimumPaneSize(PX(200));
@@ -683,7 +700,6 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
     m_sidebar = new Sidebar(m_sidebarSplitter, suggestionsMenu);
     m_sidebar->Bind(wxEVT_UPDATE_UI, &PoeditFrame::OnSingleSelectionUpdate, this);
 
-    ShowPluralFormUI(false);
     UpdateMenu();
 
     switch ( m_list->sortOrder().by )
@@ -723,68 +739,13 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
             Layout();
         }
 
-        m_splitter->SplitHorizontally(m_list, m_bottomPanel, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(250)));
+        m_splitter->SplitHorizontally(m_list, m_editingArea, (int)wxConfigBase::Get()->ReadLong("/splitter", -PX(320)));
 
         if (m_sidebar)
             m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
     });
 
     return main;
-}
-
-void PoeditFrame::CreateContentViewEditControls(wxWindow *p, wxBoxSizer *panelSizer)
-{
-    p->Bind(wxEVT_UPDATE_UI, &PoeditFrame::OnSingleSelectionUpdate, this);
-
-    wxStaticText *labelTrans = new wxStaticText(p, -1, _("Translation:"));
-    labelTrans->SetFont(m_boldGuiFont);
-
-    m_textTrans = new TranslationTextCtrl(p, ID_TEXTTRANS);
-    m_textTrans->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
-
-    // in case of plurals form, this is the control for n=1:
-    m_textTransSingularForm = nullptr;
-
-    m_pluralNotebook = new wxNotebook(p, -1);
-
-    m_errorBar = new ErrorBar(p);
-
-    panelSizer->Add(labelTrans, 0, wxEXPAND | wxALL, 3);
-    panelSizer->Add(m_textTrans, 1, wxEXPAND);
-    panelSizer->Add(m_pluralNotebook, 1, wxEXPAND);
-    panelSizer->Add(m_errorBar, 0, wxEXPAND | wxALL, 2);
-}
-
-void PoeditFrame::CreateContentViewTemplateControls(wxWindow *p, wxBoxSizer *panelSizer)
-{
-    auto win = new wxPanel(p, wxID_ANY);
-    auto sizer = new wxBoxSizer(wxVERTICAL);
-
-    auto explain = new wxStaticText(win, wxID_ANY, _(L"POT files are only templates and don’t contain any translations themselves.\nTo make a translation, create a new PO file based on the template."), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE_HORIZONTAL);
-#ifdef __WXOSX__
-    explain->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-#endif
-    explain->SetForegroundColour(ExplanationLabel::GetTextColor().ChangeLightness(160));
-    win->SetBackgroundColour(GetBackgroundColour().ChangeLightness(50));
-
-    auto button = new wxButton(win, wxID_ANY, MSW_OR_OTHER(_("Create new translation"), _("Create New Translation")));
-    button->Bind(wxEVT_BUTTON, [=](wxCommandEvent&)
-    {
-        wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
-        dlg->ShowWindowModalThenDo([=](int retcode){
-            if (retcode == wxID_OK)
-                NewFromPOT(m_catalog->GetFileName(), dlg->GetLang());
-        });
-    });
-
-    sizer->AddStretchSpacer();
-    sizer->Add(explain, wxSizerFlags().Center().Border(wxLEFT|wxRIGHT, PX(100)));
-    sizer->Add(button, wxSizerFlags().Center().Border(wxTOP|wxBOTTOM, PX(10)));
-    sizer->AddStretchSpacer();
-
-    win->SetSizerAndFit(sizer);
-
-    panelSizer->Add(win, 1, wxEXPAND);
 }
 
 
@@ -805,8 +766,6 @@ void PoeditFrame::DestroyContentView()
     if (!m_contentView)
         return;
 
-    m_textTransPlural.clear();
-
     NotifyCatalogChanged(nullptr);
 
     if (m_splitter)
@@ -817,15 +776,10 @@ void PoeditFrame::DestroyContentView()
     m_contentView = nullptr;
 
     m_list = nullptr;
-    m_labelContext = m_labelSingular = m_labelPlural = nullptr;
-    m_textTrans = m_textTransSingularForm = nullptr;
-    m_textOrig = nullptr;
-    m_textOrigPlural = nullptr;
-    m_errorBar = nullptr;
     m_splitter = nullptr;
     m_sidebarSplitter = nullptr;
     m_sidebar = nullptr;
-    m_pluralNotebook = nullptr;
+    m_editingArea = nullptr;
 
     if (m_findWindow)
     {
@@ -901,7 +855,7 @@ void PoeditFrame::InitSpellchecker()
     if (!IsSpellcheckingAvailable())
         return;
 
-    if (!m_catalog || !m_textTrans)
+    if (!m_catalog || !m_catalog->HasCapability(Catalog::Cap::Translations))
         return;
 
     Language lang = m_catalog->GetLanguage();
@@ -926,14 +880,8 @@ void PoeditFrame::InitSpellchecker()
     }
 #endif
 
-    if ( !InitTextCtrlSpellchecker(m_textTrans, enabled, lang) )
+    if (!m_editingArea->InitSpellchecker(enabled, lang))
         report_problem = true;
-
-    for (size_t i = 0; i < m_textTransPlural.size(); i++)
-    {
-        if ( !InitTextCtrlSpellchecker(m_textTransPlural[i], enabled, lang) )
-            report_problem = true;
-    }
 
 #ifndef __WXMSW__ // language choice is automatic, per-keyboard on Windows, can't fail
     if ( enabledInitially && report_problem )
@@ -966,15 +914,14 @@ void PoeditFrame::InitSpellchecker()
 
 void PoeditFrame::UpdateTextLanguage()
 {
-    if (!m_catalog || !m_textTrans)
+    if (!m_catalog)
         return;
 
     InitSpellchecker();
 
     auto lang = m_catalog->GetLanguage();
-    m_textTrans->SetLanguage(lang);
-    for (auto tp : m_textTransPlural)
-        tp->SetLanguage(lang);
+
+    m_editingArea->SetLanguage(lang);
 
     if (m_sidebar)
         m_sidebar->RefreshContent();
@@ -1001,10 +948,10 @@ void PoeditFrame::DoOpenFile(const wxString& filename)
 {
     ReadCatalog(filename);
 
-    if (m_textTrans && m_list)
+    if (m_editingArea && m_list)
     {
         if (g_focusToText)
-            m_textTrans->SetFocus();
+            m_editingArea->SetTextFocus();
         else
             m_list->SetFocus();
     }
@@ -1342,11 +1289,22 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
 void PoeditFrame::OnNew(wxCommandEvent& event)
 {
     DoIfCanDiscardCurrentDoc([=]{
-        bool isFromPOT = event.GetId() == XRCID("menu_new_from_pot");
-        if (isFromPOT)
+        if (event.GetId() == XRCID("menu_new_from_pot"))
+        {
             NewFromPOT();
+        }
+        else if (event.GetId() == XRCID("button_new_from_this_pot"))
+        {
+            wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+            dlg->ShowWindowModalThenDo([=](int retcode){
+                if (retcode == wxID_OK)
+                    NewFromPOT(m_catalog->GetFileName(), dlg->GetLang());
+            });
+        }
         else
+        {
             NewFromScratch();
+        }
     });
 }
 
@@ -1866,9 +1824,8 @@ void PoeditFrame::ReportValidationErrors(int errors,
 
 void PoeditFrame::OnListSel(wxDataViewEvent& event)
 {
-    wxWindow *focus = wxWindow::FindFocus();
-    bool hasFocus = (focus == m_textTrans) ||
-                    (focus && focus->GetParent() == m_pluralNotebook);
+    bool multipleSel = m_list && m_list->HasMultipleSelection();
+    bool hasTextFocus = m_editingArea->HasTextFocus();
 
     event.Skip();
 
@@ -1878,23 +1835,26 @@ void PoeditFrame::OnListSel(wxDataViewEvent& event)
         m_pendingHumanEditedItem.reset();
     }
 
-    UpdateToTextCtrl(ItemChanged);
-
-    if (m_sidebar && m_list)
+    if (multipleSel)
     {
-        if (m_list->HasMultipleSelection())
+        m_editingArea->SetMultipleSelectionMode();
+    }
+    else
+    {
+        m_editingArea->SetSingleSelectionMode();
+        UpdateToTextCtrl(EditingArea::ItemChanged);
+    }
+
+    if (m_sidebar)
+    {
+        if (multipleSel)
             m_sidebar->SetMultipleSelection();
         else
             m_sidebar->SetSelectedItem(m_catalog, GetCurrentItem()); // may be nullptr
     }
 
-    if (hasFocus && m_textTrans)
-    {
-        if (m_textTrans->IsShown())
-            m_textTrans->SetFocus();
-        else if (!m_textTransPlural.empty())
-            m_textTransPlural[0]->SetFocus();
-    }
+    if (hasTextFocus)
+        m_editingArea->SetTextFocus();
 
     auto references = FileViewer::GetIfExists();
     if (references)
@@ -1938,21 +1898,9 @@ void PoeditFrame::ShowReference(int num)
 
 
 
-void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
+void PoeditFrame::OnFuzzyFlag(wxCommandEvent&)
 {
-    bool setFuzzy = false;
-
-    auto source = event.GetEventObject();
-    if (source && dynamic_cast<wxMenu*>(source))
-    {
-        setFuzzy = GetMenuBar()->IsChecked(XRCID("menu_fuzzy"));
-        m_toolbar->SetFuzzy(setFuzzy);
-    }
-    else
-    {
-        setFuzzy = m_toolbar->IsFuzzy();
-        GetMenuBar()->Check(XRCID("menu_fuzzy"), setFuzzy);
-    }
+    bool setFuzzy = GetMenuBar()->IsChecked(XRCID("menu_fuzzy"));
 
     bool modified = false;
 
@@ -1972,7 +1920,7 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
     }
     UpdateStatusBar();
 
-    UpdateToTextCtrl(UndoableEdit);
+    UpdateToTextCtrl(EditingArea::UndoableEdit);
 
     if (m_list->HasSingleSelection())
     {
@@ -1981,7 +1929,7 @@ void PoeditFrame::OnFuzzyFlag(wxCommandEvent& event)
         // fuzzy on to indicate the translation is problematic and then continues
         // editing the entry, we do not want to annoy him by changing fuzzy back on
         // every keystroke.
-        m_dontAutoclearFuzzyStatus = true;
+        m_editingArea->DontAutoclearFuzzyStatus();
     }
 }
 
@@ -1995,11 +1943,7 @@ void PoeditFrame::OnIDsFlag(wxCommandEvent&)
 
 void PoeditFrame::OnCopyFromSingular(wxCommandEvent&)
 {
-    auto current = dynamic_cast<TranslationTextCtrl*>(wxWindow::FindFocus());
-    if (!current || !m_textTransSingularForm)
-        return;
-
-    current->SetPlainTextUserWritten(m_textTransSingularForm->GetPlainText());
+    m_editingArea->CopyFromSingular();
 }
 
 void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
@@ -2019,7 +1963,7 @@ void PoeditFrame::OnCopyFromSource(wxCommandEvent&)
     }
     UpdateStatusBar();
 
-    UpdateToTextCtrl(UndoableEdit);
+    UpdateToTextCtrl(EditingArea::UndoableEdit);
 }
 
 void PoeditFrame::OnClearTranslation(wxCommandEvent&)
@@ -2039,14 +1983,14 @@ void PoeditFrame::OnClearTranslation(wxCommandEvent&)
     }
     UpdateStatusBar();
 
-    UpdateToTextCtrl(UndoableEdit);
+    UpdateToTextCtrl(EditingArea::UndoableEdit);
 }
 
 
 void PoeditFrame::OnFind(wxCommandEvent&)
 {
     if (!m_findWindow)
-        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_pluralNotebook);
+        m_findWindow = new FindFrame(this, m_list, m_editingArea, m_catalog);
 
     m_findWindow->ShowForFind();
 }
@@ -2054,7 +1998,7 @@ void PoeditFrame::OnFind(wxCommandEvent&)
 void PoeditFrame::OnFindAndReplace(wxCommandEvent&)
 {
     if (!m_findWindow)
-        m_findWindow = new FindFrame(this, m_list, m_catalog, m_textOrig, m_textTrans, m_pluralNotebook);
+        m_findWindow = new FindFrame(this, m_list, m_editingArea, m_catalog);
 
     m_findWindow->ShowForReplace();
 }
@@ -2085,112 +2029,19 @@ CatalogItemPtr PoeditFrame::GetCurrentItem() const
 }
 
 
-namespace
+void PoeditFrame::OnUpdatedFromTextCtrl(CatalogItemPtr item, bool statsChanged)
 {
+    GetMenuBar()->Check(XRCID("menu_fuzzy"), item->IsFuzzy());
 
-// does some basic processing of user input, e.g. to remove trailing \n
-wxString PreprocessEnteredTextForItem(CatalogItemPtr item, wxString t)
-{
-    auto& orig = item->GetString();
+    m_pendingHumanEditedItem = item;
 
-    if (!t.empty() && !orig.empty())
-    {
-        if (orig.Last() == '\n' && t.Last() != '\n')
-            t.append(1, '\n');
-        else if (orig.Last() != '\n' && t.Last() == '\n')
-            t.RemoveLast();
-    }
-
-    return t;
-}
-
-} // anonymous namespace
-
-void PoeditFrame::UpdateFromTextCtrl()
-{
-    if (!m_list || !m_list->HasSingleSelection())
-        return;
-
-    auto entry = GetCurrentItem();
-    if ( !entry )
-        return;
-
-    wxString key = entry->GetString();
-    bool newfuzzy = m_toolbar->IsFuzzy();
-
-    const bool oldIsTranslated = entry->IsTranslated();
-    bool allTranslated = true; // will be updated later
-    bool anyTransChanged = false; // ditto
-
-    if (entry->HasPlural())
-    {
-        wxArrayString str;
-        for (unsigned i = 0; i < m_textTransPlural.size(); i++)
-        {
-            auto val = PreprocessEnteredTextForItem(entry, m_textTransPlural[i]->GetPlainText());
-            str.Add(val);
-            if ( val.empty() )
-                allTranslated = false;
-        }
-
-        if ( str != entry->GetTranslations() )
-        {
-            anyTransChanged = true;
-            entry->SetTranslations(str);
-        }
-    }
-    else
-    {
-        auto newval = PreprocessEnteredTextForItem(entry, m_textTrans->GetPlainText());
-
-        if ( newval.empty() )
-            allTranslated = false;
-
-        if ( newval != entry->GetTranslation() )
-        {
-            anyTransChanged = true;
-            entry->SetTranslation(newval);
-        }
-    }
-
-    if (entry->IsFuzzy() == newfuzzy && !anyTransChanged)
-    {
-        return; // not even fuzzy status changed, so return
-    }
-
-    // did something affecting statistics change?
-    bool statisticsChanged = false;
-
-    if (newfuzzy == entry->IsFuzzy() && !m_dontAutoclearFuzzyStatus)
-        newfuzzy = false;
-
-    m_toolbar->SetFuzzy(newfuzzy);
-    GetMenuBar()->Check(XRCID("menu_fuzzy"), newfuzzy);
-
-    if ( entry->IsFuzzy() != newfuzzy )
-    {
-        entry->SetFuzzy(newfuzzy);
-        statisticsChanged = true;
-    }
-    if ( oldIsTranslated != allTranslated )
-    {
-        entry->SetTranslated(allTranslated);
-        statisticsChanged = true;
-    }
-    entry->SetModified(true);
-    entry->SetPreTranslated(false);
-
-    m_pendingHumanEditedItem = entry;
-
-    m_list->RefreshSelectedItems();
-
-    if ( statisticsChanged )
+    if (statsChanged)
     {
         UpdateStatusBar();
     }
     // else: no point in recomputing stats
 
-    if ( !IsModified() )
+    if (!IsModified())
     {
         m_modified = true;
         UpdateTitle();
@@ -2227,98 +2078,17 @@ void PoeditFrame::OnNewTranslationEntered(const CatalogItemPtr& item)
 }
 
 
-namespace
-{
-
-struct EventHandlerDisabler
-{
-    EventHandlerDisabler(wxEvtHandler *h) : m_hnd(h)
-        { m_hnd->SetEvtHandlerEnabled(false); }
-    ~EventHandlerDisabler()
-        { m_hnd->SetEvtHandlerEnabled(true); }
-
-    wxEvtHandler *m_hnd;
-};
-
-void SetTranslationValue(TranslationTextCtrl *txt, const wxString& value, int flags)
-{
-    // disable EVT_TEXT forwarding -- the event is generated by
-    // programmatic changes to text controls' content and we *don't*
-    // want UpdateFromTextCtrl() to be called from here
-    EventHandlerDisabler disabler(txt->GetEventHandler());
-
-    if (flags & PoeditFrame::UndoableEdit)
-        txt->SetPlainTextUserWritten(value);
-    else
-        txt->SetPlainText(value);
-}
-
-} // anonymous namespace
-
 void PoeditFrame::UpdateToTextCtrl(int flags)
 {
-    m_pendingHumanEditedItem.reset();
-    auto entry = GetCurrentItem();
-    if ( !entry )
+    auto item = GetCurrentItem();
+    if (!item)
         return;
 
-    auto syntax = SyntaxHighlighter::ForItem(*entry);
-    m_textOrig->SetSyntaxHighlighter(syntax);
-    if (m_textTrans)
-        m_textTrans->SetSyntaxHighlighter(syntax);
-    if (entry->HasPlural())
-    {
-        m_textOrigPlural->SetSyntaxHighlighter(syntax);
-        for (auto p : m_textTransPlural)
-            p->SetSyntaxHighlighter(syntax);
-    }
+    m_pendingHumanEditedItem.reset();
 
-    m_textOrig->SetPlainText(entry->GetString());
+    m_editingArea->UpdateToTextCtrl(item, flags);
 
-    if (entry->HasPlural())
-    {
-        m_textOrigPlural->SetPlainText(entry->GetPluralString());
-
-        unsigned formsCnt = (unsigned)m_textTransPlural.size();
-        for (unsigned j = 0; j < formsCnt; j++)
-            SetTranslationValue(m_textTransPlural[j], wxEmptyString, flags);
-
-        unsigned i = 0;
-        for (i = 0; i < std::min(formsCnt, entry->GetNumberOfTranslations()); i++)
-        {
-            SetTranslationValue(m_textTransPlural[i], entry->GetTranslation(i), flags);
-        }
-    }
-    else
-    {
-        if (m_textTrans)
-            SetTranslationValue(m_textTrans, entry->GetTranslation(), flags);
-    }
-
-    if ( entry->HasContext() )
-    {
-        const wxString prefix = _("Context:");
-        const wxString ctxt = entry->GetContext();
-        m_labelContext->SetLabelMarkup(
-            wxString::Format("<b>%s</b> %s", prefix, EscapeMarkup(ctxt)));
-    }
-    m_labelContext->GetContainingSizer()->Show(m_labelContext, entry->HasContext());
-
-    if (m_errorBar)
-    {
-        if( entry->GetValidity() == CatalogItem::Val_Invalid )
-            m_errorBar->ShowError(entry->GetErrorString());
-        else
-            m_errorBar->HideError();
-    }
-
-    // by default, editing fuzzy item unfuzzies it
-    m_dontAutoclearFuzzyStatus = false;
-
-    m_toolbar->SetFuzzy(entry->IsFuzzy());
-    GetMenuBar()->Check(XRCID("menu_fuzzy"), entry->IsFuzzy());
-
-    ShowPluralFormUI(entry->HasPlural());
+    GetMenuBar()->Check(XRCID("menu_fuzzy"), item->IsFuzzy());
 }
 
 
@@ -2488,8 +2258,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
         // FIXME: make this part of global error checking
         wxString plForms = m_catalog->Header().GetHeader("Plural-Forms");
-        PluralFormsCalculator *plCalc =
-                PluralFormsCalculator::make(plForms.ToAscii());
+        auto plCalc = PluralFormsCalculator::make(plForms.ToAscii());
         if ( !plCalc )
         {
             if ( plForms.empty() )
@@ -2503,7 +2272,6 @@ void PoeditFrame::WarnAboutLanguageIssues()
                             plForms.c_str());
             }
         }
-        delete plCalc;
 
         if ( !err.empty() )
         {
@@ -2746,25 +2514,11 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(XRCID("sort_untrans_first"), editable);
     menubar->Enable(XRCID("sort_errors_first"), editable);
 
-    if (m_textTrans)
-        m_textTrans->Enable(editable);
     if (m_list)
         m_list->Enable(nonEmpty);
 
     menubar->Enable(XRCID("menu_purge_deleted"),
                     editable && m_catalog->HasDeletedItems());
-
-#ifdef __WXGTK__
-    if (!editable)
-    {
-        // work around a wxGTK bug: enabling wxTextCtrl makes it editable too
-        // in wxGTK <= 2.8:
-        if (m_textOrig)
-            m_textOrig->SetEditable(false);
-        if (m_textOrigPlural)
-            m_textOrigPlural->SetEditable(false);
-    }
-#endif
 
     for (int i = 0; i < 10; i++)
     {
@@ -2945,7 +2699,7 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
     UpdateTitle();
     UpdateStatusBar();
 
-    UpdateToTextCtrl(UndoableEdit);
+    UpdateToTextCtrl(EditingArea::UndoableEdit);
     m_list->RefreshSelectedItems();
 }
 
@@ -3173,7 +2927,7 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
 
         wxMenuItem *it1 = new wxMenuItem(menu, ID_POPUP_DUMMY+0, _("References:"));
 #ifdef __WXMSW__
-        it1->SetFont(m_boldGuiFont);
+        it1->SetFont(it1->GetFont().Bold());
         menu->Append(it1);
 #else
         menu->Append(it1);
@@ -3187,22 +2941,6 @@ wxMenu *PoeditFrame::GetPopupMenu(int item)
     return menu;
 }
 
-
-static inline void SetCtrlFont(wxWindow *win, const wxFont& font)
-{
-    if (!win)
-        return;
-
-#ifdef __WXMSW__
-    // Native wxMSW text control sends EN_CHANGE when the font changes,
-    // producing a wxEVT_TEXT event as if the user changed the value.
-    // Unfortunately the event seems to be used internally for sizing,
-    // so we can't just filter it out completely. What we can do, however,
-    // is to disable *our* handling of the event.
-    EventHandlerDisabler disabler(win->GetEventHandler());
-#endif
-    win->SetFont(font);
-}
 
 void PoeditFrame::SetCustomFonts()
 {
@@ -3241,22 +2979,14 @@ void PoeditFrame::SetCustomFonts()
             fi.FromString(name);
             wxFont font;
             font.SetNativeFontInfo(fi);
-            SetCtrlFont(m_textOrig, font);
-            SetCtrlFont(m_textOrigPlural, font);
-            SetCtrlFont(m_textTrans, font);
-            for (size_t i = 0; i < m_textTransPlural.size(); i++)
-                SetCtrlFont(m_textTransPlural[i], font);
+            m_editingArea->SetCustomFont(font);
             prevUseFontText = true;
         }
     }
     else if (prevUseFontText)
     {
         wxFont font(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT));
-        SetCtrlFont(m_textOrig, font);
-        SetCtrlFont(m_textOrigPlural, font);
-        SetCtrlFont(m_textTrans, font);
-        for (size_t i = 0; i < m_textTransPlural.size(); i++)
-            SetCtrlFont(m_textTransPlural[i], font);
+        m_editingArea->SetCustomFont(font);
         prevUseFontText = false;
     }
 }
@@ -3287,126 +3017,17 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
     }
 }
 
-void PoeditFrame::ShowPluralFormUI(bool show)
-{
-    if (show && (!m_catalog || m_catalog->GetPluralFormsCount() == 0))
-        show = false;
-
-    wxSizer *origSizer = m_textOrig->GetContainingSizer();
-    origSizer->Show(m_labelSingular, show);
-    origSizer->Show(m_labelPlural, show);
-    origSizer->Show(m_textOrigPlural, show);
-    origSizer->Layout();
-
-    if (m_textTrans && m_pluralNotebook)
-    {
-        wxSizer *textSizer = m_textTrans->GetContainingSizer();
-        textSizer->Show(m_textTrans, !show);
-        textSizer->Show(m_pluralNotebook, show);
-        textSizer->Layout();
-    }
-}
-
 
 void PoeditFrame::RecreatePluralTextCtrls()
 {
-    if (!m_catalog || !m_list || !m_pluralNotebook)
+    if (!m_catalog || !m_editingArea)
         return;
 
-    m_textTransPlural.clear();
-    m_pluralNotebook->DeleteAllPages();
-    m_textTransSingularForm = NULL;
-
-    PluralFormsCalculator *calc = PluralFormsCalculator::make(
-                m_catalog->Header().GetHeader("Plural-Forms").ToAscii());
-
-    int formsCount = m_catalog->GetPluralFormsCount();
-    for (int form = 0; form < formsCount; form++)
-    {
-        // find example number that would use this plural form:
-        static const int maxExamplesCnt = 5;
-        wxString examples;
-        int firstExample = -1;
-        int examplesCnt = 0;
-
-        if (calc && formsCount > 1)
-        {
-            for (int example = 0; example < 1000; example++)
-            {
-                if (calc->evaluate(example) == form)
-                {
-                    if (++examplesCnt == 1)
-                        firstExample = example;
-                    if (examplesCnt == maxExamplesCnt)
-                    {
-                        examples += L'…';
-                        break;
-                    }
-                    else if (examplesCnt == 1)
-                        examples += wxString::Format("%d", example);
-                    else
-                        examples += wxString::Format(", %d", example);
-                }
-            }
-        }
-
-        wxString desc;
-        if (formsCount == 1)
-            desc = _("Everything");
-        else if (examplesCnt == 0)
-            desc.Printf(_("Form %i"), form);
-        else if (examplesCnt == 1)
-        {
-            if (formsCount == 2 && firstExample == 1) // English-like
-            {
-                desc = _("Singular");
-            }
-            else
-            {
-                if (firstExample == 0)
-                    desc = _("Zero");
-                else if (firstExample == 1)
-                    desc = _("One");
-                else if (firstExample == 2)
-                    desc = _("Two");
-                else
-                    desc.Printf(L"n = %s", examples);
-            }
-        }
-        else if (formsCount == 2 && examplesCnt == 2 && firstExample == 0 && examples == "0, 1")
-        {
-            desc = _("Singular");
-        }
-        else if (formsCount == 2 && firstExample != 1 && examplesCnt == maxExamplesCnt)
-        {
-            if (firstExample == 0 || firstExample == 2)
-                desc = _("Plural");
-            else
-                desc = _("Other");
-        }
-        else
-            desc.Printf(L"n → %s", examples);
-
-        // create text control and notebook page for it:
-        auto txt = new TranslationTextCtrl(m_pluralNotebook, wxID_ANY);
-        txt->Bind(wxEVT_TEXT, [=](wxCommandEvent& e){ e.Skip(); UpdateFromTextCtrl(); });
-        m_textTransPlural.push_back(txt);
-        m_pluralNotebook->AddPage(txt, desc);
-
-        if (examplesCnt == 1 && firstExample == 1) // == singular
-            m_textTransSingularForm = txt;
-    }
-
-    // as a fallback, assume 1st form for plural entries is the singular
-    // (like in English and most real-life uses):
-    if (!m_textTransSingularForm && !m_textTransPlural.empty())
-        m_textTransSingularForm = m_textTransPlural[0];
-
-    delete calc;
+    m_editingArea->RecreatePluralTextCtrls(m_catalog);
 
     SetCustomFonts();
     UpdateTextLanguage();
-    UpdateToTextCtrl(ItemChanged);
+    UpdateToTextCtrl(EditingArea::ItemChanged);
 }
 
 void PoeditFrame::OnListRightClick(wxDataViewEvent& event)
@@ -3434,13 +3055,8 @@ void PoeditFrame::OnListRightClick(wxDataViewEvent& event)
 
 void PoeditFrame::OnListFocus(wxFocusEvent& event)
 {
-    if (g_focusToText && m_textTrans != nullptr)
-    {
-        if (m_textTrans->IsShown())
-            m_textTrans->SetFocus();
-        else if (!m_textTransPlural.empty())
-            (m_textTransPlural)[0]->SetFocus();
-    }
+    if (g_focusToText && m_editingArea)
+        m_editingArea->SetTextFocus();
     else
         event.Skip();
 }
@@ -3676,9 +3292,9 @@ void PoeditFrame::OnSingleSelectionUpdate(wxUpdateUIEvent& event)
 void PoeditFrame::OnSingleSelectionWithPluralsUpdate(wxUpdateUIEvent& event)
 {
     // Enable only if a single item with plural forms is selected
-    event.Enable(m_catalog && m_list && m_list->HasSingleSelection() &&
-                 m_pluralNotebook && m_pluralNotebook->IsShown() &&
-                 std::find(m_textTransPlural.begin(), m_textTransPlural.end(), FindFocus()) != m_textTransPlural.end());
+    event.Enable(m_catalog &&
+                 m_list && m_list->HasSingleSelection() &&
+                 m_editingArea->HasTextFocusInPlurals());
 }
 
 void PoeditFrame::OnHasCatalogUpdate(wxUpdateUIEvent& event)
@@ -3822,8 +3438,9 @@ void PoeditFrame::OnDoneAndNext(wxCommandEvent&)
     if (!item)
         return;
 
-    // If the user is "done" with an item, it should be in its final approved state:
-    if (item->IsFuzzy())
+    // If the user is "done" with an item, it should be in its final approved state
+    // (unless they _just_ marked it as fuzzy now):
+    if (item->IsFuzzy() && !m_editingArea->ShouldNotAutoclearFuzzyStatus())
     {
         item->SetFuzzy(false);
         item->SetPreTranslated(false);
@@ -3861,12 +3478,10 @@ void PoeditFrame::OnNextPage(wxCommandEvent&)
 
 void PoeditFrame::OnPrevPluralForm(wxCommandEvent&)
 {
-    m_pluralNotebook->AdvanceSelection(/*forward=*/false);
-    m_textTransPlural[m_pluralNotebook->GetSelection()]->SetFocus();
+    m_editingArea->ChangeFocusedPluralTab(-1);
 }
 
 void PoeditFrame::OnNextPluralForm(wxCommandEvent&)
 {
-    m_pluralNotebook->AdvanceSelection(/*forward=*/true);
-    m_textTransPlural[m_pluralNotebook->GetSelection()]->SetFocus();
+    m_editingArea->ChangeFocusedPluralTab(+1);
 }

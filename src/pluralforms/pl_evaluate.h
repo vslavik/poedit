@@ -12,6 +12,8 @@
 
 #include <wx/string.h>
 
+#include <memory>
+
 // ----------------------------------------------------------------------------
 // Plural forms parser
 // ----------------------------------------------------------------------------
@@ -134,7 +136,7 @@ public:
     // input: text after "Plural-Forms:" (e.g. "nplurals=2; plural=(n != 1);"),
     // if s == 0, creates default handler
     // returns 0 if error
-    static PluralFormsCalculator* make(const char* s = 0);
+    static std::unique_ptr<PluralFormsCalculator> make(const char* s = 0);
 
     ~PluralFormsCalculator() {}
 

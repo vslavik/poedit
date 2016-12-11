@@ -169,7 +169,9 @@ class PoeditListCtrl : public wxDataViewCtrl
 
         void SelectAndFocus(const wxDataViewItem& item)
         {
+        #ifndef __WXOSX__ // implicit in selection on macOS
             SetCurrentItem(item);
+        #endif
             SelectOnly(item);
         }
 
@@ -184,7 +186,9 @@ class PoeditListCtrl : public wxDataViewCtrl
         {
             // TODO: Remove this API
 
+        #ifndef __WXOSX__ // implicit in selection on macOS
             SetCurrentItem(m_model->GetItem(n));
+        #endif
             SelectOnly(n);
         }
 
@@ -290,8 +294,9 @@ class PoeditListCtrl : public wxDataViewCtrl
 
             TextDirection m_sourceTextDir, m_transTextDir, m_appTextDir;
 
-            wxColour m_clrID, m_clrInvalid, m_clrUntranslated, m_clrFuzzy;
-            wxBitmap m_iconPreTranslated, m_iconComment, m_iconBookmark;
+            wxColour m_clrID, m_clrInvalid, m_clrFuzzy;
+            wxString m_clrContextFg, m_clrContextBg;
+            wxBitmap m_iconComment, m_iconBookmark;
         };
 
 

@@ -60,6 +60,10 @@ public:
     void SaveSnapshot();
 #endif
 
+#ifdef __WXMSW__
+    WXDWORD MSWGetStyle(long style, WXDWORD *exstyle) const override;
+#endif
+
 protected:
 #ifdef __WXOSX__
     void DoSetValue(const wxString& value, int flags) override;

@@ -35,9 +35,6 @@ class MainToolbar
 public:
     virtual ~MainToolbar() {}
 
-    virtual bool IsFuzzy() const = 0;
-    virtual void SetFuzzy(bool on) = 0;
-
     virtual void EnableSyncWithCrowdin(bool on) = 0;
 
     static std::unique_ptr<MainToolbar> Create(wxFrame *parent);

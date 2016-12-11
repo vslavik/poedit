@@ -24,6 +24,7 @@
 		B2166F4F19AE4045000A6AA0 /* Prefs-Updates.png in Resources */ = {isa = PBXBuildFile; fileRef = B2166F4719AE4045000A6AA0 /* Prefs-Updates.png */; };
 		B2166F5019AE4045000A6AA0 /* Prefs-Updates@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2166F4819AE4045000A6AA0 /* Prefs-Updates@2x.png */; };
 		B216A14E1AD9426500F2898C /* libcld2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2083D121A87D17D00150BBF /* libcld2.a */; };
+		B21B7B491DD4DB9F002A4C62 /* editing_area.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B21B7B471DD4DB9F002A4C62 /* editing_area.cpp */; };
 		B21FB781179D51BE003F45AC /* libexpat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21FB780179D51BE003F45AC /* libexpat.dylib */; };
 		B2284A53183BE3B300E097C7 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = B2284A51183BE3B300E097C7 /* PFMoveApplication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B2284A55183BE68200E097C7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2284A54183BE68200E097C7 /* Security.framework */; };
@@ -33,7 +34,6 @@
 		B22A5C84184E4B870034BEFD /* document-new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C7D184E4B870034BEFD /* document-new@2x.png */; };
 		B22A5C86184E4B870034BEFD /* document-properties@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C7F184E4B870034BEFD /* document-properties@2x.png */; };
 		B22A5C87184E4B870034BEFD /* poedit-update@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C80184E4B870034BEFD /* poedit-update@2x.png */; };
-		B22A5C88184E4B870034BEFD /* poedit-fuzzy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B22A5C81184E4B870034BEFD /* poedit-fuzzy@2x.png */; };
 		B22C5F0A17DDC67400ECAFD1 /* language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22C5F0817DDC67400ECAFD1 /* language.cpp */; };
 		B22E690F1A936294002C06C7 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22E690E1A936294002C06C7 /* libAFNetworking.a */; };
 		B22E69111A93699E002C06C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22E69101A93699E002C06C7 /* SystemConfiguration.framework */; };
@@ -55,6 +55,7 @@
 		B26D06581826A22C0069C378 /* PoeditWelcome.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06561826A22C0069C378 /* PoeditWelcome.png */; };
 		B26D06591826A22C0069C378 /* PoeditWelcome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */; };
 		B280E84D1A92776D009F4A98 /* http_client_macos.mm in Sources */ = {isa = PBXBuildFile; fileRef = B280E84B1A92776D009F4A98 /* http_client_macos.mm */; };
+		B28602441DDB279400FCA617 /* colorscheme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28602421DDB279400FCA617 /* colorscheme.cpp */; };
 		B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAC16F629D30018AF7E /* catalog.cpp */; };
 		B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CAE16F629D30018AF7E /* edapp.cpp */; };
 		B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB016F629D30018AF7E /* edframe.cpp */; };
@@ -64,7 +65,6 @@
 		B28F1CEC16F629D30018AF7E /* commentdlg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB716F629D30018AF7E /* commentdlg.cpp */; };
 		B28F1CED16F629D30018AF7E /* digger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CB916F629D30018AF7E /* digger.cpp */; };
 		B28F1CEE16F629D30018AF7E /* edlistctrl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */; };
-		B28F1CEF16F629D30018AF7E /* errorbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CBE16F629D30018AF7E /* errorbar.cpp */; };
 		B28F1CF016F629D30018AF7E /* fileviewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC016F629D30018AF7E /* fileviewer.cpp */; };
 		B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC216F629D30018AF7E /* findframe.cpp */; };
 		B28F1CF216F629D30018AF7E /* gexecute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28F1CC416F629D30018AF7E /* gexecute.cpp */; };
@@ -106,6 +106,10 @@
 		B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */; };
 		B2CE6D231ACFCD95007E6863 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B2CE6D221ACFCD95007E6863 /* main.c */; };
 		B2CE6D2B1AD00A0E007E6863 /* PoeditQuicklook.qlgenerator in Copy Quicklook plugin */ = {isa = PBXBuildFile; fileRef = B2CE6D1A1ACFCD95007E6863 /* PoeditQuicklook.qlgenerator */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B2D52B861DE88A3D00E27B35 /* SuggestionPerfectMatch.png in Resources */ = {isa = PBXBuildFile; fileRef = B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */; };
+		B2D52B871DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */; };
+		B2D52B8C1DEC76B000E27B35 /* StyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D52B8A1DEC76B000E27B35 /* StyleKit.m */; };
+		B2D52B8F1DEC785700E27B35 /* custom_buttons.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2D52B8D1DEC785700E27B35 /* custom_buttons.cpp */; };
 		B2D76A45181D027F0083C9D9 /* libLucenePlusPlus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */; };
 		B2D76A4C181D028B0083C9D9 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A46181D028B0083C9D9 /* libboost_date_time.a */; };
 		B2D76A4D181D028B0083C9D9 /* libboost_filesystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */; };
@@ -123,7 +127,6 @@
 		B2E2184C199A76B100EA2784 /* syntaxhighlighter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E2184A199A76B100EA2784 /* syntaxhighlighter.cpp */; };
 		B2E836DE1709ECD600F31559 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = B2E836DD1709ECD600F31559 /* dsa_pub.pem */; };
 		B2E836E91709ED2A00F31559 /* window-close.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E01709ED2A00F31559 /* window-close.png */; };
-		B2E836EA1709ED2A00F31559 /* poedit-status-automatic.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */; };
 		B2E836EB1709ED2A00F31559 /* poedit-status-cat-mid.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */; };
 		B2E836EC1709ED2A00F31559 /* poedit-status-cat-no.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E31709ED2A00F31559 /* poedit-status-cat-no.png */; };
 		B2E836ED1709ED2A00F31559 /* poedit-status-cat-ok.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836E41709ED2A00F31559 /* poedit-status-cat-ok.png */; };
@@ -131,7 +134,6 @@
 		B2E836FB1709ED6300F31559 /* document-new.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F21709ED6300F31559 /* document-new.png */; };
 		B2E836FD1709ED6300F31559 /* document-properties.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F41709ED6300F31559 /* document-properties.png */; };
 		B2E836FF1709ED6300F31559 /* edit-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F61709ED6300F31559 /* edit-delete.png */; };
-		B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F81709ED6300F31559 /* poedit-fuzzy.png */; };
 		B2E837021709ED6300F31559 /* poedit-update.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836F91709ED6300F31559 /* poedit-update.png */; };
 		B2E837031709ED6300F31559 /* poedit-validate.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E836FA1709ED6300F31559 /* poedit-validate.png */; };
 		B2EC60A41812D9D40059756A /* icudt57l.dat in Resources */ = {isa = PBXBuildFile; fileRef = B2EC60A31812D9D40059756A /* icudt57l.dat */; };
@@ -255,6 +257,8 @@
 		B2166F4819AE4045000A6AA0 /* Prefs-Updates@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Prefs-Updates@2x.png"; sourceTree = "<group>"; };
 		B2178B1F1BD665EB0012F3E8 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2178B201BD665EB0012F3E8 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B21B7B471DD4DB9F002A4C62 /* editing_area.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = editing_area.cpp; sourceTree = "<group>"; };
+		B21B7B481DD4DB9F002A4C62 /* editing_area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editing_area.h; sourceTree = "<group>"; };
 		B21FB780179D51BE003F45AC /* libexpat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libexpat.dylib; path = usr/lib/libexpat.dylib; sourceTree = SDKROOT; };
 		B224557B19A3AF3C00120FFE /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B224557C19A3B00300120FFE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -275,7 +279,6 @@
 		B22A5C7D184E4B870034BEFD /* document-new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-new@2x.png"; sourceTree = "<group>"; };
 		B22A5C7F184E4B870034BEFD /* document-properties@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-properties@2x.png"; sourceTree = "<group>"; };
 		B22A5C80184E4B870034BEFD /* poedit-update@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-update@2x.png"; sourceTree = "<group>"; };
-		B22A5C81184E4B870034BEFD /* poedit-fuzzy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-fuzzy@2x.png"; sourceTree = "<group>"; };
 		B22A5C8918508F1F0034BEFD /* logcapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logcapture.h; sourceTree = "<group>"; };
 		B22C5F0817DDC67400ECAFD1 /* language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = language.cpp; sourceTree = "<group>"; };
 		B22C5F0917DDC67400ECAFD1 /* language.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = language.h; sourceTree = "<group>"; };
@@ -353,6 +356,8 @@
 		B282DC3B1B3C124C0050FB48 /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B28511ED1AF38F2400031975 /* is */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = is; path = is.lproj/MoveApplication.strings; sourceTree = "<group>"; };
 		B28511EE1AF38F2900031975 /* is */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = is; path = is.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B28602421DDB279400FCA617 /* colorscheme.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = colorscheme.cpp; sourceTree = "<group>"; };
+		B28602431DDB279400FCA617 /* colorscheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colorscheme.h; sourceTree = "<group>"; };
 		B28F1CAC16F629D30018AF7E /* catalog.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = catalog.cpp; sourceTree = "<group>"; };
 		B28F1CAD16F629D30018AF7E /* chooselang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chooselang.h; sourceTree = "<group>"; };
 		B28F1CAE16F629D30018AF7E /* edapp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = edapp.cpp; sourceTree = "<group>"; };
@@ -369,10 +374,8 @@
 		B28F1CB916F629D30018AF7E /* digger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = digger.cpp; sourceTree = "<group>"; };
 		B28F1CBA16F629D30018AF7E /* digger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = digger.h; sourceTree = "<group>"; };
 		B28F1CBB16F629D30018AF7E /* edframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edframe.h; sourceTree = "<group>"; };
-		B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edlistctrl.cpp; sourceTree = "<group>"; };
+		B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = edlistctrl.cpp; sourceTree = "<group>"; };
 		B28F1CBD16F629D30018AF7E /* edlistctrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = edlistctrl.h; sourceTree = "<group>"; };
-		B28F1CBE16F629D30018AF7E /* errorbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = errorbar.cpp; sourceTree = "<group>"; };
-		B28F1CBF16F629D30018AF7E /* errorbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errorbar.h; sourceTree = "<group>"; };
 		B28F1CC016F629D30018AF7E /* fileviewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fileviewer.cpp; sourceTree = "<group>"; };
 		B28F1CC116F629D30018AF7E /* fileviewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fileviewer.h; sourceTree = "<group>"; };
 		B28F1CC216F629D30018AF7E /* findframe.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = findframe.cpp; sourceTree = "<group>"; };
@@ -454,6 +457,13 @@
 		B2CE6D201ACFCD95007E6863 /* GeneratePreviewForURL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GeneratePreviewForURL.cpp; sourceTree = "<group>"; };
 		B2CE6D221ACFCD95007E6863 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B2D04DFB197A831D00D24B42 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SuggestionPerfectMatch.png; sourceTree = "<group>"; };
+		B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SuggestionPerfectMatch@2x.png"; sourceTree = "<group>"; };
+		B2D52B881DEC76B000E27B35 /* PoeditStyleKit.pcvd */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = PoeditStyleKit.pcvd; path = artwork/macos/PoeditStyleKit.pcvd; sourceTree = SOURCE_ROOT; };
+		B2D52B891DEC76B000E27B35 /* StyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StyleKit.h; path = artwork/macos/StyleKit.h; sourceTree = SOURCE_ROOT; };
+		B2D52B8A1DEC76B000E27B35 /* StyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StyleKit.m; path = artwork/macos/StyleKit.m; sourceTree = SOURCE_ROOT; };
+		B2D52B8D1DEC785700E27B35 /* custom_buttons.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = custom_buttons.cpp; sourceTree = "<group>"; };
+		B2D52B8E1DEC785700E27B35 /* custom_buttons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = custom_buttons.h; sourceTree = "<group>"; };
 		B2D76A44181D027F0083C9D9 /* libLucenePlusPlus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLucenePlusPlus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A46181D028B0083C9D9 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_date_time.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D76A47181D028B0083C9D9 /* libboost_filesystem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libboost_filesystem.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -471,7 +481,6 @@
 		B2E2184B199A76B100EA2784 /* syntaxhighlighter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syntaxhighlighter.h; sourceTree = "<group>"; };
 		B2E836DD1709ECD600F31559 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = macos/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		B2E836E01709ED2A00F31559 /* window-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "window-close.png"; sourceTree = "<group>"; };
-		B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-automatic.png"; sourceTree = "<group>"; };
 		B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-mid.png"; sourceTree = "<group>"; };
 		B2E836E31709ED2A00F31559 /* poedit-status-cat-no.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-no.png"; sourceTree = "<group>"; };
 		B2E836E41709ED2A00F31559 /* poedit-status-cat-ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-status-cat-ok.png"; sourceTree = "<group>"; };
@@ -479,7 +488,6 @@
 		B2E836F21709ED6300F31559 /* document-new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-new.png"; sourceTree = "<group>"; };
 		B2E836F41709ED6300F31559 /* document-properties.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-properties.png"; sourceTree = "<group>"; };
 		B2E836F61709ED6300F31559 /* edit-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-delete.png"; sourceTree = "<group>"; };
-		B2E836F81709ED6300F31559 /* poedit-fuzzy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-fuzzy.png"; sourceTree = "<group>"; };
 		B2E836F91709ED6300F31559 /* poedit-update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-update.png"; sourceTree = "<group>"; };
 		B2E836FA1709ED6300F31559 /* poedit-validate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "poedit-validate.png"; sourceTree = "<group>"; };
 		B2E83708170C97ED00F31559 /* copy-translations.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = "copy-translations.sh"; path = "macos/copy-translations.sh"; sourceTree = "<group>"; };
@@ -618,12 +626,16 @@
 				B28F1CB416F629D30018AF7E /* cat_sorting.h */,
 				B28F1CB616F629D30018AF7E /* chooselang.cpp */,
 				B28F1CAD16F629D30018AF7E /* chooselang.h */,
+				B28602421DDB279400FCA617 /* colorscheme.cpp */,
+				B28602431DDB279400FCA617 /* colorscheme.h */,
 				B28F1CB716F629D30018AF7E /* commentdlg.cpp */,
 				B28F1CB816F629D30018AF7E /* commentdlg.h */,
 				B2CE2FED1A94EBF50020A620 /* crowdin_client.cpp */,
 				B2CE2FEE1A94EBF50020A620 /* crowdin_client.h */,
 				B2380F981A9B821200B7D8C9 /* crowdin_gui.cpp */,
 				B2380F991A9B821200B7D8C9 /* crowdin_gui.h */,
+				B2D52B8D1DEC785700E27B35 /* custom_buttons.cpp */,
+				B2D52B8E1DEC785700E27B35 /* custom_buttons.h */,
 				B2132FD819B3672000326B16 /* customcontrols.cpp */,
 				B2132FD919B3672000326B16 /* customcontrols.h */,
 				B28F1CB916F629D30018AF7E /* digger.cpp */,
@@ -632,10 +644,10 @@
 				B28F1CAF16F629D30018AF7E /* edapp.h */,
 				B28F1CB016F629D30018AF7E /* edframe.cpp */,
 				B28F1CBB16F629D30018AF7E /* edframe.h */,
+				B21B7B471DD4DB9F002A4C62 /* editing_area.cpp */,
+				B21B7B481DD4DB9F002A4C62 /* editing_area.h */,
 				B28F1CBC16F629D30018AF7E /* edlistctrl.cpp */,
 				B28F1CBD16F629D30018AF7E /* edlistctrl.h */,
-				B28F1CBE16F629D30018AF7E /* errorbar.cpp */,
-				B28F1CBF16F629D30018AF7E /* errorbar.h */,
 				B29AE89B17105306008D1F8A /* errors.h */,
 				B28F1CE216F629D30018AF7E /* export_html.cpp */,
 				B28F1CC016F629D30018AF7E /* fileviewer.cpp */,
@@ -822,6 +834,9 @@
 			children = (
 				B25504A71A2201E800EE2CEE /* main_toolbar.cpp */,
 				B25504A61A2201DC00EE2CEE /* main_toolbar.h */,
+				B2D52B881DEC76B000E27B35 /* PoeditStyleKit.pcvd */,
+				B2D52B891DEC76B000E27B35 /* StyleKit.h */,
+				B2D52B8A1DEC76B000E27B35 /* StyleKit.m */,
 			);
 			name = Native;
 			sourceTree = "<group>";
@@ -851,8 +866,6 @@
 				B22A5C7F184E4B870034BEFD /* document-properties@2x.png */,
 				B2E836F61709ED6300F31559 /* edit-delete.png */,
 				B22A5C7C184E4B870034BEFD /* edit-delete@2x.png */,
-				B2E836F81709ED6300F31559 /* poedit-fuzzy.png */,
-				B22A5C81184E4B870034BEFD /* poedit-fuzzy@2x.png */,
 				B2E836F91709ED6300F31559 /* poedit-update.png */,
 				B22A5C80184E4B870034BEFD /* poedit-update@2x.png */,
 				B29A1C311A9F8C0A00BC3006 /* poedit-sync.png */,
@@ -883,7 +896,6 @@
 				B2B1EB0619E45FE7009A59B7 /* Toolbar */,
 				B2166F4019AE4024000A6AA0 /* Preferences */,
 				B24ACD8316F6263900399242 /* Poedit.iconset */,
-				B2E836E11709ED2A00F31559 /* poedit-status-automatic.png */,
 				B26A088B19E450480031719B /* poedit-status-bookmark.png */,
 				B2E836E21709ED2A00F31559 /* poedit-status-cat-mid.png */,
 				B2E836E31709ED2A00F31559 /* poedit-status-cat-no.png */,
@@ -892,6 +904,8 @@
 				B26D06561826A22C0069C378 /* PoeditWelcome.png */,
 				B26D06571826A22C0069C378 /* PoeditWelcome@2x.png */,
 				B209005F19CAD64A00D6382E /* SuggestionError.png */,
+				B2D52B841DE88A3D00E27B35 /* SuggestionPerfectMatch.png */,
+				B2D52B851DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png */,
 				B209005D19CAD64400D6382E /* SuggestionTM.png */,
 				B2E836E01709ED2A00F31559 /* window-close.png */,
 				B2CE2FE91A94EBDE0020A620 /* CrowdinLogo.png */,
@@ -1093,6 +1107,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2D52B871DE88A3D00E27B35 /* SuggestionPerfectMatch@2x.png in Resources */,
 				B24ACD6916F6201F00399242 /* InfoPlist.strings in Resources */,
 				B29A1C341A9F8C0A00BC3006 /* poedit-sync@2x.png in Resources */,
 				B24ACD8416F6263900399242 /* Poedit.iconset in Resources */,
@@ -1101,7 +1116,6 @@
 				B29B282019D2E87600D27DC8 /* sidebar.png in Resources */,
 				B2E836E91709ED2A00F31559 /* window-close.png in Resources */,
 				B29A1C331A9F8C0A00BC3006 /* poedit-sync.png in Resources */,
-				B2E836EA1709ED2A00F31559 /* poedit-status-automatic.png in Resources */,
 				B2E836EB1709ED2A00F31559 /* poedit-status-cat-mid.png in Resources */,
 				B2E836EC1709ED2A00F31559 /* poedit-status-cat-no.png in Resources */,
 				B2E836ED1709ED2A00F31559 /* poedit-status-cat-ok.png in Resources */,
@@ -1112,15 +1126,14 @@
 				B2E836FD1709ED6300F31559 /* document-properties.png in Resources */,
 				B22A5C87184E4B870034BEFD /* poedit-update@2x.png in Resources */,
 				B2E836FF1709ED6300F31559 /* edit-delete.png in Resources */,
-				B2E837011709ED6300F31559 /* poedit-fuzzy.png in Resources */,
 				B2E837021709ED6300F31559 /* poedit-update.png in Resources */,
 				B2E837031709ED6300F31559 /* poedit-validate.png in Resources */,
 				B29AE89017103992008D1F8A /* comment.xrc in Resources */,
 				B22A5C83184E4B870034BEFD /* edit-delete@2x.png in Resources */,
 				B2CE2FEB1A94EBDE0020A620 /* CrowdinLogo.png in Resources */,
-				B22A5C88184E4B870034BEFD /* poedit-fuzzy@2x.png in Resources */,
 				B2CE2FF21A94F19D0020A620 /* Prefs-Accounts.png in Resources */,
 				B29B282119D2E87600D27DC8 /* sidebar@2x.png in Resources */,
+				B2D52B861DE88A3D00E27B35 /* SuggestionPerfectMatch.png in Resources */,
 				B29AE89217103992008D1F8A /* manager.xrc in Resources */,
 				B29AE89317103992008D1F8A /* menus.xrc in Resources */,
 				B22A5C84184E4B870034BEFD /* document-new@2x.png in Resources */,
@@ -1257,8 +1270,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2D52B8C1DEC76B000E27B35 /* StyleKit.m in Sources */,
 				B25504A81A2201E800EE2CEE /* main_toolbar.cpp in Sources */,
+				B2D52B8F1DEC785700E27B35 /* custom_buttons.cpp in Sources */,
 				B28F1CE616F629D30018AF7E /* catalog.cpp in Sources */,
+				B28602441DDB279400FCA617 /* colorscheme.cpp in Sources */,
 				B28F1CE716F629D30018AF7E /* edapp.cpp in Sources */,
 				B28F1CE816F629D30018AF7E /* edframe.cpp in Sources */,
 				B28F1CE916F629D30018AF7E /* attentionbar.cpp in Sources */,
@@ -1270,9 +1286,9 @@
 				B28F1CEB16F629D30018AF7E /* chooselang.cpp in Sources */,
 				B28F1CEC16F629D30018AF7E /* commentdlg.cpp in Sources */,
 				B28F1CED16F629D30018AF7E /* digger.cpp in Sources */,
+				B21B7B491DD4DB9F002A4C62 /* editing_area.cpp in Sources */,
 				B201EBE11DCF755900FFB541 /* configuration.cpp in Sources */,
 				B28F1CEE16F629D30018AF7E /* edlistctrl.cpp in Sources */,
-				B28F1CEF16F629D30018AF7E /* errorbar.cpp in Sources */,
 				B28F1CF016F629D30018AF7E /* fileviewer.cpp in Sources */,
 				B2132FDA19B3672000326B16 /* customcontrols.cpp in Sources */,
 				B28F1CF116F629D30018AF7E /* findframe.cpp in Sources */,
