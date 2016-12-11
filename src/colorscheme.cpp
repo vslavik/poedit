@@ -87,6 +87,14 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return sRGB(70, 109, 137);
         case Color::ItemContextBg:
             return sRGB(217, 232, 242);
+        case Color::ItemContextBgHighlighted:
+            #if defined(__WXMSW__)
+            return sRGB(255, 255, 255, 0.50);
+            #elif defined(SUPPORTS_BGALPHA)
+            return sRGB(255, 255, 255, 0.35);
+            #else
+            return DoGet(Color::ItemContextBg, type);
+            #endif
 
         // Tags:
 

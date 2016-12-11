@@ -42,6 +42,7 @@ enum class Color : size_t
     ItemError,
     ItemContextFg,
     ItemContextBg,
+    ItemContextBgHighlighted,
 
     TagContextFg,
     TagContextBg,

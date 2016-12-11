@@ -84,6 +84,66 @@ private:
     int focus;
 };
 
+
+#if wxCHECK_VERSION(3,1,1)
+
+class DataViewMarkupRenderer : public wxDataViewTextRenderer
+{
+public:
+    DataViewMarkupRenderer(const wxColour& bgHighlight)
+    {
+        EnableMarkup();
+        SetValueAdjuster(new Adjuster(bgHighlight));
+    }
+
+private:
+    class Adjuster : public wxDataViewValueAdjuster
+    {
+    public:
+        Adjuster(const wxColour& bgHighlight)
+        {
+            m_bgHighlight = bgHighlight.GetAsString(wxC2S_HTML_SYNTAX);
+        }
+
+        wxVariant MakeHighlighted(const wxVariant& value) const override
+        {
+            auto s = value.GetString();
+            bool changed = false;
+            auto pos = s.find(" bgcolor=\"");
+            if (pos != wxString::npos)
+            {
+                pos += 10;
+                auto pos2 = s.find('"', pos);
+                s.replace(pos, pos2 - pos, m_bgHighlight);
+                changed = true;
+            }
+#ifdef __WXGTK__
+            pos = s.find(" color=\"");
+            if (pos != wxString::npos)
+            {
+                auto pos2 = s.find('"', pos + 8);
+                s.erase(pos, pos2 - pos + 1);
+                changed = true;
+            }
+#endif
+            return changed ? wxVariant(s) : value;
+        }
+
+    private:
+        wxString m_bgHighlight;
+    };
+};
+
+#else
+
+class DataViewMarkupRenderer : public wxDataViewTextRenderer
+{
+public:
+    DataViewMarkupRenderer(const wxColour&) {}
+};
+
+#endif
+
 } // anonymous namespace
 
 
@@ -427,11 +487,8 @@ void PoeditListCtrl::CreateColumns()
     wxString sourceTitle = srclang.IsValid()
                              ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
                              : _("Source text");
-    auto sourceRenderer = new wxDataViewTextRenderer();
+    auto sourceRenderer = new DataViewMarkupRenderer(ColorScheme::Get(Color::ItemContextBgHighlighted, this));
     sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
-#if wxCHECK_VERSION(3,1,1)
-    sourceRenderer->EnableMarkup();
-#endif
     m_colSource = new wxDataViewColumn(sourceTitle, sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
     AppendColumn(m_colSource);
 
