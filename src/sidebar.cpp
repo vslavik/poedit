@@ -275,7 +275,7 @@ public:
         auto top = new wxBoxSizer(wxHORIZONTAL);
         auto right = new wxBoxSizer(wxVERTICAL);
         top->AddSpacer(PX(2));
-        top->Add(m_icon, wxSizerFlags().Top().PXBorder(wxTOP|wxBOTTOM));
+        top->Add(m_icon, wxSizerFlags().Top().Border(wxTOP|wxBOTTOM, PX(6)));
         top->Add(right, wxSizerFlags(1).Expand().PXBorder(wxLEFT));
         right->Add(m_text, wxSizerFlags().Expand().Border(wxTOP, PX(4)));
         auto infoSizer = new wxBoxSizer(wxHORIZONTAL);
