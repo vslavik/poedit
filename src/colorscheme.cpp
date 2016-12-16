@@ -82,7 +82,7 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         case Color::ItemFuzzy:
             return type == Light ? sRGB(218, 123, 0) : "#a9861b";
         case Color::ItemError:
-            return sRGB(242, 84, 77);
+            return DoGet(Color::TagErrorLineFg, type);
         case Color::ItemContextFg:
             return sRGB(70, 109, 137);
         case Color::ItemContextBg:

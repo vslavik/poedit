@@ -165,6 +165,7 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
 
     m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
     m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
+    m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
 }
 
 
@@ -234,7 +235,9 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 
         case Col_Icon:
         {
-            if (d->GetBookmark() != NO_BOOKMARK)
+            if (d->GetValidity() == CatalogItem::Val_Invalid)
+                variant << m_iconError;
+            else if (d->GetBookmark() != NO_BOOKMARK)
                 variant << m_iconBookmark;
             else if (d->HasComment())
                 variant << m_iconComment;

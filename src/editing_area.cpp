@@ -40,6 +40,7 @@
 #include <wx/graphics.h>
 #include <wx/notebook.h>
 #include <wx/sizer.h>
+#include <wx/statbmp.h>
 #include <wx/stattext.h>
 
 #include <algorithm>
@@ -158,6 +159,7 @@ public:
 
     TagLabel(wxWindow *parent, Color fg, Color bg) : wxWindow(parent, wxID_ANY)
     {
+        m_icon = nullptr;
         m_fg = ColorScheme::Get(fg);
         m_bg = ColorScheme::Get(bg);
 
@@ -186,6 +188,29 @@ public:
     {
         m_label->SetLabel(text);
         InvalidateBestSize();
+    }
+
+    void SetIcon(const wxBitmap& icon)
+    {
+        auto sizer = GetSizer();
+        if (icon.IsOk())
+        {
+            if (!m_icon)
+            {
+                m_icon = new wxStaticBitmap(this, wxID_ANY, icon);
+#ifdef __WXMSW__
+                m_icon->SetBackgroundColour(m_bg);
+#endif
+                sizer->Insert(0, m_icon, wxSizerFlags().Center().Border(wxLEFT, PX(2)));
+            }
+            m_icon->SetBitmap(icon);
+            sizer->Show(m_icon);
+        }
+        else
+        {
+            if (m_icon)
+                sizer->Hide(m_icon);
+        }
     }
 
 protected:
@@ -218,9 +243,9 @@ private:
         gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
     }
 
-    wxColour m_fg;
-    wxBrush m_bg;
+    wxColour m_fg, m_bg;
     wxStaticText *m_label;
+    wxStaticBitmap *m_icon;
 };
 
 
@@ -313,6 +338,8 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     m_labelTrans->SetFont(m_labelTrans->GetFont().Bold());
 
     m_errorLine = new TagLabel(this, Color::TagErrorLineFg, Color::TagErrorLineBg);
+    m_errorLine->SetIcon(wxArtProvider::GetBitmap("poedit-status-error"));
+
     m_tagPretranslated = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
     m_tagPretranslated->SetLabel(_("Pre-translated"));
 
