@@ -2730,6 +2730,16 @@ void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
 
     auto buttons = dlg->CreateButtonSizer(wxOK | wxCANCEL);
     auto ok = static_cast<wxButton*>(dlg->FindWindow(wxID_OK));
+    // TRANSLATORS: This is a somewhat common term describing the action where
+    // you apply the translation memory and/or machine translation to all of the
+    // strings you're translating as the first step, followed by correcting,
+    // improving etc., i.e. actually translating the strings. This may be tricky
+    // to express in other languages as simply as in Engish, but please try to
+    // keep it similarly concise. Please try to avoid, if possible, describing it
+    // as "auto-translation" and similar, because such terminology would mislead
+    // some users into thinking it's all that needs to be done (spoken from
+    // experience). "Pre-translate" nicely expresses that it's only the step done
+    // *before* actual translation.
     ok->SetLabel(_("Pre-translate"));
     ok->SetDefault();
 #ifdef __WXOSX__
