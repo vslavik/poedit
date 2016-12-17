@@ -738,7 +738,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
 
 
 Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
-    : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE),
+    : wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE),
       m_catalog(nullptr),
       m_selectedItem(nullptr)
 {
