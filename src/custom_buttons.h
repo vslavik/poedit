@@ -87,6 +87,7 @@ public:
 
 #ifdef __WXMSW__
     bool ShouldInheritColours() const override { return true; }
+    void OnMouseClick(wxMouseEvent& e);
     bool MSWOnDraw(WXDRAWITEMSTRUCT *wxdis) override;
     wxSize DoGetBestSize() const override;
 
