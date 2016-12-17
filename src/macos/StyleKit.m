@@ -147,12 +147,18 @@
     NSColor* strokeColor = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.2];
     NSColor* strokeColor2 = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.12];
 
+    //// Shadow Declarations
+    NSShadow* translucentButtonShadow = [[NSShadow alloc] init];
+    [translucentButtonShadow setShadowColor: [NSColor.blackColor colorWithAlphaComponent: 0.25]];
+    [translucentButtonShadow setShadowOffset: NSMakeSize(0.1, -0.6)];
+    [translucentButtonShadow setShadowBlurRadius: 1];
+
     //// Variable Declarations
     NSColor* translucentButtonColor = pressed ? pressedTranslucent : white;
 
 
     //// Subframes
-    NSRect group2 = NSMakeRect(NSMinX(frame) + 0.75, NSMinY(frame) + 0.75, NSWidth(frame) - 1.5, NSHeight(frame) - 1.5);
+    NSRect group2 = NSMakeRect(NSMinX(frame) + 0.75, NSMinY(frame) + 1.75, NSWidth(frame) - 1.5, NSHeight(frame) - 3.5);
 
 
     //// Group 2
@@ -166,8 +172,12 @@
 
             //// Rectangle Drawing
             NSBezierPath* rectanglePath = [NSBezierPath bezierPathWithRoundedRect: NSMakeRect(NSMinX(group2) + floor(NSWidth(group2) * 0.00000 + 0.5), NSMinY(group2) + floor(NSHeight(group2) * 0.00000 + 0.5), floor(NSWidth(group2) * 1.00000) - floor(NSWidth(group2) * 0.00000 + 0.5) + 0.5, floor(NSHeight(group2) * 1.00000) - floor(NSHeight(group2) * 0.00000 + 0.5) + 0.5) xRadius: 4 yRadius: 4];
+            [NSGraphicsContext saveGraphicsState];
+            [translucentButtonShadow set];
             [translucentButtonColor setFill];
             [rectanglePath fill];
+            [NSGraphicsContext restoreGraphicsState];
+
 
 
             //// Rectangle 2 Drawing

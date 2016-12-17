@@ -332,7 +332,7 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
 {
     NSSize size = self.attributedTitle.size;
     size.width += 28;
-    size.height = 22;
+    size.height = 24;
     [self setFrameSize:size];
 }
 
