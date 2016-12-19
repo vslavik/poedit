@@ -505,7 +505,7 @@ auto future_base<T, FutureType>::catch_all(F&& continuation) -> future<void>
         }
         catch (...)
         {
-            f(std::current_exception());
+            f(dispatch::current_exception());
         }
     });
 }

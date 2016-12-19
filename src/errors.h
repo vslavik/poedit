@@ -30,6 +30,8 @@
 #include <exception>
 #include <stdexcept>
 
+#include <boost/exception_ptr.hpp>
+
 /// Any exception error.
 /// Pretty much the same as std::runtime_error, except using Unicode strings.
 class Exception : public std::runtime_error
@@ -54,11 +56,12 @@ private:
 
 
 /// Helper to convert an exception into a human-readable string
-inline wxString DescribeException(std::exception_ptr e)
+template<typename Rethrow>
+inline wxString DoDescribeException(Rethrow&& rethrow_exception)
 {
     try
     {
-        std::rethrow_exception(e);
+        rethrow_exception();
         return "no error"; // silence stupid VC++
     }
     catch (const Exception& e)
@@ -82,6 +85,16 @@ inline wxString DescribeException(std::exception_ptr e)
     {
         return "unknown error";
     }
+}
+
+inline wxString DescribeException(std::exception_ptr e)
+{
+    return DoDescribeException([e]{ std::rethrow_exception(e); });
+}
+
+inline wxString DescribeException(boost::exception_ptr e)
+{
+    return DoDescribeException([e]{ boost::rethrow_exception(e); });
 }
 
 inline wxString DescribeCurrentException()

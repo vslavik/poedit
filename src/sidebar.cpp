@@ -476,7 +476,7 @@ void SuggestionsSidebarBlock::SetMessage(const wxString& icon, const wxString& t
     m_parent->Layout();
 }
 
-void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, std::exception_ptr e)
+void SuggestionsSidebarBlock::ReportError(SuggestionsBackend*, dispatch::exception_ptr e)
 {
     SetMessage("SuggestionError", DescribeException(e));
 }
@@ -723,7 +723,7 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
         if (--self->m_pendingQueries == 0)
             self->OnQueriesFinished();
     })
-    .catch_all([weakSelf,queryId,backendPtr](std::exception_ptr e)
+    .catch_all([weakSelf,queryId,backendPtr](dispatch::exception_ptr e)
     {
         auto self = weakSelf.lock();
         // maybe this call is already out of date:

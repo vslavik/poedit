@@ -151,7 +151,7 @@ public:
     bool IsRunning() const { return m_running; }
 
     /// Convenience function for showing error message in the indicator
-    std::function<void(std::exception_ptr)> HandleError;
+    std::function<void(dispatch::exception_ptr)> HandleError;
 
     bool HasTransparentBackground() override { return true;  }
 

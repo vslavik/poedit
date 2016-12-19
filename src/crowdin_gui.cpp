@@ -191,7 +191,7 @@ void CrowdinLoginPanel::UpdateUserInfo()
             m_userLogin = u.login;
             ChangeState(State::SignedIn);
         })
-        .catch_all([](std::exception_ptr){});
+        .catch_all([](dispatch::exception_ptr){});
 }
 
 void CrowdinLoginPanel::OnSignIn(wxCommandEvent&)
@@ -594,7 +594,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
 
     wxWindowPtr<SyncProgressDialog> dlg(new SyncProgressDialog(parent));
 
-    auto handle_error = [=](std::exception_ptr e){
+    auto handle_error = [=](dispatch::exception_ptr e){
         dispatch::on_main([=]{
             dlg->EndModal(wxID_CANCEL);
             wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
