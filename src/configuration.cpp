@@ -57,6 +57,24 @@ void Config::Write(const std::string& key, const std::string& value)
     wxConfig::Get()->Write(key, wxString(value));
 }
 
+bool Config::Read(const std::string& key, std::wstring *out)
+{
+    std::lock_guard<std::mutex> guard(g_wxconfig);
+
+    wxString s;
+    if (!wxConfig::Get()->Read(key, &s))
+        return false;
+    *out = s.ToStdWstring();
+    return true;
+}
+
+void Config::Write(const std::string& key, const std::wstring& value)
+{
+    std::lock_guard<std::mutex> guard(g_wxconfig);
+
+    wxConfig::Get()->Write(key, wxString(value));
+}
+
 bool Config::Read(const std::string& key, bool *out)
 {
     std::lock_guard<std::mutex> guard(g_wxconfig);

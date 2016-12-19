@@ -64,9 +64,11 @@ private:
     }
 
     static bool Read(const std::string& key, std::string *out);
+    static bool Read(const std::string& key, std::wstring *out);
     static bool Read(const std::string& key, bool *out);
 
     static void Write(const std::string& key, const std::string& value);
+    static void Write(const std::string& key, const std::wstring& value);
     static void Write(const std::string& key, bool value);
 };
 
