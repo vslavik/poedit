@@ -144,6 +144,52 @@ public:
 
 #endif
 
+
+#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
+
+class DataViewIconsAdjuster : public wxDataViewValueAdjuster
+{
+public:
+    DataViewIconsAdjuster()
+    {
+        m_comment = wxArtProvider::GetBitmap("poedit-status-comment");
+        m_commentSel = wxArtProvider::GetBitmap("poedit-status-comment-selected");
+        m_bookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
+        m_bookmarkSel = wxArtProvider::GetBitmap("poedit-status-bookmark-selected");
+    }
+
+    wxVariant MakeHighlighted(const wxVariant& value) const override
+    {
+        if (value.IsNull())
+            return value;
+
+        wxBitmap bitmap;
+        bitmap << value;
+
+        if (bitmap.IsSameAs(m_comment))
+        {
+            wxVariant vout;
+            vout << m_commentSel;
+            return vout;
+        }
+
+        if (bitmap.IsSameAs(m_bookmark))
+        {
+            wxVariant vout;
+            vout << m_bookmarkSel;
+            return vout;
+        }
+
+        return value;
+    }
+
+private:
+    wxBitmap m_comment, m_commentSel;
+    wxBitmap m_bookmark, m_bookmarkSel;
+};
+
+#endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
+
 } // anonymous namespace
 
 
@@ -486,6 +532,9 @@ void PoeditListCtrl::CreateColumns()
 #endif
 
     m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_CENTER, 0);
+#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
+    m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster);
+#endif
 
     wxString sourceTitle = srclang.IsValid()
                              ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
