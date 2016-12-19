@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Poedit 1.8.8\n"
+"Project-Id-Version: Poedit 2.0\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-01 19:26+0200\n"
+"POT-Creation-Date: 2016-12-19 14:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -487,29 +487,6 @@ msgstr ""
 msgid "&Go"
 msgstr ""
 
-msgid "Source text:"
-msgstr ""
-
-msgid "Singular:"
-msgstr ""
-
-msgid "Plural:"
-msgstr ""
-
-msgid "Translation:"
-msgstr ""
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-
-msgid "Create New Translation"
-msgstr ""
-
-msgid "Create new translation"
-msgstr ""
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
@@ -625,9 +602,6 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr ""
 
-msgid "Context:"
-msgstr ""
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -635,8 +609,8 @@ msgstr ""
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
 
 msgid "Language of the translation isn't set."
@@ -727,9 +701,6 @@ msgstr ""
 msgid " (modified)"
 msgstr ""
 
-msgid "Go"
-msgstr ""
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr ""
@@ -752,40 +723,52 @@ msgstr ""
 msgid "Purge"
 msgstr ""
 
-msgid "Fill missing translations from TM"
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in Engish, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
 msgstr ""
 
 msgid "Only fill in exact matches"
 msgstr ""
 
 msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
 msgstr ""
 
-msgid "Don’t mark exact matches as fuzzy"
+msgid "Don’t mark exact matches as needing work"
 msgstr ""
 
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
+"from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
 
-msgid "Fill"
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
 msgstr ""
 
 #, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
 msgstr[0] ""
 msgstr[1] ""
 
 msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
 msgstr ""
 
-msgid "No entries could be filled from the translation memory."
+msgid "No entries could be pre-translated."
 msgstr ""
 
 msgid ""
@@ -794,10 +777,7 @@ msgid ""
 "from files that you translated manually."
 msgstr ""
 
-msgid "Translating"
-msgstr ""
-
-msgid "Filling missing translations from TM..."
+msgid "Pre-translating…"
 msgstr ""
 
 #, c-format
@@ -825,31 +805,6 @@ msgid "Edit Comment"
 msgstr ""
 
 msgid "References:"
-msgstr ""
-
-msgid "Everything"
-msgstr ""
-
-#, c-format
-msgid "Form %i"
-msgstr ""
-
-msgid "Singular"
-msgstr ""
-
-msgid "Zero"
-msgstr ""
-
-msgid "One"
-msgstr ""
-
-msgid "Two"
-msgstr ""
-
-msgid "Plural"
-msgstr ""
-
-msgid "Other"
 msgstr ""
 
 msgid "&Bookmarks"
@@ -883,17 +838,85 @@ msgstr ""
 msgid "Show Status Bar"
 msgstr ""
 
-msgid "Source text"
+msgid "Source text:"
 msgstr ""
 
-msgid "Translation"
+msgid "Singular:"
 msgstr ""
 
-msgid "ID"
+msgid "Plural:"
+msgstr ""
+
+msgid "Translation:"
+msgstr ""
+
+msgid "Pre-translated"
+msgstr ""
+
+msgid "Needs Work"
+msgstr ""
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr ""
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+
+msgid "Create New Translation"
+msgstr ""
+
+msgid "Create new translation"
+msgstr ""
+
+msgid "Everything"
+msgstr ""
+
+#, c-format
+msgid "Form %i"
+msgstr ""
+
+msgid "Singular"
+msgstr ""
+
+msgid "Zero"
+msgstr ""
+
+msgid "One"
+msgstr ""
+
+msgid "Two"
+msgstr ""
+
+msgid "Plural"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+#, c-format
+msgid "%s Format"
+msgstr ""
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
 msgstr ""
 
 #, c-format
 msgid "Source text — %s"
+msgstr ""
+
+msgid "Source text"
 msgstr ""
 
 msgid "unknown language"
@@ -903,7 +926,7 @@ msgstr ""
 msgid "Translation — %s"
 msgstr ""
 
-msgid "Error:"
+msgid "ID"
 msgstr ""
 
 msgid "Source file"
@@ -997,9 +1020,6 @@ msgid "Total"
 msgstr ""
 
 msgid "Untrans"
-msgstr ""
-
-msgid "Fuzzy"
 msgstr ""
 
 msgid "Bad Tokens"
@@ -1101,14 +1121,23 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-msgid "Consult TM when updating from sources"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr ""
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr ""
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
 msgstr ""
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
 
 msgid "Stored translations:"
@@ -1369,10 +1398,10 @@ msgstr ""
 msgid "Copy From Singular"
 msgstr ""
 
-msgid "Translation is &fuzzy"
+msgid "Translation needs &work"
 msgstr ""
 
-msgid "Translation Is &Fuzzy"
+msgid "Translation Needs &Work"
 msgstr ""
 
 msgid "Edit &comment"
@@ -1382,12 +1411,6 @@ msgid "Edit &Comment"
 msgstr ""
 
 msgid "Suggestions"
-msgstr ""
-
-msgid "&Show references"
-msgstr ""
-
-msgid "&Show References"
 msgstr ""
 
 msgid "&Find..."
@@ -1456,6 +1479,12 @@ msgstr ""
 msgid "&Untranslated Entries First"
 msgstr ""
 
+msgid "&Show references"
+msgstr ""
+
+msgid "&Show References"
+msgstr ""
+
 msgid "Show sidebar"
 msgstr ""
 
@@ -1480,10 +1509,7 @@ msgstr ""
 msgid "Sync with Crowdin"
 msgstr ""
 
-msgid "Fill missing translations from &TM..."
-msgstr ""
-
-msgid "Fill Missing Translations from &TM..."
+msgid "Pre-&translate from TM..."
 msgstr ""
 
 msgid "&Purge deleted translations"
@@ -1653,6 +1679,12 @@ msgid ""
 "in source files:"
 msgstr ""
 
+msgid "Also use default keywords for supported languages"
+msgstr ""
+
+msgid "Learn About Gettext Keywords"
+msgstr ""
+
 msgid "Learn about gettext keywords"
 msgstr ""
 
@@ -1696,9 +1728,6 @@ msgstr ""
 msgid "Update catalog - synchronize it with sources"
 msgstr ""
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr ""
-
 msgid "Show or hide the sidebar"
 msgstr ""
 
@@ -1707,8 +1736,8 @@ msgid "Previous source text:"
 msgstr ""
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
 msgstr ""
 
 msgid "Notes for translators:"
@@ -1738,46 +1767,13 @@ msgstr ""
 msgid "(New: %i, obsolete: %i)"
 msgstr ""
 
-#, c-format
-msgid "Importing translations: %d"
-msgstr ""
-
-msgid "Poedit Update"
-msgstr ""
-
-msgid "Preparing migration..."
-msgstr ""
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr ""
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr ""
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-
-msgid "Proceed"
-msgstr ""
-
-msgid "Translation memory migration failed."
-msgstr ""
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-
 msgid "Cannot create temporary directory."
 msgstr ""
 
 msgid "Welcome to Poedit"
+msgstr ""
+
+msgid "Edit a Translation"
 msgstr ""
 
 msgid "Edit a translation"
@@ -1791,7 +1787,10 @@ msgid ""
 "it."
 msgstr ""
 
-msgid "Collaborate on a translation with Crowdin"
+msgid "Collaborate on a Translation with Others"
+msgstr ""
+
+msgid "Collaborate on a translation with others"
 msgstr ""
 
 msgid ""
