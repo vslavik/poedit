@@ -26,6 +26,7 @@
 #ifndef Poedit_customcontrols_h
 #define Poedit_customcontrols_h
 
+#include "concurrency.h"
 #include "language.h"
 
 #include <wx/stattext.h>
