@@ -236,6 +236,17 @@ int SourceDigger::FindInDir(const wxString& dirname,
 {
     if (dirname.empty())
         return 0;
+        
+    if (!wxDir::Exists(dirname))
+	{
+		if (!wxFile::Exists(dirname))
+			return 0;
+		if (FilenameMatchesPathsList(dirname, excludePaths))
+			return 0;
+		files.Add(dirname);
+		return 1;
+	}
+	
     wxDir dir(dirname);
     if (!dir.IsOpened()) 
         return 0;
