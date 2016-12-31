@@ -33,6 +33,8 @@
 #include <wx/translation.h>
 #include <wx/filename.h>
 
+#include <boost/throw_exception.hpp>
+
 #include "gexecute.h"
 #include "errors.h"
 
@@ -146,7 +148,9 @@ long DoExecuteGettext(const wxString& cmdline_, wxArrayString& gstderr)
         retcode = -1;
 
     if ( retcode == -1 )
-        throw Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str()));
+    {
+        BOOST_THROW_EXCEPTION(Exception(wxString::Format(_("Cannot execute program: %s"), cmdline.c_str())));
+    }
 
     return retcode;
 }

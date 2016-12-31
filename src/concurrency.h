@@ -42,6 +42,7 @@
 #include <boost/chrono/duration.hpp>
 #include <boost/thread/executor.hpp>
 #include <boost/thread/future.hpp>
+#include <boost/throw_exception.hpp>
 
 #if !defined(HAVE_DISPATCH) && !defined(USE_PPL_DISPATCH)
     #include <boost/thread/executors/basic_thread_pool.hpp>
@@ -377,7 +378,7 @@ public:
                                  if (weak)
                                      return detail::call_and_unwrap_if_future(f, cch::unpack_arg(std::move(x)));
                                  else
-                                     throw detail::window_dismissed();
+                                     BOOST_THROW_EXCEPTION(detail::window_dismissed());
                              });
     };
 
@@ -455,7 +456,7 @@ public:
                                      detail::call_and_unwrap_if_future(f);
                                  }
                                  else
-                                     throw detail::window_dismissed();
+                                     BOOST_THROW_EXCEPTION(detail::window_dismissed());
 
                              });
     };

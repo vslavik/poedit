@@ -36,6 +36,8 @@
 #include <boost/iostreams/filter/gzip.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 
+#include <boost/throw_exception.hpp>
+
 #include <cpprest/asyncrt_utils.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
@@ -256,7 +258,7 @@ private:
         if (msg.empty())
             msg = str::to_utf8(r.reason_phrase());
         m_owner.on_error_response(status_code, msg);
-        throw http::http_exception(status_code, msg);
+        BOOST_THROW_EXCEPTION(http::http_exception(status_code, msg));
     }
 
     // convert to wstring
