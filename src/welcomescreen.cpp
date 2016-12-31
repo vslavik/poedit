@@ -201,20 +201,24 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
     uberSizer->AddStretchSpacer();
     SetSizer(uberSizer);
 
+    auto headerSizer = new wxBoxSizer(wxVERTICAL);
+
     auto hdr = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("PoeditWelcome"));
-    sizer->Add(hdr, wxSizerFlags().Center());
+    headerSizer->Add(hdr, wxSizerFlags().Center());
 
     auto header = new HeaderStaticText(this, wxID_ANY, _("Welcome to Poedit"));
     header->SetFont(m_fntHeader);
     header->SetForegroundColour(m_clrHeader);
-    sizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
+    headerSizer->Add(header, wxSizerFlags().Center().Border(wxTOP, PX(10)));
 
     auto version = new wxStaticText(this, wxID_ANY, wxString::Format(_("Version %s"), wxGetApp().GetAppVersion()));
     version->SetFont(m_fntSub);
     version->SetForegroundColour(m_clrSub);
-    sizer->Add(version, wxSizerFlags().Center());
+    headerSizer->Add(version, wxSizerFlags().Center());
 
-    sizer->AddSpacer(PX(20));
+    headerSizer->AddSpacer(PX(20));
+
+    sizer->Add(headerSizer, wxSizerFlags().Expand());
 
     sizer->Add(new ActionButton(
                        this, wxID_OPEN,
@@ -238,6 +242,13 @@ WelcomeScreenPanel::WelcomeScreenPanel(wxWindow *parent)
 #endif // HAVE_HTTP_CLIENT
 
     sizer->AddSpacer(PX(50));
+
+    // Hide the cosmetic logo part if the screen is too small:
+    auto minFullSize = sizer->GetMinSize().y + PX(50);
+    Bind(wxEVT_SIZE, [=](wxSizeEvent& e){
+        sizer->Show((size_t)0, e.GetSize().y >= minFullSize);
+        e.Skip();
+    });
 }
 
 
