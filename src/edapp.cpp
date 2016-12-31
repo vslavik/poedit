@@ -860,9 +860,9 @@ void PoeditApp::HandleCustomURI(const wxString& uri)
         return;
 
 #ifdef HAVE_HTTP_CLIENT
-    // nothing to do yet
     if (CrowdinClient::Get().IsOAuthCallback(uri.ToStdString()))
     {
+        wxConfig::Get()->Write("/6p/crowdin_logged_in", true);
         CrowdinClient::Get().HandleOAuthCallback(uri.ToStdString());
         return;
     }
@@ -1016,7 +1016,7 @@ void PoeditApp::OnAbout(wxCommandEvent&)
 {
 #if 0
     // Forces translation of several strings that are used for about
-    // dialog internally by wx, but are frequently not translate due to
+    // dialog internally by wx, but are frequently not translated due to
     // state of wx's translations:
 
     // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
@@ -1366,7 +1366,7 @@ void PoeditApp::AssociateFileTypeIfNeeded()
     key1.SetValue("", "Poedit.PO");
     wxRegKey key2(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO");
     key2.Create();
-    key2.SetValue("", _("PO Translation"));
+    key2.SetValue("", /*TRANSLATORS:File kind displayed in Finder/Explorer*/_("PO Translation"));
     wxRegKey key3(wxRegKey::HKCU, "Software\\Classes\\Poedit.PO\\Shell\\Open\\Command");
     key3.Create();
     key3.SetValue("", poCmd);
