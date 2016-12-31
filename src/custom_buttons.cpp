@@ -213,6 +213,12 @@ void SwitchButton::OnMouseClick(wxMouseEvent& e)
     // normal click handling moves focus to the switch (which is a button
     // underneath), which we'd rather not do
     SetValue(!GetValue());
+
+    // we need to send the event, because SetValue() doesn't
+    wxCommandEvent event(wxEVT_TOGGLEBUTTON, GetId());
+    event.SetInt(GetValue());
+    event.SetEventObject(this);
+    ProcessCommand(event);
 }
 
 
