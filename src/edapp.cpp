@@ -880,10 +880,6 @@ bool PoeditApp::OnExceptionInMainLoop()
     {
         throw;
     }
-    catch ( std::exception& )
-    {
-        wxLogError(_("Unhandled exception occurred: %s"), DescribeCurrentException());
-    }
 #ifdef __WXOSX__
     catch ( NSException *e )
     {
@@ -892,7 +888,7 @@ bool PoeditApp::OnExceptionInMainLoop()
 #endif
     catch ( ... )
     {
-        wxLogError(_("Unhandled exception occurred."));
+        wxLogError(_("Unhandled exception occurred: %s"), DescribeCurrentException());
     }
 
     return true;
