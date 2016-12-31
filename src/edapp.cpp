@@ -1014,31 +1014,6 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
 
 void PoeditApp::OnAbout(wxCommandEvent&)
 {
-#if 0
-    // Forces translation of several strings that are used for about
-    // dialog internally by wx, but are frequently not translated due to
-    // state of wx's translations:
-
-    // TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-    //              ("Poedit" here, but please use "%s")
-    _("About %s");
-    // TRANSLATORS: This is version information in about dialog, "%s" will be
-    //              version number when used
-    _("Version %s");
-
-    // TRANSLATORS: macOS item in app menu
-    _("Services");
-    // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-    _("Hide %s");
-    // TRANSLATORS: macOS item in app menu
-    _("Hide Others");
-    // TRANSLATORS: macOS item in app menu
-    _("Show All");
-    // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-    _("Quit %s");
-    _("Preferences...");
-#endif
-
     wxAboutDialogInfo about;
 
 #ifndef __WXOSX__

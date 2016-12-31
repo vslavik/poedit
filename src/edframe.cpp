@@ -394,39 +394,6 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
 #endif
 END_EVENT_TABLE()
 
-#if 0
-    // These translations are provided by wxWidgets. Force the strings here,
-    // even though unused, because Poedit is translated into many more languages
-    // than wx is.
-    _("&Undo"),               _("Undo")
-    _("&Redo"),               _("Redo")
-    _("Cu&t"),                _("Cut")
-    _("&Copy"),               _("Copy")
-    _("&Paste"),              _("Paste")
-    _("&Delete"),             _("Delete")
-    _("Select &All"),         _("Select All")
-
-    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-    _("Ctrl+"),
-    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-    _("Alt+"),
-    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-    _("Shift+"),
-    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-    _("Enter"),
-    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-    _("Up"),
-    /// TRANSLATORS: Keyboard shortcut for display in Windows menus
-    _("Down"),
-
-    /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-    _("ctrl"),
-    /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-    _("alt"),
-    /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-    _("shift"),
-#endif
-
 
 
 class PoeditDropTarget : public wxFileDropTarget

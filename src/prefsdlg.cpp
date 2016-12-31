@@ -1009,11 +1009,6 @@ public:
 
 std::unique_ptr<PoeditPreferencesEditor> PoeditPreferencesEditor::Create()
 {
-#if 0
-    // TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
-    _("%s Preferences");
-#endif
-
     std::unique_ptr<PoeditPreferencesEditor> p(new PoeditPreferencesEditor);
     p->AddPage(new GeneralPage);
     p->AddPage(new TMPage);
