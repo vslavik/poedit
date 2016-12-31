@@ -29,6 +29,7 @@
 
 #include <wx/msw/uxtheme.h>
 #include <wx/nativewin.h>
+#include <wx/recguard.h>
 
 #include <mCtrl/menubar.h>
 
@@ -45,7 +46,7 @@ class wxFrameWithWindows10Menubar::MenuBarWindow : public wxWindow
 public:
     MenuBarWindow(wxWindow *parent)
         : wxWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE),
-          m_mctrlWin(nullptr), m_mctrlHandle(0)
+          m_mctrlWin(nullptr), m_mctrlHandle(0), m_flagReenterMctrl(0)
     {
         if (g_mctrlInitialized++ == 0)
             mcMenubar_Initialize();
@@ -90,9 +91,14 @@ public:
 
     bool TranslateMenubarMessage(WXMSG *pMsg)
     {
-        MSG *msg = (MSG *) pMsg;
-        if (mcIsMenubarMessage(m_mctrlHandle, msg))
-            return true;
+        wxRecursionGuard guard(m_flagReenterMctrl);
+
+        if (!guard.IsInside())
+        {
+            MSG *msg = (MSG *) pMsg;
+            if (mcIsMenubarMessage(m_mctrlHandle, msg))
+                return true;
+        }
         return false;
     }
 
@@ -135,6 +141,7 @@ private:
 
     mCtrlWrapper *m_mctrlWin;
     WXHWND m_mctrlHandle;
+    wxRecursionGuardFlag m_flagReenterMctrl;
 };
 
 
