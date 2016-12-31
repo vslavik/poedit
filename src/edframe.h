@@ -124,9 +124,6 @@ class PoeditFrame : public PoeditFrameBase
          */
         bool UpdateCatalog(const wxString& pot_file = wxEmptyString);
 
-
-        virtual void DoGiveHelp(const wxString& text, bool show);
-
         void UpdateAfterPreferencesChange();
         static void UpdateAllAfterPreferencesChange();
 
@@ -141,6 +138,10 @@ class PoeditFrame : public PoeditFrameBase
 
         /// Puts text from textctrls to catalog & listctrl.
         void OnUpdatedFromTextCtrl(CatalogItemPtr item, bool statsChanged);
+
+    protected:
+        // Don't show help in status bar, it's not common to do these days:
+        void DoGiveHelp(const wxString& /*help*/, bool /*show*/) override {}
 
     private:
         /** Ctor.

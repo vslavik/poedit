@@ -2428,14 +2428,6 @@ void PoeditFrame::UpdateStatusBar()
     }
 }
 
-void PoeditFrame::DoGiveHelp(const wxString& text, bool show)
-{
-    if (show || !text.empty())
-        wxFrame::DoGiveHelp(text, show);
-    else
-        UpdateStatusBar();
-}
-
 
 void PoeditFrame::UpdateTitle()
 {
