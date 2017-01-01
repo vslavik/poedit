@@ -69,8 +69,7 @@ bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
         "ContributeOn",
         "poedit-status-comment",
         "follow-link",
-        "sidebar",
-        "sidebar-disabled"
+        "sidebar"
     };
 
     bool mirror = s_directional.find(id) != s_directional.end();
@@ -86,10 +85,17 @@ bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
 
 } // anonymous namespace
 
-wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
+wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
                                          const wxArtClient& client,
                                          const wxSize& size)
 {
+    wxLogTrace("poedit.icons", "getting icon '%s'", id_.c_str());
+
+    wxArtID id(id_);
+    const bool disabledVariant = id.Contains("@disabled");
+    if (disabledVariant)
+        id.Replace("@disabled", "");
+
     // Silence warning about unused parameter in some of the builds
     (void)client;
     (void)size;
@@ -97,8 +103,6 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
     // Note: On Unix, this code is only called as last resolt, if standard
     //       theme provider (that uses current icon theme and files from
     //       /usr/share/icons/<theme>) didn't find any matching icon.
-
-    wxLogTrace("poedit.icons", "getting icon '%s'", id.c_str());
 
 #ifdef __WXGTK20__
     // try legacy GNOME icons from standard theme:
@@ -125,20 +129,30 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id,
         return wxNullBitmap;
     }
 
-    bool mirror = false;
-    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft)
-        mirror = ShouldBeMirorredInRTL(id, client);
+    wxString icon;
+    icon.Printf("%s/%s", iconsdir, id);
+    wxLogTrace("poedit.icons", "loading from %s", icon);
+    wxImage img = LoadScaledBitmap(icon);
 
-    int padding = 0;
+    if (disabledVariant)
+        img = img.ConvertToDisabled();
+
+    if (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft && ShouldBeMirorredInRTL(id, client))
+    {
+        img = img.Mirror();
+    }
+
 #ifdef __WXMSW__
     if (IsWindows10OrGreater())
-        padding = 2;
-#endif
+    {
+        const int padding = PX(1);
+        auto sz = img.GetSize();
+        sz.IncBy(padding * 2);
+        img.Resize(sz, wxPoint(padding, padding));
+    }
+#endif // __WXMSW__
 
-    wxString icon;
-    icon.Printf("%s/%s", iconsdir.c_str(), id.c_str());
-    wxLogTrace("poedit.icons", "loading from %s", icon.c_str());
-    return LoadScaledBitmap(icon, mirror, padding);
+    return wxBitmap(img);
 }
 
 #endif // !__WXOSX__

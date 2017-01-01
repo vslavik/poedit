@@ -20,6 +20,7 @@
     </object>
     <object class="tool" name="wxID_SAVE" platform="win">
       <bitmap stock_id="document-save"/>
+      <bitmap2 stock_id="document-save@disabled"/>
       <label>Save</label>
       <tooltip>Save catalog</tooltip>
     </object>
@@ -33,12 +34,14 @@
 
     <object class="tool" name="menu_validate">
       <bitmap stock_id="poedit-validate"/>
+      <bitmap2 platform="win" stock_id="poedit-validate@disabled"/>
       <label>Validate</label>
       <tooltip>Check for errors in the translation</tooltip>
     </object>
 
     <object class="tool" name="toolbar_update">
       <bitmap stock_id="poedit-update"/>
+      <bitmap2 platform="win" stock_id="poedit-update@disabled"/>
       <label>Update</label>
       <tooltip>Update catalog - synchronize it with sources</tooltip>
     </object>
@@ -46,7 +49,9 @@
     <object class="space"/>
     <object class="tool" name="show_sidebar">
       <bitmap stock_id="sidebar"/>
-      <label></label>
+      <bitmap2 platform="win" stock_id="sidebar@disabled"/>
+      <label platform="win|unix"></label>
+      <label platform="mac">Sidebar</label>
       <tooltip>Show or hide the sidebar</tooltip>
     </object>
 

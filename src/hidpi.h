@@ -28,7 +28,7 @@
 
 #include <wx/defs.h>
 class WXDLLIMPEXP_FWD_BASE wxString;
-class WXDLLIMPEXP_FWD_CORE wxBitmap;
+class WXDLLIMPEXP_FWD_CORE wxImage;
 
 #ifdef __WXMSW__
     #define NEEDS_MANUAL_HIDPI 1
@@ -89,6 +89,6 @@ inline double HiDPIScalingFactor() { return 1.0; }
 
     Note that @a name is given *without* the ".png" extension.
  */
-extern wxBitmap LoadScaledBitmap(const wxString& name, bool mirror, int padding = 0);
+extern wxImage LoadScaledBitmap(const wxString& name);
 
 #endif // Poedit_hidpi_h
