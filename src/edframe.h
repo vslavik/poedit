@@ -173,6 +173,8 @@ class PoeditFrame : public PoeditFrameBase
         wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
 
+        void PlaceInitialFocus();
+
         typedef std::set<PoeditFrame*> PoeditFramesList;
         static PoeditFramesList ms_instances;
 

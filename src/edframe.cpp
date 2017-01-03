@@ -242,11 +242,7 @@ bool g_focusToText = false;
     }
 
     f->Show(true);
-
-    if (g_focusToText && f->m_editingArea)
-        f->m_editingArea->SetTextFocus();
-    else if (f->m_list)
-        f->m_list->SetFocus();
+    f->PlaceInitialFocus();
 
     return f;
 }
@@ -785,6 +781,18 @@ PoeditFrame::~PoeditFrame()
 }
 
 
+void PoeditFrame::PlaceInitialFocus()
+{
+    if (g_focusToText && m_editingArea)
+        m_editingArea->SetTextFocus();
+    else if (m_list)
+        m_list->SetFocus();
+
+    if (m_list && m_list->GetItemCount() > 0)
+        m_list->SelectAndFocus(0);
+}
+
+
 void PoeditFrame::SetAccelerators()
 {
     wxAcceleratorEntry entries[] = {
@@ -915,13 +923,7 @@ void PoeditFrame::DoOpenFile(const wxString& filename)
 {
     ReadCatalog(filename);
 
-    if (m_editingArea && m_list)
-    {
-        if (g_focusToText)
-            m_editingArea->SetTextFocus();
-        else
-            m_list->SetFocus();
-    }
+    PlaceInitialFocus();
 }
 
 
@@ -1351,6 +1353,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
     if (language.IsValid())
     {
         setLanguageFunc(language);
+        PlaceInitialFocus();
     }
     else
     {
@@ -1362,6 +1365,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
                 setLanguageFunc(dlg->GetLang());
             else
                 setLanguageFunc(Language());
+            PlaceInitialFocus();
         });
     }
 }
