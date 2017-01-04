@@ -45,7 +45,9 @@ replace_ver configure.ac \
 replace_ver scripts/refresh-pot.sh \
             '\(PACKAGE_SHORT_VERSION=\).*' "\1$VER_SHORT"
 replace_ver src/version.h \
-            '\(POEDIT_VERSION.*"\).*\("\)' "\1$VER_FULL\2"
+            '\(POEDIT_VERSION *"\).*\("\)' "\1$VER_FULL\2"
+replace_ver src/version.h \
+            '\(POEDIT_VERSION_SHORT *"\).*\("\)' "\1$VER_SHORT\2"
 replace_ver src/version.h \
             '\(POEDIT_VERSION_WIN *\).*' "\1$VER_WIN"
 replace_ver .travis.yml \

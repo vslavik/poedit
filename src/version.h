@@ -27,6 +27,7 @@
 #define _VERSION_H_
 
 #define POEDIT_VERSION           "2.0beta1"
+#define POEDIT_VERSION_SHORT     "2.0"
 #define POEDIT_VERSION_WIN        2,0,0
 
 #endif // _VERSION_H_
