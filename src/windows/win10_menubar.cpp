@@ -38,6 +38,8 @@ namespace
 
 int g_mctrlInitialized = 0;
 
+const int MENUBAR_OFFSET = -2;
+
 } // anonymous namespace
 
 
@@ -183,7 +185,7 @@ wxPoint wxFrameWithWindows10Menubar::GetClientAreaOrigin() const
     wxPoint pt = wxFrame::GetClientAreaOrigin();
     if (IsUsed())
     {
-        pt.y += m_menuBar->GetSize().y;
+        pt.y += m_menuBar->GetSize().y + MENUBAR_OFFSET;
     }
     return pt;
 }
@@ -202,7 +204,7 @@ void wxFrameWithWindows10Menubar::PositionToolBar()
     int width, height;
     wxWindow::DoGetClientSize(&width, &height);
 
-    int y = 0;
+    int y = MENUBAR_OFFSET;
 
     // use the 'real' MSW position here, don't offset relatively to the
     // client area origin
@@ -214,7 +216,7 @@ void wxFrameWithWindows10Menubar::PositionToolBar()
     if (toolbar && toolbar->IsShown())
     {
         int tbh = toolbar->GetSize().y;
-        toolbar->SetSize(0, y, width, tbh, wxSIZE_NO_ADJUSTMENTS);
+        toolbar->SetSize(0, y, width + 8, tbh, wxSIZE_NO_ADJUSTMENTS);
     }
 }
 
