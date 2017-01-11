@@ -217,10 +217,9 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
     [text setTextContainerInset:NSMakeSize(0,3)];
     [text setRichText:NO];
 
-    // TODO: This isn't implemented and doesn't work in macOS
-    //Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
-    //Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
-    //Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);
+    Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
+    Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
+    Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);
 }
 
 void CustomizedTextCtrl::DoSetValue(const wxString& value, int flags)
@@ -268,11 +267,9 @@ CustomizedTextCtrl::CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long 
     padding.SetRightIndent(5);
     SetDefaultStyle(padding);
 
-#if defined(__WXMSW__) || defined(__WXGTK__)
     Bind(wxEVT_TEXT_COPY, &CustomizedTextCtrl::OnCopy, this);
     Bind(wxEVT_TEXT_CUT, &CustomizedTextCtrl::OnCut, this);
     Bind(wxEVT_TEXT_PASTE, &CustomizedTextCtrl::OnPaste, this);
-#endif
 
 #ifdef __WXGTK__
     m_historyLocks = 0;
@@ -298,7 +295,6 @@ WXDWORD CustomizedTextCtrl::MSWGetStyle(long style, WXDWORD *exstyle) const
 #endif // __WXMSW__
 
 
-#if defined(__WXMSW__) || defined(__WXGTK__)
 // We use wxTE_RICH2 style, which allows for pasting rich-formatted
 // text into the control. We want to allow only plain text (all the
 // formatting done is Poedit's syntax highlighting), so we need to
@@ -372,7 +368,6 @@ void CustomizedTextCtrl::DoPasteText(long from, long to, const wxString& s)
 {
     Replace(from, to, s);
 }
-#endif // __WXMSW__/__WXGTK__
 
 #ifdef __WXGTK__
 void CustomizedTextCtrl::BeginUndoGrouping()
@@ -693,7 +688,6 @@ wxString AnyTranslatableTextCtrl::UnescapePlainText(const wxString& s)
     return s2;
 }
 
-#if defined(__WXMSW__) || defined(__WXGTK__)
 wxString AnyTranslatableTextCtrl::DoCopyText(long from, long to)
 {
     return UnescapePlainText(GetRange(from, to));
@@ -703,7 +697,6 @@ void AnyTranslatableTextCtrl::DoPasteText(long from, long to, const wxString& s)
 {
     Replace(from, to, EscapePlainText(s));
 }
-#endif
 
 void AnyTranslatableTextCtrl::DoSetValue(const wxString& value, int flags)
 {
