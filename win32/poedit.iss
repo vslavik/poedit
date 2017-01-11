@@ -31,7 +31,7 @@
 #include "../" + CONFIG + "/git_build_number.h"
 
 #define VERSION          "2.0"
-#define VERSION_FULL     "2.0beta1"
+#define VERSION_FULL     "2.0beta2"
 #define VERSION_WIN      VERSION + "." + Str(POEDIT_GIT_BUILD_NUMBER)
 
 #ifndef CRT_REDIST
