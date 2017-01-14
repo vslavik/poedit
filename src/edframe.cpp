@@ -2406,6 +2406,8 @@ void PoeditFrame::UpdateTitle()
     OSXSetModified(IsModified());
 #endif
 
+    m_fileNamePartOfTitle.clear();
+
     wxString title;
     auto fileName = GetFileName();
     if ( !fileName.empty() )
@@ -2432,6 +2434,9 @@ void PoeditFrame::UpdateTitle()
         {
             title = fn.GetFullName();
         }
+
+        m_fileNamePartOfTitle = title;
+
 #ifndef __WXOSX__
         if ( IsModified() )
             title += _(" (modified)");

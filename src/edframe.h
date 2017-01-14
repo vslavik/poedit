@@ -102,6 +102,8 @@ class PoeditFrame : public PoeditFrameBase
         /// Returns true if any windows (with documents) are open
         static bool HasAnyWindow() { return !ms_instances.empty(); }
 
+        static int GetOpenWindowsCount() { return (int)ms_instances.size(); }
+
         ~PoeditFrame();
 
         /// Reads catalog, refreshes controls, takes ownership of catalog.
@@ -138,6 +140,11 @@ class PoeditFrame : public PoeditFrameBase
 
         /// Puts text from textctrls to catalog & listctrl.
         void OnUpdatedFromTextCtrl(CatalogItemPtr item, bool statsChanged);
+
+        wxString GetFileName() const
+            { return m_catalog ? m_catalog->GetFileName() : wxString(); }
+        wxString GetFileNamePartOfTitle() const
+            { return m_fileNamePartOfTitle; }
 
     protected:
         // Don't show help in status bar, it's not common to do these days:
@@ -351,9 +358,9 @@ private:
     private:
         CatalogPtr m_catalog;
 
-        wxString GetFileName() const
-            { return m_catalog ? m_catalog->GetFileName() : wxString(); }
         bool m_fileExistsOnDisk;
+
+        wxString m_fileNamePartOfTitle;
 
         std::unique_ptr<MainToolbar> m_toolbar;
 

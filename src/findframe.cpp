@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 2001-2017 Vaclav Slavik
@@ -290,7 +290,14 @@ void FindFrame::OnModeChanged()
 {
     bool isReplace = m_mode->GetSelection() == Mode_Replace;
 
-    SetTitle(isReplace ? _("Replace") : _("Find"));
+    wxString title = isReplace ? _("Replace") : _("Find");
+    if (PoeditFrame::GetOpenWindowsCount() > 1)
+    {
+        auto filename = m_owner->GetFileNamePartOfTitle();
+        if (!filename.empty())
+            title += wxString::Format(L" — %s", filename);
+    }
+    SetTitle(title);
 
     m_btnReplace->Show(isReplace);
     m_btnReplaceAll->Show(isReplace);
