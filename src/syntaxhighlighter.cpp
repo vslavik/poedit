@@ -138,7 +138,7 @@ private:
 };
 
 
-std::wregex RE_HTML_MARKUP(LR"(<\/?[a-zA-Z]+(\s+\w+(=(\w+|(\"|').*(\"|')))?)*\s*\/?>)",
+std::wregex RE_HTML_MARKUP(LR"(<\/?[a-zA-Z]+(\s+\w+(=(\w+|"[^"]*"|'[^']*'))?)*\s*\/?>)",
                            std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
 // php-format per http://php.net/manual/en/function.sprintf.php plus positionals
