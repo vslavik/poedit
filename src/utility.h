@@ -32,6 +32,8 @@
     #endif
 #endif
 
+#include <map>
+
 #include <wx/arrstr.h>
 #include <wx/filename.h>
 #include <wx/string.h>
@@ -208,7 +210,7 @@ public:
     static void KeepFiles(bool keep = true) { ms_keepFiles = keep; }
 
 private:
-    int m_counter;
+    std::map<wxString, int> m_counters;
     wxString m_dir;
 
     static bool ms_keepFiles;
