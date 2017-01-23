@@ -51,6 +51,9 @@ class ProgressInfo
             /// Resets the gauge to given \a value.
             void ResetGauge(int value = 0);
 
+            /// Indicate indeterminate progress
+            void PulseGauge();
+
             /// Updates informative message.
             void UpdateMessage(const wxString& text);
             
