@@ -63,7 +63,7 @@
 #include "tm/transmem.h"
 #include "chooselang.h"
 #include "errors.h"
-#include "extractor.h"
+#include "extractors/extractor_legacy.h"
 #include "spellchecking.h"
 #include "utility.h"
 #include "customcontrols.h"
@@ -665,7 +665,7 @@ private:
         auto extractor_charset = XRCCTRL(*dlg, "extractor_charset", wxTextCtrl);
 
         {
-            const Extractor& nfo = m_extractors.Data[num];
+            const LegacyExtractorSpec& nfo = m_extractors.Data[num];
             extractor_language->SetValue(bidi::platform_mark_direction(nfo.Name));
             extractor_extensions->SetValue(bidi::mark_direction(nfo.Extensions, TextDirection::LTR));
             extractor_command->SetValue(bidi::mark_direction(nfo.Command, TextDirection::LTR));
@@ -693,7 +693,7 @@ private:
             (void)dlg; // force use
             if (retcode == wxID_OK)
             {
-                Extractor& nfo = m_extractors.Data[num];
+                LegacyExtractorSpec& nfo = m_extractors.Data[num];
                 nfo.Name = bidi::strip_control_chars(extractor_language->GetValue().Strip(wxString::both));
                 nfo.Extensions = bidi::strip_control_chars(extractor_extensions->GetValue().Strip(wxString::both));
                 nfo.Command = bidi::strip_control_chars(extractor_command->GetValue().Strip(wxString::both));
@@ -710,7 +710,7 @@ private:
     {
         m_suppressDataTransfer++;
 
-        Extractor info;
+        LegacyExtractorSpec info;
         m_extractors.Data.push_back(info);
         auto index = m_list->Append(wxEmptyString);
         m_list->Check(index);
@@ -775,7 +775,7 @@ private:
             TransferDataFromWindow();
     }
 
-    ExtractorsDB m_extractors;
+    LegacyExtractorsDB m_extractors;
 
     wxCheckListBox *m_list;
     wxButton *m_new, *m_edit, *m_delete;

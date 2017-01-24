@@ -63,13 +63,13 @@
     #error "Unicode build of wxWidgets is required by Poedit"
 #endif
 
-#include "edapp.h"
-#include "edframe.h"
 #include "colorscheme.h"
 #include "concurrency.h"
+#include "edapp.h"
+#include "edframe.h"
+#include "extractors/extractor_legacy.h"
 #include "manager.h"
 #include "prefsdlg.h"
-#include "extractor.h"
 #include "chooselang.h"
 #include "customcontrols.h"
 #include "gexecute.h"
@@ -634,125 +634,10 @@ void PoeditApp::OpenFiles(const wxArrayString& names)
     }
 }
 
-void PoeditApp::SetDefaultExtractors(wxConfigBase *cfg)
-{
-    ExtractorsDB db;
-    bool changed = false;
-    wxString defaultsVersion = cfg->Read("Parsers/DefaultsVersion",
-                                         "1.2.x");
-    db.Read(cfg);
-
-    // Add extractors for languages supported by gettext itself (but only if the
-    // user didn't already add language with this name himself):
-    static struct
-    {
-        char enableByDefault;
-        const char *name;
-        const char *exts;
-    } s_gettextLangs[] = {
-        { 1, "C/C++",      "*.c;*.cpp;*.cc;*.C;*.c++;*.cxx;*.h;*.hpp;*.hxx;*.hh" },
-        { 1, "C#",         "*.cs" },
-        { 1, "EmacsLisp",  "*.el" },
-        { 1, "GSettings",  "*.gschema.xml" },
-        { 1, "Glade",      "*.glade;*.glade2;*.ui" },
-        { 1, "AppData",    "*.appdata.xml" },
-        { 1, "Java",       "*.java" },
-        { 1, "JavaScript", "*.js" },
-        { 1, "Lisp",       "*.lisp" },
-        { 1, "Lua",        "*.lua" },
-        { 1, "ObjectiveC", "*.m" },
-        { 1, "PHP",        "*.php;*.php3;*.php4;*.phtml" },
-        { 1, "Perl",       "*.pl;*.PL;*.pm;*.perl" },
-        { 1, "Python",     "*.py" },
-        { 0, "RST",        "*.rst" },
-        { 1, "Scheme",     "*.scm" },
-        { 0, "Shell",      "*.sh;*.bash" },
-        { 1, "Smalltalk",  "*.st" },
-        { 1, "TCL",        "*.tcl" },
-        { 1, "Vala",       "*.vala" },
-        { 1, "YCP",        "*.ycp" },
-        { 1, "awk",        "*.awk" },
-        { 1, "librep",     "*.jl" },
-        { 0, NULL, NULL }
-    };
-
-    for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
-    {
-        // if this lang is already registered, don't overwrite it:
-        if (db.FindExtractor(s_gettextLangs[i].name) != -1)
-            continue;
-
-        wxString langflag;
-        if ( wxStrcmp(s_gettextLangs[i].name, "C/C++") == 0 )
-            langflag = " --language=C++";
-        else
-            langflag = wxString(" --language=") + s_gettextLangs[i].name;
-
-        // otherwise add new extractor:
-        Extractor ex;
-        ex.Name = s_gettextLangs[i].name;
-        ex.Enabled = (bool)s_gettextLangs[i].enableByDefault;
-        ex.Extensions = s_gettextLangs[i].exts;
-        ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --force-po -o %o %C %K %F";
-        ex.KeywordItem = "-k%k";
-        ex.FileItem = "%f";
-        ex.CharsetItem = "--from-code=%c";
-        db.Data.push_back(ex);
-        changed = true;
-    }
-
-    // If upgrading Poedit to 1.2.4, add dxgettext extractor for Delphi:
-#ifdef __WINDOWS__
-    if (defaultsVersion == "1.2.x")
-    {
-        Extractor p;
-        p.Name = "Delphi (dxgettext)";
-        p.Extensions = "*.pas;*.dpr;*.xfm;*.dfm";
-        p.Command = "dxgettext --so %o %F";
-        p.KeywordItem = wxEmptyString;
-        p.FileItem = "%f";
-        db.Data.push_back(p);
-        changed = true;
-    }
-#endif
-
-    // If upgrading Poedit to 1.2.5, update C++ extractor to handle --from-code:
-    if (defaultsVersion == "1.2.x" || defaultsVersion == "1.2.4")
-    {
-        int cpp = db.FindExtractor("C/C++");
-        if (cpp != -1)
-        {
-            if (db.Data[cpp].Command == "xgettext --force-po -o %o %K %F")
-            {
-                db.Data[cpp].Command = "xgettext --force-po -o %o %C %K %F";
-                db.Data[cpp].CharsetItem = "--from-code=%c";
-                changed = true;
-            }
-        }
-    }
-
-    // Poedit 1.5.6 had a breakage, it add --add-comments without space in front of it.
-    // Repair this automatically:
-    for (size_t i = 0; i < db.Data.size(); i++)
-    {
-        wxString& cmd = db.Data[i].Command;
-        if (cmd.Contains("--add-comments=") && !cmd.Contains(" --add-comments="))
-        {
-            cmd.Replace("--add-comments=", " --add-comments=");
-            changed = true;
-        }
-    }
-
-    if (changed)
-    {
-        db.Write(cfg);
-        cfg->Write("Parsers/DefaultsVersion", GetAppVersion());
-    }
-}
 
 void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
-    SetDefaultExtractors(cfg);
+    LegacyExtractorsDB::SetupDefaultExtractors(cfg);
 
     if (cfg->Read("version", wxEmptyString) == GetAppVersion()) return;
 

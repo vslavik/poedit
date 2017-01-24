@@ -42,7 +42,7 @@
 #include "catalog.h"
 
 #include "configuration.h"
-#include "digger.h"
+#include "extractors/extractor.h"
 #include "gexecute.h"
 #include "progressinfo.h"
 #include "str_helpers.h"
@@ -2209,13 +2209,38 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
         wxSetWorkingDirectory(path);
     }
 
-    SourceDigger dig(progress);
+    Extractor::SourceCodeSpec spec;
+    spec.BasePath = "."; // FIXME -- don't change working directory above, use BasePath instead
+    spec.SearchPaths = m_header.SearchPaths;
+    spec.ExcludedPaths = m_header.SearchPathsExcluded;
+    spec.Charset = m_header.SourceCodeCharset;
+    spec.Keywords = m_header.Keywords;
 
-    auto newcat = dig.Dig(m_header.SearchPaths,
-                          m_header.SearchPathsExcluded,
-                          m_header.Keywords,
-                          m_header.SourceCodeCharset,
-                          reason);
+    CatalogPtr newcat = nullptr;
+
+    progress->UpdateMessage(_("Scanning files..."));
+    progress->PulseGauge();
+
+    auto files = Extractor::CollectAllFiles(spec);
+
+    if (!files.empty())
+    {
+        TempDirectory tmpdir;
+        auto potFile = Extractor::ExtractWithAll(tmpdir, spec, files);
+        if (!potFile.empty())
+        {
+            newcat = std::make_shared<Catalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
+            if (!newcat->IsOk())
+            {
+                wxLogError(_("Failed to load extracted catalog."));
+                newcat.reset();
+            }
+        }
+    }
+    else
+    {
+        reason = UpdateResultReason::NoSourcesFound;
+    }
 
     if (progress->Cancelled())
         reason = UpdateResultReason::CancelledByUser;

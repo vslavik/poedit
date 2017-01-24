@@ -31,14 +31,14 @@ poedit_SOURCES = \
                  configuration.cpp configuration.h \
                  custom_buttons.cpp custom_buttons.h \
                  customcontrols.cpp customcontrols.h \
-                 digger.h digger.cpp \
                  edapp.cpp edapp.h \
                  edframe.cpp edframe.h \
                  editing_area.cpp editing_area.h \
                  edlistctrl.cpp edlistctrl.h \
                  errors.h \
                  export_html.cpp \
-                 extractor.cpp extractor.h \
+                 extractors/extractor.cpp extractors/extractor.h \
+                 extractors/extractor_legacy.cpp extractors/extractor_legacy.h \
                  fileviewer.cpp fileviewer.h \
                  findframe.cpp findframe.h \
                  gexecute.h gexecute.cpp \
