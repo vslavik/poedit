@@ -1593,9 +1593,10 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
         // msgcat always outputs Unix line endings, so we need to reformat the file
         if (msgcat_ok && outputCrlf == wxTextFileType_Dos)
         {
+            wxCSConv conv(m_header.Charset);
             wxTextFile finalFile(po_file_temp2);
-            if (finalFile.Open())
-                finalFile.Write(outputCrlf);
+            if (finalFile.Open(conv))
+                finalFile.Write(outputCrlf, conv);
         }
 
         if (!TempOutputFileFor::ReplaceFile(po_file_temp2, po_file))
