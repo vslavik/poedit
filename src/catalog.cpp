@@ -399,7 +399,7 @@ void Catalog::HeaderData::ParseDict()
     }
     else
     {
-        Charset = "iso-8859-1";
+        Charset = "ISO-8859-1";
     }
 
     // Parse language information, with backwards compatibility with X-Poedit-*:
@@ -911,7 +911,7 @@ class CharsetInfoFinder : public CatalogParser
 {
     public:
         CharsetInfoFinder(wxTextFile *f)
-                : CatalogParser(f), m_charset("iso-8859-1") {}
+                : CatalogParser(f), m_charset("ISO-8859-1") {}
         wxString GetCharset() const { return m_charset; }
 
     protected:
@@ -937,7 +937,7 @@ class CharsetInfoFinder : public CatalogParser
                 hdr.FromString(mtranslations[0]);
                 m_charset = hdr.Charset;
                 if (m_charset == "CHARSET")
-                    m_charset = "iso-8859-1";
+                    m_charset = "ISO-8859-1";
                 return false; // stop parsing
             }
             return true;
