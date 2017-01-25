@@ -222,15 +222,59 @@ Extractor::FilesList Extractor::FilterFiles(const FilesList& files) const
     FilesList out;
     for (auto& f: files)
     {
-#ifdef __WXMSW__
-        auto f_ = f.Lower();
-#else
-        auto& f_ = f;
-#endif
-        if (IsFileSupported(f_))
+        if (IsFileSupported(f))
             out.push_back(f);
     }
     return out;
+}
+
+
+bool Extractor::IsFileSupported(const wxString& file) const
+{
+#ifdef __WXMSW__
+    auto f = file.Lower();
+#else
+    auto& f = file;
+#endif
+
+    auto ext = f.AfterLast('.');
+    if (ext != f && m_extensions.find(ext) != m_extensions.end())
+        return true;
+
+    for (auto& w: m_wildcards)
+    {
+        if (f.Matches(w))
+            return true;
+    }
+
+    return false;
+}
+
+
+void Extractor::RegisterExtension(const wxString& ext)
+{
+    if (ext.Contains("."))
+    {
+        RegisterWildcard("*." + ext);
+        return;
+    }
+
+#ifdef __WXMSW__
+    m_extensions.insert(ext.Lower());
+#else
+    m_extensions.insert(ext);
+#endif
+    wxLogTrace("poedit.extractor", "%s handles extension %s", GetId(), ext);
+}
+
+void Extractor::RegisterWildcard(const wxString& wildcard)
+{
+#ifdef __WXMSW__
+    m_wildcards.push_back(wildcard.Lower());
+#else
+    m_wildcards.push_back(wildcard);
+#endif
+    wxLogTrace("poedit.extractor", "%s handles %s", GetId(), wildcard);
 }
 
 

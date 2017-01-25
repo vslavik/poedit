@@ -96,8 +96,13 @@ public:
     /// Returns extractor's symbolic name
     virtual wxString GetId() const = 0;
 
-    /// Returns whether the file is recognized
-    virtual bool IsFileSupported(const wxString& file) const = 0;
+    /**
+        Returns whether the file is recognized.
+        
+        Default implementation uses extension and wildcard matching, see
+        RegisterExtension() and RegisterWildcard().
+      */
+    virtual bool IsFileSupported(const wxString& file) const;
 
     /**
         Extracts translations from given source files using all
@@ -114,8 +119,20 @@ protected:
     Extractor() {}
     virtual ~Extractor() {}
 
+    /// Check if file is supported based on its extension
+    bool HasKnownExtension(const wxString& file) const;
+
+    /// Add a known extension or wildcard to be used by default IsFileSupported
+    /// (called from ctors)
+    void RegisterExtension(const wxString& ext);
+    void RegisterWildcard(const wxString& wildcard);
+
     /// Concatenates catalogs using msgcat
     static wxString ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxString>& files);
+
+private:
+    std::set<wxString> m_extensions;
+    std::vector<wxString> m_wildcards;
 
 protected:
     // private factories:

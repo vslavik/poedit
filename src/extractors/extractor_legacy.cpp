@@ -289,24 +289,8 @@ LegacyExtractor::LegacyExtractor(const LegacyExtractorSpec& spec)
     wxStringTokenizer tkn(spec.Extensions, ";, \t", wxTOKEN_STRTOK);
     while (tkn.HasMoreTokens())
     {
-        auto w = tkn.GetNextToken();
-#ifdef __WXMSW__
-        w.MakeLower();
-#endif
-        m_wildcards.push_back(w);
+        RegisterWildcard(tkn.GetNextToken());
     }
-}
-
-
-bool LegacyExtractor::IsFileSupported(const wxString& file) const
-{
-    for (auto& w: m_wildcards)
-    {
-        if (file.Matches(w))
-            return true;
-    }
-
-    return false;
 }
 
 

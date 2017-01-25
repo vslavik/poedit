@@ -119,7 +119,6 @@ public:
 
     wxString GetId() const override { return m_id; }
 
-    bool IsFileSupported(const wxString& file) const override;
     wxString Extract(TempDirectory& tmpdir,
                      const SourceCodeSpec& sourceSpec,
                      const std::vector<wxString>& files) const override;
@@ -127,7 +126,6 @@ public:
 private:
     wxString m_id;
     LegacyExtractorSpec m_spec;
-    std::vector<wxString> m_wildcards;
 };
 
 
