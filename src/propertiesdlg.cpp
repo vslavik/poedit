@@ -270,22 +270,26 @@ public:
         auto lbl = new wxStaticText(this, wxID_ANY, label);
         sizer->Add(lbl, wxSizerFlags().Expand());
         m_list = new wxListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, wxLB_EXTENDED);
-        sizer->Add(m_list, wxSizerFlags(1).Expand());
+        sizer->Add(m_list, wxSizerFlags(1).Expand().BORDER_WIN(wxLEFT, 1));
 
 #if defined(__WXOSX__)
         auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSAddTemplate"), wxDefaultPosition, wxSize(18, 18), wxBORDER_SUNKEN);
         auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSRemoveTemplate"), wxDefaultPosition, wxSize(18,18), wxBORDER_SUNKEN);
 #elif defined(__WXMSW__)
-        auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxSize(19,19));
-        auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxSize(19,19));
+        auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxSize(PX(19),PX(19)));
+        auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxSize(PX(19),PX(19)));
 #elif defined(__WXGTK__)
         auto add = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
         auto remove = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 #endif
         auto buttonSizer = new wxBoxSizer(wxHORIZONTAL);
         buttonSizer->Add(add);
+#ifdef __WXOSX__
+        buttonSizer->AddSpacer(PX(1));
+#endif
         buttonSizer->Add(remove);
-        sizer->Add(buttonSizer);
+        sizer->AddSpacer(PX(1));
+        sizer->Add(buttonSizer, wxSizerFlags().BORDER_MACOS(wxLEFT, PX(1)));
 
         SetDropTarget(new DropTarget(this));
 
