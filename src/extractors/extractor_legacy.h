@@ -73,6 +73,22 @@ class LegacyExtractorSpec
             charset name. %C in command is replaced with this. */
         wxString CharsetItem;
 
+        bool operator==(const LegacyExtractorSpec& other) const
+        {
+            return Name == other.Name &&
+                   Enabled == other.Enabled &&
+                   Extensions == other.Extensions &&
+                   Command == other.Command &&
+                   KeywordItem == other.KeywordItem &&
+                   FileItem == other.FileItem &&
+                   CharsetItem == other.CharsetItem;
+        }
+
+        bool operator!=(const LegacyExtractorSpec& other) const
+        {
+            return !(*this == other);
+        }
+
         /** Returns command line used to launch the extractor with specified
             input. This expands all veriables in Command property of the
             parser and returns string that be directly passed to wxExecute.
@@ -100,11 +116,8 @@ public:
     /// Write DB to registry/dotfile.
     void Write(wxConfigBase *cfg);
 
-    /// Returns index of extractor with given name or -1 if it can't be found:
-    int FindExtractor(const wxString& name) const;
-
-    /// Setup default extraction engines
-    static void SetupDefaultExtractors(wxConfigBase *cfg);
+    /// Remove definitions superseded by GettextExtractor
+    static void RemoveObsoleteExtractors(wxConfigBase *cfg);
 
     std::vector<LegacyExtractorSpec> Data;
 };

@@ -637,7 +637,7 @@ void PoeditApp::OpenFiles(const wxArrayString& names)
 
 void PoeditApp::SetDefaultCfg(wxConfigBase *cfg)
 {
-    LegacyExtractorsDB::SetupDefaultExtractors(cfg);
+    LegacyExtractorsDB::RemoveObsoleteExtractors(cfg);
 
     if (cfg->Read("version", wxEmptyString) == GetAppVersion()) return;
 

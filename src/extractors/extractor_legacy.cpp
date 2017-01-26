@@ -32,31 +32,52 @@
 #include <wx/config.h>
 #include <wx/tokenzr.h>
 
+namespace
+{
+
+inline LegacyExtractorSpec LoadExtractorSpec(const wxString& name, wxConfigBase *cfg)
+{
+    LegacyExtractorSpec info;
+    info.Name = name;
+    info.Enabled = cfg->ReadBool("Enabled", true);
+    info.Extensions = cfg->Read("Extensions", wxEmptyString);
+    info.Command = cfg->Read("Command", wxEmptyString);
+    info.KeywordItem = cfg->Read("KeywordItem", wxEmptyString);
+    info.FileItem = cfg->Read("FileItem", wxEmptyString);
+    info.CharsetItem = cfg->Read("CharsetItem", wxEmptyString);
+    return info;
+}
+
+template<typename F>
+inline void DoReadLegacyExtractors(wxConfigBase *cfg, F&& action)
+{
+    cfg->SetExpandEnvVars(false);
+
+    wxString oldpath = cfg->GetPath();
+    wxStringTokenizer tkn(cfg->Read("/Parsers/List", wxEmptyString), ";");
+
+    while (tkn.HasMoreTokens())
+    {
+        wxString name = tkn.GetNextToken();
+        wxString key = name; key.Replace("/", "_");
+        cfg->SetPath("/Parsers/" + key);
+        action(cfg, name);
+    }
+
+    cfg->SetPath(oldpath);
+}
+
+} // anonymous namespace
 
 void LegacyExtractorsDB::Read(wxConfigBase *cfg)
 {
     Data.clear();
 
-    cfg->SetExpandEnvVars(false);
-
-    LegacyExtractorSpec info;
-    wxString key, oldpath = cfg->GetPath();
-    wxStringTokenizer tkn(cfg->Read("Parsers/List", wxEmptyString), ";");
-
-    while (tkn.HasMoreTokens())
+    DoReadLegacyExtractors(cfg, [=](wxConfigBase *c, wxString name)
     {
-        info.Name = tkn.GetNextToken();
-        key = info.Name; key.Replace("/", "_");
-        cfg->SetPath("Parsers/" + key);
-        info.Enabled = cfg->ReadBool("Enabled", true);
-        info.Extensions = cfg->Read("Extensions", wxEmptyString);
-        info.Command = cfg->Read("Command", wxEmptyString);
-        info.KeywordItem = cfg->Read("KeywordItem", wxEmptyString);
-        info.FileItem = cfg->Read("FileItem", wxEmptyString);
-        info.CharsetItem = cfg->Read("CharsetItem", wxEmptyString);
-        Data.push_back(info);
-        cfg->SetPath(oldpath);
-    }
+        if (!c->ReadBool("DontUseIn20", false))
+            Data.push_back(LoadExtractorSpec(name, c));
+    });
 }
 
 
@@ -96,27 +117,13 @@ void LegacyExtractorsDB::Write(wxConfigBase *cfg)
 }
 
 
-int LegacyExtractorsDB::FindExtractor(const wxString& name) const
+void LegacyExtractorsDB::RemoveObsoleteExtractors(wxConfigBase *cfg)
 {
-    for (size_t i = 0; i < Data.size(); i++)
-    {
-        if (Data[i].Name == name)
-            return int(i);
-    }
-    return -1;
-}
+    // only run the migration once
+    if (cfg->ReadBool("/Parsers/MigratedTo20", false))
+        return;
 
-
-void LegacyExtractorsDB::SetupDefaultExtractors(wxConfigBase *cfg)
-{
-    LegacyExtractorsDB db;
-    bool changed = false;
-    wxString defaultsVersion = cfg->Read("Parsers/DefaultsVersion",
-                                         "1.2.x");
-    db.Read(cfg);
-
-    // Add extractors for languages supported by gettext itself (but only if the
-    // user didn't already add language with this name himself):
+    // Legacy extractor definitions. Now replaced with GettextExtractor.
     static struct
     {
         char enableByDefault;
@@ -149,78 +156,53 @@ void LegacyExtractorsDB::SetupDefaultExtractors(wxConfigBase *cfg)
         { 0, NULL, NULL }
     };
 
-    for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
+    DoReadLegacyExtractors(cfg, [=](wxConfigBase *c, wxString name)
     {
-        // if this lang is already registered, don't overwrite it:
-        if (db.FindExtractor(s_gettextLangs[i].name) != -1)
-            continue;
-
-        wxString langflag;
-        if ( wxStrcmp(s_gettextLangs[i].name, "C/C++") == 0 )
-            langflag = " --language=C++";
-        else
-            langflag = wxString(" --language=") + s_gettextLangs[i].name;
-
-        // otherwise add new extractor:
-        LegacyExtractorSpec ex;
-        ex.Name = s_gettextLangs[i].name;
-        ex.Enabled = (bool)s_gettextLangs[i].enableByDefault;
-        ex.Extensions = s_gettextLangs[i].exts;
-        ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --force-po -o %o %C %K %F";
-        ex.KeywordItem = "-k%k";
-        ex.FileItem = "%f";
-        ex.CharsetItem = "--from-code=%c";
-        db.Data.push_back(ex);
-        changed = true;
-    }
-
-    // If upgrading Poedit to 1.2.4, add dxgettext extractor for Delphi:
-#ifdef __WINDOWS__
-    if (defaultsVersion == "1.2.x")
-    {
-        LegacyExtractorSpec p;
-        p.Name = "Delphi (dxgettext)";
-        p.Extensions = "*.pas;*.dpr;*.xfm;*.dfm";
-        p.Command = "dxgettext --so %o %F";
-        p.KeywordItem = wxEmptyString;
-        p.FileItem = "%f";
-        db.Data.push_back(p);
-        changed = true;
-    }
-#endif
-
-    // If upgrading Poedit to 1.2.5, update C++ extractor to handle --from-code:
-    if (defaultsVersion == "1.2.x" || defaultsVersion == "1.2.4")
-    {
-        int cpp = db.FindExtractor("C/C++");
-        if (cpp != -1)
+        // check if it is a known default extractor; if not, keep it
+        for (size_t i = 0; s_gettextLangs[i].name != NULL; i++)
         {
-            if (db.Data[cpp].Command == "xgettext --force-po -o %o %K %F")
+            if (name == s_gettextLangs[i].name)
             {
-                db.Data[cpp].Command = "xgettext --force-po -o %o %C %K %F";
-                db.Data[cpp].CharsetItem = "--from-code=%c";
-                changed = true;
+                // build previously used default extractor definition:
+                wxString langflag;
+                if ( wxStrcmp(s_gettextLangs[i].name, "C/C++") == 0 )
+                    langflag = " --language=C++";
+                else
+                    langflag = wxString(" --language=") + s_gettextLangs[i].name;
+
+                LegacyExtractorSpec ex;
+                ex.Name = s_gettextLangs[i].name;
+                ex.Enabled = (bool)s_gettextLangs[i].enableByDefault;
+                ex.Extensions = s_gettextLangs[i].exts;
+                ex.Command = wxString("xgettext") + langflag + " --add-comments=TRANSLATORS: --force-po -o %o %C %K %F";
+                ex.KeywordItem = "-k%k";
+                ex.FileItem = "%f";
+                ex.CharsetItem = "--from-code=%c";
+
+                // load what is stored in the settings:
+                LegacyExtractorSpec loaded = LoadExtractorSpec(name, c);
+                loaded.Enabled = ex.Enabled;
+
+                if (loaded != ex)
+                {
+                    // this bad, but mostly harmless, config was used for ~2 years, so check for it too
+                    ex.Command.Replace(" --add-comments=TRANSLATORS: ", " --add-comments=TRANSLATORS: --add-comments=translators: ");
+                }
+
+                if (loaded == ex)
+                {
+                    // mark the extractor as not to be used, but keep it around
+                    // to make it possible to downgrade to Poedit 1.8:
+                    c->Write("DontUseIn20", true);
+                }
+                // else: keep customized extractor
+
+                break;
             }
         }
-    }
+    });
 
-    // Poedit 1.5.6 had a breakage, it add --add-comments without space in front of it.
-    // Repair this automatically:
-    for (size_t i = 0; i < db.Data.size(); i++)
-    {
-        wxString& cmd = db.Data[i].Command;
-        if (cmd.Contains("--add-comments=") && !cmd.Contains(" --add-comments="))
-        {
-            cmd.Replace("--add-comments=", " --add-comments=");
-            changed = true;
-        }
-    }
-
-    if (changed)
-    {
-        db.Write(cfg);
-        cfg->Write("Parsers/DefaultsVersion", "2.0");
-    }
+    cfg->Write("/Parsers/MigratedTo20", true);
 }
 
 
