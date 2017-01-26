@@ -137,6 +137,7 @@ private:
 protected:
     // private factories:
     static ExtractorsList CreateAllLegacyExtractors();
+    static std::shared_ptr<Extractor> CreateGettextExtractor();
 };
 
 #endif // Poedit_extractor_h

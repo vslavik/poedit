@@ -38,6 +38,7 @@ poedit_SOURCES = \
                  errors.h \
                  export_html.cpp \
                  extractors/extractor.cpp extractors/extractor.h \
+                 extractors/extractor_gettext.cpp \
                  extractors/extractor_legacy.cpp extractors/extractor_legacy.h \
                  fileviewer.cpp fileviewer.h \
                  findframe.cpp findframe.h \
