@@ -169,7 +169,8 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             name->SetFont(name->GetFont().Bold());
             auto username = new SecondaryLabel(this, m_userLogin);
 
-            sizer->Add(account, wxSizerFlags().PXBorder(wxRIGHT));
+            sizer->Add(account, wxSizerFlags().BORDER_MACOS(wxTOP, PX(3)));
+            sizer->AddSpacer(PX(2));
             auto box = new wxBoxSizer(wxVERTICAL);
             box->Add(name, wxSizerFlags().Left());
             box->Add(username, wxSizerFlags().Left());
