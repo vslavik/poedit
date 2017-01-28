@@ -84,28 +84,28 @@ void LegacyExtractorsDB::Read(wxConfigBase *cfg)
 void LegacyExtractorsDB::Write(wxConfigBase *cfg)
 {
 #if 0 // asserts on wxGTK, some bug in wx
-    if (cfg->HasGroup("Parsers"))
-        cfg->DeleteGroup("Parsers");
+    if (cfg->HasGroup("/Parsers"))
+        cfg->DeleteGroup("/Parsers");
 #endif
 
     cfg->SetExpandEnvVars(false);
 
-    if (Data.empty())
-        return;
-
     size_t i;
     wxString list;
-    list << Data[0].Name;
-    for (i = 1; i < Data.size(); i++)
-        list << ";" << Data[i].Name;
-    cfg->Write("Parsers/List", list);
+    if (!Data.empty())
+    {
+        list << Data[0].Name;
+        for (i = 1; i < Data.size(); i++)
+            list << ";" << Data[i].Name;
+    }
+    cfg->Write("/Parsers/List", list);
 
     wxString oldpath = cfg->GetPath();
     wxString key;
     for (const auto& item: Data)
     {
         key = item.Name; key.Replace("/", "_");
-        cfg->SetPath("Parsers/" + key);
+        cfg->SetPath("/Parsers/" + key);
         cfg->Write("Enabled", item.Enabled);
         cfg->Write("Extensions", item.Extensions);
         cfg->Write("Command", item.Command);
