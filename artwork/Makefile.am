@@ -37,6 +37,8 @@ dist_uiicons_DATA = \
 		poedit-status-comment-selected@2x.png \
 		poedit-status-comment.png \
 		poedit-status-comment@2x.png \
+		poedit-status-error.png \
+		poedit-status-error@2x.png \
 		poedit-status-cat-mid.png \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \
@@ -46,4 +48,6 @@ dist_uiicons_DATA = \
 		SuggestionPerfectMatch@2x.png \
 		SuggestionTM.png \
 		PoeditWelcome.png \
-		CrowdinLogo.png
+		CrowdinLogo.png \
+		ExtractorsGNUgettext.png \
+		ExtractorsGNUgettext@2x.png
