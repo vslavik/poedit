@@ -85,6 +85,9 @@ wxImage LoadScaledBitmap(const wxString& name)
             LoadPNGImage(img, filename);
         }
 
+        if (!img.IsOk())
+            return wxNullImage;
+
         wxImageResizeQuality quality;
         if (imgScale == 2.0)
             quality = wxIMAGE_QUALITY_NEAREST;

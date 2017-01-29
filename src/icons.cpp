@@ -133,6 +133,11 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     icon.Printf("%s/%s", iconsdir, id);
     wxLogTrace("poedit.icons", "loading from %s", icon);
     wxImage img = LoadScaledBitmap(icon);
+    if (!img.IsOk())
+    {
+        wxLogTrace("poedit.icons", "failed to load icon '%s'", id);
+        return wxNullBitmap;
+    }
 
     if (disabledVariant)
         img = img.ConvertToDisabled();
