@@ -745,7 +745,7 @@ private:
     {
         int index = m_list->GetSelection();
 
-        auto title = _("Delete extractor");
+        auto title = MSW_OR_OTHER(_("Delete extractor"), "");
         auto main = wxString::Format(_(L"Are you sure you want to delete the “%s” extractor?"), m_extractors.Data[index].Name);
 
         wxWindowPtr<wxMessageDialog> dlg(new wxMessageDialog(this, main, title, wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION));
