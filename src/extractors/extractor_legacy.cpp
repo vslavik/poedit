@@ -53,8 +53,12 @@ inline void DoReadLegacyExtractors(wxConfigBase *cfg, F&& action)
 {
     cfg->SetExpandEnvVars(false);
 
+    wxString list = cfg->Read("/Parsers/CustomExtractorsList", "");
+    if (list.empty())
+        list = cfg->Read("/Parsers/List", "");
+
     wxString oldpath = cfg->GetPath();
-    wxStringTokenizer tkn(cfg->Read("/Parsers/List", wxEmptyString), ";");
+    wxStringTokenizer tkn(list, ";");
 
     while (tkn.HasMoreTokens())
     {
@@ -98,7 +102,7 @@ void LegacyExtractorsDB::Write(wxConfigBase *cfg)
         for (i = 1; i < Data.size(); i++)
             list << ";" << Data[i].Name;
     }
-    cfg->Write("/Parsers/List", list);
+    cfg->Write("/Parsers/CustomExtractorsList", list);
 
     wxString oldpath = cfg->GetPath();
     wxString key;
