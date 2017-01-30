@@ -43,6 +43,7 @@
 #include <wx/stattext.h>
 #include <wx/menu.h>
 #include <wx/notebook.h>
+#include <wx/windowptr.h>
 
 #include <wx/nativewin.h>
 #if !wxCHECK_VERSION(3,1,0)
@@ -452,12 +453,141 @@ protected:
 };
 
 
+struct PropertiesDialog::GettextSettings
+{
+    wxString CommentTag;
+    wxString XgettextFlags;
+};
+
+class PropertiesDialog::GettextSettingsDialog : public wxDialog
+{
+public:
+    GettextSettingsDialog(wxWindow *parent) : wxDialog(parent, wxID_ANY, _("Advanced extraction settings"))
+    {
+        auto outer = new wxBoxSizer(wxVERTICAL);
+        auto sizer = new wxBoxSizer(wxVERTICAL);
+        outer->Add(sizer, wxSizerFlags(1).Expand().Border(wxALL, PX(15)));
+
+        sizer->Add(new wxStaticText(this, wxID_ANY, _("Extract notes for translators from:")));
+        sizer->AddSpacer(PX(4));
+        m_commentsPrefixed = new wxRadioButton(this, wxID_ANY, _("Comments prefixed with:"));
+        m_commentsPrefix = new wxTextCtrl(this, wxID_ANY, "");
+        m_commentsPrefix->SetHint("TRANSLATORS:");
+        auto prefixSizer = new wxBoxSizer(wxHORIZONTAL);
+        sizer->Add(prefixSizer, wxSizerFlags().Expand().Border(wxLEFT, PX(10)));
+        prefixSizer->Add(m_commentsPrefixed, wxSizerFlags().Center().BORDER_MACOS(wxTOP, PX(3)).BORDER_WIN(wxBOTTOM, PX(1)));
+        prefixSizer->Add(m_commentsPrefix, wxSizerFlags(1).Center().Border(wxLEFT, PX(5)));
+
+        sizer->AddSpacer(PX(2));
+        m_commentsAll = new wxRadioButton(this, wxID_ANY, _("All comments"));
+        sizer->Add(m_commentsAll, wxSizerFlags().Border(wxLEFT, PX(10)));
+
+        sizer->Add(new wxStaticText(this, wxID_ANY, _("Additional xgettext flags:")), wxSizerFlags().Border(wxTOP, PX(15)));
+        m_flags = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(PX(450), -1));
+#ifdef __WXOSX__
+        m_flags->OSXDisableAllSmartSubstitutions();
+#endif
+        sizer->Add(m_flags, wxSizerFlags().Expand().Border(wxTOP, PX(5)));
+
+        auto buttons = CreateButtonSizer(wxOK | wxCANCEL);
+#ifdef __WXOSX__
+        outer->Add(buttons, wxSizerFlags().Expand());
+#else
+        outer->Add(buttons, wxSizerFlags().Expand().PXDoubleBorder(wxLEFT|wxRIGHT|wxBOTTOM));
+#endif
+
+        m_commentsPrefix->Bind(
+            wxEVT_UPDATE_UI,
+            [=](wxUpdateUIEvent& e){ e.Enable(m_commentsPrefixed->GetValue()); });
+
+        SetSizerAndFit(outer);
+        CenterOnParent();
+    }
+
+    void TransferTo(const PropertiesDialog::GettextSettings& data)
+    {
+        auto flags = data.XgettextFlags;
+        auto pos = flags.Find("--add-comments");
+        if (pos != wxNOT_FOUND)
+        {
+            auto posStart = pos;
+            pos += 14;
+            if (pos < (int)flags.size() && flags[pos] == '=')
+            {
+                wxString prefix;
+                pos++;
+                char lookFor = (flags[pos] == '"') ? '"' : ' ';
+                if (lookFor == '"')
+                    pos++;
+                while (pos < (int)flags.size() && flags[pos] != lookFor)
+                    prefix += flags[pos++];
+                if (lookFor == '"')
+                    pos++;
+
+                m_commentsPrefix->SetValue(prefix);
+                m_commentsPrefixed->SetValue(true);
+            }
+            else
+            {
+                m_commentsAll->SetValue(true);
+            }
+            if (pos < (int)flags.size() && flags[pos] == ' ')
+                pos++;
+            flags = flags.replace(posStart, pos - posStart, "");
+        }
+        else
+        {
+            m_commentsPrefixed->SetValue(true);
+            m_commentsPrefix->SetValue("TRANSLATORS:");
+        }
+
+        m_flags->SetValue(flags.Strip());
+    }
+
+    void TransferFrom(PropertiesDialog::GettextSettings& data) const
+    {
+        wxString flags;
+
+        if (m_commentsAll->GetValue())
+        {
+            flags = "--add-comments";
+        }
+        else
+        {
+            auto prefix = m_commentsPrefix->GetValue();
+            if (!prefix.empty() && prefix != "TRANSLATORS:")
+            {
+                if (prefix.Contains(" ") && prefix[0] != '"')
+                    prefix = '"' + prefix + '"';
+                flags.Printf("--add-comments=%s", prefix);
+            }
+        }
+
+        if (!m_flags->GetValue().empty())
+        {
+            if (!flags.empty())
+                flags += " ";
+            flags += m_flags->GetValue();
+        }
+
+        data.XgettextFlags = flags;
+    }
+
+private:
+    wxRadioButton *m_commentsAll, *m_commentsPrefixed;
+    wxTextCtrl *m_commentsPrefix;
+    wxTextCtrl *m_flags;
+};
+
+
 PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage)
     : m_validatedPlural(-1), m_validatedLang(-1)
 {
     m_hasLang = cat->HasCapability(Catalog::Cap::LanguageSetting);
 
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
+
+    m_gettextSettings.reset(new GettextSettings);
 
     m_team = XRCCTRL(*this, "team", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
@@ -557,6 +687,12 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     openBasepath->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){
         wxLaunchDefaultApplication(m_pathsData->basepath);
     });
+
+    XRCCTRL(*this, "gettext_settings", wxButton)->Bind(wxEVT_BUTTON, &PropertiesDialog::OnGettextSettings, this);
+}
+
+PropertiesDialog::~PropertiesDialog()
+{
 }
 
 
@@ -675,6 +811,8 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
 
     m_pathsData->GetFromCatalog(cat);
     m_pathsData->RefreshView();
+
+    m_gettextSettings->XgettextFlags = cat->Header().GetHeader("X-Poedit-Flags-xgettext");
 }
 
 
@@ -713,6 +851,8 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
 
     if (m_pathsData->Changed)
         m_pathsData->SetToCatalog(cat);
+
+    cat->Header().SetHeaderNotEmpty("X-Poedit-Flags-xgettext", m_gettextSettings->XgettextFlags);
 }
 
 
@@ -782,6 +922,15 @@ void PropertiesDialog::OnPluralFormsCustom(wxCommandEvent& event)
     event.Skip();
 }
 
+void PropertiesDialog::OnGettextSettings(wxCommandEvent&)
+{
+    wxWindowPtr<GettextSettingsDialog> dlg(new GettextSettingsDialog(this));
+    dlg->TransferTo(*m_gettextSettings);
+    dlg->ShowWindowModalThenDo([this,dlg](int retval){
+        if (retval == wxID_OK)
+            dlg->TransferFrom(*m_gettextSettings);
+    });
+}
 
 bool PropertiesDialog::Validate()
 {

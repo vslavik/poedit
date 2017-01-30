@@ -2186,6 +2186,8 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
     spec.ExcludedPaths = m_header.SearchPathsExcluded;
     spec.Charset = m_header.SourceCodeCharset;
     spec.Keywords = m_header.Keywords;
+    for (auto& kv: m_header.GetAllHeaders())
+        spec.XHeaders[kv.Key] = kv.Value;
 
     CatalogPtr newcat = nullptr;
 

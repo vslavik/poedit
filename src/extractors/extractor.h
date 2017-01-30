@@ -26,6 +26,7 @@
 #ifndef Poedit_extractor_h
 #define Poedit_extractor_h
 
+#include <map>
 #include <memory>
 #include <set>
 #include <vector>
@@ -50,6 +51,9 @@ public:
 
         wxArrayString Keywords;
         wxString Charset;
+
+        // additional keys from the headers
+        std::map<wxString, wxString> XHeaders;
     };
 
     typedef std::vector<std::shared_ptr<Extractor>> ExtractorsList;

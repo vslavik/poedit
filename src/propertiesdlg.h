@@ -45,6 +45,7 @@ class PropertiesDialog : public wxDialog
 {
     public:
         PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileExistsOnDisk, int initialPage = 0);
+        ~PropertiesDialog();
 
         /// Reads data from the catalog and fill dialog's controls.
         void TransferTo(const CatalogPtr& cat);
@@ -61,12 +62,16 @@ class PropertiesDialog : public wxDialog
         void OnLanguageValueChanged(const wxString& langstr);
         void OnPluralFormsDefault(wxCommandEvent& event);
         void OnPluralFormsCustom(wxCommandEvent& event);
+        void OnGettextSettings(wxCommandEvent& event);
 
         struct PathsData;
         class BasePathCtrl;
         class PathsList;
         class SourcePathsList;
         class ExcludedPathsList;
+
+        struct GettextSettings;
+        class GettextSettingsDialog;
 
         wxTextCtrl *m_team, *m_project;
         LanguageCtrl *m_language;
@@ -79,7 +84,7 @@ class PropertiesDialog : public wxDialog
         wxEditableListBox *m_keywords;
         wxCheckBox *m_defaultKeywords;
         wxString m_rememberedPluralForm;
-
+        std::shared_ptr<GettextSettings> m_gettextSettings;
         bool m_hasLang;
         int m_validatedPlural, m_validatedLang;
 };

@@ -145,8 +145,18 @@ public:
             cmdline += wxString::Format(" -k%s", QuoteCmdlineArg(kw));
         }
 
-        // FIXME: make configurable
-        cmdline += " --add-comments=TRANSLATORS:";
+        wxString extraFlags;
+        try
+        {
+            extraFlags = sourceSpec.XHeaders.at("X-Poedit-Flags-xgettext");
+        }
+        catch (std::out_of_range) {}
+
+        if (!extraFlags.Contains("--add-comments"))
+            cmdline += " --add-comments=TRANSLATORS:";
+
+        if (!extraFlags.empty())
+            cmdline += " " + extraFlags;
 
         if (!ExecuteGettext(cmdline))
             return "";
