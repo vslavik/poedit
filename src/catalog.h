@@ -496,7 +496,7 @@ class Catalog
 
             wxString Project, CreationDate,
                      RevisionDate, Translator, TranslatorEmail,
-                     Team, TeamEmail, Charset, SourceCodeCharset;
+                     LanguageTeam, Charset, SourceCodeCharset;
             Language Lang;
 
             wxArrayString SearchPaths, SearchPathsExcluded, Keywords;

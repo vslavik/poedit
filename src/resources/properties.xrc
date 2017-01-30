@@ -30,22 +30,43 @@
                   <flag>wxEXPAND|wxRIGHT|wxTOP|wxBOTTOM</flag>
                 </object>
                 <object class="sizeritem">
+                  <object class="wxStaticText">
+                    <label>Language team:</label>
+                  </object>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <border>5d</border>
+                </object>
+                <object class="sizeritem">
+                  <object class="wxTextCtrl" name="team">
+                    <size>100,-1d</size>
+                    <hint>Team name and email address or URL</hint>
+                  </object>
+                  <border>5d</border>
+                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                </object>
+                <object class="spacer">
+                    <size>8,8d</size>
+                </object>
+                <object class="spacer">
+                    <size>8,8d</size>
+                </object>
+                <object class="sizeritem">
                   <object class="wxStaticText" name="language_label">
                     <label>Language:</label>
                   </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <flag>wxLEFT|wxRIGHT|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
                   <border>5d</border>
                 </object>
                 <object class="sizeritem">
                   <object class="wxComboBox" subclass="LanguageCtrl" name="language"/>
                   <border>5d</border>
-                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
+                  <flag>wxEXPAND|wxRIGHT</flag>
                 </object>
                 <object class="sizeritem">
                   <object class="wxStaticText" name="plural_forms_label">
                     <label>Plural Forms:</label>
                   </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
+                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxTOP|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
                   <border>5d</border>
                 </object>
                 <object class="sizeritem">
@@ -81,6 +102,12 @@
                   <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
                   <border>5d</border>
                 </object>
+                <object class="spacer">
+                    <size>8,8d</size>
+                </object>
+                <object class="spacer">
+                    <size>8,8d</size>
+                </object>
                 <object class="sizeritem">
                   <object class="wxStaticText">
                     <label>Charset:</label>
@@ -102,40 +129,6 @@
                 </object>
                 <object class="sizeritem">
                   <object class="wxComboBox" name="source_code_charset"/>
-                  <border>5d</border>
-                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
-                </object>
-                <object class="spacer">
-                    <size>10,20</size>
-                </object>
-                <object class="spacer">
-                    <size>10,20</size>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxStaticText">
-                    <label>Team:</label>
-                  </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxTextCtrl" name="team_name">
-                    <size>100,-1d</size>
-                  </object>
-                  <border>5d</border>
-                  <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxStaticText">
-                    <label>Team's email address:</label>
-                  </object>
-                  <flag>wxLEFT|wxRIGHT|wxBOTTOM|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL</flag>
-                  <border>5d</border>
-                </object>
-                <object class="sizeritem">
-                  <object class="wxTextCtrl" name="team_email">
-                    <size>100,-1d</size>
-                  </object>
                   <border>5d</border>
                   <flag>wxEXPAND|wxRIGHT|wxBOTTOM</flag>
                 </object>

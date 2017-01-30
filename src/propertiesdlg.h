@@ -68,7 +68,7 @@ class PropertiesDialog : public wxDialog
         class SourcePathsList;
         class ExcludedPathsList;
 
-        wxTextCtrl *m_team, *m_teamEmail, *m_project;
+        wxTextCtrl *m_team, *m_project;
         LanguageCtrl *m_language;
         wxComboBox *m_charset, *m_sourceCodeCharset;
         wxRadioButton *m_pluralFormsDefault, *m_pluralFormsCustom;

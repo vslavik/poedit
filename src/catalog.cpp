@@ -266,18 +266,7 @@ void Catalog::HeaderData::UpdateDict()
             SetHeader("Last-Translator", Translator + " <" + TranslatorEmail + ">");
     }
 
-    if (TeamEmail.empty())
-    {
-        SetHeader("Language-Team", Team);
-    }
-    else
-    {
-        if (Team.empty())
-            SetHeader("Language-Team", TeamEmail);
-        else
-            SetHeader("Language-Team", Team + " <" + TeamEmail + ">");
-    }
-
+    SetHeader("Language-Team", LanguageTeam);
     SetHeader("MIME-Version", "1.0");
     SetHeader("Content-Type", "text/plain; charset=" + Charset);
     SetHeader("Content-Transfer-Encoding", "8bit");
@@ -374,21 +363,7 @@ void Catalog::HeaderData::ParseDict()
         }
     }
 
-    dummy = GetHeader("Language-Team");
-    if (!dummy.empty())
-    {
-        wxStringTokenizer tkn(dummy, "<>");
-        if (tkn.CountTokens() != 2)
-        {
-            Team = dummy;
-            TeamEmail = wxEmptyString;
-        }
-        else
-        {
-            Team = tkn.GetNextToken().Strip(wxString::trailing);
-            TeamEmail = tkn.GetNextToken();
-        }
-    }
+    LanguageTeam = GetHeader("Language-Team");
 
     wxString ctype = GetHeader("Content-Type");
     int charsetPos = ctype.Find("; charset=");
@@ -1170,8 +1145,7 @@ void Catalog::CreateNewHeader()
         dt.SetHeader("Plural-Forms", "nplurals=INTEGER; plural=EXPRESSION;"); // default invalid value
 
     dt.Project = wxEmptyString;
-    dt.Team = wxEmptyString;
-    dt.TeamEmail = wxEmptyString;
+    dt.LanguageTeam = wxEmptyString;
     dt.Charset = "UTF-8";
     dt.Translator = wxConfig::Get()->Read("translator_name", wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", wxEmptyString);
@@ -1192,10 +1166,8 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
 
     // clear the fields that are translation-specific:
     dt.Lang = Language();
-    if (dt.Team == "LANGUAGE")
-        dt.Team.clear();
-    if (dt.TeamEmail == "LL@li.org")
-        dt.TeamEmail.clear();
+    if (dt.LanguageTeam == "LANGUAGE <LL@li.org>")
+        dt.LanguageTeam.clear();
 
     // translator should be pre-filled & not the default "FULL NAME <EMAIL@ADDRESS>"
     dt.DeleteHeader("Last-Translator");
@@ -1334,8 +1306,7 @@ void Catalog::FixupCommonIssues()
     if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
     {
         m_header.DeleteHeader("Language-Team");
-        m_header.Team.clear();
-        m_header.TeamEmail.clear();
+        m_header.LanguageTeam.clear();
     }
 
     if (m_header.GetHeader("Last-Translator") == "FULL NAME <EMAIL@ADDRESS>")

@@ -459,8 +459,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
 
     wxXmlResource::Get()->LoadDialog(this, parent, "properties");
 
-    m_team = XRCCTRL(*this, "team_name", wxTextCtrl);
-    m_teamEmail = XRCCTRL(*this, "team_email", wxTextCtrl);
+    m_team = XRCCTRL(*this, "team", wxTextCtrl);
     m_project = XRCCTRL(*this, "prj_name", wxTextCtrl);
     m_language = XRCCTRL(*this, "language", LanguageCtrl);
     m_charset = XRCCTRL(*this, "charset", wxComboBox);
@@ -646,8 +645,7 @@ void PropertiesDialog::TransferTo(const CatalogPtr& cat)
     SetCharsetToCombobox(m_sourceCodeCharset, cat->Header().SourceCodeCharset);
 
     #define SET_VAL(what,what2) m_##what2->SetValue(cat->Header().what)
-    SET_VAL(Team, team);
-    SET_VAL(TeamEmail, teamEmail);
+    SET_VAL(LanguageTeam, team);
     SET_VAL(Project, project);
     #undef SET_VAL
 
@@ -686,8 +684,7 @@ void PropertiesDialog::TransferFrom(const CatalogPtr& cat)
     cat->Header().SourceCodeCharset = GetCharsetFromCombobox(m_sourceCodeCharset);
 
     #define GET_VAL(what,what2) cat->Header().what = m_##what2->GetValue()
-    GET_VAL(Team, team);
-    GET_VAL(TeamEmail, teamEmail);
+    GET_VAL(LanguageTeam, team);
     GET_VAL(Project, project);
     #undef GET_VAL
 
