@@ -449,6 +449,7 @@ PoeditFrame::PoeditFrame() :
     m_setSashPositionsWhenMaximized(false)
 {
     m_list = nullptr;
+    m_editingArea = nullptr;
     m_splitter = nullptr;
     m_sidebarSplitter = nullptr;
     m_sidebar = nullptr;
@@ -855,7 +856,7 @@ void PoeditFrame::InitSpellchecker()
     }
 #endif
 
-    if (!m_editingArea->InitSpellchecker(enabled, lang))
+    if (m_editingArea && !m_editingArea->InitSpellchecker(enabled, lang))
         report_problem = true;
 
 #ifndef __WXMSW__ // language choice is automatic, per-keyboard on Windows, can't fail
@@ -892,11 +893,11 @@ void PoeditFrame::UpdateTextLanguage()
     if (!m_catalog)
         return;
 
-    InitSpellchecker();
-
-    auto lang = m_catalog->GetLanguage();
-
-    m_editingArea->SetLanguage(lang);
+    if (m_editingArea)
+    {
+        InitSpellchecker();
+        m_editingArea->SetLanguage(m_catalog->GetLanguage());
+    }
 
     if (m_sidebar)
         m_sidebar->RefreshContent();
