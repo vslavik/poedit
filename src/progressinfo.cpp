@@ -98,6 +98,11 @@ void ProgressInfo::ResetGauge(int value)
     XRCCTRL(*m_dlg, "progress", wxGauge)->SetValue(value);
 }
 
+void ProgressInfo::PulseGauge()
+{
+    XRCCTRL(*m_dlg, "progress", wxGauge)->Pulse();
+}
+
 void ProgressInfo::UpdateMessage(const wxString& text)
 {
     wxStaticText *txt = XRCCTRL(*m_dlg, "info", wxStaticText);

@@ -42,9 +42,8 @@
 #include "catalog.h"
 
 #include "configuration.h"
-#include "digger.h"
+#include "extractors/extractor.h"
 #include "gexecute.h"
-#include "progressinfo.h"
 #include "str_helpers.h"
 #include "utility.h"
 #include "version.h"
@@ -57,7 +56,6 @@
 // TODO: split into different file
 #if wxUSE_GUI
     #include <wx/msgdlg.h>
-    #include "summarydlg.h"
 #endif
 
 // ----------------------------------------------------------------------
@@ -266,18 +264,7 @@ void Catalog::HeaderData::UpdateDict()
             SetHeader("Last-Translator", Translator + " <" + TranslatorEmail + ">");
     }
 
-    if (TeamEmail.empty())
-    {
-        SetHeader("Language-Team", Team);
-    }
-    else
-    {
-        if (Team.empty())
-            SetHeader("Language-Team", TeamEmail);
-        else
-            SetHeader("Language-Team", Team + " <" + TeamEmail + ">");
-    }
-
+    SetHeader("Language-Team", LanguageTeam);
     SetHeader("MIME-Version", "1.0");
     SetHeader("Content-Type", "text/plain; charset=" + Charset);
     SetHeader("Content-Transfer-Encoding", "8bit");
@@ -374,21 +361,7 @@ void Catalog::HeaderData::ParseDict()
         }
     }
 
-    dummy = GetHeader("Language-Team");
-    if (!dummy.empty())
-    {
-        wxStringTokenizer tkn(dummy, "<>");
-        if (tkn.CountTokens() != 2)
-        {
-            Team = dummy;
-            TeamEmail = wxEmptyString;
-        }
-        else
-        {
-            Team = tkn.GetNextToken().Strip(wxString::trailing);
-            TeamEmail = tkn.GetNextToken();
-        }
-    }
+    LanguageTeam = GetHeader("Language-Team");
 
     wxString ctype = GetHeader("Content-Type");
     int charsetPos = ctype.Find("; charset=");
@@ -1170,8 +1143,7 @@ void Catalog::CreateNewHeader()
         dt.SetHeader("Plural-Forms", "nplurals=INTEGER; plural=EXPRESSION;"); // default invalid value
 
     dt.Project = wxEmptyString;
-    dt.Team = wxEmptyString;
-    dt.TeamEmail = wxEmptyString;
+    dt.LanguageTeam = wxEmptyString;
     dt.Charset = "UTF-8";
     dt.Translator = wxConfig::Get()->Read("translator_name", wxEmptyString);
     dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", wxEmptyString);
@@ -1192,10 +1164,8 @@ void Catalog::CreateNewHeader(const Catalog::HeaderData& pot_header)
 
     // clear the fields that are translation-specific:
     dt.Lang = Language();
-    if (dt.Team == "LANGUAGE")
-        dt.Team.clear();
-    if (dt.TeamEmail == "LL@li.org")
-        dt.TeamEmail.clear();
+    if (dt.LanguageTeam == "LANGUAGE <LL@li.org>")
+        dt.LanguageTeam.clear();
 
     // translator should be pre-filled & not the default "FULL NAME <EMAIL@ADDRESS>"
     dt.DeleteHeader("Last-Translator");
@@ -1334,8 +1304,7 @@ void Catalog::FixupCommonIssues()
     if (m_header.GetHeader("Language-Team") == "LANGUAGE <LL@li.org>")
     {
         m_header.DeleteHeader("Language-Team");
-        m_header.Team.clear();
-        m_header.TeamEmail.clear();
+        m_header.LanguageTeam.clear();
     }
 
     if (m_header.GetHeader("Last-Translator") == "FULL NAME <EMAIL@ADDRESS>")
@@ -2189,105 +2158,74 @@ bool Catalog::HasSourcesAvailable() const
     return true;
 }
 
-#if wxUSE_GUI // TODO: better separation into another file
-bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason)
+std::shared_ptr<SourceCodeSpec> Catalog::GetSourceCodeSpec() const
 {
-    reason = UpdateResultReason::Unspecified;
-
     if (!m_isOk)
-        return false;
+        return nullptr;
 
-    wxString cwd = wxGetCwd();
     auto path = GetSourcesBasePath();
     if (!path.empty())
     {
         if (!wxFileName::DirExists(path))
-        {
-            reason = UpdateResultReason::NoSourcesFound;
-            return false;
-        }
-
-        wxSetWorkingDirectory(path);
+            return nullptr;
     }
 
-    SourceDigger dig(progress);
+    auto spec = std::make_shared<SourceCodeSpec>();
+    spec->BasePath = !path.empty() ? path : ".";
+    spec->SearchPaths = m_header.SearchPaths;
+    spec->ExcludedPaths = m_header.SearchPathsExcluded;
+    spec->Charset = m_header.SourceCodeCharset;
+    spec->Keywords = m_header.Keywords;
+    for (auto& kv: m_header.GetAllHeaders())
+        spec->XHeaders[kv.Key] = kv.Value;
 
-    auto newcat = dig.Dig(m_header.SearchPaths,
-                          m_header.SearchPathsExcluded,
-                          m_header.Keywords,
-                          m_header.SourceCodeCharset,
-                          reason);
-
-    if (progress->Cancelled())
-        reason = UpdateResultReason::CancelledByUser;
-
-    if (newcat)
-    {
-        bool succ = false;
-        if ( progress )
-            progress->UpdateMessage(_("Merging differences..."));
-
-        bool cancelledByUser = false;
-        if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
-        {
-            switch (m_fileType)
-            {
-                case Type::PO:
-                    succ = Merge(newcat);
-                    break;
-                case Type::POT:
-                    m_items = newcat->m_items;
-                    succ = true;
-                    break;
-            }
-        }
-        if (!succ)
-        {
-            newcat.reset();
-        }
-        if (cancelledByUser)
-            reason = UpdateResultReason::CancelledByUser;
-    }
-
-    wxSetWorkingDirectory(cwd);
-
-    return newcat != nullptr;
+    return spec;
 }
-#endif
 
-bool Catalog::UpdateFromPOT(const wxString& pot_file,
-                            bool summary,
-                            UpdateResultReason& reason,
-                            bool replace_header)
+
+bool Catalog::UpdateFromPOT(const wxString& pot_file, bool replace_header)
 {
-    reason = UpdateResultReason::Unspecified;
-    if (!m_isOk) return false;
-
-    CatalogPtr newcat = std::make_shared<Catalog>(pot_file, CreationFlag_IgnoreTranslations);
-
-    if (!newcat->IsOk())
+    CatalogPtr pot = std::make_shared<Catalog>(pot_file, CreationFlag_IgnoreTranslations);
+    if (!pot->IsOk())
     {
         wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
         return false;
     }
 
-    bool cancelledByUser = false;
-    if (!summary || ShowMergeSummary(newcat, &cancelledByUser))
-    {
-        if ( !Merge(newcat) )
-            return false;
-        if ( replace_header )
-            CreateNewHeader(newcat->Header());
-        return true;
-    }
-    else
-    {
-        if (cancelledByUser)
-            reason = UpdateResultReason::CancelledByUser;
-        return false;
-    }
+    return UpdateFromPOT(pot, replace_header);
 }
 
+bool Catalog::UpdateFromPOT(CatalogPtr pot, bool replace_header)
+{
+    switch (m_fileType)
+    {
+        case Type::PO:
+        {
+            if (!Merge(pot))
+                return false;
+            break;
+        }
+        case Type::POT:
+        {
+            m_items = pot->m_items;
+            break;
+        }
+    }
+
+    if (replace_header)
+        CreateNewHeader(pot->Header());
+
+    return true;
+}
+
+CatalogPtr Catalog::CreateFromPOT(const wxString& pot_file)
+{
+    CatalogPtr c = std::make_shared<Catalog>();
+    if (c->UpdateFromPOT(pot_file, /*replace_header=*/true))
+        return c;
+    else
+        return nullptr;
+}
 
 bool Catalog::Merge(const CatalogPtr& refcat)
 {
@@ -2339,68 +2277,6 @@ bool Catalog::Merge(const CatalogPtr& refcat)
     return succ;
 }
 
-
-static inline wxString ItemMergeSummary(const CatalogItemPtr& item)
-{
-    wxString s = item->GetString();
-    if ( item->HasPlural() )
-        s += "|" + item->GetPluralString();
-    if ( item->HasContext() )
-        s += wxString::Format(" [%s]", item->GetContext());
-
-    return s;
-}
-
-void Catalog::GetMergeSummary(const CatalogPtr& refcat,
-                              wxArrayString& snew, wxArrayString& sobsolete)
-{
-    wxASSERT( snew.empty() );
-    wxASSERT( sobsolete.empty() );
-
-    std::set<wxString> strsThis, strsRef;
-
-    for (auto& i: m_items)
-        strsThis.insert(ItemMergeSummary(i));
-    for (auto& i: refcat->m_items)
-        strsRef.insert(ItemMergeSummary(i));
-
-    for (auto& i: strsThis)
-    {
-        if (strsRef.find(i) == strsRef.end())
-            sobsolete.Add(i);
-    }
-
-    for (auto& i: strsRef)
-    {
-        if (strsThis.find(i) == strsThis.end())
-            snew.Add(i);
-    }
-}
-
-bool Catalog::ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser)
-{
-#if wxUSE_GUI
-    if (cancelledByUser)
-        *cancelledByUser = false;
-    if (wxConfig::Get()->ReadBool("show_summary", false))
-    {
-        wxArrayString snew, sobsolete;
-        GetMergeSummary(refcat, snew, sobsolete);
-        MergeSummaryDialog sdlg;
-        sdlg.TransferTo(snew, sobsolete);
-        bool ok = (sdlg.ShowModal() == wxID_OK);
-        if (cancelledByUser)
-            *cancelledByUser = !ok;
-        return ok;
-    }
-    else
-        return true;
-#else
-    (void)refcat;
-    (void)cancelledByUser;
-    return true;
-#endif
-}
 
 static unsigned GetCountFromPluralFormsHeader(const Catalog::HeaderData& header)
 {

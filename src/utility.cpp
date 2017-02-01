@@ -98,7 +98,7 @@ wxFileName MakeFileName(const wxString& path)
 
 bool TempDirectory::ms_keepFiles = false;
 
-TempDirectory::TempDirectory() : m_counter(0)
+TempDirectory::TempDirectory()
 {
 #ifdef HAVE_MKDTEMP
     wxString path = wxFileName::GetTempDir();
@@ -164,9 +164,12 @@ void TempDirectory::Clear()
 wxString TempDirectory::CreateFileName(const wxString& suffix)
 {
     wxASSERT( !m_dir.empty() );
-    wxString s = wxString::Format("%s%c%d%s",
+
+    int counter = m_counters[suffix]++;
+
+    wxString s = wxString::Format("%s%c%s%s",
                                   m_dir.c_str(), wxFILE_SEP_PATH,
-                                  m_counter++,
+                                  counter > 0 ? wxString::Format("%d", counter) : wxString(),
                                   suffix.c_str());
     wxLogTrace("poedit.tmp", "new temp file %s", s.c_str());
     return s;

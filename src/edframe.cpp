@@ -57,6 +57,7 @@
 #include <fstream>
 
 #include "catalog.h"
+#include "cat_update.h"
 #include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
@@ -1298,12 +1299,8 @@ void PoeditFrame::NewFromPOT()
 
 void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
 {
-    UpdateResultReason reason;
-    CatalogPtr catalog = std::make_shared<Catalog>();
-    if (!catalog->UpdateFromPOT(pot_file,
-                                /*summary=*/false,
-                                reason,
-                                /*replace_header=*/true))
+    auto catalog = Catalog::CreateFromPOT(pot_file);
+    if (!catalog)
     {
         return;
     }
@@ -1504,8 +1501,8 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     {
         if (m_catalog->HasSourcesAvailable())
         {
-            ProgressInfo progress(this, _("Updating catalog"));
-            succ = m_catalog->Update(&progress, true, reason);
+            succ = PerformUpdateFromSources(this, m_catalog, reason);
+
             locker.reset();
             EnsureAppropriateContentView();
             NotifyCatalogChanged(m_catalog);
@@ -1518,7 +1515,8 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     }
     else
     {
-        succ = m_catalog->UpdateFromPOT(pot_file, true, reason);
+        succ = PerformUpdateFromPOT(this, m_catalog, pot_file, reason);
+
         locker.reset();
         EnsureAppropriateContentView();
         NotifyCatalogChanged(m_catalog);

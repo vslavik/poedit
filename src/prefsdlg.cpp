@@ -63,7 +63,7 @@
 #include "tm/transmem.h"
 #include "chooselang.h"
 #include "errors.h"
-#include "extractor.h"
+#include "extractors/extractor_legacy.h"
 #include "spellchecking.h"
 #include "utility.h"
 #include "customcontrols.h"
@@ -593,37 +593,96 @@ public:
         SetSizer(topsizer);
 
         sizer->Add(new ExplanationLabel(this, _("Source code extractors are used to find translatable strings in the source code files and extract them so that they can be translated.")),
-                   wxSizerFlags().Expand().PXBorder(wxTOP|wxBOTTOM));
-        sizer->AddSpacer(PX(10));
+                   wxSizerFlags().Expand().PXDoubleBorder(wxBOTTOM));
 
-        auto horizontal = new wxBoxSizer(wxHORIZONTAL);
-        sizer->Add(horizontal, wxSizerFlags(1).Expand());
+        // FIXME: Neither wxBORDER_ flag produces correct results on macOS or Windows, would need to paint manually
+        auto listPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
+        listPanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX));
+        auto listSizer = new wxBoxSizer(wxVERTICAL);
+        listPanel->SetSizer(listSizer);
 
-        m_list = new wxCheckListBox(this, wxID_ANY);
-        m_list->SetMinSize(wxSize(PX(300),PX(300)));
+        CreateBuiltinExtractorsUI(listPanel, listSizer);
+
+        auto customExLabel = new wxStaticText(listPanel, wxID_ANY, MSW_OR_OTHER(_("Custom extractors:"), _("Custom Extractors:")));
+        customExLabel->SetForegroundColour(ExplanationLabel::GetTextColor());
+#ifdef __WXOSX__
+        customExLabel->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+        customExLabel->SetFont(customExLabel->GetFont().Bold());
+
+        listSizer->AddSpacer(PX(5));
+        listSizer->Add(customExLabel, wxSizerFlags().ReserveSpaceEvenIfHidden().Border(wxLEFT|wxRIGHT, PX(5)));
+        listSizer->AddSpacer(PX(5));
+
+        m_list = new wxCheckListBox(listPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, wxBORDER_NONE);
+        m_list->SetMinSize(wxSize(PX(400),PX(300)));
 #ifdef __WXOSX__
         m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
-        horizontal->Add(m_list, wxSizerFlags(1).Expand().PXBorder(wxRIGHT));
+        listSizer->Add(m_list, wxSizerFlags(1).Expand().Border(wxLEFT|wxRIGHT, PX(5)));
 
-        auto buttons = new wxBoxSizer(wxVERTICAL);
-        horizontal->Add(buttons, wxSizerFlags().Expand());
+        sizer->Add(listPanel, wxSizerFlags(1).Expand().BORDER_WIN(wxLEFT, 1));
 
-        m_new = new wxButton(this, wxID_ANY, _("New"));
-        m_edit = new wxButton(this, wxID_ANY, _("Edit"));
-        m_delete = new wxButton(this, wxID_ANY, _("Delete"));
-        buttons->Add(m_new, wxSizerFlags().PXBorder(wxBOTTOM));
-        buttons->Add(m_edit, wxSizerFlags().PXBorder(wxBOTTOM));
-        buttons->Add(m_delete, wxSizerFlags().PXBorder(wxBOTTOM));
+#if defined(__WXOSX__)
+        m_new = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSAddTemplate"), wxDefaultPosition, wxSize(18, 18), wxBORDER_SUNKEN);
+        m_delete = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("NSRemoveTemplate"), wxDefaultPosition, wxSize(18,18), wxBORDER_SUNKEN);
+        int editButtonStyle = wxBU_EXACTFIT | wxBORDER_SIMPLE;
+#elif defined(__WXMSW__)
+        m_new = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxSize(PX(19),PX(19)));
+        m_delete = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxSize(PX(19),PX(19)));
+        int editButtonStyle = wxBU_EXACTFIT;
+#elif defined(__WXGTK__)
+        m_new = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-add"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        m_delete = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("list-remove"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        int editButtonStyle = wxBU_EXACTFIT | wxBORDER_NONE;
+#endif
+        m_edit = new wxButton(this, wxID_ANY, _("Edit..."), wxDefaultPosition, wxSize(-1, MSW_OR_OTHER(PX(19), -1)), editButtonStyle);
+#ifndef __WXGTK__
+        m_edit->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+
+        auto buttonSizer = new wxBoxSizer(wxHORIZONTAL);
+        buttonSizer->Add(m_new);
+#ifdef __WXOSX__
+        buttonSizer->AddSpacer(PX(1));
+#endif
+        buttonSizer->Add(m_delete);
+#ifdef __WXOSX__
+        buttonSizer->AddSpacer(PX(1));
+#endif
+        buttonSizer->Add(m_edit);
+
+        sizer->AddSpacer(PX(1));
+        sizer->Add(buttonSizer, wxSizerFlags().BORDER_MACOS(wxLEFT, PX(1)));
 
         m_new->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnNewExtractor, this);
         m_edit->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnEditExtractor, this);
         m_delete->Bind(wxEVT_BUTTON, &ExtractorsPageWindow::OnDeleteExtractor, this);
 
+        m_list->Bind(wxEVT_CHECKLISTBOX, &ExtractorsPageWindow::OnEnableExtractor, this);
+
         m_edit->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
         m_delete->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Enable(m_list->GetSelection() != wxNOT_FOUND); });
+        customExLabel->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e) { e.Show(m_list->GetCount() > 0); });
+    }
 
-        m_list->Bind(wxEVT_CHECKLISTBOX, &ExtractorsPageWindow::OnEnableExtractor, this);
+    void CreateBuiltinExtractorsUI(wxWindow *panel, wxSizer *topsizer)
+    {
+        auto sizer = new wxBoxSizer(wxHORIZONTAL);
+        topsizer->Add(sizer, wxSizerFlags().Expand().Border(wxALL, PX(5)));
+
+        sizer->Add(new wxStaticBitmap(panel, wxID_ANY, wxArtProvider::GetBitmap("ExtractorsGNUgettext")), wxSizerFlags().Top().Border(wxRIGHT, PX(5)));
+        auto textSizer = new wxBoxSizer(wxVERTICAL);
+        sizer->Add(textSizer, wxSizerFlags(1).Top());
+        auto heading = new wxStaticText(panel, wxID_ANY, _("GNU gettext"));
+#ifdef __WXOSX__
+        heading->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#endif
+        heading->SetFont(heading->GetFont().Bold());
+        textSizer->Add(heading, wxSizerFlags().Border(wxBOTTOM, PX(2)));
+        auto desc = new ExplanationLabel(panel, _("Supports all programming languages recognized by GNU gettext tools (PHP, C/C++, C#, Perl, Python, Java, JavaScript and others)."));
+        textSizer->Add(desc, wxSizerFlags(1).Expand());
+        textSizer->Layout();
     }
 
     void InitValues(const wxConfigBase& cfg) override
@@ -665,7 +724,7 @@ private:
         auto extractor_charset = XRCCTRL(*dlg, "extractor_charset", wxTextCtrl);
 
         {
-            const Extractor& nfo = m_extractors.Data[num];
+            const LegacyExtractorSpec& nfo = m_extractors.Data[num];
             extractor_language->SetValue(bidi::platform_mark_direction(nfo.Name));
             extractor_extensions->SetValue(bidi::mark_direction(nfo.Extensions, TextDirection::LTR));
             extractor_command->SetValue(bidi::mark_direction(nfo.Command, TextDirection::LTR));
@@ -693,7 +752,7 @@ private:
             (void)dlg; // force use
             if (retcode == wxID_OK)
             {
-                Extractor& nfo = m_extractors.Data[num];
+                LegacyExtractorSpec& nfo = m_extractors.Data[num];
                 nfo.Name = bidi::strip_control_chars(extractor_language->GetValue().Strip(wxString::both));
                 nfo.Extensions = bidi::strip_control_chars(extractor_extensions->GetValue().Strip(wxString::both));
                 nfo.Command = bidi::strip_control_chars(extractor_command->GetValue().Strip(wxString::both));
@@ -710,7 +769,7 @@ private:
     {
         m_suppressDataTransfer++;
 
-        Extractor info;
+        LegacyExtractorSpec info;
         m_extractors.Data.push_back(info);
         auto index = m_list->Append(wxEmptyString);
         m_list->Check(index);
@@ -775,7 +834,7 @@ private:
             TransferDataFromWindow();
     }
 
-    ExtractorsDB m_extractors;
+    LegacyExtractorsDB m_extractors;
 
     wxCheckListBox *m_list;
     wxButton *m_new, *m_edit, *m_delete;

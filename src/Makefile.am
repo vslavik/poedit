@@ -22,6 +22,7 @@ endif
 
 poedit_SOURCES = \
                  attentionbar.cpp attentionbar.h \
+                 cat_update.h cat_update.cpp \
                  cat_sorting.cpp cat_sorting.h \
                  catalog.cpp catalog.h \
                  chooselang.cpp chooselang.h \
@@ -31,14 +32,15 @@ poedit_SOURCES = \
                  configuration.cpp configuration.h \
                  custom_buttons.cpp custom_buttons.h \
                  customcontrols.cpp customcontrols.h \
-                 digger.h digger.cpp \
                  edapp.cpp edapp.h \
                  edframe.cpp edframe.h \
                  editing_area.cpp editing_area.h \
                  edlistctrl.cpp edlistctrl.h \
                  errors.h \
                  export_html.cpp \
-                 extractor.cpp extractor.h \
+                 extractors/extractor.cpp extractors/extractor.h \
+                 extractors/extractor_gettext.cpp \
+                 extractors/extractor_legacy.cpp extractors/extractor_legacy.h \
                  fileviewer.cpp fileviewer.h \
                  findframe.cpp findframe.h \
                  gexecute.h gexecute.cpp \
@@ -57,7 +59,6 @@ poedit_SOURCES = \
                  sidebar.cpp sidebar.h \
                  spellchecking.h spellchecking.cpp \
                  str_helpers.h \
-                 summarydlg.h summarydlg.cpp \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  text_control.h text_control.cpp \
                  tm/suggestions.cpp tm/suggestions.h \
