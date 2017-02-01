@@ -23,52 +23,43 @@
  *
  */
 
-#include <wx/xrc/xmlres.h>
-#include <wx/config.h>
-#include <wx/listbox.h>
-#include <wx/stattext.h>
-#include <wx/intl.h>
+#ifndef Poedit_cat_update_h
+#define Poedit_cat_update_h
 
-#include "summarydlg.h"
-#include "utility.h"
+#include "catalog.h"
+
+class WXDLLIMPEXP_FWD_CORE wxWindow;
 
 
-MergeSummaryDialog::MergeSummaryDialog(wxWindow *parent)
+/// Result of PerformUpdateFromSources()
+enum class UpdateResultReason
 {
-    wxXmlResource::Get()->LoadDialog(this, parent, "summary");
+    Unspecified,
+    CancelledByUser,
+    NoSourcesFound
+};
 
-    RestoreWindowState(this, wxDefaultSize, WinState_Size);
-    CentreOnParent();
-}
-
-
-
-MergeSummaryDialog::~MergeSummaryDialog()
+enum UpdateFlags
 {
-    SaveWindowState(this, WinState_Size);
-}
+    Update_DontShowSummary = 1
+};
+
+/**
+    Update ctaalog from source code, if configured, and provide UI
+    during the operation.
+ */
+bool PerformUpdateFromSources(wxWindow *parent,
+                              CatalogPtr catalog,
+                              UpdateResultReason& reason,
+                              int flags = 0);
+
+/**
+    Similarly for updating from a POT file.
+ */
+bool PerformUpdateFromPOT(wxWindow *parent,
+                          CatalogPtr catalog,
+                          const wxString& pot_file,
+                          UpdateResultReason& reason);
 
 
-
-void MergeSummaryDialog::TransferTo(const wxArrayString& snew, const wxArrayString& sobsolete)
-{
-    wxString sum;
-    sum.Printf(_("(New: %i, obsolete: %i)"),
-               (int)snew.GetCount(), (int)sobsolete.GetCount());
-    XRCCTRL(*this, "items_count", wxStaticText)->SetLabel(sum);
-
-    wxListBox *listbox;
-    size_t i;
-    
-    listbox = XRCCTRL(*this, "new_strings", wxListBox);
-    for (i = 0; i < snew.GetCount(); i++)
-    {
-        listbox->Append(snew[i]);
-    }
-
-    listbox = XRCCTRL(*this, "obsolete_strings", wxListBox);
-    for (i = 0; i < sobsolete.GetCount(); i++)
-    {
-        listbox->Append(sobsolete[i]);
-    }
-}
+#endif // Poedit_cat_update_h

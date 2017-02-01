@@ -35,6 +35,22 @@
 
 #include "utility.h"
 
+
+/// Specification of the source code to search.
+struct SourceCodeSpec
+{
+    wxString BasePath;
+    wxArrayString SearchPaths;
+    wxArrayString ExcludedPaths;
+
+    wxArrayString Keywords;
+    wxString Charset;
+
+    // additional keys from the headers
+    std::map<wxString, wxString> XHeaders;
+};
+
+
 /**
     Base class for extractors -- implementations of extracting translations
     from source code.
@@ -42,20 +58,6 @@
 class Extractor
 {
 public:
-    /// Specification of the source code to search.
-    struct SourceCodeSpec
-    {
-        wxString BasePath;
-        wxArrayString SearchPaths;
-        wxArrayString ExcludedPaths;
-
-        wxArrayString Keywords;
-        wxString Charset;
-
-        // additional keys from the headers
-        std::map<wxString, wxString> XHeaders;
-    };
-
     typedef std::vector<std::shared_ptr<Extractor>> ExtractorsList;
     typedef std::vector<wxString> FilesList;
 

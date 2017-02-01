@@ -22,6 +22,7 @@ endif
 
 poedit_SOURCES = \
                  attentionbar.cpp attentionbar.h \
+                 cat_update.h cat_update.cpp \
                  cat_sorting.cpp cat_sorting.h \
                  catalog.cpp catalog.h \
                  chooselang.cpp chooselang.h \
@@ -58,7 +59,6 @@ poedit_SOURCES = \
                  sidebar.cpp sidebar.h \
                  spellchecking.h spellchecking.cpp \
                  str_helpers.h \
-                 summarydlg.h summarydlg.cpp \
                  syntaxhighlighter.cpp syntaxhighlighter.h \
                  text_control.h text_control.cpp \
                  tm/suggestions.cpp tm/suggestions.h \

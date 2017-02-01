@@ -51,6 +51,7 @@
 #endif
 
 #include "catalog.h"
+#include "cat_update.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "hidpi.h"
@@ -463,7 +464,7 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
         {
             // FIXME: there should be only one progress bar for _all_
             //        catalogs, it shouldn't restart on next catalog
-            ProgressInfo pinfo(this, _("Updating catalog"));
+            //ProgressInfo pinfo(this, _("Updating catalog"));
 
             wxString f = m_catalogs[i];
             PoeditFrame *fr = PoeditFrame::Find(f);
@@ -473,12 +474,14 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
             }
             else
             {
-                Catalog cat(f);
+                auto cat = std::make_shared<Catalog>(f);
                 UpdateResultReason reason;
-                cat.Update(&pinfo, /*summary=*/false, reason);
-                int validation_errors = 0;
-                Catalog::CompilationStatus mo_status;
-                cat.Save(f, false, validation_errors, mo_status);
+                if (PerformUpdateFromSources(this, cat, reason, Update_DontShowSummary))
+                {
+                    int validation_errors = 0;
+                    Catalog::CompilationStatus mo_status;
+                    cat->Save(f, false, validation_errors, mo_status);
+                }
             }
          }
 

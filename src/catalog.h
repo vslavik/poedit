@@ -38,7 +38,7 @@
 #include <memory>
 #include <vector>
 
-class ProgressInfo;
+struct SourceCodeSpec;
 
 class Catalog;
 class CatalogItem;
@@ -63,13 +63,6 @@ typedef enum
     BOOKMARK_LAST
 } Bookmark;
 
-/// Result of Catalog::Update()
-enum class UpdateResultReason
-{
-    Unspecified,
-    CancelledByUser,
-    NoSourcesFound
-};
 
 /** This class holds information about one particular string.
     This includes source string and its occurrences in source code
@@ -630,18 +623,12 @@ class Catalog
          */
         bool HasSourcesAvailable() const;
 
-        /** Updates the catalog from sources.
-            \see SourceDigger, Parser, UpdateFromPOT.
-         */
-        bool Update(ProgressInfo *progress, bool summary, UpdateResultReason& reason);
+        std::shared_ptr<SourceCodeSpec> GetSourceCodeSpec() const;
 
-        /** Updates the catalog from POT file.
-            \see Update
-         */
-        bool UpdateFromPOT(const wxString& pot_file,
-                           bool summary,
-                           UpdateResultReason& reason,
-                           bool replace_header = false);
+        /// Updates the catalog from POT file.
+        bool UpdateFromPOT(const wxString& pot_file, bool replace_header = false);
+        bool UpdateFromPOT(CatalogPtr pot, bool replace_header = false);
+        static CatalogPtr CreateFromPOT(const wxString& pot_file);
 
         /// Returns the number of strings/translations in the catalog.
         unsigned GetCount() const { return (unsigned)m_items.size(); }
@@ -749,22 +736,6 @@ class Catalog
                     \em not modified!
          */
         bool Merge(const CatalogPtr& refcat);
-
-        /** Returns list of strings that are new in reference catalog
-            (compared to this one) and that are not present in \a refcat
-            (i.e. are obsoleted).
-
-            \see ShowMergeSummary
-         */
-        void GetMergeSummary(const CatalogPtr& refcat,
-                             wxArrayString& snew, wxArrayString& sobsolete);
-
-        /** Shows a dialog with merge summary.
-            \see GetMergeSummary, Merge
-
-            \return true if the merge was OK'ed by the user, false otherwise
-         */
-        bool ShowMergeSummary(const CatalogPtr& refcat, bool *cancelledByUser);
 
     private:
         CatalogItemArray m_items;
