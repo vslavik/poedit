@@ -1537,7 +1537,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
                     (
                         this,
                         _("Source code not available."),
-                        _("Updating failed"),
+                        MSW_OR_OTHER(_("Updating failed"), ""),
                         wxOK | wxICON_ERROR
                     ));
                 dlg->SetExtendedMessage(_(L"Translations couldn’t be updated from the source code, because no code was found in the location specified in the catalog’s Properties."));
