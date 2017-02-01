@@ -110,7 +110,10 @@ public:
                      const SourceCodeSpec& sourceSpec,
                      const std::vector<wxString>& files) const override
     {
-        // FIXME: translate sourceSpec.BasePath to --directory flag
+        auto basepath = sourceSpec.BasePath;
+#ifdef __WXMSW__
+        basepath.Replace("\\", "/");
+#endif
 
         wxTextFile filelist;
         filelist.Create(tmpdir.CreateFileName("gettext_filelist.txt"));
@@ -134,8 +137,9 @@ public:
         wxString cmdline;
         cmdline.Printf
         (
-            "xgettext --force-po -o %s --files-from=%s --from-code=%s",
+            "xgettext --force-po -o %s --directory=%s --files-from=%s --from-code=%s",
             QuoteCmdlineArg(outfile),
+            QuoteCmdlineArg(basepath),
             QuoteCmdlineArg(filelist.GetName()),
             QuoteCmdlineArg(sourceSpec.Charset)
         );

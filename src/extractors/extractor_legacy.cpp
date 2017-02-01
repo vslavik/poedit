@@ -71,6 +71,29 @@ inline void DoReadLegacyExtractors(wxConfigBase *cfg, F&& action)
     cfg->SetPath(oldpath);
 }
 
+// FIXME: Do this in subprocess, avoid changing CWD altogether in main process
+class CurrentWorkingDirectoryChanger
+{
+public:
+    CurrentWorkingDirectoryChanger(const wxString& path)
+    {
+        if (!path.empty() && path != ".")
+        {
+            m_old = wxGetCwd();
+            wxSetWorkingDirectory(path);
+        }
+    }
+
+    ~CurrentWorkingDirectoryChanger()
+    {
+        if (!m_old.empty())
+            wxSetWorkingDirectory(m_old);
+    }
+
+private:
+    wxString m_old;
+};
+
 } // anonymous namespace
 
 void LegacyExtractorsDB::Read(wxConfigBase *cfg)
@@ -299,6 +322,8 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
         last = i;
 
         wxString tempfile = tmpdir.CreateFileName(GetId() + "_extracted.pot");
+
+        CurrentWorkingDirectoryChanger cwd(sourceSpec.BasePath);
         if (!ExecuteGettext(m_spec.BuildCommand(batchfiles, sourceSpec.Keywords, tempfile, sourceSpec.Charset)))
         {
             return "";

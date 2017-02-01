@@ -2167,7 +2167,6 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
     if (!m_isOk)
         return false;
 
-    wxString cwd = wxGetCwd();
     auto path = GetSourcesBasePath();
     if (!path.empty())
     {
@@ -2176,12 +2175,10 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
             reason = UpdateResultReason::NoSourcesFound;
             return false;
         }
-
-        wxSetWorkingDirectory(path);
     }
 
     Extractor::SourceCodeSpec spec;
-    spec.BasePath = "."; // FIXME -- don't change working directory above, use BasePath instead
+    spec.BasePath = !path.empty() ? path : ".";
     spec.SearchPaths = m_header.SearchPaths;
     spec.ExcludedPaths = m_header.SearchPathsExcluded;
     spec.Charset = m_header.SourceCodeCharset;
@@ -2245,8 +2242,6 @@ bool Catalog::Update(ProgressInfo *progress, bool summary, UpdateResultReason& r
         if (cancelledByUser)
             reason = UpdateResultReason::CancelledByUser;
     }
-
-    wxSetWorkingDirectory(cwd);
 
     return newcat != nullptr;
 }

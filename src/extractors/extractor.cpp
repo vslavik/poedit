@@ -79,13 +79,13 @@ private:
 };
 
 
-int FindInDir(const wxString& dirname, const PathsToMatch& excludedPaths,
+int FindInDir(const wxString& basepath, const wxString& dirname, const PathsToMatch& excludedPaths,
               Extractor::FilesList& output)
 {
     if (dirname.empty())
         return 0;
 
-    wxDir dir(dirname);
+    wxDir dir(basepath + dirname);
     if (!dir.IsOpened()) 
         return 0;
 
@@ -102,6 +102,7 @@ int FindInDir(const wxString& dirname, const PathsToMatch& excludedPaths,
         if (excludedPaths.MatchesFile(f))
             continue;
 
+        wxLogTrace("poedit.extractor", "  - %s", f);
         output.push_back(f);
         found++;
     }
@@ -115,7 +116,7 @@ int FindInDir(const wxString& dirname, const PathsToMatch& excludedPaths,
         if (excludedPaths.MatchesFile(f))
             continue;
 
-        found += FindInDir(f, excludedPaths, output);
+        found += FindInDir(basepath, f, excludedPaths, output);
     }
 
     return found;
@@ -126,27 +127,28 @@ int FindInDir(const wxString& dirname, const PathsToMatch& excludedPaths,
 
 Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
 {
-    // FIXME: Properly implement handling of abs/rel paths
-    wxASSERT_MSG( sources.BasePath == ".", "basepath handling not implemented yet" );
-
     // TODO: Only collect files with recognized extensions
 
+    wxLogTrace("poedit.extractor", "collecting files:");
+
+    const auto basepath = sources.BasePath;
     const auto excludedPaths = PathsToMatch(sources.ExcludedPaths);
 
     FilesList output;
 
     for (auto& path: sources.SearchPaths)
     {
-        if (wxFileName::FileExists(path))
+        if (wxFileName::FileExists(basepath + path))
         {
             if (excludedPaths.MatchesFile(path))
             {
                 wxLogTrace("poedit.extractor", "no files found in '%s'", path);
                 continue;
             }
+            wxLogTrace("poedit.extractor", "  - %s", path);
             output.push_back(path);
         }
-        else if (!FindInDir(path, excludedPaths, output))
+        else if (!FindInDir(basepath, path, excludedPaths, output))
         {
             wxLogTrace("poedit.extractor", "no files found in '%s'", path);
         }
@@ -157,6 +159,8 @@ Extractor::FilesList Extractor::CollectAllFiles(const SourceCodeSpec& sources)
     // between filesystems. Finally, the order is reflected in the created PO
     // files and it is much better for diffs if it remains consistent.
     std::sort(output.begin(), output.end());
+
+    wxLogTrace("poedit.extractor", "finished collecting %d files", (int)output.size());
 
     return output;
 }
