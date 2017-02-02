@@ -391,7 +391,10 @@ bool PoeditApp::OnInit()
                      wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
     wxConfigBase::Get()->SetExpandEnvVars(false);
 
+#ifndef __WXOSX__
     wxImage::AddHandler(new wxPNGHandler);
+#endif
+
 #ifdef __WXMSW__
     wxImage::AddHandler(new wxICOHandler);
 #endif
