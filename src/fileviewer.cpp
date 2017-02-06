@@ -324,7 +324,8 @@ void FileViewer::ShowReferences(CatalogPtr catalog, CatalogItemPtr item, int def
     if (m_basePath.empty())
         m_basePath = wxPathOnly(catalog->GetFileName());
 
-    m_references = item->GetReferences();
+    if (item)
+        m_references = item->GetReferences();
 
     m_file->Clear();
     m_file->Enable(m_references.size() > 1);
