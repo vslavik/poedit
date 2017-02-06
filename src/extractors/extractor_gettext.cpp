@@ -141,7 +141,7 @@ public:
             QuoteCmdlineArg(outfile),
             QuoteCmdlineArg(basepath),
             QuoteCmdlineArg(filelist.GetName()),
-            QuoteCmdlineArg(sourceSpec.Charset)
+            QuoteCmdlineArg(!sourceSpec.Charset.empty() ? sourceSpec.Charset : "UTF-8")
         );
 
         for (auto& kw: sourceSpec.Keywords)
