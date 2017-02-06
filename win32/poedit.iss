@@ -108,8 +108,10 @@ Source: "{#CONFIG}\Translations\*"; DestDir: "{app}\Translations"; Flags: recurs
 Source: "{#CONFIG}\GettextTools\*"; DestDir: "{app}\GettextTools"; Flags: ignoreversion recursesubdirs
 
 [InstallDelete]
-;Delete obsolete files from version 1.6:
+;Delete obsolete files from version 1.{67}:
 Type: files; Name: "{app}\icu*52*.d??"
+Type: files; Name: "{app}\icu*54*.d??"
+Type: files; Name: "{app}\icu*55*.d??"
 ; Delete files from previous versions that are no longer needed (and in case of poedit.exe.manifest, actually harmful):
 Type: filesandordirs; Name: "{app}\bin"
 Type: filesandordirs; Name: "{app}\doc"
