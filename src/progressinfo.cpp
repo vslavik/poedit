@@ -69,8 +69,36 @@ ProgressInfo::ProgressInfo(wxWindow *parent, const wxString& title)
 
 ProgressInfo::~ProgressInfo()
 {
-    delete m_disabler;
-    m_dlg->Destroy();
+    Done();
+}
+
+void ProgressInfo::Hide()
+{
+    m_dlg->Show(false);
+    m_dlg->Refresh();
+    wxEventLoop::GetActive()->YieldFor(wxEVT_CATEGORY_UI);
+}
+
+
+void ProgressInfo::Show()
+{
+    m_dlg->Show(true);
+    m_dlg->Refresh();
+    wxEventLoop::GetActive()->YieldFor(wxEVT_CATEGORY_UI);
+}
+
+void ProgressInfo::Done()
+{
+    if (m_disabler)
+    {
+        delete m_disabler;
+        m_disabler = nullptr;
+    }
+    if (m_dlg)
+    {
+        m_dlg->Destroy();
+        m_dlg = nullptr;
+    }
 }
 
 void ProgressInfo::SetGaugeMax(int limit)
@@ -110,5 +138,5 @@ void ProgressInfo::UpdateMessage(const wxString& text)
     txt->Refresh();
     txt->Update();
     m_dlg->Refresh();
-    wxEventLoop::GetActive()->Yield(/*onlyIfNeeded=*/true);
+    wxEventLoop::GetActive()->YieldFor(wxEVT_CATEGORY_UI);
 }

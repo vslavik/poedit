@@ -39,6 +39,15 @@ class ProgressInfo
             ProgressInfo(wxWindow *parent, const wxString& title);
             ~ProgressInfo();
 
+            /// Hides temporarily
+            void Hide();
+
+            /// Shows again after having been hidden with Hide()
+            void Show();
+
+            /// Hides for good, called when all is done
+            void Done();
+
             /// Sets gauge's values interval to <0..limit).
             void SetGaugeMax(int limit);
 

@@ -148,7 +148,7 @@ void GetMergeSummary(CatalogPtr po, CatalogPtr refcat,
 
     \return true if the merge was OK'ed by the user, false otherwise
  */
-bool ShowMergeSummary(wxWindow *parent, CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
+bool ShowMergeSummary(wxWindow *parent, ProgressInfo *progress, CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
 {
     if (cancelledByUser)
         *cancelledByUser = false;
@@ -158,7 +158,13 @@ bool ShowMergeSummary(wxWindow *parent, CatalogPtr po, CatalogPtr refcat, bool *
         GetMergeSummary(po, refcat, snew, sobsolete);
         MergeSummaryDialog sdlg(parent);
         sdlg.TransferTo(snew, sobsolete);
+
+        if (progress)
+            progress->Hide();
         bool ok = (sdlg.ShowModal() == wxID_OK);
+        if (progress)
+            progress->Show();
+
         if (cancelledByUser)
             *cancelledByUser = !ok;
         return ok;
@@ -229,7 +235,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
 
     bool succ = false;
     bool cancelledByUser = false;
-    if (skipSummary || ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
+    if (skipSummary || ShowMergeSummary(parent, &progress, catalog, pot, &cancelledByUser))
     {
         succ = catalog->UpdateFromPOT(pot);
     }
@@ -259,7 +265,7 @@ bool PerformUpdateFromPOT(wxWindow *parent,
     }
 
     bool cancelledByUser = false;
-    if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
+    if (ShowMergeSummary(parent, nullptr, catalog, pot, &cancelledByUser))
     {
         return catalog->UpdateFromPOT(pot);
     }
