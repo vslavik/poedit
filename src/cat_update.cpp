@@ -198,10 +198,13 @@ bool PerformUpdateFromSources(wxWindow *parent,
 
     CatalogPtr pot = nullptr;
 
-    progress.UpdateMessage(_("Scanning files..."));
     progress.PulseGauge();
+    progress.UpdateMessage(_("Collecting source files..."));
 
     auto files = Extractor::CollectAllFiles(*spec);
+
+    progress.PulseGauge();
+    progress.UpdateMessage(_("Extracting translatable strings..."));
 
     if (!files.empty())
     {
