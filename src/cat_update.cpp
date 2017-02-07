@@ -47,7 +47,7 @@ namespace
 class MergeSummaryDialog : public wxDialog
 {
     public:
-        MergeSummaryDialog(wxWindow *parent = NULL);
+        MergeSummaryDialog(wxWindow *parent);
         ~MergeSummaryDialog();
 
         /** Reads data from catalog and fill dialog's controls.
@@ -148,7 +148,7 @@ void GetMergeSummary(CatalogPtr po, CatalogPtr refcat,
 
     \return true if the merge was OK'ed by the user, false otherwise
  */
-bool ShowMergeSummary(CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
+bool ShowMergeSummary(wxWindow *parent, CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
 {
     if (cancelledByUser)
         *cancelledByUser = false;
@@ -156,7 +156,7 @@ bool ShowMergeSummary(CatalogPtr po, CatalogPtr refcat, bool *cancelledByUser)
     {
         wxArrayString snew, sobsolete;
         GetMergeSummary(po, refcat, snew, sobsolete);
-        MergeSummaryDialog sdlg;
+        MergeSummaryDialog sdlg(parent);
         sdlg.TransferTo(snew, sobsolete);
         bool ok = (sdlg.ShowModal() == wxID_OK);
         if (cancelledByUser)
@@ -229,7 +229,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
 
     bool succ = false;
     bool cancelledByUser = false;
-    if (skipSummary || ShowMergeSummary(catalog, pot, &cancelledByUser))
+    if (skipSummary || ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
         succ = catalog->UpdateFromPOT(pot);
     }
@@ -241,7 +241,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
 }
 
 
-bool PerformUpdateFromPOT(wxWindow * /*parent*/,
+bool PerformUpdateFromPOT(wxWindow *parent,
                           CatalogPtr catalog,
                           const wxString& pot_file,
                           UpdateResultReason& reason)
@@ -259,7 +259,7 @@ bool PerformUpdateFromPOT(wxWindow * /*parent*/,
     }
 
     bool cancelledByUser = false;
-    if (ShowMergeSummary(catalog, pot, &cancelledByUser))
+    if (ShowMergeSummary(parent, catalog, pot, &cancelledByUser))
     {
         return catalog->UpdateFromPOT(pot);
     }
