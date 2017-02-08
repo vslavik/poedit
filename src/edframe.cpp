@@ -329,7 +329,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("go_next_pluralform"), PoeditFrame::OnNextPluralForm)
    EVT_MENU_RANGE     (ID_POPUP_REFS, ID_POPUP_REFS + 999, PoeditFrame::OnReference)
    EVT_COMMAND        (wxID_ANY, EVT_SUGGESTION_SELECTED, PoeditFrame::OnSuggestion)
-   EVT_MENU           (XRCID("menu_auto_translate"), PoeditFrame::OnPreTranslateAll)
+   EVT_MENU           (XRCID("menu_pretranslate"), PoeditFrame::OnPreTranslateAll)
    EVT_MENU_RANGE     (ID_BOOKMARK_GO, ID_BOOKMARK_GO + 9,
                        PoeditFrame::OnGoToBookmark)
    EVT_MENU_RANGE     (ID_BOOKMARK_SET, ID_BOOKMARK_SET + 9,
@@ -361,6 +361,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_UPDATE_UI(wxID_SAVE,                   PoeditFrame::OnHasCatalogUpdate)
    EVT_UPDATE_UI(wxID_SAVEAS,                 PoeditFrame::OnHasCatalogUpdate)
    EVT_UPDATE_UI(XRCID("menu_statistics"),    PoeditFrame::OnHasCatalogUpdate)
+   EVT_UPDATE_UI(XRCID("menu_pretranslate"),  PoeditFrame::OnIsEditableUpdate)
    EVT_UPDATE_UI(XRCID("menu_validate"),      PoeditFrame::OnIsEditableUpdate)
    EVT_UPDATE_UI(XRCID("menu_update_from_src"), PoeditFrame::OnUpdateFromSourcesUpdate)
  #ifdef HAVE_HTTP_CLIENT
@@ -2467,7 +2468,6 @@ void PoeditFrame::UpdateMenu()
     menubar->Enable(wxID_FIND, nonEmpty);
     menubar->Enable(wxID_REPLACE, nonEmpty);
 
-    menubar->Enable(XRCID("menu_auto_translate"), editable);
     menubar->Enable(XRCID("menu_purge_deleted"), editable);
     menubar->Enable(XRCID("menu_validate"), editable);
     menubar->Enable(XRCID("menu_catproperties"), hasCatalog);
