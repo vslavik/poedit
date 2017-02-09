@@ -108,7 +108,7 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
         if (op.get())
         {
             matches++;
-            progress.UpdateMessage(wxString::Format(wxPLURAL("Translated %u string", "Translated %u strings", matches), matches));
+            progress.UpdateMessage(wxString::Format(wxPLURAL("Pre-translated %u string", "Pre-translated %u strings", matches), matches));
         }
     }
 
