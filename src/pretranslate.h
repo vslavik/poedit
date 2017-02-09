@@ -31,6 +31,8 @@
 
 #include <wx/window.h>
 
+#include <functional>
+
 
 /// Flags for pre-translation functions
 enum PreTranslateFlags
@@ -69,6 +71,8 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, int flags, int *m
 
     Returns true if any changes were made.
  */
-void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catalog);
+void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list,
+                        CatalogPtr catalog,
+                        std::function<void()> onChangesMade);
 
 #endif // Poedit_pretranslate_h

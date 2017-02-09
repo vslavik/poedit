@@ -2690,7 +2690,14 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
 
 void PoeditFrame::OnPreTranslateAll(wxCommandEvent&)
 {
-    PreTranslateWithUI(this, m_list, m_catalog);
+    PreTranslateWithUI(this, m_list, m_catalog,[=]{
+        if (!m_modified)
+        {
+            m_modified = true;
+            UpdateTitle();
+        }
+        RefreshControls();
+    });
 }
 
 

@@ -125,7 +125,7 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, int flags, int *m
 }
 
 
-void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catalog)
+void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catalog, std::function<void()> onChangesMade)
 {
     wxWindowPtr<wxDialog> dlg(new wxDialog(window, wxID_ANY, _("Pre-translate"), wxDefaultPosition, wxSize(PX(440), -1)));
     auto topsizer = new wxBoxSizer(wxVERTICAL);
@@ -177,7 +177,7 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
     topsizer->SetSizeHints(dlg.get());
     dlg->CenterOnParent();
 
-    dlg->ShowWindowModalThenDo([catalog,window,list,onlyExact,noFuzzy,dlg](int retcode)
+    dlg->ShowWindowModalThenDo([catalog,window,list,onlyExact,noFuzzy,onChangesMade,dlg](int retcode)
     {
         if (retcode != wxID_OK)
             return;
@@ -200,6 +200,8 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
             if (!PreTranslateCatalog(window, catalog, flags, &matches))
                 return;
         }
+
+        onChangesMade();
 
         wxString msg, details;
 
