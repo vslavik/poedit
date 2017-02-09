@@ -54,6 +54,7 @@ poedit_SOURCES = \
                  manager.h manager.cpp \
                  pluralforms/pl_evaluate.cpp pluralforms/pl_evaluate.h \
                  prefsdlg.cpp prefsdlg.h \
+                 pretranslate.cpp pretranslate.h \
                  progressinfo.h progressinfo.cpp \
                  propertiesdlg.cpp propertiesdlg.h \
                  sidebar.cpp sidebar.h \

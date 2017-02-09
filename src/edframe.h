@@ -316,16 +316,6 @@ private:
         void OnSuggestion(wxCommandEvent& event);
         void OnPreTranslateAll(wxCommandEvent& event);
 
-        enum PreTranslateFlags
-        {
-            PreTranslate_OnlyExact       = 0x01,
-            PreTranslate_ExactNotFuzzy   = 0x02,
-            PreTranslate_OnlyGoodQuality = 0x04
-        };
-        bool PreTranslateCatalog(int *matchesCount, int flags);
-        template<typename T>
-        bool PreTranslateCatalog(int *matchesCount, const T& range, int flags);
-
         void OnPurgeDeleted(wxCommandEvent& event);
 
         void OnGoToBookmark(wxCommandEvent& event);
