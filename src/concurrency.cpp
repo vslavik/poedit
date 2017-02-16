@@ -28,7 +28,56 @@
 #include "errors.h"
 #include <wx/log.h>
 
+// All this is for rethrow_for_boost:
+#if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
+#include <cpprest/http_msg.h>
+#endif
+
 using namespace dispatch;
+
+exception_ptr dispatch::current_exception()
+{
+    // All this mess is necessary to convert std::exception_ptr to boost::exception_ptr
+    // somewhat reasonably to correctly propagate exceptions through futures.
+    // Unfortunately, boost::future has no support for std::exception_ptr and insists
+    // on using boost::exception_ptr which requires manual support.
+    //
+    // See http://stackoverflow.com/questions/22010388/converting-stdexception-ptr-to-boostexception-ptr
+    // for more in-depth examples of what this code does.
+
+    #define CATCH_AND_WRAP(type)                                    \
+        catch (type& e)                                             \
+        {                                                           \
+            try                                                     \
+            {                                                       \
+                throw boost::enable_current_exception(e);           \
+            }                                                       \
+            catch (...)                                             \
+            {                                                       \
+                return boost::current_exception();                  \
+            }                                                       \
+        }
+
+    try
+    {
+        throw;
+    }
+    catch (boost::exception&)
+    {
+        return boost::current_exception();
+    }
+#if defined(HAVE_HTTP_CLIENT) && !defined(__WXOSX__)
+    CATCH_AND_WRAP(web::http::http_exception)
+#endif
+    CATCH_AND_WRAP(std::runtime_error)
+    CATCH_AND_WRAP(std::logic_error)
+    CATCH_AND_WRAP(std::exception)
+    catch (...)
+    {
+        return boost::current_exception();
+    }
+}
+
 
 #if defined(HAVE_DISPATCH)
 

@@ -200,8 +200,15 @@ private:
                 desc = "Service Unavailable";
         }
 
-        m_owner.on_error_response(status_code, desc);
-        promise.set_exception(http_exception(desc));
+        try
+        {
+            m_owner.on_error_response(status_code, desc);
+            BOOST_THROW_EXCEPTION(http_exception(desc));
+        }
+        catch (...)
+        {
+            dispatch::set_current_exception(promise);
+        }
     }
 
     json extract_json(NSData *data)

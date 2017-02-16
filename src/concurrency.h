@@ -268,11 +268,11 @@ inline auto call_and_unwrap_if_future(F&& f, Args&&... args) -> typename future_
 // Tasks (aka futures)
 // ----------------------------------------------------------------------
 
-using boost::current_exception;
 using boost::exception_ptr;
 using boost::future_status;
 template<typename T> using promise = boost::promise<T>;
 
+exception_ptr current_exception();
 
 // Can't use std::current_exception with boost::promise, must use boost
 // version instead. This helper takes care of it.
