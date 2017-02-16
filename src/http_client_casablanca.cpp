@@ -241,7 +241,7 @@ private:
     // handle non-OK responses:
     void handle_error(http::http_response r)
     {
-        if (r.status_code() == http::status_codes::OK)
+        if (r.status_code() >= 200 && r.status_code() < 300)
             return; // not an error
 
         int status_code = r.status_code();
