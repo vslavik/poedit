@@ -520,6 +520,11 @@ auto make_ready_future(T&& value) -> future<T>
   return boost::make_ready_future(std::forward<T>(value));
 }
 
+inline future<void> make_ready_future()
+{
+  return boost::make_ready_future();
+}
+
 template<typename T>
 auto make_exceptional_future_from_current() -> future<T>
 {
