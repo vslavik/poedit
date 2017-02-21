@@ -5,6 +5,7 @@ from collections import OrderedDict
 from ninja_syntax import Writer
 
 _exclusion_list = ['.DS_Store',
+                   '.git',
                    'autom4te.cache', 'build_windows',
                    'Debug', 'Debug_static', 'Release', 'Release_static',
                    'bin',
