@@ -9,6 +9,14 @@ if [ "$1" = clean ] ; then
     exit
 fi
 
+if [ -d /usr/local/opt/ccache/libexec ] ; then
+    CC=/usr/local/opt/ccache/libexec/clang
+    CXX=/usr/local/opt/ccache/libexec/clang++
+else
+    CC=clang
+    CXX=clang++
+fi
+
 if [ "$CONFIGURATION" = "Debug" ] ; then
     cflags_config="-O2 -ggdb3"
     ldflags_config="-O2 -ggdb3"
@@ -25,6 +33,9 @@ CONFIGURATION = $CONFIGURATION
 
 top_srcdir = `pwd`
 builddir = $DEPS_BUILD_DIR
+
+cc = $CC
+cxx = $CXX
 
 cflags_config = $cflags_config
 ldflags_config = $ldflags_config
