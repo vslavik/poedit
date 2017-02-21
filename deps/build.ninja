@@ -11,18 +11,19 @@ rule gettext_build
       DESTDIR="$destdir" && rm -f $
       $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin} $
       && $top_srcdir/../macos/fixup-dylib-deps.sh //lib $
-      @executable_path/../lib $destdir/lib $destdir/bin/* && strip -u -r $
-      $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext} && strip -x $
-      $destdir/lib/lib*.*.dylib && rm -rf "$workdir" && touch $
+      @executable_path/../lib $destdir/lib $destdir/bin/* && strip -S -u -r $
+      $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext} && strip -S $
+      -x $destdir/lib/lib*.*.dylib && rm -rf "$workdir" && touch $
       $intdir/$name.done
   description = *** BUILD $name ***
 build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/.version gettext/aclocal.m4 gettext/AUTHORS gettext/autogen.sh $
-    gettext/build-aux/ac-help.sed gettext/build-aux/compile $
-    gettext/build-aux/config.guess gettext/build-aux/config.libpath $
-    gettext/build-aux/config.rpath gettext/build-aux/config.sub $
-    gettext/build-aux/csharpcomp.sh.in gettext/build-aux/csharpexec.sh.in $
-    gettext/build-aux/depcomp gettext/build-aux/install-reloc $
+    gettext/build-aux/ac-help.sed gettext/build-aux/ar-lib $
+    gettext/build-aux/compile gettext/build-aux/config.guess $
+    gettext/build-aux/config.libpath gettext/build-aux/config.rpath $
+    gettext/build-aux/config.sub gettext/build-aux/csharpcomp.sh.in $
+    gettext/build-aux/csharpexec.sh.in gettext/build-aux/depcomp $
+    gettext/build-aux/git-version-gen gettext/build-aux/install-reloc $
     gettext/build-aux/install-sh gettext/build-aux/javacomp.sh.in $
     gettext/build-aux/javaexec.sh.in gettext/build-aux/ltmain.sh $
     gettext/build-aux/mdate-sh gettext/build-aux/missing $
@@ -32,10 +33,11 @@ build $intdir/gettext.done: gettext_build gettext/.tarball-version $
     gettext/build-aux/snippet/arg-nonnull.h $
     gettext/build-aux/snippet/c++defs.h $
     gettext/build-aux/snippet/unused-parameter.h $
-    gettext/build-aux/snippet/warn-on-use.h gettext/build-aux/texinfo.tex $
-    gettext/build-aux/ylwrap gettext/ChangeLog gettext/ChangeLog.0 $
-    gettext/configure gettext/configure.ac gettext/COPYING $
-    gettext/DEPENDENCIES gettext/djgpp/config.bat gettext/djgpp/config.in $
+    gettext/build-aux/snippet/warn-on-use.h gettext/build-aux/test-driver $
+    gettext/build-aux/texinfo.tex gettext/build-aux/ylwrap $
+    gettext/ChangeLog gettext/ChangeLog.0 gettext/configure $
+    gettext/configure.ac gettext/COPYING gettext/DEPENDENCIES $
+    gettext/djgpp/config.bat gettext/djgpp/config.in $
     gettext/djgpp/config.sed gettext/djgpp/config.site $
     gettext/djgpp/COPYING.DJ gettext/djgpp/djpwd.h $
     gettext/djgpp/edtests.bat gettext/djgpp/fnchange.in $
@@ -2424,7 +2426,9 @@ build $intdir/icu.done: icu_build icu4c/APIChangeReport.html $
     icu4c/include/unicode/utrans.h icu4c/include/unicode/utypes.h $
     icu4c/include/unicode/uvernum.h icu4c/include/unicode/uversion.h $
     icu4c/include/unicode/vtzone.h icu4c/lib/icudt.exp icu4c/lib/icudt.lib $
+    icu4c/lib/icuin.exp icu4c/lib/icuin.lib icu4c/lib/icuin.pdb $
     icu4c/lib/icuind.exp icu4c/lib/icuind.lib icu4c/lib/icuind.pdb $
+    icu4c/lib/icuuc.exp icu4c/lib/icuuc.lib icu4c/lib/icuuc.pdb $
     icu4c/lib/icuucd.exp icu4c/lib/icuucd.lib icu4c/lib/icuucd.pdb $
     icu4c/LICENSE icu4c/license.html icu4c/packaging/PACKAGES $
     icu4c/packaging/README icu4c/packaging/rpm/icu.spec icu4c/readme.html $
