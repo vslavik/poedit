@@ -68,7 +68,7 @@ wxImage LoadScaledBitmap(const wxString& name)
     wxImage img;
 
 #ifdef NEEDS_MANUAL_HIDPI
-    if (HiDPIScalingFactor() > 1.0)
+    if (HiDPIScalingFactor() > 1.25)
     {
         double imgScale = HiDPIScalingFactor();
         const wxString filename_2x(name + "@2x.png");
