@@ -27,6 +27,7 @@
 
 #include "utility.h"
 
+#include <wx/config.h>
 #include <wx/msw/uxtheme.h>
 #include <wx/nativewin.h>
 #include <wx/recguard.h>
@@ -178,6 +179,9 @@ bool wxFrameWithWindows10Menubar::ShouldUse() const
         return false;
 
     if (!wxUxThemeEngine::GetIfActive())
+        return false;
+
+    if (wxConfig::Get()->ReadBool("/disable_mctrl", false))
         return false;
 
     // Detect screen readers and use normal menubar with them, because the
