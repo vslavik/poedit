@@ -40,6 +40,7 @@
 #include <wx/statbmp.h>
 #include <wx/config.h>
 #include <wx/dcclient.h>
+#include <wx/wupdlock.h>
 
 #ifdef __WXOSX__
 #include "macos_helpers.h"
@@ -199,7 +200,8 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
 
     // we need to size the control correctly _and_ lay out the controls if this
     // is the first time it's being shown, otherwise we can get garbled look:
-    SetSize(GetParent()->GetClientSize().x, GetBestSize().y);
+    wxWindowUpdateLocker lock(this);
+    SetSize(GetParent()->GetClientSize().x, 1);
     Layout();
 
     Refresh();
