@@ -110,9 +110,16 @@ AttentionBar::AttentionBar(wxWindow *parent)
     labelSizer->Add(m_explanation, wxSizerFlags().Expand().Border(wxTOP|wxRIGHT, PX(4)));
     sizer->Add(labelSizer, wxSizerFlags(1).Center().PXDoubleBorder(wxALL));
     sizer->AddSpacer(PX(20));
-    sizer->Add(m_buttons, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
-    sizer->Add(m_checkbox, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
-    sizer->Add(btnClose, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
+    auto allButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
+    auto buttonsAndCheckboxSizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(buttonsAndCheckboxSizer, wxSizerFlags().Center().Border(wxTOP, PX(1)));
+    buttonsAndCheckboxSizer->Add(allButtonsSizer, wxSizerFlags().Expand());
+    buttonsAndCheckboxSizer->Add(m_checkbox, wxSizerFlags().Left().Border(wxTOP, MACOS_OR_OTHER(PX(2), PX(4))));
+    allButtonsSizer->Add(m_buttons);
+    allButtonsSizer->AddStretchSpacer();
+    allButtonsSizer->AddSpacer(SMALL_BORDER);
+    allButtonsSizer->Add(btnClose, wxSizerFlags().Center().Border(wxTOP, PX(1)));
+    allButtonsSizer->AddSpacer(SMALL_BORDER);
 #ifdef __WXMSW__
     sizer->AddSpacer(PX(4));
 #endif
