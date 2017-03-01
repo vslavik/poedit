@@ -322,7 +322,7 @@ bool LearnMoreLinkXmlHandler::CanHandle(wxXmlNode *node)
 }
 
 
-ActivityIndicator::ActivityIndicator(wxWindow *parent)
+ActivityIndicator::ActivityIndicator(wxWindow *parent, int flags)
     : wxWindow(parent, wxID_ANY), m_running(false)
 {
     auto sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -335,8 +335,12 @@ ActivityIndicator::ActivityIndicator(wxWindow *parent)
     m_label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
+    if (flags & Centered)
+        sizer->AddStretchSpacer();
     sizer->Add(m_spinner, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sizer->Add(m_label, wxSizerFlags(1).Center());
+    if (flags & Centered)
+        sizer->AddStretchSpacer();
 
     wxWeakRef<ActivityIndicator> self(this);
     HandleError = [self](dispatch::exception_ptr e){

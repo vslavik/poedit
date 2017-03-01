@@ -137,7 +137,12 @@ public:
 class ActivityIndicator : public wxWindow
 {
 public:
-    ActivityIndicator(wxWindow *parent);
+    enum Flags
+    {
+        Centered = 1,
+    };
+
+    ActivityIndicator(wxWindow *parent, int flags = 0);
 
     /// Start indicating, with optional progress label.
     void Start(const wxString& msg = "");
