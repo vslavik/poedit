@@ -203,6 +203,10 @@ void AutoWrappingText::OnSize(wxSizeEvent& e)
     if (w == m_wrapWidth)
         return;
 
+    // refuse to participate in crazy-small sizes sizing (will be undone anyway):
+    if (w < 50)
+        return;
+
     wxWindowUpdateLocker lock(this);
 
     m_wrapWidth = w;
