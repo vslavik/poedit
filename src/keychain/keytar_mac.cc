@@ -53,6 +53,30 @@ bool AddPassword(const std::string& service, const std::string& user, const std:
                                                   (UInt32)password.length(),
                                                   password.data(),
                                                   NULL);
+
+  if (status == errSecDuplicateItem)
+  {
+    SecKeychainItemRef item = NULL;
+    status = SecKeychainFindGenericPassword(NULL,
+                                           (UInt32)serv.length(),
+                                           serv.data(),
+                                           (UInt32)user.length(),
+                                           user.data(),
+                                           NULL,
+                                           NULL,
+                                           &item);
+    if (status == errSecSuccess)
+    {
+      status = SecKeychainItemModifyContent(item,
+                                            NULL,
+                                            (UInt32)password.length(),
+                                            password.data());
+    }
+
+    if (item)
+      CFRelease(item);
+  }
+
   return status == errSecSuccess;
 }
 
