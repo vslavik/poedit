@@ -31,11 +31,11 @@
 namespace keytar
 {
 
-bool AddPassword(const std::string& account, const std::string& password);
+bool AddPassword(const std::string& service, const std::string& user, const std::string& password);
 
-bool GetPassword(const std::string& account, std::string* password);
+bool GetPassword(const std::string& service, const std::string& user, std::string* password);
 
-bool DeletePassword(const std::string& account);
+bool DeletePassword(const std::string& service, const std::string& user);
 
 }  // namespace keytar
 

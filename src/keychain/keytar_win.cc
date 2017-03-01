@@ -32,12 +32,25 @@
 
 #define SERVICE_PREFIX L"Poedit:"
 
+namespace
+{
+
+inline std::wstring make_name(const std::string& service, const std::string& user)
+{
+    auto s = SERVICE_PREFIX + str::to_wstring(service);
+    if (!user.empty())
+        s += L":" + str::to_wstring(user);
+    return s;
+}
+
+}
+
 namespace keytar
 {
 
-bool AddPassword(const std::string& account, const std::string& password)
+bool AddPassword(const std::string& service, const std::string& user, const std::string& password)
 {
-  std::wstring target_name = SERVICE_PREFIX + str::to_wstring(account);
+  std::wstring target_name = make_name(service, user);
 
   CREDENTIAL cred = { 0 };
   cred.Type = CRED_TYPE_GENERIC;
@@ -49,9 +62,9 @@ bool AddPassword(const std::string& account, const std::string& password)
   return ::CredWrite(&cred, 0) == TRUE;
 }
 
-bool GetPassword(const std::string& account, std::string* password)
+bool GetPassword(const std::string& service, const std::string& user, std::string* password)
 {
-  std::wstring target_name = SERVICE_PREFIX + str::to_wstring(account);
+  std::wstring target_name = make_name(service, user);
 
   CREDENTIAL* cred;
   if (::CredRead(target_name.c_str(), CRED_TYPE_GENERIC, 0, &cred) == FALSE)
@@ -63,9 +76,9 @@ bool GetPassword(const std::string& account, std::string* password)
   return true;
 }
 
-bool DeletePassword(const std::string& account)
+bool DeletePassword(const std::string& service, const std::string& user)
 {
-  std::wstring target_name = SERVICE_PREFIX + str::to_wstring(account);
+  std::wstring target_name = make_name(service, user);
 
   return ::CredDelete(target_name.c_str(), CRED_TYPE_GENERIC, 0) == TRUE;
 }

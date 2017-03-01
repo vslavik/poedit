@@ -42,24 +42,30 @@ namespace
 const SecretSchema kSchema = {
   "net.poedit.Credentials", SECRET_SCHEMA_NONE,
   {
-    { "account", SECRET_SCHEMA_ATTRIBUTE_STRING },
+    { "service", SECRET_SCHEMA_ATTRIBUTE_STRING },
+    { "user", SECRET_SCHEMA_ATTRIBUTE_STRING },
     { NULL, SecretSchemaAttributeType(0) },
   }
 };
 
 }  // namespace
 
-bool AddPassword(const std::string& account, const std::string& password)
+bool AddPassword(const std::string& service, const std::string& user, const std::string& password)
 {
+  std::string label = "Poedit: " + service;
+  if (!user.empty())
+   label += " (" + user + ")";
+
   GError *error = NULL;
   gboolean result = secret_password_store_sync(
       &kSchema,
       SECRET_COLLECTION_DEFAULT,
-      account.c_str(),  // label
+      label.c_str(),
       password.c_str(),
       NULL,  // not cancellable
       &error,
-      "account", account.c_str(),
+      "service", service.c_str(),
+      "user", user.c_str(),
       NULL);
   if (error != NULL) {
     fprintf(stderr, "%s\n", error->message);
@@ -68,7 +74,7 @@ bool AddPassword(const std::string& account, const std::string& password)
   return result;
 }
 
-bool GetPassword(const std::string& account, std::string* password)
+bool GetPassword(const std::string& service, const std::string& user, std::string* password)
 {
   GError *error = NULL;
   gchar* raw_passwords;
@@ -76,7 +82,8 @@ bool GetPassword(const std::string& account, std::string* password)
       &kSchema,
       NULL,  // not cancellable
       &error,
-      "account", account.c_str(),
+      "service", service.c_str(),
+      "user", user.c_str(),
       NULL);
 
   if (error != NULL) {
@@ -92,14 +99,15 @@ bool GetPassword(const std::string& account, std::string* password)
   return true;
 }
 
-bool DeletePassword(const std::string& account)
+bool DeletePassword(const std::string& service, const std::string& user)
 {
   GError *error = NULL;
   gboolean result = secret_password_clear_sync(
       &kSchema,
       NULL,  // not cancellable
       &error,
-      "account", account.c_str(),
+      "service", service.c_str(),
+      "user", user.c_str(),
       NULL);
   if (error != NULL) {
     fprintf(stderr, "%s\n", error->message);
