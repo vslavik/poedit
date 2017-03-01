@@ -87,7 +87,7 @@ json_data::json_data(const json& data)
 }
 
 
-std::string http_client::url_encode(const std::string& s)
+std::string http_client::url_encode(const std::string& s, int flags)
 {
     std::ostringstream escaped;
     escaped.fill('0');
@@ -102,7 +102,7 @@ std::string http_client::url_encode(const std::string& s)
         {
             escaped << c;
         }
-        else if (c == ' ')
+        else if (c == ' ' && !(flags & encode_no_plus))
         {
             escaped << '+';
         }
@@ -115,7 +115,7 @@ std::string http_client::url_encode(const std::string& s)
     return escaped.str();
 }
 
-std::string http_client::url_encode(const std::wstring& s)
+std::string http_client::url_encode(const std::wstring& s, int flags)
 {
-    return url_encode(str::to_utf8(s));
+    return url_encode(str::to_utf8(s), flags);
 }

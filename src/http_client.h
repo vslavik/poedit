@@ -147,8 +147,14 @@ public:
 
 
     // Helper for encoding text as URL-encoded UTF-8
-    static std::string url_encode(const std::string& s);
-    static std::string url_encode(const std::wstring& s);
+
+    enum encode_flags
+    {
+        encode_no_plus = 1 // don't encode spaces as +
+    };
+
+    static std::string url_encode(const std::string& s, int flags = 0);
+    static std::string url_encode(const std::wstring& s, int flags = 0);
 
 protected:
     /**
