@@ -182,12 +182,12 @@ FindFrame::FindFrame(PoeditFrame *owner,
 
     wxAcceleratorEntry entries[] = {
 #ifndef __WXGTK__
-        { wxACCEL_SHIFT,  WXK_RETURN, m_btnPrev->GetId() },
+        { wxACCEL_SHIFT, WXK_RETURN, m_btnPrev->GetId() },
 #endif
 #ifdef __WXOSX__
-        { wxACCEL_CMD,  'W', wxID_CLOSE },
+        { wxACCEL_CMD, 'W', wxID_CLOSE },
 #endif
-        { wxACCEL_NORMAL,  WXK_ESCAPE, wxID_CLOSE }
+        { wxACCEL_NORMAL, WXK_ESCAPE, wxID_CLOSE }
     };
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
@@ -455,7 +455,7 @@ bool FindFrame::DoFind(int dir)
 
     int mode = m_mode->GetSelection();
     int cnt = m_listCtrl->GetItemCount();
-    bool inTrans = m_findInTrans->GetValue()  && (m_catalog->HasCapability(Catalog::Cap::Translations));
+    bool inTrans = m_findInTrans->GetValue() && (m_catalog->HasCapability(Catalog::Cap::Translations));
     bool inSource = (mode == Mode_Find) && m_findInOrig->GetValue();
     bool inComments = (mode == Mode_Find) && m_findInComments->GetValue();
     bool ignoreCase = (mode == Mode_Find) && m_ignoreCase->GetValue();

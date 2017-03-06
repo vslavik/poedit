@@ -338,7 +338,7 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
 
 Extractor::ExtractorsList Extractor::CreateAllLegacyExtractors()
 {
-    // Extractors must be created anew to pick up any changes in defitinions
+    // Extractors must be created anew to pick up any changes in definitions
 
     ExtractorsList all;
 

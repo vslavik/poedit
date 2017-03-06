@@ -43,7 +43,7 @@ public:
     /// Return singleton instance of the client.
     static CrowdinClient& Get();
 
-    /// Destroys the singleton, must be called (omly) on app shutdown.
+    /// Destroys the singleton, must be called (only) on app shutdown.
     static void CleanUp();
 
     /// Is the user currently signed into Crowdin?

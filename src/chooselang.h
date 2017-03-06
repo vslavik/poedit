@@ -40,7 +40,7 @@
 /// Let the user change UI language
 void ChangeUILanguage();
 
-/** Return currently chosen language. Calls  ChooseLanguage if necessary. */
+/** Return currently chosen language. Calls ChooseLanguage if necessary. */
 wxString GetUILanguage();
 
 #endif // NEED_CHOOSELANG_UI

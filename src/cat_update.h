@@ -45,7 +45,7 @@ enum UpdateFlags
 };
 
 /**
-    Update ctaalog from source code, if configured, and provide UI
+    Update catalog from source code, if configured, and provide UI
     during the operation.
  */
 bool PerformUpdateFromSources(wxWindow *parent,

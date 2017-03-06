@@ -230,7 +230,7 @@ class PoeditListCtrl : public wxDataViewCtrl
         void SetCustomFont(wxFont font);
 
         // Order used for sorting
-        SortOrder& sortOrder() {  return m_model->sortOrder; }
+        SortOrder& sortOrder() { return m_model->sortOrder; }
 
     private:
         /// Model for the translation data

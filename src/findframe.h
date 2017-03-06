@@ -51,7 +51,7 @@ class FindFrame : public wxFrame
 {
     public:
         /** Ctor.
-            \param owner  Parent frame, FindFrame will float on it
+            \param owner   Parent frame, FindFrame will float on it
             \param list    List control to search in
             \param catalog Catalog to search in
          */

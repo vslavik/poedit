@@ -90,7 +90,7 @@ class LegacyExtractorSpec
         }
 
         /** Returns command line used to launch the extractor with specified
-            input. This expands all veriables in Command property of the
+            input. This expands all variables in Command property of the
             parser and returns string that be directly passed to wxExecute.
             \param files    list of files to parse
             \param keywords list of recognized keywords

@@ -295,7 +295,7 @@ wxString PoeditApp::GetAppBuildNumber() const
 bool PoeditApp::IsBetaVersion() const
 {
     wxString v = GetAppVersion();
-    return  v.Contains("beta") || v.Contains("rc");
+    return v.Contains("beta") || v.Contains("rc");
 }
 
 bool PoeditApp::CheckForBetaUpdates() const
@@ -404,7 +404,7 @@ bool PoeditApp::OnInit()
 #if defined(__WXOSX__)
     wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir());
 #elif defined(__WXMSW__)
-	wxStandardPaths::Get().DontIgnoreAppSubDir();
+    wxStandardPaths::Get().DontIgnoreAppSubDir();
     wxXmlResource::Get()->LoadAllFiles(wxStandardPaths::Get().GetResourcesDir() + "\\Resources");
 #else
     InitXmlResource();
@@ -530,7 +530,7 @@ static wxLayoutDirection g_layoutDirection = wxLayout_Default;
 void PoeditApp::SetupLanguage()
 {
 #if defined(__WXMSW__)
-	wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
+    wxFileTranslationsLoader::AddCatalogLookupPathPrefix(wxStandardPaths::Get().GetResourcesDir() + "\\Translations");
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
 #elif defined(__WXOSX__)
     wxFileTranslationsLoader::AddCatalogLookupPathPrefix(GetGettextPackagePath() + "/share/locale");
@@ -1050,7 +1050,7 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     #pragma clang diagnostic pop
     [editNS insertItem:[NSMenuItem separatorItem] atIndex:2];
     if (pasteItem != -1) pasteItem += 3;
-    if (findItem != -1)  findItem += 3;
+    if (findItem != -1) findItem += 3;
 
     NSMenuItem *item;
     if (pasteItem != -1)
@@ -1129,23 +1129,23 @@ void PoeditApp::CreateFakeOpenRecentMenu()
     NSMenu *mainMenu = [NSApp mainMenu];
  
     NSMenuItem *item = [mainMenu addItemWithTitle:@"File" action:NULL keyEquivalent:@""];
-	NSMenu *menu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"File", nil)];
+    NSMenu *menu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"File", nil)];
  
-	item = [menu addItemWithTitle:NSLocalizedString(@"Open Recent", nil)
-						   action:NULL
-					keyEquivalent:@""];
-	NSMenu *openRecentMenu = [[NSMenu alloc] initWithTitle:@"Open Recent"];
+    item = [menu addItemWithTitle:NSLocalizedString(@"Open Recent", nil)
+            action:NULL
+            keyEquivalent:@""];
+    NSMenu *openRecentMenu = [[NSMenu alloc] initWithTitle:@"Open Recent"];
     #pragma clang diagnostic push
     #pragma clang diagnostic ignored "-Wundeclared-selector"
-	[openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
+    [openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
     #pragma clang diagnostic pop
-	[menu setSubmenu:openRecentMenu forItem:item];
+    [menu setSubmenu:openRecentMenu forItem:item];
     m_recentMenuData->menuItem = item;
     m_recentMenuData->menu = openRecentMenu;
  
-	item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
-									 action:@selector(clearRecentDocuments:)
-							  keyEquivalent:@""];
+    item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
+            action:@selector(clearRecentDocuments:)
+            keyEquivalent:@""];
 }
 
 void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)

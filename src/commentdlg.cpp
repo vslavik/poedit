@@ -43,7 +43,7 @@ CommentDialog::CommentDialog(wxWindow *parent, const wxString& comment) : wxDial
     m_text->SetValue(RemoveStartHash(comment));
 
     wxAcceleratorEntry entries[] = {
-        { wxACCEL_CMD,  WXK_RETURN, wxID_OK }
+        { wxACCEL_CMD, WXK_RETURN, wxID_OK }
     };
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);

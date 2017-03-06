@@ -549,7 +549,7 @@ class Catalog
             of standard .po format, namely SearchPaths, Keywords, BasePath
             and Language.
 
-            @param flags  CreationFlags combination.
+            @param flags CreationFlags combination.
          */
         bool Load(const wxString& po_file, int flags = 0);
 

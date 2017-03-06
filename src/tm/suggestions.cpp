@@ -35,8 +35,8 @@ public:
 
     dispatch::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend,
                                                          const Language& srclang,
-                                                          const Language& lang,
-                                                          const std::wstring& source)
+                                                         const Language& lang,
+                                                         const std::wstring& source)
     {
         auto bck = &backend;
         return dispatch::async([=]{

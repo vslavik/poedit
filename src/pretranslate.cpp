@@ -156,7 +156,7 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
     // you apply the translation memory and/or machine translation to all of the
     // strings you're translating as the first step, followed by correcting,
     // improving etc., i.e. actually translating the strings. This may be tricky
-    // to express in other languages as simply as in Engish, but please try to
+    // to express in other languages as simply as in English, but please try to
     // keep it similarly concise. Please try to avoid, if possible, describing it
     // as "auto-translation" and similar, because such terminology would mislead
     // some users into thinking it's all that needs to be done (spoken from

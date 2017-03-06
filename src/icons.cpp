@@ -100,7 +100,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     (void)client;
     (void)size;
 
-    // Note: On Unix, this code is only called as last resolt, if standard
+    // Note: On Unix, this code is only called as last resort, if standard
     //       theme provider (that uses current icon theme and files from
     //       /usr/share/icons/<theme>) didn't find any matching icon.
 
