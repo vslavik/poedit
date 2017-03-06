@@ -670,7 +670,7 @@ void PoeditApp::OnInitCmdLine(wxCmdLineParser& parser)
     wxApp::OnInitCmdLine(parser);
 
     parser.AddSwitch("", CL_KEEP_TEMP_FILES,
-                     _("don't delete temporary files (for debugging)"));
+                     _(L"don’t delete temporary files (for debugging)"));
     parser.AddLongOption(CL_HANDLE_POEDIT_URI,
                      _("handle a poedit:// URI"), wxCMD_LINE_VAL_STRING);
     parser.AddParam("catalog.po", wxCMD_LINE_VAL_STRING,
@@ -889,7 +889,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
     wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
     if ( !wxFileExists(f) )
     {
-        wxLogError(_("File '%s' doesn't exist."), f.c_str());
+        wxLogError(_(L"File '%s' doesn’t exist."), f.c_str());
         return;
     }
 
@@ -1022,7 +1022,7 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     apple->InsertSeparator(3);
 
 #if USE_SPARKLE
-    Sparkle_AddMenuItem(apple->GetHMenu(), _("Check for Updates...").utf8_str());
+    Sparkle_AddMenuItem(apple->GetHMenu(), _(L"Check for Updates…").utf8_str());
 #endif
 
     int editMenuPos = bar->FindMenu(_("&Edit"));

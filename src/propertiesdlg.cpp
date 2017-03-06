@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 2000-2017 Vaclav Slavik
@@ -384,10 +384,10 @@ protected:
         static const auto idWild = wxNewId();
 
         wxMenu *menu = new wxMenu();
-        menu->Append(idFolder, MSW_OR_OTHER(_("Add folders..."), _("Add Folders...")));
-        menu->Append(idFile, MSW_OR_OTHER(_("Add files..."), _("Add Files...")));
+        menu->Append(idFolder, MSW_OR_OTHER(_(L"Add folders…"), _(L"Add Folders…")));
+        menu->Append(idFile, MSW_OR_OTHER(_(L"Add files…"), _(L"Add Files…")));
         if (AllowWildcards())
-            menu->Append(idWild, MSW_OR_OTHER(_("Add wildcard..."), _("Add Wildcard...")));
+            menu->Append(idWild, MSW_OR_OTHER(_(L"Add wildcard…"), _(L"Add Wildcard…")));
 
         menu->Bind(wxEVT_MENU, [=](wxCommandEvent&){
             wxDirDialog dlg(this,

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 2008-2017 Vaclav Slavik
@@ -270,7 +270,7 @@ void AttentionMessage::AddDontShowAgain()
 {
     auto id = m_id;
     AddAction(
-        MSW_OR_OTHER(_("Don't show again"), _("Don't Show Again")), [id]{
+        MSW_OR_OTHER(_(L"Don’t show again"), _(L"Don’t Show Again")), [id]{
         AddToBlacklist(id);
     });
 }

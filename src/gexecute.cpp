@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 2000-2017 Vaclav Slavik
@@ -83,7 +83,7 @@ wxString GetPathToAuxBinary(const wxString& program)
     else
     {
         wxLogTrace("poedit.execute",
-                   "%s doesn't exist, falling back to %s",
+                   L"%s doesn’t exist, falling back to %s",
                    path.GetFullPath().c_str(),
                    program.c_str());
         return program;
