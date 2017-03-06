@@ -154,7 +154,7 @@ public:
     /// Convenience function for showing error message in the indicator
     std::function<void(dispatch::exception_ptr)> HandleError;
 
-    bool HasTransparentBackground() override { return true;  }
+    bool HasTransparentBackground() override { return true; }
 
 private:
     bool m_running;

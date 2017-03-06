@@ -91,7 +91,7 @@
 namespace
 {
 
-// Splitters with customized apperance to blend with EditingArea:
+// Splitters with customized appearance to blend with EditingArea:
 
 class ThinSplitter : public wxSplitterWindow
 {

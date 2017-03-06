@@ -121,7 +121,7 @@ FileViewer::FileViewer(wxWindow*)
 
 #ifdef __WXOSX__
     wxAcceleratorEntry entries[] = {
-        { wxACCEL_CMD,  'W', wxID_CLOSE }
+        { wxACCEL_CMD, 'W', wxID_CLOSE }
     };
     wxAcceleratorTable accel(WXSIZEOF(entries), entries);
     SetAcceleratorTable(accel);
