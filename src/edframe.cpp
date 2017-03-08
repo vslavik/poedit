@@ -2662,6 +2662,8 @@ void PoeditFrame::OnPurgeDeleted(wxCommandEvent& WXUNUSED(event))
     dlg->ShowWindowModalThenDo([this,dlg](int retcode){
         if (retcode == wxID_YES) {
             m_catalog->RemoveDeletedItems();
+            m_modified = true;
+            UpdateTitle();
             UpdateMenu();
         }
     });
