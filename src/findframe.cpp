@@ -143,8 +143,8 @@ FindFrame::FindFrame(PoeditFrame *owner,
 #endif
 
     m_btnClose = new wxButton(panel, wxID_CLOSE, _("Close"));
-    m_btnReplaceAll = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Replace all"), _("Replace All")));
-    m_btnReplace = new wxButton(panel, wxID_ANY, _("Replace"));
+    m_btnReplaceAll = new wxButton(panel, wxID_ANY, MSW_OR_OTHER(_("Replace &all"), _("Replace &All")));
+    m_btnReplace = new wxButton(panel, wxID_ANY, _("&Replace"));
     m_btnPrev = new wxButton(panel, wxID_ANY, _("< &Previous"));
     m_btnNext = new wxButton(panel, wxID_ANY, _("&Next >"));
     m_btnNext->SetDefault();
