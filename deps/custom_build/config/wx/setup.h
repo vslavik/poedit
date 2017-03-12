@@ -597,7 +597,7 @@
 #define wxUSE_ZIPSTREAM     0
 
 // Set to 1 to compile wxTarInput/OutputStream classes.
-#define wxUSE_TARSTREAM     0
+#define wxUSE_TARSTREAM     1
 
 // Set to 1 to compile wxZlibInput/OutputStream classes. Also required by
 // wxUSE_LIBPNG
