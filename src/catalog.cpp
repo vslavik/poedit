@@ -55,6 +55,7 @@
 
 // TODO: split into different file
 #if wxUSE_GUI
+    #include "cloud_sync.h" // FIXME - gross, not GUI-related
     #include <wx/msgdlg.h>
 #endif
 
@@ -1597,7 +1598,16 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     
     /* If the user wants it, compile .mo file right now: */
 
-    if (m_fileType == Type::PO && save_mo && wxConfig::Get()->Read("compile_mo", (long)true))
+    bool compileMO = save_mo;
+#if wxUSE_GUI // FIXME - gross
+    if (!m_cloudSync || !m_cloudSync->NeedsMO())
+#endif
+    {
+        if (!wxConfig::Get()->Read("compile_mo", (long)true))
+            compileMO = false;
+    }
+
+    if (m_fileType == Type::PO && compileMO)
     {
         const wxString mo_file = wxFileName::StripExtension(po_file) + ".mo";
         TempOutputFileFor mo_file_temp_obj(mo_file);

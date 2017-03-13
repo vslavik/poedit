@@ -58,6 +58,7 @@
 
 #include "catalog.h"
 #include "cat_update.h"
+#include "cloud_sync.h"
 #include "colorscheme.h"
 #include "concurrency.h"
 #include "configuration.h"
@@ -1072,6 +1073,8 @@ void PoeditFrame::OnOpenFromCrowdin(wxCommandEvent&)
     DoIfCanDiscardCurrentDoc([=]{
         CrowdinOpenFile(this, [=](wxString name){
             DoOpenFile(name);
+            if (m_catalog)
+                m_catalog->AttachCloudSync(std::make_shared<CrowdinSyncDestination>());
         });
     });
 }
@@ -2595,6 +2598,11 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     }
     else
     {
+        if (m_catalog->GetCloudSync())
+        {
+            CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
+        }
+
         completionHandler(true);
     }
 }

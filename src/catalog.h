@@ -38,6 +38,7 @@
 #include <memory>
 #include <vector>
 
+class CloudSyncDestination;
 struct SourceCodeSpec;
 
 class Catalog;
@@ -719,6 +720,9 @@ class Catalog
         /// Returns number of errors (i.e. 0 if no errors).
         int Validate();
 
+        void AttachCloudSync(std::shared_ptr<CloudSyncDestination> c) { m_cloudSync = c; }
+        std::shared_ptr<CloudSyncDestination> GetCloudSync() const { return m_cloudSync; }
+
     protected:
         /// Fix commonly encountered fixable problems with loaded files
         void FixupCommonIssues();
@@ -748,6 +752,8 @@ class Catalog
         Language m_sourceLanguage;
         wxTextFileType m_fileCRLF;
         int m_fileWrappingWidth;
+
+        std::shared_ptr<CloudSyncDestination> m_cloudSync;
 
         friend class LoadParser;
 };

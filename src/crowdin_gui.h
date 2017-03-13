@@ -29,6 +29,7 @@
 #ifdef HAVE_HTTP_CLIENT
 
 #include "catalog.h"
+#include "cloud_sync.h"
 #include "customcontrols.h"
 
 #include <wx/panel.h>
@@ -75,6 +76,16 @@ protected:
     wxBoxSizer *m_loginInfo;
     wxButton *m_signIn, *m_signOut;
     wxString m_userName, m_userLogin;
+};
+
+
+class CrowdinSyncDestination : public CloudSyncDestination
+{
+public:
+    wxString GetName() const override { return "Crowdin"; }
+    bool NeedsMO() const override { return false; }
+
+    dispatch::future<void> Upload(CatalogPtr file) override;
 };
 
 
