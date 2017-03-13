@@ -2562,6 +2562,7 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         return;
     }
 
+    m_catalog->SetFileName(catalog);
     m_modified = false;
     m_fileExistsOnDisk = true;
 
