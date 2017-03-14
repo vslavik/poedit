@@ -263,7 +263,7 @@ bool PerformUpdateFromPOT(wxWindow *parent,
 
     if (!pot->IsOk())
     {
-        wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
+        wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
         return false;
     }
 

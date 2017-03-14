@@ -414,14 +414,14 @@ public:
         auto ext = f.GetExt().Lower();
         if ( ext != "po" && ext != "pot" )
         {
-            wxLogError(_("File '%s' is not a message catalog."),
+            wxLogError(_(L"File “%s” is not a message catalog."),
                        f.GetFullPath().c_str());
             return false;
         }
 
         if ( !f.FileExists() )
         {
-            wxLogError(_(L"File '%s' doesn’t exist."), f.GetFullPath().c_str());
+            wxLogError(_(L"File “%s” doesn’t exist."), f.GetFullPath().c_str());
             return false;
         }
 
@@ -1084,7 +1084,7 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
     wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
     if ( !wxFileExists(f) )
     {
-        wxLogError(_(L"File '%s' doesn’t exist."), f.c_str());
+        wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
         return;
     }
 
@@ -2344,7 +2344,7 @@ void PoeditFrame::RefreshControls(int flags)
     m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
     {
-        wxLogError(_("Error loading message catalog file '%s'."), m_catalog->GetFileName());
+        wxLogError(_(L"Error loading message catalog file “%s”."), m_catalog->GetFileName());
         m_fileExistsOnDisk = false;
         UpdateMenu();
         UpdateTitle();

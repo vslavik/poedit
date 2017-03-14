@@ -889,7 +889,7 @@ void PoeditApp::OnOpenHist(wxCommandEvent& event)
     wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
     if ( !wxFileExists(f) )
     {
-        wxLogError(_(L"File '%s' doesn’t exist."), f.c_str());
+        wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
         return;
     }
 
