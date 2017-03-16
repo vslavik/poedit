@@ -232,6 +232,10 @@ class PoeditListCtrl : public wxDataViewCtrl
         // Order used for sorting
         SortOrder& sortOrder() { return m_model->sortOrder; }
 
+    protected:
+        void DoFreeze() override;
+        void DoThaw() override;
+
     private:
         /// Model for the translation data
         class Model : public wxDataViewVirtualListModel
@@ -284,11 +288,15 @@ class PoeditListCtrl : public wxDataViewCtrl
 
             void CreateSortMap();
 
+            void Freeze() { m_frozen = true; }
+            void Thaw() { m_frozen = false; }
+
         public:
             CatalogPtr m_catalog;
             SortOrder sortOrder;
 
         private:
+            bool m_frozen;
             std::vector<int> m_mapListToCatalog;
             std::vector<int> m_mapCatalogToList;
 

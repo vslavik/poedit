@@ -195,7 +195,8 @@ private:
 
 
 PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual)
-    : m_sourceTextDir(TextDirection::LTR),
+    : m_frozen(false),
+      m_sourceTextDir(TextDirection::LTR),
       m_transTextDir(TextDirection::LTR),
       m_appTextDir(appTextDir)
 {
@@ -268,6 +269,12 @@ wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
 
 void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const
 {
+    if (!m_catalog || m_frozen)
+    {
+        variant = wxNullVariant;
+        return;
+    }
+
     auto d = Item(row);
     wxCHECK_RET(d, "invalid row");
 
@@ -359,7 +366,7 @@ bool PoeditListCtrl::Model::SetValueByRow(const wxVariant&, unsigned, unsigned)
 
 bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewItemAttr& attr) const
 {
-    if (!m_catalog)
+    if (!m_catalog || m_frozen)
         return false;
 
     switch (col)
@@ -651,4 +658,24 @@ void PoeditListCtrl::OnSize(wxSizeEvent& event)
 
     SizeColumns();
     event.Skip();
+}
+
+void PoeditListCtrl::DoFreeze()
+{
+    // FIXME: This is gross, but necessary if DVC is redrawn just between
+    // changing m_catalog and calling on-changed notification, particularly when
+    // updating from sources.
+    //
+    // Proper fix would be to either a) make a copy in cat_update.cpp instead of
+    // updating a catalog in a way that may change its size or b) have
+    // notifications integrated properly in Catalog and call them immediately
+    // after a (size) change.
+    m_model->Freeze();
+    wxDataViewCtrl::DoFreeze();
+}
+
+void PoeditListCtrl::DoThaw()
+{
+    m_model->Thaw();
+    wxDataViewCtrl::DoThaw();
 }
