@@ -132,8 +132,8 @@ class PoeditApp : public wxApp
         DECLARE_EVENT_TABLE()
 
 #ifdef __WXOSX__
-        class RecentMenuData;
-        std::unique_ptr<RecentMenuData> m_recentMenuData;
+        class NativeMacAppData;
+        std::unique_ptr<NativeMacAppData> m_nativeMacAppData;
 #else
         wxFileHistory m_history;
 #endif

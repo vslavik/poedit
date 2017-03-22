@@ -85,7 +85,7 @@
 #include "crowdin_client.h"
 
 #ifdef __WXOSX__
-struct PoeditApp::RecentMenuData
+struct PoeditApp::NativeMacAppData
 {
     NSMenu *menu = nullptr;
     NSMenuItem *menuItem = nullptr;
@@ -253,7 +253,7 @@ IMPLEMENT_APP(PoeditApp);
 PoeditApp::PoeditApp()
 {
 #ifdef __WXOSX__
-    m_recentMenuData.reset(new RecentMenuData);
+    m_nativeMacAppData.reset(new NativeMacAppData);
 #endif
 }
 
@@ -1140,8 +1140,8 @@ void PoeditApp::CreateFakeOpenRecentMenu()
     [openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
     #pragma clang diagnostic pop
     [menu setSubmenu:openRecentMenu forItem:item];
-    m_recentMenuData->menuItem = item;
-    m_recentMenuData->menu = openRecentMenu;
+    m_nativeMacAppData->menuItem = item;
+    m_nativeMacAppData->menu = openRecentMenu;
  
     item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
             action:@selector(clearRecentDocuments:)
@@ -1150,9 +1150,9 @@ void PoeditApp::CreateFakeOpenRecentMenu()
 
 void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
 {
-    if (m_recentMenuData->menuItem)
-        [m_recentMenuData->menuItem setSubmenu:nil];
-    m_recentMenuData->menuBar = nullptr;
+    if (m_nativeMacAppData->menuItem)
+        [m_nativeMacAppData->menuItem setSubmenu:nil];
+    m_nativeMacAppData->menuBar = nullptr;
 
     if (!bar)
         return;
@@ -1167,16 +1167,16 @@ void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
     if (!nativeItem)
         return;
 
-    [nativeItem setSubmenu:m_recentMenuData->menu];
-    m_recentMenuData->menuItem = nativeItem;
-    m_recentMenuData->menuBar = bar;
+    [nativeItem setSubmenu:m_nativeMacAppData->menu];
+    m_nativeMacAppData->menuItem = nativeItem;
+    m_nativeMacAppData->menuBar = bar;
 }
 
 void PoeditApp::OnIdleInstallOpenRecentMenu(wxIdleEvent& event)
 {
     event.Skip();
     auto installed = wxMenuBar::MacGetInstalledMenuBar();
-    if (m_recentMenuData->menuBar != installed)
+    if (m_nativeMacAppData->menuBar != installed)
         InstallOpenRecentMenu(installed);
 }
 
