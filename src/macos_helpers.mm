@@ -25,6 +25,8 @@
 
 #include "macos_helpers.h"
 
+#include "edapp.h"
+
 #import <Foundation/NSString.h>
 #import <Foundation/NSUserDefaults.h>
 #import <Foundation/NSAutoreleasePool.h>
@@ -42,20 +44,46 @@
 // Sparkle helpers
 // --------------------------------------------------------------------------------
 
-void Sparkle_Initialize(bool checkForBeta)
+@interface PoeditSparkleDelegate : NSObject <SUUpdaterDelegate>
+@end
+
+@implementation PoeditSparkleDelegate
+
+- (NSArray *)feedParametersForUpdater:(SUUpdater *)updater sendingSystemProfile:(BOOL)sendingProfile
+{
+    #pragma unused(updater, sendingProfile)
+    if (wxGetApp().CheckForBetaUpdates())
+    {
+        return @[ @{
+            @"key":           @"beta",
+            @"value":         @"1",
+            @"displayKey":    @"Beta Versions",
+            @"displayValue":  @"Yes"
+        } ];
+    }
+    else
+    {
+        return @[];
+    }
+}
+
+@end
+
+
+NSObject *Sparkle_Initialize()
 {
     @autoreleasepool {
+        // Poedit < 2.0 stored this in preferences, which was wrong - it overrode
+        // changes to Info.plist. Undo the damage:
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SUFeedURL"];
+
         // For Preferences window, have default in sync with Info.plist:
         NSDictionary *sparkleDefaults = @{ @"SUEnableAutomaticChecks": @YES };
         [[NSUserDefaults standardUserDefaults] registerDefaults:sparkleDefaults];
 
-        SUUpdater *updater = [SUUpdater sharedUpdater];
-
-        /* TODO: Use feedParametersForUpdater delegate method and append ?beta=1 instead.
-                 This code puts SUFeedURL into user defaults! */
-        NSString *url = checkForBeta ? @"https://poedit.net/updates/osx/appcast/beta"
-                                     : @"https://poedit.net/updates/osx/appcast";
-        [updater setFeedURL:[NSURL URLWithString:url]];
+        NSObject<SUUpdaterDelegate> *delegate = [PoeditSparkleDelegate new];
+        SUUpdater.sharedUpdater.delegate = delegate;
+        return delegate;
     }
 }
 

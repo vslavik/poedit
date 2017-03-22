@@ -90,6 +90,9 @@ struct PoeditApp::NativeMacAppData
     NSMenu *menu = nullptr;
     NSMenuItem *menuItem = nullptr;
     wxMenuBar *menuBar = nullptr;
+#ifdef USE_SPARKLE
+    NSObject *sparkleDelegate = nullptr;
+#endif
 };
 #endif
 
@@ -456,7 +459,7 @@ bool PoeditApp::OnInit()
 #endif // !__WXOSX__
 
 #ifdef USE_SPARKLE
-    Sparkle_Initialize(CheckForBetaUpdates());
+    m_nativeMacAppData->sparkleDelegate = Sparkle_Initialize();
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__

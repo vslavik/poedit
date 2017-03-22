@@ -954,7 +954,6 @@ public:
         }
 #ifdef USE_SPARKLE
         UserDefaults_SetBoolValue("SUEnableAutomaticChecks", m_updates->GetValue());
-        Sparkle_Initialize(wxGetApp().CheckForBetaUpdates());
 #endif
     }
 
