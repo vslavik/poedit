@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-26 19:02+0200\n"
-"PO-Revision-Date: 2016-08-26 13:00-0400\n"
+"POT-Creation-Date: 2017-03-22 19:03+0100\n"
+"PO-Revision-Date: 2017-03-22 13:55-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -24,6 +24,29 @@ msgstr "No tornis a mostrar-ho"
 
 msgid "Don't show again"
 msgstr "No ho mostris més"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(Noves: %i, obsoletes: %i)"
+
+msgid "Updating catalog"
+msgstr "S’està actualitzant el catàleg"
+
+msgid "Collecting source files..."
+msgstr ""
+
+msgid "Extracting translatable strings..."
+msgstr ""
+
+msgid "Failed to load extracted catalog."
+msgstr "No s’ha pogut carregar el catàleg extret."
+
+msgid "Merging differences..."
+msgstr "S’estan fusionant les diferències…"
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "El fitxer POT «%s» no és vàlid."
 
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
@@ -66,7 +89,7 @@ msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"El fitxer «%s» és de només lectura i no es pot desar.\n"
+"El fitxer «%s» és només de lectura i no es pot desar.\n"
 "Hauríeu de desar-lo amb un altre nom."
 
 #, c-format
@@ -86,11 +109,10 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"No s'ha pogut desar el catàleg en el joc de caràcters «%s» com especificat "
-"en\n"
-"els ajusts de catàleg.\n"
+"No s’ha pogut desar el catàleg en el joc de caràcters «%s» com s’especifica "
+"en la configuració del catàleg.\n"
 "\n"
-"S'ha desat en UTF-8 i l'ajust s'ha modificat en conseqüència."
+"S’ha desat en UTF-8 i la configuració s’ha modificat en conseqüència."
 
 msgid "Error saving catalog"
 msgstr "S’ha produït un error en desar el catàleg"
@@ -104,13 +126,6 @@ msgstr "Plantilles de traducció .POT"
 msgid "All Translation Files"
 msgstr "Tots els fitxers de traducció"
 
-msgid "Merging differences..."
-msgstr "S’estan fusionant les diferències…"
-
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "El fitxer POT «%s» no és vàlid."
-
 msgid "(Use default language)"
 msgstr "(Utilitza l’idioma per defecte)"
 
@@ -122,6 +137,17 @@ msgstr "Selecció d’idioma"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Heu de reiniciar el Poedit perquè aquest canvi tingui efecte."
+
+msgid "Syncing"
+msgstr "Sincronitzant"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr ""
+
+msgid "Syncing error"
+msgstr "Error de Sincronització"
 
 msgid "Downloading translations is disabled in this project."
 msgstr "Aquest projecte ha inhabilitat les baixades de traduccions."
@@ -192,9 +218,6 @@ msgstr "Aquest fitxer només es pot editar en la interfície web del Crowdin."
 msgid "Downloading latest translations…"
 msgstr "S’estan baixant les traduccions més recents…"
 
-msgid "Syncing with Crowdin"
-msgstr "S'està sincronitzant amb el Crowdin"
-
 msgid "Syncing with Crowdin failed."
 msgstr "La sincronització amb el Crowdin ha fallat."
 
@@ -212,24 +235,6 @@ msgstr "Més informació"
 
 msgid "Learn More"
 msgstr "Més informació"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Ha fallat l’ordre: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "No s'han pogut fusionar els catàlegs del gettext."
-
-msgid "Scanning files..."
-msgstr "S’estan analitzant els fitxers…"
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#, c-format
-msgid "Parsing %s files..."
-msgstr "S’estan analitzant els fitxers %s…"
-
-msgid "Failed to load extracted catalog."
-msgstr "No s'ha pogut carregar el catàleg extret."
 
 msgid "&Help"
 msgstr "&Ajuda"
@@ -260,52 +265,12 @@ msgstr "Ha fallat la comunicació amb el procès de Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "S’ha produït una excepció no controlada: %s"
 
-msgid "Unhandled exception occurred."
-msgstr "S’ha produït una excepció no controlada."
-
 msgid "Open catalog"
 msgstr "Obre el catàleg"
 
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "El fitxer «%s» no existeix."
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Quant al %s"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Versió %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Services"
-msgstr "Serveis"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Hide %s"
-msgstr "Amaga el %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Hide Others"
-msgstr "Amaga la resta"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Show All"
-msgstr "Mostra-ho tot"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Quit %s"
-msgstr "Surt del %s"
-
-msgid "Preferences..."
-msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "El Poedit és un editor de traduccions fàcil de fer servir."
@@ -409,6 +374,7 @@ msgstr "Escala"
 msgid "Bring All to Front"
 msgstr "Envia tot al capdavant"
 
+#. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
 msgstr "Traducció PO"
 
@@ -421,74 +387,6 @@ msgstr "El fitxer no és vàlid"
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "El fitxer pot ser o malmès o d'un format no reconegut pel Poedit."
-
-msgid "&Undo"
-msgstr "&Desfés"
-
-msgid "&Redo"
-msgstr "&Refés"
-
-msgid "Cu&t"
-msgstr "Re&talla"
-
-msgid "Cut"
-msgstr "Retalla"
-
-msgid "Copy"
-msgstr "Copia"
-
-msgid "&Paste"
-msgstr "&Enganxa"
-
-msgid "Paste"
-msgstr "Enganxa"
-
-msgid "&Delete"
-msgstr "&Suprimeix"
-
-msgid "Select &All"
-msgstr "Selecciona-ho &tot"
-
-msgid "Select All"
-msgstr "Selecciona-ho tot"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Alt+"
-msgstr "Alt+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Shift+"
-msgstr "Maj+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Enter"
-msgstr "Retorn"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Up"
-msgstr "↑"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Down"
-msgstr "↓"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-msgid "ctrl"
-msgstr "ctrl"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-msgid "alt"
-msgstr "alt"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-msgid "shift"
-msgstr "maj"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "No podeu deixar anar més d'un fitxer a la finestra del Poedit."
@@ -505,31 +403,6 @@ msgstr "&Fitxer"
 
 msgid "&Go"
 msgstr "&Navega"
-
-msgid "Source text:"
-msgstr "Text font:"
-
-msgid "Singular:"
-msgstr "Singular:"
-
-msgid "Plural:"
-msgstr "Plural:"
-
-msgid "Translation:"
-msgstr "Traducció:"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Els fitxers POT només són plantilles i no contenen cap traducció.\n"
-"Per a fer una traducció, creeu un fitxer PO nou basat en la plantilla."
-
-msgid "Create New Translation"
-msgstr "Crea una traducció nova"
-
-msgid "Create new translation"
-msgstr "Crea una traducció nova"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -578,10 +451,7 @@ msgid "HTML Files"
 msgstr "Fitxers HTML"
 
 msgid "Open catalog template"
-msgstr "Obre la plantilla de catàleg"
-
-msgid "Updating catalog"
-msgstr "S’està actualitzant el catàleg"
+msgstr "Obre una plantilla de catàleg"
 
 msgid "Source code not available."
 msgstr "El codi font no és disponible."
@@ -664,9 +534,6 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "La traducció ja és a punt i podeu utilitzar-la."
 
-msgid "Context:"
-msgstr "Context:"
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -675,8 +542,8 @@ msgstr ""
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
 "El fitxer contenia elements duplicats. Això no es permet als fitxers PO; en "
 "cas contrari el fitxer no es podria fer servir. El Poedit ha corregit el "
@@ -778,9 +645,6 @@ msgstr " (no desat)"
 msgid " (modified)"
 msgstr " (modificat)"
 
-msgid "Go"
-msgstr "Vés-hi"
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Ha fallat l'actualització de memòria de traducció: %s"
@@ -806,75 +670,16 @@ msgstr "Manté"
 msgid "Purge"
 msgstr "Purga"
 
-msgid "Fill missing translations from TM"
-msgstr "Emplena cadenes no traduïdes mitjançant la MT"
-
-msgid "Only fill in exact matches"
-msgstr "Únicament emplena les coincidències exactes"
-
-msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-msgstr ""
-"Per defecte, els resultats inexactes s'omplen també i es marquen com a "
-"difuses. Seleccioneu aquesta opció per a incloure només coincidències "
-"exactes."
-
-msgid "Don’t mark exact matches as fuzzy"
-msgstr "No marquis les coincidències exactes com a difuses"
-
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-msgstr ""
-"Només habilita-ho si confieu en la qualitat del vostre MT. Per defecte, "
-"totes les coincidències de la MT es marquen com a difuses i es deuen revisar."
-
-msgid "Fill"
-msgstr "Omple"
-
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "%d entrada ha estat omplerta mitjançant la memòria de traducció."
-msgstr[1] "%d entrades han estat omplertes mitjançant la memòria de traducció."
-
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr ""
-"Les traduccions s'han marcat com a difuses, ja que poden ser incorrectes. "
-"Les hauria de revisar per comprovar-les."
-
-msgid "No entries could be filled from the translation memory."
-msgstr "No s'han pogut omplir cadenes mitjançant la MT."
-
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"La MT no conté cap cadena similar al contingut d'aquest fitxer. Només serà "
-"efectiu per traduccions semi-automàtiques després de que Poedit aprengui "
-"prou dels fitxers que vagi traduint manualment."
-
-msgid "Translating"
-msgstr "Traduint"
-
-msgid "Filling missing translations from TM..."
-msgstr "Omplint cadenes no traduïdes mitjançant la MT..."
-
-#, c-format
-msgid "Translated %u string"
-msgid_plural "Translated %u strings"
-msgstr[0] "S’ha traduït %u cadena"
-msgstr[1] "S’han traduït %u cadenes"
-
 msgid "Copy from source text"
 msgstr "Copia del text font"
 
 msgid "Copy from Source Text"
 msgstr "Copia del text font"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
 
 msgid "Clear translation"
 msgstr "Neteja la traducció"
@@ -891,33 +696,13 @@ msgstr "Edita el comentari"
 msgid "References:"
 msgstr "Referències:"
 
-msgid "Everything"
-msgstr "Tot"
-
-#, c-format
-msgid "Form %i"
-msgstr "Forma %i"
-
-msgid "Singular"
-msgstr "Singular"
-
-msgid "Zero"
-msgstr "Zero"
-
-msgid "One"
-msgstr "Un"
-
-msgid "Two"
-msgstr "Dos"
-
-msgid "Plural"
-msgstr "Plural"
-
-msgid "Other"
-msgstr "Altre"
-
 msgid "&Bookmarks"
 msgstr "&Marcadors"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #, c-format
 msgid "Set bookmark %i"
@@ -947,18 +732,88 @@ msgstr "Amaga la barra d'estat"
 msgid "Show Status Bar"
 msgstr "Mostra la barra d'estat"
 
-msgid "Source text"
-msgstr "Text font"
+msgid "Source text:"
+msgstr "Text font:"
 
-msgid "Translation"
-msgstr "Traducció"
+msgid "Singular:"
+msgstr "Singular:"
 
-msgid "ID"
-msgstr "Id."
+msgid "Plural:"
+msgstr "Plural:"
+
+msgid "Translation:"
+msgstr "Traducció:"
+
+msgid "Pre-translated"
+msgstr "Pre-traduït"
+
+msgid "Needs Work"
+msgstr "Per revisar"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Per revisar"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Els fitxers POT només són plantilles i no contenen cap traducció.\n"
+"Per a fer una traducció, creeu un fitxer PO nou basat en la plantilla."
+
+msgid "Create New Translation"
+msgstr "Crea una traducció nova"
+
+msgid "Create new translation"
+msgstr "Crea una traducció nova"
+
+msgid "Everything"
+msgstr "Tot"
+
+#, c-format
+msgid "Form %i"
+msgstr "Forma %i"
+
+msgid "Singular"
+msgstr "Singular"
+
+msgid "Zero"
+msgstr "Zero"
+
+msgid "One"
+msgstr "Un"
+
+msgid "Two"
+msgstr "Dos"
+
+msgid "Plural"
+msgstr "Plural"
+
+msgid "Other"
+msgstr "Altre"
+
+#, c-format
+msgid "%s Format"
+msgstr "Format %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "format %s"
 
 #, c-format
 msgid "Source text — %s"
 msgstr "Text font — %s"
+
+msgid "Source text"
+msgstr "Text font"
 
 msgid "unknown language"
 msgstr "idioma desconegut"
@@ -967,8 +822,15 @@ msgstr "idioma desconegut"
 msgid "Translation — %s"
 msgstr "Traducció — %s"
 
-msgid "Error:"
-msgstr "Error:"
+msgid "ID"
+msgstr "Id."
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Ha fallat l’ordre: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "No s'han pogut fusionar els catàlegs del gettext."
 
 msgid "Source file"
 msgstr "Fitxer de codi font"
@@ -1020,11 +882,14 @@ msgstr "Cerca als comentaris"
 msgid "Close"
 msgstr "Tanca"
 
-msgid "Replace All"
-msgstr "Reemplaça-ho tot"
+msgid "Replace &All"
+msgstr ""
 
-msgid "Replace all"
-msgstr "Reemplaça-ho tot"
+msgid "Replace &all"
+msgstr ""
+
+msgid "&Replace"
+msgstr ""
 
 msgid "< &Previous"
 msgstr "< &Anterior"
@@ -1062,9 +927,6 @@ msgstr "Total"
 
 msgid "Untrans"
 msgstr "No traduït"
-
-msgid "Fuzzy"
-msgstr "Difuses"
 
 msgid "Bad Tokens"
 msgstr "Cadenes mal escrites"
@@ -1173,19 +1035,24 @@ msgstr "Aprèn dels fitxers…"
 msgid "Reset"
 msgstr "Reinicialitza"
 
-msgid "Consult TM when updating from sources"
-msgstr "Consulta el MT mentre s'actualitza des de les fonts"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr "Quan actualitza de fonts"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr "incloure-hi per revisar a l'arxiu"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr "pre-traduir des de TM"
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
-"Si es troba activada, Poedit mirarà d'omplir les noves entrades usant\n"
-"traduccions prèvies que estiguin desades en la memòria de traducció.\n"
-"Si la MT és quasi buida, no serà molt efectiu. Quan més traduccions\n"
-"faci i més gran sigui la MT, més bé funcionarà."
 
 msgid "Stored translations:"
 msgstr "Traduccions emmagatzemades:"
@@ -1234,11 +1101,22 @@ msgstr ""
 "Els extractors de codi font s’utilitzen per trobar cadenes traduïbles en els "
 "fitxers de codi font i extraure-les de manera que es puguin traduir."
 
-msgid "New"
-msgstr "Nou"
+msgid "Custom Extractors:"
+msgstr ""
 
-msgid "Edit"
-msgstr "Edita"
+msgid "Custom extractors:"
+msgstr ""
+
+msgid "Edit..."
+msgstr "Modifica…"
+
+msgid "GNU gettext"
+msgstr ""
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
 
 msgid "Delete extractor"
 msgstr "Suprimeix l’extractor"
@@ -1295,10 +1173,80 @@ msgstr "Preserva el format dels fitxers existents"
 msgid "Advanced"
 msgstr "Avançades"
 
-#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+msgid "Pre-translating…"
+msgstr "Pre-traduïnt…"
+
 #, c-format
-msgid "%s Preferences"
-msgstr "Preferències del %s"
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr "Pre-traduir"
+
+msgid "Only fill in exact matches"
+msgstr "Únicament emplena les coincidències exactes"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
+msgstr ""
+"Per defecte, els resultats inexactes s'omplen també i es marquen com a "
+"difuses. Seleccioneu aquesta opció per a incloure només coincidències "
+"exactes."
+
+msgid "Don’t mark exact matches as needing work"
+msgstr "No marquis les coincidències exactes com a difuses"
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+"Només habilitar si confieu en la qualitat del vostre MT. Per defecte, totes "
+"les coincidències de la MT es marquen com a difuses i es deuen revisar."
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+"Pre-traducció automàticament detecta coincidències exactes o aproximades de "
+"cadenes sense traduir en la memòria de traducció i omple la traducció."
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "S’ha pretraduït %d entrada."
+msgstr[1] "S’han pretraduït %d entrades."
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+"Les traduccions marcades com per revisar, ja que poden ser incorrectes. "
+"S'han de repassar per comprovar-les."
+
+msgid "No entries could be pre-translated."
+msgstr "No s’ha pogut pretraduir cap entrada."
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"La MT no conté cap cadena similar al contingut d'aquest fitxer. Només serà "
+"efectiu per traduccions semi-automàtiques després de que Poedit aprengui "
+"prou dels fitxers que vagi traduint manualment."
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1342,6 +1290,21 @@ msgstr "Camins"
 msgid "Excluded paths"
 msgstr "Camins exclosos"
 
+msgid "Advanced extraction settings"
+msgstr "Configuració d'ubicació avançada"
+
+msgid "Extract notes for translators from:"
+msgstr ""
+
+msgid "Comments prefixed with:"
+msgstr ""
+
+msgid "All comments"
+msgstr ""
+
+msgid "Additional xgettext flags:"
+msgstr ""
+
 msgid "Additional keywords"
 msgstr "Paraules clau addicionals"
 
@@ -1369,8 +1332,14 @@ msgstr "&Neteja"
 msgid "Clear the comment"
 msgstr "Neteja el comentari"
 
+msgid "New"
+msgstr "Nou"
+
 msgid "Create new translations project"
 msgstr "Crea un nou projecte de traduccions"
+
+msgid "Edit"
+msgstr "Edita"
 
 msgid "Edit the project"
 msgstr "Edita el projecte"
@@ -1459,11 +1428,11 @@ msgstr "Copia del singular"
 msgid "Copy From Singular"
 msgstr "Copia del singular"
 
-msgid "Translation is &fuzzy"
-msgstr "Traducció pro&visional"
+msgid "Translation needs &work"
+msgstr "Traducció per &revisar"
 
-msgid "Translation Is &Fuzzy"
-msgstr "Traducció pro&visional"
+msgid "Translation Needs &Work"
+msgstr "Traducció Per &Revisar"
 
 msgid "Edit &comment"
 msgstr "&Edita el comentari"
@@ -1473,12 +1442,6 @@ msgstr "&Edita el comentari"
 
 msgid "Suggestions"
 msgstr "Suggeriments"
-
-msgid "&Show references"
-msgstr "Mo&stra les referències"
-
-msgid "&Show References"
-msgstr "Mo&stra les referències"
 
 msgid "&Find..."
 msgstr "&Cerca..."
@@ -1546,6 +1509,12 @@ msgstr "&Primer les entrades no trad&uïdes"
 msgid "&Untranslated Entries First"
 msgstr "&Primer les entrades no trad&uïdes"
 
+msgid "&Show references"
+msgstr "Mo&stra les referències"
+
+msgid "&Show References"
+msgstr "Mo&stra les referències"
+
 msgid "Show sidebar"
 msgstr "Mostra la barra lateral"
 
@@ -1570,11 +1539,8 @@ msgstr "Actualitza des del fitxer &POT..."
 msgid "Sync with Crowdin"
 msgstr "Sincronitza amb el Crowdin"
 
-msgid "Fill missing translations from &TM..."
-msgstr "Omple les traduccions mancants des de la &MT..."
-
-msgid "Fill Missing Translations from &TM..."
-msgstr "Omplir les traduccions mancants des de la &MT..."
+msgid "Pre-&translate..."
+msgstr ""
 
 msgid "&Purge deleted translations"
 msgstr "&Purga les traduccions suprimides"
@@ -1713,8 +1679,11 @@ msgstr "Propietats del catàleg"
 msgid "Project name and version:"
 msgstr "Nom i versió del projecte:"
 
-msgid "Plural Forms:"
-msgstr "Formes plurals:"
+msgid "Language team:"
+msgstr ""
+
+msgid "Plural forms:"
+msgstr ""
 
 msgid "Use default rules for this language"
 msgstr "Usa les regles per defecte en aquest idioma"
@@ -1728,14 +1697,20 @@ msgstr "Apreneu sobre les formes plurals"
 msgid "Charset:"
 msgstr "Joc de caràcters:"
 
-msgid "Team:"
-msgstr "Equip:"
+msgid "Advanced Extraction Settings..."
+msgstr ""
 
-msgid "Team's email address:"
-msgstr "Adreça electrònica de l’equip:"
+msgid "Advanced extraction settings..."
+msgstr ""
+
+msgid "Translation Properties"
+msgstr "Propietats de la traducció"
 
 msgid "Translation properties"
 msgstr "Propietats de la traducció"
+
+msgid "Sources Paths"
+msgstr "Rutes de les fonts"
 
 msgid "Sources paths"
 msgstr "Camins de fonts"
@@ -1746,6 +1721,9 @@ msgstr "Extreu el text dels fitxers font dels següents directoris:"
 msgid "Base path:"
 msgstr "Camí base:"
 
+msgid "Sources Keywords"
+msgstr "Paraules claus de les fonts"
+
 msgid "Sources keywords"
 msgstr "Paraules clau de fonts"
 
@@ -1755,6 +1733,12 @@ msgid ""
 msgstr ""
 "Usa aquestes paraules clau (noms de funcions) per a reconèixer les\n"
 "cadenes traduïbles en els fitxers de codi font:"
+
+msgid "Also use default keywords for supported languages"
+msgstr "Utilitza també les paraules clau per defecte a les llengües admeses"
+
+msgid "Learn About Gettext Keywords"
+msgstr "Més informació sobre les paraules clau del gettext"
 
 msgid "Learn about gettext keywords"
 msgstr "Més informació sobre les paraules clau del gettext"
@@ -1803,8 +1787,8 @@ msgstr "Actualitza"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Actualitza el catàleg - sincronitza'l amb les fonts"
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "Commutat si la cadena seleccionada té una traducció difusa"
+msgid "Sidebar"
+msgstr "Barra lateral"
 
 msgid "Show or hide the sidebar"
 msgstr "Mostra o amaga la barra lateral"
@@ -1814,11 +1798,9 @@ msgid "Previous source text:"
 msgstr "Text font previ:"
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
 msgstr ""
-"El text font vell (abans que canviés durant una actualització) al qual "
-"correspon la traducció difusa."
 
 msgid "Notes for translators:"
 msgstr "Notes per als traductors:"
@@ -1843,60 +1825,20 @@ msgstr "No s’han trobat coincidències"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "S'ha trobat aquesta cadena en la memòria de traducció del Poedit."
 
-#, c-format
-msgid "(New: %i, obsolete: %i)"
-msgstr "(Noves: %i, obsoletes: %i)"
-
-#, c-format
-msgid "Importing translations: %d"
-msgstr "Important traduccions: %d"
-
-msgid "Poedit Update"
-msgstr "Actualització del Poedit"
-
-msgid "Preparing migration..."
-msgstr "Preparant la migració..."
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr "Estat de la migració: %d"
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr ""
-"El Poedit necessita convertir la vostra memòria de traducció a un format nou."
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"Cal fer això abans que Poedit pugi iniciar-se. Pot trigar uns minuts si "
-"teniu moltes traduccions emmagatzemades, però normalment deu ser molt més "
-"ràpid."
-
-msgid "Proceed"
-msgstr "Continua"
-
-msgid "Translation memory migration failed."
-msgstr "La migració de la memòria de traducció ha fallat."
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"Les dades de la memòria de traducció no s’han pogut migrar. L’error ha "
-"estat:\n"
-"\n"
-"%s\n"
-"Envieu un missatge (en anglès) a help@poedit.net i ho arreglarem."
-
 msgid "Cannot create temporary directory."
 msgstr "No s'ha pogut crear el directori temporal."
 
 msgid "Welcome to Poedit"
 msgstr "Us donem la benvinguda al Poedit"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Versió %s"
+
+msgid "Edit a Translation"
+msgstr "Modifica una traducció"
 
 msgid "Edit a translation"
 msgstr "Edita una traducció"
@@ -1910,8 +1852,11 @@ msgid ""
 msgstr ""
 "Pren un fitxer PO o plantilla existent i crea una nova traducció de el."
 
-msgid "Collaborate on a translation with Crowdin"
-msgstr "Col·labora en una traducció amb el Crowdin"
+msgid "Collaborate on a Translation with Others"
+msgstr "Col·laboreu amb altres en una traducció"
+
+msgid "Collaborate on a translation with others"
+msgstr "Col·laboreu amb altres en una traducció"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
@@ -1968,3 +1913,169 @@ msgstr "Sincronitza"
 
 msgid "Synchronize the translation with Crowdin"
 msgstr "Sincronitza la traducció amb el Crowdin"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "Quant al %s"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "Preferències del %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "Serveis"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "Amaga el %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "Amaga la resta"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "Mostra-ho tot"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Surt del %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences..."
+msgstr "Preferències..."
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr "Recents"
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr "Freqüents"
+
+msgid "&Apply"
+msgstr "&Aplica"
+
+msgid "Apply"
+msgstr "Aplica"
+
+msgid "&Back"
+msgstr "&Enrere"
+
+msgid "Back"
+msgstr "Enrere"
+
+msgid "&Cancel"
+msgstr "&Cancel·la"
+
+msgid "&Clear"
+msgstr "&Neteja"
+
+msgid "Clear"
+msgstr "Neteja"
+
+msgid "Copy"
+msgstr "Copia"
+
+msgid "Cu&t"
+msgstr "Re&talla"
+
+msgid "Cut"
+msgstr "Retalla"
+
+msgid "&Delete"
+msgstr "&Suprimeix"
+
+msgid "&Quit"
+msgstr "&Surt"
+
+msgid "File"
+msgstr "Arxiu"
+
+msgid "Help"
+msgstr "Ajuda"
+
+msgid "&New"
+msgstr "&Nou"
+
+msgid "&No"
+msgstr "&No"
+
+msgid "No"
+msgstr "No"
+
+msgid "&OK"
+msgstr "&D’acord"
+
+msgid "Open..."
+msgstr "Obre…"
+
+msgid "&Paste"
+msgstr "&Enganxa"
+
+msgid "Paste"
+msgstr "Enganxa"
+
+msgid "Preferences"
+msgstr "Preferències"
+
+msgid "&Redo"
+msgstr "&Refés"
+
+msgid "Refresh"
+msgstr "Actualitza"
+
+msgid "&Save as"
+msgstr "Anomena i de&sa"
+
+msgid "Save as"
+msgstr "Anomena i desa"
+
+msgid "Select &All"
+msgstr "Selecciona-ho &tot"
+
+msgid "Select All"
+msgstr "Selecciona-ho tot"
+
+msgid "&Undo"
+msgstr "&Desfés"
+
+msgid "&Yes"
+msgstr "&Sí"
+
+msgid "Yes"
+msgstr "Sí"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Maj+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Retorn"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "↑"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "↓"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "maj"

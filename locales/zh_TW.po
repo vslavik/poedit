@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-01 19:26+0200\n"
-"PO-Revision-Date: 2016-05-24 10:03-0400\n"
+"POT-Creation-Date: 2017-03-22 19:03+0100\n"
+"PO-Revision-Date: 2017-03-22 13:55-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -24,6 +24,29 @@ msgstr "不要再顯示"
 
 msgid "Don't show again"
 msgstr "不要再顯示"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(新增：%i，棄用：%i)"
+
+msgid "Updating catalog"
+msgstr "更新編目檔中"
+
+msgid "Collecting source files..."
+msgstr "正在收集來源檔..."
+
+msgid "Extracting translatable strings..."
+msgstr "正在抽出可翻譯的字串..."
+
+msgid "Failed to load extracted catalog."
+msgstr "無法載入抽出的編目檔。"
+
+msgid "Merging differences..."
+msgstr "正合併差異..."
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "「%s」不是有效的 POT 檔。"
 
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
@@ -93,13 +116,6 @@ msgstr "POT 翻譯模板"
 msgid "All Translation Files"
 msgstr "所有翻譯檔"
 
-msgid "Merging differences..."
-msgstr "正合併差異..."
-
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "「%s」不是有效的 POT 檔。"
-
 msgid "(Use default language)"
 msgstr "(使用預設語言)"
 
@@ -111,6 +127,17 @@ msgstr "語言選擇"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr "您得要重新啟動 Poedit 這項更動才會生效。"
+
+msgid "Syncing"
+msgstr ""
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr ""
+
+msgid "Syncing error"
+msgstr ""
 
 msgid "Downloading translations is disabled in this project."
 msgstr "此專案已停用翻譯下載。"
@@ -179,9 +206,6 @@ msgstr "這份檔案僅能在 Crowdin 的網頁介面中編輯。"
 msgid "Downloading latest translations…"
 msgstr "正在下載最新的翻譯⋯"
 
-msgid "Syncing with Crowdin"
-msgstr "正與 Crowdin 同步中"
-
 msgid "Syncing with Crowdin failed."
 msgstr "與 Crowdin 同步失敗。"
 
@@ -199,24 +223,6 @@ msgstr "深入瞭解"
 
 msgid "Learn More"
 msgstr "深入瞭解"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "指令執行失敗：%s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "無法合併 gettext 編目檔。"
-
-msgid "Scanning files..."
-msgstr "正在掃描檔案..."
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#, c-format
-msgid "Parsing %s files..."
-msgstr "正在剖析 %s 檔案..."
-
-msgid "Failed to load extracted catalog."
-msgstr "無法載入抽出的編目檔。"
 
 msgid "&Help"
 msgstr "說明(&H)"
@@ -245,52 +251,12 @@ msgstr "無法與 Poedit 程序溝通。"
 msgid "Unhandled exception occurred: %s"
 msgstr "遭遇未處理的例外：%s"
 
-msgid "Unhandled exception occurred."
-msgstr "遭遇未處理的例外。"
-
 msgid "Open catalog"
 msgstr "開啟編目檔"
 
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "「%s」檔不存在。"
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "關於 %s"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "版本 %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Services"
-msgstr "服務"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Hide %s"
-msgstr "隱藏 %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Hide Others"
-msgstr "隱藏其他"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Show All"
-msgstr "顯示全部"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Quit %s"
-msgstr "退出 %s"
-
-msgid "Preferences..."
-msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit 是個易用的翻譯編輯器。"
@@ -394,6 +360,7 @@ msgstr "調整遠近"
 msgid "Bring All to Front"
 msgstr "全部帶到最前方"
 
+#. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
 msgstr "PO 翻譯"
 
@@ -406,74 +373,6 @@ msgstr "檔案無效"
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "檔案可能損毀，或是採用 Poedit 無法辨認的格式。"
-
-msgid "&Undo"
-msgstr "復原(&U)"
-
-msgid "&Redo"
-msgstr "重做(&R)"
-
-msgid "Cu&t"
-msgstr "剪下(&T)"
-
-msgid "Cut"
-msgstr "剪下"
-
-msgid "Copy"
-msgstr "複製"
-
-msgid "&Paste"
-msgstr "貼上(&P)"
-
-msgid "Paste"
-msgstr "貼上"
-
-msgid "&Delete"
-msgstr "刪除(&D)"
-
-msgid "Select &All"
-msgstr "選取全部(&A)"
-
-msgid "Select All"
-msgstr "選取全部"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Alt+"
-msgstr "Alt+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Shift+"
-msgstr "Shift+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Enter"
-msgstr "Enter"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Up"
-msgstr "上鍵"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Down"
-msgstr "下鍵"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-msgid "ctrl"
-msgstr "ctrl"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-msgid "alt"
-msgstr "alt"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-msgid "shift"
-msgstr "shift"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "您不能拖曳超過一個檔案進 Poedit 視窗裡。"
@@ -490,31 +389,6 @@ msgstr "檔案(&F)"
 
 msgid "&Go"
 msgstr "前往(&G)"
-
-msgid "Source text:"
-msgstr "來源文字："
-
-msgid "Singular:"
-msgstr "單數："
-
-msgid "Plural:"
-msgstr "複數："
-
-msgid "Translation:"
-msgstr "譯文："
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT 檔僅只是翻譯模板，檔案內並不包含任何翻譯。\n"
-"若要翻譯，請根據該模板建立新的 PO 檔。"
-
-msgid "Create New Translation"
-msgstr "建立新翻譯"
-
-msgid "Create new translation"
-msgstr "建立新翻譯"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -562,9 +436,6 @@ msgstr "HTML 檔案"
 
 msgid "Open catalog template"
 msgstr "開啟編目模板檔"
-
-msgid "Updating catalog"
-msgstr "更新編目檔中"
 
 msgid "Source code not available."
 msgstr "源碼無法使用。"
@@ -630,9 +501,6 @@ msgstr[0] "譯文已準備好可供使用，但還有 %d 條尚未翻譯。"
 msgid "The translation is ready for use."
 msgstr "譯文已準備好可供使用。"
 
-msgid "Context:"
-msgstr "情境："
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit 已自動修正「%s」檔中的無效內容。"
@@ -640,11 +508,11 @@ msgstr "Poedit 已自動修正「%s」檔中的無效內容。"
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
 "檔案包含重複項目，然而 PO 檔並不允許重複，進而使檔案無法使用。Poedit 已修正這"
-"個問題，但您應該校閱任何標記為模糊翻譯的項目，如有需要也請校正其內容。"
+"個問題，但您應該校閱任何標記為需要處理的項目，如有需要也請校正其內容。"
 
 msgid "Language of the translation isn't set."
 msgstr "尚未設定譯文的語言。"
@@ -734,9 +602,6 @@ msgstr " (未儲存)"
 msgid " (modified)"
 msgstr " (已修改)"
 
-msgid "Go"
-msgstr "前往"
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "無法更新翻譯記憶：%s"
@@ -761,69 +626,16 @@ msgstr "保留"
 msgid "Purge"
 msgstr "淨空"
 
-msgid "Fill missing translations from TM"
-msgstr "從翻譯記憶填入缺少的翻譯"
-
-msgid "Only fill in exact matches"
-msgstr "僅只填入完全相符項目"
-
-msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-msgstr ""
-"預設情況下，也會同時填入不精確的項目，並將之標記為模糊。勾選此選項以僅只納入"
-"精確符合的項目。"
-
-msgid "Don’t mark exact matches as fuzzy"
-msgstr "不要將完全符合的項目標記為模糊"
-
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-msgstr ""
-"請您只有在信任翻譯記憶的品質時才啟用。預設情況下，所有翻譯記憶的符合項目都會"
-"標記為模糊狀態，並等候校閱。"
-
-msgid "Fill"
-msgstr "填入"
-
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "%d 項條目已從翻譯記憶填入。"
-
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr "這些譯文被標記為模糊，可能翻譯尚未明確。您應該校閱它們是否正確。"
-
-msgid "No entries could be filled from the translation memory."
-msgstr "沒有可從翻譯記憶填入的條目。"
-
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"翻譯記憶尚未包含任何類似此檔案內容的字串。這僅在 Poedit 學習夠多您手動翻譯的"
-"檔案後，才會對半自動翻譯有效用。"
-
-msgid "Translating"
-msgstr "翻譯中"
-
-msgid "Filling missing translations from TM..."
-msgstr "正從翻譯記憶填入闕漏的翻譯..."
-
-#, c-format
-msgid "Translated %u string"
-msgid_plural "Translated %u strings"
-msgstr[0] "已翻譯 %u 個字串"
-
 msgid "Copy from source text"
 msgstr "從來源文字複製"
 
 msgid "Copy from Source Text"
 msgstr "從來源文字複製"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
 
 msgid "Clear translation"
 msgstr "清除譯文"
@@ -840,33 +652,13 @@ msgstr "編輯註解"
 msgid "References:"
 msgstr "參照："
 
-msgid "Everything"
-msgstr "每一項"
-
-#, c-format
-msgid "Form %i"
-msgstr "形式 %i"
-
-msgid "Singular"
-msgstr "單數"
-
-msgid "Zero"
-msgstr "零"
-
-msgid "One"
-msgstr "壹"
-
-msgid "Two"
-msgstr "貳"
-
-msgid "Plural"
-msgstr "複數"
-
-msgid "Other"
-msgstr "其他"
-
 msgid "&Bookmarks"
 msgstr "書籤(&B)"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #, c-format
 msgid "Set bookmark %i"
@@ -896,18 +688,88 @@ msgstr "隱藏狀態列"
 msgid "Show Status Bar"
 msgstr "顯示狀態列"
 
-msgid "Source text"
-msgstr "來源文字"
+msgid "Source text:"
+msgstr "來源文字："
 
-msgid "Translation"
-msgstr "譯文"
+msgid "Singular:"
+msgstr "單數："
 
-msgid "ID"
-msgstr "ID"
+msgid "Plural:"
+msgstr "複數："
+
+msgid "Translation:"
+msgstr "譯文："
+
+msgid "Pre-translated"
+msgstr "前置翻譯"
+
+msgid "Needs Work"
+msgstr "需要處理"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "需要處理"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT 檔僅只是翻譯模板，檔案內並不包含任何翻譯。\n"
+"若要翻譯，請根據該模板建立新的 PO 檔。"
+
+msgid "Create New Translation"
+msgstr "建立新翻譯"
+
+msgid "Create new translation"
+msgstr "建立新翻譯"
+
+msgid "Everything"
+msgstr "每一項"
+
+#, c-format
+msgid "Form %i"
+msgstr "形式 %i"
+
+msgid "Singular"
+msgstr "單數"
+
+msgid "Zero"
+msgstr "零"
+
+msgid "One"
+msgstr "壹"
+
+msgid "Two"
+msgstr "貳"
+
+msgid "Plural"
+msgstr "複數"
+
+msgid "Other"
+msgstr "其他"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s 格式"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s 格式"
 
 #, c-format
 msgid "Source text — %s"
 msgstr "來源文字 — %s"
+
+msgid "Source text"
+msgstr "來源文字"
 
 msgid "unknown language"
 msgstr "未知語言"
@@ -916,8 +778,15 @@ msgstr "未知語言"
 msgid "Translation — %s"
 msgstr "譯文 — %s"
 
-msgid "Error:"
-msgstr "錯誤："
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "指令執行失敗：%s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "無法合併 gettext 編目檔。"
 
 msgid "Source file"
 msgstr "來源檔案"
@@ -969,11 +838,14 @@ msgstr "從註解中尋找"
 msgid "Close"
 msgstr "關閉"
 
-msgid "Replace All"
-msgstr "全部取代"
+msgid "Replace &All"
+msgstr ""
 
-msgid "Replace all"
-msgstr "全部取代"
+msgid "Replace &all"
+msgstr ""
+
+msgid "&Replace"
+msgstr ""
 
 msgid "< &Previous"
 msgstr "< 上一個(&P)"
@@ -1011,9 +883,6 @@ msgstr "總計"
 
 msgid "Untrans"
 msgstr "未譯"
-
-msgid "Fuzzy"
-msgstr "模糊"
 
 msgid "Bad Tokens"
 msgstr "不良代符"
@@ -1119,19 +988,27 @@ msgstr "從檔案中學習…"
 msgid "Reset"
 msgstr "重設"
 
-msgid "Consult TM when updating from sources"
-msgstr "從來源更新時查閱翻譯記憶"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr "從來源更新時"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr "在檔案內部模糊比對"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr "用翻譯記憶作為前置翻譯"
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
-"若啟用，Poedit 會試著使用您存在翻譯記憶中的先前翻譯\n"
-"填入新條目。若翻譯記憶幾近空白，可能效用不大。\n"
-"隨著您編輯過的翻譯越來越多，翻譯記憶隨之增長，\n"
-"效用會越來越大。"
+"Poedit 可以試圖根據檔案中之前的譯文填入新條目，或採用您的整個翻譯記憶填入新條"
+"目。若翻譯記憶的量很少則用起來效果不會很好，不過隨著您加入越多譯文效果也會逐"
+"漸改善。"
 
 msgid "Stored translations:"
 msgstr "儲存的翻譯："
@@ -1176,11 +1053,24 @@ msgid ""
 "code files and extract them so that they can be translated."
 msgstr "源碼抽取器用於尋找源瑪檔中的可譯字串，並將之抽取出來以便翻譯。"
 
-msgid "New"
-msgstr "新增"
+msgid "Custom Extractors:"
+msgstr "自訂抽取器："
 
-msgid "Edit"
-msgstr "編輯"
+msgid "Custom extractors:"
+msgstr "自訂抽取器："
+
+msgid "Edit..."
+msgstr "編輯..."
+
+msgid "GNU gettext"
+msgstr "GNU gettext"
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
+"支援所有 GNU gettext 工具能辨識的程式語言（PHP、C/C++、C#、Perl、Python、"
+"Java、JavaScript 與其他等）。"
 
 msgid "Delete extractor"
 msgstr "刪除抽取器"
@@ -1235,10 +1125,73 @@ msgstr "保留既有檔案的格式化處理方式"
 msgid "Advanced"
 msgstr "進階"
 
-#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+msgid "Pre-translating…"
+msgstr "前置翻譯中…"
+
 #, c-format
-msgid "%s Preferences"
-msgstr "%s 偏好設定"
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] "已前置翻譯 %u 條字串"
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr "前置翻譯"
+
+msgid "Only fill in exact matches"
+msgstr "僅只填入完全相符項目"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
+msgstr ""
+"預設情況下，也會同時填入不精確的項目，並將之標記為需要處理。勾選此選項以僅只"
+"納入精確符合的項目。"
+
+msgid "Don’t mark exact matches as needing work"
+msgstr "不要將完全符合的項目標記為需要處理"
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+"請您只有在信任翻譯記憶的品質時才啟用。預設情況下，所有翻譯記憶的符合項目都會"
+"標記為需要處理，並請在採用前先校閱。"
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+"前置翻譯會從翻譯記憶中自動尋找完全相同、或相似的翻譯並填入未翻譯的條目中。"
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d 條目已先前置翻譯。"
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr "這些譯文被標記為需要處理，可能翻譯尚未明確。您應該校閱它們是否正確。"
+
+msgid "No entries could be pre-translated."
+msgstr "沒有條目可以先前置翻譯。"
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"翻譯記憶尚未包含任何類似此檔案內容的字串。這僅在 Poedit 學習夠多您手動翻譯的"
+"檔案後，才會對半自動翻譯有效用。"
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1282,6 +1235,21 @@ msgstr "路徑"
 msgid "Excluded paths"
 msgstr "排除的路徑"
 
+msgid "Advanced extraction settings"
+msgstr "進階抽取設定"
+
+msgid "Extract notes for translators from:"
+msgstr "抽取翻譯者備註："
+
+msgid "Comments prefixed with:"
+msgstr "註解前綴字為："
+
+msgid "All comments"
+msgstr "所有註解"
+
+msgid "Additional xgettext flags:"
+msgstr "額外的 xgettext 旗標："
+
 msgid "Additional keywords"
 msgstr "額外的關鍵字"
 
@@ -1309,8 +1277,14 @@ msgstr "清除(&L)"
 msgid "Clear the comment"
 msgstr "清除註解"
 
+msgid "New"
+msgstr "新增"
+
 msgid "Create new translations project"
 msgstr "建立新的翻譯專案"
+
+msgid "Edit"
+msgstr "編輯"
 
 msgid "Edit the project"
 msgstr "編輯這個專案"
@@ -1399,11 +1373,11 @@ msgstr "從單數複製"
 msgid "Copy From Singular"
 msgstr "從單數複製"
 
-msgid "Translation is &fuzzy"
-msgstr "譯文模糊(&F)"
+msgid "Translation needs &work"
+msgstr "翻譯需要處理(&W)"
 
-msgid "Translation Is &Fuzzy"
-msgstr "譯文模糊(&F)"
+msgid "Translation Needs &Work"
+msgstr "翻譯需要處理(&W)"
 
 msgid "Edit &comment"
 msgstr "編輯註解(&C)"
@@ -1413,12 +1387,6 @@ msgstr "編輯註解(&C)"
 
 msgid "Suggestions"
 msgstr "建議"
-
-msgid "&Show references"
-msgstr "顯示參照(&S)"
-
-msgid "&Show References"
-msgstr "顯示參照(&S)"
 
 msgid "&Find..."
 msgstr "尋找(&F)..."
@@ -1486,6 +1454,12 @@ msgstr "先顯示未翻譯的條目(&U)"
 msgid "&Untranslated Entries First"
 msgstr "先顯示未翻譯的條目(&U)"
 
+msgid "&Show references"
+msgstr "顯示參照(&S)"
+
+msgid "&Show References"
+msgstr "顯示參照(&S)"
+
 msgid "Show sidebar"
 msgstr "顯示側邊欄"
 
@@ -1510,11 +1484,8 @@ msgstr "從 &POT 檔更新..."
 msgid "Sync with Crowdin"
 msgstr "與 Crowdin 同步"
 
-msgid "Fill missing translations from &TM..."
-msgstr "從翻譯記憶填入缺少的翻譯(&T)..."
-
-msgid "Fill Missing Translations from &TM..."
-msgstr "從翻譯記憶填入缺少的翻譯(&T)..."
+msgid "Pre-&translate..."
+msgstr "前置翻譯..."
 
 msgid "&Purge deleted translations"
 msgstr "淨空已刪除的譯文(&P)"
@@ -1652,7 +1623,10 @@ msgstr "編目檔屬性"
 msgid "Project name and version:"
 msgstr "專案名稱及版本："
 
-msgid "Plural Forms:"
+msgid "Language team:"
+msgstr "語言團隊："
+
+msgid "Plural forms:"
 msgstr "複數形式："
 
 msgid "Use default rules for this language"
@@ -1667,14 +1641,20 @@ msgstr "瞭解複數型態"
 msgid "Charset:"
 msgstr "字集："
 
-msgid "Team:"
-msgstr "團隊："
+msgid "Advanced Extraction Settings..."
+msgstr "進階抽取設定..."
 
-msgid "Team's email address:"
-msgstr "團隊的電子郵件地址："
+msgid "Advanced extraction settings..."
+msgstr "進階抽取設定..."
+
+msgid "Translation Properties"
+msgstr "譯文屬性"
 
 msgid "Translation properties"
 msgstr "譯文屬性"
+
+msgid "Sources Paths"
+msgstr "來源路徑"
 
 msgid "Sources paths"
 msgstr "來源路徑"
@@ -1685,6 +1665,9 @@ msgstr "從下列目錄中擷取源檔內的文字"
 msgid "Base path:"
 msgstr "基礎路徑："
 
+msgid "Sources Keywords"
+msgstr "來源關鍵字"
+
 msgid "Sources keywords"
 msgstr "來源關鍵字"
 
@@ -1694,6 +1677,12 @@ msgid ""
 msgstr ""
 "在來源檔案中使用這些關鍵字 (函式名稱) 來\n"
 "識別可翻譯字串："
+
+msgid "Also use default keywords for supported languages"
+msgstr "也為支援的語言使用預設關鍵字"
+
+msgid "Learn About Gettext Keywords"
+msgstr "瞭解 Gettext 關鍵字"
 
 msgid "Learn about gettext keywords"
 msgstr "學習 gettext 關鍵字"
@@ -1742,8 +1731,8 @@ msgstr "更新"
 msgid "Update catalog - synchronize it with sources"
 msgstr "更新編目檔 - 與來源同步"
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "切換所選字串是否包含模糊譯文"
+msgid "Sidebar"
+msgstr "側邊欄"
 
 msgid "Show or hide the sidebar"
 msgstr "顯示或隱藏側邊欄。"
@@ -1753,9 +1742,9 @@ msgid "Previous source text:"
 msgstr "過去的來源文字："
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
-msgstr "模糊翻譯所對應之舊的 (在更新並改動之前的) 來源文字。"
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
+msgstr "現在的不精確譯文對應的是（在用模板檔更新之前）舊的源文。"
 
 msgid "Notes for translators:"
 msgstr "給譯者的備註："
@@ -1780,57 +1769,20 @@ msgstr "找不到符合項目"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "此字串已在 Poedit 的翻譯記憶中找到。"
 
-#, c-format
-msgid "(New: %i, obsolete: %i)"
-msgstr "(新增：%i，棄用：%i)"
-
-#, c-format
-msgid "Importing translations: %d"
-msgstr "正匯入譯文：%d"
-
-msgid "Poedit Update"
-msgstr "Poedit 更新"
-
-msgid "Preparing migration..."
-msgstr "正準備轉移..."
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr "轉移離開狀態：%d"
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poedit 需要將您的翻譯記憶轉換為新格式。"
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"這必須在 Poedit 啟動前完成。如果您已儲存大量譯文可能會花上幾分鐘，但正常來說"
-"會更快許多。"
-
-msgid "Proceed"
-msgstr "繼續"
-
-msgid "Translation memory migration failed."
-msgstr "翻譯記憶轉移失敗。"
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"您的翻譯記憶資料無法轉移。錯誤為：\n"
-"\n"
-"%s\n"
-"請寄封電子郵件到 help@poedit.net，我們會試著修好。"
-
 msgid "Cannot create temporary directory."
 msgstr "無法建立暫存目錄。"
 
 msgid "Welcome to Poedit"
 msgstr "歡迎使用 Poedit"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "版本 %s"
+
+msgid "Edit a Translation"
+msgstr "編輯翻譯"
 
 msgid "Edit a translation"
 msgstr "編輯譯文"
@@ -1843,8 +1795,11 @@ msgid ""
 "it."
 msgstr "從既有的 PO 檔或 POT 模板檔建立新翻譯。"
 
-msgid "Collaborate on a translation with Crowdin"
-msgstr "使用 Crowdin 協作翻譯"
+msgid "Collaborate on a Translation with Others"
+msgstr "與他人一同協作翻譯"
+
+msgid "Collaborate on a translation with others"
+msgstr "與其他人協作翻譯"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
@@ -1894,3 +1849,169 @@ msgstr "同步"
 
 msgid "Synchronize the translation with Crowdin"
 msgstr "同步 Crowdin 翻譯"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "關於 %s"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "%s 偏好設定"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "服務"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "隱藏 %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "隱藏其他"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "顯示全部"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "退出 %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences..."
+msgstr "設定偏好..."
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr "最近"
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr "常用"
+
+msgid "&Apply"
+msgstr "套用(&A)"
+
+msgid "Apply"
+msgstr "套用"
+
+msgid "&Back"
+msgstr "返回(&B)"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "&Cancel"
+msgstr "取消(&C)"
+
+msgid "&Clear"
+msgstr "清除(&C)"
+
+msgid "Clear"
+msgstr "清除"
+
+msgid "Copy"
+msgstr "複製"
+
+msgid "Cu&t"
+msgstr "剪下(&T)"
+
+msgid "Cut"
+msgstr "剪下"
+
+msgid "&Delete"
+msgstr "刪除(&D)"
+
+msgid "&Quit"
+msgstr "退出(&Q)"
+
+msgid "File"
+msgstr "檔案"
+
+msgid "Help"
+msgstr "說明"
+
+msgid "&New"
+msgstr "新增(&N)"
+
+msgid "&No"
+msgstr "否(&N)"
+
+msgid "No"
+msgstr "否"
+
+msgid "&OK"
+msgstr "確定(&O)"
+
+msgid "Open..."
+msgstr "開啟..."
+
+msgid "&Paste"
+msgstr "貼上(&P)"
+
+msgid "Paste"
+msgstr "貼上"
+
+msgid "Preferences"
+msgstr "偏好設定"
+
+msgid "&Redo"
+msgstr "重做(&R)"
+
+msgid "Refresh"
+msgstr "重整"
+
+msgid "&Save as"
+msgstr "另存為(&S)"
+
+msgid "Save as"
+msgstr "另存為"
+
+msgid "Select &All"
+msgstr "選取全部(&A)"
+
+msgid "Select All"
+msgstr "選取全部"
+
+msgid "&Undo"
+msgstr "復原(&U)"
+
+msgid "&Yes"
+msgstr "是(&Y)"
+
+msgid "Yes"
+msgstr "是"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "上鍵"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "下鍵"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"

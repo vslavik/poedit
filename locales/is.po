@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-01 19:26+0200\n"
-"PO-Revision-Date: 2016-05-24 10:04-0400\n"
+"POT-Creation-Date: 2017-03-22 19:03+0100\n"
+"PO-Revision-Date: 2017-03-22 13:56-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Icelandic\n"
 "Language: is_IS\n"
@@ -24,6 +24,29 @@ msgstr "Ekki birta þetta aftur"
 
 msgid "Don't show again"
 msgstr "Ekki birta aftur"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(Nýtt: %i, úrelt: %i)"
+
+msgid "Updating catalog"
+msgstr "Uppfæri þýðingaskrá"
+
+msgid "Collecting source files..."
+msgstr "Safna upprunaskrám..."
+
+msgid "Extracting translatable strings..."
+msgstr "Næ í þýðanlega strengi..."
+
+msgid "Failed to load extracted catalog."
+msgstr "Mistókst að hlaða inn lesinni þýðingaskrá."
+
+msgid "Merging differences..."
+msgstr "Samþætti mismun..."
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "'%s' er ógild POT skrá."
 
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
@@ -98,13 +121,6 @@ msgstr "POT þýðingasniðmát"
 msgid "All Translation Files"
 msgstr "Allar þýðingaskrár"
 
-msgid "Merging differences..."
-msgstr "Samþætti mismun..."
-
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "'%s' er ógild POT skrá."
-
 msgid "(Use default language)"
 msgstr "(Nota sjálfgefið tungumál)"
 
@@ -117,6 +133,17 @@ msgstr "Velja tungumál"
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Þú þarft að endurræsa Poedit til að þessi breyting taki gildi."
 
+msgid "Syncing"
+msgstr "Samstilling"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr "Samstilling við %s mistókst."
+
+msgid "Syncing error"
+msgstr "Villa í samstillingu"
+
 msgid "Downloading translations is disabled in this project."
 msgstr "Ekki er hægt að sækja þýðingar í þessu verki."
 
@@ -127,8 +154,9 @@ msgid ""
 "Crowdin is an online localization management platform and collaborative "
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
-"Crowdin is an online localization management platform and collaborative "
-"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
+"Crowdin er staðfærslu- og þýðingakerfi á netinu, sem hjálpar til við "
+"samstarf þýðenda og umsýslu. Poedit getur samstillt hnökralaust við PO-skrár "
+"sem haldið er utan um á Crowdin."
 
 msgid "Sign In"
 msgstr "Skrá inn"
@@ -152,10 +180,10 @@ msgid "Signed in as:"
 msgstr "Skráður inn sem:"
 
 msgid "Learn More About Crowdin"
-msgstr "Læra meira um Crowdin"
+msgstr "Vita meira um Crowdin"
 
 msgid "Learn more about Crowdin"
-msgstr "Læra meira um Crowdin"
+msgstr "Vita meira um Crowdin"
 
 msgid "Sign in to Crowdin"
 msgstr "Skrá inn í Crowdin"
@@ -170,7 +198,7 @@ msgid "Language:"
 msgstr "Tungumál:"
 
 msgid "File:"
-msgstr "File:"
+msgstr "Skrá:"
 
 msgid "No translation projects listed in your Crowdin account."
 msgstr "Engin þýðingarverkefni eru skráð á þínu Crowdin svæði."
@@ -184,14 +212,11 @@ msgstr "Þessari skrá er aðeins hægt að breyta á vefsvæði Crowdin."
 msgid "Downloading latest translations…"
 msgstr "Næ í nýjustu þýðingar…"
 
-msgid "Syncing with Crowdin"
-msgstr "Samstilli við Crowdin"
-
 msgid "Syncing with Crowdin failed."
 msgstr "Samstilling við Crowdin mistókst."
 
 msgid "Crowdin error"
-msgstr "Crowdin villa"
+msgstr "Villa í Crowdin"
 
 msgid "Uploading translations…"
 msgstr "Sendi inn þýðingar…"
@@ -204,24 +229,6 @@ msgstr "Vita meira"
 
 msgid "Learn More"
 msgstr "Vita meira"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Mislukkuð skipun: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Mistókst að sameina gettext þýðingaskrár."
-
-msgid "Scanning files..."
-msgstr "Les skrár..."
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#, c-format
-msgid "Parsing %s files..."
-msgstr "Þátta %s skrár..."
-
-msgid "Failed to load extracted catalog."
-msgstr "Mistókst að hlaða inn lesinni þýðingaskrá."
 
 msgid "&Help"
 msgstr "&Hjálp"
@@ -236,24 +243,21 @@ msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"Please open and edit the corresponding PO file instead. When you save it, "
-"the MO file will be updated as well."
+"Opnaðu frekar og breyttu samsvarandi PO-skrá. Þegar þú vistar hana, verður "
+"MO-skráin líka uppfærð."
 
 msgid "don't delete temporary files (for debugging)"
 msgstr "ekki eyða bráðabirgðaskrám (fyrir aflúsun)"
 
 msgid "handle a poedit:// URI"
-msgstr "handle a poedit:// URI"
+msgstr "meðhöndla poedit:// URI"
 
 msgid "Failed to communicate with Poedit process."
-msgstr ""
+msgstr "Gat ekki átt samskipti við Poedit-ferli."
 
 #, c-format
 msgid "Unhandled exception occurred: %s"
 msgstr "Ómeðhöndlað frávik kom upp: %s"
-
-msgid "Unhandled exception occurred."
-msgstr "Ómeðhöndlað frávik kom upp."
 
 msgid "Open catalog"
 msgstr "Opna þýðingaskrá"
@@ -261,43 +265,6 @@ msgstr "Opna þýðingaskrá"
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Skráin '%s' fannst ekki."
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Um %s"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Útgáfa %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Services"
-msgstr ""
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Hide %s"
-msgstr ""
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Hide Others"
-msgstr ""
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Show All"
-msgstr ""
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Quit %s"
-msgstr ""
-
-msgid "Preferences..."
-msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit er auðveldur þýðingaritill."
@@ -401,6 +368,7 @@ msgstr "Aðdráttur"
 msgid "Bring All to Front"
 msgstr "Færa allt fremst"
 
+#. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
 msgstr "PO þýðing"
 
@@ -413,74 +381,6 @@ msgstr "Ógild skrá"
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "Skráin gæti verið skemmd eða á sniði sem Poedit þekkir ekki."
-
-msgid "&Undo"
-msgstr "&Afturkalla"
-
-msgid "&Redo"
-msgstr "Endu&rtaka"
-
-msgid "Cu&t"
-msgstr "&Klippa"
-
-msgid "Cut"
-msgstr "Klippa"
-
-msgid "Copy"
-msgstr "Afrita"
-
-msgid "&Paste"
-msgstr "&Líma"
-
-msgid "Paste"
-msgstr "Líma"
-
-msgid "&Delete"
-msgstr "&Eyða"
-
-msgid "Select &All"
-msgstr "Velja &allt"
-
-msgid "Select All"
-msgstr "Velja allt"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Alt+"
-msgstr "Alt+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Shift+"
-msgstr "Shift+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Enter"
-msgstr "Enter"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Up"
-msgstr "Upp"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Down"
-msgstr "Niður"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-msgid "ctrl"
-msgstr "ctrl"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-msgid "alt"
-msgstr "alt"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-msgid "shift"
-msgstr "shift"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Þú getur ekki sleppt fleiri en einni skrá í Poedit glugga."
@@ -497,31 +397,6 @@ msgstr "&Skrá"
 
 msgid "&Go"
 msgstr "&Fara"
-
-msgid "Source text:"
-msgstr "Frumtexti:"
-
-msgid "Singular:"
-msgstr "Eintala:"
-
-msgid "Plural:"
-msgstr "Fleirtala:"
-
-msgid "Translation:"
-msgstr "Þýðing:"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT skrár eru aðeins þýðingasniðmát og innihalda engar þýðingar.\n"
-"Til að þýða verður að búa til nýja PO skrá byggða á sniðmátinu."
-
-msgid "Create New Translation"
-msgstr "Búa til nýja þýðingu"
-
-msgid "Create new translation"
-msgstr "Búa til nýja þýðingu"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -572,9 +447,6 @@ msgstr "HTML skrár"
 msgid "Open catalog template"
 msgstr "Opna þýðingaskráarsniðmát"
 
-msgid "Updating catalog"
-msgstr "Uppfæri þýðingaskrá"
-
 msgid "Source code not available."
 msgstr "Upprunakóði ekki tiltækur."
 
@@ -585,8 +457,8 @@ msgid ""
 "Translations couldn’t be updated from the source code, because no code was "
 "found in the location specified in the catalog’s Properties."
 msgstr ""
-"Translations couldn’t be updated from the source code, because no code was "
-"found in the location specified in the catalog’s Properties."
+"Ekki var hægt að uppfæra þýðingar úr frumkóða, vegna þess að enginn kóði "
+"fannst á þeim stað sem tilgreindur er í eiginleikum þýðingaskrárinnar."
 
 msgid "Entries in the catalog are probably incorrect."
 msgstr "Færslur í þýðingaskránni eru líklega rangar."
@@ -650,19 +522,20 @@ msgstr[1] "Þýðingin er tilbúin til notkunar, en %d færslur er samt óþýdd
 msgid "The translation is ready for use."
 msgstr "Þýðingaminnið er tilbúið til notkunar."
 
-msgid "Context:"
-msgstr "Samhengi:"
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr ""
+msgstr "Poedit lagaði sjálfkrafa ógilt efni í '%s' skránni."
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
+"Skráin inniheldur tvítekin atriði sem er ekki leyfilegt í PO-skrám og sem "
+"myndi koma í veg fyrir að hægt sé að nota skrána. Poedit lagaði þetta, en þú "
+"ættir að yfirfara þau atriði sem merkt eru til athugunar og leiðrétta þau ef "
+"þörf krefur."
 
 msgid "Language of the translation isn't set."
 msgstr "Tungumál þýðingar er ekki stillt."
@@ -678,8 +551,8 @@ msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
-"Suggestions are not available if the translation language is not set "
-"correctly. Other features, such as plural forms, may be affected as well."
+"Tillögur eru ekki í boði ef tungumál þýðinga er ekki rétt skilgreint. Aðrir "
+"eiginleikar eins og fleirtöluform, gætu einnig valdið vandræðum."
 
 msgid "Language of the translation is the same as source language."
 msgstr "Tungumál þýðingar er það sama og upprunatungumálið."
@@ -758,9 +631,6 @@ msgstr " (óvistað)"
 msgid " (modified)"
 msgstr " (breytt)"
 
-msgid "Go"
-msgstr "Fara"
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Mistókst að uppfæra þýðingaminni: %s"
@@ -786,74 +656,16 @@ msgstr "Halda"
 msgid "Purge"
 msgstr "Henda"
 
-msgid "Fill missing translations from TM"
-msgstr "Fylla inn þýðingar sem vantar úr ÞM"
-
-msgid "Only fill in exact matches"
-msgstr "Einungis fylla inn nákvæmar samsvaranir"
-
-msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-msgstr ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-
-msgid "Don’t mark exact matches as fuzzy"
-msgstr "Ekki merkja nákvæmar samsvaranir sem óskýrar"
-
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-msgstr ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-
-msgid "Fill"
-msgstr "Fylla inn"
-
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "%d færsla var fyllt með samsvörun úr þýðingaminni."
-msgstr[1] "%d færslur voru fylltar með samsvörunum úr þýðingaminni."
-
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-
-msgid "No entries could be filled from the translation memory."
-msgstr "No entries could be filled from the translation memory."
-
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-
-msgid "Translating"
-msgstr "Þýðing"
-
-msgid "Filling missing translations from TM..."
-msgstr "Fylla inn þýðingar sem vantar úr ÞM..."
-
-#, c-format
-msgid "Translated %u string"
-msgid_plural "Translated %u strings"
-msgstr[0] "Þýddi %u streng"
-msgstr[1] "Þýddi %u strengi"
-
 msgid "Copy from source text"
 msgstr "Afrita úr upprunatexta"
 
 msgid "Copy from Source Text"
 msgstr "Afrita úr upprunatexta"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
 
 msgid "Clear translation"
 msgstr "Hreinsa þýðingu"
@@ -870,33 +682,13 @@ msgstr "Breyta athugasemd"
 msgid "References:"
 msgstr "Tilvísanir:"
 
-msgid "Everything"
-msgstr "Allt"
-
-#, c-format
-msgid "Form %i"
-msgstr "Form %i"
-
-msgid "Singular"
-msgstr "Eintala"
-
-msgid "Zero"
-msgstr "Núll"
-
-msgid "One"
-msgstr "Einn"
-
-msgid "Two"
-msgstr "Tveir"
-
-msgid "Plural"
-msgstr "Fleirtala"
-
-msgid "Other"
-msgstr "Annað"
-
 msgid "&Bookmarks"
 msgstr "&Bókamerki"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #, c-format
 msgid "Set bookmark %i"
@@ -926,18 +718,88 @@ msgstr "Fela stöðustiku"
 msgid "Show Status Bar"
 msgstr "Birta stöðustiku"
 
-msgid "Source text"
-msgstr "Frumtexti"
+msgid "Source text:"
+msgstr "Frumtexti:"
 
-msgid "Translation"
-msgstr "Þýðing"
+msgid "Singular:"
+msgstr "Eintala:"
 
-msgid "ID"
-msgstr "Auðkenni (ID)"
+msgid "Plural:"
+msgstr "Fleirtala:"
+
+msgid "Translation:"
+msgstr "Þýðing:"
+
+msgid "Pre-translated"
+msgstr "Forþýtt"
+
+msgid "Needs Work"
+msgstr "Þarfnast lagfæringa"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Þarfnast lagfæringa"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT skrár eru aðeins þýðingasniðmát og innihalda engar þýðingar.\n"
+"Til að þýða verður að búa til nýja PO skrá byggða á sniðmátinu."
+
+msgid "Create New Translation"
+msgstr "Búa til nýja þýðingu"
+
+msgid "Create new translation"
+msgstr "Búa til nýja þýðingu"
+
+msgid "Everything"
+msgstr "Allt"
+
+#, c-format
+msgid "Form %i"
+msgstr "Form %i"
+
+msgid "Singular"
+msgstr "Eintala"
+
+msgid "Zero"
+msgstr "Núll"
+
+msgid "One"
+msgstr "Einn"
+
+msgid "Two"
+msgstr "Tveir"
+
+msgid "Plural"
+msgstr "Fleirtala"
+
+msgid "Other"
+msgstr "Annað"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s snið"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "%s snið"
 
 #, c-format
 msgid "Source text — %s"
 msgstr "Frumtexti — %s"
+
+msgid "Source text"
+msgstr "Frumtexti"
 
 msgid "unknown language"
 msgstr "óþekkt tungumál"
@@ -946,8 +808,15 @@ msgstr "óþekkt tungumál"
 msgid "Translation — %s"
 msgstr "Þýðing — %s"
 
-msgid "Error:"
-msgstr "Villa:"
+msgid "ID"
+msgstr "Auðkenni (ID)"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Mislukkuð skipun: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Mistókst að sameina gettext þýðingaskrár."
 
 msgid "Source file"
 msgstr "Upprunaskrá"
@@ -988,7 +857,7 @@ msgid "Whole words only"
 msgstr "Aðeins stök orð"
 
 msgid "Find in source texts"
-msgstr "Find in source texts"
+msgstr "Finna í frumtextum"
 
 msgid "Find in translations"
 msgstr "Finna í þýðingum"
@@ -999,11 +868,14 @@ msgstr "Finna í athugasemdum"
 msgid "Close"
 msgstr "Loka"
 
-msgid "Replace All"
-msgstr "Skipta út öllu"
+msgid "Replace &All"
+msgstr "Skipt&a út öllu"
 
-msgid "Replace all"
-msgstr "Skipta út öllu"
+msgid "Replace &all"
+msgstr "Skipt&a út öllu"
+
+msgid "&Replace"
+msgstr "Ski&pta út"
 
 msgid "< &Previous"
 msgstr "< &Fyrra"
@@ -1041,9 +913,6 @@ msgstr "Alls"
 
 msgid "Untrans"
 msgstr "Óþýtt"
-
-msgid "Fuzzy"
-msgstr "Óskýrt"
 
 msgid "Bad Tokens"
 msgstr "Óleyfilegar merkingar"
@@ -1152,19 +1021,28 @@ msgstr "Læra út frá skrám..."
 msgid "Reset"
 msgstr "Endurstilla"
 
-msgid "Consult TM when updating from sources"
-msgstr "Fletta upp í þýðingaminni við uppfærslu úr frumskrám"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr "Þegar frumtextar eru uppfærðir"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr "nota loðna þýðingu í skrá"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr "forþýða úr þýðingaminni"
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit getur reynt að fylla inn í nýjar þýðingar með eingöngu fyrri þýðingum "
+"í skránni, eða með færslum úr þýðingaminninu þínu. Að nota þýðingaminnið er "
+"ekkert sérstaklega öflugt ef það er hálftómt, en þessi aðgerð verður smátt "
+"og smátt betri eftir því sem þýðingar bætast við."
 
 msgid "Stored translations:"
 msgstr "Geymdar þýðingar:"
@@ -1214,11 +1092,24 @@ msgstr ""
 "strengi inni í frumkóðaskrám og setja í nýjar skrár svo hægt sé að þýða "
 "strengina."
 
-msgid "New"
-msgstr "Nýtt"
+msgid "Custom Extractors:"
+msgstr "Sérsniðnir þáttarar:"
 
-msgid "Edit"
-msgstr "Breyta"
+msgid "Custom extractors:"
+msgstr "Sérsniðnir þáttarar:"
+
+msgid "Edit..."
+msgstr "Breyta..."
+
+msgid "GNU gettext"
+msgstr "GNU gettext"
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
+"Styður öll forritunarmál sem GNU-gettext verkfærin þekkja (PHP, C/C++, C#, "
+"Perl, Python, Java, JavaScript og fleiri)."
 
 msgid "Delete extractor"
 msgstr "Eyða þáttara"
@@ -1275,10 +1166,82 @@ msgstr "Vernda snið fyrirliggjandi skráa"
 msgid "Advanced"
 msgstr "Ítarlegt"
 
-#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+msgid "Pre-translating…"
+msgstr "Forþýðing…"
+
 #, c-format
-msgid "%s Preferences"
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] "Forþýddi %u streng"
+msgstr[1] "Forþýddi %u strengi"
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr "Forþýða"
+
+msgid "Only fill in exact matches"
+msgstr "Einungis fylla inn nákvæmar samsvaranir"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
 msgstr ""
+"Sjálfgefið eru ónákvæmar niðurstöður settar inn og merktar eins og þær "
+"þarfnist lagfæringa. Hakaðu við þennan valkost til að einungis nákvæmar "
+"samsvaranir séu settar inn."
+
+msgid "Don’t mark exact matches as needing work"
+msgstr "Ekki merkja nákvæmar samsvaranir sem ófullgerðar"
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+"Einungis virkja þetta ef þú treystir þýðingaminninu þínu. Sjálfgefið eru "
+"allar samsvaranir úr þýðingaminninu merktar eins og þær þarfnist lagfæringa, "
+"því ætti að yfirfara þær og leiðrétta áður en þær eru notaðar."
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+"Forþýðing finnur sjálfvirkt í þýðingaminni nákvæmar eða loðnar samsvaranir "
+"fyrir óþýdda strengi og setur þær inn sem þýðingar."
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d færsla var forþýdd."
+msgstr[1] "%d færslur voru forþýddar."
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+"Þýðingarnar voru merktar eins og þær þarfnist lagfæringa vegna þess að þær "
+"gætu verið ónákvæmar. Þú ættir að yfirfara þær og leiðrétta ef þörf krefur."
+
+msgid "No entries could be pre-translated."
+msgstr "Ekki var hægt að forþýða neinar færslur."
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"Þýðingaminnið inniheldur ekki neina strengi sem líkjast innihaldi þessarar "
+"skráar. Þýðingaminnið er aðeins nothæft til hálf-sjálfvirkra þýðinga þegar "
+"Poedit er búið að læra nógu mikið af þýðingum sem þú ert búinn að framkvæma "
+"handvirkt."
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1322,6 +1285,21 @@ msgstr "Slóðir"
 msgid "Excluded paths"
 msgstr "Slóðir sem á að sleppa"
 
+msgid "Advanced extraction settings"
+msgstr "Ítarlegar þáttunarstillingar"
+
+msgid "Extract notes for translators from:"
+msgstr "Ná í minnispunkta fyrir þýðendur úr:"
+
+msgid "Comments prefixed with:"
+msgstr "Athugasemdir eru með forskeytinu:"
+
+msgid "All comments"
+msgstr "Allar athugasemdir"
+
+msgid "Additional xgettext flags:"
+msgstr "Viðbótar xgettext flögg:"
+
 msgid "Additional keywords"
 msgstr "Aukaleg stikkorð:"
 
@@ -1351,8 +1329,14 @@ msgstr "&Hreinsa"
 msgid "Clear the comment"
 msgstr "Hreinsa athugasemd"
 
+msgid "New"
+msgstr "Nýtt"
+
 msgid "Create new translations project"
 msgstr "Búa til nýtt þýðingarverkefni"
+
+msgid "Edit"
+msgstr "Breyta"
 
 msgid "Edit the project"
 msgstr "Breyta þýðingarverkefni"
@@ -1436,16 +1420,16 @@ msgid "Quit"
 msgstr "Hætta"
 
 msgid "Copy from singular"
-msgstr ""
+msgstr "Afrita úr eintölu"
 
 msgid "Copy From Singular"
-msgstr ""
+msgstr "Afrita úr eintölu"
 
-msgid "Translation is &fuzzy"
-msgstr "Þýðin&gin er óljós"
+msgid "Translation needs &work"
+msgstr "Þýðin&g þarfnast lagfæringa"
 
-msgid "Translation Is &Fuzzy"
-msgstr "Þýðin&gin er óljós"
+msgid "Translation Needs &Work"
+msgstr "Þýðin&g þarfnast lagfæringa"
 
 msgid "Edit &comment"
 msgstr "Breyta &athugasemd"
@@ -1455,12 +1439,6 @@ msgstr "Breyta &athugasemd"
 
 msgid "Suggestions"
 msgstr "Tillögur"
-
-msgid "&Show references"
-msgstr "&Sýna tilvísanir"
-
-msgid "&Show References"
-msgstr "&Sýna tilvísanir"
 
 msgid "&Find..."
 msgstr "&Leita..."
@@ -1528,6 +1506,12 @@ msgstr "Óþýddar &færslur fyrst"
 msgid "&Untranslated Entries First"
 msgstr "Óþýddar &færslur fyrst"
 
+msgid "&Show references"
+msgstr "&Sýna tilvísanir"
+
+msgid "&Show References"
+msgstr "&Sýna tilvísanir"
+
 msgid "Show sidebar"
 msgstr "Birta hliðarspjald"
 
@@ -1552,11 +1536,8 @@ msgstr "Uppfæra frá &POT skrá..."
 msgid "Sync with Crowdin"
 msgstr "Samstilla við Crowdin"
 
-msgid "Fill missing translations from &TM..."
-msgstr "F&ylla inn þýðingar sem vantar úr ÞM..."
-
-msgid "Fill Missing Translations from &TM..."
-msgstr "F&ylla inn þýðingar sem vantar úr ÞM..."
+msgid "Pre-&translate..."
+msgstr "F&or-þýða"
 
 msgid "&Purge deleted translations"
 msgstr "&Henda eyddum þýðingum"
@@ -1604,16 +1585,16 @@ msgid "Ne&xt Unfinished"
 msgstr "&Næsta óklárað"
 
 msgid "Previous plural form"
-msgstr ""
+msgstr "Fyrri fleirtala"
 
 msgid "Previous Plural Form"
-msgstr ""
+msgstr "Fyrri fleirtala"
 
 msgid "Next plural form"
-msgstr ""
+msgstr "Næsta fleirtala"
 
 msgid "Next Plural Form"
-msgstr ""
+msgstr "Næsta fleirtala"
 
 msgid "&Online help"
 msgstr "&Hjálp á netinu"
@@ -1695,7 +1676,10 @@ msgstr "Eiginleikar þýðingaskrár"
 msgid "Project name and version:"
 msgstr "Nafn þýðingaverkefnis og útgáfunúmer:"
 
-msgid "Plural Forms:"
+msgid "Language team:"
+msgstr "Tungumálateymi:"
+
+msgid "Plural forms:"
 msgstr "Fleirtöluform:"
 
 msgid "Use default rules for this language"
@@ -1710,14 +1694,20 @@ msgstr "Vita meira um fleirtöluform"
 msgid "Charset:"
 msgstr "Stafatafla:"
 
-msgid "Team:"
-msgstr "Teymi:"
+msgid "Advanced Extraction Settings..."
+msgstr "Ítarlegar þáttunarstillingar..."
 
-msgid "Team's email address:"
-msgstr "Netfang þýðingateymis:"
+msgid "Advanced extraction settings..."
+msgstr "Ítarlegar þáttunarstillingar..."
+
+msgid "Translation Properties"
+msgstr "Eiginleikar þýðingar"
 
 msgid "Translation properties"
 msgstr "Eiginleikar þýðingar"
+
+msgid "Sources Paths"
+msgstr "Slóðir upprunaskráa"
 
 msgid "Sources paths"
 msgstr "Slóðir upprunaskráa"
@@ -1728,6 +1718,9 @@ msgstr "Ná í texta úr upprunaskrám í eftirfarandi möppum:"
 msgid "Base path:"
 msgstr "Grunnslóð:"
 
+msgid "Sources Keywords"
+msgstr "Stikkorð upprunaskráa"
+
 msgid "Sources keywords"
 msgstr "Stikkorð upprunaskráa"
 
@@ -1737,6 +1730,12 @@ msgid ""
 msgstr ""
 "Nota þessi stikkorð (aðgerðaheiti) til að auðkenna þýðanlega strengi\n"
 "í upprunaskrám:"
+
+msgid "Also use default keywords for supported languages"
+msgstr "Einnig nota sjálfgefin stikkorð fyrir studd tungumál"
+
+msgid "Learn About Gettext Keywords"
+msgstr "Vita meira um gettext stikkorð"
 
 msgid "Learn about gettext keywords"
 msgstr "Vita meira um gettext stikkorð"
@@ -1785,8 +1784,8 @@ msgstr "Uppfæra"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Uppfæra þýðingaskrár - samræma við upprunaskrár"
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "Víxlað ef valin strengur inniheldur óljósa þýðingu"
+msgid "Sidebar"
+msgstr "Hliðarspjald"
 
 msgid "Show or hide the sidebar"
 msgstr "Birta eða fela hliðarspjald"
@@ -1796,11 +1795,11 @@ msgid "Previous source text:"
 msgstr "Fyrri frumtexti:"
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
 msgstr ""
-"Eldri upprunatexti (áður en hann breyttist við uppfærslu) sem óskýra "
-"þýðingin á við."
+"Eldri frumtextinn (áður en hann breyttist við uppfærslu) sem þýðingin (núna "
+"ónákvæm) á við."
 
 msgid "Notes for translators:"
 msgstr "Minnispunktar fyrir þýðendur:"
@@ -1825,57 +1824,20 @@ msgstr "Engar samsvaranir fundust"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Þessi strengur fannst í þýðingaminni Poedit."
 
-#, c-format
-msgid "(New: %i, obsolete: %i)"
-msgstr "(Nýtt: %i, úrelt: %i)"
-
-#, c-format
-msgid "Importing translations: %d"
-msgstr "Flyt inn þýðingar: %d"
-
-msgid "Poedit Update"
-msgstr "Poedit uppfærsla"
-
-msgid "Preparing migration..."
-msgstr "Undirbý yfirfærslu..."
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr "Staða þegar yfirfærslu var hætt: %d"
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poedit verður að umbreyta þýðingaminninu þínu yfir á nýtt snið."
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"Þetta verður að gera áður en Poedit getur ræst. Þetta getur tekið nokkrar "
-"mínútur ef þú geymir margar þýðingaskrár, en er yfirleitt fljótlegra."
-
-msgid "Proceed"
-msgstr "Halda áfram"
-
-msgid "Translation memory migration failed."
-msgstr "Yfirfærsla þýðingaminnis mistókst."
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"Ekki var hægt að yfirfæra þýðingaminnið þitt. Villan var:\n"
-"\n"
-"%s\n"
-"Endilega sendu tölvupóst á help@poedit.net og við reynum að redda þessu."
-
 msgid "Cannot create temporary directory."
 msgstr "Ekki tókst að búa til bráðabirgðamöppu."
 
 msgid "Welcome to Poedit"
 msgstr "Velkomin í Poedit"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Útgáfa %s"
+
+msgid "Edit a Translation"
+msgstr "Breyta þýðingu"
 
 msgid "Edit a translation"
 msgstr "Breyta þýðingu"
@@ -1890,13 +1852,17 @@ msgstr ""
 "Taka PO-skrá eða POT-sniðmát sem er til staðar og búa til nýjar þýðingar út "
 "frá því."
 
-msgid "Collaborate on a translation with Crowdin"
-msgstr "Collaborate on a translation with Crowdin"
+msgid "Collaborate on a Translation with Others"
+msgstr "Vinna þýðingu í samstarfi við aðra"
+
+msgid "Collaborate on a translation with others"
+msgstr "Vinna þýðingu í samstarfi við aðra"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
 msgstr ""
-"Download a file from Crowdin project, translate and sync your changes back."
+"Náðu í skrá úr Crowdin-verkefni, þýddu og samstilltu breytingarnar þínar til "
+"baka."
 
 msgid "What is Crowdin?"
 msgstr "Hvað er Crowdin?"
@@ -1938,10 +1904,176 @@ msgid "Extract from sources"
 msgstr "Ná í úr frumkóða"
 
 msgid "Configure source code extraction in Properties."
-msgstr "Stilla útdrátt upprunakóða í kjörstillingum."
+msgstr "Stilla útdrátt/þáttun upprunakóða í kjörstillingum."
 
 msgid "Sync"
 msgstr "Samstilla"
 
 msgid "Synchronize the translation with Crowdin"
 msgstr "Samræma þýðinguna með Crowdin"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "Um %s"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "Kjörstillingar %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "Þjónustur"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "Fela %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "Fela annað"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "Birta allt"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Hætta í %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences..."
+msgstr "Stillingar..."
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr "Nýlegt"
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr "Algengt"
+
+msgid "&Apply"
+msgstr "Virkj&a"
+
+msgid "Apply"
+msgstr "Virkja"
+
+msgid "&Back"
+msgstr "Til &baka"
+
+msgid "Back"
+msgstr "Til baka"
+
+msgid "&Cancel"
+msgstr "&Hætta við"
+
+msgid "&Clear"
+msgstr "Hre&insa"
+
+msgid "Clear"
+msgstr "Hreinsa"
+
+msgid "Copy"
+msgstr "Afrita"
+
+msgid "Cu&t"
+msgstr "&Klippa"
+
+msgid "Cut"
+msgstr "Klippa"
+
+msgid "&Delete"
+msgstr "&Eyða"
+
+msgid "&Quit"
+msgstr "&Hætta"
+
+msgid "File"
+msgstr "Skrá"
+
+msgid "Help"
+msgstr "Hjálp"
+
+msgid "&New"
+msgstr "&Nýtt"
+
+msgid "&No"
+msgstr "&Nei"
+
+msgid "No"
+msgstr "Nei"
+
+msgid "&OK"
+msgstr "Í &lagi"
+
+msgid "Open..."
+msgstr "Opna..."
+
+msgid "&Paste"
+msgstr "&Líma"
+
+msgid "Paste"
+msgstr "Líma"
+
+msgid "Preferences"
+msgstr "Kjörstillingar"
+
+msgid "&Redo"
+msgstr "Endu&rtaka"
+
+msgid "Refresh"
+msgstr "Endurlesa"
+
+msgid "&Save as"
+msgstr "Vi&sta sem"
+
+msgid "Save as"
+msgstr "Vista sem"
+
+msgid "Select &All"
+msgstr "Velja &allt"
+
+msgid "Select All"
+msgstr "Velja allt"
+
+msgid "&Undo"
+msgstr "&Afturkalla"
+
+msgid "&Yes"
+msgstr "&Já"
+
+msgid "Yes"
+msgstr "Já"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "Upp"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "Niður"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"

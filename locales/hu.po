@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-01 19:26+0200\n"
-"PO-Revision-Date: 2016-08-01 13:25-0400\n"
+"POT-Creation-Date: 2017-03-22 19:03+0100\n"
+"PO-Revision-Date: 2017-03-22 13:56-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -24,6 +24,29 @@ msgstr "Ne jelenjen meg újra"
 
 msgid "Don't show again"
 msgstr "Ne mutassa újra"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(Új: %i, elavult: %i)"
+
+msgid "Updating catalog"
+msgstr "Katalógus frissítése"
+
+msgid "Collecting source files..."
+msgstr ""
+
+msgid "Extracting translatable strings..."
+msgstr ""
+
+msgid "Failed to load extracted catalog."
+msgstr "A kinyert katalógus betöltése meghiúsult."
+
+msgid "Merging differences..."
+msgstr "Eltérések összefésülése…"
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "A(z) „%s” nem érvényes POT fájl."
 
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
@@ -100,13 +123,6 @@ msgstr "POT fordítási sablonok"
 msgid "All Translation Files"
 msgstr "Minden fordítási fájl"
 
-msgid "Merging differences..."
-msgstr "Eltérések összefésülése…"
-
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "A(z) „%s” nem érvényes POT fájl."
-
 msgid "(Use default language)"
 msgstr "(Alapértelmezett nyelv használata)"
 
@@ -118,6 +134,17 @@ msgstr "Nyelvválasztás"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Újra kell indítania a Poeditet a módosítás életbe léptetéséhez."
+
+msgid "Syncing"
+msgstr ""
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr ""
+
+msgid "Syncing error"
+msgstr ""
 
 msgid "Downloading translations is disabled in this project."
 msgstr "A fordítások letöltése ebben a projektben le van tiltva."
@@ -189,9 +216,6 @@ msgstr "Ez a fájl csak a Crowdin webes felületén szerkeszthető."
 msgid "Downloading latest translations…"
 msgstr "A legújabb fordítások letöltése…"
 
-msgid "Syncing with Crowdin"
-msgstr "Szinkronizálás a Crowdin-nel"
-
 msgid "Syncing with Crowdin failed."
 msgstr "Nem sikerült szinkronizálni a Crowdin-nel."
 
@@ -209,24 +233,6 @@ msgstr "Tudjon meg többet"
 
 msgid "Learn More"
 msgstr "Tudjon meg többet"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Sikertelen parancs: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "A gettext katalógusok egyesítése meghiúsult."
-
-msgid "Scanning files..."
-msgstr "Fájlok átvizsgálása…"
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#, c-format
-msgid "Parsing %s files..."
-msgstr "%s fájlok elemzése…"
-
-msgid "Failed to load extracted catalog."
-msgstr "A kinyert katalógus betöltése meghiúsult."
 
 msgid "&Help"
 msgstr "&Súgó"
@@ -257,52 +263,12 @@ msgstr "Nem sikerült kommunikálni a Poedit folyamattal."
 msgid "Unhandled exception occurred: %s"
 msgstr "Nem kezelt kivétel történt: %s"
 
-msgid "Unhandled exception occurred."
-msgstr "Nem kezelt kivétel történt"
-
 msgid "Open catalog"
 msgstr "Katalógus megnyitása"
 
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Nem található a(z) „%s” fájl."
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "%s névjegye"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "%s verzió"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Services"
-msgstr "Szolgáltatások"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Hide %s"
-msgstr "%s elrejtése"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Hide Others"
-msgstr "Többi elrejtése"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Show All"
-msgstr "Mindet mutat"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Quit %s"
-msgstr "Kilépés a %s-ből"
-
-msgid "Preferences..."
-msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "A Poedit egy könnyen használható fordítás szerkesztő."
@@ -406,6 +372,7 @@ msgstr "Nagyítás"
 msgid "Bring All to Front"
 msgstr "Összes előrehozása"
 
+#. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
 msgstr "PO fordítás"
 
@@ -419,74 +386,6 @@ msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
 "A fájl lehet hogy sérült vagy olyan formátumú melyet a Poedit nem ismer fel."
-
-msgid "&Undo"
-msgstr "&Visszavonás"
-
-msgid "&Redo"
-msgstr "&Mégis"
-
-msgid "Cu&t"
-msgstr "&Kivágás"
-
-msgid "Cut"
-msgstr "Kivágás"
-
-msgid "Copy"
-msgstr "Másolás"
-
-msgid "&Paste"
-msgstr "&Beillesztés"
-
-msgid "Paste"
-msgstr "Beillesztés"
-
-msgid "&Delete"
-msgstr "&Törlés"
-
-msgid "Select &All"
-msgstr "Min&den kijelölése"
-
-msgid "Select All"
-msgstr "Minden kijelölése"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Alt+"
-msgstr "Alt+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Shift+"
-msgstr "Shift+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Enter"
-msgstr "Enter"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Up"
-msgstr "↑"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Down"
-msgstr "↓"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-msgid "ctrl"
-msgstr "ctrl"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-msgid "alt"
-msgstr "alt"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-msgid "shift"
-msgstr "shift"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "A Poedit ablakára egyszerre több fájlt nem lehet ráhúzni."
@@ -503,31 +402,6 @@ msgstr "&Fájl"
 
 msgid "&Go"
 msgstr "&Ugrás"
-
-msgid "Source text:"
-msgstr "Forrásszöveg:"
-
-msgid "Singular:"
-msgstr "Egyes szám:"
-
-msgid "Plural:"
-msgstr "Többes szám:"
-
-msgid "Translation:"
-msgstr "Fordítás:"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"A POT fájl csak egy sablon és nem  tartalmaz fordításokat.\n"
-"Fordítás készítéséhez hozzon létre egy új PO fájlt a sablon alapján."
-
-msgid "Create New Translation"
-msgstr "Új fordítás létrehozása"
-
-msgid "Create new translation"
-msgstr "Új fordítási projekt létrehozása"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -576,9 +450,6 @@ msgstr "HTML fájlok"
 
 msgid "Open catalog template"
 msgstr "Katalógus sablon megnyitása"
-
-msgid "Updating catalog"
-msgstr "Katalógus frissítése"
 
 msgid "Source code not available."
 msgstr "Nem áll rendelkezésre forráskód."
@@ -656,9 +527,6 @@ msgstr[1] "A fordítás használatra kész, de %d bejegyzés még nincs lefordí
 msgid "The translation is ready for use."
 msgstr "A fordítás használatra kész."
 
-msgid "Context:"
-msgstr "Kontextus:"
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -668,13 +536,9 @@ msgstr ""
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
-"A fájl PO fájlokban nem engedélyezett és a fájl használatát megakadályozó "
-"ismétlődő elemeket tartalmaz. A Poedit kijavította ezt a problémát, de "
-"minden bizonytalannak jelölt fordítási bejegyzés felülvizsgálata és estleges "
-"javítása szükséges."
 
 msgid "Language of the translation isn't set."
 msgstr "A fordítás nyelve nincs beállítva."
@@ -772,9 +636,6 @@ msgstr " (nincs mentve)"
 msgid " (modified)"
 msgstr " (módosítva)"
 
-msgid "Go"
-msgstr "Ugrás"
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Nem sikerült frissíteni a fordítási memóriát: %s"
@@ -800,76 +661,16 @@ msgstr "Megtartás"
 msgid "Purge"
 msgstr "Tisztítás"
 
-msgid "Fill missing translations from TM"
-msgstr "Hiányzó fordítás kitöltése FM-ből"
-
-msgid "Only fill in exact matches"
-msgstr "Csak pontos egyezés esetén"
-
-msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-msgstr ""
-"Alapesetben a pontatlan eredmények is - bizonytalanként jelölve - "
-"belekerülnek a fordításba. Bejelölve ezt az opciót, csak pontos egyezés "
-"esetén lesz kitöltve."
-
-msgid "Don’t mark exact matches as fuzzy"
-msgstr "Ne jelöld bizonytalanként a pontosan egyezőket"
-
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-msgstr ""
-"Csak akkor engedélyezze, ha megbízik a FM-jében. Alapértelmezés szerint az "
-"FM-ből származó összes találat bizonytalanként lesz megjelölve és a "
-"felülvizsgálatuk szükséges."
-
-msgid "Fill"
-msgstr "Kitöltés"
-
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "%d bejegyzés a fordítási memóriából lett lefordítva."
-msgstr[1] "%d bejegyzés a fordítási memóriából lett lefordítva."
-
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr ""
-"A fordítások bizonytalannak lettek jelölve, mert lehet, hogy pontatlanok. Át "
-"kellene nézni ezeket, a pontosításuk véget."
-
-msgid "No entries could be filled from the translation memory."
-msgstr "Nem található megfelelő bejegyzés a fordítási memóriában."
-
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"A FM nem tartalmaz a fájl tartalmat hasonló karakterláncokat. A félautomata "
-"fordítás csak azután lesz hatékony miután Poedit eleget tanult a Ön által "
-"manuálisan lefordított fájlokból."
-
-msgid "Translating"
-msgstr "Fordítás"
-
-msgid "Filling missing translations from TM..."
-msgstr "Hiányzó fordítás lefordítása FM-ből..."
-
-#, c-format
-msgid "Translated %u string"
-msgid_plural "Translated %u strings"
-msgstr[0] "%u szöveg lefordítva"
-msgstr[1] "%u szöveg lefordítva"
-
 msgid "Copy from source text"
 msgstr "Másolás a forrásszövegből"
 
 msgid "Copy from Source Text"
 msgstr "Másolás a forrásszövegből"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
 
 msgid "Clear translation"
 msgstr "Fordítás törlése"
@@ -886,33 +687,13 @@ msgstr "Megjegyzés szerkesztése"
 msgid "References:"
 msgstr "Hivatkozások:"
 
-msgid "Everything"
-msgstr "Minden"
-
-#, c-format
-msgid "Form %i"
-msgstr "%i. alak"
-
-msgid "Singular"
-msgstr "Egyes szám"
-
-msgid "Zero"
-msgstr "Nulla"
-
-msgid "One"
-msgstr "Egy"
-
-msgid "Two"
-msgstr "Kettő"
-
-msgid "Plural"
-msgstr "Többes szám"
-
-msgid "Other"
-msgstr "Egyéb"
-
 msgid "&Bookmarks"
 msgstr "&Könyvjelzők"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #, c-format
 msgid "Set bookmark %i"
@@ -942,18 +723,88 @@ msgstr "Állapotsor elrejtése"
 msgid "Show Status Bar"
 msgstr "Állapotsor megjelenítése"
 
-msgid "Source text"
-msgstr "Forrásszöveg"
+msgid "Source text:"
+msgstr "Forrásszöveg:"
 
-msgid "Translation"
-msgstr "Fordítás"
+msgid "Singular:"
+msgstr "Egyes szám:"
 
-msgid "ID"
-msgstr "Azonosító"
+msgid "Plural:"
+msgstr "Többes szám:"
+
+msgid "Translation:"
+msgstr "Fordítás:"
+
+msgid "Pre-translated"
+msgstr ""
+
+msgid "Needs Work"
+msgstr ""
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr ""
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"A POT fájl csak egy sablon és nem  tartalmaz fordításokat.\n"
+"Fordítás készítéséhez hozzon létre egy új PO fájlt a sablon alapján."
+
+msgid "Create New Translation"
+msgstr "Új fordítás létrehozása"
+
+msgid "Create new translation"
+msgstr "Új fordítási projekt létrehozása"
+
+msgid "Everything"
+msgstr "Minden"
+
+#, c-format
+msgid "Form %i"
+msgstr "%i. alak"
+
+msgid "Singular"
+msgstr "Egyes szám"
+
+msgid "Zero"
+msgstr "Nulla"
+
+msgid "One"
+msgstr "Egy"
+
+msgid "Two"
+msgstr "Kettő"
+
+msgid "Plural"
+msgstr "Többes szám"
+
+msgid "Other"
+msgstr "Egyéb"
+
+#, c-format
+msgid "%s Format"
+msgstr ""
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr ""
 
 #, c-format
 msgid "Source text — %s"
 msgstr "Forrásszöveg — %s"
+
+msgid "Source text"
+msgstr "Forrásszöveg"
 
 msgid "unknown language"
 msgstr "ismeretlen nyelv"
@@ -962,8 +813,15 @@ msgstr "ismeretlen nyelv"
 msgid "Translation — %s"
 msgstr "Fordítás — %s"
 
-msgid "Error:"
-msgstr "Hiba:"
+msgid "ID"
+msgstr "Azonosító"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Sikertelen parancs: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "A gettext katalógusok egyesítése meghiúsult."
 
 msgid "Source file"
 msgstr "Forrásfájl"
@@ -1015,11 +873,14 @@ msgstr "Keresés a megjegyzésekben"
 msgid "Close"
 msgstr "Bezárás"
 
-msgid "Replace All"
-msgstr "Összes cseréje"
+msgid "Replace &All"
+msgstr ""
 
-msgid "Replace all"
-msgstr "Összes cseréje"
+msgid "Replace &all"
+msgstr ""
+
+msgid "&Replace"
+msgstr ""
 
 msgid "< &Previous"
 msgstr "< Előző"
@@ -1057,9 +918,6 @@ msgstr "Összes"
 
 msgid "Untrans"
 msgstr "Lefordítatlan"
-
-msgid "Fuzzy"
-msgstr "Bizonytalan"
 
 msgid "Bad Tokens"
 msgstr "Hibás részlet"
@@ -1167,20 +1025,24 @@ msgstr "Beolvasás fájlból..."
 msgid "Reset"
 msgstr "Törlés"
 
-msgid "Consult TM when updating from sources"
-msgstr "A forrásból való frissítés során kiegészítés a FM-ból"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr ""
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr ""
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr ""
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
-"Engedélyezése esetén Poedit megpróbálja kitölteni az új bejegyzéseket a\n"
-"korábbi, a fordítási memóriában tárolt fordításokat felhasználva.  Ha a FM\n"
-"majdnem üres, akkor ez nem lesz túl hatékony. A fordítások számának "
-"növelésével,\n"
-"a FM is növekszik és így egyre nagyobb segítség lesz az Ön számára."
 
 msgid "Stored translations:"
 msgstr "Tárolt fordítások:"
@@ -1230,11 +1092,22 @@ msgstr ""
 "fájlokban való megkeresésére és kivonatolására annak érdekében, hogy le "
 "lehessen őket fordítani."
 
-msgid "New"
-msgstr "Új"
+msgid "Custom Extractors:"
+msgstr ""
 
-msgid "Edit"
-msgstr "Szerkesztés"
+msgid "Custom extractors:"
+msgstr ""
+
+msgid "Edit..."
+msgstr ""
+
+msgid "GNU gettext"
+msgstr ""
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
 
 msgid "Delete extractor"
 msgstr "Kivonatoló törlése"
@@ -1291,10 +1164,71 @@ msgstr "A meglévő fájlok formázásának megőrzése"
 msgid "Advanced"
 msgstr "Speciális"
 
-#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+msgid "Pre-translating…"
+msgstr ""
+
 #, c-format
-msgid "%s Preferences"
-msgstr "%s beállításai"
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr ""
+
+msgid "Only fill in exact matches"
+msgstr "Csak pontos egyezés esetén"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
+msgstr ""
+
+msgid "Don’t mark exact matches as needing work"
+msgstr ""
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+
+msgid "No entries could be pre-translated."
+msgstr ""
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"A FM nem tartalmaz a fájl tartalmat hasonló karakterláncokat. A félautomata "
+"fordítás csak azután lesz hatékony miután Poedit eleget tanult a Ön által "
+"manuálisan lefordított fájlokból."
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1338,6 +1272,21 @@ msgstr "Útvonalak"
 msgid "Excluded paths"
 msgstr "Kizárt elérési utak"
 
+msgid "Advanced extraction settings"
+msgstr ""
+
+msgid "Extract notes for translators from:"
+msgstr ""
+
+msgid "Comments prefixed with:"
+msgstr ""
+
+msgid "All comments"
+msgstr ""
+
+msgid "Additional xgettext flags:"
+msgstr ""
+
 msgid "Additional keywords"
 msgstr "Kiegészítő kulcsszavak"
 
@@ -1366,8 +1315,14 @@ msgstr "Tör&lés"
 msgid "Clear the comment"
 msgstr "Megjegyzés törlése"
 
+msgid "New"
+msgstr "Új"
+
 msgid "Create new translations project"
 msgstr "Új fordítási projekt létrehozása"
+
+msgid "Edit"
+msgstr "Szerkesztés"
 
 msgid "Edit the project"
 msgstr "A projekt szerkesztése"
@@ -1456,11 +1411,11 @@ msgstr "Másolás az egyes számból"
 msgid "Copy From Singular"
 msgstr "Másolás az egyes számból"
 
-msgid "Translation is &fuzzy"
-msgstr "A fordítás &bizonytalan"
+msgid "Translation needs &work"
+msgstr ""
 
-msgid "Translation Is &Fuzzy"
-msgstr "A fordítás &bizonytalan"
+msgid "Translation Needs &Work"
+msgstr ""
 
 msgid "Edit &comment"
 msgstr "&Megjegyzés szerkesztése"
@@ -1470,12 +1425,6 @@ msgstr "&Megjegyzés szerkesztése"
 
 msgid "Suggestions"
 msgstr "Javaslatok"
-
-msgid "&Show references"
-msgstr "&Hivatkozások megjelenítése"
-
-msgid "&Show References"
-msgstr "&Hivatkozások megjelenítése"
 
 msgid "&Find..."
 msgstr "&Keresés…"
@@ -1543,6 +1492,12 @@ msgstr "&Lefordítatlan bejegyzések előre"
 msgid "&Untranslated Entries First"
 msgstr "&Lefordítatlan bejegyzések előre"
 
+msgid "&Show references"
+msgstr "&Hivatkozások megjelenítése"
+
+msgid "&Show References"
+msgstr "&Hivatkozások megjelenítése"
+
 msgid "Show sidebar"
 msgstr "Oldalsáv megjelenítése"
 
@@ -1567,11 +1522,8 @@ msgstr "Frissítés &POT fájlból…"
 msgid "Sync with Crowdin"
 msgstr "Szinkronizáció a Crowdin-nel"
 
-msgid "Fill missing translations from &TM..."
-msgstr "Hiányzó fordítás kitöltése &FM-ből..."
-
-msgid "Fill Missing Translations from &TM..."
-msgstr "Hiányzó fordítás kitöltése &FM-ből..."
+msgid "Pre-&translate..."
+msgstr ""
 
 msgid "&Purge deleted translations"
 msgstr "Törölt &fordítások tisztítása"
@@ -1709,8 +1661,11 @@ msgstr "Katalógus tulajdonságok"
 msgid "Project name and version:"
 msgstr "Projekt neve és verziószáma:"
 
-msgid "Plural Forms:"
-msgstr "Többes számú alakok:"
+msgid "Language team:"
+msgstr ""
+
+msgid "Plural forms:"
+msgstr ""
 
 msgid "Use default rules for this language"
 msgstr "Alapértelmezett szabályok használata ehhez a nyelvhez"
@@ -1724,14 +1679,20 @@ msgstr "Tudjon meg többet a többes számú alakokról"
 msgid "Charset:"
 msgstr "Karakterkódolás:"
 
-msgid "Team:"
-msgstr "Csapat:"
+msgid "Advanced Extraction Settings..."
+msgstr ""
 
-msgid "Team's email address:"
-msgstr "Csapat e-mail címe:"
+msgid "Advanced extraction settings..."
+msgstr ""
+
+msgid "Translation Properties"
+msgstr ""
 
 msgid "Translation properties"
 msgstr "Fordítás tulajdonságai"
+
+msgid "Sources Paths"
+msgstr ""
 
 msgid "Sources paths"
 msgstr "Források útvonalai"
@@ -1742,6 +1703,9 @@ msgstr "Szövegek kinyerése a következő könyvtárakban lévő forrásfájlok
 msgid "Base path:"
 msgstr "Alap útvonal:"
 
+msgid "Sources Keywords"
+msgstr ""
+
 msgid "Sources keywords"
 msgstr "Források kulcsszavai"
 
@@ -1751,6 +1715,12 @@ msgid ""
 msgstr ""
 "Használja ezeket a kulcsszavakat (függvény neveket) a forrásfájlokban lévő\n"
 "lefordítható szövegek felismeréséhez:"
+
+msgid "Also use default keywords for supported languages"
+msgstr ""
+
+msgid "Learn About Gettext Keywords"
+msgstr ""
 
 msgid "Learn about gettext keywords"
 msgstr "Tudjon meg többet a gettext kulcsszavakról"
@@ -1799,8 +1769,8 @@ msgstr "Frissítés"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Katalógus frissítése - szinkronizálás a forrásokhoz"
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "Bekapcsolva, ha a kijelölt szöveg fordítása még bizonytalan"
+msgid "Sidebar"
+msgstr "Oldalsáv"
 
 msgid "Show or hide the sidebar"
 msgstr "Oldalsáv megjelenítése/elrejtése"
@@ -1810,11 +1780,9 @@ msgid "Previous source text:"
 msgstr "Előző forrásszöveg:"
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
 msgstr ""
-"A régi forrásszöveg (a frissítést megelőző állapotú), ami bizonytalan "
-"fordításnak tekinthető."
 
 msgid "Notes for translators:"
 msgstr "Megjegyzések a fordítóknak:"
@@ -1839,58 +1807,20 @@ msgstr "Nincs találat"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Erre a karakterláncra a Poedit fordítási memóriájában találtunk rá."
 
-#, c-format
-msgid "(New: %i, obsolete: %i)"
-msgstr "(Új: %i, elavult: %i)"
-
-#, c-format
-msgid "Importing translations: %d"
-msgstr "Importálandó fordítások: %d"
-
-msgid "Poedit Update"
-msgstr "Poedit frissítés"
-
-msgid "Preparing migration..."
-msgstr "Áttelepítés előkészítése..."
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr "Áttelepítés kimeneti állapota: %d"
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "A Poeditnek fordítási memóriát egy új formátumba  kell átalakítania"
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"A Poedit indítása előtt ezt el kell végezni. Ez eltarthat néhány percig, ha "
-"sok tárolt fordítás, de rendes körülmények sokkal gyorsabb."
-
-msgid "Proceed"
-msgstr "Tovább"
-
-msgid "Translation memory migration failed."
-msgstr "Fordítási memória áttelepítése sikertelen."
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"A Ön fordítási memóriájának adatai nem lettek áttelepítve. A hiba a "
-"következő:\n"
-"\n"
-"%s\n"
-"Kérjük, írjon help@poedit.net e-mail címre, és mi ki fogjuk javítani."
-
 msgid "Cannot create temporary directory."
 msgstr "Az ideiglenes fájlok könyvtárát nem lehet létrehozni."
 
 msgid "Welcome to Poedit"
 msgstr "Üdvözöljük a Poeditnél"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "%s verzió"
+
+msgid "Edit a Translation"
+msgstr ""
 
 msgid "Edit a translation"
 msgstr "Fordítás szerkesztése"
@@ -1905,8 +1835,11 @@ msgstr ""
 "Egy már meglévő PO fájl vagy POT sablon kiválasztása és új fordítás "
 "készítése belőle."
 
-msgid "Collaborate on a translation with Crowdin"
-msgstr "Együttműködés a Crowdin-nel egy fordításban"
+msgid "Collaborate on a Translation with Others"
+msgstr ""
+
+msgid "Collaborate on a translation with others"
+msgstr "Együttműködés egy fordításban másokkal"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
@@ -1962,3 +1895,169 @@ msgstr "Szinkronizáció"
 
 msgid "Synchronize the translation with Crowdin"
 msgstr "Fordítások szinkronizálása a Crowdin-nel"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "%s névjegye"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "%s beállításai"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "Szolgáltatások"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "%s elrejtése"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "Többi elrejtése"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "Mindet mutat"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Kilépés a %s-ből"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences..."
+msgstr ""
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr ""
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr ""
+
+msgid "&Apply"
+msgstr ""
+
+msgid "Apply"
+msgstr ""
+
+msgid "&Back"
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "&Cancel"
+msgstr ""
+
+msgid "&Clear"
+msgstr ""
+
+msgid "Clear"
+msgstr ""
+
+msgid "Copy"
+msgstr "Másolás"
+
+msgid "Cu&t"
+msgstr "&Kivágás"
+
+msgid "Cut"
+msgstr "Kivágás"
+
+msgid "&Delete"
+msgstr "&Törlés"
+
+msgid "&Quit"
+msgstr ""
+
+msgid "File"
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid "&New"
+msgstr ""
+
+msgid "&No"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "&OK"
+msgstr ""
+
+msgid "Open..."
+msgstr ""
+
+msgid "&Paste"
+msgstr "&Beillesztés"
+
+msgid "Paste"
+msgstr "Beillesztés"
+
+msgid "Preferences"
+msgstr ""
+
+msgid "&Redo"
+msgstr "&Mégis"
+
+msgid "Refresh"
+msgstr ""
+
+msgid "&Save as"
+msgstr ""
+
+msgid "Save as"
+msgstr ""
+
+msgid "Select &All"
+msgstr "Min&den kijelölése"
+
+msgid "Select All"
+msgstr "Minden kijelölése"
+
+msgid "&Undo"
+msgstr "&Visszavonás"
+
+msgid "&Yes"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "↑"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "↓"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"

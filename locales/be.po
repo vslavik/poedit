@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-01 19:26+0200\n"
-"PO-Revision-Date: 2016-05-24 10:03-0400\n"
+"POT-Creation-Date: 2017-03-22 19:03+0100\n"
+"PO-Revision-Date: 2017-03-22 13:55-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Belarusian\n"
 "Language: be_BY\n"
@@ -27,6 +27,29 @@ msgid "Don't show again"
 msgstr "Больш не паказваць"
 
 #, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(Новыя: %i, састарэлыя: %i)"
+
+msgid "Updating catalog"
+msgstr "Абнаўленне каталога"
+
+msgid "Collecting source files..."
+msgstr "Збіранне зыходных файлаў..."
+
+msgid "Extracting translatable strings..."
+msgstr "Выманне радкоў для перакладу..."
+
+msgid "Failed to load extracted catalog."
+msgstr "Не атрымалася загрузіць выняты каталог."
+
+msgid "Merging differences..."
+msgstr "Злучэнне адрозненняў..."
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "\"%s\" не з'яўляецца карэктным файлам POT."
+
+#, c-format
 msgid "%i line of file '%s' was not loaded correctly."
 msgid_plural "%i lines of file '%s' were not loaded correctly."
 msgstr[0] "%i радок файла '%s' не быў загружаны карэктна."
@@ -35,7 +58,7 @@ msgstr[2] "%i радкоў файла '%s' не было загружана ка
 
 #, c-format
 msgid "Line %d of file '%s' is corrupted (not valid %s data)."
-msgstr "Радок %d файла '%s' пашкоджаны (некарэктныя дадзеныя %s)."
+msgstr "Радок %d файла '%s' пашкоджаны (некарэктныя даныя %s)."
 
 #, c-format
 msgid "Malformed header: '%s'"
@@ -55,8 +78,8 @@ msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
 "corrupted as the result."
 msgstr ""
-"Пры загрузцы каталога ўзнікла памылка. У выніку чаго, некаторыя дадзеныя "
-"могуць быць пашкоджаныя ці адсутнічаць."
+"Пры загрузцы каталога ўзнікла памылка. У выніку чаго, некаторыя даныя могуць "
+"быць пашкоджаныя ці адсутнічаць."
 
 #, c-format
 msgid "Couldn't load file %s, it is probably corrupted."
@@ -103,15 +126,8 @@ msgstr "Шаблоны перакладу POT"
 msgid "All Translation Files"
 msgstr "Усе файлы перакладаў"
 
-msgid "Merging differences..."
-msgstr "Злучэнне адрозненняў..."
-
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "\"%s\" не з'яўляецца карэктным POT-файлам."
-
 msgid "(Use default language)"
-msgstr "(Ужываць мову па змаўчанні)"
+msgstr "(Карыстацца мовай па змаўчанні)"
 
 msgid "Select your preferred language"
 msgstr "Выберыце пажаданую мову"
@@ -121,6 +137,17 @@ msgstr "Выбар мовы"
 
 msgid "You must restart Poedit for this change to take effect."
 msgstr "Вы павінны перазапусціць Poedit, каб змены набылі моц."
+
+msgid "Syncing"
+msgstr "Сінхранізацыя"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr "Не атрымалася сінхранізаваць з %s."
+
+msgid "Syncing error"
+msgstr "Памылка сінхранізацыі"
 
 msgid "Downloading translations is disabled in this project."
 msgstr "Запампоўка перакладаў адключана ў гэтым праекце."
@@ -133,7 +160,7 @@ msgid ""
 "translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
 msgstr ""
 "Crowdin - гэта сеціўная прылада для сумеснай лакалізацыі і перакладу. Poedit "
-"можа аўтаматычна сінхранізаваць PO файлы з Crowdin."
+"можа аўтаматычна сінхранізаваць файлы PO з Crowdin."
 
 msgid "Sign In"
 msgstr "Увайсці"
@@ -189,9 +216,6 @@ msgstr "Гэты файл можа быць зменены толькі ў вэ�
 msgid "Downloading latest translations…"
 msgstr "Пампаванне найноўшых перакладаў…"
 
-msgid "Syncing with Crowdin"
-msgstr "Сінхранізацыя з Crowdin"
-
 msgid "Syncing with Crowdin failed."
 msgstr "Сінхранізаваць з Crowdin не атрымалася."
 
@@ -210,24 +234,6 @@ msgstr "Даведацца больш"
 msgid "Learn More"
 msgstr "Даведацца больш"
 
-#, c-format
-msgid "Failed command: %s"
-msgstr "Памылка выканання каманды: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Не атрымалася аб'яднаць каталогі gettext."
-
-msgid "Scanning files..."
-msgstr "Сканаванне файлаў..."
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#, c-format
-msgid "Parsing %s files..."
-msgstr "Аналіз %s файлаў..."
-
-msgid "Failed to load extracted catalog."
-msgstr "Не атрымалася загрузіць выняты каталог."
-
 msgid "&Help"
 msgstr "&Даведка"
 
@@ -241,8 +247,8 @@ msgid ""
 "Please open and edit the corresponding PO file instead. When you save it, "
 "the MO file will be updated as well."
 msgstr ""
-"Калі ласка, адкрыйце і змяніце адпаведны PO файл. Пасля яго захавання, MO "
-"файл таксама абнавіцца."
+"Калі ласка, адкрыйце і змяніце адпаведны файл PO. Пасля яго захавання, файл "
+"MO таксама абнавіцца."
 
 msgid "don't delete temporary files (for debugging)"
 msgstr "не выдаляць часовыя файлы (для адладкі)"
@@ -257,52 +263,12 @@ msgstr "Памылка падключэння да працэсу Poedit."
 msgid "Unhandled exception occurred: %s"
 msgstr "Адбылося непрадбачанае выключэнне: %s"
 
-msgid "Unhandled exception occurred."
-msgstr "Адбылося непрадбачанае выключэнне."
-
 msgid "Open catalog"
 msgstr "Адкрыць каталог"
 
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "Файл '%s' не існуе."
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "Пра %s"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "Версія %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Services"
-msgstr "Сэрвісы"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Hide %s"
-msgstr "Схаваць %s"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Hide Others"
-msgstr "Схаваць іншыя"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Show All"
-msgstr "Паказаць усе"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Quit %s"
-msgstr "Выйсці з %s"
-
-msgid "Preferences..."
-msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit - гэта просты ў выкарыстанні рэдактар перакладаў."
@@ -314,7 +280,7 @@ msgid "Check for Updates..."
 msgstr "Праверыць наяўнасць абнаўленняў..."
 
 msgid "&Edit"
-msgstr "&Праўка"
+msgstr "&Змяніць"
 
 msgid "Undo"
 msgstr "Вярнуць"
@@ -353,7 +319,7 @@ msgid "Show Substitutions"
 msgstr "Паказваць замены"
 
 msgid "Smart Copy/Paste"
-msgstr "Інтэлектуальная капіяванне/устаўка"
+msgstr "Інтэлектуальнае капіяванне/устаўка"
 
 msgid "Smart Quotes"
 msgstr "Інтэлектуальныя двукоссі"
@@ -406,6 +372,7 @@ msgstr "Маштаб"
 msgid "Bring All to Front"
 msgstr "Змясціць усё на пярэднім плане"
 
+#. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
 msgstr "Файл перакладу PO"
 
@@ -418,74 +385,6 @@ msgstr "Памылковы файл"
 msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr "Магчыма файл пашкоджаны ці мае фармат, які не падтрымліваецца Poedit."
-
-msgid "&Undo"
-msgstr "&Вярнуць"
-
-msgid "&Redo"
-msgstr "&Аднавіць"
-
-msgid "Cu&t"
-msgstr "Выра&заць"
-
-msgid "Cut"
-msgstr "Выразаць"
-
-msgid "Copy"
-msgstr "Скапіяваць"
-
-msgid "&Paste"
-msgstr "&Уставіць"
-
-msgid "Paste"
-msgstr "Уставіць"
-
-msgid "&Delete"
-msgstr "&Выдаліць"
-
-msgid "Select &All"
-msgstr "Выбраць у&сё"
-
-msgid "Select All"
-msgstr "Выбраць усё"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Alt+"
-msgstr "Alt+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Shift+"
-msgstr "Shift+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Enter"
-msgstr "Enter"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Up"
-msgstr "Уверх"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Down"
-msgstr "Уніз"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-msgid "ctrl"
-msgstr "ctrl"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-msgid "alt"
-msgstr "alt"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-msgid "shift"
-msgstr "shift"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "У акно Poedit можна перацягнуць толькі адзін файл."
@@ -503,39 +402,13 @@ msgstr "&Файл"
 msgid "&Go"
 msgstr "&Перайсці"
 
-msgid "Source text:"
-msgstr "Зыходны тэкст:"
-
-msgid "Singular:"
-msgstr "Адзіночны:"
-
-msgid "Plural:"
-msgstr "Множны:"
-
-msgid "Translation:"
-msgstr "Пераклад:"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"Файлы з пашырэннем POT з'яўляюцца толькі шаблонамі і не змяшчаюць у сабе "
-"перакладаў.\n"
-"Каб зрабіць пераклад стварыце файл PO з шаблона."
-
-msgid "Create New Translation"
-msgstr "Стварыць новы пераклад"
-
-msgid "Create new translation"
-msgstr "Стварыць новы пераклад"
-
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
 #. to rephrase it, e.g. to an equivalent of "for language %s".
 #, c-format
 msgid ""
 "Spellchecking is disabled, because the dictionary for %s isn’t installed."
-msgstr "Праверка правапісу адключана, таму што слоўнік для %s не ўсталяваны."
+msgstr "Праверка правапісу адключана, таму што, слоўнік для %s не ўсталяваны."
 
 msgid "Install"
 msgstr "Усталяваць"
@@ -547,7 +420,7 @@ msgid "Save changes"
 msgstr "Захаваць змяненні"
 
 msgid "Your changes will be lost if you don't save them."
-msgstr "Вашы змяненні будуць страчаныя, калі не захаваць іх."
+msgstr "Вашы змены будуць страчаныя, калі не захаваць іх."
 
 msgid "Save"
 msgstr "Захаваць"
@@ -571,13 +444,10 @@ msgid "Export as..."
 msgstr "Экспартаваць як..."
 
 msgid "HTML Files"
-msgstr "HTML-файл"
+msgstr "Файл HTML"
 
 msgid "Open catalog template"
 msgstr "Адкрыць шаблон каталога"
-
-msgid "Updating catalog"
-msgstr "Абнаўленне каталога"
 
 msgid "Source code not available."
 msgstr "Зыходны код не даступны."
@@ -660,9 +530,6 @@ msgstr[2] ""
 msgid "The translation is ready for use."
 msgstr "Пераклад гатовы да выкарыстання."
 
-msgid "Context:"
-msgstr "Кантэкст:"
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit аўтаматычна выправіў памылковы змест у файле \"%s\"."
@@ -670,13 +537,13 @@ msgstr "Poedit аўтаматычна выправіў памылковы зме
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
-"Гэты файл змяшчаў у сабе элементы, якія паўтараюцца. Такія элементы "
-"забараняецца выкарыстоўваць у PO-файлах і робіць немагчымым выкарыстанне "
-"файла. Poedit выправіў гэту памылку, але вы павінны перагледзець усе "
-"элементы, якія пазначаны як недакладныя і выправіць іх, калі патрабуецца."
+"Гэты файл змяшчаў у сабе дубляваныя элементы, якія не дазваляюцца ў файлах "
+"PO і могуць ствараць перашкоды ў іх выкарыстанні. Poedit выправіў гэту "
+"праблему, але вы павінны перагледзець пераклады з пазнакамі \"патрабуюць "
+"дапрацоўкі\" і выправіць іх пры неабходнасці."
 
 msgid "Language of the translation isn't set."
 msgstr "Мова перакладу не азначана."
@@ -715,7 +582,7 @@ msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog's Plural-Forms header says"
 msgstr ""
-"Запісы ў гэтым каталога маюць колькасць формаў множнага ліку, якое "
+"Запісы ў гэтым каталозе маюць колькасць формаў множнага ліку, якое "
 "адрозніваецца ад азначанага ў загалоўку \"Plural-Forms\""
 
 msgid "Required header Plural-Forms is missing."
@@ -776,9 +643,6 @@ msgstr " (не захавана)"
 msgid " (modified)"
 msgstr "(зменены)"
 
-msgid "Go"
-msgstr "Перайсці"
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Не атрымалася абнавіць памяць перакладаў: %s"
@@ -804,76 +668,16 @@ msgstr "Пакінуць"
 msgid "Purge"
 msgstr "Знішчыць"
 
-msgid "Fill missing translations from TM"
-msgstr "Запоўніць прапушчаныя пераклады з памяці перакладаў"
-
-msgid "Only fill in exact matches"
-msgstr "Запаўняць толькі пры дакладным супадзенні"
-
-msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-msgstr ""
-"Па змаўчанні, тыя пераклады, якія супадаюць часткова таксама будуць "
-"запоўнены і пазначаны недакладнымі. Азначце гэты параметр, каб уключыць "
-"толькі дакладныя супадзенні."
-
-msgid "Don’t mark exact matches as fuzzy"
-msgstr "Не пазначаць дакладныя супадзенні недакладнымі"
-
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-msgstr ""
-"Уключыце гэта толькі ў тым выпадку, калі вы ўпэўнены ў якасці вашай памяці "
-"перакладаў. Па змаўчанні, усе супадзенні з памяці перакладаў пазначаюцца як "
-"недакладныя і іх патрабуецца перагледзець."
-
-msgid "Fill"
-msgstr "Запоўніць"
-
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "З памяці перакладаў быў узяты %d запіс."
-msgstr[1] "З памяці перакладаў былі ўзятыя %d запісы."
-msgstr[2] "З памяці перакладаў было ўзята %d запісаў."
-
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr "Пераклады былі адзначаныя як недакладныя. Праверце іх правільнасць."
-
-msgid "No entries could be filled from the translation memory."
-msgstr "Не атрымалася запоўніць радкі, выкарыстоўваючы памяць перакладаў."
-
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"Памяць перакладаў не змяшчае радкоў, падобных на змесціва гэтага файла. Яна "
-"падыходзіць толькі для паўаўтаматычнага перакладу пасля таго, як Poedit "
-"збярэ дастаткова дадзеных з файлаў, якія вы пераклалі ўручную."
-
-msgid "Translating"
-msgstr "Перакладаецца"
-
-msgid "Filling missing translations from TM..."
-msgstr "Запоўніце прапушчаныя пераклады з памяці перакладаў..."
-
-#, c-format
-msgid "Translated %u string"
-msgid_plural "Translated %u strings"
-msgstr[0] "Перакладзены %u радок"
-msgstr[1] "Перакладзена %u радкі"
-msgstr[2] "Перакладзена %u радкоў"
-
 msgid "Copy from source text"
 msgstr "Скапіяваць зыходны тэкст"
 
 msgid "Copy from Source Text"
 msgstr "Скапіяваць зыходны тэкст"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
 
 msgid "Clear translation"
 msgstr "Ачысціць пераклад"
@@ -890,33 +694,13 @@ msgstr "Рэдагаваць каментар"
 msgid "References:"
 msgstr "Спасылкі:"
 
-msgid "Everything"
-msgstr "Усё"
-
-#, c-format
-msgid "Form %i"
-msgstr "Форма %i"
-
-msgid "Singular"
-msgstr "Адзіночны"
-
-msgid "Zero"
-msgstr "Нуль"
-
-msgid "One"
-msgstr "Адзін"
-
-msgid "Two"
-msgstr "Два"
-
-msgid "Plural"
-msgstr "Множны"
-
-msgid "Other"
-msgstr "Iншае"
-
 msgid "&Bookmarks"
 msgstr "&Закладкі"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #, c-format
 msgid "Set bookmark %i"
@@ -946,18 +730,89 @@ msgstr "Схаваць радок стану"
 msgid "Show Status Bar"
 msgstr "Паказаць радок стану"
 
-msgid "Source text"
-msgstr "Зыходны тэкст"
+msgid "Source text:"
+msgstr "Зыходны тэкст:"
 
-msgid "Translation"
-msgstr "Пераклад"
+msgid "Singular:"
+msgstr "Адзіночны:"
 
-msgid "ID"
-msgstr "ID"
+msgid "Plural:"
+msgstr "Множны:"
+
+msgid "Translation:"
+msgstr "Пераклад:"
+
+msgid "Pre-translated"
+msgstr "Чарнавы варыянт"
+
+msgid "Needs Work"
+msgstr "Патрабуе праверкі"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "Патрабуе праверкі"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"Файлы з пашырэннем POT з'яўляюцца толькі шаблонамі і не змяшчаюць у сабе "
+"перакладаў.\n"
+"Каб зрабіць пераклад стварыце файл PO з шаблона."
+
+msgid "Create New Translation"
+msgstr "Стварыць новы пераклад"
+
+msgid "Create new translation"
+msgstr "Стварыць новы пераклад"
+
+msgid "Everything"
+msgstr "Усё"
+
+#, c-format
+msgid "Form %i"
+msgstr "Форма %i"
+
+msgid "Singular"
+msgstr "Адзіночны"
+
+msgid "Zero"
+msgstr "Нуль"
+
+msgid "One"
+msgstr "Адзін"
+
+msgid "Two"
+msgstr "Два"
+
+msgid "Plural"
+msgstr "Множны"
+
+msgid "Other"
+msgstr "Iншае"
+
+#, c-format
+msgid "%s Format"
+msgstr "Фармат %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "Фармат %s"
 
 #, c-format
 msgid "Source text — %s"
 msgstr "Зыходны тэкст — %s"
+
+msgid "Source text"
+msgstr "Зыходны тэкст"
 
 msgid "unknown language"
 msgstr "невядомая мова"
@@ -966,8 +821,15 @@ msgstr "невядомая мова"
 msgid "Translation — %s"
 msgstr "Пераклад — %s"
 
-msgid "Error:"
-msgstr "Памылка:"
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Памылка выканання каманды: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Не атрымалася аб'яднаць каталогі gettext."
 
 msgid "Source file"
 msgstr "Зыходны файл"
@@ -1019,11 +881,14 @@ msgstr "Шукаць у перакладах"
 msgid "Close"
 msgstr "Закрыць"
 
-msgid "Replace All"
-msgstr "Замяніць усё"
+msgid "Replace &All"
+msgstr "Замяніць &усе"
 
-msgid "Replace all"
-msgstr "Замяніць усё"
+msgid "Replace &all"
+msgstr "Замяніць &усе"
+
+msgid "&Replace"
+msgstr "&Замяніць"
 
 msgid "< &Previous"
 msgstr "< &Папярэдні"
@@ -1051,7 +916,7 @@ msgid "Language of the translation:"
 msgstr "Мова перакладу:"
 
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Кіраўнік каталогаў"
+msgstr "Poedit - кіраўнік каталогаў"
 
 msgid "Catalog"
 msgstr "Каталог"
@@ -1060,10 +925,7 @@ msgid "Total"
 msgstr "Усяго"
 
 msgid "Untrans"
-msgstr "Неперакладзеных"
-
-msgid "Fuzzy"
-msgstr "Недакладны"
+msgstr "Не перакладзеных"
 
 msgid "Bad Tokens"
 msgstr "Памылковыя лексемы"
@@ -1106,7 +968,7 @@ msgid "Email:"
 msgstr "Электронная пошта:"
 
 msgid "your_email@example.com"
-msgstr "vasha_elposhta@pryklad.com"
+msgstr "vasha_elposhta@uzor.com"
 
 msgid ""
 "Your name and email address are only used to set the Last-Translator header "
@@ -1119,7 +981,7 @@ msgid "Editing"
 msgstr "Рэдагаванне"
 
 msgid "Automatically compile MO file when saving"
-msgstr "Аўтаматычна кампіляваць MO файл пры захаванні"
+msgstr "Аўтаматычна кампіляваць файл MO пры захаванні"
 
 msgid "Show summary after catalog update"
 msgstr "Паказваць зводку пасля абнаўлення каталога"
@@ -1172,26 +1034,34 @@ msgstr "Вывучыць з файлаў..."
 msgid "Reset"
 msgstr "Скінуць"
 
-msgid "Consult TM when updating from sources"
-msgstr "Выкарыстоўваць памяць перакладаў пры абнаўленні з зыходнага кода"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr "Пры абнаўленні з крыніцы"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr "падбіраць падобны пераклад унутры файла"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr "чарнавы пераклад з памяці перакладаў"
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
-"Калі ўключана, Poedit паспрабуе аўтаматычна перакласці\n"
-"новыя радкі, выкарыстоўваючы раней назапашаную памяць перакладаў. Калі "
-"памяць перакладаў змяшчае\n"
-"мала дадзеных, сэнсу ад гэтай функцыі будзе мала. Чым больш перакладаў вы\n"
-"рэдагуеце, тым больш будзе памяць перакладаў і тым лепш яна будзе дапамагаць."
+"Poedit можа паспрабаваць запоўніць новыя радкі толькі папярэднімі "
+"перакладамі з гэтага файла ці з вашай памяці перакладаў. Выкарыстанне памяці "
+"перакладаў не будзе вельмі эфектыўным, калі яна амаль пустая, але яна будзе "
+"станавіцца лепш па меры таго, як вы будзеце дадаваць новыя пераклады."
 
 msgid "Stored translations:"
 msgstr "Захаваныя пераклады:"
 
 msgid "Database size on disk:"
-msgstr "Памер базы дадзеных на дыску:"
+msgstr "Памер базы даных на дыску:"
 
 msgid "Select translation files to import"
 msgstr "Выберыце файлы перакладу для імпартавання"
@@ -1209,7 +1079,7 @@ msgid "Reset translation memory"
 msgstr "Скінуць памяць перакладаў"
 
 msgid "Are you sure you want to reset the translation memory?"
-msgstr "Вы ўпэўненыя, што хочаце скінуць памяць перакладаў?"
+msgstr "Вы ўпэўненыя, што жадаеце скінуць памяць перакладаў?"
 
 msgid ""
 "Resetting the translation memory will irrevocably delete all stored "
@@ -1225,7 +1095,7 @@ msgstr "Скасаваць"
 #. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
 #. length there.
 msgid "TM"
-msgstr "Памяць перакладаў (TM)"
+msgstr "Памяць перакладаў (ПП)"
 
 msgid ""
 "Source code extractors are used to find translatable strings in the source "
@@ -1234,18 +1104,31 @@ msgstr ""
 "Экстрактары выкарыстоўвацца для пошуку радкоў, якія перакладаюцца ў файлах "
 "зыходнага кода і вымаюць іх так, каб іх можна было перакласці."
 
-msgid "New"
-msgstr "Новы"
+msgid "Custom Extractors:"
+msgstr "Карыстальніцкія экстрактары:"
 
-msgid "Edit"
-msgstr "Змяніць"
+msgid "Custom extractors:"
+msgstr "Карыстальніцкія экстрактары:"
+
+msgid "Edit..."
+msgstr "Змяніць..."
+
+msgid "GNU gettext"
+msgstr "GNU gettext"
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
+"Падтрымліваюцца ўсе праграмныя мовы, якія распазнаюцца сродкамі GNU gettext "
+"(PHP, C/C++, C#, Perl, Python, Java, JavaScript і іншыя)."
 
 msgid "Delete extractor"
 msgstr "Выдаліць экстрактар"
 
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
-msgstr "Вы ўпэўненыя, што хочаце выдаліць экстрактар \"%s\"?"
+msgstr "Вы ўпэўненыя, што жадаеце выдаліць экстрактар \"%s\"?"
 
 msgid "Extractors"
 msgstr "Экстрактары"
@@ -1296,10 +1179,83 @@ msgstr "Захоўваць фарматаванне існуючых файла�
 msgid "Advanced"
 msgstr "Пашыраныя налады"
 
-#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+msgid "Pre-translating…"
+msgstr "Выкананне чарнавога перакладу…"
+
 #, c-format
-msgid "%s Preferences"
-msgstr "Налады %s"
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] "Чарнавы пераклад %u радка"
+msgstr[1] "Чарнавы пераклад %u радкоў"
+msgstr[2] "Чарнавы пераклад %u радкоў"
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr "Чарнавы пераклад"
+
+msgid "Only fill in exact matches"
+msgstr "Запаўняць толькі пры дакладным супадзенні"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
+msgstr ""
+"Па змаўчанні вынікі, якія не цалкам супадаюць таксама будуць запоўненыя і "
+"пазначаныя як \"патрабуюць дапрацоўкі\". Пазначце гэту опцыю, каб запаўняць "
+"толькі поўныя супадзенні."
+
+msgid "Don’t mark exact matches as needing work"
+msgstr "Не пазначаць дакладныя супадзенні як \"патрабуюць дапрацоўкі\""
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+"Уключыце толькі ў тым выпадку, калі вы давяраеце якасці вашай памяці "
+"перакладаў. Па змаўчанні, усе супадзенні з памяці перакладаў пазначаюцца як "
+"\"патрабуюць дапрацоўкі\" і іх неабходна пераправяраць."
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+"Чарнавы пераклад аўтаматычна знаходзіць дакладныя ці недакладныя супадзенні "
+"для не перакладзеных радкоў у памяці перакладаў і запаўняе іх перакладамі."
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "%d радок быў запоўнены чарнавым перакладам."
+msgstr[1] "%d радкі былі запоўненыя чарнавым перакладам."
+msgstr[2] "%d радкоў было запоўнена чарнавым перакладам."
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+"Пераклады былі пазначаныя як \"патрабуюць дапрацоўкі\" з той прычыны, што "
+"могуць змяшчаць памылкі. Вы павінны праверыць ці слушныя яны."
+
+msgid "No entries could be pre-translated."
+msgstr "Няма запісаў для якіх можна зрабіць чарнавы пераклад."
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"Памяць перакладаў не змяшчае радкоў, падобных на змесціва гэтага файла. Яна "
+"падыходзіць толькі для паўаўтаматычнага перакладу пасля таго, як Poedit "
+"збярэ дастаткова даных з файлаў, якія вы пераклалі ўручную."
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1343,6 +1299,21 @@ msgstr "Шляхі"
 msgid "Excluded paths"
 msgstr "Выключаныя шляхі"
 
+msgid "Advanced extraction settings"
+msgstr "Дадатковыя налады вымання"
+
+msgid "Extract notes for translators from:"
+msgstr "Выняць нататкі для перакладчыкаў з:"
+
+msgid "Comments prefixed with:"
+msgstr "Каментарыі, якія пачынаюцца з:"
+
+msgid "All comments"
+msgstr "Усе каментарыі"
+
+msgid "Additional xgettext flags:"
+msgstr "Дадатковыя сцягі xgettext:"
+
 msgid "Additional keywords"
 msgstr "Дадатковыя ключавыя словы"
 
@@ -1357,7 +1328,7 @@ msgstr "UTF-8 (пажадана)"
 
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
-"Калі ласка, першапачаткова захавайце файл. Да гэтага гэты раздзел не можа "
+"Калі ласка, першапачаткова захавайце файл. Да гэтага дадзены раздзел не можа "
 "быць зменены."
 
 msgid "Comment:"
@@ -1372,8 +1343,14 @@ msgstr "А&чысціць"
 msgid "Clear the comment"
 msgstr "Ачысціць каментар"
 
+msgid "New"
+msgstr "Новы"
+
 msgid "Create new translations project"
 msgstr "Стварыць новы праект перакладу"
+
+msgid "Edit"
+msgstr "Змяніць"
 
 msgid "Edit the project"
 msgstr "Рэдагаваць праект"
@@ -1403,10 +1380,10 @@ msgid "&New..."
 msgstr "&Новы..."
 
 msgid "New from &POT/PO file..."
-msgstr "Новы каталог з &POT/PO файла..."
+msgstr "Новы каталог з файла &POT/PO..."
 
 msgid "New From &POT/PO File..."
-msgstr "Новы каталог з &POT/PO файла..."
+msgstr "Новы каталог з файла &POT/PO..."
 
 msgid "&Open..."
 msgstr "&Адкрыць..."
@@ -1421,7 +1398,7 @@ msgid "Open From Crowdin..."
 msgstr "Адкрыць з Crowdin..."
 
 msgid "&Close"
-msgstr "Закрыць"
+msgstr "&Закрыць"
 
 msgid "&Save"
 msgstr "&Захаваць"
@@ -1433,7 +1410,7 @@ msgid "Save &As..."
 msgstr "Захаваць &як..."
 
 msgid "Compile to MO..."
-msgstr "Кампіляваць у MO файл..."
+msgstr "Кампіляваць у файл MO..."
 
 msgid "E&xport as HTML..."
 msgstr "Эк&спартаваць як HTML..."
@@ -1457,31 +1434,25 @@ msgid "Quit"
 msgstr "Выйсці"
 
 msgid "Copy from singular"
-msgstr "Капіяваць форму адзінага ліку"
+msgstr "Капіяваць форму адзіночнага ліку"
 
 msgid "Copy From Singular"
-msgstr "Капіяваць форму адзінага ліку"
+msgstr "Капіяваць форму адзіночнага ліку"
 
-msgid "Translation is &fuzzy"
-msgstr "&Недакладны пераклад"
+msgid "Translation needs &work"
+msgstr "Пераклад, які патрабуе &дапрацоўкі"
 
-msgid "Translation Is &Fuzzy"
-msgstr "Недакладны &пераклад"
+msgid "Translation Needs &Work"
+msgstr "Пераклады, якія патрабуюць &дапрацоўкі"
 
 msgid "Edit &comment"
-msgstr "Рэдагаваць &каментар"
+msgstr "Змяніць &каментар"
 
 msgid "Edit &Comment"
 msgstr "Змяніць &каментар"
 
 msgid "Suggestions"
 msgstr "Прапановы"
-
-msgid "&Show references"
-msgstr "&Паказаць спасылкі"
-
-msgid "&Show References"
-msgstr "&Паказваць спасылкі"
 
 msgid "&Find..."
 msgstr "&Знайсці..."
@@ -1544,10 +1515,16 @@ msgid "Entries with Errors First"
 msgstr "Першымі адлюстроўваць запісы з памылкамі"
 
 msgid "&Untranslated entries first"
-msgstr "Спачатку &неперакладзеныя запісы"
+msgstr "Спачатку &не перакладзеныя запісы"
 
 msgid "&Untranslated Entries First"
-msgstr "Спачатку &неперакладзеныя запісы"
+msgstr "Спачатку &не перакладзеныя запісы"
+
+msgid "&Show references"
+msgstr "&Паказваць спасылкі"
+
+msgid "&Show References"
+msgstr "&Паказваць спасылкі"
 
 msgid "Show sidebar"
 msgstr "Паказаць бакавую панэль"
@@ -1573,11 +1550,8 @@ msgstr "Абнавіць з файла &POT..."
 msgid "Sync with Crowdin"
 msgstr "Сінхранізаваць з Crowdin"
 
-msgid "Fill missing translations from &TM..."
-msgstr "Запоўніць прапушчаныя пераклады з &памяці перакладаў..."
-
-msgid "Fill Missing Translations from &TM..."
-msgstr "Запоўніць прапушчаныя пераклады з &памяці перакладаў..."
+msgid "Pre-&translate..."
+msgstr "Чарнавы &пераклад..."
 
 msgid "&Purge deleted translations"
 msgstr "&Знішчыць вылучаныя пераклады"
@@ -1715,8 +1689,11 @@ msgstr "Уласцівасці каталога"
 msgid "Project name and version:"
 msgstr "Назва і версія праекта:"
 
-msgid "Plural Forms:"
-msgstr "Множныя Формы:"
+msgid "Language team:"
+msgstr "Каманда перакладчыкаў:"
+
+msgid "Plural forms:"
+msgstr "Формы множнага ліку:"
 
 msgid "Use default rules for this language"
 msgstr "Выкарыстоўваць правілы па змаўчанні для гэтай мовы"
@@ -1730,14 +1707,20 @@ msgstr "Даведацца больш пра формы множнага лік�
 msgid "Charset:"
 msgstr "Кадаванне:"
 
-msgid "Team:"
-msgstr "Каманда:"
+msgid "Advanced Extraction Settings..."
+msgstr "Дадатковыя налады вымання..."
 
-msgid "Team's email address:"
-msgstr "Адрас электроннай пошты каманды:"
+msgid "Advanced extraction settings..."
+msgstr "Дадатковыя налады вымання..."
+
+msgid "Translation Properties"
+msgstr "Уласцівасці перакладу"
 
 msgid "Translation properties"
 msgstr "Уласцівасці перакладу"
+
+msgid "Sources Paths"
+msgstr "Шлях да зыходнага файла"
 
 msgid "Sources paths"
 msgstr "Шлях да зыходнага файла"
@@ -1748,6 +1731,9 @@ msgstr "Вымаць тэкст з зыходных файлаў у наступ
 msgid "Base path:"
 msgstr "Базавы шлях:"
 
+msgid "Sources Keywords"
+msgstr "Ключавыя словы зыходных файлаў"
+
 msgid "Sources keywords"
 msgstr "Ключавыя словы зыходных файлаў"
 
@@ -1757,6 +1743,14 @@ msgid ""
 msgstr ""
 "Выкарыстоўвайце гэтыя ключавыя словы (імёны функцый) для распазнання\n"
 "радкоў, якія перакладаюцца ў зыходных файлах:"
+
+msgid "Also use default keywords for supported languages"
+msgstr ""
+"Таксама выкарыстоўваць ключавыя словы па змаўчанні для моў, якія "
+"падтрымліваюцца"
+
+msgid "Learn About Gettext Keywords"
+msgstr "Даведацца больш пра ключавыя словы Gettext"
 
 msgid "Learn about gettext keywords"
 msgstr "Даведацца больш пра ключавыя словы gettext"
@@ -1788,7 +1782,7 @@ msgid "(0 new, 0 obsolete)"
 msgstr "(0 новых, 0 састарэлых)"
 
 msgid "Open"
-msgstr "Адчыніць"
+msgstr "Адкрыць"
 
 msgid "Save catalog"
 msgstr "Захаваць каталог"
@@ -1805,8 +1799,8 @@ msgstr "Абнавіць"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Абнавіць каталог - сінхранізаваць яго з зыходнымі файламі"
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "Уключана, калі выбраны радок змяшчае недакладны пераклад"
+msgid "Sidebar"
+msgstr "Бакавая панэль"
 
 msgid "Show or hide the sidebar"
 msgstr "Паказаць ці схаваць бакавую панэль"
@@ -1816,10 +1810,11 @@ msgid "Previous source text:"
 msgstr "Папярэдні зыходны тэкст:"
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
 msgstr ""
-"Стары зыходны тэкст (да абнаўлення), якому адпавядае недакладны пераклад."
+"Стары зыходны тэкст (да таго, як быў адноўлены), якому адпавядае недакладны "
+"пераклад."
 
 msgid "Notes for translators:"
 msgstr "Заўвагі для перакладчыка:"
@@ -1844,72 +1839,37 @@ msgstr "Супадзенняў не знойдзена"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Гэты радок быў знойдзены ў памяці перакладаў Poedit."
 
-#, c-format
-msgid "(New: %i, obsolete: %i)"
-msgstr "(Новыя: %i, састарэлыя: %i)"
-
-#, c-format
-msgid "Importing translations: %d"
-msgstr "Імпартаванне перакладаў: %d"
-
-msgid "Poedit Update"
-msgstr "Абнаўленне Poedit"
-
-msgid "Preparing migration..."
-msgstr "Падрыхтоўка да міграцыі..."
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr "Стан завяршэння міграцыі: %d"
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poedit патрабуецца канвертаваць вашу памяць перакладаў у новы фармат."
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"Гэта неабходна зрабіць перад запускам Poedit. Калі ў вас захавана шмат "
-"перакладаў, то на гэта можа спатрэбіцца некалькі хвілін, але звычайна гэта "
-"выконваецца хутчэй."
-
-msgid "Proceed"
-msgstr "Працягнуць"
-
-msgid "Translation memory migration failed."
-msgstr "Не атрымалася выканаць міграцыю памяці перакладаў."
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"Дадзеныя памяці перакладаў не атрымалася мігрыраваць. Адбылася памылка:\n"
-"\n"
-"%s\n"
-"Дашліце гэту памылку на адрас help@poedit.net, і мы паспрабуем выправіць яе."
-
 msgid "Cannot create temporary directory."
 msgstr "Не атрымалася стварыць часовы каталог."
 
 msgid "Welcome to Poedit"
 msgstr "Сардэчна запрашаем у Poedit"
 
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "Версія %s"
+
+msgid "Edit a Translation"
+msgstr "Змяніць пераклад"
+
 msgid "Edit a translation"
 msgstr "Змяніць пераклад"
 
 msgid "Open an existing PO file and edit the translation."
-msgstr "Адкрыць існуючы PO-файл і змяніць пераклад."
+msgstr "Адкрыць існуючы файл PO і змяніць пераклад."
 
 msgid ""
 "Take an existing PO file or POT template and create a new translation from "
 "it."
-msgstr "Стварэнне перакладу на падставе існуючага PO-файла ці POT-шаблона."
+msgstr "Стварэнне перакладу на падставе існуючага файла PO ці шаблона POT."
 
-msgid "Collaborate on a translation with Crowdin"
-msgstr "Супольная праца над перакладам з Crowdin"
+msgid "Collaborate on a Translation with Others"
+msgstr "Сумесны пераклад з іншымі людзьмі"
+
+msgid "Collaborate on a translation with others"
+msgstr "Сумесны пераклад з іншымі"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
@@ -1934,7 +1894,7 @@ msgstr ""
 "аўтаматычна вымаюцца\n"
 "з зыходнага кода. Такім чынам, забяспечваецца іх актуальнасць і "
 "дакладнасць.\n"
-"Перакладчыкі звычайна працуюць з PO-файламі (POT-шаблоны), якія падрыхтаваў "
+"Перакладчыкі звычайна працуюць з файламі PO (шаблоны POT), якія падрыхтаваў "
 "для іх распрацоўшчык."
 
 msgid "(Learn more about GNU gettext)"
@@ -1947,7 +1907,7 @@ msgid "Update from POT"
 msgstr "Абнавіць з POT"
 
 msgid "Take translatable strings from an existing POT template."
-msgstr "Выманне радкоў для перакладу з існуючага POT-шаблона."
+msgstr "Выманне радкоў для перакладу з існуючага шаблона POT."
 
 msgid ""
 "You can also extract translatable strings directly from the source code:"
@@ -1965,3 +1925,169 @@ msgstr "Сінхранізацыя"
 
 msgid "Synchronize the translation with Crowdin"
 msgstr "Сінхранізаваць пераклад з Crowdin"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "Пра %s"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "Налады %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "Сэрвісы"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "Схаваць %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "Схаваць іншыя"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "Паказаць усе"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "Выйсці з %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences..."
+msgstr "Налады..."
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr "Нядаўнія"
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr "Частыя"
+
+msgid "&Apply"
+msgstr "&Ужыць"
+
+msgid "Apply"
+msgstr "Ужыць"
+
+msgid "&Back"
+msgstr "&Назад"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "&Cancel"
+msgstr "&Адмена"
+
+msgid "&Clear"
+msgstr "&Ачысціць"
+
+msgid "Clear"
+msgstr "Ачысціць"
+
+msgid "Copy"
+msgstr "Капіяваць"
+
+msgid "Cu&t"
+msgstr "Выра&заць"
+
+msgid "Cut"
+msgstr "Выразаць"
+
+msgid "&Delete"
+msgstr "&Выдаліць"
+
+msgid "&Quit"
+msgstr "&Выйсці"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Help"
+msgstr "Даведка"
+
+msgid "&New"
+msgstr "&Стварыць"
+
+msgid "&No"
+msgstr "&Не"
+
+msgid "No"
+msgstr "Не"
+
+msgid "&OK"
+msgstr "&Ok"
+
+msgid "Open..."
+msgstr "Адкрыць..."
+
+msgid "&Paste"
+msgstr "&Уставіць"
+
+msgid "Paste"
+msgstr "Уставіць"
+
+msgid "Preferences"
+msgstr "Налады"
+
+msgid "&Redo"
+msgstr "&Аднавіць"
+
+msgid "Refresh"
+msgstr "Абнавіць"
+
+msgid "&Save as"
+msgstr "&Захаваць як"
+
+msgid "Save as"
+msgstr "Захаваць як"
+
+msgid "Select &All"
+msgstr "Выбраць у&сё"
+
+msgid "Select All"
+msgstr "Выбраць усё"
+
+msgid "&Undo"
+msgstr "&Вярнуць"
+
+msgid "&Yes"
+msgstr "&Так"
+
+msgid "Yes"
+msgstr "Так"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "Уверх"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "Уніз"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"

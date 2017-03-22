@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2016-08-01 19:26+0200\n"
-"PO-Revision-Date: 2016-08-01 13:25-0400\n"
+"POT-Creation-Date: 2017-03-22 19:03+0100\n"
+"PO-Revision-Date: 2017-03-22 13:57-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
@@ -24,6 +24,29 @@ msgstr "Boshqa ko‘rsatilmasin"
 
 msgid "Don't show again"
 msgstr "Boshqa ko‘rsatilmasin"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(Yangi: %i, eskirgan: %i)"
+
+msgid "Updating catalog"
+msgstr "Katalogni yangilash"
+
+msgid "Collecting source files..."
+msgstr "Manba fayllari yig‘ilmoqda…"
+
+msgid "Extracting translatable strings..."
+msgstr "Tarjima qilinadigan qatorlar ajratilmoqda"
+
+msgid "Failed to load extracted catalog."
+msgstr "Ajratilgan katalog yuklanmadi."
+
+msgid "Merging differences..."
+msgstr "Farqlar birlashtirilmoqda..."
+
+#, c-format
+msgid "'%s' is not a valid POT file."
+msgstr "'%s' noto‘g‘ri POT fayli."
 
 #, c-format
 msgid "%i line of file '%s' was not loaded correctly."
@@ -96,17 +119,10 @@ msgid "PO Translation Files"
 msgstr "PO tarjima fayllari"
 
 msgid "POT Translation Templates"
-msgstr "POT tarjima shablonlari"
+msgstr "POT tarjima namunalari"
 
 msgid "All Translation Files"
 msgstr "Barcha tarjima fayllari"
-
-msgid "Merging differences..."
-msgstr "Farqlar birlashtirilmoqda..."
-
-#, c-format
-msgid "'%s' is not a valid POT file."
-msgstr "'%s' noto‘g‘ri POT fayli."
 
 msgid "(Use default language)"
 msgstr "(Standart tildan foydalanish)"
@@ -120,6 +136,17 @@ msgstr "Tilni tanlash"
 msgid "You must restart Poedit for this change to take effect."
 msgstr ""
 "O‘zgartirish amalga oshishi uchun Poedit’ni qayta ishga tushirishingiz kerak."
+
+msgid "Syncing"
+msgstr ""
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr ""
+
+msgid "Syncing error"
+msgstr ""
 
 msgid "Downloading translations is disabled in this project."
 msgstr "Tarjimalarni yuklab olish ushbu loyihada o‘chirib qo‘yilgan."
@@ -189,9 +216,6 @@ msgstr "Ushbu faylni faqat Crowdin veb interfeysida tahrirlash mumkin."
 msgid "Downloading latest translations…"
 msgstr "So‘nggi tarjimalar yuklab olinmoqda…"
 
-msgid "Syncing with Crowdin"
-msgstr "Crowdin bilan sinxronlanmoqda"
-
 msgid "Syncing with Crowdin failed."
 msgstr "Crowdin bilan sinxronlash amalga oshmadi."
 
@@ -209,24 +233,6 @@ msgstr "Batafsil ma’lumot"
 
 msgid "Learn More"
 msgstr "Batafsil ma’lumot"
-
-#, c-format
-msgid "Failed command: %s"
-msgstr "Xato buyruq: %s"
-
-msgid "Failed to merge gettext catalogs."
-msgstr "Gettext kataloglarini birlashtirishda xatolik."
-
-msgid "Scanning files..."
-msgstr "Fayllar tekshirilmoqda..."
-
-#. TRANSLATORS: '%s' is replaced with the kind of the files (e.g. C++, PHP, ...)
-#, c-format
-msgid "Parsing %s files..."
-msgstr "%s ta fayl ajratilmoqda..."
-
-msgid "Failed to load extracted catalog."
-msgstr "Ajratilgan katalog yuklanmadi."
 
 msgid "&Help"
 msgstr "&Yordam"
@@ -257,52 +263,12 @@ msgstr "Poedit jarayoni bilan bog‘lab bo‘lmadi."
 msgid "Unhandled exception occurred: %s"
 msgstr "Qayta ishlab bo‘lmaydigan istisno yuz berdi: %s"
 
-msgid "Unhandled exception occurred."
-msgstr "Qayta ishlab bo‘lmaydigan istisno ro‘y berdi."
-
 msgid "Open catalog"
 msgstr "Katalogni ochish"
 
 #, c-format
 msgid "File '%s' doesn't exist."
 msgstr "'%s' fayli mavjud emas."
-
-#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
-#. ("Poedit" here, but please use "%s")
-#, c-format
-msgid "About %s"
-msgstr "%s haqida"
-
-#. TRANSLATORS: This is version information in about dialog, "%s" will be
-#. version number when used
-#, c-format
-msgid "Version %s"
-msgstr "%s versiya"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Services"
-msgstr "Xizmatlar"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Hide %s"
-msgstr "%sni yashirish"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Hide Others"
-msgstr "Boshqalarini yashirish"
-
-#. TRANSLATORS: macOS item in app menu
-msgid "Show All"
-msgstr "Barchasini ko‘rsatish"
-
-#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
-#, c-format
-msgid "Quit %s"
-msgstr "%sdan chiqish"
-
-msgid "Preferences..."
-msgstr ""
 
 msgid "Poedit is an easy to use translations editor."
 msgstr "Poedit qulay va oson tarjimalar tahrirlagichidir."
@@ -406,6 +372,7 @@ msgstr "Kattalashtirish/Kichiklashtirish"
 msgid "Bring All to Front"
 msgstr "Hammasini oldga o‘tkazish"
 
+#. TRANSLATORS:File kind displayed in Finder/Explorer
 msgid "PO Translation"
 msgstr "PO tarjima"
 
@@ -419,74 +386,6 @@ msgid ""
 "The file may be either corrupted or in a format not recognized by Poedit."
 msgstr ""
 "Fayl buzilgan bo‘lishi mumkin yoki ushbu formatni Poedit aniqlay olmadi."
-
-msgid "&Undo"
-msgstr "&Qaytarish"
-
-msgid "&Redo"
-msgstr "&Qayta bajarish"
-
-msgid "Cu&t"
-msgstr "Kes&ish"
-
-msgid "Cut"
-msgstr "Kesib olish"
-
-msgid "Copy"
-msgstr "Nusxa olish"
-
-msgid "&Paste"
-msgstr "&Qo‘yish"
-
-msgid "Paste"
-msgstr "Qo‘yish"
-
-msgid "&Delete"
-msgstr "&O‘chirish"
-
-msgid "Select &All"
-msgstr "B&archasini belgilash"
-
-msgid "Select All"
-msgstr "Barchasini belgilash"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Ctrl+"
-msgstr "Ctrl+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
-msgid "Alt+"
-msgstr "Alt+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Shift+"
-msgstr "Shift+"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Enter"
-msgstr "Enter"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Up"
-msgstr "Tepaga"
-
-#. TRANSLATORS: Keyboard shortcut for display in Windows menus
-msgid "Down"
-msgstr "Pastga"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
-msgid "ctrl"
-msgstr "ctrl"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
-msgid "alt"
-msgstr "alt"
-
-#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
-msgid "shift"
-msgstr "shift"
 
 msgid "You can't drop more than one file on Poedit window."
 msgstr "Poedit oynasiga bittadan ortiq faylni tashlab bo‘lmaydi."
@@ -503,32 +402,6 @@ msgstr "&Fayl"
 
 msgid "&Go"
 msgstr "&O‘tish"
-
-msgid "Source text:"
-msgstr "Manba matn:"
-
-msgid "Singular:"
-msgstr "Birlik:"
-
-msgid "Plural:"
-msgstr "Ko‘plik:"
-
-msgid "Translation:"
-msgstr "Tarjima:"
-
-msgid ""
-"POT files are only templates and don’t contain any translations themselves.\n"
-"To make a translation, create a new PO file based on the template."
-msgstr ""
-"POT fayllar aslida faqat shablonlar hisoblanadi va ularning tarkibida hech "
-"qanday tarjima bo‘lmaydi.\n"
-"Tarjima qilish uchun shablonga asoslangan yangi PO fayl yarating."
-
-msgid "Create New Translation"
-msgstr "Yangi tarjima yaratish"
-
-msgid "Create new translation"
-msgstr "Yangi tarjima yaratish"
 
 #. TRANSLATORS: %s is language name in its basic form (as you
 #. would see e.g. in a list of supported languages). You may need
@@ -577,9 +450,6 @@ msgstr "HTML fayllar"
 
 msgid "Open catalog template"
 msgstr "Andoza namunasini ochish"
-
-msgid "Updating catalog"
-msgstr "Katalogni yangilash"
 
 msgid "Source code not available."
 msgstr "Manba kodi mavjud emas."
@@ -661,9 +531,6 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "Tarjima foydalanish uchun tayyor."
 
-msgid "Context:"
-msgstr "Matn:"
-
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -672,13 +539,9 @@ msgstr ""
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
 "would prevent the file from being used. Poedit fixed the issue, but you "
-"should review translations of any items marked as fuzzy and correct them if "
-"necessary."
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
 msgstr ""
-"Bu faylda foydalanishga xalaqit qiladigan takroriy elementlar bor edi (PO "
-"fayllarda bunga ruxsat berilmaydi). Poedit muammoni bartaraf qildi, biroq "
-"barcha tarjimalarni qayta ko‘rib chiqib, noaniq tarjimalarni tuzatish "
-"tavsiya etiladi."
 
 msgid "Language of the translation isn't set."
 msgstr "Tarjima nomi kiritilmagan."
@@ -774,9 +637,6 @@ msgstr " (saqlanmagan)"
 msgid " (modified)"
 msgstr " (o‘zgartirilgan)"
 
-msgid "Go"
-msgstr "O‘tish"
-
 #, c-format
 msgid "Failed to update translation memory: %s"
 msgstr "Tarjima xotirasi yangilanmadi: %s"
@@ -802,76 +662,16 @@ msgstr "Saqlab qo‘yish"
 msgid "Purge"
 msgstr "Tozalash"
 
-msgid "Fill missing translations from TM"
-msgstr "TX orqali tarjima qilish"
-
-msgid "Only fill in exact matches"
-msgstr "Faqat to‘liq mos kelganlar bilan to‘ldirilsin"
-
-msgid ""
-"By default, inaccurate results are filled in as well and marked as fuzzy. "
-"Check this option to only include accurate matches."
-msgstr ""
-"Standart holat bo‘yicha, aniq bo‘lmagan natijalar odatda \"noaniq\" sifatida "
-"belgilanadi. Ushbu tanlovni faqat to‘liq mos tushganlarni qo‘shish uchun "
-"tanlang."
-
-msgid "Don’t mark exact matches as fuzzy"
-msgstr "To‘liq mos tushganlar \"noaniq\" sifatida belgilanmasin"
-
-msgid ""
-"Only enable if you trust the quality of your TM. By default, all matches "
-"from the TM are marked as fuzzy and should be reviewed."
-msgstr ""
-"Agar TX sifatiga to‘liq ishonsangiz, uni yoqib qo‘ying. Standart holat "
-"bo‘yicha, barcha TX’dan topilgan tarjimalar \"noaniq\" sifatida belgilanadi "
-"va qaytadan ko‘rib chiqish kerak bo‘ladi."
-
-msgid "Fill"
-msgstr "To‘ldirish"
-
-#, c-format
-msgid "%d entry was filled from the translation memory."
-msgid_plural "%d entries were filled from the translation memory."
-msgstr[0] "%d ta tarjima xotirasidan kiritildi."
-msgstr[1] "%d ta tarjima xotirasidan kiritildi."
-
-msgid ""
-"The translations were marked as fuzzy, because they may be inaccurate. You "
-"should review them for correctness."
-msgstr ""
-"Tarjimalar noaniq sifatida belgilangan, chunki ularda kamchiliklar bo‘lishi "
-"mumkin. Ularni bexato bo‘lishini ta’minlash uchun ko‘rib chiqishingiz kerak."
-
-msgid "No entries could be filled from the translation memory."
-msgstr "Tarjima xotirasidan birorta ham tarjima kiritilmagan."
-
-msgid ""
-"The TM doesn’t contain any strings similar to the content of this file. It "
-"is only effective for semi-automatic translations after Poedit learns enough "
-"from files that you translated manually."
-msgstr ""
-"TXda ushbu fayl tarkibi bilan bir xil qatorlar mavjud emas. U  faqat Poedit "
-"siz tarjima qilgan fayllardan yetarlicha o‘rgangandan so‘ng avtomatik "
-"tarjima qilishida samaralidir."
-
-msgid "Translating"
-msgstr "Tarjima qilinmoqda"
-
-msgid "Filling missing translations from TM..."
-msgstr "TXdan kerakli tarjimalar qo‘yilmoqda..."
-
-#, c-format
-msgid "Translated %u string"
-msgid_plural "Translated %u strings"
-msgstr[0] "%u ta qator tarjima qilindi"
-msgstr[1] "%u ta qator tarjima qilindi"
-
 msgid "Copy from source text"
 msgstr "Manba matnidan nusxa ko‘chirish"
 
 msgid "Copy from Source Text"
 msgstr "Manba matnidan nusxa ko‘chirish"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
 
 msgid "Clear translation"
 msgstr "Tarjimani tozalash"
@@ -888,33 +688,13 @@ msgstr "Sharhni tahrirlash"
 msgid "References:"
 msgstr "Bog‘lanishlar:"
 
-msgid "Everything"
-msgstr "Hammasi"
-
-#, c-format
-msgid "Form %i"
-msgstr "%i shakli "
-
-msgid "Singular"
-msgstr "Birlik"
-
-msgid "Zero"
-msgstr "Nol"
-
-msgid "One"
-msgstr "Bir"
-
-msgid "Two"
-msgstr "Ikki"
-
-msgid "Plural"
-msgstr "Ko‘plik"
-
-msgid "Other"
-msgstr "Boshqa"
-
 msgid "&Bookmarks"
 msgstr "&Xatcho‘plar"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
 
 #, c-format
 msgid "Set bookmark %i"
@@ -944,18 +724,89 @@ msgstr "Holat qatorini yashirish"
 msgid "Show Status Bar"
 msgstr "Holat qatorini ko‘rsatish"
 
-msgid "Source text"
-msgstr "Manba matni"
+msgid "Source text:"
+msgstr "Manba matn:"
 
-msgid "Translation"
-msgstr "Tarjima"
+msgid "Singular:"
+msgstr "Birlik:"
 
-msgid "ID"
-msgstr "ID"
+msgid "Plural:"
+msgstr "Ko‘plik:"
+
+msgid "Translation:"
+msgstr "Tarjima:"
+
+msgid "Pre-translated"
+msgstr ""
+
+msgid "Needs Work"
+msgstr ""
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr ""
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"POT fayllar aslida faqat shablonlar hisoblanadi va ularning tarkibida hech "
+"qanday tarjima bo‘lmaydi.\n"
+"Tarjima qilish uchun shablonga asoslangan yangi PO fayl yarating."
+
+msgid "Create New Translation"
+msgstr "Yangi tarjima yaratish"
+
+msgid "Create new translation"
+msgstr "Yangi tarjima yaratish"
+
+msgid "Everything"
+msgstr "Hammasi"
+
+#, c-format
+msgid "Form %i"
+msgstr "%i shakli "
+
+msgid "Singular"
+msgstr "Birlik"
+
+msgid "Zero"
+msgstr "Nol"
+
+msgid "One"
+msgstr "Bir"
+
+msgid "Two"
+msgstr "Ikki"
+
+msgid "Plural"
+msgstr "Ko‘plik"
+
+msgid "Other"
+msgstr "Boshqa"
+
+#, c-format
+msgid "%s Format"
+msgstr "%s format"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr ""
 
 #, c-format
 msgid "Source text — %s"
 msgstr "Manba matn — %s"
+
+msgid "Source text"
+msgstr "Manba matni"
 
 msgid "unknown language"
 msgstr "noma’lum til"
@@ -964,8 +815,15 @@ msgstr "noma’lum til"
 msgid "Translation — %s"
 msgstr "Tarjima — %s"
 
-msgid "Error:"
-msgstr "Xato:"
+msgid "ID"
+msgstr "ID"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "Xato buyruq: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "Gettext kataloglarini birlashtirishda xatolik."
 
 msgid "Source file"
 msgstr "Manba fayl"
@@ -1017,11 +875,14 @@ msgstr "Sharhlardan qidirish"
 msgid "Close"
 msgstr "Yopish"
 
-msgid "Replace All"
-msgstr "Barchasini almashtirish"
+msgid "Replace &All"
+msgstr ""
 
-msgid "Replace all"
-msgstr "Barchasini almashtirish"
+msgid "Replace &all"
+msgstr ""
+
+msgid "&Replace"
+msgstr ""
 
 msgid "< &Previous"
 msgstr "< &Oldingi"
@@ -1059,9 +920,6 @@ msgstr "Jami"
 
 msgid "Untrans"
 msgstr "Tarjima qilinmagan"
-
-msgid "Fuzzy"
-msgstr "Noaniq"
 
 msgid "Bad Tokens"
 msgstr "Noto‘g‘ri belgilar"
@@ -1170,20 +1028,24 @@ msgstr "...fayllardan o‘rganish"
 msgid "Reset"
 msgstr "Tiklash"
 
-msgid "Consult TM when updating from sources"
-msgstr "Manbalardan yangilanganda TX tavsiya qilsin"
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr ""
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr ""
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr ""
 
 msgid ""
-"If enabled, Poedit will try to fill in new entries using your previous\n"
-"translations stored in the translation memory. If the TM is\n"
-"near-empty, it will not be very effective. The more translations\n"
-"you edit and the larger the TM grows, the better it gets."
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
 msgstr ""
-"Agar yoqib qo‘yilsa, Poedit tarjima xotirasida joylashgan oldingi\n"
-"tarjimalaringizdan foydalanib tarjima qilishga urinadi. Agar tarjima "
-"xotirasi endi tuzilgan bo‘lsa samarasi kam bo‘ladi. Siz \n"
-"ko‘plab tarjimalarni tahrirlasangiz va TX kattalashib borsa,\n"
-" shuncha tarjima sifatli bo‘lib boradi."
 
 msgid "Stored translations:"
 msgstr "Saqlangan tarjimalar:"
@@ -1232,11 +1094,22 @@ msgstr ""
 "Manba kodi ajratgichlari manba kodi fayllaridagi tarjima qilinadigan "
 "qatorlarni topishda foydalaniladi va ularni tarjima qilish uchun ajratadi."
 
-msgid "New"
-msgstr "Yangi"
+msgid "Custom Extractors:"
+msgstr ""
 
-msgid "Edit"
-msgstr "Tahrirlash"
+msgid "Custom extractors:"
+msgstr ""
+
+msgid "Edit..."
+msgstr "Tahrirlash..."
+
+msgid "GNU gettext"
+msgstr ""
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
 
 msgid "Delete extractor"
 msgstr "Ajratkichni o‘chirish"
@@ -1294,10 +1167,71 @@ msgstr "Mavjud fayllarni formatlashni saqlash"
 msgid "Advanced"
 msgstr "Qo‘shimcha"
 
-#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+msgid "Pre-translating…"
+msgstr ""
+
 #, c-format
-msgid "%s Preferences"
-msgstr "%s sozlamalar"
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr "Avtomatik tarjima"
+
+msgid "Only fill in exact matches"
+msgstr "Faqat to‘liq mos kelganlar bilan to‘ldirilsin"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
+msgstr ""
+
+msgid "Don’t mark exact matches as needing work"
+msgstr ""
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+
+msgid "No entries could be pre-translated."
+msgstr ""
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"TXda ushbu fayl tarkibi bilan bir xil qatorlar mavjud emas. U  faqat Poedit "
+"siz tarjima qilgan fayllardan yetarlicha o‘rgangandan so‘ng avtomatik "
+"tarjima qilishida samaralidir."
 
 msgid ""
 "<big>Drag and Drop Folders Here</big>\n"
@@ -1341,6 +1275,21 @@ msgstr "Yo‘llar"
 msgid "Excluded paths"
 msgstr "Qo‘shilmagan yo‘llar"
 
+msgid "Advanced extraction settings"
+msgstr ""
+
+msgid "Extract notes for translators from:"
+msgstr ""
+
+msgid "Comments prefixed with:"
+msgstr ""
+
+msgid "All comments"
+msgstr ""
+
+msgid "Additional xgettext flags:"
+msgstr ""
+
 msgid "Additional keywords"
 msgstr "Qo‘shimcha kalit so‘zlar"
 
@@ -1368,8 +1317,14 @@ msgstr "Toza&lash"
 msgid "Clear the comment"
 msgstr "Sharhni tozalash"
 
+msgid "New"
+msgstr "Yangi"
+
 msgid "Create new translations project"
 msgstr "Yangi tarjimalar loyihasini yaratish"
+
+msgid "Edit"
+msgstr "Tahrirlash"
 
 msgid "Edit the project"
 msgstr "Loyihani tahrirlash"
@@ -1458,11 +1413,11 @@ msgstr "Birlik shaklidan nusxa ko‘chirish"
 msgid "Copy From Singular"
 msgstr "Birlik shaklidan nusxa ko‘chirish"
 
-msgid "Translation is &fuzzy"
-msgstr "Tarjima &noaniq"
+msgid "Translation needs &work"
+msgstr ""
 
-msgid "Translation Is &Fuzzy"
-msgstr "Tarjima &noaniq"
+msgid "Translation Needs &Work"
+msgstr ""
 
 msgid "Edit &comment"
 msgstr "&Sharhni tahrirlash"
@@ -1472,12 +1427,6 @@ msgstr "&Sharhni tahrirlash"
 
 msgid "Suggestions"
 msgstr "Tavsiyalar"
-
-msgid "&Show references"
-msgstr "&Bog‘lanishlarni ko‘rsatish"
-
-msgid "&Show References"
-msgstr "Linklarni ko‘rsati&sh"
 
 msgid "&Find..."
 msgstr "&Topish..."
@@ -1545,6 +1494,12 @@ msgstr "Avval &tarjima qilinmaganlar"
 msgid "&Untranslated Entries First"
 msgstr "Avval &tarjima qilinmaganlar"
 
+msgid "&Show references"
+msgstr "&Bog‘lanishlarni ko‘rsatish"
+
+msgid "&Show References"
+msgstr "Linklarni ko‘rsati&sh"
+
 msgid "Show sidebar"
 msgstr "Yon panelni ko‘rsatish"
 
@@ -1569,11 +1524,8 @@ msgstr "&POT faylidan yangilash..."
 msgid "Sync with Crowdin"
 msgstr "Crowdin bilan sinxronlash"
 
-msgid "Fill missing translations from &TM..."
-msgstr "Kerakli tarjimalarni &TX’dan to‘ldirish"
-
-msgid "Fill Missing Translations from &TM..."
-msgstr "Kerakli tarjimalarni &TX’dan to‘ldirish"
+msgid "Pre-&translate..."
+msgstr ""
 
 msgid "&Purge deleted translations"
 msgstr "&O‘chirilgan tarjimalarni tozalash"
@@ -1712,8 +1664,11 @@ msgstr "Katalog xossalari"
 msgid "Project name and version:"
 msgstr "Loyiha nomi va versiyasi:"
 
-msgid "Plural Forms:"
-msgstr "Ko‘plik shakllari:"
+msgid "Language team:"
+msgstr ""
+
+msgid "Plural forms:"
+msgstr ""
 
 msgid "Use default rules for this language"
 msgstr "Ushbu til uchun standart qoidalardan foydalanish"
@@ -1727,14 +1682,20 @@ msgstr "Ko‘plik shakllari haqida o‘rganish"
 msgid "Charset:"
 msgstr "Kodlash usuli:"
 
-msgid "Team:"
-msgstr "Guruh:"
+msgid "Advanced Extraction Settings..."
+msgstr ""
 
-msgid "Team's email address:"
-msgstr "Guruhning e-pochta manzili:"
+msgid "Advanced extraction settings..."
+msgstr ""
+
+msgid "Translation Properties"
+msgstr ""
 
 msgid "Translation properties"
 msgstr "Tarjima xossalari"
+
+msgid "Sources Paths"
+msgstr ""
 
 msgid "Sources paths"
 msgstr "Manbalar yo‘llari"
@@ -1745,6 +1706,9 @@ msgstr "Quyidagi direktoriyalardagi manba fayllaridan matnni ajratish:"
 msgid "Base path:"
 msgstr "Asosiy yo‘l:"
 
+msgid "Sources Keywords"
+msgstr ""
+
 msgid "Sources keywords"
 msgstr "Manbalar kalit so‘zlari"
 
@@ -1754,6 +1718,12 @@ msgid ""
 msgstr ""
 "Ushbu kalit so‘zlar (funksiya nomlari)dan manba fayllaridagi\n"
 "tarjima qilinadigan qatorlarni tanish uchun foydalaning:"
+
+msgid "Also use default keywords for supported languages"
+msgstr ""
+
+msgid "Learn About Gettext Keywords"
+msgstr ""
 
 msgid "Learn about gettext keywords"
 msgstr "gettext kalit so‘lari haqida o‘rganish"
@@ -1802,8 +1772,8 @@ msgstr "Yangilash"
 msgid "Update catalog - synchronize it with sources"
 msgstr "Katalogni yangilash - uni manbalar bilan sinxronlash"
 
-msgid "Toggled if selected string has fuzzy translation"
-msgstr "Agar belgilangan qator noaniq tarjimaga ega bo‘lsa, yoqiladi"
+msgid "Sidebar"
+msgstr "Yon panel"
 
 msgid "Show or hide the sidebar"
 msgstr "Yon panelni ko‘rsatish yoki yashirish"
@@ -1813,11 +1783,9 @@ msgid "Previous source text:"
 msgstr "Oldingi manba matni:"
 
 msgid ""
-"The old source text (before it changed during an update) that the fuzzy "
-"translation corresponds to."
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
 msgstr ""
-"Noaniq tarjima ham javob beradigan eski manba matni (yangilash davomida uni "
-"o‘zgartirishdan oldin)."
 
 msgid "Notes for translators:"
 msgstr "Tarjimonlar uchun eslatmalar:"
@@ -1842,58 +1810,20 @@ msgstr "Topilmadi"
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Ushbu qator Poedit’ning tarjima xotirasida topildi."
 
-#, c-format
-msgid "(New: %i, obsolete: %i)"
-msgstr "(Yangi: %i, eskirgan: %i)"
-
-#, c-format
-msgid "Importing translations: %d"
-msgstr "Tarjimalar import qilinmoqda: %d"
-
-msgid "Poedit Update"
-msgstr "Poedit’ni yangilash"
-
-msgid "Preparing migration..."
-msgstr "Ko‘chirishga tayyorlanmoqda..."
-
-#, c-format
-msgid "Migration exit status: %d"
-msgstr "Migratsiya chiqish holati: %d"
-
-msgid "Poedit needs to convert your translation memory to a new format."
-msgstr "Poedit tarjimalaringiz xotirasini yangi formatga o‘girishi kerak."
-
-msgid ""
-"This must be done before Poedit can start. It may take a few minutes if you "
-"have lots of translations stored, but should normally be much faster."
-msgstr ""
-"Bu Poedit ishga tushishidan oldin tayyor bo‘lishi kerak. Agar sizda juda "
-"ko‘p tarjimalar bo‘lsa, u bir necha daqiqa olishi mumkin, lekin yetarlicha "
-"tez bo‘lishi kerak."
-
-msgid "Proceed"
-msgstr "Davom ettirish"
-
-msgid "Translation memory migration failed."
-msgstr "Tarjima xotirasini ko‘chirib o‘tkazish amalga oshmadi."
-
-#, c-format
-msgid ""
-"Your translation memory data couldn't be migrated. The error was:\n"
-"\n"
-"%s\n"
-"Please email help@poedit.net and we’ll get it fixed."
-msgstr ""
-"Tarjima xotirasi ma’lumotlari ko‘chirib o‘tkazilmadi. Xatolik:\n"
-"\n"
-"%s\n"
-"help@poedit.net manziliga xat yozing va biz uni tezda to‘g‘rilaymiz."
-
 msgid "Cannot create temporary directory."
 msgstr "Vaqtinchalik direktoriya yaratilmadi."
 
 msgid "Welcome to Poedit"
 msgstr "Poedit’ga xush kelibsiz"
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "%s versiya"
+
+msgid "Edit a Translation"
+msgstr ""
 
 msgid "Edit a translation"
 msgstr "Tarjimani tahrirlash"
@@ -1907,8 +1837,11 @@ msgid ""
 msgstr ""
 "Mavjud PO fayl yoki POT namunani oling va undan yangi tarjima yarating."
 
-msgid "Collaborate on a translation with Crowdin"
-msgstr "Crowdin bilan tarjimalarda hamkorlik qilish"
+msgid "Collaborate on a Translation with Others"
+msgstr ""
+
+msgid "Collaborate on a translation with others"
+msgstr "Tarjimalar bo‘yicha boshqalar bilan hamkorlik qilish"
 
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
@@ -1966,3 +1899,169 @@ msgstr "Sinxronlash"
 
 msgid "Synchronize the translation with Crowdin"
 msgstr "Tarjimani Crowdin bilan sinxronlash"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "%s haqida"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "%s sozlamalar"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "Xizmatlar"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "%sni yashirish"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "Boshqalarini yashirish"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "Barchasini ko‘rsatish"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "%sdan chiqish"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences..."
+msgstr "Sozlamalar..."
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr "So‘nggi"
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr "Muntazam"
+
+msgid "&Apply"
+msgstr "&Qo‘llash"
+
+msgid "Apply"
+msgstr "Qo‘llash"
+
+msgid "&Back"
+msgstr "&Orqaga"
+
+msgid "Back"
+msgstr "Orqaga"
+
+msgid "&Cancel"
+msgstr "&Bekor qilish"
+
+msgid "&Clear"
+msgstr "&Tozalash"
+
+msgid "Clear"
+msgstr "Tozalash"
+
+msgid "Copy"
+msgstr "Nusxa olish"
+
+msgid "Cu&t"
+msgstr "Kes&ish"
+
+msgid "Cut"
+msgstr "Kesib olish"
+
+msgid "&Delete"
+msgstr "&O‘chirish"
+
+msgid "&Quit"
+msgstr "Chi&qish"
+
+msgid "File"
+msgstr "Fayl"
+
+msgid "Help"
+msgstr "Yordam"
+
+msgid "&New"
+msgstr "&Yangi"
+
+msgid "&No"
+msgstr "&Yo‘q"
+
+msgid "No"
+msgstr "Yo‘q"
+
+msgid "&OK"
+msgstr ""
+
+msgid "Open..."
+msgstr "Ochish..."
+
+msgid "&Paste"
+msgstr "&Qo‘yish"
+
+msgid "Paste"
+msgstr "Qo‘yish"
+
+msgid "Preferences"
+msgstr "Shaxsiy sozlamalar"
+
+msgid "&Redo"
+msgstr "&Qayta bajarish"
+
+msgid "Refresh"
+msgstr "Yangilash"
+
+msgid "&Save as"
+msgstr "&Boshqacha saqlash"
+
+msgid "Save as"
+msgstr "Boshqacha saqlash"
+
+msgid "Select &All"
+msgstr "B&archasini belgilash"
+
+msgid "Select All"
+msgstr "Barchasini belgilash"
+
+msgid "&Undo"
+msgstr "&Qaytarish"
+
+msgid "&Yes"
+msgstr "&Ha"
+
+msgid "Yes"
+msgstr "Ha"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "Tepaga"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "Pastga"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"
