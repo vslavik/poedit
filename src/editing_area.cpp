@@ -160,18 +160,16 @@ public:
     TagLabel(wxWindow *parent, Color fg, Color bg) : wxWindow(parent, wxID_ANY)
     {
         m_icon = nullptr;
-        m_fg = ColorScheme::Get(fg);
-        m_bg = ColorScheme::Get(bg);
 
         m_label = new wxStaticText(this, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, wxST_ELLIPSIZE_END);
-        m_label->SetForegroundColour(m_fg);
 #ifdef __WXOSX__
         m_label->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
+
 #ifdef __WXMSW__
         SetBackgroundColour(parent->GetBackgroundColour());
-        m_label->SetBackgroundColour(ColorScheme::GetBlendedOn(bg, this));
 #endif
+        SetColor(fg, bg);
 
         auto sizer = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(m_label, wxSizerFlags(1).Center().Border(wxALL, PX(2)));
@@ -188,6 +186,19 @@ public:
     {
         m_label->SetLabel(text);
         InvalidateBestSize();
+    }
+
+    void SetColor(Color fg, Color bg)
+    {
+        m_fg = ColorScheme::GetBlendedOn(fg, this);
+        m_bg = ColorScheme::GetBlendedOn(bg, this);
+
+        m_label->SetForegroundColour(m_fg);
+#ifdef __WXMSW__
+        m_label->SetBackgroundColour(m_bg);
+        if (m_icon)
+            m_icon->SetBackgroundColour(m_bg);
+#endif
     }
 
     void SetIcon(const wxBitmap& icon)
@@ -249,6 +260,39 @@ private:
 };
 
 
+class EditingArea::IssueLabel : public EditingArea::TagLabel
+{
+public:
+    IssueLabel(wxWindow *parent)
+        : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg)
+    {
+        m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
+        m_iconWarning = wxArtProvider::GetBitmap("poedit-status-warning");
+        SetIcon(m_iconError);
+    }
+
+    void SetIssue(const CatalogItem::Issue& issue)
+    {
+        switch (issue.severity)
+        {
+            case CatalogItem::Issue::Error:
+                SetIcon(m_iconError);
+                SetColor(Color::TagErrorLineFg, Color::TagErrorLineBg);
+                break;
+            case CatalogItem::Issue::Warning:
+                SetIcon(m_iconWarning);
+                SetColor(Color::TagWarningLineFg, Color::TagWarningLineBg);
+                break;
+        }
+        SetLabel(issue.message);
+        SetToolTip(issue.message);
+    }
+
+private:
+    wxBitmap m_iconError, m_iconWarning;
+};
+
+
 EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode mode)
     : m_associatedList(associatedList),
       m_dontAutoclearFuzzyStatus(false),
@@ -264,7 +308,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
       m_tagContext(nullptr),
       m_tagFormat(nullptr),
       m_tagPretranslated(nullptr),
-      m_errorLine(nullptr)
+      m_issueLine(nullptr)
 {
     wxPanel::Create(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
                     wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);
@@ -337,8 +381,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 #endif
     m_labelTrans->SetFont(m_labelTrans->GetFont().Bold());
 
-    m_errorLine = new TagLabel(this, Color::TagErrorLineFg, Color::TagErrorLineBg);
-    m_errorLine->SetIcon(wxArtProvider::GetBitmap("poedit-status-error"));
+    m_issueLine = new IssueLabel(this);
 
     m_tagPretranslated = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
     m_tagPretranslated->SetLabel(_("Pre-translated"));
@@ -346,14 +389,14 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     auto transLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
     transLineSizer->Add(m_labelTrans, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
     transLineSizer->AddSpacer(PX(4));
-    transLineSizer->Add(m_errorLine, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
-    transLineSizer->SetShrinkableWindow(m_errorLine);
+    transLineSizer->Add(m_issueLine, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
+    transLineSizer->SetShrinkableWindow(m_issueLine);
 
     transLineSizer->AddStretchSpacer(1);
     transLineSizer->Add(m_tagPretranslated, wxSizerFlags().Center().Border(wxRIGHT, 3*PX(4)));
 
 #ifndef __WXOSX__
-    transLineSizer->SetMinSize(-1, m_errorLine->GetBestSize().y);
+    transLineSizer->SetMinSize(-1, m_issueLine->GetBestSize().y);
 #endif
 
     // TRANSLATORS: This indicates that the string's translation isn't final
@@ -749,18 +792,16 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
     if (m_fuzzy)
         m_fuzzy->SetValue(item->IsFuzzy());
 
-    if (m_errorLine)
+    if (m_issueLine)
     {
         if (item->HasIssue())
         {
-            auto issue = item->GetIssue();
-            m_errorLine->SetLabel(issue.message);
-            m_errorLine->SetToolTip(issue.message);
-            ShowPart(m_errorLine, true);
+            m_issueLine->SetIssue(item->GetIssue());
+            ShowPart(m_issueLine, true);
         }
         else
         {
-            ShowPart(m_errorLine, false);
+            ShowPart(m_issueLine, false);
         }
     }
 
