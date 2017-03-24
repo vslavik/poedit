@@ -1726,10 +1726,12 @@ void PoeditFrame::ReportValidationErrors(int errors,
 {
     wxWindowPtr<wxMessageDialog> dlg;
 
+    // Refresh the list even without errors, because there may be new warnings
+    if (m_list && m_catalog->GetCount())
+        m_list->RefreshAllItems();
+
     if ( errors )
     {
-        if (m_list && m_catalog->GetCount())
-            m_list->RefreshAllItems();
         RefreshControls();
 
         dlg.reset(new wxMessageDialog

@@ -44,6 +44,7 @@
 #include "configuration.h"
 #include "extractors/extractor.h"
 #include "gexecute.h"
+#include "qa_checks.h"
 #include "str_helpers.h"
 #include "utility.h"
 #include "version.h"
@@ -2030,6 +2031,8 @@ int Catalog::DoValidate(const wxString& po_file)
 
     for (auto& i: m_items)
         i->ClearIssue();
+
+    QAChecker::GetFor(*this)->Check(*this);
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {
