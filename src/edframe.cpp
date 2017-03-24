@@ -3178,7 +3178,7 @@ bool Pred_UnfinishedItem(const CatalogItemPtr& item)
 {
     return !item->IsTranslated() ||
            item->IsFuzzy() ||
-           item->GetValidity() == CatalogItem::Val_Invalid;
+           item->HasIssue();
 }
 
 } // anonymous namespace

@@ -288,7 +288,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 
         case Col_Icon:
         {
-            if (d->GetValidity() == CatalogItem::Val_Invalid)
+            if (d->HasError())
                 variant << m_iconError;
             else if (d->GetBookmark() != NO_BOOKMARK)
                 variant << m_iconBookmark;
@@ -381,7 +381,7 @@ bool PoeditListCtrl::Model::GetAttrByRow(unsigned row, unsigned col, wxDataViewI
         case Col_Translation:
         {
             auto d = Item(row);
-            if (d->GetValidity() == CatalogItem::Val_Invalid)
+            if (d->HasError())
             {
                 attr.SetColour(m_clrInvalid);
                 return true;

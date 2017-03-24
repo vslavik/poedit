@@ -553,7 +553,7 @@ public:
             return;
 
         // ignore translations with errors in them
-        if (item->GetValidity() == CatalogItem::Val_Invalid)
+        if (item->HasError())
             return;
 
         // can't handle plurals yet (TODO?)

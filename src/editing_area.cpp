@@ -751,10 +751,11 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
 
     if (m_errorLine)
     {
-        if (item->GetValidity() == CatalogItem::Val_Invalid)
+        if (item->HasIssue())
         {
-            m_errorLine->SetLabel(item->GetErrorString());
-            m_errorLine->SetToolTip(item->GetErrorString());
+            auto issue = item->GetIssue();
+            m_errorLine->SetLabel(issue.message);
+            m_errorLine->SetToolTip(issue.message);
             ShowPart(m_errorLine, true);
         }
         else
