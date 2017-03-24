@@ -658,6 +658,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
 
     // Controls setup:
     m_project->SetHint(_("Name of the project the translation is for"));
+    m_team->SetHint(_("Team name and email address or URL"));
     m_pluralFormsExpr->SetHint(_("e.g. nplurals=2; plural=(n > 1);"));
 
     Layout();
