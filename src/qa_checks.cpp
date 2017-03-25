@@ -37,6 +37,145 @@
 namespace QA
 {
 
+class NotAllPlurals : public QACheck
+{
+public:
+    bool CheckItem(CatalogItemPtr item) override
+    {
+        if (!item->HasPlural())
+            return false;
+
+        bool foundTranslated = false;
+        bool foundEmpty = false;
+        for (auto& s: item->GetTranslations())
+        {
+            if (s.empty())
+                foundEmpty = true;
+            else
+                foundTranslated = true;
+        }
+
+        if (foundEmpty && foundTranslated)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _("Not all plural forms are translated."));
+            return true;
+        }
+
+        return false;
+    }
+};
+
+
+class CaseMismatch : public QACheck
+{
+public:
+    bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
+    {
+        if (u_isupper(source[0]) && u_islower(translation[0]))
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start as a sentence."));
+            return true;
+        }
+
+        if (u_islower(source[0]) && u_isupper(translation[0]))
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start with a lowercase character."));
+            return true;
+        }
+
+        return false;
+    }
+};
+
+
+class WhitespaceMismatch : public QACheck
+{
+public:
+    bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
+    {
+        if (u_isspace(source[0]) && !u_isspace(translation[0]))
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation doesn’t start with a space."));
+            return true;
+        }
+
+        if (!u_isspace(source[0]) && u_isspace(translation[0]))
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation starts with a space, but the source text doesn’t."));
+            return true;
+        }
+
+        if (source.Last() == '\n' && translation.Last() != '\n')
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is missing a newline at the end."));
+            return true;
+        }
+
+        if (source.Last() != '\n' && translation.Last() == '\n')
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation ends with a newline, but the source text doesn’t."));
+            return true;
+        }
+
+        if (u_isspace(source.Last()) && !u_isspace(translation.Last()))
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation is missing a space at the end."));
+            return true;
+        }
+
+        if (!u_isspace(source.Last()) && u_isspace(translation.Last()))
+        {
+            item->SetIssue(CatalogItem::Issue::Warning, _(L"The translation ends with a space, but the source text doesn’t."));
+            return true;
+        }
+
+        return false;
+    }
+};
+
+
+class PunctuationMismatch : public QACheck
+{
+public:
+    bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
+    {
+        const UChar32 s_last = source.Last();
+        const UChar32 t_last = translation.Last();
+        const bool s_punct = u_ispunct(s_last);
+        const bool t_punct = u_ispunct(t_last);
+
+        if (s_punct && !t_punct)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning,
+                           wxString::Format(_(L"The translation should end with “%s”."), wxString(wxUniChar(s_last))));
+            return true;
+        }
+        else if (!s_punct && t_punct)
+        {
+            item->SetIssue(CatalogItem::Issue::Warning,
+                           wxString::Format(_(L"The translation should not end with “%s”."), wxString(wxUniChar(t_last))));
+            return true;
+        }
+        else if (s_punct && t_punct && s_last != t_last)
+        {
+            if (t_last == L'…' && source.EndsWith("..."))
+            {
+                // as a special case, allow translating ... (3 dots) as … (ellipsis)
+            }
+            else
+            {
+                item->SetIssue(CatalogItem::Issue::Warning,
+                               wxString::Format(_(L"The translation ends with “%s”, but the source text ends with “%s”."),
+                                                wxString(wxUniChar(s_last)), wxString(wxUniChar(t_last))));
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
+
+
 } // namespace QA
 
 
@@ -109,5 +248,9 @@ int QAChecker::Check(CatalogItemPtr item)
 std::shared_ptr<QAChecker> QAChecker::GetFor(Catalog& /*catalog*/)
 {
     auto c = std::make_shared<QAChecker>();
+    c->AddCheck<QA::NotAllPlurals>();
+    c->AddCheck<QA::CaseMismatch>();
+    c->AddCheck<QA::WhitespaceMismatch>();
+    c->AddCheck<QA::PunctuationMismatch>();
     return c;
 }
