@@ -439,6 +439,7 @@ enum FoundState
 {
     Found_Not = 0,
     Found_InOrig,
+    Found_InOrigPlural,
     Found_InTrans,
     Found_InComments,
     Found_InExtractedComments
@@ -517,6 +518,11 @@ bool FindFrame::DoFind(int dir)
                 found = Found_InOrig;
                 break;
             }
+            if (dt->HasPlural() && IsTextInString(dt->GetPluralString(), text, ignoreCase, wholeWords, ignoreAmp, ignoreUnderscore))
+            {
+                found = Found_InOrigPlural;
+                break;
+            }
         }
         if (inComments)
         {
@@ -547,6 +553,9 @@ bool FindFrame::DoFind(int dir)
         {
             case Found_InOrig:
               txt = m_editingArea->Ctrl_Original();
+              break;
+            case Found_InOrigPlural:
+              txt = m_editingArea->Ctrl_OriginalPlural();
               break;
             case Found_InTrans:
               if (lastItem->GetNumberOfTranslations() == 1)
