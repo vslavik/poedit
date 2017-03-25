@@ -110,6 +110,10 @@ wxColour ColorScheme::DoGet(Color color, Type type)
             return sRGB(162, 0, 20);
         case Color::TagErrorLineBg:
             return sRGB(255, 227, 230, 0.75);
+        case Color::TagWarningLineFg:
+            return sRGB(101, 91, 1);
+        case Color::TagWarningLineBg:
+            return sRGB(255, 249, 192, 0.75);
 
 
         // Separators:

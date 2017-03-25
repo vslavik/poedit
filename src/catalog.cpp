@@ -44,6 +44,7 @@
 #include "configuration.h"
 #include "extractors/extractor.h"
 #include "gexecute.h"
+#include "qa_checks.h"
 #include "str_helpers.h"
 #include "utility.h"
 #include "version.h"
@@ -2029,9 +2030,9 @@ int Catalog::DoValidate(const wxString& po_file)
     );
 
     for (auto& i: m_items)
-    {
-        i->SetValidity(CatalogItem::Val_Valid);
-    }
+        i->ClearIssue();
+
+    QAChecker::GetFor(*this)->Check(*this);
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {
@@ -2040,8 +2041,7 @@ int Catalog::DoValidate(const wxString& po_file)
             auto item = FindItemByLine(i->line);
             if ( item )
             {
-                item->SetValidity(CatalogItem::Val_Invalid);
-                item->SetErrorString(i->text);
+                item->SetIssue(CatalogItem::Issue::Error, i->text);
                 continue;
             }
         }
@@ -2382,7 +2382,7 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
                 (*fuzzy)++;
             ok = false;
         }
-        if (i->GetValidity() == CatalogItem::Val_Invalid)
+        if (i->HasError())
         {
             if (badtokens)
                 (*badtokens)++;
@@ -2475,7 +2475,7 @@ void CatalogItem::SetTranslation(const wxString &t, unsigned idx)
         m_translations.Add(wxEmptyString);
     m_translations[idx] = t;
 
-    m_validity = Val_Unknown;
+    ClearIssue();
 
     m_isTranslated = true;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
@@ -2492,7 +2492,7 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
 {
     m_translations = t;
 
-    m_validity = Val_Unknown;
+    ClearIssue();
 
     m_isTranslated = true;
     for (size_t i = 0; i < m_translations.GetCount(); i++)
@@ -2507,7 +2507,7 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
 
 void CatalogItem::SetTranslationFromSource()
 {
-    m_validity = Val_Unknown;
+    ClearIssue();
     m_isFuzzy = false;
     m_isPreTranslated = false;
     m_isTranslated = true;

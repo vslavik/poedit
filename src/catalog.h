@@ -85,7 +85,6 @@ class CatalogItem
                   m_isTranslated(false),
                   m_isModified(false),
                   m_isPreTranslated(false),
-                  m_validity(Val_Unknown),
                   m_lineNum(0),
                   m_bookmark(NO_BOOKMARK) {}
 
@@ -107,9 +106,7 @@ class CatalogItem
                   m_hasBadTokens(dt.m_hasBadTokens),
                   m_moreFlags(dt.m_moreFlags),
                   m_comment(dt.m_comment),
-                  m_validity(dt.m_validity),
                   m_lineNum(dt.m_lineNum),
-                  m_errorString(dt.m_errorString),
                   m_bookmark(dt.m_bookmark) {}
 
         /// Gets numeric, 1-based ID
@@ -179,7 +176,7 @@ class CatalogItem
         void SetString(const wxString& s)
         {
             m_string = s;
-            m_validity = Val_Unknown;
+            ClearIssue();
         }
 
         /// Sets the plural form (if applicable).
@@ -271,21 +268,28 @@ class CatalogItem
         wxString GetOldMsgid() const;
         bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
 
-        // Validity (syntax-checking) status of the entry:
-        enum Validity
+        struct Issue
         {
-            Val_Unknown = -1,
-            Val_Invalid = 0,
-            Val_Valid = 1
+            enum Severity
+            {
+                Warning,
+                Error
+            };
+
+            Severity severity;
+            wxString message;
+
+            Issue(Severity s, const wxString& m) : severity(s), message(m) {}
         };
 
-        /** Checks if %i etc. are correct in the translation (true if yes).
-            Strings that are not c-format are always correct. */
-        Validity GetValidity() const { return m_validity; }
-        void SetValidity(Validity val) { m_validity = val; }
+        bool HasIssue() const { return m_issue != nullptr; }
+        bool HasError() const { return m_issue && m_issue->severity == Issue::Error; }
+        const Issue& GetIssue() const { return *m_issue; }
 
-        void SetErrorString(const wxString& str) { m_errorString = str; }
-        wxString GetErrorString() const { return m_errorString; }
+        void ClearIssue() { m_issue.reset(); }
+        void SetIssue(std::shared_ptr<Issue> issue) { m_issue = issue; }
+        void SetIssue(const Issue& issue) { m_issue = std::make_shared<Issue>(issue); }
+        void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
         /// Returns the bookmark for the item
         Bookmark GetBookmark() const {return m_bookmark;}
@@ -311,10 +315,10 @@ class CatalogItem
         bool m_hasBadTokens;
         wxString m_moreFlags;
         wxString m_comment;
-        Validity m_validity;
         int m_lineNum;
-        wxString m_errorString;
         Bookmark m_bookmark;
+
+        std::shared_ptr<Issue> m_issue;
 };
 
 

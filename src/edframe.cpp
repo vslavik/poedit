@@ -1726,10 +1726,12 @@ void PoeditFrame::ReportValidationErrors(int errors,
 {
     wxWindowPtr<wxMessageDialog> dlg;
 
+    // Refresh the list even without errors, because there may be new warnings
+    if (m_list && m_catalog->GetCount())
+        m_list->RefreshAllItems();
+
     if ( errors )
     {
-        if (m_list && m_catalog->GetCount())
-            m_list->RefreshAllItems();
         RefreshControls();
 
         dlg.reset(new wxMessageDialog
@@ -3178,7 +3180,7 @@ bool Pred_UnfinishedItem(const CatalogItemPtr& item)
 {
     return !item->IsTranslated() ||
            item->IsFuzzy() ||
-           item->GetValidity() == CatalogItem::Val_Invalid;
+           item->HasIssue();
 }
 
 } // anonymous namespace

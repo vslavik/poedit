@@ -118,9 +118,9 @@ bool CatalogItemsComparator::operator()(int i, int j) const
 
     if ( m_order.errorsFirst )
     {
-        if ( a.GetValidity() == CatalogItem::Val_Invalid && b.GetValidity() != CatalogItem::Val_Invalid )
+        if ( a.HasError() && !b.HasError() )
             return true;
-        else if ( a.GetValidity() != CatalogItem::Val_Invalid && b.GetValidity() == CatalogItem::Val_Invalid )
+        else if ( !a.HasError() && b.HasError() )
             return false;
     }
 

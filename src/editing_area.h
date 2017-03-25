@@ -119,6 +119,7 @@ private:
 
 private:
     class TagLabel;
+    class IssueLabel;
 
     PoeditListCtrl *m_associatedList;
 
@@ -139,7 +140,7 @@ private:
     TagLabel *m_tagFormat;
     TagLabel *m_tagPretranslated;
 
-    TagLabel *m_errorLine;
+    IssueLabel *m_issueLine;
 };
 
 #endif // Poedit_editing_area_h
