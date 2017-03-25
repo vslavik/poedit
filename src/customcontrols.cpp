@@ -390,6 +390,7 @@ void ActivityIndicator::StopWithError(const wxString& msg)
     m_spinner->Stop();
     m_label->SetForegroundColour(*wxRED);
     m_label->SetLabel(msg);
+    m_label->SetToolTip(msg);
 
     auto sizer = GetSizer();
     sizer->Hide(m_spinner);
