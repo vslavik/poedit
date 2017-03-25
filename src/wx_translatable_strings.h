@@ -125,6 +125,10 @@ _("Enter");
 _("Up");
 /// TRANSLATORS: Keyboard shortcut for display in Windows menus
 _("Down");
+/// TRANSLATORS: Keyboard shortcut for display in Windows menus
+_("Left");
+/// TRANSLATORS: Keyboard shortcut for display in Windows menus
+_("Right");
 
 /// TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
 _("ctrl");
