@@ -69,7 +69,7 @@ class PoeditFrame : public PoeditFrameBase
 
             \param catalog filename of catalog to open.
          */
-        static PoeditFrame *Create(const wxString& catalog);
+        static PoeditFrame *Create(const wxString& catalog, int lineno = 0);
 
         /** Public constructor functions. Creates and shows frame
             without catalog or other content.
@@ -83,7 +83,7 @@ class PoeditFrame : public PoeditFrameBase
 
         /// Opens given file in this frame. Asks user for permission first
         /// if there's unsaved document.
-        void OpenFile(const wxString& filename);
+        void OpenFile(const wxString& filename, int lineno = 0);
 
         /** Returns pointer to existing instance of PoeditFrame that currently
             exists and edits \a catalog. If no such frame exists, returns NULL.
@@ -183,7 +183,7 @@ class PoeditFrame : public PoeditFrameBase
         wxWindow* CreateContentViewEmptyPO();
         void DestroyContentView();
 
-        void PlaceInitialFocus();
+        void PlaceInitialFocus(int lineno = 0);
 
         typedef std::set<PoeditFrame*> PoeditFramesList;
         static PoeditFramesList ms_instances;
@@ -206,7 +206,7 @@ class PoeditFrame : public PoeditFrameBase
         wxWindowPtr<wxMessageDialog> CreateAskAboutSavingDialog();
 
         // implements opening of files, without asking user
-        void DoOpenFile(const wxString& filename);
+        void DoOpenFile(const wxString& filename, int lineno = 0);
 
         /// Updates statistics in statusbar.
         void UpdateStatusBar();

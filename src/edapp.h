@@ -61,7 +61,7 @@ class PoeditApp : public wxApp
         bool CheckForBetaUpdates() const;
 
         // opens files in new frame
-        void OpenFiles(const wxArrayString& filenames);
+        void OpenFiles(const wxArrayString& filenames, int lineno = 0);
         // opens empty frame or catalogs manager
         void OpenNewFile();
 
@@ -70,7 +70,7 @@ class PoeditApp : public wxApp
 #endif
 
 #ifdef __WXOSX__
-        virtual void MacOpenFiles(const wxArrayString& names) { OpenFiles(names); }
+        virtual void MacOpenFiles(const wxArrayString& names);
         virtual void MacNewFile() { OpenNewFile(); }
         virtual void MacOpenURL(const wxString &url) { HandleCustomURI(url); }
 #endif

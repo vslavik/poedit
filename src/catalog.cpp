@@ -1365,13 +1365,19 @@ void Catalog::RemoveDeletedItems()
 
 CatalogItemPtr Catalog::FindItemByLine(int lineno)
 {
-    CatalogItemPtr last;
+    int i = FindItemIndexByLine(lineno);
+    return i == -1 ? CatalogItemPtr() : m_items[i];
+}
+
+int Catalog::FindItemIndexByLine(int lineno)
+{
+    int last = -1;
 
     for (auto& i: m_items)
     {
-        if ( i->GetLineNumber() > lineno )
+        if (i->GetLineNumber() > lineno)
             return last;
-        last = i;
+        last++;
     }
 
     return last;

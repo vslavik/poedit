@@ -709,6 +709,9 @@ class Catalog
         /// Finds item by line number
         CatalogItemPtr FindItemByLine(int lineno);
 
+        /// Finds catalog index by line number
+        int FindItemIndexByLine(int lineno);
+
         /// Sets the given item to have the given bookmark and returns the index
         /// of the item that previously had this bookmark (or -1)
         int SetBookmark(int id, Bookmark bookmark);
