@@ -212,7 +212,7 @@ bool g_focusToText = false;
     return false;
 }
 
-/*static*/ PoeditFrame *PoeditFrame::Create(const wxString& filename)
+/*static*/ PoeditFrame *PoeditFrame::Create(const wxString& filename, int lineno)
 {
     PoeditFrame *f = PoeditFrame::Find(filename);
     if (f)
@@ -245,7 +245,9 @@ bool g_focusToText = false;
     }
 
     f->Show(true);
-    f->PlaceInitialFocus();
+
+    // HACK: make sure this is called *after* the delayed call in PoeditListCtrl::CatalogChanged
+    f->m_list->CallAfter([=]{ f->PlaceInitialFocus(lineno); });
 
     return f;
 }
@@ -786,15 +788,23 @@ PoeditFrame::~PoeditFrame()
 }
 
 
-void PoeditFrame::PlaceInitialFocus()
+void PoeditFrame::PlaceInitialFocus(int lineno)
 {
     if (g_focusToText && m_editingArea)
         m_editingArea->SetTextFocus();
     else if (m_list)
         m_list->SetFocus();
 
-    if (m_list && m_list->GetItemCount() > 0)
-        m_list->SelectAndFocus(0);
+    if (m_catalog && m_list && m_list->GetItemCount() > 0)
+    {
+        int item = 0;
+        if (lineno > 0)
+        {
+            item = m_catalog->FindItemIndexByLine(lineno);
+            item = (item == -1) ? 0 : m_list->CatalogIndexToList(item);
+        }
+        m_list->SelectAndFocus(item);
+    }
 }
 
 
@@ -916,19 +926,20 @@ void PoeditFrame::OnCloseCmd(wxCommandEvent&)
 #endif
 
 
-void PoeditFrame::OpenFile(const wxString& filename)
+void PoeditFrame::OpenFile(const wxString& filename, int lineno)
 {
     DoIfCanDiscardCurrentDoc([=]{
-        DoOpenFile(filename);
+        DoOpenFile(filename, lineno);
     });
 }
 
 
-void PoeditFrame::DoOpenFile(const wxString& filename)
+void PoeditFrame::DoOpenFile(const wxString& filename, int lineno)
 {
     ReadCatalog(filename);
 
-    PlaceInitialFocus();
+    // HACK: make sure this is called *after* the delayed call in PoeditListCtrl::CatalogChanged
+    m_list->CallAfter([=]{ PlaceInitialFocus(lineno); });
 }
 
 
