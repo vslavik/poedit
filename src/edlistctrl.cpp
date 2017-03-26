@@ -317,6 +317,15 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 #if wxCHECK_VERSION(3,1,1)
             if (d->HasContext())
             {
+            #ifdef __WXMSW__
+                if (m_appTextDir == TextDirection::RTL && m_sourceTextDir == TextDirection::LTR)
+                {
+                    // Temporary workaround for https://github.com/vslavik/poedit/issues/343 - fall back to old style rendering:
+                    orig.Printf("[%s] %s", EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+                }
+                else
+            #endif
+                {
                 // Work around a problem with GTK+'s coloring of markup that begins with colorizing <span>:
                 #ifdef __WXGTK__
                     #define MARKUP(x) L"\u200B" L##x
@@ -326,6 +335,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
                 orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
                             m_clrContextBg, m_clrContextFg,
                             EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+                }
             }
             else
             {
