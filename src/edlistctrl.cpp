@@ -643,7 +643,7 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 {
     wxWindowUpdateLocker no_updates(this);
 
-    const int oldCount = m_catalog ? m_catalog->GetCount() : 0;
+    const int oldCount = m_model->GetCount();
     const int newCount = catalog ? catalog->GetCount() : 0;
     const bool isSameCatalog = (catalog == m_catalog);
     const bool sizeOrCatalogChanged = !isSameCatalog || (oldCount != newCount);
