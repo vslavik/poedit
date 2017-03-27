@@ -463,11 +463,11 @@ bool PoeditApp::OnInit()
 #endif // USE_SPARKLE
 
 #ifdef __WXMSW__
-    wxString appcast = "https://poedit.net/updates/win/appcast";
+    wxString appcast = "https://poedit.net/updates_v2/win/appcast";
     if ( CheckForBetaUpdates() )
     {
         // Beta versions use unstable feed.
-        appcast = "https://poedit.net/updates/win/appcast/beta";
+        appcast = "https://poedit.net/updates_v2/win/appcast/beta";
     }
 
     win_sparkle_set_appcast_url(appcast.utf8_str());
