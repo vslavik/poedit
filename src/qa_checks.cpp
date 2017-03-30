@@ -166,7 +166,7 @@ public:
             {
                 item->SetIssue(CatalogItem::Issue::Warning,
                                wxString::Format(_(L"The translation ends with “%s”, but the source text ends with “%s”."),
-                                                wxString(wxUniChar(s_last)), wxString(wxUniChar(t_last))));
+                                                wxString(wxUniChar(t_last)), wxString(wxUniChar(s_last))));
                 return true;
             }
         }
