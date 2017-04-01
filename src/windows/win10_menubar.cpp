@@ -25,6 +25,7 @@
 
 #include "win10_menubar.h"
 
+#include "hidpi.h"
 #include "utility.h"
 
 #include <wx/config.h>
@@ -60,7 +61,7 @@ public:
             MC_WC_MENUBAR,
             _T(""),
             WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | CCS_NORESIZE | CCS_NOPARENTALIGN,
-            0, 0, 1000, 23*2,
+            0, 0, 1000, PX(23),
             (HWND)this->GetHWND(),
             (HMENU) -1,
             wxGetInstance(),
