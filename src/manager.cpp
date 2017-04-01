@@ -270,7 +270,7 @@ void ManagerFrame::UpdateListCat(int id)
     m_listCat->InsertColumn(1, _("Total"));
     m_listCat->InsertColumn(2, _("Untrans"));
     m_listCat->InsertColumn(3, _("Needs Work"));
-    m_listCat->InsertColumn(4, _("Bad Tokens"));
+    m_listCat->InsertColumn(4, _("Errors"));
     m_listCat->InsertColumn(5, _("Last modified"));
 
     // FIXME: this is time-consuming, it should be done in parallel on
