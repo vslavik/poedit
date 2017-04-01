@@ -315,12 +315,14 @@ wxString Extractor::ConcatCatalogs(TempDirectory& tmpdir, const std::vector<wxSt
 
 Extractor::ExtractorsList Extractor::CreateAllExtractors()
 {
+    ExtractorsList all;
+
     // User-defined "legacy" extractors take precedence over anything else,
     // to allow customization of the behavior:
-    ExtractorsList all = CreateAllLegacyExtractors();
+    CreateAllLegacyExtractors(all);
 
     // Standard builtin extractors follow
-    all.push_back(CreateGettextExtractor());
+    CreateGettextExtractors(all);
 
     return all;
 }

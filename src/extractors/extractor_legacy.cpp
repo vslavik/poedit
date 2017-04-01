@@ -336,11 +336,9 @@ wxString LegacyExtractor::Extract(TempDirectory& tmpdir,
 }
 
 
-Extractor::ExtractorsList Extractor::CreateAllLegacyExtractors()
+void Extractor::CreateAllLegacyExtractors(Extractor::ExtractorsList& into)
 {
     // Extractors must be created anew to pick up any changes in definitions
-
-    ExtractorsList all;
 
     // FIXME: Make this MT-safe
     LegacyExtractorsDB db;
@@ -349,8 +347,6 @@ Extractor::ExtractorsList Extractor::CreateAllLegacyExtractors()
     for (auto& ex: db.Data)
     {
         if (ex.Enabled)
-            all.push_back(std::make_shared<LegacyExtractor>(ex));
+            into.push_back(std::make_shared<LegacyExtractor>(ex));
     }
-
-    return all;
 }

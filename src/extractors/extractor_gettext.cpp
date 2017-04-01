@@ -170,7 +170,8 @@ public:
 };
 
 
-std::shared_ptr<Extractor> Extractor::CreateGettextExtractor()
+void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into)
 {
-    return std::make_shared<GettextExtractor>();
+    into.push_back(std::make_shared<GettextExtractor>());
+    into.push_back(std::make_shared<PHTMLGettextExtractor>());
 }
