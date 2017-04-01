@@ -67,7 +67,6 @@ const char * const GETTEXT_EXTENSIONS[] = {
     "pl", "PL", "pm", "perl", /*"cgi" - too generic,*/    // perl
 
     "php", "php3", "php4",                                // PHP
-    // NOTE: .phtml shouldn't be used by modern PHP, but maybe it is?
 
     "py",                                                 // Python
 
@@ -95,17 +94,9 @@ const char * const GETTEXT_EXTENSIONS[] = {
 
 
 /// Extractor implementation for standard GNU gettext
-class GettextExtractor : public Extractor
+class GettextExtractorBase : public Extractor
 {
 public:
-    GettextExtractor()
-    {
-        for (const char * const *e = GETTEXT_EXTENSIONS; *e != nullptr; e++)
-            RegisterExtension(*e);
-    }
-
-    wxString GetId() const override { return "gettext"; }
-
     wxString Extract(TempDirectory& tmpdir,
                      const SourceCodeSpec& sourceSpec,
                      const std::vector<wxString>& files) const override
@@ -144,6 +135,10 @@ public:
             QuoteCmdlineArg(!sourceSpec.Charset.empty() ? sourceSpec.Charset : "UTF-8")
         );
 
+        auto additional = GetAdditionalFlags();
+        if (!additional.empty())
+            cmdline += " " + additional;
+
         for (auto& kw: sourceSpec.Keywords)
         {
             cmdline += wxString::Format(" -k%s", QuoteCmdlineArg(kw));
@@ -167,7 +162,44 @@ public:
 
         return outfile;
     }
+    
+protected:
+    virtual wxString GetAdditionalFlags() const = 0;
 };
+
+
+/// Extractor implementation for standard GNU gettext
+class GettextExtractor : public GettextExtractorBase
+{
+public:
+    GettextExtractor()
+    {
+        for (const char * const *e = GETTEXT_EXTENSIONS; *e != nullptr; e++)
+            RegisterExtension(*e);
+    }
+
+    wxString GetId() const override { return "gettext"; }
+
+protected:
+    wxString GetAdditionalFlags() const override { return ""; }
+};
+
+
+/// Dedicated extractor for .phtml files - PHP, used by Zend Framework
+class PHTMLGettextExtractor : public GettextExtractorBase
+{
+public:
+    PHTMLGettextExtractor()
+    {
+        RegisterExtension("phtml");
+    }
+
+    wxString GetId() const override { return "gettext-phtml"; }
+
+protected:
+    wxString GetAdditionalFlags() const override { return "-L php"; }
+};
+
 
 
 void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into)
