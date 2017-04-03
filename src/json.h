@@ -28,7 +28,12 @@
 
 #include "str_helpers.h"
 
+#ifdef HAVE_JSON_HPP
+#include <json.hpp>
+#else
 #include "json/src/json.hpp"
+#endif
+
 using json = nlohmann::json;
 
 
