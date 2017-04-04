@@ -214,6 +214,13 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
     m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
     m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
     m_iconWarning = wxArtProvider::GetBitmap("poedit-status-warning");
+
+#ifdef HAS_BROKEN_NULL_BITMAPS
+    wxImage nullimg(m_iconError.GetSize().x, m_iconError.GetSize().y);
+    nullimg.Clear();
+    nullimg.SetMaskColour(0, 0, 0);
+    m_nullBitmap = wxBitmap(nullimg);
+#endif
 }
 
 
@@ -270,9 +277,26 @@ wxString PoeditListCtrl::Model::GetColumnType(unsigned int col) const
 
 void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsigned col) const
 {
+#if defined(HAS_BROKEN_NULL_BITMAPS)
+    #define NULL_BITMAP(variant)  variant << m_nullBitmap
+#elif defined(__WXGTK__) && !wxCHECK_VERSION(3,1,1)
+    #define NULL_BITMAP(variant)  variant << wxNullBitmap
+#else
+    #define NULL_BITMAP(variant)  variant = wxNullVariant
+#endif
+
     if (!m_catalog || m_frozen)
     {
+#if defined(__WXGTK__) && !wxCHECK_VERSION(3,1,1)
+        auto type = GetColumnType(col);
+        if (type == "string")
+            variant = "";
+        else if (type == "wxBitmap")
+            NULL_BITMAP(variant);
+        else
+#else
         variant = wxNullVariant;
+#endif
         return;
     }
 
@@ -307,7 +331,7 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
             else if (d->HasComment())
                 variant << m_iconComment;
             else
-                variant = wxNullVariant;
+                NULL_BITMAP(variant);
             break;
         }
 
