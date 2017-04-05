@@ -112,7 +112,7 @@ public:
         : CloudSyncProgressWindow(parent)
     {
         // TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
-        Activity->Start(wxString::Format(L"Syncing with %s…", dest->GetName()));
+        Activity->Start(wxString::Format(_(L"Syncing with %s…"), dest->GetName()));
     }
 
     ActivityIndicator *Activity;
