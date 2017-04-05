@@ -95,20 +95,17 @@ save some time and disk space by checking out only them:
 
     git submodule update --init src/json
 
-If you get the sources directly from the Git repository, some generated files
-are not present. You have to run the ./bootstrap script to create them. After
-that, continue according to the instructions above.
+When building for Unix/Linux, if you get the sources directly from the Git
+repository, some generated files are not present. You have to run the
+./bootstrap script to create them. After that, continue according to the
+instructions above.
 
 The ./bootstrap script requires some additional tools to be installed:
 
  * AsciiDoc, xsltproc and xmlto to generate the manual page
- * Bakefile, to generate Windows makefiles/projects
- * ImageMagick and png2icns from libicns to generate icons in Windows and
-   macOS native formats
+ * gettext tools to create .mo files
 
-If you don't have any of the dependencies, ./bootstrap will print errors, but
-will continue to run. In other words, if you don't need e.g. Windows stuff, you
-can ignore Windows-specific dependencies.
+On macOS and Windows, bootstrapping is not needed.
 
 
  License
