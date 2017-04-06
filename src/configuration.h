@@ -45,6 +45,8 @@ enum MergeBehavior
 class Config
 {
 public:
+    static void Initialize(const std::wstring& configFile);
+
     static bool UseTM() { return Read("/use_tm", true); }
     static void UseTM(bool use) { Write("/use_tm", use); }
 

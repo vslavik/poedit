@@ -65,6 +65,7 @@
 
 #include "colorscheme.h"
 #include "concurrency.h"
+#include "configuration.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "extractors/extractor_legacy.h"
@@ -378,7 +379,7 @@ bool PoeditApp::OnInit()
 #elif defined(__UNIX__)
     #define CFG_FILE configFile
 #else
-    #define CFG_FILE wxEmptyString
+    #define CFG_FILE wxString()
 #endif
 
 #ifdef __WXOSX__
@@ -389,10 +390,7 @@ bool PoeditApp::OnInit()
         wxFileName::Rmdir(oldsparkle, wxPATH_RMDIR_RECURSIVE);
 #endif
 
-    wxConfigBase::Set(
-        new wxConfig(wxEmptyString, wxEmptyString, CFG_FILE, wxEmptyString, 
-                     wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE));
-    wxConfigBase::Get()->SetExpandEnvVars(false);
+    Config::Initialize(CFG_FILE.ToStdWstring());
 
 #ifndef __WXOSX__
     wxImage::AddHandler(new wxPNGHandler);

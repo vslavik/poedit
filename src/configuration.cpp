@@ -26,22 +26,196 @@
 #include "configuration.h"
 
 #include <wx/config.h>
+#include <wx/thread.h>
 
 #include <mutex>
+
+
+// This class ensures that wxConfig is only accessed MT-safely
+class MTSafeConfig : public wxConfig
+{
+public:
+    typedef wxConfig Base;
+
+    MTSafeConfig(const std::wstring& configFile)
+        : wxConfig("", "", configFile, "", wxCONFIG_USE_GLOBAL_FILE | wxCONFIG_USE_LOCAL_FILE)
+    {
+    }
+
+    struct Lock
+    {
+        Lock(const MTSafeConfig *self_) : self(self_) { self->m_cs.Enter(); }
+        ~Lock() { self->m_cs.Leave(); }
+
+        const MTSafeConfig *self;
+    };
+
+    const wxString& GetPath() const override
+    {
+        Lock l(this);
+        return Base::GetPath();
+    }
+
+    bool GetFirstGroup(wxString& str, long& index) const override
+    {
+        Lock l(this);
+        return Base::GetFirstGroup(str, index);
+    }
+
+    bool GetNextGroup(wxString& str, long& index) const override
+    {
+        Lock l(this);
+        return Base::GetNextGroup(str, index);
+    }
+
+    bool GetFirstEntry(wxString& str, long& index) const override
+    {
+        Lock l(this);
+        return Base::GetFirstEntry(str, index);
+    }
+
+    bool GetNextEntry(wxString& str, long& index) const override
+    {
+        Lock l(this);
+        return Base::GetNextEntry(str, index);
+    }
+
+    size_t GetNumberOfEntries(bool recursive = false) const override
+    {
+        Lock l(this);
+        return Base::GetNumberOfEntries(recursive);
+    }
+
+    size_t GetNumberOfGroups(bool recursive = false) const override
+    {
+        Lock l(this);
+        return Base::GetNumberOfGroups(recursive);
+    }
+
+    bool HasGroup(const wxString& name) const override
+    {
+        Lock l(this);
+        return Base::HasGroup(name);
+    }
+
+    bool HasEntry(const wxString& name) const override
+    {
+        Lock l(this);
+        return Base::HasEntry(name);
+    }
+
+    bool Flush(bool currentOnly = false) override
+    {
+        Lock l(this);
+        return Base::Flush(currentOnly);
+    }
+
+    bool RenameEntry(const wxString& oldName, const wxString& newName) override
+    {
+        Lock l(this);
+        return Base::RenameEntry(oldName, newName);
+    }
+
+    bool RenameGroup(const wxString& oldName, const wxString& newName) override
+    {
+        Lock l(this);
+        return Base::RenameGroup(oldName, newName);
+    }
+
+    bool DeleteEntry(const wxString& key, bool bDeleteGroupIfEmpty = true) override
+    {
+        Lock l(this);
+        return Base::DeleteEntry(key, bDeleteGroupIfEmpty);
+    }
+
+    bool DeleteGroup(const wxString& key) override
+    {
+        Lock l(this);
+        return Base::DeleteGroup(key);
+    }
+
+    bool DeleteAll() override
+    {
+        Lock l(this);
+        return Base::DeleteAll();
+    }
+
+    bool DoReadString(const wxString& key, wxString *pStr) const override
+    {
+        Lock l(this);
+        return Base::DoReadString(key, pStr);
+    }
+
+    bool DoReadLong(const wxString& key, long *pl) const override
+    {
+        Lock l(this);
+        return Base::DoReadLong(key, pl);
+    }
+
+#if wxUSE_BASE64
+    bool DoReadBinary(const wxString& key, wxMemoryBuffer* buf) const override
+    {
+        Lock l(this);
+        return Base::DoReadBinary(key, buf);
+    }
+#endif // wxUSE_BASE64
+
+    bool DoWriteString(const wxString& key, const wxString& value) override
+    {
+        Lock l(this);
+        return Base::DoWriteString(key, value);
+    }
+
+    bool DoWriteLong(const wxString& key, long value) override
+    {
+        Lock l(this);
+        return Base::DoWriteLong(key, value);
+    }
+
+#if wxUSE_BASE64
+    bool DoWriteBinary(const wxString& key, const wxMemoryBuffer& buf) override
+    {
+        Lock l(this);
+        return Base::DoWriteBinary(key, buf);
+    }
+#endif // wxUSE_BASE64
+
+private:
+    wxConfigBase *m_real;
+    mutable wxCriticalSection m_cs;
+};
+
 
 namespace
 {
 
-// wxConfig isn't thread safe because it's implementing using SetPath.
+// wxConfig isn't thread safe because it's implemented using SetPath.
 // Make sure it's only accessed from a single location at a time.
-std::mutex g_wxconfig;
+std::mutex g_configAccess;
+
+struct CfgLock
+{
+    CfgLock() : m_guard(g_configAccess), m_wxLock(dynamic_cast<MTSafeConfig*>(wxConfigBase::Get())) {}
+
+    std::lock_guard<std::mutex> m_guard;
+    MTSafeConfig::Lock m_wxLock;
+};
 
 } // anonymous namespace
 
 
+void Config::Initialize(const std::wstring& configFile)
+{
+    // Because wxConfig is accessed directly elsewhere, both in Poedit (still)
+    // and in wx itself, we must use a n MT-safe implementation.
+    wxConfigBase::Set(new MTSafeConfig(configFile));
+    wxConfigBase::Get()->SetExpandEnvVars(false);
+}
+
+
 bool Config::Read(const std::string& key, std::string *out)
 {
-    std::lock_guard<std::mutex> guard(g_wxconfig);
+    CfgLock lock;
 
     wxString s;
     if (!wxConfig::Get()->Read(key, &s))
@@ -52,14 +226,13 @@ bool Config::Read(const std::string& key, std::string *out)
 
 void Config::Write(const std::string& key, const std::string& value)
 {
-    std::lock_guard<std::mutex> guard(g_wxconfig);
-
+    CfgLock lock;
     wxConfig::Get()->Write(key, wxString(value));
 }
 
 bool Config::Read(const std::string& key, std::wstring *out)
 {
-    std::lock_guard<std::mutex> guard(g_wxconfig);
+    CfgLock lock;
 
     wxString s;
     if (!wxConfig::Get()->Read(key, &s))
@@ -70,22 +243,19 @@ bool Config::Read(const std::string& key, std::wstring *out)
 
 void Config::Write(const std::string& key, const std::wstring& value)
 {
-    std::lock_guard<std::mutex> guard(g_wxconfig);
-
+    CfgLock lock;
     wxConfig::Get()->Write(key, wxString(value));
 }
 
 bool Config::Read(const std::string& key, bool *out)
 {
-    std::lock_guard<std::mutex> guard(g_wxconfig);
-
+    CfgLock lock;
     return wxConfig::Get()->Read(key, out);
 }
 
 void Config::Write(const std::string& key, bool value)
 {
-    std::lock_guard<std::mutex> guard(g_wxconfig);
-
+    CfgLock lock;
     wxConfig::Get()->Write(key, value);
 }
 
