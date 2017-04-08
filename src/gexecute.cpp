@@ -163,12 +163,28 @@ bool ExecuteGettext(const wxString& cmdline)
     wxArrayString gstderr;
     long retcode = DoExecuteGettext(cmdline, gstderr);
 
-    for ( size_t i = 0; i < gstderr.size(); i++ )
+    wxString pending;
+    for (auto& ln: gstderr)
     {
-        if ( gstderr[i].empty() )
+        if (ln.empty())
             continue;
-        wxLogError("%s", gstderr[i].c_str());
+
+        // special handling of multiline errors
+        if (ln[0] == ' ' || ln[0] == '\t')
+        {
+            pending += "\n\t" + ln.Strip(wxString::both);
+        }
+        else
+        {
+            if (!pending.empty())
+                wxLogError("%s", pending);
+
+            pending = ln;
+        }
     }
+
+    if (!pending.empty())
+        wxLogError("%s", pending);
 
     return retcode == 0;
 }
