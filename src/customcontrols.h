@@ -162,6 +162,8 @@ public:
     bool HasTransparentBackground() override { return true; }
 
 private:
+    void UpdateLayoutAfterTextChange();
+
     bool m_running;
     wxActivityIndicator *m_spinner;
     wxStaticText *m_label, *m_error;

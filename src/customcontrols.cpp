@@ -355,6 +355,24 @@ ActivityIndicator::ActivityIndicator(wxWindow *parent, int flags)
     };
 }
 
+
+void ActivityIndicator::UpdateLayoutAfterTextChange()
+{
+    m_label->Wrap(GetSize().x);
+
+    Layout();
+
+    if (GetSizer()->IsShown(m_label))
+    {
+        InvalidateBestSize();
+        SetMinSize(wxDefaultSize);
+        SetMinSize(GetBestSize());
+
+        GetParent()->Layout();
+    }
+}
+
+
 void ActivityIndicator::Start(const wxString& msg)
 {
     m_running = true;
@@ -365,7 +383,8 @@ void ActivityIndicator::Start(const wxString& msg)
     auto sizer = GetSizer();
     sizer->Show(m_spinner);
     sizer->Show(m_label, !msg.empty());
-    Layout();
+
+    UpdateLayoutAfterTextChange();
 
     m_spinner->Start();
 }
@@ -380,7 +399,8 @@ void ActivityIndicator::Stop()
     auto sizer = GetSizer();
     sizer->Hide(m_spinner);
     sizer->Hide(m_label);
-    Layout();
+
+    UpdateLayoutAfterTextChange();
 }
 
 void ActivityIndicator::StopWithError(const wxString& msg)
@@ -395,5 +415,6 @@ void ActivityIndicator::StopWithError(const wxString& msg)
     auto sizer = GetSizer();
     sizer->Hide(m_spinner);
     sizer->Show(m_label);
-    Layout();
+
+    UpdateLayoutAfterTextChange();
 }
