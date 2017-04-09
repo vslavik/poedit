@@ -703,7 +703,10 @@ void EditingArea::SetTextFocus()
     if (m_textTrans && m_textTrans->IsShown())
         m_textTrans->SetFocus();
     else if (!m_textTransPlural.empty())
+    {
+        m_pluralNotebook->SetSelection(0);
         m_textTransPlural[0]->SetFocus();
+    }
 }
 
 bool EditingArea::HasTextFocus()
@@ -771,6 +774,9 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
         {
             SetTranslationValue(m_textTransPlural[i], item->GetTranslation(i), flags);
         }
+
+        if (flags & EditingArea::ItemChanged)
+            m_pluralNotebook->SetSelection(0);
     }
     else
     {
