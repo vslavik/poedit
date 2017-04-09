@@ -103,6 +103,7 @@ public:
     {
         auto basepath = sourceSpec.BasePath;
 #ifdef __WXMSW__
+        basepath = CliSafeFileName(basepath);
         basepath.Replace("\\", "/");
 #endif
 
@@ -115,7 +116,7 @@ public:
             // char* arguments), so work around this by using the short names.
             if (!fn.IsAscii())
             {
-                fn = wxFileName(fn).GetShortPath();
+                fn = CliSafeFileName(fn);
                 fn.Replace("\\", "/");
             }
 #endif

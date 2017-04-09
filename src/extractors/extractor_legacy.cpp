@@ -257,7 +257,7 @@ wxString LegacyExtractorSpec::BuildCommand(const std::vector<wxString>& files,
         // char* arguments), so work around this by using the short names.
         if (!fn.IsAscii())
         {
-            fn = wxFileName(fn).GetShortPath();
+            fn = CliSafeFileName(fn);
             fn.Replace("\\", "/");
         }
 #endif
