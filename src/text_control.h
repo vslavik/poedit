@@ -46,7 +46,7 @@
 class CustomizedTextCtrl : public wxTextCtrl
 {
 public:
-    static const int ALWAYS_USED_STYLE = wxTE_MULTILINE | wxTE_RICH2;
+    static const int ALWAYS_USED_STYLE = wxTE_MULTILINE | wxTE_RICH2 | wxTE_NOHIDESEL;
 
     CustomizedTextCtrl(wxWindow *parent, wxWindowID winid, long style = 0);
 
