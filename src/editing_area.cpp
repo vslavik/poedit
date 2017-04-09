@@ -713,6 +713,7 @@ bool EditingArea::HasTextFocus()
            (focus && focus->GetParent() == m_pluralNotebook);
 }
 
+
 bool EditingArea::HasTextFocusInPlurals()
 {
     if (!m_pluralNotebook || !m_pluralNotebook->IsShown())
@@ -723,6 +724,12 @@ bool EditingArea::HasTextFocusInPlurals()
         return false;
 
     return std::find(m_textTransPlural.begin(), m_textTransPlural.end(), focused) != m_textTransPlural.end();
+}
+
+
+bool EditingArea::IsShowingPlurals()
+{
+    return m_pluralNotebook && m_pluralNotebook->IsShown();
 }
 
 
@@ -896,6 +903,16 @@ void EditingArea::ChangeFocusedPluralTab(int offset)
 {
     wxCHECK_RET(offset == +1 || offset == -1, "invalid offset");
 
+    bool hasFocus = HasTextFocusInPlurals();
+#ifdef __WXMSW__
+    wxWindow *prevFocus = hasFocus ? nullptr : FindFocus();
+#endif
+
     m_pluralNotebook->AdvanceSelection(/*forward=*/offset == +1 ? true : false);
-    m_textTransPlural[m_pluralNotebook->GetSelection()]->SetFocus();
+    if (hasFocus)
+        m_textTransPlural[m_pluralNotebook->GetSelection()]->SetFocus();
+#ifdef __WXMSW__
+    else if (prevFocus)
+        prevFocus->SetFocus();
+#endif
 }

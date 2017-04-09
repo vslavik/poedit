@@ -86,6 +86,7 @@ public:
     void SetTextFocus();
     bool HasTextFocus();
     bool HasTextFocusInPlurals();
+    bool IsShowingPlurals();
 
     void CopyFromSingular();
 
