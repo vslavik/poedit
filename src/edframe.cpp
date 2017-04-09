@@ -2341,6 +2341,13 @@ void PoeditFrame::NoteAsRecentFile()
 }
 
 
+void PoeditFrame::MarkAsModified()
+{
+    m_modified = true;
+    UpdateTitle();
+}
+
+
 void PoeditFrame::RefreshControls(int flags)
 {
     if (!m_catalog)

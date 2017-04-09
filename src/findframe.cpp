@@ -610,8 +610,13 @@ bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
             replaced = true;
     }
 
-    if (replaced && item == m_owner->GetCurrentItem())
-        m_owner->UpdateToTextCtrl(EditingArea::UndoableEdit);
+    if (replaced)
+    {
+        item->SetModified(true);
+        m_owner->MarkAsModified();
+        if (item == m_owner->GetCurrentItem())
+            m_owner->UpdateToTextCtrl(EditingArea::UndoableEdit);
+    }
 
     return replaced;
 }

@@ -121,6 +121,9 @@ class PoeditFrame : public PoeditFrameBase
 
         /// Did the user modify the catalog?
         bool IsModified() const { return m_modified; }
+
+        void MarkAsModified();
+
         /** Updates catalog and sets m_modified flag. Updates from POT
             if \a pot_file is not empty and from sources otherwise.
          */
