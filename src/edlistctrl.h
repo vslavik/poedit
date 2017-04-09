@@ -207,10 +207,7 @@ class PoeditListCtrl : public wxDataViewCtrl
             m_model->ItemsChanged(sel);
         }
 
-        void RefreshAllItems()
-        {
-            m_model->Reset(m_model->GetCount());
-        }
+        void RefreshAllItems();
 
         void RefreshItem(const wxDataViewItem& item)
         {

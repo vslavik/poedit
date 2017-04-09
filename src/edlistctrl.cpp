@@ -694,6 +694,18 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
 }
 
 
+void PoeditListCtrl::RefreshAllItems()
+{
+    // Can't use Cleared() here because it messes up selection and scroll position
+    const int count = m_model->GetCount();
+    wxDataViewItemArray items;
+    items.reserve(count);
+    for (int i = 0; i < count; i++)
+        items.push_back(m_model->GetItem(i));
+    m_model->ItemsChanged(items);
+}
+
+
 void PoeditListCtrl::Sort()
 {
     if (!m_catalog)

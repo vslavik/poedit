@@ -625,13 +625,25 @@ void FindFrame::OnReplace(wxCommandEvent&)
 {
     if (!m_lastItem)
         return;
-    DoReplaceInItem(m_lastItem);
-    m_listCtrl->Refresh();
+    if (DoReplaceInItem(m_lastItem))
+    {
+        // FIXME: Only refresh affected items
+        m_listCtrl->RefreshAllItems();
+    }
 }
 
 void FindFrame::OnReplaceAll(wxCommandEvent&)
 {
+    bool replaced = false;
     for (auto& item: m_catalog->items())
-        DoReplaceInItem(item);
-    m_listCtrl->Refresh();
+    {
+        if (DoReplaceInItem(item))
+            replaced = true;
+    }
+
+    if (replaced)
+    {
+        // FIXME: Only refresh affected items
+        m_listCtrl->RefreshAllItems();
+    }
 }
