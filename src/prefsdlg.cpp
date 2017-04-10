@@ -615,7 +615,7 @@ public:
         listSizer->AddSpacer(PX(5));
 
         m_list = new wxCheckListBox(listPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, nullptr, wxBORDER_NONE);
-        m_list->SetMinSize(wxSize(PX(400),PX(300)));
+        m_list->SetMinSize(wxSize(PX(400),PX(200)));
 #ifdef __WXOSX__
         m_list->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
