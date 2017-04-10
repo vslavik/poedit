@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2017-03-27 15:53+0200\n"
-"PO-Revision-Date: 2017-03-27 09:53-0400\n"
+"POT-Creation-Date: 2017-04-10 17:34+0200\n"
+"PO-Revision-Date: 2017-04-10 11:34-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -137,6 +137,11 @@ msgstr "Debe reiniciar Poedit para que los cambios surtan efecto."
 
 msgid "Syncing"
 msgstr "Sincronizando"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s…"
+msgstr "Sincronizando con %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
@@ -540,10 +545,10 @@ msgid ""
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
-"El archivo contenía elementos duplicados, los cuales no están permitidos en "
-"los archivos PO y podría impedir utilizar el archivo. Poedit resolvió el "
-"problema, pero debe revisar las traducciones de los elementos marcados como "
-"por revisar y corregirlos si fuera necesario."
+"El archivo contenía elementos duplicados, lo que impediría su "
+"funcionamiento. Poedit ha corregido el problema, pero debe revisar las "
+"traducciones de cualesquier elementos marcados como por revisar y "
+"corregirlas si es necesario."
 
 msgid "Language of the translation isn't set."
 msgstr "No se ha establecido el idioma de la traducción."
@@ -924,8 +929,8 @@ msgstr "Total"
 msgid "Untrans"
 msgstr "Sin traducir"
 
-msgid "Bad Tokens"
-msgstr "Símbolos erróneos"
+msgid "Errors"
+msgstr "Errores"
 
 msgid "Last modified"
 msgstr "Última modificación"
@@ -962,7 +967,7 @@ msgid "Your Name"
 msgstr "Su nombre"
 
 msgid "Email:"
-msgstr "Dirección de correo electrónico:"
+msgstr "Correo electrónico:"
 
 msgid "your_email@example.com"
 msgstr "dirección@ejemplo.com"
@@ -1037,7 +1042,7 @@ msgstr "Al actualizar desde el código fuente"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
-msgstr ""
+msgstr "incluir coincidencias aprox. del archivo"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
@@ -1206,8 +1211,9 @@ msgid ""
 "By default, inaccurate results are filled in as well and marked as needing "
 "work. Check this option to only include accurate matches."
 msgstr ""
-"Por defecto, los resultados imprecisos también son incluidos y marcados como "
-"por revisar. Active esta opción para incluir solo coincidencias exactas."
+"De manera predeterminada, se incluyen también los resultados aproximados y "
+"se marcan como pendientes de revisión. Active esta opción para incluir solo "
+"coincidencias exactas."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "No marcar las coincidencias exactas como por revisar"
@@ -1317,7 +1323,7 @@ msgid "Name of the project the translation is for"
 msgstr "El nombre del proyecto al que se destina esta traducción"
 
 msgid "Team name and email address or URL"
-msgstr ""
+msgstr "Nombre de equipo y correo o URL"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "p. ej., nplurals=2; plural=(n > 1);"
@@ -1333,10 +1339,10 @@ msgid "Not all plural forms are translated."
 msgstr "No todas las formas plurales están traducidas."
 
 msgid "The translation should start as a sentence."
-msgstr ""
+msgstr "La traducción debe comenzar como una oración."
 
 msgid "The translation should start with a lowercase character."
-msgstr "La traducción debe comenzar con letra minúscula."
+msgstr "La traducción debe comenzar con una letra minúscula."
 
 msgid "The translation doesn’t start with a space."
 msgstr "La traducción no comienza con un espacio."
@@ -1349,6 +1355,7 @@ msgstr "Falta un salto de renglón al final en la traducción."
 
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr ""
+"La traducción termina con un salto de renglón, pero el texto original no."
 
 msgid "The translation is missing a space at the end."
 msgstr "Falta un espacio final en la traducción."
@@ -1358,15 +1365,16 @@ msgstr "La traducción termina con un espacio, pero el texto original no."
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr ""
+msgstr "La traducción debe terminar con «%s»."
 
 #, c-format
 msgid "The translation should not end with “%s”."
-msgstr ""
+msgstr "La traducción no debe terminar con «%s»."
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
 msgstr ""
+"La traducción termina con «%s», pero el texto original termina con «%s»."
 
 msgid "Comment:"
 msgstr "Comentario:"
@@ -1477,10 +1485,10 @@ msgid "Copy From Singular"
 msgstr "Copiar del singular"
 
 msgid "Translation needs &work"
-msgstr ""
+msgstr "Traducción por re&visar"
 
 msgid "Translation Needs &Work"
-msgstr ""
+msgstr "Traducción por re&visar"
 
 msgid "Edit &comment"
 msgstr "Editar &comentario"
@@ -2114,19 +2122,19 @@ msgstr "Intro"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Up"
-msgstr "↑"
+msgstr "Arriba"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Down"
-msgstr "↓"
+msgstr "Abajo"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Left"
-msgstr ""
+msgstr "Izquierda"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Right"
-msgstr ""
+msgstr "Derecha"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
 msgid "ctrl"

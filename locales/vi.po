@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2017-03-27 15:53+0200\n"
-"PO-Revision-Date: 2017-03-27 09:53-0400\n"
+"POT-Creation-Date: 2017-04-10 17:34+0200\n"
+"PO-Revision-Date: 2017-04-09 03:32-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -85,8 +85,8 @@ msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"Tập tin '%s' chỉ cho phép đọc và không thể ghi lại được.\n"
-"Xin hãy ghi lại dưới một cái tên mới."
+"Tập tin '%s' chỉ cho phép đọc và không thể lưu lại được.\n"
+"Xin hãy lưu lại dưới một cái tên mới."
 
 #, c-format
 msgid "Couldn't save file %s."
@@ -94,7 +94,7 @@ msgstr "Không thể lưu tập tin %s."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
-msgstr "Có vấn đề với định dạng (nhưng vẫn có thể ghi lại)."
+msgstr "Có vấn đề với định dạng (nhưng vẫn có thể lưu lại)."
 
 #, c-format
 msgid ""
@@ -103,13 +103,13 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Catalog không ghi lại được theo danh nghĩa bộ ký tự '%s' như trong cài đặt.\n"
+"Catalog không thể được lưu trong bản mã '%s' như quy định tại danh mục cài "
+"đặt.\n"
 "\n"
-"Thay vào đó, nó được ghi lại bằng kiểu UTF-8 và cài đặt sẽ được chỉnh sửa "
-"lại cho phù hợp."
+"Nó đã được lưu trong UTF-8 để thay thế và các thiết lập thay đổi cho phù hợp."
 
 msgid "Error saving catalog"
-msgstr "Gặp lỗi khi đang ghi lại catalog"
+msgstr "Gặp lỗi khi lưu catalog"
 
 msgid "PO Translation Files"
 msgstr "PO Dịch Tập Tin"
@@ -134,6 +134,11 @@ msgstr "Bạn phải khởi động lại Poedit để các thay đổi có tác
 
 msgid "Syncing"
 msgstr "Đồng bộ"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s…"
+msgstr ""
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
@@ -224,7 +229,7 @@ msgid "&Copy"
 msgstr "&Sao"
 
 msgid "Learn more"
-msgstr "Nghiên cứu sâu hơn"
+msgstr "Tìm hiểu thêm"
 
 msgid "Learn More"
 msgstr "Tìm Hiểu Thêm"
@@ -410,25 +415,25 @@ msgid "Install"
 msgstr "Cài đặt"
 
 msgid "Catalog modified. Do you want to save changes?"
-msgstr "Catalog đã bị sửa. Bạn có muốn ghi lại các thay đổi không?"
+msgstr "Catalog đã bị sửa. Bạn có muốn lưu lại các thay đổi không?"
 
 msgid "Save changes"
-msgstr "Ghi lại các thay đổi"
+msgstr "Lưu thay đổi"
 
 msgid "Your changes will be lost if you don't save them."
-msgstr "Các thay đổi của bạn sẽ bị mất nếu bạn không ghi nó lại."
+msgstr "Thay đổi của bạn sẽ bị mất nếu bạn không lưu chúng."
 
 msgid "Save"
-msgstr "Ghi lại"
+msgstr "Lưu"
 
 msgid "Don't save"
-msgstr "Không ghi Lại"
+msgstr "Không lưu"
 
 msgid "Don't Save"
-msgstr "Không Ghi Lại"
+msgstr "Không Lưu"
 
 msgid "Save as..."
-msgstr "Ghi lại với tên mới..."
+msgstr "Lưu như"
 
 msgid "Compile to..."
 msgstr "Biên dịch sang..."
@@ -495,8 +500,8 @@ msgid ""
 "The file was saved safely, but it cannot be compiled into the MO format and "
 "used."
 msgstr ""
-"Tập tin đã được ghi lại một cách an toàn, nhưng nó không thể được dịch thành "
-"tập tin có định dạng MO để có thể dùng được."
+"Tập tin đã được lưu một cách an toàn, nhưng nó không thể được biên dịch "
+"thành định dạng MO để có thể sử dụng được."
 
 msgid ""
 "The file was compiled into the MO format, but it will probably not work "
@@ -912,8 +917,8 @@ msgstr "Tổng cộng"
 msgid "Untrans"
 msgstr "Chưa dịch"
 
-msgid "Bad Tokens"
-msgstr "Token hỏng"
+msgid "Errors"
+msgstr ""
 
 msgid "Last modified"
 msgstr "Lần sửa cuối"
@@ -1024,11 +1029,11 @@ msgstr "Khi cập nhật từ nguồn"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
-msgstr ""
+msgstr "Làm mờ trùng bên trong tập tin"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
-msgstr ""
+msgstr "Dịch trước từ TM"
 
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
@@ -1036,6 +1041,10 @@ msgid ""
 "effective if it’s near-empty, but it will get better as you add more "
 "translations to it."
 msgstr ""
+"Poedit có thể cố gắng để điền vào mục mới từ bản dịch trước đó trong tập tin "
+"hoặc từ toàn bộ bộ nhớ dịch của bạn. Sử dụng TM sẽ không thể hiệu quả nếu nó "
+"gần như trống rỗng, nhưng nó sẽ trở nên tốt hơn khi bạn thêm nhiều bản dịch "
+"với nó."
 
 msgid "Stored translations:"
 msgstr "Các bản dịch được lưu trữ:"
@@ -1085,13 +1094,13 @@ msgstr ""
 "tin mã nguồn và giải nén nó vì thế chúng có thể được dịch."
 
 msgid "Custom Extractors:"
-msgstr ""
+msgstr "Tùy Chọn Giải Nén:"
 
 msgid "Custom extractors:"
-msgstr ""
+msgstr "Tùy chọn giải nén:"
 
 msgid "Edit..."
-msgstr ""
+msgstr "Sửa..."
 
 msgid "GNU gettext"
 msgstr ""
@@ -1100,6 +1109,8 @@ msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
+"Hỗ trợ tất cả các ngôn ngữ lập trình được công nhận bởi công cụ GNU gettext "
+"(PHP, C/c + +, C#, Perl, Python, Java, JavaScript và những ngôn ngữ khác)."
 
 msgid "Delete extractor"
 msgstr "Xóa trình giải nén"
@@ -1157,12 +1168,12 @@ msgid "Advanced"
 msgstr "Nâng cao"
 
 msgid "Pre-translating…"
-msgstr ""
+msgstr "Đang dịch trước..."
 
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
-msgstr[0] ""
+msgstr[0] "Chuỗi %u đã được dịch trước"
 
 #. TRANSLATORS: This is a somewhat common term describing the action where
 #. you apply the translation memory and/or machine translation to all of the
@@ -1201,6 +1212,8 @@ msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
+"Bản dịch tự động tìm kiếm kết hợp chính xác hoặc làm mờ cho các chuỗi chưa "
+"dịch trong bộ nhớ dịch và điền vào bản dịch của họ."
 
 #, c-format
 msgid "%d entry was pre-translated."
@@ -1215,7 +1228,7 @@ msgstr ""
 "chính xác. Bạn nên xem lại chúng cho việc sửa chữa."
 
 msgid "No entries could be pre-translated."
-msgstr ""
+msgstr "Không có mục có thể được trước dịch."
 
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
@@ -1269,19 +1282,19 @@ msgid "Excluded paths"
 msgstr "Đường dẫn loại trừ"
 
 msgid "Advanced extraction settings"
-msgstr ""
+msgstr "Cài đặt giải nén nâng cao"
 
 msgid "Extract notes for translators from:"
-msgstr ""
+msgstr "Giải nén ghi chú cho người dịch từ:"
 
 msgid "Comments prefixed with:"
-msgstr ""
+msgstr "Bình luận bắt đầu bằng:"
 
 msgid "All comments"
-msgstr ""
+msgstr "Tất cả bình luận"
 
 msgid "Additional xgettext flags:"
-msgstr ""
+msgstr "Bổ sung cờ xgettext :"
 
 msgid "Additional keywords"
 msgstr "Từ khoá bổ xung"
@@ -1290,7 +1303,7 @@ msgid "Name of the project the translation is for"
 msgstr "Tên của dự án của bản dịch"
 
 msgid "Team name and email address or URL"
-msgstr ""
+msgstr "Tên nhóm và địa chỉ email hoặc URL"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "ví dụ: nplurals=2; plural=(n > 1);"
@@ -1300,7 +1313,8 @@ msgstr "UTF-8 (nên dùng)"
 
 msgid "Please save the file first. This section cannot be edited until then."
 msgstr ""
-"Hãy ghi lại tập tin trước. Phần này không thể được sửa chữa cho đến sau này."
+"Vui lòng lưu tập tin này trước. Phần này không được chỉnh sửa cho đến khi "
+"tập tin được lưu lại."
 
 msgid "Not all plural forms are translated."
 msgstr "Không phải tất cả các hình thức số nhiều được dịch."
@@ -1355,7 +1369,7 @@ msgid "Clear the comment"
 msgstr "Xóa phần chú thích"
 
 msgid "New"
-msgstr "Tạo mới"
+msgstr "Mới"
 
 msgid "Create new translations project"
 msgstr "Tạo một dự án dịch mới"
@@ -1382,7 +1396,7 @@ msgid "Project name:"
 msgstr "Tên dự án:"
 
 msgid "Browse"
-msgstr "Tìm duyệt"
+msgstr "Duyệt"
 
 msgid "Add directory to the list"
 msgstr "Thêm thư mục vào danh sách"
@@ -1391,10 +1405,10 @@ msgid "&New..."
 msgstr "&Mới..."
 
 msgid "New from &POT/PO file..."
-msgstr "Tạo cái mới từ tệp tin &POT/PO..."
+msgstr "Tạo mới từ tệp tin &POT/PO..."
 
 msgid "New From &POT/PO File..."
-msgstr "Tạo cái mới từ tệp tin &POT/PO..."
+msgstr "Tạo Mới Từ Tập Tin &POT/PO..."
 
 msgid "&Open..."
 msgstr "&Mở..."
@@ -1412,13 +1426,13 @@ msgid "&Close"
 msgstr "Đó&ng"
 
 msgid "&Save"
-msgstr "&Ghi lại"
+msgstr "&Lưu"
 
 msgid "Save &as..."
-msgstr "Ghi lại với tên &mới..."
+msgstr "Lưu &như..."
 
 msgid "Save &As..."
-msgstr "Ghi lại với tên &mới..."
+msgstr "Lưu &Như..."
 
 msgid "Compile to MO..."
 msgstr "Biên dịch sang MO..."
@@ -1439,7 +1453,7 @@ msgid "Catalogs &Manager"
 msgstr "&Quản lý các catalog"
 
 msgid "E&xit"
-msgstr "Thoát r&a"
+msgstr "Thoá&t"
 
 msgid "Quit"
 msgstr "Thoát"
@@ -1451,10 +1465,10 @@ msgid "Copy From Singular"
 msgstr "Sao chép từ số ít"
 
 msgid "Translation needs &work"
-msgstr ""
+msgstr "Bản dịch cần làm &việc"
 
 msgid "Translation Needs &Work"
-msgstr ""
+msgstr "Bản Dịch Cần Làm &Việc"
 
 msgid "Edit &comment"
 msgstr "Sửa &chú thích"
@@ -1562,7 +1576,7 @@ msgid "Sync with Crowdin"
 msgstr "Đồng bộ với Crowdin"
 
 msgid "Pre-&translate..."
-msgstr ""
+msgstr "Dịch &trước ..."
 
 msgid "&Purge deleted translations"
 msgstr "&Thanh lọc các chuỗi đã xóa"
@@ -1701,10 +1715,10 @@ msgid "Project name and version:"
 msgstr "Tên và phiên bản của dự án:"
 
 msgid "Language team:"
-msgstr ""
+msgstr "Nhóm ngôn ngữ:"
 
 msgid "Plural forms:"
-msgstr ""
+msgstr "Hình thức số nhiều:"
 
 msgid "Use default rules for this language"
 msgstr "Sử dụng quy tắc mặc định cho ngôn ngữ này"
@@ -1719,19 +1733,19 @@ msgid "Charset:"
 msgstr "Bảng mã ký tự:"
 
 msgid "Advanced Extraction Settings..."
-msgstr ""
+msgstr "Cài Đặt Giải Nén Nâng Cao..."
 
 msgid "Advanced extraction settings..."
-msgstr ""
+msgstr "Cài đặt giải nén nâng cao..."
 
 msgid "Translation Properties"
-msgstr ""
+msgstr "Thuộc tính dịch"
 
 msgid "Translation properties"
 msgstr "Thuộc tính bản dịch"
 
 msgid "Sources Paths"
-msgstr ""
+msgstr "Đường dẫn nguồn"
 
 msgid "Sources paths"
 msgstr "Đường dẫn mã nguồn"
@@ -1743,7 +1757,7 @@ msgid "Base path:"
 msgstr "Đường dẫn cơ sở:"
 
 msgid "Sources Keywords"
-msgstr ""
+msgstr "Nguồn từ khóa"
 
 msgid "Sources keywords"
 msgstr "Từ khóa dùng cho mã nguồn"
@@ -1794,7 +1808,7 @@ msgid "Open"
 msgstr "Mở"
 
 msgid "Save catalog"
-msgstr "Ghi lại catalog"
+msgstr "Lưu catalog"
 
 msgid "Validate"
 msgstr "Thẩm tra"
@@ -1822,6 +1836,8 @@ msgid ""
 "The old source text (before it changed during an update) that the now-"
 "inaccurate translation corresponds to."
 msgstr ""
+"Các nguồn văn bản cũ (trước khi nó thay đổi trong quá trình cập nhật) mà bản "
+"dịch hiện thời không chính xác tương ứng."
 
 msgid "Notes for translators:"
 msgstr "Ghi chú dành cho người dịch:"
@@ -1975,17 +1991,17 @@ msgstr "Cá nhân hóa..."
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Recent"
-msgstr ""
+msgstr "Gần đây"
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Frequent"
-msgstr ""
+msgstr "Thường xuyên"
 
 msgid "&Apply"
-msgstr ""
+msgstr "&Áp dụng"
 
 msgid "Apply"
-msgstr ""
+msgstr "Áp dụng"
 
 msgid "&Back"
 msgstr "&Quay lại"

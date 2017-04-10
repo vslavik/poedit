@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2017-03-27 15:53+0200\n"
-"PO-Revision-Date: 2017-03-27 09:52-0400\n"
+"POT-Creation-Date: 2017-04-10 17:34+0200\n"
+"PO-Revision-Date: 2017-04-10 11:34-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Crowdin-File: /locales/poedit.pot\n"
 
 msgid "Hide this notification message"
-msgstr "Skryť túto správu s upozornením"
+msgstr "Skryť toto upozornenie"
 
 msgid "Don't Show Again"
 msgstr "Nabudúce nezobrazovať"
@@ -27,13 +27,13 @@ msgstr "Nabudúce nezobrazovať"
 
 #, c-format
 msgid "(New: %i, obsolete: %i)"
-msgstr "(Nové: %i, zastarané: %i)"
+msgstr "(Nové: %i, zastaralé: %i)"
 
 msgid "Updating catalog"
-msgstr "Aktualizácia katalógu"
+msgstr "Aktualizovanie katalógu"
 
 msgid "Collecting source files..."
-msgstr "Prebieha zhromažďovanie zdrojových súborov..."
+msgstr "Zhromažďovanie zdrojových súborov..."
 
 msgid "Extracting translatable strings..."
 msgstr "Extrahovanie preložiteľných reťazcov..."
@@ -61,7 +61,7 @@ msgstr "Riadok %d v súbore '%s' je poškodený (nesprávne %s dáta)."
 
 #, c-format
 msgid "Malformed header: '%s'"
-msgstr "Chybný formát hlavičky „%s“"
+msgstr "Chybný formát hlavičky: '%s'"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -71,7 +71,7 @@ msgstr ""
 
 msgid "Broken catalog file: plural form msgstr used without msgid_plural"
 msgstr ""
-"Chybný súbor katalógu: tvar množného čísla msgstr použitý bez msgid_plural"
+"Poškodený súbor katalógu: tvar množného čísla msgstr použitý bez msgid_plural"
 
 msgid ""
 "There were errors when loading the catalog. Some data may be missing or "
@@ -89,12 +89,12 @@ msgid ""
 "File '%s' is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"Súbor „%s“ je možné iba čítať, takže nemôže byť uložený.\n"
+"Súbor '%s' je možné iba čítať, takže nemôže byť uložený.\n"
 "Skúste ho uložiť pod iným názvom."
 
 #, c-format
 msgid "Couldn't save file %s."
-msgstr "Nedá sa uložiť súbor %s."
+msgstr "Súbor %s sa nedá uložiť."
 
 msgid ""
 "There was a problem formatting the file nicely (but it was saved all right)."
@@ -138,18 +138,23 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "Musíte reštartovať program Poedit, aby sa prejavili zmeny."
 
 msgid "Syncing"
-msgstr "Prebieha synchronizácia"
+msgstr "Synchronizácia"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s…"
+msgstr "Synchronizácia so službou %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s failed."
-msgstr "Synchronizácia so službou %s zlyhala."
+msgstr "Synchronizácia s %s zlyhala."
 
 msgid "Syncing error"
 msgstr "Chyba synchronizácie"
 
 msgid "Downloading translations is disabled in this project."
-msgstr "Sťahovanie prekladu nie je možné pre tento projekt."
+msgstr "V tomto projekte je sťahovanie prekladov vypnuté."
 
 msgid "Not authorized, please sign in again."
 msgstr "Chyba pri autorizácii, skúste sa prihlásiť znova."
@@ -181,7 +186,7 @@ msgid "Updating user information…"
 msgstr "Aktualizujú sa informácie o používateľovi…"
 
 msgid "Signed in as:"
-msgstr "Prihlásený používateľ:"
+msgstr "Prihlásený ako:"
 
 msgid "Learn More About Crowdin"
 msgstr "Viac informácií o službe Crowdin"
@@ -205,7 +210,7 @@ msgid "File:"
 msgstr "Súbor:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "Neboli nájdené žiadne prekladateľské projekty vo vašom Crowdin účte."
+msgstr "Neboli nájdené žiadne prekladateľské projekty vo vašom účte Crowdin."
 
 msgid "This project has no files that can be translated in Poedit."
 msgstr ""
@@ -223,10 +228,10 @@ msgid "Syncing with Crowdin failed."
 msgstr "Synchronizácia so službou Crowdin zlyhala."
 
 msgid "Crowdin error"
-msgstr "Chyba - Crowdin"
+msgstr "Chyba – Crowdin"
 
 msgid "Uploading translations…"
-msgstr "Aktualizácia prekladov…"
+msgstr "Odosielanie prekladov…"
 
 msgid "&Copy"
 msgstr "&Kopírovať"
@@ -930,8 +935,8 @@ msgstr "Celkovo"
 msgid "Untrans"
 msgstr "Nepreložené"
 
-msgid "Bad Tokens"
-msgstr "Chybné preklady"
+msgid "Errors"
+msgstr "Chyby"
 
 msgid "Last modified"
 msgstr "Posledná zmena"
@@ -1201,7 +1206,7 @@ msgstr[2] "Predbežne preložených %u reťazcov"
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
 msgid "Pre-translate"
-msgstr "Predbežný preklad"
+msgstr "Predpreložiť"
 
 msgid "Only fill in exact matches"
 msgstr "Vyplniť iba presné zhody"
@@ -1341,7 +1346,7 @@ msgid "The translation should start with a lowercase character."
 msgstr "Preklad by mal začať malým písmenom."
 
 msgid "The translation doesn’t start with a space."
-msgstr "Preklad nemôže začínat s medzerou."
+msgstr "Preklad nezačína medzerou."
 
 msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "Preklad začína medzerou, ale zdrojový text nie."
@@ -1353,14 +1358,14 @@ msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "Preklad končí novým riadkom, ale zdrojový text nie."
 
 msgid "The translation is missing a space at the end."
-msgstr "Prekladu chýba medzera na konci."
+msgstr "V preklade chýba medzera na konci."
 
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "Preklad končí medzerou, ale zdrojový text nie."
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr "Preklad by mal byť ukončený s \"%s\"."
+msgstr "Preklad by mal končiť s \"%s\"."
 
 #, c-format
 msgid "The translation should not end with “%s”."
@@ -2119,11 +2124,11 @@ msgstr "Dole"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Left"
-msgstr ""
+msgstr "Vľavo"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Right"
-msgstr ""
+msgstr "Vpravo"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
 msgid "ctrl"
