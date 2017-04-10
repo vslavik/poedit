@@ -137,6 +137,10 @@ public:
 class PunctuationMismatch : public QACheck
 {
 public:
+    PunctuationMismatch(Language lang) : m_lang(lang.Lang())
+    {
+    }
+
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
         const UChar32 s_last = source.Last();
@@ -166,6 +170,10 @@ public:
             {
                 // don't check for correct quotes for now, accept any quotations marks as equal
             }
+            else if (IsEquivalent(s_last, t_last))
+            {
+                // some characters are mostly equivalent and we shouldn't warn about them
+            }
             else
             {
                 item->SetIssue(CatalogItem::Issue::Warning,
@@ -177,6 +185,36 @@ public:
 
         return false;
     }
+
+private:
+    bool IsEquivalent(UChar32 src, UChar32 trans) const
+    {
+        if (src == trans)
+            return true;
+
+        if (m_lang == "zh")
+        {
+            // Chinese uses full-width punctuation.
+            // See https://en.wikipedia.org/wiki/Chinese_punctuation
+            switch (src)
+            {
+                case '.':
+                    return trans == L'。';
+                case '!':
+                    return trans == L'！';
+                case '?':
+                    return trans == L'？';
+                case ':':
+                    return trans == L'：';
+                default:
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+    std::string m_lang;
 };
 
 
@@ -249,12 +287,12 @@ int QAChecker::Check(CatalogItemPtr item)
 }
 
 
-std::shared_ptr<QAChecker> QAChecker::GetFor(Catalog& /*catalog*/)
+std::shared_ptr<QAChecker> QAChecker::GetFor(Catalog& catalog)
 {
     auto c = std::make_shared<QAChecker>();
     c->AddCheck<QA::NotAllPlurals>();
     c->AddCheck<QA::CaseMismatch>();
     c->AddCheck<QA::WhitespaceMismatch>();
-    c->AddCheck<QA::PunctuationMismatch>();
+    c->AddCheck(std::make_shared<QA::PunctuationMismatch>(catalog.GetLanguage()));
     return c;
 }
