@@ -1,4 +1,22 @@
 
+Version 2.0.1
+-------------
+
+- Restored compatibility with Zend Framework and its .phtml extension.
+- Fixed keyboard navigation between plurals.
+- Fixed false positives in punctuation warnings (quotes, Chinese).
+- [Linux] Mostly fixed compatibility with wxGTK 3.0.2.
+- [macOS] Fixed crash with Vietnamese input method.
+- [Windows] Fixed disappearing menu with HiDPI >200% zoom.
+- [Windows] Fixed settings-related crash.
+- [Windows] Fixed Ctrl+A handling.
+
+IMPORTANT NOTE TO DISTRIBUTION MAINTAINERS:
+Poedit is affected by a bug in wxGTK 3.0.2 that cannot be worked around in user
+code, requiring this patch to wxGTK to be applied:
+https://github.com/wxWidgets/wxWidgets/commit/ed88188be7e97a0503f3471f7b0452740b732902
+
+
 Version 2.0
 -----------
 
