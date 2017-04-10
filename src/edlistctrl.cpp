@@ -590,7 +590,13 @@ void PoeditListCtrl::CreateColumns()
         isRTL = !isRTL;
 #endif
 
-    m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_CENTER, 0);
+#if defined(__WXMSW__)
+    int iconWidth = wxArtProvider::GetBitmap("poedit-status-error").GetSize().x + 6 /*wxDVC internal padding*/;
+#else
+    int iconWidth = PX(16);
+#endif
+
+    m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, iconWidth, wxALIGN_CENTER, 0);
 #if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
     m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster);
 #endif
