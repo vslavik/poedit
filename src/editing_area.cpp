@@ -775,7 +775,7 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
             SetTranslationValue(m_textTransPlural[i], item->GetTranslation(i), flags);
         }
 
-        if (flags & EditingArea::ItemChanged)
+        if ((flags & EditingArea::ItemChanged) && m_pluralNotebook)
             m_pluralNotebook->SetSelection(0);
     }
     else
