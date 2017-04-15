@@ -81,7 +81,7 @@ public:
         m_view.automaticSpellingCorrectionEnabled = NO;
     }
 
-    DisableAutomaticSubstitutions()
+    ~DisableAutomaticSubstitutions()
     {
         m_view.automaticDashSubstitutionEnabled = m_dash;
         m_view.automaticQuoteSubstitutionEnabled = m_quote;
