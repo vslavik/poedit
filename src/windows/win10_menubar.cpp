@@ -61,7 +61,7 @@ public:
             MC_WC_MENUBAR,
             _T(""),
             WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | CCS_NORESIZE | CCS_NOPARENTALIGN,
-            0, 0, 1000, PX(23),
+            0, 0, 1000, 2 * PX(23),
             (HWND)this->GetHWND(),
             (HMENU) -1,
             wxGetInstance(),
