@@ -61,6 +61,7 @@
 { "hy"   , "nplurals=2; plural=(n != 1);" },
 { "ia"   , "nplurals=2; plural=(n != 1);" },
 { "id"   , "nplurals=1; plural=0;" },
+{ "ie"   , "nplurals=2; plural=(n != 1);" },
 { "ig"   , "nplurals=2; plural=(n != 1);" },
 { "ilo"  , "nplurals=2; plural=(n != 1);" },
 { "is"   , "nplurals=2; plural=(n != 1);" },
