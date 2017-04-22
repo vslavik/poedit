@@ -704,7 +704,8 @@ void EditingArea::SetTextFocus()
         m_textTrans->SetFocus();
     else if (!m_textTransPlural.empty())
     {
-        m_pluralNotebook->SetSelection(0);
+        if (m_pluralNotebook && m_pluralNotebook->GetPageCount())
+            m_pluralNotebook->SetSelection(0);
         m_textTransPlural[0]->SetFocus();
     }
 }
@@ -775,7 +776,7 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
             SetTranslationValue(m_textTransPlural[i], item->GetTranslation(i), flags);
         }
 
-        if ((flags & EditingArea::ItemChanged) && m_pluralNotebook)
+        if ((flags & EditingArea::ItemChanged) && m_pluralNotebook && m_pluralNotebook->GetPageCount())
             m_pluralNotebook->SetSelection(0);
     }
     else
