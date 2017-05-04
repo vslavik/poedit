@@ -200,7 +200,7 @@ wxPoint wxFrameWithWindows10Menubar::GetClientAreaOrigin() const
     wxPoint pt = wxFrame::GetClientAreaOrigin();
     if (IsUsed())
     {
-        pt.y += m_menuBar->GetSize().y + MENUBAR_OFFSET;
+        pt.y += wxMax(m_menuBar->GetSize().y, m_menuBar->GetBestSize().y) + MENUBAR_OFFSET;
     }
     return pt;
 }
