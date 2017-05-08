@@ -121,7 +121,7 @@ AM_CONDITIONAL([HAVE_CPPREST], [test "x$have_cpprest" != "xno"])
 
 AC_CHECK_HEADERS([json.hpp])
 
-WX_CONFIG_CHECK([3.0.2], [WXFOUND=1], [WXFOUND=0], [$WXLIBS_USED], [--unicode])
+WX_CONFIG_CHECK([3.0.3], [WXFOUND=1], [WXFOUND=0], [$WXLIBS_USED], [--unicode])
 
 if test "$WXFOUND" != 1; then
     AC_MSG_ERROR([
