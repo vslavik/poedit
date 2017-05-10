@@ -66,8 +66,23 @@ public:
             }
         }
 
+        int blank_block_pos = -1;
+
         for (auto i = s.begin(); i != s.end(); ++i)
         {
+            if (u_isblank(*i))
+            {
+                if (blank_block_pos == -1)
+                    blank_block_pos = int(i - s.begin());
+            }
+            else if (blank_block_pos != -1)
+            {
+                int endpos = int(i - s.begin());
+                if (endpos - blank_block_pos >= 2)
+                    highlight(blank_block_pos, endpos, LeadingWhitespace);
+                blank_block_pos = -1;
+            }
+
             if (*i == '\\')
             {
                 int pos = int(i - s.begin());
