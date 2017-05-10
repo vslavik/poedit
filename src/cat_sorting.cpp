@@ -118,6 +118,11 @@ bool CatalogItemsComparator::operator()(int i, int j) const
 
     if ( m_order.errorsFirst )
     {
+        if ( a.HasIssue() && !b.HasIssue() )
+            return true;
+        else if ( !a.HasIssue() && b.HasIssue() )
+            return false;
+
         if ( a.HasError() && !b.HasError() )
             return true;
         else if ( !a.HasError() && b.HasError() )
