@@ -148,12 +148,16 @@ private:
             wxString payload;
             if (data == "Activate")
             {
-                m_app->OpenNewFile();
+                dispatch::on_main([=] {
+                    m_app->OpenNewFile();
+                });
                 return true;
             }
             if (data.StartsWith("OpenURI:", &payload))
             {
-                m_app->HandleCustomURI(payload);
+                dispatch::on_main([=] {
+                    m_app->HandleCustomURI(payload);
+                });
                 return true;
             }
             if (data.StartsWith("OpenFile:", &payload))
@@ -162,7 +166,9 @@ private:
                 payload.BeforeFirst(':').ToLong(&lineno);
                 wxArrayString a;
                 a.push_back(payload.AfterFirst(':'));
-                m_app->OpenFiles(a, lineno);
+                dispatch::on_main([=] {
+                    m_app->OpenFiles(a, lineno);
+                });
                 return true;
             }
             return false;
