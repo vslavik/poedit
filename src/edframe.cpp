@@ -247,7 +247,8 @@ bool g_focusToText = false;
     f->Show(true);
 
     // HACK: make sure this is called *after* the delayed call in PoeditListCtrl::CatalogChanged
-    f->m_list->CallAfter([=]{ f->PlaceInitialFocus(lineno); });
+    if (f->m_list)
+        f->m_list->CallAfter([=]{ f->PlaceInitialFocus(lineno); });
 
     return f;
 }
@@ -939,7 +940,8 @@ void PoeditFrame::DoOpenFile(const wxString& filename, int lineno)
     ReadCatalog(filename);
 
     // HACK: make sure this is called *after* the delayed call in PoeditListCtrl::CatalogChanged
-    m_list->CallAfter([=]{ PlaceInitialFocus(lineno); });
+    if (m_list)
+        m_list->CallAfter([=]{ PlaceInitialFocus(lineno); });
 }
 
 
