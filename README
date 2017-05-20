@@ -39,6 +39,71 @@ Optional dependencies:
   * cld2 (better language autodetection and non-English source languages)
   * C++REST SDK >= 2.5 (Crowdin integration)
 
+ Ubuntu
+--
+
+Installing on Ubuntu requires the installation of a specific set of dependencies.
+
+1. Install dependencies for building 
+```
+sudo apt-get install build-essential g++-4.8 g++ git make libboost1.54-all-dev libssl-dev cmake git libsecret-1-dev libgtkspell-dev
+```
+2. Create directory all required repositories 
+```
+cd ~; mkdir Source; cd Source
+```
+3. Download all required repositories
+```
+git clone https://github.com/Microsoft/cpprestsdk.git
+git clone https://github.com/luceneplusplus/LucenePlusPlus.git
+git clone https://github.com/CLD2Owners/cld2
+```
+4. Download poedit source code
+```
+wget https://github.com/vslavik/poedit/releases/download/v1.8.6-oss/poedit-1.8.6.tar.gz
+```
+5. Extract it
+```
+tar -zxf poedit-1.8.6.tar.gz
+```
+6. Build and install LucenePlusPlus
+```
+cd ~/Source/LucenePlusPlus; mkdir build; cd build
+CXX=g++-4.8 cmake .. -DCMAKE_BUILD_TYPE=Debug
+make
+sudo make install
+```
+7. Build and install REST SDK
+```
+cd ~/Source/cpprestsdk/Release; mkdir build; cd build
+CXX=g++-4.8 cmake .. -DCMAKE_BUILD_TYPE=Release
+make
+sudo make install
+```
+8. Install wxWidgets
+```
+sudo apt-key adv --fetch-keys http://repos.codelite.org/CodeLite.asc
+sudo apt-add-repository 'deb http://repos.codelite.org/wx3.0.2/ubuntu/ trusty universe'
+sudo apt-get update
+sudo apt-get install libwxbase3.0-0-unofficial libwxbase3.0-dev libwxgtk3.0-0-unofficial libwxgtk3.0-dev wx3.0-headers wx-common libwxbase3.0-dbg libwxgtk3.0-dbg wx3.0-i18n wx3.0-examples wx3.0-doc
+```
+9. Build and install poedit-1.8.6
+```
+cd ~/Source/poedit-1.8.6
+./configure --disable-legacytm LDFLAGS="-L../cld2/internal/ " CPPFLAGS="-I.. "
+make
+sudo make install
+```
+
+You can now run `poedit` or launch it from your menu.
+
+**Note**: If you receive the error 
+```
+poedit: error while loading shared libraries:
+ liblucene++.so.0: cannot open shared object file: No such file or directory
+```
+You can fix this by running `echo "/usr/local/lib/x86_64-linux-gnu" | sudo tee -a /etc/ld.so.conf.d/x86_64-linux-gnu.conf
+sudo ldconfig`
 
  Unix
 ------
