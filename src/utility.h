@@ -119,6 +119,9 @@ inline T EscapeCString(const T& str)
 template<typename T>
 inline T UnescapeCString(const T& str)
 {
+    if (str.find('\\') == T::npos)
+        return str;
+
     T out;
     out.reserve(str.length());
     for (auto i = str.begin(); i != str.end(); ++i)
