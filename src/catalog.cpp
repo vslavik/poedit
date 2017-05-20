@@ -1024,8 +1024,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
         d->SetTranslations(mtranslations);
         d->SetComment(comment);
         d->SetLineNumber(lineNumber);
-        for (size_t i = 0; i < references.GetCount(); i++)
-            d->AddReference(references[i]);
+        d->SetReferences(references);
 
         for (auto i: extractedComments)
         {
