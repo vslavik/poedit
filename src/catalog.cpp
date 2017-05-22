@@ -587,7 +587,8 @@ bool CatalogParser::Parse()
         // Can't we have more than one flag, now only the last is kept ...
         if (ReadParam(line, prefix_flags, dummy))
         {
-            mflags = wxS("#, ") + dummy;
+            static wxString prefix_flags_partial(wxS(", "));
+            mflags = prefix_flags_partial + dummy;
             line = ReadTextLine();
         }
 
@@ -1872,7 +1873,7 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
             f.AddLine("#: " + data->GetRawReferences()[i]);
         wxString dummy = data->GetFlags();
         if (!dummy.empty())
-            f.AddLine(dummy);
+            f.AddLine("#" + dummy);
         for (unsigned i = 0; i < data->GetOldMsgidRaw().GetCount(); i++)
             f.AddLine("#| " + data->GetOldMsgidRaw()[i]);
         if ( data->HasContext() )
@@ -1916,7 +1917,7 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
             f.AddLine("#: " + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
-            f.AddLine(dummy);
+            f.AddLine("#" + dummy);
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
@@ -2434,38 +2435,41 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
 
 void CatalogItem::SetFlags(const wxString& flags)
 {
-    static const wxString flag_fuzzy(wxS("fuzzy"));
+    static const wxString flag_fuzzy(wxS(", fuzzy"));
 
-    m_isFuzzy = false;
-    m_moreFlags.Empty();
+    m_moreFlags = flags;
 
-    if (flags.empty()) return;
-    wxStringTokenizer tkn(flags.Mid(1), " ,", wxTOKEN_STRTOK);
-    wxString s;
-    while (tkn.HasMoreTokens())
+    if (flags.find(flag_fuzzy) != wxString::npos)
     {
-        s = tkn.GetNextToken();
-        if (s == flag_fuzzy)
-            m_isFuzzy = true;
-        else m_moreFlags << wxS(", ") << s;
+        m_isFuzzy = true;
+        m_moreFlags.Replace(flag_fuzzy, wxString());
+    }
+    else
+    {
+        m_isFuzzy = false;
     }
 }
 
 
 wxString CatalogItem::GetFlags() const
 {
-    wxString f;
-    if (m_isFuzzy) f << ", fuzzy";
-    f << m_moreFlags;
-    if (!f.empty())
-        return "#" + f;
+    if (m_isFuzzy)
+    {
+        static const wxString flag_fuzzy(wxS(", fuzzy"));
+        if (m_moreFlags.empty())
+            return flag_fuzzy;
+        else
+            return flag_fuzzy + m_moreFlags;
+    }
     else
-        return wxEmptyString;
+    {
+        return m_moreFlags;
+    }
 }
 
 wxString CatalogItem::GetFormatFlag() const
 {
-    auto pos = m_moreFlags.find("-format");
+    auto pos = m_moreFlags.find(wxS("-format"));
     if (pos == wxString::npos)
         return wxString();
     auto space = m_moreFlags.find_last_of(" \t", pos);

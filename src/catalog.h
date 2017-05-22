@@ -210,8 +210,9 @@ class CatalogItem
         }
 
         /** Sets gettext flags directly in string format. It may be
-            either empty string or "#, fuzzy", "#, c-format",
-            "#, fuzzy, c-format" or others (not understood by Poedit).
+            either empty string or ", fuzzy", ", c-format",
+            ", fuzzy, c-format" or others (not understood by Poedit),
+            i.e. the leading # is not included, but ", " is.
          */
         void SetFlags(const wxString& flags);
 
