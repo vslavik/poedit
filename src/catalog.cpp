@@ -547,6 +547,19 @@ Catalog::HeaderData::Find(const wxString& key) const
 
 bool CatalogParser::Parse()
 {
+    static const wxString prefix_flags(wxS("#, "));
+    static const wxString prefix_autocomments(wxS("#. "));
+    static const wxString prefix_autocomments2(wxS("#.")); // account for empty auto comments
+    static const wxString prefix_references(wxS("#: "));
+    static const wxString prefix_prev_msgid(wxS("#| "));
+    static const wxString prefix_msgctxt(wxS("msgctxt \""));
+    static const wxString prefix_msgid(wxS("msgid \""));
+    static const wxString prefix_msgid_plural(wxS("msgid_plural \""));
+    static const wxString prefix_msgstr(wxS("msgstr \""));
+    static const wxString prefix_msgstr_plural(wxS("msgstr["));
+    static const wxString prefix_deleted(wxS("#~"));
+    static const wxString prefix_deleted_msgid(wxS("#~ msgid"));
+
     if (m_textFile->GetLineCount() == 0)
         return false;
 
@@ -566,26 +579,26 @@ bool CatalogParser::Parse()
     {
         // ignore empty special tags (except for extracted comments which we
         // DO want to preserve):
-        while (line == "#," || line == "#:" || line == "#|")
+        while (line.length() == 2 && *line.begin() == '#' && (line[1] == ',' || line[1] == ':' || line[1] == '|'))
             line = ReadTextLine();
 
         // flags:
         // Can't we have more than one flag, now only the last is kept ...
-        if (ReadParam(line, "#, ", dummy))
+        if (ReadParam(line, prefix_flags, dummy))
         {
-            mflags = "#, " + dummy;
+            mflags = wxS("#, ") + dummy;
             line = ReadTextLine();
         }
 
         // auto comments:
-        if (ReadParam(line, "#. ", dummy) || ReadParam(line, "#.", dummy)) // second one to account for empty auto comments
+        if (ReadParam(line, prefix_autocomments, dummy) || ReadParam(line, prefix_autocomments2, dummy))
         {
             mextractedcomments.Add(dummy);
             line = ReadTextLine();
         }
 
         // references:
-        else if (ReadParam(line, "#: ", dummy))
+        else if (ReadParam(line, prefix_references, dummy))
         {
             // Just store the references unmodified, we don't modify this
             // data anywhere.
@@ -594,14 +607,14 @@ bool CatalogParser::Parse()
         }
 
         // previous msgid value:
-        else if (ReadParam(line, "#| ", dummy))
+        else if (ReadParam(line, prefix_prev_msgid, dummy))
         {
             msgid_old.Add(dummy);
             line = ReadTextLine();
         }
 
         // msgctxt:
-        else if (ReadParam(line, _T("msgctxt \""), dummy))
+        else if (ReadParam(line, prefix_msgctxt, dummy))
         {
             has_context = true;
             msgctxt = UnescapeCString(dummy.RemoveLast());
@@ -620,15 +633,15 @@ bool CatalogParser::Parse()
         }
 
         // msgid:
-        else if (ReadParam(line, _T("msgid \""), dummy))
+        else if (ReadParam(line, prefix_msgid, dummy))
         {
             mstr = UnescapeCString(dummy.RemoveLast());
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine()).empty())
             {
-                if (line[0u] == _T('\t'))
+                if (line[0u] == wxS('\t'))
                     line.Remove(0, 1);
-                if (line[0u] == _T('"') && line.Last() == _T('"'))
+                if (line[0u] == wxS('"') && line.Last() == wxS('"'))
                 {
                     mstr += UnescapeCString(line.Mid(1, line.Length() - 2));
                     PossibleWrappedLine();
@@ -639,7 +652,7 @@ bool CatalogParser::Parse()
         }
 
         // msgid_plural:
-        else if (ReadParam(line, _T("msgid_plural \""), dummy))
+        else if (ReadParam(line, prefix_msgid_plural, dummy))
         {
             msgid_plural = UnescapeCString(dummy.RemoveLast());
             has_plural = true;
@@ -659,7 +672,7 @@ bool CatalogParser::Parse()
         }
 
         // msgstr:
-        else if (ReadParam(line, _T("msgstr \""), dummy))
+        else if (ReadParam(line, prefix_msgstr, dummy))
         {
             if (has_plural)
             {
@@ -711,7 +724,7 @@ bool CatalogParser::Parse()
         }
 
         // msgstr[i]:
-        else if (ReadParam(line, "msgstr[", dummy))
+        else if (ReadParam(line, prefix_msgstr_plural, dummy))
         {
             if (!has_plural)
             {
@@ -719,27 +732,27 @@ bool CatalogParser::Parse()
                 return false;
             }
 
-            wxString idx = dummy.BeforeFirst(_T(']'));
-            wxString label = "msgstr[" + idx + "]";
+            wxString idx = dummy.BeforeFirst(wxS(']'));
+            wxString label_prefix = prefix_msgstr_plural + idx + wxS("] \"");
 
-            while (ReadParam(line, label + _T(" \""), dummy))
+            while (ReadParam(line, label_prefix, dummy))
             {
                 wxString str = UnescapeCString(dummy.RemoveLast());
 
                 while (!(line=ReadTextLine()).empty())
                 {
                     line.Trim(/*fromRight=*/false);
-                    if (line[0u] == _T('"') && line.Last() == _T('"'))
+                    if (line[0u] == wxS('"') && line.Last() == wxS('"'))
                     {
                         str += UnescapeCString(line.Mid(1, line.Length() - 2));
                         PossibleWrappedLine();
                     }
                     else
                     {
-                        if (ReadParam(line, "msgstr[", dummy))
+                        if (ReadParam(line, prefix_msgstr_plural, dummy))
                         {
-                            idx = dummy.BeforeFirst(_T(']'));
-                            label = "msgstr[" + idx + "]";
+                            idx = dummy.BeforeFirst(wxS(']'));
+                            label_prefix = prefix_msgstr_plural + idx + wxS("] \"");
                         }
                         break;
                     }
@@ -765,7 +778,7 @@ bool CatalogParser::Parse()
         }
 
         // deleted lines:
-        else if (ReadParam(line, "#~", dummy))
+        else if (ReadParam(line, prefix_deleted, dummy))
         {
             wxArrayString deletedLines;
             deletedLines.Add(line);
@@ -773,11 +786,11 @@ bool CatalogParser::Parse()
             while (!(line = ReadTextLine()).empty())
             {
                 // if line does not start with "#~" anymore, stop reading
-                if (!ReadParam(line, "#~", dummy))
+                if (!ReadParam(line, prefix_deleted, dummy))
                     break;
                 // if the line starts with "#~ msgid", we skipped an empty line
                 // and it's a new entry, so stop reading too (see bug #329)
-                if (ReadParam(line, "#~ msgid", dummy))
+                if (ReadParam(line, prefix_deleted_msgid, dummy))
                     break;
 
                 deletedLines.Add(line);
@@ -797,15 +810,15 @@ bool CatalogParser::Parse()
         }
 
         // comment:
-        else if (line[0u] == _T('#'))
+        else if (line[0u] == wxS('#'))
         {
             bool readNewLine = false;
 
             while (!line.empty() &&
-                    line[0u] == _T('#') &&
-                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') && line[1u] != _T('~') )))
+                    line[0u] == wxS('#') &&
+                   (line.Length() < 2 || (line[1u] != wxS(',') && line[1u] != wxS(':') && line[1u] != wxS('.') && line[1u] != wxS('~') )))
             {
-                mcomment << line << _T('\n');
+                mcomment << line << wxS('\n');
                 readNewLine = true;
                 line = ReadTextLine();
             }
@@ -830,6 +843,8 @@ wxString CatalogParser::ReadTextLine()
     m_lastLineHardWrapped = false;
 
     wxString s;
+    static const wxString msgid_alone(wxS("msgid \"\""));
+    static const wxString msgstr_alone(wxS("msgstr \"\""));
 
     while (s.empty())
     {
@@ -848,7 +863,7 @@ wxString CatalogParser::ReadTextLine()
                 // Similarly, lines ending with \n are always wrapped, so skip that too.
                 m_lastLineHardWrapped = true;
             }
-            else if (ln == "msgid \"\"" || ln == "msgstr \"\"")
+            else if (ln == msgid_alone || ln == msgstr_alone)
             {
                 // The header is always indented like this
                 m_lastLineHardWrapped = true;
@@ -2408,6 +2423,8 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
 
 void CatalogItem::SetFlags(const wxString& flags)
 {
+    static const wxString flag_fuzzy(wxS("fuzzy"));
+
     m_isFuzzy = false;
     m_moreFlags.Empty();
 
@@ -2417,8 +2434,9 @@ void CatalogItem::SetFlags(const wxString& flags)
     while (tkn.HasMoreTokens())
     {
         s = tkn.GetNextToken();
-        if (s == "fuzzy") m_isFuzzy = true;
-        else m_moreFlags << ", " << s;
+        if (s == flag_fuzzy)
+            m_isFuzzy = true;
+        else m_moreFlags << wxS(", ") << s;
     }
 }
 
