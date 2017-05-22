@@ -106,7 +106,8 @@ bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
     if (pat_pos < pattern.size()) // pattern not fully matched
         return false;
 
-    output = input.Mid(in_pos).Strip(wxString::trailing);
+    output = input.Mid(in_pos);
+    output.Trim(true); // trailing whitespace
     return true;
 }
 
@@ -842,17 +843,18 @@ wxString CatalogParser::ReadTextLine()
     m_previousLineHardWrapped = m_lastLineHardWrapped;
     m_lastLineHardWrapped = false;
 
-    wxString s;
     static const wxString msgid_alone(wxS("msgid \"\""));
     static const wxString msgstr_alone(wxS("msgstr \"\""));
 
-    while (s.empty())
+    for (;;)
     {
         if (m_textFile->Eof())
-            return wxEmptyString;
+            return wxString();
 
         // read next line and strip insignificant whitespace from it:
-        auto ln = m_textFile->GetNextLine();
+        const auto& ln = m_textFile->GetNextLine();
+        if (ln.empty())
+            continue;
 
         // gettext tools don't include (extracted) comments in wrapping, so they can't
         // be reliably used to detect file's wrapping either; just skip them.
@@ -881,10 +883,19 @@ wxString CatalogParser::ReadTextLine()
             }
         }
 
-        s = ln.Strip(wxString::both);
+        if (wxIsspace(ln[0]) || wxIsspace(ln.Last()))
+        {
+            auto s = ln.Strip(wxString::both);
+            if (!s.empty())
+                return s;
+        }
+        else
+        {
+            return ln;
+        }
     }
 
-    return s;
+    return wxString();
 }
 
 int CatalogParser::GetWrappingWidth() const
