@@ -1475,7 +1475,7 @@ bool CanEncodeToCharset(const wxTextBuffer& f, const wxString& charset)
 
 void SaveMultiLines(wxTextBuffer &f, const wxString& text)
 {
-    wxStringTokenizer tkn(text, _T('\n'));
+    wxStringTokenizer tkn(text, wxS('\n'));
     while (tkn.HasMoreTokens())
         f.AddLine(tkn.GetNextToken());
 }
@@ -1848,10 +1848,10 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 
     SaveMultiLines(f, m_header.Comment);
     if (m_fileType == Type::POT)
-        f.AddLine("#, fuzzy");
-    f.AddLine(_T("msgid \"\""));
-    f.AddLine(_T("msgstr \"\""));
-    wxString pohdr = wxString(_T("\"")) + m_header.ToString(_T("\"\n\""));
+        f.AddLine(wxS("#, fuzzy"));
+    f.AddLine(wxS("msgid \"\""));
+    f.AddLine(wxS("msgstr \"\""));
+    wxString pohdr = wxString(wxS("\"")) + m_header.ToString(wxS("\"\n\""));
     pohdr.RemoveLast();
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
@@ -1865,39 +1865,39 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         for (unsigned i = 0; i < data->GetExtractedComments().GetCount(); i++)
         {
             if (data->GetExtractedComments()[i].empty())
-              f.AddLine("#.");
+              f.AddLine(wxS("#."));
             else
-              f.AddLine("#. " + data->GetExtractedComments()[i]);
+              f.AddLine(wxS("#. ") + data->GetExtractedComments()[i]);
         }
         for (unsigned i = 0; i < data->GetRawReferences().GetCount(); i++)
-            f.AddLine("#: " + data->GetRawReferences()[i]);
+            f.AddLine(wxS("#: ") + data->GetRawReferences()[i]);
         wxString dummy = data->GetFlags();
         if (!dummy.empty())
-            f.AddLine("#" + dummy);
+            f.AddLine(wxS("#") + dummy);
         for (unsigned i = 0; i < data->GetOldMsgidRaw().GetCount(); i++)
-            f.AddLine("#| " + data->GetOldMsgidRaw()[i]);
+            f.AddLine(wxS("#| ") + data->GetOldMsgidRaw()[i]);
         if ( data->HasContext() )
         {
-            SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data->GetContext()) + _T("\""));
+            SaveMultiLines(f, wxS("msgctxt \"") + FormatStringForFile(data->GetContext()) + wxS("\""));
         }
         dummy = FormatStringForFile(data->GetString());
-        SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
+        SaveMultiLines(f, wxS("msgid \"") + dummy + wxS("\""));
         if (data->HasPlural())
         {
             dummy = FormatStringForFile(data->GetPluralString());
-            SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
+            SaveMultiLines(f, wxS("msgid_plural \"") + dummy + wxS("\""));
 
             for (unsigned i = 0; i < pluralsCount; i++)
             {
                 dummy = FormatStringForFile(data->GetTranslation(i));
-                wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
-                SaveMultiLines(f, hdr + dummy + _T("\""));
+                wxString hdr = wxString::Format(wxS("msgstr[%u] \""), i);
+                SaveMultiLines(f, hdr + dummy + wxS("\""));
             }
         }
         else
         {
             dummy = FormatStringForFile(data->GetTranslation());
-            SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
+            SaveMultiLines(f, wxS("msgstr \"") + dummy + wxS("\""));
         }
         f.AddLine(wxEmptyString);
     }
@@ -1912,12 +1912,12 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         deletedItem.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetExtractedComments().GetCount(); i++)
-            f.AddLine("#. " + deletedItem.GetExtractedComments()[i]);
+            f.AddLine(wxS("#. ") + deletedItem.GetExtractedComments()[i]);
         for (unsigned i = 0; i < deletedItem.GetRawReferences().GetCount(); i++)
-            f.AddLine("#: " + deletedItem.GetRawReferences()[i]);
+            f.AddLine(wxS("#: ") + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
-            f.AddLine("#" + dummy);
+            f.AddLine(wxS("#") + dummy);
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
