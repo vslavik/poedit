@@ -1472,12 +1472,32 @@ bool CanEncodeToCharset(const wxTextBuffer& f, const wxString& charset)
     return true;
 }
 
+template<typename Func>
+inline void SplitIntoLines(const wxString& text, Func&& f)
+{
+    if (text.empty())
+        return;
+
+    wxString::const_iterator last = text.begin();
+    for (wxString::const_iterator i = text.begin(); i != text.end(); ++i)
+    {
+        if (*i == '\n')
+        {
+            f(wxString(last, i), false);
+            last = i + 1;
+        }
+    }
+
+    if (last != text.end())
+        f(wxString(last, text.end()), true);
+}
 
 void SaveMultiLines(wxTextBuffer &f, const wxString& text)
 {
-    wxStringTokenizer tkn(text, wxS('\n'));
-    while (tkn.HasMoreTokens())
-        f.AddLine(tkn.GetNextToken());
+    SplitIntoLines(text, [&f](wxString&& s, bool)
+    {
+        f.AddLine(s);
+    });
 }
 
 /** Adds \n characters as necessary for good-looking output
@@ -1487,17 +1507,17 @@ wxString FormatStringForFile(const wxString& text)
     wxString s;
     s.reserve(text.length() + 16);
 
-    wxStringTokenizer tkn(text, wxS('\n'), wxTOKEN_RET_EMPTY_ALL);
-    while (tkn.HasMoreTokens())
+    static wxString quoted_newline(wxS("\"\n\""));
+
+    SplitIntoLines(text, [&s](wxString&& piece, bool last)
     {
         if (!s.empty())
-            s += wxS("\"\n\"");
-        auto piece = tkn.GetNextToken();
-        if (tkn.GetLastDelimiter())
-            piece += tkn.GetLastDelimiter();
+            s += quoted_newline;
+        if (!last)
+            piece += '\n';
         EscapeCStringInplace(piece);
         s += piece;
-    }
+    });
 
     return s;
 }
