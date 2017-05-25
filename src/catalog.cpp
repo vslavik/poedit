@@ -1495,7 +1495,8 @@ wxString FormatStringForFile(const wxString& text)
         auto piece = tkn.GetNextToken();
         if (tkn.GetLastDelimiter())
             piece += tkn.GetLastDelimiter();
-        s += EscapeCString(piece);
+        EscapeCStringInplace(piece);
+        s += piece;
     }
 
     return s;

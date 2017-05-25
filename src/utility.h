@@ -91,28 +91,32 @@ wxString EscapeMarkup(const wxString& str);
 // Encoding and decoding a string with C escape sequences:
 
 template<typename T>
-inline T EscapeCString(const T& str)
+inline void EscapeCStringInplace(T& str)
 {
-    T out;
-    out.reserve(str.length());
-    for (wchar_t c: str)
+    for (typename T::iterator i = str.begin(); i != str.end(); ++i)
     {
-        switch (c)
+        switch ((wchar_t)*i)
         {
-            case '"' : out += L"\\\"";  break;
-            case '\a': out += L"\\a";   break;
-            case '\b': out += L"\\b";   break;
-            case '\f': out += L"\\f";   break;
-            case '\n': out += L"\\n";   break;
-            case '\r': out += L"\\r";   break;
-            case '\t': out += L"\\t";   break;
-            case '\v': out += L"\\v";   break;
-            case '\\': out += L"\\\\";  break;
+            case '"' :           i = ++str.insert(i, '\\'); break;
+            case '\a': *i = 'a'; i = ++str.insert(i, '\\'); break;
+            case '\b': *i = 'b'; i = ++str.insert(i, '\\'); break;
+            case '\f': *i = 'f'; i = ++str.insert(i, '\\'); break;
+            case '\n': *i = 'n'; i = ++str.insert(i, '\\'); break;
+            case '\r': *i = 'r'; i = ++str.insert(i, '\\'); break;
+            case '\t': *i = 't'; i = ++str.insert(i, '\\'); break;
+            case '\v': *i = 'v'; i = ++str.insert(i, '\\'); break;
+            case '\\':           i = ++str.insert(i, '\\'); break;
             default:
-                out += c;
                 break;
         }
     }
+}
+
+template<typename T>
+inline T EscapeCString(const T& str)
+{
+    T out(str);
+    EscapeCStringInplace(out);
     return out;
 }
 
