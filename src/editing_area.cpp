@@ -251,7 +251,8 @@ private:
         gc->SetPen(*wxTRANSPARENT_PEN);
 
         auto rect = GetClientRect();
-        gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+        if (!rect.IsEmpty())
+            gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
     }
 
     wxColour m_fg, m_bg;
