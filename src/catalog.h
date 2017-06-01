@@ -164,11 +164,7 @@ class CatalogItem
         bool HasExtractedComments() const { return !m_extractedComments.empty(); }
 
         /// Adds new reference to the entry (used by SourceDigger).
-        void AddReference(const wxString& ref)
-        {
-            if (m_references.Index(ref) == wxNOT_FOUND)
-                m_references.Add(ref);
-        }
+        void SetReferences(const wxArrayString& ref) { m_references = ref; }
 
         void SetId(int id) { m_id = id; }
 
@@ -214,8 +210,9 @@ class CatalogItem
         }
 
         /** Sets gettext flags directly in string format. It may be
-            either empty string or "#, fuzzy", "#, c-format",
-            "#, fuzzy, c-format" or others (not understood by Poedit).
+            either empty string or ", fuzzy", ", c-format",
+            ", fuzzy, c-format" or others (not understood by Poedit),
+            i.e. the leading # is not included, but ", " is.
          */
         void SetFlags(const wxString& flags);
 

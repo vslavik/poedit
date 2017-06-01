@@ -106,7 +106,8 @@ bool ReadParam(const wxString& input, const wxString& pattern, wxString& output)
     if (pat_pos < pattern.size()) // pattern not fully matched
         return false;
 
-    output = input.Mid(in_pos).Strip(wxString::trailing);
+    output = input.Mid(in_pos);
+    output.Trim(true); // trailing whitespace
     return true;
 }
 
@@ -547,6 +548,19 @@ Catalog::HeaderData::Find(const wxString& key) const
 
 bool CatalogParser::Parse()
 {
+    static const wxString prefix_flags(wxS("#, "));
+    static const wxString prefix_autocomments(wxS("#. "));
+    static const wxString prefix_autocomments2(wxS("#.")); // account for empty auto comments
+    static const wxString prefix_references(wxS("#: "));
+    static const wxString prefix_prev_msgid(wxS("#| "));
+    static const wxString prefix_msgctxt(wxS("msgctxt \""));
+    static const wxString prefix_msgid(wxS("msgid \""));
+    static const wxString prefix_msgid_plural(wxS("msgid_plural \""));
+    static const wxString prefix_msgstr(wxS("msgstr \""));
+    static const wxString prefix_msgstr_plural(wxS("msgstr["));
+    static const wxString prefix_deleted(wxS("#~"));
+    static const wxString prefix_deleted_msgid(wxS("#~ msgid"));
+
     if (m_textFile->GetLineCount() == 0)
         return false;
 
@@ -566,26 +580,27 @@ bool CatalogParser::Parse()
     {
         // ignore empty special tags (except for extracted comments which we
         // DO want to preserve):
-        while (line == "#," || line == "#:" || line == "#|")
+        while (line.length() == 2 && *line.begin() == '#' && (line[1] == ',' || line[1] == ':' || line[1] == '|'))
             line = ReadTextLine();
 
         // flags:
         // Can't we have more than one flag, now only the last is kept ...
-        if (ReadParam(line, "#, ", dummy))
+        if (ReadParam(line, prefix_flags, dummy))
         {
-            mflags = "#, " + dummy;
+            static wxString prefix_flags_partial(wxS(", "));
+            mflags = prefix_flags_partial + dummy;
             line = ReadTextLine();
         }
 
         // auto comments:
-        if (ReadParam(line, "#. ", dummy) || ReadParam(line, "#.", dummy)) // second one to account for empty auto comments
+        if (ReadParam(line, prefix_autocomments, dummy) || ReadParam(line, prefix_autocomments2, dummy))
         {
             mextractedcomments.Add(dummy);
             line = ReadTextLine();
         }
 
         // references:
-        else if (ReadParam(line, "#: ", dummy))
+        else if (ReadParam(line, prefix_references, dummy))
         {
             // Just store the references unmodified, we don't modify this
             // data anywhere.
@@ -594,14 +609,14 @@ bool CatalogParser::Parse()
         }
 
         // previous msgid value:
-        else if (ReadParam(line, "#| ", dummy))
+        else if (ReadParam(line, prefix_prev_msgid, dummy))
         {
             msgid_old.Add(dummy);
             line = ReadTextLine();
         }
 
         // msgctxt:
-        else if (ReadParam(line, _T("msgctxt \""), dummy))
+        else if (ReadParam(line, prefix_msgctxt, dummy))
         {
             has_context = true;
             msgctxt = UnescapeCString(dummy.RemoveLast());
@@ -620,15 +635,15 @@ bool CatalogParser::Parse()
         }
 
         // msgid:
-        else if (ReadParam(line, _T("msgid \""), dummy))
+        else if (ReadParam(line, prefix_msgid, dummy))
         {
             mstr = UnescapeCString(dummy.RemoveLast());
             mlinenum = unsigned(m_textFile->GetCurrentLine() + 1);
             while (!(line = ReadTextLine()).empty())
             {
-                if (line[0u] == _T('\t'))
+                if (line[0u] == wxS('\t'))
                     line.Remove(0, 1);
-                if (line[0u] == _T('"') && line.Last() == _T('"'))
+                if (line[0u] == wxS('"') && line.Last() == wxS('"'))
                 {
                     mstr += UnescapeCString(line.Mid(1, line.Length() - 2));
                     PossibleWrappedLine();
@@ -639,7 +654,7 @@ bool CatalogParser::Parse()
         }
 
         // msgid_plural:
-        else if (ReadParam(line, _T("msgid_plural \""), dummy))
+        else if (ReadParam(line, prefix_msgid_plural, dummy))
         {
             msgid_plural = UnescapeCString(dummy.RemoveLast());
             has_plural = true;
@@ -659,7 +674,7 @@ bool CatalogParser::Parse()
         }
 
         // msgstr:
-        else if (ReadParam(line, _T("msgstr \""), dummy))
+        else if (ReadParam(line, prefix_msgstr, dummy))
         {
             if (has_plural)
             {
@@ -711,7 +726,7 @@ bool CatalogParser::Parse()
         }
 
         // msgstr[i]:
-        else if (ReadParam(line, "msgstr[", dummy))
+        else if (ReadParam(line, prefix_msgstr_plural, dummy))
         {
             if (!has_plural)
             {
@@ -719,27 +734,27 @@ bool CatalogParser::Parse()
                 return false;
             }
 
-            wxString idx = dummy.BeforeFirst(_T(']'));
-            wxString label = "msgstr[" + idx + "]";
+            wxString idx = dummy.BeforeFirst(wxS(']'));
+            wxString label_prefix = prefix_msgstr_plural + idx + wxS("] \"");
 
-            while (ReadParam(line, label + _T(" \""), dummy))
+            while (ReadParam(line, label_prefix, dummy))
             {
                 wxString str = UnescapeCString(dummy.RemoveLast());
 
                 while (!(line=ReadTextLine()).empty())
                 {
                     line.Trim(/*fromRight=*/false);
-                    if (line[0u] == _T('"') && line.Last() == _T('"'))
+                    if (line[0u] == wxS('"') && line.Last() == wxS('"'))
                     {
                         str += UnescapeCString(line.Mid(1, line.Length() - 2));
                         PossibleWrappedLine();
                     }
                     else
                     {
-                        if (ReadParam(line, "msgstr[", dummy))
+                        if (ReadParam(line, prefix_msgstr_plural, dummy))
                         {
-                            idx = dummy.BeforeFirst(_T(']'));
-                            label = "msgstr[" + idx + "]";
+                            idx = dummy.BeforeFirst(wxS(']'));
+                            label_prefix = prefix_msgstr_plural + idx + wxS("] \"");
                         }
                         break;
                     }
@@ -765,7 +780,7 @@ bool CatalogParser::Parse()
         }
 
         // deleted lines:
-        else if (ReadParam(line, "#~", dummy))
+        else if (ReadParam(line, prefix_deleted, dummy))
         {
             wxArrayString deletedLines;
             deletedLines.Add(line);
@@ -773,11 +788,11 @@ bool CatalogParser::Parse()
             while (!(line = ReadTextLine()).empty())
             {
                 // if line does not start with "#~" anymore, stop reading
-                if (!ReadParam(line, "#~", dummy))
+                if (!ReadParam(line, prefix_deleted, dummy))
                     break;
                 // if the line starts with "#~ msgid", we skipped an empty line
                 // and it's a new entry, so stop reading too (see bug #329)
-                if (ReadParam(line, "#~ msgid", dummy))
+                if (ReadParam(line, prefix_deleted_msgid, dummy))
                     break;
 
                 deletedLines.Add(line);
@@ -797,15 +812,15 @@ bool CatalogParser::Parse()
         }
 
         // comment:
-        else if (line[0u] == _T('#'))
+        else if (line[0u] == wxS('#'))
         {
             bool readNewLine = false;
 
             while (!line.empty() &&
-                    line[0u] == _T('#') &&
-                   (line.Length() < 2 || (line[1u] != _T(',') && line[1u] != _T(':') && line[1u] != _T('.') && line[1u] != _T('~') )))
+                    line[0u] == wxS('#') &&
+                   (line.Length() < 2 || (line[1u] != wxS(',') && line[1u] != wxS(':') && line[1u] != wxS('.') && line[1u] != wxS('~') )))
             {
-                mcomment << line << _T('\n');
+                mcomment << line << wxS('\n');
                 readNewLine = true;
                 line = ReadTextLine();
             }
@@ -829,15 +844,18 @@ wxString CatalogParser::ReadTextLine()
     m_previousLineHardWrapped = m_lastLineHardWrapped;
     m_lastLineHardWrapped = false;
 
-    wxString s;
+    static const wxString msgid_alone(wxS("msgid \"\""));
+    static const wxString msgstr_alone(wxS("msgstr \"\""));
 
-    while (s.empty())
+    for (;;)
     {
         if (m_textFile->Eof())
-            return wxEmptyString;
+            return wxString();
 
         // read next line and strip insignificant whitespace from it:
-        auto ln = m_textFile->GetNextLine();
+        const auto& ln = m_textFile->GetNextLine();
+        if (ln.empty())
+            continue;
 
         // gettext tools don't include (extracted) comments in wrapping, so they can't
         // be reliably used to detect file's wrapping either; just skip them.
@@ -848,7 +866,7 @@ wxString CatalogParser::ReadTextLine()
                 // Similarly, lines ending with \n are always wrapped, so skip that too.
                 m_lastLineHardWrapped = true;
             }
-            else if (ln == "msgid \"\"" || ln == "msgstr \"\"")
+            else if (ln == msgid_alone || ln == msgstr_alone)
             {
                 // The header is always indented like this
                 m_lastLineHardWrapped = true;
@@ -866,10 +884,19 @@ wxString CatalogParser::ReadTextLine()
             }
         }
 
-        s = ln.Strip(wxString::both);
+        if (wxIsspace(ln[0]) || wxIsspace(ln.Last()))
+        {
+            auto s = ln.Strip(wxString::both);
+            if (!s.empty())
+                return s;
+        }
+        else
+        {
+            return ln;
+        }
     }
 
-    return s;
+    return wxString();
 }
 
 int CatalogParser::GetWrappingWidth() const
@@ -1024,8 +1051,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
         d->SetTranslations(mtranslations);
         d->SetComment(comment);
         d->SetLineNumber(lineNumber);
-        for (size_t i = 0; i < references.GetCount(); i++)
-            d->AddReference(references[i]);
+        d->SetReferences(references);
 
         for (auto i: extractedComments)
         {
@@ -1446,12 +1472,32 @@ bool CanEncodeToCharset(const wxTextBuffer& f, const wxString& charset)
     return true;
 }
 
+template<typename Func>
+inline void SplitIntoLines(const wxString& text, Func&& f)
+{
+    if (text.empty())
+        return;
+
+    wxString::const_iterator last = text.begin();
+    for (wxString::const_iterator i = text.begin(); i != text.end(); ++i)
+    {
+        if (*i == '\n')
+        {
+            f(wxString(last, i), false);
+            last = i + 1;
+        }
+    }
+
+    if (last != text.end())
+        f(wxString(last, text.end()), true);
+}
 
 void SaveMultiLines(wxTextBuffer &f, const wxString& text)
 {
-    wxStringTokenizer tkn(text, _T('\n'));
-    while (tkn.HasMoreTokens())
-        f.AddLine(tkn.GetNextToken());
+    SplitIntoLines(text, [&f](wxString&& s, bool)
+    {
+        f.AddLine(s);
+    });
 }
 
 /** Adds \n characters as necessary for good-looking output
@@ -1461,16 +1507,17 @@ wxString FormatStringForFile(const wxString& text)
     wxString s;
     s.reserve(text.length() + 16);
 
-    wxStringTokenizer tkn(text, wxS('\n'), wxTOKEN_RET_EMPTY_ALL);
-    while (tkn.HasMoreTokens())
+    static wxString quoted_newline(wxS("\"\n\""));
+
+    SplitIntoLines(text, [&s](wxString&& piece, bool last)
     {
         if (!s.empty())
-            s += wxS("\"\n\"");
-        auto piece = tkn.GetNextToken();
-        if (tkn.GetLastDelimiter())
-            piece += tkn.GetLastDelimiter();
-        s += EscapeCString(piece);
-    }
+            s += quoted_newline;
+        if (!last)
+            piece += '\n';
+        EscapeCStringInplace(piece);
+        s += piece;
+    });
 
     return s;
 }
@@ -1822,10 +1869,10 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 
     SaveMultiLines(f, m_header.Comment);
     if (m_fileType == Type::POT)
-        f.AddLine("#, fuzzy");
-    f.AddLine(_T("msgid \"\""));
-    f.AddLine(_T("msgstr \"\""));
-    wxString pohdr = wxString(_T("\"")) + m_header.ToString(_T("\"\n\""));
+        f.AddLine(wxS("#, fuzzy"));
+    f.AddLine(wxS("msgid \"\""));
+    f.AddLine(wxS("msgstr \"\""));
+    wxString pohdr = wxString(wxS("\"")) + m_header.ToString(wxS("\"\n\""));
     pohdr.RemoveLast();
     SaveMultiLines(f, pohdr);
     f.AddLine(wxEmptyString);
@@ -1839,39 +1886,39 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         for (unsigned i = 0; i < data->GetExtractedComments().GetCount(); i++)
         {
             if (data->GetExtractedComments()[i].empty())
-              f.AddLine("#.");
+              f.AddLine(wxS("#."));
             else
-              f.AddLine("#. " + data->GetExtractedComments()[i]);
+              f.AddLine(wxS("#. ") + data->GetExtractedComments()[i]);
         }
         for (unsigned i = 0; i < data->GetRawReferences().GetCount(); i++)
-            f.AddLine("#: " + data->GetRawReferences()[i]);
+            f.AddLine(wxS("#: ") + data->GetRawReferences()[i]);
         wxString dummy = data->GetFlags();
         if (!dummy.empty())
-            f.AddLine(dummy);
+            f.AddLine(wxS("#") + dummy);
         for (unsigned i = 0; i < data->GetOldMsgidRaw().GetCount(); i++)
-            f.AddLine("#| " + data->GetOldMsgidRaw()[i]);
+            f.AddLine(wxS("#| ") + data->GetOldMsgidRaw()[i]);
         if ( data->HasContext() )
         {
-            SaveMultiLines(f, _T("msgctxt \"") + FormatStringForFile(data->GetContext()) + _T("\""));
+            SaveMultiLines(f, wxS("msgctxt \"") + FormatStringForFile(data->GetContext()) + wxS("\""));
         }
         dummy = FormatStringForFile(data->GetString());
-        SaveMultiLines(f, _T("msgid \"") + dummy + _T("\""));
+        SaveMultiLines(f, wxS("msgid \"") + dummy + wxS("\""));
         if (data->HasPlural())
         {
             dummy = FormatStringForFile(data->GetPluralString());
-            SaveMultiLines(f, _T("msgid_plural \"") + dummy + _T("\""));
+            SaveMultiLines(f, wxS("msgid_plural \"") + dummy + wxS("\""));
 
             for (unsigned i = 0; i < pluralsCount; i++)
             {
                 dummy = FormatStringForFile(data->GetTranslation(i));
-                wxString hdr = wxString::Format(_T("msgstr[%u] \""), i);
-                SaveMultiLines(f, hdr + dummy + _T("\""));
+                wxString hdr = wxString::Format(wxS("msgstr[%u] \""), i);
+                SaveMultiLines(f, hdr + dummy + wxS("\""));
             }
         }
         else
         {
             dummy = FormatStringForFile(data->GetTranslation());
-            SaveMultiLines(f, _T("msgstr \"") + dummy + _T("\""));
+            SaveMultiLines(f, wxS("msgstr \"") + dummy + wxS("\""));
         }
         f.AddLine(wxEmptyString);
     }
@@ -1886,12 +1933,12 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         deletedItem.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetExtractedComments().GetCount(); i++)
-            f.AddLine("#. " + deletedItem.GetExtractedComments()[i]);
+            f.AddLine(wxS("#. ") + deletedItem.GetExtractedComments()[i]);
         for (unsigned i = 0; i < deletedItem.GetRawReferences().GetCount(); i++)
-            f.AddLine("#: " + deletedItem.GetRawReferences()[i]);
+            f.AddLine(wxS("#: ") + deletedItem.GetRawReferences()[i]);
         wxString dummy = deletedItem.GetFlags();
         if (!dummy.empty())
-            f.AddLine(dummy);
+            f.AddLine(wxS("#") + dummy);
 
         for (size_t j = 0; j < deletedItem.GetDeletedLines().GetCount(); j++)
             f.AddLine(deletedItem.GetDeletedLines()[j]);
@@ -2409,35 +2456,41 @@ void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,
 
 void CatalogItem::SetFlags(const wxString& flags)
 {
-    m_isFuzzy = false;
-    m_moreFlags.Empty();
+    static const wxString flag_fuzzy(wxS(", fuzzy"));
 
-    if (flags.empty()) return;
-    wxStringTokenizer tkn(flags.Mid(1), " ,", wxTOKEN_STRTOK);
-    wxString s;
-    while (tkn.HasMoreTokens())
+    m_moreFlags = flags;
+
+    if (flags.find(flag_fuzzy) != wxString::npos)
     {
-        s = tkn.GetNextToken();
-        if (s == "fuzzy") m_isFuzzy = true;
-        else m_moreFlags << ", " << s;
+        m_isFuzzy = true;
+        m_moreFlags.Replace(flag_fuzzy, wxString());
+    }
+    else
+    {
+        m_isFuzzy = false;
     }
 }
 
 
 wxString CatalogItem::GetFlags() const
 {
-    wxString f;
-    if (m_isFuzzy) f << ", fuzzy";
-    f << m_moreFlags;
-    if (!f.empty())
-        return "#" + f;
+    if (m_isFuzzy)
+    {
+        static const wxString flag_fuzzy(wxS(", fuzzy"));
+        if (m_moreFlags.empty())
+            return flag_fuzzy;
+        else
+            return flag_fuzzy + m_moreFlags;
+    }
     else
-        return wxEmptyString;
+    {
+        return m_moreFlags;
+    }
 }
 
 wxString CatalogItem::GetFormatFlag() const
 {
-    auto pos = m_moreFlags.find("-format");
+    auto pos = m_moreFlags.find(wxS("-format"));
     if (pos == wxString::npos)
         return wxString();
     auto space = m_moreFlags.find_last_of(" \t", pos);
