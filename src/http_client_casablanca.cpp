@@ -147,6 +147,8 @@ public:
     #endif
     }
 
+    static string_t ui_language;
+
     bool is_reachable() const
     {
     #ifdef _WIN32
@@ -175,6 +177,7 @@ public:
         http::http_request req(http::methods::GET);
         req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
+        req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
             req.headers().add(http::header_names::authorization, m_auth);
         req.set_request_uri(to_string_t(url));
@@ -199,6 +202,7 @@ public:
             *fileStream = outFile;
             http::http_request req(http::methods::GET);
             req.headers().add(http::header_names::user_agent, m_userAgent);
+            req.headers().add(http::header_names::accept_language, ui_language);
             if (!m_auth.empty())
                 req.headers().add(http::header_names::authorization, m_auth);
             req.set_request_uri(to_string_t(url));
@@ -220,6 +224,7 @@ public:
         http::http_request req(http::methods::POST);
         req.headers().add(http::header_names::accept,     L"application/json");
         req.headers().add(http::header_names::user_agent, m_userAgent);
+        req.headers().add(http::header_names::accept_language, ui_language);
         if (!m_auth.empty())
             req.headers().add(http::header_names::authorization, m_auth);
         req.set_request_uri(to_string_t(url));
@@ -318,6 +323,8 @@ private:
 };
 
 
+string_t http_client::impl::ui_language;
+
 
 http_client::http_client(const std::string& url_prefix, int flags)
     : m_impl(new impl(*this, url_prefix, flags))
@@ -326,6 +333,11 @@ http_client::http_client(const std::string& url_prefix, int flags)
 
 http_client::~http_client()
 {
+}
+
+void http_client::set_ui_language(const std::string& lang)
+{
+    impl::ui_language = to_string_t(lang);
 }
 
 bool http_client::is_reachable() const

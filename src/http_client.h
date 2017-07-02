@@ -124,6 +124,11 @@ public:
     http_client(const std::string& url_prefix, int flags = default_flags);
     virtual ~http_client();
 
+#ifndef __DARWIN__
+    /// Sets Accept-Language to use (language tag; managed automatically on macOS)
+    static void set_ui_language(const std::string& lang);
+#endif
+
     /// Return true if the server is reachable, i.e. client is online
     bool is_reachable() const;
 

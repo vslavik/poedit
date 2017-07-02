@@ -591,6 +591,9 @@ void PoeditApp::SetupLanguage()
     Language uiLang = Language::TryParse(bestTrans.ToStdWstring());
     UErrorCode err = U_ZERO_ERROR;
     icu::Locale::setDefault(uiLang.ToIcu(), err);
+#ifndef __WXOSX__
+    http_client::set_ui_language(uiLang.LanguageTag());
+#endif
 
     const wxLanguageInfo *info = wxLocale::FindLanguageInfo(bestTrans);
     g_layoutDirection = info ? info->LayoutDirection : wxLayout_Default;
