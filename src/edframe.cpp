@@ -2861,6 +2861,9 @@ void PoeditFrame::OnSize(wxSizeEvent& event)
         auto split = wxConfigBase::Get()->ReadDouble("/sidebar_splitter", 0.75);
         m_sidebarSplitter->SetSashPosition(split * event.GetSize().x);
     }
+
+    if (m_sidebar && m_splitter)
+        m_sidebar->SetUpperHeight(m_splitter->GetSashPosition());
 }
 
 

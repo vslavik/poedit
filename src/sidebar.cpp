@@ -840,6 +840,16 @@ void Sidebar::SetUpperHeight(int size)
     wxWindowUpdateLocker lock(this);
 
     int pos = GetSize().y - size;
+
+    if (size < PX(400) || pos > size)
+    {
+        // Too little space for suggestions (either absolute size small or
+        // bottom area larger than top). If that happens, align the top/bottom
+        // separator with the Translation: field in editing area instead of
+        // with its top.
+        pos = pos / 2 - PX(1);
+    }
+
     pos += PX(5);
 
     m_bottomBlocksSizer->SetMinSize(wxSize(-1, pos));
