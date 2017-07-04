@@ -612,7 +612,8 @@ void SuggestionsSidebarBlock::UpdateVisibility()
     for (w = 0; w < m_suggestions.size(); w++)
     {
         heightRemaining -= m_suggestionsWidgets[w]->GetSize().y;
-        if (heightRemaining < 20)
+        // don't show suggestions that don't fit in the space, but always try to show at least 2
+        if (heightRemaining < 20 && w > 2)
             break;
         m_suggestionsSizer->Show(m_suggestionsWidgets[w]);
     }
