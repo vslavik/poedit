@@ -51,9 +51,6 @@
 
 #include <algorithm>
 
-#define GRAY_LINES_COLOR        wxColour(220,220,220)
-#define GRAY_LINES_COLOR_DARK   wxColour(180,180,180)
-
 
 class SidebarSeparator : public wxWindow
 {
@@ -61,14 +58,14 @@ public:
     SidebarSeparator(wxWindow *parent)
         : wxWindow(parent, wxID_ANY),
           m_sides(ColorScheme::Get(Color::SidebarBackground)),
-          m_center(GRAY_LINES_COLOR_DARK)
+          m_center(ColorScheme::Get(Color::EditingSubtleSeparator))
     {
         Bind(wxEVT_PAINT, &SidebarSeparator::OnPaint, this);
     }
 
     wxSize DoGetBestSize() const override
     {
-        return wxSize(-1, 1);
+        return wxSize(-1, PX(1));
     }
 
     bool AcceptsFocus() const override { return false; }
@@ -78,8 +75,8 @@ private:
     {
         wxPaintDC dc(this);
         auto w = dc.GetSize().x;
-        dc.GradientFillLinear(wxRect(0,0,PX(15),PX(1)), m_sides, m_center);
-        dc.GradientFillLinear(wxRect(PX(15),0,w,PX(1)), m_center, m_sides);
+        dc.GradientFillLinear(wxRect(0,0,PX(20),PX(1)), m_sides, m_center);
+        dc.GradientFillLinear(wxRect(PX(20),0,w,PX(1)), m_center, m_sides);
     }
 
     wxColour m_sides, m_center;
@@ -615,7 +612,8 @@ void SuggestionsSidebarBlock::UpdateVisibility()
     for (w = 0; w < m_suggestions.size(); w++)
     {
         heightRemaining -= m_suggestionsWidgets[w]->GetSize().y;
-        if (heightRemaining < 20)
+        // don't show suggestions that don't fit in the space, but always try to show at least 2
+        if (heightRemaining < 20 && w > 2)
             break;
         m_suggestionsSizer->Show(m_suggestionsWidgets[w]);
     }
@@ -842,11 +840,18 @@ void Sidebar::SetUpperHeight(int size)
     wxWindowUpdateLocker lock(this);
 
     int pos = GetSize().y - size;
-#ifdef __WXOSX__
-    pos += 4;
-#else
-    pos += 6;
-#endif
+
+    if (size < PX(400) || pos > size)
+    {
+        // Too little space for suggestions (either absolute size small or
+        // bottom area larger than top). If that happens, align the top/bottom
+        // separator with the Translation: field in editing area instead of
+        // with its top.
+        pos = pos / 2 - PX(1);
+    }
+
+    pos += PX(5);
+
     m_bottomBlocksSizer->SetMinSize(wxSize(-1, pos));
     Layout();
 }
