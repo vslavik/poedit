@@ -75,6 +75,7 @@
 #include "customcontrols.h"
 #include "gexecute.h"
 #include "hidpi.h"
+#include "http_client.h"
 #include "icons.h"
 #include "version.h"
 #include "str_helpers.h"
