@@ -69,6 +69,10 @@ public:
 class CaseMismatch : public QACheck
 {
 public:
+    CaseMismatch(Language lang) : m_lang(lang.Lang())
+    {
+    }
+
     bool CheckString(CatalogItemPtr item, const wxString& source, const wxString& translation) override
     {
         if (u_isupper(source[0]) && u_islower(translation[0]))
@@ -79,12 +83,19 @@ public:
 
         if (u_islower(source[0]) && u_isupper(translation[0]))
         {
-            item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start with a lowercase character."));
-            return true;
+            if (m_lang != "de")
+            {
+                item->SetIssue(CatalogItem::Issue::Warning, _("The translation should start with a lowercase character."));
+                return true;
+            }
+            // else: German nouns start uppercased, this would cause too many false positives
         }
 
         return false;
     }
+
+private:
+    std::string m_lang;
 };
 
 
@@ -289,10 +300,11 @@ int QAChecker::Check(CatalogItemPtr item)
 
 std::shared_ptr<QAChecker> QAChecker::GetFor(Catalog& catalog)
 {
+    auto lang = catalog.GetLanguage();
     auto c = std::make_shared<QAChecker>();
     c->AddCheck<QA::NotAllPlurals>();
-    c->AddCheck<QA::CaseMismatch>();
+    c->AddCheck<QA::CaseMismatch>(lang);
     c->AddCheck<QA::WhitespaceMismatch>();
-    c->AddCheck(std::make_shared<QA::PunctuationMismatch>(catalog.GetLanguage()));
+    c->AddCheck<QA::PunctuationMismatch>(lang);
     return c;
 }

@@ -71,6 +71,10 @@ public:
 
     template<typename TCheck>
     void AddCheck() { AddCheck(std::make_shared<TCheck>()); }
+
+    template<typename TCheck>
+    void AddCheck(const Language& lang) { AddCheck(std::make_shared<TCheck>(lang)); }
+
     void AddCheck(std::shared_ptr<QACheck> c) { m_checks.push_back(c); }
 
 protected:
