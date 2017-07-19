@@ -118,8 +118,8 @@ inline std::wstring to_wstring(NSString *str)
 #endif // Objective-C++
 
 
-// ICU conversions; only included them if ICU is included
-#ifdef UNISTR_H
+// ICU conversions; only include them if ICU is included
+#ifdef U_ICU_VERSION
 
 /**
     Create read-only icu::UnicodeString from wxString efficiently.
@@ -194,7 +194,7 @@ inline std::wstring to_wstring(const icu::UnicodeString& str)
     return to_wx(str).ToStdWstring();
 }
 
-#endif // UNISTR_H
+#endif // U_ICU_VERSION
 
 } // namespace str
 
