@@ -299,3 +299,18 @@ Enabled features:
     * language detection:             $have_cld2
     * crowdin integration:            $have_cpprest
 "
+
+if test "x$have_cld2" != "xyes" -o "x$have_cpprest" != "xyes" ; then
+    echo "
+
+    !!! WARNING !!!
+
+    Your are building a limited version of Poedit without some important
+    features (see above). This makes Poedit harder to use and is strongly
+    advised against.
+
+    !!! WARNING !!!
+
+    "
+fi
+
