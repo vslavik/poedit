@@ -379,12 +379,22 @@ void Catalog::HeaderData::ParseDict()
     }
 
     // Parse language information, with backwards compatibility with X-Poedit-*:
+    Lang = Language();
     wxString languageCode = GetHeader("Language");
-    if ( !languageCode.empty() )
+    if (!languageCode.empty())
     {
         Lang = Language::TryParse(languageCode.ToStdWstring());
     }
-    else
+
+    if (!Lang.IsValid())
+    {
+        // try looking for non-standard Qt extension
+        languageCode = GetHeader("X-Language");
+        if (!languageCode.empty())
+            Lang = Language::TryParse(languageCode.ToStdWstring());
+    }
+
+    if (!Lang.IsValid())
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
