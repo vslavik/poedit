@@ -221,6 +221,21 @@ private:
                     break;
             }
         }
+        else if (m_lang == "ar")
+        {
+            // In Arabic (but not other RTL languages), some punctuation is mirrored.
+            switch (src)
+            {
+                case ';':
+                    return trans == L'؛';
+                case '?':
+                    return trans == L'؟';
+                case ',':
+                    return trans == L'،';
+                default:
+                    break;
+            }
+        }
 
         return false;
     }
