@@ -166,7 +166,13 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
         {
             auto account = new wxStaticText(this, wxID_ANY, _("Signed in as:"));
             account->SetForegroundColour(SecondaryLabel::GetTextColor());
+#ifdef __WXGTK3__
+            // Under wxGTK3, there is not enough space for the name. Longer names are wrapped and overlap with the username then
+            // Hard code an inital horizontal width for wxSize and ellipsize longer names as a workaround
+            auto name = new wxStaticText(this, wxID_ANY, m_userName, wxPoint(), wxSize(150,-1), wxST_ELLIPSIZE_END);
+#else
             auto name = new wxStaticText(this, wxID_ANY, m_userName);
+#endif
             name->SetFont(name->GetFont().Bold());
             auto username = new SecondaryLabel(this, m_userLogin);
 
@@ -174,6 +180,8 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             sizer->AddSpacer(PX(2));
             auto box = new wxBoxSizer(wxVERTICAL);
             box->Add(name, wxSizerFlags().Left());
+            // A spacer in between would also improve the overlapping of name and username under wxGTK3
+            // box->AddSpacer(PX(25));
             box->Add(username, wxSizerFlags().Left());
             sizer->Add(box);
             break;
