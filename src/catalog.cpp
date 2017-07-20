@@ -379,12 +379,22 @@ void Catalog::HeaderData::ParseDict()
     }
 
     // Parse language information, with backwards compatibility with X-Poedit-*:
+    Lang = Language();
     wxString languageCode = GetHeader("Language");
-    if ( !languageCode.empty() )
+    if (!languageCode.empty())
     {
         Lang = Language::TryParse(languageCode.ToStdWstring());
     }
-    else
+
+    if (!Lang.IsValid())
+    {
+        // try looking for non-standard Qt extension
+        languageCode = GetHeader("X-Language");
+        if (!languageCode.empty())
+            Lang = Language::TryParse(languageCode.ToStdWstring());
+    }
+
+    if (!Lang.IsValid())
     {
         wxString X_Language = GetHeader("X-Poedit-Language");
         wxString X_Country = GetHeader("X-Poedit-Country");
@@ -961,19 +971,27 @@ class LoadParser : public CatalogParser
 
         Language GetMsgidLanguage()
         {
-            auto x_srclang = m_catalog.m_header.GetHeader("X-Source-Language");
-            if (!x_srclang.empty())
-            {
-                return Language::TryParse(str::to_utf8(x_srclang));
-            }
-            else
-            {
-                auto utf8 = m_allMsgidText.utf8_str();
-                return Language::TryDetectFromText(utf8.data(), utf8.length(), Language::English());
-            }
+            auto lang = GetSpecifiedMsgidLanguage();
+            if (lang.IsValid())
+                return lang;
+
+            auto utf8 = m_allMsgidText.utf8_str();
+            return Language::TryDetectFromText(utf8.data(), utf8.length(), Language::English());
         }
 
     protected:
+        Language GetSpecifiedMsgidLanguage()
+        {
+            auto x_srclang = m_catalog.m_header.GetHeader("X-Source-Language");
+            if (!x_srclang.empty())
+            {
+                auto parsed = Language::TryParse(str::to_utf8(x_srclang));
+                if (parsed.IsValid())
+                    return parsed;
+            }
+            return Language();
+        }
+
         Catalog& m_catalog;
 
         virtual bool OnEntry(const wxString& msgid,
@@ -1032,7 +1050,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
             // gettext header:
             m_catalog.m_header.FromString(mtranslations[0]);
             m_catalog.m_header.Comment = comment;
-            m_collectMsgidText = m_catalog.m_header.GetHeader("X-Source-Language").empty();
+            m_collectMsgidText = !GetSpecifiedMsgidLanguage().IsValid();
             m_seenHeaderAlready = true;
         }
         // else: ignore duplicate header in malformed files
