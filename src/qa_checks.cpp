@@ -159,6 +159,26 @@ public:
         const bool s_punct = u_ispunct(s_last);
         const bool t_punct = u_ispunct(t_last);
 
+        if (u_getIntPropertyValue(s_last, UCHAR_BIDI_PAIRED_BRACKET_TYPE) == U_BPT_CLOSE ||
+            u_getIntPropertyValue(t_last, UCHAR_BIDI_PAIRED_BRACKET_TYPE) == U_BPT_CLOSE)
+        {
+            // too many reordering related false positives for brackets
+            // e.g. "your {site} account" -> "váš účet na {site}"
+            if ((wchar_t)u_getBidiPairedBracket(s_last) != (wchar_t)source[0])
+            {
+                return false;
+            }
+            else
+            {
+                // OTOH, it's desirable to check strings fully enclosed in brackets like "(unsaved)"
+                if (source.find_first_of((wchar_t)s_last, 1) != source.size() - 1)
+                {
+                    // it's more complicated, possibly something like "your {foo} on {bar}"
+                    return false;
+                }
+            }
+        }
+
         if (s_punct && !t_punct)
         {
             item->SetIssue(CatalogItem::Issue::Warning,
