@@ -217,6 +217,10 @@ private:
                     return trans == L'？';
                 case ':':
                     return trans == L'：';
+                case '(':
+                    return trans == L'（';
+                case ')':
+                    return trans == L'）';
                 default:
                     break;
             }
