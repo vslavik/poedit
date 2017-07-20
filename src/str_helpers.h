@@ -119,7 +119,7 @@ inline std::wstring to_wstring(NSString *str)
 
 
 // ICU conversions; only include them if ICU is included
-#ifdef U_ICU_VERSION
+#ifdef UNISTR_H
 
 /**
     Create read-only icu::UnicodeString from wxString efficiently.
@@ -159,6 +159,27 @@ inline icu::UnicodeString to_icu(const std::wstring& str)
 #endif
 }
 
+/// Create wxString from icu::UnicodeString, making a copy.
+inline wxString to_wx(const icu::UnicodeString& str)
+{
+#if wxUSE_UNICODE_WCHAR && SIZEOF_WCHAR_T == 2
+    return wxString(str.getBuffer(), str.length());
+#else
+    return wxString((const char*)str.getBuffer(), wxMBConvUTF16(), str.length() * 2);
+#endif
+}
+
+/// Create std::wstring from icu::UnicodeString, making a copy.
+inline std::wstring to_wstring(const icu::UnicodeString& str)
+{
+    return to_wx(str).ToStdWstring();
+}
+
+#endif // UNISTR_H
+
+// Low-level ICU conversions:
+#ifdef U_SIZEOF_UCHAR
+
 /**
     Create buffer with raw UChar* string.
 
@@ -177,24 +198,8 @@ inline wxScopedCharTypeBuffer<UChar> to_icu_raw(const wxString& str)
 #endif
 }
 
+#endif // U_SIZEOF_UCHAR
 
-/// Create wxString from icu::UnicodeString, making a copy.
-inline wxString to_wx(const icu::UnicodeString& str)
-{
-#if wxUSE_UNICODE_WCHAR && SIZEOF_WCHAR_T == 2
-    return wxString(str.getBuffer(), str.length());
-#else
-    return wxString((const char*)str.getBuffer(), wxMBConvUTF16(), str.length() * 2);
-#endif
-}
-
-/// Create std::wstring from icu::UnicodeString, making a copy.
-inline std::wstring to_wstring(const icu::UnicodeString& str)
-{
-    return to_wx(str).ToStdWstring();
-}
-
-#endif // U_ICU_VERSION
 
 } // namespace str
 
