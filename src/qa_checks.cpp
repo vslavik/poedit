@@ -203,7 +203,7 @@ private:
         if (src == trans)
             return true;
 
-        if (m_lang == "zh")
+        if (m_lang == "zh" || m_lang == "ja")
         {
             // Chinese uses full-width punctuation.
             // See https://en.wikipedia.org/wiki/Chinese_punctuation
