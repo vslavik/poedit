@@ -526,6 +526,14 @@ void EditingArea::SetCustomFont(const wxFont& font)
     SetCtrlFont(m_textTrans, font);
     for (auto tp : m_textTransPlural)
         SetCtrlFont(tp, font);
+
+    int minh = m_textOrig->GetCharHeight();
+#ifdef __WXOSX__
+    minh += 2*3; // inset
+#endif
+
+    m_textOrig->SetMinSize(wxSize(-1, minh));
+    m_textOrigPlural->SetMinSize(wxSize(-1, minh));
 }
 
 
