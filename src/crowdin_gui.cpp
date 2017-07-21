@@ -167,7 +167,14 @@ void CrowdinLoginPanel::CreateLoginInfoControls(State state)
             auto account = new wxStaticText(this, wxID_ANY, _("Signed in as:"));
             account->SetForegroundColour(SecondaryLabel::GetTextColor());
             auto name = new wxStaticText(this, wxID_ANY, m_userName);
+#ifdef __WXGTK3__
+            // This is needed to avoid missizing text with bold font. See
+            // https://github.com/vslavik/poedit/pull/411 and https://trac.wxwidgets.org/ticket/16088
+            name->SetLabelMarkup("<b>" + EscapeMarkup(m_userName) + "</b>");
+#else
             name->SetFont(name->GetFont().Bold());
+#endif
+
             auto username = new SecondaryLabel(this, m_userLogin);
 
             sizer->Add(account, wxSizerFlags().BORDER_MACOS(wxTOP, PX(3)));

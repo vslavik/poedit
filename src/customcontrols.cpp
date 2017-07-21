@@ -28,6 +28,7 @@
 #include "concurrency.h"
 #include "errors.h"
 #include "hidpi.h"
+#include "utility.h"
 
 #include <wx/app.h>
 #include <wx/clipbrd.h>
@@ -148,6 +149,19 @@ wxString WrapTextAtWidth(const wxString& text_, int width, Language lang, wxWind
 
 
 } // anonymous namespace
+
+
+HeadingLabel::HeadingLabel(wxWindow *parent, const wxString& label)
+    : wxStaticText(parent, wxID_ANY, label)
+{
+#ifdef __WXGTK3__
+    // This is needed to avoid missizing text with bold font. See
+    // https://github.com/vslavik/poedit/pull/411 and https://trac.wxwidgets.org/ticket/16088
+    SetLabelMarkup("<b>" + EscapeMarkup(label) + "</b>");
+#else
+    SetFont(GetFont().Bold());
+#endif
+}
 
 
 AutoWrappingText::AutoWrappingText(wxWindow *parent, const wxString& label)

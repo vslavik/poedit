@@ -43,12 +43,7 @@ class WXDLLIMPEXP_ADV wxActivityIndicator;
 class HeadingLabel : public wxStaticText
 {
 public:
-    HeadingLabel(wxWindow *parent, const wxString& label)
-        : wxStaticText(parent, wxID_ANY, label)
-    {
-        SetFont(GetFont().Bold());
-    }
-
+    HeadingLabel(wxWindow *parent, const wxString& label);
 };
 
 // Label that auto-wraps itself to fit surrounding control's width.
