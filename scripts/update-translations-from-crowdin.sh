@@ -10,7 +10,7 @@ fi
 
 # Fetch translations updates:
 
-crowdin-cli download
+crowdin download
 
 
 # Now work around deficiencies in Crowdin's CLI tools and remove bogus files:
