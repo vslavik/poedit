@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
 "POT-Creation-Date: 2017-06-01 17:42+0200\n"
-"PO-Revision-Date: 2017-06-01 11:25-0400\n"
+"PO-Revision-Date: 2017-07-23 10:27-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -33,10 +33,10 @@ msgid "Updating catalog"
 msgstr "Katalógus frissítése"
 
 msgid "Collecting source files..."
-msgstr ""
+msgstr "Forrás fájlok összegyűjtése..."
 
 msgid "Extracting translatable strings..."
-msgstr ""
+msgstr "Fordítható karakterláncok kinyerése..."
 
 msgid "Failed to load extracted catalog."
 msgstr "A kinyert katalógus betöltése meghiúsult."
@@ -136,20 +136,20 @@ msgid "You must restart Poedit for this change to take effect."
 msgstr "Újra kell indítania a Poeditet a módosítás életbe léptetéséhez."
 
 msgid "Syncing"
-msgstr ""
+msgstr "Szinkronizálás"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s…"
-msgstr ""
+msgstr "Szinkronizálás ezzel: %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s failed."
-msgstr ""
+msgstr "A szinkronizálás ezzel: %s nem sikerült."
 
 msgid "Syncing error"
-msgstr ""
+msgstr "Szinkronizálás hiba"
 
 msgid "Downloading translations is disabled in this project."
 msgstr "A fordítások letöltése ebben a projektben le van tiltva."
@@ -547,6 +547,10 @@ msgid ""
 "should review translations of any items marked as needing work and correct "
 "them if necessary."
 msgstr ""
+"A fájl PO fájlokban nem engedélyezett és a fájl használatát megakadályozó "
+"ismétlődő elemeket tartalmaz. A Poedit kijavította ezt a problémát, de "
+"minden bizonytalannak jelölt fordítási bejegyzés felülvizsgálata és estleges "
+"javítása szükséges."
 
 msgid "Language of the translation isn't set."
 msgstr "A fordítás nyelve nincs beállítva."
@@ -744,10 +748,10 @@ msgid "Translation:"
 msgstr "Fordítás:"
 
 msgid "Pre-translated"
-msgstr ""
+msgstr "Előfordított"
 
 msgid "Needs Work"
-msgstr ""
+msgstr "Munkát igényel"
 
 #. TRANSLATORS: This indicates that the string's translation isn't final
 #. and has known problems.  For example, it might be machine translated or
@@ -758,7 +762,7 @@ msgstr ""
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
 msgid "Needs work"
-msgstr ""
+msgstr "Munkát igényel"
 
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
@@ -800,12 +804,12 @@ msgstr "Egyéb"
 
 #, c-format
 msgid "%s Format"
-msgstr ""
+msgstr "%s formátum"
 
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
 #, c-format
 msgid "%s format"
-msgstr ""
+msgstr "%s formátum"
 
 #, c-format
 msgid "Source text — %s"
@@ -882,13 +886,13 @@ msgid "Close"
 msgstr "Bezárás"
 
 msgid "Replace &All"
-msgstr ""
+msgstr "Összes cseréje"
 
 msgid "Replace &all"
-msgstr ""
+msgstr "Összes cseréje"
 
 msgid "&Replace"
-msgstr ""
+msgstr "Csere"
 
 msgid "< &Previous"
 msgstr "< Előző"
@@ -1043,7 +1047,7 @@ msgstr "fuzzy megfelelő a fájlon belül"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
-msgstr ""
+msgstr "előfordítás TM-ből"
 
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
@@ -1051,6 +1055,10 @@ msgid ""
 "effective if it’s near-empty, but it will get better as you add more "
 "translations to it."
 msgstr ""
+"A Poedit megpróbálhat újabb bejegyzéseket betölteni a korábbi fordításokból "
+"amik a fájlban vagy a teljes fordítási memóriájában vannak. A TM használata "
+"akkor még nem nagyon hatásos, ha majdnem üres, de amikor több fordítást ad "
+"hozzá, akkor egyre jobb lesz."
 
 msgid "Stored translations:"
 msgstr "Tárolt fordítások:"
@@ -1101,10 +1109,10 @@ msgstr ""
 "lehessen őket fordítani."
 
 msgid "Custom Extractors:"
-msgstr ""
+msgstr "Egyéni kivonatolók:"
 
 msgid "Custom extractors:"
-msgstr ""
+msgstr "Egyéni kivonatolók:"
 
 msgid "Edit..."
 msgstr "Szerkesztés..."
@@ -1203,33 +1211,44 @@ msgid ""
 "By default, inaccurate results are filled in as well and marked as needing "
 "work. Check this option to only include accurate matches."
 msgstr ""
+"Alapesetben a pontatlan eredmények is - bizonytalanként jelölve - "
+"belekerülnek a fordításba. Bejelölve ezt az opciót, csak pontos egyezés "
+"esetén lesz kitöltve."
 
 msgid "Don’t mark exact matches as needing work"
-msgstr ""
+msgstr "Ne jelölje meg a pontos egyezést, mivel munkát igényel"
 
 msgid ""
 "Only enable if you trust the quality of your TM. By default, all matches "
 "from the TM are marked as needing work and should be reviewed before use."
 msgstr ""
+"Csak akkor engedélyezze, ha megbízik a TM minőségében. Alapértelmezés "
+"szerint a TM minden egyezését Munkát igényel kifejezéssel jelöltük meg, és "
+"használat előtt ellenőriznie kell."
 
 msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
+"Az előfordítás automatikusan megtalálja a fordítási memóriában a "
+"lefordítatlan karakterláncok pontos vagy fuzzy illeszkedését, és beírja a "
+"fordításokat."
 
 #, c-format
 msgid "%d entry was pre-translated."
 msgid_plural "%d entries were pre-translated."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d elem előfordítva."
+msgstr[1] "%d elem előre lefordítva."
 
 msgid ""
 "The translations were marked as needing work, because they may be "
 "inaccurate. You should review them for correctness."
 msgstr ""
+"A fordítások bizonytalannak lettek jelölve, mert lehet, hogy pontatlanok. A "
+"pontosításukhoz át kellene nézni ezeket."
 
 msgid "No entries could be pre-translated."
-msgstr ""
+msgstr "A bejegyzést nem lehet előfordítani."
 
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
@@ -1283,19 +1302,19 @@ msgid "Excluded paths"
 msgstr "Kizárt elérési utak"
 
 msgid "Advanced extraction settings"
-msgstr ""
+msgstr "Speciális kibontási beállítások"
 
 msgid "Extract notes for translators from:"
-msgstr ""
+msgstr "Kibontás jegyzetek a következő fordítóktól:"
 
 msgid "Comments prefixed with:"
-msgstr ""
+msgstr "Megjegyzések előtaggal:"
 
 msgid "All comments"
-msgstr ""
+msgstr "Összes megjegyzés"
 
 msgid "Additional xgettext flags:"
-msgstr ""
+msgstr "Kiegészítő xgettext jelzők:"
 
 msgid "Additional keywords"
 msgstr "Kiegészítő kulcsszavak"
@@ -1304,7 +1323,7 @@ msgid "Name of the project the translation is for"
 msgstr "A projekt megnevezése, és aminek a fordítása:"
 
 msgid "Team name and email address or URL"
-msgstr ""
+msgstr "Csapat neve és email címe vagy URL"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
 msgstr "pl. nplurals=2; plural=(n != 1);"
@@ -1317,43 +1336,43 @@ msgstr ""
 "Kérjük először mentse el fájlt. Ez a szakasz mindaddig nem lesz szerkeszthető"
 
 msgid "Not all plural forms are translated."
-msgstr ""
+msgstr "Nincs az összes többes szám lefordítva."
 
 msgid "The translation should start as a sentence."
-msgstr ""
+msgstr "A fordítást mondatként kell kezdeni."
 
 msgid "The translation should start with a lowercase character."
-msgstr ""
+msgstr "A fordítást kisbetűvel kell kezdeni."
 
 msgid "The translation doesn’t start with a space."
-msgstr ""
+msgstr "A fordítás nem kezdődhet szóközzel."
 
 msgid "The translation starts with a space, but the source text doesn’t."
-msgstr ""
+msgstr "A fordítás szóközzel kezdődik, de a forrásszöveg nem."
 
 msgid "The translation is missing a newline at the end."
-msgstr ""
+msgstr "A fordítás végén hiányzik egy új sor."
 
 msgid "The translation ends with a newline, but the source text doesn’t."
-msgstr ""
+msgstr "A fordítás egy új sorral végződik, de a forrásszöveg nem."
 
 msgid "The translation is missing a space at the end."
-msgstr ""
+msgstr "A fordítás végén hiányzik egy szóköz."
 
 msgid "The translation ends with a space, but the source text doesn’t."
-msgstr ""
+msgstr "A fordítás végén hiányzik egy szóköz, de a forrásszövegben nem."
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr ""
+msgstr "A fordítás végére \"%s\" kell."
 
 #, c-format
 msgid "The translation should not end with “%s”."
-msgstr ""
+msgstr "A fordítás végére nem kell \"%s\"."
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
-msgstr ""
+msgstr "A fordítás végére \"%s\" kell, de a forrásszöveg végén “%s” van."
 
 msgid "Comment:"
 msgstr "Megjegyzés:"
@@ -1464,10 +1483,10 @@ msgid "Copy From Singular"
 msgstr "Másolás az egyes számból"
 
 msgid "Translation needs &work"
-msgstr ""
+msgstr "Fordítási munkát igényel"
 
 msgid "Translation Needs &Work"
-msgstr ""
+msgstr "Fordítási munkát igényel"
 
 msgid "Edit &comment"
 msgstr "&Megjegyzés szerkesztése"
@@ -1575,7 +1594,7 @@ msgid "Sync with Crowdin"
 msgstr "Szinkronizáció a Crowdin-nel"
 
 msgid "Pre-&translate..."
-msgstr ""
+msgstr "Előre lefordítás..."
 
 msgid "&Purge deleted translations"
 msgstr "Törölt &fordítások tisztítása"
@@ -1714,10 +1733,10 @@ msgid "Project name and version:"
 msgstr "Projekt neve és verziószáma:"
 
 msgid "Language team:"
-msgstr ""
+msgstr "Nyelvi csoport:"
 
 msgid "Plural forms:"
-msgstr ""
+msgstr "Többes számú alakok:"
 
 msgid "Use default rules for this language"
 msgstr "Alapértelmezett szabályok használata ehhez a nyelvhez"
@@ -1732,19 +1751,19 @@ msgid "Charset:"
 msgstr "Karakterkódolás:"
 
 msgid "Advanced Extraction Settings..."
-msgstr ""
+msgstr "Speciális kibontási beállítások..."
 
 msgid "Advanced extraction settings..."
-msgstr ""
+msgstr "Speciális kibontási beállítások..."
 
 msgid "Translation Properties"
-msgstr ""
+msgstr "Fordítás tulajdonságai"
 
 msgid "Translation properties"
 msgstr "Fordítás tulajdonságai"
 
 msgid "Sources Paths"
-msgstr ""
+msgstr "Források útvonalai"
 
 msgid "Sources paths"
 msgstr "Források útvonalai"
@@ -1756,7 +1775,7 @@ msgid "Base path:"
 msgstr "Alap útvonal:"
 
 msgid "Sources Keywords"
-msgstr ""
+msgstr "Források kulcsszavai"
 
 msgid "Sources keywords"
 msgstr "Források kulcsszavai"
@@ -1769,10 +1788,10 @@ msgstr ""
 "lefordítható szövegek felismeréséhez:"
 
 msgid "Also use default keywords for supported languages"
-msgstr ""
+msgstr "A támogatott nyelvek alapértelmezett kulcsszavai is használhatók"
 
 msgid "Learn About Gettext Keywords"
-msgstr ""
+msgstr "Tudjon meg többet a Gettext kulcsszavakról"
 
 msgid "Learn about gettext keywords"
 msgstr "Tudjon meg többet a gettext kulcsszavakról"
@@ -1835,6 +1854,8 @@ msgid ""
 "The old source text (before it changed during an update) that the now-"
 "inaccurate translation corresponds to."
 msgstr ""
+"A régi forrásszöveg (a frissítést megelőző állapotú), ami bizonytalan "
+"fordításnak tekinthető."
 
 msgid "Notes for translators:"
 msgstr "Megjegyzések a fordítóknak:"
@@ -1872,7 +1893,7 @@ msgid "Version %s"
 msgstr "%s verzió"
 
 msgid "Edit a Translation"
-msgstr ""
+msgstr "Fordítás szerkesztése"
 
 msgid "Edit a translation"
 msgstr "Fordítás szerkesztése"
@@ -1888,7 +1909,7 @@ msgstr ""
 "készítése belőle."
 
 msgid "Collaborate on a Translation with Others"
-msgstr ""
+msgstr "Együttműködés egy fordításban másokkal"
 
 msgid "Collaborate on a translation with others"
 msgstr "Együttműködés egy fordításban másokkal"
@@ -1983,36 +2004,36 @@ msgstr "Kilépés a %s-ből"
 
 #. TRANSLATORS: macOS item in app menu
 msgid "Preferences..."
-msgstr ""
+msgstr "Beállítások..."
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Recent"
-msgstr ""
+msgstr "Legutóbbi"
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Frequent"
-msgstr ""
+msgstr "Gyakori"
 
 msgid "&Apply"
-msgstr ""
+msgstr "Alkalmaz"
 
 msgid "Apply"
-msgstr ""
+msgstr "Alkalmaz"
 
 msgid "&Back"
-msgstr ""
+msgstr "Vissza"
 
 msgid "Back"
-msgstr ""
+msgstr "Vissza"
 
 msgid "&Cancel"
-msgstr ""
+msgstr "Mégsem"
 
 msgid "&Clear"
-msgstr ""
+msgstr "Töröl"
 
 msgid "Clear"
-msgstr ""
+msgstr "Töröl"
 
 msgid "Copy"
 msgstr "Másolás"
@@ -2027,28 +2048,28 @@ msgid "&Delete"
 msgstr "&Törlés"
 
 msgid "&Quit"
-msgstr ""
+msgstr "Kilépés"
 
 msgid "File"
-msgstr ""
+msgstr "Fájl"
 
 msgid "Help"
-msgstr ""
+msgstr "Súgó"
 
 msgid "&New"
-msgstr ""
+msgstr "Új"
 
 msgid "&No"
-msgstr ""
+msgstr "Nem"
 
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 msgid "&OK"
-msgstr ""
+msgstr "OK"
 
 msgid "Open..."
-msgstr ""
+msgstr "Megnyitás..."
 
 msgid "&Paste"
 msgstr "&Beillesztés"
@@ -2057,19 +2078,19 @@ msgid "Paste"
 msgstr "Beillesztés"
 
 msgid "Preferences"
-msgstr ""
+msgstr "Beállítások"
 
 msgid "&Redo"
 msgstr "&Mégis"
 
 msgid "Refresh"
-msgstr ""
+msgstr "Frissítés"
 
 msgid "&Save as"
-msgstr ""
+msgstr "Mentés másként"
 
 msgid "Save as"
-msgstr ""
+msgstr "Mentés másként"
 
 msgid "Select &All"
 msgstr "Min&den kijelölése"
@@ -2081,10 +2102,10 @@ msgid "&Undo"
 msgstr "&Visszavonás"
 
 msgid "&Yes"
-msgstr ""
+msgstr "Igen"
 
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Shift+"
@@ -2096,19 +2117,19 @@ msgstr "Enter"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Up"
-msgstr ""
+msgstr "Fel"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Down"
-msgstr ""
+msgstr "Le"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Left"
-msgstr ""
+msgstr "Balra"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Right"
-msgstr ""
+msgstr "Jobbra"
 
 #. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
 msgid "ctrl"
