@@ -409,7 +409,7 @@ public:
     {
         if ( files.size() != 1 )
         {
-            wxLogError(_("You can't drop more than one file on Poedit window."));
+            wxLogError(_(L"You can’t drop more than one file on Poedit window."));
             return false;
         }
 
@@ -418,14 +418,14 @@ public:
         auto ext = f.GetExt().Lower();
         if ( ext != "po" && ext != "pot" )
         {
-            wxLogError(_("File '%s' is not a message catalog."),
+            wxLogError(_(L"File “%s” is not a message catalog."),
                        f.GetFullPath().c_str());
             return false;
         }
 
         if ( !f.FileExists() )
         {
-            wxLogError(_("File '%s' doesn't exist."), f.GetFullPath().c_str());
+            wxLogError(_(L"File “%s” doesn’t exist."), f.GetFullPath().c_str());
             return false;
         }
 
@@ -1011,14 +1011,14 @@ wxWindowPtr<wxMessageDialog> PoeditFrame::CreateAskAboutSavingDialog()
                         _("Save changes"),
                         wxYES_NO | wxCANCEL | wxICON_QUESTION
                     ));
-    dlg->SetExtendedMessage(_("Your changes will be lost if you don't save them."));
+    dlg->SetExtendedMessage(_(L"Your changes will be lost if you don’t save them."));
     dlg->SetYesNoLabels
          (
             _("Save"),
         #ifdef __WXMSW__
-            _("Don't save")
+            _(L"Don’t save")
         #else
-            _("Don't Save")
+            _(L"Don’t Save")
         #endif
          );
     return dlg;
@@ -1100,7 +1100,7 @@ void PoeditFrame::OnOpenHist(wxCommandEvent& event)
     wxString f(FileHistory().GetHistoryFile(event.GetId() - wxID_FILE1));
     if ( !wxFileExists(f) )
     {
-        wxLogError(_("File '%s' doesn't exist."), f.c_str());
+        wxLogError(_(L"File “%s” doesn’t exist."), f.c_str());
         return;
     }
 
@@ -1152,7 +1152,7 @@ void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         MACOS_OR_OTHER("", _("Save as...")),
+                         MACOS_OR_OTHER("", _(L"Save as…")),
                          path,
                          name,
                          m_catalog->GetFileMask(),
@@ -1197,7 +1197,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         MACOS_OR_OTHER("", _("Compile to...")),
+                         MACOS_OR_OTHER("", _(L"Compile to…")),
                          wxPathOnly(fileName),
                          name,
                          wxString::Format("%s (*.mo)|*.mo", _("Compiled Translation Files")),
@@ -1241,7 +1241,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     wxWindowPtr<wxFileDialog> dlg(
         new wxFileDialog(this,
-                         MACOS_OR_OTHER("", _("Export as...")),
+                         MACOS_OR_OTHER("", _(L"Export as…")),
                          wxPathOnly(fileName),
                          name,
                          wxString::Format("%s (*.html)|*.html", _("HTML Files")),
@@ -1267,7 +1267,7 @@ bool PoeditFrame::ExportCatalog(const wxString& filename)
     f.close();
     if (!tempfile.Commit())
     {
-        wxLogError(_("Couldn't save file %s."), filename);
+        wxLogError(_(L"Couldn’t save file %s."), filename);
         return false;
     }
     return true;
@@ -2217,7 +2217,7 @@ void PoeditFrame::WarnAboutLanguageIssues()
             (
                 "missing-language",
                 AttentionMessage::Error,
-                _("Language of the translation isn't set.")
+                _(L"Language of the translation isn’t set.")
             );
         msg.AddAction(MSW_OR_OTHER(_("Set language"), _("Set Language")),
                       [=]{ EditCatalogProperties(); });
@@ -2255,11 +2255,11 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
         if ( m_catalog->Header().GetHeader("Plural-Forms").empty() )
         {
-            err = _("This catalog has entries with plural forms, but doesn't have Plural-Forms header configured.");
+            err = _(L"This catalog has entries with plural forms, but doesn’t have Plural-Forms header configured.");
         }
         else if ( m_catalog->HasWrongPluralFormsCount() )
         {
-            err = _("Entries in this catalog have different plural forms count from what catalog's Plural-Forms header says");
+            err = _(L"Entries in this catalog have different plural forms count from what catalog’s Plural-Forms header says");
         }
 
         // FIXME: make this part of global error checking
@@ -2369,7 +2369,7 @@ void PoeditFrame::RefreshControls(int flags)
     m_hasObsoleteItems = false;
     if (!m_catalog->IsOk())
     {
-        wxLogError(_("Error loading message catalog file '%s'."), m_catalog->GetFileName());
+        wxLogError(_(L"Error loading message catalog file “%s”."), m_catalog->GetFileName());
         m_fileExistsOnDisk = false;
         UpdateMenu();
         UpdateTitle();

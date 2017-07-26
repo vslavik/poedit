@@ -269,7 +269,7 @@ EmptyPOScreenPanel::EmptyPOScreenPanel(PoeditFrame *parent)
     header->SetForegroundColour(m_clrHeader);
     sizer->Add(header, wxSizerFlags().Center().PXBorderAll());
 
-    auto explain = new wxStaticText(this, wxID_ANY, _("Translatable entries aren't added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
+    auto explain = new wxStaticText(this, wxID_ANY, _(L"Translatable entries aren’t added manually in the Gettext system, but are automatically extracted\nfrom source code. This way, they stay up to date and accurate.\nTranslators typically use PO template files (POTs) prepared for them by the developer."));
     explain->SetFont(m_fntNorm);
     explain->SetForegroundColour(m_clrNorm);
     sizer->Add(explain, wxSizerFlags());

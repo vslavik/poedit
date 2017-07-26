@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 2000-2017 Vaclav Slavik
@@ -199,12 +199,12 @@ bool PerformUpdateFromSources(wxWindow *parent,
     CatalogPtr pot = nullptr;
 
     progress.PulseGauge();
-    progress.UpdateMessage(_("Collecting source files..."));
+    progress.UpdateMessage(_(L"Collecting source files…"));
 
     auto files = Extractor::CollectAllFiles(*spec);
 
     progress.PulseGauge();
-    progress.UpdateMessage(_("Extracting translatable strings..."));
+    progress.UpdateMessage(_(L"Extracting translatable strings…"));
 
     if (!files.empty())
     {
@@ -234,7 +234,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
     if (!pot)
         return false;
 
-    progress.UpdateMessage(_("Merging differences..."));
+    progress.UpdateMessage(_(L"Merging differences…"));
 
     bool succ = false;
     bool cancelledByUser = false;
@@ -263,7 +263,7 @@ bool PerformUpdateFromPOT(wxWindow *parent,
 
     if (!pot->IsOk())
     {
-        wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
+        wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
         return false;
     }
 

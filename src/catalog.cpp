@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 1999-2017 Vaclav Slavik
@@ -127,8 +127,8 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
     if (f.GetLineCount() != f2.GetLineCount())
     {
         int linesCount = (int)f2.GetLineCount() - (int)f.GetLineCount();
-        wxLogError(wxPLURAL("%i line of file '%s' was not loaded correctly.",
-                            "%i lines of file '%s' were not loaded correctly.",
+        wxLogError(wxPLURAL(L"%i line of file “%s” was not loaded correctly.",
+                            L"%i lines of file “%s” were not loaded correctly.",
                             linesCount),
                    linesCount,
                    filename.c_str());
@@ -142,7 +142,7 @@ bool VerifyFileCharset(const wxTextFile& f, const wxString& filename,
         if (f[i].empty() && !f2[i].empty()) // wxMBConv conversion failed
         {
             wxLogError(
-                _("Line %d of file '%s' is corrupted (not valid %s data)."),
+                _(L"Line %d of file “%s” is corrupted (not valid %s data)."),
                 int(i), filename.c_str(), charset.c_str());
             ok = false;
         }
@@ -218,7 +218,7 @@ void Catalog::HeaderData::FromString(const wxString& str)
         size_t pos = ln.find(_T(':'));
         if (pos == wxString::npos)
         {
-            wxLogError(_("Malformed header: '%s'"), ln.c_str());
+            wxLogError(_(L"Malformed header: “%s”"), ln.c_str());
         }
         else
         {
@@ -1267,7 +1267,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
     {
         wxLogError(
             wxString::Format(
-                _("Couldn't load file %s, it is probably corrupted."),
+                _(L"Couldn’t load file %s, it is probably corrupted."),
                 po_file.c_str()));
         return false;
     }
@@ -1566,7 +1566,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     if ( wxFileExists(po_file) && !wxFile::Access(po_file, wxFile::write) )
     {
-        wxLogError(_("File '%s' is read-only and cannot be saved.\nPlease save it under different name."),
+        wxLogError(_(L"File “%s” is read-only and cannot be saved.\nPlease save it under different name."),
                    po_file.c_str());
         return false;
     }
@@ -1598,7 +1598,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 
     if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
-        wxLogError(_("Couldn't save file %s."), po_file.c_str());
+        wxLogError(_(L"Couldn’t save file %s."), po_file.c_str());
         return false;
     }
 
@@ -1670,7 +1670,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     {
         if ( !po_file_temp_obj.Commit() )
         {
-            wxLogError(_("Couldn't save file %s."), po_file.c_str());
+            wxLogError(_(L"Couldn’t save file %s."), po_file.c_str());
         }
         else
         {
@@ -1760,7 +1760,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
                                                                      error:nil];
                 if (!ok)
                 {
-                    wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                    wxLogError(_(L"Couldn’t save file %s."), mo_file.c_str());
                     mo_compilation_status = CompilationStatus::Error;
                 }
             }];
@@ -1771,7 +1771,7 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
 #else // !__WXOSX__
             if ( !mo_file_temp_obj.Commit() )
             {
-                wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+                wxLogError(_(L"Couldn’t save file %s."), mo_file.c_str());
                 mo_compilation_status = CompilationStatus::Error;
             }
 #endif // __WXOSX__/!__WXOSX__
@@ -1826,7 +1826,7 @@ bool Catalog::CompileToMO(const wxString& mo_file,
 
     if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
-        wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
+        wxLogError(_(L"Couldn’t save file %s."), po_file_temp.c_str());
         return false;
     }
 
@@ -1860,7 +1860,7 @@ bool Catalog::CompileToMO(const wxString& mo_file,
 
     if ( !mo_file_temp_obj.Commit() )
     {
-        wxLogError(_("Couldn't save file %s."), mo_file.c_str());
+        wxLogError(_(L"Couldn’t save file %s."), mo_file.c_str());
         return false;
     }
 
@@ -1966,7 +1966,7 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
     {
 #if wxUSE_GUI
         wxString msg;
-        msg.Printf(_("The catalog couldn't be saved in '%s' charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
+        msg.Printf(_(L"The catalog couldn’t be saved in “%s” charset as specified in catalog settings.\n\nIt was saved in UTF-8 instead and the setting was modified accordingly."),
                    m_header.Charset.c_str());
         wxMessageBox(msg, _("Error saving catalog"),
                      wxOK | wxICON_EXCLAMATION);
@@ -2010,7 +2010,7 @@ bool Catalog::FixDuplicateItems()
 
     if ( !DoSaveOnly(po_file_temp, wxTextFileType_Unix) )
     {
-        wxLogError(_("Couldn't save file %s."), po_file_temp.c_str());
+        wxLogError(_(L"Couldn’t save file %s."), po_file_temp.c_str());
         return false;
     }
 
@@ -2269,7 +2269,7 @@ bool Catalog::UpdateFromPOT(const wxString& pot_file, bool replace_header)
     CatalogPtr pot = std::make_shared<Catalog>(pot_file, CreationFlag_IgnoreTranslations);
     if (!pot->IsOk())
     {
-        wxLogError(_("'%s' is not a valid POT file."), pot_file.c_str());
+        wxLogError(_(L"“%s” is not a valid POT file."), pot_file.c_str());
         return false;
     }
 

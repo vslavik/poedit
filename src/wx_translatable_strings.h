@@ -65,6 +65,7 @@ _("Show All");
 // TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
 _("Quit %s");
 // TRANSLATORS: macOS item in app menu
+_(L"Preferences…");
 _("Preferences...");
 
 
@@ -101,6 +102,7 @@ STOCKITEM(wxID_HELP,                _("&Help"),               _("Help"));
 STOCKITEM(wxID_NEW,                 _("&New"),                _("New"));
 STOCKITEM(wxID_NO,                  _("&No"),                 _("No"));
 STOCKITEM(wxID_OK,                  _("&OK"),                 _("OK"));
+STOCKITEM(wxID_OPEN,                _(L"&Open…"),             _(L"Open…"));
 STOCKITEM(wxID_OPEN,                _("&Open..."),            _("Open..."));
 STOCKITEM(wxID_PASTE,               _("&Paste"),              _("Paste"));
 STOCKITEM(wxID_PREFERENCES,         _("&Preferences"),        _("Preferences"));
