@@ -312,6 +312,11 @@ Language Language::TryParse(const std::wstring& s)
     if (IsValidCode(s))
         return Language(s);
 
+    if (s == "zh-Hans")
+        return Language("zh_CN");
+    else if (s == "zh-Hant")
+        return Language("zh_TW");
+
     // Is it a standard language code?
     if (regex_match(s, RE_LANG_CODE_PERMISSIVE))
     {
