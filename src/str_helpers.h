@@ -185,7 +185,7 @@ inline std::wstring to_wstring(const icu::UnicodeString& str)
 
     Notice that the resulting string is only valid for the input's lifetime.
  */
-inline wxScopedCharTypeBuffer<UChar> to_icu_raw(const wxString& str)
+inline wxScopedCharTypeBuffer<wxChar16> to_icu_raw(const wxString& str)
 {
     static_assert(U_SIZEOF_UCHAR == 2, "unexpected UChar size");
 #if SIZEOF_WCHAR_T == 2
@@ -194,7 +194,7 @@ inline wxScopedCharTypeBuffer<UChar> to_icu_raw(const wxString& str)
 #else
     auto buf = wxMBConvUTF16().cWC2MB(str.wc_str());
     auto len = buf.length();
-    return wxCharTypeBuffer<UChar>::CreateOwned((UChar*)buf.release(), len);
+    return wxCharTypeBuffer<wxChar16>::CreateOwned((wxChar16*)buf.release(), len);
 #endif
 }
 
