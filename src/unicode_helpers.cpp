@@ -38,7 +38,7 @@ TextDirection get_base_direction(const wxString& text)
         return TextDirection::LTR;
 
     auto s = str::to_icu_raw(text);
-    switch (ubidi_getBaseDirection(s.data(), (int)s.length()))
+    switch (ubidi_getBaseDirection((const UChar*)s.data(), (int)s.length()))
     {
         case UBIDI_RTL:
             return TextDirection::RTL;
