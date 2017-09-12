@@ -72,7 +72,7 @@ void ExtractFilesFromInfo(std::vector<std::wstring>& out, const json& r, const s
         {
             out.push_back(name);
         }
-        else if (node_type == "directory")
+        else if (node_type == "directory" || node_type == "branch")
         {
             ExtractFilesFromInfo(out, i, name + L"/");
         }
