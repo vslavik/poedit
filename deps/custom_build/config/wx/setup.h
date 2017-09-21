@@ -11,6 +11,12 @@
 #ifndef _WX_SETUP_H_
 #define _WX_SETUP_H_
 
+#ifdef __WXMAC_XCODE__
+// while configure based builds have the flags prepended, we must do this here
+// for xcode based builds
+#include "wx/osx/config_xcode.h"
+#endif
+
 /* --- start common options --- */
 // ----------------------------------------------------------------------------
 // global settings
@@ -68,6 +74,16 @@
 //
 // Recommended setting: 0
 #define wxUSE_UNSAFE_WXSTRING_CONV 0
+
+// If set to 1, enables "reproducible builds", i.e. build output should be
+// exactly the same if the same build is redone again. As using __DATE__ and
+// __TIME__ macros clearly makes the build irreproducible, setting this option
+// to 1 disables their use in the library code.
+//
+// Default is 0
+//
+// Recommended setting: 0
+#define wxUSE_REPRODUCIBLE_BUILD 1
 
 // ----------------------------------------------------------------------------
 // debugging settings
