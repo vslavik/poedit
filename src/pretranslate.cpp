@@ -177,19 +177,28 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
     topsizer->SetSizeHints(dlg.get());
     dlg->CenterOnParent();
 
-    noFuzzy->SetValue(true);
+    {
+        PretranslateSettings settings = Config::PretranslateSettings();
+        onlyExact->SetValue(settings.onlyExact);
+        noFuzzy->SetValue(settings.exactNotFuzzy);
+    }
 
     dlg->ShowWindowModalThenDo([catalog,window,list,onlyExact,noFuzzy,onChangesMade,dlg](int retcode)
     {
         if (retcode != wxID_OK)
             return;
 
+        PretranslateSettings settings;
+        settings.onlyExact = onlyExact->GetValue();
+        settings.exactNotFuzzy = noFuzzy->GetValue();
+        Config::PretranslateSettings(settings);
+
         int matches = 0;
 
         int flags = 0;
-        if (onlyExact->GetValue())
+        if (settings.onlyExact)
             flags |= PreTranslate_OnlyExact;
-        if (noFuzzy->GetValue())
+        if (settings.exactNotFuzzy)
             flags |= PreTranslate_ExactNotFuzzy;
 
         if (list->HasMultipleSelection())

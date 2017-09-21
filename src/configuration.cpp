@@ -260,6 +260,21 @@ void Config::Write(const std::string& key, bool value)
 }
 
 
+::PretranslateSettings Config::PretranslateSettings()
+{
+    ::PretranslateSettings s;
+    s.onlyExact = Read("/pretranslate/only_exact", false);
+    s.exactNotFuzzy = Read("/pretranslate/exact_not_fuzzy", true);
+    return s;
+}
+
+void Config::PretranslateSettings(::PretranslateSettings s)
+{
+    Write("/pretranslate/only_exact", s.onlyExact);
+    Write("/pretranslate/exact_not_fuzzy", s.exactNotFuzzy);
+}
+
+
 MergeBehavior Config::MergeBehavior()
 {
     ::MergeBehavior value = Merge_FuzzyMatch;

@@ -36,6 +36,13 @@ enum MergeBehavior
     Merge_UseTM
 };
 
+// Pre-translation settings
+struct PretranslateSettings
+{
+    bool onlyExact;
+    bool exactNotFuzzy;
+};
+
 
 /**
     High-level interface to configuration storage.
@@ -49,6 +56,9 @@ public:
 
     static bool UseTM() { return Read("/use_tm", true); }
     static void UseTM(bool use) { Write("/use_tm", use); }
+
+    static ::PretranslateSettings PretranslateSettings();
+    static void PretranslateSettings(::PretranslateSettings s);
 
     // What to do during merge
     static ::MergeBehavior MergeBehavior();
