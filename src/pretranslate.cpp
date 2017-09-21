@@ -177,6 +177,8 @@ void PreTranslateWithUI(wxWindow *window, PoeditListCtrl *list, CatalogPtr catal
     topsizer->SetSizeHints(dlg.get());
     dlg->CenterOnParent();
 
+    noFuzzy->SetValue(true);
+
     dlg->ShowWindowModalThenDo([catalog,window,list,onlyExact,noFuzzy,onChangesMade,dlg](int retcode)
     {
         if (retcode != wxID_OK)
