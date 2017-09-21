@@ -297,6 +297,11 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 #else
         variant = wxNullVariant;
 #endif
+        if (col == Col_ID)
+        {
+            // sequential ID better than nothing, but this is a hack to get sizing correctly
+            variant = wxString::Format("%d", (int)row);
+        }
         return;
     }
 
