@@ -56,8 +56,10 @@ class ActionButton : public wxWindow
 {
 public:
     ActionButton(wxWindow *parent, wxWindowID winid, const wxString& label, const wxString& note)
-        : wxWindow(parent, wxID_ANY, wxDefaultPosition, wxSize(500, 65))
+        : wxWindow(parent, wxID_ANY)
     {
+        SetMinSize(wxSize(500, 65));
+
         m_button = new wxButton(this, winid, "");
         auto sizer = new wxBoxSizer(wxHORIZONTAL);
         sizer->Add(m_button, wxSizerFlags(1).Expand());
