@@ -9,7 +9,7 @@ _exclusion_list = ['.DS_Store',
                    'autom4te.cache', 'build_windows',
                    'Debug', 'Debug_static', 'Release', 'Release_static',
                    'bin',
-                   'docs', 'doc', 'examples', 'test', 'tests']
+                   'docs', 'doc', 'examples', 'test', 'tests', 'test-driver']
 def _is_excluded(e):
     if e.name in _exclusion_list:
         return True
