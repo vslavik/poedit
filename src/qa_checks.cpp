@@ -231,6 +231,8 @@ private:
             {
                 case '.':
                     return trans == L'。';
+                case ',':
+                    return trans == L'、';
                 case '!':
                     return trans == L'！';
                 case '?':
