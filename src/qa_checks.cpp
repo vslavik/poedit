@@ -245,7 +245,7 @@ private:
                     break;
             }
         }
-        else if (m_lang == "ar")
+        else if (m_lang == "ar" || m_lang == "fa")
         {
             // In Arabic (but not other RTL languages), some punctuation is mirrored.
             switch (src)
