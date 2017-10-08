@@ -252,7 +252,13 @@ private:
 
         auto rect = GetClientRect();
         if (!rect.IsEmpty())
+        {
+#if wxCHECK_VERSION(3,1,1)
+            gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+#else
             gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+#endif
+        }
     }
 
     wxColour m_fg, m_bg;
