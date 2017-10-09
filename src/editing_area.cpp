@@ -336,7 +336,7 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
     m_tagFormat = new TagLabel(this, Color::TagSecondaryFg, Color::TagSecondaryBg);
 
     auto sourceLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
-    sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
+    sourceLineSizer->Add(m_labelSource, wxSizerFlags().Center());
     sourceLineSizer->AddSpacer(PX(4));
     sourceLineSizer->Add(m_tagContext, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     sourceLineSizer->Add(m_tagFormat, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
@@ -394,7 +394,7 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
     m_tagPretranslated->SetLabel(_("Pre-translated"));
 
     auto transLineSizer = new ShrinkableBoxSizer(wxHORIZONTAL);
-    transLineSizer->Add(m_labelTrans, wxSizerFlags().Center().Border(wxBOTTOM, MACOS_OR_OTHER(2, 0)));
+    transLineSizer->Add(m_labelTrans, wxSizerFlags().Center());
     transLineSizer->AddSpacer(PX(4));
     transLineSizer->Add(m_issueLine, wxSizerFlags().Center().Border(wxRIGHT, PX(4)));
     transLineSizer->SetShrinkableWindow(m_issueLine);
@@ -496,7 +496,7 @@ void EditingArea::OnPaint(wxPaintEvent&)
     wxPaintDC dc(this);
     auto width = GetClientSize().x;
 
-    const int paddingTop = MACOS_OR_OTHER(PX(2), PX(6));
+    const int paddingTop = MACOS_OR_OTHER(dc.GetContentScaleFactor() > 1.0 ? PX(5) : PX(6), PX(6));
     const int paddingBottom = PX(5);
 
     auto clr = ColorScheme::Get(Color::EditingSeparator);
