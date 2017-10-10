@@ -112,6 +112,7 @@ public:
 private:
     void CreateEditControls(wxBoxSizer *sizer);
     void CreateTemplateControls(wxBoxSizer *sizer);
+    void SetupTextCtrlSizes();
 
     void ShowPluralFormUI(bool show);
 

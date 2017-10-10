@@ -377,6 +377,8 @@ EditingArea::EditingArea(wxWindow *parent, PoeditListCtrl *associatedList, Mode 
         CreateTemplateControls(sizer);
     else
         CreateEditControls(sizer);
+
+    SetupTextCtrlSizes();
 }
 
 
@@ -484,6 +486,18 @@ void EditingArea::CreateTemplateControls(wxBoxSizer *panelSizer)
 }
 
 
+void EditingArea::SetupTextCtrlSizes()
+{
+    int minh = m_textOrig->GetCharHeight();
+#ifdef __WXOSX__
+    minh += 2*3; // inset
+#endif
+
+    m_textOrig->SetMinSize(wxSize(-1, minh));
+    m_textOrigPlural->SetMinSize(wxSize(-1, minh));
+}
+
+
 EditingArea::~EditingArea()
 {
     // OnPaint may still be called as child windows are destroyed
@@ -533,13 +547,7 @@ void EditingArea::SetCustomFont(const wxFont& font)
     for (auto tp : m_textTransPlural)
         SetCtrlFont(tp, font);
 
-    int minh = m_textOrig->GetCharHeight();
-#ifdef __WXOSX__
-    minh += 2*3; // inset
-#endif
-
-    m_textOrig->SetMinSize(wxSize(-1, minh));
-    m_textOrigPlural->SetMinSize(wxSize(-1, minh));
+    SetupTextCtrlSizes();
 }
 
 
