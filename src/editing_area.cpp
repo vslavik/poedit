@@ -451,6 +451,15 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
         UpdateFromTextCtrl();
         e.Skip();
     });
+
+#ifdef __WXMSW__
+    m_pluralNotebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, [=](wxBookCtrlEvent& e){
+        e.Skip();
+        auto focused = FindFocus();
+        if (focused && (focused == m_pluralNotebook || focused->GetParent() == m_pluralNotebook))
+            m_pluralNotebook->GetPage(e.GetSelection())->SetFocus();
+    });
+#endif
 }
 
 
