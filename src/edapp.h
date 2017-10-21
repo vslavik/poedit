@@ -87,8 +87,8 @@ class PoeditApp : public wxApp
         // the apple menu etc. Call on every newly created menubar
         void TweakOSXMenuBar(wxMenuBar *bar);
         void CreateFakeOpenRecentMenu();
-        void InstallOpenRecentMenu(wxMenuBar *bar);
-        void OnIdleInstallOpenRecentMenu(wxIdleEvent& event);
+        void FixupMenusForMac(wxMenuBar *bar);
+        void OnIdleFixupMenusForMac(wxIdleEvent& event);
         virtual void OSXOnWillFinishLaunching();
         void OnCloseWindowCommand(wxCommandEvent& event);
 #endif

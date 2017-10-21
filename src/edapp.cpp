@@ -89,8 +89,9 @@
 #ifdef __WXOSX__
 struct PoeditApp::NativeMacAppData
 {
-    NSMenu *menu = nullptr;
-    NSMenuItem *menuItem = nullptr;
+    NSMenu *recentMenu = nullptr;
+    NSMenuItem *recentMenuItem = nullptr;
+    wxMenu *windowMenu = nullptr;
     wxMenuBar *menuBar = nullptr;
 #ifdef USE_SPARKLE
     NSObject *sparkleDelegate = nullptr;
@@ -267,6 +268,7 @@ PoeditApp::PoeditApp()
 {
 #ifdef __WXOSX__
     m_nativeMacAppData.reset(new NativeMacAppData);
+    wxMenuBar::SetAutoWindowMenu(false);
 #endif
 }
 
@@ -833,7 +835,7 @@ BEGIN_EVENT_TABLE(PoeditApp, wxApp)
 #endif
 #ifdef __WXOSX__
    EVT_MENU           (wxID_CLOSE, PoeditApp::OnCloseWindowCommand)
-   EVT_IDLE           (PoeditApp::OnIdleInstallOpenRecentMenu)
+   EVT_IDLE           (PoeditApp::OnIdleFixupMenusForMac)
 #endif
 END_EVENT_TABLE()
 
@@ -1054,6 +1056,18 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
     Sparkle_AddMenuItem(apple->GetHMenu(), _(L"Check for Updates…").utf8_str());
 #endif
 
+    wxMenu *fileMenu = nullptr;
+    wxMenuItem *fileCloseItem = bar->FindItem(wxID_CLOSE, &fileMenu);
+    if (fileMenu && fileCloseItem)
+    {
+        NSMenuItem *nativeCloseItem = [fileMenu->GetHMenu() itemWithTitle:str::to_NS(fileCloseItem->GetItemLabelText())];
+        if (nativeCloseItem)
+        {
+            nativeCloseItem.target = nil;
+            nativeCloseItem.action = @selector(performClose:);
+        }
+    }
+
     int editMenuPos = bar->FindMenu(_("&Edit"));
     if (editMenuPos == wxNOT_FOUND)
         editMenuPos = 1;
@@ -1140,15 +1154,20 @@ void PoeditApp::TweakOSXMenuBar(wxMenuBar *bar)
 
     }
 
-    int windowMenuPos = bar->FindMenu(_("Window"));
-    if (windowMenuPos != wxNOT_FOUND)
+    if (!m_nativeMacAppData->windowMenu)
     {
-        NSMenu *windowNS = bar->GetMenu(windowMenuPos)->GetHMenu();
-        AddNativeItem(windowNS, -1, _("Minimize"), @selector(performMiniaturize:), @"m");
-        AddNativeItem(windowNS, -1, _("Zoom"), @selector(performZoom:), @"");
-        [windowNS addItem:[NSMenuItem separatorItem]];
-        AddNativeItem(windowNS, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");
-        [NSApp setWindowsMenu:windowNS];
+        int windowMenuPos = bar->FindMenu(_("Window"));
+        if (windowMenuPos != wxNOT_FOUND)
+        {
+            m_nativeMacAppData->windowMenu = bar->GetMenu(windowMenuPos);
+            NSMenu *windowNS = m_nativeMacAppData->windowMenu->GetHMenu();
+            AddNativeItem(windowNS, -1, _("Minimize"), @selector(performMiniaturize:), @"m");
+            AddNativeItem(windowNS, -1, _("Zoom"), @selector(performZoom:), @"");
+            [windowNS addItem:[NSMenuItem separatorItem]];
+            AddNativeItem(windowNS, -1, _("Bring All to Front"), @selector(arrangeInFront:), @"");
+
+            [NSApp setWindowsMenu:windowNS];
+        }
     }
 }
 
@@ -1169,44 +1188,65 @@ void PoeditApp::CreateFakeOpenRecentMenu()
     [openRecentMenu performSelector:@selector(_setMenuName:) withObject:@"NSRecentDocumentsMenu"];
     #pragma clang diagnostic pop
     [menu setSubmenu:openRecentMenu forItem:item];
-    m_nativeMacAppData->menuItem = item;
-    m_nativeMacAppData->menu = openRecentMenu;
+    m_nativeMacAppData->recentMenuItem = item;
+    m_nativeMacAppData->recentMenu = openRecentMenu;
  
     item = [openRecentMenu addItemWithTitle:NSLocalizedString(@"Clear Menu", nil)
             action:@selector(clearRecentDocuments:)
             keyEquivalent:@""];
 }
 
-void PoeditApp::InstallOpenRecentMenu(wxMenuBar *bar)
+void PoeditApp::FixupMenusForMac(wxMenuBar *bar)
 {
-    if (m_nativeMacAppData->menuItem)
-        [m_nativeMacAppData->menuItem setSubmenu:nil];
+    wxMenuBar *prevBar = m_nativeMacAppData->menuBar;
     m_nativeMacAppData->menuBar = nullptr;
+
+    if (m_nativeMacAppData->recentMenuItem)
+        [m_nativeMacAppData->recentMenuItem setSubmenu:nil];
 
     if (!bar)
         return;
 
     wxMenu *fileMenu;
     wxMenuItem *item = bar->FindItem(XRCID("open_recent"), &fileMenu);
-    if (!item)
-        return;
+    if (item)
+    {
+        NSMenu *native = fileMenu->GetHMenu();
+        NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(item->GetItemLabelText())];
+        if (nativeItem)
+        {
+            [nativeItem setSubmenu:m_nativeMacAppData->recentMenu];
+            m_nativeMacAppData->recentMenuItem = nativeItem;
+        }
+    }
 
-    NSMenu *native = fileMenu->GetHMenu();
-    NSMenuItem *nativeItem = [native itemWithTitle:str::to_NS(item->GetItemLabelText())];
-    if (!nativeItem)
-        return;
+    if (m_nativeMacAppData->windowMenu)
+    {
+        int windowMenuPos = bar->FindMenu(_("Window"));
+        if (windowMenuPos != wxNOT_FOUND)
+        {
+            if (bar->GetMenu(windowMenuPos) != m_nativeMacAppData->windowMenu)
+            {
+                if (prevBar)
+                {
+                    prevBar->Remove(prevBar->FindMenu(_("Window")));
+                    prevBar->Insert(windowMenuPos, new wxMenu(), _("Window"));
+                }
+                bar->Remove(windowMenuPos);
+                bar->Insert(windowMenuPos, m_nativeMacAppData->windowMenu, _("Window"));
+            }
+        }
+    }
 
-    [nativeItem setSubmenu:m_nativeMacAppData->menu];
-    m_nativeMacAppData->menuItem = nativeItem;
     m_nativeMacAppData->menuBar = bar;
 }
 
-void PoeditApp::OnIdleInstallOpenRecentMenu(wxIdleEvent& event)
+void PoeditApp::OnIdleFixupMenusForMac(wxIdleEvent& event)
 {
     event.Skip();
     auto installed = wxMenuBar::MacGetInstalledMenuBar();
     if (m_nativeMacAppData->menuBar != installed)
-        InstallOpenRecentMenu(installed);
+        FixupMenusForMac(installed);
 }
 
 void PoeditApp::OSXOnWillFinishLaunching()
