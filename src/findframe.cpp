@@ -185,6 +185,7 @@ FindFrame::FindFrame(PoeditFrame *owner,
         { wxACCEL_SHIFT, WXK_RETURN, m_btnPrev->GetId() },
 #endif
 #ifdef __WXOSX__
+        { wxACCEL_NORMAL, WXK_RETURN, m_btnNext->GetId() },
         { wxACCEL_CMD, 'W', wxID_CLOSE },
 #endif
         { wxACCEL_NORMAL, WXK_ESCAPE, wxID_CLOSE }
@@ -213,6 +214,9 @@ FindFrame::FindFrame(PoeditFrame *owner,
     // differently. More than a bit of a hack, but it works.
     NSButton *macPrev = (NSButton*)m_btnPrev->GetHandle();
     Bind(wxEVT_MENU, [=](wxCommandEvent&){ [macPrev performClick:nil]; }, m_btnPrev->GetId());
+
+    NSButton *macNext = (NSButton*)m_btnNext->GetHandle();
+    Bind(wxEVT_MENU, [=](wxCommandEvent&){ [macNext performClick:nil]; }, m_btnNext->GetId());
 #endif
 
     OnModeChanged();
