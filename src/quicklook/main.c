@@ -17,8 +17,8 @@
 #include <CoreServices/CoreServices.h>
 #include <QuickLook/QuickLook.h>
 
-extern void Initialize_plugin();
-extern void Uninitialize_plugin();
+extern void Initialize_plugin(void);
+extern void Uninitialize_plugin(void);
 
 #pragma GCC visibility push(default)
 

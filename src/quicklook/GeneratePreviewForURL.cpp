@@ -70,7 +70,7 @@ CFDataRef CreateHTMLDataForURL(CFURLRef url, CFStringRef contentTypeUTI)
 extern "C"
 {
 
-void Initialize_plugin()
+void Initialize_plugin(void)
 {
     wxInitialize();
 
@@ -97,7 +97,7 @@ void Initialize_plugin()
     }
 }
 
-void Uninitialize_plugin()
+void Uninitialize_plugin(void)
 {
     u_cleanup();
 
