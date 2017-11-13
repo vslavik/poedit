@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 
-import os, sys
+import os, sys, subprocess
 from collections import OrderedDict
 from ninja_syntax import Writer
 
-_exclusion_list = ['.DS_Store',
-                   '.git',
-                   'autom4te.cache', 'build_windows',
-                   'Debug', 'Debug_static', 'Release', 'Release_static',
-                   'bin',
-                   'docs', 'doc', 'examples', 'test', 'tests', 'test-driver']
+_exclusion_list = [
+    '.DS_Store',
+    '.git',
+    'autom4te.cache', 'build_windows',
+    'Debug', 'Debug_static', 'Release', 'Release_static',
+    'bin',
+    'docs', 'doc', 'examples', 'test', 'tests', 'test-driver',
+]
+_exclusion_gitignore = subprocess.run(['git', 'ls-files', '--others', '-i', '--exclude-standard'],
+                                      stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines()
+
 def _is_excluded(e):
-    if e.name in _exclusion_list:
+    if e.name in _exclusion_list or e.path in _exclusion_gitignore:
         return True
     if e.name.endswith('-tests'):
         return True
