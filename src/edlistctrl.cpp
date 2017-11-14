@@ -497,6 +497,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
     AssociateModel(m_model.get());
 
     CreateColumns();
+    UpdateColumns();
 
     UpdateHeaderAttrs();
 
@@ -560,19 +561,18 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
 #endif
 
     UpdateHeaderAttrs();
-    CreateColumns();
+    UpdateColumns();
 }
 
 void PoeditListCtrl::SetDisplayLines(bool dl)
 {
     m_displayIDs = dl;
-    CreateColumns();
+    UpdateColumns();
 }
 
 void PoeditListCtrl::CreateColumns()
 {
-    if (GetColumnCount() > 0)
-        ClearColumns();
+    wxASSERT( GetColumnCount() == 0 );
 
 #ifdef __WXOSX__
     NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
@@ -580,20 +580,6 @@ void PoeditListCtrl::CreateColumns()
 #endif
 
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
-
-    Language srclang, lang;
-    if (m_catalog)
-    {
-        srclang = m_catalog->GetSourceLanguage();
-        lang = m_catalog->GetLanguage();
-    }
-
-    auto isRTL = lang.IsRTL();
-#ifdef __WXMSW__
-    // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
-    if (m_appTextDir == TextDirection::RTL)
-        isRTL = !isRTL;
-#endif
 
 #if defined(__WXMSW__)
     int iconWidth = wxArtProvider::GetBitmap("poedit-status-error").GetSize().x + 6 /*wxDVC internal padding*/;
@@ -606,28 +592,17 @@ void PoeditListCtrl::CreateColumns()
     m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster);
 #endif
 
-    wxString sourceTitle = srclang.IsValid()
-                             ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
-                             : _("Source text");
     auto sourceRenderer = new DataViewMarkupRenderer(ColorScheme::Get(Color::ItemContextBgHighlighted, this));
     sourceRenderer->EnableEllipsize(wxELLIPSIZE_END);
-    m_colSource = new wxDataViewColumn(sourceTitle, sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
+    m_colSource = new wxDataViewColumn(_("Source text"), sourceRenderer, Model::Col_Source, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
     AppendColumn(m_colSource);
 
-    if (m_model->m_catalog && m_model->m_catalog->HasCapability(Catalog::Cap::Translations))
-    {
-        wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");;
-        wxString transTitle = wxString::Format(_(L"Translation — %s"), langname);
-        auto transRenderer = new wxDataViewTextRenderer();
-        transRenderer->EnableEllipsize(wxELLIPSIZE_END);
-        m_colTrans = new wxDataViewColumn(transTitle, transRenderer, Model::Col_Translation, wxCOL_WIDTH_DEFAULT, isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT, 0);
-        AppendColumn(m_colTrans);
-    }
+    auto transRenderer = new wxDataViewTextRenderer();
+    transRenderer->EnableEllipsize(wxELLIPSIZE_END);
+    m_colTrans = new wxDataViewColumn(_(L"Translation — %s"), transRenderer, Model::Col_Translation, wxCOL_WIDTH_DEFAULT, wxALIGN_LEFT, 0);
+    AppendColumn(m_colTrans);
 
-    if (m_displayIDs)
-    {
-        m_colID = AppendTextColumn(_("ID"), Model::Col_ID, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_RIGHT, 0);
-    }
+    m_colID = AppendTextColumn(_("ID"), Model::Col_ID, wxDATAVIEW_CELL_INERT, wxCOL_WIDTH_AUTOSIZE, wxALIGN_RIGHT, 0);
 
     // wxDVC insists on having an expander column, but we really don't want one:
     auto fake = AppendTextColumn("", Model::Col_ID);
@@ -638,6 +613,47 @@ void PoeditListCtrl::CreateColumns()
     if (m_appTextDir == TextDirection::RTL)
         m_colSource->SetAlignment(wxALIGN_RIGHT);
 #endif
+}
+
+void PoeditListCtrl::UpdateColumns()
+{
+    wxASSERT( GetColumnCount() > 0 );
+
+    if (!m_catalog)
+        return;
+
+    auto srclang = m_catalog->GetSourceLanguage();
+    auto lang = m_catalog->GetLanguage();
+
+    wxString sourceTitle = srclang.IsValid()
+                             ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
+                             : _("Source text");
+    m_colSource->SetTitle(sourceTitle);
+
+    if (m_model->m_catalog && m_model->m_catalog->HasCapability(Catalog::Cap::Translations))
+    {
+        wxString langname = lang.IsValid() ? lang.DisplayName() : _("unknown language");;
+        wxString transTitle = wxString::Format(_(L"Translation — %s"), langname);
+
+        auto isRTL = lang.IsRTL();
+#ifdef __WXMSW__
+        // a quirk of wx API: if the current locale is RTL, the meaning of L and R is reversed
+        if (m_appTextDir == TextDirection::RTL)
+            isRTL = !isRTL;
+#endif
+
+        m_colTrans->SetHidden(false);
+        m_colTrans->SetTitle(transTitle);
+        m_colTrans->SetAlignment(isRTL ? wxALIGN_RIGHT : wxALIGN_LEFT);
+    }
+    else
+    {
+        m_colTrans->SetHidden(true);
+    }
+
+    m_colID->SetHidden(!m_displayIDs);
+    if (m_displayIDs)
+        m_colID->SetWidth(wxCOL_WIDTH_AUTOSIZE);
 
     SizeColumns();
 
@@ -660,7 +676,7 @@ void PoeditListCtrl::SizeColumns()
     if (m_colIcon)
         w -= m_colIcon->GetWidth();
 
-    if (m_colID)
+    if (m_colID && m_colID->IsShown())
     {
         w -= m_colID->GetWidth();
 #ifdef __WXGTK__
@@ -668,7 +684,7 @@ void PoeditListCtrl::SizeColumns()
 #endif
     }
 
-    if (m_colTrans)
+    if (m_colTrans && m_colTrans->IsShown())
     {
         m_colSource->SetWidth(w / 2);
         m_colTrans->SetWidth(w - w / 2);
@@ -698,7 +714,7 @@ void PoeditListCtrl::CatalogChanged(const CatalogPtr& catalog)
     if (!m_catalog)
         return;
 
-    CreateColumns();
+    UpdateColumns();
 
     if (sizeOrCatalogChanged && GetItemCount() > 0)
         CallAfter([=]{ SelectAndFocus(0); });
