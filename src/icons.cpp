@@ -69,7 +69,11 @@ bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
         "ContributeOn",
         "poedit-status-comment",
         "follow-link",
-        "sidebar"
+        "sidebar",
+        "Welcome_EditTranslation",
+        "Welcome_CreateTranslation",
+        "Welcome_WordPress",
+        "Welcome_Collaborate"
     };
 
     bool mirror = s_directional.find(id) != s_directional.end();
