@@ -68,19 +68,38 @@ wxImage LoadScaledBitmap(const wxString& name)
     wxImage img;
 
 #ifdef NEEDS_MANUAL_HIDPI
-    if (HiDPIScalingFactor() > 1.25)
+    // On Windows, arbitrary scaling factors are possible and "ugly" values like 125%
+    // or 150% scaling are not only possible, but common. It is unrealistic to provide
+    // custom-drawn bitmaps for all of them, so we make do with a basic set of 100%/@1x,
+    // 200%/@2x (used on macOS too) and one more for 150%/@1.5x for Windows use.
+    // To eliminate smudged scaling artifacts, we use these fixed sizes even for zoom
+    // factors in-between (such as the very common 125% or less common 175%). This looks
+    // better and the size difference is negligible.
+    auto const screenScaling = HiDPIScalingFactor();
+    if (screenScaling > 1.25)
     {
-        double imgScale = HiDPIScalingFactor();
+        if (screenScaling <= 1.75)  // @1.5x is reasonable 
+        {
+            const wxString filename_15x(name + "@1.5x.png");
+            if (wxFileExists(filename_15x))
+            {
+                LoadPNGImage(img, filename_15x);
+                if (img.IsOk())
+                    return img;
+            }
+        }
+
+        double imgScale = screenScaling;
         const wxString filename_2x(name + "@2x.png");
         if (wxFileExists(filename_2x))
         {
             LoadPNGImage(img, filename_2x);
-            if (HiDPIScalingFactor() == 2.0)
+            if (screenScaling > 1.75 && screenScaling <= 2.50)  // @2x is reasonable
                 return img;
             else
                 imgScale /= 2.0;
         }
-        else
+        else  // fall back to upscaled @1x
         {
             LoadPNGImage(img, filename);
         }
@@ -98,7 +117,7 @@ wxImage LoadScaledBitmap(const wxString& name)
         img.Rescale(img.GetWidth() * imgScale, img.GetHeight() * imgScale, quality);
         return img;
     }
-    // else: load normally
+    // else if screenScaling <= 1.25: @1x size is good enough, load normally
 #endif
 
     LoadPNGImage(img, filename);
