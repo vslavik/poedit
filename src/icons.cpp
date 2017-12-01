@@ -152,7 +152,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     }
 
 #ifdef __WXMSW__
-    if (IsWindows10OrGreater())
+    if (client == wxART_TOOLBAR && IsWindows10OrGreater())
     {
         const int padding = PX(1);
         auto sz = img.GetSize();
