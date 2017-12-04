@@ -1720,7 +1720,10 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
     try
     {
         wxBusyCursor bcur;
-        ReportValidationErrors(m_catalog->Validate(),
+        auto results = m_catalog->Validate();
+        if (m_list && m_list->sortOrder().errorsFirst)
+            m_list->Sort();
+        ReportValidationErrors(results,
                                /*mo_compilation_failed=*/Catalog::CompilationStatus::NotDone,
                                /*from_save=*/false, /*other_file_saved=*/false, []{});
     }
@@ -2611,6 +2614,9 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
 
     if (tmUpdateThread.valid())
         tmUpdateThread.wait();
+
+    if (m_list && m_list->sortOrder().errorsFirst)
+        m_list->Sort();
 
     if (validation_results.errors)
     {
