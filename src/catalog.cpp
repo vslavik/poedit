@@ -1688,13 +1688,8 @@ bool Catalog::Save(const wxString& po_file, bool save_mo,
     /* If the user wants it, compile .mo file right now: */
 
     bool compileMO = save_mo;
-#if wxUSE_GUI // FIXME - gross
-    if (!m_cloudSync || !m_cloudSync->NeedsMO())
-#endif
-    {
-        if (!wxConfig::Get()->Read("compile_mo", (long)true))
-            compileMO = false;
-    }
+    if (!wxConfig::Get()->Read("compile_mo", (long)true))
+        compileMO = false;
 
     if (m_fileType == Type::PO && compileMO)
     {

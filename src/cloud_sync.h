@@ -60,32 +60,28 @@ public:
     /// Name of the destionation (e.g. Crowding or hostname)
     virtual wxString GetName() const = 0;
 
-    virtual bool NeedsMO() const = 0;
-
     /// Asynchronously uploads the file. Returned future throws on error.
     virtual dispatch::future<void> Upload(CatalogPtr file) = 0;
 
 
     /// Convenicence for creating a destination from a lambda.
     template<typename F>
-    static std::shared_ptr<CloudSyncDestination> Make(const wxString& name, bool needsMO, F&& func)
+    static std::shared_ptr<CloudSyncDestination> Make(const wxString& name, F&& func)
     {
         class Dest : public CloudSyncDestination
         {
         public:
-            Dest(const wxString& name_, bool needsMO_, F&& func_)
-                : name(name_), needsMO(needsMO_), func(func_) {}
+            Dest(const wxString& name_, F&& func_)
+                : name(name_), func(func_) {}
 
             wxString GetName() const override { return name; }
-            bool NeedsMO() const override { return needsMO; }
             dispatch::future<void> Upload(CatalogPtr file) override { return func(file); }
 
             wxString name;
-            bool needsMO;
             F func;
         };
 
-        return std::make_shared<Dest>(name, needsMO, std::move(func));
+        return std::make_shared<Dest>(name, std::move(func));
     }
 };
 
