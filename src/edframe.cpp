@@ -2604,6 +2604,11 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (ManagerFrame::Get())
         ManagerFrame::Get()->NotifyFileChanged(GetFileName());
 
+    if (m_catalog->GetCloudSync())
+    {
+        CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
+    }
+
     if (tmUpdateThread.valid())
         tmUpdateThread.wait();
 
@@ -2620,11 +2625,6 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     }
     else
     {
-        if (m_catalog->GetCloudSync())
-        {
-            CloudSyncProgressWindow::RunSync(this, m_catalog->GetCloudSync(), m_catalog);
-        }
-
         completionHandler(true);
     }
 }
