@@ -478,9 +478,9 @@ void ManagerFrame::OnUpdateProject(wxCommandEvent&)
                 UpdateResultReason reason;
                 if (PerformUpdateFromSources(this, cat, reason, Update_DontShowSummary))
                 {
-                    int validation_errors = 0;
+                    Catalog::ValidationResults validation_results;
                     Catalog::CompilationStatus mo_status;
-                    cat->Save(f, false, validation_errors, mo_status);
+                    cat->Save(f, false, validation_results, mo_status);
                 }
             }
          }

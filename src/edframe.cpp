@@ -1210,17 +1210,17 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
         wxBusyCursor bcur;
         auto fn = dlg->GetPath();
         wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
-        int validation_errors = 0;
+        Catalog::ValidationResults validation_results;
         Catalog::CompilationStatus compilation_status = Catalog::CompilationStatus::NotDone;
-        m_catalog->CompileToMO(fn, validation_errors, compilation_status);
+        m_catalog->CompileToMO(fn, validation_results, compilation_status);
 
-        if (validation_errors)
+        if (validation_results.errors)
         {
             // Note: this may show window-modal window and because we may
             //       be called from such window too, run this in the next
             //       event loop iteration.
             CallAfter([=]{
-                ReportValidationErrors(validation_errors, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
+                ReportValidationErrors(validation_results, compilation_status, /*from_save=*/true, /*other_file_saved=*/false, []{});
             });
         }
     });
@@ -1732,7 +1732,7 @@ void PoeditFrame::OnValidate(wxCommandEvent&)
 
 
 template<typename TFunctor>
-void PoeditFrame::ReportValidationErrors(int errors,
+void PoeditFrame::ReportValidationErrors(Catalog::ValidationResults validation,
                                          Catalog::CompilationStatus mo_compilation_status,
                                          bool from_save, bool other_file_saved,
                                          TFunctor completionHandler)
@@ -1743,7 +1743,7 @@ void PoeditFrame::ReportValidationErrors(int errors,
     if (m_list && m_catalog->GetCount())
         m_list->RefreshAllItems();
 
-    if ( errors )
+    if ( validation.errors )
     {
         RefreshControls();
 
@@ -1754,8 +1754,8 @@ void PoeditFrame::ReportValidationErrors(int errors,
             (
                 wxPLURAL("%d issue with the translation found.",
                          "%d issues with the translation found.",
-                         errors),
-                errors
+                         validation.errors),
+                validation.errors
             ),
             _("Validation results"),
             wxOK | wxICON_ERROR
@@ -2577,9 +2577,9 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
         dt.TranslatorEmail = wxConfig::Get()->Read("translator_email", dt.TranslatorEmail);
     }
 
-    int validation_errors = 0;
+    Catalog::ValidationResults validation_results;
     Catalog::CompilationStatus mo_compilation_status = Catalog::CompilationStatus::NotDone;
-    if ( !m_catalog->Save(catalog, true, validation_errors, mo_compilation_status) )
+    if ( !m_catalog->Save(catalog, true, validation_results, mo_compilation_status) )
     {
         if (tmUpdateThread.valid())
             tmUpdateThread.wait();
@@ -2612,13 +2612,13 @@ void PoeditFrame::WriteCatalog(const wxString& catalog, TFunctor completionHandl
     if (tmUpdateThread.valid())
         tmUpdateThread.wait();
 
-    if (validation_errors)
+    if (validation_results.errors)
     {
         // Note: this may show window-modal window and because we may
         //       be called from such window too, run this in the next
         //       event loop iteration.
         CallAfter([=]{
-            ReportValidationErrors(validation_errors, mo_compilation_status, /*from_save=*/true, /*other_file_saved=*/true, [=]{
+            ReportValidationErrors(validation_results, mo_compilation_status, /*from_save=*/true, /*other_file_saved=*/true, [=]{
                 completionHandler(true);
             });
         });

@@ -335,7 +335,8 @@ private:
         void RecreatePluralTextCtrls();
 
         template<typename TFunctor>
-        void ReportValidationErrors(int errors, Catalog::CompilationStatus mo_compilation_status,
+        void ReportValidationErrors(Catalog::ValidationResults validation,
+                                    Catalog::CompilationStatus mo_compilation_status,
                                     bool from_save, bool other_file_saved,
                                     TFunctor completionHandler);
 

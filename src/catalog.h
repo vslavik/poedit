@@ -519,6 +519,13 @@ class Catalog
             Error
         };
 
+        struct ValidationResults
+        {
+            ValidationResults() : errors(0), warnings(0) {}
+            int errors;
+            int warnings;
+        };
+
         // Common wrapping values
         static const int NO_WRAPPING = -1;
         static const int DEFAULT_WRAPPING = -2;
@@ -564,7 +571,7 @@ class Catalog
             name & location as .po file except for different extension.
          */
         bool Save(const wxString& po_file, bool save_mo,
-                  int& validation_errors,
+                  ValidationResults& validation_results,
                   CompilationStatus& mo_compilation_status);
 
         /**
@@ -583,7 +590,7 @@ class Catalog
 
         /// Compiles the catalog into binary MO file.
         bool CompileToMO(const wxString& mo_file,
-                         int& validation_errors,
+                         ValidationResults& validation_results,
                          CompilationStatus& mo_compilation_status);
 
         /// Exports the catalog to HTML format
@@ -722,7 +729,7 @@ class Catalog
 
         /// Validates correctness of the translation by running msgfmt
         /// Returns number of errors (i.e. 0 if no errors).
-        int Validate();
+        ValidationResults Validate();
 
         void AttachCloudSync(std::shared_ptr<CloudSyncDestination> c) { m_cloudSync = c; }
         std::shared_ptr<CloudSyncDestination> GetCloudSync() const { return m_cloudSync; }
@@ -731,7 +738,7 @@ class Catalog
         /// Fix commonly encountered fixable problems with loaded files
         void FixupCommonIssues();
 
-        int DoValidate(const wxString& po_file);
+        ValidationResults DoValidate(const wxString& po_file);
         bool DoSaveOnly(const wxString& po_file, wxTextFileType crlf);
         bool DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf);
 
