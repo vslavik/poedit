@@ -96,7 +96,7 @@ bool ReadOutput(wxInputStream& s, wxArrayString& out)
 {
     // the stream could be already at EOF or in wxSTREAM_BROKEN_PIPE state
     s.Reset();
-    wxTextInputStream tis(s, " ", wxConvUTF8);
+    wxTextInputStream tis(s, " ", wxConvAuto() /* UTF-8, fallback if impossible */);
 
     while (true)
     {
