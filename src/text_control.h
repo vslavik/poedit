@@ -164,6 +164,10 @@ protected:
     void DoSetValue(const wxString& value, int flags) override;
 #endif
 
+#ifdef __WXMSW__
+    void DoEnable(bool enable) override;
+#endif
+
     bool m_lastKeyWasReturn;
 };
 

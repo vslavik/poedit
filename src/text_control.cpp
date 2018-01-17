@@ -842,6 +842,14 @@ void TranslationTextCtrl::DoSetValue(const wxString& value, int flags)
 }
 #endif
 
+#ifdef __WXMSW__
+void TranslationTextCtrl::DoEnable(bool enable)
+{
+    wxEventBlocker block(this, wxEVT_TEXT);
+    AnyTranslatableTextCtrl::DoEnable(enable);
+}
+#endif
+
 void TranslationTextCtrl::SetPlainTextUserWritten(const wxString& value)
 {
     UndoGroup undo(this);
