@@ -96,13 +96,25 @@ bool ReadOutput(wxInputStream& s, wxArrayString& out)
 {
     // the stream could be already at EOF or in wxSTREAM_BROKEN_PIPE state
     s.Reset();
-    wxTextInputStream tis(s, " ", wxConvAuto() /* UTF-8, fallback if impossible */);
+
+    // Read the input as Latin1, even though we know it's UTF-8. This is terrible,
+    // terrible thing to do, but gettext tools may sometimes output invalid UTF-8
+    // (e.g. when using non-ASCII, non-UTF8 msgids) and wxTextInputStream logic
+    // can't cope well with failing conversions. To make this work, we read the
+    // input as Latin1 and later re-encode it back and re-parse as UTF-8.
+    wxTextInputStream tis(s, " ", wxConvISO8859_1);
 
     while (true)
     {
-        wxString line = tis.ReadLine();
+        const wxString line = tis.ReadLine();
         if ( !line.empty() )
-            out.push_back(line);
+        {
+            // reconstruct the UTF-8 text if we can
+            wxString line2(line.mb_str(wxConvISO8859_1), wxConvUTF8);
+            if (line2.empty())
+                line2 = line;
+            out.push_back(line2);
+        }
         if (s.Eof())
             break;
         if ( !s )
