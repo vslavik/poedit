@@ -62,7 +62,7 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
     // FIXME: make this window-modal
     // FIXME: and don't create it here, reuse upstream progress data
     ProgressInfo progress(window, _(L"Pre-translating…"));
-    progress.UpdateMessage(_("Pre-translating…"));
+    progress.UpdateMessage(_(L"Pre-translating…"));
 
     // Function to apply fetched suggestions to a catalog item:
     auto process_results = [=](CatalogItemPtr dt, const SuggestionsList& results) -> bool
