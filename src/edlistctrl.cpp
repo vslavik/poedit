@@ -549,12 +549,18 @@ void PoeditListCtrl::SetCustomFont(wxFont font_)
     SetFont(font);
 
 #if defined(__WXOSX__)
+    // Have to propagate font setting to native columns
+    NSFont *nativeFont = font.OSXGetNSFont();
+    NSTableView *tableView = (NSTableView*)[((NSScrollView*)GetHandle()) documentView];
+    for (NSTableColumn *c in tableView.tableColumns)
+        [c.dataCell setFont:nativeFont];
+
     // Custom setup of NSLayoutManager is necessary to match NSTableView sizing.
     // See http://stackoverflow.com/questions/17095927/dynamically-changing-row-height-after-font-size-of-entire-nstableview-nsoutlin
     NSLayoutManager *lm = [[NSLayoutManager alloc] init];
     [lm setTypesetterBehavior:NSTypesetterBehavior_10_2_WithCompatibility];
     [lm setUsesScreenFonts:NO];
-    CGFloat height = [lm defaultLineHeightForFont:font.OSXGetNSFont()];
+    CGFloat height = [lm defaultLineHeightForFont:nativeFont];
     SetRowHeight(int(height) + PX(4));
 #elif defined(__WXMSW__)
     SetRowHeight(GetCharHeight() + PX(4));
