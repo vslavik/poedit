@@ -1016,7 +1016,7 @@ wxWindowPtr<wxMessageDialog> PoeditFrame::CreateAskAboutSavingDialog()
          (
             _("Save"),
         #ifdef __WXMSW__
-            _(L"Don’t save")
+            _(L"Do&n’t save")
         #else
             _(L"Don’t Save")
         #endif
