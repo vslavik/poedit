@@ -50,7 +50,9 @@
             <border>5d</border>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="extractor_command"/>
+            <object class="wxTextCtrl" name="extractor_command">
+              <hint translate="0">xgettext -L PHP --add-comments=TRANSLATORS: --force-po -o %o %C %K %F</hint>
+            </object>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -71,7 +73,9 @@
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="extractor_keywords"/>
+            <object class="wxTextCtrl" name="extractor_keywords">
+              <hint translate="0">-k%k</hint>
+            </object>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -92,7 +96,9 @@
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="extractor_files"/>
+            <object class="wxTextCtrl" name="extractor_files">
+              <hint translate="0">%f</hint>
+            </object>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
@@ -113,7 +119,9 @@
             <flag>wxLEFT|wxRIGHT|wxTOP</flag>
           </object>
           <object class="sizeritem">
-            <object class="wxTextCtrl" name="extractor_charset"/>
+            <object class="wxTextCtrl" name="extractor_charset">
+              <hint translate="0">--from-code=%c</hint>
+            </object>
             <flag>wxEXPAND|wxLEFT|wxRIGHT|wxBOTTOM</flag>
             <border>5d</border>
           </object>
