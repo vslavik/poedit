@@ -155,7 +155,8 @@ public:
 
     enum encode_flags
     {
-        encode_no_plus = 1 // don't encode spaces as +
+        encode_no_plus = 1,     // don't encode spaces as +
+        encode_keep_slash = 2,  // don't encode / as %2f
     };
 
     static std::string url_encode(const std::string& s, int flags = 0);

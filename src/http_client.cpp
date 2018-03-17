@@ -106,6 +106,10 @@ std::string http_client::url_encode(const std::string& s, int flags)
         {
             escaped << '+';
         }
+        else if (c == '/' && (flags & encode_keep_slash))
+        {
+            escaped << '/';
+        }
         else
         {
             escaped << '%' << std::setw(2) << int((unsigned char)c);
