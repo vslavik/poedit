@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  This file is part of Poedit (https://poedit.net)
  *
  *  Copyright (C) 2014-2018 Vaclav Slavik
