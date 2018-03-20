@@ -352,7 +352,7 @@ void PerformSearch(IndexSearcherPtr searcher,
             if (!ContainsResult(results, t))
             {
                 time_t ts = DateField::stringToTime(doc->get(L"created"));
-                Suggestion r {t, score, ts};
+                Suggestion r {t, score, int(ts)};
                 results.push_back(r);
             }
         }
@@ -447,7 +447,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
                     !ContainsResult(results, t))
                 {
                     time_t ts = DateField::stringToTime(doc->get(L"created"));
-                    Suggestion r {t, score, ts};
+                    Suggestion r {t, score, int(ts)};
                     results.push_back(r);
                 }
             }

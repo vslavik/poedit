@@ -49,12 +49,12 @@ struct Suggestion
     };
 
     /// Ctor
-    Suggestion() : score(0.), timestamp(0), source(Source::LocalTM) {}
+    Suggestion() : score(0.), localScore(0), source(Source::LocalTM) {}
     Suggestion(const std::wstring& text_,
                double score_,
-               time_t timestamp_ = 0,
+               int localScore_ = 0,
                Source source_ = Source::LocalTM)
-        : text(text_), score(score_), timestamp(timestamp_), source(source_)
+        : text(text_), score(score_), localScore(localScore_), source(source_)
     {}
 
     /// Text of the suggested translation
@@ -64,7 +64,7 @@ struct Suggestion
     double score;
 
     /// Time when the suggestion was stored
-    time_t timestamp;
+    int localScore;
 
     /// Source of the suggestion
     Source source;
@@ -76,7 +76,7 @@ struct Suggestion
 inline bool operator<(const Suggestion& a, const Suggestion& b)
 {
     if (std::fabs(a.score - b.score) <= std::numeric_limits<double>::epsilon())
-        return a.timestamp > b.timestamp;
+        return a.localScore > b.localScore;
     else
         return a.score > b.score;
 }
