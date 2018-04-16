@@ -144,6 +144,28 @@ private:
 };
 
 
+// Pretifies c-format etc. tags. Use canonical spelling for known languages,
+// fall back to upper-casing only the first letter.
+wxString PrettyPrintFormatTag(const wxString& fmt)
+{
+    if (fmt.empty())
+        return fmt;
+    else if (fmt == "php")
+        return "PHP";
+    else if (fmt == "csharp")
+        return "C#";
+    else if (fmt == "objc")
+        return "Objective C";
+    else if (fmt == "sh")
+        return "Shell";
+    else if (fmt == "kde")
+        return "KDE";
+    else if (fmt == "javascript")
+        return "JavaScript";
+    else
+        return wxToupper(fmt[0]) + fmt.substr(1);
+}
+
 } // anonymous namespace
 
 
@@ -829,7 +851,7 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
     if (!format.empty())
     {
         // TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
-        m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), format.Upper()));
+        m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), PrettyPrintFormatTag(format)));
     }
 
     if (m_tagPretranslated)
