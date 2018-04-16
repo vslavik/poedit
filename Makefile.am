@@ -9,4 +9,7 @@ dist_desktop_DATA = poedit.desktop poedit-uri.desktop
 appdatadir=$(datadir)/appdata
 dist_appdata_DATA = poedit.appdata.xml
 
-EXTRA_DIST = bootstrap
+EXTRA_DIST = \
+	deps/json/LICENSE.MIT \
+	deps/json/src/json.hpp \
+	bootstrap
