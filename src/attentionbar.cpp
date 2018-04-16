@@ -198,9 +198,6 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
           i != msg.m_actions.end(); ++i )
     {
         auto b = new TranslucentButton(this, wxID_ANY, i->first);
-#ifdef __WXOSX__
-        MakeButtonRounded(b->GetHandle());
-#endif
         m_buttons->Add(b, wxSizerFlags().Center().Border(wxRIGHT, BUTTONS_SPACE));
         m_actions[b] = i->second;
     }

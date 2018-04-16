@@ -323,7 +323,7 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
     if (self)
     {
         self.title = label;
-        self.bezelStyle = NSSmallSquareBezelStyle;
+        self.bezelStyle = NSRoundRectBezelStyle;
         self.buttonType = NSMomentaryPushInButton;
         self.font = [NSFont systemFontOfSize:[NSFont smallSystemFontSize]];
     }

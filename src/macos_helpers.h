@@ -42,8 +42,6 @@ int  UserDefaults_GetBoolValue(const char *key);
 void UserDefaults_RemoveValue(const char *key);
 
 // Misc UI helpers
-void MakeButtonRounded(void *button);
-
 void MoveToApplicationsFolderIfNecessary();
 
 #endif // Poedit_macos_helpers_h

@@ -152,11 +152,6 @@ void UserDefaults_RemoveValue(const char *key)
 // Misc UI helpers
 // --------------------------------------------------------------------------------
 
-void MakeButtonRounded(void *button)
-{
-    [(__bridge NSButton*)button setBezelStyle:NSRoundRectBezelStyle];
-}
-
 void MoveToApplicationsFolderIfNecessary()
 {
     PFMoveToApplicationsFolderIfNecessary();
