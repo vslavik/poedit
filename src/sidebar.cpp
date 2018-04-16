@@ -754,7 +754,8 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     topSizer->SetMinSize(wxSize(PX(300), -1));
 
     m_blocksSizer = new wxBoxSizer(wxVERTICAL);
-    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXDoubleBorder(wxTOP|wxBOTTOM));
+    topSizer->Add(m_blocksSizer, wxSizerFlags(1).Expand().PXBorder(wxTOP|wxBOTTOM));
+    topSizer->AddSpacer(PXDefaultBorder);
 
     m_topBlocksSizer = new wxBoxSizer(wxVERTICAL);
     m_bottomBlocksSizer = new wxBoxSizer(wxVERTICAL);
@@ -762,6 +763,7 @@ Sidebar::Sidebar(wxWindow *parent, wxMenu *suggestionsMenu)
     m_blocksSizer->Add(m_topBlocksSizer, wxSizerFlags(1).Expand().ReserveSpaceEvenIfHidden());
     m_blocksSizer->Add(m_bottomBlocksSizer, wxSizerFlags().Expand());
 
+    m_topBlocksSizer->AddSpacer(PXDefaultBorder);
     AddBlock(new SuggestionsSidebarBlock(this, suggestionsMenu), Top);
     AddBlock(new OldMsgidSidebarBlock(this), Bottom);
     AddBlock(new ExtractedCommentSidebarBlock(this), Bottom);

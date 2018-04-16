@@ -81,8 +81,6 @@ protected:
     Sidebar *m_parent;
     wxSizer *m_headerSizer;
     wxSizer *m_innerSizer;
-
-private:
     wxSizer *m_sizer;
 };
 
