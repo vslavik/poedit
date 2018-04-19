@@ -9,8 +9,8 @@ make_msgfmt()
     done
 }
 
-echo " - aclocal" && aclocal -I admin && \
-echo " - automake" && automake --foreign -a -c -f && \
+echo " - aclocal" && aclocal && \
+echo " - automake" && automake -a -c -f && \
 echo " - autoconf" && autoconf && \
 \
 echo " - generate-docs.make" && make -C docs  -f generate-docs.make && \
