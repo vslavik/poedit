@@ -34,6 +34,9 @@ appicon ICON   "../artwork/windows/Poedit.ico"
 #include  "git_build_number.h"
 #define POEDIT_VERSION_WIN_FULL POEDIT_VERSION_WIN,POEDIT_GIT_BUILD_NUMBER
 
+// Verify WinSparkle updates' signatures
+DSAPub DSAPEM "../macos/dsa_pub.pem"
+
 #ifndef NDEBUG
 #define VER_DEBUG    VS_FF_DEBUG
 #else
