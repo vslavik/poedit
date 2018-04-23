@@ -1,0 +1,80 @@
+name: poedit
+version: '0.0.0-git'
+summary: Gettext translations editor for OS X, Windows and Unix.
+description: |
+  This program is a GUI frontend to GNU Gettext utilities and a catalogs 
+  editor/source code parser. It helps with translating applications into 
+  other languages.
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+icon: ../artwork/linux/appicon/512x512/apps/poedit.png
+
+parts:
+  poedit:
+    plugin: autotools
+    source: ../.git
+    source-type: git
+    source-depth: 1
+    build-packages:
+      - asciidoc
+      - debhelper
+      - gettext
+      - libboost-dev
+      - libboost-iostreams-dev
+      - libboost-regex-dev
+      - libboost-system-dev
+      - libboost-thread-dev
+      - libcld2-dev
+      - libcpprest-dev
+      - libdb++-dev
+      - libgtk2.0-dev
+      - libgtkspell-dev
+      - libicu-dev
+      - liblucene++-dev
+      - libsecret-1-dev
+      - libwxgtk3.0-dev
+      #- nlohmann-json-dev
+      - xsltproc
+      - xmlto
+      - zip
+    prepare: ./bootstrap
+    stage-packages: 
+      - gettext
+    filesets:
+      executables: [usr/local/bin/*]
+      freedesktop-desktop-entries: [usr/local/share/applications/*]
+      manpages: [usr/local/share/man/*]
+      icons: [usr/local/share/icons/*]
+      localizations: [usr/local/share/locale/*]
+      manpages: [usr/local/share/man/*]
+      pixmaps: [usr/local/share/pixmaps/*]
+      resources: [usr/local/share/poedit/*]
+    after: [boostlib]
+  boostlib:
+    plugin: dump
+    source: ../deps/boost
+    source-type: local
+    prepare: ./bootstrap.sh
+    build-packages:
+      - dctrl-tools
+      - zlib1g-dev
+      - libbz2-dev
+      - libicu-dev
+      - mpi-default-dev
+      - bison
+      - flex
+      - docbook-to-man
+      - help2man
+      - xsltproc
+      - g++
+      - g++-6
+      - python
+      - python-all-dev
+      - python3
+      - python3-all-dev
+    build: ./b2 install
+apps:
+  poedit:
+    command: usr/local/bin/poedit
+    plugs: [home, removable-media, x11]
+    desktop: usr/local/share/applications/poedit.desktop
