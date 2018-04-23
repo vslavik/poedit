@@ -76,7 +76,17 @@ parts:
       - python-all-dev
       - python3
       - python3-all-dev
-    build: ./b2 install
+    build: |
+      sudo ./b2 install\
+        -j $(nproc)\
+        --build-type=minimal\
+        --layout=system\
+        --with-iostreams\
+        --with-regex\
+        --with-system\
+        --with-thread\
+        threading=multi
+
 apps:
   poedit:
     command: usr/local/bin/poedit
