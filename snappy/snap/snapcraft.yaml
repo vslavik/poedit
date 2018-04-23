@@ -54,7 +54,7 @@ parts:
       manpages: [usr/local/share/man/*]
       pixmaps: [usr/local/share/pixmaps/*]
       resources: [usr/local/share/poedit/*]
-    after: [boostlib]
+    after: [boostlib, wxwidgets]
   boostlib:
     plugin: dump
     source: ../deps/boost
@@ -88,6 +88,36 @@ parts:
         --with-system\
         --with-thread\
         threading=multi
+  wxwidgets:
+    plugin: dump
+    source: ../deps/wx
+    source-type: local
+    build-packages:
+      # FIXME: Extracted from debian package, might be more than enough
+      - gettext
+      - libgtk2.0-dev
+      - g++
+      - zlib1g-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libtiff5-dev
+      - libsm-dev
+      - libgl1-mesa-dev
+      - libglu1-mesa-dev
+      - autotools-dev
+      - autoconf
+      - libexpat1-dev
+      - libxt-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libgtk-3-dev
+      - libwebkit2gtk-4.0-dev
+      - libnotify-dev
+    override-build: |
+      ./configure
+      make -j$(nproc)
+      sudo make install
+      sudo ldconfig
 
 apps:
   poedit:
