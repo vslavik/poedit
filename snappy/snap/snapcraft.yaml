@@ -40,7 +40,9 @@ parts:
       - xsltproc
       - xmlto
       - zip
-    prepare: ./bootstrap
+    override-build: |
+      ./bootstrap
+      snapcraftctl build
     stage-packages: 
       - gettext
     filesets:
@@ -57,7 +59,6 @@ parts:
     plugin: dump
     source: ../deps/boost
     source-type: local
-    prepare: ./bootstrap.sh
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - dctrl-tools
@@ -76,7 +77,8 @@ parts:
       - python-all-dev
       - python3
       - python3-all-dev
-    build: |
+    override-build: |
+      ./bootstrap.sh
       sudo ./b2 install\
         -j $(nproc)\
         --build-type=minimal\
