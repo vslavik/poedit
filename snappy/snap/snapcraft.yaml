@@ -16,6 +16,7 @@ parts:
     source-type: git
     source-depth: 1
     build-packages:
+      # FIXME: Extracted from Debian package, might be more than enough
       - asciidoc
       - debhelper
       - gettext
@@ -58,6 +59,7 @@ parts:
     source-type: local
     prepare: ./bootstrap.sh
     build-packages:
+      # FIXME: Extracted from debian package, might be more than enough
       - dctrl-tools
       - zlib1g-dev
       - libbz2-dev
