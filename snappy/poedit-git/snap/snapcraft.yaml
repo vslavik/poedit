@@ -54,7 +54,21 @@ parts:
       manpages: [usr/local/share/man/*]
       pixmaps: [usr/local/share/pixmaps/*]
       resources: [usr/local/share/poedit/*]
-    after: [boostlib, wxwidgets]
+    stage:
+      - $executables
+      - $freedesktop-desktop-entries
+      - $manpages
+      - $localizations
+      - $pixmaps
+      - $resources
+    prime:
+      - $executables
+      - $freedesktop-desktop-entries
+      - $manpages
+      - $localizations
+      - $pixmaps
+      - $resources
+    after: [boostlib, desktop-gtk3, wxwidgets]
   boostlib:
     plugin: dump
     source: ../../deps/boost
@@ -88,6 +102,12 @@ parts:
         --with-system\
         --with-thread\
         threading=multi
+    filesets:
+      shared-libs: [usr/local/lib/*.so*]
+    stage:
+      - $shared-libs
+    prime:
+      - $shared-libs
   wxwidgets:
     plugin: dump
     source: ../../deps/wx
@@ -118,6 +138,12 @@ parts:
       make -j$(nproc)
       sudo make install
       sudo ldconfig
+    filesets:
+      shared-libs: [usr/local/lib/*.so*]
+    stage:
+      - $shared-libs
+    prime:
+      - $shared-libs
 
 apps:
   poedit:
