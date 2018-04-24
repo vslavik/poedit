@@ -1,0 +1,151 @@
+name: poedit
+version: '2.0.7'
+summary: Gettext translations editor for OS X, Windows and Unix.
+description: |
+  This program is a GUI frontend to GNU Gettext utilities and a catalogs 
+  editor/source code parser. It helps with translating applications into 
+  other languages.
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+icon: ../../artwork/linux/appicon/512x512/apps/poedit.png
+
+parts:
+  poedit:
+    plugin: autotools
+    source: https://github.com/vslavik/poedit/releases/download/v2.0.7-oss/poedit-2.0.7.tar.gz
+    build-packages:
+      # FIXME: Extracted from Debian package, might be more than enough
+      - asciidoc
+      - debhelper
+      - gettext
+      # Boost libraries provided by Ubuntu 16.04 are too old
+      #- libboost-dev
+      #- libboost-iostreams-dev
+      #- libboost-regex-dev
+      #- libboost-system-dev
+      #- libboost-thread-dev
+      - libcld2-dev
+      - libcpprest-dev
+      - libdb++-dev
+      - libgtk2.0-dev
+      - libgtkspell-dev
+      - libicu-dev
+      - liblucene++-dev
+      - libsecret-1-dev
+      # wxWidgets library provided by Ubuntu 16.04 is too old
+      #- libwxgtk3.0-dev
+      #- nlohmann-json-dev
+      - xsltproc
+      - xmlto
+      - zip
+    override-build: |
+      ./bootstrap
+      snapcraftctl build
+    stage-packages: 
+      - gettext
+      - binutils
+    filesets:
+      executables: [usr/local/bin/*]
+      freedesktop-desktop-entries: [usr/local/share/applications/*]
+      manpages: [usr/local/share/man/*]
+      icons: [usr/local/share/icons/*]
+      localizations: [usr/local/share/locale/*]
+      pixmaps: [usr/local/share/pixmaps/*]
+      resources: [usr/local/share/poedit/*]
+    stage:
+      - usr/bin/addr2line # Required by wxWidgets stacktrace dialog
+      - $executables
+      - $freedesktop-desktop-entries
+      - $manpages
+      - $localizations
+      - $pixmaps
+      - $resources
+    prime:
+      - usr/bin/addr2line
+      - $executables
+      - $freedesktop-desktop-entries
+      - $manpages
+      - $localizations
+      - $pixmaps
+      - $resources
+    after: [boostlib, desktop-gtk3, wxwidgets]
+  boostlib:
+    plugin: dump
+    source: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.bz2
+    build-packages:
+      # FIXME: Extracted from debian package, might be more than enough
+      - dctrl-tools
+      - zlib1g-dev
+      - libbz2-dev
+      - libicu-dev
+      - mpi-default-dev
+      - bison
+      - flex
+      - docbook-to-man
+      - help2man
+      - xsltproc
+      - g++
+      # - g++-6
+      - python
+      - python-all-dev
+      - python3
+      - python3-all-dev
+    override-build: |
+      ./bootstrap.sh
+      sudo ./b2 install\
+        -j $(nproc)\
+        --build-type=minimal\
+        --layout=system\
+        --with-iostreams\
+        --with-regex\
+        --with-system\
+        --with-thread\
+        threading=multi
+    filesets:
+      shared-libs: [usr/local/lib/*.so*]
+    stage:
+      - $shared-libs
+    prime:
+      - $shared-libs
+  wxwidgets:
+    plugin: autotools
+    source: https://github.com/vslavik/wxWidgets.git
+    source-type: git
+    source-depth: 1
+    build-packages:
+      # FIXME: Extracted from debian package, might be more than enough
+      - gettext
+      - libgtk2.0-dev
+      - g++
+      - zlib1g-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libtiff5-dev
+      - libsm-dev
+      - libgl1-mesa-dev
+      - libglu1-mesa-dev
+      - autotools-dev
+      - autoconf
+      - libexpat1-dev
+      - libxt-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libgtk-3-dev
+      - libwebkit2gtk-4.0-dev
+      - libnotify-dev
+    override-build: |
+      snapcraftctl build
+      sudo make install
+      sudo ldconfig
+    filesets:
+      shared-libs: [usr/local/lib/*.so*]
+    stage:
+      - $shared-libs
+    prime:
+      - $shared-libs
+
+apps:
+  poedit:
+    command: desktop-launch $SNAP/usr/local/bin/poedit
+    plugs: [desktop, home, removable-media, x11]
+    desktop: usr/local/share/applications/poedit.desktop
