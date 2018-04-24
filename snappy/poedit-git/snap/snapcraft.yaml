@@ -7,12 +7,12 @@ description: |
   other languages.
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
-icon: ../artwork/linux/appicon/512x512/apps/poedit.png
+icon: ../../artwork/linux/appicon/512x512/apps/poedit.png
 
 parts:
   poedit:
     plugin: autotools
-    source: ../.git
+    source: ../../.git
     source-type: git
     source-depth: 1
     build-packages:
@@ -57,7 +57,7 @@ parts:
     after: [boostlib, wxwidgets]
   boostlib:
     plugin: dump
-    source: ../deps/boost
+    source: ../../deps/boost
     source-type: local
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
@@ -90,7 +90,7 @@ parts:
         threading=multi
   wxwidgets:
     plugin: dump
-    source: ../deps/wx
+    source: ../../deps/wx
     source-type: local
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
