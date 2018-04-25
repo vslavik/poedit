@@ -70,11 +70,12 @@ poedit_SOURCES = \
                  utility.cpp utility.h \
                  version.h \
                  welcomescreen.cpp welcomescreen.h \
+                 pugixml.h \
                  $(CROWDIN_SUPPORT_SRC) \
                  $(WX_BACKPORT_SRC)
 nodist_poedit_SOURCES = compiled_xrc.cpp
 
-poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(CROWDIN_SUPPORT_LIBS) \
+poedit_LDADD = $(WX_LIBS) $(LUCENE_LIBS) $(CLD2_LIBS) $(PUGIXML_LIBS) $(CROWDIN_SUPPORT_LIBS) \
                $(BOOST_LDFLAGS) $(BOOST_THREAD_LIB) $(BOOST_REGEX_LIB) $(BOOST_SYSTEM_LIB)
 
 XRC_RESOURCES = \
