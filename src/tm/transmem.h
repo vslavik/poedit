@@ -27,6 +27,7 @@
 #define _TRANSMEM_H_
 
 #include <exception>
+#include <functional>
 #include <string>
 #include <vector>
 #include <memory>
@@ -68,6 +69,35 @@ public:
                                                          const Language& lang,
                                                          const std::wstring& source) override;
 
+    /// Abstract interface to processing TM entries
+    class IOInterface
+    {
+    public:
+        virtual ~IOInterface() {}
+
+        virtual void Insert(const Language& srclang,
+                            const Language& lang,
+                            const std::wstring& source,
+                            const std::wstring& trans,
+                            time_t creationTime) = 0;
+    };
+
+    /**
+        Exports all database entries by pushing them to the provided output interface.
+
+        May throw on error.
+     */
+    void ExportData(IOInterface& destination);
+
+    /**
+        Imports data provided by the function into the database. The function
+        must use the interface passed to it to write data.
+
+        May throw on error.
+     */
+    void ImportData(std::function<void(IOInterface&)> source);
+
+
     /**
         Performs updates to the translation memory.
         
@@ -83,10 +113,16 @@ public:
 
         All methods may throw Exception.
       */
-    class Writer
+    class Writer : public IOInterface
     {
     public:
         virtual ~Writer() {}
+
+        void Insert(const Language& srclang,
+                            const Language& lang,
+                            const std::wstring& source,
+                            const std::wstring& trans,
+                            time_t creationTime) override = 0;
 
         /**
             Insert translation into the TM.
