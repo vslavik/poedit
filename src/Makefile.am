@@ -66,6 +66,7 @@ poedit_SOURCES = \
                  text_control.h text_control.cpp \
                  tm/suggestions.cpp tm/suggestions.h \
                  tm/transmem.cpp tm/transmem.h \
+                 tm/tmx_io.cpp tm/tmx_io.h \
                  unicode_helpers.h unicode_helpers.cpp \
                  utility.cpp utility.h \
                  version.h \
