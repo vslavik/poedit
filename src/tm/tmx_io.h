@@ -35,6 +35,8 @@
 namespace TMX
 {
 
+void ImportFromFile(std::istream& file, TranslationMemory& tm);
+
 void ExportToFile(TranslationMemory& tm, std::ostream& file);
 
 } // namespace TMX

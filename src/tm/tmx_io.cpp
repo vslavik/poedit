@@ -26,11 +26,140 @@
 #include "tmx_io.h"
 
 #include <wx/time.h>
+#include <time.h>
+#ifdef _WIN32
+    #define timegm _mkgmtime
+#endif
 
+#include <wx/translation.h>
+
+#include "errors.h"
 #include "pugixml.h"
 #include "version.h"
 
 using namespace pugi;
+
+namespace
+{
+
+std::string extract_date(xml_node node, const std::string& fallback = std::string())
+{
+    std::string d = node.attribute("changedate").value();
+    if (d.empty())
+        d = node.attribute("creationdate").value();
+    return d.empty() ? fallback : d;
+}
+
+const char *extract_lang(xml_node node)
+{
+    const char *l = node.attribute("xml:lang").as_string(nullptr);
+    if (!l)
+        l = node.attribute("lang").as_string(nullptr); // TMX 1.1
+    return l ? l : "";
+}
+
+std::wstring extract_seg(xml_node node)
+{
+    // Of the markings within <seg>, only <ph> (placeholder) would make sense
+    // to extract and substitute with e.g. %s -- but because that's not used
+    // in TM search anyway, it's OK to ignore it, at least for now.
+    std::string text;
+    for (auto child: node.child("seg").children())
+    {
+        if (child.type() == pugi::node_pcdata)
+            text += child.value();
+    }
+    return pugi::as_wide(text);
+}
+
+} // anonymous namespace
+
+
+void TMX::ImportFromFile(std::istream& file, TranslationMemory& tm)
+{
+    xml_document doc;
+    auto result = doc.load(file);
+    if (!result)
+        throw std::runtime_error(result.description());
+
+    auto root = doc.child("tmx");
+    if (!root)
+        throw Exception(_("The TMX file is malformed."));
+
+    std::string defaultSrclang;
+    std::string defaultDate;
+    auto header = root.child("header");
+    if (header)
+    {
+        defaultSrclang = header.attribute("srclang").value();
+        if (defaultSrclang == "*all*")
+            defaultSrclang.clear();
+        defaultDate = extract_date(header);
+    }
+
+    int counter = 0;
+    auto body = root.child("body");
+    if (!body)
+        throw Exception(_("The TMX file is malformed."));
+
+    tm.ImportData([=,&counter,&body](auto& writer)
+    {
+        for (auto tu: body.children("tu"))
+        {
+            auto tuDate = extract_date(tu, defaultDate);
+            std::string tuSrclang = tu.attribute("srclang").value();
+            if (tuSrclang.empty())
+                tuSrclang = defaultSrclang;
+
+            std::wstring source;
+            for (auto tuv: tu.children("tuv"))
+            {
+                if (extract_lang(tuv) == tuSrclang)
+                {
+                    source = extract_seg(tuv);
+                    break;
+                }
+            }
+            if (source.empty())
+                continue;
+
+            for (auto tuv: tu.children("tuv"))
+            {
+                auto tuvLang = extract_lang(tuv);
+                if (tuvLang == tuSrclang)
+                    continue;
+
+                auto srclang = Language::TryParse(tuSrclang);
+                auto lang = Language::TryParse(tuvLang);
+                if (!srclang.IsValid() || !lang.IsValid())
+                    continue;
+
+                auto trans = extract_seg(tuv);
+                if (trans.empty())
+                    continue;
+
+                time_t creationTime = 0;
+                auto tuvDate = extract_date(tu, tuDate);
+                if (!tuvDate.empty())
+                {
+                    struct tm t {};
+                    std::istringstream s(tuvDate.c_str());
+                    s >> std::get_time(&t, "%Y%m%dT%H%M%SZ"); // YYYYMMDDThhmmssZ
+                    if (!s.fail())
+                        creationTime = timegm(&t);
+                }
+
+                writer.Insert(srclang, lang, source, trans, creationTime);
+                counter++;
+            }
+        }
+    });
+
+    if (counter == 0)
+        throw Exception(_("No translations were found in the TMX file."));
+}
+
+
 
 
 void TMX::ExportToFile(TranslationMemory& tm, std::ostream& file)
