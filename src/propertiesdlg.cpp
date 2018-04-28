@@ -384,6 +384,9 @@ protected:
         static const auto idWild = wxNewId();
 
         wxMenu *menu = new wxMenu();
+#ifdef __WXOSX__
+        [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
+#endif
         menu->Append(idFolder, MSW_OR_OTHER(_(L"Add folders…"), _(L"Add Folders…")));
         menu->Append(idFile, MSW_OR_OTHER(_(L"Add files…"), _(L"Add Files…")));
         if (AllowWildcards())
@@ -424,7 +427,7 @@ protected:
 
         auto win = dynamic_cast<wxButton*>(e.GetEventObject());
 #ifdef __WXOSX__
-        win->PopupMenu(menu, 9, 29);
+        win->PopupMenu(menu, -1, 24);
 #else
         win->PopupMenu(menu, 0, win->GetSize().y);
 #endif
