@@ -23,6 +23,9 @@
  *
  */
 
+#include "prefsdlg.h"
+
+#include <fstream>
 #include <memory>
 
 #include <wx/editlbox.h>
@@ -53,7 +56,6 @@
     #define CenterVertical() Center()
 #endif
 
-#include "prefsdlg.h"
 #include "edapp.h"
 #include "edframe.h"
 #include "catalog.h"
@@ -61,6 +63,7 @@
 #include "crowdin_gui.h"
 #include "hidpi.h"
 #include "tm/transmem.h"
+#include "tm/tmx_io.h"
 #include "chooselang.h"
 #include "errors.h"
 #include "extractors/extractor_legacy.h"
@@ -485,15 +488,25 @@ private:
     void OnManageTM(wxCommandEvent& e)
     {
         static const auto idLearn = wxNewId();
+        static const auto idImportTMX = wxNewId();
+        static const auto idExportTMX = wxNewId();
         static const auto idReset = wxNewId();
 
         wxMenu *menu = new wxMenu();
-        menu->Append(idLearn, MSW_OR_OTHER(_(L"Learn from files…"), _(L"Learn From Files…")));
+#ifdef __WXOSX__
+        [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
+#endif
+        menu->Append(idLearn, MSW_OR_OTHER(_(L"Import translation files…"), _(L"Import Translation Files…")));
+        menu->AppendSeparator();
+        menu->Append(idImportTMX, MSW_OR_OTHER(_(L"Import from TMX…"), _(L"Import From TMX…")));
+        menu->Append(idExportTMX, MSW_OR_OTHER(_(L"Export to TMX…"), _(L"Export To TMX…")));
         menu->AppendSeparator();
         // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
         menu->Append(idReset, _("Reset"));
 
         menu->Bind(wxEVT_MENU, &TMPageWindow::OnImportIntoTM, this, idLearn);
+        menu->Bind(wxEVT_MENU, &TMPageWindow::OnImportTMX, this, idImportTMX);
+        menu->Bind(wxEVT_MENU, &TMPageWindow::OnExportTMX, this, idExportTMX);
         menu->Bind(wxEVT_MENU, &TMPageWindow::OnResetTM, this, idReset);
 
         auto win = dynamic_cast<wxButton*>(e.GetEventObject());
@@ -541,6 +554,107 @@ private:
             progress.Pulse(_(L"Finalizing…"));
             tm->Commit();
             UpdateStats();
+        });
+    }
+
+    void OnImportTMX(wxCommandEvent&)
+    {
+        wxWindowPtr<wxFileDialog> dlg(new wxFileDialog
+        (
+            this,
+            MACOS_OR_OTHER("", _("Select TMX files to import")),
+            "",
+            "",
+            MaskForType("*.tmx", _("TMX Files")),
+            wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE)
+        );
+
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode != wxID_OK)
+                return;
+
+            wxArrayString paths;
+            dlg->GetPaths(paths);
+
+            wxProgressDialog progress(_("Translation Memory"),
+                                      _(L"Importing translations…"),
+                                      (int)paths.size() + 1,
+                                      this,
+                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
+            progress.Pulse();
+            for (auto p: paths)
+            {
+                try
+                {
+                    std::ifstream f;
+                    f.open(p.fn_str());
+                    TMX::ImportFromFile(f, TranslationMemory::Get());
+                    f.close();
+
+                    if (!progress.Pulse())
+                        break;
+                }
+                catch (...)
+                {
+                    wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
+                    (
+                            this,
+                            wxString::Format(_(L"Importing translation memory from “%s” failed."), p),
+                            _("Import error"),
+                            wxOK | wxICON_ERROR
+                        ));
+                    err->SetExtendedMessage(DescribeCurrentException());
+                    err->ShowWindowModalThenDo([err](int){});
+                    break;
+                }
+            }
+            UpdateStats();
+        });
+    }
+
+    void OnExportTMX(wxCommandEvent&)
+    {
+        wxWindowPtr<wxFileDialog> dlg(new wxFileDialog
+        (
+            this,
+            MACOS_OR_OTHER("", _(L"Export as…")),
+            "",
+            "",
+            MaskForType("*.tmx", _("TMX Files")),
+            wxFD_SAVE | wxFD_OVERWRITE_PROMPT)
+        );
+
+        dlg->ShowWindowModalThenDo([=](int retcode){
+            if (retcode != wxID_OK)
+                return;
+
+            auto p = dlg->GetPath();
+            wxProgressDialog progress(_("Translation Memory"),
+                                      _(L"Exporting translations…"),
+                                      1,
+                                      this,
+                                      wxPD_APP_MODAL|wxPD_AUTO_HIDE|wxPD_CAN_ABORT);
+            progress.Pulse();
+
+            try
+            {
+                std::ofstream f;
+                f.open(p.fn_str());
+                TMX::ExportToFile(TranslationMemory::Get(), f);
+                f.close();
+            }
+            catch (...)
+            {
+                wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
+                (
+                        this,
+                        wxString::Format(_(L"Exporting translation memory to “%s” failed."), p),
+                        _("Export error"),
+                        wxOK | wxICON_ERROR
+                    ));
+                err->SetExtendedMessage(DescribeCurrentException());
+                err->ShowWindowModalThenDo([err](int){});
+            }
         });
     }
 
