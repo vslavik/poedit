@@ -378,12 +378,8 @@ public:
 
         auto buttonsSizer = new wxBoxSizer(wxHORIZONTAL);
 
-        auto import = new wxButton(this, wxID_ANY,
-                                   MSW_OR_OTHER(_(L"Learn from files…"), _(L"Learn From Files…")));
-        buttonsSizer->Add(import, wxSizerFlags());
-        // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-        auto clear = new wxButton(this, wxID_ANY, _("Reset"));
-        buttonsSizer->Add(clear, wxSizerFlags().Border(wxLEFT, 5));
+        auto manage = new wxButton(this, wxID_ANY, _(L"Manage…"));
+        buttonsSizer->Add(manage, wxSizerFlags());
 
         sizer->Add(buttonsSizer, wxSizerFlags().Expand().Border(wxLEFT|wxRIGHT, PX(30)));
         sizer->AddSpacer(PX(10));
@@ -417,18 +413,15 @@ public:
 
 #ifdef __WXOSX__
         m_stats->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        import->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        clear->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+        manage->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif
 
         m_mergeBehavior->Bind(wxEVT_UPDATE_UI, [=](wxUpdateUIEvent& e){ e.Enable(m_mergeUse->GetValue() == true); });
 
         m_stats->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
-        import->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
-        clear->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
+        manage->Bind(wxEVT_UPDATE_UI, &TMPageWindow::OnUpdateUI, this);
 
-        import->Bind(wxEVT_BUTTON, &TMPageWindow::OnImportIntoTM, this);
-        clear->Bind(wxEVT_BUTTON, &TMPageWindow::OnResetTM, this);
+        manage->Bind(wxEVT_BUTTON, &TMPageWindow::OnManageTM, this);
 
         UpdateStats();
 
@@ -487,6 +480,28 @@ private:
             _("Stored translations:"),      sDocs,
             _("Database size on disk:"),    sFileSize
         ));
+    }
+
+    void OnManageTM(wxCommandEvent& e)
+    {
+        static const auto idLearn = wxNewId();
+        static const auto idReset = wxNewId();
+
+        wxMenu *menu = new wxMenu();
+        menu->Append(idLearn, MSW_OR_OTHER(_(L"Learn from files…"), _(L"Learn From Files…")));
+        menu->AppendSeparator();
+        // TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+        menu->Append(idReset, _("Reset"));
+
+        menu->Bind(wxEVT_MENU, &TMPageWindow::OnImportIntoTM, this, idLearn);
+        menu->Bind(wxEVT_MENU, &TMPageWindow::OnResetTM, this, idReset);
+
+        auto win = dynamic_cast<wxButton*>(e.GetEventObject());
+#ifdef __WXOSX__
+        win->PopupMenu(menu, 5, 26);
+#else
+        win->PopupMenu(menu, 0, win->GetSize().y);
+#endif
     }
 
     void OnImportIntoTM(wxCommandEvent&)
