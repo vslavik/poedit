@@ -33,6 +33,7 @@
 #include <wx/utils.h>
 #include <wx/dir.h>
 #include <wx/filename.h>
+#include <wx/translation.h>
 
 #include <time.h>
 #include <mutex>
@@ -72,15 +73,24 @@ using namespace Lucene;
 namespace
 {
 
-#define CATCH_AND_RETHROW_EXCEPTION                                 \
-    catch (LuceneException& e)                                      \
-    {                                                               \
-        throw Exception(wxString::Format("%s (%d)",                 \
-                        e.getError(), (int)e.getType()));           \
-    }                                                               \
-    catch (std::exception& e)                                       \
-    {                                                               \
-        throw Exception(e.what());                                  \
+#define CATCH_AND_RETHROW_EXCEPTION                                                                             \
+    catch (LuceneException& e)                                                                                  \
+    {                                                                                                           \
+        switch (e.getType())                                                                                    \
+        {                                                                                                       \
+            case LuceneException::CorruptIndex:                                                                 \
+            case LuceneException::FileNotFound:                                                                 \
+            case LuceneException::NoSuchDirectory:                                                              \
+                throw Exception(wxString::Format(_("Translation memory database is corrupted: %s (%d)."),       \
+                                                 e.getError(), (int)e.getType()));                              \
+            default:                                                                                            \
+                throw Exception(wxString::Format(_("Translation memory error: %s (%d)."),                       \
+                                                 e.getError(), (int)e.getType()));                              \
+        }                                                                                                       \
+    }                                                                                                           \
+    catch (std::exception& e)                                                                                   \
+    {                                                                                                           \
+        throw Exception(e.what());                                                                              \
     }
 
 
