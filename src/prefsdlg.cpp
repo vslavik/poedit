@@ -542,9 +542,7 @@ private:
         dlg->ShowWindowModalThenDo([this,dlg](int retcode){
             if (retcode == wxID_YES) {
                 wxBusyCursor bcur;
-                auto tm = TranslationMemory::Get().GetWriter();
-                tm->DeleteAll();
-                tm->Commit();
+                TranslationMemory::Get().DeleteAllAndReset();
                 UpdateStats();
             }
         });

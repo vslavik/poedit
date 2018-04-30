@@ -133,6 +133,9 @@ public:
     /// Returns the shared writer instance
     std::shared_ptr<Writer> GetWriter();
 
+    /// Resets the database to pristine state, removing all data
+    void DeleteAllAndReset();
+
     /// Returns statistics about the TM
     void GetStats(long& numDocs, long& fileSize);
 
