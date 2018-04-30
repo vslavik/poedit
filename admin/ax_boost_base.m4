@@ -104,11 +104,11 @@ if test "x$want_boost" = "xyes"; then
     dnl them priority over the other paths since, if libs are found there, they
     dnl are almost assuredly the ones desired.
     AC_REQUIRE([AC_CANONICAL_HOST])
-    libsubdirs="lib/${host_cpu}-${host_os} $libsubdirs"
+    multiarch_libsubdir="lib/${host_cpu}-${host_os}"
 
     case ${host_cpu} in
       i?86)
-        libsubdirs="lib/i386-${host_os} $libsubdirs"
+        multiarch_libsubdir="lib/i386-${host_os}"
         ;;
     esac
 
@@ -117,16 +117,21 @@ if test "x$want_boost" = "xyes"; then
     dnl or if you install boost with RPM
     if test "$ac_boost_path" != ""; then
         BOOST_CPPFLAGS="-I$ac_boost_path/include"
-        for ac_boost_path_tmp in $libsubdirs; do
+        for ac_boost_path_tmp in $multiarch_libsubdir $libsubdirs; do
                 if test -d "$ac_boost_path"/"$ac_boost_path_tmp" ; then
                         BOOST_LDFLAGS="-L$ac_boost_path/$ac_boost_path_tmp"
                         break
                 fi
         done
-    elif test "$cross_compiling" != yes; then
+    else
+        if test "$cross_compiling" = yes; then
+            search_libsubdirs=$multiarch_libsubdir
+        else
+            search_libsubdirs="$multiarch_libsubdir $libsubdirs"
+        fi
         for ac_boost_path_tmp in /usr /usr/local /opt /opt/local ; do
             if test -d "$ac_boost_path_tmp/include/boost" && test -r "$ac_boost_path_tmp/include/boost"; then
-                for libsubdir in $libsubdirs ; do
+                for libsubdir in $search_libsubdirs ; do
                     if ls "$ac_boost_path_tmp/$libsubdir/libboost_"* >/dev/null 2>&1 ; then break; fi
                 done
                 BOOST_LDFLAGS="-L$ac_boost_path_tmp/$libsubdir"
