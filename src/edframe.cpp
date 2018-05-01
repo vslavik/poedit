@@ -649,6 +649,7 @@ wxWindow* PoeditFrame::CreateContentViewPO(Content type)
                             m_list,
                             type == Content::POT ? EditingArea::POT : EditingArea::Editing
                         );
+    m_editingArea->RecreatePluralTextCtrls(m_catalog);
 
     m_editingArea->OnUpdatedFromTextCtrl = [=](CatalogItemPtr item, bool statsChanged){
         OnUpdatedFromTextCtrl(item, statsChanged);
