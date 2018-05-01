@@ -39,11 +39,15 @@
 #define BOOST_THREAD_VERSION 4
 #define BOOST_THREAD_PROVIDES_EXECUTORS
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wshadow"
+#ifdef __clang__
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wshadow"
+#endif
 #include <boost/thread/executor.hpp>
 #include <boost/thread/future.hpp>
-#pragma clang diagnostic pop
+#ifdef __clang__
+    #pragma clang diagnostic pop
+#endif
 
 #include <boost/chrono/duration.hpp>
 #include <boost/throw_exception.hpp>
