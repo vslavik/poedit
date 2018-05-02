@@ -103,7 +103,6 @@ class CatalogItem
                   m_isTranslated(dt.m_isTranslated),
                   m_isModified(dt.m_isModified),
                   m_isPreTranslated(dt.m_isPreTranslated),
-                  m_hasBadTokens(dt.m_hasBadTokens),
                   m_moreFlags(dt.m_moreFlags),
                   m_comment(dt.m_comment),
                   m_lineNum(dt.m_lineNum),
@@ -309,7 +308,6 @@ class CatalogItem
         wxArrayString m_references, m_extractedComments;
         wxArrayString m_oldMsgid;
         bool m_isFuzzy, m_isTranslated, m_isModified, m_isPreTranslated;
-        bool m_hasBadTokens;
         wxString m_moreFlags;
         wxString m_comment;
         int m_lineNum;
