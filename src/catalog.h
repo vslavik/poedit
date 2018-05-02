@@ -88,25 +88,7 @@ class CatalogItem
                   m_lineNum(0),
                   m_bookmark(NO_BOOKMARK) {}
 
-        CatalogItem(const CatalogItem& dt)
-                : m_id(dt.m_id),
-                  m_string(dt.m_string),
-                  m_plural(dt.m_plural),
-                  m_hasPlural(dt.m_hasPlural),
-                  m_hasContext(dt.m_hasContext),
-                  m_context(dt.m_context),
-                  m_translations(dt.m_translations),
-                  m_references(dt.m_references),
-                  m_extractedComments(dt.m_extractedComments),
-                  m_oldMsgid(dt.m_oldMsgid),
-                  m_isFuzzy(dt.m_isFuzzy),
-                  m_isTranslated(dt.m_isTranslated),
-                  m_isModified(dt.m_isModified),
-                  m_isPreTranslated(dt.m_isPreTranslated),
-                  m_moreFlags(dt.m_moreFlags),
-                  m_comment(dt.m_comment),
-                  m_lineNum(dt.m_lineNum),
-                  m_bookmark(dt.m_bookmark) {}
+        CatalogItem(const CatalogItem&) = delete;
 
         /// Gets numeric, 1-based ID
         int GetId() const { return m_id; }
