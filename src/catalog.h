@@ -90,6 +90,11 @@ class CatalogItem
 
         CatalogItem(const CatalogItem&) = delete;
 
+    public:
+        // -------------------------------------------------------------------
+        // Read-only access to values in the item:
+        // -------------------------------------------------------------------
+
         /// Gets numeric, 1-based ID
         int GetId() const { return m_id; }
 
@@ -123,7 +128,6 @@ class CatalogItem
 
         /// Returns all translations.
         const wxArrayString& GetTranslations() const { return m_translations; }
-        wxArrayString& GetTranslations() { return m_translations; }
 
         /// Returns references (#:) lines for the entry
         const wxArrayString& GetRawReferences() const { return m_references; }
@@ -144,31 +148,37 @@ class CatalogItem
         /// Convenience function: does this entry has auto comments?
         bool HasExtractedComments() const { return !m_extractedComments.empty(); }
 
-        /// Adds new reference to the entry (used by SourceDigger).
-        void SetReferences(const wxArrayString& ref) { m_references = ref; }
+        /// Gets gettext flags. \see SetFlags
+        wxString GetFlags() const;
 
-        void SetId(int id) { m_id = id; }
+        /// Returns format flag ("php" for "php-format" etc.) if there's any,
+        // empty string otherwise
+        wxString GetFormatFlag() const;
 
-        /// Sets the string.
-        void SetString(const wxString& s)
-        {
-            m_string = s;
-            ClearIssue();
-        }
+        /// Gets value of fuzzy flag.
+        bool IsFuzzy() const { return m_isFuzzy; }
+        /// Gets value of translated flag.
+        bool IsTranslated() const { return m_isTranslated; }
+        /// Gets value of modified flag.
+        bool IsModified() const { return m_isModified; }
+        /// Gets value of pre-translated translation flag.
+        bool IsPreTranslated() const { return m_isPreTranslated; }
+        /// Get line number of this entry.
+        int GetLineNumber() const { return m_lineNum; }
 
-        /// Sets the plural form (if applicable).
-        void SetPluralString(const wxString& p)
-        {
-            m_plural = p;
-            m_hasPlural = true;
-        }
+        const wxArrayString& GetOldMsgidRaw() const { return m_oldMsgid; }
+        wxString GetOldMsgid() const;
+        bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
 
-        /// Sets the context (msgctxt0
-        void SetContext(const wxString& context)
-        {
-            m_hasContext = true;
-            m_context = context;
-        }
+        /// Returns the bookmark for the item
+        Bookmark GetBookmark() const {return m_bookmark;}
+        /// Returns true if the item has a bookmark
+        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
+
+
+        // -------------------------------------------------------------------
+        // Setters for user-editable values:
+        // -------------------------------------------------------------------
 
         /** Sets the translation. Changes "translated" status to true
             if \a t is not empty.
@@ -184,57 +194,25 @@ class CatalogItem
         // Clears all translation content from the entry
         void ClearTranslation();
 
-        /// Sets the comment.
-        void SetComment(const wxString& c)
-        {
-            m_comment = c;
-        }
-
-        /** Sets gettext flags directly in string format. It may be
-            either empty string or ", fuzzy", ", c-format",
-            ", fuzzy, c-format" or others (not understood by Poedit),
-            i.e. the leading # is not included, but ", " is.
-         */
-        void SetFlags(const wxString& flags);
-
-        /// Gets gettext flags. \see SetFlags
-        wxString GetFlags() const;
-
-        /// Returns format flag ("php" for "php-format" etc.) if there's any,
-        // empty string otherwise
-        wxString GetFormatFlag() const;
-
         /// Sets fuzzy flag.
         void SetFuzzy(bool fuzzy);
-        /// Gets value of fuzzy flag.
-        bool IsFuzzy() const { return m_isFuzzy; }
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
-        /// Gets value of translated flag.
-        bool IsTranslated() const { return m_isTranslated; }
         /// Sets modified flag.
         void SetModified(bool modified) { m_isModified = modified; }
-        /// Gets value of modified flag.
-        bool IsModified() const { return m_isModified; }
         /// Sets pre-translated translation flag.
         void SetPreTranslated(bool pre) { m_isPreTranslated = pre; }
-        /// Gets value of pre-translated translation flag.
-        bool IsPreTranslated() const { return m_isPreTranslated; }
-        /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(int line) { m_lineNum = line; }
-        /// Get line number of this entry.
-        int GetLineNumber() const { return m_lineNum; }
+        /// Sets the bookmark
+        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
-        /// Adds new extracted comments (#. )
-        void AddExtractedComments(const wxString& com)
-        {
-            m_extractedComments.Add(com);
-        }
+        /// Sets the comment.
+        void SetComment(const wxString& c) { m_comment = c; }
 
-        void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
-        const wxArrayString& GetOldMsgidRaw() const { return m_oldMsgid; }
-        wxString GetOldMsgid() const;
-        bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
+
+        // -------------------------------------------------------------------
+        // Auxiliary data attached to the item, such as QA issues. Setting those
+        // is done in base class only, because they don't affect the saved output.
+        // -------------------------------------------------------------------
 
         struct Issue
         {
@@ -259,14 +237,51 @@ class CatalogItem
         void SetIssue(const Issue& issue) { m_issue = std::make_shared<Issue>(issue); }
         void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
-        /// Returns the bookmark for the item
-        Bookmark GetBookmark() const {return m_bookmark;}
-        /// Returns true if the item has a bookmark
-        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
-        /// Sets the bookmark
-        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
-    private:
+    protected:
+        // -------------------------------------------------------------------
+        // Private data setters only for internal use:
+        // -------------------------------------------------------------------
+
+        void SetReferences(const wxArrayString& ref) { m_references = ref; }
+
+        void SetId(int id) { m_id = id; }
+
+        void SetString(const wxString& s)
+        {
+            m_string = s;
+            ClearIssue();
+        }
+
+        void SetPluralString(const wxString& p)
+        {
+            m_plural = p;
+            m_hasPlural = true;
+        }
+
+        void SetContext(const wxString& context)
+        {
+            m_hasContext = true;
+            m_context = context;
+        }
+
+        void SetLineNumber(int line) { m_lineNum = line; }
+
+        void AddExtractedComments(const wxString& com)
+        {
+            m_extractedComments.Add(com);
+        }
+
+        void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
+
+        /** Sets gettext flags directly in string format. It may be
+            either empty string or ", fuzzy", ", c-format",
+            ", fuzzy, c-format" or others (not understood by Poedit),
+            i.e. the leading # is not included, but ", " is.
+         */
+        void SetFlags(const wxString& flags);
+
+    protected:
         int m_id;
 
         wxString m_string, m_plural;
@@ -286,6 +301,10 @@ class CatalogItem
         Bookmark m_bookmark;
 
         std::shared_ptr<Issue> m_issue;
+
+        friend class LoadParser;
+        friend class Catalog; // FIXME: remove once refactored
+};
 };
 
 
