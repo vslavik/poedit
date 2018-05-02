@@ -235,12 +235,6 @@ class CatalogItem
             m_extractedComments.Add(com);
         }
 
-        /// Clears extracted comments.
-        void ClearExtractedComments()
-        {
-            m_extractedComments.Clear();
-        }
-
         void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
         const wxArrayString& GetOldMsgidRaw() const { return m_oldMsgid; }
         wxString GetOldMsgid() const;
@@ -376,12 +370,6 @@ class CatalogDeletedData
         void AddExtractedComments(const wxString& com)
         {
             m_extractedComments.Add(com);
-        }
-
-        /// Clears extracted comments.
-        void ClearExtractedComments()
-        {
-            m_extractedComments.Clear();
         }
 
     private:
