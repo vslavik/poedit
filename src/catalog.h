@@ -74,7 +74,7 @@ typedef enum
  */
 class CatalogItem
 {
-    public:
+    protected:
         /// Ctor. Initializes the object with source string and translation.
         CatalogItem()
                 : m_id(0),
@@ -301,10 +301,19 @@ class CatalogItem
         Bookmark m_bookmark;
 
         std::shared_ptr<Issue> m_issue;
-
-        friend class LoadParser;
-        friend class Catalog; // FIXME: remove once refactored
 };
+
+
+class POCatalogItem : public CatalogItem
+{
+public:
+    POCatalogItem() {}
+    POCatalogItem(const CatalogItem&) = delete;
+
+protected:
+
+    friend class POLoadParser;
+    friend class Catalog; // FIXME: remove once refactored
 };
 
 
@@ -314,18 +323,17 @@ class CatalogItem
 
     This class is mostly internal, used by Catalog to store data.
  */
-// FIXME: derive this from CatalogItem (or CatalogItemBase)
-class CatalogDeletedData
+class POCatalogDeletedData
 {
     public:
         /// Ctor.
-        CatalogDeletedData()
+        POCatalogDeletedData()
                 : m_lineNum(0) {}
-        CatalogDeletedData(const wxArrayString& deletedLines)
+        POCatalogDeletedData(const wxArrayString& deletedLines)
                 : m_deletedLines(deletedLines),
                   m_lineNum(0) {}
 
-        CatalogDeletedData(const CatalogDeletedData& dt)
+        POCatalogDeletedData(const POCatalogDeletedData& dt)
                 : m_deletedLines(dt.m_deletedLines),
                   m_references(dt.m_references),
                   m_extractedComments(dt.m_extractedComments),
@@ -398,7 +406,7 @@ class CatalogDeletedData
 
 
 typedef std::vector<CatalogItemPtr> CatalogItemArray;
-typedef std::vector<CatalogDeletedData> CatalogDeletedDataArray;
+typedef std::vector<POCatalogDeletedData> CatalogDeletedDataArray;
 typedef std::map<wxString, unsigned> CatalogItemIndex;
 
 /** This class stores all translations, together with filelists, references
@@ -685,7 +693,7 @@ class Catalog
 
         /// Adds entry to the catalog (the catalog will take ownership of
         /// the object).
-        void AddDeletedItem(const CatalogDeletedData& data);
+        void AddDeletedItem(const POCatalogDeletedData& data);
 
         /// Returns true if the catalog contains obsolete entries (~.*)
         bool HasDeletedItems();
@@ -749,15 +757,15 @@ class Catalog
 
         std::shared_ptr<CloudSyncDestination> m_cloudSync;
 
-        friend class LoadParser;
+        friend class POLoadParser;
 };
 
 
 /// Internal class - used for parsing of po files.
-class CatalogParser
+class POCatalogParser
 {
     public:
-        CatalogParser(wxTextFile *f)
+        POCatalogParser(wxTextFile *f)
             : m_textFile(f),
               m_detectedLineWidth(0),
               m_detectedWrappedLines(false),
@@ -766,7 +774,7 @@ class CatalogParser
               m_ignoreTranslations(false)
         {}
 
-        virtual ~CatalogParser() {}
+        virtual ~POCatalogParser() {}
 
         /// Tell the parser to ignore header entries when processing
         void IgnoreHeader(bool ignore) { m_ignoreHeader = ignore; }

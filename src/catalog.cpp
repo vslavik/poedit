@@ -556,7 +556,7 @@ Catalog::HeaderData::Find(const wxString& key) const
 // Parsers
 // ----------------------------------------------------------------------
 
-bool CatalogParser::Parse()
+bool POCatalogParser::Parse()
 {
     static const wxString prefix_flags(wxS("#, "));
     static const wxString prefix_autocomments(wxS("#. "));
@@ -849,7 +849,7 @@ bool CatalogParser::Parse()
 }
 
 
-wxString CatalogParser::ReadTextLine()
+wxString POCatalogParser::ReadTextLine()
 {
     m_previousLineHardWrapped = m_lastLineHardWrapped;
     m_lastLineHardWrapped = false;
@@ -909,7 +909,7 @@ wxString CatalogParser::ReadTextLine()
     return wxString();
 }
 
-int CatalogParser::GetWrappingWidth() const
+int POCatalogParser::GetWrappingWidth() const
 {
     if (!m_detectedWrappedLines)
         return Catalog::NO_WRAPPING;
@@ -919,11 +919,11 @@ int CatalogParser::GetWrappingWidth() const
 
 
 
-class CharsetInfoFinder : public CatalogParser
+class POCharsetInfoFinder : public POCatalogParser
 {
     public:
-        CharsetInfoFinder(wxTextFile *f)
-                : CatalogParser(f), m_charset("ISO-8859-1") {}
+        POCharsetInfoFinder(wxTextFile *f)
+                : POCatalogParser(f), m_charset("ISO-8859-1") {}
         wxString GetCharset() const { return m_charset; }
 
     protected:
@@ -958,11 +958,11 @@ class CharsetInfoFinder : public CatalogParser
 
 
 
-class LoadParser : public CatalogParser
+class POLoadParser : public POCatalogParser
 {
     public:
-        LoadParser(Catalog& c, wxTextFile *f)
-              : CatalogParser(f),
+        POLoadParser(Catalog& c, wxTextFile *f)
+              : POCatalogParser(f),
                 FileIsValid(false),
                 m_catalog(c), m_nextId(1), m_seenHeaderAlready(false), m_collectMsgidText(true) {}
 
@@ -1028,7 +1028,7 @@ class LoadParser : public CatalogParser
 };
 
 
-bool LoadParser::OnEntry(const wxString& msgid,
+bool POLoadParser::OnEntry(const wxString& msgid,
                          const wxString& msgid_plural,
                          bool has_plural,
                          bool has_context,
@@ -1059,7 +1059,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
     }
     else
     {
-        CatalogItemPtr d = std::make_shared<CatalogItem>();
+        auto d = std::make_shared<POCatalogItem>();
         d->SetId(m_nextId++);
         if (!flags.empty())
             d->SetFlags(flags);
@@ -1101,7 +1101,7 @@ bool LoadParser::OnEntry(const wxString& msgid,
     return true;
 }
 
-bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
+bool POLoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
                                 const wxString& flags,
                                 const wxArrayString& /*references*/,
                                 const wxString& comment,
@@ -1110,7 +1110,7 @@ bool LoadParser::OnDeletedEntry(const wxArrayString& deletedLines,
 {
     FileIsValid = true;
 
-    CatalogDeletedData d;
+    POCatalogDeletedData d;
     if (!flags.empty()) d.SetFlags(flags);
     d.SetDeletedLines(deletedLines);
     d.SetComment(comment);
@@ -1247,7 +1247,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
 
     {
         wxLogNull null; // don't report parsing errors from here, report them later
-        CharsetInfoFinder charsetFinder(&f);
+        POCharsetInfoFinder charsetFinder(&f);
         charsetFinder.Parse();
         m_header.Charset = charsetFinder.GetCharset();
     }
@@ -1262,7 +1262,7 @@ bool Catalog::Load(const wxString& po_file, int flags)
         wxLogError(_("There were errors when loading the catalog. Some data may be missing or corrupted as the result."));
     }
 
-    LoadParser parser(*this, &f);
+    POLoadParser parser(*this, &f);
     parser.IgnoreHeader(flags & CreationFlag_IgnoreHeader);
     parser.IgnoreTranslations(flags & CreationFlag_IgnoreTranslations);
     if (!parser.Parse())
@@ -1394,7 +1394,7 @@ void Catalog::AddItem(const CatalogItemPtr& data)
     m_items.push_back(data);
 }
 
-void Catalog::AddDeletedItem(const CatalogDeletedData& data)
+void Catalog::AddDeletedItem(const POCatalogDeletedData& data)
 {
     m_deletedItems.push_back(data);
 }
@@ -1894,8 +1894,10 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
 
     auto pluralsCount = GetPluralFormsCount();
 
-    for (auto& data: m_items)
+    for (auto& data_: m_items)
     {
+        auto data = std::static_pointer_cast<POCatalogItem>(data_);
+
         data->SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, data->GetComment());
         for (unsigned i = 0; i < data->GetExtractedComments().GetCount(); i++)
@@ -1944,7 +1946,7 @@ bool Catalog::DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf)
         if ( itemIdx != 0 )
             f.AddLine(wxEmptyString);
 
-        CatalogDeletedData& deletedItem = m_deletedItems[itemIdx];
+        POCatalogDeletedData& deletedItem = m_deletedItems[itemIdx];
         deletedItem.SetLineNumber(int(f.GetLineCount()+1));
         SaveMultiLines(f, deletedItem.GetComment());
         for (unsigned i = 0; i < deletedItem.GetExtractedComments().GetCount(); i++)
