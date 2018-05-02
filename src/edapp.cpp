@@ -635,7 +635,7 @@ void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
         if (n.EndsWith(".mo") || n.EndsWith(".gmo"))
         {
             wxMessageDialog dlg(nullptr,
-                                _("MO files can’t be directly edited in Poedit."),
+                                _(L"MO files can’t be directly edited in Poedit."),
                                 _("Error opening file"),
                                 wxOK);
             dlg.SetExtendedMessage(_("Please open and edit the corresponding PO file instead. When you save it, the MO file will be updated as well."));
