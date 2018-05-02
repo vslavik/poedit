@@ -225,10 +225,6 @@ class CatalogItem
         /// Get line number of this entry.
         int GetLineNumber() const { return m_lineNum; }
 
-        /** Returns true if the gettext flags line contains "foo-format"
-            flag when called with "foo" as argument. */
-        bool IsInFormat(const wxString& format);
-
         /// Adds new extracted comments (#. )
         void AddExtractedComments(const wxString& com)
         {

@@ -2516,19 +2516,6 @@ void CatalogItem::SetFuzzy(bool fuzzy)
     m_isFuzzy = fuzzy;
 }
 
-bool CatalogItem::IsInFormat(const wxString& format)
-{
-    wxString lookingFor;
-    lookingFor.Printf("%s-format", format.c_str());
-    wxStringTokenizer tkn(m_moreFlags, " ,", wxTOKEN_STRTOK);
-    while (tkn.HasMoreTokens())
-    {
-        if (tkn.GetNextToken() == lookingFor)
-            return true;
-    }
-    return false;
-}
-
 wxString CatalogItem::GetTranslation(unsigned idx) const
 {
     if (idx >= GetNumberOfTranslations())
