@@ -658,9 +658,16 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
 
         wxString desc;
         if (formsCount == 1)
+        {
             desc = _("Everything");
+        }
         else if (examplesCnt == 0)
+        {
+            #if 0 // kept just in case, for translations
             desc.Printf(_("Form %i"), form);
+            #endif
+            desc.Printf(_("Form %i (unused)"), form);
+        }
         else if (examplesCnt == 1)
         {
             if (formsCount == 2 && firstExample == 1) // English-like
