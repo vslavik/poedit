@@ -2,8 +2,8 @@ name: poedit
 version: '2.0.7'
 summary: Gettext translations editor for OS X, Windows and Unix.
 description: |
-  This program is a GUI frontend to GNU Gettext utilities and a catalogs 
-  editor/source code parser. It helps with translating applications into 
+  This program is a GUI frontend to GNU Gettext utilities and a catalogs
+  editor/source code parser. It helps with translating applications into
   other languages.
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
@@ -41,7 +41,7 @@ parts:
     override-build: |
       ./bootstrap
       snapcraftctl build
-    stage-packages: 
+    stage-packages:
       - gettext
       - binutils
     filesets:
