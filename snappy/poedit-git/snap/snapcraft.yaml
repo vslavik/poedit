@@ -46,14 +46,22 @@ parts:
     stage-packages:
       - gettext
     filesets:
-      executables: [usr/local/bin/*]
-      freedesktop-desktop-entries: [usr/local/share/applications/*]
-      manpages: [usr/local/share/man/*]
-      icons: [usr/local/share/icons/*]
-      localizations: [usr/local/share/locale/*]
-      manpages: [usr/local/share/man/*]
-      pixmaps: [usr/local/share/pixmaps/*]
-      resources: [usr/local/share/poedit/*]
+      executables:
+        - usr/local/bin/*
+      freedesktop-desktop-entries:
+        - usr/local/share/applications/*
+      manpages:
+        - usr/local/share/man/*
+      icons:
+        - usr/local/share/icons/*
+      localizations:
+        - usr/local/share/locale/*
+      manpages:
+        - usr/local/share/man/*
+      pixmaps:
+        - usr/local/share/pixmaps/*
+      resources:
+        - usr/local/share/poedit/*
     stage:
       - $executables
       - $freedesktop-desktop-entries
@@ -68,7 +76,10 @@ parts:
       - $localizations
       - $pixmaps
       - $resources
-    after: [boostlib, desktop-gtk3, wxwidgets]
+    after:
+      - boostlib
+      - desktop-gtk3
+      - wxwidgets
   boostlib:
     plugin: dump
     source: ../../deps/boost
@@ -103,7 +114,8 @@ parts:
         --with-thread\
         threading=multi
     filesets:
-      shared-libs: [usr/local/lib/*.so*]
+      shared-libs:
+        - usr/local/lib/*.so*
     stage:
       - $shared-libs
     prime:
@@ -139,7 +151,8 @@ parts:
       sudo make install
       sudo ldconfig
     filesets:
-      shared-libs: [usr/local/lib/*.so*]
+      shared-libs:
+        - usr/local/lib/*.so*
     stage:
       - $shared-libs
     prime:
@@ -148,5 +161,8 @@ parts:
 apps:
   poedit:
     command: usr/local/bin/poedit
-    plugs: [home, removable-media, x11]
+    plugs:
+      - home
+      - removable-media
+      - x11
     desktop: usr/local/share/applications/poedit.desktop

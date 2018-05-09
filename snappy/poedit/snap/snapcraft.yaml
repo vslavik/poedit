@@ -45,13 +45,20 @@ parts:
       - gettext
       - binutils
     filesets:
-      executables: [usr/local/bin/*]
-      freedesktop-desktop-entries: [usr/local/share/applications/*]
-      manpages: [usr/local/share/man/*]
-      icons: [usr/local/share/icons/*]
-      localizations: [usr/local/share/locale/*]
-      pixmaps: [usr/local/share/pixmaps/*]
-      resources: [usr/local/share/poedit/*]
+      executables:
+        - usr/local/bin/*
+      freedesktop-desktop-entries:
+        - usr/local/share/applications/*
+      manpages:
+        - usr/local/share/man/*
+      icons:
+        - usr/local/share/icons/*
+      localizations:
+        - usr/local/share/locale/*
+      pixmaps:
+        - usr/local/share/pixmaps/*
+      resources:
+        - usr/local/share/poedit/*
     stage:
       - usr/bin/addr2line # Required by wxWidgets stacktrace dialog
       - $executables
@@ -102,7 +109,8 @@ parts:
         --with-thread\
         threading=multi
     filesets:
-      shared-libs: [usr/local/lib/*.so*]
+      shared-libs:
+        - usr/local/lib/*.so*
     stage:
       - $shared-libs
     prime:
@@ -138,7 +146,8 @@ parts:
       sudo make install
       sudo ldconfig
     filesets:
-      shared-libs: [usr/local/lib/*.so*]
+      shared-libs:
+        - usr/local/lib/*.so*
     stage:
       - $shared-libs
     prime:
@@ -147,5 +156,9 @@ parts:
 apps:
   poedit:
     command: desktop-launch $SNAP/usr/local/bin/poedit
-    plugs: [desktop, home, removable-media, x11]
+    plugs:
+      - desktop
+      - home
+      - removable-media
+      - x11
     desktop: usr/local/share/applications/poedit.desktop
