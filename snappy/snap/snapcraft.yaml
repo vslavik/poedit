@@ -87,22 +87,22 @@ parts:
     source: ../deps/boost
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
+      - bison
       - dctrl-tools
-      - zlib1g-dev
+      - docbook-to-man
+      - flex
+      - g++
+      # - g++-6
+      - help2man
       - libbz2-dev
       - libicu-dev
       - mpi-default-dev
-      - bison
-      - flex
-      - docbook-to-man
-      - help2man
-      - xsltproc
-      - g++
-      # - g++-6
       - python
       - python-all-dev
       - python3
       - python3-all-dev
+      - xsltproc
+      - zlib1g-dev
     override-build: |
       ./bootstrap.sh
       ./b2 install\
@@ -129,24 +129,24 @@ parts:
     source: ../deps/wx
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
-      - gettext
+      - autoconf
+      - autotools-dev
       - g++
-      - zlib1g-dev
-      - libjpeg-dev
-      - libpng-dev
-      - libtiff5-dev
-      - libsm-dev
+      - gettext
+      - libexpat1-dev
       - libgl1-mesa-dev
       - libglu1-mesa-dev
-      - autotools-dev
-      - autoconf
-      - libexpat1-dev
-      - libxt-dev
       - libgstreamer1.0-dev
       - libgstreamer-plugins-base1.0-dev
       - libgtk-3-dev
-      - libwebkit2gtk-4.0-dev
+      - libjpeg-dev
       - libnotify-dev
+      - libpng-dev
+      - libsm-dev
+      - libtiff5-dev
+      - libwebkit2gtk-4.0-dev
+      - libxt-dev
+      - zlib1g-dev
     override-build: |
       ./configure
       make -j$(nproc)
