@@ -108,6 +108,8 @@
 		B2A3637C1E4B9DC800E96253 /* pretranslate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2A3637A1E4B9DC800E96253 /* pretranslate.cpp */; };
 		B2B7D472170DD93E00ED0AFE /* GettextTools.bundle in Copy Gettext bundle */ = {isa = PBXBuildFile; fileRef = B248B2DE170D765100EBA58E /* GettextTools.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B2B7E81A1AD94194007FC4EB /* libwx_osx_base_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2B7E8191AD94194007FC4EB /* libwx_osx_base_static.a */; };
+		B2BC828B20A1F0DC007652D6 /* catalog_po.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC828920A1F0DC007652D6 /* catalog_po.cpp */; };
+		B2BC828C20A34AB6007652D6 /* catalog_po.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BC828920A1F0DC007652D6 /* catalog_po.cpp */; };
 		B2BF84BA170846290030AA22 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84B9170846290030AA22 /* OpenGL.framework */; };
 		B2BF84BE170847220030AA22 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84BD170847220030AA22 /* libz.dylib */; };
 		B2BF84C1170847E60030AA22 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2BF84C0170847E60030AA22 /* IOKit.framework */; };
@@ -468,6 +470,8 @@
 		B2B7E8191AD94194007FC4EB /* libwx_osx_base_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwx_osx_base_static.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2B814851E82F7B70050DCBF /* ga */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ga; path = ga.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2B814861E82F7B80050DCBF /* ga */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ga; path = ga.lproj/MoveApplication.strings; sourceTree = "<group>"; };
+		B2BC828920A1F0DC007652D6 /* catalog_po.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = catalog_po.cpp; sourceTree = "<group>"; };
+		B2BC828A20A1F0DC007652D6 /* catalog_po.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = catalog_po.h; sourceTree = "<group>"; };
 		B2BF84B9170846290030AA22 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B2BF84BB170846940030AA22 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		B2BF84BD170847220030AA22 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -767,6 +771,8 @@
 			children = (
 				B28F1CB516F629D30018AF7E /* catalog.h */,
 				B28F1CAC16F629D30018AF7E /* catalog.cpp */,
+				B2BC828A20A1F0DC007652D6 /* catalog_po.h */,
+				B2BC828920A1F0DC007652D6 /* catalog_po.cpp */,
 				B22CC9CE1E7719E700709DEA /* cloud_sync.h */,
 				B25D94931AE3D7E3003BC368 /* concurrency.h */,
 				B25D94921AE3D7E3003BC368 /* concurrency.cpp */,
@@ -1416,6 +1422,7 @@
 				B212FEED20A7356300FAC68F /* pl_evaluate.cpp in Sources */,
 				B28F1CF616F629D30018AF7E /* macos_helpers.mm in Sources */,
 				B240FFC719C6F1A600777AFE /* suggestions.cpp in Sources */,
+				B2BC828B20A1F0DC007652D6 /* catalog_po.cpp in Sources */,
 				B2380F9A1A9B821200B7D8C9 /* crowdin_gui.cpp in Sources */,
 				B28F1CF816F629D30018AF7E /* prefsdlg.cpp in Sources */,
 				B28F1CF916F629D30018AF7E /* progressinfo.cpp in Sources */,
@@ -1449,6 +1456,7 @@
 				B27959DF1E858F7100DBA47D /* qa_checks.cpp in Sources */,
 				B201EBE31DCF8BFD00FFB541 /* catalog.cpp in Sources */,
 				B2DAD70F1AD1984200DCB398 /* utility.cpp in Sources */,
+				B2BC828C20A34AB6007652D6 /* catalog_po.cpp in Sources */,
 				B2DAD7101AD198B800DCB398 /* gexecute.cpp in Sources */,
 				B2CE6D211ACFCD95007E6863 /* GeneratePreviewForURL.cpp in Sources */,
 				B212FEEE20A7366600FAC68F /* pl_evaluate.cpp in Sources */,

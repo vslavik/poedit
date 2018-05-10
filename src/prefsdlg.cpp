@@ -543,10 +543,10 @@ private:
             int step = 0;
             for (size_t i = 0; i < paths.size(); i++)
             {
-                CatalogPtr cat = std::make_shared<Catalog>(paths[i]);
+                auto cat = Catalog::Create(paths[i]);
                 if (!progress.Update(++step))
                     break;
-                if (cat->IsOk())
+                if (cat && cat->IsOk())
                     tm->Insert(cat);
                 if (!progress.Update(++step))
                     break;

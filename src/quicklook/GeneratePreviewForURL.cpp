@@ -55,12 +55,12 @@ CFDataRef CreateHTMLDataForURL(CFURLRef url, CFStringRef contentTypeUTI)
     if (!path)
         return NULL;
 
-    Catalog cat(path.AsString());
-    if (!cat.IsOk())
+    auto cat = Catalog::Create(path.AsString());
+    if (!cat || !cat->IsOk())
         return NULL;
 
     std::ostringstream s;
-    cat.ExportToHTML(s);
+    cat->ExportToHTML(s);
     std::string data = s.str();
     return CFDataCreate(NULL, (const UInt8*)data.data(), data.length());
 }
