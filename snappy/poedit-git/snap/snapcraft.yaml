@@ -117,14 +117,16 @@ parts:
         --with-regex\
         --with-system\
         --with-thread\
-        threading=multi
+        threading=multi\
+        link=static
     filesets:
-      shared-libs:
-        - usr/local/lib/*.so*
+      headers:
+        - include/*
+      static-libs:
+        - lib/*.a
     stage:
-      - $shared-libs
-    prime:
-      - $shared-libs
+      - $headers
+      - $static-libs
   wxwidgets:
     plugin: dump
     source: ../../deps/wx
