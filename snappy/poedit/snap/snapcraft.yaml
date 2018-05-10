@@ -5,6 +5,13 @@ description: |
   This program is a GUI frontend to GNU Gettext utilities and a catalogs
   editor/source code parser. It helps with translating applications into
   other languages.
+
+  By default Poedit can only open files under your home directory, to
+  allow Poedit access files under /media run the following command in
+  terminal as superuser:
+
+    # snap connect poedit:removable-media
+
 grade: devel
 confinement: strict
 icon: ../../artwork/linux/appicon/512x512/apps/poedit.png
