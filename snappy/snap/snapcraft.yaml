@@ -148,17 +148,19 @@ parts:
       - libxt-dev
       - zlib1g-dev
     override-build: |
-      ./configure
+      ./configure \
+        --prefix=../install \
+        --disable-shared
       make -j$(nproc)
-      sudo make install
-      sudo ldconfig
+      make install
     filesets:
-      shared-libs:
-        - usr/local/lib/*.so*
+      headers:
+        - include/*
+      static-libs:
+        - lib/*.a
     stage:
-      - $shared-libs
-    prime:
-      - $shared-libs
+      - $headers
+      - $static-libs
 
 apps:
   poedit:
