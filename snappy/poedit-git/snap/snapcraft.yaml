@@ -108,7 +108,8 @@ parts:
       - python3-all-dev
     override-build: |
       ./bootstrap.sh
-      sudo ./b2 install\
+      ./b2 install\
+        --prefix=../install\
         -j $(nproc)\
         --build-type=minimal\
         --layout=system\
