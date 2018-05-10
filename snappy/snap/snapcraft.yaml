@@ -1,5 +1,5 @@
 name: poedit
-version: '2.0.7'
+version: '0.0.0-git'
 summary: Gettext translations editor for OS X, Windows and Unix.
 description: |
   This program is a GUI frontend to GNU Gettext utilities and a catalogs
@@ -13,13 +13,15 @@ description: |
     # snap connect poedit:removable-media
 
 grade: devel
-confinement: strict
-icon: ../../artwork/linux/appicon/512x512/apps/poedit.png
+confinement: devmode
+icon: ../artwork/linux/appicon/512x512/apps/poedit.png
 
 parts:
   poedit:
     plugin: autotools
-    source: https://github.com/vslavik/poedit/releases/download/v2.0.7-oss/poedit-2.0.7.tar.gz
+    source: ../.git
+    source-type: git
+    source-depth: 1
     build-packages:
       # FIXME: Extracted from Debian package, might be more than enough
       - asciidoc
@@ -33,7 +35,7 @@ parts:
       - libcld2-dev
       - libcpprest-dev
       - libdb++-dev
-      - libgtk2.0-dev
+      #- libgtk2.0-dev
       - libgtkspell-dev
       - libicu-dev
       - liblucene++-dev
@@ -49,24 +51,22 @@ parts:
       snapcraftctl build
     stage-packages:
       - gettext
-      - binutils
     filesets:
       executables:
         - usr/local/bin/*
       freedesktop-desktop-entries:
         - usr/local/share/applications/*
-      manpages:
-        - usr/local/share/man/*
       icons:
         - usr/local/share/icons/*
       localizations:
         - usr/local/share/locale/*
+      manpages:
+        - usr/local/share/man/*
       pixmaps:
         - usr/local/share/pixmaps/*
       resources:
         - usr/local/share/poedit/*
     stage:
-      - usr/bin/addr2line # Required by wxWidgets stacktrace dialog
       - $executables
       - $freedesktop-desktop-entries
       - $manpages
@@ -74,17 +74,20 @@ parts:
       - $pixmaps
       - $resources
     prime:
-      - usr/bin/addr2line
       - $executables
       - $freedesktop-desktop-entries
       - $manpages
       - $localizations
       - $pixmaps
       - $resources
-    after: [boostlib, desktop-gtk3, wxwidgets]
+    after:
+      - boostlib
+      - desktop-gtk3
+      - wxwidgets
   boostlib:
     plugin: dump
-    source: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.bz2
+    source: ../deps/boost
+    source-type: local
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - dctrl-tools
@@ -125,14 +128,12 @@ parts:
       - $headers
       - $static-libs
   wxwidgets:
-    plugin: autotools
-    source: https://github.com/vslavik/wxWidgets.git
-    source-type: git
-    source-depth: 1
+    plugin: dump
+    source: ../deps/wx
+    source-type: local
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - gettext
-      - libgtk2.0-dev
       - g++
       - zlib1g-dev
       - libjpeg-dev
@@ -151,7 +152,8 @@ parts:
       - libwebkit2gtk-4.0-dev
       - libnotify-dev
     override-build: |
-      snapcraftctl build
+      ./configure
+      make -j$(nproc)
       sudo make install
       sudo ldconfig
     filesets:
@@ -164,7 +166,7 @@ parts:
 
 apps:
   poedit:
-    command: desktop-launch $SNAP/usr/local/bin/poedit
+    command: usr/local/bin/poedit
     plugs:
       - desktop
       - desktop-legacy
