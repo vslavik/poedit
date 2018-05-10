@@ -121,9 +121,6 @@ parts:
         - include/*
       static-libs:
         - lib/*.a
-    stage:
-      - $headers
-      - $static-libs
   wxwidgets:
     plugin: autotools
     configflags:
@@ -136,11 +133,6 @@ parts:
       - --enable-mediactrl
       - --enable-unicode
       - --with-gtk=3
-      - --with-expat=builtin
-      - --with-libjpeg=builtin
-      - --with-libpng=builtin
-      - --with-libtiff=builtin
-      - --with-zlib=builtin
       - --without-opengl
       - --without-sdl
     install-via: prefix
@@ -152,27 +144,25 @@ parts:
       - g++
       - gettext
       - libexpat1-dev
-      - libgl1-mesa-dev
-      - libglu1-mesa-dev
-      - libgstreamer1.0-dev
-      - libgstreamer-plugins-base1.0-dev
       - libgtk-3-dev
       - libjpeg-dev
       - libnotify-dev
       - libpng-dev
       - libsm-dev
       - libtiff5-dev
-      - libwebkit2gtk-4.0-dev
       - libxt-dev
       - zlib1g-dev
+      # FIXME: Probably not used by Poedit and can be dropped
+      #- libgl1-mesa-dev
+      #- libglu1-mesa-dev
+      #- libgstreamer1.0-dev
+      #- libgstreamer-plugins-base1.0-dev
+      #- libwebkit2gtk-4.0-dev
     filesets:
       headers:
         - include/*
       static-libs:
         - lib/*.a
-    stage:
-      - $headers
-      - $static-libs
 
 apps:
   poedit:
