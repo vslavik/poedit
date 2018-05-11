@@ -55,19 +55,19 @@ parts:
       - gettext
     filesets:
       executables:
-        - usr/local/bin/*
+        - bin/*
       freedesktop-desktop-entries:
-        - usr/local/share/applications/*
+        - share/applications/*
       icons:
-        - usr/local/share/icons/*
+        - share/icons/*
       localizations:
-        - usr/local/share/locale/*
+        - share/locale/*
       manpages:
-        - usr/local/share/man/*
+        - share/man/*
       pixmaps:
-        - usr/local/share/pixmaps/*
+        - share/pixmaps/*
       resources:
-        - usr/local/share/poedit/*
+        - share/poedit/*
     stage:
       - $executables
       - $freedesktop-desktop-entries
@@ -175,7 +175,7 @@ parts:
 
 apps:
   poedit:
-    command: usr/local/bin/poedit
+    command: bin/poedit
     plugs:
       - desktop
       - desktop-legacy
@@ -183,4 +183,4 @@ apps:
       - network
       - removable-media
       - x11
-    desktop: usr/local/share/applications/poedit.desktop
+    desktop: share/applications/poedit.desktop
