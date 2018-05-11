@@ -19,6 +19,10 @@ icon: ../artwork/linux/appicon/512x512/apps/poedit.png
 parts:
   poedit:
     plugin: autotools
+    configflags:
+      - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
+      - --with-boost=$SNAPCRAFT_PART_INSTALL/../../boostlib/install
+    install-via: prefix
     source: ..
     build-packages:
       # FIXME: Extracted from Debian package, might be more than enough
