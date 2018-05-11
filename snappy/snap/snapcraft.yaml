@@ -52,6 +52,7 @@ parts:
     override-build: |
       ./bootstrap
       snapcraftctl build
+      sed -i 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit.desktop
     stage-packages:
       - gettext
     filesets:
