@@ -6,6 +6,4 @@ set -o errexit -o nounset
 pip install --user yamllint
 yamllint --version
 
-for snapcraft_config in snappy/poedit*/snap/snapcraft.yaml ; do
-    yamllint --config-file snappy/.yamllint "${snapcraft_config}"
-done
+yamllint --config-file snappy/.yamllint snappy/snap/snapcraft.yaml
