@@ -1,11 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
 # Update plural forms expressions from the data collected by Unicode Consortium
 # (see http://www.unicode.org/cldr/charts/supplemental/language_plural_rules.html),
 # but from a JSON version by Transifex folks
 
 import os.path
 import sys
-import urllib2
+import urllib.request
 import re
 import gettext
 import json
@@ -27,7 +28,7 @@ def validate_entry(e):
     # and that all indexes are used:
     count = int(m.group(1))
     used = [0] * count
-    for i in xrange(0,1001):
+    for i in range(0,1001):
         fi = func(i)
         if fi >= count:
             raise ValueError("expression out of range (n=%d -> %d)" % (i, fi))
@@ -43,18 +44,19 @@ elif os.path.isfile("../src/language_impl_plurals.h"):
 else:
     raise RuntimeError("run this script from root or from scripts/ directory")
 
-with file(outfname, "rt") as f:
+with open(outfname, "rt") as f:
     orig_content = f.read()
 
 
-response = urllib2.urlopen(TABLE_URL)
+with urllib.request.urlopen(TABLE_URL) as response:
+    data = json.load(response)
 
 output = "// Code generated with scripts/extract-plural-forms.py begins here\n\n"
 
 langdata = {}
 shortlangdata = {}
 
-for x in json.load(response):
+for x in data:
     data = x['fields']
     lang = data['code']
     shortlang = lang.partition('_')[0]
@@ -62,7 +64,7 @@ for x in json.load(response):
     langdata[lang] = expr
     shortlangdata.setdefault(shortlang, set()).add(expr)
     if shortlang=='ar':
-        print lang, repr(expr)
+        print(lang, repr(expr))
 
 
 for lang in list(langdata.keys()):
@@ -92,5 +94,5 @@ content = re.sub('%s(.*?)%s' % (MARKER_BEGIN, MARKER_END),
                  0,
                  re.DOTALL)
 
-with file(outfname, "wt") as f:
+with open(outfname, "wt") as f:
     f.write(content)
