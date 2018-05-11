@@ -23,7 +23,8 @@ parts:
       - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
       - --with-boost=$SNAPCRAFT_PART_INSTALL/../../boostlib/install
     install-via: prefix
-    source: ..
+    source: https://github.com/vslavik/poedit.git
+    source-depth: 80
     build-packages:
       # FIXME: Extracted from Debian package, might be more than enough
       - asciidoc
@@ -88,7 +89,8 @@ parts:
       - wxwidgets
   boostlib:
     plugin: dump
-    source: ../deps/boost
+    source: parts/poedit/src/deps/boost
+    source-type: local
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - bison
@@ -143,7 +145,7 @@ parts:
       - --without-opengl
       - --without-sdl
     install-via: prefix
-    source: ../deps/wx
+    source: parts/poedit/src/deps/wx
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - autoconf
