@@ -91,8 +91,10 @@ parts:
       - wxwidgets
   boostlib:
     plugin: dump
-    source: parts/poedit/src/deps/boost
-    source-type: local
+    source: https://github.com/vslavik/poedit.git
+    source-type: git
+    source-depth: 1
+    source-subdir: deps/boost
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - bison
@@ -147,8 +149,9 @@ parts:
       - --without-opengl
       - --without-sdl
     install-via: prefix
-    source: parts/poedit/src/deps/wx
-    source-type: local
+    source: https://github.com/vslavik/wxWidgets.git
+    source-type: git
+    source-depth: 1
     build-packages:
       # FIXME: Extracted from debian package, might be more than enough
       - autoconf
