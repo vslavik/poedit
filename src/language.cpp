@@ -31,6 +31,8 @@
 #include <mutex>
 #include <memory>
 
+#include <boost/algorithm/string.hpp>
+
 #include <unicode/uvernum.h>
 #include <unicode/locid.h>
 #include <unicode/coll.h>
@@ -39,6 +41,7 @@
 #include <wx/filename.h>
 
 #include "str_helpers.h"
+#include "pluralforms/pl_evaluate.h"
 
 #ifdef HAVE_CLD2
     #ifdef HAVE_CLD2_PUBLIC_COMPACT_LANG_DET_H
@@ -386,10 +389,10 @@ Language Language::FromLegacyNames(const std::string& lang, const std::string& c
 }
 
 
-std::string Language::DefaultPluralFormsExpr() const
+PluralFormsExpr Language::DefaultPluralFormsExpr() const
 {
     if (!IsValid())
-        return std::string();
+        return PluralFormsExpr();
 
     static const std::unordered_map<std::string, std::string> forms = {
         #include "language_impl_plurals.h"
@@ -407,7 +410,7 @@ std::string Language::DefaultPluralFormsExpr() const
     if ( i != forms.end() )
         return i->second;
 
-    return std::string();
+    return PluralFormsExpr();
 }
 
 
@@ -561,4 +564,62 @@ Language Language::TryDetectFromText(const char *buffer, size_t len, Language pr
     (void)len;
     return probableLanguage;
 #endif
+}
+
+
+PluralFormsExpr::PluralFormsExpr() : m_calcCreated(true)
+{
+}
+
+PluralFormsExpr::PluralFormsExpr(const std::string& expr) : m_expr(expr), m_calcCreated(false)
+{
+}
+
+PluralFormsExpr::~PluralFormsExpr()
+{
+}
+
+std::shared_ptr<PluralFormsCalculator> PluralFormsExpr::calc() const
+{
+    auto self = const_cast<PluralFormsExpr*>(this);
+    if (m_calcCreated)
+        return m_calc;
+    if (!m_expr.empty())
+        self->m_calc = PluralFormsCalculator::make(m_expr.c_str());
+    self->m_calcCreated = true;
+    return m_calc;
+}
+
+bool PluralFormsExpr::operator==(const PluralFormsExpr& other) const
+{
+    if (m_expr == other.m_expr)
+        return true;
+
+    // do some normalization to avoid unnecessary complains when the only
+    // differences are in whitespace for example:
+    auto expr1 = boost::erase_all_copy(m_expr, " \t");
+    auto expr2 = boost::erase_all_copy(other.m_expr, " \t");
+    if (expr1 == expr2)
+        return true;
+
+    // failing that, compare the expressions semantically:
+    auto calc1 = calc();
+    auto calc2 = other.calc();
+
+    if (calc1->nplurals() != calc2->nplurals())
+        return false;
+
+    for (int i = 0; i < MAX_EXAMPLES_COUNT; i++)
+    {
+        if (calc1->evaluate(i) != calc2->evaluate(i))
+            return false;
+    }
+    // both expressions are identical on all tested integers
+    return true;
+}
+
+int PluralFormsExpr::evaluate_for_n(int n) const
+{
+    auto c = calc();
+    return c ? c->evaluate(n) : 0;
 }

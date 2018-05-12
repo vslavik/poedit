@@ -1378,7 +1378,7 @@ void Catalog::FixupCommonIssues()
         // Auto-fill default plural form if it is missing:
         if (m_header.Lang.IsValid() && HasPluralItems())
         {
-            pluralForms = m_header.Lang.DefaultPluralFormsExpr();
+            pluralForms = m_header.Lang.DefaultPluralFormsExpr().str();
             if (!pluralForms.empty())
                 m_header.SetHeader("Plural-Forms", pluralForms);
         }
@@ -2426,7 +2426,7 @@ bool Catalog::HasPluralItems() const
 void Catalog::SetLanguage(Language lang)
 {
     m_header.Lang = lang;
-    m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr());
+    m_header.SetHeaderNotEmpty("Plural-Forms", lang.DefaultPluralFormsExpr().str());
 }
 
 void Catalog::GetStatistics(int *all, int *fuzzy, int *badtokens,

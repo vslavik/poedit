@@ -577,9 +577,9 @@ PluralFormsNode* PluralFormsParser::pmExpression()
     return n.release();
 }
 
-std::unique_ptr<PluralFormsCalculator> PluralFormsCalculator::make(const char* s)
+std::shared_ptr<PluralFormsCalculator> PluralFormsCalculator::make(const char* s)
 {
-    auto calculator = std::make_unique<PluralFormsCalculator>();
+    auto calculator = std::make_shared<PluralFormsCalculator>();
     if (s != NULL)
     {
         PluralFormsScanner scanner(s);
