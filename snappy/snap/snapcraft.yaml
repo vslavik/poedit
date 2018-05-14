@@ -22,38 +22,69 @@ parts:
     configflags:
       - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
       - --with-boost=$SNAPCRAFT_PART_INSTALL/../../boostlib/install
+
+      - CC=gcc-6
+      - CXX=g++-6
+      # wxWidgets DSO linking option bug due to linker behavior change,
+      # consider upgrading the submodule
+      - LDFLAGS=-Wl,--copy-dt-needed-entries
     install-via: prefix
+
     source: https://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 80
+    override-pull: |
+      # There's no way we pull all the submodules down, we do this manually
+      git clone --depth=80 https://github.com/vslavik/poedit.git .
+      git submodule init deps/json
+      git submodule update --depth=200
+
     build-packages:
-      # FIXME: Extracted from Debian package, might be more than enough
-      - asciidoc
-      - gettext
-      # Boost libraries provided by Ubuntu 16.04 are too old
+      # Boost libraries provided by Ubuntu 16.04 are too old, using
+      # installation from `boostlib` part instead
       #- libboost-dev
       #- libboost-iostreams-dev
       #- libboost-regex-dev
       #- libboost-system-dev
       #- libboost-thread-dev
+
+      # wxWidgets library provided by Ubuntu 16.04 is too old, using
+      # installation from `wxwidgets` part instead
+      #- libwxgtk3.0-dev
+
+      # "JSON for Modern C++" is only provided by Ubuntu >= 17.10,
+      # using embedded submodule's version instead
+      #- nlohmann-json-dev
+
+      # GCC(`g++` to be specific) provided by Ubuntu 16.04 is too
+      # old for the embedded submodule "JSON for Modern C++", use
+      # installation from `gcc-6` part instead.
+      #- gcc
+      #- g++
+
+      - asciidoc
+      - automake
+      - gettext
       - libcld2-dev
       - libcpprest-dev
-      - libdb++-dev
-      #- libgtk2.0-dev
-      - libgtkspell-dev
+      - libgtkspell3-3-dev
       - libicu-dev
+      - libjpeg-dev
       - liblucene++-dev
+      - libnotify-dev
       - libsecret-1-dev
-      # wxWidgets library provided by Ubuntu 16.04 is too old
-      #- libwxgtk3.0-dev
-      #- nlohmann-json-dev
+      - libtiff5-dev
+      - pkg-config
       - xsltproc
       - xmlto
-      - zip
+      - zlib1g-dev
+
     override-build: |
       ./bootstrap
       snapcraftctl build
-      sed -i 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit.desktop
+
+      sed -i 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' \
+        ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit.desktop
     stage-packages:
       - gettext
     filesets:
@@ -88,6 +119,7 @@ parts:
     after:
       - boostlib
       - desktop-gtk3
+      - gcc-6
       - wxwidgets
   boostlib:
     plugin: dump
@@ -180,6 +212,13 @@ parts:
         - lib/*.a
     stage:
       - -*
+  gcc-6:
+    plugin: nil
+    override-build: |
+      # Install newer GCC from Toolchain test builds PPA
+      sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+      sudo apt update
+      sudo apt install gcc-6 g++-6
 
 apps:
   poedit:
