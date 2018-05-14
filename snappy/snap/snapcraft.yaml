@@ -18,18 +18,6 @@ icon: poedit.png
 
 parts:
   poedit:
-    plugin: autotools
-    configflags:
-      - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
-      - --with-boost=$SNAPCRAFT_PART_INSTALL/../../boostlib/install
-
-      - CC=gcc-6
-      - CXX=g++-6
-      # wxWidgets DSO linking option bug due to linker behavior change,
-      # consider upgrading the submodule
-      - LDFLAGS=-Wl,--copy-dt-needed-entries
-    install-via: prefix
-
     source: https://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 80
@@ -79,14 +67,27 @@ parts:
       - xmlto
       - zlib1g-dev
 
+    plugin: autotools
+    configflags:
+      - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
+      - --with-boost=$SNAPCRAFT_PART_INSTALL/../../boostlib/install
+
+      - CC=gcc-6
+      - CXX=g++-6
+      # wxWidgets DSO linking option bug due to linker behavior change,
+      # consider upgrading the submodule
+      - LDFLAGS=-Wl,--copy-dt-needed-entries
+    install-via: prefix
     override-build: |
       ./bootstrap
       snapcraftctl build
 
       sed -i 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' \
         ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit.desktop
+
     stage-packages:
       - gettext
+
     filesets:
       executables:
         - bin/*
@@ -102,6 +103,7 @@ parts:
         - share/pixmaps/*
       resources:
         - share/poedit/*
+
     stage:
       - $executables
       - $freedesktop-desktop-entries
@@ -109,6 +111,7 @@ parts:
       - $localizations
       - $pixmaps
       - $resources
+
     prime:
       - $executables
       - $freedesktop-desktop-entries
@@ -116,14 +119,14 @@ parts:
       - $localizations
       - $pixmaps
       - $resources
+
     after:
       - boostlib
       - desktop-gtk3
       - gcc-6
       - wxwidgets
-  boostlib:
-    plugin: dump
 
+  boostlib:
     source: https://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 1
@@ -140,6 +143,8 @@ parts:
       #- g++
       - libbz2-dev
       - libicu-dev
+
+    plugin: dump
     override-build: |
       cd deps/boost
       echo 'using gcc : : g++-6 ;' >user-config.jam
@@ -152,32 +157,27 @@ parts:
         --build-type=minimal \
         threading=multi \
         link=static
+
     filesets:
       headers:
         - include/*
       static-libs:
         - lib/*.a
+
     stage:
       - -*
+
     prime:
       - -*
+
     after:
       - gcc-6
+
   wxwidgets:
-    plugin: autotools
-    configflags:
-      - --disable-shared
-      - --disable-sound
-      - --with-gtk=3
-      - --without-opengl
-      - --without-sdl
-      # OPTIONAL: Use gcc installation from `gcc-6` part instead
-      - CC=gcc-6
-      - CXX=g++-6
-    install-via: prefix
     source: https://github.com/vslavik/wxWidgets.git
     source-type: git
     source-depth: 1
+
     build-packages:
       # OPTIONAL: Use gcc installation from `gcc-6` part instead
       #- gcc
@@ -207,17 +207,34 @@ parts:
       - libxtst-dev
 
       - zlib1g-dev
+
+    plugin: autotools
+    configflags:
+      - --disable-shared
+      - --disable-sound
+      - --with-gtk=3
+      - --without-opengl
+      - --without-sdl
+      # OPTIONAL: Use gcc installation from `gcc-6` part instead
+      - CC=gcc-6
+      - CXX=g++-6
+    install-via: prefix
+
     filesets:
       headers:
         - include/*
       static-libs:
         - lib/*.a
+
     stage:
       - -*
+
     prime:
       - -*
+
     after:
       - gcc-6
+
   gcc-6:
     plugin: nil
     override-build: |
