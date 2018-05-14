@@ -266,7 +266,9 @@ parts:
   gcc-6:
     plugin: nil
     override-build: |
+      sudo apt --yes install software-properties-common
+
       # Install newer GCC from Toolchain test builds PPA
       sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
       sudo apt update
-      sudo apt install gcc-6 g++-6
+      sudo apt --yes install gcc-6 g++-6
