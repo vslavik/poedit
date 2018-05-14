@@ -191,12 +191,6 @@ parts:
         threading=multi \
         link=static
 
-    filesets:
-      headers:
-        - include/*
-      static-libs:
-        - lib/*.a
-
     stage:
       - -*
 
@@ -252,12 +246,6 @@ parts:
       - CC=gcc-6
       - CXX=g++-6
     install-via: prefix
-
-    filesets:
-      headers:
-        - include/*
-      static-libs:
-        - lib/*.a
 
     stage:
       - -*
