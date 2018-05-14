@@ -51,18 +51,21 @@ script:
 after_failure:
     - test -f Makefile || cat config.log
 
+after_success:
+    - docker run -v $(pwd)/snappy:$(pwd)/snappy -w $(pwd)/snappy snapcore/snapcraft sh -c "apt update && snapcraft"
+
 git:
     submodules: false
 
 cache: apt
 
 deploy:
-    provider: releases
-    api_key:
-        secure: fkelxNMcGoNY4MT30dEiEUE53cMkhtmr44Y7iSEkOGmfeG9ReUqVIk1nd7027iehzdhhcov57XwHg49KA+AWpQGvEbLkRNRazOxSGFL9o/P/Rzft/tvKP0sxcRF5RUVo0b5J5wlsIKSlbjDqGu9CM+G4eyK0D2jo/XPzsv9akKQ=
-    skip_cleanup: true
-    file: poedit-2.0.8.tar.gz
-    on:
-        repo: vslavik/poedit
-        tags: true
-        all_branches: true
+    - provider: releases
+      api_key:
+          secure: fkelxNMcGoNY4MT30dEiEUE53cMkhtmr44Y7iSEkOGmfeG9ReUqVIk1nd7027iehzdhhcov57XwHg49KA+AWpQGvEbLkRNRazOxSGFL9o/P/Rzft/tvKP0sxcRF5RUVo0b5J5wlsIKSlbjDqGu9CM+G4eyK0D2jo/XPzsv9akKQ=
+      skip_cleanup: true
+      file: poedit-2.0.8.tar.gz
+      on:
+          repo: vslavik/poedit
+          tags: true
+          all_branches: true
