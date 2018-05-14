@@ -98,6 +98,9 @@ parts:
         ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit.desktop
 
     stage-packages:
+      # For addr2line, required by wxWidgets error dialog
+      - binutils
+
       - gettext
 
     filesets:
