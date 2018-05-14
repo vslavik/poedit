@@ -91,6 +91,8 @@ parts:
       - LDFLAGS=-Wl,--copy-dt-needed-entries
     install-via: prefix
     override-build: |
+      set -eu
+
       ./bootstrap
       snapcraftctl build
 
@@ -179,6 +181,8 @@ parts:
 
     plugin: dump
     override-build: |
+      set -eu
+
       cd deps/boost
       echo 'using gcc : : g++-6 ;' >user-config.jam
       ./bootstrap.sh \
