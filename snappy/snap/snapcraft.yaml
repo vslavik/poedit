@@ -123,40 +123,34 @@ parts:
       - wxwidgets
   boostlib:
     plugin: dump
+
     source: https://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 1
     source-subdir: deps/boost
+    override-pull: |
+      # NOTE: Overrided until submodule fetching is optional
+      #snapcraftctl pull
+
+      git clone --depth=1 https://github.com/vslavik/poedit.git .
+
     build-packages:
-      # FIXME: Extracted from debian package, might be more than enough
-      - bison
-      - dctrl-tools
-      - docbook-to-man
-      - flex
-      - g++
-      # - g++-6
-      - help2man
+      # OPTIONAL: Use gcc installation from `gcc-6` part instead
+      #- gcc
+      #- g++
       - libbz2-dev
       - libicu-dev
-      - mpi-default-dev
-      - python
-      - python-all-dev
-      - python3
-      - python3-all-dev
-      - xsltproc
-      - zlib1g-dev
     override-build: |
-      ./bootstrap.sh
-      ./b2 install\
-        --prefix=../install\
-        -j $(nproc)\
-        --build-type=minimal\
-        --layout=system\
-        --with-iostreams\
-        --with-regex\
-        --with-system\
-        --with-thread\
-        threading=multi\
+      cd deps/boost
+      echo 'using gcc : : g++-6 ;' >user-config.jam
+      ./bootstrap.sh \
+        --prefix="${SNAPCRAFT_PART_INSTALL}" \
+        --with-libraries=iostreams,regex,system,thread \
+        --with-icu=/usr
+      ./b2 install \
+        -j $(nproc) \
+        --build-type=minimal \
+        threading=multi \
         link=static
     filesets:
       headers:
@@ -165,6 +159,10 @@ parts:
         - lib/*.a
     stage:
       - -*
+    prime:
+      - -*
+    after:
+      - gcc-6
   wxwidgets:
     plugin: autotools
     configflags:
