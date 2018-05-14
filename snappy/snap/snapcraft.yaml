@@ -103,6 +103,8 @@ parts:
     filesets:
       executables:
         - bin/*
+      files-in-stage-packages:
+        - usr/*
       freedesktop-desktop-entries:
         - share/applications/*
       icons:
@@ -118,6 +120,7 @@ parts:
 
     stage:
       - $executables
+      - $files-in-stage-packages
       - $freedesktop-desktop-entries
       - $manpages
       - $localizations
@@ -126,6 +129,7 @@ parts:
 
     prime:
       - $executables
+      - $files-in-stage-packages
       - $freedesktop-desktop-entries
       - $manpages
       - $localizations
