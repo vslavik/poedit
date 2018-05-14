@@ -166,43 +166,47 @@ parts:
   wxwidgets:
     plugin: autotools
     configflags:
-      - --disable-gui
       - --disable-shared
       - --disable-sound
-      - --enable-display
-      - --enable-geometry
-      - --enable-graphics_ctx
-      - --enable-mediactrl
-      - --enable-unicode
-      - --enable-xrc
       - --with-gtk=3
       - --without-opengl
       - --without-sdl
+      # OPTIONAL: Use gcc installation from `gcc-6` part instead
+      - CC=gcc-6
+      - CXX=g++-6
     install-via: prefix
     source: https://github.com/vslavik/wxWidgets.git
     source-type: git
     source-depth: 1
     build-packages:
-      # FIXME: Extracted from debian package, might be more than enough
-      - autoconf
-      - autotools-dev
-      - g++
+      # OPTIONAL: Use gcc installation from `gcc-6` part instead
+      #- gcc
+      #- g++
+
       - gettext
+      - libcairo2-dev
       - libexpat1-dev
-      - libgtk-3-dev
-      - libjpeg-dev
-      - libnotify-dev
-      - libpng-dev
-      - libsm-dev
-      - libtiff5-dev
-      - libxt-dev
-      - zlib1g-dev
-      # FIXME: Probably not used by Poedit and can be dropped
+
+      # Not used by Poedit
       #- libgl1-mesa-dev
       #- libglu1-mesa-dev
       #- libgstreamer1.0-dev
       #- libgstreamer-plugins-base1.0-dev
+
+      - libgtk-3-dev
+      - libjpeg-dev
+      - libnotify-dev
+      - libpng-dev
+      - libsecret-1-dev
+
+      - libtiff5-dev
+
+      # Not used by Poedit
       #- libwebkit2gtk-4.0-dev
+
+      - libxtst-dev
+
+      - zlib1g-dev
     filesets:
       headers:
         - include/*
@@ -210,6 +214,10 @@ parts:
         - lib/*.a
     stage:
       - -*
+    prime:
+      - -*
+    after:
+      - gcc-6
   gcc-6:
     plugin: nil
     override-build: |
