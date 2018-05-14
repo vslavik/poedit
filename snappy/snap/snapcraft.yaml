@@ -16,6 +16,18 @@ grade: devel
 confinement: strict
 icon: poedit.png
 
+apps:
+  poedit:
+    command: desktop-launch poedit
+    plugs:
+      - desktop
+      - desktop-legacy
+      - home
+      - network
+      - removable-media
+      - x11
+    desktop: share/applications/poedit.desktop
+
 parts:
   poedit:
     source: https://github.com/vslavik/poedit.git
@@ -242,15 +254,3 @@ parts:
       sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
       sudo apt update
       sudo apt install gcc-6 g++-6
-
-apps:
-  poedit:
-    command: desktop-launch poedit
-    plugs:
-      - desktop
-      - desktop-legacy
-      - home
-      - network
-      - removable-media
-      - x11
-    desktop: share/applications/poedit.desktop
