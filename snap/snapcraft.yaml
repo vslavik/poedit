@@ -263,6 +263,13 @@ parts:
     after:
       - gcc-6
 
+  desktop-gtk3:
+    make-parameters:
+      - CC=gcc-6
+      - CXX=g++-6
+    after:
+      - gcc-6
+
   gcc-6:
     plugin: nil
     override-build: |
