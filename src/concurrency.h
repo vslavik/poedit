@@ -39,9 +39,17 @@
 #define BOOST_THREAD_VERSION 4
 #define BOOST_THREAD_PROVIDES_EXECUTORS
 
-#include <boost/chrono/duration.hpp>
+#ifdef __clang__
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wshadow"
+#endif
 #include <boost/thread/executor.hpp>
 #include <boost/thread/future.hpp>
+#ifdef __clang__
+    #pragma clang diagnostic pop
+#endif
+
+#include <boost/chrono/duration.hpp>
 #include <boost/throw_exception.hpp>
 
 #if !defined(HAVE_DISPATCH) && !defined(USE_PPL_DISPATCH)

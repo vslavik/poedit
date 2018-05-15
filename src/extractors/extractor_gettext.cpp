@@ -186,16 +186,17 @@ protected:
 };
 
 
-/// Dedicated extractor for .phtml files - PHP, used by Zend Framework
-class PHTMLGettextExtractor : public GettextExtractorBase
+/// Dedicated extractor for non-standard PHP extensions (*.phtml etc.)
+class NonstandardPHPGettextExtractor : public GettextExtractorBase
 {
 public:
-    PHTMLGettextExtractor()
+    NonstandardPHPGettextExtractor()
     {
-        RegisterExtension("phtml");
+        RegisterExtension("phtml");  // Zend Framework
+        RegisterExtension("ctp");    // CakePHP
     }
 
-    wxString GetId() const override { return "gettext-phtml"; }
+    wxString GetId() const override { return "gettext-php"; }
 
 protected:
     wxString GetAdditionalFlags() const override { return "-L php"; }
@@ -206,5 +207,5 @@ protected:
 void Extractor::CreateGettextExtractors(Extractor::ExtractorsList& into)
 {
     into.push_back(std::make_shared<GettextExtractor>());
-    into.push_back(std::make_shared<PHTMLGettextExtractor>());
+    into.push_back(std::make_shared<NonstandardPHPGettextExtractor>());
 }

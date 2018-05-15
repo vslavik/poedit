@@ -211,10 +211,10 @@ public:
 
     void GetStats(long& numDocs, long& fileSize);
 
+    static std::wstring GetDatabaseDir();
+
 private:
     void Init();
-
-    static std::wstring GetDatabaseDir();
 
 private:
     AnalyzerPtr      m_analyzer;
@@ -688,6 +688,27 @@ std::shared_ptr<TranslationMemory::Writer> TranslationMemory::GetWriter()
     if (!m_impl)
         std::rethrow_exception(m_error);
     return m_impl->GetWriter();
+}
+
+void TranslationMemory::DeleteAllAndReset()
+{
+    try
+    {
+        auto tm = TranslationMemory::Get().GetWriter();
+        tm->DeleteAll();
+        tm->Commit();
+    }
+    catch (...)
+    {
+        // Lucene database is corrupted, best we can do is delete it completely
+        wxFileName::Rmdir(TranslationMemoryImpl::GetDatabaseDir(), wxPATH_RMDIR_RECURSIVE);
+
+        // recreate implementation object
+        TranslationMemoryImpl *impl = new TranslationMemoryImpl;
+        std::swap(m_impl, impl);
+        delete impl;
+        m_error = nullptr;
+    }
 }
 
 void TranslationMemory::GetStats(long& numDocs, long& fileSize)

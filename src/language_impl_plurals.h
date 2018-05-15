@@ -113,7 +113,7 @@
 { "pt"   , "nplurals=2; plural=(n != 1);" },
 { "pt_BR", "nplurals=2; plural=(n > 1);" },
 { "rm"   , "nplurals=2; plural=(n != 1);" },
-{ "ro"   , "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));" },
+{ "ro"   , "nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);" },
 { "ru"   , "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);" },
 { "rw"   , "nplurals=2; plural=(n != 1);" },
 { "sc"   , "nplurals=2; plural=(n != 1);" },
