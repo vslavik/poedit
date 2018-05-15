@@ -186,17 +186,28 @@ parts:
     override-build: |
       set -eu
 
-      CC=gcc-6
-      CXX=g++-6
-      export CC CXX
+      # WORKAROUND: `cc` toolset broken
+      # https://svn.boost.org/trac10/ticket/5917
+      #CC=gcc-6
+      #CXX=g++-6
+      #export CC CXX
+      mkdir "${HOME}/bin"
+      ln \
+        --symbolic \
+        "$(which gcc-6)" \
+        "${HOME}/bin/gcc"
+      ln \
+        --symbolic \
+        "$(which g++-6)" \
+        "${HOME}/bin/g++"
+      PATH="${HOME}/bin:${PATH}"
 
       cd deps/boost
-      echo 'using gcc : : g++-6 ;' >user-config.jam
       ./bootstrap.sh \
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
         --with-libraries=iostreams,regex,system,thread \
         --with-icu=/usr \
-        --with-toolset=cc
+        --with-toolset=gcc
       ./b2 install \
         -j $(nproc) \
         --build-type=minimal \
