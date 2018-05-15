@@ -6,4 +6,4 @@ set -o errexit -o nounset
 pip install --user yamllint
 yamllint --version
 
-yamllint --config-file snappy/.yamllint snappy/snap/snapcraft.yaml
+yamllint --config-file snap/.yamllint snap/snapcraft.yaml
