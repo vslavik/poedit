@@ -186,12 +186,17 @@ parts:
     override-build: |
       set -eu
 
+      CC=gcc-6
+      CXX=g++-6
+      export CC CXX
+
       cd deps/boost
       echo 'using gcc : : g++-6 ;' >user-config.jam
       ./bootstrap.sh \
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
         --with-libraries=iostreams,regex,system,thread \
-        --with-icu=/usr
+        --with-icu=/usr \
+        --with-toolset=cc
       ./b2 install \
         -j $(nproc) \
         --build-type=minimal \
