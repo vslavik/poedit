@@ -201,18 +201,18 @@ parts:
       #export CC CXX
       mkdir \
         --parents \
-        "${HOME}/bin"
+        "${SNAPCRAFT_PART_INSTALL}/../bin"
       ln \
         --force \
         --symbolic \
         "$(which gcc-6)" \
-        "${HOME}/bin/gcc"
+        "${SNAPCRAFT_PART_INSTALL}/../bin/gcc"
       ln \
         --force \
         --symbolic \
         "$(which g++-6)" \
-        "${HOME}/bin/g++"
-      PATH="${HOME}/bin:${PATH}"
+        "${SNAPCRAFT_PART_INSTALL}/../bin/g++"
+      PATH="${SNAPCRAFT_PART_INSTALL}/../bin:${PATH}"
 
       cd deps/boost
       ./bootstrap.sh \
