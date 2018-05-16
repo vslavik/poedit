@@ -222,11 +222,8 @@ parts:
         threading=multi \
         link=static
 
-    stage:
-      - -*
-
-    prime:
-      - -*
+    override-stage: 'true'
+    override-prime: 'true'
 
     after:
       - gcc-6
@@ -278,11 +275,8 @@ parts:
       - CXX=g++-6
     install-via: prefix
 
-    stage:
-      - -*
-
-    prime:
-      - -*
+    override-stage: 'true'
+    override-prime: 'true'
 
     after:
       - gcc-6
@@ -306,3 +300,6 @@ parts:
       sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
       sudo apt update
       sudo apt --yes install gcc-6 g++-6
+
+    override-stage: 'true'
+    override-prime: 'true'
