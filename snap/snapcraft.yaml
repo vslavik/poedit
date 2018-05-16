@@ -199,12 +199,16 @@ parts:
       #CC=gcc-6
       #CXX=g++-6
       #export CC CXX
-      mkdir "${HOME}/bin"
+      mkdir \
+        --parents \
+        "${HOME}/bin"
       ln \
+        --force \
         --symbolic \
         "$(which gcc-6)" \
         "${HOME}/bin/gcc"
       ln \
+        --force \
         --symbolic \
         "$(which g++-6)" \
         "${HOME}/bin/g++"
