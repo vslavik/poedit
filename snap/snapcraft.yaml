@@ -296,6 +296,9 @@ parts:
 
   gcc-6:
     plugin: nil
+    # Poedit sources will be used when `source` is ommitted, avoid this
+    # behavior
+    override-pull: 'true'
     override-build: |
       sudo apt --yes install software-properties-common
 
