@@ -20,12 +20,20 @@ apps:
   poedit:
     command: desktop-launch poedit
     plugs:
-      - desktop
-      - desktop-legacy
+      # The desktop interfaces
+      # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
+      - desktop # basic graphical resources
+      - desktop-legacy # Input method/a11y support
+
+      - x11 # access to the X server
+
+      # File access
       - home
-      - network
       - removable-media
-      - x11
+
+      # Crowdin access
+      - network
+
     desktop: share/applications/poedit.desktop
 
 parts:
