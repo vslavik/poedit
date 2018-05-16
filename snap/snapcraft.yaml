@@ -38,12 +38,12 @@ apps:
 
 parts:
   poedit:
-    source: https://github.com/vslavik/poedit.git
+    source: git://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 80
     override-pull: |
       # There's no way we pull all the submodules down, we do this manually
-      git clone --depth=80 https://github.com/vslavik/poedit.git .
+      git clone --depth=80 git://github.com/vslavik/poedit.git .
       git submodule init deps/json
       git submodule update --depth=200
 
@@ -173,7 +173,7 @@ parts:
       - wxwidgets
 
   boostlib:
-    source: https://github.com/vslavik/poedit.git
+    source: git://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 1
     source-subdir: deps/boost
@@ -181,7 +181,7 @@ parts:
       # NOTE: Overrided until submodule fetching is optional
       #snapcraftctl pull
 
-      git clone --depth=1 https://github.com/vslavik/poedit.git .
+      git clone --depth=1 git://github.com/vslavik/poedit.git .
 
     build-packages:
       # OPTIONAL: Use gcc installation from `gcc-6` part instead
@@ -232,7 +232,7 @@ parts:
       - gcc-6
 
   wxwidgets:
-    source: https://github.com/vslavik/wxWidgets.git
+    source: git://github.com/vslavik/wxWidgets.git
     source-type: git
     source-depth: 1
 
