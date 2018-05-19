@@ -293,6 +293,27 @@ parts:
     make-parameters:
       - CC=gcc-6
       - CXX=g++-6
+    override-build: |
+      set -eu
+
+      # WORKAROUND: Makefile doesn't honour toolchain variables
+      # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/119
+      mkdir \
+        --parents \
+        "${SNAPCRAFT_PART_INSTALL}/../bin"
+      ln \
+        --force \
+        --symbolic \
+        "$(which gcc-6)" \
+        "${SNAPCRAFT_PART_INSTALL}/../bin/gcc"
+      ln \
+        --force \
+        --symbolic \
+        "$(which g++-6)" \
+        "${SNAPCRAFT_PART_INSTALL}/../bin/g++"
+      PATH="${SNAPCRAFT_PART_INSTALL}/../bin:${PATH}"
+
+      snapcraftctl build
     after:
       - gcc-6
 
