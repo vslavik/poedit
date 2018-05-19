@@ -18,7 +18,11 @@ icon: artwork/linux/appicon/256x256/apps/poedit.png
 
 apps:
   poedit:
-    command: desktop-launch poedit
+    # WORKAROUND: Fix icon loading problem
+    # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/121
+    command: >
+      env XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
+      desktop-launch poedit
     plugs:
       # The desktop interfaces
       # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
