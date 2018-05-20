@@ -43,6 +43,13 @@ apps:
       - gsettings
       - mount-observe
 
+  poedit-uri-handler:
+    command: desktop-launch poedit --handle-poedit-uri %u
+    desktop: share/applications/poedit-uri.desktop
+    plugs:
+      - desktop
+      - desktop-legacy
+      - x11
 
 parts:
   poedit:
