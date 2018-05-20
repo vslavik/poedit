@@ -23,6 +23,7 @@ apps:
     command: >
       env XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
       desktop-launch poedit
+    desktop: share/applications/poedit.desktop
     plugs:
       # The desktop interfaces
       # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
@@ -42,7 +43,6 @@ apps:
       - gsettings
       - mount-observe
 
-    desktop: share/applications/poedit.desktop
 
 parts:
   poedit:
