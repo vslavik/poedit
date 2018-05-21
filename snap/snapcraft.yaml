@@ -119,7 +119,9 @@ parts:
       ./bootstrap
       snapcraftctl build
 
-      sed -i 's|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|' \
+      sed \
+        --in-place \
+        --file ../../../snap/postprocess-desktop-entries.sed \
         ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit*.desktop
 
     stage-packages:
