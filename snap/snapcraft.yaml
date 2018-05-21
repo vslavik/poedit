@@ -21,7 +21,9 @@ apps:
     # WORKAROUND: Fix icon loading problem
     # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/121
     command: >
-      env XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
+      env
+      XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
+      DICPATH="$SNAP/usr/share/hunspell:$SNAP/usr/share/myspell/dicts"
       desktop-launch poedit
     desktop: share/applications/poedit.desktop
     plugs:
@@ -345,3 +347,37 @@ parts:
 
     override-stage: 'true'
     override-prime: 'true'
+
+  spellcheck-dictionaries:
+    plugin: nil
+    # Poedit sources will be used when `source` is ommitted, avoid this
+    # behavior
+    override-pull: 'true'
+    override-build: |
+      set -eu
+
+      # Download all dictionary packages, and extract to install prefix
+      apt download $(
+        apt-cache search '^hunspell-.*$' \
+          | sort \
+          | grep \
+            --extended-regexp \
+            --invert-match \
+            '(myspell|dbgsym|tools|transitional|dependency)' \
+          | cut --fields=1 --delimiter=' ' \
+          | tr '\n' ' '
+      )
+      find -name '*.deb' \
+        | xargs \
+          --max-args=1 \
+          --replace='{}' \
+          --verbose \
+          dpkg-deb --extract '{}' ../install
+
+    filesets:
+      hunspell-dictionaries:
+        - usr/share/hunspell/*
+    stage:
+      - $hunspell-dictionaries
+    prime:
+      - $hunspell-dictionaries
