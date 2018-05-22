@@ -87,12 +87,14 @@ parts:
       #- gcc
       #- g++
 
+      # Gtkspell3 requires patching to be relocatable
+      #- libgtkspell3-3-dev
+
       - asciidoc
       - automake
       - gettext
       - libcld2-dev
       - libcpprest-dev
-      - libgtkspell3-3-dev
       - libicu-dev
       - libjpeg-dev
       - liblucene++-dev
@@ -114,6 +116,7 @@ parts:
       # wxWidgets DSO linking option bug due to linker behavior change,
       # consider upgrading the submodule
       - LDFLAGS=-Wl,--copy-dt-needed-entries
+      - PKG_CONFIG_PATH=$SNAPCRAFT_PART_INSTALL/../../gtkspell/install/lib/pkgconfig
     install-via: prefix
     override-build: |
       set -eu
@@ -142,7 +145,7 @@ parts:
       - libcld2-0
       - libcpprest2.8
       - libenchant1c2a
-      - libgtkspell3-3-0
+      #- libgtkspell3-3-0 # replaced by gtkspell part
       - libice6
       - liblucene++0v5
       - libsecret-1-0
@@ -188,6 +191,7 @@ parts:
     after:
       - boostlib
       - gcc-6
+      - gtkspell
       - wxwidgets
 
   boostlib:
@@ -380,3 +384,43 @@ parts:
       - $hunspell-dictionaries
     prime:
       - $hunspell-dictionaries
+
+  gtkspell:
+    source: https://git.code.sf.net/p/gtkspell/gtkspell
+    source-type: git
+    source-depth: 1
+
+    plugin: autotools
+    configflags:
+      - --disable-shared
+      - CC=gcc-6
+      - CXX=g++-6
+      - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/../snap/pkgconfig
+    install-via: prefix
+    build-packages:
+      - autoconf
+      - autoconf-archive
+      - automake
+      - gobject-introspection
+      - libgirepository1.0-dev
+      - gtk-doc-tools
+      - intltool
+      - libenchant-dev
+      - libgtk-3-dev
+      - libtool-bin
+      - valac
+    override-build: |
+      set -eu
+
+      # autogen.sh requires build directory to be created in advance
+      # https://sourceforge.net/p/gtkspell/gtkspell/merge-requests/1/
+      mkdir -p build
+
+      # GtkSpell's autogen runs configure by default
+      env NOCONFIGURE=yes ./autogen.sh
+      snapcraftctl build
+
+    override-stage: 'true'
+    override-prime: 'true'
+    after:
+      - gcc-6
