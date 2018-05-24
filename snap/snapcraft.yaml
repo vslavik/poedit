@@ -13,6 +13,11 @@ description: >
 
     # snap connect poedit:removable-media
 
+  For Poedit to save credential data you must connect this snap to the
+  `password-manager-service` interface:
+
+    # snap connect poedit:password-manager-service
+
 grade: stable
 confinement: strict
 icon: artwork/linux/appicon/256x256/apps/poedit.png
@@ -42,6 +47,9 @@ apps:
       # Crowdin access
       - network
 
+      # Secret Service access
+      - password-manager-service
+
       # Suggestions from snappy-debug
       - gsettings
       - mount-observe
@@ -53,6 +61,7 @@ apps:
       - desktop
       - desktop-legacy
       - x11
+      - password-manager-service
 
 parts:
   poedit:
