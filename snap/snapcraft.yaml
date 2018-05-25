@@ -137,7 +137,7 @@ parts:
       sed \
         --in-place \
         --file ../../../snap/postprocess-desktop-entries.sed \
-        ${SNAPCRAFT_PART_INSTALL}/share/applications/poedit*.desktop
+        "${SNAPCRAFT_PART_INSTALL}"/share/applications/poedit*.desktop
 
     stage-packages:
       # For addr2line, required by wxWidgets error dialog
