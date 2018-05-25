@@ -263,8 +263,8 @@ parts:
       ./b2 install \
         -j $(nproc) \
         --build-type=minimal \
-        threading=multi \
-        link=static
+        link=static \
+        threading=multi
 
     override-stage: 'true'
     override-prime: 'true'
