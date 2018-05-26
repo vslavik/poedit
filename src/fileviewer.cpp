@@ -348,7 +348,7 @@ void FileViewer::SelectReference(const wxString& ref)
     const wxFileName filename = GetFilename(ref);
     if (!filename.IsOk())
     {
-        ShowError(wxString::Format(_("Error opening file %s!"), filename.GetFullPath()));
+        ShowError(wxString::Format(_("Error opening file %s!"), ref.BeforeLast(':')));
         m_openInEditor->Disable();
         return;
     }
@@ -360,7 +360,7 @@ void FileViewer::SelectReference(const wxString& ref)
          !file.Open(filename.GetFullPath()) ||
          !file.ReadAll(&data, wxConvAuto()) )
     {
-        ShowError(wxString::Format(_("Error opening file %s!"), filename.GetFullPath()));
+        ShowError(wxString::Format(_("Error opening file %s!"), ref.BeforeLast(':')));
         m_openInEditor->Disable();
         return;
     }
