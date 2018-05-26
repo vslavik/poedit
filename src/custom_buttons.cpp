@@ -240,11 +240,18 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
     if (GetNormalState() == State_Pressed)
         state |= ODS_SELECTED;
     const bool toggled = state & ODS_SELECTED;
+    const bool isRtl = ::GetLayout(hdc) & LAYOUT_RTL;
 
     wxRect rect(lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right - lpDIS->rcItem.left, lpDIS->rcItem.bottom - lpDIS->rcItem.top);
 
     wxScopedPtr<wxGraphicsContext> gc(wxGraphicsContext::CreateFromNativeHDC(hdc));
     gc->EnableOffset(false);
+
+    if (isRtl)
+    {
+        gc->Translate(rect.width, 0);
+        gc->Scale(-1.0, 1.0);
+    }
 
     if (toggled)
     {
@@ -287,7 +294,14 @@ bool SwitchButton::MSWOnDraw(WXDRAWITEMSTRUCT *wxdis)
     gc->GetTextExtent(GetLabel(), &textw, &texth, &descent);
     texth += descent;
     wxCoord textpos = switchRect.y + (switchRect.height - texth) / 2 + PX(0.5);
+    gc->PushState();
+    if (isRtl)
+    {
+        gc->Translate(textw, 0);
+        gc->Scale(-1.0, 1.0);
+    }
     gc->DrawText(GetLabel(), rect.x, textpos);
+    gc->PopState();
 
     // draw the focus rectangle if we need it
     if ((state & ODS_FOCUS) && !(state & ODS_NOFOCUSRECT))
