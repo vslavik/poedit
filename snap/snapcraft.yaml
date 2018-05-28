@@ -239,20 +239,7 @@ parts:
       #CC=gcc-6
       #CXX=g++-6
       #export CC CXX
-      mkdir \
-        --parents \
-        "${SNAPCRAFT_PART_INSTALL}/../bin"
-      ln \
-        --force \
-        --symbolic \
-        "$(which gcc-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/../bin/gcc"
-      ln \
-        --force \
-        --symbolic \
-        "$(which g++-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/../bin/g++"
-      PATH="${SNAPCRAFT_PART_INSTALL}/../bin:${PATH}"
+      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       cd deps/boost
       ./bootstrap.sh \
@@ -335,20 +322,7 @@ parts:
 
       # WORKAROUND: Makefile doesn't honour toolchain variables
       # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/119
-      mkdir \
-        --parents \
-        "${SNAPCRAFT_PART_INSTALL}/../bin"
-      ln \
-        --force \
-        --symbolic \
-        "$(which gcc-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/../bin/gcc"
-      ln \
-        --force \
-        --symbolic \
-        "$(which g++-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/../bin/g++"
-      PATH="${SNAPCRAFT_PART_INSTALL}/../bin:${PATH}"
+      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       snapcraftctl build
     after:
@@ -367,7 +341,27 @@ parts:
       sudo apt update
       sudo apt --yes install gcc-6 g++-6
 
-    override-stage: 'true'
+      # Make fake executable search path for build systems that don't
+      # respect CC and CXX environmental variables
+      mkdir \
+        --parents \
+        "${SNAPCRAFT_PART_INSTALL}/bin"
+      ln \
+        --force \
+        --symbolic \
+        "$(which gcc-6)" \
+        "${SNAPCRAFT_PART_INSTALL}/bin/gcc"
+      ln \
+        --force \
+        --symbolic \
+        "$(which g++-6)" \
+        "${SNAPCRAFT_PART_INSTALL}/bin/g++"
+
+    filesets:
+      executables:
+        - bin/*
+    stage:
+      - $executables
     override-prime: 'true'
 
   spellcheck-dictionaries:
