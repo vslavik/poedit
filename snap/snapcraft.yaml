@@ -339,7 +339,7 @@ parts:
       # Install newer GCC from Toolchain test builds PPA
       sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
       sudo apt update
-      sudo apt --yes install gcc-6 g++-6
+      sudo apt --yes install cpp-6 gcc-6 g++-6
 
       # Make fake executable search path for build systems that don't
       # respect CC and CXX environmental variables
@@ -356,6 +356,11 @@ parts:
         --symbolic \
         "$(which g++-6)" \
         "${SNAPCRAFT_PART_INSTALL}/bin/g++"
+      ln \
+        --force \
+        --symbolic \
+        "$(which cpp-6)" \
+        "${SNAPCRAFT_PART_INSTALL}/bin/cpp"
 
     filesets:
       executables:
