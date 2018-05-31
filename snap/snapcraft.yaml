@@ -129,10 +129,14 @@ parts:
       - CC=gcc-6
       - CXX=g++-6
       - CXXCPP=cpp-6
-      - CPPFLAGS=-I$SNAPCRAFT_PART_INSTALL/../../boostlib/install/include/boost-1_61 -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src
+      - >
+        CPPFLAGS=-I$SNAPCRAFT_PART_INSTALL/../../boostlib/install/include/boost-1_61
+        -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src
       # wxWidgets DSO linking option bug due to linker behavior change,
       # consider upgrading the submodule
-      - LDFLAGS=-Wl,--copy-dt-needed-entries -L$SNAPCRAFT_PART_INSTALL/../../boostlib/install/lib
+      - >
+        LDFLAGS=-Wl,--copy-dt-needed-entries
+        -L$SNAPCRAFT_PART_INSTALL/../../boostlib/install/lib
       - PKG_CONFIG_PATH=$SNAPCRAFT_PART_INSTALL/../../gtkspell/install/lib/pkgconfig
     install-via: prefix
     override-build: |
