@@ -223,10 +223,9 @@ parts:
     source-type: git
     source-depth: 1
     source-subdir: deps/boost
+    # NOTE: We override the entire pull step as submodule fetching is
+    # not optional
     override-pull: |
-      # NOTE: Overrided until submodule fetching is optional
-      #snapcraftctl pull
-
       git clone --depth=1 git://github.com/vslavik/poedit.git .
 
     build-packages:
