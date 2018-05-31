@@ -250,8 +250,7 @@ parts:
       ./bootstrap.sh \
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
         --with-libraries=iostreams,regex,system,thread \
-        --with-icu=/usr \
-        --with-toolset=gcc
+        --with-icu=/usr
       ./b2 install \
         -j $(nproc) \
         --build-type=minimal \
