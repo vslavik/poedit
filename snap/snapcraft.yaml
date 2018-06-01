@@ -138,7 +138,6 @@ parts:
         LDFLAGS=-Wl,--copy-dt-needed-entries
         -L$SNAPCRAFT_STAGE/lib
       - PKG_CONFIG_PATH=$SNAPCRAFT_PART_INSTALL/../../gtkspell/install/lib/pkgconfig
-    install-via: prefix
     override-build: |
       set -eu
 
@@ -316,7 +315,6 @@ parts:
       # OPTIONAL: Use gcc installation from `gcc-6` part instead
       - CC=gcc-6
       - CXX=g++-6
-    install-via: prefix
 
     override-stage: 'true'
     override-prime: 'true'
@@ -425,7 +423,6 @@ parts:
       - CC=gcc-6
       - CXX=g++-6
       - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/../snap/pkgconfig
-    install-via: prefix
     build-packages:
       - autoconf
       - autoconf-archive
