@@ -124,19 +124,19 @@ parts:
     plugin: autotools
     configflags:
       - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
-      - --with-boost=$SNAPCRAFT_PART_INSTALL/../../boostlib/install
+      - --with-boost=$SNAPCRAFT_STAGE
 
       - CC=gcc-6
       - CXX=g++-6
       - CXXCPP=cpp-6
       - >
-        CPPFLAGS=-I$SNAPCRAFT_PART_INSTALL/../../boostlib/install/include/boost-1_61
+        CPPFLAGS=-I$SNAPCRAFT_STAGE/include/boost-1_61
         -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src
       # wxWidgets DSO linking option bug due to linker behavior change,
       # consider upgrading the submodule
       - >
         LDFLAGS=-Wl,--copy-dt-needed-entries
-        -L$SNAPCRAFT_PART_INSTALL/../../boostlib/install/lib
+        -L$SNAPCRAFT_STAGE/lib
       - PKG_CONFIG_PATH=$SNAPCRAFT_PART_INSTALL/../../gtkspell/install/lib/pkgconfig
     install-via: prefix
     override-build: |
@@ -258,7 +258,14 @@ parts:
         link=static \
         threading=multi
 
-    override-stage: 'true'
+    filesets:
+      library-headers:
+        - include/*
+      libraries:
+        - lib/*
+    stage:
+      - $library-headers
+      - $libraries
     override-prime: 'true'
 
     after:
