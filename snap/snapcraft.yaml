@@ -123,7 +123,7 @@ parts:
 
     plugin: autotools
     configflags:
-      - --with-wx-prefix=$SNAPCRAFT_PART_INSTALL/../../wxwidgets/install
+      - --with-wx-prefix=$SNAPCRAFT_STAGE
       - --with-boost=$SNAPCRAFT_STAGE
 
       - CC=gcc-6
@@ -316,8 +316,39 @@ parts:
       - CC=gcc-6
       - CXX=g++-6
 
-    override-stage: 'true'
-    override-prime: 'true'
+    filesets:
+      autoconf-macros:
+        - share/aclocal/*
+      bakefiles:
+        - share/bakefile/*
+      executables:
+        - bin/*
+      headers:
+        - include/*
+      libraries:
+        - lib/*
+      localizations:
+        - share/locale/*
+    stage:
+      - $autoconf-macros
+      - $executables
+      - $headers
+      - $libraries
+      - $localizations
+    override-stage: |
+      set -eu
+
+      snapcraftctl stage
+
+      # Fixup wrong wx-config link
+      ln \
+        --force \
+        --relative \
+        --symbolic \
+        "${SNAPCRAFT_STAGE}""$(readlink "${SNAPCRAFT_STAGE}"/bin/wx-config)" \
+        "${SNAPCRAFT_STAGE}"/bin/wx-config
+    prime:
+      - $localizations
 
     after:
       - gcc-6
