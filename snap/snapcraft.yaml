@@ -137,7 +137,7 @@ parts:
       - >
         LDFLAGS=-Wl,--copy-dt-needed-entries
         -L$SNAPCRAFT_STAGE/lib
-      - PKG_CONFIG_PATH=$SNAPCRAFT_PART_INSTALL/../../gtkspell/install/lib/pkgconfig
+      - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/lib/pkgconfig
     override-build: |
       set -eu
 
@@ -477,7 +477,24 @@ parts:
       env NOCONFIGURE=yes ./autogen.sh
       snapcraftctl build
 
-    override-stage: 'true'
-    override-prime: 'true'
+    filesets:
+      gir:
+        - share/gir-1.0/*
+      library-headers:
+        - include/*
+      libraries:
+        - lib/*
+      localization:
+        - share/locale/*
+      vala-bindings:
+        - share/vala/*
+    stage:
+      - $gir
+      - $library-headers
+      - $libraries
+      - $localization
+    prime:
+      - $localization
+
     after:
       - gcc-6
