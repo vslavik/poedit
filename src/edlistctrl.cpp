@@ -344,37 +344,41 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
         {
             wxString orig;
 #if wxCHECK_VERSION(3,1,1)
-            if (d->HasContext())
+        #ifdef __WXMSW__
+            // Temporary workaround for https://github.com/vslavik/poedit/issues/343 and
+            // https://github.com/vslavik/poedit/issues/481 -- fall back to old style rendering:
+            if (m_appTextDir == TextDirection::LTR || m_sourceTextDir == TextDirection::RTL)
+        #endif
             {
-            #ifdef __WXMSW__
-                if (m_appTextDir == TextDirection::RTL && m_sourceTextDir == TextDirection::LTR)
+                if (d->HasContext())
                 {
-                    // Temporary workaround for https://github.com/vslavik/poedit/issues/343 - fall back to old style rendering:
-                    orig.Printf("[%s] %s", EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
-                }
-                else
-            #endif
-                {
-                // Work around a problem with GTK+'s coloring of markup that begins with colorizing <span>:
+                    // Work around a problem with GTK+'s coloring of markup that begins with colorizing <span>:
                 #ifdef __WXGTK__
                     #define MARKUP(x) L"\u200B" L##x
                 #else
                     #define MARKUP(x) x
                 #endif
-                orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
-                            m_clrContextBg, m_clrContextFg,
-                            EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+                    orig.Printf(MARKUP("<span bgcolor=\"%s\" color=\"%s\"> %s </span> %s"),
+                        m_clrContextBg, m_clrContextFg,
+                        EscapeMarkup(d->GetContext()), EscapeMarkup(d->GetString()));
+                }
+                else
+                {
+                    orig = EscapeMarkup(d->GetString());
                 }
             }
-            else
+        #ifdef __WXMSW__
+            else // RTL problems, fall back to worse rendering
+        #endif
+#endif
+#if !wxCHECK_VERSION(3,1,1) || defined(__WXMSW__)
+            // non-markup rendering of source column:
             {
-                orig = EscapeMarkup(d->GetString());
+                if (d->HasContext())
+                    orig.Printf("[%s] %s", d->GetContext(), d->GetString());
+                else
+                    orig = d->GetString();
             }
-#else // wx 3.0
-            if (d->HasContext())
-                orig.Printf("[%s] %s", d->GetContext(), d->GetString());
-            else
-                orig = d->GetString();
 #endif
 
             // FIXME: use syntax highlighting or typographic marks
@@ -635,6 +639,16 @@ void PoeditListCtrl::UpdateColumns()
                              ? wxString::Format(_(L"Source text — %s"), srclang.DisplayName())
                              : _("Source text");
     m_colSource->SetTitle(sourceTitle);
+
+#ifdef __WXMSW__
+    // Temporary workaround for https://github.com/vslavik/poedit/issues/343 and
+    // https://github.com/vslavik/poedit/issues/481 -- fall back to markup-less rendering
+    // (see also above in PoeditListCtrl::Model::GetValueByRow):
+    dynamic_cast<wxDataViewTextRenderer*>(m_colSource->GetRenderer())->EnableMarkup
+    (
+        m_appTextDir == TextDirection::LTR || srclang.IsRTL()
+    );
+#endif
 
     if (m_model->m_catalog && m_model->m_catalog->HasCapability(Catalog::Cap::Translations))
     {
