@@ -262,6 +262,12 @@ private:
                     break;
             }
         }
+        else if (m_lang == "el")
+        {
+            // In Greek, questions end with ';' and not '?'.
+            if (src == '?')
+                return trans == ';';
+        }
 
         return false;
     }
