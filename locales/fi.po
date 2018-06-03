@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:33-0400\n"
+"POT-Creation-Date: 2018-06-03 18:15+0200\n"
+"PO-Revision-Date: 2018-06-03 12:13-0400\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -143,12 +143,12 @@ msgstr "Synkronoidaan"
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s…"
-msgstr ""
+msgstr "Synkronointi: %s…"
 
 #. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
 #, c-format
 msgid "Syncing with %s failed."
-msgstr ""
+msgstr "Synkronointi epäonnistui: %s."
 
 msgid "Syncing error"
 msgstr "Synkronointivirhe"
@@ -213,7 +213,7 @@ msgid "No translation projects listed in your Crowdin account."
 msgstr "Crowdin-tiliisi ei liity käännösprojekteja."
 
 msgid "This project has no files that can be translated in Poedit."
-msgstr "Tässä projektissa ei ole Poeditillä käännettäviä tiedostoja."
+msgstr "Tässä projektissa ei ole Poeditillä käännettävissä olevia tiedostoja."
 
 msgid "This file can only be edited in Crowdin’s web interface."
 msgstr "Tätä tiedostoa voi muokata vain Crowdinin web-käyttöliittymässä."
@@ -436,7 +436,7 @@ msgid "Save"
 msgstr "Tallenna"
 
 msgid "Do&n’t save"
-msgstr ""
+msgstr "&Älä tallenna"
 
 msgid "Don’t Save"
 msgstr "Älä tallenna"
@@ -586,6 +586,8 @@ msgid ""
 "Entries in this catalog have different plural forms count from what "
 "catalog’s Plural-Forms header says"
 msgstr ""
+"Tämän katalogin viesteillä on eri määrä monikkomuotoja kuin katalogin Plural-"
+"Forms-otsake sanoo"
 
 msgid "Required header Plural-Forms is missing."
 msgstr "Pakollinen otsake Plural-Forms puuttuu."
@@ -614,7 +616,7 @@ msgstr "Katselmointi"
 
 #, c-format
 msgid "Error loading message catalog file “%s”."
-msgstr ""
+msgstr "Virhe ladattaessa viestikatalogitiedosta ”%s”."
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -745,7 +747,7 @@ msgid "Pre-translated"
 msgstr "Esikäännetty"
 
 msgid "Needs Work"
-msgstr "Keskeneräinen"
+msgstr "Keskeneräisiä"
 
 #. TRANSLATORS: This indicates that the string's translation isn't final
 #. and has known problems.  For example, it might be machine translated or
@@ -756,7 +758,7 @@ msgstr "Keskeneräinen"
 #. I am done with it (i.e. consider it good), while "needs work" implies I
 #. need to return to it and finish the translation.
 msgid "Needs work"
-msgstr "Keskeneräinen"
+msgstr "Keskeneräisiä"
 
 msgid ""
 "POT files are only templates and don’t contain any translations themselves.\n"
@@ -1034,15 +1036,15 @@ msgstr "Tyhjennä"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
-msgstr ""
+msgstr "Päivitettäessä lähteistä"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
-msgstr ""
+msgstr "käytä sumeaa täsmäystä tiedoston sisäisesti"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
-msgstr ""
+msgstr "esikäännä käännösmuistista"
 
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
@@ -1050,6 +1052,10 @@ msgid ""
 "effective if it’s near-empty, but it will get better as you add more "
 "translations to it."
 msgstr ""
+"Poedit voi yrittää täyttää uudet viestit vain tiedoston aiempien käännösten "
+"pohjalta tai koko käännösmuistista. Lähes tyhjän käännösmuistin käyttö ei "
+"ole kovinkaan hyödyllistä, mutta uusien käännösten lisäämisen myötä toiminta "
+"paranee."
 
 msgid "Stored translations:"
 msgstr "Tallennetut käännökset:"
@@ -1202,6 +1208,9 @@ msgid ""
 "By default, inaccurate results are filled in as well and marked as needing "
 "work. Check this option to only include accurate matches."
 msgstr ""
+"Oletuksena käännökset täytetään myös epätäsmällisten tulosten perustella ja "
+"merkitään keskeneräisiksi. Valitse tämä vaihtoehto, jos haluat käyttää vain "
+"tarkasti täsmääviä."
 
 msgid "Don’t mark exact matches as needing work"
 msgstr "Älä merkitse tarkkoja vastineita keskeneräisiksi"
@@ -1215,6 +1224,8 @@ msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
+"Esikääntäminen etsii automaattisesti tarkasti tai osittain täsmäävät "
+"kääntämättömät merkkijonot käännösmuistista ja täyttää käännökset."
 
 #, c-format
 msgid "%d entry was pre-translated."
@@ -1288,10 +1299,10 @@ msgid "Advanced extraction settings"
 msgstr "Poiminnan lisäasetukset"
 
 msgid "Extract notes for translators from:"
-msgstr ""
+msgstr "Poimi huomautukset kääntäjille lähteestä:"
 
 msgid "Comments prefixed with:"
-msgstr ""
+msgstr "Kommentit, joiden alussa on:"
 
 msgid "All comments"
 msgstr "Kaikki kommentit"
@@ -1321,10 +1332,10 @@ msgid "Not all plural forms are translated."
 msgstr "Kaikkia monikkomuotoja ei ole käännetty."
 
 msgid "The translation should start as a sentence."
-msgstr ""
+msgstr "Käännöksen tulisi alkaa virkkeellä."
 
 msgid "The translation should start with a lowercase character."
-msgstr ""
+msgstr "Käännöksen tulisi alkaa pienellä kirjaimella."
 
 msgid "The translation doesn’t start with a space."
 msgstr "Käännös ei ala välilyönnillä."
@@ -1346,15 +1357,15 @@ msgstr "Käännös päättyy välilyöntiin toisin kuin lähdeteksti."
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr ""
+msgstr "Käännöksen lopussa tulisi olla ”%s”."
 
 #, c-format
 msgid "The translation should not end with “%s”."
-msgstr ""
+msgstr "Käännöksen lopussa ei tulisi olla ”%s”."
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
-msgstr ""
+msgstr "Käännöksen lopussa on ”%s\", mutta lähdetekstin lopussa ”%s”."
 
 msgid "Comment:"
 msgstr "Kommentti:"
@@ -1836,6 +1847,8 @@ msgid ""
 "The old source text (before it changed during an update) that the now-"
 "inaccurate translation corresponds to."
 msgstr ""
+"Tähän keskeneräiseksi muuttuneeseen käännökseen liittyvä vanha lähdeteksti "
+"(ennen sen muuttumista päivityksen aikana)."
 
 msgid "Notes for translators:"
 msgstr "Huomautukset kääntäjille:"
@@ -1929,7 +1942,7 @@ msgid "Update from POT"
 msgstr "Päivitä POT-tiedostosta"
 
 msgid "Take translatable strings from an existing POT template."
-msgstr "Poimi käännettävät merkkijonot olemassa olevasta POT-mallipohjasta."
+msgstr "Poimi käännettävät merkkijonot olemassa olevasta POT-käännöspohjasta."
 
 msgid ""
 "You can also extract translatable strings directly from the source code:"
@@ -1989,11 +2002,11 @@ msgstr "Asetukset..."
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Recent"
-msgstr ""
+msgstr "Äskettäiset"
 
 #. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
 msgid "Frequent"
-msgstr ""
+msgstr "Usein käytetyt"
 
 msgid "&Apply"
 msgstr "&Käytä"
