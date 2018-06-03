@@ -983,6 +983,8 @@ class LoadParser : public CatalogParser
         Language GetSpecifiedMsgidLanguage()
         {
             auto x_srclang = m_catalog.m_header.GetHeader("X-Source-Language");
+            if (x_srclang.empty())
+                x_srclang = m_catalog.m_header.GetHeader("X-Loco-Source-Locale");
             if (!x_srclang.empty())
             {
                 auto parsed = Language::TryParse(str::to_utf8(x_srclang));
