@@ -125,7 +125,8 @@ parts:
       set -eu
 
       ./bootstrap
-      ./configure
+      ./configure \
+        --with-wx-prefix="$SNAPCRAFT_STAGE" \
         CC=gcc-6 \
         CPPFLAGS="-I$SNAPCRAFT_STAGE/include -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src" \
         CXX=g++-6 \
