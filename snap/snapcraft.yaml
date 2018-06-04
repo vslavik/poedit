@@ -121,25 +121,22 @@ parts:
       - zlib1g-dev
 
     plugin: autotools
-    configflags:
-      - CC=gcc-6
-      - CXX=g++-6
-      - CXXCPP=cpp-6
-      - >
-        CPPFLAGS=-I$SNAPCRAFT_STAGE/include
-        -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src
-      # wxWidgets DSO linking option bug due to linker behavior change,
-      # consider upgrading the submodule
-      - >
-        LDFLAGS=-Wl,--copy-dt-needed-entries
-        -L$SNAPCRAFT_STAGE/lib
-      - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/lib/pkgconfig
-    install-via: prefix
     override-build: |
       set -eu
 
       ./bootstrap
-      snapcraftctl build
+      ./configure
+        CC=gcc-6 \
+        CXX=g++-6 \
+        CXXCPP=cpp-6 \
+        CPPFLAGS="-I$SNAPCRAFT_STAGE/include -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src" \
+        LDFLAGS="-Wl,--copy-dt-needed-entries -L$SNAPCRAFT_STAGE/lib" \
+        PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/lib/pkgconfig
+      make \
+        --jobs=$(nproc)
+      make \
+        prefix="$SNAPCRAFT_PART_INSTALL" \
+        install
 
       sed \
         --in-place \
