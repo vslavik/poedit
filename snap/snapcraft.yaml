@@ -165,7 +165,7 @@ parts:
       - libboost-thread1.58.0
       - libcld2-0
       - libcpprest2.8
-      - libenchant1c2a
+      #- libenchant1c2a # replaced by enchant part
       #- libgtkspell3-3-0 # replaced by gtkspell part
       - libice6
       - liblucene++0v5
@@ -455,8 +455,12 @@ parts:
       - CC=gcc-6
       - CXX=g++-6
       - CPP=cpp-6
-      - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/../snap/pkgconfig
+      - LDFLAGS=-Wl,--copy-dt-needed-entries
+      - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/../snap/pkgconfig:${SNAPCRAFT_STAGE}/lib/pkgconfig
     build-packages:
+      # Replaced by enchant part
+      #- libenchant-dev
+
       - autoconf
       - autoconf-archive
       - automake
@@ -464,7 +468,6 @@ parts:
       - libgirepository1.0-dev
       - gtk-doc-tools
       - intltool
-      - libenchant-dev
       - libgtk-3-dev
       - libtool-bin
       - valac
@@ -498,5 +501,69 @@ parts:
     prime:
       - $localization
 
+    after:
+      - gcc-6
+      - enchant
+
+  enchant:
+    source: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
+    source-type: tar
+
+    plugin: autotools
+    build-packages:
+      - autoconf
+      - automake
+      - libtool
+      - libglib2.0-dev
+      - libhunspell-dev
+    override-pull: |
+      set -eu
+      snapcraftctl pull
+      patch --strip=0 < "${SNAPCRAFT_STAGE}"/../snap/patches/enchant-fix-build.patch
+
+    override-build: |
+      set -eu
+      env NOCONFIGURE=yes ./autogen.sh
+      ./configure \
+        --disable-shared \
+        --prefix=/snap/poedit/current \
+        --with-myspell-dir=/snap/poedit/current/usr/share/hunspell \
+        CC='gcc-6' \
+        CPP='cpp-6' \
+        CXX='g++-6' \
+        CXXCPP='cpp-6' \
+        PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}/lib/pkgconfig"
+      make --jobs=$(nproc)
+      make prefix="${SNAPCRAFT_PART_INSTALL}" install
+
+    filesets:
+      executables:
+        - bin/*
+      libraries:
+        - lib/*
+      library-headers:
+        - include/*
+      resources:
+        - share/enchant/*
+      manpages:
+        - share/man/*
+    stage:
+      - $libraries
+      - $library-headers
+      - $resources
+    override-stage: |
+      set -eu
+
+      snapcraftctl stage
+
+      # Patch-up incorrect prefix set by snapcraft :-/
+      # https://bugs.launchpad.net/snapcraft/+bug/1774254
+      sed \
+        --in-place \
+        's#^prefix=.*$#prefix=${pcfiledir}/../..#g' \
+        "${SNAPCRAFT_STAGE}"/lib/pkgconfig/enchant.pc
+    prime:
+      - $libraries
+      - $resources
     after:
       - gcc-6
