@@ -462,8 +462,8 @@ parts:
     configflags:
       - --disable-shared
       - CC=gcc-6
-      - CXX=g++-6
       - CPP=cpp-6
+      - CXX=g++-6
       - LDFLAGS=-Wl,--copy-dt-needed-entries
       - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/../snap/pkgconfig:${SNAPCRAFT_STAGE}/lib/pkgconfig
     build-packages:
