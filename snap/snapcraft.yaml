@@ -132,7 +132,7 @@ parts:
         CXX=g++-6 \
         CXXCPP=cpp-6 \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L$SNAPCRAFT_STAGE/lib" \
-        PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/lib/pkgconfig
+        PKG_CONFIG_PATH="$SNAPCRAFT_STAGE/lib/pkgconfig"
       make \
         --jobs=$(nproc)
       make \
