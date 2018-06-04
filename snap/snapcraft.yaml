@@ -145,14 +145,9 @@ parts:
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/poedit*.desktop
 
     stage-packages:
-      # For addr2line, required by wxWidgets error dialog
-      - binutils
 
       # Called by Poedit
       - gettext
-
-      # Referenced by Poedit while saving message catalogs
-      - iso-codes
 
       - libboost-iostreams1.58.0
       - libboost-regex1.58.0
@@ -321,11 +316,17 @@ parts:
         prefix="${SNAPCRAFT_PART_INSTALL}" \
         install
 
+    stage-packages:
+      # For addr2line, required by wxWidgets error dialog
+      - binutils
+
     filesets:
       autoconf-macros:
         - share/aclocal/*
       bakefiles:
         - share/bakefile/*
+      files-from-stage-packages:
+        - usr/*
       executables:
         - bin/*
       headers:
@@ -337,6 +338,7 @@ parts:
     stage:
       - $autoconf-macros
       - $executables
+      - $files-from-stage-packages
       - $headers
       - $libraries
       - $localizations
@@ -353,6 +355,7 @@ parts:
         "${SNAPCRAFT_STAGE}"/lib/wx/config/gtk3-unicode-static-3.1 \
         "${SNAPCRAFT_STAGE}"/bin/wx-config
     prime:
+      - $files-from-stage-packages
       - $localizations
 
     after:
@@ -488,7 +491,13 @@ parts:
       env NOCONFIGURE=yes ./autogen.sh
       snapcraftctl build
 
+    stage-packages:
+      # Read by GtkSpell
+      - iso-codes
+
     filesets:
+      files-from-stage-packages:
+        - usr/*
       gir:
         - share/gir-1.0/*
       library-headers:
@@ -500,11 +509,13 @@ parts:
       vala-bindings:
         - share/vala/*
     stage:
+      - $files-from-stage-packages
       - $gir
       - $library-headers
       - $libraries
       - $localization
     prime:
+      - $files-from-stage-packages
       - $localization
 
     after:
