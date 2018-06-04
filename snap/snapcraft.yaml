@@ -123,14 +123,11 @@ parts:
 
     plugin: autotools
     configflags:
-      - --with-wx-prefix=$SNAPCRAFT_STAGE
-      - --with-boost=$SNAPCRAFT_STAGE
-
       - CC=gcc-6
       - CXX=g++-6
       - CXXCPP=cpp-6
       - >
-        CPPFLAGS=-I$SNAPCRAFT_STAGE/include/boost-1_61
+        CPPFLAGS=-I$SNAPCRAFT_STAGE/include
         -I$SNAPCRAFT_PART_INSTALL/../build/deps/json/src
       # wxWidgets DSO linking option bug due to linker behavior change,
       # consider upgrading the submodule
@@ -254,7 +251,7 @@ parts:
       ./b2 install \
         -j $(nproc) \
         --build-type=minimal \
-        --layout=versioned \
+        --layout=system \
         link=static \
         threading=multi
 
@@ -307,15 +304,25 @@ parts:
       - zlib1g-dev
 
     plugin: autotools
-    configflags:
-      - --disable-shared
-      - --disable-sound
-      - --with-gtk=3
-      - --without-opengl
-      - --without-sdl
-      # OPTIONAL: Use gcc installation from `gcc-6` part instead
-      - CC=gcc-6
-      - CXX=g++-6
+    override-build: |
+      set -eu
+
+      ./autogen.sh
+      ./configure \
+        --disable-shared \
+        --disable-sound \
+        --prefix="$SNAPCRAFT_STAGE" \
+        --with-gtk=3 \
+        --without-opengl \
+        --without-sdl \
+        CC='gcc-6' \
+        CPP=cpp-6 \
+        CXX='g++-6'
+      make \
+        --jobs=$(nproc)
+      make \
+        prefix="${SNAPCRAFT_PART_INSTALL}" \
+        install
 
     filesets:
       autoconf-macros:
@@ -346,7 +353,7 @@ parts:
         --force \
         --relative \
         --symbolic \
-        "${SNAPCRAFT_STAGE}""$(readlink "${SNAPCRAFT_STAGE}"/bin/wx-config)" \
+        "${SNAPCRAFT_STAGE}"/lib/wx/config/gtk3-unicode-static-3.1 \
         "${SNAPCRAFT_STAGE}"/bin/wx-config
     prime:
       - $localizations
