@@ -138,6 +138,7 @@ parts:
         LDFLAGS=-Wl,--copy-dt-needed-entries
         -L$SNAPCRAFT_STAGE/lib
       - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/lib/pkgconfig
+    install-via: prefix
     override-build: |
       set -eu
 
