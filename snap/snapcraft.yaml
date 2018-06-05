@@ -556,18 +556,23 @@ parts:
     filesets:
       executables:
         - bin/*
-      libraries:
-        - lib/*
       library-headers:
         - include/*
       resources:
         - share/enchant/*
+      shared-libraries:
+        - lib/*.so*
+        - lib/enchant/*.so*
+      static-libraries:
+        - lib/*.a
+        - lib/enchant/*.a
       manpages:
         - share/man/*
     stage:
-      - $libraries
       - $library-headers
       - $resources
+      - $shared-libraries
+      - $static-libraries
     override-stage: |
       set -eu
 
@@ -580,7 +585,7 @@ parts:
         's#^prefix=.*$#prefix=${pcfiledir}/../..#g' \
         "${SNAPCRAFT_STAGE}"/lib/pkgconfig/enchant.pc
     prime:
-      - $libraries
       - $resources
+      - $shared-libraries
     after:
       - gcc-6
