@@ -224,6 +224,16 @@ PKG_CHECK_MODULES([LUCENE], [liblucene++ >= 3.0.5],
         ])
 
 
+PKG_CHECK_MODULES([PUGIXML], [pugixml >= 1.9],
+        [
+            CXXFLAGS="$CXXFLAGS $PUGIXML_CFLAGS -DHAVE_PUGIXML"
+            AC_SUBST(PUGIXML_LIBS)
+        ],
+        [
+            dnl use bundled copy
+        ])
+
+
 dnl Check for Compact Language Detector 2
 dnl (used for better language detection and for non-English source languages)
 AC_ARG_WITH([cld2],

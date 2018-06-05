@@ -2027,17 +2027,6 @@ bool Catalog::FixDuplicateItems()
 namespace
 {
 
-wxString MaskForType(const char *extensions, const wxString& description, bool showExt = true)
-{
-    (void)showExt;
-#ifdef __WXMSW__
-    if (showExt)
-        return wxString::Format("%s (%s)|%s", description, extensions, extensions);
-    else
-#endif
-        return wxString::Format("%s|%s", description, extensions);
-}
-
 wxString MaskForType(Catalog::Type t)
 {
     switch (t)

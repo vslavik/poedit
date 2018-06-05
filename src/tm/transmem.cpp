@@ -217,6 +217,9 @@ public:
     SuggestionsList Search(const Language& srclang, const Language& lang,
                            const std::wstring& source);
 
+    void ExportData(TranslationMemory::IOInterface& destination);
+    void ImportData(std::function<void(TranslationMemory::IOInterface&)> source);
+
     std::shared_ptr<TranslationMemory::Writer> GetWriter() { return m_writerAPI; }
 
     void GetStats(long& numDocs, long& fileSize);
@@ -473,6 +476,37 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
 }
 
 
+void TranslationMemoryImpl::ExportData(TranslationMemory::IOInterface& destination)
+{
+    try
+    {
+        auto reader = m_mng->Reader();
+        int32_t numDocs = reader->numDocs();
+        for (int32_t i = 0; i < numDocs; i++)
+        {
+            auto doc = reader->document(i);
+            destination.Insert
+            (
+            	Language::TryParse(doc->get(L"srclang")),
+                Language::TryParse(doc->get(L"lang")),
+                get_text_field(doc, L"source"),
+                get_text_field(doc, L"trans"),
+                DateField::stringToTime(doc->get(L"created"))
+            );
+        }
+    }
+    CATCH_AND_RETHROW_EXCEPTION
+}
+
+
+void TranslationMemoryImpl::ImportData(std::function<void(TranslationMemory::IOInterface&)> source)
+{
+    auto writer = TranslationMemory::Get().GetWriter();
+    source(*writer);
+    writer->Commit();
+}
+
+
 void TranslationMemoryImpl::GetStats(long& numDocs, long& fileSize)
 {
     try
@@ -514,10 +548,14 @@ public:
     }
 
     void Insert(const Language& srclang, const Language& lang,
-                const std::wstring& source, const std::wstring& trans) override
+                const std::wstring& source, const std::wstring& trans,
+                time_t creationTime) override
     {
         if (!lang.IsValid() || !srclang.IsValid() || lang == srclang)
             return;
+
+        if (creationTime == 0)
+            creationTime = time(NULL);
 
         // Compute unique ID for the translation:
 
@@ -541,7 +579,7 @@ public:
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
             doc->add(newLucene<Field>(L"v", L"1",
                                       Field::STORE_YES, Field::INDEX_NO));
-            doc->add(newLucene<Field>(L"created", DateField::timeToString(time(NULL)),
+            doc->add(newLucene<Field>(L"created", DateField::timeToString(creationTime),
                                       Field::STORE_YES, Field::INDEX_NO));
             doc->add(newLucene<Field>(L"srclang", srclang.WCode(),
                                       Field::STORE_YES, Field::INDEX_NOT_ANALYZED));
@@ -555,6 +593,12 @@ public:
             m_writer->updateDocument(newLucene<Term>(L"uuid", itemUUID), doc);
         }
         CATCH_AND_RETHROW_EXCEPTION
+    }
+
+    void Insert(const Language& srclang, const Language& lang,
+                const std::wstring& source, const std::wstring& trans) override
+    {
+        Insert(srclang, lang, source, trans, 0);
     }
 
     void Insert(const Language& srclang, const Language& lang, const CatalogItemPtr& item) override
@@ -691,6 +735,20 @@ dispatch::future<SuggestionsList> TranslationMemory::SuggestTranslation(const La
     {
         return dispatch::make_exceptional_future_from_current<SuggestionsList>();
     }
+}
+
+void TranslationMemory::ExportData(IOInterface& destination)
+{
+    if (!m_impl)
+        std::rethrow_exception(m_error);
+    return m_impl->ExportData(destination);
+}
+
+void TranslationMemory::ImportData(std::function<void(IOInterface&)> source)
+{
+    if (!m_impl)
+        std::rethrow_exception(m_error);
+    return m_impl->ImportData(source);
 }
 
 std::shared_ptr<TranslationMemory::Writer> TranslationMemory::GetWriter()

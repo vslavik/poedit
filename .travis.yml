@@ -40,7 +40,7 @@ before_install:
     # work around Travis being difficult, see https://github.com/travis-ci/travis-ci/issues/6633
     - export CC=$REAL_CC CXX=$REAL_CXX
     # git submodules needed for Linux:
-    - git submodule update --init deps/json
+    - git submodule update --init deps/json deps/pugixml
 
 script:
     - scripts/travis-check-translations.sh
