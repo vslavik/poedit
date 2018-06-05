@@ -307,9 +307,9 @@ parts:
         --with-gtk=3 \
         --without-opengl \
         --without-sdl \
-        CC='gcc-6' \
+        CC=gcc-6 \
         CPP=cpp-6 \
-        CXX='g++-6'
+        CXX=g++-6
       make \
         --jobs=$(nproc)
       make \
@@ -545,10 +545,10 @@ parts:
         --disable-shared \
         --prefix=/snap/poedit/current \
         --with-myspell-dir=/snap/poedit/current/usr/share/hunspell \
-        CC='gcc-6' \
-        CPP='cpp-6' \
-        CXX='g++-6' \
-        CXXCPP='cpp-6' \
+        CC=gcc-6 \
+        CPP=cpp-6 \
+        CXX=g++-6 \
+        CXXCPP=cpp-6 \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}/lib/pkgconfig"
       make --jobs=$(nproc)
       make prefix="${SNAPCRAFT_PART_INSTALL}" install
