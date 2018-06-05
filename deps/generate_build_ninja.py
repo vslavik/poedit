@@ -122,7 +122,7 @@ with open('build.ninja', 'w') as buildfile:
                                      'touch `find . -name *.3`',
                                      'touch `find . -name *.html`',
                                      # Prevent running moopp tool that requires GNU sed and refused to be configured to use gsed:
-                                     'touch `find . -name *stream*`',
+                                     'touch `find . -name *stream*.[ch]*`',
                                      # Prevent running msgfmt:
                                      'touch `find . -name *.gmo`',
                                  ] + default_build_commands + [
