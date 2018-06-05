@@ -74,6 +74,9 @@ for lang in list(langdata.keys()):
         assert short in langdata
         del langdata[lang]
 
+# add languages not supported by Transifex
+langdata['ie'] = 'nplurals=2; plural=(n != 1);'
+
 for lang in sorted(langdata.keys()):
     expr = langdata[lang]
     definition = '{ %-7s, "%s" },' % ('"%s"' % lang, expr)
