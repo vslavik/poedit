@@ -27,9 +27,14 @@
 #define Poedit_language_h
 
 #include <wx/string.h>
+#include <memory>
 #include <string>
 #include <vector>
 #include <unicode/locid.h>
+
+class PluralFormsCalculator;
+class PluralFormsExpr;
+
 
 /// Language's text writing direction
 enum class TextDirection
@@ -96,7 +101,7 @@ public:
         @return Plural form expression suitable for directly using in the
                 gettext header or empty string if no record was found.
      */
-    std::string DefaultPluralFormsExpr() const;
+    PluralFormsExpr DefaultPluralFormsExpr() const;
 
     /// Returns language's text writing direction
     TextDirection Direction() const { return m_direction; }
@@ -173,6 +178,33 @@ private:
     std::string m_code;
     std::string m_tag;
     TextDirection m_direction;
+};
+
+
+/// Language's plural forms expression
+class PluralFormsExpr
+{
+public:
+    /// What numbers to test or show examples for (0..1001)
+    static const int MAX_EXAMPLES_COUNT = 1002;
+
+    PluralFormsExpr();
+    PluralFormsExpr(const std::string& expr);
+    ~PluralFormsExpr();
+
+    const std::string& str() const { return m_expr; }
+    bool operator==(const PluralFormsExpr& other) const;
+    bool operator!=(const PluralFormsExpr& other) const { return !(*this == other); }
+    explicit operator bool() const { return !m_expr.empty() && calc() != nullptr; }
+
+    int evaluate_for_n(int n) const;
+
+private:
+    std::shared_ptr<PluralFormsCalculator> calc() const;
+
+    std::string m_expr;
+    bool m_calcCreated;
+    std::shared_ptr<PluralFormsCalculator> m_calc;
 };
 
 #endif // Poedit_language_h

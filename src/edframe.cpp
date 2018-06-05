@@ -77,7 +77,6 @@
 #include "commentdlg.h"
 #include "main_toolbar.h"
 #include "manager.h"
-#include "pluralforms/pl_evaluate.h"
 #include "pretranslate.h"
 #include "attentionbar.h"
 #include "utility.h"
@@ -2267,19 +2266,16 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
 
         // FIXME: make this part of global error checking
-        wxString plForms = m_catalog->Header().GetHeader("Plural-Forms");
-        auto plCalc = PluralFormsCalculator::make(plForms.ToAscii());
-        if ( !plCalc )
+        PluralFormsExpr plForms(m_catalog->Header().GetHeader("Plural-Forms").ToStdString());
+        if (!plForms)
         {
-            if ( plForms.empty() )
+            if (plForms.str().empty())
             {
                 err = _("Required header Plural-Forms is missing.");
             }
             else
             {
-                err = wxString::Format(
-                            _("Syntax error in Plural-Forms header (\"%s\")."),
-                            plForms.c_str());
+                err = wxString::Format(_("Syntax error in Plural-Forms header (\"%s\")."), plForms.str());
             }
         }
 
@@ -2298,48 +2294,26 @@ void PoeditFrame::WarnAboutLanguageIssues()
         }
         else // no error, check for warning-worthy stuff
         {
-            if ( lang.IsValid() )
+            if (lang.IsValid() && plForms != lang.DefaultPluralFormsExpr())
             {
-                // Check for unusual plural forms. Do some normalization to avoid unnecessary
-                // complains when the only differences are in whitespace for example.
-                wxString pl1 = plForms;
-                wxString pl2 = lang.DefaultPluralFormsExpr();
-                if (!pl2.empty())
-                {
-                    pl1.Replace(" ", "");
-                    pl2.Replace(" ", "");
-                    if ( pl1 != pl2 )
-                    {
-                        if (pl1.Find(";plural=(") == wxNOT_FOUND && pl1.Last() == ';')
-                        {
-                            pl1.Replace(";plural=", ";plural=(");
-                            pl1.RemoveLast();
-                            pl1 += ");";
-                        }
-                    }
+                AttentionMessage msg
+                    (
+                        "unusual-plural-forms",
+                        AttentionMessage::Warning,
+                        wxString::Format
+                        (
+                            // TRANSLATORS: %s is language name in its basic form (as you
+                            // would see e.g. in a list of supported languages). You may need
+                            // to rephrase it, e.g. to an equivalent of "for language %s".
+                            _("Plural forms expression used by the catalog is unusual for %s."),
+                            lang.DisplayName()
+                        )
+                    );
+                // TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
+                msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });
+                msg.AddDontShowAgain();
 
-                    if ( pl1 != pl2 )
-                    {
-                        AttentionMessage msg
-                            (
-                                "unusual-plural-forms",
-                                AttentionMessage::Warning,
-                                wxString::Format
-                                (
-                                    // TRANSLATORS: %s is language name in its basic form (as you
-                                    // would see e.g. in a list of supported languages). You may need
-                                    // to rephrase it, e.g. to an equivalent of "for language %s".
-                                    _("Plural forms expression used by the catalog is unusual for %s."),
-                                    lang.DisplayName()
-                                )
-                            );
-                        // TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
-                        msg.AddAction(_("Review"), [=]{ EditCatalogProperties(); });
-                        msg.AddDontShowAgain();
-
-                        m_attentionBar->ShowMessage(msg);
-                    }
-                }
+                m_attentionBar->ShowMessage(msg);
             }
         }
     }

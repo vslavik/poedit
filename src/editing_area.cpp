@@ -30,7 +30,6 @@
 #include "customcontrols.h"
 #include "edlistctrl.h"
 #include "hidpi.h"
-#include "pluralforms/pl_evaluate.h"
 #include "spellchecking.h"
 #include "text_control.h"
 #include "utility.h"
@@ -624,7 +623,7 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
     m_pluralNotebook->DeleteAllPages();
     m_textTransSingularForm = NULL;
 
-    auto calc = PluralFormsCalculator::make(catalog->Header().GetHeader("Plural-Forms").ToAscii());
+    auto plurals = PluralFormsExpr(catalog->Header().GetHeader("Plural-Forms").ToStdString());
 
     int formsCount = catalog->GetPluralFormsCount();
     for (int form = 0; form < formsCount; form++)
@@ -635,11 +634,11 @@ void EditingArea::RecreatePluralTextCtrls(CatalogPtr catalog)
         int firstExample = -1;
         int examplesCnt = 0;
 
-        if (calc && formsCount > 1)
+        if (plurals && formsCount > 1)
         {
-            for (int example = 0; example < 1000; example++)
+            for (int example = 0; example < PluralFormsExpr::MAX_EXAMPLES_COUNT; example++)
             {
-                if (calc->evaluate(example) == form)
+                if (plurals.evaluate_for_n(example) == form)
                 {
                     if (++examplesCnt == 1)
                         firstExample = example;

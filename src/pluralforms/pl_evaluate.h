@@ -133,10 +133,12 @@ public:
     // input: number, returns msgstr index
     int evaluate(int n) const;
 
+    int nplurals() const { return m_nplurals; }
+
     // input: text after "Plural-Forms:" (e.g. "nplurals=2; plural=(n != 1);"),
     // if s == 0, creates default handler
     // returns 0 if error
-    static std::unique_ptr<PluralFormsCalculator> make(const char* s = 0);
+    static std::shared_ptr<PluralFormsCalculator> make(const char* s = 0);
 
     ~PluralFormsCalculator() {}
 
