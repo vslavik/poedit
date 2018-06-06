@@ -522,6 +522,22 @@ parts:
       - gcc-6
       - enchant
 
+  # Self-built Enchant Part #
+  # This part provides a patched old version of the Enchant spell-
+  # checking library required by the GtkSpell library provided by
+  # Ubuntu 16.04.  It workarounds the non-relocatable library to let
+  # it load the necessary backend plugins for each spellchecking
+  # dictionaries.
+  #
+  # NOTES:
+  #
+  # 1. Enchant requires its installation --prefix set to $SNAP
+  #    in order to locate its spell checker backends plugins.
+  # 2. Static-linking(`--disable-shared`) is not possible as
+  #    Enchant only support dynamically loading spell checker
+  #    backends.
+  # 3. DESTDIR install method is used to avoid libtool error
+  #    about library isn't installed under --prefix.
   enchant:
     source: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
     source-type: tar
@@ -543,7 +559,6 @@ parts:
 
       env NOCONFIGURE=yes ./autogen.sh
       ./configure \
-        --disable-shared \
         --prefix=/snap/poedit/current \
         --with-myspell-dir=/snap/poedit/current/usr/share/hunspell \
         CC=gcc-6 \
@@ -552,8 +567,11 @@ parts:
         CXXCPP=cpp-6 \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}/lib/pkgconfig"
       make --jobs=$(nproc)
-      make prefix="${SNAPCRAFT_PART_INSTALL}" install
+      make DESTDIR="$SNAPCRAFT_PART_INSTALL" \
+        install
 
+    organize:
+      snap/poedit/current/: /
     filesets:
       executables:
         - bin/*
