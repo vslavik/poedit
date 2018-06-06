@@ -558,6 +558,8 @@ parts:
         - bin/*
       library-headers:
         - include/*
+      pkgconfig:
+        - lib/pkgconfig/*
       resources:
         - share/enchant/*
       shared-libraries:
@@ -570,6 +572,7 @@ parts:
         - share/man/*
     stage:
       - $library-headers
+      - $pkgconfig
       - $resources
       - $shared-libraries
       - $static-libraries
