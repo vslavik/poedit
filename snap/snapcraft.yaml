@@ -508,8 +508,6 @@ parts:
       - iso-codes
 
     filesets:
-      files-from-stage-packages:
-        - usr/*
       gir:
         - share/gir-1.0/*
       library-headers:
@@ -521,13 +519,11 @@ parts:
       vala-bindings:
         - share/vala/*
     stage:
-      - $files-from-stage-packages
       - $gir
       - $library-headers
       - $libraries
       - $localization
     prime:
-      - $files-from-stage-packages
       - $localization
 
   # Self-built Enchant Part #
@@ -581,11 +577,16 @@ parts:
       make DESTDIR="${SNAPCRAFT_PART_INSTALL}" \
         install
 
+    stage-packages:
+      - libhunspell-1.3-0
+
     organize:
       snap/poedit/current/: /
     filesets:
       executables:
         - bin/*
+      files-from-stage-packages:
+        - usr/*
       library-headers:
         - include/*
       libtool-control-files:
@@ -604,6 +605,7 @@ parts:
       manpages:
         - share/man/*
     stage:
+      - $files-from-stage-packages
       - $library-headers
       - $libtool-control-files
       - $pkgconfig
@@ -622,5 +624,6 @@ parts:
         's#^prefix=.*$#prefix=${pcfiledir}/../..#g' \
         "${SNAPCRAFT_STAGE}"/lib/pkgconfig/enchant.pc
     prime:
+      - $files-from-stage-packages
       - $resources
       - $shared-libraries
