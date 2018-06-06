@@ -75,8 +75,15 @@ parts:
     override-pull: |
       # There's no way we pull all the submodules down, we do this manually
       git clone --depth=80 git://github.com/vslavik/poedit.git .
-      git submodule init deps/json
-      git submodule update --depth=200
+      git submodule init \
+        deps/json \
+        deps/pugixml
+      git submodule update \
+        --depth=200 \
+        deps/json
+      git submodule update \
+        --depth=50 \
+        deps/pugixml
 
     build-packages:
       # Boost libraries provided by Ubuntu 16.04 are too old, using
