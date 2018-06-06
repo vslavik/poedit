@@ -471,6 +471,7 @@ parts:
     after:
       - enchant
       - gcc-6
+      - iso-codes
 
     source: https://git.code.sf.net/p/gtkspell/gtkspell
     source-type: git
@@ -483,7 +484,7 @@ parts:
       - CPP=cpp-6
       - CXX=g++-6
       - LDFLAGS=-Wl,--copy-dt-needed-entries
-      - PKG_CONFIG_PATH=$SNAPCRAFT_STAGE/../snap/pkgconfig:${SNAPCRAFT_STAGE}/lib/pkgconfig
+      - PKG_CONFIG_PATH=${SNAPCRAFT_STAGE}/usr/share/pkgconfig:${SNAPCRAFT_STAGE}/lib/pkgconfig
     build-packages:
       # Replaced by enchant part
       #- libenchant-dev
@@ -509,12 +510,9 @@ parts:
       env NOCONFIGURE=yes ./autogen.sh
       snapcraftctl build
 
-    stage-packages:
+    #stage-packages:
       # Replaced by enchant part
       #- libenchant1c2a
-
-      # Read by GtkSpell
-      - iso-codes
 
     filesets:
       gir:
@@ -638,3 +636,47 @@ parts:
       - $files-from-stage-packages
       - $resources
       - $shared-libraries
+
+  # Patched Ubuntu iso-codes installation
+  # This patch slightly patches iso-codes's pkg-config so that non-
+  # relocable GtkSpell part can locate its data
+  iso-codes:
+    override-pull: 'true'
+
+    plugin: nil
+    override-build: |
+      set -eu
+
+      apt download iso-codes
+      dpkg-deb \
+        --extract \
+        iso-codes_*_all.deb \
+        "${SNAPCRAFT_PART_INSTALL}"
+      rm iso-codes_*_all.deb
+
+    filesets:
+      data:
+        - usr/share/xml/iso-codes/*
+      documentation:
+        - usr/share/doc/iso-codes/*
+      localization:
+        - usr/share/locale/*
+      pkgconfig:
+        - usr/share/pkgconfig/*
+    stage:
+      - $data
+      - $localization
+      - $pkgconfig
+    override-stage: |
+      set -eu
+
+      snapcraftctl stage
+
+      # Fix installation prefix to $SNAP
+      sed \
+        --in-place \
+        's#^prefix=.*$#prefix=/snap/poedit/current/usr#g' \
+        "${SNAPCRAFT_STAGE}"/usr/share/pkgconfig/iso-codes.pc
+    prime:
+      - $data
+      - $localization
