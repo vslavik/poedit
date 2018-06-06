@@ -155,13 +155,14 @@ parts:
       # Called by Poedit
       - gettext
 
+      # Replaced by gtkspell part
+      #- libgtkspell3-3-0
+
       - libboost-iostreams1.58.0
       - libboost-regex1.58.0
       - libboost-thread1.58.0
       - libcld2-0
       - libcpprest2.8
-      #- libenchant1c2a # replaced by enchant part
-      #- libgtkspell3-3-0 # replaced by gtkspell part
       - libice6
       - liblucene++0v5
       - libsecret-1-0
@@ -492,6 +493,9 @@ parts:
       snapcraftctl build
 
     stage-packages:
+      # Replaced by enchant part
+      #- libenchant1c2a
+
       # Read by GtkSpell
       - iso-codes
 
