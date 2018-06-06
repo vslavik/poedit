@@ -559,6 +559,9 @@ parts:
         - bin/*
       library-headers:
         - include/*
+      libtool-control-files:
+        - lib/*.la
+        - lib/enchant/*.la
       pkgconfig:
         - lib/pkgconfig/*
       resources:
@@ -573,6 +576,7 @@ parts:
         - share/man/*
     stage:
       - $library-headers
+      - $libtool-control-files
       - $pkgconfig
       - $resources
       - $shared-libraries
