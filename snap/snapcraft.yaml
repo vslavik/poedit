@@ -454,6 +454,9 @@ parts:
     prime:
       - $hunspell-dictionaries
 
+  # Self-built GtkSpell Part #
+  # This part provides a patched old version of the GtkSpell library
+  # to fix the non-relocatable iso-codes data path.
   gtkspell:
     source: https://git.code.sf.net/p/gtkspell/gtkspell
     source-type: git
