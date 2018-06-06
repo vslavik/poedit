@@ -540,6 +540,7 @@ parts:
 
     override-build: |
       set -eu
+
       env NOCONFIGURE=yes ./autogen.sh
       ./configure \
         --disable-shared \
