@@ -34,10 +34,12 @@ apps:
     plugs:
       # The desktop interfaces
       # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
-      - desktop # basic graphical resources
-      - desktop-legacy # Input method/a11y support
-
-      - x11 # access to the X server
+      # + Basic graphical resources
+      - desktop
+      # + Input method/a11y support
+      - desktop-legacy
+      # + Access to the X server
+      - x11
 
       # File access
       - home
