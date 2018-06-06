@@ -559,7 +559,9 @@ parts:
     override-pull: |
       set -eu
       snapcraftctl pull
-      patch --strip=0 < "${SNAPCRAFT_STAGE}"/../snap/patches/enchant-fix-build.patch
+      patch \
+        --strip=0 \
+        < "${SNAPCRAFT_STAGE}"/../snap/patches/enchant-fix-build.patch
 
     override-build: |
       set -eu
