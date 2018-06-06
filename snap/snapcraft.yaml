@@ -69,6 +69,12 @@ apps:
 
 parts:
   poedit:
+    after:
+      - boostlib
+      - gcc-6
+      - gtkspell
+      - wxwidgets
+
     source: git://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 80
@@ -205,16 +211,13 @@ parts:
       - $pixmaps
       - $resources
 
-    after:
-      - boostlib
-      - gcc-6
-      - gtkspell
-      - wxwidgets
-
     build-attributes:
       - no-system-libraries
 
   boostlib:
+    after:
+      - gcc-6
+
     source: git://github.com/vslavik/poedit.git
     source-type: git
     source-depth: 1
@@ -264,10 +267,10 @@ parts:
       - $libraries
     override-prime: 'true'
 
+  wxwidgets:
     after:
       - gcc-6
 
-  wxwidgets:
     source: git://github.com/vslavik/wxWidgets.git
     source-type: git
     source-depth: 1
@@ -359,10 +362,10 @@ parts:
       - $files-from-stage-packages
       - $localizations
 
+  desktop-gtk3:
     after:
       - gcc-6
 
-  desktop-gtk3:
     #make-parameters:
       #- CC=gcc-6
       #- CXX=g++-6
@@ -374,8 +377,6 @@ parts:
       PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       snapcraftctl build
-    after:
-      - gcc-6
 
   gcc-6:
     plugin: nil
@@ -458,6 +459,10 @@ parts:
   # This part provides a patched old version of the GtkSpell library
   # to fix the non-relocatable iso-codes data path.
   gtkspell:
+    after:
+      - gcc-6
+      - enchant
+
     source: https://git.code.sf.net/p/gtkspell/gtkspell
     source-type: git
     source-depth: 1
@@ -525,10 +530,6 @@ parts:
       - $files-from-stage-packages
       - $localization
 
-    after:
-      - gcc-6
-      - enchant
-
   # Self-built Enchant Part #
   # This part provides a patched old version of the Enchant spell-
   # checking library required by the GtkSpell library provided by
@@ -546,6 +547,9 @@ parts:
   # 3. DESTDIR install method is used to avoid libtool error
   #    about library isn't installed under --prefix.
   enchant:
+    after:
+      - gcc-6
+
     source: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
     source-type: tar
 
@@ -620,5 +624,3 @@ parts:
     prime:
       - $resources
       - $shared-libraries
-    after:
-      - gcc-6
