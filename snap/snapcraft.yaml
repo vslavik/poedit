@@ -552,6 +552,7 @@ parts:
   enchant:
     after:
       - gcc-6
+      - patches
 
     source: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
     source-type: tar
@@ -568,7 +569,7 @@ parts:
       snapcraftctl pull
       patch \
         --strip=0 \
-        < "${SNAPCRAFT_STAGE}"/../snap/patches/enchant-fix-build.patch
+        < "${SNAPCRAFT_STAGE}"/patches/enchant-fix-build.patch
 
     override-build: |
       set -eu
@@ -680,3 +681,32 @@ parts:
     prime:
       - $data
       - $localization
+
+  # Patches to be applied in build
+  # This pseudo part installs the patches required for building other parts into the stage tree
+  patches:
+    source: snap/patches
+    plugin: dump
+
+    # DISABLED: `organize:{ /: another-dir/ }` causes the items under host root directory to be copied in another-dir - snapcraft - snapcraft.io
+    # https://forum.snapcraft.io/t/organize-another-dir-causes-the-items-under-host-root-directory-to-be-copied-in-another-dir/5806
+    #organize:
+      #/: patches/
+    override-build: |
+      set -eu
+
+      snapcraftctl build
+      mkdir \
+        --parents \
+        "${SNAPCRAFT_PART_INSTALL}"/patches
+      find \
+        "${SNAPCRAFT_PART_INSTALL}" \
+        -type f \
+        -maxdepth 1 \
+        -mindepth 1 \
+        -exec \
+          mv \
+          {} \
+          "${SNAPCRAFT_PART_INSTALL}"/patches \
+          ';'
+    override-prime: 'true'
