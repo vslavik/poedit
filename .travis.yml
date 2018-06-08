@@ -34,11 +34,11 @@ addons:
             - libsecret-1-dev
 
 env:
-    - REAL_CC=gcc-6 REAL_CXX=g++-6
+    - REAL_CC='ccache gcc-6' REAL_CXX='ccache g++-6'
 
 before_install:
     # work around Travis being difficult, see https://github.com/travis-ci/travis-ci/issues/6633
-    - export CC=$REAL_CC CXX=$REAL_CXX
+    - export CC="$REAL_CC" CXX="$REAL_CXX"
     # git submodules needed for Linux:
     - git submodule update --init deps/json deps/pugixml
 
@@ -53,7 +53,9 @@ after_failure:
 git:
     submodules: false
 
-cache: apt
+cache:
+    apt: true
+    ccache: true
 
 deploy:
     provider: releases
