@@ -151,7 +151,7 @@ parts:
         CXX=g++-6 \
         CXXCPP=cpp-6 \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
-        PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}/lib/pkgconfig"
+        PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
       make \
         --jobs=$(nproc)
       make \
@@ -404,22 +404,22 @@ parts:
       # respect CC and CXX environmental variables
       mkdir \
         --parents \
-        "${SNAPCRAFT_PART_INSTALL}/bin"
+        "${SNAPCRAFT_PART_INSTALL}"/bin
       ln \
         --force \
         --symbolic \
         "$(which gcc-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/bin/gcc"
+        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc
       ln \
         --force \
         --symbolic \
         "$(which g++-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/bin/g++"
+        "${SNAPCRAFT_PART_INSTALL}"/bin/g++
       ln \
         --force \
         --symbolic \
         "$(which cpp-6)" \
-        "${SNAPCRAFT_PART_INSTALL}/bin/cpp"
+        "${SNAPCRAFT_PART_INSTALL}"/bin/cpp
 
     filesets:
       executables:
@@ -450,9 +450,9 @@ parts:
       find -name '*.deb' \
         | xargs \
           --max-args=1 \
-          --replace='{}' \
+          --replace={} \
           --verbose \
-          dpkg-deb --extract '{}' ../install
+          dpkg-deb --extract {} ../install
 
     filesets:
       hunspell-dictionaries:
@@ -582,7 +582,7 @@ parts:
         CPP=cpp-6 \
         CXX=g++-6 \
         CXXCPP=cpp-6 \
-        PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}/lib/pkgconfig"
+        PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
       make --jobs=$(nproc)
       make DESTDIR="${SNAPCRAFT_PART_INSTALL}" \
         install
