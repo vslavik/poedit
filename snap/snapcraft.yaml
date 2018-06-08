@@ -79,6 +79,7 @@ parts:
       - boostlib
       - ccache
       - gtkspell
+      - patches
       - wxwidgets
 
     source: git://github.com/vslavik/poedit.git
@@ -160,7 +161,7 @@ parts:
 
       sed \
         --in-place \
-        --file ../../../snap/postprocess-desktop-entries.sed \
+        --file "${SNAPCRAFT_STAGE}"/patches/postprocess-desktop-entries.sed \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/poedit*.desktop
 
     stage-packages:
