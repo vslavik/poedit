@@ -387,6 +387,10 @@ parts:
 
       snapcraftctl build
 
+  # This pseudo part setups version 6 of GCC, which is not available
+  # in Ubuntu 16.04 software source.
+  # To use it simply add a dependency to this part and prepend
+  # "$SNAPCRAFT_STAGE"/bin to the command search PATHs
   gcc-6:
     plugin: nil
     # Poedit sources will be used when `source` is ommitted, avoid this
