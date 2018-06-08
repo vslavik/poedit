@@ -726,12 +726,14 @@ parts:
       - $localization
 
   # Patches to be applied in build
-  # This pseudo part installs the patches required for building other parts into the stage tree
+  # This pseudo part installs the patches required for building other
+  # parts into the stage tree
   patches:
     source: snap/patches
     plugin: dump
 
-    # DISABLED: `organize:{ /: another-dir/ }` causes the items under host root directory to be copied in another-dir - snapcraft - snapcraft.io
+    # DISABLED: `organize:{ /: another-dir/ }` causes the items under host
+    # root directory to be copied in another-dir - snapcraft - snapcraft.io
     # https://forum.snapcraft.io/t/organize-another-dir-causes-the-items-under-host-root-directory-to-be-copied-in-another-dir/5806
     #organize:
       #/: patches/
