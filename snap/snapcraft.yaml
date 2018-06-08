@@ -549,6 +549,8 @@ parts:
   #    backends.
   # 3. DESTDIR install method is used to avoid libtool error
   #    about library isn't installed under --prefix.
+  # 4. A patch is applied to avoid a libtool error, refer snap/
+  #    patches/enchant-fix-build.patch for details
   enchant:
     after:
       - gcc-6
