@@ -77,7 +77,7 @@ parts:
   poedit:
     after:
       - boostlib
-      - gcc-6
+      - ccache
       - gtkspell
       - wxwidgets
 
@@ -143,13 +143,13 @@ parts:
     override-build: |
       set -eu
 
+      # Setup ccache + GCC-6
+      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
+
       ./bootstrap
       ./configure \
         --with-wx-prefix="$SNAPCRAFT_STAGE" \
-        CC=gcc-6 \
         CPPFLAGS="-I${SNAPCRAFT_STAGE}/include -I${SNAPCRAFT_PART_INSTALL}/../build/deps/json/src" \
-        CXX=g++-6 \
-        CXXCPP=cpp-6 \
         LDFLAGS="-Wl,--copy-dt-needed-entries -L${SNAPCRAFT_STAGE}/lib" \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
       make \
@@ -225,7 +225,7 @@ parts:
 
   boostlib:
     after:
-      - gcc-6
+      - ccache
 
     source: git://github.com/vslavik/poedit.git
     source-type: git
@@ -247,11 +247,7 @@ parts:
     override-build: |
       set -eu
 
-      # WORKAROUND: `cc` toolset broken
-      # https://svn.boost.org/trac10/ticket/5917
-      #CC=gcc-6
-      #CXX=g++-6
-      #export CC CXX
+      # Setup ccache + GCC-6
       PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       cd deps/boost
@@ -278,7 +274,7 @@ parts:
 
   wxwidgets:
     after:
-      - gcc-6
+      - ccache
 
     source: git://github.com/vslavik/wxWidgets.git
     source-type: git
@@ -311,6 +307,9 @@ parts:
     plugin: autotools
     override-build: |
       set -eu
+
+      # Setup ccache + GCC-6
+      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       ./autogen.sh
       ./configure \
@@ -373,19 +372,57 @@ parts:
 
   desktop-gtk3:
     after:
-      - gcc-6
+      - ccache
 
-    #make-parameters:
-      #- CC=gcc-6
-      #- CXX=g++-6
     override-build: |
       set -eu
 
-      # WORKAROUND: Makefile doesn't honour toolchain variables
-      # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/119
+      # Setup ccache + GCC-6
       PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       snapcraftctl build
+
+  # This pseudo part setups Compiler cache(ccache) to the stage dir.
+  #
+  # To use it simply add a dependency to this part and prepend
+  # "$SNAPCRAFT_STAGE"/bin to the command search PATHs
+  ccache:
+    after:
+      - gcc-6
+    override-pull: 'true'
+    build-packages:
+      - ccache
+    plugin: nil
+    override-build: |
+      mkdir \
+        --parents \
+        "${SNAPCRAFT_PART_INSTALL}"/bin
+      ln \
+        --force \
+        --symbolic \
+        "$(which ccache)" \
+        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc-6
+      ln \
+        --force \
+        --symbolic \
+        "$(which ccache)" \
+        "${SNAPCRAFT_PART_INSTALL}"/bin/g++-6
+      ln \
+        --force \
+        --symbolic \
+        ./gcc-6 \
+        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc
+      ln \
+        --force \
+        --symbolic \
+        ./g++-6 \
+        "${SNAPCRAFT_PART_INSTALL}"/bin/g++
+    filesets:
+      executables:
+        - bin/*
+    stage:
+      - $executables
+    override-prime: 'true'
 
   # This pseudo part setups version 6 of GCC, which is not available
   # in Ubuntu 16.04 software source.
@@ -409,16 +446,17 @@ parts:
       mkdir \
         --parents \
         "${SNAPCRAFT_PART_INSTALL}"/bin
-      ln \
-        --force \
-        --symbolic \
-        "$(which gcc-6)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc
-      ln \
-        --force \
-        --symbolic \
-        "$(which g++-6)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/g++
+      # DISABLED: Replaced by ccache-gcc-6
+      #ln \
+        #--force \
+        #--symbolic \
+        #"$(which gcc-6)" \
+        #"${SNAPCRAFT_PART_INSTALL}"/bin/gcc
+      #ln \
+        #--force \
+        #--symbolic \
+        #"$(which g++-6)" \
+        #"${SNAPCRAFT_PART_INSTALL}"/bin/g++
       ln \
         --force \
         --symbolic \
@@ -473,8 +511,8 @@ parts:
   # to fix the non-relocatable iso-codes data path.
   gtkspell:
     after:
+      - ccache
       - enchant
-      - gcc-6
       - iso-codes
 
     source: https://git.code.sf.net/p/gtkspell/gtkspell
@@ -484,9 +522,6 @@ parts:
     plugin: autotools
     configflags:
       - --disable-shared
-      - CC=gcc-6
-      - CPP=cpp-6
-      - CXX=g++-6
       - LDFLAGS=-Wl,--copy-dt-needed-entries
       - PKG_CONFIG_PATH=${SNAPCRAFT_STAGE}/usr/share/pkgconfig:${SNAPCRAFT_STAGE}/lib/pkgconfig
     build-packages:
@@ -505,6 +540,9 @@ parts:
       - valac
     override-build: |
       set -eu
+
+      # Setup ccache + GCC-6
+      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       # autogen.sh requires build directory to be created in advance
       # https://sourceforge.net/p/gtkspell/gtkspell/merge-requests/1/
@@ -557,7 +595,7 @@ parts:
   #    patches/enchant-fix-build.patch for details
   enchant:
     after:
-      - gcc-6
+      - ccache
       - patches
 
     source: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
@@ -580,14 +618,13 @@ parts:
     override-build: |
       set -eu
 
+      # Setup ccache + GCC-6
+      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
+
       env NOCONFIGURE=yes ./autogen.sh
       ./configure \
         --prefix=/snap/poedit/current \
         --with-myspell-dir=/snap/poedit/current/usr/share/hunspell \
-        CC=gcc-6 \
-        CPP=cpp-6 \
-        CXX=g++-6 \
-        CXXCPP=cpp-6 \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
       make --jobs=$(nproc)
       make DESTDIR="${SNAPCRAFT_PART_INSTALL}" \
