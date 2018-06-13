@@ -9,6 +9,9 @@ if [ "$1" = clean ] ; then
     exit
 fi
 
+# Include Homebrew binaries on PATH if not there yet:
+PATH="$PATH:/usr/local/bin"
+
 if [ -d /usr/local/opt/ccache/libexec ] ; then
     CC=/usr/local/opt/ccache/libexec/clang
     CXX=/usr/local/opt/ccache/libexec/clang++
