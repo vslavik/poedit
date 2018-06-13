@@ -59,8 +59,11 @@ inline wxColour sRGB(int r, int g, int b, double a = 1.0)
 } // anonymous namespace
 
 std::unique_ptr<ColorScheme::Data> ColorScheme::s_data;
+bool ColorScheme::s_appModeDetermined = false;
+ColorScheme::Mode ColorScheme::s_appMode = ColorScheme::Mode::Light;
 
-wxColour ColorScheme::DoGet(Color color, Type type)
+
+wxColour ColorScheme::DoGet(Color color, Mode type)
 {
     switch (color)
     {
@@ -130,9 +133,12 @@ wxColour ColorScheme::DoGet(Color color, Type type)
         // Backgrounds:
 
         case Color::SidebarBackground:
-            return "#edf0f4";
+            if (GetAppMode() == Dark)
+                return "#120f0b";
+            else
+                return "#edf0f4";
         case Color::EditingBackground:
-            return *wxWHITE;
+            return wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:
@@ -184,12 +190,26 @@ wxColour ColorScheme::DoGet(Color color, Type type)
 }
 
 
-ColorScheme::Type ColorScheme::GetSchemeTypeFromWindow(const wxVisualAttributes& win)
+ColorScheme::Mode ColorScheme::GetAppMode()
+{
+    if (!s_appModeDetermined)
+    {
+        auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
+        if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
+            s_appMode = Dark;
+        else
+            s_appMode = Light;
+        s_appModeDetermined = true;
+    }
+
+    return s_appMode;
+}
+
+
+ColorScheme::Mode ColorScheme::GetWindowMode(const wxVisualAttributes& win)
 {
     // Use dark scheme for very dark backgrounds:
-    if (win.colBg.Red() < 0x60 &&
-        win.colBg.Green() < 0x60 &&
-        win.colBg.Blue() < 0x60)
+    if (win.colBg.Red() < 0x60 && win.colBg.Green() < 0x60 && win.colBg.Blue() < 0x60)
     {
         return Dark;
     }

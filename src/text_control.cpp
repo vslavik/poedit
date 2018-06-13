@@ -469,7 +469,7 @@ public:
     NSDictionary *m_attrSpace, *m_attrEscape, *m_attrMarkup, *m_attrFormat;
     typedef NSDictionary* AttrType;
 
-    Attributes()
+    Attributes(wxTextCtrl*)
     {
         m_attrSpace  = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxLeadingWhitespaceBg).OSXGetNSColor()};
         m_attrEscape = @{NSBackgroundColorAttributeName: ColorScheme::Get(Color::SyntaxEscapeBg).OSXGetNSColor(),
@@ -481,10 +481,10 @@ public:
     wxTextAttr m_attrDefault, m_attrSpace, m_attrEscape, m_attrMarkup, m_attrFormat;
     typedef wxTextAttr AttrType;
 
-    Attributes()
+    Attributes(wxTextCtrl *ctrl)
     {
-        m_attrDefault.SetBackgroundColour(*wxWHITE);
-        m_attrDefault.SetTextColour(*wxBLACK);
+        m_attrDefault.SetBackgroundColour(ctrl->GetBackgroundColour());
+        m_attrDefault.SetTextColour(ctrl->GetForegroundColour());
 
         m_attrSpace.SetBackgroundColour(ColorScheme::Get(Color::SyntaxLeadingWhitespaceBg));
 
@@ -514,9 +514,9 @@ public:
 
 
 AnyTranslatableTextCtrl::AnyTranslatableTextCtrl(wxWindow *parent, wxWindowID winid, int style)
-   : CustomizedTextCtrl(parent, winid, style),
-     m_attrs(new Attributes)
+   : CustomizedTextCtrl(parent, winid, style)
 {
+    m_attrs.reset(new Attributes(this));
     Bind(wxEVT_TEXT, [=](wxCommandEvent& e){
         e.Skip();
         HighlightText();
