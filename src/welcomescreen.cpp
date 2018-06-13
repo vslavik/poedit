@@ -25,6 +25,7 @@
 
 #include "welcomescreen.h"
 
+#include "colorscheme.h"
 #include "crowdin_gui.h"
 #include "edapp.h"
 #include "edframe.h"
@@ -165,7 +166,15 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
       m_clrNorm("#444444"),
       m_clrSub("#aaaaaa")
 {
-    SetBackgroundColour(wxColour("#fffcf5"));
+    switch (ColorScheme::GetAppMode())
+    {
+        case ColorScheme::Light:
+            SetBackgroundColour("#fffcf5");
+            break;
+        case ColorScheme::Dark:
+            SetBackgroundColour("#00030a");
+            break;
+    }
 
 #if defined(__WXOSX__)
     auto guiface = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetFaceName();

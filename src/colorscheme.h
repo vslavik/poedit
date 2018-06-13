@@ -88,14 +88,14 @@ enum class Color : size_t
 class ColorScheme
 {
 public:
-    /// Type of the scheme to use (not used a lot for now)
-    enum Type
+    /// Mode of the scheme to use (not used a lot for now)
+    enum Mode
     {
         Light,
         Dark
     };
 
-    static const wxColour& Get(Color color, Type type = Light)
+    static const wxColour& Get(Color color, Mode type = Light)
     {
         if (!s_data)
             s_data = std::make_unique<Data>();
@@ -113,10 +113,18 @@ public:
 
     static const wxColour& Get(Color color, const wxVisualAttributes& win)
     {
-        return Get(color, GetSchemeTypeFromWindow(win));
+        return Get(color, GetWindowMode(win));
     }
 
     static wxColour GetBlendedOn(Color color, wxWindow *win);
+
+    /// Returns app-wide mode (dark, light)
+    static Mode GetAppMode();
+    static Mode GetWindowMode(const wxVisualAttributes& win);
+    static Mode GetWindowMode(wxWindow *win)
+    {
+        return GetWindowMode(win->GetDefaultAttributes());
+    }
 
     static void CleanUp();
 
@@ -126,10 +134,11 @@ private:
         wxColour colors[static_cast<size_t>(Color::Max)][2];
     };
 
-    static wxColour DoGet(Color color, Type type);
-    static Type GetSchemeTypeFromWindow(const wxVisualAttributes& win);
+    static wxColour DoGet(Color color, Mode type);
 
     static std::unique_ptr<Data> s_data;
+    static bool s_appModeDetermined;
+    static Mode s_appMode;
 };
 
 #endif // Poedit_colorscheme_h

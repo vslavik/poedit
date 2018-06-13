@@ -505,6 +505,11 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
 
     UpdateHeaderAttrs();
 
+#ifdef __WXMSW__
+    if (ColorScheme::GetWindowMode(this) == ColorScheme::Dark)
+        SetAlternateRowColour(GetBackgroundColour().ChangeLightness(108));
+#endif
+
     Bind(wxEVT_SIZE, &PoeditListCtrl::OnSize, this);
 }
 

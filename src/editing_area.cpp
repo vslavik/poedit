@@ -453,6 +453,9 @@ void EditingArea::CreateEditControls(wxBoxSizer *sizer)
 
     m_pluralNotebook = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, wxNB_NOPAGETHEME);
     m_pluralNotebook->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+#ifdef __WXMSW__
+    m_pluralNotebook->SetBackgroundColour(GetBackgroundColour());
+#endif
 
     sizer->Add(transLineSizer, wxSizerFlags().Expand().Border(wxLEFT|wxTOP, PX(6)));
     sizer->AddSpacer(PX(6));
