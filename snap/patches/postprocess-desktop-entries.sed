@@ -22,7 +22,7 @@
 ##        with localestring format to let the translators fill in
 ##        additional localized string and use these values to replace
 ##        the Name keys here.
-/^Name=.*$/s/$/ (Snappy Edition)/
+s/^\(Name\(\[.\+\]\)\?=.*\)$/\1 (Snappy Edition)/g
 
 ## Fix-up application icon lookup
 s|^Icon=.*|Icon=\${SNAP}/meta/gui/icon.png|
