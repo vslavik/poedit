@@ -260,8 +260,9 @@ wxDEFINE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
 class SuggestionWidget : public wxWindow
 {
 public:
-    SuggestionWidget(wxWindow *parent, bool isFirst) : wxWindow(parent, wxID_ANY)
+    SuggestionWidget(wxWindow *parent, SuggestionsSidebarBlock *block, bool isFirst) : wxWindow(parent, wxID_ANY)
     {
+        m_parentBlock = block;
         m_isHighlighted = false;
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
@@ -393,10 +394,7 @@ private:
         auto mpos = e.GetPosition();
         if (evtWin != this)
             mpos += evtWin->GetPosition();
-        m_isHighlighted = highlight;
-        for (auto c: GetChildren())
-            c->SetBackgroundColour(highlight ? m_bgHighlight : m_bg);
-        Refresh();
+        Highlight(rectWin.Contains(mpos));
     }
 
     void OnMouseClick(wxMouseEvent&)
@@ -407,6 +405,24 @@ private:
         ProcessWindowEvent(event);
     }
 
+
+    void Highlight(bool highlight)
+    {
+        m_isHighlighted = highlight;
+        for (auto c: GetChildren())
+            c->SetBackgroundColour(highlight ? m_bgHighlight : m_bg);
+        Refresh();
+
+        if (highlight)
+        {
+            for (auto widget: m_parentBlock->m_suggestionsWidgets)
+            {
+                if (widget != this)
+                    widget->Highlight(false);
+            }
+        }
+    }
+    SuggestionsSidebarBlock *m_parentBlock;
     Suggestion m_value;
     bool m_isHighlighted;
     wxStaticBitmap *m_icon;
@@ -527,7 +543,7 @@ void SuggestionsSidebarBlock::UpdateSuggestions(const SuggestionsList& hits)
     // create any necessary controls:
     while (m_suggestions.size() > m_suggestionsWidgets.size())
     {
-        auto w = new SuggestionWidget(m_parent, /*isFirst=*/m_suggestionsWidgets.empty());
+        auto w = new SuggestionWidget(m_parent, this, /*isFirst=*/m_suggestionsWidgets.empty());
         m_suggestionsSizer->Add(w, wxSizerFlags().Expand());
         m_suggestionsWidgets.push_back(w);
     }

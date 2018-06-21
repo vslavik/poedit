@@ -151,6 +151,8 @@ protected:
     // delayed showing of suggestions:
     long long m_lastUpdateTime;
     wxTimer m_suggestionsTimer;
+
+    friend class SuggestionWidget;
 };
 
 /**
