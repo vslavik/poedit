@@ -366,6 +366,7 @@ void PerformSearch(IndexSearcherPtr searcher,
             {
                 time_t ts = DateField::stringToTime(doc->get(L"created"));
                 Suggestion r {t, score, int(ts)};
+                r.id = StringUtils::toUTF8(doc->get(L"uuid"));
                 results.push_back(r);
             }
         }
@@ -461,6 +462,7 @@ SuggestionsList TranslationMemoryImpl::Search(const Language& srclang,
                 {
                     time_t ts = DateField::stringToTime(doc->get(L"created"));
                     Suggestion r {t, score, int(ts)};
+                    r.id = StringUtils::toUTF8(doc->get(L"uuid"));
                     results.push_back(r);
                 }
             }
@@ -637,6 +639,15 @@ public:
         }
     }
 
+    void Delete(const std::string& uuid) override
+    {
+        try
+        {
+            m_writer->deleteDocuments(newLucene<Term>(L"uuid", StringUtils::toUnicode(uuid)));
+        }
+        CATCH_AND_RETHROW_EXCEPTION
+    }
+
     void DeleteAll() override
     {
         try
@@ -735,6 +746,13 @@ dispatch::future<SuggestionsList> TranslationMemory::SuggestTranslation(const La
     {
         return dispatch::make_exceptional_future_from_current<SuggestionsList>();
     }
+}
+
+void TranslationMemory::Delete(const std::string& id)
+{
+    auto tm = TranslationMemory::Get().GetWriter();
+    tm->Delete(id);
+    tm->Commit();
 }
 
 void TranslationMemory::ExportData(IOInterface& destination)

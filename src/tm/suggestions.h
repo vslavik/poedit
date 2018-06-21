@@ -69,6 +69,9 @@ struct Suggestion
     /// Source of the suggestion
     Source source;
 
+    /// Optional ID of the suggestion, for use with up/downvoting
+    std::string id;
+
     bool HasScore() const { return score != 0.0; }
     bool IsExactMatch() const { return score == 1.0; }
 };
@@ -119,6 +122,9 @@ public:
                                                          const Language& lang,
                                                          const std::wstring& source);
 
+    /// Mark a suggestion as good. Called when a suggestion is used.
+    static void Delete(const Suggestion& s);
+
 private:
     std::unique_ptr<SuggestionsProviderImpl> m_impl;
 };
@@ -160,6 +166,9 @@ public:
     virtual dispatch::future<SuggestionsList> SuggestTranslation(const Language& srclang,
                                                                  const Language& lang,
                                                                  const std::wstring& source) = 0;
+
+    /// Delete suggestion with given ID from the database
+    virtual void Delete(const std::string& id) = 0;
 };
 
 #endif // Poedit_suggestions_h

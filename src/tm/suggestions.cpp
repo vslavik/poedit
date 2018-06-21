@@ -26,6 +26,7 @@
 #include "suggestions.h"
 
 #include "concurrency.h"
+#include "transmem.h"
 
 
 class SuggestionsProviderImpl
@@ -68,4 +69,17 @@ dispatch::future<SuggestionsList> SuggestionsProvider::SuggestTranslation(Sugges
                                                                           const std::wstring& source)
 {
     return m_impl->SuggestTranslation(backend, srclang, lang, source);
+}
+
+void SuggestionsProvider::Delete(const Suggestion& s)
+{
+    if (s.id.empty())
+        return;
+
+    switch (s.source)
+    {
+        case Suggestion::Source::LocalTM:
+            TranslationMemory::Get().Delete(s.id);
+            break;
+    }
 }

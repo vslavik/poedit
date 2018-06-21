@@ -48,7 +48,7 @@ public:
     /// Return singleton instance of the TM.
     static TranslationMemory& Get();
 
-    /// Destroys the singleton, must be called (omly) on app shutdown.
+    /// Destroys the singleton, must be called (only) on app shutdown.
     static void CleanUp();
 
     /**
@@ -68,6 +68,8 @@ public:
     dispatch::future<SuggestionsList> SuggestTranslation(const Language& srclang,
                                                          const Language& lang,
                                                          const std::wstring& source) override;
+
+    void Delete(const std::string& id) override;
 
     /// Abstract interface to processing TM entries
     class IOInterface
@@ -155,6 +157,9 @@ public:
             If the catalog doesn't have language header, it is not included either.
          */
         virtual void Insert(const CatalogPtr& cat) = 0;
+
+        /// Delete a single document identifed by its UUID
+        virtual void Delete(const std::string& uuid) = 0;
 
         /// Deletes everything from the TM.
         virtual void DeleteAll() = 0;

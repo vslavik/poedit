@@ -40,6 +40,7 @@
 #include "tm/transmem.h"
 
 #include <wx/app.h>
+#include <wx/bmpbuttn.h>
 #include <wx/button.h>
 #include <wx/dcclient.h>
 #include <wx/graphics.h>
@@ -49,6 +50,10 @@
 #include <wx/stattext.h>
 #include <wx/time.h>
 #include <wx/wupdlock.h>
+
+#if !wxCHECK_VERSION(3,1,0)
+    #define CenterVertical() Center()
+#endif
 
 #include <algorithm>
 
@@ -260,13 +265,15 @@ wxDEFINE_EVENT(EVT_SUGGESTION_SELECTED, wxCommandEvent);
 class SuggestionWidget : public wxWindow
 {
 public:
-    SuggestionWidget(wxWindow *parent, SuggestionsSidebarBlock *block, bool isFirst) : wxWindow(parent, wxID_ANY)
+    SuggestionWidget(Sidebar *parent, SuggestionsSidebarBlock *block, bool isFirst) : wxWindow(parent, wxID_ANY)
     {
+        m_sidebar = parent;
         m_parentBlock = block;
         m_isHighlighted = false;
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
+        m_moreActions = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("MoreIcon"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT);
 
         m_isPerfect = isFirst
                       ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
@@ -283,19 +290,27 @@ public:
         if (m_isPerfect)
             infoSizer->Add(m_isPerfect, wxSizerFlags().Center().Border(wxLEFT, PX(2)));
         right->Add(infoSizer, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
+
+        infoSizer->AddStretchSpacer();
+        infoSizer->Add(m_moreActions, wxSizerFlags().ReserveSpaceEvenIfHidden().CenterVertical().Border(wxRIGHT, PX(2)));
+        m_moreActions->Hide();
+
         SetSizerAndFit(top);
 
         // setup mouse hover highlighting:
         m_bg = parent->GetBackgroundColour();
         m_bgHighlight = m_bg.ChangeLightness(95);
 
-        wxWindow* parts [] = { this, m_icon, m_text, m_info };
+        wxWindow* parts [] = { this, m_icon, m_text, m_info, m_moreActions };
         for (auto w : parts)
         {
             w->Bind(wxEVT_MOTION,       &SuggestionWidget::OnMouseMove, this);
             w->Bind(wxEVT_LEAVE_WINDOW, &SuggestionWidget::OnMouseMove, this);
-            w->Bind(wxEVT_LEFT_UP,      &SuggestionWidget::OnMouseClick, this);
+            if (w != m_moreActions)
+                w->Bind(wxEVT_LEFT_UP,  &SuggestionWidget::OnMouseClick, this);
+            w->Bind(wxEVT_CONTEXT_MENU, &SuggestionWidget::OnMoreActions, this);
         }
+        m_moreActions->Bind(wxEVT_BUTTON, &SuggestionWidget::OnMoreActions, this);
         Bind(wxEVT_PAINT, &SuggestionWidget::OnPaint, this);
     }
 
@@ -405,6 +420,31 @@ private:
         ProcessWindowEvent(event);
     }
 
+    void OnMoreActions(wxCommandEvent& e)
+    {
+        if (!ShouldShowActions())
+        {
+            e.Skip();
+            return;
+        }
+
+        auto sidebar = m_sidebar;
+        auto suggestion = m_value;
+        static const auto idDelete = wxNewId();
+
+        wxMenu *menu = new wxMenu();
+#ifdef __WXOSX__
+        [menu->GetHMenu() setFont:[NSFont systemFontOfSize:13]];
+#endif
+        menu->Append(idDelete, MSW_OR_OTHER(_("Delete from translation memory"), _("Delete From Translation Memory")));
+        menu->Bind(wxEVT_MENU, [sidebar,suggestion](wxCommandEvent&)
+        {
+            SuggestionsProvider::Delete(suggestion);
+            sidebar->RefreshContent();
+        }, idDelete);
+
+        PopupMenu(menu);
+    }
 
     void Highlight(bool highlight)
     {
@@ -422,6 +462,13 @@ private:
             }
         }
     }
+
+    bool ShouldShowActions() const
+    {
+        return m_isHighlighted && !m_value.id.empty();
+    }
+
+    Sidebar *m_sidebar;
     SuggestionsSidebarBlock *m_parentBlock;
     Suggestion m_value;
     bool m_isHighlighted;
@@ -429,6 +476,7 @@ private:
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;
+    wxBitmapButton *m_moreActions;
     wxColour m_bg, m_bgHighlight;
 };
 
