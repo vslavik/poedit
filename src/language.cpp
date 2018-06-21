@@ -606,6 +606,9 @@ bool PluralFormsExpr::operator==(const PluralFormsExpr& other) const
     auto calc1 = calc();
     auto calc2 = other.calc();
 
+    if (!calc1 || !calc2)
+        return false; // at least one is invalid _and_ the strings are different due to code above
+
     if (calc1->nplurals() != calc2->nplurals())
         return false;
 
