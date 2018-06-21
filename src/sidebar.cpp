@@ -42,6 +42,7 @@
 #include <wx/app.h>
 #include <wx/button.h>
 #include <wx/dcclient.h>
+#include <wx/graphics.h>
 #include <wx/menu.h>
 #include <wx/sizer.h>
 #include <wx/statbmp.h>
@@ -261,6 +262,7 @@ class SuggestionWidget : public wxWindow
 public:
     SuggestionWidget(wxWindow *parent, bool isFirst) : wxWindow(parent, wxID_ANY)
     {
+        m_isHighlighted = false;
         m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
@@ -284,7 +286,7 @@ public:
 
         // setup mouse hover highlighting:
         m_bg = parent->GetBackgroundColour();
-        m_bgHighlight = m_bg.ChangeLightness(160);
+        m_bgHighlight = m_bg.ChangeLightness(95);
 
         wxWindow* parts [] = { this, m_icon, m_text, m_info };
         for (auto w : parts)
@@ -293,6 +295,7 @@ public:
             w->Bind(wxEVT_LEAVE_WINDOW, &SuggestionWidget::OnMouseMove, this);
             w->Bind(wxEVT_LEFT_UP,      &SuggestionWidget::OnMouseClick, this);
         }
+        Bind(wxEVT_PAINT, &SuggestionWidget::OnPaint, this);
     }
 
     void SetValue(int index, const Suggestion& s, Language lang, const wxBitmap& icon, const wxString& tooltip)
@@ -361,6 +364,27 @@ private:
         void DoEnable(bool) override {} // wxOSX's disabling would break color
     };
 
+    void OnPaint(wxPaintEvent&)
+    {
+        wxPaintDC dc(this);
+        if (m_isHighlighted)
+        {
+            std::unique_ptr<wxGraphicsContext> gc(wxGraphicsContext::Create(dc));
+            gc->SetBrush(m_bgHighlight);
+            gc->SetPen(*wxTRANSPARENT_PEN);
+
+            auto rect = GetClientRect();
+            if (!rect.IsEmpty())
+            {
+#if wxCHECK_VERSION(3,1,1)
+                gc->DrawRoundedRectangle(rect.x, rect.y, rect.width, rect.height, PX(2));
+#else
+                gc->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+#endif
+            }
+        }
+    }
+
     void OnMouseMove(wxMouseEvent& e)
     {
         auto rectWin = GetClientRect();
@@ -369,8 +393,9 @@ private:
         auto mpos = e.GetPosition();
         if (evtWin != this)
             mpos += evtWin->GetPosition();
-        bool highlighted = rectWin.Contains(mpos);
-        SetBackgroundColour(highlighted ? m_bgHighlight : m_bg);
+        m_isHighlighted = highlight;
+        for (auto c: GetChildren())
+            c->SetBackgroundColour(highlight ? m_bgHighlight : m_bg);
         Refresh();
     }
 
@@ -383,6 +408,7 @@ private:
     }
 
     Suggestion m_value;
+    bool m_isHighlighted;
     wxStaticBitmap *m_icon;
     AutoWrappingText *m_text;
     wxStaticText *m_info;
