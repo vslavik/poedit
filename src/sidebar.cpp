@@ -794,13 +794,13 @@ void SuggestionsSidebarBlock::QueryProvider(SuggestionsBackend& backend, const C
     auto backendPtr = &backend;
     std::weak_ptr<SuggestionsSidebarBlock> weakSelf = std::dynamic_pointer_cast<SuggestionsSidebarBlock>(shared_from_this());
 
-    m_provider->SuggestTranslation
-    (
-        backend,
+    SuggestionQuery query {
         m_parent->GetCurrentSourceLanguage(),
         m_parent->GetCurrentLanguage(),
         item->GetString().ToStdWstring()
-    )
+    };
+
+    m_provider->SuggestTranslation(backend, std::move(query))
     .then_on_main([weakSelf,queryId](SuggestionsList hits)
     {
         auto self = weakSelf.lock();

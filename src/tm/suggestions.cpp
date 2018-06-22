@@ -34,21 +34,18 @@ class SuggestionsProviderImpl
 public:
     SuggestionsProviderImpl() {}
 
-    dispatch::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend,
-                                                         const Language& srclang,
-                                                         const Language& lang,
-                                                         const std::wstring& source)
+    dispatch::future<SuggestionsList> SuggestTranslation(SuggestionsBackend& backend, const SuggestionQuery&& q)
     {
         auto bck = &backend;
         return dispatch::async([=]{
             // don't bother asking the backend if the language or query is invalid:
-            if (!srclang.IsValid() || !lang.IsValid() || srclang == lang || source.empty())
+            if (!q.srclang.IsValid() || !q.lang.IsValid() || q.srclang == q.lang || q.source.empty())
             {
                 return dispatch::make_ready_future(SuggestionsList());
             }
 
             // query the backend:
-            return bck->SuggestTranslation(srclang, lang, source);
+            return bck->SuggestTranslation(std::move(q));
         });
     }
 };
@@ -63,12 +60,9 @@ SuggestionsProvider::~SuggestionsProvider()
 {
 }
 
-dispatch::future<SuggestionsList> SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend,
-                                                                          const Language& srclang,
-                                                                          const Language& lang,
-                                                                          const std::wstring& source)
+dispatch::future<SuggestionsList> SuggestionsProvider::SuggestTranslation(SuggestionsBackend& backend, const SuggestionQuery&& q)
 {
-    return m_impl->SuggestTranslation(backend, srclang, lang, source);
+    return m_impl->SuggestTranslation(backend, std::move(q));
 }
 
 void SuggestionsProvider::Delete(const Suggestion& s)

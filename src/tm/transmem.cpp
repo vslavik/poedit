@@ -734,13 +734,11 @@ SuggestionsList TranslationMemory::Search(const Language& srclang,
     return m_impl->Search(srclang, lang, source);
 }
 
-dispatch::future<SuggestionsList> TranslationMemory::SuggestTranslation(const Language& srclang,
-                                                                        const Language& lang,
-                                                                        const std::wstring& source)
+dispatch::future<SuggestionsList> TranslationMemory::SuggestTranslation(const SuggestionQuery&& q)
 {
     try
     {
-        return dispatch::make_ready_future(Search(srclang, lang, source));
+        return dispatch::make_ready_future(Search(q.srclang, q.lang, q.source));
     }
     catch (...)
     {

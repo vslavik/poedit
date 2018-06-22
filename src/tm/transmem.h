@@ -65,9 +65,7 @@ public:
                            const std::wstring& source);
 
     /// SuggestionsBackend API implementation:
-    dispatch::future<SuggestionsList> SuggestTranslation(const Language& srclang,
-                                                         const Language& lang,
-                                                         const std::wstring& source) override;
+    dispatch::future<SuggestionsList> SuggestTranslation(const SuggestionQuery&& q) override;
 
     void Delete(const std::string& id) override;
 
