@@ -451,7 +451,7 @@ private:
         m_isHighlighted = highlight;
         for (auto c: GetChildren())
             c->SetBackgroundColour(highlight ? m_bgHighlight : m_bg);
-        m_moreActions->Show(highlight);
+        m_moreActions->Show(highlight && ShouldShowActions());
         Refresh();
 
         if (highlight)
