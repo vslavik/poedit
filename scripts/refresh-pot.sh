@@ -1,13 +1,13 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
-PACKAGE_SHORT_VERSION=2.1
+PACKAGE_VERSION=2.1
 
 [ -n "${WXRC}" ] || WXRC=wxrc
 
 XGETTEXT_ARGS="-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
-              --package-name=Poedit --package-version=${PACKAGE_SHORT_VERSION} \
+              --package-name=Poedit --package-version=${PACKAGE_VERSION} \
               --msgid-bugs-address=help@poedit.net"
 
 

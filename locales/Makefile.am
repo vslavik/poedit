@@ -30,7 +30,7 @@ XARGS=xargs
 XGETTEXT_ARGS=-C -k_ -kwxGetTranslation -kwxTRANSLATE -kwxPLURAL:1,2 -F -j \
               --add-comments=TRANSLATORS \
               --from-code=UTF-8 \
-              --package-name=Poedit --package-version=$(PACKAGE_SHORT_VERSION) \
+              --package-name=Poedit --package-version=$(PACKAGE_VERSION) \
               --msgid-bugs-address=help@poedit.net
 
 # implicit rules

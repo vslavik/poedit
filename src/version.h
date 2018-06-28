@@ -23,11 +23,10 @@
  *
  */
 
-#ifndef _VERSION_H_
-#define _VERSION_H_
+#ifndef Poedit_version_h
+#define Poedit_version_h
 
 #define POEDIT_VERSION           "2.1"
-#define POEDIT_VERSION_SHORT     "2.1"
 #define POEDIT_VERSION_WIN        2,1,0
 
-#endif // _VERSION_H_
+#endif // Poedit_version_h

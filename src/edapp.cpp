@@ -310,8 +310,7 @@ wxString PoeditApp::GetAppBuildNumber() const
 
 bool PoeditApp::IsBetaVersion() const
 {
-    wxString v = GetAppVersion();
-    return v.Contains("beta") || v.Contains("rc");
+    return false;
 }
 
 bool PoeditApp::CheckForBetaUpdates() const
