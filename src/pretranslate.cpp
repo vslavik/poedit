@@ -29,6 +29,7 @@
 #include "customcontrols.h"
 #include "hidpi.h"
 #include "progressinfo.h"
+#include "str_helpers.h"
 #include "tm/transmem.h"
 #include "utility.h"
 
@@ -65,7 +66,7 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
     progress.UpdateMessage(_(L"Pre-translating…"));
 
     // Function to apply fetched suggestions to a catalog item:
-    auto process_results = [=](CatalogItemPtr dt, const SuggestionsList& results) -> bool
+    auto process_results = [=](CatalogItemPtr dt, unsigned index, const SuggestionsList& results) -> bool
         {
             if (results.empty())
                 return false;
@@ -76,7 +77,7 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
             if ((flags & PreTranslate_OnlyGoodQuality) && res.score < 0.80)
                 return false;
 
-            dt->SetTranslation(res.text);
+            dt->SetTranslation(res.text, index);
             dt->SetPreTranslated(true);
             dt->SetFuzzy(!res.IsExactMatch() || (flags & PreTranslate_ExactNotFuzzy) == 0);
             return true;
@@ -85,14 +86,28 @@ bool PreTranslateCatalog(wxWindow *window, CatalogPtr catalog, const T& range, i
     std::vector<dispatch::future<bool>> operations;
     for (auto dt: range)
     {
-        if (dt->HasPlural())
-            continue; // can't handle yet (TODO?)
         if (dt->IsTranslated() && !dt->IsFuzzy())
             continue;
 
         operations.push_back(dispatch::async([=,&tm]{
-            auto results = tm.Search(srclang, lang, dt->GetString().ToStdWstring());
-            bool ok = process_results(dt, results);
+            auto results = tm.Search(srclang, lang, str::to_wstring(dt->GetString()));
+            bool ok = process_results(dt, 0, results);
+
+            if (ok && dt->HasPlural())
+            {
+                switch (lang.nplurals())
+                {
+                    case 2:  // "simple" English-like plurals
+                    {
+                        auto results_plural = tm.Search(srclang, lang, str::to_wstring(dt->GetPluralString()));
+                        process_results(dt, 1, results_plural);
+                    }
+                    case 1:  // nothing else to do
+                    default: // not supported
+                        break;
+                }
+            }
+
             return ok;
         }));
     }

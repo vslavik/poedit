@@ -27,6 +27,7 @@
 
 #include "catalog.h"
 #include "errors.h"
+#include "str_helpers.h"
 #include "utility.h"
 
 #include <wx/stdpaths.h>
@@ -612,15 +613,31 @@ public:
         if (item->HasError())
             return;
 
-        // can't handle plurals yet (TODO?)
-        if (item->HasPlural())
-            return;
-
         // ignore untranslated or unfinished translations
         if (item->IsFuzzy() || !item->IsTranslated())
             return;
 
-        Insert(srclang, lang, item->GetString().ToStdWstring(), item->GetTranslation().ToStdWstring());
+        // always store at least the singular translation
+        Insert(srclang, lang, str::to_wstring(item->GetString()), str::to_wstring(item->GetTranslation()));
+
+        // for plurals, try to support at least the simpler cases, with nplurals <= 2
+        if (item->HasPlural())
+        {
+            switch (lang.nplurals())
+            {
+                case 1:
+                    // e.g. Chinese, Japanese; store translation for both singular and plural
+                    Insert(srclang, lang, str::to_wstring(item->GetPluralString()), str::to_wstring(item->GetTranslation()));
+                    break;
+                case 2:
+                    // e.g. Germanic or Romanic languages, same 2 forms as English
+                    Insert(srclang, lang, str::to_wstring(item->GetPluralString()), str::to_wstring(item->GetTranslation(1)));
+                    break;
+                default:
+                    // not supported, only singular stored above
+                    break;
+            }
+        }
     }
 
     void Insert(const CatalogPtr& cat) override
