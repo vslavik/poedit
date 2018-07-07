@@ -68,7 +68,8 @@ output = "// Code generated with scripts/extract-plural-forms.py begins here\n\n
 
 for lang in sorted(langdata.keys()):
     expr = langdata[lang]
-    definition = '{ %-7s, "%s" },' % ('"%s"' % lang, expr)
+    nplurals = int(re.search('^nplurals=([0-9]+)', expr).group(1))
+    definition = '{ %-7s, { "%s", %d } },' % ('"%s"' % lang, expr, nplurals)
     try:
         validate_entry(lang, expr)
         output += '%s\n' % definition

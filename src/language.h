@@ -103,6 +103,9 @@ public:
      */
     PluralFormsExpr DefaultPluralFormsExpr() const;
 
+    /// Count of plural forms for this language
+    int nplurals() const;
+
     /// Returns language's text writing direction
     TextDirection Direction() const { return m_direction; }
 
@@ -189,7 +192,7 @@ public:
     static const int MAX_EXAMPLES_COUNT = 1002;
 
     PluralFormsExpr();
-    PluralFormsExpr(const std::string& expr);
+    PluralFormsExpr(const std::string& expr, int nplurals = -1);
     ~PluralFormsExpr();
 
     const std::string& str() const { return m_expr; }
@@ -197,12 +200,15 @@ public:
     bool operator!=(const PluralFormsExpr& other) const { return !(*this == other); }
     explicit operator bool() const { return !m_expr.empty() && calc() != nullptr; }
 
+    int nplurals() const;
+
     int evaluate_for_n(int n) const;
 
 private:
     std::shared_ptr<PluralFormsCalculator> calc() const;
 
     std::string m_expr;
+    int m_nplurals;
     bool m_calcCreated;
     std::shared_ptr<PluralFormsCalculator> m_calc;
 };

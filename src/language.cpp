@@ -56,12 +56,16 @@
 // GCC's libstdc++ didn't have functional std::regex implementation until 4.9
 #if (defined(__GNUC__) && !defined(__clang__) && !wxCHECK_GCC_VERSION(4,9))
     #include <boost/regex.hpp>
+    using boost::regex;
     using boost::wregex;
     using boost::regex_match;
+    using boost::smatch;
 #else
     #include <regex>
+    using std::regex;
     using std::wregex;
     using std::regex_match;
+    using std::smatch;
 #endif
 
 namespace
@@ -394,7 +398,7 @@ PluralFormsExpr Language::DefaultPluralFormsExpr() const
     if (!IsValid())
         return PluralFormsExpr();
 
-    static const std::unordered_map<std::string, std::string> forms = {
+    static const std::unordered_map<std::string, PluralFormsExpr> forms = {
         #include "language_impl_plurals.h"
     };
 
@@ -411,6 +415,12 @@ PluralFormsExpr Language::DefaultPluralFormsExpr() const
         return i->second;
 
     return PluralFormsExpr();
+}
+
+
+int Language::nplurals() const
+{
+    return DefaultPluralFormsExpr().nplurals();
 }
 
 
@@ -571,12 +581,28 @@ PluralFormsExpr::PluralFormsExpr() : m_calcCreated(true)
 {
 }
 
-PluralFormsExpr::PluralFormsExpr(const std::string& expr) : m_expr(expr), m_calcCreated(false)
+PluralFormsExpr::PluralFormsExpr(const std::string& expr, int nplurals)
+    : m_expr(expr), m_nplurals(nplurals), m_calcCreated(false)
 {
 }
 
 PluralFormsExpr::~PluralFormsExpr()
 {
+}
+
+int PluralFormsExpr::nplurals() const
+{
+    if (m_nplurals != -1)
+        return m_nplurals;
+    if (m_calc)
+        return m_calc->nplurals();
+
+    const regex re("^nplurals=([0-9]+)");
+    smatch m;
+    if (regex_match(m_expr, m, re))
+        return std::stoi(m.str(1));
+    else
+        return -1;
 }
 
 std::shared_ptr<PluralFormsCalculator> PluralFormsExpr::calc() const
