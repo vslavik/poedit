@@ -29,8 +29,8 @@
       <label>Save</label>
       <tooltip>Save catalog</tooltip>
     </object>
-    <object class="separator" platform="unix"/>
-    <object class="separator" platform="win"/>
+
+    <object class="separator" platform="unix|win"/>
 
     <object class="tool" name="menu_validate">
       <bitmap stock_id="poedit-validate"/>
@@ -42,7 +42,8 @@
     <object class="tool" name="toolbar_update">
       <bitmap stock_id="poedit-update"/>
       <bitmap2 platform="win" stock_id="poedit-update@disabled"/>
-      <label>Update</label>
+      <label platform="win">Update from code</label>
+      <label platform="mac|unix">Update from Code</label>
       <tooltip>Update catalog - synchronize it with sources</tooltip>
     </object>
 

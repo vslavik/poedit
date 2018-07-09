@@ -80,7 +80,7 @@ public:
         }
         else
         {
-            tool->SetLabel(_("Update"));
+            tool->SetLabel(MSW_OR_OTHER(_("Update from code"), _("Update from Code")));
             tool->SetShortHelp(_("Update catalog - synchronize it with sources"));
             m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update", wxART_TOOLBAR));
             #ifdef __WXMSW__
