@@ -302,6 +302,7 @@ BEGIN_EVENT_TABLE(PoeditFrame, wxFrame)
    EVT_MENU           (XRCID("menu_purge_deleted"), PoeditFrame::OnPurgeDeleted)
    EVT_MENU           (XRCID("menu_fuzzy"),       PoeditFrame::OnFuzzyFlag)
    EVT_MENU           (XRCID("menu_ids"),         PoeditFrame::OnIDsFlag)
+   EVT_MENU           (XRCID("menu_warnings"),    PoeditFrame::OnToggleWarnings)
    EVT_MENU           (XRCID("sort_by_order"),    PoeditFrame::OnSortByFileOrder)
    EVT_MENU           (XRCID("sort_by_source"),    PoeditFrame::OnSortBySource)
    EVT_MENU           (XRCID("sort_by_translation"), PoeditFrame::OnSortByTranslation)
@@ -514,6 +515,7 @@ PoeditFrame::PoeditFrame() :
     m_toolbar = MainToolbar::Create(this);
 
     GetMenuBar()->Check(XRCID("menu_ids"), m_displayIDs);
+    GetMenuBar()->Check(XRCID("menu_warnings"), Config::ShowWarnings());
 
     if (wxConfigBase::Get()->ReadBool("/statusbar_shown", true))
         CreateStatusBar(1, wxST_SIZEGRIP);
@@ -1948,6 +1950,33 @@ void PoeditFrame::OnIDsFlag(wxCommandEvent&)
 {
     m_displayIDs = GetMenuBar()->IsChecked(XRCID("menu_ids"));
     m_list->SetDisplayLines(m_displayIDs);
+}
+
+void PoeditFrame::OnToggleWarnings(wxCommandEvent& e)
+{
+    bool enable = (bool)e.GetInt();
+    Config::ShowWarnings(enable);
+
+    // refresh display of items in the window:
+    if (m_catalog)
+    {
+        m_catalog->Validate();
+        if (m_list && m_list->sortOrder().errorsFirst)
+            m_list->Sort();
+    }
+
+    if (!enable)
+    {
+        wxWindowPtr<wxMessageDialog> err(new wxMessageDialog
+        (
+                this,
+                _("Warnings have been disabled."),
+                "Poedit",
+                wxOK
+            ));
+        err->SetExtendedMessage(_("If you disabled the warnings because of excessive false positives, please consider sending a sample file to help@poedit.net to help improve them."));
+        err->ShowWindowModalThenDo([err](int){});
+    }
 }
 
 void PoeditFrame::OnCopyFromSingular(wxCommandEvent&)

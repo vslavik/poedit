@@ -282,6 +282,7 @@ private:
         void OnRightClick(wxCommandEvent& event);
         void OnFuzzyFlag(wxCommandEvent& event);
         void OnIDsFlag(wxCommandEvent& event);
+        void OnToggleWarnings(wxCommandEvent& event);
         void OnCopyFromSource(wxCommandEvent& event);
         void OnCopyFromSingular(wxCommandEvent& event);
         void OnClearTranslation(wxCommandEvent& event);

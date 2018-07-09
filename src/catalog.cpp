@@ -2092,7 +2092,9 @@ Catalog::ValidationResults Catalog::DoValidate(const wxString& po_file)
         i->ClearIssue();
 
     res.errors = (int)err.size();
-    res.warnings = QAChecker::GetFor(*this)->Check(*this);
+
+    if (Config::ShowWarnings())
+        res.warnings = QAChecker::GetFor(*this)->Check(*this);
 
     for ( GettextErrors::const_iterator i = err.begin(); i != err.end(); ++i )
     {

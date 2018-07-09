@@ -64,6 +64,9 @@ public:
     static ::MergeBehavior MergeBehavior();
     static void MergeBehavior(::MergeBehavior b);
 
+    static bool ShowWarnings() { return Read("/show_warnings", true); }
+    static void ShowWarnings(bool show) { Write("/show_warnings", show); }
+
 private:
     template<typename T>
     static T Read(const std::string& key, T defval)
