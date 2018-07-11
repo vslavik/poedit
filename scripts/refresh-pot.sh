@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-PACKAGE_SHORT_VERSION=2.0.8
+PACKAGE_SHORT_VERSION=2.0.9
 
 [ -n "${WXRC}" ] || WXRC=wxrc
 
