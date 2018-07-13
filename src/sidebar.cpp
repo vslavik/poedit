@@ -356,6 +356,8 @@ public:
         (void)tooltip;
 
         SetBackgroundColour(m_bg);
+
+        Layout();
         InvalidateBestSize();
         SetMinSize(wxDefaultSize);
         SetMinSize(GetBestSize());
