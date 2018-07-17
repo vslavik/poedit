@@ -222,14 +222,35 @@ PKG_CHECK_MODULES([LUCENE], [liblucene++ >= 3.0.5],
         ])
 
 
-PKG_CHECK_MODULES([PUGIXML], [pugixml >= 1.9],
-        [
-            CXXFLAGS="$CXXFLAGS $PUGIXML_CFLAGS -DHAVE_PUGIXML"
-            AC_SUBST(PUGIXML_LIBS)
-        ],
-        [
-            dnl use bundled copy
+PKG_CHECK_EXISTS([pugixml],[pugixml_found=yes],[pugixml_found=no])
+
+if test x"$pugixml_found" = xyes; then
+    PKG_CHECK_MODULES([PUGIXML],[pugixml >= 1.9],[pugixml_found=yes],[pugixml_found=no])
+fi
+
+if test x"$pugixml_found" = xno; then
+    AC_LANG_PUSH(C++)
+
+    AC_CHECK_HEADERS([pugixml.hpp])
+
+    if test x"$ac_cv_header_pugixml_hpp" = xyes; then
+        AC_CHECK_LIB([pugixml], [main], [
+            PUGIXML_LIBS=-lpugixml
+            pugixml_found=yes
         ])
+    fi
+
+    AC_LANG_POP
+fi
+
+if test $pugixml_found = yes; then
+    AC_MSG_NOTICE([Using the system version of the pugixml library])
+    CXXFLAGS="$CXXFLAGS $PUGIXML_CFLAGS -DHAVE_PUGIXML"
+    AC_SUBST(PUGIXML_LIBS)
+else
+    dnl use bundled copy
+    AC_MSG_NOTICE([Using bundled copy of pugixml library])
+fi
 
 
 dnl Check for Compact Language Detector 2
