@@ -724,9 +724,10 @@ bool PoeditApp::OnCmdLineParsed(wxCmdLineParser& parser)
         {
             wxString poeditURI;
             if (parser.Found(CL_HANDLE_POEDIT_URI, &poeditURI))
+            {
                 client.HandleCustomURI(poeditURI);
-
-            if (parser.GetParamCount() == 0)
+            }
+            else if (parser.GetParamCount() == 0)
             {
                 client.Activate();
             }
