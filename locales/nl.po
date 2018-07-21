@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-06-03 18:15+0200\n"
-"PO-Revision-Date: 2018-06-03 12:13-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-21 10:14\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -544,6 +544,17 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "De vertaling is klaar voor gebruik."
 
+msgid "Warnings have been disabled."
+msgstr "Waarschuwingen zijn uitgeschakeld."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Indien je de waarschuwingen hebt uitgezet vanwege bovenmatig veel valse "
+"waarschuwingen, stuur dan alsjeblieft een proefbestand naar help@poedit.net "
+"om ons te helpen dit te verbeteren."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -794,6 +805,10 @@ msgstr "Alles"
 msgid "Form %i"
 msgstr "Vorm %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Formulier %i (ongebruikt)"
+
 msgid "Singular"
 msgstr "Enkelvoud"
 
@@ -1038,15 +1053,8 @@ msgstr "Algemeen"
 msgid "Use translation memory"
 msgstr "Vertaalgeheugen gebruiken"
 
-msgid "Learn From Files…"
-msgstr "Leren van bestanden..."
-
-msgid "Learn from files…"
-msgstr "Leren van bestanden..."
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Resetten"
+msgid "Manage…"
+msgstr "Beheer…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1077,6 +1085,28 @@ msgstr "Opgeslagen vertalingen:"
 msgid "Database size on disk:"
 msgstr "Databasegrootte op schijf:"
 
+msgid "Import Translation Files…"
+msgstr "Importeer Vertaalbestanden…"
+
+msgid "Import translation files…"
+msgstr "Importeer vertaalbestanden…"
+
+msgid "Import From TMX…"
+msgstr "Importeer Van TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importeer van TMX…"
+
+msgid "Export To TMX…"
+msgstr "Exporteer Naar TMX…"
+
+msgid "Export to TMX…"
+msgstr "Exporteer naar TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Resetten"
+
 msgid "Select translation files to import"
 msgstr "Selecteer de te importeren taalbestanden"
 
@@ -1088,6 +1118,29 @@ msgstr "Vertalingen importeren..."
 
 msgid "Finalizing…"
 msgstr "Afronden..."
+
+msgid "Select TMX files to import"
+msgstr "Selecteer te importeren TMX-bestanden"
+
+msgid "TMX Files"
+msgstr "TMX-bestanden"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Vertaalgeheugen importeren van “%s” mislukt."
+
+msgid "Import error"
+msgstr "Importeerfout"
+
+msgid "Exporting translations…"
+msgstr "Vertalingen exporteren…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Vertaalgeheugen exporteren van “%s” mislukt."
+
+msgid "Export error"
+msgstr "Exporteerfout"
 
 msgid "Reset translation memory"
 msgstr "Vertaalgeheugen resetten"
@@ -1531,11 +1584,17 @@ msgstr "Vorige zoeken"
 msgid "&Preferences"
 msgstr "&Voorkeuren"
 
-msgid "Display entry &IDs"
-msgstr "Invoer-&ID's weergeven"
+msgid "Show string &ID"
+msgstr "Toon string &ID"
 
-msgid "Display Entry &IDs"
-msgstr "Invoer-&ID's weergeven"
+msgid "Show String &ID"
+msgstr "Toon String &ID"
+
+msgid "Show warnings"
+msgstr "Toon waarschuwingen"
+
+msgid "Show Warnings"
+msgstr "Toon Waarschuwingen"
 
 msgid "Sort by &file order"
 msgstr "Sorteren op bestands&volgorde"
@@ -1588,11 +1647,11 @@ msgstr "Statusbalk tonen"
 msgid "C&atalog"
 msgstr "C&atalogus"
 
-msgid "&Update from sources"
-msgstr "Bij&werken vanuit de bronteksten"
+msgid "&Update from source code"
+msgstr "&Update van broncode"
 
-msgid "&Update from Sources"
-msgstr "Bij&werken vanuit de bronteksten"
+msgid "&Update from Source Code"
+msgstr "&Update van Broncode"
 
 msgid "Update from &POT file…"
 msgstr "Bijwerken vanuit &POT-bestand..."
@@ -1845,8 +1904,11 @@ msgstr "Valideren"
 msgid "Check for errors in the translation"
 msgstr "De vertaling op fouten controleren"
 
-msgid "Update"
-msgstr "Bijwerken"
+msgid "Update from code"
+msgstr "&Update van code"
+
+msgid "Update from Code"
+msgstr "&Update van Code"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Catalogus bijwerken - synchroniseren met de bronnen"
@@ -1877,6 +1939,12 @@ msgstr "Opmerking toevoegen"
 msgid "Add Comment"
 msgstr "Opmerking toevoegen"
 
+msgid "Delete From Translation Memory"
+msgstr "Verwijder Uit Vertaalgeheugen"
+
+msgid "Delete from translation memory"
+msgstr "Verwijder uit vertaalgeheugen"
+
 msgid "Translation suggestions:"
 msgstr "Vertaalsuggesties:"
 
@@ -1890,6 +1958,20 @@ msgstr "Geen overeenkomsten gevonden"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Deze tekenreeks is gevonden in het vertaalgeheugen van Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "Het TMX-bestand is ongeldig."
+
+msgid "No translations were found in the TMX file."
+msgstr "Er zijn geen vertalingen gevonden in het TMX-bestand."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Vertaalgeheugen-database is beschadigd: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Vertaalgeheugenfout: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Tijdelijke map maken niet mogelijk."

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:34-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-21 10:14\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -546,6 +546,17 @@ msgstr[3] "Перевод готов к использованию, но %d за
 msgid "The translation is ready for use."
 msgstr "Перевод готов к использованию."
 
+msgid "Warnings have been disabled."
+msgstr "Предупреждения были отключены."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Если вы отключили предупреждения из-за большого количества ложных "
+"срабатываний, пожалуйста, отправьте файл с примером на help@poedit.net, "
+"чтобы помочь нам улучшить эту функцию."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit автоматически исправил неверное содержимое в файле «%s»."
@@ -797,6 +808,10 @@ msgstr "Всё"
 msgid "Form %i"
 msgstr "Форма %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Форма %i (не используется)"
+
 msgid "Singular"
 msgstr "Единственное"
 
@@ -1038,15 +1053,8 @@ msgstr "Общее"
 msgid "Use translation memory"
 msgstr "Использовать память переводов"
 
-msgid "Learn From Files…"
-msgstr "Собрать из файлов…"
-
-msgid "Learn from files…"
-msgstr "Собрать из файлов…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Сброс"
+msgid "Manage…"
+msgstr "Управление…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1077,6 +1085,28 @@ msgstr "Сохраненных переводов:"
 msgid "Database size on disk:"
 msgstr "Размер базы данных на диске:"
 
+msgid "Import Translation Files…"
+msgstr "Импорт файлов перевода…"
+
+msgid "Import translation files…"
+msgstr "Импорт файлов перевода…"
+
+msgid "Import From TMX…"
+msgstr "Импорт из TMX…"
+
+msgid "Import from TMX…"
+msgstr "Импорт из TMX…"
+
+msgid "Export To TMX…"
+msgstr "Экспорт в TMX…"
+
+msgid "Export to TMX…"
+msgstr "Экспорт в TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Сброс"
+
 msgid "Select translation files to import"
 msgstr "Выберите файлы переводов для импорта"
 
@@ -1088,6 +1118,29 @@ msgstr "Импорт переводов…"
 
 msgid "Finalizing…"
 msgstr "Завершение…"
+
+msgid "Select TMX files to import"
+msgstr "Выберите TMX-файлы для импорта"
+
+msgid "TMX Files"
+msgstr "TMX-файлы"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Не удалось импортировать память перевода из «%s»."
+
+msgid "Import error"
+msgstr "Ошибка импорта"
+
+msgid "Exporting translations…"
+msgstr "Экспорт переводов…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Не удалось экспортировать память перевода в «%s»."
+
+msgid "Export error"
+msgstr "Ошибка экспорта"
 
 msgid "Reset translation memory"
 msgstr "Очистить память переводов"
@@ -1536,11 +1589,17 @@ msgstr "Назад"
 msgid "&Preferences"
 msgstr "&Параметры"
 
-msgid "Display entry &IDs"
-msgstr "Показывать &номера строк"
+msgid "Show string &ID"
+msgstr "Показать строку &ID"
 
-msgid "Display Entry &IDs"
-msgstr "Показывать &номера строк"
+msgid "Show String &ID"
+msgstr "Показать строку &ID"
+
+msgid "Show warnings"
+msgstr "Показать предупреждения"
+
+msgid "Show Warnings"
+msgstr "Показать предупреждения"
 
 msgid "Sort by &file order"
 msgstr "Сортировать как в &файле"
@@ -1593,10 +1652,10 @@ msgstr "Показать строку состояния"
 msgid "C&atalog"
 msgstr "&Каталог"
 
-msgid "&Update from sources"
+msgid "&Update from source code"
 msgstr "&Обновить из исходного кода"
 
-msgid "&Update from Sources"
+msgid "&Update from Source Code"
 msgstr "&Обновить из исходного кода"
 
 msgid "Update from &POT file…"
@@ -1851,8 +1910,11 @@ msgstr "Проверить"
 msgid "Check for errors in the translation"
 msgstr "Проверить наличие ошибок в переводе"
 
-msgid "Update"
-msgstr "Обновить"
+msgid "Update from code"
+msgstr "Обновить из кода"
+
+msgid "Update from Code"
+msgstr "Обновить из кода"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Обновить каталог — синхронизировать его с исходными файлами"
@@ -1883,6 +1945,12 @@ msgstr "Добавить комментарий"
 msgid "Add Comment"
 msgstr "Добавить комментарий"
 
+msgid "Delete From Translation Memory"
+msgstr "Удалить из памяти перевода"
+
+msgid "Delete from translation memory"
+msgstr "Удалить из памяти перевода"
+
 msgid "Translation suggestions:"
 msgstr "Предлагаемые варианты перевода:"
 
@@ -1896,6 +1964,20 @@ msgstr "Совпадений не найдено"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Эта строка была найдена в памяти переводов Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "Неверный формат TMX-файла."
+
+msgid "No translations were found in the TMX file."
+msgstr "В TMX-файле не найдены переводы."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Ошибка в базе данных памяти перевода: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Ошибка памяти перевода: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Не удаётся создать папку для временных файлов."

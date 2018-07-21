@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-06-03 18:15+0200\n"
-"PO-Revision-Date: 2018-06-03 12:14-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:58\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -209,7 +209,7 @@ msgid "File:"
 msgstr "Dosya:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "Crowdin hesabınızda herhangi bir çeviri projesi yok."
+msgstr "Crowdin hesabınızda listelenen hiç çeviri projesi yok."
 
 msgid "This project has no files that can be translated in Poedit."
 msgstr "Bu projenin Poedit ile çevrilebilecek herhangi bir dosyası yok."
@@ -534,6 +534,17 @@ msgstr[1] "Çeviri kullanıma hazır, ancak henüz %d dizge çevrilmemiş."
 msgid "The translation is ready for use."
 msgstr "Çeviri kullanıma hazır."
 
+msgid "Warnings have been disabled."
+msgstr "Uyarılar etkisizleştirildi."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Aşırı yanlış pozitifler nedeniyle uyarıları etkisizleştirirseniz, lütfen "
+"bunları iyileştirmek için help@poedit.net adresine bir örnek dosya "
+"göndermeyi düşünün."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit, “%s” dosyasındaki geçersiz içeriği otomatik olarak düzeltti."
@@ -782,6 +793,10 @@ msgstr "Herşey"
 msgid "Form %i"
 msgstr "Biçim %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Form %i (kullanılmamış)"
+
 msgid "Singular"
 msgstr "Tekil"
 
@@ -1026,15 +1041,8 @@ msgstr "Genel"
 msgid "Use translation memory"
 msgstr "Çeviri belleği kullanılsın"
 
-msgid "Learn From Files…"
-msgstr "Dosyalardan Öğren…"
-
-msgid "Learn from files…"
-msgstr "Dosyalardan öğren…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Sıfırla"
+msgid "Manage…"
+msgstr "Yönet…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1064,6 +1072,28 @@ msgstr "Kaydedilmiş çeviriler:"
 msgid "Database size on disk:"
 msgstr "Diskteki veritabanı boyutu:"
 
+msgid "Import Translation Files…"
+msgstr "Çeviri Dosyalarını İçe Aktar…"
+
+msgid "Import translation files…"
+msgstr "Çeviri dosyalarını içe aktar…"
+
+msgid "Import From TMX…"
+msgstr "TMX’ten Aktar…"
+
+msgid "Import from TMX…"
+msgstr "TMX’ten aktar…"
+
+msgid "Export To TMX…"
+msgstr "TMX’e Aktar…"
+
+msgid "Export to TMX…"
+msgstr "TMX’e aktar…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Sıfırla"
+
 msgid "Select translation files to import"
 msgstr "İçe aktarılacak çeviri dosyalarını seçin"
 
@@ -1075,6 +1105,29 @@ msgstr "Çeviriler içe aktarılıyor…"
 
 msgid "Finalizing…"
 msgstr "Tamamlanıyor…"
+
+msgid "Select TMX files to import"
+msgstr "İçe aktarmak için TMX dosyalarını seç"
+
+msgid "TMX Files"
+msgstr "TMX Dosyaları"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "“%s” dosyasından çeviri belleğini aktarma başarısız oldu."
+
+msgid "Import error"
+msgstr "İçe aktarma hatası"
+
+msgid "Exporting translations…"
+msgstr "Çeviriler dışa aktarılıyor…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "“%s” dosyasına çeviri belleğini aktarma başarısız oldu."
+
+msgid "Export error"
+msgstr "Dışa aktarma hatası"
 
 msgid "Reset translation memory"
 msgstr "Çeviri belleğini sıfırla"
@@ -1171,7 +1224,7 @@ msgstr "Windows"
 
 #. TRANSLATORS: Followed by text control for entering number; wraps text at given width
 msgid "Wrap at:"
-msgstr "Kaydırma konumu:"
+msgstr "Kaydırma yeri:"
 
 msgid "Preserve formatting of existing files"
 msgstr "Var olan dosyaların biçimleri korunsun"
@@ -1517,11 +1570,17 @@ msgstr "Öncekini Bul"
 msgid "&Preferences"
 msgstr "&Tercihler"
 
-msgid "Display entry &IDs"
-msgstr "&Kayıt kodlarını görüntüle"
+msgid "Show string &ID"
+msgstr "Satır &Kodunu göster"
 
-msgid "Display Entry &IDs"
-msgstr "&Kayıt Kodlarını Görüntüle"
+msgid "Show String &ID"
+msgstr "Satır &Kodunu Göster"
+
+msgid "Show warnings"
+msgstr "Uyarıları göster"
+
+msgid "Show Warnings"
+msgstr "Uyarıları Göster"
 
 msgid "Sort by &file order"
 msgstr "&Dosya düzenine göre sırala"
@@ -1574,11 +1633,11 @@ msgstr "Durum çubuğunu görüntüle"
 msgid "C&atalog"
 msgstr "&Katalog"
 
-msgid "&Update from sources"
-msgstr "Kaynaklardan gü&ncelle"
+msgid "&Update from source code"
+msgstr "Kaynak kodundan gü&ncelle"
 
-msgid "&Update from Sources"
-msgstr "Kaynaklardan Gü&ncelle"
+msgid "&Update from Source Code"
+msgstr "Kaynak Kodundan Gü&ncelle"
 
 msgid "Update from &POT file…"
 msgstr "&POT dosyasından güncelle…"
@@ -1831,8 +1890,11 @@ msgstr "Doğrula"
 msgid "Check for errors in the translation"
 msgstr "Çeviri sorunlarını denetle"
 
-msgid "Update"
-msgstr "Güncelle"
+msgid "Update from code"
+msgstr "Koddan güncelle"
+
+msgid "Update from Code"
+msgstr "Koddan Güncelle"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Kataloğu güncelleyin - kaynak dosyalarla eşitleyin"
@@ -1863,6 +1925,12 @@ msgstr "Yorum ekle"
 msgid "Add Comment"
 msgstr "Yorum Ekle"
 
+msgid "Delete From Translation Memory"
+msgstr "Çeviri Belleğinden Sil"
+
+msgid "Delete from translation memory"
+msgstr "Çeviri belleğinden sil"
+
 msgid "Translation suggestions:"
 msgstr "Çeviri önerileri:"
 
@@ -1876,6 +1944,20 @@ msgstr "Herhangi Bir Eşleşme Bulunamadı"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Bu dizge Poedit Çeviri Belleğinde bulundu."
+
+msgid "The TMX file is malformed."
+msgstr "TMX dosyası hatalı oluşturulmuş."
+
+msgid "No translations were found in the TMX file."
+msgstr "TMX dosyasında bulunan çeviri yok."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Çeviri belleği veritabanı bozulmuş: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Çeviri belleği hatası: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Geçici klasör oluşturulamıyor."

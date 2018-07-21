@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-06-03 18:15+0200\n"
-"PO-Revision-Date: 2018-06-03 12:14-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Galician\n"
 "Language: gl_ES\n"
@@ -259,7 +259,7 @@ msgid "don’t delete temporary files (for debugging)"
 msgstr "non eliminar os ficheiros temporais (para depuración)"
 
 msgid "handle a poedit:// URI"
-msgstr "manexar un URI de poedit://"
+msgstr "manexar un URI de poedit"
 
 msgid "go to item at given line number"
 msgstr "ir ao elemento dun número de liña determinado"
@@ -541,6 +541,16 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "A tradución está lista para utilizar."
 
+msgid "Warnings have been disabled."
+msgstr "Os avisos foron desactivados."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Se desactivou os avisos polo exceso de falsos positivos, considere enviarnos "
+"un ficheiro de mostra a help@poedit.net para axudar a melloralo."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -787,6 +797,10 @@ msgstr "Todo"
 msgid "Form %i"
 msgstr "Forma %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Forma %i (non usado)"
+
 msgid "Singular"
 msgstr "Singular"
 
@@ -1031,15 +1045,8 @@ msgstr "Xeral"
 msgid "Use translation memory"
 msgstr "Utilizar a memoria de tradución"
 
-msgid "Learn From Files…"
-msgstr "Aprender dos ficheiros…"
-
-msgid "Learn from files…"
-msgstr "Aprender dos ficheiros…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Restablecer"
+msgid "Manage…"
+msgstr "Manexar…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1070,6 +1077,28 @@ msgstr "Traducións almacenadas:"
 msgid "Database size on disk:"
 msgstr "Tamaño da base de datos no disco:"
 
+msgid "Import Translation Files…"
+msgstr "Importar os ficheiros da tradución…"
+
+msgid "Import translation files…"
+msgstr "Importar os ficheiros da tradución…"
+
+msgid "Import From TMX…"
+msgstr "Importar de TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importar de TMX…"
+
+msgid "Export To TMX…"
+msgstr "Exportar como TMX…"
+
+msgid "Export to TMX…"
+msgstr "Exportar como TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Restablecer"
+
 msgid "Select translation files to import"
 msgstr "Seleccione os ficheiros de tradución para importar"
 
@@ -1081,6 +1110,29 @@ msgstr "Importando as traducións…"
 
 msgid "Finalizing…"
 msgstr "Rematando…"
+
+msgid "Select TMX files to import"
+msgstr "Seleccione os ficheiros TMX a importar"
+
+msgid "TMX Files"
+msgstr "Ficheiros TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Produciuse un erro importando a memoria de tradución «%s»."
+
+msgid "Import error"
+msgstr "Produciuse un erro na importación"
+
+msgid "Exporting translations…"
+msgstr "Exportando as traducións…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Produciuse un erro exportando a memoria de tradución «%s»."
+
+msgid "Export error"
+msgstr "Erro de exportación"
 
 msgid "Reset translation memory"
 msgstr "Restablecer memoria de tradución"
@@ -1344,7 +1396,7 @@ msgid "Not all plural forms are translated."
 msgstr "Non se traduciron todas as formas do plural."
 
 msgid "The translation should start as a sentence."
-msgstr "A tradución debería comezar como unha frase."
+msgstr "A tradución debería comezar con maiúscula."
 
 msgid "The translation should start with a lowercase character."
 msgstr "A tradución debería comezar con minúscula."
@@ -1526,11 +1578,17 @@ msgstr "Buscar anterior"
 msgid "&Preferences"
 msgstr "&Preferencias"
 
-msgid "Display entry &IDs"
-msgstr "Mostrar &ID das entradas"
+msgid "Show string &ID"
+msgstr "Mostrar o &ID da cadea"
 
-msgid "Display Entry &IDs"
-msgstr "Mostrar &ID das entradas"
+msgid "Show String &ID"
+msgstr "Mostrar o &ID da cadea"
+
+msgid "Show warnings"
+msgstr "Mostrar avisos"
+
+msgid "Show Warnings"
+msgstr "Mostrar avisos"
 
 msgid "Sort by &file order"
 msgstr "Ordenar por &ficheiro"
@@ -1583,11 +1641,11 @@ msgstr "Mostrar a barra de estado"
 msgid "C&atalog"
 msgstr "C&atálogo"
 
-msgid "&Update from sources"
-msgstr "Act&ualizar desde as fontes"
+msgid "&Update from source code"
+msgstr "Act&ualizar desde o código fonte"
 
-msgid "&Update from Sources"
-msgstr "Act&ualizar desde as fontes"
+msgid "&Update from Source Code"
+msgstr "Act&ualizar desde o código fonte"
 
 msgid "Update from &POT file…"
 msgstr "Actualizar desde un ficheiro &POT…"
@@ -1845,8 +1903,11 @@ msgstr "Validar"
 msgid "Check for errors in the translation"
 msgstr "Buscar erros na tradución"
 
-msgid "Update"
-msgstr "Actualizar"
+msgid "Update from code"
+msgstr "Actualizar desde o código"
+
+msgid "Update from Code"
+msgstr "Actualizar desde o código"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Actualizar catálogo - sincronizalo coas súas fontes"
@@ -1877,6 +1938,12 @@ msgstr "Engadir comentario"
 msgid "Add Comment"
 msgstr "Engadir comentario"
 
+msgid "Delete From Translation Memory"
+msgstr "Eliminar da memoria de tradución"
+
+msgid "Delete from translation memory"
+msgstr "Eliminar da memoria de tradución"
+
 msgid "Translation suggestions:"
 msgstr "Suxestións de tradución:"
 
@@ -1890,6 +1957,20 @@ msgstr "Non se atoparon coincidencias"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Esta cadea atopouse na memoria de tradución de Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "O ficheiro TMX está mal construído."
+
+msgid "No translations were found in the TMX file."
+msgstr "Non se atoparon traducións no ficheiro TMX."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "A base de datos da memoria de tradución está corrupta: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Erro na memoria de tradución: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Non foi posíbel crear o directorio temporal."

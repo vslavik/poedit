@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:33-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -546,6 +546,17 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "La traduction est prête à être utilisée."
 
+msgid "Warnings have been disabled."
+msgstr "Les alertes ont été désactivées."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Si vous avez désactivé les alertes en raison d'un trop grand nombre de faux "
+"positifs, faîtes nous parvenir un exemple de fichier à help@poedit.net pour "
+"aider à les améliorer."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -796,6 +807,10 @@ msgstr "Tout"
 msgid "Form %i"
 msgstr "Forme %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Formulaire %i (inutilisé)"
+
 msgid "Singular"
 msgstr "Singulier"
 
@@ -1040,15 +1055,8 @@ msgstr "Général"
 msgid "Use translation memory"
 msgstr "Utiliser la mémoire de traduction"
 
-msgid "Learn From Files…"
-msgstr "Apprendre à partir des fichiers…"
-
-msgid "Learn from files…"
-msgstr "Apprendre à partir des fichiers…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Réinitialiser "
+msgid "Manage…"
+msgstr "Gérer…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1079,6 +1087,28 @@ msgstr "Traductions stockées :"
 msgid "Database size on disk:"
 msgstr "Taille de la base de données sur le disque :"
 
+msgid "Import Translation Files…"
+msgstr "Importer Fichiers de Traduction…"
+
+msgid "Import translation files…"
+msgstr "Importer les fichiers de traduction…"
+
+msgid "Import From TMX…"
+msgstr "Importer un TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importation depuis un TMX…"
+
+msgid "Export To TMX…"
+msgstr "Exporter en TMX…"
+
+msgid "Export to TMX…"
+msgstr "Exportation vers un TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Réinitialiser "
+
 msgid "Select translation files to import"
 msgstr "Sélectionner les fichiers de traduction à importer"
 
@@ -1090,6 +1120,29 @@ msgstr "Importation des traductions…"
 
 msgid "Finalizing…"
 msgstr "Finalisation…"
+
+msgid "Select TMX files to import"
+msgstr "Sélectionner les fichiers TMX à importer"
+
+msgid "TMX Files"
+msgstr "Fichiers TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "L'importation de la mémoire de traduction à partir de “%s“ a échoué."
+
+msgid "Import error"
+msgstr "Erreur d'importation"
+
+msgid "Exporting translations…"
+msgstr "Exportation des traductions…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "L'exportation de la mémoire de traduction à partir de “%s“ a échoué."
+
+msgid "Export error"
+msgstr "Erreur d'exportation"
 
 msgid "Reset translation memory"
 msgstr "Réinitialiser la mémoire de traduction"
@@ -1536,11 +1589,17 @@ msgstr "Chercher le précédent"
 msgid "&Preferences"
 msgstr "&Préférences"
 
-msgid "Display entry &IDs"
-msgstr "Afficher les &IDs des entrées"
+msgid "Show string &ID"
+msgstr "Afficher la chaîne de caractères et l'ID"
 
-msgid "Display Entry &IDs"
-msgstr "Afficher les &IDs des entrées"
+msgid "Show String &ID"
+msgstr "Afficher Chaîne & ID"
+
+msgid "Show warnings"
+msgstr "Afficher les alertes"
+
+msgid "Show Warnings"
+msgstr "Afficher Alertes"
 
 msgid "Sort by &file order"
 msgstr "Trier par &fichier"
@@ -1593,11 +1652,11 @@ msgstr "Afficher la barre d’état"
 msgid "C&atalog"
 msgstr "C&atalogue"
 
-msgid "&Update from sources"
-msgstr "Mettre à jo&ur depuis les sources"
+msgid "&Update from source code"
+msgstr "&Mise à jour depuis le code source"
 
-msgid "&Update from Sources"
-msgstr "Mettre à jo&ur depuis les sources"
+msgid "&Update from Source Code"
+msgstr "&Mise à Jour Code Source"
 
 msgid "Update from &POT file…"
 msgstr "Mettre à jour depuis un fichier &POT…"
@@ -1856,8 +1915,11 @@ msgstr "Valider"
 msgid "Check for errors in the translation"
 msgstr "Vérifier les erreurs dans la traduction"
 
-msgid "Update"
-msgstr "Mettre à jour"
+msgid "Update from code"
+msgstr "Mise à jour du code"
+
+msgid "Update from Code"
+msgstr "Mise à Jour Code"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Mettre à jour le catalogue - Synchroniser avec les sources"
@@ -1888,6 +1950,12 @@ msgstr "Ajouter un commentaire"
 msgid "Add Comment"
 msgstr "Ajouter un commentaire"
 
+msgid "Delete From Translation Memory"
+msgstr "Supprimer Depuis Mémoire de Traduction"
+
+msgid "Delete from translation memory"
+msgstr "Suppression depuis la mémoire de traduction"
+
 msgid "Translation suggestions:"
 msgstr "Suggestions de traduction :"
 
@@ -1901,6 +1969,20 @@ msgstr "Aucune correspondance trouvée"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Cette chaîne a été trouvée dans la mémoire de traduction de Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "Le fichier TMX est incorrect."
+
+msgid "No translations were found in the TMX file."
+msgstr "Aucune traduction trouvée dans le ficher TMX."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Base de données de la mémoire de traduction corrompue : %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Erreur de la mémoire de traduction : %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Impossible de créer le répertoire temporaire."

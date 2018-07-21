@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-06-03 18:15+0200\n"
-"PO-Revision-Date: 2018-06-03 12:13-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -534,6 +534,14 @@ msgstr[1] "Käännös on käyttövalmis, mutta %d viestiä on vielä kääntäm�
 msgid "The translation is ready for use."
 msgstr "Käännös on käyttövalmis."
 
+msgid "Warnings have been disabled."
+msgstr "Varoitukset on poistettu käytöstä."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit korjasi automaattisesti tiedoston ”%s” virheellisen sisällön."
@@ -780,6 +788,10 @@ msgstr "Kaikki"
 msgid "Form %i"
 msgstr "Muoto %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Muoto %i (käyttämätön)"
+
 msgid "Singular"
 msgstr "Yksikkö"
 
@@ -1024,15 +1036,8 @@ msgstr "Yleiset"
 msgid "Use translation memory"
 msgstr "Käytä käännösmuistia"
 
-msgid "Learn From Files…"
-msgstr "Opi tiedostoista…"
-
-msgid "Learn from files…"
-msgstr "Opi tiedostoista…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Tyhjennä"
+msgid "Manage…"
+msgstr ""
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1063,6 +1068,28 @@ msgstr "Tallennetut käännökset:"
 msgid "Database size on disk:"
 msgstr "Tietokannan koko levyllä:"
 
+msgid "Import Translation Files…"
+msgstr ""
+
+msgid "Import translation files…"
+msgstr ""
+
+msgid "Import From TMX…"
+msgstr "Tuo TMX-tiedostosta…"
+
+msgid "Import from TMX…"
+msgstr "Tuo TMX-tiedostosta…"
+
+msgid "Export To TMX…"
+msgstr "Vie TMX-tiedostoon…"
+
+msgid "Export to TMX…"
+msgstr "Vie TMX-tiedostoon…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Tyhjennä"
+
 msgid "Select translation files to import"
 msgstr "Valitse tuotavat käännöstiedostot"
 
@@ -1073,6 +1100,29 @@ msgid "Importing translations…"
 msgstr "Tuodaan käännöksiä…"
 
 msgid "Finalizing…"
+msgstr ""
+
+msgid "Select TMX files to import"
+msgstr ""
+
+msgid "TMX Files"
+msgstr "TMX-tiedostot"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr ""
+
+msgid "Import error"
+msgstr ""
+
+msgid "Exporting translations…"
+msgstr ""
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr ""
+
+msgid "Export error"
 msgstr ""
 
 msgid "Reset translation memory"
@@ -1514,11 +1564,17 @@ msgstr "Etsi edellinen"
 msgid "&Preferences"
 msgstr "A&setukset"
 
-msgid "Display entry &IDs"
-msgstr "Näytä viestien &ID:t"
+msgid "Show string &ID"
+msgstr ""
 
-msgid "Display Entry &IDs"
-msgstr "Näytä viestien &ID:t"
+msgid "Show String &ID"
+msgstr ""
+
+msgid "Show warnings"
+msgstr "Näytä varoitukset"
+
+msgid "Show Warnings"
+msgstr "Näytä varoitukset"
 
 msgid "Sort by &file order"
 msgstr "Järjestä &tiedostojärjestyksen mukaan"
@@ -1571,11 +1627,11 @@ msgstr "Näytä tilarivi"
 msgid "C&atalog"
 msgstr "K&atalogi"
 
-msgid "&Update from sources"
-msgstr "P&äivitä lähteestä"
+msgid "&Update from source code"
+msgstr "&Päivitä lähdekoodista"
 
-msgid "&Update from Sources"
-msgstr "P&äivitä lähteestä"
+msgid "&Update from Source Code"
+msgstr "&Päivitä lähdekoodista"
 
 msgid "Update from &POT file…"
 msgstr "Päivitä &POT-tiedostosta…"
@@ -1827,8 +1883,11 @@ msgstr "Validoi"
 msgid "Check for errors in the translation"
 msgstr "Tarkista käännöksen virheet"
 
-msgid "Update"
-msgstr "Päivitä"
+msgid "Update from code"
+msgstr ""
+
+msgid "Update from Code"
+msgstr ""
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Päivityskatalogi - synkronoi se lähteen kanssa"
@@ -1859,6 +1918,12 @@ msgstr "Lisää kommentti"
 msgid "Add Comment"
 msgstr "Lisää kommentti"
 
+msgid "Delete From Translation Memory"
+msgstr "Poista käännösmuistista"
+
+msgid "Delete from translation memory"
+msgstr "Poista käännösmuistista"
+
 msgid "Translation suggestions:"
 msgstr "Käännösehdotukset:"
 
@@ -1872,6 +1937,20 @@ msgstr "Vastaavuuksia ei löydy"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Tämä merkkijono löytyi Poeditin käännösmuistista."
+
+msgid "The TMX file is malformed."
+msgstr "TMX-tiedosto on viallinen."
+
+msgid "No translations were found in the TMX file."
+msgstr "TMX-tiedostosta ei löytynyt käännöksiä."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr ""
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr ""
 
 msgid "Cannot create temporary directory."
 msgstr "Tilapäiskansiota ei voida luoda."

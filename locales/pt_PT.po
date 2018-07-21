@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:34-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -211,7 +211,7 @@ msgid "File:"
 msgstr "Ficheiro:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "Não existem projetos de tradução associados à sua conta Crowdin."
+msgstr "Não existem projetos de tradução listados na sua conta da Crowdin."
 
 msgid "This project has no files that can be translated in Poedit."
 msgstr "Este projeto não tem ficheiros que possam ser traduzidos com o Poedit."
@@ -401,7 +401,7 @@ msgstr "Não pode largar mais do que um ficheiro na janela do Poedit."
 
 #, c-format
 msgid "File “%s” is not a message catalog."
-msgstr "O ficheiro “%s“ não é um catálogo."
+msgstr "O ficheiro “%s“ não é um catálogo de mensagens."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -537,6 +537,17 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "A tradução está pronta para utilização."
 
+msgid "Warnings have been disabled."
+msgstr "Os avisos foram desativados."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Se desativou os avisos em virtude dos falsos positivos, considere o envio de "
+"um ficheiro de exemplo para help@poedit.com para nos ajudar a melhorar a "
+"aplicação."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -567,12 +578,12 @@ msgid ""
 "Suggestions are not available if the translation language is not set "
 "correctly. Other features, such as plural forms, may be affected as well."
 msgstr ""
-"As sugestões de tradução não estarão disponíveis se o idioma do projeto não "
-"estiver definido corretamente. Outras funcionalidades, como as formas "
-"plurais, também poderão ser afetadas."
+"As sugestões não estão disponíveis se o idioma de tradução não estiver "
+"definido corretamente. Outras funcionalidades, tais como as formas de "
+"plural, poderão ser também afetadas."
 
 msgid "Language of the translation is the same as source language."
-msgstr "O idioma da tradução é igual ao idioma do texto fonte."
+msgstr "O idioma de tradução é o mesmo que o idioma fonte."
 
 msgid "Fix Language"
 msgstr "Corrigir idioma"
@@ -613,8 +624,8 @@ msgstr "Corrigir cabeçalho"
 #, c-format
 msgid "Plural forms expression used by the catalog is unusual for %s."
 msgstr ""
-"A expressão de formas plurais utilizadas neste catálogo não são as que devem "
-"ser utilizadas pelo idioma %s."
+"A expressão de formas de plural utilizadas pelo catálogo são invulgares para "
+"%s."
 
 #. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the catalog is unusual for %s.")"
 msgid "Review"
@@ -786,6 +797,10 @@ msgstr "Tudo"
 msgid "Form %i"
 msgstr "Forma %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Forma %i (não usada)"
+
 msgid "Singular"
 msgstr "Singular"
 
@@ -835,7 +850,7 @@ msgid "Failed command: %s"
 msgstr "Falha do comando: %s"
 
 msgid "Failed to merge gettext catalogs."
-msgstr "Erro ao unir os catálogos gettex."
+msgstr "Não foi possível unir os catálogos do Gettext."
 
 msgid "Source file"
 msgstr "Ficheiro fonte"
@@ -1030,15 +1045,8 @@ msgstr "Geral"
 msgid "Use translation memory"
 msgstr "Utilizar memória de tradução"
 
-msgid "Learn From Files…"
-msgstr "Aprender dos ficheiros…"
-
-msgid "Learn from files…"
-msgstr "Aprender dos ficheiros…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Repor"
+msgid "Manage…"
+msgstr "Gerir…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1069,6 +1077,28 @@ msgstr "Traduções guardadas:"
 msgid "Database size on disk:"
 msgstr "Tamanho da base de dados no disco:"
 
+msgid "Import Translation Files…"
+msgstr "Importar ficheiros de tradução…"
+
+msgid "Import translation files…"
+msgstr "Importar ficheiros de tradução…"
+
+msgid "Import From TMX…"
+msgstr "Importar de TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importar de TMX…"
+
+msgid "Export To TMX…"
+msgstr "Exportar para TMX…"
+
+msgid "Export to TMX…"
+msgstr "Exportar para TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Repor"
+
 msgid "Select translation files to import"
 msgstr "Selecione os ficheiros de tradução a importar"
 
@@ -1080,6 +1110,29 @@ msgstr "A importar traduções…"
 
 msgid "Finalizing…"
 msgstr "A finalizar…"
+
+msgid "Select TMX files to import"
+msgstr "Selecione os ficheiros TMX a importar"
+
+msgid "TMX Files"
+msgstr "Ficheiros TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Ocorreu uma falha ao importar a memória de traduções de “%s”."
+
+msgid "Import error"
+msgstr "Erro de importação"
+
+msgid "Exporting translations…"
+msgstr "A exportar traduções…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Ocorreu uma falha ao exportar a memória de traduções para “%s”."
+
+msgid "Export error"
+msgstr "Erro de exportação"
 
 msgid "Reset translation memory"
 msgstr "Reiniciar memória de traduções"
@@ -1524,11 +1577,17 @@ msgstr "Localizar anterior"
 msgid "&Preferences"
 msgstr "&Preferências"
 
-msgid "Display entry &IDs"
-msgstr "Mostrar &ID das entradas"
+msgid "Show string &ID"
+msgstr "Mostrar &ID da linha"
 
-msgid "Display Entry &IDs"
-msgstr "Mostrar &ID das entradas"
+msgid "Show String &ID"
+msgstr "Mostrar &ID da linha"
+
+msgid "Show warnings"
+msgstr "Mostrar avisos"
+
+msgid "Show Warnings"
+msgstr "Mostrar avisos"
 
 msgid "Sort by &file order"
 msgstr "Ordenar pela ordem do &ficheiro"
@@ -1581,11 +1640,11 @@ msgstr "Mostrar barra de estado"
 msgid "C&atalog"
 msgstr "C&atálogo"
 
-msgid "&Update from sources"
-msgstr "At&ualizar com base nas fontes"
+msgid "&Update from source code"
+msgstr "At&ualizar a partir do código fonte"
 
-msgid "&Update from Sources"
-msgstr "At&ualizar com base nas fontes"
+msgid "&Update from Source Code"
+msgstr "At&ualizar a partir do código fonte"
 
 msgid "Update from &POT file…"
 msgstr "Atualizar a partir de ficheiro &POT…"
@@ -1838,8 +1897,11 @@ msgstr "Validar"
 msgid "Check for errors in the translation"
 msgstr "Procurar erros na tradução"
 
-msgid "Update"
-msgstr "Atualizar"
+msgid "Update from code"
+msgstr "Atualizar a partir do código"
+
+msgid "Update from Code"
+msgstr "Atualizar a partir do código"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Atualizar catálogo e sincronizar com o código fonte"
@@ -1870,6 +1932,12 @@ msgstr "Adicionar comentário"
 msgid "Add Comment"
 msgstr "Adicionar comentário"
 
+msgid "Delete From Translation Memory"
+msgstr "Apagar da memória de traduções"
+
+msgid "Delete from translation memory"
+msgstr "Apagar da memória de traduções"
+
 msgid "Translation suggestions:"
 msgstr "Sugestões de tradução:"
 
@@ -1883,6 +1951,20 @@ msgstr "Nenhuma ocorrência"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Esta linha foi encontrada na memória de traduções do Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "O ficheiro TMX está danificado."
+
+msgid "No translations were found in the TMX file."
+msgstr "Não foram encontradas traduções no ficheiro TMX."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "A base de dados da memória de traduções está danificada: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Erro na memória de traduções: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Não foi possível criar o diretório temporário."
@@ -1948,7 +2030,8 @@ msgstr "(Saber mais sobre o GNU gettext)"
 
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
-"O método mais fácil para preencher este catálogo é utilizar um ficheiro POT:"
+"O método mais fácil para preencher este catálogo é atualizá-lo a partir de "
+"um ficheiro POT:"
 
 msgid "Update from POT"
 msgstr "Atualizar com base em ficheiro POT..."

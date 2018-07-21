@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-06-03 18:15+0200\n"
-"PO-Revision-Date: 2018-06-03 12:13-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -542,6 +542,16 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "La traducció ja és a punt i podeu utilitzar-la."
 
+msgid "Warnings have been disabled."
+msgstr "S’han inhabilitat els advertiments."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Si heu inhabilitat els advertiments a causa de massa falsos positius, "
+"considereu enviar un fitxer de mostra a help@poedit.net per a millorar-los."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
@@ -577,7 +587,7 @@ msgstr ""
 "també podrien quedar afectades."
 
 msgid "Language of the translation is the same as source language."
-msgstr "L’idioma de la traducció es el mateix que el d’origen."
+msgstr "L’idioma de la traducció es el mateix que el de partida."
 
 msgid "Fix Language"
 msgstr "Corregeix l’idioma"
@@ -663,7 +673,7 @@ msgid "Purge deleted translations"
 msgstr "Purga les traduccions obsoletes"
 
 msgid "Do you want to remove all translations that are no longer used?"
-msgstr "Voleu suprimir totes les traduccions que ja no s'usin?"
+msgstr "Voleu suprimir totes les traduccions que ja no s’utilitzen?"
 
 msgid ""
 "If you continue with purging, all translations marked as deleted will be "
@@ -681,10 +691,10 @@ msgid "Purge"
 msgstr "Purga"
 
 msgid "Copy from source text"
-msgstr "Copia del text font"
+msgstr "Copia del text de partida"
 
 msgid "Copy from Source Text"
-msgstr "Copia del text font"
+msgstr "Copia del text de partida"
 
 #. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
@@ -740,10 +750,10 @@ msgid "Hide Status Bar"
 msgstr "Amaga la barra d’estat"
 
 msgid "Show Status Bar"
-msgstr "Mostra la barra d'estat"
+msgstr "Mostra la barra d’estat"
 
 msgid "Source text:"
-msgstr "Text font:"
+msgstr "Text de partida:"
 
 msgid "Singular:"
 msgstr "Singular:"
@@ -791,6 +801,10 @@ msgstr "Tot"
 msgid "Form %i"
 msgstr "Forma %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Forma %i (no utilitzada)"
+
 msgid "Singular"
 msgstr "Singular"
 
@@ -816,21 +830,21 @@ msgstr "Format %s"
 #. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
 #, c-format
 msgid "%s format"
-msgstr "format %s"
+msgstr "Format %s"
 
 msgid "Source text"
-msgstr "Text font"
+msgstr "Text de partida"
 
 #, c-format
 msgid "Translation — %s"
-msgstr "Traducció — %s"
+msgstr "Traducció: %s"
 
 msgid "ID"
 msgstr "Id."
 
 #, c-format
 msgid "Source text — %s"
-msgstr "Text font — %s"
+msgstr "Text de partida: %s"
 
 msgid "unknown language"
 msgstr "idioma desconegut"
@@ -846,7 +860,7 @@ msgid "Source file"
 msgstr "Fitxer de codi font"
 
 msgid "Source file occurrence:"
-msgstr "Ocurrència al fitxer font:"
+msgstr "Ocurrència al fitxer de codi font:"
 
 msgid "Open in Editor"
 msgstr "Obre en l’editor"
@@ -881,7 +895,7 @@ msgid "Whole words only"
 msgstr "Només les paraules senceres"
 
 msgid "Find in source texts"
-msgstr "Troba als texts d’origen"
+msgstr "Troba als texts de partida"
 
 msgid "Find in translations"
 msgstr "Troba a les traduccions"
@@ -927,7 +941,7 @@ msgid "Language of the translation:"
 msgstr "Idioma de la traducció:"
 
 msgid "Poedit - Catalogs manager"
-msgstr "Poedit - Gestor de catàlegs"
+msgstr "Poedit: Gestor de catàlegs"
 
 msgid "Catalog"
 msgstr "Catàleg"
@@ -936,7 +950,7 @@ msgid "Total"
 msgstr "Total"
 
 msgid "Untrans"
-msgstr "No traduït"
+msgstr "No traduïdes"
 
 msgid "Errors"
 msgstr "Errors"
@@ -963,8 +977,8 @@ msgid ""
 "Do you really want to do mass update of\n"
 "all catalogs in this project?"
 msgstr ""
-"Segur que voleu actualitzar en massa\n"
-"tots els catàlegs d'aquest projecte?"
+"Esteu segur que voleu actualitzar en massa\n"
+"tots els catàlegs d’aquest projecte?"
 
 msgid "Information about the translator"
 msgstr "Informació sobre el traductor"
@@ -995,10 +1009,10 @@ msgid "Automatically compile MO file when saving"
 msgstr "Compila el fitxer MO automàticament en desar"
 
 msgid "Show summary after catalog update"
-msgstr "Mostra el resum després de l'actualització del catàleg"
+msgstr "Mostra el resum després d’actualitzar el catàleg"
 
 msgid "Check spelling"
-msgstr "Comprova l'ortografia"
+msgstr "Comprova l’ortografia"
 
 msgid "Always change focus to text input field"
 msgstr "Canvia sempre el focus al camp d'introducció de text"
@@ -1035,23 +1049,16 @@ msgstr "General"
 msgid "Use translation memory"
 msgstr "Usa la memòria de traducció"
 
-msgid "Learn From Files…"
-msgstr "Aprèn dels fitxers…"
-
-msgid "Learn from files…"
-msgstr "Aprèn dels fitxers…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Reinicialitza"
+msgid "Manage…"
+msgstr "Gestiona…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
-msgstr "Quan actualitza de fonts"
+msgstr "En actualitzar des del codi font"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "fuzzy match within the file"
-msgstr "incloure-hi per revisar a l'arxiu"
+msgstr "inclou-hi concordances aproximades"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
@@ -1072,10 +1079,32 @@ msgid "Stored translations:"
 msgstr "Traduccions emmagatzemades:"
 
 msgid "Database size on disk:"
-msgstr "Mida de base de dades en disc:"
+msgstr "Mida de la base de dades al disc:"
+
+msgid "Import Translation Files…"
+msgstr "Importa fitxers de traducció…"
+
+msgid "Import translation files…"
+msgstr "Importa fitxers de traducció…"
+
+msgid "Import From TMX…"
+msgstr "Importa des de TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importa des de TMX…"
+
+msgid "Export To TMX…"
+msgstr "Exporta com a TMX…"
+
+msgid "Export to TMX…"
+msgstr "Exporta com a TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Reinicialitza"
 
 msgid "Select translation files to import"
-msgstr "Seleccioneu els fitxers de traducció que importar"
+msgstr "Seleccioneu els fitxers de traducció que s’han d’importar"
 
 msgid "Translation Memory"
 msgstr "Memòria de traducció"
@@ -1085,6 +1114,29 @@ msgstr "S’estan important les traduccions…"
 
 msgid "Finalizing…"
 msgstr "S’està finalitzant…"
+
+msgid "Select TMX files to import"
+msgstr "Seleccioneu els fitxers TMX que s’han d’importar"
+
+msgid "TMX Files"
+msgstr "Fitxers TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Ha fallat la importació de la memòria de traducció des de «%s»."
+
+msgid "Import error"
+msgstr "Error d’importació"
+
+msgid "Exporting translations…"
+msgstr "S’estan exportant les traduccions…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Ha fallat l’exportació de la memòria de traducció cap a «%s»."
+
+msgid "Export error"
+msgstr "Error d’exportació"
 
 msgid "Reset translation memory"
 msgstr "Esborra la memòria de traduccions"
@@ -1131,6 +1183,8 @@ msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
+"Admet tots els llenguatges de programació que les eines del Gettext "
+"reconeixen (PHP, C/C++, C#, Perl, Python, Java, JavaScript, entre d’altres)."
 
 msgid "Delete extractor"
 msgstr "Suprimeix l’extractor"
@@ -1207,7 +1261,7 @@ msgstr[1] "S’han pretraduït %u cadenes"
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
 msgid "Pre-translate"
-msgstr "Pre-traduir"
+msgstr "Pretradueix"
 
 msgid "Only fill in exact matches"
 msgstr "Únicament emplena les coincidències exactes"
@@ -1247,8 +1301,8 @@ msgid ""
 "The translations were marked as needing work, because they may be "
 "inaccurate. You should review them for correctness."
 msgstr ""
-"Les traduccions marcades com per revisar, ja que poden ser incorrectes. "
-"S'han de repassar per comprovar-les."
+"Les traduccions s’han marcat per a revisar, ja que poden ser inexactes. "
+"Hauríeu de revisar-les per a garantir-ne la correctesa."
 
 msgid "No entries could be pre-translated."
 msgstr "No s’ha pogut pretraduir cap entrada."
@@ -1305,7 +1359,7 @@ msgid "Excluded paths"
 msgstr "Camins exclosos"
 
 msgid "Advanced extraction settings"
-msgstr "Configuració d'ubicació avançada"
+msgstr "Paràmetres d’extracció avançats"
 
 msgid "Extract notes for translators from:"
 msgstr ""
@@ -1329,7 +1383,7 @@ msgid "Team name and email address or URL"
 msgstr "Nom de l’equip i adreça electrònica o URL"
 
 msgid "e.g. nplurals=2; plural=(n > 1);"
-msgstr "per exemple, nplurals=2; plural=(n > 1);"
+msgstr "p. ex., nplurals=2; plural=(n > 1);"
 
 msgid "UTF-8 (recommended)"
 msgstr "UTF-8 (recomanat)"
@@ -1353,28 +1407,28 @@ msgid "The translation starts with a space, but the source text doesn’t."
 msgstr "La traducció comença amb un espai, però el text de partida no."
 
 msgid "The translation is missing a newline at the end."
-msgstr "A la traducció hi falta un salt de línia."
+msgstr "A la traducció hi falta un salt de línia al final."
 
 msgid "The translation ends with a newline, but the source text doesn’t."
 msgstr "La traducció acaba amb un salt de línia, però el text de partida no."
 
 msgid "The translation is missing a space at the end."
-msgstr "A la traducció hi falta unespai al final."
+msgstr "A la traducció hi falta un espai al final."
 
 msgid "The translation ends with a space, but the source text doesn’t."
 msgstr "La traducció acaba amb un espai, però el text de partida no."
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr "La traducció ha d'acabar amb \"%s\"."
+msgstr "La traducció ha d’acabar amb «%s»."
 
 #, c-format
 msgid "The translation should not end with “%s”."
-msgstr "La traducció no pot acabar amb \"%s\"."
+msgstr "La traducció no ha d’acabar amb «%s»."
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
-msgstr "La traducció acaba amb “%s”, però el text de partida no “%s”."
+msgstr "La traducció acaba amb «%s», però el text de partida acaba amb «%s»."
 
 msgid "Comment:"
 msgstr "Comentari:"
@@ -1523,11 +1577,17 @@ msgstr "Cerca l'anterior"
 msgid "&Preferences"
 msgstr "&Preferències"
 
-msgid "Display entry &IDs"
-msgstr "Mostra els &id. de les entrades"
+msgid "Show string &ID"
+msgstr ""
 
-msgid "Display Entry &IDs"
-msgstr "Mostra els &id. de les entrades"
+msgid "Show String &ID"
+msgstr ""
+
+msgid "Show warnings"
+msgstr "Mostra els advertiments"
+
+msgid "Show Warnings"
+msgstr "Mostra els advertiments"
 
 msgid "Sort by &file order"
 msgstr "&Ordena per ordre de fitxer"
@@ -1580,11 +1640,11 @@ msgstr "Mostra la barra d'estat"
 msgid "C&atalog"
 msgstr "&Catàleg"
 
-msgid "&Update from sources"
-msgstr "Act&ualitza des de les fonts"
+msgid "&Update from source code"
+msgstr "Actualitza des del codi &font"
 
-msgid "&Update from Sources"
-msgstr "Act&ualitza des de les fonts"
+msgid "&Update from Source Code"
+msgstr "Actualitza des del codi &font"
 
 msgid "Update from &POT file…"
 msgstr ""
@@ -1837,8 +1897,11 @@ msgstr "Valida"
 msgid "Check for errors in the translation"
 msgstr "Comprova si hi ha errors a la traducció"
 
-msgid "Update"
-msgstr "Actualitza"
+msgid "Update from code"
+msgstr "Actualitza des del codi"
+
+msgid "Update from Code"
+msgstr "Actualitza des del codi"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Actualitza el catàleg - sincronitza'l amb les fonts"
@@ -1851,12 +1914,14 @@ msgstr "Mostra o amaga la barra lateral"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 msgid "Previous source text:"
-msgstr "Text font previ:"
+msgstr "Text de partida anterior:"
 
 msgid ""
 "The old source text (before it changed during an update) that the now-"
 "inaccurate translation corresponds to."
 msgstr ""
+"El text de partida antic (abans que canviés durant una actualització) al "
+"qual correspon la traducció ara inexacta."
 
 msgid "Notes for translators:"
 msgstr "Notes per als traductors:"
@@ -1866,6 +1931,12 @@ msgstr "Afegeix un comentari"
 
 msgid "Add Comment"
 msgstr "Afegeix un comentari"
+
+msgid "Delete From Translation Memory"
+msgstr "Suprimeix de la memòria de traducció"
+
+msgid "Delete from translation memory"
+msgstr "Suprimeix de la memòria de traducció"
 
 msgid "Translation suggestions:"
 msgstr "Suggeriments de traducció:"
@@ -1880,6 +1951,20 @@ msgstr "No s’han trobat coincidències"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "S'ha trobat aquesta cadena en la memòria de traducció del Poedit."
+
+msgid "The TMX file is malformed."
+msgstr ""
+
+msgid "No translations were found in the TMX file."
+msgstr "No s’ha trobat cap traducció al fitxer TMX."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr ""
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr ""
 
 msgid "Cannot create temporary directory."
 msgstr "No s'ha pogut crear el directori temporal."
@@ -1897,7 +1982,7 @@ msgid "Edit a Translation"
 msgstr "Modifica una traducció"
 
 msgid "Edit a translation"
-msgstr "Edita una traducció"
+msgstr "Modifica una traducció"
 
 msgid "Open an existing PO file and edit the translation."
 msgstr "Obre un fitxer PO existent i edita la traducció."
@@ -2054,7 +2139,7 @@ msgid "&Quit"
 msgstr "&Surt"
 
 msgid "File"
-msgstr "Arxiu"
+msgstr "Fitxer"
 
 msgid "Help"
 msgstr "Ajuda"
@@ -2126,11 +2211,11 @@ msgstr "Retorn"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Up"
-msgstr "Puja"
+msgstr "Amunt"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Down"
-msgstr "Baixa"
+msgstr "Avall"
 
 #. TRANSLATORS: Keyboard shortcut for display in Windows menus
 msgid "Left"

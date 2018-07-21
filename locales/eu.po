@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:33-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:56\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -540,6 +540,16 @@ msgstr[1] ""
 msgid "The translation is ready for use."
 msgstr "Itzulpena erabiltzeko prest dago."
 
+msgid "Warnings have been disabled."
+msgstr "Oharrak desaktibatu egin dira."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Oharrak positibo faltsu gehiegigatik desgaitu badituzu, bidali mesedez "
+"fitxategia help@poedit.net helbidera zer gertatzen den argitzeko."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poeditek automatikoki konpondu du \"%s\" fitxategiko eduki baliogabea."
@@ -787,6 +797,10 @@ msgstr "Dena"
 msgid "Form %i"
 msgstr "%i forma"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "%i forma (ez da erabiltzen)"
+
 msgid "Singular"
 msgstr "Singularra"
 
@@ -1030,15 +1044,8 @@ msgstr "Orokorra"
 msgid "Use translation memory"
 msgstr "Erabili itzulpen memoria"
 
-msgid "Learn From Files…"
-msgstr "Ikasi fitxategietatik…"
-
-msgid "Learn from files…"
-msgstr "Ikasi fitxategietatik…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Berrezarri"
+msgid "Manage…"
+msgstr "Kudeatu…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1068,6 +1075,28 @@ msgstr "Biltegiratutako itzulpenak:"
 msgid "Database size on disk:"
 msgstr "Datu-basearen tamaina diskoan:"
 
+msgid "Import Translation Files…"
+msgstr "Itzulpen fitxategiak inportatu…"
+
+msgid "Import translation files…"
+msgstr "Itzulpen fitxategiak inportatu…"
+
+msgid "Import From TMX…"
+msgstr "TMXtik inportatu…"
+
+msgid "Import from TMX…"
+msgstr "TMXtik inportatu…"
+
+msgid "Export To TMX…"
+msgstr "TMXra esportatu…"
+
+msgid "Export to TMX…"
+msgstr "TMXra esportatu…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Berrezarri"
+
 msgid "Select translation files to import"
 msgstr "Hautatu inportatzeko itzulpen-fitxategiak"
 
@@ -1079,6 +1108,29 @@ msgstr "Itzulpenak inportatzen…"
 
 msgid "Finalizing…"
 msgstr "Amaitzen…"
+
+msgid "Select TMX files to import"
+msgstr "Inportatu beharreko TMX fitxategiak aukeratu"
+
+msgid "TMX Files"
+msgstr "TMX fitxategiak"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "\"%s\"tik itzulpen memoria inportatzeak huts egin du."
+
+msgid "Import error"
+msgstr "Inportazio-errorea"
+
+msgid "Exporting translations…"
+msgstr "Itzulpenak esportatzen…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "\"%s\"ra itzulpen memoria esportatzeak huts egin du."
+
+msgid "Export error"
+msgstr "Esportazio errorea"
 
 msgid "Reset translation memory"
 msgstr "Berrezarri itzulpen memoria"
@@ -1522,11 +1574,17 @@ msgstr "Bilatu aurrekoa"
 msgid "&Preferences"
 msgstr "&Hobespenak"
 
-msgid "Display entry &IDs"
-msgstr "Erakutsi sarreren &ID-ak"
+msgid "Show string &ID"
+msgstr "&ID katea erakutsi"
 
-msgid "Display Entry &IDs"
-msgstr "Erakutsi sarreren &ID-ak"
+msgid "Show String &ID"
+msgstr "&ID katea erakutsi"
+
+msgid "Show warnings"
+msgstr "Oharrak erakutsi"
+
+msgid "Show Warnings"
+msgstr "Oharrak erakutsi"
 
 msgid "Sort by &file order"
 msgstr "Ordenatu &fitxategiz"
@@ -1579,11 +1637,11 @@ msgstr "Erakutsi egoera-barra"
 msgid "C&atalog"
 msgstr "&Katalogoa"
 
-msgid "&Update from sources"
+msgid "&Update from source code"
 msgstr "&Eguneratu iturburuetatik"
 
-msgid "&Update from Sources"
-msgstr "Eguneratu &iturburuetatik"
+msgid "&Update from Source Code"
+msgstr "&Eguneratu iturburuetatik"
 
 msgid "Update from &POT file…"
 msgstr "Eguneratu &POT fitxategitik…"
@@ -1836,8 +1894,11 @@ msgstr "Balioztatu"
 msgid "Check for errors in the translation"
 msgstr "Egiaztatu itzulpenean errorerik dagoen"
 
-msgid "Update"
-msgstr "Eguneratu"
+msgid "Update from code"
+msgstr "Eguneratu kodetik"
+
+msgid "Update from Code"
+msgstr "Eguneratu kodetik"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Eguneratu katalogoa - sinkronizatu iturburuekin"
@@ -1868,6 +1929,12 @@ msgstr "Gehitu iruzkina"
 msgid "Add Comment"
 msgstr "Gehitu iruzkina"
 
+msgid "Delete From Translation Memory"
+msgstr "Itzulpen memoriatik ezabatu"
+
+msgid "Delete from translation memory"
+msgstr "Itzulpen memoriatik ezabatu"
+
 msgid "Translation suggestions:"
 msgstr "Itzulpen-iradokizunak:"
 
@@ -1881,6 +1948,20 @@ msgstr "Ez da bat datorrenik aurkitu"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Kate hau Poedit-en itzulpen memorian aurkitu da."
+
+msgid "The TMX file is malformed."
+msgstr "TMX fitxategia ez da zuzena."
+
+msgid "No translations were found in the TMX file."
+msgstr "Ez da itzulpenik aurkitu TMX fitxategian."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Itzulpen memorien datubasea ez da zuzena: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Itzulpen memoriaren errorea: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Ezin izan da direktorio tenporala sortu."

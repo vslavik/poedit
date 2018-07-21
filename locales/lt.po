@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:34-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt_LT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100<=11 || n%100>=19) ? 0 : n"
-"%10>=2 && n%10<=9 && (n%100<=11 || n%100>=19) ? 1 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && (n%100>19 || n%100<11) ? 0 : (n"
+"%10>=2 && n%10<=9) && (n%100>19 || n%100<11) ? 1 : n%1!=0 ? 2: 3);\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: poedit\n"
 "X-Crowdin-Language: lt\n"
@@ -450,7 +450,7 @@ msgid "Compiled Translation Files"
 msgstr "Kompiliuoti vertimo failai"
 
 msgid "Export as…"
-msgstr "Iškelti kaip…"
+msgstr "Eksportuoti kaip…"
 
 msgid "HTML Files"
 msgstr "HTML failai"
@@ -538,6 +538,14 @@ msgstr[3] "Vertimas paruoštas naudoti, bet %d įrašų dar neišversta."
 
 msgid "The translation is ready for use."
 msgstr "Vertimas paruoštas naudoti."
+
+msgid "Warnings have been disabled."
+msgstr "Įspėjimų rodymas išjungtas."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -787,6 +795,10 @@ msgstr "Viskas"
 msgid "Form %i"
 msgstr "Forma %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr ""
+
 msgid "Singular"
 msgstr "Vienaskaita"
 
@@ -1030,15 +1042,8 @@ msgstr "Bendra"
 msgid "Use translation memory"
 msgstr "Naudoti vertimų atminties pasiūlymus"
 
-msgid "Learn From Files…"
-msgstr "Mokytis iš failų…"
-
-msgid "Learn from files…"
-msgstr "Mokytis iš failų…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Iš naujo"
+msgid "Manage…"
+msgstr ""
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1069,6 +1074,28 @@ msgstr "Išsaugoti vertimai:"
 msgid "Database size on disk:"
 msgstr "Duomenų bazės dydis diske:"
 
+msgid "Import Translation Files…"
+msgstr "Importuoti vertimo failus…"
+
+msgid "Import translation files…"
+msgstr "Importuoti vertimo failus…"
+
+msgid "Import From TMX…"
+msgstr "Importuoti iš TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importuoti iš TMX…"
+
+msgid "Export To TMX…"
+msgstr "Eksportuoti į TMX…"
+
+msgid "Export to TMX…"
+msgstr "Eksportuoti į TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Iš naujo"
+
 msgid "Select translation files to import"
 msgstr "Pasirinkite kokius vertimo failus importuosite"
 
@@ -1076,10 +1103,33 @@ msgid "Translation Memory"
 msgstr "Vertimų atmintis"
 
 msgid "Importing translations…"
-msgstr "Įkeliami vertimai…"
+msgstr "Importuojami vertimai…"
 
 msgid "Finalizing…"
 msgstr "Užbaigiama…"
+
+msgid "Select TMX files to import"
+msgstr "Pasirinkite kokius TMX importuosite"
+
+msgid "TMX Files"
+msgstr "TMX failai"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Vertimų atminties importas iš „%s“ nepavyko."
+
+msgid "Import error"
+msgstr "Importavimo klaida"
+
+msgid "Exporting translations…"
+msgstr "Eksportuojami vertimai…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Vertimų atminties eksportas į „%s“ nepavyko."
+
+msgid "Export error"
+msgstr "Eksporto klaida"
 
 msgid "Reset translation memory"
 msgstr "Atkurti vertimų atmintį"
@@ -1528,11 +1578,17 @@ msgstr "Surasti ankstesnį"
 msgid "&Preferences"
 msgstr "&Nustatymai"
 
-msgid "Display entry &IDs"
-msgstr "Rodyti įrašų &identifikatorius"
+msgid "Show string &ID"
+msgstr ""
 
-msgid "Display Entry &IDs"
-msgstr "Rodyti įrašų &identifikatorius"
+msgid "Show String &ID"
+msgstr ""
+
+msgid "Show warnings"
+msgstr "Rodyti įspėjimus"
+
+msgid "Show Warnings"
+msgstr "Rodyti įspėjimus"
 
 msgid "Sort by &file order"
 msgstr "Rikiuoti pagal eiliškumą &faile"
@@ -1585,11 +1641,11 @@ msgstr "Rodyti būsenos juostą"
 msgid "C&atalog"
 msgstr "K&atalogas"
 
-msgid "&Update from sources"
-msgstr "&Atnaujinti iš pradinių tekstų"
+msgid "&Update from source code"
+msgstr ""
 
-msgid "&Update from Sources"
-msgstr "&Atnaujinti iš pradinių tekstų"
+msgid "&Update from Source Code"
+msgstr ""
 
 msgid "Update from &POT file…"
 msgstr "Atnaujinti iš &POT failo…"
@@ -1842,8 +1898,11 @@ msgstr "Patvirtinti"
 msgid "Check for errors in the translation"
 msgstr "Tikrinti ar nėra vertimo klaidų"
 
-msgid "Update"
-msgstr "Atnaujinti"
+msgid "Update from code"
+msgstr ""
+
+msgid "Update from Code"
+msgstr ""
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Atnaujinti katalogą - sinchronizuoti jį su pradiniais tekstais"
@@ -1874,6 +1933,12 @@ msgstr "Pridėti komentarą"
 msgid "Add Comment"
 msgstr "Pridėti komentarą"
 
+msgid "Delete From Translation Memory"
+msgstr "Ištrinti iš vertimų atminties"
+
+msgid "Delete from translation memory"
+msgstr "Ištrinti iš vertimų atminties"
+
 msgid "Translation suggestions:"
 msgstr "Vertimų siūlymai:"
 
@@ -1887,6 +1952,20 @@ msgstr "Atitikmenų nerasta"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Ši eilutė buvo rasta „Poedit“ vertimų atmintyje."
+
+msgid "The TMX file is malformed."
+msgstr "TMX failas yra neteisingas."
+
+msgid "No translations were found in the TMX file."
+msgstr ""
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Sugadinta vertimų atminties duomenų bazė: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Vertimų atminties klaida: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Sukurti laikino aplanko nepavyko."

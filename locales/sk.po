@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-04-22 15:13+0200\n"
-"PO-Revision-Date: 2018-04-22 08:34-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:58\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -549,6 +549,16 @@ msgstr[3] ""
 msgid "The translation is ready for use."
 msgstr "Preklad je pripravený na používanie."
 
+msgid "Warnings have been disabled."
+msgstr "Varovania boli vypnuté."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"Ak ste vypli varovania kvôli častým falošným poplachom, zvážte, prosím, "
+"odoslanie vzorového súboru na help@poedit.net s cieľom zlepšiť ich."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Program Poedit automaticky opraví neplatný obsah v súbore \"%s\"."
@@ -798,6 +808,10 @@ msgstr "Všetko"
 msgid "Form %i"
 msgstr "Tvar %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "Formulár %i (nepoužitý)"
+
 msgid "Singular"
 msgstr "Jednotné číslo"
 
@@ -1042,15 +1056,8 @@ msgstr "Všeobecné"
 msgid "Use translation memory"
 msgstr "Použiť pamäť prekladov (PP)"
 
-msgid "Learn From Files…"
-msgstr "Učiť sa zo súborov..."
-
-msgid "Learn from files…"
-msgstr "Učiť sa zo súborov..."
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "Obnoviť"
+msgid "Manage…"
+msgstr "Spravovať…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1062,7 +1069,7 @@ msgstr "označiť ako nepresné v súbore"
 
 #. TRANSLATORS: Preceded by "When updating from sources"
 msgid "pre-translate from TM"
-msgstr "predbežne preložiť z PP"
+msgstr "pred-preložiť z PP"
 
 msgid ""
 "Poedit can attempt to fill in new entries from only previous translations in "
@@ -1080,6 +1087,28 @@ msgstr "Počet uložených prekladov:"
 msgid "Database size on disk:"
 msgstr "Veľkosť databázy na disku:"
 
+msgid "Import Translation Files…"
+msgstr "Importovať súbory na preklad…"
+
+msgid "Import translation files…"
+msgstr "Importovať súbory na preklad…"
+
+msgid "Import From TMX…"
+msgstr "Importovať z TMX…"
+
+msgid "Import from TMX…"
+msgstr "Importovať z TMX…"
+
+msgid "Export To TMX…"
+msgstr "Exportovať do TMX…"
+
+msgid "Export to TMX…"
+msgstr "Exportovať do TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "Obnoviť"
+
 msgid "Select translation files to import"
 msgstr "Vyberte súbor prekladu pre import"
 
@@ -1091,6 +1120,29 @@ msgstr "Importujú sa preklady..."
 
 msgid "Finalizing…"
 msgstr "Dokončuje sa..."
+
+msgid "Select TMX files to import"
+msgstr "Vyberte súbor TMX na import"
+
+msgid "TMX Files"
+msgstr "Súbory TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "Importovanie prekladovej pamäte do \"%s\" zlyhalo."
+
+msgid "Import error"
+msgstr "Chyba importu"
+
+msgid "Exporting translations…"
+msgstr "Exportovanie prekladov…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "Exportovanie prekladovej pamäte do \"%s\" zlyhalo."
+
+msgid "Export error"
+msgstr "Chyba exportu"
 
 msgid "Reset translation memory"
 msgstr "Obnoviť pamäť prekladov"
@@ -1201,7 +1253,7 @@ msgstr "Prebieha predbežný preklad…"
 #, c-format
 msgid "Pre-translated %u string"
 msgid_plural "Pre-translated %u strings"
-msgstr[0] "Predbežne preložený %u reťazec"
+msgstr[0] "Pred-preložený %u reťazec"
 msgstr[1] "Predbežne preložené %u reťazce"
 msgstr[2] "Predbežne preložených %u reťazcov"
 msgstr[3] "Predbežne preložených %u reťazcov"
@@ -1217,7 +1269,7 @@ msgstr[3] "Predbežne preložených %u reťazcov"
 #. experience). "Pre-translate" nicely expresses that it's only the step done
 #. *before* actual translation.
 msgid "Pre-translate"
-msgstr "Predpreložiť"
+msgstr "Pred-preložiť"
 
 msgid "Only fill in exact matches"
 msgstr "Vyplniť iba presné zhody"
@@ -1262,7 +1314,7 @@ msgstr ""
 "môžu potrebovať úpravy."
 
 msgid "No entries could be pre-translated."
-msgstr "Žiadne reťazce neboli predbežne preložené."
+msgstr "Žiadne reťazce neboli pred-preložené."
 
 msgid ""
 "The TM doesn’t contain any strings similar to the content of this file. It "
@@ -1534,11 +1586,17 @@ msgstr "Nájsť predchádzajúci"
 msgid "&Preferences"
 msgstr "Nas&tavenia"
 
-msgid "Display entry &IDs"
-msgstr "Zobraziť &ID záznamu"
+msgid "Show string &ID"
+msgstr "Zobraziť &ID reťazaca"
 
-msgid "Display Entry &IDs"
-msgstr "Zobraziť &ID záznamu"
+msgid "Show String &ID"
+msgstr "Zobraziť &ID reťazaca"
+
+msgid "Show warnings"
+msgstr "Zobraziť varovania"
+
+msgid "Show Warnings"
+msgstr "Zobraziť varovania"
 
 msgid "Sort by &file order"
 msgstr "Usporiadať podľa poradia &súborov"
@@ -1591,11 +1649,11 @@ msgstr "Zobraziť stavový riadok"
 msgid "C&atalog"
 msgstr "&Katalóg"
 
-msgid "&Update from sources"
-msgstr "&Aktualizovať zo zdroja"
+msgid "&Update from source code"
+msgstr "&Aktualizovať zo zdrojového kódu"
 
-msgid "&Update from Sources"
-msgstr "&Aktualizovať zo zdroja"
+msgid "&Update from Source Code"
+msgstr "&Aktualizovať zo zdrojového kódu"
 
 msgid "Update from &POT file…"
 msgstr "Aktualizovať zo súboru POT..."
@@ -1848,8 +1906,11 @@ msgstr "Overiť"
 msgid "Check for errors in the translation"
 msgstr "Skontrolovať chyby v preklade"
 
-msgid "Update"
-msgstr "Aktualizovať"
+msgid "Update from code"
+msgstr "Aktualizovať z kódu"
+
+msgid "Update from Code"
+msgstr "Aktualizovať z kódu"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Aktualizovať katalóg - synchronizácia so zdrojom"
@@ -1880,6 +1941,12 @@ msgstr "Pridať komentár"
 msgid "Add Comment"
 msgstr "Pridať komentár"
 
+msgid "Delete From Translation Memory"
+msgstr "Vymazať z pamäte prekladov"
+
+msgid "Delete from translation memory"
+msgstr "Vymazať z pamäte prekladov"
+
 msgid "Translation suggestions:"
 msgstr "Návrhy prekladu:"
 
@@ -1893,6 +1960,20 @@ msgstr "Nenašli sa žiadne zhody"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "Tento reťazec bol nájdený v pamäti prekladov programu Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "TMX súbor je poškodený."
+
+msgid "No translations were found in the TMX file."
+msgstr "V TMX súbore sa nenašli žiadne preklady."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "Databáza pamäte prekladov je poškodená: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "Chyba pamäte prekladu: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Nepodarilo sa vytvoriť dočasný adresár."

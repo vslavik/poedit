@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-06-03 18:15+0200\n"
-"PO-Revision-Date: 2018-06-03 12:13-0400\n"
+"POT-Creation-Date: 2018-07-21 13:36+0200\n"
+"PO-Revision-Date: 2018-07-18 08:57\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -525,6 +525,16 @@ msgstr[3] "התרגום מוכן לשימוש, אבל %d רשומות לא תו�
 msgid "The translation is ready for use."
 msgstr "התרגום מוכן לשימוש."
 
+msgid "Warnings have been disabled."
+msgstr "האזהרות הושבתו."
+
+msgid ""
+"If you disabled the warnings because of excessive false positives, please "
+"consider sending a sample file to help@poedit.net to help improve them."
+msgstr ""
+"אם השבתת את האזהרות בגלל כמות מופרזת של אזהרות שווא, נא לשקול לשלוח קובץ "
+"לדוגמה אל help@poedit.net כדי לעזור לנו לשפר אותם."
+
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr "Poedit תיקן באופן אוטומטי תוכן שגוי בקובץ \"%s\"."
@@ -771,6 +781,10 @@ msgstr "הכל"
 msgid "Form %i"
 msgstr "צורה %i"
 
+#, c-format
+msgid "Form %i (unused)"
+msgstr "צורה %i (לא בשימוש)"
+
 msgid "Singular"
 msgstr "יחיד"
 
@@ -1012,15 +1026,8 @@ msgstr "כללי"
 msgid "Use translation memory"
 msgstr "שימוש בזיכרון תרגום"
 
-msgid "Learn From Files…"
-msgstr "למידה מקבצים…"
-
-msgid "Learn from files…"
-msgstr "למידה מקבצים…"
-
-#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
-msgid "Reset"
-msgstr "איפוס"
+msgid "Manage…"
+msgstr "ניהול…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1050,6 +1057,28 @@ msgstr "תרגומים מאוחסנים:"
 msgid "Database size on disk:"
 msgstr "גודל מסד הנתונים בכונן:"
 
+msgid "Import Translation Files…"
+msgstr "ייבוא קובצי תרגום…"
+
+msgid "Import translation files…"
+msgstr "ייבוא קובצי תרגום…"
+
+msgid "Import From TMX…"
+msgstr "ייבוא מ-TMX…"
+
+msgid "Import from TMX…"
+msgstr "ייבוא מ-TMX…"
+
+msgid "Export To TMX…"
+msgstr "ייצוא ל-TMX…"
+
+msgid "Export to TMX…"
+msgstr "ייצוא ל-TMX…"
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "איפוס"
+
 msgid "Select translation files to import"
 msgstr "בחירת קובצי תרגום לייבוא"
 
@@ -1061,6 +1090,29 @@ msgstr "מייבא תרגומים…"
 
 msgid "Finalizing…"
 msgstr "מתבצעת סגירה…"
+
+msgid "Select TMX files to import"
+msgstr "בחירת קובצי TMX לייבוא"
+
+msgid "TMX Files"
+msgstr "קובצי TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "ייבוא זיכרון תרגום מתוך ״%s״ נכשל."
+
+msgid "Import error"
+msgstr "שגיאת ייבוא"
+
+msgid "Exporting translations…"
+msgstr "מייצא תרגומים…"
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "ייצוא זיכרון תרגום אל ״%s״ נכשל."
+
+msgid "Export error"
+msgstr "שגיאת ייצוא"
 
 msgid "Reset translation memory"
 msgstr "איפוס זיכרון התרגום"
@@ -1502,11 +1554,17 @@ msgstr "חיפוש הקודם"
 msgid "&Preferences"
 msgstr "ה&עדפות"
 
-msgid "Display entry &IDs"
-msgstr "הצגת מ&זהים של רשומות"
+msgid "Show string &ID"
+msgstr "הצגת מ&זהה מחרוזת"
 
-msgid "Display Entry &IDs"
-msgstr "הצגת מ&זהים של רשומות"
+msgid "Show String &ID"
+msgstr "הצגת מ&זהה מחרוזת"
+
+msgid "Show warnings"
+msgstr "הצגת אזהרות"
+
+msgid "Show Warnings"
+msgstr "הצגת אזהרות"
 
 msgid "Sort by &file order"
 msgstr "מיון לפי ה&סדר שבקובץ"
@@ -1559,11 +1617,11 @@ msgstr "הצגת שורת המצב"
 msgid "C&atalog"
 msgstr "ק&טלוג"
 
-msgid "&Update from sources"
-msgstr "עדכון מ&מקורות"
+msgid "&Update from source code"
+msgstr "עדכון מ&קוד המקור"
 
-msgid "&Update from Sources"
-msgstr "עדכון מ&מקורות"
+msgid "&Update from Source Code"
+msgstr "עדכון מ&קוד המקור"
 
 msgid "Update from &POT file…"
 msgstr "עדכון מקובץ &POT…"
@@ -1814,8 +1872,11 @@ msgstr "אימות"
 msgid "Check for errors in the translation"
 msgstr "בדיקת שגיאות בתרגום"
 
-msgid "Update"
-msgstr "עדכון"
+msgid "Update from code"
+msgstr "עדכון מקוד"
+
+msgid "Update from Code"
+msgstr "עדכון מקוד"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "עדכון קטלוג - מסנכרן אותו עם המקורות"
@@ -1845,6 +1906,12 @@ msgstr "הוספת הערה"
 msgid "Add Comment"
 msgstr "הוספת הערה"
 
+msgid "Delete From Translation Memory"
+msgstr "מחיקה מזיכרון התרגום"
+
+msgid "Delete from translation memory"
+msgstr "מחיקה מזיכרון התרגום"
+
 msgid "Translation suggestions:"
 msgstr "הצעות תרגום:"
 
@@ -1858,6 +1925,20 @@ msgstr "לא נמצאו התאמות"
 
 msgid "This string was found in Poedit’s translation memory."
 msgstr "מחרוזת זו אותרה בזיכרון התרגום של Poedit."
+
+msgid "The TMX file is malformed."
+msgstr "קובץ ה-TMX מעוות."
+
+msgid "No translations were found in the TMX file."
+msgstr "לא נמצאו תרגומים בקובץ ה-TMX."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "מסד הנתונים של זיכרון התרגום פגום: %s ‏(%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "שגיאת זיכרון תרגום: %s ‏(%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "לא ניתן ליצור ספרייה זמנית."
