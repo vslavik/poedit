@@ -15,7 +15,7 @@ get_all_langs()
 
 lang_to_macos()
 {
-    x="$1"
+    x="${1/_/-}"
     x="${x/zh-TW/zh-Hant}"
     x="${x/zh-CN/zh-Hans}"
     x="${x/@latin/-Latn}"
