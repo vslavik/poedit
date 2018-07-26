@@ -26,7 +26,7 @@
 #ifndef Poedit_version_h
 #define Poedit_version_h
 
-#define POEDIT_VERSION           "2.1"
-#define POEDIT_VERSION_WIN        2,1,0
+#define POEDIT_VERSION           "2.1.1"
+#define POEDIT_VERSION_WIN        2,1,1
 
 #endif // Poedit_version_h
