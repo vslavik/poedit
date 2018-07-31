@@ -118,7 +118,7 @@ AS_IF([test "x$have_cpprest" = "xyes"],
       ])
 AM_CONDITIONAL([HAVE_CPPREST], [test "x$have_cpprest" != "xno"])
 
-AC_CHECK_HEADERS([json.hpp])
+AC_CHECK_HEADERS([nlohmann/json.hpp])
 
 WX_CONFIG_CHECK([3.0.3], [WXFOUND=1], [WXFOUND=0], [$WXLIBS_USED], [--unicode])
 

@@ -11,7 +11,7 @@ dist_metainfo_DATA = net.poedit.Poedit.appdata.xml
 
 EXTRA_DIST = \
 	deps/json/LICENSE.MIT \
-	deps/json/src/json.hpp \
+	deps/json/single_include/nlohmann/json.hpp \
 	deps/pugixml/LICENSE.md \
 	deps/pugixml/src/pugiconfig.hpp \
 	deps/pugixml/src/pugixml.cpp \

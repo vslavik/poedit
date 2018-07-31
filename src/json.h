@@ -28,10 +28,10 @@
 
 #include "str_helpers.h"
 
-#ifdef HAVE_JSON_HPP
-#include <json.hpp>
+#ifdef HAVE_NLOHMANN_JSON_HPP
+ #include <nlohmann/json.hpp>
 #else
-#include "../deps/json/src/json.hpp"
+ #include "../deps/json/single_include/nlohmann/json.hpp"
 #endif
 
 using json = nlohmann::json;
