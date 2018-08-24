@@ -98,7 +98,23 @@ parts:
         --depth=50 \
         deps/pugixml
 
+      # Avoid generating manpage that is not accessible by users
+      sed \
+        --in-place \
+        '/\(^.*generate-docs.*$\)/d' \
+        bootstrap
+      sed \
+        --in-place \
+        '/^SUBDIRS = /s/docs //' \
+        Makefile.am
+
     build-packages:
+      # Generated manpages are not accessible, also it depends on
+      # huge texlive packages that waste bandwidth and disk space
+      #- asciidoc
+      #- xsltproc
+      #- xmlto
+
       # Boost libraries provided by Ubuntu 16.04 are too old, using
       # installation from `boostlib` part instead
       #- libboost-dev
@@ -124,7 +140,6 @@ parts:
       # Gtkspell3 requires patching to be relocatable
       #- libgtkspell3-3-dev
 
-      - asciidoc
       - automake
       - gettext
       - libcld2-dev
@@ -136,8 +151,6 @@ parts:
       - libsecret-1-dev
       - libtiff5-dev
       - pkg-config
-      - xsltproc
-      - xmlto
       - zlib1g-dev
 
     plugin: autotools
