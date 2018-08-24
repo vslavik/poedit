@@ -82,12 +82,11 @@ parts:
       - patches
       - wxwidgets
 
-    source: git://github.com/vslavik/poedit.git
+    source: .git
     source-type: git
-    source-depth: 80
     override-pull: |
       # There's no way we pull all the submodules down, we do this manually
-      git clone --depth=80 git://github.com/vslavik/poedit.git .
+      git clone ../../../.git .
       git submodule init \
         deps/json \
         deps/pugixml
