@@ -1,22 +1,21 @@
 name: poedit
-version: git
-summary: Gettext translations editor for OS X, Windows and Unix.
+version: 2.1.1
+summary: Translations editor for gettext
 description: >
-  This program is a GUI frontend to GNU Gettext utilities and a catalogs
-  editor/source code parser. It helps with translating applications into
-  other languages.
+  Translations editor for gettext (PO files). It helps with translating
+  applications or WordPress themes and plugins into other languages, as well as
+  with developing localizable applications.
 
-  By default Poedit can only open files under your home directory, to
-  allow Poedit access files under /media you must connect this snap to
-  the `removable-media` interface by running the following command as
-  superuser:
+  By default Poedit snap can only open files under your home directory, to
+  allow Poedit access files under /media you must connect this snap to the
+  `removable-media` interface by running the following command:
 
-    # snap connect poedit:removable-media
+    $ sudo snap connect poedit:removable-media
 
   For Poedit to save credential data for Crowdin integration you must
   connect this snap to the `password-manager-service` interface:
 
-    # snap connect poedit:password-manager-service
+    $ snap connect poedit:password-manager-service
 
 grade: stable
 confinement: strict
@@ -61,7 +60,10 @@ apps:
       - mount-observe
 
   poedit-uri-handler:
-    command: desktop-launch poedit --handle-poedit-uri %u
+    command: >
+      env
+      XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
+      desktop-launch poedit
     desktop: share/applications/poedit-uri.desktop
     plugs:
       - desktop
@@ -83,22 +85,9 @@ parts:
       - gtkspell
       - patches
       - wxwidgets
+      - desktop-gtk3
 
-    source: git://github.com/vslavik/poedit.git
-    source-type: git
-    source-depth: 80
-    override-pull: |
-      # There's no way we pull all the submodules down, we do this manually
-      git clone --depth=80 git://github.com/vslavik/poedit.git .
-      git submodule init \
-        deps/json \
-        deps/pugixml
-      git submodule update \
-        --depth=200 \
-        deps/json
-      git submodule update \
-        --depth=50 \
-        deps/pugixml
+    source: .
 
     build-packages:
       # Boost libraries provided by Ubuntu 16.04 are too old, using
@@ -126,7 +115,6 @@ parts:
       # Gtkspell3 requires patching to be relocatable
       #- libgtkspell3-3-dev
 
-      - asciidoc
       - automake
       - gettext
       - libcld2-dev
@@ -138,8 +126,6 @@ parts:
       - libsecret-1-dev
       - libtiff5-dev
       - pkg-config
-      - xsltproc
-      - xmlto
       - zlib1g-dev
 
     plugin: autotools
@@ -230,14 +216,7 @@ parts:
     after:
       - ccache
 
-    source: git://github.com/vslavik/poedit.git
-    source-type: git
-    source-depth: 1
-    source-subdir: deps/boost
-    # NOTE: We override the entire pull step as submodule fetching is
-    # not optional
-    override-pull: |
-      git clone --depth=1 git://github.com/vslavik/poedit.git .
+    source: deps/boost
 
     build-packages:
       # OPTIONAL: Use gcc installation from `gcc-6` part instead
@@ -253,7 +232,6 @@ parts:
       # Setup ccache + GCC-6
       PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
-      cd deps/boost
       ./bootstrap.sh \
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
         --with-libraries=iostreams,regex,system,thread \
@@ -279,9 +257,7 @@ parts:
     after:
       - ccache
 
-    source: git://github.com/vslavik/wxWidgets.git
-    source-type: git
-    source-depth: 1
+    source: deps/wx
 
     build-packages:
       # OPTIONAL: Use gcc installation from `gcc-6` part instead
@@ -372,18 +348,6 @@ parts:
     prime:
       - $files-from-stage-packages
       - $localizations
-
-  desktop-gtk3:
-    after:
-      - ccache
-
-    override-build: |
-      set -eu
-
-      # Setup ccache + GCC-6
-      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
-
-      snapcraftctl build
 
   # This pseudo part setups Compiler cache(ccache) to the stage dir.
   #

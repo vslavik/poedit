@@ -45,4 +45,6 @@ replace_ver .travis.yml \
             '\(file: poedit-\).*\(.tar.gz\)' "\1$VERSION\2"
 replace_ver Poedit.xcodeproj/project.pbxproj \
             '\(POEDIT_VERSION = \).*\(;\)' "\1$VERSION\2"
+replace_ver snap/snapcraft.yaml \
+            '\(version: \).*' "\1$VERSION"
 touch macos/Poedit-Info.plist
