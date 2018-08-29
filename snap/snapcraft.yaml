@@ -307,6 +307,18 @@ parts:
       - zlib1g-dev
 
     plugin: autotools
+    override-pull: |
+      set -eu
+
+      snapcraftctl pull
+
+      # Fix configure process on armhf, arm64
+      cp \
+        --force \
+        --verbose \
+        /usr/share/misc/config.* \
+        .
+
     override-build: |
       set -eu
 
