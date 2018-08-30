@@ -143,9 +143,7 @@ parts:
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
       make \
         --jobs=$(nproc)
-      make \
-        prefix="${SNAPCRAFT_PART_INSTALL}" \
-        install
+      make prefix="${SNAPCRAFT_PART_INSTALL}" install-strip
 
       sed \
         --in-place \
@@ -303,9 +301,7 @@ parts:
         CXX=g++-6
       make \
         --jobs=$(nproc)
-      make \
-        prefix="${SNAPCRAFT_PART_INSTALL}" \
-        install
+      make prefix="${SNAPCRAFT_PART_INSTALL}" install
 
     stage-packages:
       # For addr2line, required by wxWidgets error dialog
@@ -594,8 +590,7 @@ parts:
         --with-myspell-dir=/snap/poedit/current/usr/share/hunspell \
         PKG_CONFIG_PATH="${SNAPCRAFT_STAGE}"/lib/pkgconfig
       make --jobs=$(nproc)
-      make DESTDIR="${SNAPCRAFT_PART_INSTALL}" \
-        install
+      make DESTDIR="${SNAPCRAFT_PART_INSTALL}" install-strip
 
     stage-packages:
       - libhunspell-1.3-0
