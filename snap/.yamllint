@@ -1,0 +1,17 @@
+# yamllint Configuration File for Snappy Packaging
+# https://yamllint.readthedocs.io
+#
+
+extends: default
+
+rules:
+  comments:
+    # Comments without starting space is disabled code
+    require-starting-space: false
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  document-start: disable
+  line-length:
+    # /parts/*/source key's value is URL
+    allow-non-breakable-inline-mappings: true
+    max: 100

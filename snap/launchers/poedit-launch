@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# This is a launcher for displaying obsoletion notice before launching the application
+
+set \
+	-o errexit \
+	-o errtrace \
+	-o nounset \
+	-o pipefail
+
+desktop-launch \
+	yad \
+	--button='Got it' \
+	--buttons-layout=center \
+	--center \
+	--on-top \
+	--title='Snap Obsoletion Notice' \
+	--text='This snap, `poedit-wip-pr-468` has been superceded by the `poedit` snap, and will NOT recieve any updates!  Please remove this snap and install the `poedit` snap as soon as possible.  For more info, check out <https://github.com/vslavik/poedit/pull/468>' \
+	--width=500 \
+	--height=500 \
+	--window-icon="${SNAP}"/meta/gui/icon.png
+
+desktop-launch poedit "${@}"

@@ -44,6 +44,7 @@ before_install:
 
 script:
     - scripts/travis-check-translations.sh
+    - scripts/travis-check-snappy-yamllint.sh
     # don't build directly, create a tarball first and try building from that
     - ./bootstrap && ./configure && make dist && make distcheck
 
