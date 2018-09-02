@@ -132,9 +132,6 @@ parts:
     override-build: |
       set -eu
 
-      # Setup ccache + GCC-6
-      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
-
       ./bootstrap
       ./configure \
         --with-wx-prefix="$SNAPCRAFT_STAGE" \
@@ -227,9 +224,6 @@ parts:
     override-build: |
       set -eu
 
-      # Setup ccache + GCC-6
-      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
-
       ./bootstrap.sh \
         --prefix="${SNAPCRAFT_PART_INSTALL}" \
         --with-libraries=iostreams,regex,system,thread \
@@ -284,9 +278,6 @@ parts:
     plugin: autotools
     override-build: |
       set -eu
-
-      # Setup ccache + GCC-6
-      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       ./autogen.sh
       ./configure \
@@ -392,8 +383,6 @@ parts:
 
   # This pseudo part setups version 6 of GCC, which is not available
   # in Ubuntu 16.04 software source.
-  # To use it simply add a dependency to this part and prepend
-  # "$SNAPCRAFT_STAGE"/bin to the command search PATHs
   gcc-6:
     plugin: nil
     # Poedit sources will be used when `source` is ommitted, avoid this
@@ -409,6 +398,8 @@ parts:
 
       # Make fake executable search path for build systems that don't
       # respect CC and CXX environmental variables
+      # Snapcraft will give executable paths under SNAPCRAFT_STAGE priority
+      # in other parts' build step
       mkdir \
         --parents \
         "${SNAPCRAFT_PART_INSTALL}"/bin
@@ -507,9 +498,6 @@ parts:
     override-build: |
       set -eu
 
-      # Setup ccache + GCC-6
-      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
-
       # autogen.sh requires build directory to be created in advance
       # https://sourceforge.net/p/gtkspell/gtkspell/merge-requests/1/
       mkdir -p build
@@ -583,9 +571,6 @@ parts:
 
     override-build: |
       set -eu
-
-      # Setup ccache + GCC-6
-      PATH="${SNAPCRAFT_STAGE}/bin:${PATH}"
 
       env NOCONFIGURE=yes ./autogen.sh
       ./configure \
