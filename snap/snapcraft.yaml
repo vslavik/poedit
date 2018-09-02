@@ -26,15 +26,11 @@ apps:
     # WORKAROUND: Fix icon loading problem
     # https://github.com/ubuntu/snapcraft-desktop-helpers/pull/121
     command: >
-      env
-      XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
       desktop-launch poedit
     desktop: share/applications/poedit.desktop
 
   poedit-uri-handler:
     command: >
-      env
-      XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
       desktop-launch poedit
     desktop: share/applications/poedit-uri.desktop
 
