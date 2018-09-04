@@ -1,31 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<components version="0.11">
-  <component type="desktop-application">
+<component type="desktop">
     <id>poedit.desktop</id>
     <name>Poedit</name>
     <summary>Translations editor for gettext</summary>
     <project_license>MIT</project_license>
+    <metadata_license>CC0</metadata_license>
     <description>
-      <p>
-        Translations editor for gettext (PO files). It helps with translating
-        applications or WordPress themes and plugins into other languages, as
-        well as with developing localizable applications.
-      </p>
+        <p>
+            Translations editor for gettext (PO files). It helps with translating
+            applications or WordPress themes and plugins into other languages, as
+            well as with developing localizable applications.
+        </p>
     </description>
     <screenshots>
-      <screenshot>
-        <image type="source">https://upload.wikimedia.org/wikipedia/commons/c/c2/Poedit_1.8.1_en.png</image>
-      </screenshot>
+        <screenshot>
+            <image type="source">https://upload.wikimedia.org/wikipedia/commons/c/c2/Poedit_1.8.1_en.png</image>
+        </screenshot>
     </screenshots>
     <url type="homepage">https://poedit.net</url>
+    <url type="bugtracker">https://github.com/vslavik/poedit</url>
     <url type="translate">https://crowdin.com/project/poedit</url>
+    <content_rating type="oars-1.0" />
+    <releases>
+        <release version="2.1.1" date="2018-07-26">
+            <description>
+                <p>Fixed breakage of some localizations on macOS.</p>
+            </description>
+        </release>
+
+        <release version="2.1" date="2018-07-23">
+            <description>
+                <ul>
+                    <li>Added import and export of translation memory as TMX files.</li>
+                    <li>Added ability to delete bad translations from the TM.</li>
+                    <li>TM now has limited support for plural forms (only nplurals ≤ 2).</li>
+                    <li>Improved handling plural form rules. CLDR is now used as the data source and expressions
+                        are checked for equivalence before warning about unusual forms.</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.0.9" date="2018-07-11">
+            <description>
+                <ul>
+                    <li>Improved dark theme supports (still not perfect).</li>
+                    <li>Fixed broken list rendering of RTL text on Windows.</li>
+                </ul>
+            </description>
+        </release>
+
+        <release version="2.0.8" date="2018-06-03">
+            <description>
+                <ul>
+                    <li>Added CakePHP support.</li>
+                    <li>Minor QA warnings and RTL fixes.</li>
+                    <li>Improved TM reset to work when the index is corrupted.</li>
+                </ul>
+            </description>
+        </release>
+
+    </releases>
     <keywords>
-      <keyword>translation</keyword>
-      <keyword>gettext</keyword>
-      <keyword>po</keyword>
-      <keyword>localization</keyword>
-      <keyword>i18n</keyword>
-      <keyword>wordpress</keyword>
+        <keyword>translation</keyword>
+        <keyword>gettext</keyword>
+        <keyword>po</keyword>
+        <keyword>localization</keyword>
+        <keyword>i18n</keyword>
+        <keyword>wordpress</keyword>
     </keywords>
-  </component>
-</components>
+    <provides>
+        <binary>poedit</binary>
+    </provides>
+
+    <developer_name>Václav Slavík</developer_name>
+    <translation type="gettext">poedit</translation>
+</component>
