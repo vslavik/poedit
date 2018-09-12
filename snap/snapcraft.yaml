@@ -30,34 +30,6 @@ apps:
       XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
       desktop-launch poedit
     desktop: share/applications/poedit.desktop
-    plugs:
-      # The desktop interfaces
-      # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
-      # + Basic graphical resources
-      - desktop
-      # + Input method/a11y support
-      - desktop-legacy
-      # + Access to the X server
-      - x11
-      - wayland
-      # + Access to Unity DE services(i.e. global menu support)
-      # FIXME: This breaks common menu options' localization
-      # https://forum.snapcraft.io/t/common-menu-option-localization-broken-after-connecting-to-unity7-interface/5792
-      - unity7
-
-      # File access
-      - home
-      - removable-media
-
-      # Crowdin access
-      - network
-
-      # Secret Service access
-      - password-manager-service
-
-      # Suggestions from snappy-debug
-      - gsettings
-      - mount-observe
 
   poedit-uri-handler:
     command: >
@@ -65,17 +37,35 @@ apps:
       XDG_DATA_DIRS="$SNAP/share:$XDG_DATA_DIRS"
       desktop-launch poedit
     desktop: share/applications/poedit-uri.desktop
-    plugs:
-      - desktop
-      - desktop-legacy
-      - x11
-      - wayland
-      - home
-      - removable-media
-      - network
-      - password-manager-service
-      - gsettings
-      - mount-observe
+
+plugs:
+  # The desktop interfaces
+  # https://forum.snapcraft.io/t/the-desktop-interfaces/2042
+  # + Basic graphical resources
+  desktop:
+  # + Input method/a11y support
+  desktop-legacy:
+  # + Access to the X server
+  x11:
+  wayland:
+  # + Access to Unity DE services(i.e. global menu support)
+  # FIXME: This breaks common menu options' localization
+  # https://forum.snapcraft.io/t/common-menu-option-localization-broken-after-connecting-to-unity7-interface/5792
+  unity7:
+
+  # File access
+  home:
+  removable-media:
+
+  # Crowdin access
+  network:
+
+  # Secret Service access
+  password-manager-service:
+
+  # Suggestions from snappy-debug
+  gsettings:
+  mount-observe:
 
 parts:
   poedit:
