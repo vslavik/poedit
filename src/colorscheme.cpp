@@ -47,6 +47,19 @@ inline wxColour sRGB(int r, int g, int b, double a = 1.0)
     return wxColour([NSColor colorWithSRGBRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]);
 }
 
+inline bool IsDarkAppearance(NSAppearance *appearance)
+{
+    if (@available(macOS 10.14, *))
+    {
+        NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
+        return [appearanceName isEqualToString:NSAppearanceNameDarkAqua];
+    }
+    else
+    {
+        return false;
+    }
+}
+
 #else
 
 inline wxColour sRGB(int r, int g, int b, double a = 1.0)
@@ -194,11 +207,18 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 {
     if (!s_appModeDetermined)
     {
+#ifdef __WXOSX__
+        if (@available(macOS 10.14, *))
+            s_appMode = IsDarkAppearance(NSApp.effectiveAppearance) ? Dark : Light;
+        else
+            s_appMode = Light;
+#else
         auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
         if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
             s_appMode = Dark;
         else
             s_appMode = Light;
+#endif
         s_appModeDetermined = true;
     }
 
@@ -208,6 +228,10 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 
 ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 {
+#ifdef __WXOSX__
+    NSView *view = win->GetHandle();
+    return IsDarkAppearance(view.effectiveAppearance) ? Dark : Light;
+#else
     auto colBg = win->GetDefaultAttributes().colBg;
 
     // Use dark scheme for very dark backgrounds:

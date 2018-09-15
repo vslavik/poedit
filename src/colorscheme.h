@@ -95,7 +95,7 @@ public:
         Dark
     };
 
-    static const wxColour& Get(Color color, Mode type = Light)
+    static const wxColour& Get(Color color, Mode type = GetAppMode())
     {
         if (!s_data)
             s_data = std::make_unique<Data>();
