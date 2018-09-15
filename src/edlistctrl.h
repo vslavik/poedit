@@ -37,6 +37,7 @@ class WXDLLIMPEXP_FWD_CORE wxListEvent;
 
 #include "catalog.h"
 #include "cat_sorting.h"
+#include "colorscheme.h"
 #include "language.h"
 
 // list control with both columns equally wide:
@@ -247,7 +248,7 @@ class PoeditListCtrl : public wxDataViewCtrl
                 Col_Max // invalid
             };
 
-            Model(TextDirection appTextDir, wxVisualAttributes visual);
+            Model(TextDirection appTextDir, ColorScheme::Mode visualMode);
             virtual ~Model() {}
 
             void SetCatalog(CatalogPtr catalog);

@@ -108,11 +108,6 @@ public:
 
     static const wxColour& Get(Color color, wxWindow *win)
     {
-        return Get(color, win->GetDefaultAttributes());
-    }
-
-    static const wxColour& Get(Color color, const wxVisualAttributes& win)
-    {
         return Get(color, GetWindowMode(win));
     }
 
@@ -120,11 +115,7 @@ public:
 
     /// Returns app-wide mode (dark, light)
     static Mode GetAppMode();
-    static Mode GetWindowMode(const wxVisualAttributes& win);
-    static Mode GetWindowMode(wxWindow *win)
-    {
-        return GetWindowMode(win->GetDefaultAttributes());
-    }
+    static Mode GetWindowMode(wxWindow *win);
 
     static void CleanUp();
 

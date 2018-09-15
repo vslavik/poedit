@@ -194,7 +194,7 @@ private:
 
 
 
-PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual)
+PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualMode)
     : m_frozen(false),
       m_sourceTextDir(TextDirection::LTR),
       m_transTextDir(TextDirection::LTR),
@@ -204,11 +204,11 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, wxVisualAttributes visual
 
     // configure items colors & fonts:
 
-    m_clrID = ColorScheme::Get(Color::ItemID, visual);
-    m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visual);
-    m_clrInvalid = ColorScheme::Get(Color::ItemError, visual);
-    m_clrContextFg = ColorScheme::Get(Color::ItemContextFg, visual).GetAsString(wxC2S_HTML_SYNTAX);
-    m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visual).GetAsString(wxC2S_HTML_SYNTAX);
+    m_clrID = ColorScheme::Get(Color::ItemID, visualMode);
+    m_clrFuzzy = ColorScheme::Get(Color::ItemFuzzy, visualMode);
+    m_clrInvalid = ColorScheme::Get(Color::ItemError, visualMode);
+    m_clrContextFg = ColorScheme::Get(Color::ItemContextFg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
+    m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
 
     m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
     m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
@@ -493,11 +493,12 @@ void PoeditListCtrl::Model::CreateSortMap()
 PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
      : wxDataViewCtrl(parent, id, wxDefaultPosition, wxDefaultSize, wxDV_MULTIPLE | wxDV_ROW_LINES | wxNO_BORDER, wxDefaultValidator, "translations list")
 {
+    auto visualMode = ColorScheme::GetWindowMode(this);
     m_displayIDs = dispIDs;
 
     m_appTextDir = (wxTheApp->GetLayoutDirection() == wxLayout_RightToLeft) ? TextDirection::RTL : TextDirection::LTR;
 
-    m_model.reset(new Model(m_appTextDir, GetDefaultAttributes()));
+    m_model.reset(new Model(m_appTextDir, visualMode));
     AssociateModel(m_model.get());
 
     CreateColumns();
@@ -506,7 +507,7 @@ PoeditListCtrl::PoeditListCtrl(wxWindow *parent, wxWindowID id, bool dispIDs)
     UpdateHeaderAttrs();
 
 #ifdef __WXMSW__
-    if (ColorScheme::GetWindowMode(this) == ColorScheme::Dark)
+    if (visualMode == ColorScheme::Dark)
         SetAlternateRowColour(GetBackgroundColour().ChangeLightness(108));
 #endif
 

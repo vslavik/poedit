@@ -63,7 +63,7 @@ bool ColorScheme::s_appModeDetermined = false;
 ColorScheme::Mode ColorScheme::s_appMode = ColorScheme::Mode::Light;
 
 
-wxColour ColorScheme::DoGet(Color color, Mode type)
+wxColour ColorScheme::DoGet(Color color, Mode mode)
 {
     switch (color)
     {
@@ -81,11 +81,11 @@ wxColour ColorScheme::DoGet(Color color, Mode type)
         // List items:
 
         case Color::ItemID:
-            return type == Light ? "#a1a1a1" : wxNullColour;
+            return mode == Light ? "#a1a1a1" : wxNullColour;
         case Color::ItemFuzzy:
-            return type == Light ? sRGB(218, 123, 0) : "#a9861b";
+            return mode == Light ? sRGB(218, 123, 0) : "#a9861b";
         case Color::ItemError:
-            return DoGet(Color::TagErrorLineFg, type);
+            return DoGet(Color::TagErrorLineFg, mode);
         case Color::ItemContextFg:
             return sRGB(70, 109, 137);
         case Color::ItemContextBg:
@@ -102,9 +102,9 @@ wxColour ColorScheme::DoGet(Color color, Mode type)
         // Tags:
 
         case Color::TagContextFg:
-            return DoGet(Color::ItemContextFg, type);
+            return DoGet(Color::ItemContextFg, mode);
         case Color::TagContextBg:
-            return DoGet(Color::ItemContextBg, type);
+            return DoGet(Color::ItemContextBg, mode);
         case Color::TagSecondaryFg:
             return sRGB(87, 87, 87);
         case Color::TagSecondaryBg:
@@ -142,7 +142,7 @@ wxColour ColorScheme::DoGet(Color color, Mode type)
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:
-            return DoGet(Color::ItemFuzzy, type);
+            return DoGet(Color::ItemFuzzy, mode);
         case Color::FuzzySwitchInactive:
             return sRGB(87, 87, 87);
 
@@ -206,17 +206,16 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 }
 
 
-ColorScheme::Mode ColorScheme::GetWindowMode(const wxVisualAttributes& win)
+ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 {
+    auto colBg = win->GetDefaultAttributes().colBg;
+
     // Use dark scheme for very dark backgrounds:
-    if (win.colBg.Red() < 0x60 && win.colBg.Green() < 0x60 && win.colBg.Blue() < 0x60)
-    {
+    if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
         return Dark;
-    }
     else
-    {
         return Light;
-    }
+#endif
 }
 
 
