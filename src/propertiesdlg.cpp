@@ -258,8 +258,6 @@ public:
     {
 #if defined(__WXOSX__)
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        // FIXME: gross hack to make inside-notebook color to match
-        SetBackgroundColour(parent->GetBackgroundColour().ChangeLightness(93));
 #elif defined(__WXMSW__)
         SetBackgroundColour(*wxWHITE);
 #endif

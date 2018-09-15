@@ -17,6 +17,7 @@
 #include "wx/osx/config_xcode.h"
 #endif
 
+#define wxUSE_PRIVATE_FONTS 0
 /* --- start common options --- */
 // ----------------------------------------------------------------------------
 // global settings
@@ -630,6 +631,7 @@
 // Set to 1 to compile wxZlibInput/OutputStream classes. Also required by
 // wxUSE_LIBPNG
 #define wxUSE_ZLIB          1
+#define wxUSE_ZLIB_H_IN_PATH
 
 // If enabled, the code written by Apple will be used to write, in a portable
 // way, float on the disk. See extended.c for the license which is different

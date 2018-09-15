@@ -51,11 +51,10 @@ public:
         // De-uglify the toolbar a bit on Windows 10:
         if (IsWindows10OrGreater())
         {
-            const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
-            if (theme)
+            if (wxUxThemeIsActive())
             {
                 wxUxThemeHandle hTheme(m_tb, L"ExplorerMenu::Toolbar");
-                m_tb->SetBackgroundColour(wxRGBToColour(theme->GetThemeSysColor(hTheme, COLOR_WINDOW)));
+                m_tb->SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
             }
 
             unsigned padding = PX(4);

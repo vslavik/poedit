@@ -526,12 +526,11 @@ void PoeditListCtrl::UpdateHeaderAttrs()
     if (IsWindows10OrGreater())
     {
         // Use the same text color as Explorer's headers use
-        const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
-        if (theme)
+        if (wxUxThemeIsActive())
         {
             wxUxThemeHandle hTheme(this->GetParent(), L"ItemsView::Header");
             COLORREF clr;
-            HRESULT hr = theme->GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
+            HRESULT hr = ::GetThemeColor(hTheme, HP_HEADERITEM, 0, TMT_TEXTCOLOR, &clr);
             if (SUCCEEDED(hr))
             {
                 wxItemAttr headerAttr;
