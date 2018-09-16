@@ -135,21 +135,34 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         // Separators:
 
         case Color::ToolbarSeparator:
-            return "#cdcdcd";
+            if (mode == Dark)
+                return "#505050";
+            else
+                return "#cdcdcd";
         case Color::SidebarSeparator:
-            return "#cbcbcb";
+            if (mode == Dark)
+                return *wxBLACK;
+            else
+                return "#cbcbcb";
         case Color::EditingSeparator:
-            return sRGB(204, 204, 204);
+            if (mode == Dark)
+                return sRGB(80, 80, 80);
+            else
+                return sRGB(204, 204, 204);
         case Color::EditingSubtleSeparator:
-            return sRGB(229, 229, 229);
+            if (mode == Dark)
+                return sRGB(60, 60, 60);
+            else
+                return sRGB(229, 229, 229);
 
         // Backgrounds:
 
         case Color::SidebarBackground:
-            if (GetAppMode() == Dark)
-                return "#120f0b";
+            if (mode == Dark)
+                return "#2e2b29";
             else
                 return "#edf0f4";
+
         case Color::EditingBackground:
             #ifdef __WXOSX__
             return wxColour([NSColor textBackgroundColor]);
