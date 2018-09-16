@@ -151,7 +151,11 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             else
                 return "#edf0f4";
         case Color::EditingBackground:
+            #ifdef __WXOSX__
+            return wxColour([NSColor textBackgroundColor]);
+            #else
             return wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
+            #endif
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:

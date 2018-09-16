@@ -65,6 +65,8 @@ AttentionBar::AttentionBar(wxWindow *parent)
 {
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    NSView *view = GetHandle();
+    view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 #endif
 
 #ifndef __WXGTK__

@@ -97,7 +97,8 @@ public:
         [btn setBezelStyle:NSSmallSquareBezelStyle];
         [btn setButtonType:NSMomentaryPushInButton];
 
-        SetBackgroundColour(wxColour("#F2FCE2"));
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+            SetBackgroundColour(wxColour("#F2FCE2"));
         Bind(wxEVT_PAINT, &ActionButton::OnPaint, this);
     }
 
@@ -166,7 +167,7 @@ WelcomeScreenBase::WelcomeScreenBase(wxWindow *parent)
       m_clrNorm("#444444"),
       m_clrSub("#aaaaaa")
 {
-    switch (ColorScheme::GetAppMode())
+    switch (ColorScheme::GetWindowMode(this))
     {
         case ColorScheme::Light:
             SetBackgroundColour("#fffcf5");
