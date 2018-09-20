@@ -145,17 +145,17 @@ public:
 #endif
 
 
-#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)&& !defined(__WXOSX__)
 
 class DataViewIconsAdjuster : public wxDataViewValueAdjuster
 {
 public:
     DataViewIconsAdjuster()
     {
-        m_comment = wxArtProvider::GetBitmap("poedit-status-comment");
-        m_commentSel = wxArtProvider::GetBitmap("poedit-status-comment-selected");
-        m_bookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
-        m_bookmarkSel = wxArtProvider::GetBitmap("poedit-status-bookmark-selected");
+        m_comment = wxArtProvider::GetBitmap("ItemCommentTemplate");
+        m_commentSel = wxArtProvider::GetBitmap("ItemCommentTemplate@inverted");
+        m_bookmark = wxArtProvider::GetBitmap("ItemBookmarkTemplate");
+        m_bookmarkSel = wxArtProvider::GetBitmap("ItemBookmarkTemplate@inverted");
     }
 
     wxVariant MakeHighlighted(const wxVariant& value) const override
@@ -188,7 +188,7 @@ private:
     wxBitmap m_bookmark, m_bookmarkSel;
 };
 
-#endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
+#endif // wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
 
 } // anonymous namespace
 
@@ -210,8 +210,8 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualM
     m_clrContextFg = ColorScheme::Get(Color::ItemContextFg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
     m_clrContextBg = ColorScheme::Get(Color::ItemContextBg, visualMode).GetAsString(wxC2S_HTML_SYNTAX);
 
-    m_iconComment = wxArtProvider::GetBitmap("poedit-status-comment");
-    m_iconBookmark = wxArtProvider::GetBitmap("poedit-status-bookmark");
+    m_iconComment = wxArtProvider::GetBitmap("ItemCommentTemplate");
+    m_iconBookmark = wxArtProvider::GetBitmap("ItemBookmarkTemplate");
     m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
     m_iconWarning = wxArtProvider::GetBitmap("poedit-status-warning");
 
@@ -603,8 +603,8 @@ void PoeditListCtrl::CreateColumns()
 #endif
 
     m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, iconWidth, wxALIGN_CENTER, 0);
-#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__)
-    m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster);
+#if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
+    m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
 #endif
 
     auto sourceRenderer = new DataViewMarkupRenderer(ColorScheme::Get(Color::ItemContextBgHighlighted, this));

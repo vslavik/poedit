@@ -89,11 +89,12 @@ bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
     return mirror;
 }
 
-void ProcessTemplateImage(wxImage& img, bool keepOpaque)
+void ProcessTemplateImage(wxImage& img, bool keepOpaque, bool inverted)
 {
     int size = img.GetWidth() * img.GetHeight();
 
-    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
+    ColorScheme::Mode inverseMode = inverted ? ColorScheme::Light : ColorScheme::Dark;
+    if (ColorScheme::GetAppMode() == inverseMode)
     {
         auto rgb = img.GetData();
         for (int i = 0; i < 3*size; ++i, ++rgb)
@@ -124,6 +125,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
             id.Replace("@" #name, "")
     CHECK_FOR_VARIANT(disabled);
     CHECK_FOR_VARIANT(opaque);
+    CHECK_FOR_VARIANT(inverted);
 
     // Silence warning about unused parameter in some of the builds
     (void)client;
@@ -174,7 +176,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     }
 
     if (id.EndsWith("Template"))
-        ProcessTemplateImage(img, opaqueVariant);
+        ProcessTemplateImage(img, opaqueVariant, invertedVariant);
 
     if (disabledVariant)
         img = img.ConvertToDisabled();
