@@ -247,12 +247,16 @@ wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win)
 {
     auto bg = win->GetBackgroundColour();
     auto fg = Get(color, win);
-    if (fg.Alpha() == wxALPHA_OPAQUE)
-        return fg;
-    double alpha = fg.Alpha() / 255.0;
-    return wxColour(wxColour::AlphaBlend(fg.Red(), bg.Red(), alpha),
-                    wxColour::AlphaBlend(fg.Green(), bg.Green(), alpha),
-                    wxColour::AlphaBlend(fg.Blue(), bg.Blue(), alpha));
+#ifndef __WXOSX__
+    if (fg.Alpha() != wxALPHA_OPAQUE)
+    {
+        double alpha = fg.Alpha() / 255.0;
+        return wxColour(wxColour::AlphaBlend(fg.Red(), bg.Red(), alpha),
+                        wxColour::AlphaBlend(fg.Green(), bg.Green(), alpha),
+                        wxColour::AlphaBlend(fg.Blue(), bg.Blue(), alpha));
+    }
+#endif
+    return fg;
 }
 
 void ColorScheme::CleanUp()
