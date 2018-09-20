@@ -270,7 +270,7 @@ public:
         m_sidebar = parent;
         m_parentBlock = block;
         m_isHighlighted = false;
-        m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
+        m_icon = new ImageView(this, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
         m_moreActions = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("MoreIcon"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT);
@@ -451,8 +451,10 @@ private:
     void Highlight(bool highlight)
     {
         m_isHighlighted = highlight;
+#ifndef __WXOSX__
         for (auto c: GetChildren())
             c->SetBackgroundColour(highlight ? m_bgHighlight : m_bg);
+#endif
         m_moreActions->Show(highlight && ShouldShowActions());
         Refresh();
 
@@ -475,7 +477,7 @@ private:
     SuggestionsSidebarBlock *m_parentBlock;
     Suggestion m_value;
     bool m_isHighlighted;
-    wxStaticBitmap *m_icon;
+    ImageView *m_icon;
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;
@@ -541,7 +543,7 @@ SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
 
 wxBitmap SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const
 {
-    return wxArtProvider::GetBitmap("SuggestionTM");
+    return wxArtProvider::GetBitmap("SuggestionTMTemplate");
 }
 
 wxString SuggestionsSidebarBlock::GetTooltipForSuggestion(const Suggestion&) const
@@ -623,7 +625,7 @@ void SuggestionsSidebarBlock::BuildSuggestionsMenu(int count)
     {
         auto text = wxString::Format("(empty)\t%s%d", _("Ctrl+"), i+1);
         auto item = new wxMenuItem(menu, wxID_ANY, text);
-        item->SetBitmap(wxArtProvider::GetBitmap("SuggestionTM"));
+        item->SetBitmap(wxArtProvider::GetBitmap("SuggestionTMTemplate"));
 
         m_suggestionMenuItems.push_back(item);
         menu->Append(item);

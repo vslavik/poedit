@@ -37,7 +37,7 @@ dist_uiicons_DATA = \
 		PoeditWelcome.png \
 		SuggestionError.png \
 		SuggestionPerfectMatch.png \
-		SuggestionTM.png \
+		SuggestionTMTemplate.png \
 		poedit-status-cat-mid.png \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \
