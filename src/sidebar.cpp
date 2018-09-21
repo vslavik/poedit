@@ -273,7 +273,7 @@ public:
         m_icon = new ImageView(this, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
-        m_moreActions = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("MoreIcon"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT);
+        m_moreActions = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("MoreTemplate"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT);
 
         m_isPerfect = isFirst
                       ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
