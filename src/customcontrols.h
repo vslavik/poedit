@@ -29,6 +29,8 @@
 #include "concurrency.h"
 #include "language.h"
 
+#include <wx/nativewin.h>
+#include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
@@ -163,5 +165,22 @@ private:
     wxActivityIndicator *m_spinner;
     wxStaticText *m_label, *m_error;
 };
+
+
+/// Native static bitmap
+#ifdef __WXOSX__
+class ImageView : public wxNativeWindow
+{
+public:
+    ImageView(wxWindow *parent, const wxBitmap& bmp = wxNullBitmap);
+    void SetBitmap(const wxBitmap& bmp);
+};
+#else
+class ImageView : public wxStaticBitmap
+{
+public:
+    ImageView(wxWindow *parent, const wxBitmap& bmp = wxNullBitmap) : wxStaticBitmap(parent, wxID_ANY, bmp) {}
+};
+#endif
 
 #endif // Poedit_customcontrols_h

@@ -432,3 +432,23 @@ void ActivityIndicator::StopWithError(const wxString& msg)
 
     UpdateLayoutAfterTextChange();
 }
+
+
+
+#ifdef __WXOSX__
+ImageView::ImageView(wxWindow *parent, const wxBitmap& bmp)
+{
+    NSImageView *v = [NSImageView new];
+    v.wantsLayer = YES;
+    v.imageAlignment = NSImageAlignTop;
+    if (bmp.IsOk())
+        v.image = bmp.GetNSImage();
+    Create(parent, wxID_ANY, v);
+}
+
+void ImageView::SetBitmap(const wxBitmap& bmp)
+{
+    NSImageView *v = (NSImageView*)GetHandle();
+    v.image = bmp.GetNSImage();
+}
+#endif // __WXOSX__
