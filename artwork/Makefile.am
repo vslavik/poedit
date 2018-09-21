@@ -30,10 +30,10 @@ dist_uiicons_DATA = \
 		linux/poedit-validate.png \
 		linux/sidebar.png \
 		CrowdinLogo.png \
+		DownvoteTemplate.png \
 		ExtractorsGNUgettext.png \
 		ItemBookmarkTemplate.png \
 		ItemCommentTemplate.png \
-		MoreIcon.png \
 		PoeditWelcome.png \
 		SuggestionError.png \
 		SuggestionPerfectMatch.png \
