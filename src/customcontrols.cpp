@@ -452,3 +452,15 @@ void ImageView::SetBitmap(const wxBitmap& bmp)
     v.image = bmp.GetNSImage();
 }
 #endif // __WXOSX__
+
+
+
+ImageButton::ImageButton(wxWindow *parent, const wxBitmap& bmp)
+    : wxBitmapButton(parent, wxID_ANY, bmp, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT)
+{
+#ifdef __WXOSX__
+    // don't light up the background when clicked:
+    NSButton *view = (NSButton*)GetHandle();
+    view.buttonType = NSMomentaryChangeButton;
+#endif
+}

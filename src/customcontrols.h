@@ -29,6 +29,7 @@
 #include "concurrency.h"
 #include "language.h"
 
+#include <wx/bmpbuttn.h>
 #include <wx/nativewin.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
@@ -182,5 +183,13 @@ public:
     ImageView(wxWindow *parent, const wxBitmap& bmp = wxNullBitmap) : wxStaticBitmap(parent, wxID_ANY, bmp) {}
 };
 #endif
+
+
+// A bit nicer (macOS) and easier to use image button
+class ImageButton : public wxBitmapButton
+{
+public:
+    ImageButton(wxWindow *parent, const wxBitmap& bmp);
+};
 
 #endif // Poedit_customcontrols_h

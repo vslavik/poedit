@@ -40,7 +40,6 @@
 #include "tm/transmem.h"
 
 #include <wx/app.h>
-#include <wx/bmpbuttn.h>
 #include <wx/button.h>
 #include <wx/dcclient.h>
 #include <wx/graphics.h>
@@ -273,7 +272,7 @@ public:
         m_icon = new ImageView(this, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
-        m_moreActions = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("DownvoteTemplate"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT);
+        m_moreActions = new ImageButton(this, wxArtProvider::GetBitmap("DownvoteTemplate"));
 
         m_isPerfect = isFirst
                       ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
@@ -481,7 +480,7 @@ private:
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;
-    wxBitmapButton *m_moreActions;
+    ImageButton *m_moreActions;
     wxColour m_bg, m_bgHighlight;
 };
 
