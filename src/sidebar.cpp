@@ -292,7 +292,7 @@ public:
         right->Add(infoSizer, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
 
         infoSizer->AddStretchSpacer();
-        infoSizer->Add(m_moreActions, wxSizerFlags().ReserveSpaceEvenIfHidden().CenterVertical().Border(wxRIGHT, PX(2)));
+        infoSizer->Add(m_moreActions, wxSizerFlags().ReserveSpaceEvenIfHidden().CenterVertical().Border(wxRIGHT, MSW_OR_OTHER(PX(4), PX(2))));
         m_moreActions->Hide();
 
         SetSizerAndFit(top);
