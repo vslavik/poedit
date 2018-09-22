@@ -94,7 +94,11 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         // List items:
 
         case Color::ItemID:
-            return mode == Light ? "#a1a1a1" : wxNullColour;
+            #ifdef __WXOSX__
+            return wxColour([NSColor tertiaryLabelColor]);
+            #else
+            return mode == Light ? "#a1a1a1" : wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOXTEXT).ChangeLightness(50);
+            #endif
         case Color::ItemFuzzy:
             return mode == Light ? sRGB(218, 123, 0) : "#a9861b";
         case Color::ItemError:
