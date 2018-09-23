@@ -608,7 +608,8 @@ bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
     auto replace = m_replaceField->GetValue();
 
     bool replaced = false;
-    for (auto& t: item->GetTranslations())
+    auto translations = item->GetTranslations();
+    for (auto& t: translations)
     {
         if (ReplaceTextInString(t, search, wholeWords, replace))
             replaced = true;
@@ -616,6 +617,7 @@ bool FindFrame::DoReplaceInItem(CatalogItemPtr item)
 
     if (replaced)
     {
+        item->SetTranslations(translations);
         item->SetModified(true);
         m_owner->MarkAsModified();
         if (item == m_owner->GetCurrentItem())

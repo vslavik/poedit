@@ -620,7 +620,7 @@ void CrowdinSyncFile(wxWindow *parent, std::shared_ptr<Catalog> catalog,
                     )
                     .then_on_main([=]
                     {
-                        CatalogPtr newcat = std::make_shared<Catalog>(outfile);
+                        auto newcat = Catalog::Create(outfile);
                         newcat->SetFileName(catalog->GetFileName());
 
                         tmpdir->Clear();

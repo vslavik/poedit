@@ -177,7 +177,7 @@ bool ShowMergeSummary(wxWindow *parent, ProgressInfo *progress, CatalogPtr po, C
 
 
 bool PerformUpdateFromSources(wxWindow *parent,
-                              CatalogPtr catalog,
+                              POCatalogPtr catalog,
                               UpdateResultReason& reason,
                               int flags)
 {
@@ -196,7 +196,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
         return false;
     }
 
-    CatalogPtr pot = nullptr;
+    POCatalogPtr pot = nullptr;
 
     progress.PulseGauge();
     progress.UpdateMessage(_(L"Collecting source files…"));
@@ -212,7 +212,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
         auto potFile = Extractor::ExtractWithAll(tmpdir, *spec, files);
         if (!potFile.empty())
         {
-            pot = std::make_shared<Catalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
+            pot = std::make_shared<POCatalog>(potFile, Catalog::CreationFlag_IgnoreHeader);
             if (!pot->IsOk())
             {
                 wxLogError(_("Failed to load extracted catalog."));
@@ -251,7 +251,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
 
 
 bool PerformUpdateFromPOT(wxWindow *parent,
-                          CatalogPtr catalog,
+                          POCatalogPtr catalog,
                           const wxString& pot_file,
                           UpdateResultReason& reason)
 {
@@ -259,7 +259,7 @@ bool PerformUpdateFromPOT(wxWindow *parent,
     if (!catalog->IsOk())
         return false;
 
-    CatalogPtr pot = std::make_shared<Catalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
+    auto pot = std::make_shared<POCatalog>(pot_file, Catalog::CreationFlag_IgnoreTranslations);
 
     if (!pot->IsOk())
     {

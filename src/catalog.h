@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef _CATALOG_H_
-#define _CATALOG_H_
+#ifndef Poedit_catalog_h
+#define Poedit_catalog_h
 
 #include "language.h"
 
@@ -74,7 +74,7 @@ typedef enum
  */
 class CatalogItem
 {
-    public:
+    protected:
         /// Ctor. Initializes the object with source string and translation.
         CatalogItem()
                 : m_id(0),
@@ -88,25 +88,12 @@ class CatalogItem
                   m_lineNum(0),
                   m_bookmark(NO_BOOKMARK) {}
 
-        CatalogItem(const CatalogItem& dt)
-                : m_id(dt.m_id),
-                  m_string(dt.m_string),
-                  m_plural(dt.m_plural),
-                  m_hasPlural(dt.m_hasPlural),
-                  m_hasContext(dt.m_hasContext),
-                  m_context(dt.m_context),
-                  m_translations(dt.m_translations),
-                  m_references(dt.m_references),
-                  m_extractedComments(dt.m_extractedComments),
-                  m_oldMsgid(dt.m_oldMsgid),
-                  m_isFuzzy(dt.m_isFuzzy),
-                  m_isTranslated(dt.m_isTranslated),
-                  m_isModified(dt.m_isModified),
-                  m_isPreTranslated(dt.m_isPreTranslated),
-                  m_moreFlags(dt.m_moreFlags),
-                  m_comment(dt.m_comment),
-                  m_lineNum(dt.m_lineNum),
-                  m_bookmark(dt.m_bookmark) {}
+        CatalogItem(const CatalogItem&) = delete;
+
+    public:
+        // -------------------------------------------------------------------
+        // Read-only access to values in the item:
+        // -------------------------------------------------------------------
 
         /// Gets numeric, 1-based ID
         int GetId() const { return m_id; }
@@ -141,7 +128,6 @@ class CatalogItem
 
         /// Returns all translations.
         const wxArrayString& GetTranslations() const { return m_translations; }
-        wxArrayString& GetTranslations() { return m_translations; }
 
         /// Returns references (#:) lines for the entry
         const wxArrayString& GetRawReferences() const { return m_references; }
@@ -162,31 +148,37 @@ class CatalogItem
         /// Convenience function: does this entry has auto comments?
         bool HasExtractedComments() const { return !m_extractedComments.empty(); }
 
-        /// Adds new reference to the entry (used by SourceDigger).
-        void SetReferences(const wxArrayString& ref) { m_references = ref; }
+        /// Gets gettext flags. \see SetFlags
+        wxString GetFlags() const;
 
-        void SetId(int id) { m_id = id; }
+        /// Returns format flag ("php" for "php-format" etc.) if there's any,
+        // empty string otherwise
+        wxString GetFormatFlag() const;
 
-        /// Sets the string.
-        void SetString(const wxString& s)
-        {
-            m_string = s;
-            ClearIssue();
-        }
+        /// Gets value of fuzzy flag.
+        bool IsFuzzy() const { return m_isFuzzy; }
+        /// Gets value of translated flag.
+        bool IsTranslated() const { return m_isTranslated; }
+        /// Gets value of modified flag.
+        bool IsModified() const { return m_isModified; }
+        /// Gets value of pre-translated translation flag.
+        bool IsPreTranslated() const { return m_isPreTranslated; }
+        /// Get line number of this entry.
+        int GetLineNumber() const { return m_lineNum; }
 
-        /// Sets the plural form (if applicable).
-        void SetPluralString(const wxString& p)
-        {
-            m_plural = p;
-            m_hasPlural = true;
-        }
+        const wxArrayString& GetOldMsgidRaw() const { return m_oldMsgid; }
+        wxString GetOldMsgid() const;
+        bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
 
-        /// Sets the context (msgctxt0
-        void SetContext(const wxString& context)
-        {
-            m_hasContext = true;
-            m_context = context;
-        }
+        /// Returns the bookmark for the item
+        Bookmark GetBookmark() const {return m_bookmark;}
+        /// Returns true if the item has a bookmark
+        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
+
+
+        // -------------------------------------------------------------------
+        // Setters for user-editable values:
+        // -------------------------------------------------------------------
 
         /** Sets the translation. Changes "translated" status to true
             if \a t is not empty.
@@ -202,67 +194,25 @@ class CatalogItem
         // Clears all translation content from the entry
         void ClearTranslation();
 
-        /// Sets the comment.
-        void SetComment(const wxString& c)
-        {
-            m_comment = c;
-        }
-
-        /** Sets gettext flags directly in string format. It may be
-            either empty string or ", fuzzy", ", c-format",
-            ", fuzzy, c-format" or others (not understood by Poedit),
-            i.e. the leading # is not included, but ", " is.
-         */
-        void SetFlags(const wxString& flags);
-
-        /// Gets gettext flags. \see SetFlags
-        wxString GetFlags() const;
-
-        /// Returns format flag ("php" for "php-format" etc.) if there's any,
-        // empty string otherwise
-        wxString GetFormatFlag() const;
-
         /// Sets fuzzy flag.
         void SetFuzzy(bool fuzzy);
-        /// Gets value of fuzzy flag.
-        bool IsFuzzy() const { return m_isFuzzy; }
         /// Sets translated flag.
         void SetTranslated(bool t) { m_isTranslated = t; }
-        /// Gets value of translated flag.
-        bool IsTranslated() const { return m_isTranslated; }
         /// Sets modified flag.
         void SetModified(bool modified) { m_isModified = modified; }
-        /// Gets value of modified flag.
-        bool IsModified() const { return m_isModified; }
         /// Sets pre-translated translation flag.
         void SetPreTranslated(bool pre) { m_isPreTranslated = pre; }
-        /// Gets value of pre-translated translation flag.
-        bool IsPreTranslated() const { return m_isPreTranslated; }
-        /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(int line) { m_lineNum = line; }
-        /// Get line number of this entry.
-        int GetLineNumber() const { return m_lineNum; }
+        /// Sets the bookmark
+        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
-        /** Returns true if the gettext flags line contains "foo-format"
-            flag when called with "foo" as argument. */
-        bool IsInFormat(const wxString& format);
+        /// Sets the comment.
+        void SetComment(const wxString& c) { m_comment = c; }
 
-        /// Adds new extracted comments (#. )
-        void AddExtractedComments(const wxString& com)
-        {
-            m_extractedComments.Add(com);
-        }
 
-        /// Clears extracted comments.
-        void ClearExtractedComments()
-        {
-            m_extractedComments.Clear();
-        }
-
-        void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
-        const wxArrayString& GetOldMsgidRaw() const { return m_oldMsgid; }
-        wxString GetOldMsgid() const;
-        bool HasOldMsgid() const { return !m_oldMsgid.empty(); }
+        // -------------------------------------------------------------------
+        // Auxiliary data attached to the item, such as QA issues. Setting those
+        // is done in base class only, because they don't affect the saved output.
+        // -------------------------------------------------------------------
 
         struct Issue
         {
@@ -287,14 +237,51 @@ class CatalogItem
         void SetIssue(const Issue& issue) { m_issue = std::make_shared<Issue>(issue); }
         void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
-        /// Returns the bookmark for the item
-        Bookmark GetBookmark() const {return m_bookmark;}
-        /// Returns true if the item has a bookmark
-        bool HasBookmark() const {return (GetBookmark() != NO_BOOKMARK);}
-        /// Sets the bookmark
-        void SetBookmark(Bookmark bookmark) {m_bookmark = bookmark;}
 
-    private:
+    protected:
+        // -------------------------------------------------------------------
+        // Private data setters only for internal use:
+        // -------------------------------------------------------------------
+
+        void SetReferences(const wxArrayString& ref) { m_references = ref; }
+
+        void SetId(int id) { m_id = id; }
+
+        void SetString(const wxString& s)
+        {
+            m_string = s;
+            ClearIssue();
+        }
+
+        void SetPluralString(const wxString& p)
+        {
+            m_plural = p;
+            m_hasPlural = true;
+        }
+
+        void SetContext(const wxString& context)
+        {
+            m_hasContext = true;
+            m_context = context;
+        }
+
+        void SetLineNumber(int line) { m_lineNum = line; }
+
+        void AddExtractedComments(const wxString& com)
+        {
+            m_extractedComments.Add(com);
+        }
+
+        void SetOldMsgid(const wxArrayString& data) { m_oldMsgid = data; }
+
+        /** Sets gettext flags directly in string format. It may be
+            either empty string or ", fuzzy", ", c-format",
+            ", fuzzy, c-format" or others (not understood by Poedit),
+            i.e. the leading # is not included, but ", " is.
+         */
+        void SetFlags(const wxString& flags);
+
+    protected:
         int m_id;
 
         wxString m_string, m_plural;
@@ -317,104 +304,8 @@ class CatalogItem
 };
 
 
-/** This class holds information about one particular deleted item.
-    This includes deleted lines, references, translation's status
-    (fuzzy, non translated, translated) and optional comment(s).
-
-    This class is mostly internal, used by Catalog to store data.
- */
-// FIXME: derive this from CatalogItem (or CatalogItemBase)
-class CatalogDeletedData
-{
-    public:
-        /// Ctor.
-        CatalogDeletedData()
-                : m_lineNum(0) {}
-        CatalogDeletedData(const wxArrayString& deletedLines)
-                : m_deletedLines(deletedLines),
-                  m_lineNum(0) {}
-
-        CatalogDeletedData(const CatalogDeletedData& dt)
-                : m_deletedLines(dt.m_deletedLines),
-                  m_references(dt.m_references),
-                  m_extractedComments(dt.m_extractedComments),
-                  m_flags(dt.m_flags),
-                  m_comment(dt.m_comment),
-                  m_lineNum(dt.m_lineNum) {}
-
-        /// Returns the deleted lines.
-        const wxArrayString& GetDeletedLines() const { return m_deletedLines; }
-
-        /// Returns references (#:) lines for the entry
-        const wxArrayString& GetRawReferences() const { return m_references; }
-
-        /// Returns comment added by the translator to this entry
-        const wxString& GetComment() const { return m_comment; }
-
-        /// Returns array of all auto comments.
-        const wxArrayString& GetExtractedComments() const { return m_extractedComments; }
-
-        /// Convenience function: does this entry has a comment?
-        bool HasComment() const { return !m_comment.empty(); }
-
-        /// Adds new reference to the entry (used by SourceDigger).
-        void AddReference(const wxString& ref)
-        {
-            if (m_references.Index(ref) == wxNOT_FOUND)
-                m_references.Add(ref);
-        }
-
-        /// Sets the string.
-        void SetDeletedLines(const wxArrayString& a)
-        {
-            m_deletedLines = a;
-        }
-
-        /// Sets the comment.
-        void SetComment(const wxString& c)
-        {
-            m_comment = c;
-        }
-
-        /** Sets gettext flags directly in string format. It may be
-            either empty string or "#, fuzzy", "#, c-format",
-            "#, fuzzy, c-format" or others (not understood by Poedit).
-         */
-        void SetFlags(const wxString& flags) {m_flags = flags;};
-
-        /// Gets gettext flags. \see SetFlags
-        wxString GetFlags() const {return m_flags;};
-
-        /// Sets the number of the line this entry occurs on.
-        void SetLineNumber(int line) { m_lineNum = line; }
-        /// Get line number of this entry.
-        int GetLineNumber() const { return m_lineNum; }
-
-        /// Adds new extracted comments (#. )
-        void AddExtractedComments(const wxString& com)
-        {
-            m_extractedComments.Add(com);
-        }
-
-        /// Clears extracted comments.
-        void ClearExtractedComments()
-        {
-            m_extractedComments.Clear();
-        }
-
-    private:
-        wxArrayString m_deletedLines;
-
-        wxArrayString m_references, m_extractedComments;
-        wxString m_flags;
-        wxString m_comment;
-        int m_lineNum;
-};
-
-
 typedef std::vector<CatalogItemPtr> CatalogItemArray;
-typedef std::vector<CatalogDeletedData> CatalogDeletedDataArray;
-typedef std::map<wxString, unsigned> CatalogItemIndex;
+
 
 /** This class stores all translations, together with filelists, references
     and other additional information. It can read .po files and save both
@@ -440,7 +331,7 @@ class Catalog
         };
 
         /// Is this file capable of doing these things
-        bool HasCapability(Cap cap) const;
+        virtual bool HasCapability(Cap cap) const = 0;
 
         /// PO file header information.
         class HeaderData
@@ -524,18 +415,14 @@ class Catalog
             int warnings;
         };
 
-        // Common wrapping values
-        static const int NO_WRAPPING = -1;
-        static const int DEFAULT_WRAPPING = -2;
-
         /// Default ctor. Creates empty catalog, you have to call Load.
-        Catalog(Type type = Type::PO);
+        static CatalogPtr Create(Type type = Type::PO);
 
         /// Ctor that loads the catalog from \a po_file with Load.
         /// \a flags is CreationFlags combination.
-        explicit Catalog(const wxString& po_file, int flags = 0);
+        static CatalogPtr Create(const wxString& filename, int flags = 0);
 
-        ~Catalog();
+        virtual ~Catalog() {}
 
         /** Creates new, empty header. Sets Charset to something meaningful
             ("UTF-8", currently).
@@ -547,7 +434,7 @@ class Catalog
         void CreateNewHeader(const HeaderData& pot_header);
 
         /// Clears the catalog, removes all entries from it.
-        void Clear();
+        virtual void Clear();
 
         /** Loads catalog from .po file.
             If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
@@ -558,7 +445,7 @@ class Catalog
 
             @param flags CreationFlags combination.
          */
-        bool Load(const wxString& po_file, int flags = 0);
+        virtual bool Load(const wxString& po_file, int flags = 0) = 0;
 
         /** Saves catalog to file. Creates both .po (text) and .mo (binary)
             version of the catalog (unless the latter was disabled in
@@ -568,9 +455,9 @@ class Catalog
             Note that \a po_file refers to .po file, .mo file will have same
             name & location as .po file except for different extension.
          */
-        bool Save(const wxString& po_file, bool save_mo,
-                  ValidationResults& validation_results,
-                  CompilationStatus& mo_compilation_status);
+        virtual bool Save(const wxString& po_file, bool save_mo,
+                          ValidationResults& validation_results,
+                          CompilationStatus& mo_compilation_status) = 0;
 
         /**
             "Saves" the PO file into a memory buffer with content identical
@@ -578,7 +465,7 @@ class Catalog
             
             Returns empty string in case of failure.
          */
-        std::string SaveToBuffer();
+        virtual std::string SaveToBuffer() = 0;
 
         /// File mask for opening/saving this catalog's file type
         wxString GetFileMask() const { return GetTypesFileMask({m_fileType}); }
@@ -586,19 +473,8 @@ class Catalog
         static wxString GetTypesFileMask(std::initializer_list<Type> types);
         static wxString GetAllTypesFileMask();
 
-        /// Compiles the catalog into binary MO file.
-        bool CompileToMO(const wxString& mo_file,
-                         ValidationResults& validation_results,
-                         CompilationStatus& mo_compilation_status);
-
         /// Exports the catalog to HTML format
         void ExportToHTML(std::ostream& output);
-
-        /// Detect a particular common breakage of catalogs.
-        bool HasDuplicateItems() const;
-
-        /// Fixes a common invalid kind of entries, when msgids aren't unique.
-        bool FixDuplicateItems();
 
         Type GetFileType() const { return m_fileType; }
 
@@ -631,11 +507,6 @@ class Catalog
         bool HasSourcesAvailable() const;
 
         std::shared_ptr<SourceCodeSpec> GetSourceCodeSpec() const;
-
-        /// Updates the catalog from POT file.
-        bool UpdateFromPOT(const wxString& pot_file, bool replace_header = false);
-        bool UpdateFromPOT(CatalogPtr pot, bool replace_header = false);
-        static CatalogPtr CreateFromPOT(const wxString& pot_file);
 
         /// Returns the number of strings/translations in the catalog.
         unsigned GetCount() const { return (unsigned)m_items.size(); }
@@ -694,19 +565,11 @@ class Catalog
         bool IsFromCrowdin() const
             { return m_header.HasHeader("X-Crowdin-Project") && m_header.HasHeader("X-Crowdin-File"); }
 
-        /// Adds entry to the catalog (the catalog will take ownership of
-        /// the object).
-        void AddItem(const CatalogItemPtr& data);
-
-        /// Adds entry to the catalog (the catalog will take ownership of
-        /// the object).
-        void AddDeletedItem(const CatalogDeletedData& data);
-
         /// Returns true if the catalog contains obsolete entries (~.*)
-        bool HasDeletedItems();
+        virtual bool HasDeletedItems() const = 0;
 
         /// Removes all obsolete translations from the catalog
-        void RemoveDeletedItems();
+        virtual void RemoveDeletedItems() = 0;
 
         /// Finds item by line number
         CatalogItemPtr FindItemByLine(int lineno);
@@ -727,131 +590,24 @@ class Catalog
 
         /// Validates correctness of the translation by running msgfmt
         /// Returns number of errors (i.e. 0 if no errors).
-        ValidationResults Validate();
+        virtual ValidationResults Validate() = 0;
 
         void AttachCloudSync(std::shared_ptr<CloudSyncDestination> c) { m_cloudSync = c; }
         std::shared_ptr<CloudSyncDestination> GetCloudSync() const { return m_cloudSync; }
 
     protected:
-        /// Fix commonly encountered fixable problems with loaded files
-        void FixupCommonIssues();
+        Catalog(Type type);
 
-        ValidationResults DoValidate(const wxString& po_file);
-        bool DoSaveOnly(const wxString& po_file, wxTextFileType crlf);
-        bool DoSaveOnly(wxTextBuffer& f, wxTextFileType crlf);
-
-        /** Merges the catalog with reference catalog
-            (in the sense of msgmerge -- this catalog is old one with
-            translations, \a refcat is reference catalog created by Update().)
-
-            \return true if the merge was successful, false otherwise.
-                    Note that if it returns false, the catalog was
-                    \em not modified!
-         */
-        bool Merge(const CatalogPtr& refcat);
-
-    private:
+    protected:
         CatalogItemArray m_items;
-        CatalogDeletedDataArray m_deletedItems;
 
         bool m_isOk;
         Type m_fileType;
         wxString m_fileName;
         HeaderData m_header;
         Language m_sourceLanguage;
-        wxTextFileType m_fileCRLF;
-        int m_fileWrappingWidth;
 
         std::shared_ptr<CloudSyncDestination> m_cloudSync;
-
-        friend class LoadParser;
 };
 
-
-/// Internal class - used for parsing of po files.
-class CatalogParser
-{
-    public:
-        CatalogParser(wxTextFile *f)
-            : m_textFile(f),
-              m_detectedLineWidth(0),
-              m_detectedWrappedLines(false),
-              m_lastLineHardWrapped(true), m_previousLineHardWrapped(true),
-              m_ignoreHeader(false),
-              m_ignoreTranslations(false)
-        {}
-
-        virtual ~CatalogParser() {}
-
-        /// Tell the parser to ignore header entries when processing
-        void IgnoreHeader(bool ignore) { m_ignoreHeader = ignore; }
-
-        /// Tell the parser to treat input as POT and ignore translations
-        void IgnoreTranslations(bool ignore) { m_ignoreTranslations = ignore; }
-
-        /** Parses the entire file, calls OnEntry each time
-            new msgid/msgstr pair is found.
-
-            @return false if parsing failed, true otherwise
-         */
-        bool Parse();
-
-        int GetWrappingWidth() const;
-
-    protected:
-        // Read one line from file, remove all \r and \n characters, ignore empty lines:
-        wxString ReadTextLine();
-
-        void PossibleWrappedLine()
-        {
-            if (!m_previousLineHardWrapped)
-                m_detectedWrappedLines = true;
-        }
-
-        /** Called when new entry was parsed. Parsing continues
-            if returned value is true and is cancelled if it
-            is false.
-         */
-        virtual bool OnEntry(const wxString& msgid,
-                             const wxString& msgid_plural,
-                             bool has_plural,
-                             bool has_context,
-                             const wxString& context,
-                             const wxArrayString& mtranslations,
-                             const wxString& flags,
-                             const wxArrayString& references,
-                             const wxString& comment,
-                             const wxArrayString& extractedComments,
-                             const wxArrayString& msgid_old,
-                             unsigned lineNumber) = 0;
-
-        /** Called when new deleted entry was parsed. Parsing continues
-            if returned value is true and is cancelled if it
-            is false. Defaults to an empty implementation.
-         */
-        virtual bool OnDeletedEntry(const wxArrayString& /*deletedLines*/,
-                                    const wxString& /*flags*/,
-                                    const wxArrayString& /*references*/,
-                                    const wxString& /*comment*/,
-                                    const wxArrayString& /*extractedComments*/,
-                                    unsigned /*lineNumber*/)
-        {
-            return true;
-        }
-
-        virtual void OnIgnoredEntry() {}
-
-        /// Textfile being parsed.
-        wxTextFile *m_textFile;
-        int m_detectedLineWidth;
-        bool m_detectedWrappedLines;
-        bool m_lastLineHardWrapped, m_previousLineHardWrapped;
-
-        /// Whether the header should be parsed or not
-        bool m_ignoreHeader;
-
-        /// Whether the translations should be ignored (as if it was a POT)
-        bool m_ignoreTranslations;
-};
-
-#endif // _CATALOG_H_
+#endif // Poedit_catalog_h

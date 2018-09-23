@@ -57,6 +57,7 @@
 #include <fstream>
 
 #include "catalog.h"
+#include "catalog_po.h"
 #include "cat_update.h"
 #include "cloud_sync.h"
 #include "colorscheme.h"
@@ -221,8 +222,8 @@ bool g_focusToText = false;
     else
     {
         // NB: duplicated in ReadCatalog()
-        CatalogPtr cat = std::make_shared<Catalog>(filename);
-        if (!cat->IsOk())
+        auto cat = Catalog::Create(filename);
+        if (!cat || !cat->IsOk())
         {
             wxMessageDialog dlg
             (
@@ -1189,13 +1190,17 @@ void PoeditFrame::OnSaveAs(wxCommandEvent&)
 
 void PoeditFrame::OnCompileMO(wxCommandEvent&)
 {
+    auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+    if (!cat)
+        return;
+
     auto fileName = GetFileName();
     wxString name;
     wxFileName::SplitPath(fileName, nullptr, &name, nullptr);
 
     if (name.empty())
     {
-        name = SuggestFileName(m_catalog) + ".mo";
+        name = SuggestFileName(cat) + ".mo";
     }
     else
         name += ".mo";
@@ -1217,7 +1222,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
         wxConfig::Get()->Write("last_file_path", wxPathOnly(fn));
         Catalog::ValidationResults validation_results;
         Catalog::CompilationStatus compilation_status = Catalog::CompilationStatus::NotDone;
-        m_catalog->CompileToMO(fn, validation_results, compilation_status);
+        cat->CompileToMO(fn, validation_results, compilation_status);
 
         if (validation_results.errors)
         {
@@ -1322,11 +1327,9 @@ void PoeditFrame::NewFromPOT()
 
 void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
 {
-    auto catalog = Catalog::CreateFromPOT(pot_file);
+    auto catalog = POCatalog::CreateFromPOT(pot_file);
     if (!catalog)
-    {
         return;
-    }
 
     m_catalog = catalog;
     m_pendingHumanEditedItem.reset();
@@ -1394,7 +1397,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
 
 void PoeditFrame::NewFromScratch()
 {
-    CatalogPtr catalog = std::make_shared<Catalog>();
+    auto catalog = std::make_shared<POCatalog>();
     catalog->CreateNewHeader();
 
     m_catalog = catalog;
@@ -1509,6 +1512,10 @@ void PoeditFrame::UpdateAfterPreferencesChange()
 
 bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 {
+    auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+    if (!cat)
+        return false;
+
     // This ensures that the list control won't be redrawn during Update()
     // call when a dialog box is hidden; another alternative would be to call
     // m_list->CatalogChanged(NULL) here
@@ -1522,9 +1529,9 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
 
     if (pot_file.empty())
     {
-        if (m_catalog->HasSourcesAvailable())
+        if (cat->HasSourcesAvailable())
         {
-            succ = PerformUpdateFromSources(this, m_catalog, reason);
+            succ = PerformUpdateFromSources(this, cat, reason);
 
             locker.reset();
             EnsureAppropriateContentView();
@@ -1538,7 +1545,7 @@ bool PoeditFrame::UpdateCatalog(const wxString& pot_file)
     }
     else
     {
-        succ = PerformUpdateFromPOT(this, m_catalog, pot_file, reason);
+        succ = PerformUpdateFromPOT(this, cat, pot_file, reason);
 
         locker.reset();
         EnsureAppropriateContentView();
@@ -2139,8 +2146,8 @@ void PoeditFrame::ReadCatalog(const wxString& catalog)
     wxBusyCursor bcur;
 
     // NB: duplicated in PoeditFrame::Create()
-    CatalogPtr cat = std::make_shared<Catalog>(catalog);
-    if (cat->IsOk())
+    auto cat = Catalog::Create(catalog);
+    if (cat && cat->IsOk())
     {
         ReadCatalog(cat);
     }
@@ -2212,19 +2219,23 @@ void PoeditFrame::ReadCatalog(const CatalogPtr& cat)
 
 void PoeditFrame::FixDuplicatesIfPresent()
 {
+    auto cat = std::dynamic_pointer_cast<POCatalog>(m_catalog);
+    if (!cat)
+        return;
+
     // Poedit always produces good files, so don't bother with it. Older
     // versions would preserve bad files, though.
-    wxString generator = m_catalog->Header().GetHeader("X-Generator");
+    wxString generator = cat->Header().GetHeader("X-Generator");
     wxString gversion;
     if (generator.StartsWith("Poedit ", &gversion) &&
             !gversion.StartsWith("1.7") && !gversion.StartsWith("1.6") && !gversion.StartsWith("1.5"))
         return;
 
-    if (!m_catalog->HasDuplicateItems())
+    if (!cat->HasDuplicateItems())
         return; // good
 
     // Fix duplicates and explain the changes to the user:
-    m_catalog->FixDuplicateItems();
+    cat->FixDuplicateItems();
     NotifyCatalogChanged(m_catalog);
 
     wxWindowPtr<wxMessageDialog> dlg(

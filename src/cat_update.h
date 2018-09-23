@@ -26,7 +26,7 @@
 #ifndef Poedit_cat_update_h
 #define Poedit_cat_update_h
 
-#include "catalog.h"
+#include "catalog_po.h"
 
 class WXDLLIMPEXP_FWD_CORE wxWindow;
 
@@ -49,7 +49,7 @@ enum UpdateFlags
     during the operation.
  */
 bool PerformUpdateFromSources(wxWindow *parent,
-                              CatalogPtr catalog,
+                              POCatalogPtr catalog,
                               UpdateResultReason& reason,
                               int flags = 0);
 
@@ -57,7 +57,7 @@ bool PerformUpdateFromSources(wxWindow *parent,
     Similarly for updating from a POT file.
  */
 bool PerformUpdateFromPOT(wxWindow *parent,
-                          CatalogPtr catalog,
+                          POCatalogPtr catalog,
                           const wxString& pot_file,
                           UpdateResultReason& reason);
 

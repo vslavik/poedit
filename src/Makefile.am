@@ -25,6 +25,7 @@ poedit_SOURCES = \
                  cat_update.h cat_update.cpp \
                  cat_sorting.cpp cat_sorting.h \
                  catalog.cpp catalog.h \
+                 catalog_po.cpp catalog_po.h \
                  chooselang.cpp chooselang.h \
                  cloud_sync.h \
                  colorscheme.h colorscheme.cpp \
