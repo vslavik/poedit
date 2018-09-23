@@ -372,7 +372,7 @@ private:
         {
             SetForegroundColour(ExplanationLabel::GetTextColor());
         #ifdef __WXMSW__
-            SetFont(GetFont().Smaller());
+            SetFont(SmallerFont(GetFont()));
         #else
             SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         #endif

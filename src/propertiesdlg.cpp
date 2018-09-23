@@ -603,7 +603,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_pluralFormsCustom = XRCCTRL(*this, "plural_forms_custom", wxRadioButton);
     m_pluralFormsExpr = XRCCTRL(*this, "plural_forms_expr", wxTextCtrl);
 #if defined(__WXMSW__) && !wxCHECK_VERSION(3,1,0)
-    m_pluralFormsExpr->SetFont(m_pluralFormsExpr->GetFont().Smaller());
+    m_pluralFormsExpr->SetFont(SmallerFont(m_pluralFormsExpr->GetFont()));
 #else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif

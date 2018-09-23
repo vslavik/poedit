@@ -27,6 +27,8 @@
 #define Poedit_hidpi_h
 
 #include <wx/defs.h>
+#include <wx/font.h>
+
 class WXDLLIMPEXP_FWD_BASE wxString;
 class WXDLLIMPEXP_FWD_CORE wxImage;
 
@@ -74,6 +76,23 @@ inline double HiDPIScalingFactor() { return 1.0; }
 
 #define PXBorderAll() PXBorder(wxALL)
 #define PXDoubleBorderAll() PXDoubleBorder(wxALL)
+
+
+/// Fine-tuned creation of smaller fonts
+inline wxFont SmallerFont(const wxFont& font)
+{
+#ifdef __WXMSW__
+    // wxFont::Smaller() is uses precise fractional font sizes, which looks 
+    // ugly in low-DPI and small font sizes.
+    if (!IsHiDPI())
+    {
+        wxFont f(font);
+        f.SetPointSize(int(f.GetPointSize() / 1.2f + 0.5));
+        return f;
+    }
+#endif
+    return font.Smaller();
+}
 
 
 /**
