@@ -179,6 +179,15 @@ public:
             }
         }
 
+        if (u_hasBinaryProperty(s_last, UCHAR_QUOTATION_MARK) || (!s_punct && u_hasBinaryProperty(t_last, UCHAR_QUOTATION_MARK)))
+        {
+            // quoted fragments can move around, e.g., so ignore quotes in reporting:
+            //      >> Invalid value for ‘{fieldName}’​ field
+            //      >> Valor inválido para el campo ‘{fieldName}’
+            // TODO: count quote characters to check if used correctly in translation; don't check position
+            return false;
+        }
+
         if (s_punct && !t_punct)
         {
             item->SetIssue(CatalogItem::Issue::Warning,
@@ -197,14 +206,9 @@ public:
             {
                 // as a special case, allow translating ... (3 dots) as … (ellipsis)
             }
-            else if (u_hasBinaryProperty(s_last, UCHAR_QUOTATION_MARK) || u_hasBinaryProperty(t_last, UCHAR_QUOTATION_MARK))
+            else if (u_hasBinaryProperty(s_last, UCHAR_QUOTATION_MARK) && u_hasBinaryProperty(t_last, UCHAR_QUOTATION_MARK))
             {
-                // quoted fragments can move around, e.g., so ignore quotes in reporting:
-                //      >> Invalid value for ‘{fieldName}’​ field
-                //      >> Valor inválido para el campo ‘{fieldName}’
-                // TODO: count quote characters to check if used correctly in translation; don't check position
-                // (don't check for correct quotes for now, accept any quotations marks as equal)
-
+                // don't check for correct quotes for now, accept any quotations marks as equal
             }
             else if (IsEquivalent(s_last, t_last))
             {
