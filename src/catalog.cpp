@@ -976,7 +976,7 @@ class LoadParser : public CatalogParser
                 return lang;
 
             auto utf8 = m_allMsgidText.utf8_str();
-            return Language::TryDetectFromText(utf8.data(), utf8.length(), Language::English());
+            return Language::TryDetectFromText(utf8.data(), utf8.length());
         }
 
     protected:
