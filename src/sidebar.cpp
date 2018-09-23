@@ -298,7 +298,9 @@ public:
 
         // setup mouse hover highlighting:
         m_bg = parent->GetBackgroundColour();
-        m_bgHighlight = m_bg.ChangeLightness(95);
+        m_bgHighlight = ColorScheme::GetWindowMode(parent) == ColorScheme::Dark
+                        ? m_bg.ChangeLightness(110)
+                        : m_bg.ChangeLightness(95);
 
         wxWindow* parts [] = { this, m_icon, m_text, m_info, m_moreActions };
         for (auto w : parts)
