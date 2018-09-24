@@ -155,6 +155,8 @@ public:
 
     bool HasCapability(Cap cap) const override;
 
+    static bool CanLoadFile(const wxString& extension);
+
     bool Save(const wxString& po_file, bool save_mo,
               ValidationResults& validation_results,
               CompilationStatus& mo_compilation_status) override;

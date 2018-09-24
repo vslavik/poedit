@@ -791,6 +791,12 @@ bool POCatalog::HasCapability(Catalog::Cap cap) const
 }
 
 
+bool POCatalog::CanLoadFile(const wxString& extension)
+{
+    return extension == "po" || extension == "pot";
+}
+
+
 static inline wxString GetCurrentTimeString()
 {
     return wxDateTime::Now().Format("%Y-%m-%d %H:%M%z");
@@ -1685,17 +1691,3 @@ bool POCatalog::Merge(const POCatalogPtr& refcat)
 
     return succ;
 }
-
-
-// Temporary creation factories:
-
-CatalogPtr Catalog::Create(Type type)
-{
-    return std::make_shared<POCatalog>(type);
-}
-
-CatalogPtr Catalog::Create(const wxString& filename, int flags)
-{
-    return std::make_shared<POCatalog>(filename, flags);
-}
-

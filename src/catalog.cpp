@@ -25,7 +25,10 @@
 
 #include "catalog.h"
 
+#include "catalog_po.h"
+
 #include "configuration.h"
+#include "errors.h"
 #include "extractors/extractor.h"
 #include "gexecute.h"
 #include "qa_checks.h"
@@ -1033,4 +1036,31 @@ wxString CatalogItem::GetOldMsgid() const
         s += UnescapeCString(line);
     }
     return s;
+}
+
+
+// Catalog file creation factories:
+
+CatalogPtr Catalog::Create(Type type)
+{
+    switch (type)
+    {
+        case Type::PO:
+        case Type::POT:
+            return std::make_shared<POCatalog>(type);
+    }
+
+    return CatalogPtr(); // silence VC++ warning
+}
+
+CatalogPtr Catalog::Create(const wxString& filename, int flags)
+{
+    wxString ext;
+    wxFileName::SplitPath(filename, nullptr, nullptr, nullptr, &ext);
+    ext.MakeLower();
+
+    if (POCatalog::CanLoadFile(ext))
+        return std::make_shared<POCatalog>(filename, flags);
+
+    throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
 }
