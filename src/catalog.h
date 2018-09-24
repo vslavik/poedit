@@ -436,17 +436,6 @@ class Catalog
         /// Clears the catalog, removes all entries from it.
         virtual void Clear();
 
-        /** Loads catalog from .po file.
-            If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
-            this function loads additional information from it. .po.poedit
-            file contains parts of catalog header data that are not part
-            of standard .po format, namely SearchPaths, Keywords, BasePath
-            and Language.
-
-            @param flags CreationFlags combination.
-         */
-        virtual bool Load(const wxString& po_file, int flags = 0) = 0;
-
         /** Saves catalog to file. Creates both .po (text) and .mo (binary)
             version of the catalog (unless the latter was disabled in
             preferences). Calls external xmsgfmt program to generate the .mo

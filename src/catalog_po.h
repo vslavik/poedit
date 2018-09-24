@@ -157,8 +157,6 @@ public:
 
     void Clear() override;
 
-    bool Load(const wxString& po_file, int flags = 0) override;
-
     bool Save(const wxString& po_file, bool save_mo,
               ValidationResults& validation_results,
               CompilationStatus& mo_compilation_status) override;
@@ -190,6 +188,19 @@ public:
     static POCatalogPtr CreateFromPOT(const wxString& pot_file);
 
 protected:
+    /** Loads catalog from .po file.
+        If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
+        this function loads additional information from it. .po.poedit
+        file contains parts of catalog header data that are not part
+        of standard .po format, namely SearchPaths, Keywords, BasePath
+        and Language.
+
+        @param flags CreationFlags combination.
+     */
+    bool Load(const wxString& po_file, int flags = 0);
+
+    void Clear() override;
+
     /// Adds entry to the catalog (the catalog will take ownership of
     /// the object).
     void AddItem(const POCatalogItemPtr& data)
