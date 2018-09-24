@@ -244,7 +244,7 @@ Based on Minimal CSS (minimalcss.com) under the MIT license.
 * { margin: 0; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 /* Layout */
-body { background-color: #fff; color: #333;	font: 14px/20px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+body { background-color: #fff; color: #333;	font: 14px/20px -apple-system, "HelveticaNeue", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
 header { width: 100%; margin: 0 auto; position: relative; padding: 20px 0; margin-bottom: 20px; }
 
@@ -372,7 +372,8 @@ tr.comments div p:last-child { margin-bottom: 0; }
   color: rgb(70, 109, 137);
   font-size: smaller;
   background-color: rgb(217, 232, 242);
-  padding: 1px 2px;
+  border-radius: 2px;
+  padding: 2px 4px;
   margin-right: 4px;
 }
 
