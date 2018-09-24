@@ -56,7 +56,6 @@
 
 // TODO: split into different file
 #if wxUSE_GUI
-    #include "cloud_sync.h" // FIXME - gross, not GUI-related
     #include <wx/msgdlg.h>
 #endif
 

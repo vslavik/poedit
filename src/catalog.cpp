@@ -50,15 +50,6 @@
 #include <set>
 #include <algorithm>
 
-#ifdef __WXOSX__
-#import <Foundation/Foundation.h>
-#endif
-
-// TODO: split into different file
-#if wxUSE_GUI
-    #include "cloud_sync.h" // FIXME - gross, not GUI-related
-    #include <wx/msgdlg.h>
-#endif
 
 // ----------------------------------------------------------------------
 // Textfile processing utilities:
