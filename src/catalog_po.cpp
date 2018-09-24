@@ -966,7 +966,13 @@ void POCatalog::FixupCommonIssues()
 
 void POCatalog::Clear()
 {
-    Catalog::Clear();
+    // Catalog base class fields:
+    m_items.clear();
+    m_isOk = true;
+    for (int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
+        m_header.Bookmarks[i] = -1;
+
+    // PO-specific fields:
     m_deletedItems.clear();
 }
 

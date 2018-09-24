@@ -155,8 +155,6 @@ public:
 
     bool HasCapability(Cap cap) const override;
 
-    void Clear() override;
-
     bool Save(const wxString& po_file, bool save_mo,
               ValidationResults& validation_results,
               CompilationStatus& mo_compilation_status) override;
@@ -199,7 +197,7 @@ protected:
      */
     bool Load(const wxString& po_file, int flags = 0);
 
-    void Clear() override;
+    void Clear();
 
     /// Adds entry to the catalog (the catalog will take ownership of
     /// the object).

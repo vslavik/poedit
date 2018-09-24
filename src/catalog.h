@@ -433,9 +433,6 @@ class Catalog
          */
         void CreateNewHeader(const HeaderData& pot_header);
 
-        /// Clears the catalog, removes all entries from it.
-        virtual void Clear();
-
         /** Saves catalog to file. Creates both .po (text) and .mo (binary)
             version of the catalog (unless the latter was disabled in
             preferences). Calls external xmsgfmt program to generate the .mo

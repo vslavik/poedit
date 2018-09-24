@@ -535,16 +535,6 @@ int Catalog::FindItemIndexByLine(int lineno)
     return last;
 }
 
-void Catalog::Clear()
-{
-    m_items.clear();
-    m_isOk = true;
-    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
-    {
-        m_header.Bookmarks[i] = -1;
-    }
-}
-
 int Catalog::SetBookmark(int id, Bookmark bookmark)
 {
     int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
