@@ -2365,7 +2365,11 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
 void PoeditFrame::NoteAsRecentFile()
 {
-    wxFileName fn(GetFileName());
+    auto filename = GetFileName();
+    if (!filename)
+        return;
+
+    wxFileName fn(filename);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 #ifdef __WXOSX__
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())]];
