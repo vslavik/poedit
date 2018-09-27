@@ -68,6 +68,11 @@ inline std::wstring to_wstring(const std::string& utf8str)
     return boost::locale::conv::utf_to_utf<wchar_t>(utf8str);
 }
 
+inline std::wstring to_wstring(const char *utf8str)
+{
+    return boost::locale::conv::utf_to_utf<wchar_t>(utf8str);
+}
+
 inline std::string to_utf8(const wxString& str)
 {
     return std::string(str.utf8_str());
@@ -76,6 +81,16 @@ inline std::string to_utf8(const wxString& str)
 inline std::wstring to_wstring(const wxString& str)
 {
     return str.ToStdWstring();
+}
+
+inline wxString to_wx(const char *utf8)
+{
+    return wxString::FromUTF8(utf8);
+}
+
+inline wxString to_wx(const std::string& utf8)
+{
+    return wxString::FromUTF8(utf8);
 }
 
 #if defined(__cplusplus) && defined(__OBJC__)
