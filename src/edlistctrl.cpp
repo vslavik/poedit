@@ -383,6 +383,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 
             // FIXME: use syntax highlighting or typographic marks
             orig.Replace("\n", " ");
+            orig.Trim(true);
+            orig.Trim(false);
 
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_appTextDir != m_sourceTextDir)
@@ -398,6 +400,8 @@ void PoeditListCtrl::Model::GetValueByRow(wxVariant& variant, unsigned row, unsi
 
             // FIXME: use syntax highlighting or typographic marks
             trans.Replace("\n", " ");
+            trans.Trim(true);
+            trans.Trim(false);
 
             // Add RTL Unicode mark to render bidi texts correctly
             if (m_appTextDir != m_transTextDir)
