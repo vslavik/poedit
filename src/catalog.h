@@ -90,6 +90,8 @@ class CatalogItem
 
         CatalogItem(const CatalogItem&) = delete;
 
+        virtual ~CatalogItem() {}
+
     public:
         // -------------------------------------------------------------------
         // Read-only access to values in the item:
@@ -237,6 +239,9 @@ class CatalogItem
         void SetIssue(const Issue& issue) { m_issue = std::make_shared<Issue>(issue); }
         void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
+    protected:
+        // API for subclasses:
+        virtual void UpdateInternalRepresentation() = 0;
 
     protected:
         // -------------------------------------------------------------------

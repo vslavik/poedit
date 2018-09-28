@@ -895,6 +895,8 @@ void CatalogItem::SetFuzzy(bool fuzzy)
     if (!fuzzy && m_isFuzzy)
         m_oldMsgid.clear();
     m_isFuzzy = fuzzy;
+
+    UpdateInternalRepresentation();
 }
 
 wxString CatalogItem::GetTranslation(unsigned idx) const
@@ -922,6 +924,8 @@ void CatalogItem::SetTranslation(const wxString &t, unsigned idx)
             break;
         }
     }
+
+    UpdateInternalRepresentation();
 }
 
 void CatalogItem::SetTranslations(const wxArrayString &t)
@@ -939,6 +943,8 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
             break;
         }
     }
+
+    UpdateInternalRepresentation();
 }
 
 void CatalogItem::SetTranslationFromSource()
@@ -967,6 +973,8 @@ void CatalogItem::SetTranslationFromSource()
             }
         }
     }
+
+    UpdateInternalRepresentation();
 }
 
 void CatalogItem::ClearTranslation()
@@ -980,6 +988,8 @@ void CatalogItem::ClearTranslation()
             m_isModified = true;
         t.clear();
     }
+
+    UpdateInternalRepresentation();
 }
 
 unsigned CatalogItem::GetPluralFormsCount() const

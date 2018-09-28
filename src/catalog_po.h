@@ -41,6 +41,7 @@ public:
     POCatalogItem(const CatalogItem&) = delete;
 
 protected:
+    void UpdateInternalRepresentation() override {}
 
     friend class POLoadParser;
     friend class POCatalog;
