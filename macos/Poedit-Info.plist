@@ -75,6 +75,25 @@
 			<key>NSIsRelatedItemType</key>
 			<true/>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xlf</string>
+				<string>xliff</string>
+			</array>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>application/x-xliff+xml</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>XLIFF Translation</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>org.oasis-open.xliff</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
@@ -207,6 +226,35 @@
 					<string>application/x-gettext-translation</string>
 				</array>
 			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>org.oasis-open.xliff</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/x-xliff+xml</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>xliff</string>
+					<string>xlf</string>
+				</array>
+			</dict>
+			<key>UTTypeIconFile</key>
+			<string>XLIFF_Icon.icns</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.xml</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>XML Localization Interchange File Format</string>
+			<key>UTTypeReferenceURL</key>
+			<string>http://docs.oasis-open.org/xliff/xliff-core/xliff-core.html</string>
 		</dict>
 	</array>
 </dict>
