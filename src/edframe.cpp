@@ -614,6 +614,7 @@ void PoeditFrame::EnsureAppropriateContentView()
         switch (m_catalog->GetFileType())
         {
             case Catalog::Type::PO:
+            case Catalog::Type::XLIFF:
                 EnsureContentView(Content::PO);
                 break;
             case Catalog::Type::POT:

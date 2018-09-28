@@ -324,7 +324,8 @@ class Catalog
         enum class Type
         {
             PO,
-            POT
+            POT,
+            XLIFF
         };
 
         /// Capabilities of the file type
@@ -547,10 +548,10 @@ class Catalog
         Language GetSourceLanguage() const { return m_sourceLanguage; }
 
         /// Returns catalog's language (may be invalid).
-        Language GetLanguage() const { return m_header.Lang; }
+        virtual Language GetLanguage() const { return m_header.Lang; }
 
         /// Change the catalog's language and update headers accordingly
-        void SetLanguage(Language lang);
+        virtual void SetLanguage(Language lang);
 
         /// Is the PO file from Crowdin, i.e. sync-able?
         bool IsFromCrowdin() const

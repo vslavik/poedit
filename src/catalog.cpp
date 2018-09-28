@@ -26,6 +26,7 @@
 #include "catalog.h"
 
 #include "catalog_po.h"
+#include "catalog_xliff.h"
 
 #include "configuration.h"
 #include "errors.h"
@@ -1072,5 +1073,7 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     if (POCatalog::CanLoadFile(ext))
         return std::make_shared<POCatalog>(filename, flags);
 
+    if (XLIFFCatalog::CanLoadFile(ext))
+        return XLIFFCatalog::Open(filename);
     throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
 }
