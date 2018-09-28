@@ -100,13 +100,13 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return mode == Light ? "#a1a1a1" : wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOXTEXT).ChangeLightness(50);
             #endif
         case Color::ItemFuzzy:
-            return mode == Light ? sRGB(218, 123, 0) : "#a9861b";
+            return mode == Dark ? sRGB(253, 178, 72) : sRGB(230, 134, 0);
         case Color::ItemError:
-            return DoGet(Color::TagErrorLineFg, mode);
+            return sRGB(225, 77, 49);
         case Color::ItemContextFg:
-            return sRGB(70, 109, 137);
+            return mode == Dark ? sRGB(180, 222, 254) : sRGB(70, 109, 137);
         case Color::ItemContextBg:
-            return sRGB(217, 232, 242);
+            return mode == Dark ? sRGB(67, 94, 147, 0.6) : sRGB(217, 232, 242);
         case Color::ItemContextBgHighlighted:
             #if defined(__WXMSW__)
             return sRGB(255, 255, 255, 0.50);
@@ -122,50 +122,33 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return DoGet(Color::ItemContextFg, mode);
         case Color::TagContextBg:
             return DoGet(Color::ItemContextBg, mode);
-        case Color::TagSecondaryFg:
-            return sRGB(87, 87, 87);
         case Color::TagSecondaryBg:
-            return sRGB(236, 236, 236);
-        case Color::TagErrorLineFg:
-            return sRGB(162, 0, 20);
+            return mode == Dark ? sRGB(255, 255, 255, 0.5) : sRGB(0, 0, 0, 0.10);
         case Color::TagErrorLineBg:
             return sRGB(255, 227, 230, 0.75);
-        case Color::TagWarningLineFg:
-            return sRGB(101, 91, 1);
         case Color::TagWarningLineBg:
-            return sRGB(255, 249, 192, 0.75);
+            return sRGB(253, 235, 176);
+        case Color::TagSecondaryFg:
+        case Color::TagErrorLineFg:
+        case Color::TagWarningLineFg:
+            return sRGB(0, 0, 0, 0.9);
 
 
         // Separators:
 
         case Color::ToolbarSeparator:
-            if (mode == Dark)
-                return "#505050";
-            else
-                return "#cdcdcd";
+            return mode == Dark ? "#505050" : "#cdcdcd";
         case Color::SidebarSeparator:
-            if (mode == Dark)
-                return *wxBLACK;
-            else
-                return "#cbcbcb";
+            return mode == Dark ? *wxBLACK : "#cbcbcb";
         case Color::EditingSeparator:
-            if (mode == Dark)
-                return sRGB(80, 80, 80);
-            else
-                return sRGB(204, 204, 204);
+            return mode == Dark ? sRGB(80, 80, 80) : sRGB(204, 204, 204);
         case Color::EditingSubtleSeparator:
-            if (mode == Dark)
-                return sRGB(60, 60, 60);
-            else
-                return sRGB(229, 229, 229);
+            return mode == Dark ? sRGB(60, 60, 60) : sRGB(229, 229, 229);
 
         // Backgrounds:
 
         case Color::SidebarBackground:
-            if (mode == Dark)
-                return "#2e2b29";
-            else
-                return "#edf0f4";
+            return mode == Dark ? sRGB(43, 44, 47) : "#edf0f4";
 
         case Color::EditingBackground:
             #ifdef __WXOSX__
@@ -178,20 +161,20 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         case Color::FuzzySwitch:
             return DoGet(Color::ItemFuzzy, mode);
         case Color::FuzzySwitchInactive:
-            return sRGB(87, 87, 87);
+            return mode == Dark ? sRGB(163, 163, 163) : sRGB(87, 87, 87);
 
         // Syntax highlighting:
 
         case Color::SyntaxLeadingWhitespaceBg:
-            return sRGB(255, 233, 204);
+            return mode == Dark ? sRGB(75, 49, 111) : sRGB(234, 223, 247);
         case Color::SyntaxEscapeFg:
-            return sRGB(162, 0, 20);
+            return mode == Dark ? sRGB(234, 188, 244) : sRGB(162, 0, 20);
         case Color::SyntaxEscapeBg:
-            return sRGB(254, 234, 236);
+            return mode == Dark ? sRGB(90, 15, 167, 0.5) : sRGB(254, 234, 236);
         case Color::SyntaxMarkup:
-            return sRGB(0, 121, 215);
+            return mode == Dark ? sRGB(76, 156, 230) : sRGB(0, 121, 215);
         case Color::SyntaxFormat:
-            return sRGB(178, 52, 197);
+            return mode == Dark ? sRGB(250, 165, 251) : sRGB(178, 52, 197);
 
         // Attention bar:
 
@@ -264,9 +247,9 @@ ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 }
 
 
-wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win)
+wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win, Color bgColor)
 {
-    auto bg = win->GetBackgroundColour();
+    auto bg = (bgColor != Color::Max) ? Get(bgColor, win) : win->GetBackgroundColour();
     auto fg = Get(color, win);
 #ifndef __WXOSX__
     if (fg.Alpha() != wxALPHA_OPAQUE)

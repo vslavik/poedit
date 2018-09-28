@@ -111,7 +111,7 @@ public:
         return Get(color, GetWindowMode(win));
     }
 
-    static wxColour GetBlendedOn(Color color, wxWindow *win);
+    static wxColour GetBlendedOn(Color color, wxWindow *win, Color bgColor = Color::Max);
 
     /// Returns app-wide mode (dark, light)
     static Mode GetAppMode();

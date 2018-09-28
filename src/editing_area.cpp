@@ -211,7 +211,7 @@ public:
 
     void SetColor(Color fg, Color bg)
     {
-        m_fg = ColorScheme::GetBlendedOn(fg, this);
+        m_fg = ColorScheme::GetBlendedOn(fg, this, bg);
         m_bg = ColorScheme::GetBlendedOn(bg, this);
 
         m_label->SetForegroundColour(m_fg);
