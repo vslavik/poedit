@@ -863,11 +863,26 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
         m_tagFormat->SetLabel(wxString::Format(MSW_OR_OTHER(_("%s format"), _("%s Format")), PrettyPrintFormatTag(format)));
     }
 
-    if (m_tagPretranslated)
-        ShowPart(m_tagPretranslated, item->IsPreTranslated());
-
     if (m_fuzzy)
         m_fuzzy->SetValue(item->IsFuzzy());
+
+    UpdateAuxiliaryInfo(item);
+
+    ShowPluralFormUI(item->HasPlural());
+
+    Layout();
+
+    Refresh();
+
+    // by default, editing fuzzy item unfuzzies it
+    m_dontAutoclearFuzzyStatus = false;
+}
+
+
+void EditingArea::UpdateAuxiliaryInfo(CatalogItemPtr item)
+{
+    if (m_tagPretranslated)
+        ShowPart(m_tagPretranslated, item->IsPreTranslated());
 
     if (m_issueLine)
     {
@@ -881,15 +896,6 @@ void EditingArea::UpdateToTextCtrl(CatalogItemPtr item, int flags)
             ShowPart(m_issueLine, false);
         }
     }
-
-    ShowPluralFormUI(item->HasPlural());
-
-    Layout();
-
-    Refresh();
-
-    // by default, editing fuzzy item unfuzzies it
-    m_dontAutoclearFuzzyStatus = false;
 }
 
 
@@ -961,6 +967,8 @@ void EditingArea::UpdateFromTextCtrl()
     }
     item->SetModified(true);
     item->SetPreTranslated(false);
+
+    UpdateAuxiliaryInfo(item);
 
     m_associatedList->RefreshSelectedItems();
 

@@ -110,6 +110,8 @@ public:
     TranslationTextCtrl *Ctrl_PluralTranslation(size_t index) const { return m_textTransPlural[index]; }
 
 private:
+    void UpdateAuxiliaryInfo(CatalogItemPtr item);
+
     void CreateEditControls(wxBoxSizer *sizer);
     void CreateTemplateControls(wxBoxSizer *sizer);
     void SetupTextCtrlSizes();
