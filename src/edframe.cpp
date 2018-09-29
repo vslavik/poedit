@@ -539,8 +539,8 @@ PoeditFrame::PoeditFrame() :
     SetAccelerators();
 
     auto defaultSize = wxGetDisplaySize();
-    defaultSize.x -= PX(400);
-    defaultSize.y -= PX(400);
+    defaultSize.x = std::max(defaultSize.x - PX(300), std::min(defaultSize.x, PX(900)));
+    defaultSize.y = std::max(defaultSize.y - PX(300), std::min(defaultSize.y, PX(600)));
     if (defaultSize.x > PX(1400))
         defaultSize.x = PX(1400);
     if (double(defaultSize.x) / double(defaultSize.y) > 1.6)
