@@ -80,8 +80,17 @@ private:
     {
         wxPaintDC dc(this);
         auto w = dc.GetSize().x;
-        dc.GradientFillLinear(wxRect(0,0,PX(20),PX(1)), m_sides, m_center);
-        dc.GradientFillLinear(wxRect(PX(20),0,w,PX(1)), m_center, m_sides);
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+        {
+            dc.GradientFillLinear(wxRect(0,0,PX(20),PX(1)), m_sides, m_center);
+            dc.GradientFillLinear(wxRect(PX(20),0,w,PX(1)), m_center, m_sides);
+        }
+        else
+        {
+            dc.SetBrush(m_center);
+            dc.SetPen(m_center);
+            dc.DrawRectangle(PX(2), 0, w - PX(4), PX(1));
+        }
     }
 
     wxColour m_sides, m_center;
