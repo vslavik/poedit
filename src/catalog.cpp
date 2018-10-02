@@ -1070,10 +1070,31 @@ CatalogPtr Catalog::Create(const wxString& filename, int flags)
     wxFileName::SplitPath(filename, nullptr, nullptr, nullptr, &ext);
     ext.MakeLower();
 
+    CatalogPtr cat;
     if (POCatalog::CanLoadFile(ext))
-        return std::make_shared<POCatalog>(filename, flags);
+    {
+        cat = std::make_shared<POCatalog>(filename, flags);
+        flags = 0; // don't do the stuff below that is already handled by POCatalog's parser
+    }
+    else if (XLIFFCatalog::CanLoadFile(ext))
+    {
+        cat = XLIFFCatalog::Open(filename);
+    }
 
-    if (XLIFFCatalog::CanLoadFile(ext))
-        return XLIFFCatalog::Open(filename);
-    throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
+    if (!cat)
+        throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
+
+    if (flags & CreationFlag_IgnoreTranslations)
+    {
+        for (auto item: cat->m_items)
+            item->ClearTranslation();
+    }
+
+    return cat;
+}
+
+bool Catalog::CanLoadFile(const wxString& extension)
+{
+    return POCatalog::CanLoadFile(extension) ||
+           XLIFFCatalog::CanLoadFile(extension);
 }
