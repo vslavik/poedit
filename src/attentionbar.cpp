@@ -77,6 +77,14 @@ AttentionBar::AttentionBar(wxWindow *parent)
     m_explanation = new AutoWrappingText(this, "");
     m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
 
+#ifndef __WXOSX__
+    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
+    {
+        m_label->SetForegroundColour(wxColour(0,0,0,180));
+        m_explanation->SetForegroundColour(wxColour(0,0,0,180));
+    }
+#endif
+
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
 
     m_checkbox = new wxCheckBox(this, wxID_ANY, "");
