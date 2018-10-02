@@ -604,7 +604,8 @@ void PoeditListCtrl::CreateColumns()
 
     m_colIcon = AppendBitmapColumn(L"∙", Model::Col_Icon, wxDATAVIEW_CELL_INERT, iconWidth, wxALIGN_CENTER, 0);
 #if wxCHECK_VERSION(3,1,1) && !defined(__WXMSW__) && !defined(__WXOSX__)
-    m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
+    if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+        m_colIcon->GetRenderer()->SetValueAdjuster(new DataViewIconsAdjuster());
 #endif
 
     auto sourceRenderer = new DataViewMarkupRenderer(ColorScheme::Get(Color::ItemContextBgHighlighted, this));
