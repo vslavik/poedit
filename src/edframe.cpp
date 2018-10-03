@@ -1436,26 +1436,59 @@ void PoeditFrame::OnProperties(wxCommandEvent&)
 
 void PoeditFrame::EditCatalogProperties()
 {
-    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this, m_catalog, m_fileExistsOnDisk));
-
-    const Language prevLang = m_catalog->GetLanguage();
-    dlg->TransferTo(m_catalog);
-    dlg->ShowWindowModalThenDo([=](int retcode){
-        if (retcode == wxID_OK)
+    switch (m_catalog->GetFileType())
+    {
+        case Catalog::Type::PO:
+        case Catalog::Type::POT:
         {
-            dlg->TransferFrom(m_catalog);
-            m_modified = true;
-            RecreatePluralTextCtrls();
-            UpdateTitle();
-            UpdateMenu();
-            if (prevLang != m_catalog->GetLanguage())
-            {
-                UpdateTextLanguage();
-                // trigger resorting and language header update:
-                NotifyCatalogChanged(m_catalog);
-            }
+            wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this, m_catalog, m_fileExistsOnDisk));
+
+            const Language prevLang = m_catalog->GetLanguage();
+            dlg->TransferTo(m_catalog);
+            dlg->ShowWindowModalThenDo([=](int retcode){
+                if (retcode != wxID_OK)
+                    return;
+
+                dlg->TransferFrom(m_catalog);
+                m_modified = true;
+                RecreatePluralTextCtrls();
+                UpdateTitle();
+                UpdateMenu();
+                if (prevLang != m_catalog->GetLanguage())
+                {
+                    UpdateTextLanguage();
+                    // trigger resorting and language header update:
+                    NotifyCatalogChanged(m_catalog);
+                }
+            });
+
+            break;
         }
-    });
+
+        // Only language can be changed for other file types:
+        case Catalog::Type::XLIFF:
+        {
+            wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+            dlg->SetLang(m_catalog->GetLanguage());
+            dlg->ShowWindowModalThenDo([=](int retcode){
+                if (retcode != wxID_OK)
+                    return;
+
+                if (dlg->GetLang() != m_catalog->GetLanguage())
+                {
+                    m_catalog->SetLanguage(dlg->GetLang());
+                    m_modified = true;
+                    RecreatePluralTextCtrls();
+
+                    UpdateTextLanguage();
+                    // trigger resorting and language header update:
+                    NotifyCatalogChanged(m_catalog);
+                }
+            });
+
+            break;
+        }
+    }
 }
 
 void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
