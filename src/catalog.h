@@ -428,6 +428,10 @@ class Catalog
         /// \a flags is CreationFlags combination.
         static CatalogPtr Create(const wxString& filename, int flags = 0);
 
+        static bool CanLoadFile(const wxString& extension);
+
+        virtual wxString GetPreferredExtension() const = 0;
+
         virtual ~Catalog() {}
 
         /** Creates new, empty header. Sets Charset to something meaningful

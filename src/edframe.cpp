@@ -415,11 +415,9 @@ public:
         }
 
         wxFileName f(files[0]);
-
-        auto ext = f.GetExt().Lower();
-        if ( ext != "po" && ext != "pot" )
+        if (!Catalog::CanLoadFile(f.GetExt()))
         {
-            wxLogError(_(L"File “%s” is not a message catalog."),
+            wxLogError(_(L"File “%s” is not a translation file."),
                        f.GetFullPath().c_str());
             return false;
         }
@@ -1132,16 +1130,22 @@ void PoeditFrame::OnSave(wxCommandEvent& event)
 }
 
 
-static wxString SuggestFileName(const CatalogPtr& catalog)
+static wxString SuggestFileName(const CatalogPtr& catalog, const wxString& extension = "")
 {
     wxString name;
     if (catalog)
         name = catalog->GetLanguage().Code();
 
     if (name.empty())
-        return "default";
+        name = "default";
+
+    name += '.';
+    if (extension.empty())
+        name += catalog->GetPreferredExtension();
     else
-        return name;
+        name += extension;
+
+    return name;
 }
 
 template<typename F>
@@ -1154,7 +1158,7 @@ void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then)
     if (name.empty())
     {
         path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-        name = SuggestFileName(cat) + ".po";
+        name = SuggestFileName(cat);
     }
 
     wxWindowPtr<wxFileDialog> dlg(
@@ -1201,7 +1205,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
 
     if (name.empty())
     {
-        name = SuggestFileName(cat) + ".mo";
+        name = SuggestFileName(cat, "mo");
     }
     else
         name += ".mo";
@@ -1245,7 +1249,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     if (name.empty())
     {
-        name = SuggestFileName(m_catalog) + ".html";
+        name = SuggestFileName(m_catalog, "html");
     }
     else
         name += ".html";
@@ -1357,7 +1361,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
             // work, e.g. WordPress plugins use different naming, so don't actually
             // save the file just yet and let the user confirm the location when saving.
             wxFileName pot_fn(pot_file);
-            pot_fn.SetFullName(lang.Code() + ".po");
+            pot_fn.SetFullName(lang.Code() + "." + catalog->GetPreferredExtension());
             m_catalog->SetFileName(pot_fn.GetFullPath());
         }
         else

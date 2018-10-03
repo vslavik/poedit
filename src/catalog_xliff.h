@@ -67,6 +67,7 @@ public:
     bool HasCapability(Cap cap) const override;
 
     static bool CanLoadFile(const wxString& extension);
+    wxString GetPreferredExtension() const override { return "xlf"; }
 
     static std::shared_ptr<XLIFFCatalog> Open(const wxString& filename);
 

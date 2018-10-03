@@ -797,6 +797,23 @@ bool POCatalog::CanLoadFile(const wxString& extension)
 }
 
 
+wxString POCatalog::GetPreferredExtension() const
+{
+    switch (m_fileType)
+    {
+        case Type::PO:
+            return "po";
+        case Type::POT:
+            return "pot";
+
+        case Type::XLIFF:
+            wxFAIL_MSG("not possible here"); 
+    }
+
+    return "";
+}
+
+
 static inline wxString GetCurrentTimeString()
 {
     return wxDateTime::Now().Format("%Y-%m-%d %H:%M%z");
@@ -1108,6 +1125,10 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         case Type::POT:
             if ( m_fileType == Type::POT && !m_header.CreationDate.empty() )
                 m_header.CreationDate = currentTime;
+            break;
+
+        case Type::XLIFF:
+            wxFAIL_MSG("not possible here");
             break;
     }
 
@@ -1625,6 +1646,10 @@ bool POCatalog::UpdateFromPOT(POCatalogPtr pot, bool replace_header)
             m_items = pot->m_items;
             break;
         }
+
+        case Type::XLIFF:
+            wxFAIL_MSG("not possible here");
+            break;
     }
 
     if (replace_header)

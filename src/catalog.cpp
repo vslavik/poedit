@@ -562,6 +562,8 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.po", _("PO Translation Files"));
         case Catalog::Type::POT:
             return MaskForType("*.pot", _("POT Translation Templates"));
+        case Catalog::Type::XLIFF:
+            return MaskForType("*.xlf;*.xliff", _("XLIFF Translation Files"));
     }
     return ""; // silence stupid warning
 }
@@ -585,9 +587,9 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff", _("All Translation Files"), /*showExt=*/false) +
            "|" +
-           GetTypesFileMask({Type::PO, Type::POT});
+           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF});
 }
 
 
@@ -1059,6 +1061,10 @@ CatalogPtr Catalog::Create(Type type)
         case Type::PO:
         case Type::POT:
             return std::make_shared<POCatalog>(type);
+
+        case Type::XLIFF:
+            wxFAIL_MSG("empty XLIFF creation not implemented");
+            return CatalogPtr();
     }
 
     return CatalogPtr(); // silence VC++ warning
