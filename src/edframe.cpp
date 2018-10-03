@@ -415,11 +415,9 @@ public:
         }
 
         wxFileName f(files[0]);
-
-        auto ext = f.GetExt().Lower();
-        if ( ext != "po" && ext != "pot" )
+        if (!Catalog::CanLoadFile(f.GetExt()))
         {
-            wxLogError(_(L"File “%s” is not a message catalog."),
+            wxLogError(_(L"File “%s” is not a translation file."),
                        f.GetFullPath().c_str());
             return false;
         }
@@ -614,6 +612,7 @@ void PoeditFrame::EnsureAppropriateContentView()
         switch (m_catalog->GetFileType())
         {
             case Catalog::Type::PO:
+            case Catalog::Type::XLIFF:
                 EnsureContentView(Content::PO);
                 break;
             case Catalog::Type::POT:
@@ -1131,16 +1130,22 @@ void PoeditFrame::OnSave(wxCommandEvent& event)
 }
 
 
-static wxString SuggestFileName(const CatalogPtr& catalog)
+static wxString SuggestFileName(const CatalogPtr& catalog, const wxString& extension = "")
 {
     wxString name;
     if (catalog)
         name = catalog->GetLanguage().Code();
 
     if (name.empty())
-        return "default";
+        name = "default";
+
+    name += '.';
+    if (extension.empty())
+        name += catalog->GetPreferredExtension();
     else
-        return name;
+        name += extension;
+
+    return name;
 }
 
 template<typename F>
@@ -1153,7 +1158,7 @@ void PoeditFrame::GetSaveAsFilenameThenDo(const CatalogPtr& cat, F then)
     if (name.empty())
     {
         path = wxConfig::Get()->Read("last_file_path", wxEmptyString);
-        name = SuggestFileName(cat) + ".po";
+        name = SuggestFileName(cat);
     }
 
     wxWindowPtr<wxFileDialog> dlg(
@@ -1200,7 +1205,7 @@ void PoeditFrame::OnCompileMO(wxCommandEvent&)
 
     if (name.empty())
     {
-        name = SuggestFileName(cat) + ".mo";
+        name = SuggestFileName(cat, "mo");
     }
     else
         name += ".mo";
@@ -1244,7 +1249,7 @@ void PoeditFrame::OnExport(wxCommandEvent&)
 
     if (name.empty())
     {
-        name = SuggestFileName(m_catalog) + ".html";
+        name = SuggestFileName(m_catalog, "html");
     }
     else
         name += ".html";
@@ -1356,7 +1361,7 @@ void PoeditFrame::NewFromPOT(const wxString& pot_file, Language language)
             // work, e.g. WordPress plugins use different naming, so don't actually
             // save the file just yet and let the user confirm the location when saving.
             wxFileName pot_fn(pot_file);
-            pot_fn.SetFullName(lang.Code() + ".po");
+            pot_fn.SetFullName(lang.Code() + "." + catalog->GetPreferredExtension());
             m_catalog->SetFileName(pot_fn.GetFullPath());
         }
         else
@@ -1431,26 +1436,59 @@ void PoeditFrame::OnProperties(wxCommandEvent&)
 
 void PoeditFrame::EditCatalogProperties()
 {
-    wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this, m_catalog, m_fileExistsOnDisk));
-
-    const Language prevLang = m_catalog->GetLanguage();
-    dlg->TransferTo(m_catalog);
-    dlg->ShowWindowModalThenDo([=](int retcode){
-        if (retcode == wxID_OK)
+    switch (m_catalog->GetFileType())
+    {
+        case Catalog::Type::PO:
+        case Catalog::Type::POT:
         {
-            dlg->TransferFrom(m_catalog);
-            m_modified = true;
-            RecreatePluralTextCtrls();
-            UpdateTitle();
-            UpdateMenu();
-            if (prevLang != m_catalog->GetLanguage())
-            {
-                UpdateTextLanguage();
-                // trigger resorting and language header update:
-                NotifyCatalogChanged(m_catalog);
-            }
+            wxWindowPtr<PropertiesDialog> dlg(new PropertiesDialog(this, m_catalog, m_fileExistsOnDisk));
+
+            const Language prevLang = m_catalog->GetLanguage();
+            dlg->TransferTo(m_catalog);
+            dlg->ShowWindowModalThenDo([=](int retcode){
+                if (retcode != wxID_OK)
+                    return;
+
+                dlg->TransferFrom(m_catalog);
+                m_modified = true;
+                RecreatePluralTextCtrls();
+                UpdateTitle();
+                UpdateMenu();
+                if (prevLang != m_catalog->GetLanguage())
+                {
+                    UpdateTextLanguage();
+                    // trigger resorting and language header update:
+                    NotifyCatalogChanged(m_catalog);
+                }
+            });
+
+            break;
         }
-    });
+
+        // Only language can be changed for other file types:
+        case Catalog::Type::XLIFF:
+        {
+            wxWindowPtr<LanguageDialog> dlg(new LanguageDialog(this));
+            dlg->SetLang(m_catalog->GetLanguage());
+            dlg->ShowWindowModalThenDo([=](int retcode){
+                if (retcode != wxID_OK)
+                    return;
+
+                if (dlg->GetLang() != m_catalog->GetLanguage())
+                {
+                    m_catalog->SetLanguage(dlg->GetLang());
+                    m_modified = true;
+                    RecreatePluralTextCtrls();
+
+                    UpdateTextLanguage();
+                    // trigger resorting and language header update:
+                    NotifyCatalogChanged(m_catalog);
+                }
+            });
+
+            break;
+        }
+    }
 }
 
 void PoeditFrame::EditCatalogPropertiesAndUpdateFromSources()
@@ -2365,7 +2403,11 @@ void PoeditFrame::WarnAboutLanguageIssues()
 
 void PoeditFrame::NoteAsRecentFile()
 {
-    wxFileName fn(GetFileName());
+    auto filename = GetFileName();
+    if (!filename)
+        return;
+
+    wxFileName fn(filename);
     fn.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_ABSOLUTE);
 #ifdef __WXOSX__
     [[NSDocumentController sharedDocumentController] noteNewRecentDocumentURL:[NSURL fileURLWithPath:str::to_NS(fn.GetFullPath())]];

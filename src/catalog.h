@@ -90,6 +90,8 @@ class CatalogItem
 
         CatalogItem(const CatalogItem&) = delete;
 
+        virtual ~CatalogItem() {}
+
     public:
         // -------------------------------------------------------------------
         // Read-only access to values in the item:
@@ -237,6 +239,9 @@ class CatalogItem
         void SetIssue(const Issue& issue) { m_issue = std::make_shared<Issue>(issue); }
         void SetIssue(Issue::Severity severity, const wxString& message) { m_issue = std::make_shared<Issue>(severity, message); }
 
+    protected:
+        // API for subclasses:
+        virtual void UpdateInternalRepresentation() = 0;
 
     protected:
         // -------------------------------------------------------------------
@@ -319,7 +324,8 @@ class Catalog
         enum class Type
         {
             PO,
-            POT
+            POT,
+            XLIFF
         };
 
         /// Capabilities of the file type
@@ -422,6 +428,10 @@ class Catalog
         /// \a flags is CreationFlags combination.
         static CatalogPtr Create(const wxString& filename, int flags = 0);
 
+        static bool CanLoadFile(const wxString& extension);
+
+        virtual wxString GetPreferredExtension() const = 0;
+
         virtual ~Catalog() {}
 
         /** Creates new, empty header. Sets Charset to something meaningful
@@ -432,20 +442,6 @@ class Catalog
         /** Creates new header initialized based on a POT file's header.
          */
         void CreateNewHeader(const HeaderData& pot_header);
-
-        /// Clears the catalog, removes all entries from it.
-        virtual void Clear();
-
-        /** Loads catalog from .po file.
-            If file named po_file ".poedit" (e.g. "cs.po.poedit") exists,
-            this function loads additional information from it. .po.poedit
-            file contains parts of catalog header data that are not part
-            of standard .po format, namely SearchPaths, Keywords, BasePath
-            and Language.
-
-            @param flags CreationFlags combination.
-         */
-        virtual bool Load(const wxString& po_file, int flags = 0) = 0;
 
         /** Saves catalog to file. Creates both .po (text) and .mo (binary)
             version of the catalog (unless the latter was disabled in
@@ -556,10 +552,10 @@ class Catalog
         Language GetSourceLanguage() const { return m_sourceLanguage; }
 
         /// Returns catalog's language (may be invalid).
-        Language GetLanguage() const { return m_header.Lang; }
+        virtual Language GetLanguage() const { return m_header.Lang; }
 
         /// Change the catalog's language and update headers accordingly
-        void SetLanguage(Language lang);
+        virtual void SetLanguage(Language lang);
 
         /// Is the PO file from Crowdin, i.e. sync-able?
         bool IsFromCrowdin() const

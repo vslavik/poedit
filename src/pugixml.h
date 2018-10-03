@@ -31,7 +31,6 @@
 #ifdef HAVE_PUGIXML
     #include <pugixml.hpp>
 #else
-    #define PUGIXML_NO_XPATH
     // #define PUGIXML_COMPACT ?
     #define PUGIXML_HEADER_ONLY
     #include "../deps/pugixml/src/pugixml.hpp"

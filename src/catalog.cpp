@@ -25,7 +25,11 @@
 
 #include "catalog.h"
 
+#include "catalog_po.h"
+#include "catalog_xliff.h"
+
 #include "configuration.h"
+#include "errors.h"
 #include "extractors/extractor.h"
 #include "gexecute.h"
 #include "qa_checks.h"
@@ -50,15 +54,6 @@
 #include <set>
 #include <algorithm>
 
-#ifdef __WXOSX__
-#import <Foundation/Foundation.h>
-#endif
-
-// TODO: split into different file
-#if wxUSE_GUI
-    #include "cloud_sync.h" // FIXME - gross, not GUI-related
-    #include <wx/msgdlg.h>
-#endif
 
 // ----------------------------------------------------------------------
 // Textfile processing utilities:
@@ -535,16 +530,6 @@ int Catalog::FindItemIndexByLine(int lineno)
     return last;
 }
 
-void Catalog::Clear()
-{
-    m_items.clear();
-    m_isOk = true;
-    for(int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
-    {
-        m_header.Bookmarks[i] = -1;
-    }
-}
-
 int Catalog::SetBookmark(int id, Bookmark bookmark)
 {
     int result = (bookmark==NO_BOOKMARK)?-1:m_header.Bookmarks[bookmark];
@@ -577,6 +562,8 @@ wxString MaskForType(Catalog::Type t)
             return MaskForType("*.po", _("PO Translation Files"));
         case Catalog::Type::POT:
             return MaskForType("*.pot", _("POT Translation Templates"));
+        case Catalog::Type::XLIFF:
+            return MaskForType("*.xlf;*.xliff", _("XLIFF Translation Files"));
     }
     return ""; // silence stupid warning
 }
@@ -600,9 +587,9 @@ wxString Catalog::GetTypesFileMask(std::initializer_list<Type> types)
 
 wxString Catalog::GetAllTypesFileMask()
 {
-    return MaskForType("*.po;*.pot", _("All Translation Files"), /*showExt=*/false) +
+    return MaskForType("*.po;*.pot;*.xlf;*.xliff", _("All Translation Files"), /*showExt=*/false) +
            "|" +
-           GetTypesFileMask({Type::PO, Type::POT});
+           GetTypesFileMask({Type::PO, Type::POT, Type::XLIFF});
 }
 
 
@@ -911,6 +898,8 @@ void CatalogItem::SetFuzzy(bool fuzzy)
     if (!fuzzy && m_isFuzzy)
         m_oldMsgid.clear();
     m_isFuzzy = fuzzy;
+
+    UpdateInternalRepresentation();
 }
 
 wxString CatalogItem::GetTranslation(unsigned idx) const
@@ -938,6 +927,8 @@ void CatalogItem::SetTranslation(const wxString &t, unsigned idx)
             break;
         }
     }
+
+    UpdateInternalRepresentation();
 }
 
 void CatalogItem::SetTranslations(const wxArrayString &t)
@@ -955,6 +946,8 @@ void CatalogItem::SetTranslations(const wxArrayString &t)
             break;
         }
     }
+
+    UpdateInternalRepresentation();
 }
 
 void CatalogItem::SetTranslationFromSource()
@@ -983,6 +976,8 @@ void CatalogItem::SetTranslationFromSource()
             }
         }
     }
+
+    UpdateInternalRepresentation();
 }
 
 void CatalogItem::ClearTranslation()
@@ -996,6 +991,8 @@ void CatalogItem::ClearTranslation()
             m_isModified = true;
         t.clear();
     }
+
+    UpdateInternalRepresentation();
 }
 
 unsigned CatalogItem::GetPluralFormsCount() const
@@ -1052,4 +1049,58 @@ wxString CatalogItem::GetOldMsgid() const
         s += UnescapeCString(line);
     }
     return s;
+}
+
+
+// Catalog file creation factories:
+
+CatalogPtr Catalog::Create(Type type)
+{
+    switch (type)
+    {
+        case Type::PO:
+        case Type::POT:
+            return std::make_shared<POCatalog>(type);
+
+        case Type::XLIFF:
+            wxFAIL_MSG("empty XLIFF creation not implemented");
+            return CatalogPtr();
+    }
+
+    return CatalogPtr(); // silence VC++ warning
+}
+
+CatalogPtr Catalog::Create(const wxString& filename, int flags)
+{
+    wxString ext;
+    wxFileName::SplitPath(filename, nullptr, nullptr, nullptr, &ext);
+    ext.MakeLower();
+
+    CatalogPtr cat;
+    if (POCatalog::CanLoadFile(ext))
+    {
+        cat = std::make_shared<POCatalog>(filename, flags);
+        flags = 0; // don't do the stuff below that is already handled by POCatalog's parser
+    }
+    else if (XLIFFCatalog::CanLoadFile(ext))
+    {
+        cat = XLIFFCatalog::Open(filename);
+    }
+
+    if (!cat)
+        throw Exception(wxString::Format(_(L"File “%s” is in unsupported format."), filename));
+
+    if (flags & CreationFlag_IgnoreTranslations)
+    {
+        for (auto item: cat->m_items)
+            item->ClearTranslation();
+    }
+
+    return cat;
+}
+
+bool Catalog::CanLoadFile(const wxString& extension)
+{
+    return POCatalog::CanLoadFile(extension) ||
+           XLIFFCatalog::CanLoadFile(extension);
 }

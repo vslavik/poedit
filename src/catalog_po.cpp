@@ -56,7 +56,6 @@
 
 // TODO: split into different file
 #if wxUSE_GUI
-    #include "cloud_sync.h" // FIXME - gross, not GUI-related
     #include <wx/msgdlg.h>
 #endif
 
@@ -792,6 +791,29 @@ bool POCatalog::HasCapability(Catalog::Cap cap) const
 }
 
 
+bool POCatalog::CanLoadFile(const wxString& extension)
+{
+    return extension == "po" || extension == "pot";
+}
+
+
+wxString POCatalog::GetPreferredExtension() const
+{
+    switch (m_fileType)
+    {
+        case Type::PO:
+            return "po";
+        case Type::POT:
+            return "pot";
+
+        case Type::XLIFF:
+            wxFAIL_MSG("not possible here"); 
+    }
+
+    return "";
+}
+
+
 static inline wxString GetCurrentTimeString()
 {
     return wxDateTime::Now().Format("%Y-%m-%d %H:%M%z");
@@ -966,7 +988,13 @@ void POCatalog::FixupCommonIssues()
 
 void POCatalog::Clear()
 {
-    Catalog::Clear();
+    // Catalog base class fields:
+    m_items.clear();
+    m_isOk = true;
+    for (int i = BOOKMARK_0; i < BOOKMARK_LAST; i++)
+        m_header.Bookmarks[i] = -1;
+
+    // PO-specific fields:
     m_deletedItems.clear();
 }
 
@@ -1097,6 +1125,10 @@ bool POCatalog::Save(const wxString& po_file, bool save_mo,
         case Type::POT:
             if ( m_fileType == Type::POT && !m_header.CreationDate.empty() )
                 m_header.CreationDate = currentTime;
+            break;
+
+        case Type::XLIFF:
+            wxFAIL_MSG("not possible here");
             break;
     }
 
@@ -1614,6 +1646,10 @@ bool POCatalog::UpdateFromPOT(POCatalogPtr pot, bool replace_header)
             m_items = pot->m_items;
             break;
         }
+
+        case Type::XLIFF:
+            wxFAIL_MSG("not possible here");
+            break;
     }
 
     if (replace_header)
@@ -1680,17 +1716,3 @@ bool POCatalog::Merge(const POCatalogPtr& refcat)
 
     return succ;
 }
-
-
-// Temporary creation factories:
-
-CatalogPtr Catalog::Create(Type type)
-{
-    return std::make_shared<POCatalog>(type);
-}
-
-CatalogPtr Catalog::Create(const wxString& filename, int flags)
-{
-    return std::make_shared<POCatalog>(filename, flags);
-}
-
