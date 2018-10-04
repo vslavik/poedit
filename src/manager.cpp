@@ -96,11 +96,10 @@ ManagerFrame::ManagerFrame() :
     // De-uglify the toolbar a bit on Windows 10:
     if (IsWindows10OrGreater())
     {
-        const wxUxThemeEngine* theme = wxUxThemeEngine::GetIfActive();
-        if (theme)
+        if (wxUxThemeIsActive())
         {
             wxUxThemeHandle hTheme(tb, L"ExplorerMenu::Toolbar");
-            tb->SetBackgroundColour(wxRGBToColour(theme->GetThemeSysColor(hTheme, COLOR_WINDOW)));
+            tb->SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
         }
     }
 #endif

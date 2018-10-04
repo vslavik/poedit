@@ -144,8 +144,8 @@
     //// Color Declarations
     NSColor* white = [NSColor colorWithCalibratedRed: 1 green: 1 blue: 1 alpha: 1];
     NSColor* pressedTranslucent = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.157];
-    NSColor* strokeColor = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.2];
-    NSColor* strokeColor2 = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.12];
+    NSColor* strokeColor = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.118];
+    NSColor* strokeColor2 = [NSColor colorWithCalibratedRed: 0 green: 0 blue: 0 alpha: 0.071];
 
     //// Shadow Declarations
     NSShadow* translucentButtonShadow = [[NSShadow alloc] init];
@@ -166,7 +166,7 @@
         //// Group 3
         {
             [NSGraphicsContext saveGraphicsState];
-            CGContextSetAlpha(context, 0.6);
+            CGContextSetAlpha(context, 0.7);
             CGContextBeginTransparencyLayer(context, NULL);
 
 

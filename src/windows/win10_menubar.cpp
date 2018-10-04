@@ -74,7 +74,7 @@ public:
 
         {
             wxUxThemeHandle hTheme(this, L"ExplorerMenu::Toolbar");
-            SetBackgroundColour(wxRGBToColour(wxUxThemeEngine::GetIfActive()->GetThemeSysColor(hTheme, COLOR_WINDOW)));
+            SetBackgroundColour(wxRGBToColour(::GetThemeSysColor(hTheme, COLOR_WINDOW)));
         }
     }
 
@@ -179,7 +179,7 @@ bool wxFrameWithWindows10Menubar::ShouldUse() const
     if (!IsWindows10OrGreater())
         return false;
 
-    if (!wxUxThemeEngine::GetIfActive())
+    if (!wxUxThemeIsActive())
         return false;
 
     if (wxConfig::Get()->ReadBool("/disable_mctrl", false))

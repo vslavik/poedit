@@ -30,19 +30,19 @@ dist_uiicons_DATA = \
 		linux/poedit-validate.png \
 		linux/sidebar.png \
 		CrowdinLogo.png \
+		DownvoteTemplate.png \
 		ExtractorsGNUgettext.png \
-		MoreIcon.png \
+		ItemBookmarkTemplate.png \
+		ItemCommentTemplate.png \
 		PoeditWelcome.png \
 		SuggestionError.png \
 		SuggestionPerfectMatch.png \
-		SuggestionTM.png \
-		poedit-status-bookmark-selected.png \
-		poedit-status-bookmark.png \
+		SuggestionTMTemplate.png \
 		poedit-status-cat-mid.png \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \
-		poedit-status-comment-selected.png \
-		poedit-status-comment.png \
-		poedit-status-error.png \
-		poedit-status-warning.png \
+		StatusError.png \
+		StatusErrorBlack.png \
+		StatusWarning.png \
+		StatusWarningBlack.png \
 		window-close.png

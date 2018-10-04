@@ -30,6 +30,8 @@
 #include <set>
 
 #include "icons.h"
+
+#include "colorscheme.h"
 #include "edapp.h"
 #include "hidpi.h"
 #include "utility.h"
@@ -87,6 +89,27 @@ bool ShouldBeMirorredInRTL(const wxArtID& id, const wxArtClient& client)
     return mirror;
 }
 
+void ProcessTemplateImage(wxImage& img, bool keepOpaque, bool inverted)
+{
+    int size = img.GetWidth() * img.GetHeight();
+
+    ColorScheme::Mode inverseMode = inverted ? ColorScheme::Light : ColorScheme::Dark;
+    if (ColorScheme::GetAppMode() == inverseMode)
+    {
+        auto rgb = img.GetData();
+        for (int i = 0; i < 3*size; ++i, ++rgb)
+            *rgb = 255 - *rgb;
+    }
+
+    // Apply 50% transparency
+    if (!keepOpaque)
+    {
+        auto alpha = img.GetAlpha();
+        for (int i = 0; i < size; ++i, ++alpha)
+            *alpha /= 2;
+    }
+}
+
 } // anonymous namespace
 
 wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
@@ -96,9 +119,13 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     wxLogTrace("poedit.icons", "getting icon '%s'", id_.c_str());
 
     wxArtID id(id_);
-    const bool disabledVariant = id.Contains("@disabled");
-    if (disabledVariant)
-        id.Replace("@disabled", "");
+    #define CHECK_FOR_VARIANT(name)                         \
+        const bool name##Variant = id.Contains("@" #name);  \
+        if (name##Variant)                                  \
+            id.Replace("@" #name, "")
+    CHECK_FOR_VARIANT(disabled);
+    CHECK_FOR_VARIANT(opaque);
+    CHECK_FOR_VARIANT(inverted);
 
     // Silence warning about unused parameter in some of the builds
     (void)client;
@@ -136,12 +163,20 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     wxString icon;
     icon.Printf("%s/%s", iconsdir, id);
     wxLogTrace("poedit.icons", "loading from %s", icon);
-    wxImage img = LoadScaledBitmap(icon);
+    wxImage img;
+    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
+        img = LoadScaledBitmap(icon + "Dark");
+    if (!img.IsOk())
+        img = LoadScaledBitmap(icon);
+
     if (!img.IsOk())
     {
         wxLogTrace("poedit.icons", "failed to load icon '%s'", id);
         return wxNullBitmap;
     }
+
+    if (id.EndsWith("Template"))
+        ProcessTemplateImage(img, opaqueVariant, invertedVariant);
 
     if (disabledVariant)
         img = img.ConvertToDisabled();

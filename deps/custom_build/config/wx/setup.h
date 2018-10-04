@@ -17,6 +17,7 @@
 #include "wx/osx/config_xcode.h"
 #endif
 
+#define wxUSE_PRIVATE_FONTS 0
 /* --- start common options --- */
 // ----------------------------------------------------------------------------
 // global settings
@@ -630,6 +631,7 @@
 // Set to 1 to compile wxZlibInput/OutputStream classes. Also required by
 // wxUSE_LIBPNG
 #define wxUSE_ZLIB          1
+#define wxUSE_ZLIB_H_IN_PATH
 
 // If enabled, the code written by Apple will be used to write, in a portable
 // way, float on the disk. See extended.c for the license which is different
@@ -1786,6 +1788,12 @@
 // make sure we have the proper dispatcher for the console event loop
 #define wxUSE_SELECT_DISPATCHER 1
 #define wxUSE_EPOLL_DISPATCHER 0
+
+// set to 1 if you have older code that still needs icon refs
+#define wxOSX_USE_ICONREF 0
+
+// set to 0 if you have code that has problems with the new bitmap implementation
+#define wxOSX_BITMAP_NATIVE_ACCESS 1
 
 #define wxUSE_XTEST 0
 

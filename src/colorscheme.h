@@ -95,7 +95,7 @@ public:
         Dark
     };
 
-    static const wxColour& Get(Color color, Mode type = Light)
+    static const wxColour& Get(Color color, Mode type = GetAppMode())
     {
         if (!s_data)
             s_data = std::make_unique<Data>();
@@ -108,23 +108,14 @@ public:
 
     static const wxColour& Get(Color color, wxWindow *win)
     {
-        return Get(color, win->GetDefaultAttributes());
-    }
-
-    static const wxColour& Get(Color color, const wxVisualAttributes& win)
-    {
         return Get(color, GetWindowMode(win));
     }
 
-    static wxColour GetBlendedOn(Color color, wxWindow *win);
+    static wxColour GetBlendedOn(Color color, wxWindow *win, Color bgColor = Color::Max);
 
     /// Returns app-wide mode (dark, light)
     static Mode GetAppMode();
-    static Mode GetWindowMode(const wxVisualAttributes& win);
-    static Mode GetWindowMode(wxWindow *win)
-    {
-        return GetWindowMode(win->GetDefaultAttributes());
-    }
+    static Mode GetWindowMode(wxWindow *win);
 
     static void CleanUp();
 

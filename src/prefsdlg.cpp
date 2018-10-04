@@ -724,7 +724,13 @@ public:
 
         // FIXME: Neither wxBORDER_ flag produces correct results on macOS or Windows, would need to paint manually
         auto listPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL | MSW_OR_OTHER(wxBORDER_SIMPLE, wxBORDER_SUNKEN));
-        listPanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX));
+#ifdef __WXOSX__
+        // FIXME: In dark mode, listbox color is special and requires NSBox to be rendered correctly
+        if (ColorScheme::GetWindowMode(this) != ColorScheme::Dark)
+#endif
+        {
+            listPanel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX));
+        }
         auto listSizer = new wxBoxSizer(wxVERTICAL);
         listPanel->SetSizer(listSizer);
 

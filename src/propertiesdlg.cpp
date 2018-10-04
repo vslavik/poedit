@@ -258,8 +258,6 @@ public:
     {
 #if defined(__WXOSX__)
         SetWindowVariant(wxWINDOW_VARIANT_SMALL);
-        // FIXME: gross hack to make inside-notebook color to match
-        SetBackgroundColour(parent->GetBackgroundColour().ChangeLightness(93));
 #elif defined(__WXMSW__)
         SetBackgroundColour(*wxWHITE);
 #endif
@@ -605,7 +603,7 @@ PropertiesDialog::PropertiesDialog(wxWindow *parent, CatalogPtr cat, bool fileEx
     m_pluralFormsCustom = XRCCTRL(*this, "plural_forms_custom", wxRadioButton);
     m_pluralFormsExpr = XRCCTRL(*this, "plural_forms_expr", wxTextCtrl);
 #if defined(__WXMSW__) && !wxCHECK_VERSION(3,1,0)
-    m_pluralFormsExpr->SetFont(m_pluralFormsExpr->GetFont().Smaller());
+    m_pluralFormsExpr->SetFont(SmallerFont(m_pluralFormsExpr->GetFont()));
 #else
     m_pluralFormsExpr->SetWindowVariant(wxWINDOW_VARIANT_SMALL);
 #endif

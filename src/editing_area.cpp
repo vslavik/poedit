@@ -211,7 +211,7 @@ public:
 
     void SetColor(Color fg, Color bg)
     {
-        m_fg = ColorScheme::GetBlendedOn(fg, this);
+        m_fg = ColorScheme::GetBlendedOn(fg, this, bg);
         m_bg = ColorScheme::GetBlendedOn(bg, this);
 
         m_label->SetForegroundColour(m_fg);
@@ -294,8 +294,8 @@ public:
     IssueLabel(wxWindow *parent)
         : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg)
     {
-        m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
-        m_iconWarning = wxArtProvider::GetBitmap("poedit-status-warning");
+        m_iconError = wxArtProvider::GetBitmap("StatusErrorBlack");
+        m_iconWarning = wxArtProvider::GetBitmap("StatusWarningBlack");
         SetIcon(m_iconError);
     }
 

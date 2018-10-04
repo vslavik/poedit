@@ -40,7 +40,6 @@
 #include "tm/transmem.h"
 
 #include <wx/app.h>
-#include <wx/bmpbuttn.h>
 #include <wx/button.h>
 #include <wx/dcclient.h>
 #include <wx/graphics.h>
@@ -81,8 +80,17 @@ private:
     {
         wxPaintDC dc(this);
         auto w = dc.GetSize().x;
-        dc.GradientFillLinear(wxRect(0,0,PX(20),PX(1)), m_sides, m_center);
-        dc.GradientFillLinear(wxRect(PX(20),0,w,PX(1)), m_center, m_sides);
+        if (ColorScheme::GetWindowMode(this) == ColorScheme::Light)
+        {
+            dc.GradientFillLinear(wxRect(0,0,PX(20),PX(1)), m_sides, m_center);
+            dc.GradientFillLinear(wxRect(PX(20),0,w,PX(1)), m_center, m_sides);
+        }
+        else
+        {
+            dc.SetBrush(m_center);
+            dc.SetPen(m_center);
+            dc.DrawRectangle(PX(2), 0, w - PX(4), PX(1));
+        }
     }
 
     wxColour m_sides, m_center;
@@ -270,10 +278,10 @@ public:
         m_sidebar = parent;
         m_parentBlock = block;
         m_isHighlighted = false;
-        m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
+        m_icon = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
-        m_moreActions = new wxBitmapButton(this, wxID_ANY, wxArtProvider::GetBitmap("MoreIcon"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT);
+        m_moreActions = new ImageButton(this, wxArtProvider::GetBitmap("DownvoteTemplate"));
 
         m_isPerfect = isFirst
                       ? new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionPerfectMatch"))
@@ -292,14 +300,16 @@ public:
         right->Add(infoSizer, wxSizerFlags().Expand().Border(wxTOP|wxBOTTOM, PX(2)));
 
         infoSizer->AddStretchSpacer();
-        infoSizer->Add(m_moreActions, wxSizerFlags().ReserveSpaceEvenIfHidden().CenterVertical().Border(wxRIGHT, PX(2)));
+        infoSizer->Add(m_moreActions, wxSizerFlags().ReserveSpaceEvenIfHidden().CenterVertical().Border(wxRIGHT, MSW_OR_OTHER(PX(4), PX(2))));
         m_moreActions->Hide();
 
         SetSizerAndFit(top);
 
         // setup mouse hover highlighting:
         m_bg = parent->GetBackgroundColour();
-        m_bgHighlight = m_bg.ChangeLightness(95);
+        m_bgHighlight = ColorScheme::GetWindowMode(parent) == ColorScheme::Dark
+                        ? m_bg.ChangeLightness(110)
+                        : m_bg.ChangeLightness(95);
 
         wxWindow* parts [] = { this, m_icon, m_text, m_info, m_moreActions };
         for (auto w : parts)
@@ -373,7 +383,7 @@ private:
         {
             SetForegroundColour(ExplanationLabel::GetTextColor());
         #ifdef __WXMSW__
-            SetFont(GetFont().Smaller());
+            SetFont(SmallerFont(GetFont()));
         #else
             SetWindowVariant(wxWINDOW_VARIANT_SMALL);
         #endif
@@ -451,8 +461,10 @@ private:
     void Highlight(bool highlight)
     {
         m_isHighlighted = highlight;
+#ifndef __WXOSX__
         for (auto c: GetChildren())
             c->SetBackgroundColour(highlight ? m_bgHighlight : m_bg);
+#endif
         m_moreActions->Show(highlight && ShouldShowActions());
         Refresh();
 
@@ -479,7 +491,7 @@ private:
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;
-    wxBitmapButton *m_moreActions;
+    ImageButton *m_moreActions;
     wxColour m_bg, m_bgHighlight;
 };
 
@@ -541,7 +553,7 @@ SuggestionsSidebarBlock::~SuggestionsSidebarBlock()
 
 wxBitmap SuggestionsSidebarBlock::GetIconForSuggestion(const Suggestion&) const
 {
-    return wxArtProvider::GetBitmap("SuggestionTM");
+    return wxArtProvider::GetBitmap("SuggestionTMTemplate");
 }
 
 wxString SuggestionsSidebarBlock::GetTooltipForSuggestion(const Suggestion&) const
@@ -623,7 +635,7 @@ void SuggestionsSidebarBlock::BuildSuggestionsMenu(int count)
     {
         auto text = wxString::Format("(empty)\t%s%d", _("Ctrl+"), i+1);
         auto item = new wxMenuItem(menu, wxID_ANY, text);
-        item->SetBitmap(wxArtProvider::GetBitmap("SuggestionTM"));
+        item->SetBitmap(wxArtProvider::GetBitmap("SuggestionTMTemplate"));
 
         m_suggestionMenuItems.push_back(item);
         menu->Append(item);

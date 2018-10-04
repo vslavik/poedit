@@ -29,6 +29,8 @@
 #include "concurrency.h"
 #include "language.h"
 
+#include <wx/bmpbuttn.h>
+#include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/hyperlink.h>
 #include <wx/xrc/xmlres.h>
@@ -162,6 +164,14 @@ private:
     bool m_running;
     wxActivityIndicator *m_spinner;
     wxStaticText *m_label, *m_error;
+};
+
+
+// A bit nicer (macOS) and easier to use image button
+class ImageButton : public wxBitmapButton
+{
+public:
+    ImageButton(wxWindow *parent, const wxBitmap& bmp);
 };
 
 #endif // Poedit_customcontrols_h

@@ -47,6 +47,19 @@ inline wxColour sRGB(int r, int g, int b, double a = 1.0)
     return wxColour([NSColor colorWithSRGBRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]);
 }
 
+inline bool IsDarkAppearance(NSAppearance *appearance)
+{
+    if (@available(macOS 10.14, *))
+    {
+        NSAppearanceName appearanceName = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
+        return [appearanceName isEqualToString:NSAppearanceNameDarkAqua];
+    }
+    else
+    {
+        return false;
+    }
+}
+
 #else
 
 inline wxColour sRGB(int r, int g, int b, double a = 1.0)
@@ -63,7 +76,7 @@ bool ColorScheme::s_appModeDetermined = false;
 ColorScheme::Mode ColorScheme::s_appMode = ColorScheme::Mode::Light;
 
 
-wxColour ColorScheme::DoGet(Color color, Mode type)
+wxColour ColorScheme::DoGet(Color color, Mode mode)
 {
     switch (color)
     {
@@ -81,15 +94,19 @@ wxColour ColorScheme::DoGet(Color color, Mode type)
         // List items:
 
         case Color::ItemID:
-            return type == Light ? "#a1a1a1" : wxNullColour;
+            #ifdef __WXOSX__
+            return wxColour([NSColor tertiaryLabelColor]);
+            #else
+            return mode == Light ? "#a1a1a1" : wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOXTEXT).ChangeLightness(50);
+            #endif
         case Color::ItemFuzzy:
-            return type == Light ? sRGB(218, 123, 0) : "#a9861b";
+            return mode == Dark ? sRGB(253, 178, 72) : sRGB(230, 134, 0);
         case Color::ItemError:
-            return DoGet(Color::TagErrorLineFg, type);
+            return sRGB(225, 77, 49);
         case Color::ItemContextFg:
-            return sRGB(70, 109, 137);
+            return mode == Dark ? sRGB(180, 222, 254) : sRGB(70, 109, 137);
         case Color::ItemContextBg:
-            return sRGB(217, 232, 242);
+            return mode == Dark ? sRGB(67, 94, 147, 0.6) : sRGB(217, 232, 242);
         case Color::ItemContextBgHighlighted:
             #if defined(__WXMSW__)
             return sRGB(255, 255, 255, 0.50);
@@ -102,66 +119,68 @@ wxColour ColorScheme::DoGet(Color color, Mode type)
         // Tags:
 
         case Color::TagContextFg:
-            return DoGet(Color::ItemContextFg, type);
+            return DoGet(Color::ItemContextFg, mode);
         case Color::TagContextBg:
-            return DoGet(Color::ItemContextBg, type);
-        case Color::TagSecondaryFg:
-            return sRGB(87, 87, 87);
+            return DoGet(Color::ItemContextBg, mode);
         case Color::TagSecondaryBg:
-            return sRGB(236, 236, 236);
-        case Color::TagErrorLineFg:
-            return sRGB(162, 0, 20);
+            return mode == Dark ? sRGB(255, 255, 255, 0.5) : sRGB(0, 0, 0, 0.10);
         case Color::TagErrorLineBg:
-            return sRGB(255, 227, 230, 0.75);
-        case Color::TagWarningLineFg:
-            return sRGB(101, 91, 1);
+            return sRGB(241, 134, 135);
         case Color::TagWarningLineBg:
-            return sRGB(255, 249, 192, 0.75);
+            return mode == Dark ? sRGB(198, 171, 113) : sRGB(253, 235, 176);
+        case Color::TagErrorLineFg:
+            return sRGB(0, 0, 0, 0.8);
+        case Color::TagSecondaryFg:
+        case Color::TagWarningLineFg:
+            return sRGB(0, 0, 0, 0.9);
 
 
         // Separators:
 
         case Color::ToolbarSeparator:
-            return "#cdcdcd";
+            return mode == Dark ? "#505050" : "#cdcdcd";
         case Color::SidebarSeparator:
-            return "#cbcbcb";
+            return mode == Dark ? *wxBLACK : "#cbcbcb";
         case Color::EditingSeparator:
-            return sRGB(204, 204, 204);
+            return mode == Dark ? sRGB(80, 80, 80) : sRGB(204, 204, 204);
         case Color::EditingSubtleSeparator:
-            return sRGB(229, 229, 229);
+            return mode == Dark ? sRGB(60, 60, 60) : sRGB(229, 229, 229);
 
         // Backgrounds:
 
         case Color::SidebarBackground:
-            if (GetAppMode() == Dark)
-                return "#120f0b";
-            else
-                return "#edf0f4";
+            return mode == Dark ? sRGB(43, 44, 47) : "#edf0f4";
+
         case Color::EditingBackground:
+            #ifdef __WXOSX__
+            return wxColour([NSColor textBackgroundColor]);
+            #else
             return wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
+            #endif
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:
-            return DoGet(Color::ItemFuzzy, type);
+            return mode == Dark ? sRGB(253, 178, 72) : sRGB(244, 143, 0);
         case Color::FuzzySwitchInactive:
-            return sRGB(87, 87, 87);
+            return mode == Dark ? sRGB(163, 163, 163) : sRGB(87, 87, 87);
 
         // Syntax highlighting:
 
         case Color::SyntaxLeadingWhitespaceBg:
-            return sRGB(255, 233, 204);
+            return mode == Dark ? sRGB(75, 49, 111) : sRGB(234, 223, 247);
         case Color::SyntaxEscapeFg:
-            return sRGB(162, 0, 20);
+            return mode == Dark ? sRGB(234, 188, 244) : sRGB(162, 0, 20);
         case Color::SyntaxEscapeBg:
-            return sRGB(254, 234, 236);
+            return mode == Dark ? sRGB(90, 15, 167, 0.5) : sRGB(254, 234, 236);
         case Color::SyntaxMarkup:
-            return sRGB(0, 121, 215);
+            return mode == Dark ? sRGB(76, 156, 230) : sRGB(0, 121, 215);
         case Color::SyntaxFormat:
-            return sRGB(178, 52, 197);
+            return mode == Dark ? sRGB(250, 165, 251) : sRGB(178, 52, 197);
 
         // Attention bar:
 
 #ifdef __WXGTK__
+        // FIXME: use system colors
         case Color::AttentionWarningBackground:
             return sRGB(250, 173, 61);
         case Color::AttentionQuestionBackground:
@@ -170,11 +189,11 @@ wxColour ColorScheme::DoGet(Color color, Mode type)
             return sRGB(237, 54, 54);
 #else
         case Color::AttentionWarningBackground:
-            return sRGB(255, 222, 91);
+            return mode == Dark ? sRGB(254, 224, 132) : sRGB(254, 228, 149);
         case Color::AttentionQuestionBackground:
-            return sRGB(150, 233, 109);
+            return sRGB(199, 244, 156);
         case Color::AttentionErrorBackground:
-            return sRGB(255, 125, 125);
+            return sRGB(241, 103, 104);
 #endif
 
         // Buttons:
@@ -194,11 +213,18 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 {
     if (!s_appModeDetermined)
     {
+#ifdef __WXOSX__
+        if (@available(macOS 10.14, *))
+            s_appMode = IsDarkAppearance(NSApp.effectiveAppearance) ? Dark : Light;
+        else
+            s_appMode = Light;
+#else
         auto colBg = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW);
         if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
             s_appMode = Dark;
         else
             s_appMode = Light;
+#endif
         s_appModeDetermined = true;
     }
 
@@ -206,30 +232,37 @@ ColorScheme::Mode ColorScheme::GetAppMode()
 }
 
 
-ColorScheme::Mode ColorScheme::GetWindowMode(const wxVisualAttributes& win)
+ColorScheme::Mode ColorScheme::GetWindowMode(wxWindow *win)
 {
+#ifdef __WXOSX__
+    NSView *view = win->GetHandle();
+    return IsDarkAppearance(view.effectiveAppearance) ? Dark : Light;
+#else
+    auto colBg = win->GetDefaultAttributes().colBg;
+
     // Use dark scheme for very dark backgrounds:
-    if (win.colBg.Red() < 0x60 && win.colBg.Green() < 0x60 && win.colBg.Blue() < 0x60)
-    {
+    if (colBg.Red() < 0x60 && colBg.Green() < 0x60 && colBg.Blue() < 0x60)
         return Dark;
-    }
     else
-    {
         return Light;
-    }
+#endif
 }
 
 
-wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win)
+wxColour ColorScheme::GetBlendedOn(Color color, wxWindow *win, Color bgColor)
 {
-    auto bg = win->GetBackgroundColour();
+    auto bg = (bgColor != Color::Max) ? Get(bgColor, win) : win->GetBackgroundColour();
     auto fg = Get(color, win);
-    if (fg.Alpha() == wxALPHA_OPAQUE)
-        return fg;
-    double alpha = fg.Alpha() / 255.0;
-    return wxColour(wxColour::AlphaBlend(fg.Red(), bg.Red(), alpha),
-                    wxColour::AlphaBlend(fg.Green(), bg.Green(), alpha),
-                    wxColour::AlphaBlend(fg.Blue(), bg.Blue(), alpha));
+#ifndef __WXOSX__
+    if (fg.Alpha() != wxALPHA_OPAQUE)
+    {
+        double alpha = fg.Alpha() / 255.0;
+        return wxColour(wxColour::AlphaBlend(fg.Red(), bg.Red(), alpha),
+                        wxColour::AlphaBlend(fg.Green(), bg.Green(), alpha),
+                        wxColour::AlphaBlend(fg.Blue(), bg.Blue(), alpha));
+    }
+#endif
+    return fg;
 }
 
 void ColorScheme::CleanUp()

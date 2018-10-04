@@ -65,6 +65,8 @@ AttentionBar::AttentionBar(wxWindow *parent)
 {
 #ifdef __WXOSX__
     SetWindowVariant(wxWINDOW_VARIANT_SMALL);
+    NSView *view = GetHandle();
+    view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 #endif
 
 #ifndef __WXGTK__
@@ -74,6 +76,14 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     m_explanation = new AutoWrappingText(this, "");
     m_explanation->SetForegroundColour(GetBackgroundColour().ChangeLightness(40));
+
+#ifndef __WXOSX__
+    if (ColorScheme::GetAppMode() == ColorScheme::Dark)
+    {
+        m_label->SetForegroundColour(wxColour(0,0,0,180));
+        m_explanation->SetForegroundColour(wxColour(0,0,0,180));
+    }
+#endif
 
     m_buttons = new wxBoxSizer(wxHORIZONTAL);
 
