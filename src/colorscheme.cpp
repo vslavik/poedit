@@ -180,6 +180,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         // Attention bar:
 
 #ifdef __WXGTK__
+        // FIXME: use system colors
         case Color::AttentionWarningBackground:
             return sRGB(250, 173, 61);
         case Color::AttentionQuestionBackground:
@@ -188,11 +189,11 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             return sRGB(237, 54, 54);
 #else
         case Color::AttentionWarningBackground:
-            return sRGB(255, 222, 91);
+            return mode == Dark ? sRGB(254, 224, 132) : sRGB(254, 228, 149);
         case Color::AttentionQuestionBackground:
-            return sRGB(150, 233, 109);
+            return sRGB(199, 244, 156);
         case Color::AttentionErrorBackground:
-            return sRGB(255, 125, 125);
+            return sRGB(241, 103, 104);
 #endif
 
         // Buttons:
