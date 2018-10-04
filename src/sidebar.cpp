@@ -278,7 +278,7 @@ public:
         m_sidebar = parent;
         m_parentBlock = block;
         m_isHighlighted = false;
-        m_icon = new ImageView(this, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
+        m_icon = new wxStaticBitmap(this, wxID_ANY, wxArtProvider::GetBitmap("SuggestionTMTemplate"));
         m_text = new AutoWrappingText(this, "TEXT");
         m_info = new InfoStaticText(this);
         m_moreActions = new ImageButton(this, wxArtProvider::GetBitmap("DownvoteTemplate"));
@@ -487,7 +487,7 @@ private:
     SuggestionsSidebarBlock *m_parentBlock;
     Suggestion m_value;
     bool m_isHighlighted;
-    ImageView *m_icon;
+    wxStaticBitmap *m_icon;
     AutoWrappingText *m_text;
     wxStaticText *m_info;
     wxStaticBitmap *m_isPerfect;

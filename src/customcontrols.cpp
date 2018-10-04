@@ -435,26 +435,6 @@ void ActivityIndicator::StopWithError(const wxString& msg)
 
 
 
-#ifdef __WXOSX__
-ImageView::ImageView(wxWindow *parent, const wxBitmap& bmp)
-{
-    NSImageView *v = [NSImageView new];
-    v.wantsLayer = YES;
-    v.imageAlignment = NSImageAlignTop;
-    if (bmp.IsOk())
-        v.image = bmp.GetNSImage();
-    Create(parent, wxID_ANY, v);
-}
-
-void ImageView::SetBitmap(const wxBitmap& bmp)
-{
-    NSImageView *v = (NSImageView*)GetHandle();
-    v.image = bmp.GetNSImage();
-}
-#endif // __WXOSX__
-
-
-
 ImageButton::ImageButton(wxWindow *parent, const wxBitmap& bmp)
     : wxBitmapButton(parent, wxID_ANY, bmp, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxBU_EXACTFIT)
 {
