@@ -42,5 +42,7 @@ dist_uiicons_DATA = \
 		poedit-status-cat-no.png \
 		poedit-status-cat-ok.png \
 		StatusError.png \
+		StatusErrorBlack.png \
 		StatusWarning.png \
+		StatusWarningBlack.png \
 		window-close.png

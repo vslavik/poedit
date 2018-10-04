@@ -125,11 +125,12 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
         case Color::TagSecondaryBg:
             return mode == Dark ? sRGB(255, 255, 255, 0.5) : sRGB(0, 0, 0, 0.10);
         case Color::TagErrorLineBg:
-            return sRGB(255, 227, 230, 0.75);
+            return sRGB(241, 134, 135);
         case Color::TagWarningLineBg:
-            return sRGB(253, 235, 176);
-        case Color::TagSecondaryFg:
+            return mode == Dark ? sRGB(198, 171, 113) : sRGB(253, 235, 176);
         case Color::TagErrorLineFg:
+            return sRGB(0, 0, 0, 0.8);
+        case Color::TagSecondaryFg:
         case Color::TagWarningLineFg:
             return sRGB(0, 0, 0, 0.9);
 
@@ -159,7 +160,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
 
         // Fuzzy toggle:
         case Color::FuzzySwitch:
-            return DoGet(Color::ItemFuzzy, mode);
+            return mode == Dark ? sRGB(253, 178, 72) : sRGB(244, 143, 0);
         case Color::FuzzySwitchInactive:
             return mode == Dark ? sRGB(163, 163, 163) : sRGB(87, 87, 87);
 
