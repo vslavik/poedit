@@ -146,7 +146,7 @@ private:
     void OnPaint(wxPaintEvent& event);
 
 private:
-#ifndef __WXGTK__
+#ifdef __WXMSW__
     wxStaticBitmap *m_icon;
 #endif
     AutoWrappingText *m_label;

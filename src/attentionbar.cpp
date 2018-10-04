@@ -69,7 +69,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
     view.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
 #endif
 
-#ifndef __WXGTK__
+#ifdef __WXMSW__
     m_icon = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
 #endif
     m_label = new AutoWrappingText(this, "");
@@ -111,7 +111,7 @@ AttentionBar::AttentionBar(wxWindow *parent)
 
     wxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
     sizer->AddSpacer(PXDefaultBorder);
-#ifndef __WXGTK__
+#ifdef __WXMSW__
     sizer->Add(m_icon, wxSizerFlags().Center().Border(wxALL, SMALL_BORDER));
 #endif
 
@@ -191,7 +191,7 @@ void AttentionBar::ShowMessage(const AttentionMessage& msg)
             iconName = wxART_ERROR;
             break;
     }
-#ifndef __WXGTK__
+#ifdef __WXMSW__
     m_icon->SetBitmap(wxArtProvider::GetBitmap(iconName, wxART_MENU, wxSize(PX(16), PX(16))));
 #endif
 
