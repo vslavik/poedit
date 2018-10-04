@@ -212,8 +212,8 @@ PoeditListCtrl::Model::Model(TextDirection appTextDir, ColorScheme::Mode visualM
 
     m_iconComment = wxArtProvider::GetBitmap("ItemCommentTemplate");
     m_iconBookmark = wxArtProvider::GetBitmap("ItemBookmarkTemplate");
-    m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
-    m_iconWarning = wxArtProvider::GetBitmap("poedit-status-warning");
+    m_iconError = wxArtProvider::GetBitmap("StatusError");
+    m_iconWarning = wxArtProvider::GetBitmap("StatusWarning");
 
 #ifdef HAS_BROKEN_NULL_BITMAPS
     wxImage nullimg(m_iconError.GetSize().x, m_iconError.GetSize().y);
@@ -597,7 +597,7 @@ void PoeditListCtrl::CreateColumns()
     m_colID = m_colIcon = m_colSource = m_colTrans = nullptr;
 
 #if defined(__WXMSW__)
-    int iconWidth = wxArtProvider::GetBitmap("poedit-status-error").GetSize().x + 6 /*wxDVC internal padding*/;
+    int iconWidth = wxArtProvider::GetBitmap("StatusError").GetSize().x + 6 /*wxDVC internal padding*/;
 #else
     int iconWidth = PX(16);
 #endif

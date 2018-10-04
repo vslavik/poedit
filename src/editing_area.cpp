@@ -294,8 +294,8 @@ public:
     IssueLabel(wxWindow *parent)
         : TagLabel(parent, Color::TagErrorLineFg, Color::TagErrorLineBg)
     {
-        m_iconError = wxArtProvider::GetBitmap("poedit-status-error");
-        m_iconWarning = wxArtProvider::GetBitmap("poedit-status-warning");
+        m_iconError = wxArtProvider::GetBitmap("StatusError");
+        m_iconWarning = wxArtProvider::GetBitmap("StatusWarning");
         SetIcon(m_iconError);
     }
 
