@@ -29,6 +29,10 @@
 
 #include <set>
 
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#endif
+
 #include "icons.h"
 
 #include "colorscheme.h"
@@ -112,6 +116,26 @@ void ProcessTemplateImage(wxImage& img, bool keepOpaque, bool inverted)
 
 } // anonymous namespace
 
+
+
+PoeditArtProvider::PoeditArtProvider()
+{
+#ifdef __WXGTK3__
+    gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), GetIconsDir().fn_str());
+#endif
+}
+
+
+wxString PoeditArtProvider::GetIconsDir()
+{
+#if defined(__WXMSW__)
+    return wxStandardPaths::Get().GetResourcesDir() + "\\Resources";
+#else
+    return wxStandardPaths::Get().GetInstallPrefix() + "/share/poedit/icons";
+#endif
+}
+
+
 wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
                                          const wxArtClient& client,
                                          const wxSize& size)
@@ -147,12 +171,7 @@ wxBitmap PoeditArtProvider::CreateBitmap(const wxArtID& id_,
     }
 #endif // __WXGTK20__
 
-    wxString iconsdir =
-#if defined(__WXMSW__)
-        wxStandardPaths::Get().GetResourcesDir() + "\\Resources";
-#else
-        wxStandardPaths::Get().GetInstallPrefix() + "/share/poedit/icons";
-#endif
+    auto iconsdir = GetIconsDir();
     if ( !wxDirExists(iconsdir) )
     {
         wxLogTrace("poedit.icons",

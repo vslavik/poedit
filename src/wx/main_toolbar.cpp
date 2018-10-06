@@ -38,6 +38,10 @@
 #include <wx/msw/uxtheme.h>
 #endif
 
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#endif
+
 
 class WXMainToolbar : public MainToolbar
 {
@@ -46,6 +50,15 @@ public:
     {
         m_tb = wxXmlResource::Get()->LoadToolBar(parent, "toolbar");
         m_idUpdate = XRCID("toolbar_update");
+
+#ifdef __WXGTK3__
+        gtk_style_context_add_class(gtk_widget_get_style_context(GTK_WIDGET(Toolbar())), GTK_STYLE_CLASS_PRIMARY_TOOLBAR);
+        SetIcon(0 , "document-open-symbolic");
+        SetIcon(1 , "document-save-symbolic");
+        SetIcon(3 , "poedit-validate-symbolic");
+        SetIcon(4 , "poedit-update-symbolic");
+        SetIcon(6 , "sidebar-symbolic");
+#endif
 
 #ifdef __WXMSW__
         // De-uglify the toolbar a bit on Windows 10:
@@ -72,7 +85,11 @@ public:
         {
             tool->SetLabel(_("Sync"));
             tool->SetShortHelp(_("Synchronize the translation with Crowdin"));
+            #ifdef __WXGTK3__
+            SetIcon(4 , "poedit-sync-symbolic");
+            #else
             m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync", wxART_TOOLBAR));
+            #endif
             #ifdef __WXMSW__
             m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-sync@disabled", wxART_TOOLBAR));
             #endif
@@ -81,12 +98,35 @@ public:
         {
             tool->SetLabel(MSW_OR_OTHER(_("Update from code"), _("Update from Code")));
             tool->SetShortHelp(_("Update catalog - synchronize it with sources"));
+            #ifdef __WXGTK3__
+            SetIcon(4 , "poedit-update-symbolic");
+            #else
             m_tb->SetToolNormalBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update", wxART_TOOLBAR));
+            #endif
             #ifdef __WXMSW__
             m_tb->SetToolDisabledBitmap(m_idUpdate, wxArtProvider::GetBitmap("poedit-update@disabled", wxART_TOOLBAR));
             #endif
         }
     }
+
+#ifdef __WXGTK3__
+private:
+    GtkToolbar *Toolbar()
+    {
+    #ifdef __WXGTK4__
+        return GTK_TOOLBAR(m_tb->GetHandle());
+    #else
+        return GTK_TOOLBAR(gtk_bin_get_child(GTK_BIN(m_tb->GetHandle())));
+    #endif
+    }
+
+    void SetIcon(int index, const char *name)
+    {
+         GtkToolItem *i = gtk_toolbar_get_nth_item(Toolbar(), index);
+         gtk_tool_button_set_icon_widget(GTK_TOOL_BUTTON(i), NULL);
+         gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(i), name);
+    } 
+#endif
 
 private:
     wxToolBar *m_tb;

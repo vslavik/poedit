@@ -35,7 +35,12 @@
 #ifndef __WXOSX__
 class PoeditArtProvider : public wxArtProvider
 {
+public:
+    PoeditArtProvider();
+
 protected:
+    static wxString GetIconsDir();
+
     virtual wxBitmap CreateBitmap(const wxArtID& id,
                                   const wxArtClient& client,
                                   const wxSize& size);

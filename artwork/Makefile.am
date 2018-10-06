@@ -9,6 +9,7 @@ appicons512dir=$(iconsdir)/512x512/apps
 pixmapsdir=$(datadir)/pixmaps
 
 uiiconsdir=$(datadir)/poedit/icons
+uiiconssymbolicdir=$(uiiconsdir)/hicolor/scalable/actions
 
 dist_appicons16_DATA = linux/appicon/16x16/apps/poedit.png
 dist_appicons24_DATA = linux/appicon/24x24/apps/poedit.png
@@ -18,6 +19,12 @@ dist_appicons256_DATA = linux/appicon/256x256/apps/poedit.png
 dist_appicons512_DATA = linux/appicon/512x512/apps/poedit.png
 
 dist_pixmaps_DATA = linux/appicon/48x48/apps/poedit.png
+
+dist_uiiconssymbolic_DATA = \
+		linux/poedit-sync-symbolic.svg \
+		linux/poedit-update-symbolic.svg \
+		linux/poedit-validate-symbolic.svg \
+		linux/sidebar-symbolic.svg
 
 dist_uiicons_DATA = \
 		linux/document-new.png \
