@@ -4,10 +4,10 @@ ACLOCAL_AMFLAGS = -I admin
 SUBDIRS = src docs locales artwork
 
 desktopdir=$(datadir)/applications
-dist_desktop_DATA = poedit.desktop poedit-uri.desktop
+dist_desktop_DATA = net.poedit.Poedit.desktop net.poedit.PoeditURI.desktop
 
 appdatadir=$(datadir)/appdata
-dist_appdata_DATA = poedit.appdata.xml
+dist_appdata_DATA = net.poedit.Poedit.appdata.xml
 
 EXTRA_DIST = \
 	deps/json/LICENSE.MIT \

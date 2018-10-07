@@ -6,7 +6,7 @@ AC_INIT([poedit], [2.1.1], [help@poedit.net])
 
 AC_CONFIG_AUX_DIR([admin])
 AC_CONFIG_MACRO_DIR([admin])
-AC_CONFIG_SRCDIR([poedit.desktop])
+AC_CONFIG_SRCDIR([net.poedit.Poedit.desktop])
 
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
