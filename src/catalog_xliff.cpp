@@ -229,7 +229,7 @@ public:
         }
         else
         {
-            m_translations.emplace_back("");
+            m_translations.push_back("");
         }
 
         for (auto note: node.children("note"))
@@ -332,7 +332,7 @@ public:
         }
         else
         {
-            m_translations.emplace_back("");
+            m_translations.push_back("");
         }
 
         std::string state = node.attribute("subState").value();

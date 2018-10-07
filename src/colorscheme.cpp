@@ -113,7 +113,7 @@ wxColour ColorScheme::DoGet(Color color, Mode mode)
             #elif defined(SUPPORTS_BGALPHA)
             return sRGB(255, 255, 255, 0.35);
             #else
-            return DoGet(Color::ItemContextBg, type);
+            return DoGet(Color::ItemContextBg, mode);
             #endif
 
         // Tags:

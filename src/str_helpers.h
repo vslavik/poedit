@@ -90,7 +90,7 @@ inline wxString to_wx(const char *utf8)
 
 inline wxString to_wx(const std::string& utf8)
 {
-    return wxString::FromUTF8(utf8);
+    return wxString::FromUTF8(utf8.c_str());
 }
 
 #if defined(__cplusplus) && defined(__OBJC__)
