@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:56\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:39\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Basque\n"
 "Language: eu_ES\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "\"%s\" ez da baliozko POT fitxategi bat."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Gaizki osatutako goiburua: \"%s\""
+
+msgid "PO Translation Files"
+msgstr "PO itzulpen-fitxategiak"
+
+msgid "POT Translation Templates"
+msgstr "POT itzulpen-txantiloiak"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF itzulpen-fitxategiak"
+
+msgid "All Translation Files"
+msgstr "Itzulpen-fitxategi guztiak"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "“%s” fitxategia onartzen ez den formatu batean dago."
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "'%2$s' fitxategiko kate %1$i ez da ongi kargatu."
@@ -57,10 +77,6 @@ msgstr[1] "'%2$s' fitxategiko %1$i kate ez dira ongi kargatu."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "%d lerroa hondatuta dago \"%s\" fitxategian (%s datu baliogabea)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Gaizki osatutako goiburua: \"%s\""
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -116,14 +132,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Errorea katalogoa gordetzean"
 
-msgid "PO Translation Files"
-msgstr "PO itzulpen-fitxategiak"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "Errorea “%s” fitxategia kargatzean: %s."
 
-msgid "POT Translation Templates"
-msgstr "POT itzulpen-txantiloiak"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "onartzen ez den XLIFF bertsioa (%s)"
 
-msgid "All Translation Files"
-msgstr "Itzulpen-fitxategi guztiak"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "Marka-kode hautsia itzulpen katean."
 
 msgid "(Use default language)"
 msgstr "(Erabili hizkuntza lehenetsia)"
@@ -401,8 +420,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Ezin duzu fitxategi bat baino gehiago jaregin Poedit leihoan."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "\"%s\" fitxategia ez da mezu-katalogo bat."
+msgid "File “%s” is not a translation file."
+msgstr "“%s” fitxategia ez da itzulpen fitxategia."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -1584,7 +1603,7 @@ msgid "Show warnings"
 msgstr "Oharrak erakutsi"
 
 msgid "Show Warnings"
-msgstr "Oharrak erakutsi"
+msgstr "Erakutsi oharrak"
 
 msgid "Sort by &file order"
 msgstr "Ordenatu &fitxategiz"

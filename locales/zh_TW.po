@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:57\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:41\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -33,20 +33,40 @@ msgid "Updating catalog"
 msgstr "更新編目檔中"
 
 msgid "Collecting source files…"
-msgstr "正在收集來源檔..."
+msgstr "正在收集來源檔…"
 
 msgid "Extracting translatable strings…"
-msgstr "正在抽出可翻譯的字串..."
+msgstr "正在抽出可翻譯的字串…"
 
 msgid "Failed to load extracted catalog."
 msgstr "無法載入抽出的編目檔。"
 
 msgid "Merging differences…"
-msgstr "正合併差異..."
+msgstr "正在合併差異…"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "「%s」不是有效的 POT 檔。"
+
+#, c-format
+msgid "Malformed header: “%s”"
+msgstr "格式不良的檔頭：「%s」"
+
+msgid "PO Translation Files"
+msgstr "PO 翻譯檔"
+
+msgid "POT Translation Templates"
+msgstr "POT 翻譯模板"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF 翻譯檔"
+
+msgid "All Translation Files"
+msgstr "所有翻譯檔"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "「%s」檔案是未支援格式。"
 
 #, c-format
 msgid "%i line of file “%s” was not loaded correctly."
@@ -56,10 +76,6 @@ msgstr[0] "共有 %i 列 (檔案「%s」中) 未正確載入。"
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "第 %d 列 (檔案「%s」中) 已毀損 (不是有效的 %s 資料)。"
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "格式不良的檔頭：「%s」"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -107,14 +123,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "儲存編目檔時發生錯誤"
 
-msgid "PO Translation Files"
-msgstr "PO 翻譯檔"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "「%s」檔案載入時發生錯誤：%s。"
 
-msgid "POT Translation Templates"
-msgstr "POT 翻譯模板"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "未支援的 XLIFF 版本 (%s)"
 
-msgid "All Translation Files"
-msgstr "所有翻譯檔"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "翻譯字串中有損壞的標記。"
 
 msgid "(Use default language)"
 msgstr "(使用預設語言)"
@@ -386,8 +405,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "您不能拖曳超過一個檔案進 Poedit 視窗裡。"
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "「%s」檔不是訊息編目檔。"
+msgid "File “%s” is not a translation file."
+msgstr "「%s」檔案不是翻譯檔。"
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -510,12 +529,14 @@ msgid "The translation is ready for use."
 msgstr "譯文已準備好可供使用。"
 
 msgid "Warnings have been disabled."
-msgstr ""
+msgstr "已停用警告。"
 
 msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
+"若您是因過多誤報而停用警告，請考慮將樣本檔寄給 help@poedit.net 來協助改善情"
+"況。"
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -755,7 +776,7 @@ msgstr "形式 %i"
 
 #, c-format
 msgid "Form %i (unused)"
-msgstr ""
+msgstr "形式 %i (未使用)"
 
 msgid "Singular"
 msgstr "單數"
@@ -983,7 +1004,7 @@ msgid "Use custom list font:"
 msgstr "使用自訂清單字型："
 
 msgid "Use custom text fields font:"
-msgstr "使用自訂文字欄位自型："
+msgstr "使用自訂文字欄位字型："
 
 msgid "Change UI language"
 msgstr "變更介面語言"
@@ -999,7 +1020,7 @@ msgid "Use translation memory"
 msgstr "使用翻譯記憶"
 
 msgid "Manage…"
-msgstr ""
+msgstr "管理…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1030,22 +1051,22 @@ msgid "Database size on disk:"
 msgstr "資料庫在磁碟上的大小："
 
 msgid "Import Translation Files…"
-msgstr ""
+msgstr "匯入翻譯檔…"
 
 msgid "Import translation files…"
-msgstr ""
+msgstr "匯入翻譯檔…"
 
 msgid "Import From TMX…"
-msgstr ""
+msgstr "從 TMX 匯入…"
 
 msgid "Import from TMX…"
-msgstr ""
+msgstr "從 TMX 匯入…"
 
 msgid "Export To TMX…"
-msgstr ""
+msgstr "匯出為 TMX…"
 
 msgid "Export to TMX…"
-msgstr ""
+msgstr "匯出為 TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
@@ -1064,27 +1085,27 @@ msgid "Finalizing…"
 msgstr "正在收尾…"
 
 msgid "Select TMX files to import"
-msgstr ""
+msgstr "選取要匯入的 TMX 檔"
 
 msgid "TMX Files"
-msgstr ""
+msgstr "TMX 檔"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr ""
+msgstr "從「%s」匯入翻譯記憶的操作失敗。"
 
 msgid "Import error"
-msgstr ""
+msgstr "匯入發生錯誤"
 
 msgid "Exporting translations…"
-msgstr ""
+msgstr "匯出翻譯中…"
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr ""
+msgstr "將翻譯記憶匯出成「%s」的操作失敗。"
 
 msgid "Export error"
-msgstr ""
+msgstr "匯出發生錯誤"
 
 msgid "Reset translation memory"
 msgstr "重設翻譯記憶"
@@ -1513,16 +1534,16 @@ msgid "&Preferences"
 msgstr "偏好設定(&P)"
 
 msgid "Show string &ID"
-msgstr ""
+msgstr "顯示字串 &ID"
 
 msgid "Show String &ID"
-msgstr ""
+msgstr "顯示字串 &ID"
 
 msgid "Show warnings"
-msgstr ""
+msgstr "顯示警告"
 
 msgid "Show Warnings"
-msgstr ""
+msgstr "顯示警告"
 
 msgid "Sort by &file order"
 msgstr "按照檔案順序排列(&F)"
@@ -1576,10 +1597,10 @@ msgid "C&atalog"
 msgstr "專案(&A)"
 
 msgid "&Update from source code"
-msgstr ""
+msgstr "從源始碼更新(&U)"
 
 msgid "&Update from Source Code"
-msgstr ""
+msgstr "從源始碼更新(&U)"
 
 msgid "Update from &POT file…"
 msgstr "從 &POT 檔更新…"
@@ -1766,7 +1787,7 @@ msgid "Sources paths"
 msgstr "來源路徑"
 
 msgid "Extract text from source files in the following directories:"
-msgstr "從下列目錄中擷取源檔內的文字"
+msgstr "從下列目錄中擷取源檔內的文字："
 
 msgid "Base path:"
 msgstr "基礎路徑："
@@ -1832,10 +1853,10 @@ msgid "Check for errors in the translation"
 msgstr "檢查譯文中是否有錯誤"
 
 msgid "Update from code"
-msgstr ""
+msgstr "從源碼更新"
 
 msgid "Update from Code"
-msgstr ""
+msgstr "從源碼更新"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "更新專案 - 與來源同步"
@@ -1844,7 +1865,7 @@ msgid "Sidebar"
 msgstr "側邊欄"
 
 msgid "Show or hide the sidebar"
-msgstr "顯示或隱藏側邊欄。"
+msgstr "顯示或隱藏側邊欄"
 
 #. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
 msgid "Previous source text:"
@@ -1865,10 +1886,10 @@ msgid "Add Comment"
 msgstr "加入註解"
 
 msgid "Delete From Translation Memory"
-msgstr ""
+msgstr "從翻譯記憶中刪除"
 
 msgid "Delete from translation memory"
-msgstr ""
+msgstr "從翻譯記憶中刪除"
 
 msgid "Translation suggestions:"
 msgstr "譯文建議："
@@ -1885,18 +1906,18 @@ msgid "This string was found in Poedit’s translation memory."
 msgstr "此字串已在 Poedit 的翻譯記憶中找到。"
 
 msgid "The TMX file is malformed."
-msgstr ""
+msgstr "TMX 檔格式不良。"
 
 msgid "No translations were found in the TMX file."
-msgstr ""
+msgstr "我們在 TMX 檔中找不到翻譯。"
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr ""
+msgstr "翻譯記憶資料庫毀損：%s (%d)。"
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr ""
+msgstr "翻譯記憶錯誤：%s (%d)。"
 
 msgid "Cannot create temporary directory."
 msgstr "無法建立暫存目錄。"

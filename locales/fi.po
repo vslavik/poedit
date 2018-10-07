@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:57\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:39\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "”%s” ei ole kelvollinen POT-tiedosto."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Vääränmuotoinen otsake: ”%s”"
+
+msgid "PO Translation Files"
+msgstr "PO-käännöstiedostot"
+
+msgid "POT Translation Templates"
+msgstr "POT-käännöspohjat"
+
+msgid "XLIFF Translation Files"
+msgstr ""
+
+msgid "All Translation Files"
+msgstr "Kaikki käännöstiedostot"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr ""
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i riviä tiedostosta ”%s” ei voitu ladata oikein."
@@ -57,10 +77,6 @@ msgstr[1] "%i riviä tiedostosta ”%s” ei voitu ladata oikein."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Rivi %d tiedostossa ”%s” on korruptoitunut (ei kelvollista %s-dataa)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Vääränmuotoinen otsake: ”%s”"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -116,14 +132,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Virhe katalogia tallennettaessa"
 
-msgid "PO Translation Files"
-msgstr "PO-käännöstiedostot"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr ""
 
-msgid "POT Translation Templates"
-msgstr "POT-käännöspohjat"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr ""
 
-msgid "All Translation Files"
-msgstr "Kaikki käännöstiedostot"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr ""
 
 msgid "(Use default language)"
 msgstr "(Käytä oletuskieltä)"
@@ -398,8 +417,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Poedit-ikkunaan voi pudottaa vain yhden tiedoston."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "Tiedosto ”%s” ei ole viestikatalogi."
+msgid "File “%s” is not a translation file."
+msgstr ""
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -1037,7 +1056,7 @@ msgid "Use translation memory"
 msgstr "Käytä käännösmuistia"
 
 msgid "Manage…"
-msgstr ""
+msgstr "Hallitse…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1950,7 +1969,7 @@ msgstr ""
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr ""
+msgstr "Käännösmuistin virhe: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Tilapäiskansiota ei voida luoda."

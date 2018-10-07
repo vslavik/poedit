@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:57\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:41\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Icelandic\n"
 "Language: is_IS\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "“%s\" er ógild POT skrá."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Rangt formaður haus: “%s”"
+
+msgid "PO Translation Files"
+msgstr "PO þýðingaskrár"
+
+msgid "POT Translation Templates"
+msgstr "POT þýðingasniðmát"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF-þýðingaskrár"
+
+msgid "All Translation Files"
+msgstr "Allar þýðingaskrár"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "Skráin “%s” er á óstuddu sniði."
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i lína úr skránni '%s' var ekki lesin rétt inn."
@@ -57,10 +77,6 @@ msgstr[1] "%i línur úr skránni '%s' voru ekki lesnar rétt inn."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Lína “%d í skránni '%s' er skemmd (ekki gild %s gögn)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Rangt formaður haus: “%s”"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -112,14 +128,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Villa við vistun á þýðingaskrá"
 
-msgid "PO Translation Files"
-msgstr "PO þýðingaskrár"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "Villa við að hlaða inn skránni “%s”: %s."
 
-msgid "POT Translation Templates"
-msgstr "POT þýðingasniðmát"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "óstudd útgáfa XLIFF (%s)"
 
-msgid "All Translation Files"
-msgstr "Allar þýðingaskrár"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "Skemmd skilgreining í þýðingarstreng."
 
 msgid "(Use default language)"
 msgstr "(Nota sjálfgefið tungumál)"
@@ -394,8 +413,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Þú getur ekki sleppt fleiri en einni skrá í Poedit glugga."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "Skráin '%s' er ekki þýðingaskrá."
+msgid "File “%s” is not a translation file."
+msgstr "Skráin “%s” er ekki þýðingaskrá."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -531,12 +550,15 @@ msgid "The translation is ready for use."
 msgstr "Þýðingaminnið er tilbúið til notkunar."
 
 msgid "Warnings have been disabled."
-msgstr ""
+msgstr "Aðvaranir hafa verið gerðar óvirkar."
 
 msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
+"Ef þú gerðir aðvaranir óvirkar vegna fjölda ábendinga um galla sem reynast "
+"síðan vera réttir, íhugaðu frekar að senda sýnishorn af slíkum skrám til "
+"help@poedit.net svo hægt sé að bæta ábendingarnar."
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -785,7 +807,7 @@ msgstr "Form %i"
 
 #, c-format
 msgid "Form %i (unused)"
-msgstr ""
+msgstr "Form %i (ónotað)"
 
 msgid "Singular"
 msgstr "Eintala"
@@ -1032,7 +1054,7 @@ msgid "Use translation memory"
 msgstr "Nota þýðingaminni"
 
 msgid "Manage…"
-msgstr ""
+msgstr "Sýsla…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1064,22 +1086,22 @@ msgid "Database size on disk:"
 msgstr "Stærð gagnagrunns á diski:"
 
 msgid "Import Translation Files…"
-msgstr ""
+msgstr "Flytja inn þýðingaskrár…"
 
 msgid "Import translation files…"
-msgstr ""
+msgstr "Flytja inn þýðingaskrár…"
 
 msgid "Import From TMX…"
-msgstr ""
+msgstr "Flytja inn úr TMX…"
 
 msgid "Import from TMX…"
-msgstr ""
+msgstr "Flytja inn úr TMX…"
 
 msgid "Export To TMX…"
-msgstr ""
+msgstr "Flytja út í TMX…"
 
 msgid "Export to TMX…"
-msgstr ""
+msgstr "Flytja út í TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
@@ -1098,27 +1120,27 @@ msgid "Finalizing…"
 msgstr "Geng frá…"
 
 msgid "Select TMX files to import"
-msgstr ""
+msgstr "Veldu TMX-skrár til að flytja inn"
 
 msgid "TMX Files"
-msgstr ""
+msgstr "TMX-skrár"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr ""
+msgstr "Innflutningur þýðingaminnis frá “%s” mistókst."
 
 msgid "Import error"
-msgstr ""
+msgstr "Villa í innflutningi"
 
 msgid "Exporting translations…"
-msgstr ""
+msgstr "Flyt út þýðingar…"
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr ""
+msgstr "Útflutningur þýðingaminnis í “%s” mistókst."
 
 msgid "Export error"
-msgstr ""
+msgstr "Villa í útflutningi"
 
 msgid "Reset translation memory"
 msgstr "Núllstilla þýðingaminni"
@@ -1565,16 +1587,16 @@ msgid "&Preferences"
 msgstr "S&tillingar"
 
 msgid "Show string &ID"
-msgstr ""
+msgstr "Sýna &ID-auðkenni strengs"
 
 msgid "Show String &ID"
-msgstr ""
+msgstr "Sýna &ID-auðkenni strengs"
 
 msgid "Show warnings"
-msgstr ""
+msgstr "Birta aðvaranir"
 
 msgid "Show Warnings"
-msgstr ""
+msgstr "Birta aðvaranir"
 
 msgid "Sort by &file order"
 msgstr "Raða eftir s&kráaröð"
@@ -1628,10 +1650,10 @@ msgid "C&atalog"
 msgstr "Þýðing&askrá"
 
 msgid "&Update from source code"
-msgstr ""
+msgstr "&Uppfæra úr grunnkóða"
 
 msgid "&Update from Source Code"
-msgstr ""
+msgstr "&Uppfæra úr grunnkóða"
 
 msgid "Update from &POT file…"
 msgstr "Uppfæra frá &POT skrá…"
@@ -1885,10 +1907,10 @@ msgid "Check for errors in the translation"
 msgstr "Athuga með villur í þýðingum"
 
 msgid "Update from code"
-msgstr ""
+msgstr "Uppfæra úr kóða"
 
 msgid "Update from Code"
-msgstr ""
+msgstr "Uppfæra úr kóða"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Uppfæra þýðingaskrár - samræma við upprunaskrár"
@@ -1920,10 +1942,10 @@ msgid "Add Comment"
 msgstr "Bæta við athugasemd"
 
 msgid "Delete From Translation Memory"
-msgstr ""
+msgstr "Eyða úr þýðingaminni"
 
 msgid "Delete from translation memory"
-msgstr ""
+msgstr "Eyða úr þýðingaminni"
 
 msgid "Translation suggestions:"
 msgstr "Þýðingatillögur:"
@@ -1940,18 +1962,18 @@ msgid "This string was found in Poedit’s translation memory."
 msgstr "Þessi strengur fannst í þýðingaminni Poedit."
 
 msgid "The TMX file is malformed."
-msgstr ""
+msgstr "TMX-skráin er gölluð."
 
 msgid "No translations were found in the TMX file."
-msgstr ""
+msgstr "Engar þýðingar fundust í TMX-skránni."
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr ""
+msgstr "Gagnagrunnur þýðingaminnis er skemmdur: %s (%d)."
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr ""
+msgstr "Villa í þýðingaminni: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Ekki tókst að búa til bráðabirgðamöppu."

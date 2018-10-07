@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:57\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:41\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "“%s”不是一个有效的 POT 文件。"
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "首部格式异常：“%s”"
+
+msgid "PO Translation Files"
+msgstr "PO 翻译文件"
+
+msgid "POT Translation Templates"
+msgstr "POT 翻译模板"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF 翻译文件"
+
+msgid "All Translation Files"
+msgstr "所有翻译文件"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "文件“%s”的格式不支持。"
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "文件“%2$s”的第 %1$i 行未能正确加载。"
@@ -56,10 +76,6 @@ msgstr[0] "文件“%2$s”的第 %1$i 行未能正确加载。"
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "文件“%2$s”的第 %1$d 行已损坏（不是有效的 %3$s 数据）。"
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "首部格式异常：“%s”"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -107,14 +123,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "保存编目时出错"
 
-msgid "PO Translation Files"
-msgstr "PO 翻译文件"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "加载文件“%s”出错：%s。"
 
-msgid "POT Translation Templates"
-msgstr "POT 翻译模板"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "不支持的 XLIFF 版本 (%s)"
 
-msgid "All Translation Files"
-msgstr "所有翻译文件"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "翻译文件中的标记不正确。"
 
 msgid "(Use default language)"
 msgstr "（使用默认语言）"
@@ -386,8 +405,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "您不能拖放一个以上的文件到 Poedit 窗口。"
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "文件“%s”不是一个消息编目。"
+msgid "File “%s” is not a translation file."
+msgstr "文件“%s”不是一个翻译文件。"
 
 msgid "Poedit"
 msgstr "Poedit"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-21 10:14\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:41\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -20,7 +20,7 @@ msgid "Hide this notification message"
 msgstr "Esconder esta mensagem de notificação"
 
 msgid "Don’t Show Again"
-msgstr "Não Mostrar Novamente"
+msgstr "Não mostrar novamente"
 
 msgid "Don’t show again"
 msgstr "Não mostrar novamente"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "\"%s\" não é um arquivo POT válido."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Cabeçalho malformado: \"%s\""
+
+msgid "PO Translation Files"
+msgstr "Arquivos de Tradução PO"
+
+msgid "POT Translation Templates"
+msgstr "Modelos de Tradução POT"
+
+msgid "XLIFF Translation Files"
+msgstr "Arquivos de tradução XLIFF"
+
+msgid "All Translation Files"
+msgstr "Todos os Arquivos de Tradução"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "O arquivo \"%s\" tem um formato não suportado."
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i linha do arquivo \"%s\" não foi carregada corretamente."
@@ -57,10 +77,6 @@ msgstr[1] "%i linhas do arquivo \"%s\" não foram carregadas corretamente."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "A linha %d do arquivo \"%s\" está corrompida (dados %s inválidos)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Cabeçalho malformado: \"%s\""
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -116,14 +132,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Erro ao salvar o catálogo"
 
-msgid "PO Translation Files"
-msgstr "Arquivos de Tradução PO"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "Erro ao carregar o arquivo “%s”: %s."
 
-msgid "POT Translation Templates"
-msgstr "Modelos de Tradução POT"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "versão não suportada do XLIFF (%s)"
 
-msgid "All Translation Files"
-msgstr "Todos os Arquivos de Tradução"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "Marcação danificada na tradução da sequência."
 
 msgid "(Use default language)"
 msgstr "(Usar idioma padrão)"
@@ -282,7 +301,7 @@ msgid "Poedit is an easy to use translations editor."
 msgstr "O Poedit é um editor de traduções fácil de usar."
 
 msgid "Catalogs Manager"
-msgstr "Gerenciador de Catálogos"
+msgstr "Gerenciador de catálogos"
 
 msgid "Check for Updates…"
 msgstr "Verificar Atualizações…"
@@ -399,8 +418,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Você não pode soltar mais do que um arquivo na janela do Poedit."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "O arquivo \"%s\" não é um catálogo de mensagens."
+msgid "File “%s” is not a translation file."
+msgstr "O arquivo “%s” não é de tradução."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -997,11 +1016,11 @@ msgid ""
 "Your name and email address are only used to set the Last-Translator header "
 "of GNU gettext files."
 msgstr ""
-"Seu nome e endereço de e-mail só são usados pra definir o cabeçalho do "
-"Último-Tradutor dos arquivos gettext do GNU."
+"Seu nome e endereço de e-mail são usados apenas para definir o cabeçalho do "
+"último tradutor de arquivos do GNU gettext."
 
 msgid "Editing"
-msgstr "Editando"
+msgstr "Edição"
 
 msgid "Automatically compile MO file when saving"
 msgstr "Compilar automaticamente o arquivo MO ao salvar"
@@ -1174,7 +1193,7 @@ msgid "Edit…"
 msgstr "Editar…"
 
 msgid "GNU gettext"
-msgstr "GetText do GNU"
+msgstr "gettext do GNU"
 
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
@@ -1615,7 +1634,7 @@ msgid "Entries with errors first"
 msgstr "Entradas com erros primeiro"
 
 msgid "Entries with Errors First"
-msgstr "Entradas com Erros Primeiro"
+msgstr "Entradas com erros primeiro"
 
 msgid "&Untranslated entries first"
 msgstr "&Entradas não traduzidas primeiro"
@@ -1666,7 +1685,7 @@ msgid "&Validate translations"
 msgstr "&Validar traduções"
 
 msgid "&Validate Translations"
-msgstr "&Validar Traduções"
+msgstr "&Validar traduções"
 
 msgid "&Properties…"
 msgstr "&Propriedades…"

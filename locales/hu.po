@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:57\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:40\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "\"%s\" nem egy érvényes POT fájl."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Hibás fejléc: \"%s\""
+
+msgid "PO Translation Files"
+msgstr "PO fordítási fájlok"
+
+msgid "POT Translation Templates"
+msgstr "POT fordítási sablonok"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF fordítási fájlok"
+
+msgid "All Translation Files"
+msgstr "Minden fordítási fájl"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "“%s” fájl nem támogatott formátum."
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "%i sor „%s” fájlból nem lett megfelelően betöltve."
@@ -57,10 +77,6 @@ msgstr[1] "%i sorok „%s” fájlból nem lettek megfelelően betöltve."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "%d sor a “%s” fájlban sérült (nem érvényes %s adat)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Hibás fejléc: \"%s\""
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -116,14 +132,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Hiba a katalógus mentésekor"
 
-msgid "PO Translation Files"
-msgstr "PO fordítási fájlok"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "Hiba fájl betöltéskor “%s”: %s."
 
-msgid "POT Translation Templates"
-msgstr "POT fordítási sablonok"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "nem támogatott XLIFF változat (%s)"
 
-msgid "All Translation Files"
-msgstr "Minden fordítási fájl"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "Törött jelölés a fordítószövegben."
 
 msgid "(Use default language)"
 msgstr "(Alapértelmezett nyelv használata)"
@@ -401,8 +420,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "A Poedit ablakára egyszerre több fájlt nem lehet ráhúzni."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "„%s” fájl nem üzenet katalógus."
+msgid "File “%s” is not a translation file."
+msgstr "\"%s\" fájl nem fordítási fájl."
 
 msgid "Poedit"
 msgstr "Poedit"

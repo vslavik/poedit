@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-26 16:22\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:40\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "“%s” は有効な POT ファイルではありません。"
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "書式が不正なヘッダ: “%s”"
+
+msgid "PO Translation Files"
+msgstr "PO 翻訳ファイル"
+
+msgid "POT Translation Templates"
+msgstr "POT 翻訳テンプレート"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF 翻訳ファイル"
+
+msgid "All Translation Files"
+msgstr "すべての翻訳ファイル"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "ファイル \"%s\" はサポートされていない形式です。"
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "ファイル \"%2$s\" 中の %1$i行が正しく読み込まれませんでした。"
@@ -56,10 +76,6 @@ msgstr[0] "ファイル \"%2$s\" 中の %1$i行が正しく読み込まれませ
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "%d行目 (ファイル “%s“) が破損しています。無効な%sデータです。"
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "書式が不正なヘッダ: “%s”"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -114,14 +130,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "カタログ保存エラー"
 
-msgid "PO Translation Files"
-msgstr "PO 翻訳ファイル"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "ファイル “%s” の読み込みエラー: %s。"
 
-msgid "POT Translation Templates"
-msgstr "POT 翻訳テンプレート"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "サポートされていない XLIFF バージョン (%s)"
 
-msgid "All Translation Files"
-msgstr "すべての翻訳ファイル"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "翻訳文字列内に不正なマークアップ記述があります。"
 
 msgid "(Use default language)"
 msgstr "(デフォルト言語を使用)"
@@ -396,8 +415,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Poedit へドロップできるのは1回につき1ファイルのみです。"
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "ファイル \"%s\" はメッセージカタログではありません。"
+msgid "File “%s” is not a translation file."
+msgstr "ファイル \"%s\" は翻訳ファイルではありません。"
 
 msgid "Poedit"
 msgstr "Poedit"

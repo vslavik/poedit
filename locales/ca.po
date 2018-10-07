@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:57\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:39\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "«%s» no és un fitxer POT vàlid."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "El format de la capçalera és incorrecte: «%s»"
+
+msgid "PO Translation Files"
+msgstr "Fitxers de traducció PO"
+
+msgid "POT Translation Templates"
+msgstr "Plantilles de traducció .POT"
+
+msgid "XLIFF Translation Files"
+msgstr "Fitxers de traducció XLIFF"
+
+msgid "All Translation Files"
+msgstr "Tots els fitxers de traducció"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "No s’admet el format del fitxer «%s»."
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "No s’ha carregat %i línia del fitxer «%s» correctament."
@@ -57,10 +77,6 @@ msgstr[1] "No s’han carregat %i línies del fitxer «%s» correctament."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "La línia %d del fitxer «%s» està malmesa (dades %s no vàlids)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "El format de la capçalera és incorrecte: «%s»"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -117,14 +133,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "S’ha produït un error en desar el catàleg"
 
-msgid "PO Translation Files"
-msgstr "Fitxers de traducció PO"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "S’ha produït un error en carregar el fitxer «%s»: %s."
 
-msgid "POT Translation Templates"
-msgstr "Plantilles de traducció .POT"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr ""
 
-msgid "All Translation Files"
-msgstr "Tots els fitxers de traducció"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr ""
 
 msgid "(Use default language)"
 msgstr "(Utilitza l’idioma per defecte)"
@@ -400,8 +419,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "No podeu deixar anar més d’un fitxer a la finestra del Poedit."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "El fitxer «%s» no és un catàleg de missatges."
+msgid "File “%s” is not a translation file."
+msgstr "El fitxer «%s» no és de traducció."
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -495,8 +514,8 @@ msgid ""
 "Entries with errors were marked in red in the list. Details of the error "
 "will be shown when you select such an entry."
 msgstr ""
-"Les entrades amb errors s'han marcat en vermell a la llista. Els detalls de "
-"l'error es mostraran quan seleccioneu l'entrada."
+"Les entrades amb errors s’han marcat en vermell a la llista. Els detalls de "
+"l’error es mostraran quan seleccioneu l’entrada."
 
 msgid "The file was saved safely."
 msgstr "El fitxer s’ha desat amb seguretat."
@@ -555,7 +574,7 @@ msgstr ""
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
 msgstr ""
-"El Poedit ha corregit automàticament el contingut invàlid en el fitxer «%s»."
+"El Poedit ha corregit automàticament el contingut no vàlid al fitxer «%s»."
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
@@ -685,10 +704,10 @@ msgstr ""
 "traduir de nou en cas que tornin a ser afegides en un futur."
 
 msgid "Keep"
-msgstr "Manté"
+msgstr "Mantingues-les"
 
 msgid "Purge"
-msgstr "Purga"
+msgstr "Purga-les"
 
 msgid "Copy from source text"
 msgstr "Copia del text de partida"
@@ -854,7 +873,7 @@ msgid "Failed command: %s"
 msgstr "Ha fallat l’ordre: %s"
 
 msgid "Failed to merge gettext catalogs."
-msgstr "No s’han pogut fusionar els catàlegs del Gettext."
+msgstr "No s’han pogut fusionar els catàlegs del gettext."
 
 msgid "Source file"
 msgstr "Fitxer de codi font"
@@ -869,7 +888,7 @@ msgid "Open in editor"
 msgstr "Obre en l’editor"
 
 msgid "No references for the selected item."
-msgstr "No hi ha referències per a l'ítem seleccionat."
+msgstr "No hi ha referències per a l’element seleccionat."
 
 #, c-format
 msgid "Error opening file %s!"
@@ -1177,13 +1196,13 @@ msgid "Edit…"
 msgstr "Edita…"
 
 msgid "GNU gettext"
-msgstr ""
+msgstr "gettext de GNU"
 
 msgid ""
 "Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
 "+, C#, Perl, Python, Java, JavaScript and others)."
 msgstr ""
-"Admet tots els llenguatges de programació que les eines del Gettext "
+"Admet tots els llenguatges de programació que les eines del gettext "
 "reconeixen (PHP, C/C++, C#, Perl, Python, Java, JavaScript, entre d’altres)."
 
 msgid "Delete extractor"
@@ -1288,8 +1307,9 @@ msgid ""
 "Pre-translation automatically finds exact or fuzzy matches for untranslated "
 "strings in the translation memory and fills in their translations."
 msgstr ""
-"Pre-traducció automàticament detecta coincidències exactes o aproximades de "
-"cadenes sense traduir en la memòria de traducció i omple la traducció."
+"La pretraducció detecta automàticament coincidències exactes o aproximades "
+"de cadenes sense traduir en la memòria de traducció i n’omple les "
+"traduccions."
 
 #, c-format
 msgid "%d entry was pre-translated."
@@ -1323,7 +1343,7 @@ msgid ""
 msgstr ""
 "<big>Arrossegueu i deixeu anar carpetes aquí</big>\n"
 "\n"
-"o usa el botó +"
+"o feu servir el botó +"
 
 msgid ""
 "<big>Drag and drop folders here</big>\n"
@@ -1332,7 +1352,7 @@ msgid ""
 msgstr ""
 "<big>Arrossegueu i deixeu anar carpetes aquí</big>\n"
 "\n"
-"o usa el botó +"
+"o feu servir el botó +"
 
 msgid "Add Folders…"
 msgstr "Afegeix carpetes…"
@@ -1362,16 +1382,16 @@ msgid "Advanced extraction settings"
 msgstr "Paràmetres d’extracció avançats"
 
 msgid "Extract notes for translators from:"
-msgstr ""
+msgstr "Extreu les notes per a traductors des de:"
 
 msgid "Comments prefixed with:"
-msgstr ""
+msgstr "Comentaris prefixats per:"
 
 msgid "All comments"
 msgstr "Tots els comentaris"
 
 msgid "Additional xgettext flags:"
-msgstr ""
+msgstr "Senyaladors addicionals de l’xgettext:"
 
 msgid "Additional keywords"
 msgstr "Paraules clau addicionals"
@@ -1635,7 +1655,7 @@ msgid "Show sidebar"
 msgstr "Mostra la barra lateral"
 
 msgid "Show status bar"
-msgstr "Mostra la barra d'estat"
+msgstr "Mostra la barra d’estat"
 
 msgid "C&atalog"
 msgstr "&Catàleg"
@@ -1953,18 +1973,18 @@ msgid "This string was found in Poedit’s translation memory."
 msgstr "S'ha trobat aquesta cadena en la memòria de traducció del Poedit."
 
 msgid "The TMX file is malformed."
-msgstr ""
+msgstr "El fitxer TMX no és formatat correctament."
 
 msgid "No translations were found in the TMX file."
 msgstr "No s’ha trobat cap traducció al fitxer TMX."
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr ""
+msgstr "La base de dades de la memòria de traducció és malmesa: %s (%d)."
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr ""
+msgstr "Hi ha un error a la memòria de traducció: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "No s'ha pogut crear el directori temporal."
@@ -2001,8 +2021,8 @@ msgstr "Col·laboreu amb altres en una traducció"
 msgid ""
 "Download a file from Crowdin project, translate and sync your changes back."
 msgstr ""
-"Baixa el fitxer d'un projecte del Crowdin, traduïu-ho i sincronitzeu-ho amb "
-"els vostres canvis."
+"Baixeu un fitxer d’un projecte del Crowdin, traduïu-lo i sincronitzeu-hi els "
+"vostres canvis."
 
 msgid "What is Crowdin?"
 msgstr "Què és el Crowdin?"
@@ -2017,7 +2037,7 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
-"Les entrades traduïbles no s’afegeixen manualment en el sistema Gettext, "
+"Les entrades traduïbles no s’afegeixen manualment en el sistema gettext, "
 "sinó que s’extreuen\n"
 "automàticament des del codi font. D’aquesta manera, queden actualitzades i "
 "correctes.\n"
@@ -2025,7 +2045,7 @@ msgstr ""
 "desenvolupador els prepara."
 
 msgid "(Learn more about GNU gettext)"
-msgstr "(Apreneu més sobre el GNU gettext)"
+msgstr "(Apreneu-ne més sobre el gettext de GNU)"
 
 msgid "The simplest way to fill this catalog is to update it from a POT:"
 msgstr ""
@@ -2046,7 +2066,7 @@ msgid "Extract from sources"
 msgstr "Extreu des de les fonts"
 
 msgid "Configure source code extraction in Properties."
-msgstr "Configura l'extracció de codi font en els Propietats."
+msgstr "Configureu l’extracció de codi font a Propietats."
 
 msgid "Sync"
 msgstr "Sincronitza"
@@ -2160,7 +2180,7 @@ msgid "Open…"
 msgstr "Obre…"
 
 msgid "&Open..."
-msgstr "&Obre..."
+msgstr "&Obre…"
 
 msgid "Open..."
 msgstr "Obre…"

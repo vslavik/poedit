@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-26 16:22\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:39\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
@@ -43,26 +43,42 @@ msgid "Failed to load extracted catalog."
 msgstr "Încărcarea catalogului extras a eșuat."
 
 msgid "Merging differences…"
-msgstr "Fuzionarea diferențele…"
+msgstr "Fuzionarea diferențelor…"
 
 #, c-format
 msgid "“%s” is not a valid POT file."
 msgstr "„%s” nu este un fișier POT valid."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Antet malformat: „%s”"
+
+msgid "PO Translation Files"
+msgstr "Fișiere de traducere PO"
+
+msgid "POT Translation Templates"
+msgstr "Şabloane de traducere POT"
+
+msgid "XLIFF Translation Files"
+msgstr ""
+
+msgid "All Translation Files"
+msgstr "Toate fișierele pentru traducere"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr ""
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] "%i linia de fișier \"%s\" nu a fost încărcată corect."
-msgstr[1] "%i liniile de fișier \"%s\" nu au fost încărcate corect."
-msgstr[2] "%i liniile de fișier \"%s\" nu au fost încărcate corect."
+msgstr[0] "%i linia de fișier „%s” nu a fost încărcată corect."
+msgstr[1] "%i liniile de fișier „%s” nu a fost încărcată corect."
+msgstr[2] "%i liniile de fișier „%s” nu au fost încărcate corect."
 
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
-msgstr "Linia %d de fișier \"%s\" este corupa (data %s invalida)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Antetului incorect format: \"%s\""
+msgstr "Linia %d de fișier „%s” este coruptă (data %s invalida)."
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -80,7 +96,7 @@ msgid ""
 "corrupted as the result."
 msgstr ""
 "Au apărut unele erori la încărcarea catalogului. E posibil ca unele date să "
-"lipseasca sau să fie deteriorate."
+"lipsească sau să fie deteriorate."
 
 #, c-format
 msgid "Couldn’t load file %s, it is probably corrupted."
@@ -91,8 +107,8 @@ msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"Файл «%s» доступен только для чтения, поэтому его невозможно сохранить.\n"
-"Сохраните этот файл под другим именем."
+"Fișierul „%s” este doar citire și nu poate fi salvat.\n"
+"Vă rugăm să îl salvați cu alt nume."
 
 #, c-format
 msgid "Couldn’t save file %s."
@@ -110,7 +126,7 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"Catalogul nu a putut fi salvat cu setul de caractere \"%s\", specificat în "
+"Catalogul nu a putut fi salvat cu setul de caractere „%s”, specificat în "
 "setările de catalog.\n"
 "\n"
 "Acesta a fost salvat în UTF-8 și această schimbare a fost actualizată în mod "
@@ -119,14 +135,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Eroare la salvarea catalogului"
 
-msgid "PO Translation Files"
-msgstr "Dosar de traducere PO"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr ""
 
-msgid "POT Translation Templates"
-msgstr "Şabloane de traducere"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr ""
 
-msgid "All Translation Files"
-msgstr "Toate fișierele pentru traducere"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr ""
 
 msgid "(Use default language)"
 msgstr "(Folosește limba implicită)"
@@ -213,10 +232,10 @@ msgid "File:"
 msgstr "Fişier:"
 
 msgid "No translation projects listed in your Crowdin account."
-msgstr "Nu sunt proiecte de traducere în contul tau Crowdin."
+msgstr "Nu sunt proiecte de traducere în contul tău Crowdin."
 
 msgid "This project has no files that can be translated in Poedit."
-msgstr "Acest proiect nu are dosare care pot fi traduse în Poedit."
+msgstr "Acest proiect nu are fișiere care pot fi traduse în Poedit."
 
 msgid "This file can only be edited in Crowdin’s web interface."
 msgstr "Acest fișier poate fi editat doar în interfața web Crowdin."
@@ -234,7 +253,7 @@ msgid "Uploading translations…"
 msgstr "Se încarcă traducerile…"
 
 msgid "&Copy"
-msgstr "&Copie"
+msgstr "&Copiază"
 
 msgid "Learn more"
 msgstr "Află mai multe"
@@ -402,8 +421,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Nu puteți să lăsați mai mult de un fișier în fereastra Poedit."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "Fișierul „%s” nu este un catalog de mesaje."
+msgid "File “%s” is not a translation file."
+msgstr ""
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -557,7 +576,7 @@ msgstr ""
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit corectează automat conținutul invalid în fișierul “%s”."
+msgstr "Poedit corectează automat conținutul invalid în fișierul „%s”."
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
@@ -638,7 +657,7 @@ msgstr "Revizuire"
 
 #, c-format
 msgid "Error loading message catalog file “%s”."
-msgstr "Eroare la încărcarea mesaj catalog fișier \"%s\"."
+msgstr "Eroare la încărcarea mesaj catalog fișier „%s”."
 
 #, c-format
 msgid "Translated: %d of %d (%d %%)"
@@ -1126,7 +1145,7 @@ msgstr "Fişiere TMX"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr "Importarea traducerii din memorie pentru \"%s\" nu a reuşit."
+msgstr "Importarea memorie de traducere pentru „%s” nu a reușit."
 
 msgid "Import error"
 msgstr "Eroare de import"
@@ -1194,7 +1213,7 @@ msgstr "Ştergeţi extractor"
 
 #, c-format
 msgid "Are you sure you want to delete the “%s” extractor?"
-msgstr "Ești sigur că dorești să ștergi extractor \"%s\"?"
+msgstr "Ești sigur că dorești să ștergi extractor „%s”?"
 
 msgid "Extractors"
 msgstr "Extractori"
@@ -1425,16 +1444,15 @@ msgstr "Traducerea se termină cu un spațiu, dar nu și textul sursă."
 
 #, c-format
 msgid "The translation should end with “%s”."
-msgstr "Traducerea trebuie să se termine cu \"%s\"."
+msgstr "Traducerea trebuie să se termine cu „%s”."
 
 #, c-format
 msgid "The translation should not end with “%s”."
-msgstr "Traducerea nu trebuie să se termine cu \"%s\"."
+msgstr "Traducerea nu trebuie să se termine cu „%s”."
 
 #, c-format
 msgid "The translation ends with “%s”, but the source text ends with “%s”."
-msgstr ""
-"Traducerea se termină cu \"%s\", dar textul-sursă se termină cu \"%s\"."
+msgstr "Traducerea se termină cu „%s”, dar textul-sursă se termină cu „%s”."
 
 msgid "Comment:"
 msgstr "Comentariu:"
@@ -2025,7 +2043,7 @@ msgid ""
 "Translators typically use PO template files (POTs) prepared for them by the "
 "developer."
 msgstr ""
-"Înregistrările traductibile nu sunt adăugate manual în sistemul Gettext, ci "
+"Înregistrările traductibile nu sunt adăugate manual în sistemul gettext, ci "
 "sunt extrase în mod automat\n"
 "din codul sursă. În acest mod, acestea rămân actualizate și exacte.\n"
 "Traducătorii folosesc de regulă fișiere șablon PO (POT-uri), pregătite "

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:58\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:41\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -49,6 +49,26 @@ msgid "“%s” is not a valid POT file."
 msgstr "\"%s\" är inte en giltig POT-fil."
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Felaktig rubrik: \"%s\""
+
+msgid "PO Translation Files"
+msgstr "PO-översättningsfiler"
+
+msgid "POT Translation Templates"
+msgstr "POT-översättningsmallar"
+
+msgid "XLIFF Translation Files"
+msgstr ""
+
+msgid "All Translation Files"
+msgstr "Alla översättningsfiler"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr ""
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
 msgstr[0] "Rad %i i filen \"%s\" kunde inte läsas korrekt."
@@ -57,10 +77,6 @@ msgstr[1] "Raderna %i i filen \"%s\" kunde inte läsas korrekt."
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "Rad %d i filen '%s' är felaktig (inte giltig %s-data)."
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Felaktig rubrik: \"%s\""
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -114,14 +130,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Fel vid sparande av katalog"
 
-msgid "PO Translation Files"
-msgstr "PO-översättningsfiler"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr ""
 
-msgid "POT Translation Templates"
-msgstr "POT-översättningsmallar"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr ""
 
-msgid "All Translation Files"
-msgstr "Alla översättningsfiler"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr ""
 
 msgid "(Use default language)"
 msgstr "(Använd standardspråk)"
@@ -397,8 +416,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Du kan inte släppa mer än en fil i Poedit-fönstret."
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "Filen '%s' är inte en meddelandekatalog."
+msgid "File “%s” is not a translation file."
+msgstr ""
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -537,12 +556,14 @@ msgid "The translation is ready for use."
 msgstr "Översättningen är klar för användning."
 
 msgid "Warnings have been disabled."
-msgstr ""
+msgstr "Varningar har inaktiverats."
 
 msgid ""
 "If you disabled the warnings because of excessive false positives, please "
 "consider sending a sample file to help@poedit.net to help improve them."
 msgstr ""
+"Om du har inaktiverat varningarna på grund av överdrivna falska positiva, "
+"överväg att skicka en exempelfil till help@poedit.net för att förbättra dem."
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
@@ -791,7 +812,7 @@ msgstr "Formulär %i"
 
 #, c-format
 msgid "Form %i (unused)"
-msgstr ""
+msgstr "Formulär %i (Oanvänd)"
 
 msgid "Singular"
 msgstr "Singular"
@@ -1037,7 +1058,7 @@ msgid "Use translation memory"
 msgstr "Använda översättningsminne"
 
 msgid "Manage…"
-msgstr ""
+msgstr "Hantera…"
 
 #. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
 msgid "When updating from sources"
@@ -1068,22 +1089,22 @@ msgid "Database size on disk:"
 msgstr "Databasstorlek på disk:"
 
 msgid "Import Translation Files…"
-msgstr ""
+msgstr "Importera översättningsfiler…"
 
 msgid "Import translation files…"
-msgstr ""
+msgstr "Importera översättningsfiler…"
 
 msgid "Import From TMX…"
-msgstr ""
+msgstr "Importera från TMX…"
 
 msgid "Import from TMX…"
-msgstr ""
+msgstr "Importera från TMX…"
 
 msgid "Export To TMX…"
-msgstr ""
+msgstr "Exportera till TMX…"
 
 msgid "Export to TMX…"
-msgstr ""
+msgstr "Exportera till TMX…"
 
 #. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
 msgid "Reset"
@@ -1102,27 +1123,27 @@ msgid "Finalizing…"
 msgstr "Färdigställer…"
 
 msgid "Select TMX files to import"
-msgstr ""
+msgstr "Välj TMX-fil som ska importeras"
 
 msgid "TMX Files"
-msgstr ""
+msgstr "TMX-filer"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr ""
+msgstr "Import av översättningsminne från ”%s” misslyckades."
 
 msgid "Import error"
-msgstr ""
+msgstr "Importera fel"
 
 msgid "Exporting translations…"
-msgstr ""
+msgstr "Exporterar översättningar…"
 
 #, c-format
 msgid "Exporting translation memory to “%s” failed."
-msgstr ""
+msgstr "Export av översättningsminne till ”%s” misslyckades."
 
 msgid "Export error"
-msgstr ""
+msgstr "Exportera fel"
 
 msgid "Reset translation memory"
 msgstr "Återställ översättningsminne"
@@ -1566,16 +1587,16 @@ msgid "&Preferences"
 msgstr "&Inställningar"
 
 msgid "Show string &ID"
-msgstr ""
+msgstr "Visa sträng och ID"
 
 msgid "Show String &ID"
-msgstr ""
+msgstr "Visa sträng och ID"
 
 msgid "Show warnings"
-msgstr ""
+msgstr "Visa varningar"
 
 msgid "Show Warnings"
-msgstr ""
+msgstr "Visa varningar"
 
 msgid "Sort by &file order"
 msgstr "Sortera efter &filordning"
@@ -1629,10 +1650,10 @@ msgid "C&atalog"
 msgstr "&Katalog"
 
 msgid "&Update from source code"
-msgstr ""
+msgstr "och uppdatera från källkod"
 
 msgid "&Update from Source Code"
-msgstr ""
+msgstr "och uppdatera från källkod"
 
 msgid "Update from &POT file…"
 msgstr "Uppdatera från &POT-fil…"
@@ -1665,7 +1686,7 @@ msgid "&Done and next"
 msgstr "&Klar och nästa"
 
 msgid "&Done and Next"
-msgstr "&Klar och nästa"
+msgstr "&Färdig och nästa"
 
 msgid "&Previous translation"
 msgstr "&Föregående översättning"
@@ -1887,10 +1908,10 @@ msgid "Check for errors in the translation"
 msgstr "Kontrollera om det finns fel i översättningen"
 
 msgid "Update from code"
-msgstr ""
+msgstr "Uppdatera från kod"
 
 msgid "Update from Code"
-msgstr ""
+msgstr "Uppdatera från kod"
 
 msgid "Update catalog - synchronize it with sources"
 msgstr "Uppdatera katalog - synkronisera den med källor"
@@ -1922,10 +1943,10 @@ msgid "Add Comment"
 msgstr "Lägg till kommentar"
 
 msgid "Delete From Translation Memory"
-msgstr ""
+msgstr "Ta bort från översättningsminne"
 
 msgid "Delete from translation memory"
-msgstr ""
+msgstr "Ta bort från översättningsminne"
 
 msgid "Translation suggestions:"
 msgstr "Översättningsförslag:"
@@ -1942,18 +1963,18 @@ msgid "This string was found in Poedit’s translation memory."
 msgstr "Den här strängen hittades i Poedits översättningsminne."
 
 msgid "The TMX file is malformed."
-msgstr ""
+msgstr "TMX-filen är felformad."
 
 msgid "No translations were found in the TMX file."
-msgstr ""
+msgstr "Inga översättningar hittades i TMX-filen."
 
 #, c-format
 msgid "Translation memory database is corrupted: %s (%d)."
-msgstr ""
+msgstr "Databasens översättningsminne är skadat: %s (%d)."
 
 #, c-format
 msgid "Translation memory error: %s (%d)."
-msgstr ""
+msgstr "Översättningsminne-fel: %s (%d)."
 
 msgid "Cannot create temporary directory."
 msgstr "Kan inte skapa temporär katalog."

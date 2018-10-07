@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: poedit\n"
 "Report-Msgid-Bugs-To: help@poedit.net\n"
-"POT-Creation-Date: 2018-07-21 13:36+0200\n"
-"PO-Revision-Date: 2018-07-18 08:56\n"
+"POT-Creation-Date: 2018-10-07 13:14+0200\n"
+"PO-Revision-Date: 2018-10-07 10:40\n"
 "Last-Translator: vslavik <vaclav@slavik.io>\n"
 "Language-Team: Armenian\n"
 "Language: hy_AM\n"
@@ -49,18 +49,34 @@ msgid "“%s” is not a valid POT file."
 msgstr "'%s'-ը վավեր POT ֆայլ չէ:"
 
 #, c-format
+msgid "Malformed header: “%s”"
+msgstr "Այլակերպված '%s' գլխագիր"
+
+msgid "PO Translation Files"
+msgstr "PO թարգմանության ֆայլեր"
+
+msgid "POT Translation Templates"
+msgstr "POT թարգմանության ֆայլեր"
+
+msgid "XLIFF Translation Files"
+msgstr "XLIFF թարգմանության ֆայլեր"
+
+msgid "All Translation Files"
+msgstr "Թարգմանության բոլոր ֆայլերը"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "“%s” ֆայլի ձևաչափը չի աջակցվում:"
+
+#, c-format
 msgid "%i line of file “%s” was not loaded correctly."
 msgid_plural "%i lines of file “%s” were not loaded correctly."
-msgstr[0] "“%2$s” ֆայլի %1$i տողը ճիշտ չէ բեռնվել."
-msgstr[1] "“%2$s” ֆայլի %1$i տողերը ճիշտ չեն բեռնվել."
+msgstr[0] "«%2$s» ֆայլի %1$i տողը ճիշտ չէ բեռնվել."
+msgstr[1] "«%2$s» ֆայլի %1$i տողերը ճիշտ չեն բեռնվել."
 
 #, c-format
 msgid "Line %d of file “%s” is corrupted (not valid %s data)."
 msgstr "%d տողի '%s' ֆայլը վնասված է (անվավեր %s տվյալ):"
-
-#, c-format
-msgid "Malformed header: “%s”"
-msgstr "Այլակերպված '%s' գլխագիր"
 
 msgid ""
 "Broken catalog file: singular form msgstr used together with msgid_plural"
@@ -85,7 +101,7 @@ msgid ""
 "File “%s” is read-only and cannot be saved.\n"
 "Please save it under different name."
 msgstr ""
-"“%s” ֆայլը միայն կարդալու համար է և հնարավոր չէ այն պահպանել:\n"
+"«%s» ֆայլը միայն կարդալու համար է և հնարավոր չէ այն պահպանել:\n"
 "Պահպանեք այն այլ անունով:"
 
 #, c-format
@@ -103,7 +119,7 @@ msgid ""
 "\n"
 "It was saved in UTF-8 instead and the setting was modified accordingly."
 msgstr ""
-"ՀՆարավոր չէ պահպանել գրացուցակը “%s”-ում այն գաղտնագրմամբ, որը հատկորոշված է "
+"ՀՆարավոր չէ պահպանել գրացուցակը «%s»-ում այն գաղտնագրմամբ, որը հատկորոշված է "
 "գրացուցակի կարգավորումներում:\n"
 "\n"
 "Փոխարենը՝ այն պահպանվել է UTF-8-ով և համապատասխանաբար կարգավորումը փոփոխվել "
@@ -112,14 +128,17 @@ msgstr ""
 msgid "Error saving catalog"
 msgstr "Սխալ՝ գրացուցակը պահպանելիս"
 
-msgid "PO Translation Files"
-msgstr "PO թարգմանության ֆայլեր"
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "Ֆայլը բեռնելու սխալ “%s”: %s:"
 
-msgid "POT Translation Templates"
-msgstr "POT թարգմանության ֆայլեր"
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "չաջակցվող XLIFF տարբերակ (%s)"
 
-msgid "All Translation Files"
-msgstr "Թարգմանության բոլոր ֆայլերը"
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "Կոտրված նշարկում թարգմանության տողում:"
 
 msgid "(Use default language)"
 msgstr "(Օգտ. հիմնական լեզուն)"
@@ -394,8 +413,8 @@ msgid "You can’t drop more than one file on Poedit window."
 msgstr "Չեք կարող գցել մեկ ֆայլից ավելի Poedit-ի պատուհանում:"
 
 #, c-format
-msgid "File “%s” is not a message catalog."
-msgstr "'%s' ֆայլը հաղորդագրության գրացուցակ չէ:"
+msgid "File “%s” is not a translation file."
+msgstr "“%s” ֆայլը թարգմանության ֆայլ չէ:"
 
 msgid "Poedit"
 msgstr "Poedit"
@@ -543,7 +562,7 @@ msgstr ""
 
 #, c-format
 msgid "Poedit automatically fixed invalid content in the file “%s”."
-msgstr "Poedit-ը ինքնաբար ուղղել է սխալ բովանդակությունը “%s” ֆայլում:"
+msgstr "Poedit-ը ինքնաբար ուղղել է սխալ բովանդակությունը «%s» ֆայլում:"
 
 msgid ""
 "The file contained duplicate items, which is not allowed in PO files and "
@@ -1107,7 +1126,7 @@ msgstr "TMX ֆայլեր"
 
 #, c-format
 msgid "Importing translation memory from “%s” failed."
-msgstr "Թարգմանության հիշողության ներմուծումը “%s”-ից ձախողվեց:"
+msgstr "Թարգմանության հիշողության ներմուծումը «%s»-ից ձախողվեց:"
 
 msgid "Import error"
 msgstr "Ներմուծելու սխալ"
