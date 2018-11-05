@@ -645,6 +645,7 @@ void PoeditApp::OpenFiles(const wxArrayString& names, int lineno)
         if (active)
         {
             active->OpenFile(name, lineno);
+            active->Raise();
             active = nullptr;
         }
         else
