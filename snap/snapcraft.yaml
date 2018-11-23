@@ -325,8 +325,8 @@ parts:
 
   # This pseudo part setups Compiler cache(ccache) to the stage dir.
   #
-  # To use it simply add a dependency to this part and prepend
-  # "$SNAPCRAFT_STAGE"/bin to the command search PATHs
+  # To use it simply add a dependency to this part for every part you'd
+  # prefer caching
   ccache:
     after:
       - gcc-6
