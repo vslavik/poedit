@@ -326,40 +326,6 @@ parts:
   ccache:
     after:
       - gcc-6
-    override-pull: 'true'
-    build-packages:
-      - ccache
-    plugin: nil
-    override-build: |
-      mkdir \
-        --parents \
-        "${SNAPCRAFT_PART_INSTALL}"/bin
-      ln \
-        --force \
-        --symbolic \
-        "$(which ccache)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc-6
-      ln \
-        --force \
-        --symbolic \
-        "$(which ccache)" \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/g++-6
-      ln \
-        --force \
-        --symbolic \
-        ./gcc-6 \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/gcc
-      ln \
-        --force \
-        --symbolic \
-        ./g++-6 \
-        "${SNAPCRAFT_PART_INSTALL}"/bin/g++
-    filesets:
-      executables:
-        - bin/*
-    stage:
-      - $executables
-    override-prime: 'true'
 
   # This pseudo part setups version 6 of GCC, which is not available
   # in Ubuntu 16.04 software source.
