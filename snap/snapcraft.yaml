@@ -63,6 +63,11 @@ plugs:
   gsettings:
   mount-observe:
 
+  gnome-3-26-1604:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-3-26-1604:gnome-3-26-1604
+
 parts:
   poedit:
     after:
@@ -71,7 +76,7 @@ parts:
       - gtkspell
       - patches
       - wxwidgets
-      - desktop-gtk3
+      - desktop-gnome-platform
 
     source: .
 
@@ -132,6 +137,10 @@ parts:
         --in-place \
         --file "${SNAPCRAFT_STAGE}"/patches/postprocess-desktop-entries.sed \
         "${SNAPCRAFT_PART_INSTALL}"/share/applications/net.poedit*.desktop
+
+    build-attributes:
+      # Gtk libraries provided by gnome-platform content shared snap
+      - no-system-libraries
 
     stage-packages:
       # Called by Poedit
@@ -260,6 +269,9 @@ parts:
       - libtiff5-dev
       - libxtst-dev
       - zlib1g-dev
+    build-attributes:
+      # Gtk libraries provided by gnome-platform content shared snap
+      - no-system-libraries
 
     plugin: autotools
     override-build: |
@@ -504,6 +516,10 @@ parts:
       - $localization
     prime:
       - $localization
+
+    build-attributes:
+      # Gtk libraries provided by gnome-platform content shared snap
+      - no-system-libraries
 
   # Self-built Enchant Part #
   # This part provides a patched recent version of the Enchant spell-
