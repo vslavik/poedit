@@ -332,7 +332,7 @@ parts:
   ccache:
     after:
       - gcc-6
-    override-pull: 'true'
+    source: snap/local/empty
     build-packages:
       - ccache
     plugin: nil
@@ -370,10 +370,8 @@ parts:
   # This pseudo part setups version 6 of GCC, which is not available
   # in Ubuntu 16.04 software source.
   gcc-6:
+    source: snap/local/empty
     plugin: nil
-    # Poedit sources will be used when `source` is ommitted, avoid this
-    # behavior
-    override-pull: 'true'
     override-build: |
       sudo apt --yes install software-properties-common
 
@@ -414,10 +412,8 @@ parts:
     override-prime: 'true'
 
   spellcheck-dictionaries:
+    source: snap/local/empty
     plugin: nil
-    # Poedit sources will be used when `source` is ommitted, avoid this
-    # behavior
-    override-pull: 'true'
     override-build: |
       set -eu
 
@@ -591,8 +587,7 @@ parts:
   # This patch slightly patches iso-codes's pkg-config so that non-
   # relocable GtkSpell part can locate its data
   iso-codes:
-    override-pull: 'true'
-
+    source: snap/local/empty
     plugin: nil
     override-build: |
       set -eu
