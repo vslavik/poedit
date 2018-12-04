@@ -524,8 +524,8 @@ private:
             _("Select translation files to import"),
             wxEmptyString,
             wxEmptyString,
-			Catalog::GetAllTypesFileMask(),
-			wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
+            Catalog::GetAllTypesFileMask(),
+            wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE));
 
         dlg->ShowWindowModalThenDo([=](int retcode){
             if (retcode != wxID_OK)
