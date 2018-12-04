@@ -3,78 +3,336 @@
 include $
     build.vars.ninja
 rule gettext_build
-  command = rm $
-      -rf $
+  command = echo $
+      'note: ►  $
+      rm -rf $
+      "$workdir" $
+      "$destdir"' $
+      && $
+      tmp=`mktemp` $
+      && rm -rf $
       "$workdir" $
       "$destdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      mkdir -p $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && mkdir -p $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      cp -aR $
+      "$srcdir/" $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && cp -aR $
       "$srcdir/" $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      cd $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && cd $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      configure`' $
+      && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name $
       configure` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      aclocal.m4`' $
+      && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name $
       aclocal.m4` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      config.h.in`' $
+      && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name $
       config.h.in` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      Makefile.in`' $
+      && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name $
       Makefile.in` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      *.1`' && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name *.1` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      *.3`' && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name *.3` $
-      && touch $
-      `find . $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      find . $
       -name $
-      *.html` && $
+      *.html $
+      -exec touch $
+      {} \;' && $
+      tmp=`mktemp` $
+      && find . $
+      -name $
+      *.html $
+      -exec touch $
+      {} \; $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
       touch `find $
       . -name $
-      *stream*.[ch]*` $
+      *stream*.[ch]*`' $
+      && $
+      tmp=`mktemp` $
       && touch $
       `find . $
       -name $
-      *.gmo` && $
+      *stream*.[ch]*` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch `find $
+      . -name $
+      *.gmo`' && $
+      tmp=`mktemp` $
+      && touch $
+      `find . $
+      -name $
+      *.gmo` $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      $configure $
+      $configure_flags' $
+      && $
+      tmp=`mktemp` $
+      && $
       $configure $
       $configure_flags $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      make $
+      $makeflags' $
+      && $
+      tmp=`mktemp` $
       && make $
       $makeflags $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      make $
+      install -j1 $
+      DESTDIR="$destdir"' $
+      && $
+      tmp=`mktemp` $
       && make $
       install -j1 $
       DESTDIR="$destdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      rm -f $
+      $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin}' $
+      && $
+      tmp=`mktemp` $
       && rm -f $
       $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin} $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      $top_srcdir/../macos/fixup-dylib-deps.sh $
+      //lib $
+      @executable_path/../lib $
+      $destdir/lib $
+      $destdir/bin/*' $
+      && $
+      tmp=`mktemp` $
       && $
       $top_srcdir/../macos/fixup-dylib-deps.sh $
       //lib $
       @executable_path/../lib $
       $destdir/lib $
       $destdir/bin/* $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      strip -S -u $
+      -r $
+      $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext}' $
+      && $
+      tmp=`mktemp` $
       && strip -S $
       -u -r $
       $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext} $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      strip -S -x $
+      $destdir/lib/lib*.*.dylib' $
+      && $
+      tmp=`mktemp` $
       && strip -S $
       -x $
       $destdir/lib/lib*.*.dylib $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      rm -rf $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && rm -rf $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch $
+      $intdir/$name.done' $
+      && $
+      tmp=`mktemp` $
       && touch $
-      $intdir/$name.done
+      $intdir/$name.done $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp
   description = $
-      *** BUILD $
-      $name ***
+      BUILD $name
+  pool = console
 build $
     $intdir/gettext.done: $
     gettext_build $
@@ -2606,33 +2864,137 @@ build $
       $builddir/gettext
   workdir = $
       $intdir/gettext
+build gettext: $
+    phony $
+    $intdir/gettext.done
 rule icu_build
-  command = rm $
-      -rf $
+  command = echo $
+      'note: ►  $
+      rm -rf $
+      "$workdir" $
+      "$destdir"' $
+      && $
+      tmp=`mktemp` $
+      && rm -rf $
       "$workdir" $
       "$destdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      mkdir -p $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && mkdir -p $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      cp -aR $
+      "$srcdir/" $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && cp -aR $
       "$srcdir/" $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      cd $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && cd $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      $configure $
+      $configure_flags' $
+      && $
+      tmp=`mktemp` $
       && $
       $configure $
       $configure_flags $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      make $
+      $makeflags' $
+      && $
+      tmp=`mktemp` $
       && make $
       $makeflags $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      make $
+      install -j1 $
+      DESTDIR="$destdir"' $
+      && $
+      tmp=`mktemp` $
       && make $
       install -j1 $
       DESTDIR="$destdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      rm -rf $
+      "$workdir"' $
+      && $
+      tmp=`mktemp` $
       && rm -rf $
       "$workdir" $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp $
+      && echo $
+      'note: ►  $
+      touch $
+      $intdir/$name.done' $
+      && $
+      tmp=`mktemp` $
       && touch $
-      $intdir/$name.done
+      $intdir/$name.done $
+      >$$tmp 2>&1 $
+      || (cat $
+      $$tmp ; $
+      exit 1) && $
+      rm -f $$tmp
   description = $
-      *** BUILD $
-      $name ***
+      BUILD $name
+  pool = console
 build $
     $intdir/icu.done: $
     icu_build $
@@ -4323,6 +4685,8 @@ build $
       $builddir/icu
   workdir = $
       $intdir/icu
+build icu: phony $
+    $intdir/icu.done
 default $
     $intdir/gettext.done $
     $intdir/icu.done

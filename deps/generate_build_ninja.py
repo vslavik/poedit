@@ -31,6 +31,13 @@ def collect_files(dirname):
         elif e.is_dir():
             yield from collect_files(e.path)
 
+def emit_commands(commands):
+    for cmd in commands:
+        assert "'" not in cmd
+        yield "echo 'note: ►  %s'" % cmd
+        yield 'tmp=`mktemp`'
+        yield '%s >$$tmp 2>&1 || (cat $$tmp ; exit 1)' % cmd
+        yield 'rm -f $$tmp'
 
 pre_build_commands = [
     'rm -rf "$workdir" "$destdir"',
@@ -60,8 +67,9 @@ def gen_configure(n, prj, srcdir=None, configure='configure', flags=[], build_co
 
     configure_commands = pre_build_commands + commands + post_build_commands
     n.rule('%s_build' % prj,
-           description='*** BUILD $name ***',
-           command=' && '.join(configure_commands))
+           description='BUILD $name',
+           pool='console',
+           command=' && '.join(emit_commands(configure_commands)))
     n.build([target],
             '%s_build' % prj,
             inputs=sorted(collect_files(srcdir)),
@@ -73,6 +81,7 @@ def gen_configure(n, prj, srcdir=None, configure='configure', flags=[], build_co
                 ('destdir', '$builddir/%s' % prj),
                 ('workdir', '$intdir/%s' % prj),
             ]))
+    n.build([prj], 'phony', target)
     return target
 
 
@@ -120,7 +129,7 @@ with open('build.ninja', 'w') as buildfile:
                                      'touch `find . -name Makefile.in`',
                                      'touch `find . -name *.1`',
                                      'touch `find . -name *.3`',
-                                     'touch `find . -name *.html`',
+                                     'find . -name *.html -exec touch {} \\;',
                                      # Prevent running moopp tool that requires GNU sed and refused to be configured to use gsed:
                                      'touch `find . -name *stream*.[ch]*`',
                                      # Prevent running msgfmt:

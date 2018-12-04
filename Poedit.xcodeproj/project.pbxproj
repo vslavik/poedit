@@ -185,13 +185,6 @@
 			remoteGlobalIDString = B248B2DD170D765100EBA58E;
 			remoteInfo = GettextTools;
 		};
-		B2B7D473170DDAAB00ED0AFE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = ant_external_deps;
-		};
 		B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
@@ -199,12 +192,19 @@
 			remoteGlobalIDString = B2CE6D191ACFCD95007E6863;
 			remoteInfo = PoeditQuicklook;
 		};
-		B2DAD7141AD19AAD00DCB398 /* PBXContainerItemProxy */ = {
+		B2E270B821B6979D00C33EA0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B27115F8170830A800B936D5;
-			remoteInfo = ant_external_deps;
+			remoteGlobalIDString = B2E270B421B6977700C33EA0;
+			remoteInfo = "deps:icu";
+		};
+		B2E270BA21B697AA00C33EA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2E270B421B6977700C33EA0;
+			remoteInfo = "deps:icu";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1031,19 +1031,33 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXLegacyTarget section */
-		B27115F8170830A800B936D5 /* external_deps */ = {
+		B27115F8170830A800B936D5 /* deps:gettext */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "$(ACTION) ";
-			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "external_deps" */;
+			buildArgumentsString = "gettext $(ACTION)";
+			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "deps:gettext" */;
 			buildPhases = (
 			);
 			buildToolPath = ./build_deps.sh;
 			buildWorkingDirectory = deps;
 			dependencies = (
 			);
-			name = external_deps;
+			name = "deps:gettext";
 			passBuildSettingsInEnvironment = 1;
-			productName = external_deps;
+			productName = "deps:gettext";
+		};
+		B2E270B421B6977700C33EA0 /* deps:icu */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "icu $(ACTION)";
+			buildConfigurationList = B2E270B521B6977700C33EA0 /* Build configuration list for PBXLegacyTarget "deps:icu" */;
+			buildPhases = (
+			);
+			buildToolPath = ./build_deps.sh;
+			buildWorkingDirectory = deps;
+			dependencies = (
+			);
+			name = "deps:icu";
+			passBuildSettingsInEnvironment = 1;
+			productName = "deps:icu";
 		};
 /* End PBXLegacyTarget section */
 
@@ -1085,7 +1099,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */,
+				B2E270B921B6979D00C33EA0 /* PBXTargetDependency */,
 				B248B2EE170D773000EBA58E /* PBXTargetDependency */,
 				B2CE6D281AD00897007E6863 /* PBXTargetDependency */,
 			);
@@ -1108,7 +1122,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				B2DAD7151AD19AAD00DCB398 /* PBXTargetDependency */,
+				B2E270BB21B697AA00C33EA0 /* PBXTargetDependency */,
 			);
 			name = PoeditQuicklook;
 			productName = PoeditQuicklook;
@@ -1197,7 +1211,8 @@
 			projectRoot = "";
 			targets = (
 				B24ACD5A16F6201F00399242 /* Poedit */,
-				B27115F8170830A800B936D5 /* external_deps */,
+				B27115F8170830A800B936D5 /* deps:gettext */,
+				B2E270B421B6977700C33EA0 /* deps:icu */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
 				B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */,
 			);
@@ -1249,7 +1264,7 @@
 				B29AE89017103992008D1F8A /* comment.xrc in Resources */,
 				B22A5C83184E4B870034BEFD /* edit-delete@2x.png in Resources */,
 				B292667621664C9500DC536C /* ItemBookmarkTemplate@2x.png in Resources */,
-				B2E7F1701E04534A005FA992 /* SuggestionTM@2x.png in Resources */,
+				B2E7F1701E04534A005FA992 /* SuggestionTMTemplate@2x.png in Resources */,
 				B2E7F1701E04534A005FA992 /* SuggestionTMTemplate@2x.png in Resources */,
 				B20F31D0216654DA005B7037 /* StatusWarningBlack.png in Resources */,
 				B20F31CC216654D2005B7037 /* StatusErrorBlack@2x.png in Resources */,
@@ -1478,7 +1493,7 @@
 /* Begin PBXTargetDependency section */
 		B248B2EC170D772800EBA58E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* external_deps */;
+			target = B27115F8170830A800B936D5 /* deps:gettext */;
 			targetProxy = B248B2EB170D772800EBA58E /* PBXContainerItemProxy */;
 		};
 		B248B2EE170D773000EBA58E /* PBXTargetDependency */ = {
@@ -1486,20 +1501,20 @@
 			target = B248B2DD170D765100EBA58E /* GettextTools */;
 			targetProxy = B248B2ED170D773000EBA58E /* PBXContainerItemProxy */;
 		};
-		B2B7D474170DDAAB00ED0AFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* external_deps */;
-			targetProxy = B2B7D473170DDAAB00ED0AFE /* PBXContainerItemProxy */;
-		};
 		B2CE6D281AD00897007E6863 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */;
 			targetProxy = B2CE6D271AD00897007E6863 /* PBXContainerItemProxy */;
 		};
-		B2DAD7151AD19AAD00DCB398 /* PBXTargetDependency */ = {
+		B2E270B921B6979D00C33EA0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* external_deps */;
-			targetProxy = B2DAD7141AD19AAD00DCB398 /* PBXContainerItemProxy */;
+			target = B2E270B421B6977700C33EA0 /* deps:icu */;
+			targetProxy = B2E270B821B6979D00C33EA0 /* PBXContainerItemProxy */;
+		};
+		B2E270BB21B697AA00C33EA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2E270B421B6977700C33EA0 /* deps:icu */;
+			targetProxy = B2E270BA21B697AA00C33EA0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1953,6 +1968,31 @@
 			};
 			name = Release;
 		};
+		B2E270B621B6977700C33EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B2E270B721B6977700C33EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1983,7 +2023,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "external_deps" */ = {
+		B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "deps:gettext" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B27115FA170830A800B936D5 /* Debug */,
@@ -1997,6 +2037,15 @@
 			buildConfigurations = (
 				B2CE6D241ACFCD95007E6863 /* Debug */,
 				B2CE6D251ACFCD95007E6863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2E270B521B6977700C33EA0 /* Build configuration list for PBXLegacyTarget "deps:icu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2E270B621B6977700C33EA0 /* Debug */,
+				B2E270B721B6977700C33EA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
