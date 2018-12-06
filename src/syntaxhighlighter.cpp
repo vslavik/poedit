@@ -26,6 +26,7 @@
 #include "syntaxhighlighter.h"
 
 #include "catalog.h"
+#include "str_helpers.h"
 
 #include <unicode/uchar.h>
 
@@ -153,7 +154,7 @@ private:
 };
 
 
-std::wregex RE_HTML_MARKUP(LR"(<\/?[a-zA-Z:-]+(\s+[-:\w]+(=([-:\w+]|"[^"]*"|'[^']*'))?)*\s*\/?>)",
+std::wregex RE_HTML_MARKUP(LR"((<\/?[a-zA-Z:-]+(\s+[-:\w]+(=([-:\w+]|"[^"]*"|'[^']*'))?)*\s*\/?>)|(&[^ ;]+;))",
                            std::regex_constants::ECMAScript | std::regex_constants::optimize);
 
 // php-format per http://php.net/manual/en/function.sprintf.php plus positionals
@@ -171,7 +172,7 @@ std::wregex RE_C_FORMAT(LR"(%(\d+\$)?[-+ #0]{0,5}(\d+|\*)?(\.(\d+|\*))?(hh|ll|[h
 SyntaxHighlighterPtr SyntaxHighlighter::ForItem(const CatalogItem& item)
 {
     auto formatFlag = item.GetFormatFlag();
-    bool needsHTML = item.GetString().Contains('<');
+    bool needsHTML = std::regex_search(str::to_wstring(item.GetString()), RE_HTML_MARKUP);
 
     static auto basic = std::make_shared<BasicSyntaxHighlighter>();
     if (!needsHTML && formatFlag.empty())
