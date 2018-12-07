@@ -357,12 +357,13 @@ table.translations th:last-child, table.translations td:last-child { padding-rig
   border-bottom: none !important;
 }
 tr.comments div {
-  float: right;
-  max-width: 75%;
+  float: left;
+  max-width: 90%;
   font-size: smaller;
   color: #aaa;
 }
 tr.comments div p:last-child { margin-bottom: 0; }
+tr.comments td { padding-top: 0; }
 
 .fuzzy .tra {
   color: rgb(218, 123, 0);
