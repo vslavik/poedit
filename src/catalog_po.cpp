@@ -558,7 +558,7 @@ class POCharsetInfoFinder : public POCatalogParser
 {
     public:
         POCharsetInfoFinder(wxTextFile *f)
-                : POCatalogParser(f), m_charset("ISO-8859-1") {}
+                : POCatalogParser(f), m_charset("UTF-8") {}
         wxString GetCharset() const { return m_charset; }
 
     protected:

@@ -252,7 +252,7 @@ void Catalog::HeaderData::ParseDict()
     }
     else
     {
-        Charset = "ISO-8859-1";
+        Charset = "UTF-8";
     }
 
     // Parse language information, with backwards compatibility with X-Poedit-*:
