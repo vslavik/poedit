@@ -3,8 +3,33 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 51;
 	objects = {
+
+/* Begin PBXAggregateTarget section */
+		B27115F8170830A800B936D5 /* deps.gettext */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */;
+			buildPhases = (
+				B2C129D921C6CBAF004364B2 /* Ninja Build */,
+			);
+			dependencies = (
+			);
+			name = deps.gettext;
+			productName = deps.gettext;
+		};
+		B2E270B421B6977700C33EA0 /* deps.icu */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B2E270B521B6977700C33EA0 /* Build configuration list for PBXAggregateTarget "deps.icu" */;
+			buildPhases = (
+				B2C129D821C6CA07004364B2 /* Ninja Build */,
+			);
+			dependencies = (
+			);
+			name = deps.icu;
+			productName = deps.icu;
+		};
+/* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
 		B201EBE11DCF755900FFB541 /* configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B201EBDF1DCF755900FFB541 /* configuration.cpp */; };
@@ -197,14 +222,14 @@
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B2E270B421B6977700C33EA0;
-			remoteInfo = "deps:icu";
+			remoteInfo = deps.icu;
 		};
 		B2E270BA21B697AA00C33EA0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B24ACD5316F6201F00399242 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B2E270B421B6977700C33EA0;
-			remoteInfo = "deps:icu";
+			remoteInfo = deps.icu;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1029,37 +1054,6 @@
 		};
 /* End PBXHeadersBuildPhase section */
 
-/* Begin PBXLegacyTarget section */
-		B27115F8170830A800B936D5 /* deps:gettext */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "gettext $(ACTION)";
-			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "deps:gettext" */;
-			buildPhases = (
-			);
-			buildToolPath = ./build_deps.sh;
-			buildWorkingDirectory = deps;
-			dependencies = (
-			);
-			name = "deps:gettext";
-			passBuildSettingsInEnvironment = 1;
-			productName = "deps:gettext";
-		};
-		B2E270B421B6977700C33EA0 /* deps:icu */ = {
-			isa = PBXLegacyTarget;
-			buildArgumentsString = "icu $(ACTION)";
-			buildConfigurationList = B2E270B521B6977700C33EA0 /* Build configuration list for PBXLegacyTarget "deps:icu" */;
-			buildPhases = (
-			);
-			buildToolPath = ./build_deps.sh;
-			buildWorkingDirectory = deps;
-			dependencies = (
-			);
-			name = "deps:icu";
-			passBuildSettingsInEnvironment = 1;
-			productName = "deps:icu";
-		};
-/* End PBXLegacyTarget section */
-
 /* Begin PBXNativeTarget section */
 		B248B2DD170D765100EBA58E /* GettextTools */ = {
 			isa = PBXNativeTarget;
@@ -1144,7 +1138,7 @@
 				};
 			};
 			buildConfigurationList = B24ACD5616F6201F00399242 /* Build configuration list for PBXProject "Poedit" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1206,8 +1200,8 @@
 			projectRoot = "";
 			targets = (
 				B24ACD5A16F6201F00399242 /* Poedit */,
-				B27115F8170830A800B936D5 /* deps:gettext */,
-				B2E270B421B6977700C33EA0 /* deps:icu */,
+				B27115F8170830A800B936D5 /* deps.gettext */,
+				B2E270B421B6977700C33EA0 /* deps.icu */,
 				B248B2DD170D765100EBA58E /* GettextTools */,
 				B2CE6D191ACFCD95007E6863 /* PoeditQuicklook */,
 			);
@@ -1308,6 +1302,42 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		B2C129D821C6CA07004364B2 /* Ninja Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Ninja Build";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd deps && ./build_deps.sh icu\n\n";
+		};
+		B2C129D921C6CBAF004364B2 /* Ninja Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Ninja Build";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd deps && ./build_deps.sh gettext\n";
+		};
 		B2C1DA6A1AD2DC0E00CDABFF /* Link Resources/ to Embedding App */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1334,7 +1364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "BUILD_NUMBER=`git rev-list HEAD --count`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+			shellScript = "BUILD_NUMBER=`git rev-list HEAD --count`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
 		};
 		B2CC62E217DB7F670097461B /* Set bundle versions from deps/gettext */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1342,13 +1372,14 @@
 			files = (
 			);
 			inputPaths = (
+				"$(TARGET_BUILD_DIR)/$(INFOPLIST_PATH)",
 			);
 			name = "Set bundle versions from deps/gettext";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "VERSION_NUMBER=`cat deps/gettext/.version`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+			shellScript = "VERSION_NUMBER=`cat deps/gettext/.version`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $VERSION_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
 		};
 		B2CE6D291AD008F6007E6863 /* Set CFBundleVersion from git */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1362,7 +1393,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "BUILD_NUMBER=`git rev-list HEAD --count`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"";
+			shellScript = "BUILD_NUMBER=`git rev-list HEAD --count`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $BUILD_NUMBER\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
 		};
 		B2E83707170C96DB00F31559 /* Copy PO Translations */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1487,7 +1518,7 @@
 /* Begin PBXTargetDependency section */
 		B248B2EC170D772800EBA58E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* deps:gettext */;
+			target = B27115F8170830A800B936D5 /* deps.gettext */;
 			targetProxy = B248B2EB170D772800EBA58E /* PBXContainerItemProxy */;
 		};
 		B248B2EE170D773000EBA58E /* PBXTargetDependency */ = {
@@ -1502,12 +1533,12 @@
 		};
 		B2E270B921B6979D00C33EA0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B2E270B421B6977700C33EA0 /* deps:icu */;
+			target = B2E270B421B6977700C33EA0 /* deps.icu */;
 			targetProxy = B2E270B821B6979D00C33EA0 /* PBXContainerItemProxy */;
 		};
 		B2E270BB21B697AA00C33EA0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B2E270B421B6977700C33EA0 /* deps:icu */;
+			target = B2E270B421B6977700C33EA0 /* deps.icu */;
 			targetProxy = B2E270BA21B697AA00C33EA0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2016,7 +2047,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B27115F9170830A800B936D5 /* Build configuration list for PBXLegacyTarget "deps:gettext" */ = {
+		B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B27115FA170830A800B936D5 /* Debug */,
@@ -2034,7 +2065,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B2E270B521B6977700C33EA0 /* Build configuration list for PBXLegacyTarget "deps:icu" */ = {
+		B2E270B521B6977700C33EA0 /* Build configuration list for PBXAggregateTarget "deps.icu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B2E270B621B6977700C33EA0 /* Debug */,
