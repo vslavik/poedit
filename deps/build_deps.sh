@@ -50,4 +50,7 @@ cflags_config = $cflags_config
 ldflags_config = $ldflags_config
 EOT
 
+# don't produce error if the build is stopped for other reasons
+trap 'exit 0' INT
+
 ninja $1
