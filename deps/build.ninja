@@ -4,7 +4,7 @@ include $
     build.vars.ninja
 rule gettext_build
   command = echo $
-      'note: ►  $
+      'note: ⋯  $
       rm -rf $
       "$workdir" $
       "$destdir"' $
@@ -19,7 +19,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       mkdir -p $
       "$workdir"' $
       && $
@@ -32,7 +32,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       cp -aR $
       "$srcdir/" $
       "$workdir"' $
@@ -47,7 +47,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       cd $
       "$workdir"' $
       && $
@@ -60,7 +60,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       configure`' $
@@ -76,7 +76,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       aclocal.m4`' $
@@ -92,7 +92,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       config.h.in`' $
@@ -108,7 +108,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       Makefile.in`' $
@@ -124,7 +124,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       *.1`' && $
@@ -138,7 +138,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       *.3`' && $
@@ -152,7 +152,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       find . $
       -name $
       *.html $
@@ -170,7 +170,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       *stream*.[ch]*`' $
@@ -186,7 +186,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch `find $
       . -name $
       *.gmo`' && $
@@ -201,7 +201,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       $configure $
       $configure_flags' $
       && $
@@ -215,7 +215,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       make $
       $makeflags' $
       && $
@@ -228,7 +228,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       make $
       install -j1 $
       DESTDIR="$destdir"' $
@@ -243,7 +243,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       rm -f $
       $destdir/bin/{autopoint,envsubst,gettext*,ngettext,recode-sr-latin}' $
       && $
@@ -256,7 +256,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       $top_srcdir/../macos/fixup-dylib-deps.sh $
       //lib $
       @executable_path/../lib $
@@ -276,7 +276,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       strip -S -u $
       -r $
       $destdir/bin/{msgfmt,msgmerge,msgunfmt,msgcat,xgettext}' $
@@ -291,7 +291,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       strip -S -x $
       $destdir/lib/lib*.*.dylib' $
       && $
@@ -305,7 +305,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       rm -rf $
       "$workdir"' $
       && $
@@ -318,7 +318,7 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch $
       $intdir/$name.done' $
       && $
@@ -331,7 +331,8 @@ rule gettext_build
       exit 1) && $
       rm -f $$tmp
   description = $
-      BUILD $name
+      Building $
+      deps/$name...
   pool = console
 build $
     $intdir/gettext.done: $
@@ -2869,7 +2870,7 @@ build gettext: $
     $intdir/gettext.done
 rule icu_build
   command = echo $
-      'note: ►  $
+      'note: ⋯  $
       rm -rf $
       "$workdir" $
       "$destdir"' $
@@ -2884,7 +2885,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       mkdir -p $
       "$workdir"' $
       && $
@@ -2897,7 +2898,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       cp -aR $
       "$srcdir/" $
       "$workdir"' $
@@ -2912,7 +2913,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       cd $
       "$workdir"' $
       && $
@@ -2925,7 +2926,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       $configure $
       $configure_flags' $
       && $
@@ -2939,7 +2940,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       make $
       $makeflags' $
       && $
@@ -2952,7 +2953,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       make $
       install -j1 $
       DESTDIR="$destdir"' $
@@ -2967,7 +2968,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       rm -rf $
       "$workdir"' $
       && $
@@ -2980,7 +2981,7 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp $
       && echo $
-      'note: ►  $
+      'note: ⋯  $
       touch $
       $intdir/$name.done' $
       && $
@@ -2993,7 +2994,8 @@ rule icu_build
       exit 1) && $
       rm -f $$tmp
   description = $
-      BUILD $name
+      Building $
+      deps/$name...
   pool = console
 build $
     $intdir/icu.done: $

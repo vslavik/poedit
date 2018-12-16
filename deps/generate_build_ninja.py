@@ -34,7 +34,7 @@ def collect_files(dirname):
 def emit_commands(commands):
     for cmd in commands:
         assert "'" not in cmd
-        yield "echo 'note: ►  %s'" % cmd
+        yield "echo 'note: ⋯  %s'" % cmd
         yield 'tmp=`mktemp`'
         yield '%s >$$tmp 2>&1 || (cat $$tmp ; exit 1)' % cmd
         yield 'rm -f $$tmp'
@@ -67,7 +67,7 @@ def gen_configure(n, prj, srcdir=None, configure='configure', flags=[], build_co
 
     configure_commands = pre_build_commands + commands + post_build_commands
     n.rule('%s_build' % prj,
-           description='BUILD $name',
+           description='Building deps/$name...',
            pool='console',
            command=' && '.join(emit_commands(configure_commands)))
     n.build([target],
