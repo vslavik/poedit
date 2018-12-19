@@ -2783,7 +2783,7 @@ void PoeditFrame::OnSuggestion(wxCommandEvent& event)
     UpdateStatusBar();
 
     UpdateToTextCtrl(EditingArea::UndoableEdit);
-    m_list->RefreshSelectedItems();
+    m_list->RefreshItem(m_list->GetCurrentItem());
 }
 
 
@@ -3050,7 +3050,8 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     // Set bookmark if different from the current value for the item,
     // else unset it
     int bkIndex = -1;
-    int selItemIndex = m_list->ListItemToCatalogIndex(m_list->GetCurrentItem());
+    wxDataViewItem selItem = m_list->GetCurrentItem();
+    int selItemIndex = m_list->ListItemToCatalogIndex(selItem);
     if (selItemIndex == -1)
         return;
 
@@ -3065,7 +3066,7 @@ void PoeditFrame::OnSetBookmark(wxCommandEvent& event)
     }
 
     // Refresh items
-    m_list->RefreshSelectedItems();
+    m_list->RefreshItem(selItem);
     if (bkIndex != -1)
         m_list->RefreshItem(m_list->CatalogIndexToListItem(bkIndex));
 

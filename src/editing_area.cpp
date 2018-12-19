@@ -970,7 +970,7 @@ void EditingArea::UpdateFromTextCtrl()
 
     UpdateAuxiliaryInfo(item);
 
-    m_associatedList->RefreshSelectedItems();
+    m_associatedList->RefreshItem(m_associatedList->GetCurrentItem());
 
     if (OnUpdatedFromTextCtrl)
         OnUpdatedFromTextCtrl(item, statisticsChanged);

@@ -199,15 +199,6 @@ class PoeditListCtrl : public wxDataViewCtrl
         /// Returns true if more than one item are selected.
         bool HasMultipleSelection() const { return GetSelectedItemsCount() > 1; }
 
-        void RefreshSelectedItems()
-        {
-            // TODO: Remove this API
-
-            wxDataViewItemArray sel;
-            GetSelections(sel);
-            m_model->ItemsChanged(sel);
-        }
-
         void RefreshAllItems();
 
         void RefreshItem(const wxDataViewItem& item)
