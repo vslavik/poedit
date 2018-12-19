@@ -683,7 +683,11 @@ void PoeditListCtrl::UpdateColumns()
 
     m_colID->SetHidden(!m_displayIDs);
     if (m_displayIDs)
+    {
+        // determine best fitting width only once, then set it as fixed, because IDs are immutable
         m_colID->SetWidth(wxCOL_WIDTH_AUTOSIZE);
+        m_colID->SetWidth(m_colID->GetWidth());
+    }
 
     SizeColumns();
 
