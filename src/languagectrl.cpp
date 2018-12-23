@@ -180,7 +180,7 @@ void LanguageCtrl::SetLang(const Language& lang)
 
 Language LanguageCtrl::GetLang() const
 {
-    return Language::TryParse(GetValue().ToStdWstring());
+    return Language::TryParse(GetValue().Strip(wxString::both).ToStdWstring());
 }
 
 #ifdef __WXMSW__
