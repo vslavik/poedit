@@ -4,6 +4,6 @@
 #include <boost/integer/integer_log2.hpp>
 #include <boost/config/header_deprecated.hpp>
 
-BOOST_HEADER_DEPRECATED("<boost/integer/integer_log2.hpp>");
+//BOOST_HEADER_DEPRECATED("<boost/integer/integer_log2.hpp>");
 
 #endif
